@@ -1,2 +1,9 @@
-# CT-Frontend23
-2023 - V4 version of CodeTribe Frontend
+## USING YARN (Recommend)
+
+- yarn install
+- yarn dev
+
+## USING NPM
+
+- npm i OR npm i --legacy-peer-deps
+- npm run dev
