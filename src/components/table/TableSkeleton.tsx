@@ -1,5 +1,11 @@
 // @mui
-import { TableRow, TableCell, Skeleton, Stack, TableRowProps } from '@mui/material';
+import {
+  TableRow,
+  TableCell,
+  Skeleton,
+  Stack,
+  TableRowProps,
+} from "@mui/material";
 
 // ----------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -10,24 +10,24 @@ import {
   Checkbox,
   CardProps,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useCopyToClipboard from '../../../../hooks/useCopyToClipboard';
+import useCopyToClipboard from "../../../../hooks/useCopyToClipboard";
 // utils
-import { fDateTime } from '../../../../utils/formatTime';
-import { fData } from '../../../../utils/formatNumber';
+import { fDateTime } from "../../../../utils/formatTime";
+import { fData } from "../../../../utils/formatNumber";
 // @types
-import { IFileManager } from '../../../../@types/file';
+import { IFileManager } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import { useSnackbar } from '../../../../components/snackbar';
-import TextMaxLine from '../../../../components/text-max-line';
-import FileThumbnail from '../../../../components/file-thumbnail';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import { useSnackbar } from "../../../../components/snackbar";
+import TextMaxLine from "../../../../components/text-max-line";
+import FileThumbnail from "../../../../components/file-thumbnail";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import FileShareDialog from '../portal/FileShareDialog';
-import FileDetailsDrawer from '../portal/FileDetailsDrawer';
+import FileShareDialog from "../portal/FileShareDialog";
+import FileDetailsDrawer from "../portal/FileDetailsDrawer";
 
 // ----------------------------------------------------------------------
 
@@ -38,12 +38,19 @@ interface Props extends CardProps {
   onDelete: VoidFunction;
 }
 
-export default function FileCard({ file, selected, onSelect, onDelete, sx, ...other }: Props) {
+export default function FileCard({
+  file,
+  selected,
+  onSelect,
+  onDelete,
+  sx,
+  ...other
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const [showCheckbox, setShowCheckbox] = useState(false);
 
@@ -106,7 +113,7 @@ export default function FileCard({ file, selected, onSelect, onDelete, sx, ...ot
   };
 
   const handleCopy = () => {
-    enqueueSnackbar('Copied!');
+    enqueueSnackbar("Copied!");
     copy(file.url);
   };
 
@@ -120,11 +127,11 @@ export default function FileCard({ file, selected, onSelect, onDelete, sx, ...ot
           width: 1,
           maxWidth: 222,
           boxShadow: 0,
-          bgcolor: 'background.default',
+          bgcolor: "background.default",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           ...((showCheckbox || selected) && {
-            borderColor: 'transparent',
-            bgcolor: 'background.paper',
+            borderColor: "transparent",
+            bgcolor: "background.paper",
             boxShadow: (theme) => theme.customShadows.z20,
           }),
           ...sx,
@@ -155,16 +162,27 @@ export default function FileCard({ file, selected, onSelect, onDelete, sx, ...ot
           spacing={0.75}
           direction="row"
           alignItems="center"
-          sx={{ typography: 'caption', color: 'text.disabled', mt: 0.5 }}
+          sx={{ typography: "caption", color: "text.disabled", mt: 0.5 }}
         >
           <Box> {fData(file.size)} </Box>
 
-          <Box sx={{ width: 2, height: 2, borderRadius: '50%', bgcolor: 'currentColor' }} />
+          <Box
+            sx={{
+              width: 2,
+              height: 2,
+              borderRadius: "50%",
+              bgcolor: "currentColor",
+            }}
+          />
 
           <Box> {fDateTime(file.dateModified)} </Box>
         </Stack>
 
-        <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: 'absolute' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ top: 8, right: 8, position: "absolute" }}
+        >
           <Checkbox
             color="warning"
             icon={<Iconify icon="eva:star-outline" />}
@@ -174,7 +192,10 @@ export default function FileCard({ file, selected, onSelect, onDelete, sx, ...ot
             sx={{ p: 0.75 }}
           />
 
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
@@ -206,14 +227,14 @@ export default function FileCard({ file, selected, onSelect, onDelete, sx, ...ot
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete
@@ -241,7 +262,7 @@ export default function FileCard({ file, selected, onSelect, onDelete, sx, ...ot
         onCopyLink={handleCopy}
         onClose={() => {
           handleCloseShare();
-          setInviteEmail('');
+          setInviteEmail("");
         }}
       />
 

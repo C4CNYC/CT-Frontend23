@@ -1,21 +1,21 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Button } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Container, Grid, Button } from "@mui/material";
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
+import { useAuthContext } from "../../auth/useAuthContext";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // _mock_
 import {
   _ecommerceNewProducts,
   _ecommerceSalesOverview,
   _ecommerceBestSalesman,
   _ecommerceLatestProducts,
-} from '../../_mock/arrays';
+} from "../../_mock/arrays";
 // components
-import { useSettingsContext } from '../../components/settings';
+import { useSettingsContext } from "../../components/settings";
 // sections
 import {
   EcommerceNewProducts,
@@ -26,10 +26,10 @@ import {
   EcommerceSalesOverview,
   EcommerceLatestProducts,
   EcommerceCurrentBalance,
-} from '../../sections/@dashboard/general/e-commerce';
-import { AppWelcome } from '../../sections/@dashboard/general/app';
+} from "../../sections/@dashboard/general/e-commerce";
+import { AppWelcome } from "../../sections/@dashboard/general/app";
 // assets
-import { MotivationIllustration } from '../../assets/illustrations';
+import { MotivationIllustration } from "../../assets/illustrations";
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ export default function GeneralEcommercePage() {
         <title> General: E-commerce | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <AppWelcome
@@ -63,7 +63,7 @@ export default function GeneralEcommercePage() {
                   sx={{
                     p: 3,
                     width: 360,
-                    margin: { xs: 'auto', md: 'inherit' },
+                    margin: { xs: "auto", md: "inherit" },
                   }}
                 />
               }
@@ -117,8 +117,8 @@ export default function GeneralEcommercePage() {
               total={2324}
               chart={{
                 series: [
-                  { label: 'Mens', value: 44 },
-                  { label: 'Womens', value: 75 },
+                  { label: "Mens", value: 44 },
+                  { label: "Womens", value: 75 },
                 ],
               }}
             />
@@ -129,20 +129,42 @@ export default function GeneralEcommercePage() {
               title="Yearly Sales"
               subheader="(+43%) than last year"
               chart={{
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                categories: [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                ],
                 series: [
                   {
-                    year: '2019',
+                    year: "2019",
                     data: [
-                      { name: 'Total Income', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
-                      { name: 'Total Expenses', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
+                      {
+                        name: "Total Income",
+                        data: [10, 41, 35, 151, 49, 62, 69, 91, 48],
+                      },
+                      {
+                        name: "Total Expenses",
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45],
+                      },
                     ],
                   },
                   {
-                    year: '2020',
+                    year: "2020",
                     data: [
-                      { name: 'Total Income', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-                      { name: 'Total Expenses', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] },
+                      {
+                        name: "Total Income",
+                        data: [148, 91, 69, 62, 49, 51, 35, 41, 10],
+                      },
+                      {
+                        name: "Total Expenses",
+                        data: [45, 77, 99, 88, 77, 56, 13, 34, 10],
+                      },
                     ],
                   },
                 ],
@@ -151,7 +173,10 @@ export default function GeneralEcommercePage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <EcommerceSalesOverview title="Sales Overview" data={_ecommerceSalesOverview} />
+            <EcommerceSalesOverview
+              title="Sales Overview"
+              data={_ecommerceSalesOverview}
+            />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
@@ -167,17 +192,20 @@ export default function GeneralEcommercePage() {
               title="Best Salesman"
               tableData={_ecommerceBestSalesman}
               tableLabels={[
-                { id: 'seller', label: 'Seller' },
-                { id: 'product', label: 'Product' },
-                { id: 'country', label: 'Country', align: 'center' },
-                { id: 'total', label: 'Total' },
-                { id: 'rank', label: 'Rank', align: 'right' },
+                { id: "seller", label: "Seller" },
+                { id: "product", label: "Product" },
+                { id: "country", label: "Country", align: "center" },
+                { id: "total", label: "Total" },
+                { id: "rank", label: "Rank", align: "right" },
               ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <EcommerceLatestProducts title="Latest Products" list={_ecommerceLatestProducts} />
+            <EcommerceLatestProducts
+              title="Latest Products"
+              list={_ecommerceLatestProducts}
+            />
           </Grid>
         </Grid>
       </Container>

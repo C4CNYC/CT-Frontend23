@@ -1,8 +1,14 @@
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { Stack, Button, Typography, StackProps, IconButton } from '@mui/material';
+import {
+  Stack,
+  Button,
+  Typography,
+  StackProps,
+  IconButton,
+} from "@mui/material";
 // components
-import Iconify from '../../../components/iconify';
+import Iconify from "../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -39,10 +45,10 @@ export default function FilePanel({
               p: 0,
               width: 24,
               height: 24,
-              color: 'common.white',
-              bgcolor: 'success.main',
-              '&:hover': {
-                bgcolor: 'success.main',
+              color: "common.white",
+              bgcolor: "success.main",
+              "&:hover": {
+                bgcolor: "success.main",
               },
             }}
           >
@@ -50,7 +56,7 @@ export default function FilePanel({
           </IconButton>
         </Stack>
 
-        <Typography variant="body2" sx={{ color: 'text.disabled', mt: 0.5 }}>
+        <Typography variant="body2" sx={{ color: "text.disabled", mt: 0.5 }}>
           {subTitle}
         </Typography>
       </Stack>
@@ -69,7 +75,9 @@ export default function FilePanel({
 
       {onCollapse && (
         <IconButton onClick={onCollapse}>
-          <Iconify icon={collapse ? 'eva:chevron-down-fill' : 'eva:chevron-up-fill'} />
+          <Iconify
+            icon={collapse ? "eva:chevron-down-fill" : "eva:chevron-up-fill"}
+          />
         </IconButton>
       )}
     </Stack>

@@ -1,16 +1,23 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Stack, Card, Container, CardHeader, CardContent } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import {
+  Box,
+  Stack,
+  Card,
+  Container,
+  CardHeader,
+  CardContent,
+} from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // _mock
-import _mock from '../../../_mock';
+import _mock from "../../../_mock";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
 import {
   CarouselBasic1,
@@ -20,7 +27,7 @@ import {
   CarouselAnimation,
   CarouselThumbnail,
   CarouselCenterMode,
-} from '../../../sections/_examples/extra/carousel';
+} from "../../../sections/_examples/extra/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +40,9 @@ const _carouselsExample = [...Array(5)].map((_, index) => ({
 
 // ----------------------------------------------------------------------
 
-DemoCarouselsPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoCarouselsPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +57,8 @@ export default function DemoCarouselsPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -56,12 +66,12 @@ export default function DemoCarouselsPage() {
             heading="Carousel"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Carousel' },
+              { name: "Carousel" },
             ]}
-            moreLink={['https://react-slick.neostack.com']}
+            moreLink={["https://react-slick.neostack.com"]}
           />
         </Container>
       </Box>
@@ -106,7 +116,10 @@ export default function DemoCarouselsPage() {
           </Card>
 
           <Card>
-            <CardHeader title="Carousel Center Mode" subheader="Customs shape & icon button" />
+            <CardHeader
+              title="Carousel Center Mode"
+              subheader="Customs shape & icon button"
+            />
             <CardContent>
               <CarouselCenterMode data={_carouselsExample} />
             </CardContent>

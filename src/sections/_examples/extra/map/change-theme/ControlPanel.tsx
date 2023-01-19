@@ -1,8 +1,8 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { Radio, Typography, RadioGroup, FormControlLabel } from '@mui/material';
+import { Radio, Typography, RadioGroup, FormControlLabel } from "@mui/material";
 // components
-import { StyledControlPanel } from '../../../../../components/map';
+import { StyledControlPanel } from "../../../../../components/map";
 
 // ----------------------------------------------------------------------
 
@@ -17,18 +17,25 @@ type Props = {
 function ControlPanel({ themes, selectTheme, onChangeTheme }: Props) {
   return (
     <StyledControlPanel>
-      <Typography gutterBottom variant="subtitle2" sx={{ color: 'common.white' }}>
+      <Typography
+        gutterBottom
+        variant="subtitle2"
+        sx={{ color: "common.white" }}
+      >
         Select Theme:
       </Typography>
 
-      <RadioGroup value={selectTheme} onChange={(event, value) => onChangeTheme(value)}>
+      <RadioGroup
+        value={selectTheme}
+        onChange={(event, value) => onChangeTheme(value)}
+      >
         {Object.keys(themes).map((item) => (
           <FormControlLabel
             key={item}
             value={item}
             control={<Radio size="small" />}
             label={item}
-            sx={{ color: 'common.white', textTransform: 'capitalize' }}
+            sx={{ color: "common.white", textTransform: "capitalize" }}
           />
         ))}
       </RadioGroup>

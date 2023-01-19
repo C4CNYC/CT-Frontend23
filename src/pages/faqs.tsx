@@ -1,15 +1,17 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from "@mui/material";
 // layouts
-import MainLayout from '../layouts/main';
+import MainLayout from "../layouts/main";
 // sections
-import { FaqsHero, FaqsCategory, FaqsList, FaqsForm } from '../sections/faqs';
+import { FaqsHero, FaqsCategory, FaqsList, FaqsForm } from "../sections/faqs";
 
 // ----------------------------------------------------------------------
 
-FaqsPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+FaqsPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +24,7 @@ export default function FaqsPage() {
 
       <FaqsHero />
 
-      <Container sx={{ pt: 15, pb: 10, position: 'relative' }}>
+      <Container sx={{ pt: 15, pb: 10, position: "relative" }}>
         <FaqsCategory />
 
         <Typography variant="h3" sx={{ mb: 5 }}>
@@ -33,8 +35,8 @@ export default function FaqsPage() {
           gap={10}
           display="grid"
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            md: 'repeat(2, 1fr)',
+            xs: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
           }}
         >
           <FaqsList />

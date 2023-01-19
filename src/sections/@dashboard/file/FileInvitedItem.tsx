@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Avatar,
@@ -9,12 +9,12 @@ import {
   MenuItem,
   ListItemText,
   ListItemAvatar,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IFileShared } from '../../../@types/file';
+import { IFileShared } from "../../../@types/file";
 // components
-import Iconify from '../../../components/iconify';
-import MenuPopover from '../../../components/menu-popover';
+import Iconify from "../../../components/iconify";
+import MenuPopover from "../../../components/menu-popover";
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ export default function FileInvitedItem({ person }: Props) {
               <span>{person.email}</span>
             </Tooltip>
           }
-          primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
+          primaryTypographyProps={{ noWrap: true, typography: "subtitle2" }}
           secondaryTypographyProps={{ noWrap: true }}
           sx={{ flexGrow: 1, pr: 1 }}
         />
@@ -61,17 +61,23 @@ export default function FileInvitedItem({ person }: Props) {
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
+          endIcon={
+            <Iconify
+              icon={
+                openPopover ? "eva:chevron-up-fill" : "eva:chevron-down-fill"
+              }
+            />
+          }
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
-            textTransform: 'unset',
-            fontWeight: 'fontWeightMedium',
-            '& .MuiButton-endIcon': {
+            textTransform: "unset",
+            fontWeight: "fontWeightMedium",
+            "& .MuiButton-endIcon": {
               ml: 0,
             },
             ...(openPopover && {
-              bgcolor: 'action.selected',
+              bgcolor: "action.selected",
             }),
           }}
         >
@@ -79,16 +85,20 @@ export default function FileInvitedItem({ person }: Props) {
         </Button>
       </ListItem>
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 160 }}>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        sx={{ width: 160 }}
+      >
         <>
           <MenuItem
             onClick={() => {
               handleClosePopover();
-              handleChangePermission('view');
+              handleChangePermission("view");
             }}
             sx={{
-              ...(permission === 'view' && {
-                bgcolor: 'action.selected',
+              ...(permission === "view" && {
+                bgcolor: "action.selected",
               }),
             }}
           >
@@ -99,11 +109,11 @@ export default function FileInvitedItem({ person }: Props) {
           <MenuItem
             onClick={() => {
               handleClosePopover();
-              handleChangePermission('edit');
+              handleChangePermission("edit");
             }}
             sx={{
-              ...(permission === 'edit' && {
-                bgcolor: 'action.selected',
+              ...(permission === "edit" && {
+                bgcolor: "action.selected",
               }),
             }}
           >
@@ -111,13 +121,13 @@ export default function FileInvitedItem({ person }: Props) {
             Can edit
           </MenuItem>
 
-          <Divider sx={{ borderStyle: 'dashed' }} />
+          <Divider sx={{ borderStyle: "dashed" }} />
 
           <MenuItem
             onClick={() => {
               handleClosePopover();
             }}
-            sx={{ color: 'error.main' }}
+            sx={{ color: "error.main" }}
           >
             <Iconify icon="eva:trash-2-outline" />
             Remove

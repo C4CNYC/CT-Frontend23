@@ -1,14 +1,14 @@
-import { useState, ChangeEvent } from 'react';
-import { Draggable } from '@hello-pangea/dnd';
+import { useState, ChangeEvent } from "react";
+import { Draggable } from "@hello-pangea/dnd";
 // @mui
-import { Paper, Typography, Box, Checkbox } from '@mui/material';
+import { Paper, Typography, Box, Checkbox } from "@mui/material";
 // @types
-import { IKanbanCard } from '../../../@types/kanban';
+import { IKanbanCard } from "../../../@types/kanban";
 // components
-import Image from '../../../components/image';
-import Iconify from '../../../components/iconify';
+import Image from "../../../components/image";
+import Iconify from "../../../components/iconify";
 //
-import KanbanDetails from './details/KanbanDetails';
+import KanbanDetails from "./details/KanbanDetails";
 
 // ----------------------------------------------------------------------
 
@@ -48,15 +48,15 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
             sx={{
               width: 1,
               borderRadius: 1,
-              overflow: 'hidden',
-              position: 'relative',
+              overflow: "hidden",
+              position: "relative",
               boxShadow: (theme) => theme.customShadows.z1,
-              '&:hover': {
+              "&:hover": {
                 boxShadow: (theme) => theme.customShadows.z20,
               },
             }}
           >
-            <Box onClick={handleOpenDetails} sx={{ cursor: 'pointer' }}>
+            <Box onClick={handleOpenDetails} sx={{ cursor: "pointer" }}>
               {!!attachments.length && (
                 <Image
                   disabledEffect
@@ -65,7 +65,7 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
                   ratio="4/3"
                   sx={{
                     transition: (theme) =>
-                      theme.transitions.create('opacity', {
+                      theme.transitions.create("opacity", {
                         duration: theme.transitions.duration.shortest,
                       }),
                     ...(completed && {
@@ -82,9 +82,9 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
                   pr: 1,
                   pl: 6,
                   height: 72,
-                  lineHeight: '72px',
+                  lineHeight: "72px",
                   transition: (theme) =>
-                    theme.transitions.create('opacity', {
+                    theme.transitions.create("opacity", {
                       duration: theme.transitions.duration.shortest,
                     }),
                   ...(completed && {
@@ -102,7 +102,7 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
               icon={<Iconify icon="eva:radio-button-off-outline" />}
               checkedIcon={<Iconify icon="eva:checkmark-circle-2-outline" />}
               onChange={handleChangeComplete}
-              sx={{ position: 'absolute', bottom: 16, left: 8 }}
+              sx={{ position: "absolute", bottom: 16, left: 8 }}
             />
           </Paper>
         )}

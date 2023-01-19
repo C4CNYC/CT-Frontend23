@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // components
-import LoadingScreen from '../components/loading-screen';
+import LoadingScreen from "../components/loading-screen";
 //
-import Login from '../pages/auth/login';
-import { useAuthContext } from './useAuthContext';
+import Login from "../pages/auth/login";
+import { useAuthContext } from "./useAuthContext";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +18,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
 
   const { pathname, push } = useRouter();
 
-  const [requestedLocation, setRequestedLocation] = useState<string | null>(null);
+  const [requestedLocation, setRequestedLocation] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     if (requestedLocation && pathname !== requestedLocation) {

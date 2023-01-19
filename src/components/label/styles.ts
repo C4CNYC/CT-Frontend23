@@ -1,8 +1,8 @@
 // @mui
-import { alpha, Theme, styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { alpha, Theme, styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
 //
-import { LabelColor, LabelVariant } from './types';
+import { LabelColor, LabelVariant } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -17,32 +17,34 @@ export const StyledLabel = styled(Box)(
       variant: LabelVariant;
     };
   }) => {
-    const isLight = theme.palette.mode === 'light';
+    const isLight = theme.palette.mode === "light";
 
-    const filledVariant = ownerState.variant === 'filled';
+    const filledVariant = ownerState.variant === "filled";
 
-    const outlinedVariant = ownerState.variant === 'outlined';
+    const outlinedVariant = ownerState.variant === "outlined";
 
-    const softVariant = ownerState.variant === 'soft';
+    const softVariant = ownerState.variant === "soft";
 
     const defaultStyle = {
-      ...(ownerState.color === 'default' && {
+      ...(ownerState.color === "default" && {
         // OUTLINED
         ...(outlinedVariant && {
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
           color: theme.palette.text.primary,
           border: `1px solid ${alpha(theme.palette.grey[500], 0.32)}`,
         }),
         // SOFT
         ...(softVariant && {
-          color: isLight ? theme.palette.text.primary : theme.palette.common.white,
+          color: isLight
+            ? theme.palette.text.primary
+            : theme.palette.common.white,
           backgroundColor: alpha(theme.palette.grey[500], 0.16),
         }),
       }),
     };
 
     const colorStyle = {
-      ...(ownerState.color !== 'default' && {
+      ...(ownerState.color !== "default" && {
         // FILLED
         ...(filledVariant && {
           color: theme.palette[ownerState.color].contrastText,
@@ -50,13 +52,13 @@ export const StyledLabel = styled(Box)(
         }),
         // OUTLINED
         ...(outlinedVariant && {
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
           color: theme.palette[ownerState.color].main,
           border: `1px solid ${theme.palette[ownerState.color].main}`,
         }),
         // SOFT
         ...(softVariant && {
-          color: theme.palette[ownerState.color][isLight ? 'dark' : 'light'],
+          color: theme.palette[ownerState.color][isLight ? "dark" : "light"],
           backgroundColor: alpha(theme.palette[ownerState.color].main, 0.16),
         }),
       }),
@@ -67,12 +69,12 @@ export const StyledLabel = styled(Box)(
       minWidth: 22,
       lineHeight: 0,
       borderRadius: 6,
-      cursor: 'default',
-      alignItems: 'center',
-      whiteSpace: 'nowrap',
-      display: 'inline-flex',
-      justifyContent: 'center',
-      textTransform: 'capitalize',
+      cursor: "default",
+      alignItems: "center",
+      whiteSpace: "nowrap",
+      display: "inline-flex",
+      justifyContent: "center",
+      textTransform: "capitalize",
       padding: theme.spacing(0, 1),
       color: theme.palette.grey[800],
       fontSize: theme.typography.pxToRem(12),

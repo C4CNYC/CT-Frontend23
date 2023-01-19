@@ -1,7 +1,7 @@
-import { add, subDays } from 'date-fns';
+import { add, subDays } from "date-fns";
 //
-import _mock from '../_mock';
-import { randomInArray, randomNumberRange } from '../utils';
+import _mock from "../_mock";
+import { randomInArray, randomNumberRange } from "../utils";
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ export const _invoices = [...Array(20)].map((_, index) => ({
   totalPrice: _mock.number.price(index + 1),
   createDate: subDays(new Date(), index),
   dueDate: add(new Date(), { days: index + 15, hours: index }),
-  status: randomInArray(['paid', 'unpaid', 'overdue', 'draft']),
+  status: randomInArray(["paid", "unpaid", "overdue", "draft"]),
   invoiceFrom: {
     id: _mock.id(index),
     name: _mock.name.fullName(index),
@@ -40,11 +40,11 @@ export const _invoices = [...Array(20)].map((_, index) => ({
     price: _mock.number.price(itemIndex),
     total: _mock.number.price(itemIndex),
     service: randomInArray([
-      'full stack development',
-      'backend development',
-      'ui design',
-      'ui/ux design',
-      'front end development',
+      "full stack development",
+      "backend development",
+      "ui design",
+      "ui/ux design",
+      "front end development",
     ]),
   })),
 }));

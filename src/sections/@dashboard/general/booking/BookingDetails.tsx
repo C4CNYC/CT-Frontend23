@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { sentenceCase } from 'change-case';
+import { useState } from "react";
+import { format } from "date-fns";
+import { sentenceCase } from "change-case";
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Card,
@@ -20,13 +20,13 @@ import {
   Typography,
   IconButton,
   TableContainer,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import MenuPopover from '../../../../components/menu-popover';
-import { TableHeadCustom } from '../../../../components/table';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import MenuPopover from "../../../../components/menu-popover";
+import { TableHeadCustom } from "../../../../components/table";
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ export default function BookingDetails({
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
 
-      <TableContainer sx={{ overflow: 'unset' }}>
+      <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar>
           <Table sx={{ minWidth: 960 }}>
             <TableHeadCustom headLabel={tableLabels} />
@@ -75,7 +75,7 @@ export default function BookingDetails({
 
       <Divider />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
+      <Box sx={{ p: 2, textAlign: "right" }}>
         <Button
           size="small"
           color="inherit"
@@ -97,7 +97,7 @@ type BookingDetailsRowProps = {
 function BookingDetailsRow({ row }: BookingDetailsRowProps) {
   const theme = useTheme();
 
-  const isLight = theme.palette.mode === 'light';
+  const isLight = theme.palette.mode === "light";
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -111,22 +111,22 @@ function BookingDetailsRow({ row }: BookingDetailsRowProps) {
 
   const handleDownload = () => {
     handleClosePopover();
-    console.log('DOWNLOAD', row.id);
+    console.log("DOWNLOAD", row.id);
   };
 
   const handlePrint = () => {
     handleClosePopover();
-    console.log('PRINT', row.id);
+    console.log("PRINT", row.id);
   };
 
   const handleShare = () => {
     handleClosePopover();
-    console.log('SHARE', row.id);
+    console.log("SHARE", row.id);
   };
 
   const handleDelete = () => {
     handleClosePopover();
-    console.log('DELETE', row.id);
+    console.log("DELETE", row.id);
   };
 
   return (
@@ -139,17 +139,17 @@ function BookingDetailsRow({ row }: BookingDetailsRowProps) {
           </Stack>
         </TableCell>
 
-        <TableCell>{format(new Date(row.checkIn), 'dd MMM yyyy')}</TableCell>
+        <TableCell>{format(new Date(row.checkIn), "dd MMM yyyy")}</TableCell>
 
-        <TableCell>{format(new Date(row.checkOut), 'dd MMM yyyy')}</TableCell>
+        <TableCell>{format(new Date(row.checkOut), "dd MMM yyyy")}</TableCell>
 
         <TableCell>
           <Label
-            variant={isLight ? 'soft' : 'filled'}
+            variant={isLight ? "soft" : "filled"}
             color={
-              (row.status === 'paid' && 'success') ||
-              (row.status === 'pending' && 'warning') ||
-              'error'
+              (row.status === "paid" && "success") ||
+              (row.status === "pending" && "warning") ||
+              "error"
             }
           >
             {sentenceCase(row.status)}
@@ -158,10 +158,15 @@ function BookingDetailsRow({ row }: BookingDetailsRowProps) {
 
         <TableCell>{row.phoneNumber}</TableCell>
 
-        <TableCell sx={{ textTransform: 'capitalize' }}>{row.roomType}</TableCell>
+        <TableCell sx={{ textTransform: "capitalize" }}>
+          {row.roomType}
+        </TableCell>
 
         <TableCell align="right">
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -188,9 +193,9 @@ function BookingDetailsRow({ row }: BookingDetailsRowProps) {
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
-        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" />
           Delete
         </MenuItem>

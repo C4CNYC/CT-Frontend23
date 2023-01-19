@@ -1,15 +1,15 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // form
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton } from "@mui/lab";
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from "../../routes/paths";
 // components
-import FormProvider, { RHFTextField } from '../../components/hook-form';
+import FormProvider, { RHFTextField } from "../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -21,12 +21,14 @@ export default function AuthResetPasswordForm() {
   const { push } = useRouter();
 
   const ResetPasswordSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email must be a valid email address"),
   });
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(ResetPasswordSchema),
-    defaultValues: { email: 'demo@minimals.cc' },
+    defaultValues: { email: "demo@minimals.cc" },
   });
 
   const {
@@ -37,7 +39,7 @@ export default function AuthResetPasswordForm() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      sessionStorage.setItem('email-recovery', data.email);
+      sessionStorage.setItem("email-recovery", data.email);
       push(PATH_AUTH.newPassword);
     } catch (error) {
       console.error(error);

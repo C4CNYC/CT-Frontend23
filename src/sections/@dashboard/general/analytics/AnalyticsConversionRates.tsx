@@ -1,10 +1,10 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { Box, Card, CardHeader, CardProps } from '@mui/material';
+import { Box, Card, CardHeader, CardProps } from "@mui/material";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +21,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function AnalyticsConversionRates({ title, subheader, chart, ...other }: Props) {
+export default function AnalyticsConversionRates({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { colors, series, options } = chart;
 
   const chartSeries = series.map((i) => i.value);
@@ -33,14 +38,14 @@ export default function AnalyticsConversionRates({ title, subheader, chart, ...o
       y: {
         formatter: (value: number) => fNumber(value),
         title: {
-          formatter: () => '',
+          formatter: () => "",
         },
       },
     },
     plotOptions: {
       bar: {
         horizontal: true,
-        barHeight: '28%',
+        barHeight: "28%",
         borderRadius: 2,
       },
     },
@@ -55,7 +60,12 @@ export default function AnalyticsConversionRates({ title, subheader, chart, ...o
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ mx: 3 }} dir="ltr">
-        <Chart type="bar" series={[{ data: chartSeries }]} options={chartOptions} height={364} />
+        <Chart
+          type="bar"
+          series={[{ data: chartSeries }]}
+          options={chartOptions}
+          height={364}
+        />
       </Box>
     </Card>
   );

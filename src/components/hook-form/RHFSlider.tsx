@@ -1,7 +1,7 @@
 // form
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller } from "react-hook-form";
 // @mui
-import { Slider, SliderProps, FormHelperText } from '@mui/material';
+import { Slider, SliderProps, FormHelperText } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,9 @@ export default function RHFSlider({ name, helperText, ...other }: Props) {
           <Slider {...field} valueLabelDisplay="auto" {...other} />
 
           {(!!error || helperText) && (
-            <FormHelperText error={!!error}>{error ? error?.message : helperText}</FormHelperText>
+            <FormHelperText error={!!error}>
+              {error ? error?.message : helperText}
+            </FormHelperText>
           )}
         </div>
       )}

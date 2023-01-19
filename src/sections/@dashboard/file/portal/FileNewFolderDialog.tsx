@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 // @mui
 import {
   Stack,
@@ -9,10 +9,10 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import { Upload } from '../../../../components/upload';
+import Iconify from "../../../../components/iconify";
+import { Upload } from "../../../../components/upload";
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ interface Props extends DialogProps {
 }
 
 export default function FileNewFolderDialog({
-  title = 'Upload Files',
+  title = "Upload Files",
   open,
   onClose,
   //
@@ -64,7 +64,7 @@ export default function FileNewFolderDialog({
 
   const handleUpload = () => {
     onClose();
-    console.log('ON UPLOAD');
+    console.log("ON UPLOAD");
   };
 
   const handleRemoveFile = (inputFile: File | string) => {
@@ -78,9 +78,12 @@ export default function FileNewFolderDialog({
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose} {...other}>
-      <DialogTitle sx={{ p: (theme) => theme.spacing(3, 3, 2, 3) }}> {title} </DialogTitle>
+      <DialogTitle sx={{ p: (theme) => theme.spacing(3, 3, 2, 3) }}>
+        {" "}
+        {title}{" "}
+      </DialogTitle>
 
-      <DialogContent dividers sx={{ pt: 1, pb: 0, border: 'none' }}>
+      <DialogContent dividers sx={{ pt: 1, pb: 0, border: "none" }}>
         {(onCreate || onUpdate) && (
           <TextField
             fullWidth
@@ -91,7 +94,12 @@ export default function FileNewFolderDialog({
           />
         )}
 
-        <Upload multiple files={files} onDrop={handleDrop} onRemove={handleRemoveFile} />
+        <Upload
+          multiple
+          files={files}
+          onDrop={handleDrop}
+          onRemove={handleRemoveFile}
+        />
       </DialogContent>
 
       <DialogActions>
@@ -104,7 +112,11 @@ export default function FileNewFolderDialog({
         </Button>
 
         {!!files.length && (
-          <Button variant="outlined" color="inherit" onClick={handleRemoveAllFiles}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={handleRemoveAllFiles}
+          >
             Remove all
           </Button>
         )}
@@ -112,7 +124,7 @@ export default function FileNewFolderDialog({
         {(onCreate || onUpdate) && (
           <Stack direction="row" justifyContent="flex-end" flexGrow={1}>
             <Button variant="soft" onClick={onCreate || onUpdate}>
-              {onUpdate ? 'Save' : 'Create'}
+              {onUpdate ? "Save" : "Create"}
             </Button>
           </Stack>
         )}

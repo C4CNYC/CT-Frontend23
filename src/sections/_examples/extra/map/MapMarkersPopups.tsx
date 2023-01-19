@@ -1,10 +1,15 @@
-import { useState, memo } from 'react';
-import Map from 'react-map-gl';
+import { useState, memo } from "react";
+import Map from "react-map-gl";
 // @mui
-import { Box, Typography } from '@mui/material';
+import { Box, Typography } from "@mui/material";
 // components
-import Image from '../../../../components/image';
-import { MapPopup, MapMarker, MapControl, MapBoxProps } from '../../../../components/map';
+import Image from "../../../../components/image";
+import {
+  MapPopup,
+  MapMarker,
+  MapControl,
+  MapBoxProps,
+} from "../../../../components/map";
 
 // ----------------------------------------------------------------------
 
@@ -51,23 +56,23 @@ function MapMarkersPopups({ data, ...other }: Props) {
           longitude={popupInfo.latlng[1]}
           onClose={() => setPopupInfo(null)}
         >
-          <Box sx={{ color: 'common.white' }}>
+          <Box sx={{ color: "common.white" }}>
             <Box
               sx={{
                 mb: 1,
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <Box
                 sx={{
-                  height: '18px',
-                  minWidth: '28px',
-                  marginRight: '8px',
-                  borderRadius: '4px',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
+                  height: "18px",
+                  minWidth: "28px",
+                  marginRight: "8px",
+                  borderRadius: "4px",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
                   backgroundImage: `url(https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/${popupInfo.country_code.toLowerCase()}.svg)`,
                 }}
               />

@@ -1,13 +1,13 @@
 // @mui
-import { Grid, Stack } from '@mui/material';
+import { Grid, Stack } from "@mui/material";
 // @types
-import { IUserProfile, IUserProfilePost } from '../../../../../@types/user';
+import { IUserProfile, IUserProfilePost } from "../../../../../@types/user";
 //
-import ProfileAbout from './ProfileAbout';
-import ProfilePostCard from './ProfilePostCard';
-import ProfilePostInput from './ProfilePostInput';
-import ProfileFollowInfo from './ProfileFollowInfo';
-import ProfileSocialInfo from './ProfileSocialInfo';
+import ProfileAbout from "./ProfileAbout";
+import ProfilePostCard from "./ProfilePostCard";
+import ProfilePostInput from "./ProfilePostInput";
+import ProfileFollowInfo from "./ProfileFollowInfo";
+import ProfileSocialInfo from "./ProfileSocialInfo";
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +21,10 @@ export default function Profile({ info, posts }: Props) {
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
         <Stack spacing={3}>
-          <ProfileFollowInfo follower={info.follower} following={info.following} />
+          <ProfileFollowInfo
+            follower={info.follower}
+            following={info.following}
+          />
 
           <ProfileAbout
             quote={info.quote}

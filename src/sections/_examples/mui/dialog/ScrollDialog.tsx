@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 // @mui
 import {
   Button,
@@ -7,17 +7,17 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
-} from '@mui/material';
-import { DialogProps } from '@mui/material/Dialog';
+} from "@mui/material";
+import { DialogProps } from "@mui/material/Dialog";
 
 // ----------------------------------------------------------------------
 
 export default function ScrollDialog() {
   const [open, setOpen] = useState(false);
 
-  const [scroll, setScroll] = useState<DialogProps['scroll']>('paper');
+  const [scroll, setScroll] = useState<DialogProps["scroll"]>("paper");
 
-  const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
+  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
     setOpen(true);
     setScroll(scrollType);
   };
@@ -39,18 +39,22 @@ export default function ScrollDialog() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen('paper')} sx={{ mr: 2 }}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen("paper")}
+        sx={{ mr: 2 }}
+      >
         scroll=paper
       </Button>
 
-      <Button variant="outlined" onClick={handleClickOpen('body')}>
+      <Button variant="outlined" onClick={handleClickOpen("body")}>
         scroll=body
       </Button>
 
       <Dialog open={open} onClose={handleClose} scroll={scroll}>
         <DialogTitle sx={{ pb: 2 }}>Subscribe</DialogTitle>
 
-        <DialogContent dividers={scroll === 'paper'}>
+        <DialogContent dividers={scroll === "paper"}>
           <DialogContentText
             id="scroll-dialog-description"
             ref={descriptionElementRef}
@@ -63,7 +67,7 @@ Cras justo odio, dapibus ac facilisis in, egestas eget quam.
 Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
 Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
               )
-              .join('\n')}
+              .join("\n")}
           </DialogContentText>
         </DialogContent>
 

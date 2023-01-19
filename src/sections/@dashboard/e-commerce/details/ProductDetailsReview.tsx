@@ -1,16 +1,24 @@
-import { useState } from 'react';
-import sumBy from 'lodash/sumBy';
+import { useState } from "react";
+import sumBy from "lodash/sumBy";
 // @mui
-import { Divider, Typography, Rating, Button, LinearProgress, Stack, Box } from '@mui/material';
+import {
+  Divider,
+  Typography,
+  Rating,
+  Button,
+  LinearProgress,
+  Stack,
+  Box,
+} from "@mui/material";
 // utils
-import { fShortenNumber } from '../../../../utils/formatNumber';
+import { fShortenNumber } from "../../../../utils/formatNumber";
 // @types
-import { IProduct } from '../../../../@types/product';
+import { IProduct } from "../../../../@types/product";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import ProductDetailsReviewList from './ProductDetailsReviewList';
-import ProductDetailsReviewNewDialog from './ProductDetailsNewReviewForm';
+import ProductDetailsReviewList from "./ProductDetailsReviewList";
+import ProductDetailsReviewNewDialog from "./ProductDetailsNewReviewForm";
 
 // ----------------------------------------------------------------------
 
@@ -38,8 +46,8 @@ export default function ProductDetailsReview({ product }: Props) {
       <Box
         display="grid"
         gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          md: 'repeat(3, 1fr)',
+          xs: "repeat(1, 1fr)",
+          md: "repeat(3, 1fr)",
         }}
       >
         <Stack
@@ -51,7 +59,7 @@ export default function ProductDetailsReview({ product }: Props) {
             pb: { xs: 3, md: 0 },
           }}
         >
-          <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
+          <Typography variant="subtitle1" sx={{ color: "text.secondary" }}>
             Average rating
           </Typography>
 
@@ -59,7 +67,7 @@ export default function ProductDetailsReview({ product }: Props) {
 
           <Rating readOnly value={totalRating} precision={0.1} />
 
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+          <Typography variant="caption" sx={{ color: "text.secondary" }}>
             ({fShortenNumber(totalReview)} reviews)
           </Typography>
         </Stack>
@@ -69,8 +77,12 @@ export default function ProductDetailsReview({ product }: Props) {
           sx={{
             p: 3,
             py: { md: 5 },
-            borderLeft: (theme) => ({ md: `dashed 1px ${theme.palette.divider}` }),
-            borderRight: (theme) => ({ md: `dashed 1px ${theme.palette.divider}` }),
+            borderLeft: (theme) => ({
+              md: `dashed 1px ${theme.palette.divider}`,
+            }),
+            borderRight: (theme) => ({
+              md: `dashed 1px ${theme.palette.divider}`,
+            }),
           }}
         >
           {ratings
@@ -105,7 +117,10 @@ export default function ProductDetailsReview({ product }: Props) {
 
       <ProductDetailsReviewList reviews={product.reviews} />
 
-      <ProductDetailsReviewNewDialog open={openReview} onClose={handleCloseReview} />
+      <ProductDetailsReviewNewDialog
+        open={openReview}
+        onClose={handleCloseReview}
+      />
     </>
   );
 }
@@ -144,7 +159,7 @@ function ProgressItem({ star, total }: ProgressItemProps) {
         variant="body2"
         sx={{
           minWidth: 48,
-          color: 'text.secondary',
+          color: "text.secondary",
         }}
       >
         {fShortenNumber(reviewCount)}

@@ -1,15 +1,15 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Stack, LinearProgress } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Stack, LinearProgress } from "@mui/material";
 // @types
-import { IMailListState, IMailLabel } from '../../../../@types/mail';
+import { IMailListState, IMailLabel } from "../../../../@types/mail";
 // utils
-import { bgBlur } from '../../../../utils/cssStyles';
+import { bgBlur } from "../../../../utils/cssStyles";
 // components
-import Scrollbar from '../../../../components/scrollbar';
-import EmptyContent from '../../../../components/empty-content';
+import Scrollbar from "../../../../components/scrollbar";
+import EmptyContent from "../../../../components/empty-content";
 //
-import MailItem from './MailItem';
+import MailItem from "./MailItem";
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ export default function MailList({
   const { allIds, byId } = mails;
 
   return (
-    <Stack sx={{ position: 'relative', height: `calc(100% - 80px)` }}>
+    <Stack sx={{ position: "relative", height: `calc(100% - 80px)` }}>
       {isLoading && (
         <Stack
           alignItems="center"
@@ -50,7 +50,7 @@ export default function MailList({
             width: 1,
             height: 1,
             zIndex: 9,
-            position: 'absolute',
+            position: "absolute",
             ...bgBlur({ color: theme.palette.background.paper }),
           }}
         >
@@ -74,7 +74,9 @@ export default function MailList({
                 selected={selectedMails(mailId)}
                 onSelect={() => onSelectMail(mailId)}
                 onDeselect={() => onDeselectMail(mailId)}
-                getLabel={(labelId: string) => labels.filter((label) => label.id === labelId)[0]}
+                getLabel={(labelId: string) =>
+                  labels.filter((label) => label.id === labelId)[0]
+                }
               />
             ))}
           </Stack>

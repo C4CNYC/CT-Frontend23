@@ -1,18 +1,18 @@
 // @mui
-import { styled, SxProps, Theme } from '@mui/material/styles';
-import { Box, Typography, Checkbox, Portal } from '@mui/material';
+import { styled, SxProps, Theme } from "@mui/material/styles";
+import { Box, Typography, Checkbox, Portal } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
+const StyledRoot = styled("div")(({ theme }) => ({
   right: 24,
   zIndex: 9,
   bottom: 40,
-  display: 'flex',
-  position: 'fixed',
-  alignItems: 'center',
+  display: "flex",
+  position: "fixed",
+  alignItems: "center",
   boxShadow: theme.customShadows.z20,
   padding: theme.spacing(1.5, 1, 1.5, 2),
   borderRadius: theme.shape.borderRadius,
@@ -58,7 +58,8 @@ export default function FileActionSelected({
             variant="subtitle2"
             sx={{
               mr: 2,
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
             }}
           >
             {selected.length}

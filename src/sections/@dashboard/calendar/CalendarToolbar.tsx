@@ -1,21 +1,28 @@
 // @mui
-import { Stack, Button, Tooltip, Typography, IconButton, ToggleButton } from '@mui/material';
+import {
+  Stack,
+  Button,
+  Tooltip,
+  Typography,
+  IconButton,
+  ToggleButton,
+} from "@mui/material";
 // utils
-import { fDate } from '../../../utils/formatTime';
+import { fDate } from "../../../utils/formatTime";
 // hooks
-import useResponsive from '../../../hooks/useResponsive';
+import useResponsive from "../../../hooks/useResponsive";
 // @types
-import { ICalendarViewValue } from '../../../@types/calendar';
+import { ICalendarViewValue } from "../../../@types/calendar";
 // components
-import Iconify from '../../../components/iconify';
+import Iconify from "../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
 const VIEW_OPTIONS = [
-  { value: 'dayGridMonth', label: 'Month', icon: 'ic:round-view-module' },
-  { value: 'timeGridWeek', label: 'Week', icon: 'ic:round-view-week' },
-  { value: 'timeGridDay', label: 'Day', icon: 'ic:round-view-day' },
-  { value: 'listWeek', label: 'Agenda', icon: 'ic:round-view-agenda' },
+  { value: "dayGridMonth", label: "Month", icon: "ic:round-view-module" },
+  { value: "timeGridWeek", label: "Week", icon: "ic:round-view-week" },
+  { value: "timeGridDay", label: "Day", icon: "ic:round-view-day" },
+  { value: "listWeek", label: "Agenda", icon: "ic:round-view-agenda" },
 ] as const;
 
 // ----------------------------------------------------------------------
@@ -39,13 +46,13 @@ export default function CalendarToolbar({
   onChangeView,
   onOpenFilter,
 }: Props) {
-  const isDesktop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive("up", "sm");
 
   return (
     <Stack
       alignItems="center"
       justifyContent="space-between"
-      direction={{ xs: 'column', sm: 'row' }}
+      direction={{ xs: "column", sm: "row" }}
       sx={{ p: 2.5 }}
     >
       {isDesktop && (
@@ -79,7 +86,12 @@ export default function CalendarToolbar({
 
       <Stack direction="row" alignItems="center" spacing={1}>
         {isDesktop && (
-          <Button size="small" color="error" variant="contained" onClick={onToday}>
+          <Button
+            size="small"
+            color="error"
+            variant="contained"
+            onClick={onToday}
+          >
             Today
           </Button>
         )}

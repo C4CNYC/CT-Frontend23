@@ -1,19 +1,24 @@
-import { useState } from 'react';
-import { Droppable, Draggable } from '@hello-pangea/dnd';
+import { useState } from "react";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 // @mui
-import { Paper, Stack, Button } from '@mui/material';
+import { Paper, Stack, Button } from "@mui/material";
 // redux
-import { useDispatch } from '../../../../redux/store';
-import { deleteColumn, updateColumn, addTask, deleteTask } from '../../../../redux/slices/kanban';
+import { useDispatch } from "../../../../redux/store";
+import {
+  deleteColumn,
+  updateColumn,
+  addTask,
+  deleteTask,
+} from "../../../../redux/slices/kanban";
 // @types
-import { IKanbanColumn, IKanbanCard } from '../../../../@types/kanban';
+import { IKanbanColumn, IKanbanCard } from "../../../../@types/kanban";
 // components
-import Iconify from '../../../../components/iconify';
-import { useSnackbar } from '../../../../components/snackbar';
+import Iconify from "../../../../components/iconify";
+import { useSnackbar } from "../../../../components/snackbar";
 //
-import KanbanTaskAdd from '../KanbanTaskAdd';
-import KanbanTaskCard from '../KanbanTaskCard';
-import KanbanColumnToolBar from './KanbanColumnToolBar';
+import KanbanTaskAdd from "../KanbanTaskAdd";
+import KanbanTaskCard from "../KanbanTaskCard";
+import KanbanColumnToolBar from "./KanbanColumnToolBar";
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +50,7 @@ export default function KanbanColumn({ column, index, cards }: Props) {
         columnId: column.id,
       })
     );
-    enqueueSnackbar('Delete success!');
+    enqueueSnackbar("Delete success!");
   };
 
   const handleUpdateColumn = async (newName: string) => {
@@ -57,7 +62,7 @@ export default function KanbanColumn({ column, index, cards }: Props) {
             name: newName,
           })
         );
-        enqueueSnackbar('Update success!');
+        enqueueSnackbar("Update success!");
       }
     } catch (error) {
       console.error(error);
@@ -67,7 +72,7 @@ export default function KanbanColumn({ column, index, cards }: Props) {
   const handleDeleteColumn = async () => {
     try {
       dispatch(deleteColumn(column.id));
-      enqueueSnackbar('Delete success!');
+      enqueueSnackbar("Delete success!");
     } catch (error) {
       console.error(error);
     }
@@ -93,9 +98,11 @@ export default function KanbanColumn({ column, index, cards }: Props) {
           sx={{
             px: 2,
             borderRadius: 1,
-            borderStyle: 'dashed',
+            borderStyle: "dashed",
             bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'grey.100' : 'background.default',
+              theme.palette.mode === "light"
+                ? "grey.100"
+                : "background.default",
           }}
         >
           <Stack spacing={3} {...provided.dragHandleProps}>
@@ -128,7 +135,10 @@ export default function KanbanColumn({ column, index, cards }: Props) {
 
             <Stack spacing={2} sx={{ pb: 3 }}>
               {openAddTask && (
-                <KanbanTaskAdd onAddTask={handleAddTask} onCloseAddTask={handleCloseAddTask} />
+                <KanbanTaskAdd
+                  onAddTask={handleAddTask}
+                  onCloseAddTask={handleCloseAddTask}
+                />
               )}
 
               <Button

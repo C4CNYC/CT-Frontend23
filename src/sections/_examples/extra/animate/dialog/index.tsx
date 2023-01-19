@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Grid, Card } from '@mui/material';
+import { Grid, Card } from "@mui/material";
 //
-import ControlPanel from '../ControlPanel';
-import ContainerView from './ContainerView';
+import ControlPanel from "../ControlPanel";
+import ContainerView from "./ContainerView";
 
 // ----------------------------------------------------------------------
 
 export default function DialogView() {
   const [open, setOpen] = useState(false);
 
-  const [selectVariant, setSelectVariant] = useState('slideInUp');
+  const [selectVariant, setSelectVariant] = useState("slideInUp");
 
   const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectVariant(event.target.value);
@@ -43,31 +43,37 @@ export default function DialogView() {
 
 const variantKey = [
   {
-    type: 'slide',
-    values: ['slideInUp', 'slideInDown', 'slideInLeft', 'slideInRight'],
+    type: "slide",
+    values: ["slideInUp", "slideInDown", "slideInLeft", "slideInRight"],
   },
   {
-    type: 'fade',
-    values: ['fadeIn', 'fadeInUp', 'fadeInDown', 'fadeInLeft', 'fadeInRight'],
+    type: "fade",
+    values: ["fadeIn", "fadeInUp", "fadeInDown", "fadeInLeft", "fadeInRight"],
   },
   {
-    type: 'zoom',
-    values: ['zoomIn', 'zoomInUp', 'zoomInDown', 'zoomInLeft', 'zoomInRight'],
+    type: "zoom",
+    values: ["zoomIn", "zoomInUp", "zoomInDown", "zoomInLeft", "zoomInRight"],
   },
   {
-    type: 'bounce',
-    values: ['bounceIn', 'bounceInUp', 'bounceInDown', 'bounceInLeft', 'bounceInRight'],
+    type: "bounce",
+    values: [
+      "bounceIn",
+      "bounceInUp",
+      "bounceInDown",
+      "bounceInLeft",
+      "bounceInRight",
+    ],
   },
   {
-    type: 'flip',
-    values: ['flipInX', 'flipInY'],
+    type: "flip",
+    values: ["flipInX", "flipInY"],
   },
   {
-    type: 'scale',
-    values: ['scaleInX', 'scaleInY'],
+    type: "scale",
+    values: ["scaleInX", "scaleInY"],
   },
   {
-    type: 'rotate',
-    values: ['rotateIn'],
+    type: "rotate",
+    values: ["rotateIn"],
   },
 ];

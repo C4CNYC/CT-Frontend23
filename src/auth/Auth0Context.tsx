@@ -1,9 +1,20 @@
-import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
-import { Auth0Client } from '@auth0/auth0-spa-js';
+import {
+  createContext,
+  useEffect,
+  useReducer,
+  useCallback,
+  useMemo,
+} from "react";
+import { Auth0Client } from "@auth0/auth0-spa-js";
 // config
-import { AUTH0_API } from '../config-global';
+import { AUTH0_API } from "../config-global";
 //
-import { ActionMapType, AuthStateType, AuthUserType, Auth0ContextType } from './types';
+import {
+  ActionMapType,
+  AuthStateType,
+  AuthUserType,
+  Auth0ContextType,
+} from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -14,9 +25,9 @@ import { ActionMapType, AuthStateType, AuthUserType, Auth0ContextType } from './
 // ----------------------------------------------------------------------
 
 enum Types {
-  INITIAL = 'INITIAL',
-  LOGIN = 'LOGIN',
-  LOGOUT = 'LOGOUT',
+  INITIAL = "INITIAL",
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
 }
 
 type Payload = {
@@ -83,8 +94,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const initialize = useCallback(async () => {
     try {
       auth0Client = new Auth0Client({
-        clientId: AUTH0_API.clientId || '',
-        domain: AUTH0_API.domain || '',
+        clientId: AUTH0_API.clientId || "",
+        domain: AUTH0_API.domain || "",
         authorizationParams: {
           redirect_uri: window.location.origin,
         },
@@ -105,7 +116,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
               ...user,
               displayName: user?.name,
               photoURL: user?.picture,
-              role: 'admin',
+              role: "admin",
             },
           },
         });
@@ -150,7 +161,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             ...user,
             displayName: user?.name,
             photoURL: user?.picture,
-            role: 'admin',
+            role: "admin",
           },
         },
       });
@@ -170,12 +181,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isInitialized: state.isInitialized,
       isAuthenticated: state.isAuthenticated,
       user: state.user,
-      method: 'auth0',
+      method: "auth0",
       login,
       logout,
     }),
     [state.isAuthenticated, state.isInitialized, state.user, login, logout]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

@@ -1,8 +1,8 @@
 // @mui
-import { InputAdornment, ClickAwayListener } from '@mui/material';
+import { InputAdornment, ClickAwayListener } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import { CustomTextField } from '../../../../components/custom-input';
+import Iconify from "../../../../components/iconify";
+import { CustomTextField } from "../../../../components/custom-input";
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +24,7 @@ export default function ChatNavSearch({ value, onChange, onClickAway }: Props) {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
             </InputAdornment>
           ),
         }}

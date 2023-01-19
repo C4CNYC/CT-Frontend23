@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -10,45 +10,48 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../components/iconify';
+import Iconify from "../../components/iconify";
 //
-import PaymentNewCardDialog from './PaymentNewCardDialog';
+import PaymentNewCardDialog from "./PaymentNewCardDialog";
 
 // ----------------------------------------------------------------------
 
 const PAYMENT_OPTIONS = [
   {
-    value: 'paypal',
-    title: 'Paypal',
-    icons: ['/assets/icons/payments/ic_paypal.svg'],
+    value: "paypal",
+    title: "Paypal",
+    icons: ["/assets/icons/payments/ic_paypal.svg"],
   },
   {
-    value: 'credit_card',
-    title: 'Credit / Debit Card',
-    icons: ['/assets/icons/payments/ic_mastercard.svg', '/assets/icons/payments/ic_visa.svg'],
+    value: "credit_card",
+    title: "Credit / Debit Card",
+    icons: [
+      "/assets/icons/payments/ic_mastercard.svg",
+      "/assets/icons/payments/ic_visa.svg",
+    ],
   },
 ];
 const CARD_OPTIONS = [
   {
-    value: 'visa1',
-    label: '**** **** **** 1212 - Jimmy Holland',
+    value: "visa1",
+    label: "**** **** **** 1212 - Jimmy Holland",
   },
   {
-    value: 'visa2',
-    label: '**** **** **** 2424 - Shawn Stokes',
+    value: "visa2",
+    label: "**** **** **** 2424 - Shawn Stokes",
   },
   {
-    value: 'mastercard',
-    label: '**** **** **** 4545 - Cole Armstrong',
+    value: "mastercard",
+    label: "**** **** **** 4545 - Cole Armstrong",
   },
 ];
 
 // ----------------------------------------------------------------------
 
 export default function PaymentMethods() {
-  const [method, setMethod] = useState('paypal');
+  const [method, setMethod] = useState("paypal");
 
   const [open, setOpen] = useState(false);
 
@@ -76,8 +79,10 @@ export default function PaymentMethods() {
                 key={option.title}
                 option={option}
                 isSelected={method === option.value}
-                hasChild={option.value === 'credit_card'}
-                isCreditMethod={option.value === 'credit_card' && method === 'credit_card'}
+                hasChild={option.value === "credit_card"}
+                isCreditMethod={
+                  option.value === "credit_card" && method === "credit_card"
+                }
                 onOpen={handleOpen}
               />
             ))}
@@ -117,12 +122,12 @@ function PaymentOption({
     <Paper
       variant="outlined"
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        transition: (theme) => theme.transitions.create('all'),
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
+        transition: (theme) => theme.transitions.create("all"),
         ...(hasChild && {
-          flexWrap: 'wrap',
+          flexWrap: "wrap",
         }),
         ...(isSelected && {
           boxShadow: (theme) => theme.customShadows.z20,
@@ -131,7 +136,9 @@ function PaymentOption({
     >
       <FormControlLabel
         value={value}
-        control={<Radio checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />} />}
+        control={
+          <Radio checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />} />
+        }
         label={title}
         sx={{ py: 2, pl: 2.5, flexGrow: 1, mr: 0 }}
       />
@@ -140,7 +147,7 @@ function PaymentOption({
         spacing={1}
         direction="row"
         alignItems="center"
-        sx={{ position: 'absolute', right: 20, top: 24 }}
+        sx={{ position: "absolute", right: 20, top: 24 }}
       >
         {icons.map((icon) => (
           <Box component="img" key={icon} src={icon} />

@@ -1,50 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // next
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import { useRouter } from "next/router";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Tab, Tabs, Card, Grid, Divider, Container, Typography, Stack } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Tab,
+  Tabs,
+  Card,
+  Grid,
+  Divider,
+  Container,
+  Typography,
+  Stack,
+} from "@mui/material";
 // redux
-import { useDispatch, useSelector } from '../../../../redux/store';
-import { getProduct, addToCart, gotoStep } from '../../../../redux/slices/product';
+import { useDispatch, useSelector } from "../../../../redux/store";
+import {
+  getProduct,
+  addToCart,
+  gotoStep,
+} from "../../../../redux/slices/product";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // @types
-import { ICheckoutCartItem } from '../../../../@types/product';
+import { ICheckoutCartItem } from "../../../../@types/product";
 // layouts
-import DashboardLayout from '../../../../layouts/dashboard';
+import DashboardLayout from "../../../../layouts/dashboard";
 // components
-import Iconify from '../../../../components/iconify';
-import Markdown from '../../../../components/markdown';
-import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../../../components/settings';
-import { SkeletonProductDetails } from '../../../../components/skeleton';
+import Iconify from "../../../../components/iconify";
+import Markdown from "../../../../components/markdown";
+import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../../components/settings";
+import { SkeletonProductDetails } from "../../../../components/skeleton";
 // sections
 import {
   ProductDetailsSummary,
   ProductDetailsReview,
   ProductDetailsCarousel,
-} from '../../../../sections/@dashboard/e-commerce/details';
-import CartWidget from '../../../../sections/@dashboard/e-commerce/CartWidget';
+} from "../../../../sections/@dashboard/e-commerce/details";
+import CartWidget from "../../../../sections/@dashboard/e-commerce/CartWidget";
 
 // ----------------------------------------------------------------------
 
 const SUMMARY = [
   {
-    title: '100% Original',
-    description: 'Chocolate bar candy canes ice cream toffee cookie halvah.',
-    icon: 'ic:round-verified',
+    title: "100% Original",
+    description: "Chocolate bar candy canes ice cream toffee cookie halvah.",
+    icon: "ic:round-verified",
   },
   {
-    title: '10 Day Replacement',
-    description: 'Marshmallow biscuit donut dragée fruitcake wafer.',
-    icon: 'eva:clock-fill',
+    title: "10 Day Replacement",
+    description: "Marshmallow biscuit donut dragée fruitcake wafer.",
+    icon: "eva:clock-fill",
   },
   {
-    title: 'Year Warranty',
-    description: 'Cotton candy gingerbread cake I love sugar sweet.',
-    icon: 'ic:round-verified-user',
+    title: "Year Warranty",
+    description: "Cotton candy gingerbread cake I love sugar sweet.",
+    icon: "ic:round-verified-user",
   },
 ];
 
@@ -65,9 +79,11 @@ export default function EcommerceProductDetailsPage() {
 
   const dispatch = useDispatch();
 
-  const { product, isLoading, checkout } = useSelector((state) => state.product);
+  const { product, isLoading, checkout } = useSelector(
+    (state) => state.product
+  );
 
-  const [currentTab, setCurrentTab] = useState('description');
+  const [currentTab, setCurrentTab] = useState("description");
 
   useEffect(() => {
     if (name) {
@@ -85,13 +101,13 @@ export default function EcommerceProductDetailsPage() {
 
   const TABS = [
     {
-      value: 'description',
-      label: 'description',
+      value: "description",
+      label: "description",
       component: product ? <Markdown children={product?.description} /> : null,
     },
     {
-      value: 'reviews',
-      label: `Reviews (${product ? product.reviews.length : ''})`,
+      value: "reviews",
+      label: `Reviews (${product ? product.reviews.length : ""})`,
       component: product ? <ProductDetailsReview product={product} /> : null,
     },
   ];
@@ -99,20 +115,20 @@ export default function EcommerceProductDetailsPage() {
   return (
     <>
       <Head>
-        <title>{`Ecommerce: ${product?.name || ''} | Minimal UI`}</title>
+        <title>{`Ecommerce: ${product?.name || ""} | Minimal UI`}</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Product Details"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             {
-              name: 'E-Commerce',
+              name: "E-Commerce",
               href: PATH_DASHBOARD.eCommerce.root,
             },
             {
-              name: 'Shop',
+              name: "Shop",
               href: PATH_DASHBOARD.eCommerce.shop,
             },
             { name: product?.name },
@@ -142,23 +158,24 @@ export default function EcommerceProductDetailsPage() {
               gap={5}
               display="grid"
               gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                md: 'repeat(3, 1fr)',
+                xs: "repeat(1, 1fr)",
+                md: "repeat(3, 1fr)",
               }}
               sx={{ my: 10 }}
             >
               {SUMMARY.map((item) => (
-                <Box key={item.title} sx={{ textAlign: 'center' }}>
+                <Box key={item.title} sx={{ textAlign: "center" }}>
                   <Stack
                     alignItems="center"
                     justifyContent="center"
                     sx={{
                       width: 64,
                       height: 64,
-                      mx: 'auto',
-                      borderRadius: '50%',
-                      color: 'primary.main',
-                      bgcolor: (theme) => `${alpha(theme.palette.primary.main, 0.08)}`,
+                      mx: "auto",
+                      borderRadius: "50%",
+                      color: "primary.main",
+                      bgcolor: (theme) =>
+                        `${alpha(theme.palette.primary.main, 0.08)}`,
                     }}
                   >
                     <Iconify icon={item.icon} width={36} />
@@ -168,7 +185,9 @@ export default function EcommerceProductDetailsPage() {
                     {item.title}
                   </Typography>
 
-                  <Typography sx={{ color: 'text.secondary' }}>{item.description}</Typography>
+                  <Typography sx={{ color: "text.secondary" }}>
+                    {item.description}
+                  </Typography>
                 </Box>
               ))}
             </Box>
@@ -177,7 +196,7 @@ export default function EcommerceProductDetailsPage() {
               <Tabs
                 value={currentTab}
                 onChange={(event, newValue) => setCurrentTab(newValue)}
-                sx={{ px: 3, bgcolor: 'background.neutral' }}
+                sx={{ px: 3, bgcolor: "background.neutral" }}
               >
                 {TABS.map((tab) => (
                   <Tab key={tab.value} value={tab.value} label={tab.label} />
@@ -192,7 +211,7 @@ export default function EcommerceProductDetailsPage() {
                     <Box
                       key={tab.value}
                       sx={{
-                        ...(currentTab === 'description' && {
+                        ...(currentTab === "description" && {
                           p: 3,
                         }),
                       }}

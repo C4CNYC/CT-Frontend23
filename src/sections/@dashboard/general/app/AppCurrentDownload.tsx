@@ -1,11 +1,11 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader, CardProps } from '@mui/material';
+import { useTheme, styled } from "@mui/material/styles";
+import { Card, CardHeader, CardProps } from "@mui/material";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -13,19 +13,19 @@ const CHART_HEIGHT = 400;
 
 const LEGEND_HEIGHT = 72;
 
-const StyledChart = styled('div')(({ theme }) => ({
+const StyledChart = styled("div")(({ theme }) => ({
   height: CHART_HEIGHT,
   marginTop: theme.spacing(5),
-  '& .apexcharts-canvas svg': {
+  "& .apexcharts-canvas svg": {
     height: CHART_HEIGHT,
   },
-  '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
-    overflow: 'visible',
+  "& .apexcharts-canvas svg,.apexcharts-canvas foreignObject": {
+    overflow: "visible",
   },
-  '& .apexcharts-legend': {
+  "& .apexcharts-legend": {
     height: LEGEND_HEIGHT,
-    alignContent: 'center',
-    position: 'relative !important' as 'relative',
+    alignContent: "center",
+    position: "relative !important" as "relative",
     borderTop: `solid 1px ${theme.palette.divider}`,
     top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`,
   },
@@ -46,7 +46,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function AppCurrentDownload({ title, subheader, chart, ...other }: Props) {
+export default function AppCurrentDownload({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
@@ -62,7 +67,7 @@ export default function AppCurrentDownload({ title, subheader, chart, ...other }
     colors,
     labels: series.map((i) => i.label),
     stroke: { colors: [theme.palette.background.paper] },
-    legend: { floating: true, horizontalAlign: 'center' },
+    legend: { floating: true, horizontalAlign: "center" },
     tooltip: {
       fillSeriesColor: false,
       y: {
@@ -75,7 +80,7 @@ export default function AppCurrentDownload({ title, subheader, chart, ...other }
     plotOptions: {
       pie: {
         donut: {
-          size: '90%',
+          size: "90%",
           labels: {
             value: {
               formatter: (value: number | string) => fNumber(value),
@@ -98,7 +103,12 @@ export default function AppCurrentDownload({ title, subheader, chart, ...other }
       <CardHeader title={title} subheader={subheader} />
 
       <StyledChart dir="ltr">
-        <Chart type="donut" series={chartSeries} options={chartOptions} height={280} />
+        <Chart
+          type="donut"
+          series={chartSeries}
+          options={chartOptions}
+          height={280}
+        />
       </StyledChart>
     </Card>
   );

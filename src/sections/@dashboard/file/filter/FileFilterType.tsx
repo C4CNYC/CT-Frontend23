@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Stack, Button, Typography, CardActionArea } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import { Box, Stack, Button, Typography, CardActionArea } from "@mui/material";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import FileThumbnail from '../../../../components/file-thumbnail';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import FileFilterButton from './FileFilterButton';
+import FileFilterButton from "./FileFilterButton";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,12 @@ type Props = {
   onFilterType: (type: string) => void;
 };
 
-export default function FileFilterType({ optionsType, filterType, onFilterType, onReset }: Props) {
+export default function FileFilterType({
+  optionsType,
+  filterType,
+  onFilterType,
+  onReset,
+}: Props) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,13 +37,19 @@ export default function FileFilterType({ optionsType, filterType, onFilterType, 
 
   const isSelected = !!filterType.length;
 
-  const renderLabel = filterType.length ? filterType.slice(0, 2).join(',') : 'All type';
+  const renderLabel = filterType.length
+    ? filterType.slice(0, 2).join(",")
+    : "All type";
 
   return (
     <>
       <FileFilterButton
         isSelected={isSelected}
-        endIcon={<Iconify icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
+        endIcon={
+          <Iconify
+            icon={openPopover ? "eva:chevron-up-fill" : "eva:chevron-down-fill"}
+          />
+        }
         onClick={handleOpenPopover}
       >
         {renderLabel}
@@ -49,11 +60,15 @@ export default function FileFilterType({ optionsType, filterType, onFilterType, 
         )}
       </FileFilterButton>
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ p: 2.5 }}>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        sx={{ p: 2.5 }}
+      >
         <Stack spacing={2.5}>
           <Box
             display="grid"
-            gridTemplateColumns={{ xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' }}
+            gridTemplateColumns={{ xs: "repeat(2, 1fr)", sm: "repeat(4, 1fr)" }}
             gap={1}
           >
             {optionsType.map((type) => {
@@ -66,12 +81,13 @@ export default function FileFilterType({ optionsType, filterType, onFilterType, 
                   sx={{
                     p: 1,
                     borderRadius: 1,
-                    cursor: 'pointer',
-                    color: 'text.secondary',
-                    border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.12)}`,
+                    cursor: "pointer",
+                    color: "text.secondary",
+                    border: (theme) =>
+                      `solid 1px ${alpha(theme.palette.grey[500], 0.12)}`,
                     ...(selected && {
-                      color: 'text.primary',
-                      bgcolor: 'action.selected',
+                      color: "text.primary",
+                      bgcolor: "action.selected",
                     }),
                   }}
                 >
@@ -85,7 +101,12 @@ export default function FileFilterType({ optionsType, filterType, onFilterType, 
             })}
           </Box>
 
-          <Stack spacing={1} direction="row" alignItems="center" justifyContent="flex-end">
+          <Stack
+            spacing={1}
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+          >
             <Button variant="outlined" color="inherit" onClick={onReset}>
               Clear
             </Button>

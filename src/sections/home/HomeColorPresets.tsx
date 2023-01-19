@@ -1,6 +1,6 @@
-import { m } from 'framer-motion';
+import { m } from "framer-motion";
 // @mui
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import {
   Box,
   Stack,
@@ -11,18 +11,18 @@ import {
   RadioGroup,
   CardActionArea,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import { useSettingsContext } from '../../components/settings';
-import Image from '../../components/image';
-import Iconify from '../../components/iconify';
-import { MotionViewport, varFade } from '../../components/animate';
+import { useSettingsContext } from "../../components/settings";
+import Image from "../../components/image";
+import Iconify from "../../components/iconify";
+import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
+const StyledRoot = styled("div")(({ theme }) => ({
   padding: theme.spacing(10, 0),
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     padding: theme.spacing(15, 0),
   },
 }));
@@ -32,7 +32,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 export default function HomeColorPresets() {
   return (
     <StyledRoot>
-      <Container component={MotionViewport} sx={{ position: 'relative' }}>
+      <Container component={MotionViewport} sx={{ position: "relative" }}>
         <Description />
 
         <m.div variants={varFade().inDown}>
@@ -49,9 +49,13 @@ export default function HomeColorPresets() {
 
 function Description() {
   return (
-    <Stack spacing={3} sx={{ textAlign: 'center' }}>
+    <Stack spacing={3} sx={{ textAlign: "center" }}>
       <m.div variants={varFade().inDown}>
-        <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
+        <Typography
+          component="div"
+          variant="overline"
+          sx={{ color: "text.disabled" }}
+        >
           choose your style
         </Typography>
       </m.div>
@@ -61,7 +65,7 @@ function Description() {
       </m.div>
 
       <m.div variants={varFade().inDown}>
-        <Typography sx={{ color: 'text.secondary' }}>
+        <Typography sx={{ color: "text.secondary" }}>
           Express your own style with just one click
         </Typography>
       </m.div>
@@ -75,10 +79,14 @@ function Content() {
   const { themeColorPresets: color } = useSettingsContext();
 
   return (
-    <Box sx={{ position: 'relative' }}>
-      <Image disabledEffect alt="grid" src="/assets/images/home/presets_grid.png" />
+    <Box sx={{ position: "relative" }}>
+      <Image
+        disabledEffect
+        alt="grid"
+        src="/assets/images/home/presets_grid.png"
+      />
 
-      <Box sx={{ position: 'absolute', top: 0 }}>
+      <Box sx={{ position: "absolute", top: 0 }}>
         <m.div variants={varFade().inUp}>
           <Image
             disabledEffect
@@ -88,9 +96,12 @@ function Content() {
         </m.div>
       </Box>
 
-      <Box sx={{ position: 'absolute', top: 0 }}>
+      <Box sx={{ position: "absolute", top: 0 }}>
         <m.div variants={varFade().inDown}>
-          <m.div animate={{ y: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity }}>
+          <m.div
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          >
             <Image
               disabledEffect
               alt="sidebar"
@@ -100,9 +111,12 @@ function Content() {
         </m.div>
       </Box>
 
-      <Box sx={{ position: 'absolute', top: 0 }}>
+      <Box sx={{ position: "absolute", top: 0 }}>
         <m.div variants={varFade().inDown}>
-          <m.div animate={{ y: [-5, 10, -5] }} transition={{ duration: 8, repeat: Infinity }}>
+          <m.div
+            animate={{ y: [-5, 10, -5] }}
+            transition={{ duration: 8, repeat: Infinity }}
+          >
             <Image
               disabledEffect
               alt="sidebar"
@@ -112,9 +126,12 @@ function Content() {
         </m.div>
       </Box>
 
-      <Box sx={{ position: 'absolute', top: 0 }}>
+      <Box sx={{ position: "absolute", top: 0 }}>
         <m.div variants={varFade().inDown}>
-          <m.div animate={{ y: [-25, 5, -25] }} transition={{ duration: 10, repeat: Infinity }}>
+          <m.div
+            animate={{ y: [-25, 5, -25] }}
+            transition={{ duration: 10, repeat: Infinity }}
+          >
             <Image
               disabledEffect
               alt="sidebar"
@@ -130,7 +147,8 @@ function Content() {
 // ----------------------------------------------------------------------
 
 function Options() {
-  const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext();
+  const { themeColorPresets, onChangeColorPresets, presetsOption } =
+    useSettingsContext();
 
   return (
     <RadioGroup
@@ -145,8 +163,8 @@ function Options() {
         sx={{
           width: 100,
           height: 88,
-          mx: 'auto',
-          position: 'relative',
+          mx: "auto",
+          position: "relative",
         }}
       >
         {presetsOption.map((color, index) => {
@@ -159,9 +177,9 @@ function Options() {
                 sx={{
                   width: 24,
                   height: 24,
-                  borderRadius: '50%',
-                  position: 'absolute',
-                  color: 'common.white',
+                  borderRadius: "50%",
+                  position: "absolute",
+                  color: "common.white",
                   ...(index === 0 && { bottom: 0 }),
                   ...(index === 1 && { left: 19 }),
                   ...(index === 2 && { right: 19 }),
@@ -175,25 +193,27 @@ function Options() {
                     bgcolor: value,
                     width: 1,
                     height: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '50%',
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%",
                   }}
                 >
-                  {isSelected && <Iconify icon="eva:color-picker-fill" width={16} />}
+                  {isSelected && (
+                    <Iconify icon="eva:color-picker-fill" width={16} />
+                  )}
 
                   <FormControlLabel
                     label=""
                     value={name}
-                    control={<Radio sx={{ display: 'none' }} />}
+                    control={<Radio sx={{ display: "none" }} />}
                     sx={{
                       top: 0,
                       left: 0,
                       margin: 0,
                       width: 1,
                       height: 1,
-                      position: 'absolute',
+                      position: "absolute",
                     }}
                   />
                 </Box>

@@ -1,5 +1,5 @@
 // @mui
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ export default function BlogPostsSort({ sortBy, sortOptions, onSort }: Props) {
       value={sortBy}
       onChange={onSort}
       SelectProps={{
-        sx: { typography: 'body2' },
+        sx: { typography: "body2" },
       }}
     >
       {sortOptions.map((option) => (
@@ -27,8 +27,8 @@ export default function BlogPostsSort({ sortBy, sortOptions, onSort }: Props) {
           sx={{
             mx: 1,
             borderRadius: 0.75,
-            typography: 'body2',
-            textTransform: 'capitalize',
+            typography: "body2",
+            textTransform: "capitalize",
           }}
         >
           {option.label}

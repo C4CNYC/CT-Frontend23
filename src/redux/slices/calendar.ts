@@ -1,8 +1,8 @@
-import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 // utils
-import axios from '../../utils/axios';
+import axios from "../../utils/axios";
 // @types
-import { ICalendarState, ICalendarEvent } from '../../@types/calendar';
+import { ICalendarState, ICalendarEvent } from "../../@types/calendar";
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ const initialState: ICalendarState = {
 };
 
 const slice = createSlice({
-  name: 'calendar',
+  name: "calendar",
   initialState,
   reducers: {
     // START LOADING
@@ -92,7 +92,8 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const { onOpenModal, onCloseModal, selectEvent, selectRange } = slice.actions;
+export const { onOpenModal, onCloseModal, selectEvent, selectRange } =
+  slice.actions;
 
 // ----------------------------------------------------------------------
 
@@ -100,7 +101,7 @@ export function getEvents() {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/calendar/events');
+      const response = await axios.get("/api/calendar/events");
       dispatch(slice.actions.getEventsSuccess(response.data.events));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -114,7 +115,7 @@ export function createEvent(newEvent: ICalendarEvent) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.post('/api/calendar/events/new', newEvent);
+      const response = await axios.post("/api/calendar/events/new", newEvent);
       dispatch(slice.actions.createEventSuccess(response.data.event));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -135,7 +136,7 @@ export function updateEvent(
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.post('/api/calendar/events/update', {
+      const response = await axios.post("/api/calendar/events/update", {
         eventId,
         event,
       });
@@ -152,7 +153,7 @@ export function deleteEvent(eventId: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/calendar/events/delete', { eventId });
+      await axios.post("/api/calendar/events/delete", { eventId });
       dispatch(slice.actions.deleteEventSuccess(eventId));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

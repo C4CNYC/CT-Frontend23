@@ -1,15 +1,15 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 // @mui
-import { Button, IconButton, InputBase, Stack } from '@mui/material';
+import { Button, IconButton, InputBase, Stack } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
 export default function MailDetailsReplyInput() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleChangeMessage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(event.target.value);
@@ -56,7 +56,7 @@ export default function MailDetailsReplyInput() {
         </Button>
       </Stack>
 
-      <input type="file" ref={fileInputRef} style={{ display: 'none' }} />
+      <input type="file" ref={fileInputRef} style={{ display: "none" }} />
     </>
   );
 }

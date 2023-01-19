@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Card,
@@ -11,9 +11,9 @@ import {
   ListItemText,
   ListItemIcon,
   ListItemButton,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -54,7 +54,8 @@ export default function EnhancedTransferList() {
     setChecked(newChecked);
   };
 
-  const numberOfChecked = (items: number[]) => intersection(checked, items).length;
+  const numberOfChecked = (items: number[]) =>
+    intersection(checked, items).length;
 
   const handleToggleAll = (items: number[]) => () => {
     if (numberOfChecked(items) === items.length) {
@@ -82,10 +83,15 @@ export default function EnhancedTransferList() {
         avatar={
           <Checkbox
             onClick={handleToggleAll(items)}
-            checked={numberOfChecked(items) === items.length && items.length !== 0}
-            indeterminate={numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0}
+            checked={
+              numberOfChecked(items) === items.length && items.length !== 0
+            }
+            indeterminate={
+              numberOfChecked(items) !== items.length &&
+              numberOfChecked(items) !== 0
+            }
             disabled={items.length === 0}
-            inputProps={{ 'aria-label': 'all items selected' }}
+            inputProps={{ "aria-label": "all items selected" }}
           />
         }
         title={title}
@@ -102,19 +108,23 @@ export default function EnhancedTransferList() {
         sx={{
           width: 200,
           height: 220,
-          overflow: 'auto',
+          overflow: "auto",
         }}
       >
         {items.map((value: number) => {
           const labelId = `transfer-list-all-item-${value}-label`;
           return (
-            <ListItemButton key={value} role="listitem" onClick={handleToggle(value)}>
+            <ListItemButton
+              key={value}
+              role="listitem"
+              onClick={handleToggle(value)}
+            >
               <ListItemIcon>
                 <Checkbox
                   disableRipple
                   checked={checked.indexOf(value) !== -1}
                   tabIndex={-1}
-                  inputProps={{ 'aria-labelledby': labelId }}
+                  inputProps={{ "aria-labelledby": labelId }}
                 />
               </ListItemIcon>
               <ListItemText id={labelId} primary={`List item ${value + 1}`} />
@@ -126,8 +136,13 @@ export default function EnhancedTransferList() {
   );
 
   return (
-    <Grid container justifyContent="center" alignItems="center" sx={{ width: 'auto', p: 3 }}>
-      <Grid item>{customList('Choices', left)}</Grid>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      sx={{ width: "auto", p: 3 }}
+    >
+      <Grid item>{customList("Choices", left)}</Grid>
 
       <Grid item>
         <Grid container direction="column" alignItems="center" sx={{ p: 3 }}>
@@ -157,7 +172,7 @@ export default function EnhancedTransferList() {
         </Grid>
       </Grid>
 
-      <Grid item>{customList('Chosen', right)}</Grid>
+      <Grid item>{customList("Chosen", right)}</Grid>
     </Grid>
   );
 }

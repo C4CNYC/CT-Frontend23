@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import parse from 'autosuggest-highlight/parse';
-import match from 'autosuggest-highlight/match';
+import { useState } from "react";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
 // @mui
-import { alpha } from '@mui/material/styles';
+import { alpha } from "@mui/material/styles";
 import {
   Box,
   Chip,
@@ -12,12 +12,12 @@ import {
   Typography,
   StackProps,
   Autocomplete,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IChatParticipant } from '../../../../@types/chat';
+import { IChatParticipant } from "../../../../@types/chat";
 // components
-import Iconify from '../../../../components/iconify';
-import SearchNotFound from '../../../../components/search-not-found';
+import Iconify from "../../../../components/iconify";
+import SearchNotFound from "../../../../components/search-not-found";
 
 // ----------------------------------------------------------------------
 
@@ -34,10 +34,10 @@ export default function ChatHeaderCompose({
   sx,
   ...other
 }: Props) {
-  const [searchRecipients, setSearchRecipients] = useState('');
+  const [searchRecipients, setSearchRecipients] = useState("");
 
   const handleAddRecipients = (selectedRecipients: IChatParticipant[]) => {
-    setSearchRecipients('');
+    setSearchRecipients("");
     onAddRecipients(selectedRecipients);
   };
 
@@ -53,7 +53,7 @@ export default function ChatHeaderCompose({
       }}
       {...other}
     >
-      <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+      <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
         To:
       </Typography>
 
@@ -70,7 +70,7 @@ export default function ChatHeaderCompose({
           <TextField
             {...params}
             size="small"
-            placeholder={recipients.length ? '+Recipients' : ''}
+            placeholder={recipients.length ? "+Recipients" : ""}
           />
         )}
         renderOption={(props, recipient, { inputValue, selected }) => {
@@ -82,7 +82,7 @@ export default function ChatHeaderCompose({
             <Box
               component="li"
               sx={{
-                p: '12px !important',
+                p: "12px !important",
               }}
               {...props}
             >
@@ -91,9 +91,9 @@ export default function ChatHeaderCompose({
                   mr: 1.5,
                   width: 32,
                   height: 32,
-                  overflow: 'hidden',
-                  borderRadius: '50%',
-                  position: 'relative',
+                  overflow: "hidden",
+                  borderRadius: "50%",
+                  position: "relative",
                 }}
               >
                 <Avatar alt={name} src={avatar} />
@@ -101,21 +101,21 @@ export default function ChatHeaderCompose({
                   sx={{
                     top: 0,
                     opacity: 0,
-                    width: '100%',
-                    height: '100%',
-                    display: 'flex',
-                    position: 'absolute',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    position: "absolute",
+                    alignItems: "center",
+                    justifyContent: "center",
                     bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
                     transition: (theme) =>
-                      theme.transitions.create('opacity', {
+                      theme.transitions.create("opacity", {
                         easing: theme.transitions.easing.easeInOut,
                         duration: theme.transitions.duration.shorter,
                       }),
                     ...(selected && {
                       opacity: 1,
-                      color: 'primary.main',
+                      color: "primary.main",
                     }),
                   }}
                 >
@@ -127,7 +127,7 @@ export default function ChatHeaderCompose({
                 <Typography
                   key={index}
                   variant="subtitle2"
-                  color={part.highlight ? 'primary' : 'textPrimary'}
+                  color={part.highlight ? "primary" : "textPrimary"}
                 >
                   {part.text}
                 </Typography>

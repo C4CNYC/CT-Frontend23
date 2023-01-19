@@ -1,14 +1,14 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Typography, Box, CardProps, Stack } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Typography, Box, CardProps, Stack } from "@mui/material";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Iconify from '../../../../components/iconify';
-import Chart, { useChart } from '../../../../components/chart';
+import Iconify from "../../../../components/iconify";
+import Chart, { useChart } from "../../../../components/chart";
 // theme
-import { ColorSchema } from '../../../../theme/palette';
+import { ColorSchema } from "../../../../theme/palette";
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ export default function AppWidget({
   title,
   total,
   icon,
-  color = 'primary',
+  color = "primary",
   chart,
   sx,
   ...other
@@ -49,7 +49,7 @@ export default function AppWidget({
     plotOptions: {
       radialBar: {
         hollow: {
-          size: '78%',
+          size: "78%",
         },
         track: {
           margin: 0,
@@ -76,15 +76,21 @@ export default function AppWidget({
       sx={{
         p: 3,
         borderRadius: 2,
-        overflow: 'hidden',
-        position: 'relative',
-        color: 'common.white',
+        overflow: "hidden",
+        position: "relative",
+        color: "common.white",
         bgcolor: `${color}.dark`,
         ...sx,
       }}
       {...other}
     >
-      <Chart type="radialBar" series={[series]} options={chartOptions} width={86} height={86} />
+      <Chart
+        type="radialBar"
+        series={[series]}
+        options={chartOptions}
+        width={86}
+        height={86}
+      />
 
       <Box sx={{ ml: 3 }}>
         <Typography variant="h4"> {fNumber(total)}</Typography>
@@ -100,7 +106,7 @@ export default function AppWidget({
           width: 120,
           height: 120,
           opacity: 0.12,
-          position: 'absolute',
+          position: "absolute",
           right: theme.spacing(-3),
         }}
       />

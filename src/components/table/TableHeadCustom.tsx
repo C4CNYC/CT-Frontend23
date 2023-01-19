@@ -1,5 +1,5 @@
 // @mui
-import { Theme } from '@mui/material/styles';
+import { Theme } from "@mui/material/styles";
 import {
   Box,
   SxProps,
@@ -8,7 +8,7 @@ import {
   TableCell,
   TableHead,
   TableSortLabel,
-} from '@mui/material';
+} from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -16,18 +16,18 @@ const visuallyHidden = {
   border: 0,
   margin: -1,
   padding: 0,
-  width: '1px',
-  height: '1px',
-  overflow: 'hidden',
-  position: 'absolute',
-  whiteSpace: 'nowrap',
-  clip: 'rect(0 0 0 0)',
+  width: "1px",
+  height: "1px",
+  overflow: "hidden",
+  position: "absolute",
+  whiteSpace: "nowrap",
+  clip: "rect(0 0 0 0)",
 } as const;
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  order?: 'asc' | 'desc';
+  order?: "asc" | "desc";
   orderBy?: string;
   headLabel: any[];
   rowCount?: number;
@@ -65,7 +65,7 @@ export default function TableHeadCustom({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.align || 'left'}
+            align={headCell.align || "left"}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
@@ -73,15 +73,17 @@ export default function TableHeadCustom({
               <TableSortLabel
                 hideSortIcon
                 active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
+                direction={orderBy === headCell.id ? order : "asc"}
                 onClick={() => onSort(headCell.id)}
-                sx={{ textTransform: 'capitalize' }}
+                sx={{ textTransform: "capitalize" }}
               >
                 {headCell.label}
 
                 {orderBy === headCell.id ? (
                   <Box sx={{ ...visuallyHidden }}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
                   </Box>
                 ) : null}
               </TableSortLabel>

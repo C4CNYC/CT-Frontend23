@@ -1,7 +1,7 @@
-import { forwardRef } from 'react';
-import { AvatarGroup } from '@mui/material';
+import { forwardRef } from "react";
+import { AvatarGroup } from "@mui/material";
 //
-import { CustomAvatarGroupProps } from './types';
+import { CustomAvatarGroupProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -13,30 +13,30 @@ const SIZES = {
 };
 
 const CustomAvatarGroup = forwardRef<HTMLDivElement, CustomAvatarGroupProps>(
-  ({ size = 'small', compact, max, children, sx, ...other }, ref) => {
-    const isTiny = size === 'tiny';
+  ({ size = "small", compact, max, children, sx, ...other }, ref) => {
+    const isTiny = size === "tiny";
 
-    const isSmall = size === 'small';
+    const isSmall = size === "small";
 
-    const isMedium = size === 'medium';
+    const isMedium = size === "medium";
 
-    const isLarge = size === 'large';
+    const isLarge = size === "large";
 
     const compactStyle = {
       width: 40,
       height: 40,
-      position: 'relative',
-      '& .MuiAvatarGroup-avatar': {
+      position: "relative",
+      "& .MuiAvatarGroup-avatar": {
         m: 0,
         width: 28,
         height: 28,
-        position: 'absolute',
-        '&:first-of-type': {
+        position: "absolute",
+        "&:first-of-type": {
           left: 0,
           bottom: 0,
           zIndex: 9,
         },
-        '&:last-of-type': {
+        "&:last-of-type": {
           top: 0,
           right: 0,
         },
@@ -47,13 +47,13 @@ const CustomAvatarGroup = forwardRef<HTMLDivElement, CustomAvatarGroupProps>(
       <AvatarGroup
         ref={ref}
         max={compact ? 3 : max}
-        spacing={((isTiny || isSmall) && 'medium') || 'small'}
+        spacing={((isTiny || isSmall) && "medium") || "small"}
         sx={{
-          '& .MuiAvatar-root': {
+          "& .MuiAvatar-root": {
             ...(isLarge && {
               width: SIZES.large,
               height: SIZES.large,
-              '&:first-of-type': { fontSize: 16 },
+              "&:first-of-type": { fontSize: 16 },
             }),
             ...(isMedium && {
               width: SIZES.medium,

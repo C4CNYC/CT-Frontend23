@@ -1,19 +1,19 @@
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Typography } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import { Box, Typography } from "@mui/material";
 // components
-import Markdown from '../../../../components/markdown';
-import Scrollbar from '../../../../components/scrollbar';
+import Markdown from "../../../../components/markdown";
+import Scrollbar from "../../../../components/scrollbar";
 // @types
-import { IMailAttachment } from '../../../../@types/mail';
+import { IMailAttachment } from "../../../../@types/mail";
 //
-import MailDetailsReplyInput from './MailDetailsReplyInput';
-import MailDetailsAttachments from './MailDetailsAttachments';
+import MailDetailsReplyInput from "./MailDetailsReplyInput";
+import MailDetailsAttachments from "./MailDetailsAttachments";
 
 // ----------------------------------------------------------------------
 
-const StyledMarkdown = styled('div')(({ theme }) => ({
-  '& > p': {
+const StyledMarkdown = styled("div")(({ theme }) => ({
+  "& > p": {
     ...theme.typography.body1,
     marginBottom: theme.spacing(2),
   },
@@ -46,7 +46,9 @@ export default function MailDetails({ subject, message, attachments }: Props) {
         </Box>
       </Scrollbar>
 
-      {!!attachments.length && <MailDetailsAttachments attachments={attachments} />}
+      {!!attachments.length && (
+        <MailDetailsAttachments attachments={attachments} />
+      )}
 
       <MailDetailsReplyInput />
     </>

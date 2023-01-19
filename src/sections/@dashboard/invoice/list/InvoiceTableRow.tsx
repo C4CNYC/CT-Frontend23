@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Link,
@@ -11,18 +11,18 @@ import {
   TableCell,
   IconButton,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fDate } from '../../../../utils/formatTime';
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fDate } from "../../../../utils/formatTime";
+import { fCurrency } from "../../../../utils/formatNumber";
 // @types
-import { IInvoice } from '../../../../@types/invoice';
+import { IInvoice } from "../../../../@types/invoice";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import { CustomAvatar } from '../../../../components/custom-avatar';
-import MenuPopover from '../../../../components/menu-popover';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import { CustomAvatar } from "../../../../components/custom-avatar";
+import MenuPopover from "../../../../components/menu-popover";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +43,15 @@ export default function InvoiceTableRow({
   onEditRow,
   onDeleteRow,
 }: Props) {
-  const { sent, invoiceNumber, createDate, dueDate, status, invoiceTo, totalPrice } = row;
+  const {
+    sent,
+    invoiceNumber,
+    createDate,
+    dueDate,
+    status,
+    invoiceTo,
+    totalPrice,
+  } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -85,7 +93,7 @@ export default function InvoiceTableRow({
                 noWrap
                 variant="body2"
                 onClick={onViewRow}
-                sx={{ color: 'text.disabled', cursor: 'pointer' }}
+                sx={{ color: "text.disabled", cursor: "pointer" }}
               >
                 {`INV-${invoiceNumber}`}
               </Link>
@@ -99,7 +107,7 @@ export default function InvoiceTableRow({
 
         <TableCell align="center">{fCurrency(totalPrice)}</TableCell>
 
-        <TableCell align="center" sx={{ textTransform: 'capitalize' }}>
+        <TableCell align="center" sx={{ textTransform: "capitalize" }}>
           {sent}
         </TableCell>
 
@@ -107,10 +115,10 @@ export default function InvoiceTableRow({
           <Label
             variant="soft"
             color={
-              (status === 'paid' && 'success') ||
-              (status === 'unpaid' && 'warning') ||
-              (status === 'overdue' && 'error') ||
-              'default'
+              (status === "paid" && "success") ||
+              (status === "unpaid" && "warning") ||
+              (status === "overdue" && "error") ||
+              "default"
             }
           >
             {status}
@@ -118,7 +126,10 @@ export default function InvoiceTableRow({
         </TableCell>
 
         <TableCell align="right">
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -150,14 +161,14 @@ export default function InvoiceTableRow({
           Edit
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete

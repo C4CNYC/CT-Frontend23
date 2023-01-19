@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Stack, Button, Rating, Avatar, Pagination, Typography } from '@mui/material';
+import {
+  Stack,
+  Button,
+  Rating,
+  Avatar,
+  Pagination,
+  Typography,
+} from "@mui/material";
 // utils
-import { fDate } from '../../../../utils/formatTime';
-import { fShortenNumber } from '../../../../utils/formatNumber';
+import { fDate } from "../../../../utils/formatTime";
+import { fShortenNumber } from "../../../../utils/formatNumber";
 // @types
-import { IProductReview } from '../../../../@types/product';
+import { IProductReview } from "../../../../@types/product";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -39,8 +46,8 @@ export default function ProductDetailsReviewList({ reviews }: Props) {
 
       <Stack
         alignItems={{
-          xs: 'center',
-          md: 'flex-end',
+          xs: "center",
+          md: "flex-end",
         }}
         sx={{
           my: 5,
@@ -60,7 +67,8 @@ type ReviewItemProps = {
 };
 
 function ReviewItem({ review }: ReviewItemProps) {
-  const { name, rating, comment, helpful, postedAt, avatarUrl, isPurchased } = review;
+  const { name, rating, comment, helpful, postedAt, avatarUrl, isPurchased } =
+    review;
 
   const [isHelpful, setIsHelpful] = useState(false);
 
@@ -68,20 +76,20 @@ function ReviewItem({ review }: ReviewItemProps) {
     <Stack
       spacing={2}
       direction={{
-        xs: 'column',
-        md: 'row',
+        xs: "column",
+        md: "row",
       }}
     >
       <Stack
         spacing={2}
         alignItems="center"
         direction={{
-          xs: 'row',
-          md: 'column',
+          xs: "row",
+          md: "column",
         }}
         sx={{
           width: { md: 240 },
-          textAlign: { md: 'center' },
+          textAlign: { md: "center" },
         }}
       >
         <Avatar
@@ -97,7 +105,7 @@ function ReviewItem({ review }: ReviewItemProps) {
             {name}
           </Typography>
 
-          <Typography variant="caption" sx={{ color: 'text.secondary' }} noWrap>
+          <Typography variant="caption" sx={{ color: "text.secondary" }} noWrap>
             {fDate(postedAt)}
           </Typography>
         </Stack>
@@ -110,9 +118,9 @@ function ReviewItem({ review }: ReviewItemProps) {
           <Typography
             variant="caption"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              color: 'success.main',
+              display: "flex",
+              alignItems: "center",
+              color: "success.main",
             }}
           >
             <Iconify icon="ic:round-verified" width={16} sx={{ mr: 0.5 }} />
@@ -124,20 +132,27 @@ function ReviewItem({ review }: ReviewItemProps) {
 
         <Stack
           spacing={1}
-          alignItems={{ xs: 'flex-start', sm: 'center' }}
-          direction={{ xs: 'column', sm: 'row' }}
+          alignItems={{ xs: "flex-start", sm: "center" }}
+          direction={{ xs: "column", sm: "row" }}
         >
           {!isHelpful && (
-            <Typography variant="subtitle2">Was this review helpful to you?</Typography>
+            <Typography variant="subtitle2">
+              Was this review helpful to you?
+            </Typography>
           )}
 
           <Button
             size="small"
             color="inherit"
-            startIcon={<Iconify icon={!isHelpful ? 'ic:round-thumb-up' : 'eva:checkmark-fill'} />}
+            startIcon={
+              <Iconify
+                icon={!isHelpful ? "ic:round-thumb-up" : "eva:checkmark-fill"}
+              />
+            }
             onClick={() => setIsHelpful(!isHelpful)}
           >
-            {isHelpful ? 'Helpful' : 'Thank'}({fShortenNumber(!isHelpful ? helpful : helpful + 1)})
+            {isHelpful ? "Helpful" : "Thank"}(
+            {fShortenNumber(!isHelpful ? helpful : helpful + 1)})
           </Button>
         </Stack>
       </Stack>

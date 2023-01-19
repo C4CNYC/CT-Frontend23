@@ -1,9 +1,9 @@
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { Box, Link } from '@mui/material';
+import { Box, Link } from "@mui/material";
 //
-import { BreadcrumbsLinkProps } from './types';
+import { BreadcrumbsLinkProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -17,14 +17,14 @@ export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
   const { name, href, icon } = link;
 
   const styles = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    color: 'text.primary',
+    display: "inline-flex",
+    alignItems: "center",
+    color: "text.primary",
     ...(disabled &&
       !activeLast && {
-        cursor: 'default',
-        pointerEvents: 'none',
-        color: 'text.disabled',
+        cursor: "default",
+        pointerEvents: "none",
+        color: "text.disabled",
       }),
   };
 
@@ -35,8 +35,8 @@ export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
           component="span"
           sx={{
             mr: 1,
-            display: 'inherit',
-            '& svg': { width: 20, height: 20 },
+            display: "inherit",
+            "& svg": { width: 20, height: 20 },
           }}
         >
           {icon}

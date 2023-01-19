@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Card, IconButton, Typography, Stack } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, Card, IconButton, Typography, Stack } from "@mui/material";
 // utils
-import { fDate } from '../../../../utils/formatTime';
-import { bgBlur } from '../../../../utils/cssStyles';
+import { fDate } from "../../../../utils/formatTime";
+import { bgBlur } from "../../../../utils/cssStyles";
 // @types
-import { IUserProfileGallery } from '../../../../@types/user';
+import { IUserProfileGallery } from "../../../../@types/user";
 // components
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import Lightbox from '../../../../components/lightbox';
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import Lightbox from "../../../../components/lightbox";
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,9 @@ export default function ProfileGallery({ gallery }: Props) {
   }));
 
   const handleOpenLightbox = (imageUrl: string) => {
-    const imageIndex = imagesLightbox.findIndex((image) => image.src === imageUrl);
+    const imageIndex = imagesLightbox.findIndex(
+      (image) => image.src === imageUrl
+    );
     setSelectedImage(imageIndex);
   };
 
@@ -44,9 +46,9 @@ export default function ProfileGallery({ gallery }: Props) {
         gap={3}
         display="grid"
         gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
-          md: 'repeat(3, 1fr)',
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
         }}
       >
         {gallery.map((image) => (
@@ -81,8 +83,13 @@ function GalleryItem({ image, onOpenLightbox }: GalleryItemProps) {
   const { imageUrl, title, postAt } = image;
 
   return (
-    <Card sx={{ cursor: 'pointer', position: 'relative' }}>
-      <Image alt="gallery" ratio="1/1" src={imageUrl} onClick={() => onOpenLightbox(imageUrl)} />
+    <Card sx={{ cursor: "pointer", position: "relative" }}>
+      <Image
+        alt="gallery"
+        ratio="1/1"
+        src={imageUrl}
+        onClick={() => onOpenLightbox(imageUrl)}
+      />
 
       <Stack
         spacing={2}
@@ -95,8 +102,8 @@ function GalleryItem({ image, onOpenLightbox }: GalleryItemProps) {
           width: 1,
           left: 0,
           bottom: 0,
-          position: 'absolute',
-          color: 'common.white',
+          position: "absolute",
+          color: "common.white",
           p: theme.spacing(3, 1, 3, 3),
         }}
       >

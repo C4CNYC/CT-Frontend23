@@ -1,11 +1,11 @@
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
 const series = [
   {
-    name: 'Desktops',
+    name: "Desktops",
     data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
   },
 ];
@@ -13,7 +13,17 @@ const series = [
 export default function ChartLine() {
   const chartOptions = useChart({
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+      ],
     },
     tooltip: {
       x: {
@@ -23,5 +33,7 @@ export default function ChartLine() {
     },
   });
 
-  return <Chart type="line" series={series} options={chartOptions} height={320} />;
+  return (
+    <Chart type="line" series={series} options={chartOptions} height={320} />
+  );
 }

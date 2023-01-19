@@ -1,40 +1,57 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Radio, Container, RadioGroup, FormControl, FormControlLabel } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import {
+  Box,
+  Radio,
+  Container,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "default",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
-const PLACEMENTS = ['top', 'start', 'bottom', 'end'] as const;
+const PLACEMENTS = ["top", "start", "bottom", "end"] as const;
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { mx: 1 },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { mx: 1 },
 } as const;
 
 // ----------------------------------------------------------------------
 
-MUIRadioButtonsPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIRadioButtonsPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
 export default function MUIRadioButtonsPage() {
-  const [value, setValue] = useState('a1');
+  const [value, setValue] = useState("a1");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -50,7 +67,8 @@ export default function MUIRadioButtonsPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -58,12 +76,12 @@ export default function MUIRadioButtonsPage() {
             heading="Radio Buttons"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Radio Buttons' },
+              { name: "Radio Buttons" },
             ]}
-            moreLink={['https://mui.com/components/radio-buttons']}
+            moreLink={["https://mui.com/components/radio-buttons"]}
           />
         </Container>
       </Box>
@@ -83,7 +101,11 @@ export default function MUIRadioButtonsPage() {
           <Block title="Size" sx={style}>
             <RadioGroup row defaultValue="g">
               <FormControlLabel value="g" control={<Radio />} label="Normal" />
-              <FormControlLabel value="p" control={<Radio size="small" />} label="Small" />
+              <FormControlLabel
+                value="p"
+                control={<Radio size="small" />}
+                label="Small"
+              />
             </RadioGroup>
           </Block>
 
@@ -97,7 +119,7 @@ export default function MUIRadioButtonsPage() {
                     label={placement}
                     labelPlacement={placement}
                     control={<Radio />}
-                    sx={{ textTransform: 'capitalize' }}
+                    sx={{ textTransform: "capitalize" }}
                   />
                 ))}
               </RadioGroup>
@@ -113,7 +135,7 @@ export default function MUIRadioButtonsPage() {
                     value={color}
                     control={<Radio color={color} />}
                     label={color}
-                    sx={{ textTransform: 'capitalize' }}
+                    sx={{ textTransform: "capitalize" }}
                   />
                 ))}
 

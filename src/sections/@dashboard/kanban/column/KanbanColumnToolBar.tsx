@@ -1,12 +1,12 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from "react";
 // @mui
-import { Stack, MenuItem, IconButton, Button, Box } from '@mui/material';
+import { Stack, MenuItem, IconButton, Button, Box } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import KanbanInputName from '../KanbanInputName';
+import KanbanInputName from "../KanbanInputName";
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,11 @@ type Props = {
   onUpdate: (name: string) => void;
 };
 
-export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: Props) {
+export default function KanbanColumnToolBar({
+  columnName,
+  onDelete,
+  onUpdate,
+}: Props) {
   const renameRef = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(columnName);
@@ -55,12 +59,14 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
     handleClosePopover();
   };
 
-  const handleChangeColumnName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeColumnName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setValue(event.target.value);
   };
 
   const handleUpdateColumn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && renameRef.current) {
+    if (event.key === "Enter" && renameRef.current) {
       renameRef.current.blur();
       onUpdate(value);
     }
@@ -85,20 +91,24 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
 
         <IconButton
           size="small"
-          color={openPopover ? 'inherit' : 'default'}
+          color={openPopover ? "inherit" : "default"}
           onClick={handleOpenPopover}
         >
           <Iconify icon="eva:more-horizontal-fill" />
         </IconButton>
       </Stack>
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ mt: 0, ml: 1.25 }}>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        sx={{ mt: 0, ml: 1.25 }}
+      >
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete section
@@ -117,8 +127,9 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
         content={
           <>
             Are you sure want to delete column?
-            <Box sx={{ typography: 'caption', color: 'error.main', mt: 2 }}>
-              <strong> NOTE: </strong> All tasks related to this category will also be deleted.
+            <Box sx={{ typography: "caption", color: "error.main", mt: 2 }}>
+              <strong> NOTE: </strong> All tasks related to this category will
+              also be deleted.
             </Box>
           </>
         }

@@ -1,4 +1,4 @@
-import { formatDistanceToNowStrict } from 'date-fns';
+import { formatDistanceToNowStrict } from "date-fns";
 // @mui
 import {
   Badge,
@@ -7,16 +7,19 @@ import {
   ListItemText,
   ListItemButton,
   ListItemAvatar,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IChatConversation } from '../../../../@types/chat';
+import { IChatConversation } from "../../../../@types/chat";
 // components
-import { CustomAvatar, CustomAvatarGroup } from '../../../../components/custom-avatar';
-import BadgeStatus from '../../../../components/badge-status';
+import {
+  CustomAvatar,
+  CustomAvatarGroup,
+} from "../../../../components/custom-avatar";
+import BadgeStatus from "../../../../components/badge-status";
 
 // ----------------------------------------------------------------------
 
-const CURRENT_USER_ID = '8864c717-587d-472a-929a-8e5f298024da-0';
+const CURRENT_USER_ID = "8864c717-587d-472a-929a-8e5f298024da-0";
 
 type Props = {
   conversation: IChatConversation;
@@ -25,17 +28,24 @@ type Props = {
   onSelect: VoidFunction;
 };
 
-export default function ChatNavItem({ conversation, openNav, isSelected, onSelect }: Props) {
+export default function ChatNavItem({
+  conversation,
+  openNav,
+  isSelected,
+  onSelect,
+}: Props) {
   const details = getDetails(conversation, CURRENT_USER_ID);
 
-  const lastActivity = conversation.messages[conversation.messages.length - 1].createdAt;
+  const lastActivity =
+    conversation.messages[conversation.messages.length - 1].createdAt;
 
   const isGroup = details.otherParticipants.length > 1;
 
   const isUnread = conversation.unreadCount > 0;
 
   const hasOnlineInGroup =
-    isGroup && details.otherParticipants.map((item) => item.status).includes('online');
+    isGroup &&
+    details.otherParticipants.map((item) => item.status).includes("online");
 
   return (
     <ListItemButton
@@ -45,7 +55,7 @@ export default function ChatNavItem({ conversation, openNav, isSelected, onSelec
         py: 1.5,
         px: 2.5,
         ...(isSelected && {
-          bgcolor: 'action.selected',
+          bgcolor: "action.selected",
         }),
       }}
     >
@@ -53,7 +63,7 @@ export default function ChatNavItem({ conversation, openNav, isSelected, onSelec
         {isGroup ? (
           <Badge
             overlap="circular"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             badgeContent={hasOnlineInGroup && <BadgeStatus status="online" />}
           >
             <CustomAvatarGroup compact sx={{ width: 48, height: 48 }}>
@@ -72,7 +82,9 @@ export default function ChatNavItem({ conversation, openNav, isSelected, onSelec
             alt={details.otherParticipants[0].name}
             src={details.otherParticipants[0].avatar}
             BadgeProps={{
-              badgeContent: <BadgeStatus status={details.otherParticipants[0].status} />,
+              badgeContent: (
+                <BadgeStatus status={details.otherParticipants[0].status} />
+              ),
             }}
             sx={{ width: 48, height: 48 }}
           />
@@ -83,12 +95,12 @@ export default function ChatNavItem({ conversation, openNav, isSelected, onSelec
         <>
           <ListItemText
             primary={details.displayNames}
-            primaryTypographyProps={{ noWrap: true, variant: 'subtitle2' }}
+            primaryTypographyProps={{ noWrap: true, variant: "subtitle2" }}
             secondary={details.displayText}
             secondaryTypographyProps={{
               noWrap: true,
-              variant: isUnread ? 'subtitle2' : 'body2',
-              color: isUnread ? 'text.primary' : 'text.secondary',
+              variant: isUnread ? "subtitle2" : "body2",
+              color: isUnread ? "text.primary" : "text.secondary",
             }}
           />
 
@@ -100,7 +112,7 @@ export default function ChatNavItem({ conversation, openNav, isSelected, onSelec
               sx={{
                 mb: 1.5,
                 fontSize: 12,
-                color: 'text.disabled',
+                color: "text.disabled",
               }}
             >
               {formatDistanceToNowStrict(new Date(lastActivity), {
@@ -123,15 +135,18 @@ const getDetails = (conversation: IChatConversation, currentUserId: string) => {
     (participant) => participant.id !== currentUserId
   );
 
-  const displayNames = otherParticipants.map((participant) => participant.name).join(', ');
+  const displayNames = otherParticipants
+    .map((participant) => participant.name)
+    .join(", ");
 
-  let displayText = '';
+  let displayText = "";
 
   const lastMessage = conversation.messages[conversation.messages.length - 1];
   if (lastMessage) {
-    const sender = lastMessage.senderId === currentUserId ? 'You: ' : '';
+    const sender = lastMessage.senderId === currentUserId ? "You: " : "";
 
-    const message = lastMessage.contentType === 'image' ? 'Sent a photo' : lastMessage.body;
+    const message =
+      lastMessage.contentType === "image" ? "Sent a photo" : lastMessage.body;
 
     displayText = `${sender}${message}`;
   }

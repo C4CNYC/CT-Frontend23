@@ -1,8 +1,8 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { Radio, RadioGroup, FormControlLabel } from '@mui/material';
+import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 // components
-import { StyledControlPanel } from '../../../../../components/map';
+import { StyledControlPanel } from "../../../../../components/map";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +18,10 @@ export type CityProps = {
 type Props = {
   data: CityProps[];
   selectedCity: string;
-  onSelectCity: (event: React.ChangeEvent<HTMLInputElement>, city: CityProps) => void;
+  onSelectCity: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    city: CityProps
+  ) => void;
 };
 
 function ControlPanel({ data, selectedCity, onSelectCity }: Props) {
@@ -34,7 +37,7 @@ function ControlPanel({ data, selectedCity, onSelectCity }: Props) {
             value={city.city}
             label={city.city}
             control={<Radio size="small" />}
-            sx={{ color: 'common.white' }}
+            sx={{ color: "common.white" }}
           />
         </RadioGroup>
       ))}

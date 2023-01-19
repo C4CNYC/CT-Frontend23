@@ -1,22 +1,29 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from "react";
 // next
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import { useRouter } from "next/router";
 // @mui
-import { Box, Divider, Stack, Container, Typography, Pagination } from '@mui/material';
+import {
+  Box,
+  Divider,
+  Stack,
+  Container,
+  Typography,
+  Pagination,
+} from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // utils
-import axios from '../../../../utils/axios';
+import axios from "../../../../utils/axios";
 // layouts
-import DashboardLayout from '../../../../layouts/dashboard';
+import DashboardLayout from "../../../../layouts/dashboard";
 // @types
-import { IBlogPost } from '../../../../@types/blog';
+import { IBlogPost } from "../../../../@types/blog";
 // components
-import Markdown from '../../../../components/markdown';
-import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../../../components/settings';
-import { SkeletonPostDetails } from '../../../../components/skeleton';
+import Markdown from "../../../../components/markdown";
+import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../../components/settings";
+import { SkeletonPostDetails } from "../../../../components/skeleton";
 // sections
 import {
   BlogPostHero,
@@ -24,11 +31,13 @@ import {
   BlogPostCard,
   BlogPostCommentList,
   BlogPostCommentForm,
-} from '../../../../sections/@dashboard/blog';
+} from "../../../../sections/@dashboard/blog";
 
 // ----------------------------------------------------------------------
 
-BlogPostPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+BlogPostPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +58,7 @@ export default function BlogPostPage() {
 
   const getPost = useCallback(async () => {
     try {
-      const response = await axios.get('/api/blog/post', {
+      const response = await axios.get("/api/blog/post", {
         params: { title },
       });
 
@@ -64,7 +73,7 @@ export default function BlogPostPage() {
 
   const getRecentPosts = useCallback(async () => {
     try {
-      const response = await axios.get('/api/blog/posts/recent', {
+      const response = await axios.get("/api/blog/posts/recent", {
         params: { title },
       });
 
@@ -87,19 +96,19 @@ export default function BlogPostPage() {
   return (
     <>
       <Head>
-        <title>{`Blog: ${post?.title || ''} | Minimal UI`}</title>
+        <title>{`Blog: ${post?.title || ""} | Minimal UI`}</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Post Details"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'Blog',
+              name: "Blog",
               href: PATH_DASHBOARD.blog.root,
             },
             {
@@ -156,7 +165,7 @@ export default function BlogPostPage() {
               <Stack direction="row" sx={{ mb: 3 }}>
                 <Typography variant="h4">Comments</Typography>
 
-                <Typography variant="subtitle2" sx={{ color: 'text.disabled' }}>
+                <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
                   ({post.comments.length})
                 </Typography>
               </Stack>
@@ -177,15 +186,17 @@ export default function BlogPostPage() {
                 count={8}
                 sx={{
                   my: 5,
-                  ml: 'auto',
-                  mr: { xs: 'auto', md: 0 },
+                  ml: "auto",
+                  mr: { xs: "auto", md: 0 },
                 }}
               />
             </Stack>
           </Stack>
         )}
 
-        {errorMsg && !loadingPost && <Typography variant="h6">404 {errorMsg}</Typography>}
+        {errorMsg && !loadingPost && (
+          <Typography variant="h6">404 {errorMsg}</Typography>
+        )}
 
         {loadingPost && <SkeletonPostDetails />}
 
@@ -199,9 +210,9 @@ export default function BlogPostPage() {
               gap={3}
               display="grid"
               gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
-                md: 'repeat(4, 1fr)',
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(4, 1fr)",
               }}
             >
               {recentPosts.slice(recentPosts.length - 4).map((recentPost) => (

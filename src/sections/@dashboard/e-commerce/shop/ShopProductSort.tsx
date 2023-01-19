@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import { useState } from "react";
 // form
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
-import { Button, MenuItem, Box } from '@mui/material';
+import { Button, MenuItem, Box } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'newest', label: 'Newest' },
-  { value: 'priceDesc', label: 'Price: High - Low' },
-  { value: 'priceAsc', label: 'Price: Low - High' },
+  { value: "featured", label: "Featured" },
+  { value: "newest", label: "Newest" },
+  { value: "priceDesc", label: "Price: High - Low" },
+  { value: "priceAsc", label: "Price: Low - High" },
 ];
 
 function renderLabel(label: string) {
   return {
-    featured: 'Featured',
-    newest: 'Newest',
-    priceDesc: 'Price: High - Low',
-    priceAsc: 'Price: Low - High',
+    featured: "Featured",
+    newest: "Newest",
+    priceDesc: "Price: High - Low",
+    priceAsc: "Price: Low - High",
   }[label];
 }
 
@@ -51,12 +51,16 @@ export default function ShopProductSort() {
             color="inherit"
             onClick={handleOpenPopover}
             endIcon={
-              <Iconify icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />
+              <Iconify
+                icon={
+                  openPopover ? "eva:chevron-up-fill" : "eva:chevron-down-fill"
+                }
+              />
             }
-            sx={{ fontWeight: 'fontWeightMedium' }}
+            sx={{ fontWeight: "fontWeightMedium" }}
           >
             Sort By:
-            <Box component="span" sx={{ color: 'text.secondary', ml: 0.5 }}>
+            <Box component="span" sx={{ color: "text.secondary", ml: 0.5 }}>
               {renderLabel(field.value)}
             </Box>
           </Button>

@@ -1,24 +1,32 @@
 // @mui
-import { ButtonGroup, Button } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { ButtonGroup, Button } from "@mui/material";
+import { Masonry } from "@mui/lab";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
 } as const;
 
-const COLORS = ['inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning'] as const;
+const COLORS = [
+  "inherit",
+  "primary",
+  "secondary",
+  "success",
+  "error",
+  "info",
+  "warning",
+] as const;
 
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ["small", "medium", "large"] as const;
 
-const VARIANTS = ['contained', 'outlined', 'text', 'soft'] as const;
+const VARIANTS = ["contained", "outlined", "text", "soft"] as const;
 
 // ----------------------------------------------------------------------
 
@@ -108,7 +116,12 @@ export default function ButtonGroups() {
           </ButtonGroup>
         ))}
 
-        <ButtonGroup disabled variant="soft" color="info" orientation="vertical">
+        <ButtonGroup
+          disabled
+          variant="soft"
+          color="info"
+          orientation="vertical"
+        >
           <Button>One</Button>
           <Button>Two</Button>
           <Button>Three</Button>

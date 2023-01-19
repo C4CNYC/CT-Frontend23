@@ -1,32 +1,32 @@
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Typography, ListItemText, ListItemButton } from '@mui/material';
+import { Typography, ListItemText, ListItemButton } from "@mui/material";
 // @config
-import { ICON } from '../../../../config-global';
+import { ICON } from "../../../../config-global";
 // hooks
-import useActiveLink from '../../../../hooks/useActiveLink';
+import useActiveLink from "../../../../hooks/useActiveLink";
 // @types
-import { IMailLabel } from '../../../../@types/mail';
+import { IMailLabel } from "../../../../@types/mail";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // components
-import Iconify, { IconifyProps } from '../../../../components/iconify';
+import Iconify, { IconifyProps } from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
 const LABEL_ICONS = {
-  all: 'eva:email-fill',
-  inbox: 'eva:inbox-fill',
-  trash: 'eva:trash-2-outline',
-  drafts: 'eva:file-fill',
-  spam: 'ic:round-report',
-  sent: 'ic:round-send',
-  starred: 'eva:star-fill',
-  important: 'ic:round-label-important',
-  id_social: 'ic:round-label',
-  id_promotions: 'ic:round-label',
-  id_forums: 'ic:round-label',
+  all: "eva:email-fill",
+  inbox: "eva:inbox-fill",
+  trash: "eva:trash-2-outline",
+  drafts: "eva:file-fill",
+  spam: "ic:round-report",
+  sent: "ic:round-send",
+  starred: "eva:star-fill",
+  important: "ic:round-label-important",
+  id_social: "ic:round-label",
+  id_promotions: "ic:round-label",
+  id_forums: "ic:round-label",
 };
 
 // ----------------------------------------------------------------------
@@ -54,13 +54,13 @@ export default function MailNavItem({ label, ...other }: Props) {
       sx={{
         px: 3,
         height: 48,
-        typography: 'body2',
-        color: 'text.secondary',
-        textTransform: 'capitalize',
+        typography: "body2",
+        color: "text.secondary",
+        textTransform: "capitalize",
         ...(active && {
-          color: 'text.primary',
-          bgcolor: 'action.selected',
-          fontWeight: 'fontWeightMedium',
+          color: "text.primary",
+          bgcolor: "action.selected",
+          fontWeight: "fontWeightMedium",
         }),
       }}
       {...other}
@@ -77,7 +77,9 @@ export default function MailNavItem({ label, ...other }: Props) {
 
       <ListItemText disableTypography primary={label.name} />
 
-      {isUnread && <Typography variant="caption">{label.unreadCount}</Typography>}
+      {isUnread && (
+        <Typography variant="caption">{label.unreadCount}</Typography>
+      )}
     </ListItemButton>
   );
 }
@@ -87,11 +89,11 @@ export default function MailNavItem({ label, ...other }: Props) {
 const linkTo = (label: IMailLabel) => {
   const baseUrl = PATH_DASHBOARD.mail.root;
 
-  if (label.type === 'system') {
+  if (label.type === "system") {
     return `${baseUrl}/${label.id}`;
   }
 
-  if (label.type === 'custom') {
+  if (label.type === "custom") {
     return `${baseUrl}/label/${label.name}`;
   }
 

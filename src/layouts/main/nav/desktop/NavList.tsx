@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Stack, Fade, Portal } from '@mui/material';
+import { Stack, Fade, Portal } from "@mui/material";
 // hooks
-import useActiveLink from '../../../../hooks/useActiveLink';
+import useActiveLink from "../../../../hooks/useActiveLink";
 //
-import { NavItemProps } from '../types';
-import { NavItem, NavItemDashboard } from './NavItem';
-import { StyledSubheader, StyledMenu } from './styles';
+import { NavItemProps } from "../types";
+import { NavItem, NavItemDashboard } from "./NavItem";
+import { StyledSubheader, StyledMenu } from "./styles";
 
 // ----------------------------------------------------------------------
 
@@ -58,13 +58,16 @@ export default function NavList({ item, isOffset }: NavListProps) {
       {!!children && openMenu && (
         <Portal>
           <Fade in={openMenu}>
-            <StyledMenu onMouseEnter={handleOpenMenu} onMouseLeave={handleCloseMenu}>
+            <StyledMenu
+              onMouseEnter={handleOpenMenu}
+              onMouseLeave={handleCloseMenu}
+            >
               {children.map((list) => (
                 <NavSubList
                   key={list.subheader}
                   subheader={list.subheader}
                   items={list.items}
-                  isDashboard={list.subheader === 'Dashboard'}
+                  isDashboard={list.subheader === "Dashboard"}
                   onClose={handleCloseMenu}
                 />
               ))}
@@ -85,13 +88,22 @@ type NavSubListProps = {
   onClose: VoidFunction;
 };
 
-function NavSubList({ items, isDashboard, subheader, onClose }: NavSubListProps) {
+function NavSubList({
+  items,
+  isDashboard,
+  subheader,
+  onClose,
+}: NavSubListProps) {
   const { pathname } = useRouter();
 
   const isActive = (path: string) => pathname === path;
 
   return (
-    <Stack spacing={2.5} gridColumn={isDashboard ? 'span 6' : 'span 2'} alignItems="flex-start">
+    <Stack
+      spacing={2.5}
+      gridColumn={isDashboard ? "span 6" : "span 2"}
+      alignItems="flex-start"
+    >
       <StyledSubheader disableSticky>{subheader}</StyledSubheader>
 
       {items.map((item) =>

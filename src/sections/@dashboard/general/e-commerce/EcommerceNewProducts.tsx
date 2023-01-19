@@ -1,15 +1,22 @@
 // @mui
-import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Box, Card, Button, CardContent, Typography, CardProps } from '@mui/material';
+import { alpha, useTheme, styled } from "@mui/material/styles";
+import {
+  Box,
+  Card,
+  Button,
+  CardContent,
+  Typography,
+  CardProps,
+} from "@mui/material";
 // utils
-import { bgGradient } from '../../../../utils/cssStyles';
+import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from '../../../../components/image';
-import Carousel, { CarouselDots } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import Carousel, { CarouselDots } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
-const StyledOverlay = styled('div')(({ theme }) => ({
+const StyledOverlay = styled("div")(({ theme }) => ({
   ...bgGradient({
     startColor: `${alpha(theme.palette.common.black, 0)} 0%`,
     endColor: `${theme.palette.common.black} 75%`,
@@ -19,7 +26,7 @@ const StyledOverlay = styled('div')(({ theme }) => ({
   right: 0,
   bottom: 0,
   zIndex: 8,
-  position: 'absolute',
+  position: "absolute",
 }));
 
 // ----------------------------------------------------------------------
@@ -44,12 +51,12 @@ export default function EcommerceNewProducts({ list, ...other }: Props) {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     ...CarouselDots({
       sx: {
         right: 24,
         bottom: 24,
-        position: 'absolute',
+        position: "absolute",
       },
     }),
   };
@@ -75,15 +82,15 @@ function CarouselItem({ item }: CarouselItemProps) {
   const { image, name } = item;
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: "relative" }}>
       <CardContent
         sx={{
           left: 0,
           bottom: 0,
           zIndex: 9,
-          maxWidth: '80%',
-          position: 'absolute',
-          color: 'common.white',
+          maxWidth: "80%",
+          position: "absolute",
+          color: "common.white",
         }}
       >
         <Typography variant="overline" sx={{ opacity: 0.48 }}>

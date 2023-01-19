@@ -1,37 +1,43 @@
-import orderBy from 'lodash/orderBy';
-import { useEffect, useCallback, useState } from 'react';
+import orderBy from "lodash/orderBy";
+import { useEffect, useCallback, useState } from "react";
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
+import Head from "next/head";
+import NextLink from "next/link";
 // @mui
-import { Grid, Button, Container, Stack } from '@mui/material';
+import { Grid, Button, Container, Stack } from "@mui/material";
 // utils
-import axios from '../../../utils/axios';
+import axios from "../../../utils/axios";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // @types
-import { IBlogPost } from '../../../@types/blog';
+import { IBlogPost } from "../../../@types/blog";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // components
-import Iconify from '../../../components/iconify';
-import { SkeletonPostItem } from '../../../components/skeleton';
-import { useSettingsContext } from '../../../components/settings';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import { SkeletonPostItem } from "../../../components/skeleton";
+import { useSettingsContext } from "../../../components/settings";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../../../sections/@dashboard/blog';
+import {
+  BlogPostCard,
+  BlogPostsSort,
+  BlogPostsSearch,
+} from "../../../sections/@dashboard/blog";
 
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
+  { value: "latest", label: "Latest" },
+  { value: "popular", label: "Popular" },
+  { value: "oldest", label: "Oldest" },
 ];
 
 // ----------------------------------------------------------------------
 
-BlogPostsPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+BlogPostsPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -40,13 +46,13 @@ export default function BlogPostsPage() {
 
   const [posts, setPosts] = useState([]);
 
-  const [sortBy, setSortBy] = useState('latest');
+  const [sortBy, setSortBy] = useState("latest");
 
   const sortedPosts = applySortBy(posts, sortBy);
 
   const getAllPosts = useCallback(async () => {
     try {
-      const response = await axios.get('/api/blog/posts');
+      const response = await axios.get("/api/blog/posts");
       setPosts(response.data.posts);
     } catch (error) {
       console.error(error);
@@ -67,20 +73,20 @@ export default function BlogPostsPage() {
         <title> Blog: Posts | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Blog"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'Blog',
+              name: "Blog",
               href: PATH_DASHBOARD.blog.root,
             },
             {
-              name: 'Posts',
+              name: "Posts",
             },
           ]}
           action={
@@ -95,15 +101,30 @@ export default function BlogPostsPage() {
           }
         />
 
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          mb={5}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <BlogPostsSearch />
-          <BlogPostsSort sortBy={sortBy} sortOptions={SORT_OPTIONS} onSort={handleChangeSortBy} />
+          <BlogPostsSort
+            sortBy={sortBy}
+            sortOptions={SORT_OPTIONS}
+            onSort={handleChangeSortBy}
+          />
         </Stack>
 
         <Grid container spacing={3}>
           {(!posts.length ? [...Array(12)] : sortedPosts).map((post, index) =>
             post ? (
-              <Grid key={post.id} item xs={12} sm={6} md={(index === 0 && 6) || 3}>
+              <Grid
+                key={post.id}
+                item
+                xs={12}
+                sm={6}
+                md={(index === 0 && 6) || 3}
+              >
                 <BlogPostCard post={post} index={index} />
               </Grid>
             ) : (
@@ -119,16 +140,16 @@ export default function BlogPostsPage() {
 // ----------------------------------------------------------------------
 
 const applySortBy = (posts: IBlogPost[], sortBy: string) => {
-  if (sortBy === 'latest') {
-    return orderBy(posts, ['createdAt'], ['desc']);
+  if (sortBy === "latest") {
+    return orderBy(posts, ["createdAt"], ["desc"]);
   }
 
-  if (sortBy === 'oldest') {
-    return orderBy(posts, ['createdAt'], ['asc']);
+  if (sortBy === "oldest") {
+    return orderBy(posts, ["createdAt"], ["asc"]);
   }
 
-  if (sortBy === 'popular') {
-    return orderBy(posts, ['view'], ['desc']);
+  if (sortBy === "popular") {
+    return orderBy(posts, ["view"], ["desc"]);
   }
   return posts;
 };

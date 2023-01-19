@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // next
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 // @mui
-import { useTheme, styled } from '@mui/material/styles';
-import { Box, Stack, Drawer, IconButton, IconButtonProps } from '@mui/material';
+import { useTheme, styled } from "@mui/material/styles";
+import { Box, Stack, Drawer, IconButton, IconButtonProps } from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // utils
-import axios from '../../../../utils/axios';
+import axios from "../../../../utils/axios";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // @types
-import { IChatContact, IChatConversationsState } from '../../../../@types/chat';
+import { IChatContact, IChatConversationsState } from "../../../../@types/chat";
 // components
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
 //
-import ChatNavList from './ChatNavList';
-import ChatNavSearch from './ChatNavSearch';
-import ChatNavAccount from './ChatNavAccount';
-import ChatNavSearchResults from './ChatNavSearchResults';
+import ChatNavList from "./ChatNavList";
+import ChatNavSearch from "./ChatNavSearch";
+import ChatNavAccount from "./ChatNavAccount";
+import ChatNavSearchResults from "./ChatNavSearchResults";
 
 // ----------------------------------------------------------------------
 
@@ -31,13 +31,13 @@ const StyledToggleButton = styled((props) => (
   zIndex: 9,
   width: 32,
   height: 32,
-  position: 'absolute',
+  position: "absolute",
   top: theme.spacing(13),
   borderRadius: `0 12px 12px 0`,
   color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.primary.main,
   boxShadow: theme.customShadows.primary,
-  '&:hover': {
+  "&:hover": {
     backgroundColor: theme.palette.primary.darker,
   },
 }));
@@ -53,16 +53,19 @@ type Props = {
   activeConversationId: string | null;
 };
 
-export default function ChatNav({ conversations, activeConversationId }: Props) {
+export default function ChatNav({
+  conversations,
+  activeConversationId,
+}: Props) {
   const theme = useTheme();
 
   const { push } = useRouter();
 
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   const [openNav, setOpenNav] = useState(false);
 
-  const [searchContacts, setSearchContacts] = useState('');
+  const [searchContacts, setSearchContacts] = useState("");
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -89,14 +92,16 @@ export default function ChatNav({ conversations, activeConversationId }: Props) 
     setOpenNav(false);
   };
 
-  const handleChangeSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeSearch = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     try {
       const { value } = event.target;
 
       setSearchContacts(value);
 
       if (value) {
-        const response = await axios.get('/api/chat/search', {
+        const response = await axios.get("/api/chat/search", {
           params: { query: value },
         });
 
@@ -110,7 +115,7 @@ export default function ChatNav({ conversations, activeConversationId }: Props) 
   };
 
   const handleSelectContact = (result: IChatContact) => {
-    setSearchContacts('');
+    setSearchContacts("");
     push(PATH_DASHBOARD.chat.view(result.username));
   };
 
@@ -126,7 +131,13 @@ export default function ChatNav({ conversations, activeConversationId }: Props) 
           )}
 
           <IconButton onClick={handleToggleNav}>
-            <Iconify icon={openNav ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'} />
+            <Iconify
+              icon={
+                openNav
+                  ? "eva:arrow-ios-back-fill"
+                  : "eva:arrow-ios-forward-fill"
+              }
+            />
           </IconButton>
 
           {!isCollapse && (
@@ -140,7 +151,7 @@ export default function ChatNav({ conversations, activeConversationId }: Props) 
           <ChatNavSearch
             value={searchContacts}
             onChange={handleChangeSearch}
-            onClickAway={() => setSearchContacts('')}
+            onClickAway={() => setSearchContacts("")}
           />
         )}
       </Box>
@@ -151,7 +162,9 @@ export default function ChatNav({ conversations, activeConversationId }: Props) 
             openNav={openNav}
             onCloseNav={handleCloseNav}
             conversations={conversations}
-            selected={(conversationId: string) => activeConversationId === conversationId}
+            selected={(conversationId: string) =>
+              activeConversationId === conversationId
+            }
           />
         ) : (
           <ChatNavSearchResults
@@ -180,16 +193,16 @@ export default function ChatNav({ conversations, activeConversationId }: Props) 
             sx: {
               pb: 1,
               width: 1,
-              position: 'static',
+              position: "static",
               ...(isCollapse && {
-                transform: 'none !important',
-                visibility: 'visible !important',
+                transform: "none !important",
+                visibility: "visible !important",
               }),
             },
           }}
           sx={{
             width: NAV_WIDTH,
-            transition: theme.transitions.create('width'),
+            transition: theme.transitions.create("width"),
             ...(isCollapse && {
               width: NAV_COLLAPSE_WIDTH,
             }),

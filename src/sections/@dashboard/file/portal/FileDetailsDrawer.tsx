@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -15,19 +15,21 @@ import {
   StackProps,
   DrawerProps,
   Autocomplete,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fData } from '../../../../utils/formatNumber';
-import { fDateTime } from '../../../../utils/formatTime';
+import { fData } from "../../../../utils/formatNumber";
+import { fDateTime } from "../../../../utils/formatTime";
 // @types
-import { IFile } from '../../../../@types/file';
+import { IFile } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import FileThumbnail, { fileFormat } from '../../../../components/file-thumbnail';
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import FileThumbnail, {
+  fileFormat,
+} from "../../../../components/file-thumbnail";
 //
-import FileShareDialog from './FileShareDialog';
-import FileInvitedItem from '../FileInvitedItem';
+import FileShareDialog from "./FileShareDialog";
+import FileInvitedItem from "../FileInvitedItem";
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +63,7 @@ export default function FileDetailsDrawer({
 
   const [toggleTags, setToggleTags] = useState(true);
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const [tags, setTags] = useState(item.tags.slice(0, 3));
 
@@ -102,7 +104,12 @@ export default function FileDetailsDrawer({
         {...other}
       >
         <Scrollbar sx={{ height: 1 }}>
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ p: 2.5 }}
+          >
             <Typography variant="h6"> Info </Typography>
 
             <Checkbox
@@ -118,23 +125,27 @@ export default function FileDetailsDrawer({
           <Stack
             spacing={2.5}
             justifyContent="center"
-            sx={{ p: 2.5, bgcolor: 'background.neutral' }}
+            sx={{ p: 2.5, bgcolor: "background.neutral" }}
           >
             <FileThumbnail
               imageView
-              file={type === 'folder' ? type : url}
+              file={type === "folder" ? type : url}
               sx={{ width: 64, height: 64 }}
               imgSx={{ borderRadius: 1 }}
             />
 
-            <Typography variant="h6" sx={{ wordBreak: 'break-all' }}>
+            <Typography variant="h6" sx={{ wordBreak: "break-all" }}>
               {name}
             </Typography>
 
-            <Divider sx={{ borderStyle: 'dashed' }} />
+            <Divider sx={{ borderStyle: "dashed" }} />
 
             <Stack spacing={1}>
-              <Panel label="Tags" toggle={toggleTags} onToggle={handleToggleTags} />
+              <Panel
+                label="Tags"
+                toggle={toggleTags}
+                onToggle={handleToggleTags}
+              />
 
               {toggleTags && (
                 <Autocomplete
@@ -144,7 +155,12 @@ export default function FileDetailsDrawer({
                   options={item.tags.map((option) => option)}
                   value={tags}
                   onChange={(event, newValue) => {
-                    setTags([...tags, ...newValue.filter((option) => tags.indexOf(option) === -1)]);
+                    setTags([
+                      ...tags,
+                      ...newValue.filter(
+                        (option) => tags.indexOf(option) === -1
+                      ),
+                    ]);
                   }}
                   renderTags={(value: readonly string[], getTagProps) =>
                     value.map((option: string, index: number) => (
@@ -157,7 +173,9 @@ export default function FileDetailsDrawer({
                       />
                     ))
                   }
-                  renderInput={(params) => <TextField {...params} placeholder="#Add a tags" />}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="#Add a tags" />
+                  )}
                 />
               )}
             </Stack>
@@ -181,7 +199,12 @@ export default function FileDetailsDrawer({
             </Stack>
           </Stack>
 
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ p: 2.5 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ p: 2.5 }}
+          >
             <Typography variant="subtitle2"> File Share With </Typography>
 
             <IconButton
@@ -192,10 +215,10 @@ export default function FileDetailsDrawer({
                 p: 0,
                 width: 24,
                 height: 24,
-                color: 'common.white',
-                bgcolor: 'success.main',
-                '&:hover': {
-                  bgcolor: 'success.main',
+                color: "common.white",
+                bgcolor: "success.main",
+                "&:hover": {
+                  bgcolor: "success.main",
                 },
               }}
             >
@@ -234,7 +257,7 @@ export default function FileDetailsDrawer({
         onCopyLink={onCopyLink}
         onClose={() => {
           handleCloseShare();
-          setInviteEmail('');
+          setInviteEmail("");
         }}
       />
     </>
@@ -251,11 +274,18 @@ interface PanelProps extends StackProps {
 
 function Panel({ label, toggle, onToggle, ...other }: PanelProps) {
   return (
-    <Stack direction="row" alignItems="center" justifyContent="space-between" {...other}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      {...other}
+    >
       <Typography variant="subtitle2"> {label} </Typography>
 
       <IconButton size="small" onClick={onToggle}>
-        <Iconify icon={toggle ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />
+        <Iconify
+          icon={toggle ? "eva:chevron-up-fill" : "eva:chevron-down-fill"}
+        />
       </IconButton>
     </Stack>
   );
@@ -268,10 +298,13 @@ type RowProps = {
   value: string;
 };
 
-function Row({ label, value = '' }: RowProps) {
+function Row({ label, value = "" }: RowProps) {
   return (
-    <Stack direction="row" sx={{ typography: 'caption', textTransform: 'capitalize' }}>
-      <Box component="span" sx={{ width: 80, color: 'text.secondary', mr: 2 }}>
+    <Stack
+      direction="row"
+      sx={{ typography: "caption", textTransform: "capitalize" }}
+    >
+      <Box component="span" sx={{ width: 80, color: "text.secondary", mr: 2 }}>
         {label}
       </Box>
 

@@ -1,7 +1,7 @@
 // form
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
-import { alpha } from '@mui/material/styles';
+import { alpha } from "@mui/material/styles";
 import {
   Box,
   Radio,
@@ -16,41 +16,50 @@ import {
   Typography,
   RadioGroup,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // config
-import { NAV } from '../../../../config-global';
+import { NAV } from "../../../../config-global";
 // components
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import { ColorMultiPicker } from '../../../../components/color-utils';
-import { RHFMultiCheckbox, RHFRadioGroup, RHFSlider } from '../../../../components/hook-form';
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import { ColorMultiPicker } from "../../../../components/color-utils";
+import {
+  RHFMultiCheckbox,
+  RHFRadioGroup,
+  RHFSlider,
+} from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
 export const FILTER_GENDER_OPTIONS = [
-  { label: 'Men', value: 'Men' },
-  { label: 'Women', value: 'Women' },
-  { label: 'Kids', value: 'Kids' },
+  { label: "Men", value: "Men" },
+  { label: "Women", value: "Women" },
+  { label: "Kids", value: "Kids" },
 ];
 
 export const FILTER_CATEGORY_OPTIONS = [
-  { label: 'All', value: 'All' },
-  { label: 'Shose', value: 'Shose' },
-  { label: 'Apparel', value: 'Apparel' },
-  { label: 'Accessories', value: 'Accessories' },
+  { label: "All", value: "All" },
+  { label: "Shose", value: "Shose" },
+  { label: "Apparel", value: "Apparel" },
+  { label: "Accessories", value: "Accessories" },
 ];
 
-export const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star'];
+export const FILTER_RATING_OPTIONS = [
+  "up4Star",
+  "up3Star",
+  "up2Star",
+  "up1Star",
+];
 
 export const FILTER_COLOR_OPTIONS = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
+  "#00AB55",
+  "#000000",
+  "#FFFFFF",
+  "#FFC0CB",
+  "#FF4842",
+  "#1890FF",
+  "#94D82D",
+  "#FFC107",
 ];
 
 // ----------------------------------------------------------------------
@@ -79,7 +88,7 @@ export default function ShopFilterDrawer({
 
     return {
       value,
-      label: index % 4 ? '' : firstValue,
+      label: index % 4 ? "" : firstValue,
     };
   });
 
@@ -129,12 +138,19 @@ export default function ShopFilterDrawer({
           <Stack spacing={3} sx={{ p: 2.5 }}>
             <Stack spacing={1}>
               <Typography variant="subtitle1"> Gender </Typography>
-              <RHFMultiCheckbox name="gender" options={FILTER_GENDER_OPTIONS} sx={{ width: 1 }} />
+              <RHFMultiCheckbox
+                name="gender"
+                options={FILTER_GENDER_OPTIONS}
+                sx={{ width: 1 }}
+              />
             </Stack>
 
             <Stack spacing={1}>
               <Typography variant="subtitle1"> Category </Typography>
-              <RHFRadioGroup name="category" options={FILTER_CATEGORY_OPTIONS} />
+              <RHFRadioGroup
+                name="category"
+                options={FILTER_CATEGORY_OPTIONS}
+              />
             </Stack>
 
             <Stack spacing={1}>
@@ -147,7 +163,9 @@ export default function ShopFilterDrawer({
                   <ColorMultiPicker
                     selected={field.value}
                     colors={FILTER_COLOR_OPTIONS}
-                    onChangeColor={(color) => field.onChange(getSelected(field.value, color))}
+                    onChangeColor={(color) =>
+                      field.onChange(getSelected(field.value, color))
+                    }
                     sx={{ maxWidth: 36 * 4 }}
                   />
                 )}
@@ -172,7 +190,7 @@ export default function ShopFilterDrawer({
                 marks={marksLabel}
                 getAriaValueText={(value) => `$${value}`}
                 valueLabelFormat={(value) => `$${value}`}
-                sx={{ alignSelf: 'center', width: `calc(100% - 20px)` }}
+                sx={{ alignSelf: "center", width: `calc(100% - 20px)` }}
               />
             </Stack>
 
@@ -195,7 +213,7 @@ export default function ShopFilterDrawer({
                             icon={<Rating readOnly value={4 - index} />}
                             checkedIcon={<Rating readOnly value={4 - index} />}
                             sx={{
-                              '&:hover': { bgcolor: 'transparent' },
+                              "&:hover": { bgcolor: "transparent" },
                             }}
                           />
                         }
@@ -203,9 +221,9 @@ export default function ShopFilterDrawer({
                         sx={{
                           my: 0.5,
                           borderRadius: 1,
-                          '&:hover': { opacity: 0.48 },
+                          "&:hover": { opacity: 0.48 },
                           ...(field.value.includes(item) && {
-                            bgcolor: 'action.selected',
+                            bgcolor: "action.selected",
                           }),
                         }}
                       />
@@ -221,7 +239,7 @@ export default function ShopFilterDrawer({
           <Badge
             color="error"
             variant="dot"
-            anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+            anchorOrigin={{ vertical: "top", horizontal: "left" }}
             invisible={isDefault}
             sx={{ width: 1 }}
           >
@@ -246,7 +264,7 @@ export default function ShopFilterDrawer({
 // ----------------------------------------------------------------------
 
 type InputRangeProps = {
-  type: 'min' | 'max';
+  type: "min" | "max";
 };
 
 function InputRange({ type }: InputRangeProps) {
@@ -258,16 +276,16 @@ function InputRange({ type }: InputRangeProps) {
     const max = value[1];
 
     if (min < 0) {
-      setValue('priceRange', [0, max]);
+      setValue("priceRange", [0, max]);
     }
     if (min > 200) {
-      setValue('priceRange', [200, max]);
+      setValue("priceRange", [200, max]);
     }
     if (max < 0) {
-      setValue('priceRange', [min, 0]);
+      setValue("priceRange", [min, 0]);
     }
     if (max > 200) {
-      setValue('priceRange', [min, 200]);
+      setValue("priceRange", [min, 200]);
     }
   };
 
@@ -276,21 +294,26 @@ function InputRange({ type }: InputRangeProps) {
       name="priceRange"
       control={control}
       render={({ field }) => {
-        const isMin = type === 'min';
+        const isMin = type === "min";
 
         const min = field.value[0];
 
         const max = field.value[1];
 
         return (
-          <Stack direction="row" spacing={0.5} alignItems="center" sx={{ width: 1 }}>
+          <Stack
+            direction="row"
+            spacing={0.5}
+            alignItems="center"
+            sx={{ width: 1 }}
+          >
             <Typography
               variant="caption"
               sx={{
                 flexShrink: 0,
-                color: 'text.disabled',
-                textTransform: 'capitalize',
-                fontWeight: 'fontWeightBold',
+                color: "text.disabled",
+                textTransform: "capitalize",
+                fontWeight: "fontWeightBold",
               }}
             >
               {`${type} ($)`}
@@ -311,16 +334,16 @@ function InputRange({ type }: InputRangeProps) {
                 step: 10,
                 min: 0,
                 max: 200,
-                type: 'number',
-                'aria-labelledby': 'input-slider',
+                type: "number",
+                "aria-labelledby": "input-slider",
               }}
               sx={{
                 pr: 1,
                 py: 0.5,
                 borderRadius: 0.75,
-                typography: 'body2',
+                typography: "body2",
                 bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
-                '& .MuiInput-input': { p: 0, textAlign: 'right' },
+                "& .MuiInput-input": { p: 0, textAlign: "right" },
               }}
             />
           </Stack>

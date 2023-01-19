@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { m } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { m } from "framer-motion";
 // @mui
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled } from "@mui/material/styles";
 import {
   Fab,
   Tab,
@@ -30,70 +30,76 @@ import {
   CircularProgress,
   FormControlLabel,
   ToggleButtonGroup,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from "../../hooks/useResponsive";
 // utils
-import { bgGradient } from '../../utils/cssStyles';
+import { bgGradient } from "../../utils/cssStyles";
 // routes
-import { PATH_PAGE } from '../../routes/paths';
+import { PATH_PAGE } from "../../routes/paths";
 // _mock
-import _mock from '../../_mock';
+import _mock from "../../_mock";
 // components
-import Label from '../../components/label';
-import Image from '../../components/image';
-import Iconify from '../../components/iconify';
-import Scrollbar from '../../components/scrollbar';
-import MenuPopover from '../../components/menu-popover';
-import BadgeStatus from '../../components/badge-status';
-import { CustomAvatar, CustomAvatarGroup } from '../../components/custom-avatar';
-import { MotionViewport, varFade } from '../../components/animate';
+import Label from "../../components/label";
+import Image from "../../components/image";
+import Iconify from "../../components/iconify";
+import Scrollbar from "../../components/scrollbar";
+import MenuPopover from "../../components/menu-popover";
+import BadgeStatus from "../../components/badge-status";
+import {
+  CustomAvatar,
+  CustomAvatarGroup,
+} from "../../components/custom-avatar";
+import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
+const StyledRoot = styled("div")(({ theme }) => ({
   padding: theme.spacing(10, 0),
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(20),
   },
 }));
 
-const StyledContent = styled('div')(({ theme }) => ({
+const StyledContent = styled("div")(({ theme }) => ({
   ...bgGradient({
-    color: alpha(theme.palette.background.default, theme.palette.mode === 'light' ? 0.9 : 0.98),
-    imgUrl: '/assets/background/overlay_3.jpg',
+    color: alpha(
+      theme.palette.background.default,
+      theme.palette.mode === "light" ? 0.9 : 0.98
+    ),
+    imgUrl: "/assets/background/overlay_3.jpg",
   }),
   padding: theme.spacing(1.5, 0),
   borderRadius: Number(theme.shape.borderRadius) * 2,
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     padding: theme.spacing(2, 0),
   },
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     padding: theme.spacing(2.5),
   },
 }));
 
-const StyledDescription = styled('div')(({ theme }) => ({
-  textAlign: 'center',
-  [theme.breakpoints.up('md')]: {
-    textAlign: 'left',
+const StyledDescription = styled("div")(({ theme }) => ({
+  textAlign: "center",
+  [theme.breakpoints.up("md")]: {
+    textAlign: "left",
     paddingLeft: theme.spacing(5),
     paddingTop: theme.spacing(15),
   },
 }));
 
-const StyledRow = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': {
+const StyledRow = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": {
     margin: theme.spacing(1.5),
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       margin: theme.spacing(2),
     },
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       margin: theme.spacing(2.5),
     },
   },
@@ -102,12 +108,16 @@ const StyledRow = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomeHugePackElements() {
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   return (
     <StyledRoot>
       <Container component={MotionViewport}>
-        <Grid direction={{ xs: 'column', md: 'row-reverse' }} container spacing={5}>
+        <Grid
+          direction={{ xs: "column", md: "row-reverse" }}
+          container
+          spacing={5}
+        >
           <Grid item xs={12} md={5}>
             <Description />
           </Grid>
@@ -117,7 +127,7 @@ export default function HomeHugePackElements() {
           </Grid>
 
           {!isDesktop && (
-            <Grid item xs={12} sx={{ textAlign: 'center' }}>
+            <Grid item xs={12} sx={{ textAlign: "center" }}>
               {ViewAllButton}
             </Grid>
           )}
@@ -130,12 +140,16 @@ export default function HomeHugePackElements() {
 // ----------------------------------------------------------------------
 
 function Description() {
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   return (
     <StyledDescription>
       <m.div variants={varFade().inUp}>
-        <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
+        <Typography
+          component="div"
+          variant="overline"
+          sx={{ color: "text.disabled" }}
+        >
           Interface Starter Kit
         </Typography>
       </m.div>
@@ -151,11 +165,11 @@ function Description() {
         <Typography
           sx={{
             mb: 5,
-            color: 'text.secondary',
+            color: "text.secondary",
           }}
         >
-          We collected most popular elements. Menu, sliders, buttons, inputs etc. are all here. Just
-          dive in!
+          We collected most popular elements. Menu, sliders, buttons, inputs
+          etc. are all here. Just dive in!
         </Typography>
       </m.div>
 
@@ -167,21 +181,21 @@ function Description() {
 // ----------------------------------------------------------------------
 
 function Content() {
-  const isMd = useResponsive('up', 'md');
+  const isMd = useResponsive("up", "md");
 
-  const isLg = useResponsive('up', 'lg');
+  const isLg = useResponsive("up", "lg");
 
   const [mounted, setMounted] = useState(false);
 
   const [slider, setSlider] = useState<number>(24);
 
-  const [select, setSelect] = useState('Option 1');
+  const [select, setSelect] = useState("Option 1");
 
-  const [alignment, setAlignment] = useState('left');
+  const [alignment, setAlignment] = useState("left");
 
   const [rating, setRating] = useState<number | null>(2);
 
-  const [currentTab, setCurrentTab] = useState('Angular');
+  const [currentTab, setCurrentTab] = useState("Angular");
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -200,13 +214,19 @@ function Content() {
       {/* Row 1 */}
       <StyledRow>
         <m.div variants={varFade().in}>
-          <Button variant="contained" startIcon={<Iconify icon="ic:round-add-shopping-cart" />}>
+          <Button
+            variant="contained"
+            startIcon={<Iconify icon="ic:round-add-shopping-cart" />}
+          >
             Add To Cart
           </Button>
         </m.div>
 
         <m.div variants={varFade().in}>
-          <Button variant="soft" startIcon={<Iconify icon="eva:cloud-upload-fill" />}>
+          <Button
+            variant="soft"
+            startIcon={<Iconify icon="eva:cloud-upload-fill" />}
+          >
             Upload
           </Button>
         </m.div>
@@ -228,15 +248,17 @@ function Content() {
           <Tabs
             value={currentTab}
             onChange={(event, newValue) => setCurrentTab(newValue)}
-            sx={{ borderBottom: (theme) => `solid 1px ${theme.palette.divider}` }}
+            sx={{
+              borderBottom: (theme) => `solid 1px ${theme.palette.divider}`,
+            }}
           >
-            {['Angular', 'React', 'Vue'].map((tab) => (
+            {["Angular", "React", "Vue"].map((tab) => (
               <Tab
                 key={tab}
                 value={tab}
                 label={tab}
                 sx={{
-                  '&:not(:last-of-type)': { mr: 3 },
+                  "&:not(:last-of-type)": { mr: 3 },
                 }}
               />
             ))}
@@ -249,15 +271,22 @@ function Content() {
             color="primary"
             value={alignment}
             exclusive
-            onChange={(event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
+            onChange={(
+              event: React.MouseEvent<HTMLElement>,
+              newAlignment: string | null
+            ) => {
               if (newAlignment !== null) {
                 setAlignment(newAlignment);
               }
             }}
             aria-label="text alignment"
           >
-            {['left', 'center', 'right'].map((align) => (
-              <ToggleButton key={align} value={align} aria-label={`${align} aligned`}>
+            {["left", "center", "right"].map((align) => (
+              <ToggleButton
+                key={align}
+                value={align}
+                aria-label={`${align} aligned`}
+              >
                 <Iconify icon={`carbon:align-horizontal-${align}`} />
               </ToggleButton>
             ))}
@@ -305,7 +334,11 @@ function Content() {
         )}
 
         <m.div variants={varFade().in}>
-          <Label variant="filled" color="error" startIcon={<Iconify icon="eva:email-fill" />}>
+          <Label
+            variant="filled"
+            color="error"
+            startIcon={<Iconify icon="eva:email-fill" />}
+          >
             Label
           </Label>
         </m.div>
@@ -314,7 +347,7 @@ function Content() {
       {/* Row 4 */}
       <StyledRow
         sx={{
-          flexWrap: { lg: 'nowrap' },
+          flexWrap: { lg: "nowrap" },
         }}
       >
         <m.div variants={varFade().in}>
@@ -356,7 +389,11 @@ function Content() {
             </Button>
           </m.div>
 
-          <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 160 }}>
+          <MenuPopover
+            open={openPopover}
+            onClose={handleClosePopover}
+            sx={{ width: 160 }}
+          >
             <Scrollbar sx={{ maxHeight: 160 }}>
               {[...Array(8)].map((_, index) => (
                 <MenuItem key={index} onClick={handleClosePopover}>
@@ -372,7 +409,10 @@ function Content() {
       {isMd && (
         <StyledRow>
           <m.div variants={varFade().in}>
-            <FormControlLabel control={<Switch defaultChecked />} label="Label" />
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="Label"
+            />
           </m.div>
 
           <m.div variants={varFade().in}>
@@ -383,7 +423,10 @@ function Content() {
           </m.div>
 
           <m.div variants={varFade().in}>
-            <FormControlLabel control={<Checkbox color="info" defaultChecked />} label="Checkbox" />
+            <FormControlLabel
+              control={<Checkbox color="info" defaultChecked />}
+              label="Checkbox"
+            />
           </m.div>
 
           <m.div variants={varFade().in}>
@@ -397,7 +440,7 @@ function Content() {
 
       {/* Row 7 */}
       {isLg && (
-        <StyledRow sx={{ flexWrap: 'nowrap' }}>
+        <StyledRow sx={{ flexWrap: "nowrap" }}>
           <m.div variants={varFade().in}>{cardPost}</m.div>
 
           <Stack spacing={3} sx={{ width: 1 }}>
@@ -415,20 +458,22 @@ function Content() {
                   setSelect(event.target.value);
                 }}
               >
-                {['Option 1', 'Option 2', 'Option 3', 'Option 4'].map((option) => (
-                  <MenuItem
-                    key={option}
-                    value={option}
-                    sx={{
-                      mx: 1,
-                      borderRadius: 0.75,
-                      typography: 'body2',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {option}
-                  </MenuItem>
-                ))}
+                {["Option 1", "Option 2", "Option 3", "Option 4"].map(
+                  (option) => (
+                    <MenuItem
+                      key={option}
+                      value={option}
+                      sx={{
+                        mx: 1,
+                        borderRadius: 0.75,
+                        typography: "body2",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {option}
+                    </MenuItem>
+                  )
+                )}
               </TextField>
             </m.div>
 
@@ -482,13 +527,13 @@ const cardPost = (
           sx={{ width: 48, height: 48 }}
         />
       }
-      titleTypographyProps={{ typography: 'subtitle2', sx: { mb: 0.25 } }}
-      subheaderTypographyProps={{ typography: 'caption' }}
+      titleTypographyProps={{ typography: "subtitle2", sx: { mb: 0.25 } }}
+      subheaderTypographyProps={{ typography: "caption" }}
       sx={{ p: 2 }}
     />
     <Image alt="cover" src={_mock.image.cover(12)} ratio="16/9" />
 
-    <Typography variant="body2" sx={{ color: 'text.secondary', pt: 2, px: 2 }}>
+    <Typography variant="body2" sx={{ color: "text.secondary", pt: 2, px: 2 }}>
       Phasellus dolor. Fusce egestas elit eget lorem. Quisque id odio.
     </Typography>
 

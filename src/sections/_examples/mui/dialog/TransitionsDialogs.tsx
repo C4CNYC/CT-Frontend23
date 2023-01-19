@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState } from "react";
 // @mui
 import {
   Slide,
@@ -8,8 +8,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-} from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+} from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
 
 // ----------------------------------------------------------------------
 
@@ -51,8 +51,8 @@ export default function TransitionsDialogs() {
 
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
           </DialogContentText>
         </DialogContent>
 

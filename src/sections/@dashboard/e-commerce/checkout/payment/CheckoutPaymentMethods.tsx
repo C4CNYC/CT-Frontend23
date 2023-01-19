@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 // form
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import {
   Box,
@@ -17,14 +17,17 @@ import {
   CardContent,
   FormHelperText,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { ICheckoutCardOption, ICheckoutPaymentOption } from '../../../../../@types/product';
+import {
+  ICheckoutCardOption,
+  ICheckoutPaymentOption,
+} from "../../../../../@types/product";
 // components
-import Image from '../../../../../components/image';
-import Iconify from '../../../../../components/iconify';
+import Image from "../../../../../components/image";
+import Iconify from "../../../../../components/iconify";
 // section
-import { PaymentNewCardDialog } from '../../../../payment';
+import { PaymentNewCardDialog } from "../../../../payment";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +36,11 @@ interface Props extends CardProps {
   cardOptions: ICheckoutCardOption[];
 }
 
-export default function CheckoutPaymentMethods({ paymentOptions, cardOptions, ...other }: Props) {
+export default function CheckoutPaymentMethods({
+  paymentOptions,
+  cardOptions,
+  ...other
+}: Props) {
   const { control } = useFormContext();
 
   const [open, setOpen] = useState(false);
@@ -64,10 +71,11 @@ export default function CheckoutPaymentMethods({ paymentOptions, cardOptions, ..
                         key={option.title}
                         option={option}
                         cardOptions={cardOptions}
-                        hasChild={option.value === 'credit_card'}
+                        hasChild={option.value === "credit_card"}
                         isSelected={field.value === option.value}
                         isCreditMethod={
-                          option.value === 'credit_card' && field.value === 'credit_card'
+                          option.value === "credit_card" &&
+                          field.value === "credit_card"
                         }
                         onOpen={handleOpen}
                       />
@@ -116,24 +124,26 @@ function PaymentOption({
     <Paper
       variant="outlined"
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        transition: (theme) => theme.transitions.create('all'),
+        display: "flex",
+        alignItems: "center",
+        transition: (theme) => theme.transitions.create("all"),
         ...(isSelected && {
           boxShadow: (theme) => theme.customShadows.z20,
         }),
         ...(hasChild && {
-          flexWrap: 'wrap',
+          flexWrap: "wrap",
         }),
       }}
     >
       <FormControlLabel
         value={value}
-        control={<Radio checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />} />}
+        control={
+          <Radio checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />} />
+        }
         label={
           <Box sx={{ ml: 1 }}>
             <Typography variant="subtitle2">{title}</Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {description}
             </Typography>
           </Box>
@@ -148,8 +158,8 @@ function PaymentOption({
         sx={{
           pr: 2.5,
           display: {
-            xs: 'none',
-            sm: 'inline-flex',
+            xs: "none",
+            sm: "inline-flex",
           },
         }}
       >
@@ -166,7 +176,12 @@ function PaymentOption({
             width: 1,
           }}
         >
-          <TextField select fullWidth label="Cards" SelectProps={{ native: true }}>
+          <TextField
+            select
+            fullWidth
+            label="Cards"
+            SelectProps={{ native: true }}
+          >
             {cardOptions.map((card) => (
               <option key={card.value} value={card.value}>
                 {card.label}

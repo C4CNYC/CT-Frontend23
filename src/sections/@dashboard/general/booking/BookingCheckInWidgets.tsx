@@ -1,13 +1,13 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Card, Typography, Stack, Divider, CardProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Card, Typography, Stack, Divider, CardProps } from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ interface Props extends CardProps {
 export default function BookingCheckInWidgets({ chart, ...other }: Props) {
   const theme = useTheme();
 
-  const isDesktop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive("up", "sm");
 
   const { colors, series, options } = chart;
 
@@ -49,7 +49,7 @@ export default function BookingCheckInWidgets({ chart, ...other }: Props) {
     },
     plotOptions: {
       radialBar: {
-        hollow: { size: '64%' },
+        hollow: { size: "64%" },
         track: { margin: 0 },
         dataLabels: {
           name: { show: false },
@@ -71,12 +71,12 @@ export default function BookingCheckInWidgets({ chart, ...other }: Props) {
   return (
     <Card {...other}>
       <Stack
-        direction={{ xs: 'column', sm: 'row' }}
+        direction={{ xs: "column", sm: "row" }}
         divider={
           <Divider
-            orientation={isDesktop ? 'vertical' : 'horizontal'}
+            orientation={isDesktop ? "vertical" : "horizontal"}
             flexItem
-            sx={{ borderStyle: 'dashed' }}
+            sx={{ borderStyle: "dashed" }}
           />
         }
       >

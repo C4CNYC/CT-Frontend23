@@ -1,25 +1,33 @@
-import sum from 'lodash/sum';
-import { useCallback, useEffect } from 'react';
+import sum from "lodash/sum";
+import { useCallback, useEffect } from "react";
 // form
-import { useFormContext, useFieldArray } from 'react-hook-form';
+import { useFormContext, useFieldArray } from "react-hook-form";
 // @mui
-import { Box, Stack, Button, Divider, Typography, InputAdornment, MenuItem } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Button,
+  Divider,
+  Typography,
+  InputAdornment,
+  MenuItem,
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // @types
-import { IInvoiceItem } from '../../../../@types/invoice';
+import { IInvoiceItem } from "../../../../@types/invoice";
 // components
-import Iconify from '../../../../components/iconify';
-import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import Iconify from "../../../../components/iconify";
+import { RHFSelect, RHFTextField } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
 const SERVICE_OPTIONS = [
-  { id: 1, name: 'full stack development', price: 90.99 },
-  { id: 2, name: 'backend development', price: 80.99 },
-  { id: 3, name: 'ui design', price: 70.99 },
-  { id: 4, name: 'ui/ux design', price: 60.99 },
-  { id: 5, name: 'front end development', price: 40.99 },
+  { id: 1, name: "full stack development", price: 90.99 },
+  { id: 2, name: "backend development", price: 80.99 },
+  { id: 3, name: "ui design", price: 70.99 },
+  { id: 4, name: "ui/ux design", price: 60.99 },
+  { id: 5, name: "front end development", price: 40.99 },
 ];
 
 // ----------------------------------------------------------------------
@@ -29,24 +37,26 @@ export default function InvoiceNewEditDetails() {
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'items',
+    name: "items",
   });
 
   const values = watch();
 
-  const totalOnRow = values.items.map((item: IInvoiceItem) => item.quantity * item.price);
+  const totalOnRow = values.items.map(
+    (item: IInvoiceItem) => item.quantity * item.price
+  );
 
   const totalPrice = sum(totalOnRow) - values.discount + values.taxes;
 
   useEffect(() => {
-    setValue('totalPrice', totalPrice);
+    setValue("totalPrice", totalPrice);
   }, [setValue, totalPrice]);
 
   const handleAdd = () => {
     append({
-      title: '',
-      description: '',
-      service: '',
+      title: "",
+      description: "",
+      service: "",
       quantity: 1,
       price: 0,
       total: 0,
@@ -74,29 +84,41 @@ export default function InvoiceNewEditDetails() {
       );
       setValue(
         `items[${index}].total`,
-        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[index]
+        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[
+          index
+        ]
       );
     },
     [setValue, values.items]
   );
 
   const handleChangeQuantity = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      index: number
+    ) => {
       setValue(`items[${index}].quantity`, Number(event.target.value));
       setValue(
         `items[${index}].total`,
-        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[index]
+        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[
+          index
+        ]
       );
     },
     [setValue, values.items]
   );
 
   const handleChangePrice = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      index: number
+    ) => {
       setValue(`items[${index}].price`, Number(event.target.value));
       setValue(
         `items[${index}].total`,
-        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[index]
+        values.items.map((item: IInvoiceItem) => item.quantity * item.price)[
+          index
+        ]
       );
     },
     [setValue, values.items]
@@ -104,14 +126,21 @@ export default function InvoiceNewEditDetails() {
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h6" sx={{ color: 'text.disabled', mb: 3 }}>
+      <Typography variant="h6" sx={{ color: "text.disabled", mb: 3 }}>
         Details:
       </Typography>
 
-      <Stack divider={<Divider flexItem sx={{ borderStyle: 'dashed' }} />} spacing={3}>
+      <Stack
+        divider={<Divider flexItem sx={{ borderStyle: "dashed" }} />}
+        spacing={3}
+      >
         {fields.map((item, index) => (
           <Stack key={item.id} alignItems="flex-end" spacing={1.5}>
-            <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} sx={{ width: 1 }}>
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              spacing={2}
+              sx={{ width: 1 }}
+            >
               <RHFTextField
                 size="small"
                 name={`items[${index}].title`}
@@ -136,7 +165,7 @@ export default function InvoiceNewEditDetails() {
                 <MenuItem
                   value=""
                   onClick={() => handleClearService(index)}
-                  sx={{ fontStyle: 'italic', color: 'text.secondary' }}
+                  sx={{ fontStyle: "italic", color: "text.secondary" }}
                 >
                   None
                 </MenuItem>
@@ -173,7 +202,9 @@ export default function InvoiceNewEditDetails() {
                 placeholder="0"
                 onChange={(event) => handleChangePrice(event, index)}
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                 }}
                 sx={{ maxWidth: { md: 96 } }}
               />
@@ -186,7 +217,9 @@ export default function InvoiceNewEditDetails() {
                 placeholder="0"
                 value={totalOnRow[index]}
                 InputProps={{
-                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                 }}
                 sx={{ maxWidth: { md: 96 } }}
               />
@@ -204,12 +237,12 @@ export default function InvoiceNewEditDetails() {
         ))}
       </Stack>
 
-      <Divider sx={{ my: 3, borderStyle: 'dashed' }} />
+      <Divider sx={{ my: 3, borderStyle: "dashed" }} />
 
       <Stack
         spacing={2}
-        direction={{ xs: 'column-reverse', md: 'row' }}
-        alignItems={{ xs: 'flex-start', md: 'center' }}
+        direction={{ xs: "column-reverse", md: "row" }}
+        alignItems={{ xs: "flex-start", md: "center" }}
       >
         <Button
           size="small"
@@ -223,14 +256,16 @@ export default function InvoiceNewEditDetails() {
         <Stack
           spacing={2}
           justifyContent="flex-end"
-          direction={{ xs: 'column', md: 'row' }}
+          direction={{ xs: "column", md: "row" }}
           sx={{ width: 1 }}
         >
           <RHFTextField
             size="small"
             label="Discount"
             name="discount"
-            onChange={(event) => setValue('discount', Number(event.target.value))}
+            onChange={(event) =>
+              setValue("discount", Number(event.target.value))
+            }
             sx={{ maxWidth: { md: 200 } }}
           />
 
@@ -238,7 +273,7 @@ export default function InvoiceNewEditDetails() {
             size="small"
             label="Taxes"
             name="taxes"
-            onChange={(event) => setValue('taxes', Number(event.target.value))}
+            onChange={(event) => setValue("taxes", Number(event.target.value))}
             sx={{ maxWidth: { md: 200 } }}
           />
         </Stack>
@@ -247,31 +282,35 @@ export default function InvoiceNewEditDetails() {
       <Stack spacing={2} sx={{ mt: 3 }}>
         <Stack direction="row" justifyContent="flex-end">
           <Typography>Subtotal :</Typography>
-          <Typography sx={{ textAlign: 'right', width: 120 }}>
-            {fCurrency(sum(totalOnRow)) || '-'}
+          <Typography sx={{ textAlign: "right", width: 120 }}>
+            {fCurrency(sum(totalOnRow)) || "-"}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
           <Typography>Discount :</Typography>
           <Typography
-            sx={{ textAlign: 'right', width: 120, ...(values.discount && { color: 'error.main' }) }}
+            sx={{
+              textAlign: "right",
+              width: 120,
+              ...(values.discount && { color: "error.main" }),
+            }}
           >
-            {values.discount ? `- ${fCurrency(values.discount)}` : '-'}
+            {values.discount ? `- ${fCurrency(values.discount)}` : "-"}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
           <Typography>Taxes :</Typography>
-          <Typography sx={{ textAlign: 'right', width: 120 }}>
-            {values.taxes ? fCurrency(values.taxes) : '-'}
+          <Typography sx={{ textAlign: "right", width: 120 }}>
+            {values.taxes ? fCurrency(values.taxes) : "-"}
           </Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="flex-end">
           <Typography variant="h6">Total price :</Typography>
-          <Typography variant="h6" sx={{ textAlign: 'right', width: 120 }}>
-            {fCurrency(totalPrice) || '-'}
+          <Typography variant="h6" sx={{ textAlign: "right", width: 120 }}>
+            {fCurrency(totalPrice) || "-"}
           </Typography>
         </Stack>
       </Stack>

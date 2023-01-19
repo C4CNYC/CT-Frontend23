@@ -1,11 +1,19 @@
-import orderBy from 'lodash/orderBy';
+import orderBy from "lodash/orderBy";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Stack, Card, Avatar, CardHeader, Typography, CardProps } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Stack,
+  Card,
+  Avatar,
+  CardHeader,
+  Typography,
+  CardProps,
+} from "@mui/material";
 // utils
-import { fShortenNumber } from '../../../../utils/formatNumber';
+import { fShortenNumber } from "../../../../utils/formatNumber";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -22,13 +30,18 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AppTopAuthors({ title, subheader, list, ...other }: Props) {
+export default function AppTopAuthors({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {orderBy(list, ['favourite'], ['desc']).map((author, index) => (
+        {orderBy(list, ["favourite"], ["desc"]).map((author, index) => (
           <AuthorItem key={author.id} author={author} index={index} />
         ))}
       </Stack>
@@ -55,9 +68,9 @@ function AuthorItem({ author, index }: AuthorItemProps) {
           variant="caption"
           sx={{
             mt: 0.5,
-            display: 'flex',
-            alignItems: 'center',
-            color: 'text.secondary',
+            display: "flex",
+            alignItems: "center",
+            color: "text.secondary",
           }}
         >
           <Iconify icon="eva:heart-fill" width={16} sx={{ mr: 0.5 }} />
@@ -71,15 +84,15 @@ function AuthorItem({ author, index }: AuthorItemProps) {
           p: 1,
           width: 40,
           height: 40,
-          borderRadius: '50%',
-          color: 'primary.main',
+          borderRadius: "50%",
+          color: "primary.main",
           bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
           ...(index === 1 && {
-            color: 'info.main',
+            color: "info.main",
             bgcolor: (theme) => alpha(theme.palette.info.main, 0.08),
           }),
           ...(index === 2 && {
-            color: 'error.main',
+            color: "error.main",
             bgcolor: (theme) => alpha(theme.palette.error.main, 0.08),
           }),
         }}

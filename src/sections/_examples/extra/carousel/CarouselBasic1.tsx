@@ -1,10 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Card } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Card } from "@mui/material";
 // components
-import Image from '../../../../components/image';
-import Carousel, { CarouselArrowIndex } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import Carousel, { CarouselArrowIndex } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,9 @@ export default function CarouselBasic1({ data }: Props) {
 
   const carouselRef = useRef<Carousel | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(theme.direction === 'rtl' ? data.length - 1 : 0);
+  const [currentIndex, setCurrentIndex] = useState(
+    theme.direction === "rtl" ? data.length - 1 : 0
+  );
 
   const carouselSettings = {
     dots: false,
@@ -30,7 +32,7 @@ export default function CarouselBasic1({ data }: Props) {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     beforeChange: (current: number, next: number) => setCurrentIndex(next),
   };
 

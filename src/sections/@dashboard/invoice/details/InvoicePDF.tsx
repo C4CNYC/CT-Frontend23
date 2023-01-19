@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { Page, View, Text, Image, Document } from '@react-pdf/renderer';
+import { Page, View, Text, Image, Document } from "@react-pdf/renderer";
 // utils
-import { fDate } from '../../../../utils/formatTime';
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fDate } from "../../../../utils/formatTime";
+import { fCurrency } from "../../../../utils/formatNumber";
 // @types
-import { IInvoice } from '../../../../@types/invoice';
+import { IInvoice } from "../../../../@types/invoice";
 //
-import styles from './InvoiceStyle';
+import styles from "./InvoiceStyle";
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ export default function InvoicePDF({ invoice }: Props) {
       <Page size="A4" style={styles.page}>
         <View style={[styles.gridContainer, styles.mb40]}>
           <Image source="/logo/logo_full.jpg" style={{ height: 32 }} />
-          <View style={{ alignItems: 'flex-end', flexDirection: 'column' }}>
+          <View style={{ alignItems: "flex-end", flexDirection: "column" }}>
             <Text style={styles.h3}>{status}</Text>
             <Text> {`INV-${invoiceNumber}`} </Text>
           </View>
@@ -174,7 +174,8 @@ export default function InvoicePDF({ invoice }: Props) {
           <View style={styles.col8}>
             <Text style={styles.subtitle2}>NOTES</Text>
             <Text>
-              We appreciate your business. Should you need us to add VAT or extra notes let us know!
+              We appreciate your business. Should you need us to add VAT or
+              extra notes let us know!
             </Text>
           </View>
           <View style={[styles.col4, styles.alignRight]}>

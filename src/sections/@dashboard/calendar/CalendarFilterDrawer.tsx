@@ -1,7 +1,7 @@
-import orderBy from 'lodash/orderBy';
-import { EventInput } from '@fullcalendar/common';
+import orderBy from "lodash/orderBy";
+import { EventInput } from "@fullcalendar/common";
 // @mui
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker } from "@mui/x-date-pickers";
 import {
   Box,
   Stack,
@@ -13,16 +13,16 @@ import {
   IconButton,
   ListItemText,
   ListItemButton,
-} from '@mui/material';
+} from "@mui/material";
 // config
-import { NAV } from '../../../config-global';
+import { NAV } from "../../../config-global";
 // utils
-import { fDateTime } from '../../../utils/formatTime';
+import { fDateTime } from "../../../utils/formatTime";
 // components
-import Iconify from '../../../components/iconify';
-import Scrollbar from '../../../components/scrollbar';
-import { ColorMultiPicker } from '../../../components/color-utils';
-import { DateRangePickerProps } from '../../../components/date-range-picker';
+import Iconify from "../../../components/iconify";
+import Scrollbar from "../../../components/scrollbar";
+import { ColorMultiPicker } from "../../../components/color-utils";
+import { DateRangePickerProps } from "../../../components/date-range-picker";
 
 // ----------------------------------------------------------------------
 
@@ -81,8 +81,8 @@ export default function CalendarFilterDrawer({
       <Typography
         variant="caption"
         sx={{
-          color: 'text.secondary',
-          fontWeight: 'fontWeightMedium',
+          color: "text.secondary",
+          fontWeight: "fontWeightMedium",
           p: (theme) => theme.spacing(2, 2, 1, 2),
         }}
       >
@@ -100,8 +100,8 @@ export default function CalendarFilterDrawer({
         variant="caption"
         sx={{
           p: 2,
-          color: 'text.secondary',
-          fontWeight: 'fontWeightMedium',
+          color: "text.secondary",
+          fontWeight: "fontWeightMedium",
         }}
       >
         Range
@@ -127,24 +127,27 @@ export default function CalendarFilterDrawer({
         variant="caption"
         sx={{
           p: 2,
-          color: 'text.secondary',
-          fontWeight: 'fontWeightMedium',
+          color: "text.secondary",
+          fontWeight: "fontWeightMedium",
         }}
       >
         Events ({events.length})
       </Typography>
 
       <Scrollbar sx={{ height: 1 }}>
-        {orderBy(events, ['end'], ['desc']).map((event) => (
-          <ListItemButton key={event.id} onClick={() => onSelectEvent(event.id as string)}>
+        {orderBy(events, ["end"], ["desc"]).map((event) => (
+          <ListItemButton
+            key={event.id}
+            onClick={() => onSelectEvent(event.id as string)}
+          >
             <Box
               sx={{
                 top: 0,
                 left: 0,
                 width: 0,
                 height: 0,
-                position: 'absolute',
-                borderRight: '8px solid transparent',
+                position: "absolute",
+                borderRight: "8px solid transparent",
                 borderTop: `8px solid ${event.textColor}`,
               }}
             />
@@ -160,19 +163,19 @@ export default function CalendarFilterDrawer({
                 <Typography
                   variant="caption"
                   component="div"
-                  sx={{ fontSize: 11, color: 'text.disabled' }}
+                  sx={{ fontSize: 11, color: "text.disabled" }}
                 >
                   {event.allDay ? (
-                    fDateTime(event.start as Date, 'dd MMM yy')
+                    fDateTime(event.start as Date, "dd MMM yy")
                   ) : (
                     <>
-                      {fDateTime(event.start as Date, 'dd MMM yy p')} {' - '}
-                      {fDateTime(event.end as Date, 'dd MMM yy p')}
+                      {fDateTime(event.start as Date, "dd MMM yy p")} {" - "}
+                      {fDateTime(event.end as Date, "dd MMM yy p")}
                     </>
                   )}
                 </Typography>
               }
-              sx={{ display: 'flex', flexDirection: 'column-reverse' }}
+              sx={{ display: "flex", flexDirection: "column-reverse" }}
             />
           </ListItemButton>
         ))}

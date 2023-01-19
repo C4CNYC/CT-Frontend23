@@ -1,26 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Alert, Button, Container, AlertTitle, Stack } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Alert,
+  Button,
+  Container,
+  AlertTitle,
+  Stack,
+} from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['info', 'success', 'warning', 'error'] as const;
+const COLORS = ["info", "success", "warning", "error"] as const;
 
 // ----------------------------------------------------------------------
 
-MUIAlertPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIAlertPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +52,8 @@ export default function MUIAlertPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -51,12 +61,12 @@ export default function MUIAlertPage() {
             heading="Alert"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Alert' },
+              { name: "Alert" },
             ]}
-            moreLink={['https://mui.com/components/alert']}
+            moreLink={["https://mui.com/components/alert"]}
           />
         </Container>
       </Box>
@@ -76,7 +86,12 @@ export default function MUIAlertPage() {
           <Block title="Filled">
             <Stack spacing={2}>
               {COLORS.map((color) => (
-                <Alert key={color} severity={color} variant="filled" onClose={() => {}}>
+                <Alert
+                  key={color}
+                  severity={color}
+                  variant="filled"
+                  onClose={() => {}}
+                >
                   This is an {color} alert — check it out!
                 </Alert>
               ))}
@@ -86,7 +101,12 @@ export default function MUIAlertPage() {
           <Block title="Outlined">
             <Stack spacing={2}>
               {COLORS.map((color) => (
-                <Alert key={color} severity={color} variant="outlined" onClose={() => {}}>
+                <Alert
+                  key={color}
+                  severity={color}
+                  variant="outlined"
+                  onClose={() => {}}
+                >
                   This is an {color} alert — check it out!
                 </Alert>
               ))}
@@ -97,7 +117,10 @@ export default function MUIAlertPage() {
             <Stack spacing={2}>
               {COLORS.map((color) => (
                 <Alert key={color} severity={color} onClose={() => {}}>
-                  <AlertTitle sx={{ textTransform: 'capitalize' }}> {color} </AlertTitle>
+                  <AlertTitle sx={{ textTransform: "capitalize" }}>
+                    {" "}
+                    {color}{" "}
+                  </AlertTitle>
                   This is an {color} alert — <strong>check it out!</strong>
                 </Alert>
               ))}
@@ -128,7 +151,11 @@ export default function MUIAlertPage() {
                       variant="outlined"
                       sx={{
                         mr: 1,
-                        border: (theme) => `1px solid ${alpha(theme.palette.common.white, 0.48)}`,
+                        border: (theme) =>
+                          `1px solid ${alpha(
+                            theme.palette.common.white,
+                            0.48
+                          )}`,
                       }}
                     >
                       Undo
@@ -139,7 +166,7 @@ export default function MUIAlertPage() {
                       color="inherit"
                       variant="contained"
                       sx={{
-                        bgcolor: 'common.white',
+                        bgcolor: "common.white",
                       }}
                     >
                       Action

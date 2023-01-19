@@ -1,18 +1,26 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container, Stack, Card, CardHeader, Typography, Link } from '@mui/material';
+import {
+  Box,
+  Container,
+  Stack,
+  Card,
+  CardHeader,
+  Typography,
+  Link,
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // _mock_
-import _mock, { randomInArray } from '../../../_mock';
+import _mock, { randomInArray } from "../../../_mock";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import DataGridBasic from '../../../sections/_examples/mui/data-grid/DataGridBasic';
-import DataGridCustom from '../../../sections/_examples/mui/data-grid/DataGridCustom';
+import DataGridBasic from "../../../sections/_examples/mui/data-grid/DataGridBasic";
+import DataGridCustom from "../../../sections/_examples/mui/data-grid/DataGridCustom";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +31,7 @@ export const _dataGrid = [...Array(36)].map((_, index) => ({
   lastLogin: _mock.time(index),
   performance: _mock.number.percent(index),
   rating: _mock.number.rating(index),
-  status: randomInArray(['online', 'away', 'busy']),
+  status: randomInArray(["online", "away", "busy"]),
   isAdmin: _mock.boolean(index),
   lastName: _mock.name.lastName(index),
   firstName: _mock.name.firstName(index),
@@ -32,7 +40,9 @@ export const _dataGrid = [...Array(36)].map((_, index) => ({
 
 // ----------------------------------------------------------------------
 
-MUIDataGridPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIDataGridPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +57,8 @@ export default function MUIDataGridPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -55,21 +66,25 @@ export default function MUIDataGridPage() {
             heading="DataGrid"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'DataGrid' },
+              { name: "DataGrid" },
             ]}
-            moreLink={['https://mui.com/x/react-data-grid/']}
+            moreLink={["https://mui.com/x/react-data-grid/"]}
             sx={{ mb: 0 }}
           />
 
           <Typography variant="body2" sx={{ my: 3 }}>
-            This component includes 2 <strong>Free</strong> and <strong>Paid</strong> versions from
-            MUI.
+            This component includes 2 <strong>Free</strong> and{" "}
+            <strong>Paid</strong> versions from MUI.
             <br />
-            Paid version will have more features. Please read more{' '}
-            <Link href="https://mui.com/x/react-data-grid/" target="_blank" rel="noopener">
+            Paid version will have more features. Please read more{" "}
+            <Link
+              href="https://mui.com/x/react-data-grid/"
+              target="_blank"
+              rel="noopener"
+            >
               here
             </Link>
           </Typography>

@@ -1,35 +1,37 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { Box, Container } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import FormDialogs from '../../../sections/_examples/mui/dialog/FormDialogs';
-import AlertDialog from '../../../sections/_examples/mui/dialog/AlertDialog';
-import ScrollDialog from '../../../sections/_examples/mui/dialog/ScrollDialog';
-import SimpleDialogs from '../../../sections/_examples/mui/dialog/SimpleDialogs';
-import MaxWidthDialog from '../../../sections/_examples/mui/dialog/MaxWidthDialog';
-import FullScreenDialogs from '../../../sections/_examples/mui/dialog/FullScreenDialogs';
-import TransitionsDialogs from '../../../sections/_examples/mui/dialog/TransitionsDialogs';
-import { Block } from '../../../sections/_examples/Block';
+import FormDialogs from "../../../sections/_examples/mui/dialog/FormDialogs";
+import AlertDialog from "../../../sections/_examples/mui/dialog/AlertDialog";
+import ScrollDialog from "../../../sections/_examples/mui/dialog/ScrollDialog";
+import SimpleDialogs from "../../../sections/_examples/mui/dialog/SimpleDialogs";
+import MaxWidthDialog from "../../../sections/_examples/mui/dialog/MaxWidthDialog";
+import FullScreenDialogs from "../../../sections/_examples/mui/dialog/FullScreenDialogs";
+import TransitionsDialogs from "../../../sections/_examples/mui/dialog/TransitionsDialogs";
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 // ----------------------------------------------------------------------
 
-MUIDialogPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIDialogPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +46,8 @@ export default function MUIDialogPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -52,12 +55,12 @@ export default function MUIDialogPage() {
             heading="Dialog"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Dialog' },
+              { name: "Dialog" },
             ]}
-            moreLink={['https://mui.com/components/dialogs']}
+            moreLink={["https://mui.com/components/dialogs"]}
           />
         </Container>
       </Box>

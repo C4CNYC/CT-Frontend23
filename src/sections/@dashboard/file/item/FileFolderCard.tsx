@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -10,23 +10,23 @@ import {
   Checkbox,
   CardProps,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useCopyToClipboard from '../../../../hooks/useCopyToClipboard';
+import useCopyToClipboard from "../../../../hooks/useCopyToClipboard";
 // utils
-import { fData } from '../../../../utils/formatNumber';
+import { fData } from "../../../../utils/formatNumber";
 // @types
-import { IFolderManager } from '../../../../@types/file';
+import { IFolderManager } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import TextMaxLine from '../../../../components/text-max-line';
-import { useSnackbar } from '../../../../components/snackbar';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import TextMaxLine from "../../../../components/text-max-line";
+import { useSnackbar } from "../../../../components/snackbar";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import FileShareDialog from '../portal/FileShareDialog';
-import FileDetailsDrawer from '../portal/FileDetailsDrawer';
-import FileNewFolderDialog from '../portal/FileNewFolderDialog';
+import FileShareDialog from "../portal/FileShareDialog";
+import FileDetailsDrawer from "../portal/FileDetailsDrawer";
+import FileNewFolderDialog from "../portal/FileNewFolderDialog";
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ export default function FileFolderCard({
 
   const { copy } = useCopyToClipboard();
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const [showCheckbox, setShowCheckbox] = useState(false);
 
@@ -124,7 +124,7 @@ export default function FileFolderCard({
   };
 
   const handleCopy = () => {
-    enqueueSnackbar('Copied!');
+    enqueueSnackbar("Copied!");
     copy(folder.url);
   };
 
@@ -138,18 +138,22 @@ export default function FileFolderCard({
           width: 1,
           maxWidth: 222,
           boxShadow: 0,
-          bgcolor: 'background.default',
+          bgcolor: "background.default",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           ...((showCheckbox || selected) && {
-            borderColor: 'transparent',
-            bgcolor: 'background.paper',
+            borderColor: "transparent",
+            bgcolor: "background.paper",
             boxShadow: (theme) => theme.customShadows.z20,
           }),
           ...sx,
         }}
         {...other}
       >
-        <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: 'absolute' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ top: 8, right: 8, position: "absolute" }}
+        >
           <Checkbox
             color="warning"
             icon={<Iconify icon="eva:star-outline" />}
@@ -159,7 +163,10 @@ export default function FileFolderCard({
             sx={{ p: 0.75 }}
           />
 
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
@@ -179,7 +186,11 @@ export default function FileFolderCard({
           />
         )}
 
-        <TextMaxLine variant="h6" onClick={handleOpenDetails} sx={{ mt: 1, mb: 0.5 }}>
+        <TextMaxLine
+          variant="h6"
+          onClick={handleOpenDetails}
+          sx={{ mt: 1, mb: 0.5 }}
+        >
           {folder.name}
         </TextMaxLine>
 
@@ -187,11 +198,18 @@ export default function FileFolderCard({
           direction="row"
           alignItems="center"
           spacing={0.75}
-          sx={{ typography: 'caption', color: 'text.disabled' }}
+          sx={{ typography: "caption", color: "text.disabled" }}
         >
           <Box> {fData(folder.size)} </Box>
 
-          <Box sx={{ width: 2, height: 2, borderRadius: '50%', bgcolor: 'currentColor' }} />
+          <Box
+            sx={{
+              width: 2,
+              height: 2,
+              borderRadius: "50%",
+              bgcolor: "currentColor",
+            }}
+          />
 
           <Box> {folder.totalFiles} files </Box>
         </Stack>
@@ -233,14 +251,14 @@ export default function FileFolderCard({
           Edit
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete
@@ -268,7 +286,7 @@ export default function FileFolderCard({
         onCopyLink={handleCopy}
         onClose={() => {
           handleCloseShare();
-          setInviteEmail('');
+          setInviteEmail("");
         }}
       />
 
@@ -279,7 +297,7 @@ export default function FileFolderCard({
         onUpdate={() => {
           handleCloseEditFolder();
           setFolderName(folderName);
-          console.log('UPDATE FOLDER', folderName);
+          console.log("UPDATE FOLDER", folderName);
         }}
         folderName={folderName}
         onChangeFolderName={(event) => setFolderName(event.target.value)}

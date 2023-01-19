@@ -1,8 +1,14 @@
 // @mui
-import { Stack, InputAdornment, TextField, MenuItem, Button } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import {
+  Stack,
+  InputAdornment,
+  TextField,
+  MenuItem,
+  Button,
+} from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -40,8 +46,8 @@ export default function InvoiceTableToolbar({
       spacing={2}
       alignItems="center"
       direction={{
-        xs: 'column',
-        md: 'row',
+        xs: "column",
+        md: "row",
       }}
       sx={{ px: 2.5, py: 3 }}
     >
@@ -60,7 +66,7 @@ export default function InvoiceTableToolbar({
         }}
         sx={{
           maxWidth: { md: INPUT_WIDTH },
-          textTransform: 'capitalize',
+          textTransform: "capitalize",
         }}
       >
         {optionsService.map((option) => (
@@ -70,8 +76,8 @@ export default function InvoiceTableToolbar({
             sx={{
               mx: 1,
               borderRadius: 0.75,
-              typography: 'body2',
-              textTransform: 'capitalize',
+              typography: "body2",
+              textTransform: "capitalize",
             }}
           >
             {option}
@@ -117,7 +123,7 @@ export default function InvoiceTableToolbar({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
             </InputAdornment>
           ),
         }}

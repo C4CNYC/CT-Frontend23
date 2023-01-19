@@ -1,13 +1,13 @@
 // @mui
-import { RadioGroup } from '@mui/material';
+import { RadioGroup } from "@mui/material";
 //
-import SvgColor from '../../svg-color';
-import { useSettingsContext } from '../SettingsContext';
-import { StyledCard, StyledWrap, MaskControl } from '../styles';
+import SvgColor from "../../svg-color";
+import { useSettingsContext } from "../SettingsContext";
+import { StyledCard, StyledWrap, MaskControl } from "../styles";
 
 // ----------------------------------------------------------------------
 
-const OPTIONS = ['light', 'dark'] as const;
+const OPTIONS = ["light", "dark"] as const;
 
 export default function ModeOptions() {
   const { themeMode, onChangeMode } = useSettingsContext();
@@ -18,7 +18,9 @@ export default function ModeOptions() {
         {OPTIONS.map((mode) => (
           <StyledCard key={mode} selected={themeMode === mode}>
             <SvgColor
-              src={`/assets/icons/setting/${mode === 'light' ? 'ic_sun' : 'ic_moon'}.svg`}
+              src={`/assets/icons/setting/${
+                mode === "light" ? "ic_sun" : "ic_moon"
+              }.svg`}
             />
 
             <MaskControl value={mode} />

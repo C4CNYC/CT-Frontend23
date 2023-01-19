@@ -1,10 +1,10 @@
-import omit from 'lodash/omit';
-import keyBy from 'lodash/keyBy';
-import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import omit from "lodash/omit";
+import keyBy from "lodash/keyBy";
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 // utils
-import axios from '../../utils/axios';
+import axios from "../../utils/axios";
 // @types
-import { IKanbanState, IKanbanCard, IKanbanColumn } from '../../@types/kanban';
+import { IKanbanState, IKanbanCard, IKanbanColumn } from "../../@types/kanban";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ const initialState: IKanbanState = {
 };
 
 const slice = createSlice({
-  name: 'kanban',
+  name: "kanban",
   initialState,
   reducers: {
     // START LOADING
@@ -37,8 +37,8 @@ const slice = createSlice({
     getBoardSuccess(state, action) {
       state.isLoading = false;
       const board = action.payload;
-      const cards = keyBy(board.cards, 'id');
-      const columns = keyBy(board.columns, 'id');
+      const cards = keyBy(board.cards, "id");
+      const columns = keyBy(board.columns, "id");
       const { columnOrder } = board;
 
       state.board = {
@@ -78,9 +78,9 @@ const slice = createSlice({
     deleteTask(state, action) {
       const { cardId, columnId } = action.payload;
 
-      state.board.columns[columnId].cardIds = state.board.columns[columnId].cardIds.filter(
-        (id) => id !== cardId
-      );
+      state.board.columns[columnId].cardIds = state.board.columns[
+        columnId
+      ].cardIds.filter((id) => id !== cardId);
 
       state.board.cards = omit(state.board.cards, [cardId]);
     },
@@ -101,7 +101,9 @@ const slice = createSlice({
       state.isLoading = false;
       state.board.columns = omit(state.board.columns, [columnId]);
       state.board.cards = omit(state.board.cards, [...deletedColumn.cardIds]);
-      state.board.columnOrder = state.board.columnOrder.filter((c) => c !== columnId);
+      state.board.columnOrder = state.board.columnOrder.filter(
+        (c) => c !== columnId
+      );
     },
   },
 });
@@ -117,7 +119,7 @@ export function getBoard() {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/kanban/board');
+      const response = await axios.get("/api/kanban/board");
       dispatch(slice.actions.getBoardSuccess(response.data.board));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -131,7 +133,7 @@ export function createColumn(newColumn: { name: string }) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.post('/api/kanban/columns/new', newColumn);
+      const response = await axios.post("/api/kanban/columns/new", newColumn);
       dispatch(slice.actions.createColumnSuccess(response.data.column));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -145,7 +147,7 @@ export function updateColumn(columnId: string, column: IKanbanColumn) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.post('/api/kanban/columns/update', {
+      const response = await axios.post("/api/kanban/columns/update", {
         columnId,
         column,
       });
@@ -162,7 +164,7 @@ export function deleteColumn(columnId: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.post('/api/kanban/columns/delete', { columnId });
+      await axios.post("/api/kanban/columns/delete", { columnId });
       dispatch(slice.actions.deleteColumnSuccess({ columnId }));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -188,7 +190,13 @@ export function persistCard(columns: Record<string, IKanbanColumn>) {
 
 // ----------------------------------------------------------------------
 
-export function addTask({ card, columnId }: { card: Partial<IKanbanCard>; columnId: string }) {
+export function addTask({
+  card,
+  columnId,
+}: {
+  card: Partial<IKanbanCard>;
+  columnId: string;
+}) {
   return (dispatch: Dispatch) => {
     dispatch(slice.actions.addTask({ card, columnId }));
   };
@@ -196,7 +204,13 @@ export function addTask({ card, columnId }: { card: Partial<IKanbanCard>; column
 
 // ----------------------------------------------------------------------
 
-export function deleteTask({ cardId, columnId }: { cardId: string; columnId: string }) {
+export function deleteTask({
+  cardId,
+  columnId,
+}: {
+  cardId: string;
+  columnId: string;
+}) {
   return (dispatch: Dispatch) => {
     dispatch(slice.actions.deleteTask({ cardId, columnId }));
   };

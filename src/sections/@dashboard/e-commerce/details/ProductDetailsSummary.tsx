@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import { sentenceCase } from 'change-case';
+import { useEffect } from "react";
+import { sentenceCase } from "change-case";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // form
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm } from "react-hook-form";
 // @mui
 import {
   Box,
@@ -15,25 +15,25 @@ import {
   MenuItem,
   Typography,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // utils
-import { fShortenNumber, fCurrency } from '../../../../utils/formatNumber';
+import { fShortenNumber, fCurrency } from "../../../../utils/formatNumber";
 // @types
-import { IProduct, ICheckoutCartItem } from '../../../../@types/product';
+import { IProduct, ICheckoutCartItem } from "../../../../@types/product";
 // _mock
-import { _socials } from '../../../../_mock/arrays';
+import { _socials } from "../../../../_mock/arrays";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import { IncrementerButton } from '../../../../components/custom-input';
-import { ColorSinglePicker } from '../../../../components/color-utils';
-import FormProvider, { RHFSelect } from '../../../../components/hook-form';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import { IncrementerButton } from "../../../../components/custom-input";
+import { ColorSinglePicker } from "../../../../components/color-utils";
+import FormProvider, { RHFSelect } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<ICheckoutCartItem, 'colors'> {
+interface FormValuesProps extends Omit<ICheckoutCartItem, "colors"> {
   colors: string;
 }
 
@@ -71,7 +71,8 @@ export default function ProductDetailsSummary({
   const alreadyProduct = cart.map((item) => item.id).includes(id);
 
   const isMaxQuantity =
-    cart.filter((item) => item.id === id).map((item) => item.quantity)[0] >= available;
+    cart.filter((item) => item.id === id).map((item) => item.quantity)[0] >=
+    available;
 
   const defaultValues = {
     id,
@@ -141,17 +142,17 @@ export default function ProductDetailsSummary({
         <Stack spacing={2}>
           <Label
             variant="soft"
-            color={inventoryType === 'in_stock' ? 'success' : 'error'}
-            sx={{ textTransform: 'uppercase', mr: 'auto' }}
+            color={inventoryType === "in_stock" ? "success" : "error"}
+            sx={{ textTransform: "uppercase", mr: "auto" }}
           >
-            {sentenceCase(inventoryType || '')}
+            {sentenceCase(inventoryType || "")}
           </Label>
 
           <Typography
             variant="overline"
             component="div"
             sx={{
-              color: status === 'sale' ? 'error.main' : 'info.main',
+              color: status === "sale" ? "error.main" : "info.main",
             }}
           >
             {status}
@@ -162,7 +163,7 @@ export default function ProductDetailsSummary({
           <Stack direction="row" alignItems="center" spacing={1}>
             <Rating value={totalRating} precision={0.1} readOnly />
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               ({fShortenNumber(totalReview)}
               reviews)
             </Typography>
@@ -172,7 +173,11 @@ export default function ProductDetailsSummary({
             {priceSale && (
               <Box
                 component="span"
-                sx={{ color: 'text.disabled', textDecoration: 'line-through', mr: 0.5 }}
+                sx={{
+                  color: "text.disabled",
+                  textDecoration: "line-through",
+                  mr: 0.5,
+                }}
               >
                 {fCurrency(priceSale)}
               </Box>
@@ -182,9 +187,13 @@ export default function ProductDetailsSummary({
           </Typography>
         </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Typography variant="subtitle2">Color</Typography>
 
           <Controller
@@ -198,7 +207,7 @@ export default function ProductDetailsSummary({
                 sx={{
                   ...(colors.length > 4 && {
                     maxWidth: 144,
-                    justifyContent: 'flex-end',
+                    justifyContent: "flex-end",
                   }),
                 }}
               />
@@ -207,7 +216,10 @@ export default function ProductDetailsSummary({
         </Stack>
 
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="subtitle2" sx={{ height: 40, lineHeight: '40px', flexGrow: 1 }}>
+          <Typography
+            variant="subtitle2"
+            sx={{ height: 40, lineHeight: "40px", flexGrow: 1 }}
+          >
             Size
           </Typography>
 
@@ -221,10 +233,10 @@ export default function ProductDetailsSummary({
             }
             sx={{
               maxWidth: 96,
-              '& .MuiFormHelperText-root': {
+              "& .MuiFormHelperText-root": {
                 mx: 0,
                 mt: 1,
-                textAlign: 'right',
+                textAlign: "right",
               },
             }}
           >
@@ -237,7 +249,10 @@ export default function ProductDetailsSummary({
         </Stack>
 
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="subtitle2" sx={{ height: 36, lineHeight: '36px' }}>
+          <Typography
+            variant="subtitle2"
+            sx={{ height: 36, lineHeight: "36px" }}
+          >
             Quantity
           </Typography>
 
@@ -247,21 +262,21 @@ export default function ProductDetailsSummary({
               quantity={values.quantity}
               disabledDecrease={values.quantity <= 1}
               disabledIncrease={values.quantity >= available}
-              onIncrease={() => setValue('quantity', values.quantity + 1)}
-              onDecrease={() => setValue('quantity', values.quantity - 1)}
+              onIncrease={() => setValue("quantity", values.quantity + 1)}
+              onDecrease={() => setValue("quantity", values.quantity - 1)}
             />
 
             <Typography
               variant="caption"
               component="div"
-              sx={{ textAlign: 'right', color: 'text.secondary' }}
+              sx={{ textAlign: "right", color: "text.secondary" }}
             >
               Available: {available}
             </Typography>
           </Stack>
         </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <Stack direction="row" spacing={2}>
           <Button
@@ -272,7 +287,7 @@ export default function ProductDetailsSummary({
             variant="contained"
             startIcon={<Iconify icon="ic:round-add-shopping-cart" />}
             onClick={handleAddCart}
-            sx={{ whiteSpace: 'nowrap' }}
+            sx={{ whiteSpace: "nowrap" }}
           >
             Add to Cart
           </Button>

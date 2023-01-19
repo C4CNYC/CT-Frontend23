@@ -1,10 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Card, Typography, CardContent, Stack } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Card, Typography, CardContent, Stack } from "@mui/material";
 // components
-import Image from '../../../../components/image';
-import Carousel, { CarouselArrowIndex } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import Carousel, { CarouselArrowIndex } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -31,8 +31,8 @@ export default function CarouselBasic2({ data }: Props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: currentIndex,
-    fade: Boolean(theme.direction !== 'rtl'),
-    rtl: Boolean(theme.direction === 'rtl'),
+    fade: Boolean(theme.direction !== "rtl"),
+    rtl: Boolean(theme.direction === "rtl"),
     beforeChange: (current: number, next: number) => setCurrentIndex(next),
   };
 
@@ -51,12 +51,16 @@ export default function CarouselBasic2({ data }: Props) {
           <Stack key={item.id}>
             <Image alt={item.title} src={item.image} ratio="4/3" />
 
-            <CardContent sx={{ textAlign: 'left' }}>
+            <CardContent sx={{ textAlign: "left" }}>
               <Typography variant="h6" noWrap gutterBottom>
                 {item.title}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              <Typography
+                variant="body2"
+                sx={{ color: "text.secondary" }}
+                noWrap
+              >
                 {item.description}
               </Typography>
             </CardContent>

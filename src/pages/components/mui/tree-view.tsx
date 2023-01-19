@@ -1,18 +1,18 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { alpha, styled } from '@mui/material/styles';
-import { Box, Container } from '@mui/material';
-import { TreeView, TreeItem, TreeItemProps, treeItemClasses } from '@mui/lab';
+import { alpha, styled } from "@mui/material/styles";
+import { Box, Container } from "@mui/material";
+import { TreeView, TreeItem, TreeItemProps, treeItemClasses } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
@@ -22,9 +22,11 @@ const StyledTreeView = styled(TreeView)({
   maxWidth: 400,
 });
 
-const StyledTreeItem = styled((props: TreeItemProps) => <TreeItem {...props} />)(({ theme }) => ({
+const StyledTreeItem = styled((props: TreeItemProps) => (
+  <TreeItem {...props} />
+))(({ theme }) => ({
   [`& .${treeItemClasses.iconContainer}`]: {
-    '& .close': {
+    "& .close": {
       opacity: 0.3,
     },
   },
@@ -37,7 +39,9 @@ const StyledTreeItem = styled((props: TreeItemProps) => <TreeItem {...props} />)
 
 // ----------------------------------------------------------------------
 
-MUITreesViewPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUITreesViewPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +56,8 @@ export default function MUITreesViewPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -60,12 +65,12 @@ export default function MUITreesViewPage() {
             heading="Tree View"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Tree View' },
+              { name: "Tree View" },
             ]}
-            moreLink={['https://mui.com/components/tree-view']}
+            moreLink={["https://mui.com/components/tree-view"]}
           />
         </Container>
       </Box>
@@ -75,8 +80,8 @@ export default function MUITreesViewPage() {
           gap={3}
           display="grid"
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            md: 'repeat(3, 1fr)',
+            xs: "repeat(1, 1fr)",
+            md: "repeat(3, 1fr)",
           }}
         >
           <Block title="Basic">
@@ -126,7 +131,7 @@ export default function MUITreesViewPage() {
           </Block>
 
           <Block title="Customization">
-            <StyledTreeView defaultExpanded={['1']}>
+            <StyledTreeView defaultExpanded={["1"]}>
               <StyledTreeItem nodeId="1" label="Main">
                 <StyledTreeItem nodeId="2" label="Hello" />
                 <StyledTreeItem nodeId="3" label="Subtree with children">

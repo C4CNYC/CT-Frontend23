@@ -1,10 +1,12 @@
 // @mui
-import { Box, Button, Stack, Link } from '@mui/material';
-import DateRangePicker, { useDateRangePicker } from '../../../../components/date-range-picker';
+import { Box, Button, Stack, Link } from "@mui/material";
+import DateRangePicker, {
+  useDateRangePicker,
+} from "../../../../components/date-range-picker";
 // utils
-import { fDate } from '../../../../utils/formatTime';
+import { fDate } from "../../../../utils/formatTime";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
@@ -15,12 +17,12 @@ export default function PickerDateRange() {
 
   return (
     <>
-      <Stack sx={{ typography: 'body2', mb: 3, color: 'text.secondary' }}>
+      <Stack sx={{ typography: "body2", mb: 3, color: "text.secondary" }}>
         <div>This is the custom component from minimal.</div>
         <div>You can use more advanced components by MUI.</div>
 
         <Link href="https://mui.com/x/react-date-pickers/date-range-picker/">
-          https://mui.com/x/react-date-pickers/date-range-picker/{' '}
+          https://mui.com/x/react-date-pickers/date-range-picker/{" "}
         </Link>
       </Stack>
 
@@ -28,8 +30,8 @@ export default function PickerDateRange() {
         gap={3}
         display="grid"
         gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          md: 'repeat(2, 1fr)',
+          xs: "repeat(1, 1fr)",
+          md: "repeat(2, 1fr)",
         }}
       >
         <Block title="Input">
@@ -37,7 +39,7 @@ export default function PickerDateRange() {
             Click me!
           </Button>
 
-          <Stack sx={{ typography: 'body2', mt: 3 }}>
+          <Stack sx={{ typography: "body2", mt: 3 }}>
             <div>
               <strong>Start:</strong> {fDate(pickerInput.startDate)}
             </div>
@@ -62,7 +64,7 @@ export default function PickerDateRange() {
             Click me!
           </Button>
 
-          <Stack sx={{ typography: 'body2', mt: 3 }}>
+          <Stack sx={{ typography: "body2", mt: 3 }}>
             <div>
               <strong>Start:</strong> {fDate(pickerCalendar.startDate)}
             </div>

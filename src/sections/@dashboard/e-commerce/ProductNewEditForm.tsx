@@ -1,20 +1,27 @@
-import * as Yup from 'yup';
-import { useCallback, useEffect, useMemo } from 'react';
+import * as Yup from "yup";
+import { useCallback, useEffect, useMemo } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
-import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Typography, InputAdornment } from '@mui/material';
+import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Typography,
+  InputAdornment,
+} from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // @types
-import { IProduct } from '../../../@types/product';
+import { IProduct } from "../../../@types/product";
 // components
-import { CustomFile } from '../../../components/upload';
-import { useSnackbar } from '../../../components/snackbar';
+import { CustomFile } from "../../../components/upload";
+import { useSnackbar } from "../../../components/snackbar";
 import FormProvider, {
   RHFSwitch,
   RHFSelect,
@@ -23,41 +30,47 @@ import FormProvider, {
   RHFTextField,
   RHFRadioGroup,
   RHFAutocomplete,
-} from '../../../components/hook-form';
+} from "../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
 const GENDER_OPTION = [
-  { label: 'Men', value: 'Men' },
-  { label: 'Women', value: 'Women' },
-  { label: 'Kids', value: 'Kids' },
+  { label: "Men", value: "Men" },
+  { label: "Women", value: "Women" },
+  { label: "Kids", value: "Kids" },
 ];
 
 const CATEGORY_OPTION = [
-  { group: 'Clothing', classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather'] },
-  { group: 'Tailored', classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats'] },
-  { group: 'Accessories', classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'] },
+  { group: "Clothing", classify: ["Shirts", "T-shirts", "Jeans", "Leather"] },
+  {
+    group: "Tailored",
+    classify: ["Suits", "Blazers", "Trousers", "Waistcoats"],
+  },
+  {
+    group: "Accessories",
+    classify: ["Shoes", "Backpacks and bags", "Bracelets", "Face masks"],
+  },
 ];
 
 const TAGS_OPTION = [
-  'Toy Story 3',
-  'Logan',
-  'Full Metal Jacket',
-  'Dangal',
-  'The Sting',
-  '2001: A Space Odyssey',
+  "Toy Story 3",
+  "Logan",
+  "Full Metal Jacket",
+  "Dangal",
+  "The Sting",
+  "2001: A Space Odyssey",
   "Singin' in the Rain",
-  'Toy Story',
-  'Bicycle Thieves',
-  'The Kid',
-  'Inglourious Basterds',
-  'Snatch',
-  '3 Idiots',
+  "Toy Story",
+  "Bicycle Thieves",
+  "The Kid",
+  "Inglourious Basterds",
+  "Snatch",
+  "3 Idiots",
 ];
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<IProduct, 'images'> {
+interface FormValuesProps extends Omit<IProduct, "images"> {
   taxes: boolean;
   inStock: boolean;
   images: (CustomFile | string)[];
@@ -74,20 +87,20 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewProductSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    images: Yup.array().min(1, 'Images is required'),
-    tags: Yup.array().min(2, 'Must have at least 2 tags'),
-    price: Yup.number().moreThan(0, 'Price should not be $0.00'),
-    description: Yup.string().required('Description is required'),
+    name: Yup.string().required("Name is required"),
+    images: Yup.array().min(1, "Images is required"),
+    tags: Yup.array().min(2, "Must have at least 2 tags"),
+    price: Yup.number().moreThan(0, "Price should not be $0.00"),
+    description: Yup.string().required("Description is required"),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentProduct?.name || '',
-      description: currentProduct?.description || '',
+      name: currentProduct?.name || "",
+      description: currentProduct?.description || "",
       images: currentProduct?.images || [],
-      code: currentProduct?.code || '',
-      sku: currentProduct?.sku || '',
+      code: currentProduct?.code || "",
+      sku: currentProduct?.sku || "",
       price: currentProduct?.price || 0,
       priceSale: currentProduct?.priceSale || 0,
       tags: currentProduct?.tags || [TAGS_OPTION[0]],
@@ -129,9 +142,9 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
+      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.eCommerce.list);
-      console.log('DATA', data);
+      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -147,18 +160,19 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
         })
       );
 
-      setValue('images', [...files, ...newFiles], { shouldValidate: true });
+      setValue("images", [...files, ...newFiles], { shouldValidate: true });
     },
     [setValue, values.images]
   );
 
   const handleRemoveFile = (inputFile: File | string) => {
-    const filtered = values.images && values.images?.filter((file) => file !== inputFile);
-    setValue('images', filtered);
+    const filtered =
+      values.images && values.images?.filter((file) => file !== inputFile);
+    setValue("images", filtered);
   };
 
   const handleRemoveAllFiles = () => {
-    setValue('images', []);
+    setValue("images", []);
   };
 
   return (
@@ -170,7 +184,10 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
               <RHFTextField name="name" label="Product Name" />
 
               <Stack spacing={1}>
-                <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: "text.secondary" }}
+                >
                   Description
                 </Typography>
 
@@ -178,7 +195,10 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
               </Stack>
 
               <Stack spacing={1}>
-                <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: "text.secondary" }}
+                >
                   Images
                 </Typography>
 
@@ -190,7 +210,7 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
                   onDrop={handleDrop}
                   onRemove={handleRemoveFile}
                   onRemoveAll={handleRemoveAllFiles}
-                  onUpload={() => console.log('ON UPLOAD')}
+                  onUpload={() => console.log("ON UPLOAD")}
                 />
               </Stack>
             </Stack>
@@ -208,11 +228,19 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
                 <RHFTextField name="sku" label="Product SKU" />
 
                 <Stack spacing={1}>
-                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ color: "text.secondary" }}
+                  >
                     Gender
                   </Typography>
 
-                  <RHFRadioGroup row spacing={4} name="gender" options={GENDER_OPTION} />
+                  <RHFRadioGroup
+                    row
+                    spacing={4}
+                    name="gender"
+                    options={GENDER_OPTION}
+                  />
                 </Stack>
 
                 <RHFSelect native name="category" label="Category">
@@ -234,7 +262,7 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
                   multiple
                   freeSolo
                   options={TAGS_OPTION.map((option) => option)}
-                  ChipProps={{ size: 'small' }}
+                  ChipProps={{ size: "small" }}
                 />
               </Stack>
             </Card>
@@ -246,18 +274,20 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
                   label="Regular Price"
                   placeholder="0.00"
                   onChange={(event) =>
-                    setValue('price', Number(event.target.value), { shouldValidate: true })
+                    setValue("price", Number(event.target.value), {
+                      shouldValidate: true,
+                    })
                   }
                   InputLabelProps={{ shrink: true }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Box component="span" sx={{ color: 'text.disabled' }}>
+                        <Box component="span" sx={{ color: "text.disabled" }}>
                           $
                         </Box>
                       </InputAdornment>
                     ),
-                    type: 'number',
+                    type: "number",
                   }}
                 />
 
@@ -265,17 +295,19 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
                   name="priceSale"
                   label="Sale Price"
                   placeholder="0.00"
-                  onChange={(event) => setValue('priceSale', Number(event.target.value))}
+                  onChange={(event) =>
+                    setValue("priceSale", Number(event.target.value))
+                  }
                   InputLabelProps={{ shrink: true }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <Box component="span" sx={{ color: 'text.disabled' }}>
+                        <Box component="span" sx={{ color: "text.disabled" }}>
                           $
                         </Box>
                       </InputAdornment>
                     ),
-                    type: 'number',
+                    type: "number",
                   }}
                 />
               </Stack>
@@ -283,8 +315,13 @@ export default function ProductNewEditForm({ isEdit, currentProduct }: Props) {
               <RHFSwitch name="taxes" label="Price includes taxes" />
             </Card>
 
-            <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-              {!isEdit ? 'Create Product' : 'Save Changes'}
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              size="large"
+              loading={isSubmitting}
+            >
+              {!isEdit ? "Create Product" : "Save Changes"}
             </LoadingButton>
           </Stack>
         </Grid>

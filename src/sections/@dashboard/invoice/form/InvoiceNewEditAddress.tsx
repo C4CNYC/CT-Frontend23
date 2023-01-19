@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useState } from "react";
 // form
-import { useFormContext } from 'react-hook-form';
+import { useFormContext } from "react-hook-form";
 // @mui
-import { Stack, Divider, Typography, Button } from '@mui/material';
+import { Stack, Divider, Typography, Button } from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // _mock
-import { _invoiceAddressFrom, _invoiceAddressTo } from '../../../../_mock/arrays';
+import {
+  _invoiceAddressFrom,
+  _invoiceAddressTo,
+} from "../../../../_mock/arrays";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import InvoiceAddressListDialog from './InvoiceAddressListDialog';
+import InvoiceAddressListDialog from "./InvoiceAddressListDialog";
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +24,7 @@ export default function InvoiceNewEditAddress() {
     formState: { errors },
   } = useFormContext();
 
-  const upMd = useResponsive('up', 'md');
+  const upMd = useResponsive("up", "md");
 
   const values = watch();
 
@@ -50,19 +53,24 @@ export default function InvoiceNewEditAddress() {
   return (
     <Stack
       spacing={{ xs: 2, md: 5 }}
-      direction={{ xs: 'column', md: 'row' }}
+      direction={{ xs: "column", md: "row" }}
       divider={
         <Divider
           flexItem
-          orientation={upMd ? 'vertical' : 'horizontal'}
-          sx={{ borderStyle: 'dashed' }}
+          orientation={upMd ? "vertical" : "horizontal"}
+          sx={{ borderStyle: "dashed" }}
         />
       }
       sx={{ p: 3 }}
     >
       <Stack sx={{ width: 1 }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
-          <Typography variant="h6" sx={{ color: 'text.disabled' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ mb: 1 }}
+        >
+          <Typography variant="h6" sx={{ color: "text.disabled" }}>
             From:
           </Typography>
 
@@ -78,7 +86,7 @@ export default function InvoiceNewEditAddress() {
             open={openFrom}
             onClose={handleCloseFrom}
             selected={(selectedId: string) => invoiceFrom?.id === selectedId}
-            onSelect={(address) => setValue('invoiceFrom', address)}
+            onSelect={(address) => setValue("invoiceFrom", address)}
             addressOptions={_invoiceAddressFrom}
           />
         </Stack>
@@ -91,32 +99,43 @@ export default function InvoiceNewEditAddress() {
       </Stack>
 
       <Stack sx={{ width: 1 }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
-          <Typography variant="h6" sx={{ color: 'text.disabled' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ mb: 1 }}
+        >
+          <Typography variant="h6" sx={{ color: "text.disabled" }}>
             To:
           </Typography>
 
           <Button
             size="small"
-            startIcon={<Iconify icon={invoiceTo ? 'eva:edit-fill' : 'eva:plus-fill'} />}
+            startIcon={
+              <Iconify icon={invoiceTo ? "eva:edit-fill" : "eva:plus-fill"} />
+            }
             onClick={handleOpenTo}
           >
-            {invoiceTo ? 'Change' : 'Add'}
+            {invoiceTo ? "Change" : "Add"}
           </Button>
 
           <InvoiceAddressListDialog
             open={openTo}
             onClose={handleCloseTo}
             selected={(selectedId: string) => invoiceTo?.id === selectedId}
-            onSelect={(address) => setValue('invoiceTo', address)}
+            onSelect={(address) => setValue("invoiceTo", address)}
             addressOptions={_invoiceAddressTo}
           />
         </Stack>
 
         {invoiceTo ? (
-          <AddressInfo name={invoiceTo.name} address={invoiceTo.address} phone={invoiceTo.phone} />
+          <AddressInfo
+            name={invoiceTo.name}
+            address={invoiceTo.address}
+            phone={invoiceTo.phone}
+          />
         ) : (
-          <Typography typography="caption" sx={{ color: 'error.main' }}>
+          <Typography typography="caption" sx={{ color: "error.main" }}>
             {(errors.invoiceTo as any)?.message}
           </Typography>
         )}

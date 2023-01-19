@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { MenuItem, Stack } from '@mui/material';
+import { MenuItem, Stack } from "@mui/material";
 // locales
-import { useLocales } from '../../../locales';
+import { useLocales } from "../../../locales";
 // components
-import Image from '../../../components/image';
-import MenuPopover from '../../../components/menu-popover';
-import { IconButtonAnimate } from '../../../components/animate';
+import Image from "../../../components/image";
+import MenuPopover from "../../../components/menu-popover";
+import { IconButtonAnimate } from "../../../components/animate";
 
 // ----------------------------------------------------------------------
 
@@ -36,14 +36,18 @@ export default function LanguagePopover() {
           width: 40,
           height: 40,
           ...(openPopover && {
-            bgcolor: 'action.selected',
+            bgcolor: "action.selected",
           }),
         }}
       >
         <Image disabledEffect src={currentLang.icon} alt={currentLang.label} />
       </IconButtonAnimate>
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 180 }}>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        sx={{ width: 180 }}
+      >
         <Stack spacing={0.75}>
           {allLangs.map((option) => (
             <MenuItem

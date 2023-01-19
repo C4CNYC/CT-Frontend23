@@ -1,11 +1,11 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme, styled } from '@mui/material/styles';
-import { Card, CardHeader, CardProps } from '@mui/material';
+import { useTheme, styled } from "@mui/material/styles";
+import { Card, CardHeader, CardProps } from "@mui/material";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -13,19 +13,19 @@ const CHART_HEIGHT = 400;
 
 const LEGEND_HEIGHT = 72;
 
-const StyledChart = styled('div')(({ theme }) => ({
+const StyledChart = styled("div")(({ theme }) => ({
   height: CHART_HEIGHT,
   marginTop: theme.spacing(5),
-  '& .apexcharts-canvas svg': {
+  "& .apexcharts-canvas svg": {
     height: CHART_HEIGHT,
   },
-  '& .apexcharts-canvas svg,.apexcharts-canvas foreignObject': {
-    overflow: 'visible',
+  "& .apexcharts-canvas svg,.apexcharts-canvas foreignObject": {
+    overflow: "visible",
   },
-  '& .apexcharts-legend': {
+  "& .apexcharts-legend": {
     height: LEGEND_HEIGHT,
-    alignContent: 'center',
-    position: 'relative !important' as 'relative',
+    alignContent: "center",
+    position: "relative !important" as "relative",
     borderTop: `solid 1px ${theme.palette.divider}`,
     top: `calc(${CHART_HEIGHT - LEGEND_HEIGHT}px) !important`,
   },
@@ -46,7 +46,12 @@ interface Props extends CardProps {
   };
 }
 
-export default function AnalyticsCurrentVisits({ title, subheader, chart, ...other }: Props) {
+export default function AnalyticsCurrentVisits({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
@@ -66,7 +71,7 @@ export default function AnalyticsCurrentVisits({ title, subheader, chart, ...oth
     },
     legend: {
       floating: true,
-      horizontalAlign: 'center',
+      horizontalAlign: "center",
     },
     dataLabels: {
       enabled: true,
@@ -92,7 +97,12 @@ export default function AnalyticsCurrentVisits({ title, subheader, chart, ...oth
       <CardHeader title={title} subheader={subheader} />
 
       <StyledChart dir="ltr">
-        <Chart type="pie" series={chartSeries} options={chartOptions} height={280} />
+        <Chart
+          type="pie"
+          series={chartSeries}
+          options={chartOptions}
+          height={280}
+        />
       </StyledChart>
     </Card>
   );

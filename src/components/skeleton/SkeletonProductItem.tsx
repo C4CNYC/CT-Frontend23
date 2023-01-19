@@ -1,15 +1,19 @@
 // @mui
-import { Card, Skeleton, Stack, CardProps } from '@mui/material';
+import { Card, Skeleton, Stack, CardProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export default function SkeletonProductItem({ ...other }: CardProps) {
   return (
     <Card {...other}>
-      <Skeleton variant="rectangular" sx={{ paddingTop: '100%' }} />
+      <Skeleton variant="rectangular" sx={{ paddingTop: "100%" }} />
       <Stack spacing={2} sx={{ p: 3 }}>
         <Skeleton variant="text" sx={{ width: 0.5 }} />
-        <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Stack direction="row">
             <Skeleton variant="circular" sx={{ width: 16, height: 16 }} />
             <Skeleton variant="circular" sx={{ width: 16, height: 16 }} />

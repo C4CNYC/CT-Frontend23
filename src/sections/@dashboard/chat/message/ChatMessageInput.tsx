@@ -1,16 +1,22 @@
-import { useRef, useState } from 'react';
+import { useRef, useState } from "react";
 // @mui
-import { Stack, InputBase, InputBaseProps, IconButton, InputAdornment } from '@mui/material';
+import {
+  Stack,
+  InputBase,
+  InputBaseProps,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
 // utils
-import uuidv4 from '../../../../utils/uuidv4';
+import uuidv4 from "../../../../utils/uuidv4";
 // @types
-import { IChatSendMessage } from '../../../../@types/chat';
+import { IChatSendMessage } from "../../../../@types/chat";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
-const CURRENT_USER_ID = '8864c717-587d-472a-929a-8e5f298024da-0';
+const CURRENT_USER_ID = "8864c717-587d-472a-929a-8e5f298024da-0";
 
 interface Props extends InputBaseProps {
   conversationId: string | null;
@@ -26,26 +32,26 @@ export default function ChatMessageInput({
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleClickAttach = () => {
     fileInputRef.current?.click();
   };
 
   const handleSend = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       if (onSend && message && conversationId) {
         onSend({
           conversationId,
           messageId: uuidv4(),
           message,
-          contentType: 'text',
+          contentType: "text",
           attachments: [],
           createdAt: new Date(),
           senderId: CURRENT_USER_ID,
         });
       }
-      setMessage('');
+      setMessage("");
     }
   };
 
@@ -65,11 +71,19 @@ export default function ChatMessageInput({
         }
         endAdornment={
           <Stack direction="row" spacing={1} sx={{ flexShrink: 0, mr: 1.5 }}>
-            <IconButton disabled={disabled} size="small" onClick={handleClickAttach}>
+            <IconButton
+              disabled={disabled}
+              size="small"
+              onClick={handleClickAttach}
+            >
               <Iconify icon="ic:round-add-photo-alternate" />
             </IconButton>
 
-            <IconButton disabled={disabled} size="small" onClick={handleClickAttach}>
+            <IconButton
+              disabled={disabled}
+              size="small"
+              onClick={handleClickAttach}
+            >
               <Iconify icon="eva:attach-2-fill" />
             </IconButton>
 
@@ -88,7 +102,7 @@ export default function ChatMessageInput({
         {...other}
       />
 
-      <input type="file" ref={fileInputRef} style={{ display: 'none' }} />
+      <input type="file" ref={fileInputRef} style={{ display: "none" }} />
     </>
   );
 }

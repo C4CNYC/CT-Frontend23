@@ -1,11 +1,11 @@
-import { m } from 'framer-motion';
+import { m } from "framer-motion";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Link, Paper, Typography, CardActionArea } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import { Link, Paper, Typography, CardActionArea } from "@mui/material";
 // components
-import Image from '../../components/image';
+import Image from "../../components/image";
 
-import { varHover, varTranHover } from '../../components/animate';
+import { varHover, varTranHover } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
@@ -31,8 +31,8 @@ export default function ComponentCard({ item }: Props) {
           whileHover="hover"
           sx={{
             p: 2.5,
-            color: 'text.secondary',
-            bgcolor: 'background.neutral',
+            color: "text.secondary",
+            bgcolor: "background.neutral",
           }}
         >
           <m.div variants={varHover(1.1)} transition={varTranHover()}>
@@ -40,7 +40,7 @@ export default function ComponentCard({ item }: Props) {
           </m.div>
         </CardActionArea>
 
-        <Typography variant="subtitle2" sx={{ p: 2, textAlign: 'center' }}>
+        <Typography variant="subtitle2" sx={{ p: 2, textAlign: "center" }}>
           {name}
         </Typography>
       </Paper>

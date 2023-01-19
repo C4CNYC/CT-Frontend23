@@ -1,21 +1,21 @@
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { List, SxProps } from '@mui/material';
+import { List, SxProps } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // @types
-import { IChatConversationsState } from '../../../../@types/chat';
+import { IChatConversationsState } from "../../../../@types/chat";
 // components
-import { SkeletonConversationItem } from '../../../../components/skeleton';
+import { SkeletonConversationItem } from "../../../../components/skeleton";
 //
-import ChatNavItem from './ChatNavItem';
+import ChatNavItem from "./ChatNavItem";
 
 // ----------------------------------------------------------------------
 
-const CURRENT_USER_ID = '8864c717-587d-472a-929a-8e5f298024da-0';
+const CURRENT_USER_ID = "8864c717-587d-472a-929a-8e5f298024da-0";
 
 type Props = {
   conversations: IChatConversationsState;
@@ -35,14 +35,14 @@ export default function ChatNavList({
 }: Props) {
   const { push } = useRouter();
 
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   const handleSelectConversation = (conversationId: string) => {
-    let conversationKey = '';
+    let conversationKey = "";
 
     const conversation = conversations.byId[conversationId];
 
-    if (conversation.type === 'GROUP') {
+    if (conversation.type === "GROUP") {
       conversationKey = conversation.id;
     } else {
       const otherParticipant = conversation.participants.find(
@@ -61,23 +61,24 @@ export default function ChatNavList({
 
   return (
     <List disablePadding sx={sx} {...other}>
-      {(loading ? [...Array(12)] : conversations.allIds).map((conversationId, index) =>
-        conversationId ? (
-          <ChatNavItem
-            key={conversationId}
-            openNav={openNav}
-            conversation={conversations.byId[conversationId]}
-            isSelected={selected(conversationId)}
-            onSelect={() => {
-              if (!isDesktop) {
-                onCloseNav();
-              }
-              handleSelectConversation(conversationId);
-            }}
-          />
-        ) : (
-          <SkeletonConversationItem key={index} />
-        )
+      {(loading ? [...Array(12)] : conversations.allIds).map(
+        (conversationId, index) =>
+          conversationId ? (
+            <ChatNavItem
+              key={conversationId}
+              openNav={openNav}
+              conversation={conversations.byId[conversationId]}
+              isSelected={selected(conversationId)}
+              onSelect={() => {
+                if (!isDesktop) {
+                  onCloseNav();
+                }
+                handleSelectConversation(conversationId);
+              }}
+            />
+          ) : (
+            <SkeletonConversationItem key={index} />
+          )
       )}
     </List>
   );

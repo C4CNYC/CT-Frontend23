@@ -1,22 +1,28 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Grid, Container, Typography } from '@mui/material';
+import { Box, Grid, Container, Typography } from "@mui/material";
 // hooks
-import useResponsive from '../hooks/useResponsive';
+import useResponsive from "../hooks/useResponsive";
 // layouts
-import SimpleLayout from '../layouts/simple';
+import SimpleLayout from "../layouts/simple";
 // sections
-import { PaymentSummary, PaymentMethods, PaymentBillingAddress } from '../sections/payment';
+import {
+  PaymentSummary,
+  PaymentMethods,
+  PaymentBillingAddress,
+} from "../sections/payment";
 
 // ----------------------------------------------------------------------
 
-PaymentPage.getLayout = (page: React.ReactElement) => <SimpleLayout>{page}</SimpleLayout>;
+PaymentPage.getLayout = (page: React.ReactElement) => (
+  <SimpleLayout>{page}</SimpleLayout>
+);
 
 // ----------------------------------------------------------------------
 
 export default function PaymentPage() {
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   return (
     <>
@@ -35,7 +41,7 @@ export default function PaymentPage() {
           Let&apos;s finish powering you up!
         </Typography>
 
-        <Typography align="center" sx={{ color: 'text.secondary', mb: 5 }}>
+        <Typography align="center" sx={{ color: "text.secondary", mb: 5 }}>
           Professional plan is right for you.
         </Typography>
 
@@ -45,8 +51,8 @@ export default function PaymentPage() {
               gap={5}
               display="grid"
               gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                md: 'repeat(2, 1fr)',
+                xs: "repeat(1, 1fr)",
+                md: "repeat(2, 1fr)",
               }}
               sx={{
                 p: { md: 5 },

@@ -1,22 +1,22 @@
-import { paramCase } from 'change-case';
+import { paramCase } from "change-case";
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { Box, Card, Link, Stack, Fab } from '@mui/material';
+import { Box, Card, Link, Stack, Fab } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // redux
-import { useDispatch } from '../../../../redux/store';
-import { addToCart } from '../../../../redux/slices/product';
+import { useDispatch } from "../../../../redux/store";
+import { addToCart } from "../../../../redux/slices/product";
 // @types
-import { IProduct } from '../../../../@types/product';
+import { IProduct } from "../../../../@types/product";
 // components
-import Iconify from '../../../../components/iconify';
-import Label from '../../../../components/label';
-import Image from '../../../../components/image';
-import { ColorPreview } from '../../../../components/color-utils';
+import Iconify from "../../../../components/iconify";
+import Label from "../../../../components/label";
+import Image from "../../../../components/image";
+import { ColorPreview } from "../../../../components/color-utils";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,17 @@ type Props = {
 };
 
 export default function ShopProductCard({ product }: Props) {
-  const { id, name, cover, price, colors, status, available, sizes, priceSale } = product;
+  const {
+    id,
+    name,
+    cover,
+    price,
+    colors,
+    status,
+    available,
+    sizes,
+    priceSale,
+  } = product;
 
   const dispatch = useDispatch();
 
@@ -52,22 +62,22 @@ export default function ShopProductCard({ product }: Props) {
   return (
     <Card
       sx={{
-        '&:hover .add-cart-btn': {
+        "&:hover .add-cart-btn": {
           opacity: 1,
         },
       }}
     >
-      <Box sx={{ position: 'relative', p: 1 }}>
+      <Box sx={{ position: "relative", p: 1 }}>
         {status && (
           <Label
             variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
+            color={(status === "sale" && "error") || "info"}
             sx={{
               top: 16,
               right: 16,
               zIndex: 9,
-              position: 'absolute',
-              textTransform: 'uppercase',
+              position: "absolute",
+              textTransform: "uppercase",
             }}
           >
             {status}
@@ -84,9 +94,9 @@ export default function ShopProductCard({ product }: Props) {
             bottom: 16,
             zIndex: 9,
             opacity: 0,
-            position: 'absolute',
+            position: "absolute",
             transition: (theme) =>
-              theme.transitions.create('all', {
+              theme.transitions.create("all", {
                 easing: theme.transitions.easing.easeInOut,
                 duration: theme.transitions.duration.shorter,
               }),
@@ -99,16 +109,29 @@ export default function ShopProductCard({ product }: Props) {
       </Box>
 
       <Stack spacing={2.5} sx={{ p: 3 }}>
-        <Link component={NextLink} href={linkTo} color="inherit" variant="subtitle2" noWrap>
+        <Link
+          component={NextLink}
+          href={linkTo}
+          color="inherit"
+          variant="subtitle2"
+          noWrap
+        >
           {name}
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <ColorPreview colors={colors} />
 
-          <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
+          <Stack direction="row" spacing={0.5} sx={{ typography: "subtitle1" }}>
             {priceSale && (
-              <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
+              <Box
+                component="span"
+                sx={{ color: "text.disabled", textDecoration: "line-through" }}
+              >
                 {fCurrency(priceSale)}
               </Box>
             )}

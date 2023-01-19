@@ -1,7 +1,7 @@
 // @mui
-import { Stack, Tooltip, Typography, StackProps } from '@mui/material';
+import { Stack, Tooltip, Typography, StackProps } from "@mui/material";
 //
-import Iconify from '../../iconify';
+import Iconify from "../../iconify";
 
 // ----------------------------------------------------------------------
 
@@ -12,17 +12,23 @@ interface Props extends StackProps {
   tooltip?: string;
 }
 
-export default function Block({ title, tooltip, children, sx, ...other }: Props) {
+export default function Block({
+  title,
+  tooltip,
+  children,
+  sx,
+  ...other
+}: Props) {
   return (
     <Stack spacing={1.5} sx={{ mb: SPACING, ...sx }} {...other}>
       <Stack
         direction="row"
         alignItems="center"
         sx={{
-          color: 'text.secondary',
+          color: "text.secondary",
         }}
       >
-        <Typography variant="caption" sx={{ fontWeight: 'fontWeightMedium' }}>
+        <Typography variant="caption" sx={{ fontWeight: "fontWeightMedium" }}>
           {title}
         </Typography>
 

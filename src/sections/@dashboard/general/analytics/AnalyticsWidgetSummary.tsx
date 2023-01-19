@@ -1,13 +1,13 @@
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import { Card, Typography, CardProps } from '@mui/material';
+import { alpha, useTheme } from "@mui/material/styles";
+import { Card, Typography, CardProps } from "@mui/material";
 // utils
-import { bgGradient } from '../../../../utils/cssStyles';
-import { fShortenNumber } from '../../../../utils/formatNumber';
+import { bgGradient } from "../../../../utils/cssStyles";
+import { fShortenNumber } from "../../../../utils/formatNumber";
 // theme
-import { ColorSchema } from '../../../../theme/palette';
+import { ColorSchema } from "../../../../theme/palette";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ export default function AnalyticsWidgetSummary({
   title,
   total,
   icon,
-  color = 'primary',
+  color = "primary",
   sx,
   ...other
 }: Props) {
@@ -33,7 +33,7 @@ export default function AnalyticsWidgetSummary({
       sx={{
         py: 5,
         boxShadow: 0,
-        textAlign: 'center',
+        textAlign: "center",
         color: theme.palette[color].darker,
         bgcolor: theme.palette[color].lighter,
         ...sx,
@@ -47,10 +47,10 @@ export default function AnalyticsWidgetSummary({
           p: 2.5,
           width: 64,
           height: 64,
-          borderRadius: '50%',
+          borderRadius: "50%",
           color: theme.palette[color].dark,
           ...bgGradient({
-            direction: '135deg',
+            direction: "135deg",
             startColor: `${alpha(theme.palette[color].dark, 0)} 0%`,
             endColor: `${alpha(theme.palette[color].dark, 0.24)} 100%`,
           }),

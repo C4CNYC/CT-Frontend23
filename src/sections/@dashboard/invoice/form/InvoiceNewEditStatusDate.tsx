@@ -1,14 +1,14 @@
 // form
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller } from "react-hook-form";
 // @mui
-import { DatePicker } from '@mui/x-date-pickers';
-import { Stack, TextField, MenuItem } from '@mui/material';
+import { DatePicker } from "@mui/x-date-pickers";
+import { Stack, TextField, MenuItem } from "@mui/material";
 // components
-import { RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import { RHFSelect, RHFTextField } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = ['paid', 'unpaid', 'overdue', 'draft'];
+const STATUS_OPTIONS = ["paid", "unpaid", "overdue", "draft"];
 
 // ----------------------------------------------------------------------
 
@@ -20,8 +20,8 @@ export default function InvoiceNewEditStatusDate() {
   return (
     <Stack
       spacing={2}
-      direction={{ xs: 'column', sm: 'row' }}
-      sx={{ p: 3, bgcolor: 'background.neutral' }}
+      direction={{ xs: "column", sm: "row" }}
+      sx={{ p: 3, bgcolor: "background.neutral" }}
     >
       <RHFTextField
         disabled
@@ -30,7 +30,12 @@ export default function InvoiceNewEditStatusDate() {
         value={`INV-${values.invoiceNumber}`}
       />
 
-      <RHFSelect fullWidth name="status" label="Status" InputLabelProps={{ shrink: true }}>
+      <RHFSelect
+        fullWidth
+        name="status"
+        label="Status"
+        InputLabelProps={{ shrink: true }}
+      >
         {STATUS_OPTIONS.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
@@ -49,7 +54,12 @@ export default function InvoiceNewEditStatusDate() {
               field.onChange(newValue);
             }}
             renderInput={(params) => (
-              <TextField {...params} fullWidth error={!!error} helperText={error?.message} />
+              <TextField
+                {...params}
+                fullWidth
+                error={!!error}
+                helperText={error?.message}
+              />
             )}
           />
         )}
@@ -66,7 +76,12 @@ export default function InvoiceNewEditStatusDate() {
               field.onChange(newValue);
             }}
             renderInput={(params) => (
-              <TextField {...params} fullWidth error={!!error} helperText={error?.message} />
+              <TextField
+                {...params}
+                fullWidth
+                error={!!error}
+                helperText={error?.message}
+              />
             )}
           />
         )}

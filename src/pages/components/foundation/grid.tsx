@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme, styled } from '@mui/material/styles';
+import { useTheme, styled } from "@mui/material/styles";
 import {
   Box,
   Grid,
@@ -15,30 +15,33 @@ import {
   RadioGroup,
   GridSpacing,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const LABELS = ['1col', '2col', '3col', '4col', '6col', '12col'];
+const LABELS = ["1col", "2col", "3col", "4col", "6col", "12col"];
 
 const StyledBlockContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(5),
   border: `solid 1px ${theme.palette.divider}`,
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 100 : 800],
+  backgroundColor:
+    theme.palette.grey[theme.palette.mode === "light" ? 100 : 800],
 }));
 
 // ----------------------------------------------------------------------
 
-FoundationGridPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+FoundationGridPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +70,7 @@ export default function FoundationGridPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: theme.palette.mode === 'light' ? 'grey.200' : 'grey.800',
+          bgcolor: theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -75,10 +78,10 @@ export default function FoundationGridPage() {
             heading="Grid"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Grid' },
+              { name: "Grid" },
             ]}
           />
         </Container>
@@ -88,7 +91,7 @@ export default function FoundationGridPage() {
         <Stack spacing={5}>
           <Block title="Spacing">
             <StyledBlockContainer variant="outlined">
-              <Typography variant="body2" sx={{ mb: 3, textAlign: 'center' }}>
+              <Typography variant="body2" sx={{ mb: 3, textAlign: "center" }}>
                 Spacing: <strong>{theme.spacing(Number(spacing))}</strong>
               </Typography>
 
@@ -112,8 +115,8 @@ export default function FoundationGridPage() {
                 onChange={handleChangeSpacing}
                 sx={{
                   mt: 3,
-                  display: 'flex',
-                  justifyContent: 'center',
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
@@ -136,7 +139,7 @@ export default function FoundationGridPage() {
                     <Paper
                       sx={{
                         py: 3,
-                        textAlign: 'center',
+                        textAlign: "center",
                         boxShadow: theme.customShadows.z8,
                       }}
                     >
@@ -151,7 +154,7 @@ export default function FoundationGridPage() {
                 name="column"
                 value={column.toString()}
                 onChange={handleChangeColumn}
-                sx={{ mt: 3, display: 'flex', justifyContent: 'center' }}
+                sx={{ mt: 3, display: "flex", justifyContent: "center" }}
               >
                 {[12, 6, 4, 3, 2, 1].map((value, index) => (
                   <FormControlLabel

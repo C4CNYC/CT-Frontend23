@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container, Tab, Tabs } from '@mui/material';
+import { Box, Container, Tab, Tabs } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
 import {
   Inview,
@@ -16,26 +16,28 @@ import {
   ScrollView,
   DialogView,
   BackgroundView,
-} from '../../../sections/_examples/extra/animate';
+} from "../../../sections/_examples/extra/animate";
 
 // ----------------------------------------------------------------------
 
 const TABS = [
-  { value: 'inview', label: 'In View', component: <Inview /> },
-  { value: 'scroll', label: 'Scroll', component: <ScrollView /> },
-  { value: 'dialog', label: 'Dialog', component: <DialogView /> },
-  { value: 'background', label: 'Background', component: <BackgroundView /> },
-  { value: 'other', label: 'Other', component: <OtherView /> },
+  { value: "inview", label: "In View", component: <Inview /> },
+  { value: "scroll", label: "Scroll", component: <ScrollView /> },
+  { value: "dialog", label: "Dialog", component: <DialogView /> },
+  { value: "background", label: "Background", component: <BackgroundView /> },
+  { value: "other", label: "Other", component: <OtherView /> },
 ];
 
 // ----------------------------------------------------------------------
 
-DemoAnimatePage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoAnimatePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
 export default function DemoAnimatePage() {
-  const [currentTab, setCurrentTab] = useState('inview');
+  const [currentTab, setCurrentTab] = useState("inview");
 
   return (
     <>
@@ -47,7 +49,8 @@ export default function DemoAnimatePage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -55,18 +58,21 @@ export default function DemoAnimatePage() {
             heading="Animate"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Animate' },
+              { name: "Animate" },
             ]}
-            moreLink={['https://www.framer.com/api/motion']}
+            moreLink={["https://www.framer.com/api/motion"]}
           />
         </Container>
       </Box>
 
       <Container sx={{ my: 10 }}>
-        <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
+        <Tabs
+          value={currentTab}
+          onChange={(event, newValue) => setCurrentTab(newValue)}
+        >
           {TABS.map((tab) => (
             <Tab key={tab.value} value={tab.value} label={tab.label} />
           ))}

@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // hooks
-import useActiveLink from '../../../hooks/useActiveLink';
+import useActiveLink from "../../../hooks/useActiveLink";
 //
-import { NavListProps } from '../types';
-import { StyledPopover } from './styles';
-import NavItem from './NavItem';
+import { NavListProps } from "../types";
+import { StyledPopover } from "./styles";
+import NavItem from "./NavItem";
 
 // ----------------------------------------------------------------------
 
@@ -33,15 +33,17 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
   }, [pathname]);
 
   useEffect(() => {
-    const appBarEl = Array.from(document.querySelectorAll('.MuiAppBar-root')) as Array<HTMLElement>;
+    const appBarEl = Array.from(
+      document.querySelectorAll(".MuiAppBar-root")
+    ) as Array<HTMLElement>;
 
     // Reset styles when hover
     const styles = () => {
-      document.body.style.overflow = '';
-      document.body.style.padding = '';
+      document.body.style.overflow = "";
+      document.body.style.padding = "";
       // Apply for Window
       appBarEl.forEach((elem) => {
-        elem.style.padding = '';
+        elem.style.padding = "";
       });
     };
 
@@ -77,8 +79,8 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
         <StyledPopover
           open={open}
           anchorEl={navRef.current}
-          anchorOrigin={{ vertical: 'center', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'center', horizontal: 'left' }}
+          anchorOrigin={{ vertical: "center", horizontal: "right" }}
+          transformOrigin={{ vertical: "center", horizontal: "left" }}
           PaperProps={{
             onMouseEnter: handleOpen,
             onMouseLeave: handleClose,

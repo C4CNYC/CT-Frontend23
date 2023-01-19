@@ -1,13 +1,20 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Card, Stack, Paper, Button, Typography, IconButton } from '@mui/material';
+import {
+  Card,
+  Stack,
+  Paper,
+  Button,
+  Typography,
+  IconButton,
+} from "@mui/material";
 // @types
-import { IUserAccountBillingCreditCard } from '../../../../../@types/user';
+import { IUserAccountBillingCreditCard } from "../../../../../@types/user";
 // components
-import Image from '../../../../../components/image';
-import Iconify from '../../../../../components/iconify';
+import Image from "../../../../../components/image";
+import Iconify from "../../../../../components/iconify";
 // section
-import { PaymentNewCardDialog } from '../../../../payment';
+import { PaymentNewCardDialog } from "../../../../payment";
 
 // ----------------------------------------------------------------------
 
@@ -34,13 +41,17 @@ export default function AccountBillingPaymentMethod({ cards }: Props) {
             variant="overline"
             sx={{
               flexGrow: 1,
-              color: 'text.secondary',
+              color: "text.secondary",
             }}
           >
             Payment Method
           </Typography>
 
-          <Button size="small" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleOpen}>
+          <Button
+            size="small"
+            startIcon={<Iconify icon="eva:plus-fill" />}
+            onClick={handleOpen}
+          >
             New card
           </Button>
         </Stack>
@@ -48,8 +59,8 @@ export default function AccountBillingPaymentMethod({ cards }: Props) {
         <Stack
           spacing={2}
           direction={{
-            xs: 'column',
-            md: 'row',
+            xs: "column",
+            md: "row",
           }}
         >
           {cards.map((card) => (
@@ -59,15 +70,15 @@ export default function AccountBillingPaymentMethod({ cards }: Props) {
               sx={{
                 p: 3,
                 width: 1,
-                position: 'relative',
+                position: "relative",
               }}
             >
               <Image
                 alt="icon"
                 src={
-                  card.cardType === 'master_card'
-                    ? '/assets/icons/payments/ic_mastercard.svg'
-                    : '/assets/icons/payments/ic_visa.svg'
+                  card.cardType === "master_card"
+                    ? "/assets/icons/payments/ic_mastercard.svg"
+                    : "/assets/icons/payments/ic_visa.svg"
                 }
                 sx={{ mb: 1, maxWidth: 36 }}
               />
@@ -78,7 +89,7 @@ export default function AccountBillingPaymentMethod({ cards }: Props) {
                 sx={{
                   top: 8,
                   right: 8,
-                  position: 'absolute',
+                  position: "absolute",
                 }}
               >
                 <Iconify icon="eva:more-vertical-fill" />

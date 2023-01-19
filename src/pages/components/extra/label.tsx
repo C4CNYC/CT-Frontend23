@@ -1,24 +1,41 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Container, Stack, Paper, CardHeader, Tooltip } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Container,
+  Stack,
+  Paper,
+  CardHeader,
+  Tooltip,
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Label from '../../../components/label';
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Label from "../../../components/label";
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "default",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
 // ----------------------------------------------------------------------
 
-DemoLabelPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoLabelPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +50,8 @@ export default function DemoLabelPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -41,10 +59,10 @@ export default function DemoLabelPage() {
             heading="Label"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Label' },
+              { name: "Label" },
             ]}
           />
         </Container>
@@ -79,23 +97,42 @@ export default function DemoLabelPage() {
           </Block>
 
           <Block title="With Icon">
-            <Label variant="filled" color="primary" startIcon={<Iconify icon="eva:email-fill" />}>
+            <Label
+              variant="filled"
+              color="primary"
+              startIcon={<Iconify icon="eva:email-fill" />}
+            >
               Start Icon
             </Label>
 
-            <Label variant="filled" color="primary" endIcon={<Iconify icon="eva:email-fill" />}>
+            <Label
+              variant="filled"
+              color="primary"
+              endIcon={<Iconify icon="eva:email-fill" />}
+            >
               End Icon
             </Label>
 
-            <Label variant="outlined" color="primary" startIcon={<Iconify icon="eva:email-fill" />}>
+            <Label
+              variant="outlined"
+              color="primary"
+              startIcon={<Iconify icon="eva:email-fill" />}
+            >
               Start Icon
             </Label>
 
-            <Label variant="outlined" color="primary" endIcon={<Iconify icon="eva:email-fill" />}>
+            <Label
+              variant="outlined"
+              color="primary"
+              endIcon={<Iconify icon="eva:email-fill" />}
+            >
               End Icon
             </Label>
 
-            <Label color="primary" startIcon={<Iconify icon="eva:email-fill" />}>
+            <Label
+              color="primary"
+              startIcon={<Iconify icon="eva:email-fill" />}
+            >
               Start Icon
             </Label>
 
@@ -130,11 +167,11 @@ export function Block({ title, children }: BlockProps) {
         sx={{
           p: 5,
           minHeight: 180,
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'center',
-          '& > *': { mx: 1 },
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+          "& > *": { mx: 1 },
         }}
       >
         {children}

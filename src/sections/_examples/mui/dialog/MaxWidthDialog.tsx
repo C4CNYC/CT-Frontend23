@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -16,7 +16,7 @@ import {
   FormControlLabel,
   SelectChangeEvent,
   DialogContentText,
-} from '@mui/material';
+} from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ export default function MaxWidthDialog() {
 
   const [fullWidth, setFullWidth] = useState(true);
 
-  const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm');
+  const [maxWidth, setMaxWidth] = useState<DialogProps["maxWidth"]>("sm");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,7 +42,9 @@ export default function MaxWidthDialog() {
     );
   };
 
-  const handleFullWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFullWidthChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setFullWidth(event.target.checked);
   };
 
@@ -52,7 +54,12 @@ export default function MaxWidthDialog() {
         Max Width Dialog
       </Button>
 
-      <Dialog open={open} maxWidth={maxWidth} onClose={handleClose} fullWidth={fullWidth}>
+      <Dialog
+        open={open}
+        maxWidth={maxWidth}
+        onClose={handleClose}
+        fullWidth={fullWidth}
+      >
         <DialogTitle>Optional sizes</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -63,10 +70,10 @@ export default function MaxWidthDialog() {
             component="form"
             noValidate
             sx={{
-              margin: 'auto',
-              display: 'flex',
-              width: 'fit-content',
-              flexDirection: 'column',
+              margin: "auto",
+              display: "flex",
+              width: "fit-content",
+              flexDirection: "column",
             }}
           >
             <FormControl sx={{ mt: 2, minWidth: 120 }}>
@@ -77,8 +84,8 @@ export default function MaxWidthDialog() {
                 onChange={handleMaxWidthChange}
                 label="maxWidth"
                 inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
+                  name: "max-width",
+                  id: "max-width",
                 }}
               >
                 <MenuItem value={false as any}>false</MenuItem>
@@ -90,7 +97,9 @@ export default function MaxWidthDialog() {
               </Select>
             </FormControl>
             <FormControlLabel
-              control={<Switch checked={fullWidth} onChange={handleFullWidthChange} />}
+              control={
+                <Switch checked={fullWidth} onChange={handleFullWidthChange} />
+              }
               label="Full width"
               sx={{ mt: 1 }}
             />

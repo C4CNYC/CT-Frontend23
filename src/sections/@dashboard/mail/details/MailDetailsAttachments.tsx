@@ -1,10 +1,10 @@
 // @mui
-import { Box, Stack } from '@mui/material';
+import { Box, Stack } from "@mui/material";
 // @types
-import { IMailAttachment } from '../../../../@types/mail';
+import { IMailAttachment } from "../../../../@types/mail";
 // components
-import Scrollbar from '../../../../components/scrollbar';
-import FileThumbnail from '../../../../components/file-thumbnail';
+import Scrollbar from "../../../../components/scrollbar";
+import FileThumbnail from "../../../../components/file-thumbnail";
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ export default function MailDetailsAttachments({ attachments }: Props) {
     <Box
       sx={{
         p: 2,
-        bgcolor: 'background.neutral',
+        bgcolor: "background.neutral",
         borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
       }}
     >
@@ -47,12 +47,16 @@ function FileItem({ file }: FileItemProps) {
         width: 56,
         height: 56,
         borderRadius: 1,
-        overflow: 'hidden',
-        position: 'relative',
-        bgcolor: 'background.paper',
+        overflow: "hidden",
+        position: "relative",
+        bgcolor: "background.paper",
       }}
     >
-      <FileThumbnail tooltip file={file.preview} onDownload={() => console.log('DOWNLOAD')} />
+      <FileThumbnail
+        tooltip
+        file={file.preview}
+        onDownload={() => console.log("DOWNLOAD")}
+      />
     </Stack>
   );
 }

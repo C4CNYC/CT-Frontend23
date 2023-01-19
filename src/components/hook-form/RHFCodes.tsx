@@ -1,10 +1,10 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 // form
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller } from "react-hook-form";
 // @mui
-import { Stack, TextField, TextFieldProps } from '@mui/material';
+import { Stack, TextField, TextFieldProps } from "@mui/material";
 // hooks
-import useEventListener from '../../hooks/useEventListener';
+import useEventListener from "../../hooks/useEventListener";
 
 // ----------------------------------------------------------------------
 
@@ -13,15 +13,19 @@ type Props = TextFieldProps & {
   inputs: string[];
 };
 
-export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props) {
+export default function RHFCodes({
+  keyName = "",
+  inputs = [],
+  ...other
+}: Props) {
   const codesRef = useRef<HTMLDivElement>(null);
 
   const { control, setValue } = useFormContext();
 
   const handlePaste = (event: any) => {
-    let data = event.clipboardData.getData('text');
+    let data = event.clipboardData.getData("text");
 
-    data = data.split('');
+    data = data.split("");
 
     inputs.map((input, index) => setValue(input, data[index]));
 
@@ -34,7 +38,7 @@ export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props)
   ) => {
     const { maxLength, value, name } = event.target;
 
-    const fieldIndex = name.replace(keyName, '');
+    const fieldIndex = name.replace(keyName, "");
 
     const fieldIntIndex = Number(fieldIndex);
 
@@ -53,7 +57,7 @@ export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props)
     handleChange(event);
   };
 
-  useEventListener('paste', handlePaste, codesRef);
+  useEventListener("paste", handlePaste, codesRef);
 
   return (
     <Stack direction="row" spacing={2} justifyContent="center" ref={codesRef}>
@@ -76,12 +80,12 @@ export default function RHFCodes({ keyName = '', inputs = [], ...other }: Props)
                 sx: {
                   width: { xs: 36, sm: 56 },
                   height: { xs: 36, sm: 56 },
-                  '& input': { p: 0, textAlign: 'center' },
+                  "& input": { p: 0, textAlign: "center" },
                 },
               }}
               inputProps={{
                 maxLength: 1,
-                type: 'number',
+                type: "number",
               }}
               {...other}
             />

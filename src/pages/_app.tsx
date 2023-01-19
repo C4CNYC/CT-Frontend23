@@ -1,58 +1,58 @@
 // i18n
-import '../locales/i18n';
+import "../locales/i18n";
 
 // scroll bar
-import 'simplebar/src/simplebar.css';
+import "simplebar/src/simplebar.css";
 
 // lightbox
-import 'yet-another-react-lightbox/styles.css';
-import 'yet-another-react-lightbox/plugins/captions.css';
-import 'yet-another-react-lightbox/plugins/thumbnails.css';
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/captions.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
 
 // map
-import 'mapbox-gl/dist/mapbox-gl.css';
+import "mapbox-gl/dist/mapbox-gl.css";
 
 // editor
-import 'react-quill/dist/quill.snow.css';
+import "react-quill/dist/quill.snow.css";
 
 // slick-carousel
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 // lazy image
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 // ----------------------------------------------------------------------
 
-import { CacheProvider, EmotionCache } from '@emotion/react';
+import { CacheProvider, EmotionCache } from "@emotion/react";
 // next
-import { NextPage } from 'next';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
+import { NextPage } from "next";
+import Head from "next/head";
+import { AppProps } from "next/app";
 // redux
-import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as ReduxProvider } from "react-redux";
 // @mui
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 // redux
-import { store } from '../redux/store';
+import { store } from "../redux/store";
 // utils
-import createEmotionCache from '../utils/createEmotionCache';
+import createEmotionCache from "../utils/createEmotionCache";
 // theme
-import ThemeProvider from '../theme';
+import ThemeProvider from "../theme";
 // locales
-import ThemeLocalization from '../locales';
+import ThemeLocalization from "../locales";
 // components
-import { StyledChart } from '../components/chart';
-import ProgressBar from '../components/progress-bar';
-import SnackbarProvider from '../components/snackbar';
-import { MotionLazyContainer } from '../components/animate';
-import { ThemeSettings, SettingsProvider } from '../components/settings';
+import { StyledChart } from "../components/chart";
+import ProgressBar from "../components/progress-bar";
+import SnackbarProvider from "../components/snackbar";
+import { MotionLazyContainer } from "../components/animate";
+import { ThemeSettings, SettingsProvider } from "../components/settings";
 
 // Check our docs
 // https://docs.minimals.cc/authentication/ts-version
 
-import { AuthProvider } from '../auth/JwtContext';
+import { AuthProvider } from "../auth/JwtContext";
 // import { AuthProvider } from '../auth/Auth0Context';
 // import { AuthProvider } from '../auth/FirebaseContext';
 // import { AuthProvider } from '../auth/AwsCognitoContext';

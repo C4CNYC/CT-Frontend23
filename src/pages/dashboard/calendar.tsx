@@ -1,18 +1,24 @@
-import FullCalendar, { DateSelectArg, EventClickArg, EventDropArg } from '@fullcalendar/react'; // => request placed at the top
-import interactionPlugin, { EventResizeDoneArg } from '@fullcalendar/interaction';
-import listPlugin from '@fullcalendar/list';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import timelinePlugin from '@fullcalendar/timeline';
-import { EventInput } from '@fullcalendar/common';
+import FullCalendar, {
+  DateSelectArg,
+  EventClickArg,
+  EventDropArg,
+} from "@fullcalendar/react"; // => request placed at the top
+import interactionPlugin, {
+  EventResizeDoneArg,
+} from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import timelinePlugin from "@fullcalendar/timeline";
+import { EventInput } from "@fullcalendar/common";
 //
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Card, Button, Container, DialogTitle, Dialog } from '@mui/material';
+import { Card, Button, Container, DialogTitle, Dialog } from "@mui/material";
 // redux
-import { useDispatch, useSelector } from '../../redux/store';
+import { useDispatch, useSelector } from "../../redux/store";
 import {
   getEvents,
   createEvent,
@@ -22,46 +28,48 @@ import {
   selectRange,
   onOpenModal,
   onCloseModal,
-} from '../../redux/slices/calendar';
+} from "../../redux/slices/calendar";
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from "../../routes/paths";
 // utils
-import { fTimestamp } from '../../utils/formatTime';
+import { fTimestamp } from "../../utils/formatTime";
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from "../../hooks/useResponsive";
 // @types
-import { ICalendarEvent, ICalendarViewValue } from '../../@types/calendar';
+import { ICalendarEvent, ICalendarViewValue } from "../../@types/calendar";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // components
-import Iconify from '../../components/iconify';
-import { useSnackbar } from '../../components/snackbar';
-import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../components/settings';
-import { useDateRangePicker } from '../../components/date-range-picker';
+import Iconify from "../../components/iconify";
+import { useSnackbar } from "../../components/snackbar";
+import CustomBreadcrumbs from "../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../components/settings";
+import { useDateRangePicker } from "../../components/date-range-picker";
 // sections
 import {
   CalendarForm,
   StyledCalendar,
   CalendarToolbar,
   CalendarFilterDrawer,
-} from '../../sections/@dashboard/calendar';
+} from "../../sections/@dashboard/calendar";
 
 // ----------------------------------------------------------------------
 
 const COLOR_OPTIONS = [
-  '#00AB55', // theme.palette.primary.main,
-  '#1890FF', // theme.palette.info.main,
-  '#54D62C', // theme.palette.success.main,
-  '#FFC107', // theme.palette.warning.main,
-  '#FF4842', // theme.palette.error.main
-  '#04297A', // theme.palette.info.darker
-  '#7A0C2E', // theme.palette.error.darker
+  "#00AB55", // theme.palette.primary.main,
+  "#1890FF", // theme.palette.info.main,
+  "#54D62C", // theme.palette.success.main,
+  "#FFC107", // theme.palette.warning.main,
+  "#FF4842", // theme.palette.error.main
+  "#04297A", // theme.palette.info.darker
+  "#7A0C2E", // theme.palette.error.darker
 ];
 
 // ----------------------------------------------------------------------
 
-CalendarPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+CalendarPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -72,7 +80,7 @@ export default function CalendarPage() {
 
   const dispatch = useDispatch();
 
-  const isDesktop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive("up", "sm");
 
   const calendarRef = useRef<FullCalendar>(null);
 
@@ -96,7 +104,9 @@ export default function CalendarPage() {
 
   const [filterEventColor, setFilterEventColor] = useState<string[]>([]);
 
-  const [view, setView] = useState<ICalendarViewValue>(isDesktop ? 'dayGridMonth' : 'listWeek');
+  const [view, setView] = useState<ICalendarViewValue>(
+    isDesktop ? "dayGridMonth" : "listWeek"
+  );
 
   useEffect(() => {
     dispatch(getEvents());
@@ -106,7 +116,7 @@ export default function CalendarPage() {
     const calendarEl = calendarRef.current;
     if (calendarEl) {
       const calendarApi = calendarEl.getApi();
-      const newView = isDesktop ? 'dayGridMonth' : 'listWeek';
+      const newView = isDesktop ? "dayGridMonth" : "listWeek";
       calendarApi.changeView(newView);
       setView(newView);
     }
@@ -213,10 +223,10 @@ export default function CalendarPage() {
   const handleCreateUpdateEvent = (newEvent: ICalendarEvent) => {
     if (selectedEventId) {
       dispatch(updateEvent(selectedEventId, newEvent));
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar("Update success!");
     } else {
       dispatch(createEvent(newEvent));
-      enqueueSnackbar('Create success!');
+      enqueueSnackbar("Create success!");
     }
   };
 
@@ -225,7 +235,7 @@ export default function CalendarPage() {
       if (selectedEventId) {
         dispatch(deleteEvent(selectedEventId));
         handleCloseModal();
-        enqueueSnackbar('Delete success!');
+        enqueueSnackbar("Delete success!");
       }
     } catch (error) {
       console.error(error);
@@ -254,19 +264,19 @@ export default function CalendarPage() {
         <title> Calendar | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <CustomBreadcrumbs
           heading="Calendar"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'Calendar',
+              name: "Calendar",
             },
           ]}
-          moreLink={['https://fullcalendar.io/docs/react']}
+          moreLink={["https://fullcalendar.io/docs/react"]}
           action={
             <Button
               variant="contained"
@@ -308,7 +318,7 @@ export default function CalendarPage() {
               eventDrop={handleDropEvent}
               eventClick={handleSelectEvent}
               eventResize={handleResizeEvent}
-              height={isDesktop ? 720 : 'auto'}
+              height={isDesktop ? 720 : "auto"}
               plugins={[
                 listPlugin,
                 dayGridPlugin,
@@ -321,8 +331,13 @@ export default function CalendarPage() {
         </Card>
       </Container>
 
-      <Dialog fullWidth maxWidth="xs" open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>{selectedEvent ? 'Edit Event' : 'Add Event'}</DialogTitle>
+      <Dialog
+        fullWidth
+        maxWidth="xs"
+        open={openModal}
+        onClose={handleCloseModal}
+      >
+        <DialogTitle>{selectedEvent ? "Edit Event" : "Add Event"}</DialogTitle>
 
         <CalendarForm
           event={selectedEvent}

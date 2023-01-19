@@ -1,12 +1,12 @@
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { Link, ListItemText, ListItemIcon } from '@mui/material';
+import { Link, ListItemText, ListItemIcon } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import { NavItemMobileProps } from '../types';
-import { ListItem } from './styles';
+import { NavItemMobileProps } from "../types";
+import { ListItem } from "./styles";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +28,9 @@ export default function NavItem({
       {!!children && (
         <Iconify
           width={16}
-          icon={open ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
+          icon={
+            open ? "eva:arrow-ios-downward-fill" : "eva:arrow-ios-forward-fill"
+          }
           sx={{ ml: 1 }}
         />
       )}

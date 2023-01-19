@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // @mui
-import { useTheme, styled } from '@mui/material/styles';
-import { Box, Drawer, IconButton, IconButtonProps } from '@mui/material';
+import { useTheme, styled } from "@mui/material/styles";
+import { Box, Drawer, IconButton, IconButtonProps } from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // @types
-import { IChatConversation, IChatParticipant } from '../../../../@types/chat';
+import { IChatConversation, IChatParticipant } from "../../../../@types/chat";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import ChatRoomAttachments from './ChatRoomAttachments';
-import ChatRoomSingle from './ChatRoomSingle';
-import ChatRoomGroup from './ChatRoomGroup';
+import ChatRoomAttachments from "./ChatRoomAttachments";
+import ChatRoomSingle from "./ChatRoomSingle";
+import ChatRoomGroup from "./ChatRoomGroup";
 
 // ----------------------------------------------------------------------
 
@@ -22,15 +22,15 @@ const StyledToggleButton = styled((props) => (
   zIndex: 9,
   width: 32,
   height: 32,
-  position: 'absolute',
+  position: "absolute",
   top: theme.spacing(1),
   boxShadow: theme.customShadows.z8,
   backgroundColor: theme.palette.background.paper,
   border: `solid 1px ${theme.palette.divider}`,
   borderRight: 0,
   borderRadius: `12px 0 0 12px`,
-  transition: theme.transitions.create('all'),
-  '&:hover': {
+  transition: theme.transitions.create("all"),
+  "&:hover": {
     backgroundColor: theme.palette.background.neutral,
   },
 }));
@@ -47,7 +47,7 @@ type Props = {
 export default function ChatRoom({ conversation, participants }: Props) {
   const theme = useTheme();
 
-  const isDesktop = useResponsive('up', 'lg');
+  const isDesktop = useResponsive("up", "lg");
 
   const [openNav, setOpenNav] = useState(true);
 
@@ -105,7 +105,7 @@ export default function ChatRoom({ conversation, participants }: Props) {
   );
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: "relative" }}>
       <StyledToggleButton
         onClick={() => setOpenNav(!openNav)}
         sx={{
@@ -117,7 +117,9 @@ export default function ChatRoom({ conversation, participants }: Props) {
       >
         <Iconify
           width={16}
-          icon={openNav ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'}
+          icon={
+            openNav ? "eva:arrow-ios-forward-fill" : "eva:arrow-ios-back-fill"
+          }
         />
       </StyledToggleButton>
 
@@ -129,13 +131,13 @@ export default function ChatRoom({ conversation, participants }: Props) {
           PaperProps={{
             sx: {
               width: 1,
-              position: 'static',
+              position: "static",
             },
           }}
           sx={{
             height: 1,
             width: NAV_WIDTH,
-            transition: theme.transitions.create('width'),
+            transition: theme.transitions.create("width"),
             ...(!openNav && {
               width: 0,
             }),

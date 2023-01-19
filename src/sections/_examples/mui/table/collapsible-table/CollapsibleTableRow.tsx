@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Paper,
@@ -10,11 +10,11 @@ import {
   TableCell,
   Typography,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../../components/iconify';
+import Iconify from "../../../../../components/iconify";
 //
-import createData from './createData';
+import createData from "./createData";
 
 // ----------------------------------------------------------------------
 
@@ -31,10 +31,16 @@ export default function CollapsibleTableRow({ row }: Props) {
         <TableCell>
           <IconButton
             size="small"
-            color={open ? 'inherit' : 'default'}
+            color={open ? "inherit" : "default"}
             onClick={() => setOpen(!open)}
           >
-            <Iconify icon={open ? 'eva:arrow-ios-upward-fill' : 'eva:arrow-ios-downward-fill'} />
+            <Iconify
+              icon={
+                open
+                  ? "eva:arrow-ios-upward-fill"
+                  : "eva:arrow-ios-downward-fill"
+              }
+            />
           </IconButton>
         </TableCell>
 

@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { sentenceCase } from 'change-case';
+import { useState } from "react";
+import { format } from "date-fns";
+import { sentenceCase } from "change-case";
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Card,
@@ -19,15 +19,15 @@ import {
   Typography,
   IconButton,
   TableContainer,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Label from '../../../../components/label';
-import Iconify, { IconifyProps } from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import MenuPopover from '../../../../components/menu-popover';
-import { TableHeadCustom } from '../../../../components/table';
+import Label from "../../../../components/label";
+import Iconify, { IconifyProps } from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import MenuPopover from "../../../../components/menu-popover";
+import { TableHeadCustom } from "../../../../components/table";
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ export default function BankingRecentTransitions({
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
 
-      <TableContainer sx={{ overflow: 'unset' }}>
+      <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar sx={{ minWidth: 720 }}>
           <Table>
             <TableHeadCustom headLabel={tableLabels} />
@@ -77,7 +77,7 @@ export default function BankingRecentTransitions({
 
       <Divider />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
+      <Box sx={{ p: 2, textAlign: "right" }}>
         <Button
           size="small"
           color="inherit"
@@ -96,10 +96,12 @@ type BankingRecentTransitionsRowProps = {
   row: RowProps;
 };
 
-function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) {
+function BankingRecentTransitionsRow({
+  row,
+}: BankingRecentTransitionsRowProps) {
   const theme = useTheme();
 
-  const isLight = theme.palette.mode === 'light';
+  const isLight = theme.palette.mode === "light";
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -113,30 +115,30 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
 
   const handleDownload = () => {
     handleClosePopover();
-    console.log('DOWNLOAD', row.id);
+    console.log("DOWNLOAD", row.id);
   };
 
   const handlePrint = () => {
     handleClosePopover();
-    console.log('PRINT', row.id);
+    console.log("PRINT", row.id);
   };
 
   const handleShare = () => {
     handleClosePopover();
-    console.log('SHARE', row.id);
+    console.log("SHARE", row.id);
   };
 
   const handleDelete = () => {
     handleClosePopover();
-    console.log('DELETE', row.id);
+    console.log("DELETE", row.id);
   };
 
   return (
     <>
       <TableRow>
         <TableCell>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ position: 'relative' }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ position: "relative" }}>
               {renderAvatar(row.category, row.avatar)}
               <Box
                 sx={{
@@ -144,30 +146,30 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
                   bottom: 0,
                   width: 18,
                   height: 18,
-                  display: 'flex',
-                  borderRadius: '50%',
-                  position: 'absolute',
-                  alignItems: 'center',
-                  color: 'common.white',
-                  bgcolor: 'error.main',
-                  justifyContent: 'center',
-                  ...(row.type === 'Income' && {
-                    bgcolor: 'success.main',
+                  display: "flex",
+                  borderRadius: "50%",
+                  position: "absolute",
+                  alignItems: "center",
+                  color: "common.white",
+                  bgcolor: "error.main",
+                  justifyContent: "center",
+                  ...(row.type === "Income" && {
+                    bgcolor: "success.main",
                   }),
                 }}
               >
                 <Iconify
                   icon={
-                    row.type === 'Income'
-                      ? 'eva:diagonal-arrow-left-down-fill'
-                      : 'eva:diagonal-arrow-right-up-fill'
+                    row.type === "Income"
+                      ? "eva:diagonal-arrow-left-down-fill"
+                      : "eva:diagonal-arrow-right-up-fill"
                   }
                   width={16}
                 />
               </Box>
             </Box>
             <Box sx={{ ml: 2 }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 {row.message}
               </Typography>
               <Typography variant="subtitle2"> {row.category}</Typography>
@@ -176,9 +178,11 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
         </TableCell>
 
         <TableCell>
-          <Typography variant="subtitle2">{format(new Date(row.date), 'dd MMM yyyy')}</Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {format(new Date(row.date), 'p')}
+          <Typography variant="subtitle2">
+            {format(new Date(row.date), "dd MMM yyyy")}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {format(new Date(row.date), "p")}
           </Typography>
         </TableCell>
 
@@ -186,11 +190,11 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
 
         <TableCell>
           <Label
-            variant={isLight ? 'soft' : 'filled'}
+            variant={isLight ? "soft" : "filled"}
             color={
-              (row.status === 'completed' && 'success') ||
-              (row.status === 'in_progress' && 'warning') ||
-              'error'
+              (row.status === "completed" && "success") ||
+              (row.status === "in_progress" && "warning") ||
+              "error"
             }
           >
             {sentenceCase(row.status)}
@@ -198,7 +202,10 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
         </TableCell>
 
         <TableCell align="right">
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -225,9 +232,9 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
-        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" />
           Delete
         </MenuItem>
@@ -248,8 +255,8 @@ function AvatarIcon({ icon }: AvatarIconProps) {
       sx={{
         width: 48,
         height: 48,
-        color: 'text.secondary',
-        bgcolor: 'background.neutral',
+        color: "text.secondary",
+        bgcolor: "background.neutral",
       }}
     >
       <Iconify icon={icon} width={24} />
@@ -260,17 +267,21 @@ function AvatarIcon({ icon }: AvatarIconProps) {
 // ----------------------------------------------------------------------
 
 function renderAvatar(category: string, avatar: string | null) {
-  if (category === 'Books') {
+  if (category === "Books") {
     return <AvatarIcon icon="eva:book-fill" />;
   }
-  if (category === 'Beauty & Health') {
+  if (category === "Beauty & Health") {
     return <AvatarIcon icon="eva:heart-fill" />;
   }
   return avatar ? (
     <Avatar
       alt={category}
       src={avatar}
-      sx={{ width: 48, height: 48, boxShadow: (theme) => theme.customShadows.z8 }}
+      sx={{
+        width: 48,
+        height: 48,
+        boxShadow: (theme) => theme.customShadows.z8,
+      }}
     />
   ) : null;
 }

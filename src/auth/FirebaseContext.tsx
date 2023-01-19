@@ -1,5 +1,11 @@
-import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
-import { initializeApp } from 'firebase/app';
+import {
+  createContext,
+  useEffect,
+  useReducer,
+  useCallback,
+  useMemo,
+} from "react";
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   signOut,
@@ -10,12 +16,23 @@ import {
   TwitterAuthProvider,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-} from 'firebase/auth';
-import { getFirestore, collection, doc, getDoc, setDoc } from 'firebase/firestore';
+} from "firebase/auth";
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 // config
-import { FIREBASE_API } from '../config-global';
+import { FIREBASE_API } from "../config-global";
 //
-import { ActionMapType, AuthStateType, AuthUserType, FirebaseContextType } from './types';
+import {
+  ActionMapType,
+  AuthStateType,
+  AuthUserType,
+  FirebaseContextType,
+} from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +43,7 @@ import { ActionMapType, AuthStateType, AuthUserType, FirebaseContextType } from 
 // ----------------------------------------------------------------------
 
 enum Types {
-  INITIAL = 'INITIAL',
+  INITIAL = "INITIAL",
 }
 
 type Payload = {
@@ -86,7 +103,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       onAuthStateChanged(AUTH, async (user) => {
         if (user) {
-          const userRef = doc(DB, 'users', user.uid);
+          const userRef = doc(DB, "users", user.uid);
 
           const docSnap = await getDoc(userRef);
 
@@ -99,7 +116,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
               user: {
                 ...user,
                 ...profile,
-                role: 'admin',
+                role: "admin",
               },
             },
           });
@@ -142,15 +159,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // REGISTER
   const register = useCallback(
     (email: string, password: string, firstName: string, lastName: string) => {
-      createUserWithEmailAndPassword(AUTH, email, password).then(async (res) => {
-        const userRef = doc(collection(DB, 'users'), res.user?.uid);
+      createUserWithEmailAndPassword(AUTH, email, password).then(
+        async (res) => {
+          const userRef = doc(collection(DB, "users"), res.user?.uid);
 
-        await setDoc(userRef, {
-          uid: res.user?.uid,
-          email,
-          displayName: `${firstName} ${lastName}`,
-        });
-      });
+          await setDoc(userRef, {
+            uid: res.user?.uid,
+            email,
+            displayName: `${firstName} ${lastName}`,
+          });
+        }
+      );
     },
     []
   );
@@ -165,7 +184,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isInitialized: state.isInitialized,
       isAuthenticated: state.isAuthenticated,
       user: state.user,
-      method: 'firebase',
+      method: "firebase",
       login,
       loginWithGoogle,
       loginWithGithub,
@@ -186,5 +205,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     ]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

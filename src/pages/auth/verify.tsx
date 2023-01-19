@@ -1,22 +1,24 @@
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
+import Head from "next/head";
+import NextLink from "next/link";
 // @mui
-import { Link, Typography } from '@mui/material';
+import { Link, Typography } from "@mui/material";
 // layouts
-import CompactLayout from '../../layouts/compact';
+import CompactLayout from "../../layouts/compact";
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from "../../routes/paths";
 // components
-import Iconify from '../../components/iconify';
+import Iconify from "../../components/iconify";
 // sections
-import AuthVerifyCodeForm from '../../sections/auth/AuthVerifyCodeForm';
+import AuthVerifyCodeForm from "../../sections/auth/AuthVerifyCodeForm";
 // assets
-import { EmailInboxIcon } from '../../assets/icons';
+import { EmailInboxIcon } from "../../assets/icons";
 
 // ----------------------------------------------------------------------
 
-VerifyCodePage.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>;
+VerifyCodePage.getLayout = (page: React.ReactElement) => (
+  <CompactLayout>{page}</CompactLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -33,9 +35,9 @@ export default function VerifyCodePage() {
         Please check your email!
       </Typography>
 
-      <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-        We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below
-        box to verify your email.
+      <Typography sx={{ color: "text.secondary", mb: 5 }}>
+        We have emailed a 6-digit confirmation code to acb@domain, please enter
+        the code in below box to verify your email.
       </Typography>
 
       <AuthVerifyCodeForm />
@@ -51,9 +53,9 @@ export default function VerifyCodePage() {
         color="inherit"
         variant="subtitle2"
         sx={{
-          mx: 'auto',
-          alignItems: 'center',
-          display: 'inline-flex',
+          mx: "auto",
+          alignItems: "center",
+          display: "inline-flex",
         }}
       >
         <Iconify icon="eva:chevron-left-fill" width={16} />

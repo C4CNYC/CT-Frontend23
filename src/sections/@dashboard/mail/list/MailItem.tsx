@@ -1,52 +1,59 @@
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Tooltip, Typography, Checkbox, Stack, TypographyProps } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import {
+  Box,
+  Tooltip,
+  Typography,
+  Checkbox,
+  Stack,
+  TypographyProps,
+} from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // utils
-import { fDate } from '../../../../utils/formatTime';
+import { fDate } from "../../../../utils/formatTime";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // @types
-import { IMail, IMailLabel } from '../../../../@types/mail';
+import { IMail, IMailLabel } from "../../../../@types/mail";
 // components
-import Label from '../../../../components/label';
-import { CustomAvatar } from '../../../../components/custom-avatar';
-import Iconify from '../../../../components/iconify';
+import Label from "../../../../components/label";
+import { CustomAvatar } from "../../../../components/custom-avatar";
+import Iconify from "../../../../components/iconify";
 //
-import MailItemAction from './MailItemAction';
+import MailItemAction from "./MailItemAction";
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
-  position: 'relative',
+const StyledRoot = styled("div")(({ theme }) => ({
+  position: "relative",
   padding: theme.spacing(0, 2),
   color: theme.palette.text.secondary,
   backgroundColor: theme.palette.background.neutral,
   borderBottom: `1px solid ${theme.palette.divider}`,
-  [theme.breakpoints.up('md')]: {
-    display: 'flex',
-    alignItems: 'center',
+  [theme.breakpoints.up("md")]: {
+    display: "flex",
+    alignItems: "center",
   },
-  '&:hover': {
+  "&:hover": {
     zIndex: 9,
-    position: 'relative',
+    position: "relative",
     boxShadow: theme.customShadows.z24,
-    '& #mailActions': { opacity: 1 },
+    "& #mailActions": { opacity: 1 },
   },
 }));
 
-const StyledContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  cursor: 'pointer',
+const StyledContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  cursor: "pointer",
   padding: theme.spacing(2, 0),
-  transition: theme.transitions.create('padding'),
-  [theme.breakpoints.up('md')]: {
+  transition: theme.transitions.create("padding"),
+  [theme.breakpoints.up("md")]: {
     flexGrow: 1,
     minWidth: 0,
-    alignItems: 'center',
+    alignItems: "center",
   },
 }));
 
@@ -55,7 +62,7 @@ const StyledName = styled((props: TypographyProps) => (
 ))(({ theme }) => ({
   ...theme.typography.body2,
   marginRight: theme.spacing(2),
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     width: 160,
     flexShrink: 0,
   },
@@ -69,12 +76,12 @@ const StyledTextContent = styled((props: TypographyProps) => (
   flexGrow: 1,
 }));
 
-const StyledCreateDate = styled('div')(({ theme }) => ({
+const StyledCreateDate = styled("div")(({ theme }) => ({
   ...theme.typography.caption,
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     width: 96,
     flexShrink: 0,
-    textAlign: 'right',
+    textAlign: "right",
   },
 }));
 
@@ -82,10 +89,10 @@ const StyledAttachmentIcon = styled(Iconify)(({ theme }) => ({
   top: 16,
   right: 16,
   zIndex: 9,
-  position: 'absolute',
-  [theme.breakpoints.up('md')]: {
+  position: "absolute",
+  [theme.breakpoints.up("md")]: {
     flexShrink: 0,
-    position: 'unset',
+    position: "unset",
     marginLeft: theme.spacing(2),
   },
 }));
@@ -112,13 +119,14 @@ export default function MailItem({
 }: Props) {
   const { push, query: params } = useRouter();
 
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   const isAttached = !!mail.attachments.length;
 
   const isUnread = !mail.isUnread;
 
-  const handleChangeCheckbox = (checked: boolean) => (checked ? onSelect() : onDeselect());
+  const handleChangeCheckbox = (checked: boolean) =>
+    checked ? onSelect() : onDeselect();
 
   const handleClick = () => {
     push(linkTo(params, mail.id));
@@ -128,11 +136,11 @@ export default function MailItem({
     <StyledRoot
       sx={{
         ...(selected && {
-          bgcolor: 'action.selected',
+          bgcolor: "action.selected",
         }),
         ...(isUnread && {
-          color: 'text.primary',
-          bgcolor: 'background.paper',
+          color: "text.primary",
+          bgcolor: "background.paper",
         }),
       }}
       {...other}
@@ -176,21 +184,21 @@ export default function MailItem({
       >
         <CustomAvatar
           alt={mail.from.name}
-          src={mail.from.avatar || ''}
+          src={mail.from.avatar || ""}
           name={mail.from.name}
           sx={{ width: 32, height: 32, mr: 2 }}
         />
 
         <Stack
           flexGrow={1}
-          alignItems={{ md: 'center' }}
-          flexDirection={{ xs: 'column', md: 'row' }}
+          alignItems={{ md: "center" }}
+          flexDirection={{ xs: "column", md: "row" }}
           sx={{ minWidth: 0 }}
         >
           <StyledName
             sx={{
               ...(isUnread && {
-                fontWeight: 'fontWeightBold',
+                fontWeight: "fontWeightBold",
               }),
             }}
           >
@@ -202,7 +210,7 @@ export default function MailItem({
               component="span"
               sx={{
                 ...(isUnread && {
-                  fontWeight: 'fontWeightBold',
+                  fontWeight: "fontWeightBold",
                 }),
               }}
             >
@@ -215,7 +223,7 @@ export default function MailItem({
               component="span"
               sx={{
                 ...(isUnread && {
-                  color: 'text.secondary',
+                  color: "text.secondary",
                 }),
               }}
             >
@@ -237,7 +245,8 @@ export default function MailItem({
                     key={label.id}
                     sx={{
                       bgcolor: label.color,
-                      color: (theme) => theme.palette.getContrastText(label.color || ''),
+                      color: (theme) =>
+                        theme.palette.getContrastText(label.color || ""),
                     }}
                   >
                     {label.name}
@@ -252,7 +261,7 @@ export default function MailItem({
           <StyledCreateDate
             sx={{
               ...(isUnread && {
-                fontWeight: 'fontWeightBold',
+                fontWeight: "fontWeightBold",
               }),
             }}
           >
@@ -263,10 +272,10 @@ export default function MailItem({
 
       <MailItemAction
         id="mailActions"
-        onArchive={() => console.log('ARCHIVE', mail.id)}
-        onDelete={() => console.log('DELETE', mail.id)}
-        onMarkRead={() => console.log('MARKREAD', mail.id)}
-        onHidden={() => console.log('HIDDEN', mail.id)}
+        onArchive={() => console.log("ARCHIVE", mail.id)}
+        onDelete={() => console.log("DELETE", mail.id)}
+        onMarkRead={() => console.log("MARKREAD", mail.id)}
+        onHidden={() => console.log("HIDDEN", mail.id)}
       />
     </StyledRoot>
   );

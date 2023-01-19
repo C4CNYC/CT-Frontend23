@@ -1,11 +1,11 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Card, Typography, CardProps, Stack, Avatar } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Card, Typography, CardProps, Stack, Avatar } from "@mui/material";
 // utils
-import { fData } from '../../../../utils/formatNumber';
+import { fData } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -24,12 +24,20 @@ interface Props extends CardProps {
   };
 }
 
-export default function FileGeneralStorageOverview({ data, total, chart, ...other }: Props) {
+export default function FileGeneralStorageOverview({
+  data,
+  total,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
 
-  const chartColors = colors || [theme.palette.primary.light, theme.palette.primary.main];
+  const chartColors = colors || [
+    theme.palette.primary.light,
+    theme.palette.primary.main,
+  ];
 
   const chartOptions = useChart({
     chart: {
@@ -52,7 +60,7 @@ export default function FileGeneralStorageOverview({ data, total, chart, ...othe
         startAngle: -90,
         endAngle: 90,
         hollow: {
-          size: '56%',
+          size: "56%",
         },
         dataLabels: {
           name: {
@@ -71,7 +79,7 @@ export default function FileGeneralStorageOverview({ data, total, chart, ...othe
       },
     },
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
         colorStops: [chartColors].map((colr) => [
           { offset: 0, color: colr[0] },
@@ -84,26 +92,44 @@ export default function FileGeneralStorageOverview({ data, total, chart, ...othe
 
   return (
     <Card {...other}>
-      <Chart type="radialBar" series={[series]} options={chartOptions} height={360} />
+      <Chart
+        type="radialBar"
+        series={[series]}
+        options={chartOptions}
+        height={360}
+      />
 
       <Stack spacing={3} sx={{ p: 3 }}>
         {data.map((category) => (
-          <Stack key={category.name} spacing={2} direction="row" alignItems="center">
+          <Stack
+            key={category.name}
+            spacing={2}
+            direction="row"
+            alignItems="center"
+          >
             <Avatar
               variant="rounded"
-              sx={{ bgcolor: 'background.neutral', width: 48, height: 48, borderRadius: 1.5 }}
+              sx={{
+                bgcolor: "background.neutral",
+                width: 48,
+                height: 48,
+                borderRadius: 1.5,
+              }}
             >
               {category.icon}
             </Avatar>
 
             <Stack spacing={0.5} flexGrow={1}>
               <Typography variant="subtitle2"> {category.name} </Typography>
-              <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+              <Typography variant="caption" sx={{ color: "text.disabled" }}>
                 {category.filesCount} files
               </Typography>
             </Stack>
 
-            <Typography variant="subtitle2"> {fData(category.usedStorage)} </Typography>
+            <Typography variant="subtitle2">
+              {" "}
+              {fData(category.usedStorage)}{" "}
+            </Typography>
           </Stack>
         ))}
       </Stack>

@@ -1,10 +1,13 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box } from "@mui/material";
 // components
-import Image from '../../../../components/image';
-import Carousel, { CarouselDots, CarouselArrows } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import Carousel, {
+  CarouselDots,
+  CarouselArrows,
+} from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +31,7 @@ export default function CarouselBasic3({ data }: Props) {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     ...CarouselDots({
       rounded: true,
       sx: { mt: 3 },
@@ -46,14 +49,19 @@ export default function CarouselBasic3({ data }: Props) {
   return (
     <Box
       sx={{
-        position: 'relative',
-        '& .slick-list': {
+        position: "relative",
+        "& .slick-list": {
           borderRadius: 2,
           boxShadow: theme.customShadows.z16,
         },
       }}
     >
-      <CarouselArrows filled shape="rounded" onNext={handleNext} onPrevious={handlePrev}>
+      <CarouselArrows
+        filled
+        shape="rounded"
+        onNext={handleNext}
+        onPrevious={handlePrev}
+      >
         <Carousel ref={carouselRef} {...carouselSettings}>
           {data.map((item) => (
             <CarouselItem key={item.id} item={item} />

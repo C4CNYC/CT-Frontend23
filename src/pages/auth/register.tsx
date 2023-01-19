@@ -1,9 +1,9 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // auth
-import GuestGuard from '../../auth/GuestGuard';
+import GuestGuard from "../../auth/GuestGuard";
 // sections
-import Register from '../../sections/auth/Register';
+import Register from "../../sections/auth/Register";
 
 // ----------------------------------------------------------------------
 

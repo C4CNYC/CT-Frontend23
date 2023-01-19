@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { sentenceCase } from 'change-case';
+import { useState } from "react";
+import { sentenceCase } from "change-case";
 // @mui
 import {
   Box,
@@ -15,15 +15,15 @@ import {
   CardHeader,
   IconButton,
   TableContainer,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import MenuPopover from '../../../../components/menu-popover';
-import { TableHeadCustom } from '../../../../components/table';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import MenuPopover from "../../../../components/menu-popover";
+import { TableHeadCustom } from "../../../../components/table";
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ export default function AppNewInvoice({
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
 
-      <TableContainer sx={{ overflow: 'unset' }}>
+      <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar>
           <Table sx={{ minWidth: 720 }}>
             <TableHeadCustom headLabel={tableLabels} />
@@ -68,7 +68,7 @@ export default function AppNewInvoice({
 
       <Divider />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
+      <Box sx={{ p: 2, textAlign: "right" }}>
         <Button
           size="small"
           color="inherit"
@@ -100,22 +100,22 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
 
   const handleDownload = () => {
     handleClosePopover();
-    console.log('DOWNLOAD', row.id);
+    console.log("DOWNLOAD", row.id);
   };
 
   const handlePrint = () => {
     handleClosePopover();
-    console.log('PRINT', row.id);
+    console.log("PRINT", row.id);
   };
 
   const handleShare = () => {
     handleClosePopover();
-    console.log('SHARE', row.id);
+    console.log("SHARE", row.id);
   };
 
   const handleDelete = () => {
     handleClosePopover();
-    console.log('DELETE', row.id);
+    console.log("DELETE", row.id);
   };
 
   return (
@@ -131,9 +131,9 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
           <Label
             variant="soft"
             color={
-              (row.status === 'in_progress' && 'warning') ||
-              (row.status === 'out_of_date' && 'error') ||
-              'success'
+              (row.status === "in_progress" && "warning") ||
+              (row.status === "out_of_date" && "error") ||
+              "success"
             }
           >
             {sentenceCase(row.status)}
@@ -141,7 +141,10 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
         </TableCell>
 
         <TableCell align="right">
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -168,9 +171,9 @@ function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
-        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" />
           Delete
         </MenuItem>

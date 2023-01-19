@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { paramCase } from 'change-case';
-import parse from 'autosuggest-highlight/parse';
-import match from 'autosuggest-highlight/match';
+import { useState } from "react";
+import { paramCase } from "change-case";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Link, Typography, Autocomplete, InputAdornment } from '@mui/material';
+import { Link, Typography, Autocomplete, InputAdornment } from "@mui/material";
 // utils
-import axios from '../../../../utils/axios';
+import axios from "../../../../utils/axios";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // @types
-import { IProduct } from '../../../../@types/product';
+import { IProduct } from "../../../../@types/product";
 // components
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import { CustomTextField } from '../../../../components/custom-input';
-import SearchNotFound from '../../../../components/search-not-found';
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import { CustomTextField } from "../../../../components/custom-input";
+import SearchNotFound from "../../../../components/search-not-found";
 
 // ----------------------------------------------------------------------
 
 export default function ShopProductSearch() {
   const { push } = useRouter();
 
-  const [searchProducts, setSearchProducts] = useState('');
+  const [searchProducts, setSearchProducts] = useState("");
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -31,7 +31,7 @@ export default function ShopProductSearch() {
     try {
       setSearchProducts(value);
       if (value) {
-        const response = await axios.get('/api/products/search', {
+        const response = await axios.get("/api/products/search", {
           params: { query: value },
         });
 
@@ -47,7 +47,7 @@ export default function ShopProductSearch() {
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleGotoProduct(searchProducts);
     }
   };
@@ -70,7 +70,7 @@ export default function ShopProductSearch() {
         },
         paper: {
           sx: {
-            '& .MuiAutocomplete-option': {
+            "& .MuiAutocomplete-option": {
               px: `8px !important`,
             },
           },
@@ -86,7 +86,10 @@ export default function ShopProductSearch() {
             ...params.InputProps,
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ ml: 1, color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ ml: 1, color: "text.disabled" }}
+                />
               </InputAdornment>
             ),
           }}
@@ -102,7 +105,13 @@ export default function ShopProductSearch() {
             <Image
               alt={cover}
               src={cover}
-              sx={{ width: 48, height: 48, borderRadius: 1, flexShrink: 0, mr: 1.5 }}
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: 1,
+                flexShrink: 0,
+                mr: 1.5,
+              }}
             />
 
             <Link underline="none" onClick={() => handleGotoProduct(name)}>
@@ -111,7 +120,7 @@ export default function ShopProductSearch() {
                   key={index}
                   component="span"
                   variant="subtitle2"
-                  color={part.highlight ? 'primary' : 'textPrimary'}
+                  color={part.highlight ? "primary" : "textPrimary"}
                 >
                   {part.text}
                 </Typography>

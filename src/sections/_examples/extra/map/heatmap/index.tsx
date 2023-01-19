@@ -1,10 +1,10 @@
-import { useState, useEffect, useMemo, memo } from 'react';
-import Map, { Source, Layer } from 'react-map-gl';
+import { useState, useEffect, useMemo, memo } from "react";
+import Map, { Source, Layer } from "react-map-gl";
 // components
-import { MapBoxProps } from '../../../../../components/map';
+import { MapBoxProps } from "../../../../../components/map";
 //
-import ControlPanel from './ControlPanel';
-import { heatmapLayer } from './map-style';
+import ControlPanel from "./ControlPanel";
+import { heatmapLayer } from "./map-style";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ function MapHeatmap({ ...other }: MapBoxProps) {
   const [earthquakes, setEarthQuakes] = useState();
 
   useEffect(() => {
-    fetch('https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson')
+    fetch("https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson")
       .then((resp) => resp.json())
       .then((json) => {
         const { features } = json;
@@ -33,11 +33,12 @@ function MapHeatmap({ ...other }: MapBoxProps) {
 
         selectTime(endTime);
       })
-      .catch((err) => console.error('Could not load data', err));
+      .catch((err) => console.error("Could not load data", err));
   }, []);
 
   const data: any = useMemo(
-    () => (allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime)),
+    () =>
+      allDays ? earthquakes : filterFeaturesByDay(earthquakes, selectedTime),
     [earthquakes, allDays, selectedTime]
   );
 
@@ -99,5 +100,5 @@ function filterFeaturesByDay(
       featureDate.getDate() === day
     );
   });
-  return { type: 'FeatureCollection', features };
+  return { type: "FeatureCollection", features };
 }

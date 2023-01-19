@@ -1,7 +1,7 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -16,11 +16,19 @@ function PlanStarterIcon({ ...other }: BoxProps) {
 
   return (
     <Box {...other}>
-      <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 80 80"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <g transform="translate(0 -5)">
           <g transform="translate(0 9.15)">
             <g transform="translate(9.167 19.963)">
-              <path fill={PRIMARY_DARK} d="M53.333 17.467H61.666V24.953H53.333z" />
+              <path
+                fill={PRIMARY_DARK}
+                d="M53.333 17.467H61.666V24.953H53.333z"
+              />
 
               <path
                 fill={PRIMARY_DARKER}
@@ -41,7 +49,10 @@ function PlanStarterIcon({ ...other }: BoxProps) {
           </g>
 
           <g transform="translate(9.167 19.963)">
-            <path fill={PRIMARY_DARK} d="M53.333 17.467H61.666V24.953H53.333z" />
+            <path
+              fill={PRIMARY_DARK}
+              d="M53.333 17.467H61.666V24.953H53.333z"
+            />
 
             <path
               fill={PRIMARY_DARKER}

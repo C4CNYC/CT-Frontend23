@@ -13,7 +13,7 @@ export type IChatAttachment = {
 export type IChatTextMessage = {
   id: string;
   body: string;
-  contentType: 'text';
+  contentType: "text";
   attachments: IChatAttachment[];
   createdAt: Date;
   senderId: string;
@@ -22,7 +22,7 @@ export type IChatTextMessage = {
 export type IChatImageMessage = {
   id: string;
   body: string;
-  contentType: 'image';
+  contentType: "image";
   attachments: IChatAttachment[];
   createdAt: Date;
   senderId: string;
@@ -54,7 +54,7 @@ export type IChatParticipant = {
   phone?: string;
   email?: string;
   lastActivity?: Date | string | number;
-  status?: 'online' | 'offline' | 'away' | 'busy';
+  status?: "online" | "offline" | "away" | "busy";
   role?: string;
 };
 
@@ -70,7 +70,7 @@ export type IChatSendMessage = {
   conversationId: string;
   messageId: string;
   message: string;
-  contentType: 'text';
+  contentType: "text";
   attachments: string[];
   createdAt: Date | string | number;
   senderId: string;

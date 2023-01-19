@@ -1,23 +1,31 @@
 // @mui
-import { Paper, CircularProgress } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { Paper, CircularProgress } from "@mui/material";
+import { Masonry } from "@mui/lab";
 //
-import { Label } from '../../Block';
+import { Label } from "../../Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
   minHeight: 160,
-  display: 'flex',
-  flexWrap: 'wrap',
-  alignItems: 'center',
-  justifyContent: 'center',
-  '& > *': { m: 1 },
+  display: "flex",
+  flexWrap: "wrap",
+  alignItems: "center",
+  justifyContent: "center",
+  "& > *": { m: 1 },
 } as const;
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['inherit', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "inherit",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
 type CircularProps = {
   progress: number;
@@ -43,7 +51,11 @@ export default function ProgressCircular({ progress }: CircularProps) {
           <CircularProgress color="info" variant="determinate" value={50} />
           <CircularProgress color="info" variant="determinate" value={75} />
           <CircularProgress color="info" variant="determinate" value={100} />
-          <CircularProgress color="info" variant="determinate" value={progress} />
+          <CircularProgress
+            color="info"
+            variant="determinate"
+            value={progress}
+          />
         </Paper>
       </div>
 

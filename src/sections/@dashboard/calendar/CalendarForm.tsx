@@ -1,20 +1,31 @@
-import * as Yup from 'yup';
-import merge from 'lodash/merge';
-import { isBefore } from 'date-fns';
-import { EventInput } from '@fullcalendar/common';
+import * as Yup from "yup";
+import merge from "lodash/merge";
+import { isBefore } from "date-fns";
+import { EventInput } from "@fullcalendar/common";
 // form
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
-import { Box, Stack, Button, Tooltip, TextField, IconButton, DialogActions } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import {
+  Box,
+  Stack,
+  Button,
+  Tooltip,
+  TextField,
+  IconButton,
+  DialogActions,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { MobileDateTimePicker } from "@mui/x-date-pickers";
 // @types
-import { ICalendarEvent } from '../../../@types/calendar';
+import { ICalendarEvent } from "../../../@types/calendar";
 // components
-import Iconify from '../../../components/iconify';
-import { ColorSinglePicker } from '../../../components/color-utils';
-import FormProvider, { RHFTextField, RHFSwitch } from '../../../components/hook-form';
+import Iconify from "../../../components/iconify";
+import { ColorSinglePicker } from "../../../components/color-utils";
+import FormProvider, {
+  RHFTextField,
+  RHFSwitch,
+} from "../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -39,11 +50,13 @@ const getInitialValues = (
   range: { start: Date; end: Date } | null
 ) => {
   const initialEvent: FormValuesProps = {
-    title: '',
-    description: '',
-    textColor: '#1890FF',
+    title: "",
+    description: "",
+    textColor: "#1890FF",
     allDay: false,
-    start: range ? new Date(range.start).toISOString() : new Date().toISOString(),
+    start: range
+      ? new Date(range.start).toISOString()
+      : new Date().toISOString(),
     end: range ? new Date(range.end).toISOString() : new Date().toISOString(),
   };
 
@@ -67,7 +80,7 @@ export default function CalendarForm({
   const hasEventData = !!event;
 
   const EventSchema = Yup.object().shape({
-    title: Yup.string().max(255).required('Title is required'),
+    title: Yup.string().max(255).required("Title is required"),
     description: Yup.string().max(5000),
   });
 
@@ -114,7 +127,12 @@ export default function CalendarForm({
       <Stack spacing={3} sx={{ px: 3 }}>
         <RHFTextField name="title" label="Title" />
 
-        <RHFTextField name="description" label="Description" multiline rows={3} />
+        <RHFTextField
+          name="description"
+          label="Description"
+          multiline
+          rows={3}
+        />
 
         <RHFSwitch name="allDay" label="All day" />
 
@@ -146,7 +164,9 @@ export default function CalendarForm({
                   {...params}
                   fullWidth
                   error={!!isDateError}
-                  helperText={isDateError && 'End date must be later than start date'}
+                  helperText={
+                    isDateError && "End date must be later than start date"
+                  }
                 />
               )}
             />
@@ -182,7 +202,7 @@ export default function CalendarForm({
         </Button>
 
         <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-          {hasEventData ? 'Update' : 'Add'}
+          {hasEventData ? "Update" : "Add"}
         </LoadingButton>
       </DialogActions>
     </FormProvider>

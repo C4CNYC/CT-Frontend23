@@ -1,21 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Box, Stack, Drawer } from '@mui/material';
+import { Box, Stack, Drawer } from "@mui/material";
 // hooks
-import useResponsive from '../../../hooks/useResponsive';
+import useResponsive from "../../../hooks/useResponsive";
 // config
-import { NAV } from '../../../config-global';
+import { NAV } from "../../../config-global";
 // components
-import Logo from '../../../components/logo';
-import Scrollbar from '../../../components/scrollbar';
-import { NavSectionVertical } from '../../../components/nav-section';
+import Logo from "../../../components/logo";
+import Scrollbar from "../../../components/scrollbar";
+import { NavSectionVertical } from "../../../components/nav-section";
 //
-import navConfig from './config-navigation';
-import NavDocs from './NavDocs';
-import NavAccount from './NavAccount';
-import NavToggleButton from './NavToggleButton';
+import navConfig from "./config-navigation";
+import NavDocs from "./NavDocs";
+import NavAccount from "./NavAccount";
+import NavToggleButton from "./NavToggleButton";
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ type Props = {
 export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { pathname } = useRouter();
 
-  const isDesktop = useResponsive('up', 'lg');
+  const isDesktop = useResponsive("up", "lg");
 
   useEffect(() => {
     if (openNav) {
@@ -40,10 +40,10 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     <Scrollbar
       sx={{
         height: 1,
-        '& .simplebar-content': {
+        "& .simplebar-content": {
           height: 1,
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
         },
       }}
     >
@@ -87,8 +87,8 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
             sx: {
               zIndex: 0,
               width: NAV.W_DASHBOARD,
-              bgcolor: 'transparent',
-              borderRightStyle: 'dashed',
+              bgcolor: "transparent",
+              borderRightStyle: "dashed",
             },
           }}
         >

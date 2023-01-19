@@ -1,19 +1,23 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { styled, alpha } from '@mui/material/styles';
-import { Switch, InputBase, Typography } from '@mui/material';
+import { styled, alpha } from "@mui/material/styles";
+import { Switch, InputBase, Typography } from "@mui/material";
 // components
-import { MapSettingKeys, MapSettings, StyledControlPanel } from '../../../../../components/map';
+import {
+  MapSettingKeys,
+  MapSettings,
+  StyledControlPanel,
+} from "../../../../../components/map";
 
 // ----------------------------------------------------------------------
 
-const StyledRow = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  textTransform: 'capitalize',
-  justifyContent: 'space-between',
+const StyledRow = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  textTransform: "capitalize",
+  justifyContent: "space-between",
   color: theme.palette.common.white,
-  '&:not(:last-of-type)': {
+  "&:not(:last-of-type)": {
     marginBottom: theme.spacing(1),
   },
 }));
@@ -23,7 +27,7 @@ const StyledRow = styled('div')(({ theme }) => ({
 const camelPattern = /(^|[A-Z])[a-z]*/g;
 
 function formatSettingName(name: string) {
-  return name.match(camelPattern)?.join(' ');
+  return name.match(camelPattern)?.join(" ");
 }
 
 type Props = {
@@ -34,7 +38,7 @@ type Props = {
 function ControlPanel({ settings, onChange }: Props) {
   const renderSetting = (name: MapSettingKeys, value: boolean | number) => {
     switch (typeof value) {
-      case 'boolean':
+      case "boolean":
         return (
           <StyledRow key={name}>
             <Typography variant="body2">{formatSettingName(name)}</Typography>
@@ -45,22 +49,22 @@ function ControlPanel({ settings, onChange }: Props) {
             />
           </StyledRow>
         );
-      case 'number':
+      case "number":
         return (
           <StyledRow key={name}>
             <Typography variant="body2">{formatSettingName(name)}</Typography>
             <InputBase
               value={value}
               onChange={(event) => onChange(name, Number(event.target.value))}
-              inputProps={{ type: 'number' }}
+              inputProps={{ type: "number" }}
               sx={{
-                '& input': {
+                "& input": {
                   py: 0.25,
                   width: 40,
                   fontSize: 14,
                   borderRadius: 0.5,
-                  textAlign: 'center',
-                  color: 'common.white',
+                  textAlign: "center",
+                  color: "common.white",
                   bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
                 },
               }}

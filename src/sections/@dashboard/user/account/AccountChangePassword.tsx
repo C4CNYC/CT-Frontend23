@@ -1,16 +1,16 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // form
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
-import { Stack, Card } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Stack, Card } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // @types
-import { IUserAccountChangePassword } from '../../../../@types/user';
+import { IUserAccountChangePassword } from "../../../../@types/user";
 // components
-import Iconify from '../../../../components/iconify';
-import { useSnackbar } from '../../../../components/snackbar';
-import FormProvider, { RHFTextField } from '../../../../components/hook-form';
+import Iconify from "../../../../components/iconify";
+import { useSnackbar } from "../../../../components/snackbar";
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -20,17 +20,20 @@ export default function AccountChangePassword() {
   const { enqueueSnackbar } = useSnackbar();
 
   const ChangePassWordSchema = Yup.object().shape({
-    oldPassword: Yup.string().required('Old Password is required'),
+    oldPassword: Yup.string().required("Old Password is required"),
     newPassword: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('New Password is required'),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+      .min(6, "Password must be at least 6 characters")
+      .required("New Password is required"),
+    confirmNewPassword: Yup.string().oneOf(
+      [Yup.ref("newPassword"), null],
+      "Passwords must match"
+    ),
   });
 
   const defaultValues = {
-    oldPassword: '',
-    newPassword: '',
-    confirmNewPassword: '',
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
   };
 
   const methods = useForm({
@@ -48,8 +51,8 @@ export default function AccountChangePassword() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      enqueueSnackbar('Update success!');
-      console.log('DATA', data);
+      enqueueSnackbar("Update success!");
+      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +62,11 @@ export default function AccountChangePassword() {
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Card>
         <Stack spacing={3} alignItems="flex-end" sx={{ p: 3 }}>
-          <RHFTextField name="oldPassword" type="password" label="Old Password" />
+          <RHFTextField
+            name="oldPassword"
+            type="password"
+            label="Old Password"
+          />
 
           <RHFTextField
             name="newPassword"
@@ -67,15 +74,23 @@ export default function AccountChangePassword() {
             label="New Password"
             helperText={
               <Stack component="span" direction="row" alignItems="center">
-                <Iconify icon="eva:info-fill" width={16} sx={{ mr: 0.5 }} /> Password must be
-                minimum 6+
+                <Iconify icon="eva:info-fill" width={16} sx={{ mr: 0.5 }} />{" "}
+                Password must be minimum 6+
               </Stack>
             }
           />
 
-          <RHFTextField name="confirmNewPassword" type="password" label="Confirm New Password" />
+          <RHFTextField
+            name="confirmNewPassword"
+            type="password"
+            label="Confirm New Password"
+          />
 
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Save Changes
           </LoadingButton>
         </Stack>

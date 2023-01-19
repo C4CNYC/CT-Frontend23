@@ -1,11 +1,11 @@
 // @mui
-import { Link, Card, CardHeader, Stack } from '@mui/material';
+import { Link, Card, CardHeader, Stack } from "@mui/material";
 // _mock
-import { _socials } from '../../../../../_mock/arrays';
+import { _socials } from "../../../../../_mock/arrays";
 // @types
-import { IUserSocialLink } from '../../../../../@types/user';
+import { IUserSocialLink } from "../../../../../@types/user";
 // components
-import Iconify from '../../../../../components/iconify';
+import Iconify from "../../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,8 @@ type Props = {
 };
 
 export default function ProfileSocialInfo({ socialLinks }: Props) {
-  const { facebookLink, instagramLink, linkedinLink, twitterLink } = socialLinks;
+  const { facebookLink, instagramLink, linkedinLink, twitterLink } =
+    socialLinks;
 
   return (
     <Card>
@@ -22,7 +23,11 @@ export default function ProfileSocialInfo({ socialLinks }: Props) {
 
       <Stack spacing={2} sx={{ p: 3 }}>
         {_socials.map((link) => (
-          <Stack key={link.name} direction="row" sx={{ wordBreak: 'break-all' }}>
+          <Stack
+            key={link.name}
+            direction="row"
+            sx={{ wordBreak: "break-all" }}
+          >
             <Iconify
               icon={link.icon}
               sx={{
@@ -32,9 +37,9 @@ export default function ProfileSocialInfo({ socialLinks }: Props) {
               }}
             />
             <Link component="span" variant="body2" color="text.primary">
-              {(link.value === 'facebook' && facebookLink) ||
-                (link.value === 'instagram' && instagramLink) ||
-                (link.value === 'linkedin' && linkedinLink) ||
+              {(link.value === "facebook" && facebookLink) ||
+                (link.value === "instagram" && instagramLink) ||
+                (link.value === "linkedin" && linkedinLink) ||
                 twitterLink}
             </Link>
           </Stack>

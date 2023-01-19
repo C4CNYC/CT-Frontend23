@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { Masonry } from '@mui/lab';
-import { Link, Paper, Typography, Divider, Stack } from '@mui/material';
+import { Masonry } from "@mui/lab";
+import { Link, Paper, Typography, Divider, Stack } from "@mui/material";
 // @types
-import { ParentItemProps, MegaMenuItemProps } from './types';
+import { ParentItemProps, MegaMenuItemProps } from "./types";
 // components
-import Iconify from '../iconify';
+import Iconify from "../iconify";
 //
-import MenuHotProducts from './MenuHotProducts';
-import MegaMenuCarousel from './MenuCarousel';
+import MenuHotProducts from "./MenuHotProducts";
+import MegaMenuCarousel from "./MenuCarousel";
 
 // ----------------------------------------------------------------------
 
@@ -64,8 +64,8 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
             onMouseLeave={handleClose}
             sx={{
               p: 3,
-              width: '100%',
-              position: 'absolute',
+              width: "100%",
+              position: "absolute",
               borderRadius: 2,
               top: PARENT_ITEM_HEIGHT,
               left: -ITEM_SPACING * 8,
@@ -76,7 +76,11 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
             <Masonry columns={3} spacing={2}>
               {children.map((list) => (
                 <Stack key={list.subheader} spacing={1.25} sx={{ mb: 2.5 }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 'fontWeightBold' }} noWrap>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ fontWeight: "fontWeightBold" }}
+                    noWrap
+                  >
                     {list.subheader}
                   </Typography>
 
@@ -88,11 +92,11 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
                       noWrap
                       underline="none"
                       sx={{
-                        typography: 'body2',
-                        color: 'text.primary',
+                        typography: "body2",
+                        color: "text.primary",
                         fontSize: 13,
-                        transition: (theme) => theme.transitions.create('all'),
-                        '&:hover': { color: 'primary.main' },
+                        transition: (theme) => theme.transitions.create("all"),
+                        "&:hover": { color: "primary.main" },
                       }}
                     >
                       {link.title}
@@ -107,7 +111,11 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
                 <Link
                   component={NextLink}
                   href={more?.path}
-                  sx={{ typography: 'body2', display: 'inline-flex', fontSize: 13 }}
+                  sx={{
+                    typography: "body2",
+                    display: "inline-flex",
+                    fontSize: 13,
+                  }}
                 >
                   {more?.title}
                 </Link>
@@ -132,9 +140,15 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
 
 // ----------------------------------------------------------------------
 
-function ParentItem({ title, path = '', open, hasSub, ...other }: ParentItemProps) {
+function ParentItem({
+  title,
+  path = "",
+  open,
+  hasSub,
+  ...other
+}: ParentItemProps) {
   const activeStyle = {
-    color: 'primary.main',
+    color: "primary.main",
   };
 
   return (
@@ -145,14 +159,14 @@ function ParentItem({ title, path = '', open, hasSub, ...other }: ParentItemProp
       color="inherit"
       variant="subtitle2"
       sx={{
-        display: 'flex',
-        cursor: 'pointer',
-        alignItems: 'center',
-        textTransform: 'capitalize',
+        display: "flex",
+        cursor: "pointer",
+        alignItems: "center",
+        textTransform: "capitalize",
         height: PARENT_ITEM_HEIGHT,
         lineHeight: `${PARENT_ITEM_HEIGHT}px`,
-        transition: (theme) => theme.transitions.create('all'),
-        '&:hover': activeStyle,
+        transition: (theme) => theme.transitions.create("all"),
+        "&:hover": activeStyle,
         ...(open && activeStyle),
       }}
       {...other}

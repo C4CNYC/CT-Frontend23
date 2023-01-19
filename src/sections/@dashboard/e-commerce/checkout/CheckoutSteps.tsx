@@ -1,5 +1,5 @@
 // @mui
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import {
   Box,
   Step,
@@ -8,22 +8,22 @@ import {
   StepLabel,
   StepperProps,
   StepConnector as MUIStepConnector,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
 const StepConnector = styled(MUIStepConnector)(({ theme }) => ({
   top: 10,
-  left: 'calc(-50% + 20px)',
-  right: 'calc(50% + 20px)',
-  '& .MuiStepConnector-line': {
+  left: "calc(-50% + 20px)",
+  right: "calc(50% + 20px)",
+  "& .MuiStepConnector-line": {
     borderTopWidth: 2,
     borderColor: theme.palette.divider,
   },
-  '&.Mui-active, &.Mui-completed': {
-    '& .MuiStepConnector-line': {
+  "&.Mui-active, &.Mui-completed": {
+    "& .MuiStepConnector-line": {
       borderColor: theme.palette.primary.main,
     },
   },
@@ -36,7 +36,12 @@ interface Props extends StepperProps {
   activeStep: number;
 }
 
-export default function CheckoutSteps({ steps, activeStep, sx, ...other }: Props) {
+export default function CheckoutSteps({
+  steps,
+  activeStep,
+  sx,
+  ...other
+}: Props) {
   return (
     <Stepper
       alternativeLabel
@@ -50,8 +55,8 @@ export default function CheckoutSteps({ steps, activeStep, sx, ...other }: Props
           <StepLabel
             StepIconComponent={StepIcon}
             sx={{
-              '& .MuiStepLabel-label': {
-                typography: 'subtitle2',
+              "& .MuiStepLabel-label": {
+                typography: "subtitle2",
               },
             }}
           >
@@ -78,21 +83,21 @@ function StepIcon({ active, completed }: StepIconProps) {
       sx={{
         width: 24,
         height: 24,
-        color: 'text.disabled',
+        color: "text.disabled",
         ...(active && {
-          color: 'primary.main',
+          color: "primary.main",
         }),
       }}
     >
       {completed ? (
-        <Iconify icon="eva:checkmark-fill" sx={{ color: 'primary.main' }} />
+        <Iconify icon="eva:checkmark-fill" sx={{ color: "primary.main" }} />
       ) : (
         <Box
           sx={{
             width: 8,
             height: 8,
-            borderRadius: '50%',
-            backgroundColor: 'currentColor',
+            borderRadius: "50%",
+            backgroundColor: "currentColor",
           }}
         />
       )}

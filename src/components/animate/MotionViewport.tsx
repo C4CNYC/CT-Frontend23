@@ -1,10 +1,10 @@
-import { m, MotionProps } from 'framer-motion';
+import { m, MotionProps } from "framer-motion";
 // @mui
-import { Box, BoxProps } from '@mui/material';
+import { Box, BoxProps } from "@mui/material";
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from "../../hooks/useResponsive";
 //
-import { varContainer } from './variants';
+import { varContainer } from "./variants";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ export default function MotionViewport({
   disableAnimatedMobile = true,
   ...other
 }: Props) {
-  const isMobile = useResponsive('down', 'sm');
+  const isMobile = useResponsive("down", "sm");
 
   if (isMobile && disableAnimatedMobile) {
     return <Box {...other}>{children}</Box>;

@@ -1,24 +1,26 @@
-import { paramCase } from 'change-case';
+import { paramCase } from "change-case";
 // next
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import { useRouter } from "next/router";
 // @mui
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // _mock_
-import { _userList } from '../../../../_mock/arrays';
+import { _userList } from "../../../../_mock/arrays";
 // layouts
-import DashboardLayout from '../../../../layouts/dashboard';
+import DashboardLayout from "../../../../layouts/dashboard";
 // components
-import { useSettingsContext } from '../../../../components/settings';
-import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import { useSettingsContext } from "../../../../components/settings";
+import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 // sections
-import UserNewEditForm from '../../../../sections/@dashboard/user/UserNewEditForm';
+import UserNewEditForm from "../../../../sections/@dashboard/user/UserNewEditForm";
 
 // ----------------------------------------------------------------------
 
-UserEditPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+UserEditPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -37,16 +39,16 @@ export default function UserEditPage() {
         <title> User: Edit user | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Edit user"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'User',
+              name: "User",
               href: PATH_DASHBOARD.user.list,
             },
             { name: currentUser?.name },

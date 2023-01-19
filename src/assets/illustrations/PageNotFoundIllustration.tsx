@@ -1,9 +1,9 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/material";
 //
-import BackgroundIllustration from './BackgroundIllustration';
+import BackgroundIllustration from "./BackgroundIllustration";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,12 @@ function PageNotFoundIllustration({ ...other }: BoxProps) {
 
   return (
     <Box {...other}>
-      <svg width="100%" height="100%" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 480 360"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <BackgroundIllustration />
 
         <image
@@ -36,7 +41,10 @@ function PageNotFoundIllustration({ ...other }: BoxProps) {
           opacity="0.12"
         />
 
-        <path fill="#FFD666" d="M111.1 120c30.8-.5 30.8-46.3 0-46.8-30.8.5-30.8 46.3 0 46.8z" />
+        <path
+          fill="#FFD666"
+          d="M111.1 120c30.8-.5 30.8-46.3 0-46.8-30.8.5-30.8 46.3 0 46.8z"
+        />
         <path
           fill={PRIMARY_DARKER}
           d="M244.9 182.5c82.3 1.4 82.2 123.8 0 125.2-82.3-1.5-82.3-123.8 0-125.2zm0 23.1c-51.8.9-51.8 77.9 0 78.8 51.8-.9 51.7-77.9 0-78.8z"

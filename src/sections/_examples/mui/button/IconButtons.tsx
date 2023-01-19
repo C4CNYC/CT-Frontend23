@@ -1,33 +1,33 @@
 // @mui
-import { IconButton } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { IconButton } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // components
-import Iconify from '../../../../components/iconify';
-import { IconButtonAnimate } from '../../../../components/animate';
+import Iconify from "../../../../components/iconify";
+import { IconButtonAnimate } from "../../../../components/animate";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
 const COLORS = [
-  'inherit',
-  'default',
-  'primary',
-  'secondary',
-  'info',
-  'success',
-  'warning',
-  'error',
+  "inherit",
+  "default",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
 ] as const;
 
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ["small", "medium", "large"] as const;
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { mx: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { mx: "8px !important" },
 } as const;
 
 export default function IconButtons() {

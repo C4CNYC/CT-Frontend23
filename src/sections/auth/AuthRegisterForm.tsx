@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import * as Yup from 'yup';
+import { useState } from "react";
+import * as Yup from "yup";
 // form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
-import { Stack, IconButton, InputAdornment, Alert } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Stack, IconButton, InputAdornment, Alert } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
+import { useAuthContext } from "../../auth/useAuthContext";
 // components
-import Iconify from '../../components/iconify';
-import FormProvider, { RHFTextField } from '../../components/hook-form';
-
+import Iconify from "../../components/iconify";
+import FormProvider, { RHFTextField } from "../../components/hook-form";
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
@@ -28,17 +28,19 @@ export default function AuthRegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    password: Yup.string().required('Password is required'),
+    firstName: Yup.string().required("First name required"),
+    lastName: Yup.string().required("Last name required"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email must be a valid email address"),
+    password: Yup.string().required("Password is required"),
   });
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -56,12 +58,17 @@ export default function AuthRegisterForm() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       if (register) {
-        await register(data.email, data.password, data.firstName, data.lastName);
+        await register(
+          data.email,
+          data.password,
+          data.firstName,
+          data.lastName
+        );
       }
     } catch (error) {
       console.error(error);
       reset();
-      setError('afterSubmit', {
+      setError("afterSubmit", {
         ...error,
         message: error.message,
       });
@@ -70,10 +77,12 @@ export default function AuthRegisterForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2.5}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+      <Stack spacing={2.5} sx={{mt: 5}}>
+        {!!errors.afterSubmit && (
+          <Alert severity="error">{errors.afterSubmit.message}</Alert>
+        )}
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <RHFTextField name="firstName" label="First name" />
           <RHFTextField name="lastName" label="Last name" />
         </Stack>
@@ -83,12 +92,17 @@ export default function AuthRegisterForm() {
         <RHFTextField
           name="password"
           label="Password"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  <Iconify
+                    icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
+                  />
                 </IconButton>
               </InputAdornment>
             ),
@@ -103,15 +117,20 @@ export default function AuthRegisterForm() {
           variant="contained"
           loading={isSubmitting || isSubmitSuccessful}
           sx={{
-            bgcolor: 'text.primary',
-            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-            '&:hover': {
-              bgcolor: 'text.primary',
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            boxShadow: '0px 8px 16px rgba(2, 211, 215, 0.24)',
+            bgcolor: "#FBDD3F",
+            borderRadius: '50px',
+            color: (theme) =>
+              theme.palette.mode === "light" ? "common.white" : "grey.800",
+            "&:hover": {
+              bgcolor: "text.primary",
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
             },
           }}
         >
-          Create account
+          <RocketLaunchIcon sx={{mr: '5px'}}/>
+          Let’s GO!
         </LoadingButton>
       </Stack>
     </FormProvider>

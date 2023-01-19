@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import {
   Box,
   List,
@@ -21,32 +21,34 @@ import {
   ListItemAvatar,
   ListItemButtonProps,
   ListItemSecondaryAction,
-} from '@mui/material';
-import { Masonry } from '@mui/lab';
+} from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const StyledListContainer = styled(Paper)(({ theme }) => ({
-  width: '100%',
+  width: "100%",
   border: `solid 1px ${theme.palette.divider}`,
 }));
 
 // ----------------------------------------------------------------------
 
-MUIListPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIListPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
-function ListItemLink(props: ListItemButtonProps<'a', { button?: true }>) {
+function ListItemLink(props: ListItemButtonProps<"a", { button?: true }>) {
   return <ListItemButton component="a" {...props} />;
 }
 
@@ -57,7 +59,7 @@ export default function MUIListPage() {
 
   const [checked, setChecked] = useState([0]);
 
-  const [toggle, setToggle] = useState(['wifi']);
+  const [toggle, setToggle] = useState(["wifi"]);
 
   const handleClick = () => {
     setOpen(!open);
@@ -104,7 +106,8 @@ export default function MUIListPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -112,12 +115,12 @@ export default function MUIListPage() {
             heading="List"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Lists' },
+              { name: "Lists" },
             ]}
-            moreLink={['https://mui.com/components/lists']}
+            moreLink={["https://mui.com/components/lists"]}
           />
         </Container>
       </Box>
@@ -281,18 +284,26 @@ export default function MUIListPage() {
                 {[0, 1, 2, 3].map((value) => {
                   const labelId = `checkbox-list-label-${value}`;
                   return (
-                    <ListItemButton key={value} role={undefined} dense onClick={handleCheck(value)}>
+                    <ListItemButton
+                      key={value}
+                      role={undefined}
+                      dense
+                      onClick={handleCheck(value)}
+                    >
                       <ListItemIcon>
                         <Checkbox
                           edge="start"
                           checked={checked.indexOf(value) !== -1}
                           tabIndex={-1}
                           disableRipple
-                          inputProps={{ 'aria-labelledby': labelId }}
+                          inputProps={{ "aria-labelledby": labelId }}
                         />
                       </ListItemIcon>
 
-                      <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+                      <ListItemText
+                        id={labelId}
+                        primary={`Line item ${value + 1}`}
+                      />
 
                       <ListItemSecondaryAction>
                         <IconButton edge="end">
@@ -317,10 +328,10 @@ export default function MUIListPage() {
                   <ListItemSecondaryAction>
                     <Switch
                       edge="end"
-                      onChange={handleToggle('wifi')}
-                      checked={toggle.indexOf('wifi') !== -1}
+                      onChange={handleToggle("wifi")}
+                      checked={toggle.indexOf("wifi") !== -1}
                       inputProps={{
-                        'aria-labelledby': 'switch-list-label-wifi',
+                        "aria-labelledby": "switch-list-label-wifi",
                       }}
                     />
                   </ListItemSecondaryAction>
@@ -329,14 +340,17 @@ export default function MUIListPage() {
                   <ListItemIcon>
                     <Iconify icon="ic:baseline-bluetooth" width={24} />
                   </ListItemIcon>
-                  <ListItemText id="switch-list-label-bluetooth" primary="Bluetooth" />
+                  <ListItemText
+                    id="switch-list-label-bluetooth"
+                    primary="Bluetooth"
+                  />
                   <ListItemSecondaryAction>
                     <Switch
                       edge="end"
-                      onChange={handleToggle('bluetooth')}
-                      checked={toggle.indexOf('bluetooth') !== -1}
+                      onChange={handleToggle("bluetooth")}
+                      checked={toggle.indexOf("bluetooth") !== -1}
                       inputProps={{
-                        'aria-labelledby': 'switch-list-label-bluetooth',
+                        "aria-labelledby": "switch-list-label-bluetooth",
                       }}
                     />
                   </ListItemSecondaryAction>

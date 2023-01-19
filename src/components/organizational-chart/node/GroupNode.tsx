@@ -1,12 +1,12 @@
 // @mui
-import { alpha, Theme, useTheme } from '@mui/material/styles';
-import { SxProps, Typography, Card, Box, Stack, Avatar } from '@mui/material';
+import { alpha, Theme, useTheme } from "@mui/material/styles";
+import { SxProps, Typography, Card, Box, Stack, Avatar } from "@mui/material";
 // theme
-import { ColorSchema } from '../../../theme/palette';
+import { ColorSchema } from "../../../theme/palette";
 //
-import Label from '../../label/Label';
+import Label from "../../label/Label";
 //
-import { ItemProps } from '../types';
+import { ItemProps } from "../types";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ type Props = {
 export default function GroupNode({ node, depth, length, sx }: Props) {
   const theme = useTheme();
 
-  const isLight = theme.palette.mode === 'light';
+  const isLight = theme.palette.mode === "light";
 
   const styles = (color: ColorSchema) => ({
     bgcolor: alpha(theme.palette[color].main, 0.08),
@@ -30,26 +30,29 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
 
   const isLabel = depth === 1;
 
-  const isGrRoot = node.group === 'root';
+  const isGrRoot = node.group === "root";
 
-  const isGrProduct = node.group === 'product design';
+  const isGrProduct = node.group === "product design";
 
-  const isGrDevelopment = node.group === 'development';
+  const isGrDevelopment = node.group === "development";
 
-  const isGrMarketing = node.group === 'marketing';
+  const isGrMarketing = node.group === "marketing";
 
   return (
-    <Stack sx={{ position: 'relative', display: 'inline-flex' }} alignItems="center">
+    <Stack
+      sx={{ position: "relative", display: "inline-flex" }}
+      alignItems="center"
+    >
       {!isLabel && (
         <Avatar
           alt={node.name}
-          src={node.avatar || ''}
+          src={node.avatar || ""}
           sx={{
             mt: -3.5,
             zIndex: 9,
             width: 56,
             height: 56,
-            position: 'absolute',
+            position: "absolute",
             border: `solid 4px ${theme.palette.background.paper}`,
           }}
         />
@@ -61,11 +64,11 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
           pb: 3,
           minWidth: 200,
           borderRadius: 1.5,
-          textTransform: 'capitalize',
+          textTransform: "capitalize",
           ...(isLabel && { py: 2 }),
-          ...(isLabel && isGrProduct && styles('primary')),
-          ...(isLabel && isGrDevelopment && styles('info')),
-          ...(isLabel && isGrMarketing && styles('warning')),
+          ...(isLabel && isGrProduct && styles("primary")),
+          ...(isLabel && isGrDevelopment && styles("info")),
+          ...(isLabel && isGrMarketing && styles("warning")),
           ...sx,
         }}
       >
@@ -76,26 +79,30 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
               left: 0,
               width: 1,
               height: 4,
-              position: 'absolute',
+              position: "absolute",
               borderRadius: 1.5,
               ...(isGrProduct && {
-                bgcolor: 'primary.light',
+                bgcolor: "primary.light",
               }),
               ...(isGrDevelopment && {
-                bgcolor: 'info.light',
+                bgcolor: "info.light",
               }),
               ...(isGrMarketing && {
-                bgcolor: 'warning.light',
+                bgcolor: "warning.light",
               }),
             }}
           />
         )}
 
-        <Typography variant={isLabel ? 'subtitle1' : 'subtitle2'} noWrap>
+        <Typography variant={isLabel ? "subtitle1" : "subtitle2"} noWrap>
           {node.name}
           {isLabel && (
             <Label
-              color={(isGrDevelopment && 'info') || (isGrMarketing && 'warning') || 'primary'}
+              color={
+                (isGrDevelopment && "info") ||
+                (isGrMarketing && "warning") ||
+                "primary"
+              }
               sx={{ ml: 1 }}
             >
               {length}
@@ -104,7 +111,12 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
         </Typography>
 
         {!isLabel && (
-          <Typography variant="caption" component="div" noWrap sx={{ color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            noWrap
+            sx={{ color: "text.secondary" }}
+          >
             {node.role}
           </Typography>
         )}

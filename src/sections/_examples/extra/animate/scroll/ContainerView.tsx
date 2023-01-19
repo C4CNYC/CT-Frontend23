@@ -1,12 +1,15 @@
-import { m } from 'framer-motion';
-import { useRef } from 'react';
+import { m } from "framer-motion";
+import { useRef } from "react";
 // @mui
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography } from "@mui/material";
 // components
-import Scrollbar from '../../../../../components/scrollbar';
-import { MotionViewport, varContainer } from '../../../../../components/animate';
+import Scrollbar from "../../../../../components/scrollbar";
+import {
+  MotionViewport,
+  varContainer,
+} from "../../../../../components/animate";
 //
-import getVariant from '../getVariant';
+import getVariant from "../getVariant";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +17,10 @@ type ContainerViewProps = {
   selectVariant: string;
 };
 
-export default function ContainerView({ selectVariant, ...other }: ContainerViewProps) {
+export default function ContainerView({
+  selectVariant,
+  ...other
+}: ContainerViewProps) {
   const scrollRef = useRef(null);
 
   return (
@@ -24,7 +30,7 @@ export default function ContainerView({ selectVariant, ...other }: ContainerView
       variants={varContainer()}
       sx={{
         height: 480,
-        bgcolor: 'background.neutral',
+        bgcolor: "background.neutral",
       }}
       {...other}
     >
@@ -37,14 +43,14 @@ export default function ContainerView({ selectVariant, ...other }: ContainerView
             viewport={{ root: scrollRef, once: true, amount: 0.1 }}
             sx={{
               my: 2,
-              mx: 'auto',
+              mx: "auto",
               height: 72,
               maxWidth: 480,
-              display: 'flex',
+              display: "flex",
               borderRadius: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              bgcolor: 'background.paper',
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: "background.paper",
               boxShadow: (theme) => theme.customShadows.z8,
             }}
           >

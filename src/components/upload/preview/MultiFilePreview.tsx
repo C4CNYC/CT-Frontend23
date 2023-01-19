@@ -1,19 +1,24 @@
-import { m, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from "framer-motion";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { IconButton, Stack, Typography } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import { IconButton, Stack, Typography } from "@mui/material";
 // utils
-import { fData } from '../../../utils/formatNumber';
+import { fData } from "../../../utils/formatNumber";
 //
-import Iconify from '../../iconify';
-import { varFade } from '../../animate';
-import FileThumbnail, { fileData } from '../../file-thumbnail';
+import Iconify from "../../iconify";
+import { varFade } from "../../animate";
+import FileThumbnail, { fileData } from "../../file-thumbnail";
 //
-import { UploadProps } from '../types';
+import { UploadProps } from "../types";
 
 // ----------------------------------------------------------------------
 
-export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: UploadProps) {
+export default function MultiFilePreview({
+  thumbnail,
+  files,
+  onRemove,
+  sx,
+}: UploadProps) {
   if (!files?.length) {
     return null;
   }
@@ -21,9 +26,9 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
   return (
     <AnimatePresence initial={false}>
       {files.map((file) => {
-        const { key, name = '', size = 0 } = fileData(file);
+        const { key, name = "", size = 0 } = fileData(file);
 
-        const isNotFormatFile = typeof file === 'string';
+        const isNotFormatFile = typeof file === "string";
 
         if (thumbnail) {
           return (
@@ -39,8 +44,8 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
                 width: 80,
                 height: 80,
                 borderRadius: 1.25,
-                overflow: 'hidden',
-                position: 'relative',
+                overflow: "hidden",
+                position: "relative",
                 border: (theme) => `solid 1px ${theme.palette.divider}`,
                 ...sx,
               }}
@@ -49,8 +54,8 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
                 tooltip
                 imageView
                 file={file}
-                sx={{ position: 'absolute' }}
-                imgSx={{ position: 'absolute' }}
+                sx={{ position: "absolute" }}
+                imgSx={{ position: "absolute" }}
               />
 
               {onRemove && (
@@ -60,11 +65,11 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
                   sx={{
                     top: 4,
                     right: 4,
-                    p: '1px',
-                    position: 'absolute',
+                    p: "1px",
+                    position: "absolute",
                     color: (theme) => alpha(theme.palette.common.white, 0.72),
                     bgcolor: (theme) => alpha(theme.palette.grey[900], 0.48),
-                    '&:hover': {
+                    "&:hover": {
                       bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
                     },
                   }}
@@ -100,13 +105,17 @@ export default function MultiFilePreview({ thumbnail, files, onRemove, sx }: Upl
                 {isNotFormatFile ? file : name}
               </Typography>
 
-              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                {isNotFormatFile ? '' : fData(size)}
+              <Typography variant="caption" sx={{ color: "text.secondary" }}>
+                {isNotFormatFile ? "" : fData(size)}
               </Typography>
             </Stack>
 
             {onRemove && (
-              <IconButton edge="end" size="small" onClick={() => onRemove(file)}>
+              <IconButton
+                edge="end"
+                size="small"
+                onClick={() => onRemove(file)}
+              >
                 <Iconify icon="eva:close-fill" />
               </IconButton>
             )}

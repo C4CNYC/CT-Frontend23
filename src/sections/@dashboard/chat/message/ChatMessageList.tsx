@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from "react";
 // @types
-import { IChatConversation } from '../../../../@types/chat';
+import { IChatConversation } from "../../../../@types/chat";
 //
-import Scrollbar from '../../../../components/scrollbar';
-import Lightbox from '../../../../components/lightbox';
+import Scrollbar from "../../../../components/scrollbar";
+import Lightbox from "../../../../components/lightbox";
 //
-import ChatMessageItem from './ChatMessageItem';
+import ChatMessageItem from "./ChatMessageItem";
 
 // ----------------------------------------------------------------------
 
@@ -28,11 +28,13 @@ export default function ChatMessageList({ conversation }: Props) {
   }, [conversation.messages]);
 
   const imagesLightbox = conversation.messages
-    .filter((messages) => messages.contentType === 'image')
+    .filter((messages) => messages.contentType === "image")
     .map((messages) => ({ src: messages.body }));
 
   const handleOpenLightbox = (imageUrl: string) => {
-    const imageIndex = imagesLightbox.findIndex((image) => image.src === imageUrl);
+    const imageIndex = imagesLightbox.findIndex(
+      (image) => image.src === imageUrl
+    );
     setSelectedImage(imageIndex);
   };
 

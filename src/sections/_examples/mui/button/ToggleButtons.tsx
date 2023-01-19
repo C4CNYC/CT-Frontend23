@@ -1,47 +1,64 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import Masonry from '@mui/lab/Masonry';
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import Masonry from "@mui/lab/Masonry";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['standard', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "standard",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ["small", "medium", "large"] as const;
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
-  '& svg': { width: 24, height: 24 },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
+  "& svg": { width: 24, height: 24 },
 } as const;
 
 // ----------------------------------------------------------------------
 
 export default function ToggleButtons() {
-  const [alignment, setAlignment] = useState<string | null>('left');
+  const [alignment, setAlignment] = useState<string | null>("left");
 
-  const [formats, setFormats] = useState(() => ['bold', 'italic']);
+  const [formats, setFormats] = useState(() => ["bold", "italic"]);
 
-  const [view, setView] = useState('list');
+  const [view, setView] = useState("list");
 
   const [selected, setSelected] = useState(true);
 
-  const handleAlignment = (event: React.MouseEvent<HTMLElement>, newAlignment: string | null) => {
+  const handleAlignment = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string | null
+  ) => {
     setAlignment(newAlignment);
   };
 
-  const handleFormat = (event: React.MouseEvent<HTMLElement>, newFormats: string[]) => {
+  const handleFormat = (
+    event: React.MouseEvent<HTMLElement>,
+    newFormats: string[]
+  ) => {
     setFormats(newFormats);
   };
 
-  const handleChange = (event: React.MouseEvent<HTMLElement>, nextView: string) => {
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    nextView: string
+  ) => {
     setView(nextView);
   };
 
@@ -91,7 +108,11 @@ export default function ToggleButtons() {
   return (
     <Masonry columns={3} spacing={3}>
       <Block title="Exclusive selection" sx={style}>
-        <ToggleButtonGroup value={alignment} exclusive onChange={handleAlignment}>
+        <ToggleButtonGroup
+          value={alignment}
+          exclusive
+          onChange={handleAlignment}
+        >
           {alignContent}
         </ToggleButtonGroup>
       </Block>
@@ -131,7 +152,12 @@ export default function ToggleButtons() {
       </Block>
 
       <Block title="Vertical & Standalone buttons" sx={style}>
-        <ToggleButtonGroup orientation="vertical" value={view} exclusive onChange={handleChange}>
+        <ToggleButtonGroup
+          orientation="vertical"
+          value={view}
+          exclusive
+          onChange={handleChange}
+        >
           {viewContent}
         </ToggleButtonGroup>
 

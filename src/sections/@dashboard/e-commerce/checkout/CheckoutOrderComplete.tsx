@@ -1,10 +1,17 @@
 // @mui
-import { Link, Button, Divider, Typography, Stack, DialogProps } from '@mui/material';
+import {
+  Link,
+  Button,
+  Divider,
+  Typography,
+  Stack,
+  DialogProps,
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import { DialogAnimate } from '../../../../components/animate';
+import Iconify from "../../../../components/iconify";
+import { DialogAnimate } from "../../../../components/animate";
 // assets
-import { OrderCompleteIllustration } from '../../../../assets/illustrations';
+import { OrderCompleteIllustration } from "../../../../assets/illustrations";
 
 // ----------------------------------------------------------------------
 
@@ -13,24 +20,28 @@ interface Props extends DialogProps {
   onDownloadPDF: VoidFunction;
 }
 
-export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: Props) {
+export default function CheckoutOrderComplete({
+  open,
+  onReset,
+  onDownloadPDF,
+}: Props) {
   return (
     <DialogAnimate
       fullScreen
       open={open}
       PaperProps={{
         sx: {
-          maxWidth: { md: 'calc(100% - 48px)' },
-          maxHeight: { md: 'calc(100% - 48px)' },
+          maxWidth: { md: "calc(100% - 48px)" },
+          maxHeight: { md: "calc(100% - 48px)" },
         },
       }}
     >
       <Stack
         spacing={5}
         sx={{
-          m: 'auto',
+          m: "auto",
           maxWidth: 480,
-          textAlign: 'center',
+          textAlign: "center",
           px: { xs: 2, sm: 0 },
         }}
       >
@@ -46,16 +57,17 @@ export default function CheckoutOrderComplete({ open, onReset, onDownloadPDF }: 
           <br />
           <br />
           We will send you a notification within 5 days when it ships.
-          <br /> If you have any question or queries then fell to get in contact us. <br /> <br />
+          <br /> If you have any question or queries then fell to get in contact
+          us. <br /> <br />
           All the best,
         </Typography>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <Stack
           spacing={2}
           justifyContent="space-between"
-          direction={{ xs: 'column-reverse', sm: 'row' }}
+          direction={{ xs: "column-reverse", sm: "row" }}
         >
           <Button
             fullWidth

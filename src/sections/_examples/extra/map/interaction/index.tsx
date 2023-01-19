@@ -1,9 +1,9 @@
-import { useState, useCallback, memo } from 'react';
-import Map from 'react-map-gl';
+import { useState, useCallback, memo } from "react";
+import Map from "react-map-gl";
 // components
-import { MapControl, MapBoxProps } from '../../../../../components/map';
+import { MapControl, MapBoxProps } from "../../../../../components/map";
 //
-import ControlPanel from './ControlPanel';
+import ControlPanel from "./ControlPanel";
 
 // ----------------------------------------------------------------------
 

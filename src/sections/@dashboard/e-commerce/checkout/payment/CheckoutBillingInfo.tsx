@@ -1,9 +1,15 @@
 // @mui
-import { Card, Button, Typography, CardHeader, CardContent } from '@mui/material';
+import {
+  Card,
+  Button,
+  Typography,
+  CardHeader,
+  CardContent,
+} from "@mui/material";
 // @types
-import { ICheckoutBillingAddress } from '../../../../../@types/product';
+import { ICheckoutBillingAddress } from "../../../../../@types/product";
 // components
-import Iconify from '../../../../../components/iconify';
+import Iconify from "../../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +24,11 @@ export default function CheckoutBillingInfo({ billing, onBackStep }: Props) {
       <CardHeader
         title="Billing Address"
         action={
-          <Button size="small" startIcon={<Iconify icon="eva:edit-fill" />} onClick={onBackStep}>
+          <Button
+            size="small"
+            startIcon={<Iconify icon="eva:edit-fill" />}
+            onClick={onBackStep}
+          >
             Edit
           </Button>
         }
@@ -26,7 +36,11 @@ export default function CheckoutBillingInfo({ billing, onBackStep }: Props) {
       <CardContent>
         <Typography variant="subtitle2" gutterBottom>
           {billing?.receiver}&nbsp;
-          <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography
+            component="span"
+            variant="body2"
+            sx={{ color: "text.secondary" }}
+          >
             ({billing?.addressType})
           </Typography>
         </Typography>
@@ -35,7 +49,7 @@ export default function CheckoutBillingInfo({ billing, onBackStep }: Props) {
           {billing?.fullAddress}
         </Typography>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {billing?.phoneNumber}
         </Typography>
       </CardContent>

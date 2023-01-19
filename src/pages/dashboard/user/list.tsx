@@ -1,9 +1,9 @@
-import { paramCase } from 'change-case';
-import { useState } from 'react';
+import { paramCase } from "change-case";
+import { useState } from "react";
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 // @mui
 import {
   Tab,
@@ -17,21 +17,21 @@ import {
   Container,
   IconButton,
   TableContainer,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // @types
-import { IUserAccountGeneral } from '../../../@types/user';
+import { IUserAccountGeneral } from "../../../@types/user";
 // _mock_
-import { _userList } from '../../../_mock/arrays';
+import { _userList } from "../../../_mock/arrays";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // components
-import Iconify from '../../../components/iconify';
-import Scrollbar from '../../../components/scrollbar';
-import ConfirmDialog from '../../../components/confirm-dialog';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../../components/settings';
+import Iconify from "../../../components/iconify";
+import Scrollbar from "../../../components/scrollbar";
+import ConfirmDialog from "../../../components/confirm-dialog";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../components/settings";
 import {
   useTable,
   getComparator,
@@ -41,39 +41,44 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-} from '../../../components/table';
+} from "../../../components/table";
 // sections
-import { UserTableToolbar, UserTableRow } from '../../../sections/@dashboard/user/list';
+import {
+  UserTableToolbar,
+  UserTableRow,
+} from "../../../sections/@dashboard/user/list";
 
 // ----------------------------------------------------------------------
 
-const STATUS_OPTIONS = ['all', 'active', 'banned'];
+const STATUS_OPTIONS = ["all", "active", "banned"];
 
 const ROLE_OPTIONS = [
-  'all',
-  'ux designer',
-  'full stack designer',
-  'backend developer',
-  'project manager',
-  'leader',
-  'ui designer',
-  'ui/ux designer',
-  'front end developer',
-  'full stack developer',
+  "all",
+  "ux designer",
+  "full stack designer",
+  "backend developer",
+  "project manager",
+  "leader",
+  "ui designer",
+  "ui/ux designer",
+  "front end developer",
+  "full stack developer",
 ];
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'company', label: 'Company', align: 'left' },
-  { id: 'role', label: 'Role', align: 'left' },
-  { id: 'isVerified', label: 'Verified', align: 'center' },
-  { id: 'status', label: 'Status', align: 'left' },
-  { id: '' },
+  { id: "name", label: "Name", align: "left" },
+  { id: "company", label: "Company", align: "left" },
+  { id: "role", label: "Role", align: "left" },
+  { id: "isVerified", label: "Verified", align: "center" },
+  { id: "status", label: "Status", align: "left" },
+  { id: "" },
 ];
 
 // ----------------------------------------------------------------------
 
-UserListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+UserListPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -103,13 +108,13 @@ export default function UserListPage() {
 
   const [tableData, setTableData] = useState(_userList);
 
-  const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState("");
 
-  const [filterRole, setFilterRole] = useState('all');
+  const [filterRole, setFilterRole] = useState("all");
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -119,11 +124,15 @@ export default function UserListPage() {
     filterStatus,
   });
 
-  const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const dataInPage = dataFiltered.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   const denseHeight = dense ? 52 : 72;
 
-  const isFiltered = filterName !== '' || filterRole !== 'all' || filterStatus !== 'all';
+  const isFiltered =
+    filterName !== "" || filterRole !== "all" || filterStatus !== "all";
 
   const isNotFound =
     (!dataFiltered.length && !!filterName) ||
@@ -138,7 +147,10 @@ export default function UserListPage() {
     setOpenConfirm(false);
   };
 
-  const handleFilterStatus = (event: React.SyntheticEvent<Element, Event>, newValue: string) => {
+  const handleFilterStatus = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: string
+  ) => {
     setPage(0);
     setFilterStatus(newValue);
   };
@@ -166,7 +178,9 @@ export default function UserListPage() {
   };
 
   const handleDeleteRows = (selectedRows: string[]) => {
-    const deleteRows = tableData.filter((row) => !selectedRows.includes(row.id));
+    const deleteRows = tableData.filter(
+      (row) => !selectedRows.includes(row.id)
+    );
     setSelected([]);
     setTableData(deleteRows);
 
@@ -176,7 +190,8 @@ export default function UserListPage() {
       } else if (selectedRows.length === dataFiltered.length) {
         setPage(0);
       } else if (selectedRows.length > dataInPage.length) {
-        const newPage = Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1;
+        const newPage =
+          Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1;
         setPage(newPage);
       }
     }
@@ -187,9 +202,9 @@ export default function UserListPage() {
   };
 
   const handleResetFilter = () => {
-    setFilterName('');
-    setFilterRole('all');
-    setFilterStatus('all');
+    setFilterName("");
+    setFilterRole("all");
+    setFilterStatus("all");
   };
 
   return (
@@ -198,13 +213,13 @@ export default function UserListPage() {
         <title> User: List | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="User List"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'List' },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
+            { name: "User", href: PATH_DASHBOARD.user.root },
+            { name: "List" },
           ]}
           action={
             <Button
@@ -224,7 +239,7 @@ export default function UserListPage() {
             onChange={handleFilterStatus}
             sx={{
               px: 2,
-              bgcolor: 'background.neutral',
+              bgcolor: "background.neutral",
             }}
           >
             {STATUS_OPTIONS.map((tab) => (
@@ -244,7 +259,7 @@ export default function UserListPage() {
             onResetFilter={handleResetFilter}
           />
 
-          <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+          <TableContainer sx={{ position: "relative", overflow: "unset" }}>
             <TableSelectedAction
               dense={dense}
               numSelected={selected.length}
@@ -265,7 +280,7 @@ export default function UserListPage() {
             />
 
             <Scrollbar>
-              <Table size={dense ? 'small' : 'medium'} sx={{ minWidth: 800 }}>
+              <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
                 <TableHeadCustom
                   order={order}
                   orderBy={orderBy}
@@ -325,7 +340,8 @@ export default function UserListPage() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {selected.length} </strong> items?
+            Are you sure want to delete <strong> {selected.length} </strong>{" "}
+            items?
           </>
         }
         action={
@@ -376,11 +392,11 @@ function applyFilter({
     );
   }
 
-  if (filterStatus !== 'all') {
+  if (filterStatus !== "all") {
     inputData = inputData.filter((user) => user.status === filterStatus);
   }
 
-  if (filterRole !== 'all') {
+  if (filterRole !== "all") {
     inputData = inputData.filter((user) => user.role === filterRole);
   }
 

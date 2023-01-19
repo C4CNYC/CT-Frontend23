@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { sentenceCase } from 'change-case';
+import { useState } from "react";
+import { sentenceCase } from "change-case";
 // @mui
 import {
   Link,
@@ -10,18 +10,18 @@ import {
   MenuItem,
   TableCell,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fDate } from '../../../../utils/formatTime';
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fDate } from "../../../../utils/formatTime";
+import { fCurrency } from "../../../../utils/formatNumber";
 // @types
-import { IProduct } from '../../../../@types/product';
+import { IProduct } from "../../../../@types/product";
 // components
-import Label from '../../../../components/label';
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Label from "../../../../components/label";
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 
 // ----------------------------------------------------------------------
 
@@ -86,7 +86,7 @@ export default function ProductTableRow({
               color="inherit"
               variant="subtitle2"
               onClick={onViewRow}
-              sx={{ cursor: 'pointer' }}
+              sx={{ cursor: "pointer" }}
             >
               {name}
             </Link>
@@ -99,20 +99,23 @@ export default function ProductTableRow({
           <Label
             variant="soft"
             color={
-              (inventoryType === 'out_of_stock' && 'error') ||
-              (inventoryType === 'low_stock' && 'warning') ||
-              'success'
+              (inventoryType === "out_of_stock" && "error") ||
+              (inventoryType === "low_stock" && "warning") ||
+              "success"
             }
-            sx={{ textTransform: 'capitalize' }}
+            sx={{ textTransform: "capitalize" }}
           >
-            {inventoryType ? sentenceCase(inventoryType) : ''}
+            {inventoryType ? sentenceCase(inventoryType) : ""}
           </Label>
         </TableCell>
 
         <TableCell align="right">{fCurrency(price)}</TableCell>
 
         <TableCell align="right">
-          <IconButton color={openPopover ? 'primary' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "primary" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -129,7 +132,7 @@ export default function ProductTableRow({
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete

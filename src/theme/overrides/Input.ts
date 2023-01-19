@@ -1,4 +1,4 @@
-import { alpha, Theme } from '@mui/material/styles';
+import { alpha, Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -7,14 +7,14 @@ export default function Input(theme: Theme) {
     MuiInputBase: {
       styleOverrides: {
         root: {
-          '&.Mui-disabled': {
-            '& svg': {
+          "&.Mui-disabled": {
+            "& svg": {
               color: theme.palette.text.disabled,
             },
           },
         },
         input: {
-          '&::placeholder': {
+          "&::placeholder": {
             opacity: 1,
             color: theme.palette.text.disabled,
           },
@@ -24,10 +24,10 @@ export default function Input(theme: Theme) {
     MuiInput: {
       styleOverrides: {
         underline: {
-          '&:before': {
+          "&:before": {
             borderBottomColor: alpha(theme.palette.grey[500], 0.56),
           },
-          '&:after': {
+          "&:after": {
             borderBottomColor: theme.palette.text.primary,
           },
         },
@@ -36,7 +36,7 @@ export default function Input(theme: Theme) {
     MuiTextField: {
       styleOverrides: {
         root: {
-          '& .MuiInputLabel-root.Mui-focused': {
+          "& .MuiInputLabel-root.Mui-focused": {
             color: theme.palette.text.primary,
           },
         },
@@ -47,19 +47,19 @@ export default function Input(theme: Theme) {
         root: {
           borderRadius: theme.shape.borderRadius,
           backgroundColor: alpha(theme.palette.grey[500], 0.08),
-          '&:hover': {
+          "&:hover": {
             backgroundColor: alpha(theme.palette.grey[500], 0.16),
           },
-          '&.Mui-focused': {
+          "&.Mui-focused": {
             backgroundColor: alpha(theme.palette.grey[500], 0.16),
           },
-          '&.Mui-disabled': {
+          "&.Mui-disabled": {
             backgroundColor: theme.palette.action.disabledBackground,
           },
         },
         underline: {
-          '&:before, :after': {
-            display: 'none',
+          "&:before, :after": {
+            display: "none",
           },
         },
       },
@@ -67,17 +67,17 @@ export default function Input(theme: Theme) {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          '& .MuiOutlinedInput-notchedOutline': {
+          "& .MuiOutlinedInput-notchedOutline": {
             borderColor: alpha(theme.palette.grey[500], 0.32),
           },
-          '&.Mui-focused': {
-            '& .MuiOutlinedInput-notchedOutline': {
+          "&.Mui-focused": {
+            "& .MuiOutlinedInput-notchedOutline": {
               borderWidth: 1,
               borderColor: theme.palette.text.primary,
             },
           },
-          '&.Mui-disabled': {
-            '& .MuiOutlinedInput-notchedOutline': {
+          "&.Mui-disabled": {
+            "& .MuiOutlinedInput-notchedOutline": {
               borderColor: theme.palette.action.disabledBackground,
             },
           },

@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Grid, Card, Button, Typography, Stack, Box } from '@mui/material';
+import { Grid, Card, Button, Typography, Stack, Box } from "@mui/material";
 // @types
-import { ICheckoutBillingAddress, IProductCheckoutState } from '../../../../../@types/product';
+import {
+  ICheckoutBillingAddress,
+  IProductCheckoutState,
+} from "../../../../../@types/product";
 // _mock
-import { _addressBooks } from '../../../../../_mock/arrays';
+import { _addressBooks } from "../../../../../_mock/arrays";
 // components
-import Label from '../../../../../components/label';
-import Iconify from '../../../../../components/iconify';
+import Label from "../../../../../components/label";
+import Iconify from "../../../../../components/iconify";
 //
-import CheckoutSummary from '../CheckoutSummary';
-import CheckoutBillingNewAddressForm from './CheckoutBillingNewAddressForm';
+import CheckoutSummary from "../CheckoutSummary";
+import CheckoutBillingNewAddressForm from "./CheckoutBillingNewAddressForm";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +23,11 @@ type Props = {
   onCreateBilling: (address: ICheckoutBillingAddress) => void;
 };
 
-export default function CheckoutBillingAddress({ checkout, onBackStep, onCreateBilling }: Props) {
+export default function CheckoutBillingAddress({
+  checkout,
+  onBackStep,
+  onCreateBilling,
+}: Props) {
   const { total, discount, subtotal } = checkout;
 
   const [open, setOpen] = useState(false);
@@ -67,7 +74,11 @@ export default function CheckoutBillingAddress({ checkout, onBackStep, onCreateB
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <CheckoutSummary subtotal={subtotal} total={total} discount={discount} />
+          <CheckoutSummary
+            subtotal={subtotal}
+            total={total}
+            discount={discount}
+          />
         </Grid>
       </Grid>
 
@@ -88,7 +99,8 @@ type AddressItemProps = {
 };
 
 function AddressItem({ address, onCreateBilling }: AddressItemProps) {
-  const { receiver, fullAddress, addressType, phoneNumber, isDefault } = address;
+  const { receiver, fullAddress, addressType, phoneNumber, isDefault } =
+    address;
 
   return (
     <Card
@@ -100,18 +112,21 @@ function AddressItem({ address, onCreateBilling }: AddressItemProps) {
       <Stack
         spacing={2}
         alignItems={{
-          md: 'flex-end',
+          md: "flex-end",
         }}
         direction={{
-          xs: 'column',
-          md: 'row',
+          xs: "column",
+          md: "row",
         }}
       >
         <Stack flexGrow={1} spacing={1}>
           <Stack direction="row" alignItems="center">
             <Typography variant="subtitle1">
               {receiver}
-              <Box component="span" sx={{ ml: 0.5, typography: 'body2', color: 'text.secondary' }}>
+              <Box
+                component="span"
+                sx={{ ml: 0.5, typography: "body2", color: "text.secondary" }}
+              >
                 ({addressType})
               </Box>
             </Typography>
@@ -125,14 +140,19 @@ function AddressItem({ address, onCreateBilling }: AddressItemProps) {
 
           <Typography variant="body2">{fullAddress}</Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
             {phoneNumber}
           </Typography>
         </Stack>
 
         <Stack flexDirection="row" flexWrap="wrap" flexShrink={0}>
           {!isDefault && (
-            <Button variant="outlined" size="small" color="inherit" sx={{ mr: 1 }}>
+            <Button
+              variant="outlined"
+              size="small"
+              color="inherit"
+              sx={{ mr: 1 }}
+            >
               Delete
             </Button>
           )}

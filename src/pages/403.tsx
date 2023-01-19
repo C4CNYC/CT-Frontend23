@@ -1,19 +1,21 @@
-import { m } from 'framer-motion';
+import { m } from "framer-motion";
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
+import Head from "next/head";
+import NextLink from "next/link";
 // @mui
-import { Button, Typography } from '@mui/material';
+import { Button, Typography } from "@mui/material";
 // layouts
-import CompactLayout from '../layouts/compact';
+import CompactLayout from "../layouts/compact";
 // components
-import { MotionContainer, varBounce } from '../components/animate';
+import { MotionContainer, varBounce } from "../components/animate";
 // assets
-import { ForbiddenIllustration } from '../assets/illustrations';
+import { ForbiddenIllustration } from "../assets/illustrations";
 
 // ----------------------------------------------------------------------
 
-Page403.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>;
+Page403.getLayout = (page: React.ReactElement) => (
+  <CompactLayout>{page}</CompactLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +34,7 @@ export default function Page403() {
         </m.div>
 
         <m.div variants={varBounce().in}>
-          <Typography sx={{ color: 'text.secondary' }}>
+          <Typography sx={{ color: "text.secondary" }}>
             The page you&apos;re trying access has restricted access.
             <br />
             Please refer to your system administrator

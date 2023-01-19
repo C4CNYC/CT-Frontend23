@@ -1,7 +1,7 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ function SentIcon({ ...other }: BoxProps) {
         />
 
         <g
-          style={{ mixBlendMode: 'overlay' }}
+          style={{ mixBlendMode: "overlay" }}
           fill="#fff"
           fillOpacity="0.04"
           filter="url(#filter0_i_1870_134242)"
@@ -51,7 +51,11 @@ function SentIcon({ ...other }: BoxProps) {
             filterUnits="userSpaceOnUse"
           >
             <feFlood floodOpacity="0" result="BackgroundImageFix" />
-            <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+            <feBlend
+              in="SourceGraphic"
+              in2="BackgroundImageFix"
+              result="shape"
+            />
             <feColorMatrix
               in="SourceAlpha"
               result="hardAlpha"

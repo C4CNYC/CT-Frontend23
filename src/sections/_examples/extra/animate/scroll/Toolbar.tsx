@@ -1,7 +1,7 @@
 // @mui
-import { Paper, IconButton } from '@mui/material';
+import { Paper, IconButton } from "@mui/material";
 // components
-import Iconify from '../../../../../components/iconify';
+import Iconify from "../../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -13,9 +13,9 @@ export default function Toolbar({ onRefresh, ...other }: ToolbarProps) {
   return (
     <Paper
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
       }}
       {...other}
     >

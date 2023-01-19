@@ -1,26 +1,28 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Stack, Button, Container } from '@mui/material';
+import { Stack, Button, Container } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from "../../routes/paths";
 // utils
-import { fTimestamp } from '../../utils/formatTime';
+import { fTimestamp } from "../../utils/formatTime";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // _mock_
-import { _allFiles } from '../../_mock/arrays';
+import { _allFiles } from "../../_mock/arrays";
 // @types
-import { IFile } from '../../@types/file';
+import { IFile } from "../../@types/file";
 // components
-import Iconify from '../../components/iconify';
-import ConfirmDialog from '../../components/confirm-dialog';
-import { fileFormat } from '../../components/file-thumbnail';
-import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../components/settings';
-import { useTable, getComparator } from '../../components/table';
-import DateRangePicker, { useDateRangePicker } from '../../components/date-range-picker';
+import Iconify from "../../components/iconify";
+import ConfirmDialog from "../../components/confirm-dialog";
+import { fileFormat } from "../../components/file-thumbnail";
+import CustomBreadcrumbs from "../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../components/settings";
+import { useTable, getComparator } from "../../components/table";
+import DateRangePicker, {
+  useDateRangePicker,
+} from "../../components/date-range-picker";
 // sections
 import {
   FileListView,
@@ -30,28 +32,30 @@ import {
   FileFilterButton,
   FileChangeViewButton,
   FileNewFolderDialog,
-} from '../../sections/@dashboard/file';
+} from "../../sections/@dashboard/file";
 
 // ----------------------------------------------------------------------
 
 const FILE_TYPE_OPTIONS = [
-  'folder',
-  'txt',
-  'zip',
-  'audio',
-  'image',
-  'video',
-  'word',
-  'excel',
-  'powerpoint',
-  'pdf',
-  'photoshop',
-  'illustrator',
+  "folder",
+  "txt",
+  "zip",
+  "audio",
+  "image",
+  "video",
+  "word",
+  "excel",
+  "powerpoint",
+  "pdf",
+  "photoshop",
+  "illustrator",
 ];
 
 // ----------------------------------------------------------------------
 
-FileManagerPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+FileManagerPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -74,9 +78,9 @@ export default function FileManagerPage() {
 
   const { themeStretch } = useSettingsContext();
 
-  const [view, setView] = useState('list');
+  const [view, setView] = useState("list");
 
-  const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState("");
 
   const [tableData, setTableData] = useState(_allFiles);
 
@@ -106,9 +110,13 @@ export default function FileManagerPage() {
     (!dataFiltered.length && !!filterType) ||
     (!dataFiltered.length && !!endDate && !!startDate);
 
-  const isFiltered = !!filterName || !!filterType.length || (!!startDate && !!endDate);
+  const isFiltered =
+    !!filterName || !!filterType.length || (!!startDate && !!endDate);
 
-  const handleChangeView = (event: React.MouseEvent<HTMLElement>, newView: string | null) => {
+  const handleChangeView = (
+    event: React.MouseEvent<HTMLElement>,
+    newView: string | null
+  ) => {
     if (newView !== null) {
       setView(newView);
     }
@@ -163,7 +171,8 @@ export default function FileManagerPage() {
       } else if (selected.length === dataFiltered.length) {
         setPage(0);
       } else if (selected.length > dataInPage.length) {
-        const newPage = Math.ceil((tableData.length - selected.length) / rowsPerPage) - 1;
+        const newPage =
+          Math.ceil((tableData.length - selected.length) / rowsPerPage) - 1;
         setPage(newPage);
       }
     }
@@ -173,7 +182,7 @@ export default function FileManagerPage() {
     if (onResetPicker) {
       onResetPicker();
     }
-    setFilterName('');
+    setFilterName("");
     setFilterType([]);
   };
 
@@ -199,15 +208,15 @@ export default function FileManagerPage() {
         <title> File Manager | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="File Manager"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: 'File Manager' },
+            { name: "File Manager" },
           ]}
           action={
             <Button
@@ -222,27 +231,30 @@ export default function FileManagerPage() {
 
         <Stack
           spacing={2.5}
-          direction={{ xs: 'column', md: 'row' }}
-          alignItems={{ xs: 'flex-end', md: 'center' }}
+          direction={{ xs: "column", md: "row" }}
+          alignItems={{ xs: "flex-end", md: "center" }}
           justifyContent="space-between"
           sx={{ mb: 5 }}
         >
           <Stack
             spacing={1}
-            direction={{ xs: 'column', md: 'row' }}
-            alignItems={{ md: 'center' }}
+            direction={{ xs: "column", md: "row" }}
+            alignItems={{ md: "center" }}
             sx={{ width: 1 }}
           >
-            <FileFilterName filterName={filterName} onFilterName={handleFilterName} />
+            <FileFilterName
+              filterName={filterName}
+              onFilterName={handleFilterName}
+            />
 
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
               <>
                 <FileFilterButton
                   isSelected={!!isSelectedValuePicker}
                   startIcon={<Iconify icon="eva:calendar-fill" />}
                   onClick={onOpenPicker}
                 >
-                  {isSelectedValuePicker ? shortLabel : 'Select Date'}
+                  {isSelectedValuePicker ? shortLabel : "Select Date"}
                 </FileFilterButton>
 
                 <DateRangePicker
@@ -281,7 +293,7 @@ export default function FileManagerPage() {
           <FileChangeViewButton value={view} onChange={handleChangeView} />
         </Stack>
 
-        {view === 'list' ? (
+        {view === "list" ? (
           <FileListView
             table={table}
             tableData={tableData}
@@ -301,7 +313,10 @@ export default function FileManagerPage() {
         )}
       </Container>
 
-      <FileNewFolderDialog open={openUploadFile} onClose={handleCloseUploadFile} />
+      <FileNewFolderDialog
+        open={openUploadFile}
+        onClose={handleCloseUploadFile}
+      />
 
       <ConfirmDialog
         open={openConfirm}
@@ -309,7 +324,8 @@ export default function FileManagerPage() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
+            Are you sure want to delete{" "}
+            <strong> {table.selected.length} </strong> items?
           </>
         }
         action={
@@ -365,7 +381,9 @@ function applyFilter({
   }
 
   if (filterType.length) {
-    inputData = inputData.filter((file) => filterType.includes(fileFormat(file.type)));
+    inputData = inputData.filter((file) =>
+      filterType.includes(fileFormat(file.type))
+    );
   }
 
   if (filterStartDate && filterEndDate && !isError) {

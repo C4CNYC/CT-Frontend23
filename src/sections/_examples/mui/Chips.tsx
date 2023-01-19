@@ -1,32 +1,32 @@
 // @mui
-import { Avatar, Chip, Stack, Paper } from '@mui/material';
+import { Avatar, Chip, Stack, Paper } from "@mui/material";
 // _mock
-import _mock from '../../../_mock';
+import _mock from "../../../_mock";
 // components
-import Iconify from '../../../components/iconify';
+import Iconify from "../../../components/iconify";
 //
-import { Label } from '../Block';
+import { Label } from "../Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
   p: 2,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
 } as const;
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  variant?: 'filled' | 'outlined' | 'soft';
+  variant?: "filled" | "outlined" | "soft";
 };
 
-export default function Chips({ variant = 'filled' }: Props) {
+export default function Chips({ variant = "filled" }: Props) {
   const handleDelete = () => {
-    console.info('You clicked the delete icon.');
+    console.info("You clicked the delete icon.");
   };
 
   return (
@@ -39,7 +39,12 @@ export default function Chips({ variant = 'filled' }: Props) {
           onDelete={handleDelete}
         />
 
-        <Chip variant={variant} clickable label="Default clickable" avatar={<Avatar>M</Avatar>} />
+        <Chip
+          variant={variant}
+          clickable
+          label="Default clickable"
+          avatar={<Avatar>M</Avatar>}
+        />
 
         <Chip
           variant={variant}

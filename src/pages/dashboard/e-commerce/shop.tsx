@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import orderBy from 'lodash/orderBy';
+import { useState, useEffect } from "react";
+import orderBy from "lodash/orderBy";
 // form
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Container, Typography, Stack } from '@mui/material';
+import { Container, Typography, Stack } from "@mui/material";
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
-import { getProducts } from '../../../redux/slices/product';
+import { useDispatch, useSelector } from "../../../redux/store";
+import { getProducts } from "../../../redux/slices/product";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // @types
-import { IProduct, IProductFilter } from '../../../@types/product';
+import { IProduct, IProductFilter } from "../../../@types/product";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // components
-import FormProvider from '../../../components/hook-form';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../../components/settings';
+import FormProvider from "../../../components/hook-form";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../components/settings";
 // sections
 import {
   ShopTagFiltered,
@@ -26,8 +26,8 @@ import {
   ShopProductList,
   ShopFilterDrawer,
   ShopProductSearch,
-} from '../../../sections/@dashboard/e-commerce/shop';
-import CartWidget from '../../../sections/@dashboard/e-commerce/CartWidget';
+} from "../../../sections/@dashboard/e-commerce/shop";
+import CartWidget from "../../../sections/@dashboard/e-commerce/CartWidget";
 
 // ----------------------------------------------------------------------
 
@@ -48,11 +48,11 @@ export default function EcommerceShopPage() {
 
   const defaultValues = {
     gender: [],
-    category: 'All',
+    category: "All",
     colors: [],
     priceRange: [0, 200],
-    rating: '',
-    sortBy: 'featured',
+    rating: "",
+    sortBy: "featured",
   };
 
   const methods = useForm<IProductFilter>({
@@ -100,23 +100,23 @@ export default function EcommerceShopPage() {
       </Head>
 
       <FormProvider methods={methods}>
-        <Container maxWidth={themeStretch ? false : 'lg'}>
+        <Container maxWidth={themeStretch ? false : "lg"}>
           <CustomBreadcrumbs
             heading="Shop"
             links={[
-              { name: 'Dashboard', href: PATH_DASHBOARD.root },
+              { name: "Dashboard", href: PATH_DASHBOARD.root },
               {
-                name: 'E-Commerce',
+                name: "E-Commerce",
                 href: PATH_DASHBOARD.eCommerce.root,
               },
-              { name: 'Shop' },
+              { name: "Shop" },
             ]}
           />
 
           <Stack
             spacing={2}
-            direction={{ xs: 'column', sm: 'row' }}
-            alignItems={{ sm: 'center' }}
+            direction={{ xs: "column", sm: "row" }}
+            alignItems={{ sm: "center" }}
             justifyContent="space-between"
             sx={{ mb: 2 }}
           >
@@ -143,12 +143,18 @@ export default function EcommerceShopPage() {
                   &nbsp;Products found
                 </Typography>
 
-                <ShopTagFiltered isFiltered={!isDefault} onResetFilter={handleResetFilter} />
+                <ShopTagFiltered
+                  isFiltered={!isDefault}
+                  onResetFilter={handleResetFilter}
+                />
               </>
             )}
           </Stack>
 
-          <ShopProductList products={dataFiltered} loading={!products.length && isDefault} />
+          <ShopProductList
+            products={dataFiltered}
+            loading={!products.length && isDefault}
+          />
 
           <CartWidget totalItems={checkout.totalItems} />
         </Container>
@@ -167,20 +173,20 @@ function applyFilter(products: IProduct[], filters: IProductFilter) {
   const max = priceRange[1];
 
   // SORT BY
-  if (sortBy === 'featured') {
-    products = orderBy(products, ['sold'], ['desc']);
+  if (sortBy === "featured") {
+    products = orderBy(products, ["sold"], ["desc"]);
   }
 
-  if (sortBy === 'newest') {
-    products = orderBy(products, ['createdAt'], ['desc']);
+  if (sortBy === "newest") {
+    products = orderBy(products, ["createdAt"], ["desc"]);
   }
 
-  if (sortBy === 'priceDesc') {
-    products = orderBy(products, ['price'], ['desc']);
+  if (sortBy === "priceDesc") {
+    products = orderBy(products, ["price"], ["desc"]);
   }
 
-  if (sortBy === 'priceAsc') {
-    products = orderBy(products, ['price'], ['asc']);
+  if (sortBy === "priceAsc") {
+    products = orderBy(products, ["price"], ["asc"]);
   }
 
   // FILTER PRODUCTS
@@ -188,24 +194,28 @@ function applyFilter(products: IProduct[], filters: IProductFilter) {
     products = products.filter((product) => gender.includes(product.gender));
   }
 
-  if (category !== 'All') {
+  if (category !== "All") {
     products = products.filter((product) => product.category === category);
   }
 
   if (colors.length) {
-    products = products.filter((product) => product.colors.some((color) => colors.includes(color)));
+    products = products.filter((product) =>
+      product.colors.some((color) => colors.includes(color))
+    );
   }
 
   if (min !== 0 || max !== 200) {
-    products = products.filter((product) => product.price >= min && product.price <= max);
+    products = products.filter(
+      (product) => product.price >= min && product.price <= max
+    );
   }
 
   if (rating) {
     products = products.filter((product) => {
       const convertRating = (value: string) => {
-        if (value === 'up4Star') return 4;
-        if (value === 'up3Star') return 3;
-        if (value === 'up2Star') return 2;
+        if (value === "up4Star") return 4;
+        if (value === "up3Star") return 3;
+        if (value === "up2Star") return 2;
         return 1;
       };
       return product.totalRating > convertRating(rating);

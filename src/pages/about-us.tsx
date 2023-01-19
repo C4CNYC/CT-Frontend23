@@ -1,15 +1,23 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Divider } from '@mui/material';
+import { Divider } from "@mui/material";
 // layouts
-import MainLayout from '../layouts/main';
+import MainLayout from "../layouts/main";
 // sections
-import { AboutHero, AboutWhat, AboutTeam, AboutVision, AboutTestimonials } from '../sections/about';
+import {
+  AboutHero,
+  AboutWhat,
+  AboutTeam,
+  AboutVision,
+  AboutTestimonials,
+} from "../sections/about";
 
 // ----------------------------------------------------------------------
 
-AboutPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+AboutPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +34,10 @@ export default function AboutPage() {
 
       <AboutVision />
 
-      <Divider orientation="vertical" sx={{ my: 10, mx: 'auto', width: 2, height: 40 }} />
+      <Divider
+        orientation="vertical"
+        sx={{ my: 10, mx: "auto", width: 2, height: 40 }}
+      />
 
       <AboutTeam />
 

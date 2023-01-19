@@ -1,14 +1,14 @@
-import '../../utils/highlight';
+import "../../utils/highlight";
 // next
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 // @mui
-import { Skeleton } from '@mui/material';
+import { Skeleton } from "@mui/material";
 //
-import { EditorProps } from './types';
-import { StyledEditor } from './styles';
-import EditorToolbar, { formats } from './EditorToolbar';
+import { EditorProps } from "./types";
+import { StyledEditor } from "./styles";
+import EditorToolbar, { formats } from "./EditorToolbar";
 
-const ReactQuill = dynamic(() => import('react-quill'), {
+const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
   loading: () => (
     <Skeleton
@@ -19,7 +19,7 @@ const ReactQuill = dynamic(() => import('react-quill'), {
         right: 0,
         bottom: 0,
         height: 1,
-        position: 'absolute',
+        position: "absolute",
       }}
     />
   ),
@@ -28,7 +28,7 @@ const ReactQuill = dynamic(() => import('react-quill'), {
 // ----------------------------------------------------------------------
 
 export default function Editor({
-  id = 'minimal-quill',
+  id = "minimal-quill",
   error,
   value,
   onChange,

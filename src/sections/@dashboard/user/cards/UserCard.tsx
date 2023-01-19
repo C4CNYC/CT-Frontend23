@@ -1,26 +1,34 @@
 // @mui
-import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Avatar, Divider, Typography, Stack, IconButton } from '@mui/material';
+import { alpha, styled } from "@mui/material/styles";
+import {
+  Box,
+  Card,
+  Avatar,
+  Divider,
+  Typography,
+  Stack,
+  IconButton,
+} from "@mui/material";
 // utils
-import { fShortenNumber } from '../../../../utils/formatNumber';
+import { fShortenNumber } from "../../../../utils/formatNumber";
 // @types
-import { IUserCard } from '../../../../@types/user';
+import { IUserCard } from "../../../../@types/user";
 // _mock
-import { _socials } from '../../../../_mock/arrays';
+import { _socials } from "../../../../_mock/arrays";
 // components
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import SvgColor from '../../../../components/svg-color';
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import SvgColor from "../../../../components/svg-color";
 
 // ----------------------------------------------------------------------
 
-const StyledOverlay = styled('div')(({ theme }) => ({
+const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,
   left: 0,
   zIndex: 8,
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
+  width: "100%",
+  height: "100%",
+  position: "absolute",
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
 }));
 
@@ -31,11 +39,12 @@ type Props = {
 };
 
 export default function UserCard({ user }: Props) {
-  const { name, cover, role, follower, totalPosts, avatarUrl, following } = user;
+  const { name, cover, role, follower, totalPosts, avatarUrl, following } =
+    user;
 
   return (
-    <Card sx={{ textAlign: 'center' }}>
-      <Box sx={{ position: 'relative' }}>
+    <Card sx={{ textAlign: "center" }}>
+      <Box sx={{ position: "relative" }}>
         <SvgColor
           src="/assets/shape_avatar.svg"
           sx={{
@@ -45,9 +54,9 @@ export default function UserCard({ user }: Props) {
             left: 0,
             right: 0,
             bottom: -26,
-            mx: 'auto',
-            position: 'absolute',
-            color: 'background.paper',
+            mx: "auto",
+            position: "absolute",
+            color: "background.paper",
           }}
         />
 
@@ -61,8 +70,8 @@ export default function UserCard({ user }: Props) {
             left: 0,
             right: 0,
             bottom: -32,
-            mx: 'auto',
-            position: 'absolute',
+            mx: "auto",
+            position: "absolute",
           }}
         />
 
@@ -75,17 +84,22 @@ export default function UserCard({ user }: Props) {
         {name}
       </Typography>
 
-      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+      <Typography variant="body2" sx={{ color: "text.secondary" }}>
         {role}
       </Typography>
 
-      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ mt: 1, mb: 3 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ mt: 1, mb: 3 }}
+      >
         {_socials.map((social) => (
           <IconButton
             key={social.name}
             sx={{
               color: social.color,
-              '&:hover': {
+              "&:hover": {
                 bgcolor: alpha(social.color, 0.08),
               },
             }}
@@ -95,29 +109,47 @@ export default function UserCard({ user }: Props) {
         ))}
       </Stack>
 
-      <Divider sx={{ borderStyle: 'dashed' }} />
+      <Divider sx={{ borderStyle: "dashed" }} />
 
       <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" sx={{ py: 3 }}>
         <div>
-          <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ mb: 0.75, color: "text.disabled" }}
+          >
             Follower
           </Typography>
-          <Typography variant="subtitle1">{fShortenNumber(follower)}</Typography>
+          <Typography variant="subtitle1">
+            {fShortenNumber(follower)}
+          </Typography>
         </div>
 
         <div>
-          <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ mb: 0.75, color: "text.disabled" }}
+          >
             Following
           </Typography>
 
-          <Typography variant="subtitle1">{fShortenNumber(following)}</Typography>
+          <Typography variant="subtitle1">
+            {fShortenNumber(following)}
+          </Typography>
         </div>
 
         <div>
-          <Typography variant="caption" component="div" sx={{ mb: 0.75, color: 'text.disabled' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ mb: 0.75, color: "text.disabled" }}
+          >
             Total Post
           </Typography>
-          <Typography variant="subtitle1">{fShortenNumber(totalPosts)}</Typography>
+          <Typography variant="subtitle1">
+            {fShortenNumber(totalPosts)}
+          </Typography>
         </div>
       </Box>
     </Card>

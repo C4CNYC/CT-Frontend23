@@ -1,9 +1,9 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/material";
 //
-import BackgroundIllustration from './BackgroundIllustration';
+import BackgroundIllustration from "./BackgroundIllustration";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,12 @@ function ForbiddenIllustration({ ...other }: BoxProps) {
 
   return (
     <Box {...other}>
-      <svg width="100%" height="100%" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 480 360"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <BackgroundIllustration />
 
         <image
@@ -42,7 +47,10 @@ function ForbiddenIllustration({ ...other }: BoxProps) {
           opacity="0.12"
         />
 
-        <path fill="#FFD666" d="M111.045 121c30.8-.5 30.8-46.3 0-46.8-30.8.5-30.8 46.3 0 46.8z" />
+        <path
+          fill="#FFD666"
+          d="M111.045 121c30.8-.5 30.8-46.3 0-46.8-30.8.5-30.8 46.3 0 46.8z"
+        />
 
         <path
           fill="#FBCDBE"

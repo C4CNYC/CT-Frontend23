@@ -1,11 +1,11 @@
 // @mui
-import { Box, BoxProps } from '@mui/material';
+import { Box, BoxProps } from "@mui/material";
 // @type
-import { IProduct } from '../../../../@types/product';
+import { IProduct } from "../../../../@types/product";
 // components
-import { SkeletonProductItem } from '../../../../components/skeleton';
+import { SkeletonProductItem } from "../../../../components/skeleton";
 //
-import ShopProductCard from './ShopProductCard';
+import ShopProductCard from "./ShopProductCard";
 
 // ----------------------------------------------------------------------
 
@@ -14,16 +14,20 @@ interface Props extends BoxProps {
   loading: boolean;
 }
 
-export default function ShopProductList({ products, loading, ...other }: Props) {
+export default function ShopProductList({
+  products,
+  loading,
+  ...other
+}: Props) {
   return (
     <Box
       gap={3}
       display="grid"
       gridTemplateColumns={{
-        xs: 'repeat(1, 1fr)',
-        sm: 'repeat(2, 1fr)',
-        md: 'repeat(3, 1fr)',
-        lg: 'repeat(4, 1fr)',
+        xs: "repeat(1, 1fr)",
+        sm: "repeat(2, 1fr)",
+        md: "repeat(3, 1fr)",
+        lg: "repeat(4, 1fr)",
       }}
       {...other}
     >

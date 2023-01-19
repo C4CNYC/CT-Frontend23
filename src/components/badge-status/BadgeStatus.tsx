@@ -1,13 +1,19 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 //
-import { StyledBadgeStatus } from './styles';
-import { BadgeStatusProps } from './types';
+import { StyledBadgeStatus } from "./styles";
+import { BadgeStatusProps } from "./types";
 
 // ----------------------------------------------------------------------
 
-export default function BadgeStatus({ size = 'medium', status = 'offline', sx }: BadgeStatusProps) {
+export default function BadgeStatus({
+  size = "medium",
+  status = "offline",
+  sx,
+}: BadgeStatusProps) {
   const theme = useTheme();
 
-  return <StyledBadgeStatus ownerState={{ status, size }} sx={sx} theme={theme} />;
+  return (
+    <StyledBadgeStatus ownerState={{ status, size }} sx={sx} theme={theme} />
+  );
 }

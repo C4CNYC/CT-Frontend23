@@ -1,23 +1,23 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { MenuItem, TextField, IconButton, InputAdornment } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { MenuItem, TextField, IconButton, InputAdornment } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // components
-import Iconify from '../../../components/iconify';
+import Iconify from "../../../components/iconify";
 //
-import { Block } from '../Block';
+import { Block } from "../Block";
 
 // ----------------------------------------------------------------------
 
 const CURRENCIES = [
-  { value: 'USD', label: '$' },
-  { value: 'EUR', label: '€' },
-  { value: 'BTC', label: '฿' },
-  { value: 'JPY', label: '¥' },
+  { value: "USD", label: "$" },
+  { value: "EUR", label: "€" },
+  { value: "BTC", label: "฿" },
+  { value: "JPY", label: "¥" },
 ];
 
 const style = {
-  '& > *': { my: '8px !important' },
+  "& > *": { my: "8px !important" },
 };
 
 // ----------------------------------------------------------------------
@@ -31,17 +31,17 @@ interface State {
 }
 
 type Props = {
-  variant?: 'filled' | 'outlined' | 'standard';
+  variant?: "filled" | "outlined" | "standard";
 };
 
 export default function Textfields({ variant }: Props) {
-  const [currency, setCurrency] = useState('EUR');
+  const [currency, setCurrency] = useState("EUR");
 
   const [values, setValues] = useState<State>({
-    amount: '',
-    password: '',
-    weight: '',
-    weightRange: '',
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
     showPassword: false,
   });
 
@@ -49,15 +49,18 @@ export default function Textfields({ variant }: Props) {
     setCurrency(event.target.value);
   };
 
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -125,7 +128,9 @@ export default function Textfields({ variant }: Props) {
           fullWidth
           label="With normal TextField"
           InputProps={{
-            startAdornment: <InputAdornment position="start">Kg</InputAdornment>,
+            startAdornment: (
+              <InputAdornment position="start">Kg</InputAdornment>
+            ),
           }}
         />
 
@@ -133,7 +138,7 @@ export default function Textfields({ variant }: Props) {
           variant={variant}
           fullWidth
           value={values.weight}
-          onChange={handleChange('weight')}
+          onChange={handleChange("weight")}
           helperText="Weight"
           InputProps={{
             endAdornment: <InputAdornment position="end">Kg</InputAdornment>,
@@ -143,9 +148,9 @@ export default function Textfields({ variant }: Props) {
         <TextField
           variant={variant}
           fullWidth
-          type={values.showPassword ? 'text' : 'password'}
+          type={values.showPassword ? "text" : "password"}
           value={values.password}
-          onChange={handleChange('password')}
+          onChange={handleChange("password")}
           label="Password"
           InputProps={{
             startAdornment: (
@@ -213,9 +218,20 @@ export default function Textfields({ variant }: Props) {
       </Block>
 
       <Block title="Size" sx={style}>
-        <TextField variant={variant} fullWidth label="Size" size="small" defaultValue="Small" />
+        <TextField
+          variant={variant}
+          fullWidth
+          label="Size"
+          size="small"
+          defaultValue="Small"
+        />
 
-        <TextField variant={variant} fullWidth label="Size" defaultValue="Normal" />
+        <TextField
+          variant={variant}
+          fullWidth
+          label="Size"
+          defaultValue="Normal"
+        />
       </Block>
 
       <Block title="Select" sx={style}>

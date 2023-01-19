@@ -1,19 +1,19 @@
 // @mui
-import { IconButton, IconButtonProps } from '@mui/material';
+import { IconButton, IconButtonProps } from "@mui/material";
 // hooks
-import useResponsive from '../../../hooks/useResponsive';
+import useResponsive from "../../../hooks/useResponsive";
 // config
-import { NAV } from '../../../config-global';
+import { NAV } from "../../../config-global";
 // components
-import Iconify from '../../../components/iconify';
-import { useSettingsContext } from '../../../components/settings';
+import Iconify from "../../../components/iconify";
+import { useSettingsContext } from "../../../components/settings";
 
 // ----------------------------------------------------------------------
 
 export default function NavToggleButton({ sx, ...other }: IconButtonProps) {
   const { themeLayout, onToggleLayout } = useSettingsContext();
 
-  const isDesktop = useResponsive('up', 'lg');
+  const isDesktop = useResponsive("up", "lg");
 
   if (!isDesktop) {
     return null;
@@ -26,13 +26,13 @@ export default function NavToggleButton({ sx, ...other }: IconButtonProps) {
       sx={{
         p: 0.5,
         top: 32,
-        position: 'fixed',
+        position: "fixed",
         left: NAV.W_DASHBOARD - 12,
-        bgcolor: 'background.default',
+        bgcolor: "background.default",
         zIndex: (theme) => theme.zIndex.appBar + 1,
         border: (theme) => `dashed 1px ${theme.palette.divider}`,
-        '&:hover': {
-          bgcolor: 'background.default',
+        "&:hover": {
+          bgcolor: "background.default",
         },
         ...sx,
       }}
@@ -40,7 +40,11 @@ export default function NavToggleButton({ sx, ...other }: IconButtonProps) {
     >
       <Iconify
         width={16}
-        icon={themeLayout === 'vertical' ? 'eva:arrow-ios-back-fill' : 'eva:arrow-ios-forward-fill'}
+        icon={
+          themeLayout === "vertical"
+            ? "eva:arrow-ios-back-fill"
+            : "eva:arrow-ios-forward-fill"
+        }
       />
     </IconButton>
   );

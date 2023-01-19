@@ -1,7 +1,7 @@
 // @mui
-import { Tooltip, IconButton, Paper, PaperProps } from '@mui/material';
+import { Tooltip, IconButton, Paper, PaperProps } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -22,10 +22,14 @@ export default function MailItemAction({
   ...other
 }: Props) {
   const actions = [
-    { name: 'Archive', icon: 'eva:archive-fill', action: onArchive },
-    { name: 'Delete', icon: 'eva:trash-2-outline', action: onDelete },
-    { name: 'Mark Email Read', icon: 'ic:round-mark-email-read', action: onMarkRead },
-    { name: 'Hidden Email', icon: 'eva:eye-off-fill', action: onHidden },
+    { name: "Archive", icon: "eva:archive-fill", action: onArchive },
+    { name: "Delete", icon: "eva:trash-2-outline", action: onDelete },
+    {
+      name: "Mark Email Read",
+      icon: "ic:round-mark-email-read",
+      action: onMarkRead,
+    },
+    { name: "Hidden Email", icon: "eva:eye-off-fill", action: onHidden },
   ];
 
   return (
@@ -37,11 +41,11 @@ export default function MailItemAction({
         bottom: 12,
         zIndex: 99,
         opacity: 0,
-        display: 'flex',
-        position: 'absolute',
-        alignItems: 'center',
+        display: "flex",
+        position: "absolute",
+        alignItems: "center",
         boxShadow: (theme) => theme.customShadows.z8,
-        transition: (theme) => theme.transitions.create('opacity'),
+        transition: (theme) => theme.transitions.create("opacity"),
         ...sx,
       }}
       {...other}
@@ -53,7 +57,7 @@ export default function MailItemAction({
             onClick={action.action}
             sx={{
               mx: 0.75,
-              '&:hover': { color: 'text.primary' },
+              "&:hover": { color: "text.primary" },
             }}
           >
             <Iconify icon={action.icon} width={24} />

@@ -1,3 +1,3 @@
-export * from 'notistack';
+export * from "notistack";
 
-export { default } from './SnackbarProvider';
+export { default } from "./SnackbarProvider";

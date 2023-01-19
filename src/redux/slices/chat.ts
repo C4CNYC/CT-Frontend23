@@ -1,9 +1,9 @@
-import keyBy from 'lodash/keyBy';
-import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import keyBy from "lodash/keyBy";
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 // utils
-import axios from '../../utils/axios';
+import axios from "../../utils/axios";
 // @types
-import { IChatState } from '../../@types/chat';
+import { IChatState } from "../../@types/chat";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ const initialState: IChatState = {
 };
 
 const slice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState,
   reducers: {
     // START LOADING
@@ -36,7 +36,7 @@ const slice = createSlice({
     getContactsSuccess(state, action) {
       const contacts = action.payload;
 
-      state.contacts.byId = keyBy(contacts, 'id');
+      state.contacts.byId = keyBy(contacts, "id");
       state.contacts.allIds = Object.keys(state.contacts.byId);
     },
 
@@ -44,7 +44,7 @@ const slice = createSlice({
     getConversationsSuccess(state, action) {
       const conversations = action.payload;
 
-      state.conversations.byId = keyBy(conversations, 'id');
+      state.conversations.byId = keyBy(conversations, "id");
       state.conversations.allIds = Object.keys(state.conversations.byId);
     },
 
@@ -66,8 +66,15 @@ const slice = createSlice({
     // ON SEND MESSAGE
     sendMessage(state, action) {
       const conversation = action.payload;
-      const { conversationId, messageId, message, contentType, attachments, createdAt, senderId } =
-        conversation;
+      const {
+        conversationId,
+        messageId,
+        message,
+        contentType,
+        attachments,
+        createdAt,
+        senderId,
+      } = conversation;
 
       const newMessage = {
         id: messageId,
@@ -111,7 +118,8 @@ const slice = createSlice({
 export default slice.reducer;
 
 // Actions
-export const { addRecipients, sendMessage, resetActiveConversation } = slice.actions;
+export const { addRecipients, sendMessage, resetActiveConversation } =
+  slice.actions;
 
 // ----------------------------------------------------------------------
 
@@ -119,7 +127,7 @@ export function getContacts() {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/chat/contacts');
+      const response = await axios.get("/api/chat/contacts");
       dispatch(slice.actions.getContactsSuccess(response.data.contacts));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -133,8 +141,10 @@ export function getConversations() {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/chat/conversations');
-      dispatch(slice.actions.getConversationsSuccess(response.data.conversations));
+      const response = await axios.get("/api/chat/conversations");
+      dispatch(
+        slice.actions.getConversationsSuccess(response.data.conversations)
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -147,10 +157,12 @@ export function getConversation(conversationKey: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/chat/conversation', {
+      const response = await axios.get("/api/chat/conversation", {
         params: { conversationKey },
       });
-      dispatch(slice.actions.getConversationSuccess(response.data.conversation));
+      dispatch(
+        slice.actions.getConversationSuccess(response.data.conversation)
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -163,7 +175,7 @@ export function markConversationAsRead(conversationId: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.get('/api/chat/conversation/mark-as-seen', {
+      await axios.get("/api/chat/conversation/mark-as-seen", {
         params: { conversationId },
       });
       dispatch(slice.actions.markConversationAsReadSuccess({ conversationId }));
@@ -179,10 +191,12 @@ export function getParticipants(conversationKey: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/chat/participants', {
+      const response = await axios.get("/api/chat/participants", {
         params: { conversationKey },
       });
-      dispatch(slice.actions.getParticipantsSuccess(response.data.participants));
+      dispatch(
+        slice.actions.getParticipantsSuccess(response.data.participants)
+      );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

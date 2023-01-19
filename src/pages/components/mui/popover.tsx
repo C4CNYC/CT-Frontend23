@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
 import {
   Box,
@@ -13,28 +13,32 @@ import {
   RadioGroup,
   FormControl,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import MenuPopover, { MenuPopoverArrowValue } from '../../../components/menu-popover';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import MenuPopover, {
+  MenuPopoverArrowValue,
+} from "../../../components/menu-popover";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 // ----------------------------------------------------------------------
 
-MUIPopoverPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIPopoverPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +49,7 @@ export default function MUIPopoverPage() {
 
   const [customized, setCustomized] = useState<HTMLElement | null>(null);
 
-  const [arrow, setArrow] = useState<MenuPopoverArrowValue>('top-left');
+  const [arrow, setArrow] = useState<MenuPopoverArrowValue>("top-left");
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setCLick(event.currentTarget);
@@ -55,7 +59,9 @@ export default function MUIPopoverPage() {
     setCLick(null);
   };
 
-  const handleHoverOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const handleHoverOpen = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
     setHover(event.currentTarget);
   };
   const handleHoverClose = () => {
@@ -80,7 +86,8 @@ export default function MUIPopoverPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -88,12 +95,12 @@ export default function MUIPopoverPage() {
             heading="Popover"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Popover' },
+              { name: "Popover" },
             ]}
-            moreLink={['https://mui.com/components/popover']}
+            moreLink={["https://mui.com/components/popover"]}
           />
         </Container>
       </Box>
@@ -103,8 +110,8 @@ export default function MUIPopoverPage() {
           gap={3}
           display="grid"
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            md: 'repeat(2, 1fr)',
+            xs: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
           }}
           sx={{ mb: 3 }}
         >
@@ -117,20 +124,21 @@ export default function MUIPopoverPage() {
               anchorEl={click}
               onClose={handleClose}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+                vertical: "bottom",
+                horizontal: "center",
               }}
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
+                vertical: "top",
+                horizontal: "center",
               }}
             >
               <Box sx={{ p: 2, maxWidth: 280 }}>
                 <Typography variant="subtitle1" gutterBottom>
                   Etiam feugiat lorem non metus
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit ornare lobortis.
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit
+                  ornare lobortis.
                 </Typography>
               </Box>
             </Popover>
@@ -138,7 +146,7 @@ export default function MUIPopoverPage() {
 
           <Block title="Hover" sx={style}>
             <Typography
-              aria-owns={hover ? 'mouse-over-popover' : undefined}
+              aria-owns={hover ? "mouse-over-popover" : undefined}
               aria-haspopup="true"
               onMouseEnter={handleHoverOpen}
               onMouseLeave={handleHoverClose}
@@ -150,25 +158,26 @@ export default function MUIPopoverPage() {
               open={Boolean(hover)}
               anchorEl={hover}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               onClose={handleHoverClose}
               disableRestoreFocus
               sx={{
-                pointerEvents: 'none',
+                pointerEvents: "none",
               }}
             >
               <Box sx={{ p: 2, maxWidth: 280 }}>
                 <Typography variant="subtitle1" gutterBottom>
                   Etiam feugiat lorem non metus
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit ornare lobortis.
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  Fusce vulputate eleifend sapien. Curabitur at lacus ac velit
+                  ornare lobortis.
                 </Typography>
               </Box>
             </Popover>
@@ -176,29 +185,35 @@ export default function MUIPopoverPage() {
         </Box>
 
         <Block title="Customized" sx={style}>
-          <Button variant="contained" onClick={handleOpenCustomized} sx={{ mr: 5 }}>
+          <Button
+            variant="contained"
+            onClick={handleOpenCustomized}
+            sx={{ mr: 5 }}
+          >
             Open Customized
           </Button>
 
           <FormControl>
-            <FormLabel sx={{ typography: 'body2' }}>Arrow</FormLabel>
+            <FormLabel sx={{ typography: "body2" }}>Arrow</FormLabel>
             <RadioGroup
               value={arrow}
-              onChange={(event) => setArrow(event.target.value as MenuPopoverArrowValue)}
+              onChange={(event) =>
+                setArrow(event.target.value as MenuPopoverArrowValue)
+              }
             >
               {[
-                'top-left',
-                'top-center',
-                'top-right',
-                'bottom-left',
-                'bottom-center',
-                'bottom-right',
-                'left-top',
-                'left-center',
-                'left-bottom',
-                'right-top',
-                'right-center',
-                'right-bottom',
+                "top-left",
+                "top-center",
+                "top-right",
+                "bottom-left",
+                "bottom-center",
+                "bottom-right",
+                "left-top",
+                "left-center",
+                "left-bottom",
+                "right-top",
+                "right-center",
+                "right-bottom",
               ].map((position) => (
                 <FormControlLabel
                   key={position}
@@ -210,13 +225,18 @@ export default function MUIPopoverPage() {
             </RadioGroup>
           </FormControl>
 
-          <MenuPopover open={customized} onClose={handleCloseCustomized} arrow={arrow}>
+          <MenuPopover
+            open={customized}
+            onClose={handleCloseCustomized}
+            arrow={arrow}
+          >
             <Box sx={{ p: 2, maxWidth: 280 }}>
               <Typography variant="subtitle1" gutterBottom>
                 Etiam feugiat lorem non metus
               </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Fusce vulputate eleifend sapien. Curabitur at lacus ac velit ornare lobortis.
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                Fusce vulputate eleifend sapien. Curabitur at lacus ac velit
+                ornare lobortis.
               </Typography>
             </Box>
           </MenuPopover>

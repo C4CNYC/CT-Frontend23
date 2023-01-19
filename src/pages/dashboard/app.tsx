@@ -1,12 +1,12 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Stack, Button } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Container, Grid, Stack, Button } from "@mui/material";
 // auth
-import { useAuthContext } from '../../auth/useAuthContext';
+import { useAuthContext } from "../../auth/useAuthContext";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // _mock_
 import {
   _appFeatured,
@@ -14,9 +14,9 @@ import {
   _appInstalled,
   _appRelated,
   _appInvoices,
-} from '../../_mock/arrays';
+} from "../../_mock/arrays";
 // components
-import { useSettingsContext } from '../../components/settings';
+import { useSettingsContext } from "../../components/settings";
 // sections
 import {
   AppWidget,
@@ -29,13 +29,15 @@ import {
   AppWidgetSummary,
   AppCurrentDownload,
   AppTopInstalledCountries,
-} from '../../sections/@dashboard/general/app';
+} from "../../sections/@dashboard/general/app";
 // assets
-import { SeoIllustration } from '../../assets/illustrations';
+import { SeoIllustration } from "../../assets/illustrations";
 
 // ----------------------------------------------------------------------
 
-GeneralAppPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+GeneralAppPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +54,7 @@ export default function GeneralAppPage() {
         <title> General: App | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <AppWelcome
@@ -63,7 +65,7 @@ export default function GeneralAppPage() {
                   sx={{
                     p: 3,
                     width: 360,
-                    margin: { xs: 'auto', md: 'inherit' },
+                    margin: { xs: "auto", md: "inherit" },
                   }}
                 />
               }
@@ -122,10 +124,10 @@ export default function GeneralAppPage() {
                   theme.palette.warning.main,
                 ],
                 series: [
-                  { label: 'Mac', value: 12244 },
-                  { label: 'Window', value: 53345 },
-                  { label: 'iOS', value: 44313 },
-                  { label: 'Android', value: 78343 },
+                  { label: "Mac", value: 12244 },
+                  { label: "Window", value: 53345 },
+                  { label: "iOS", value: 44313 },
+                  { label: "Android", value: 78343 },
                 ],
               }}
             />
@@ -136,20 +138,42 @@ export default function GeneralAppPage() {
               title="Area Installed"
               subheader="(+43%) than last year"
               chart={{
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                categories: [
+                  "Jan",
+                  "Feb",
+                  "Mar",
+                  "Apr",
+                  "May",
+                  "Jun",
+                  "Jul",
+                  "Aug",
+                  "Sep",
+                ],
                 series: [
                   {
-                    year: '2019',
+                    year: "2019",
                     data: [
-                      { name: 'Asia', data: [10, 41, 35, 51, 49, 62, 69, 91, 148] },
-                      { name: 'America', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
+                      {
+                        name: "Asia",
+                        data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+                      },
+                      {
+                        name: "America",
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45],
+                      },
                     ],
                   },
                   {
-                    year: '2020',
+                    year: "2020",
                     data: [
-                      { name: 'Asia', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-                      { name: 'America', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] },
+                      {
+                        name: "Asia",
+                        data: [148, 91, 69, 62, 49, 51, 35, 41, 10],
+                      },
+                      {
+                        name: "America",
+                        data: [45, 77, 99, 88, 77, 56, 13, 34, 10],
+                      },
                     ],
                   },
                 ],
@@ -162,21 +186,27 @@ export default function GeneralAppPage() {
               title="New Invoice"
               tableData={_appInvoices}
               tableLabels={[
-                { id: 'id', label: 'Invoice ID' },
-                { id: 'category', label: 'Category' },
-                { id: 'price', label: 'Price' },
-                { id: 'status', label: 'Status' },
-                { id: '' },
+                { id: "id", label: "Invoice ID" },
+                { id: "category", label: "Category" },
+                { id: "price", label: "Price" },
+                { id: "status", label: "Status" },
+                { id: "" },
               ]}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <AppTopRelated title="Top Related Applications" list={_appRelated} />
+            <AppTopRelated
+              title="Top Related Applications"
+              list={_appRelated}
+            />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <AppTopInstalledCountries title="Top Installed Countries" list={_appInstalled} />
+            <AppTopInstalledCountries
+              title="Top Installed Countries"
+              list={_appInstalled}
+            />
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>

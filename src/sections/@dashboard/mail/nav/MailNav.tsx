@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { List, Drawer, Button, Divider, Stack } from '@mui/material';
+import { List, Drawer, Button, Divider, Stack } from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // config
-import { NAV } from '../../../../config-global';
+import { NAV } from "../../../../config-global";
 // @types
-import { IMailLabel } from '../../../../@types/mail';
+import { IMailLabel } from "../../../../@types/mail";
 // components
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import { SkeletonMailNavItem } from '../../../../components/skeleton';
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import { SkeletonMailNavItem } from "../../../../components/skeleton";
 //
-import MailNavItem from './MailNavItem';
+import MailNavItem from "./MailNavItem";
 
 // ----------------------------------------------------------------------
 
@@ -25,10 +25,15 @@ type Props = {
   onCloseNav: VoidFunction;
 };
 
-export default function MailNav({ items, openNav, onOpenCompose, onCloseNav }: Props) {
+export default function MailNav({
+  items,
+  openNav,
+  onOpenCompose,
+  onCloseNav,
+}: Props) {
   const { asPath } = useRouter();
 
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   const isLoading = !items.length;
 
@@ -46,7 +51,11 @@ export default function MailNav({ items, openNav, onOpenCompose, onCloseNav }: P
 
   const renderContent = (
     <>
-      <Stack justifyContent="center" flexShrink={0} sx={{ px: 2.5, height: 80 }}>
+      <Stack
+        justifyContent="center"
+        flexShrink={0}
+        sx={{ px: 2.5, height: 80 }}
+      >
         <Button
           fullWidth
           color="inherit"
@@ -54,11 +63,13 @@ export default function MailNav({ items, openNav, onOpenCompose, onCloseNav }: P
           startIcon={<Iconify icon="eva:edit-fill" />}
           onClick={handleOpenCompose}
           sx={{
-            bgcolor: 'text.primary',
-            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-            '&:hover': {
-              bgcolor: 'text.primary',
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+            bgcolor: "text.primary",
+            color: (theme) =>
+              theme.palette.mode === "light" ? "common.white" : "grey.800",
+            "&:hover": {
+              bgcolor: "text.primary",
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
             },
           }}
         >
@@ -88,7 +99,7 @@ export default function MailNav({ items, openNav, onOpenCompose, onCloseNav }: P
       PaperProps={{
         sx: {
           width: NAV.W_BASE,
-          position: 'relative',
+          position: "relative",
         },
       }}
     >

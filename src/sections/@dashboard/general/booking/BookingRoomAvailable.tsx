@@ -1,12 +1,19 @@
-import { ApexOptions } from 'apexcharts';
-import sumBy from 'lodash/sumBy';
+import { ApexOptions } from "apexcharts";
+import sumBy from "lodash/sumBy";
 // @mui
-import { useTheme, alpha } from '@mui/material/styles';
-import { Card, CardHeader, Stack, Box, Typography, CardProps } from '@mui/material';
+import { useTheme, alpha } from "@mui/material/styles";
+import {
+  Card,
+  CardHeader,
+  Stack,
+  Box,
+  Typography,
+  CardProps,
+} from "@mui/material";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -25,16 +32,25 @@ interface Props extends CardProps {
   };
 }
 
-export default function BookingRoomAvailable({ title, subheader, chart, ...other }: Props) {
+export default function BookingRoomAvailable({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
 
-  const total = sumBy(series, 'value');
+  const total = sumBy(series, "value");
 
-  const chartSeries = (series.filter((i) => i.label === 'Sold out')[0].value / total) * 100;
+  const chartSeries =
+    (series.filter((i) => i.label === "Sold out")[0].value / total) * 100;
 
-  const chartColors = colors || [theme.palette.primary.light, theme.palette.primary.main];
+  const chartColors = colors || [
+    theme.palette.primary.light,
+    theme.palette.primary.main,
+  ];
 
   const chartOptions = useChart({
     legend: {
@@ -44,7 +60,7 @@ export default function BookingRoomAvailable({ title, subheader, chart, ...other
       padding: { top: -32, bottom: -32 },
     },
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
         colorStops: [chartColors].map((colr) => [
           { offset: 0, color: colr[0] },
@@ -54,12 +70,12 @@ export default function BookingRoomAvailable({ title, subheader, chart, ...other
     },
     plotOptions: {
       radialBar: {
-        hollow: { size: '64%' },
+        hollow: { size: "64%" },
         dataLabels: {
           name: { offsetY: -16 },
           value: { offsetY: 8 },
           total: {
-            label: 'Rooms',
+            label: "Rooms",
             formatter: () => fNumber(total),
           },
         },
@@ -72,7 +88,12 @@ export default function BookingRoomAvailable({ title, subheader, chart, ...other
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 8 }} />
 
-      <Chart type="radialBar" series={[chartSeries]} options={chartOptions} height={310} />
+      <Chart
+        type="radialBar"
+        series={[chartSeries]}
+        options={chartOptions}
+        height={310}
+      />
 
       <Stack spacing={2} sx={{ p: 5 }}>
         {series.map((item) => (
@@ -99,13 +120,13 @@ function Legend({ item }: LegendProps) {
             height: 16,
             bgcolor: (theme) => alpha(theme.palette.grey[500], 0.16),
             borderRadius: 0.75,
-            ...(item.label === 'Sold out' && {
-              bgcolor: 'primary.main',
+            ...(item.label === "Sold out" && {
+              bgcolor: "primary.main",
             }),
           }}
         />
 
-        <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
           {item.label}
         </Typography>
       </Stack>

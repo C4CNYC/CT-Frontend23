@@ -10,11 +10,11 @@ import {
   Typography,
   CardContent,
   InputAdornment,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ export default function CheckoutSummary({
   enableEdit = false,
   enableDiscount = false,
 }: Props) {
-  const displayShipping = shipping !== null ? 'Free' : '-';
+  const displayShipping = shipping !== null ? "Free" : "-";
 
   return (
     <Card sx={{ mb: 3 }}>
@@ -47,7 +47,11 @@ export default function CheckoutSummary({
         title="Order Summary"
         action={
           enableEdit && (
-            <Button size="small" onClick={onEdit} startIcon={<Iconify icon="eva:edit-fill" />}>
+            <Button
+              size="small"
+              onClick={onEdit}
+              startIcon={<Iconify icon="eva:edit-fill" />}
+            >
               Edit
             </Button>
           )
@@ -57,21 +61,23 @@ export default function CheckoutSummary({
       <CardContent>
         <Stack spacing={2}>
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               Sub Total
             </Typography>
             <Typography variant="subtitle2">{fCurrency(subtotal)}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               Discount
             </Typography>
-            <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
+            <Typography variant="subtitle2">
+              {discount ? fCurrency(-discount) : "-"}
+            </Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               Shipping
             </Typography>
             <Typography variant="subtitle2">
@@ -83,11 +89,11 @@ export default function CheckoutSummary({
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="subtitle1">Total</Typography>
-            <Box sx={{ textAlign: 'right' }}>
-              <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
+            <Box sx={{ textAlign: "right" }}>
+              <Typography variant="subtitle1" sx={{ color: "error.main" }}>
                 {fCurrency(total)}
               </Typography>
-              <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
+              <Typography variant="caption" sx={{ fontStyle: "italic" }}>
                 (VAT included if applicable)
               </Typography>
             </Box>
@@ -101,7 +107,10 @@ export default function CheckoutSummary({
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <Button onClick={() => onApplyDiscount(5)} sx={{ mr: -0.5 }}>
+                    <Button
+                      onClick={() => onApplyDiscount(5)}
+                      sx={{ mr: -0.5 }}
+                    >
                       Apply
                     </Button>
                   </InputAdornment>

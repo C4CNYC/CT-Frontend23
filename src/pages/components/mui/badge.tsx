@@ -1,21 +1,23 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container, Typography, Badge } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { Box, Container, Typography, Badge } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-MUIBadgePage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIBadgePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +32,8 @@ export default function MUIBadgePage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -38,12 +41,12 @@ export default function MUIBadgePage() {
             heading="Badge"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Badge' },
+              { name: "Badge" },
             ]}
-            moreLink={['https://mui.com/components/badges']}
+            moreLink={["https://mui.com/components/badges"]}
           />
         </Container>
       </Box>
@@ -53,10 +56,10 @@ export default function MUIBadgePage() {
           <Block
             title="Basic"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             <Badge badgeContent={4}>
@@ -91,10 +94,10 @@ export default function MUIBadgePage() {
           <Block
             title="Maximum value"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             <Badge
@@ -118,10 +121,10 @@ export default function MUIBadgePage() {
           <Block
             title="Dot badge"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             <Badge color="info" variant="dot">
@@ -136,18 +139,18 @@ export default function MUIBadgePage() {
           <Block
             title="Badge overlap"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             <Badge color="info" badgeContent=" ">
-              <Box sx={{ width: 40, height: 40, bgcolor: 'warning.main' }} />
+              <Box sx={{ width: 40, height: 40, bgcolor: "warning.main" }} />
             </Badge>
 
             <Badge color="info" badgeContent=" " variant="dot">
-              <Box sx={{ width: 40, height: 40, bgcolor: 'warning.main' }} />
+              <Box sx={{ width: 40, height: 40, bgcolor: "warning.main" }} />
             </Badge>
 
             <Badge color="info" overlap="circular" badgeContent=" ">
@@ -155,19 +158,24 @@ export default function MUIBadgePage() {
                 sx={{
                   width: 40,
                   height: 40,
-                  borderRadius: '50%',
-                  bgcolor: 'warning.main',
+                  borderRadius: "50%",
+                  bgcolor: "warning.main",
                 }}
               />
             </Badge>
 
-            <Badge color="info" overlap="circular" badgeContent=" " variant="dot">
+            <Badge
+              color="info"
+              overlap="circular"
+              badgeContent=" "
+              variant="dot"
+            >
               <Box
                 sx={{
                   width: 40,
                   height: 40,
-                  borderRadius: '50%',
-                  bgcolor: 'warning.main',
+                  borderRadius: "50%",
+                  bgcolor: "warning.main",
                 }}
               />
             </Badge>

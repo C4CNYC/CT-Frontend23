@@ -1,13 +1,20 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Card, Grid, Container, CardHeader, CardContent } from '@mui/material';
+import {
+  Box,
+  Card,
+  Grid,
+  Container,
+  CardHeader,
+  CardContent,
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
 import {
   ChartPie,
@@ -22,11 +29,13 @@ import {
   ChartColumnStacked,
   ChartColumnNegative,
   ChartColumnMultiple,
-} from '../../../sections/_examples/extra/chart';
+} from "../../../sections/_examples/extra/chart";
 
 // ----------------------------------------------------------------------
 
-DemoChartsPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoChartsPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +50,8 @@ export default function DemoChartsPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -49,12 +59,12 @@ export default function DemoChartsPage() {
             heading="Charts"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Charts' },
+              { name: "Charts" },
             ]}
-            moreLink={['https://apexcharts.com']}
+            moreLink={["https://apexcharts.com"]}
           />
         </Container>
       </Box>
@@ -139,9 +149,9 @@ export default function DemoChartsPage() {
               <CardContent
                 sx={{
                   height: 420,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <ChartPie />
@@ -155,9 +165,9 @@ export default function DemoChartsPage() {
               <CardContent
                 sx={{
                   height: 420,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <ChartDonut />
@@ -171,9 +181,9 @@ export default function DemoChartsPage() {
               <CardContent
                 sx={{
                   height: 420,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <ChartRadialBar />
@@ -187,9 +197,9 @@ export default function DemoChartsPage() {
               <CardContent
                 sx={{
                   height: 420,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <ChartsRadarBar />

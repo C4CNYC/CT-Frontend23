@@ -1,19 +1,19 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Stack, Container } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, Stack, Container } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // _mock
-import _mock from '../../../_mock';
+import _mock from "../../../_mock";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import OrganizationalChart from '../../../components/organizational-chart';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import OrganizationalChart from "../../../components/organizational-chart";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
@@ -36,19 +36,19 @@ export default function DemoOrganizationalChartPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: theme.palette.mode === 'light' ? 'grey.200' : 'grey.800',
+          bgcolor: theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
           <CustomBreadcrumbs
             heading="Organizational Chart"
             links={[
-              { name: 'Components', href: PATH_PAGE.components },
-              { name: 'Organizational Chart' },
+              { name: "Components", href: PATH_PAGE.components },
+              { name: "Organizational Chart" },
             ]}
             moreLink={[
-              'https://www.npmjs.com/package/react-organizational-chart',
-              'https://daniel-hauser.github.io/react-organizational-chart/?path=/story/example-tree--basic',
+              "https://www.npmjs.com/package/react-organizational-chart",
+              "https://daniel-hauser.github.io/react-organizational-chart/?path=/story/example-tree--basic",
             ]}
           />
         </Container>
@@ -57,15 +57,26 @@ export default function DemoOrganizationalChartPage() {
       <Container sx={{ my: 10 }}>
         <Stack spacing={5}>
           <Block title="Simple">
-            <OrganizationalChart data={SIMPLE_DATA} lineColor={theme.palette.primary.light} />
+            <OrganizationalChart
+              data={SIMPLE_DATA}
+              lineColor={theme.palette.primary.light}
+            />
           </Block>
 
-          <Block title="Standard" sx={{ overflow: 'auto' }}>
-            <OrganizationalChart data={SIMPLE_DATA} variant="standard" lineHeight="40px" />
+          <Block title="Standard" sx={{ overflow: "auto" }}>
+            <OrganizationalChart
+              data={SIMPLE_DATA}
+              variant="standard"
+              lineHeight="40px"
+            />
           </Block>
 
-          <Block title="By Group" sx={{ overflow: 'auto' }}>
-            <OrganizationalChart data={DATA} variant="group" lineHeight="64px" />
+          <Block title="By Group" sx={{ overflow: "auto" }}>
+            <OrganizationalChart
+              data={DATA}
+              variant="group"
+              lineHeight="64px"
+            />
           </Block>
         </Stack>
       </Container>
@@ -75,7 +86,12 @@ export default function DemoOrganizationalChartPage() {
 
 // ----------------------------------------------------------------------
 
-const createData = (name: string, group: string, role: string | null, avatar: string | null) => ({
+const createData = (
+  name: string,
+  group: string,
+  role: string | null,
+  avatar: string | null
+) => ({
   name,
   group,
   role,
@@ -83,36 +99,61 @@ const createData = (name: string, group: string, role: string | null, avatar: st
 });
 
 const SIMPLE_DATA = {
-  ...createData('tasha mcneill', 'root', 'ceo, co-founder', _mock.image.avatar(1)),
+  ...createData(
+    "tasha mcneill",
+    "root",
+    "ceo, co-founder",
+    _mock.image.avatar(1)
+  ),
   children: [
     {
-      ...createData('john stone', 'product design', 'lead', _mock.image.avatar(2)),
+      ...createData(
+        "john stone",
+        "product design",
+        "lead",
+        _mock.image.avatar(2)
+      ),
       children: [
         {
-          ...createData('rimsha wynn', 'product design', 'senior', _mock.image.avatar(3)),
+          ...createData(
+            "rimsha wynn",
+            "product design",
+            "senior",
+            _mock.image.avatar(3)
+          ),
           children: null,
         },
       ],
     },
     {
-      ...createData('ponnappa priya', 'development', 'lead', _mock.image.avatar(4)),
+      ...createData(
+        "ponnappa priya",
+        "development",
+        "lead",
+        _mock.image.avatar(4)
+      ),
       children: [
         {
-          ...createData('tyra elliott', 'development', 'senior', _mock.image.avatar(5)),
+          ...createData(
+            "tyra elliott",
+            "development",
+            "senior",
+            _mock.image.avatar(5)
+          ),
           children: [
             {
               ...createData(
-                'sheridan mckee',
-                'development',
-                'back end developer',
+                "sheridan mckee",
+                "development",
+                "back end developer",
                 _mock.image.avatar(6)
               ),
               children: [
                 {
                   ...createData(
-                    'ang li',
-                    'development',
-                    'back end developer',
+                    "ang li",
+                    "development",
+                    "back end developer",
                     _mock.image.avatar(7)
                   ),
                   children: null,
@@ -120,7 +161,12 @@ const SIMPLE_DATA = {
               ],
             },
             {
-              ...createData('hope ahmad', 'development', 'front end', _mock.image.avatar(8)),
+              ...createData(
+                "hope ahmad",
+                "development",
+                "front end",
+                _mock.image.avatar(8)
+              ),
               children: null,
             },
           ],
@@ -128,14 +174,29 @@ const SIMPLE_DATA = {
       ],
     },
     {
-      ...createData('peter stanbridge', 'marketing', 'lead', _mock.image.avatar(9)),
+      ...createData(
+        "peter stanbridge",
+        "marketing",
+        "lead",
+        _mock.image.avatar(9)
+      ),
       children: [
         {
-          ...createData('madeline harding', 'marketing', 'support', _mock.image.avatar(10)),
+          ...createData(
+            "madeline harding",
+            "marketing",
+            "support",
+            _mock.image.avatar(10)
+          ),
           children: null,
         },
         {
-          ...createData('eoin medrano', 'marketing', 'content writer', _mock.image.avatar(11)),
+          ...createData(
+            "eoin medrano",
+            "marketing",
+            "content writer",
+            _mock.image.avatar(11)
+          ),
           children: null,
         },
       ],
@@ -144,16 +205,31 @@ const SIMPLE_DATA = {
 };
 
 const DATA = {
-  ...createData('tasha mcneill', 'root', 'ceo, co-founder', _mock.image.avatar(1)),
+  ...createData(
+    "tasha mcneill",
+    "root",
+    "ceo, co-founder",
+    _mock.image.avatar(1)
+  ),
   children: [
     {
-      ...createData('product design', 'product design', null, null),
+      ...createData("product design", "product design", null, null),
       children: [
         {
-          ...createData('john stone', 'product design', 'lead', _mock.image.avatar(2)),
+          ...createData(
+            "john stone",
+            "product design",
+            "lead",
+            _mock.image.avatar(2)
+          ),
           children: [
             {
-              ...createData('rimsha wynn', 'product design', 'senior', _mock.image.avatar(3)),
+              ...createData(
+                "rimsha wynn",
+                "product design",
+                "senior",
+                _mock.image.avatar(3)
+              ),
               children: null,
             },
           ],
@@ -161,27 +237,37 @@ const DATA = {
       ],
     },
     {
-      ...createData('development', 'development', null, null),
+      ...createData("development", "development", null, null),
       children: [
         {
-          ...createData('ponnappa priya', 'development', 'lead', _mock.image.avatar(4)),
+          ...createData(
+            "ponnappa priya",
+            "development",
+            "lead",
+            _mock.image.avatar(4)
+          ),
           children: [
             {
-              ...createData('tyra elliott', 'development', 'senior', _mock.image.avatar(5)),
+              ...createData(
+                "tyra elliott",
+                "development",
+                "senior",
+                _mock.image.avatar(5)
+              ),
               children: [
                 {
                   ...createData(
-                    'sheridan mckee',
-                    'development',
-                    'back end developer',
+                    "sheridan mckee",
+                    "development",
+                    "back end developer",
                     _mock.image.avatar(6)
                   ),
                   children: [
                     {
                       ...createData(
-                        'ang li',
-                        'development',
-                        'back end developer',
+                        "ang li",
+                        "development",
+                        "back end developer",
                         _mock.image.avatar(7)
                       ),
                       children: null,
@@ -189,7 +275,12 @@ const DATA = {
                   ],
                 },
                 {
-                  ...createData('hope ahmad', 'development', 'front end', _mock.image.avatar(8)),
+                  ...createData(
+                    "hope ahmad",
+                    "development",
+                    "front end",
+                    _mock.image.avatar(8)
+                  ),
                   children: null,
                 },
               ],
@@ -199,17 +290,32 @@ const DATA = {
       ],
     },
     {
-      ...createData('marketing', 'marketing', null, null),
+      ...createData("marketing", "marketing", null, null),
       children: [
         {
-          ...createData('peter stanbridge', 'marketing', 'lead', _mock.image.avatar(9)),
+          ...createData(
+            "peter stanbridge",
+            "marketing",
+            "lead",
+            _mock.image.avatar(9)
+          ),
           children: [
             {
-              ...createData('madeline harding', 'marketing', 'support', _mock.image.avatar(10)),
+              ...createData(
+                "madeline harding",
+                "marketing",
+                "support",
+                _mock.image.avatar(10)
+              ),
               children: null,
             },
             {
-              ...createData('eoin medrano', 'marketing', 'content writer', _mock.image.avatar(11)),
+              ...createData(
+                "eoin medrano",
+                "marketing",
+                "content writer",
+                _mock.image.avatar(11)
+              ),
               children: null,
             },
           ],

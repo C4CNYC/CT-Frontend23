@@ -1,10 +1,10 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { Box, Slider, Switch, Typography } from '@mui/material';
+import { Box, Slider, Switch, Typography } from "@mui/material";
 // utils
-import { fDate } from '../../../../../utils/formatTime';
+import { fDate } from "../../../../../utils/formatTime";
 // components
-import { StyledControlPanel } from '../../../../../components/map';
+import { StyledControlPanel } from "../../../../../components/map";
 
 // ----------------------------------------------------------------------
 
@@ -43,13 +43,13 @@ function ControlPanel({
     <StyledControlPanel>
       <Box
         sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        <Typography variant="subtitle2" sx={{ color: 'common.white' }}>
+        <Typography variant="subtitle2" sx={{ color: "common.white" }}>
           All Days
         </Typography>
 
@@ -65,7 +65,7 @@ function ControlPanel({
       <Typography
         gutterBottom
         variant="body2"
-        sx={{ color: allDays ? 'text.disabled' : 'common.white' }}
+        sx={{ color: allDays ? "text.disabled" : "common.white" }}
       >
         Each Day: {fDate(selectedTime)}
       </Typography>
@@ -77,7 +77,7 @@ function ControlPanel({
         disabled={allDays}
         value={selectedDay}
         onChange={(event, value) => {
-          if (typeof value === 'number') handleChangeDays(value);
+          if (typeof value === "number") handleChangeDays(value);
         }}
       />
     </StyledControlPanel>

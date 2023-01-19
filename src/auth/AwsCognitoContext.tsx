@@ -1,19 +1,30 @@
-import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
+import {
+  createContext,
+  useEffect,
+  useReducer,
+  useCallback,
+  useMemo,
+} from "react";
 import {
   CognitoUser,
   CognitoUserPool,
   CognitoUserSession,
   CognitoUserAttribute,
   AuthenticationDetails,
-} from 'amazon-cognito-identity-js';
+} from "amazon-cognito-identity-js";
 // utils
-import axios from '../utils/axios';
+import axios from "../utils/axios";
 // routes
-import { PATH_AUTH } from '../routes/paths';
+import { PATH_AUTH } from "../routes/paths";
 // config
-import { COGNITO_API } from '../config-global';
+import { COGNITO_API } from "../config-global";
 //
-import { ActionMapType, AuthStateType, AuthUserType, AWSCognitoContextType } from './types';
+import {
+  ActionMapType,
+  AuthStateType,
+  AuthUserType,
+  AWSCognitoContextType,
+} from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -24,9 +35,9 @@ import { ActionMapType, AuthStateType, AuthUserType, AWSCognitoContextType } fro
 // ----------------------------------------------------------------------
 
 enum Types {
-  AUTH = 'AUTH',
-  REGISTER = 'REGISTER',
-  LOGOUT = 'LOGOUT',
+  AUTH = "AUTH",
+  REGISTER = "REGISTER",
+  LOGOUT = "LOGOUT",
 }
 
 type Payload = {
@@ -76,8 +87,8 @@ export const AuthContext = createContext<AWSCognitoContextType | null>(null);
 // ----------------------------------------------------------------------
 
 const userPool = new CognitoUserPool({
-  UserPoolId: COGNITO_API.userPoolId || '',
-  ClientId: COGNITO_API.clientId || '',
+  UserPoolId: COGNITO_API.userPoolId || "",
+  ClientId: COGNITO_API.clientId || "",
 });
 
 type AuthProviderProps = {
@@ -143,7 +154,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     ...cognitoUser,
                     ...attributes,
                     displayName: attributes.name,
-                    role: 'admin',
+                    role: "admin",
                   },
                 },
               });
@@ -217,11 +228,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       new Promise((resolve, reject) => {
         const newAttributes = [
           new CognitoUserAttribute({
-            Name: 'email',
+            Name: "email",
             Value: email,
           }),
           new CognitoUserAttribute({
-            Name: 'name',
+            Name: "name",
             Value: `${firstName} ${lastName}`,
           }),
         ];
@@ -257,7 +268,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       isInitialized: state.isInitialized,
       isAuthenticated: state.isAuthenticated,
       user: state.user,
-      method: 'cognito',
+      method: "cognito",
       login,
       loginWithGoogle: () => {},
       loginWithGithub: () => {},
@@ -265,8 +276,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
       register,
       logout,
     }),
-    [state.isAuthenticated, state.isInitialized, state.user, login, register, logout]
+    [
+      state.isAuthenticated,
+      state.isInitialized,
+      state.user,
+      login,
+      register,
+      logout,
+    ]
   );
 
-  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={memoizedValue}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

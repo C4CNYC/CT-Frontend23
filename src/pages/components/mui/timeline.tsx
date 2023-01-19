@@ -1,8 +1,8 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Paper, Container, Typography } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import { Box, Paper, Container, Typography } from "@mui/material";
 import {
   Masonry,
   Timeline,
@@ -12,16 +12,16 @@ import {
   TimelineSeparator,
   TimelineConnector,
   TimelineOppositeContent,
-} from '@mui/lab';
+} from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
@@ -30,71 +30,81 @@ type TimelineType = {
   title: string;
   des: string;
   time: string;
-  color?: 'primary' | 'info' | 'success' | 'warning' | 'error' | 'inherit' | 'grey' | 'secondary';
+  color?:
+    | "primary"
+    | "info"
+    | "success"
+    | "warning"
+    | "error"
+    | "inherit"
+    | "grey"
+    | "secondary";
   icon: React.ReactElement;
 };
 
 const TIMELINES: TimelineType[] = [
   {
     key: 1,
-    title: 'Default',
-    des: 'Morbi mattis ullamcorper',
-    time: '09:30 am',
+    title: "Default",
+    des: "Morbi mattis ullamcorper",
+    time: "09:30 am",
     icon: <Iconify icon="eva:folder-add-fill" width={24} />,
   },
   {
     key: 2,
-    title: 'Primary',
-    des: 'Morbi mattis ullamcorper',
-    time: '10:00 am',
-    color: 'primary',
+    title: "Primary",
+    des: "Morbi mattis ullamcorper",
+    time: "10:00 am",
+    color: "primary",
     icon: <Iconify icon="eva:image-2-fill" width={24} />,
   },
   {
     key: 3,
-    title: 'Secondary',
-    des: 'Morbi mattis ullamcorper',
-    time: '10:00 am',
-    color: 'secondary',
+    title: "Secondary",
+    des: "Morbi mattis ullamcorper",
+    time: "10:00 am",
+    color: "secondary",
     icon: <Iconify icon="eva:pantone-fill" width={24} />,
   },
   {
     key: 4,
-    title: 'Info',
-    des: 'Morbi mattis ullamcorper',
-    time: '10:30 am',
-    color: 'info',
+    title: "Info",
+    des: "Morbi mattis ullamcorper",
+    time: "10:30 am",
+    color: "info",
     icon: <Iconify icon="eva:tv-fill" width={24} />,
   },
   {
     key: 5,
-    title: 'Success',
-    des: 'Morbi mattis ullamcorper',
-    time: '11:00 am',
-    color: 'success',
+    title: "Success",
+    des: "Morbi mattis ullamcorper",
+    time: "11:00 am",
+    color: "success",
     icon: <Iconify icon="eva:activity-fill" width={24} />,
   },
   {
     key: 6,
-    title: 'Warning',
-    des: 'Morbi mattis ullamcorper',
-    time: '11:30 am',
-    color: 'warning',
+    title: "Warning",
+    des: "Morbi mattis ullamcorper",
+    time: "11:30 am",
+    color: "warning",
     icon: <Iconify icon="eva:cube-fill" width={24} />,
   },
   {
     key: 7,
-    title: 'Error',
-    des: 'Morbi mattis ullamcorper',
-    time: '12:00 am',
-    color: 'error',
+    title: "Error",
+    des: "Morbi mattis ullamcorper",
+    time: "12:00 am",
+    color: "error",
     icon: <Iconify icon="eva:film-fill" width={24} />,
   },
 ];
 
 // ----------------------------------------------------------------------
 
-MUITimelinePage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUITimelinePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -113,7 +123,8 @@ export default function MUITimelinePage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -121,12 +132,12 @@ export default function MUITimelinePage() {
             heading="Timeline"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Timeline' },
+              { name: "Timeline" },
             ]}
-            moreLink={['https://mui.com/components/timeline']}
+            moreLink={["https://mui.com/components/timeline"]}
           />
         </Container>
       </Box>
@@ -208,7 +219,9 @@ export default function MUITimelinePage() {
               {TIMELINES.map((item) => (
                 <TimelineItem key={item.key}>
                   <TimelineOppositeContent>
-                    <Typography sx={{ color: 'text.secondary' }}>{item.time}</Typography>
+                    <Typography sx={{ color: "text.secondary" }}>
+                      {item.time}
+                    </Typography>
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineDot color={item.color} />
@@ -228,7 +241,7 @@ export default function MUITimelinePage() {
             {TIMELINES.map((item) => (
               <TimelineItem key={item.key}>
                 <TimelineOppositeContent>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
                     {item.time}
                   </Typography>
                 </TimelineOppositeContent>
@@ -244,7 +257,10 @@ export default function MUITimelinePage() {
                     }}
                   >
                     <Typography variant="subtitle2">{item.title}</Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "text.secondary" }}
+                    >
                       {item.des}
                     </Typography>
                   </Paper>

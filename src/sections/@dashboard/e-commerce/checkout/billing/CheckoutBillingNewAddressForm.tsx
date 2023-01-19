@@ -1,7 +1,7 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
 import {
   Box,
@@ -11,18 +11,18 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-} from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // @types
-import { ICheckoutBillingAddress } from '../../../../../@types/product';
+import { ICheckoutBillingAddress } from "../../../../../@types/product";
 // assets
-import { countries } from '../../../../../assets/data';
+import { countries } from "../../../../../assets/data";
 import FormProvider, {
   RHFCheckbox,
   RHFSelect,
   RHFTextField,
   RHFRadioGroup,
-} from '../../../../../components/hook-form';
+} from "../../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -40,26 +40,30 @@ type Props = {
   onCreateBilling: (address: ICheckoutBillingAddress) => void;
 };
 
-export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateBilling }: Props) {
+export default function CheckoutBillingNewAddressForm({
+  open,
+  onClose,
+  onCreateBilling,
+}: Props) {
   const NewAddressSchema = Yup.object().shape({
-    receiver: Yup.string().required('Fullname is required'),
-    phoneNumber: Yup.string().required('Phone number is required'),
-    address: Yup.string().required('Address is required'),
-    city: Yup.string().required('City is required'),
-    state: Yup.string().required('State is required'),
-    country: Yup.string().required('Country is required'),
-    zipCode: Yup.string().required('Zip code is required'),
+    receiver: Yup.string().required("Fullname is required"),
+    phoneNumber: Yup.string().required("Phone number is required"),
+    address: Yup.string().required("Address is required"),
+    city: Yup.string().required("City is required"),
+    state: Yup.string().required("State is required"),
+    country: Yup.string().required("Country is required"),
+    zipCode: Yup.string().required("Zip code is required"),
   });
 
   const defaultValues = {
-    addressType: 'Home',
-    receiver: '',
-    phoneNumber: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zipCode: '',
+    addressType: "Home",
+    receiver: "",
+    phoneNumber: "",
+    address: "",
+    city: "",
+    state: "",
+    country: "",
+    zipCode: "",
     isDefault: true,
   };
 
@@ -98,8 +102,8 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
               row
               name="addressType"
               options={[
-                { label: 'Home', value: 'Home' },
-                { label: 'Office', value: 'Office' },
+                { label: "Home", value: "Home" },
+                { label: "Office", value: "Office" },
               ]}
             />
 
@@ -108,8 +112,8 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
               columnGap={2}
               display="grid"
               gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(2, 1fr)',
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(2, 1fr)",
               }}
             >
               <RHFTextField name="receiver" label="Full Name" />
@@ -124,8 +128,8 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
               columnGap={2}
               display="grid"
               gridTemplateColumns={{
-                xs: 'repeat(1, 1fr)',
-                sm: 'repeat(3, 1fr)',
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(3, 1fr)",
               }}
             >
               <RHFTextField name="city" label="Town / City" />
@@ -144,12 +148,20 @@ export default function CheckoutBillingNewAddressForm({ open, onClose, onCreateB
               ))}
             </RHFSelect>
 
-            <RHFCheckbox name="isDefault" label="Use this address as default." sx={{ mt: 3 }} />
+            <RHFCheckbox
+              name="isDefault"
+              label="Use this address as default."
+              sx={{ mt: 3 }}
+            />
           </Stack>
         </DialogContent>
 
         <DialogActions>
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Deliver to this Address
           </LoadingButton>
 

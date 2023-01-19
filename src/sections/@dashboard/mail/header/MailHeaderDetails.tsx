@@ -1,18 +1,26 @@
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Box, Link, Tooltip, Typography, IconButton, Stack, StackProps } from '@mui/material';
+import {
+  Box,
+  Link,
+  Tooltip,
+  Typography,
+  IconButton,
+  Stack,
+  StackProps,
+} from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // utils
-import { fDateTime } from '../../../../utils/formatTime';
+import { fDateTime } from "../../../../utils/formatTime";
 // @types
-import { IMailSender } from '../../../../@types/mail';
+import { IMailSender } from "../../../../@types/mail";
 // components
-import { CustomAvatar } from '../../../../components/custom-avatar';
-import Iconify from '../../../../components/iconify';
+import { CustomAvatar } from "../../../../components/custom-avatar";
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -22,13 +30,19 @@ interface Props extends StackProps {
   createdAt: Date | string | number;
 }
 
-export default function MailHeaderDetails({ mailFrom, mailTo, createdAt, sx, ...other }: Props) {
+export default function MailHeaderDetails({
+  mailFrom,
+  mailTo,
+  createdAt,
+  sx,
+  ...other
+}: Props) {
   const {
     push,
     query: { systemLabel, customLabel },
   } = useRouter();
 
-  const isDesktop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive("up", "sm");
 
   const baseUrl = PATH_DASHBOARD.mail.root;
 
@@ -62,14 +76,18 @@ export default function MailHeaderDetails({ mailFrom, mailTo, createdAt, sx, ...
           </IconButton>
         </Tooltip>
 
-        <CustomAvatar alt={mailFrom.name} src={mailFrom.avatar || ''} name={mailFrom.name} />
+        <CustomAvatar
+          alt={mailFrom.name}
+          src={mailFrom.avatar || ""}
+          name={mailFrom.name}
+        />
 
         <Box sx={{ ml: 2 }}>
           <Typography display="inline" variant="subtitle2">
             {mailFrom.name}
           </Typography>
 
-          <Link variant="caption" sx={{ color: 'text.secondary', ml: 0.5 }}>
+          <Link variant="caption" sx={{ color: "text.secondary", ml: 0.5 }}>
             {`<${mailFrom.email}>`}
           </Link>
 
@@ -87,7 +105,11 @@ export default function MailHeaderDetails({ mailFrom, mailTo, createdAt, sx, ...
       <Stack direction="row" alignItems="center">
         {isDesktop && (
           <>
-            <Typography variant="caption" component="div" sx={{ color: 'text.secondary' }}>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ color: "text.secondary" }}
+            >
               {fDateTime(createdAt)}
             </Typography>
 

@@ -1,23 +1,25 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Paper, Container, Stack } from '@mui/material';
+import { Box, Paper, Container, Stack } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
-import CustomizedStepper from '../../../sections/_examples/mui/stepper/CustomizedStepper';
-import VerticalLinearStepper from '../../../sections/_examples/mui/stepper/VerticalLinearStepper';
-import LinearAlternativeLabel from '../../../sections/_examples/mui/stepper/LinearAlternativeLabel';
-import HorizontalLinearStepper from '../../../sections/_examples/mui/stepper/HorizontalLinearStepper';
+import { Block } from "../../../sections/_examples/Block";
+import CustomizedStepper from "../../../sections/_examples/mui/stepper/CustomizedStepper";
+import VerticalLinearStepper from "../../../sections/_examples/mui/stepper/VerticalLinearStepper";
+import LinearAlternativeLabel from "../../../sections/_examples/mui/stepper/LinearAlternativeLabel";
+import HorizontalLinearStepper from "../../../sections/_examples/mui/stepper/HorizontalLinearStepper";
 
 // ----------------------------------------------------------------------
 
-MUIStepperPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIStepperPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +34,8 @@ export default function MUIStepperPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -40,12 +43,12 @@ export default function MUIStepperPage() {
             heading="Stepper"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Stepper' },
+              { name: "Stepper" },
             ]}
-            moreLink={['https://mui.com/components/steppers']}
+            moreLink={["https://mui.com/components/steppers"]}
           />
         </Container>
       </Box>
@@ -56,7 +59,7 @@ export default function MUIStepperPage() {
             <Paper
               sx={{
                 p: 3,
-                width: '100%',
+                width: "100%",
                 boxShadow: (theme) => theme.customShadows.z8,
               }}
             >
@@ -68,7 +71,7 @@ export default function MUIStepperPage() {
             <Paper
               sx={{
                 p: 3,
-                width: '100%',
+                width: "100%",
                 boxShadow: (theme) => theme.customShadows.z8,
               }}
             >
@@ -80,7 +83,7 @@ export default function MUIStepperPage() {
             <Paper
               sx={{
                 p: 3,
-                width: '100%',
+                width: "100%",
                 boxShadow: (theme) => theme.customShadows.z8,
               }}
             >
@@ -92,7 +95,7 @@ export default function MUIStepperPage() {
             <Paper
               sx={{
                 p: 3,
-                width: '100%',
+                width: "100%",
                 boxShadow: (theme) => theme.customShadows.z8,
               }}
             >

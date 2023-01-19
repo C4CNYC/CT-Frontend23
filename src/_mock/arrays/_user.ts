@@ -1,16 +1,16 @@
-import _mock from '../_mock';
-import { randomNumberRange, randomInArray } from '../utils';
+import _mock from "../_mock";
+import { randomNumberRange, randomInArray } from "../utils";
 
 // ----------------------------------------------------------------------
 
 export const _userAbout = {
   id: _mock.id(1),
   cover: _mock.image.cover(1),
-  role: 'UI Designer',
+  role: "UI Designer",
   follower: randomNumberRange(999, 99999),
   following: randomNumberRange(999, 99999),
   quote:
-    'Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer..',
+    "Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer..",
   country: _mock.address.country(1),
   email: _mock.email(1),
   company: _mock.company(1),
@@ -50,7 +50,7 @@ export const _userFeeds = [...Array(3)].map((_, index) => ({
   author: {
     id: _mock.id(8),
     avatarUrl: _mock.image.avatar(1),
-    name: 'Caitlyn Kerluke',
+    name: "Caitlyn Kerluke",
   },
   isLiked: true,
   createdAt: _mock.time(index),
@@ -69,7 +69,7 @@ export const _userFeeds = [...Array(3)].map((_, index) => ({
         name: _mock.name.fullName(index + 5),
       },
       createdAt: _mock.time(2),
-      message: 'Praesent venenatis metus at',
+      message: "Praesent venenatis metus at",
     },
     {
       id: _mock.id(9),
@@ -80,7 +80,7 @@ export const _userFeeds = [...Array(3)].map((_, index) => ({
       },
       createdAt: _mock.time(3),
       message:
-        'Etiam rhoncus. Nullam vel sem. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam. Sed lectus.',
+        "Etiam rhoncus. Nullam vel sem. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam. Sed lectus.",
     },
   ],
 }));
@@ -98,8 +98,12 @@ export const _userCards = [...Array(24)].map((_, index) => ({
 
 export const _userPayment = [...Array(2)].map((_, index) => ({
   id: _mock.id(index),
-  cardNumber: ['**** **** **** 1234', '**** **** **** 5678', '**** **** **** 7878'][index],
-  cardType: ['master_card', 'visa', 'master_card'][index],
+  cardNumber: [
+    "**** **** **** 1234",
+    "**** **** **** 5678",
+    "**** **** **** 7878",
+  ][index],
+  cardType: ["master_card", "visa", "master_card"][index],
 }));
 
 export const _userAddressBook = [...Array(4)].map((_, index) => ({
@@ -107,10 +111,10 @@ export const _userAddressBook = [...Array(4)].map((_, index) => ({
   name: _mock.name.fullName(index),
   phone: _mock.phoneNumber(index),
   country: _mock.address.country(index),
-  state: 'New Hampshire',
-  city: 'East Sambury',
-  street: '41256 Kamille Turnpike',
-  zipCode: '85807',
+  state: "New Hampshire",
+  city: "East Sambury",
+  street: "41256 Kamille Turnpike",
+  zipCode: "85807",
 }));
 
 export const _userInvoices = [...Array(10)].map((_, index) => ({
@@ -125,13 +129,13 @@ export const _userList = [...Array(24)].map((_, index) => ({
   name: _mock.name.fullName(index),
   email: _mock.email(index),
   phoneNumber: _mock.phoneNumber(index),
-  address: '908 Jack Locks',
+  address: "908 Jack Locks",
   country: _mock.address.country(index),
-  state: 'Virginia',
-  city: 'Rancho Cordova',
-  zipCode: '85807',
+  state: "Virginia",
+  city: "Rancho Cordova",
+  zipCode: "85807",
   company: _mock.company(index),
   isVerified: _mock.boolean(index),
-  status: randomInArray(['active', 'banned']),
+  status: randomInArray(["active", "banned"]),
   role: _mock.role(index),
 }));

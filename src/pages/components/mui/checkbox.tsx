@@ -1,36 +1,53 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Checkbox, FormGroup, Container, FormControl, FormControlLabel } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import {
+  Box,
+  Checkbox,
+  FormGroup,
+  Container,
+  FormControl,
+  FormControlLabel,
+} from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "default",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
-const PLACEMENTS = ['top', 'start', 'bottom', 'end'] as const;
+const PLACEMENTS = ["top", "start", "bottom", "end"] as const;
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
 } as const;
 
 // ----------------------------------------------------------------------
 
-MUICheckboxPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUICheckboxPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -59,7 +76,8 @@ export default function MUICheckboxPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -67,12 +85,12 @@ export default function MUICheckboxPage() {
             heading="Checkboxes"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Checkboxes' },
+              { name: "Checkboxes" },
             ]}
-            moreLink={['https://mui.com/components/checkboxes']}
+            moreLink={["https://mui.com/components/checkboxes"]}
           />
         </Container>
       </Box>
@@ -89,8 +107,14 @@ export default function MUICheckboxPage() {
           </Block>
 
           <Block title="Size & Custom Icon" sx={style}>
-            <FormControlLabel label="Normal" control={<Checkbox defaultChecked />} />
-            <FormControlLabel label="Small" control={<Checkbox defaultChecked size="small" />} />
+            <FormControlLabel
+              label="Normal"
+              control={<Checkbox defaultChecked />}
+            />
+            <FormControlLabel
+              label="Small"
+              control={<Checkbox defaultChecked size="small" />}
+            />
             <FormControlLabel
               control={
                 <Checkbox
@@ -125,7 +149,7 @@ export default function MUICheckboxPage() {
                     label={placement}
                     labelPlacement={placement}
                     control={<Checkbox />}
-                    sx={{ textTransform: 'capitalize' }}
+                    sx={{ textTransform: "capitalize" }}
                   />
                 ))}
               </FormGroup>
@@ -139,7 +163,7 @@ export default function MUICheckboxPage() {
                   key={color}
                   control={<Checkbox defaultChecked color={color} />}
                   label={color}
-                  sx={{ textTransform: 'capitalize' }}
+                  sx={{ textTransform: "capitalize" }}
                 />
               ))}
 
@@ -155,15 +179,19 @@ export default function MUICheckboxPage() {
                 {COLORS.map((color) => (
                   <FormControlLabel
                     key={color}
-                    control={<Checkbox defaultChecked indeterminate color={color} />}
+                    control={
+                      <Checkbox defaultChecked indeterminate color={color} />
+                    }
                     label={color}
-                    sx={{ textTransform: 'capitalize' }}
+                    sx={{ textTransform: "capitalize" }}
                   />
                 ))}
 
                 <FormControlLabel
                   disabled
-                  control={<Checkbox defaultChecked indeterminate color="error" />}
+                  control={
+                    <Checkbox defaultChecked indeterminate color="error" />
+                  }
                   label="Disabled"
                 />
               </FormGroup>
@@ -185,11 +213,15 @@ export default function MUICheckboxPage() {
               <div>
                 <FormControlLabel
                   label="Child 1"
-                  control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+                  control={
+                    <Checkbox checked={checked[0]} onChange={handleChange2} />
+                  }
                 />
                 <FormControlLabel
                   label="Child 2"
-                  control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+                  control={
+                    <Checkbox checked={checked[1]} onChange={handleChange3} />
+                  }
                 />
               </div>
             </div>

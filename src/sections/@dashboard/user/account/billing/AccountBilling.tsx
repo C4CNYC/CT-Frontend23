@@ -1,15 +1,15 @@
 // @mui
-import { Box, Grid, Card, Button, Typography, Stack } from '@mui/material';
+import { Box, Grid, Card, Button, Typography, Stack } from "@mui/material";
 // @types
 import {
   IUserAccountBillingCreditCard,
   IUserAccountBillingAddress,
   IUserAccountBillingInvoice,
-} from '../../../../../@types/user';
+} from "../../../../../@types/user";
 //
-import AccountBillingAddressBook from './AccountBillingAddressBook';
-import AccountBillingPaymentMethod from './AccountBillingPaymentMethod';
-import AccountBillingInvoiceHistory from './AccountBillingInvoiceHistory';
+import AccountBillingAddressBook from "./AccountBillingAddressBook";
+import AccountBillingPaymentMethod from "./AccountBillingPaymentMethod";
+import AccountBillingInvoiceHistory from "./AccountBillingInvoiceHistory";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,11 @@ type Props = {
   addressBook: IUserAccountBillingAddress[];
 };
 
-export default function AccountBilling({ cards, addressBook, invoices }: Props) {
+export default function AccountBilling({
+  cards,
+  addressBook,
+  invoices,
+}: Props) {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} md={8}>
@@ -27,7 +31,7 @@ export default function AccountBilling({ cards, addressBook, invoices }: Props) 
           <Card sx={{ p: 3 }}>
             <Typography
               variant="overline"
-              sx={{ mb: 3, display: 'block', color: 'text.secondary' }}
+              sx={{ mb: 3, display: "block", color: "text.secondary" }}
             >
               Your Plan
             </Typography>
@@ -35,12 +39,17 @@ export default function AccountBilling({ cards, addressBook, invoices }: Props) 
             <Box
               sx={{
                 mt: { xs: 2, sm: 0 },
-                position: { sm: 'absolute' },
+                position: { sm: "absolute" },
                 top: { sm: 24 },
                 right: { sm: 24 },
               }}
             >
-              <Button size="small" color="inherit" variant="outlined" sx={{ mr: 1 }}>
+              <Button
+                size="small"
+                color="inherit"
+                variant="outlined"
+                sx={{ mr: 1 }}
+              >
                 Cancel plan
               </Button>
               <Button size="small" variant="outlined">

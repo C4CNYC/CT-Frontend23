@@ -1,4 +1,4 @@
-import { Paper, PaperProps, Typography } from '@mui/material';
+import { Paper, PaperProps, Typography } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ export default function SearchNotFound({ query, sx, ...other }: Props) {
   return query ? (
     <Paper
       sx={{
-        textAlign: 'center',
+        textAlign: "center",
         ...sx,
       }}
       {...other}

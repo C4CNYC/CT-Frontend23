@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { TextField, Stack } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { TextField, Stack } from "@mui/material";
+import { Masonry } from "@mui/lab";
 import {
   TimePicker,
   MobileTimePicker,
   StaticTimePicker,
   DesktopTimePicker,
-} from '@mui/x-date-pickers';
+} from "@mui/x-date-pickers";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,9 @@ export default function PickerTime() {
           onChange={(newValue) => {
             setValue(newValue);
           }}
-          renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
+          renderInput={(params) => (
+            <TextField fullWidth {...params} margin="normal" />
+          )}
         />
 
         <TimePicker
@@ -35,7 +37,9 @@ export default function PickerTime() {
           onChange={(newValue) => {
             setValue(newValue);
           }}
-          renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
+          renderInput={(params) => (
+            <TextField fullWidth {...params} margin="normal" />
+          )}
         />
       </Block>
 
@@ -47,7 +51,9 @@ export default function PickerTime() {
           onChange={(newValue) => {
             setValue(newValue);
           }}
-          renderInput={(params) => <TextField {...params} fullWidth margin="normal" />}
+          renderInput={(params) => (
+            <TextField {...params} fullWidth margin="normal" />
+          )}
         />
 
         <DesktopTimePicker
@@ -56,13 +62,17 @@ export default function PickerTime() {
           onChange={(newValue) => {
             setValue(newValue);
           }}
-          renderInput={(params) => <TextField {...params} margin="normal" fullWidth />}
+          renderInput={(params) => (
+            <TextField {...params} margin="normal" fullWidth />
+          )}
         />
 
         <TimePicker
           value={value}
           onChange={setValue}
-          renderInput={(params) => <TextField {...params} margin="normal" fullWidth />}
+          renderInput={(params) => (
+            <TextField {...params} margin="normal" fullWidth />
+          )}
         />
       </Block>
 

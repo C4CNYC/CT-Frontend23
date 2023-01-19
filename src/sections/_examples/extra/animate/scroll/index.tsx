@@ -1,16 +1,16 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Card, Grid } from '@mui/material';
+import { Card, Grid } from "@mui/material";
 //
-import Toolbar from './Toolbar';
-import ControlPanel from '../ControlPanel';
-import ContainerView from './ContainerView';
+import Toolbar from "./Toolbar";
+import ControlPanel from "../ControlPanel";
+import ContainerView from "./ContainerView";
 
 // ----------------------------------------------------------------------
 
 export default function ScrollView() {
   const [count, setCount] = useState(0);
-  const [selectVariant, setSelectVariant] = useState('slideInUp');
+  const [selectVariant, setSelectVariant] = useState("slideInUp");
 
   const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCount(count + 1);
@@ -45,31 +45,37 @@ export default function ScrollView() {
 
 const variantKey = [
   {
-    type: 'slide',
-    values: ['slideInUp', 'slideInDown', 'slideInLeft', 'slideInRight'],
+    type: "slide",
+    values: ["slideInUp", "slideInDown", "slideInLeft", "slideInRight"],
   },
   {
-    type: 'fade',
-    values: ['fadeIn', 'fadeInUp', 'fadeInDown', 'fadeInLeft', 'fadeInRight'],
+    type: "fade",
+    values: ["fadeIn", "fadeInUp", "fadeInDown", "fadeInLeft", "fadeInRight"],
   },
   {
-    type: 'zoom',
-    values: ['zoomIn', 'zoomInUp', 'zoomInDown', 'zoomInLeft', 'zoomInRight'],
+    type: "zoom",
+    values: ["zoomIn", "zoomInUp", "zoomInDown", "zoomInLeft", "zoomInRight"],
   },
   {
-    type: 'bounce',
-    values: ['bounceIn', 'bounceInUp', 'bounceInDown', 'bounceInLeft', 'bounceInRight'],
+    type: "bounce",
+    values: [
+      "bounceIn",
+      "bounceInUp",
+      "bounceInDown",
+      "bounceInLeft",
+      "bounceInRight",
+    ],
   },
   {
-    type: 'flip',
-    values: ['flipInX', 'flipInY'],
+    type: "flip",
+    values: ["flipInX", "flipInY"],
   },
   {
-    type: 'scale',
-    values: ['scaleInX', 'scaleInY'],
+    type: "scale",
+    values: ["scaleInX", "scaleInY"],
   },
   {
-    type: 'rotate',
-    values: ['rotateIn'],
+    type: "rotate",
+    values: ["rotateIn"],
   },
 ];

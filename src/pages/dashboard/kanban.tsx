@@ -1,27 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Container, Stack } from '@mui/material';
-import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
+import { Container, Stack } from "@mui/material";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 // redux
-import { useDispatch, useSelector } from '../../redux/store';
-import { getBoard, persistColumn, persistCard } from '../../redux/slices/kanban';
+import { useDispatch, useSelector } from "../../redux/store";
+import {
+  getBoard,
+  persistColumn,
+  persistCard,
+} from "../../redux/slices/kanban";
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from "../../routes/paths";
 // utils
-import { hideScrollbarX } from '../../utils/cssStyles';
+import { hideScrollbarX } from "../../utils/cssStyles";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // components
-import CustomBreadcrumbs from '../../components/custom-breadcrumbs';
-import { SkeletonKanbanColumn } from '../../components/skeleton';
+import CustomBreadcrumbs from "../../components/custom-breadcrumbs";
+import { SkeletonKanbanColumn } from "../../components/skeleton";
 // sections
-import { KanbanColumn, KanbanColumnAdd } from '../../sections/@dashboard/kanban';
+import {
+  KanbanColumn,
+  KanbanColumnAdd,
+} from "../../sections/@dashboard/kanban";
 
 // ----------------------------------------------------------------------
 
-KanbanPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+KanbanPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -39,10 +48,13 @@ export default function KanbanPage() {
 
     if (!destination) return;
 
-    if (destination.droppableId === source.droppableId && destination.index === source.index)
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
       return;
 
-    if (type === 'column') {
+    if (type === "column") {
       const newColumnOrder = Array.from(board.columnOrder);
 
       newColumnOrder.splice(source.index, 1);
@@ -115,15 +127,19 @@ export default function KanbanPage() {
           heading="Kanban"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: 'Kanban' },
+            { name: "Kanban" },
           ]}
         />
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="all-columns" direction="horizontal" type="column">
+          <Droppable
+            droppableId="all-columns"
+            direction="horizontal"
+            type="column"
+          >
             {(provided) => (
               <Stack
                 {...provided.droppableProps}
@@ -133,7 +149,7 @@ export default function KanbanPage() {
                 alignItems="flex-start"
                 sx={{
                   height: 1,
-                  overflowY: 'hidden',
+                  overflowY: "hidden",
                   ...hideScrollbarX,
                 }}
               >

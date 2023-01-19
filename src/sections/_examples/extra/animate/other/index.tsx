@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { alpha } from '@mui/material/styles';
-import { Box, Grid, Card, CardContent, IconButton, Paper, CardHeader } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  IconButton,
+  Paper,
+  CardHeader,
+} from "@mui/material";
 // components
-import Iconify from '../../../../../components/iconify';
+import Iconify from "../../../../../components/iconify";
 //
-import Logo from './Logo';
-import Button from './Button';
+import Logo from "./Logo";
+import Button from "./Button";
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +34,7 @@ export default function Other() {
               }}
             >
               <CardHeader title="Button Click" />
-              <Box sx={{ p: 5, minHeight: 180, '& > *': { mx: 1 } }}>
+              <Box sx={{ p: 5, minHeight: 180, "& > *": { mx: 1 } }}>
                 <Button />
               </Box>
             </Paper>
@@ -36,16 +44,16 @@ export default function Other() {
             <Paper
               variant="outlined"
               sx={{
-                position: 'relative',
+                position: "relative",
                 borderRadius: 1.5,
                 bgcolor: (theme) => alpha(theme.palette.grey[500], 0.04),
               }}
             >
               <CardHeader title="Path" />
-              <Box sx={{ p: 5, minHeight: 180, '& > *': { mx: 1 } }}>
+              <Box sx={{ p: 5, minHeight: 180, "& > *": { mx: 1 } }}>
                 <IconButton
                   onClick={() => setCount(count + 1)}
-                  sx={{ position: 'absolute', right: 16, top: 16 }}
+                  sx={{ position: "absolute", right: 16, top: 16 }}
                 >
                   <Iconify icon="eva:refresh-fill" />
                 </IconButton>

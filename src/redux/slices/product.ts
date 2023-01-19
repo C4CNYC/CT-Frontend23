@@ -1,10 +1,10 @@
-import sum from 'lodash/sum';
-import uniq from 'lodash/uniq';
-import uniqBy from 'lodash/uniqBy';
-import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import sum from "lodash/sum";
+import uniq from "lodash/uniq";
+import uniqBy from "lodash/uniqBy";
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 // utils
-import axios from '../../utils/axios';
-import { IProductState, ICheckoutCartItem } from '../../@types/product';
+import axios from "../../utils/axios";
+import { IProductState, ICheckoutCartItem } from "../../@types/product";
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ const initialState: IProductState = {
 };
 
 const slice = createSlice({
-  name: 'product',
+  name: "product",
   initialState,
   reducers: {
     // START LOADING
@@ -57,7 +57,9 @@ const slice = createSlice({
       const cart: ICheckoutCartItem[] = action.payload;
 
       const totalItems = sum(cart.map((product) => product.quantity));
-      const subtotal = sum(cart.map((product) => product.price * product.quantity));
+      const subtotal = sum(
+        cart.map((product) => product.price * product.quantity)
+      );
       state.checkout.cart = cart;
       state.checkout.discount = state.checkout.discount || 0;
       state.checkout.shipping = state.checkout.shipping || 0;
@@ -88,12 +90,16 @@ const slice = createSlice({
           return product;
         });
       }
-      state.checkout.cart = uniqBy([...state.checkout.cart, newProduct], 'id');
-      state.checkout.totalItems = sum(state.checkout.cart.map((product) => product.quantity));
+      state.checkout.cart = uniqBy([...state.checkout.cart, newProduct], "id");
+      state.checkout.totalItems = sum(
+        state.checkout.cart.map((product) => product.quantity)
+      );
     },
 
     deleteCart(state, action) {
-      const updateCart = state.checkout.cart.filter((product) => product.id !== action.payload);
+      const updateCart = state.checkout.cart.filter(
+        (product) => product.id !== action.payload
+      );
 
       state.checkout.cart = updateCart;
     },
@@ -166,7 +172,8 @@ const slice = createSlice({
     applyShipping(state, action) {
       const shipping = action.payload;
       state.checkout.shipping = shipping;
-      state.checkout.total = state.checkout.subtotal - state.checkout.discount + shipping;
+      state.checkout.total =
+        state.checkout.subtotal - state.checkout.discount + shipping;
     },
   },
 });
@@ -196,7 +203,7 @@ export function getProducts() {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/products');
+      const response = await axios.get("/api/products");
       dispatch(slice.actions.getProductsSuccess(response.data.products));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -210,7 +217,7 @@ export function getProduct(name: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/products/product', {
+      const response = await axios.get("/api/products/product", {
         params: { name },
       });
       dispatch(slice.actions.getProductSuccess(response.data.product));

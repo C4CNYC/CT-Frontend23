@@ -1,9 +1,9 @@
-import { useRef, useState, useCallback, memo } from 'react';
-import Map, { MapRef } from 'react-map-gl';
+import { useRef, useState, useCallback, memo } from "react";
+import Map, { MapRef } from "react-map-gl";
 // components
-import { MapControl, MapBoxProps } from '../../../../../components/map';
+import { MapControl, MapBoxProps } from "../../../../../components/map";
 //
-import ControlPanel, { CityProps } from './ControlPanel';
+import ControlPanel, { CityProps } from "./ControlPanel";
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,11 @@ function MapViewportAnimation({ data, ...other }: Props) {
     >
       <MapControl />
 
-      <ControlPanel data={data} selectedCity={selectedCity} onSelectCity={onSelectCity} />
+      <ControlPanel
+        data={data}
+        selectedCity={selectedCity}
+        onSelectCity={onSelectCity}
+      />
     </Map>
   );
 }

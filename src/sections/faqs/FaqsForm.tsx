@@ -1,8 +1,8 @@
-import { m } from 'framer-motion';
+import { m } from "framer-motion";
 // @mui
-import { Button, Typography, TextField, Stack } from '@mui/material';
+import { Button, Typography, TextField, Stack } from "@mui/material";
 //
-import { varFade, MotionViewport } from '../../components/animate';
+import { varFade, MotionViewport } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,12 @@ export default function FaqsForm() {
       </m.div>
 
       <m.div variants={varFade().inUp}>
-        <TextField fullWidth label="Enter your message here." multiline rows={4} />
+        <TextField
+          fullWidth
+          label="Enter your message here."
+          multiline
+          rows={4}
+        />
       </m.div>
 
       <m.div variants={varFade().inUp}>

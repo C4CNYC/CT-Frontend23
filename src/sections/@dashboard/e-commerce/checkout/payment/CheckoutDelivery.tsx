@@ -1,5 +1,5 @@
 // form
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import {
   Box,
@@ -12,11 +12,11 @@ import {
   CardHeader,
   CardContent,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { ICheckoutDeliveryOption } from '../../../../../@types/product';
+import { ICheckoutDeliveryOption } from "../../../../../@types/product";
 // components
-import Iconify from '../../../../../components/iconify';
+import Iconify from "../../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,11 @@ interface Props extends CardProps {
   onApplyShipping: (shipping: number) => void;
 }
 
-export default function CheckoutDelivery({ deliveryOptions, onApplyShipping, ...other }: Props) {
+export default function CheckoutDelivery({
+  deliveryOptions,
+  onApplyShipping,
+  ...other
+}: Props) {
   const { control } = useFormContext();
 
   return (
@@ -49,8 +53,8 @@ export default function CheckoutDelivery({ deliveryOptions, onApplyShipping, ...
                 gap={2}
                 display="grid"
                 gridTemplateColumns={{
-                  xs: 'repeat(1, 1fr)',
-                  sm: 'repeat(2, 1fr)',
+                  xs: "repeat(1, 1fr)",
+                  sm: "repeat(2, 1fr)",
                 }}
               >
                 {deliveryOptions.map((option) => (
@@ -84,9 +88,9 @@ function DeliveryOption({ option, isSelected }: DeliveryOptionProps) {
       variant="outlined"
       key={value}
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        transition: (theme) => theme.transitions.create('all'),
+        display: "flex",
+        alignItems: "center",
+        transition: (theme) => theme.transitions.create("all"),
         ...(isSelected && {
           boxShadow: (theme) => theme.customShadows.z20,
         }),
@@ -94,12 +98,14 @@ function DeliveryOption({ option, isSelected }: DeliveryOptionProps) {
     >
       <FormControlLabel
         value={value}
-        control={<Radio checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />} />}
+        control={
+          <Radio checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />} />
+        }
         label={
           <Box sx={{ ml: 1 }}>
             <Typography variant="subtitle2">{title}</Typography>
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {description}
             </Typography>
           </Box>

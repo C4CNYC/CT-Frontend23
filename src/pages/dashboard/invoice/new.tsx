@@ -1,16 +1,16 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // components
-import { useSettingsContext } from '../../../components/settings';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import { useSettingsContext } from "../../../components/settings";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import InvoiceNewEditForm from '../../../sections/@dashboard/invoice/form';
+import InvoiceNewEditForm from "../../../sections/@dashboard/invoice/form";
 
 // ----------------------------------------------------------------------
 
@@ -29,20 +29,20 @@ export default function InvoiceCreatePage() {
         <title> Invoices: Create a new invoice | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Create a new invoice"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
             {
-              name: 'Invoices',
+              name: "Invoices",
               href: PATH_DASHBOARD.invoice.list,
             },
             {
-              name: 'New invoice',
+              name: "New invoice",
             },
           ]}
         />

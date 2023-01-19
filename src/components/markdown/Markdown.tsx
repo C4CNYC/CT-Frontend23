@@ -1,18 +1,18 @@
-import '../../utils/highlight';
-import ReactMarkdown from 'react-markdown';
+import "../../utils/highlight";
+import ReactMarkdown from "react-markdown";
 // markdown plugins
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { Link, Typography, Divider } from '@mui/material';
+import { Link, Typography, Divider } from "@mui/material";
 //
-import Image from '../image';
+import Image from "../image";
 //
-import StyledMarkdown from './styles';
-import { MarkdownProps } from './types';
+import StyledMarkdown from "./styles";
+import { MarkdownProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,11 @@ export default function Markdown({ sx, ...other }: MarkdownProps) {
   return (
     <StyledMarkdown sx={sx}>
       <ReactMarkdown
-        rehypePlugins={[rehypeRaw, rehypeHighlight, [remarkGfm, { singleTilde: false }]]}
+        rehypePlugins={[
+          rehypeRaw,
+          rehypeHighlight,
+          [remarkGfm, { singleTilde: false }],
+        ]}
         components={components}
         {...other}
       />
@@ -40,10 +44,15 @@ const components = {
   p: ({ ...props }) => <Typography paragraph {...props} />,
   hr: ({ ...props }) => <Divider sx={{ my: 3 }} {...props} />,
   img: ({ ...props }) => (
-    <Image alt={props.alt} ratio="16/9" sx={{ borderRadius: 2, my: 5 }} {...props} />
+    <Image
+      alt={props.alt}
+      ratio="16/9"
+      sx={{ borderRadius: 2, my: 5 }}
+      {...props}
+    />
   ),
   a: ({ ...props }) => {
-    const isHttp = props.href.includes('http');
+    const isHttp = props.href.includes("http");
 
     return isHttp ? (
       <Link target="_blank" rel="noopener" {...props} />

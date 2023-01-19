@@ -6,11 +6,11 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import { DialogAnimate } from '../../../../../components/animate';
+import { DialogAnimate } from "../../../../../components/animate";
 //
-import getVariant from '../getVariant';
+import getVariant from "../getVariant";
 
 // ----------------------------------------------------------------------
 
@@ -32,22 +32,26 @@ export default function ContainerView({
     <Paper
       sx={{
         height: 480,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: 'background.neutral',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.neutral",
       }}
       {...other}
     >
       <Button variant="contained" onClick={onOpen}>
         Click Me!
       </Button>
-      <DialogAnimate open={isOpen} onClose={onClose} variants={getVariant(selectVariant)}>
+      <DialogAnimate
+        open={isOpen}
+        onClose={onClose}
+        variants={getVariant(selectVariant)}
+      >
         <DialogTitle id="alert-dialog-title">{`Use Google's location service?`}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+            Let Google help apps determine location. This means sending
+            anonymous location data to Google, even when no apps are running.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

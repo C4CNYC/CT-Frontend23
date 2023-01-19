@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Paper,
@@ -10,12 +10,12 @@ import {
   InputBase,
   IconButton,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useResponsive from '../../../hooks/useResponsive';
+import useResponsive from "../../../hooks/useResponsive";
 // components
-import Iconify from '../../../components/iconify';
-import Editor from '../../../components/editor';
+import Iconify from "../../../components/iconify";
+import Editor from "../../../components/editor";
 
 // ----------------------------------------------------------------------
 
@@ -28,9 +28,9 @@ type Props = {
 };
 
 export default function MailComposePortal({ onCloseCompose }: Props) {
-  const isDesktop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive("up", "sm");
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const [fullScreen, setFullScreen] = useState(false);
 
@@ -49,9 +49,9 @@ export default function MailComposePortal({ onCloseCompose }: Props) {
           borderRadius: 2,
           zIndex: ZINDEX + 1,
           m: `${POSITION}px`,
-          position: 'fixed',
-          display: 'flex',
-          flexDirection: 'column',
+          position: "fixed",
+          display: "flex",
+          flexDirection: "column",
           boxShadow: (theme) => theme.customShadows.dropdown,
           ...(fullScreen && {
             m: 0,
@@ -76,7 +76,9 @@ export default function MailComposePortal({ onCloseCompose }: Props) {
           </Typography>
 
           <IconButton onClick={() => setFullScreen(!fullScreen)}>
-            <Iconify icon={fullScreen ? 'eva:collapse-fill' : 'eva:expand-fill'} />
+            <Iconify
+              icon={fullScreen ? "eva:collapse-fill" : "eva:expand-fill"}
+            />
           </IconButton>
 
           <IconButton onClick={onCloseCompose}>
@@ -100,7 +102,7 @@ export default function MailComposePortal({ onCloseCompose }: Props) {
           value={message}
           onChange={handleChangeMessage}
           placeholder="Type a message"
-          sx={{ flexGrow: 1, borderColor: 'transparent' }}
+          sx={{ flexGrow: 1, borderColor: "transparent" }}
         />
 
         <Divider />

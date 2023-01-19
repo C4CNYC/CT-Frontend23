@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import {
   Card,
   Chip,
@@ -11,12 +11,12 @@ import {
   CardProps,
   CardHeader,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fDateTime } from '../../../../utils/formatTime';
+import { fDateTime } from "../../../../utils/formatTime";
 // components
-import Iconify from '../../../../components/iconify';
-import Carousel, { CarouselArrows } from '../../../../components/carousel';
+import Iconify from "../../../../components/iconify";
+import Carousel, { CarouselArrows } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +36,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function BookingCustomerReviews({ title, subheader, list, ...other }: Props) {
+export default function BookingCustomerReviews({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -51,7 +56,7 @@ export default function BookingCustomerReviews({ title, subheader, list, ...othe
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     beforeChange: (current: number, next: number) => setSelectCustomer(next),
   };
 
@@ -70,7 +75,7 @@ export default function BookingCustomerReviews({ title, subheader, list, ...othe
         subheader={subheader}
         action={<CarouselArrows onNext={handleNext} onPrevious={handlePrev} />}
         sx={{
-          '& .MuiCardHeader-action': { alignSelf: 'center' },
+          "& .MuiCardHeader-action": { alignSelf: "center" },
         }}
       />
 
@@ -93,7 +98,7 @@ export default function BookingCustomerReviews({ title, subheader, list, ...othe
           color="success"
           variant="contained"
           startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          onClick={() => console.log('ACCEPT', customerInfo?.id)}
+          onClick={() => console.log("ACCEPT", customerInfo?.id)}
         >
           Accept
         </Button>
@@ -103,7 +108,7 @@ export default function BookingCustomerReviews({ title, subheader, list, ...othe
           color="error"
           variant="contained"
           startIcon={<Iconify icon="eva:close-circle-fill" />}
-          onClick={() => console.log('REJECT', customerInfo?.id)}
+          onClick={() => console.log("REJECT", customerInfo?.id)}
         >
           Reject
         </Button>
@@ -125,7 +130,7 @@ function ReviewItem({ item }: ReviewItemProps) {
     <Stack
       spacing={2}
       sx={{
-        position: 'relative',
+        position: "relative",
         p: (theme) => theme.spacing(3, 3, 2, 3),
       }}
     >
@@ -134,7 +139,10 @@ function ReviewItem({ item }: ReviewItemProps) {
 
         <div>
           <Typography variant="subtitle2">{name}</Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary', mt: 0.5, display: 'block' }}>
+          <Typography
+            variant="caption"
+            sx={{ color: "text.secondary", mt: 0.5, display: "block" }}
+          >
             Posted {fDateTime(postedAt)}
           </Typography>
         </div>
@@ -146,7 +154,12 @@ function ReviewItem({ item }: ReviewItemProps) {
 
       <Stack direction="row" flexWrap="wrap">
         {tags.map((tag) => (
-          <Chip size="small" key={tag} label={tag} sx={{ mr: 1, mb: 1, color: 'text.secondary' }} />
+          <Chip
+            size="small"
+            key={tag}
+            label={tag}
+            sx={{ mr: 1, mb: 1, color: "text.secondary" }}
+          />
         ))}
       </Stack>
     </Stack>

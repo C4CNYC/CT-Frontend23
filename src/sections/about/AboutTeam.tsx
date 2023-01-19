@@ -1,15 +1,23 @@
-import { m } from 'framer-motion';
-import { useRef } from 'react';
+import { m } from "framer-motion";
+import { useRef } from "react";
 // @mui
-import { useTheme, alpha } from '@mui/material/styles';
-import { Box, Stack, Card, Button, Container, Typography, IconButton } from '@mui/material';
+import { useTheme, alpha } from "@mui/material/styles";
+import {
+  Box,
+  Stack,
+  Card,
+  Button,
+  Container,
+  Typography,
+  IconButton,
+} from "@mui/material";
 // _mock_
-import { _carouselsMembers, _socials } from '../../_mock/arrays';
+import { _carouselsMembers, _socials } from "../../_mock/arrays";
 // components
-import Image from '../../components/image';
-import Iconify from '../../components/iconify';
-import Carousel, { CarouselArrows } from '../../components/carousel';
-import { MotionViewport, varFade } from '../../components/animate';
+import Image from "../../components/image";
+import Iconify from "../../components/iconify";
+import Carousel, { CarouselArrows } from "../../components/carousel";
+import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +30,7 @@ export default function AboutTeam() {
     infinite: false,
     arrows: false,
     slidesToShow: 4,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     responsive: [
       {
         breakpoint: 1279,
@@ -48,9 +56,13 @@ export default function AboutTeam() {
   };
 
   return (
-    <Container component={MotionViewport} sx={{ pb: 10, textAlign: 'center' }}>
+    <Container component={MotionViewport} sx={{ pb: 10, textAlign: "center" }}>
       <m.div variants={varFade().inDown}>
-        <Typography component="p" variant="overline" sx={{ color: 'text.disabled' }}>
+        <Typography
+          component="p"
+          variant="overline"
+          sx={{ color: "text.disabled" }}
+        >
           Dream team
         </Typography>
       </m.div>
@@ -64,17 +76,17 @@ export default function AboutTeam() {
       <m.div variants={varFade().inUp}>
         <Typography
           sx={{
-            mx: 'auto',
+            mx: "auto",
             maxWidth: 640,
-            color: 'text.secondary',
+            color: "text.secondary",
           }}
         >
-          Minimal will provide you support if you have any problems, our support team will reply
-          within a day and we also have detailed documentation.
+          Minimal will provide you support if you have any problems, our support
+          team will reply within a day and we also have detailed documentation.
         </Typography>
       </m.div>
 
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: "relative" }}>
         <CarouselArrows
           filled
           shape="rounded"
@@ -83,13 +95,13 @@ export default function AboutTeam() {
           leftButtonProps={{
             sx: {
               left: 24,
-              ...(_carouselsMembers.length < 5 && { display: 'none' }),
+              ...(_carouselsMembers.length < 5 && { display: "none" }),
             },
           }}
           rightButtonProps={{
             sx: {
               right: 24,
-              ...(_carouselsMembers.length < 5 && { display: 'none' }),
+              ...(_carouselsMembers.length < 5 && { display: "none" }),
             },
           }}
         >
@@ -113,7 +125,7 @@ export default function AboutTeam() {
         color="inherit"
         size="large"
         endIcon={<Iconify icon="ic:round-arrow-right-alt" width={24} />}
-        sx={{ mx: 'auto' }}
+        sx={{ mx: "auto" }}
       >
         View all team members
       </Button>
@@ -139,7 +151,7 @@ function MemberCard({ member }: MemberCardProps) {
         {name}
       </Typography>
 
-      <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
+      <Typography variant="body2" sx={{ mb: 2, color: "text.secondary" }}>
         {role}
       </Typography>
 
@@ -147,13 +159,18 @@ function MemberCard({ member }: MemberCardProps) {
         <Image alt={name} src={avatar} ratio="1/1" sx={{ borderRadius: 2 }} />
       </Box>
 
-      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ p: 2 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ p: 2 }}
+      >
         {_socials.map((social) => (
           <IconButton
             key={social.name}
             sx={{
               color: social.color,
-              '&:hover': {
+              "&:hover": {
                 bgcolor: alpha(social.color, 0.08),
               },
             }}

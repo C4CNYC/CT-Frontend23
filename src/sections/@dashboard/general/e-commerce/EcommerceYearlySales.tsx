@@ -1,10 +1,10 @@
-import { ApexOptions } from 'apexcharts';
-import { useState } from 'react';
+import { ApexOptions } from "apexcharts";
+import { useState } from "react";
 // @mui
-import { Card, CardHeader, Box, CardProps } from '@mui/material';
+import { Card, CardHeader, Box, CardProps } from "@mui/material";
 // components
-import { CustomSmallSelect } from '../../../../components/custom-input';
-import Chart, { useChart } from '../../../../components/chart';
+import { CustomSmallSelect } from "../../../../components/custom-input";
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -25,16 +25,21 @@ interface Props extends CardProps {
   };
 }
 
-export default function EcommerceYearlySales({ title, subheader, chart, ...other }: Props) {
+export default function EcommerceYearlySales({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { colors, categories, series, options } = chart;
 
-  const [seriesData, setSeriesData] = useState('2019');
+  const [seriesData, setSeriesData] = useState("2019");
 
   const chartOptions = useChart({
     colors,
     legend: {
-      position: 'top',
-      horizontalAlign: 'right',
+      position: "top",
+      horizontalAlign: "right",
     },
     xaxis: {
       categories,
@@ -66,7 +71,12 @@ export default function EcommerceYearlySales({ title, subheader, chart, ...other
       {series.map((item) => (
         <Box key={item.year} sx={{ mt: 3, mx: 3 }} dir="ltr">
           {item.year === seriesData && (
-            <Chart type="area" series={item.data} options={chartOptions} height={364} />
+            <Chart
+              type="area"
+              series={item.data}
+              options={chartOptions}
+              height={364}
+            />
           )}
         </Box>
       ))}

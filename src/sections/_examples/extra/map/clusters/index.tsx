@@ -1,4 +1,4 @@
-import { useRef, memo } from 'react';
+import { useRef, memo } from "react";
 import Map, {
   Layer,
   Source,
@@ -6,11 +6,15 @@ import Map, {
   LngLatLike,
   GeoJSONSource,
   MapLayerMouseEvent,
-} from 'react-map-gl';
+} from "react-map-gl";
 // components
-import { MapBoxProps } from '../../../../../components/map';
+import { MapBoxProps } from "../../../../../components/map";
 //
-import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from './layers';
+import {
+  clusterLayer,
+  clusterCountLayer,
+  unclusteredPointLayer,
+} from "./layers";
 
 // ----------------------------------------------------------------------
 
@@ -22,14 +26,16 @@ function MapClusters({ ...other }: MapBoxProps) {
 
     const clusterId = feature?.properties?.cluster_id;
 
-    const mapboxSource = mapRef.current?.getSource('earthquakes') as GeoJSONSource;
+    const mapboxSource = mapRef.current?.getSource(
+      "earthquakes"
+    ) as GeoJSONSource;
 
     mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
       if (err) {
         return;
       }
 
-      if (feature?.geometry.type === 'Point') {
+      if (feature?.geometry.type === "Point") {
         mapRef.current?.easeTo({
           center: feature?.geometry.coordinates as LngLatLike | undefined,
           zoom: Number.isNaN(zoom) ? 3 : zoom,
@@ -46,7 +52,7 @@ function MapClusters({ ...other }: MapBoxProps) {
         longitude: -103.59,
         zoom: 3,
       }}
-      interactiveLayerIds={[clusterLayer.id || '']}
+      interactiveLayerIds={[clusterLayer.id || ""]}
       onClick={onClick}
       ref={mapRef}
       {...other}

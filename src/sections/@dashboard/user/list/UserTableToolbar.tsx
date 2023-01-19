@@ -1,7 +1,13 @@
 // @mui
-import { Stack, InputAdornment, TextField, MenuItem, Button } from '@mui/material';
+import {
+  Stack,
+  InputAdornment,
+  TextField,
+  MenuItem,
+  Button,
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +35,8 @@ export default function UserTableToolbar({
       spacing={2}
       alignItems="center"
       direction={{
-        xs: 'column',
-        sm: 'row',
+        xs: "column",
+        sm: "row",
       }}
       sx={{ px: 2.5, py: 3 }}
     >
@@ -51,7 +57,7 @@ export default function UserTableToolbar({
         }}
         sx={{
           maxWidth: { sm: 240 },
-          textTransform: 'capitalize',
+          textTransform: "capitalize",
         }}
       >
         {optionsRole.map((option) => (
@@ -61,8 +67,8 @@ export default function UserTableToolbar({
             sx={{
               mx: 1,
               borderRadius: 0.75,
-              typography: 'body2',
-              textTransform: 'capitalize',
+              typography: "body2",
+              textTransform: "capitalize",
             }}
           >
             {option}
@@ -78,7 +84,7 @@ export default function UserTableToolbar({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
             </InputAdornment>
           ),
         }}

@@ -1,41 +1,60 @@
 // @mui
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack } from "@mui/material";
 // components
-import Logo from '../../components/logo';
-import Image from '../../components/image';
+import Logo from "../../components/logo";
+import Image from "../../components/image";
 //
-import { StyledRoot, StyledSectionBg, StyledSection, StyledContent } from './styles';
+import {
+  StyledRoot,
+  StyledSectionBg,
+  StyledSection,
+  StyledContent,
+} from "./styles";
 
 // ----------------------------------------------------------------------
 
 type Props = {
+  subtitle?: string;
   title?: string;
   illustration?: string;
   children: React.ReactNode;
 };
 
-export default function LoginLayout({ children, illustration, title }: Props) {
+export default function LoginLayout({ children, illustration, title, subtitle }: Props) {
   return (
     <StyledRoot>
-      <Logo
-        sx={{
-          zIndex: 9,
-          position: 'absolute',
-          mt: { xs: 1.5, md: 5 },
-          ml: { xs: 2, md: 5 },
-        }}
-      />
-
       <StyledSection>
-        <Typography variant="h3" sx={{ mb: 10, maxWidth: 480, textAlign: 'center' }}>
-          {title || 'Hi, Welcome back'}
+        <Logo
+          sx={{
+            zIndex: 9,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            justifyContent: 'center',
+            width: '100%',
+            mt: { xs: 1.5, md: 5 },
+          }}
+        />
+        <Typography
+          variant="h3"
+          sx={{ maxWidth: 480, textAlign: "left" }}
+        >
+          {title || "Hi, Welcome back"}
+        </Typography>
+
+        <Typography
+          variant="subtitle2"
+          sx={{ mb: 10, maxWidth: 480, textAlign: "left", color: "text.secondary", }}
+        >
+          {subtitle || "Hi, Welcome back"}
         </Typography>
 
         <Image
           disabledEffect
           visibleByDefault
           alt="auth"
-          src={illustration || '/assets/illustrations/illustration_dashboard.png'}
+          src={illustration || "/assets/illustrations/auth-cat.png"}
           sx={{ maxWidth: 720 }}
         />
 

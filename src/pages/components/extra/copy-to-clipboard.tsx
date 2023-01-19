@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
 import {
   Box,
@@ -12,23 +12,25 @@ import {
   IconButton,
   Typography,
   InputAdornment,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useCopyToClipboard from '../../../hooks/useCopyToClipboard';
+import useCopyToClipboard from "../../../hooks/useCopyToClipboard";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // hooks
-import useDoubleClick from '../../../hooks/useDoubleClick';
+import useDoubleClick from "../../../hooks/useDoubleClick";
 // components
-import Iconify from '../../../components/iconify';
-import { useSnackbar } from '../../../components/snackbar';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import { useSnackbar } from "../../../components/snackbar";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
-DemoCopyToClipboardPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoCopyToClipboardPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +39,7 @@ export default function DemoCopyToClipboardPage() {
 
   const { copy } = useCopyToClipboard();
 
-  const [value, setValue] = useState('https://www.npmjs.com/package/');
+  const [value, setValue] = useState("https://www.npmjs.com/package/");
 
   const textOnClick = `Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
   Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac placerat
@@ -49,7 +51,7 @@ export default function DemoCopyToClipboardPage() {
 
   const onCopy = (text: string) => {
     if (text) {
-      enqueueSnackbar('Copied!');
+      enqueueSnackbar("Copied!");
       copy(text);
     }
   };
@@ -72,15 +74,16 @@ export default function DemoCopyToClipboardPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
           <CustomBreadcrumbs
             heading="Copy To Clipboard"
             links={[
-              { name: 'Components', href: PATH_PAGE.components },
-              { name: 'Copy To Clipboard' },
+              { name: "Components", href: PATH_PAGE.components },
+              { name: "Copy To Clipboard" },
             ]}
           />
         </Container>
@@ -90,11 +93,11 @@ export default function DemoCopyToClipboardPage() {
         <Card sx={{ p: 5 }}>
           <Box
             display="grid"
-            gridTemplateColumns={{ xs: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
+            gridTemplateColumns={{ xs: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }}
             gap={5}
           >
             <Stack spacing={2}>
-              <Typography variant="overline" sx={{ color: 'text.secondary' }}>
+              <Typography variant="overline" sx={{ color: "text.secondary" }}>
                 on Change
               </Typography>
 
@@ -117,7 +120,7 @@ export default function DemoCopyToClipboardPage() {
             </Stack>
 
             <Stack spacing={2}>
-              <Typography variant="overline" sx={{ color: 'text.secondary' }}>
+              <Typography variant="overline" sx={{ color: "text.secondary" }}>
                 on Double Click
               </Typography>
 

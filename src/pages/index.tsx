@@ -1,11 +1,11 @@
-import { m, useScroll, useSpring } from 'framer-motion';
+import { m, useScroll, useSpring } from "framer-motion";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box } from "@mui/material";
 // layouts
-import MainLayout from '../layouts/main';
+import MainLayout from "../layouts/main";
 // sections
 import {
   HomeHero,
@@ -18,11 +18,13 @@ import {
   HomeAdvertisement,
   HomeCleanInterfaces,
   HomeHugePackElements,
-} from '../sections/home';
+} from "../sections/home";
 
 // ----------------------------------------------------------------------
 
-HomePage.getLayout = (page: React.ReactElement) => <MainLayout> {page} </MainLayout>;
+HomePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout> {page} </MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -45,8 +47,8 @@ export default function HomePage() {
         right: 0,
         height: 3,
         zIndex: 1999,
-        position: 'fixed',
-        transformOrigin: '0%',
+        position: "fixed",
+        transformOrigin: "0%",
         backgroundColor: theme.palette.primary.main,
         scaleX,
       }}
@@ -65,9 +67,9 @@ export default function HomePage() {
 
       <Box
         sx={{
-          overflow: 'hidden',
-          position: 'relative',
-          bgcolor: 'background.default',
+          overflow: "hidden",
+          position: "relative",
+          bgcolor: "background.default",
         }}
       >
         <HomeMinimal />

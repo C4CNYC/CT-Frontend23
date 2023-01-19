@@ -1,13 +1,13 @@
-import { sentenceCase } from 'change-case';
+import { sentenceCase } from "change-case";
 // form
-import { useFormContext } from 'react-hook-form';
+import { useFormContext } from "react-hook-form";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Chip, Stack, Button, Box, StackProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Chip, Stack, Button, Box, StackProps } from "@mui/material";
 // @type
-import { IProductFilter } from '../../../../@types/product';
+import { IProductFilter } from "../../../../@types/product";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -37,24 +37,24 @@ export default function ShopTagFiltered({ isFiltered, onResetFilter }: Props) {
 
   const handleRemoveGender = (value: string) => {
     const newValue = filterGender.filter((item) => item !== value);
-    setValue('gender', newValue);
+    setValue("gender", newValue);
   };
 
   const handleRemoveCategory = () => {
-    setValue('category', 'All');
+    setValue("category", "All");
   };
 
   const handleRemoveColor = (value: string) => {
     const newValue = filterColors.filter((item) => item !== value);
-    setValue('colors', newValue);
+    setValue("colors", newValue);
   };
 
   const handleRemovePrice = () => {
-    setValue('priceRange', [0, 200]);
+    setValue("priceRange", [0, 200]);
   };
 
   const handleRemoveRating = () => {
-    setValue('rating', '');
+    setValue("rating", "");
   };
 
   return (
@@ -73,7 +73,7 @@ export default function ShopTagFiltered({ isFiltered, onResetFilter }: Props) {
         </Panel>
       )}
 
-      {filterCategory !== 'All' && (
+      {filterCategory !== "All" && (
         <Panel label="Category:">
           <Chip
             size="small"
@@ -96,7 +96,7 @@ export default function ShopTagFiltered({ isFiltered, onResetFilter }: Props) {
                     width: 20,
                     height: 20,
                     bgcolor: color,
-                    borderRadius: '50%',
+                    borderRadius: "50%",
                     border: `solid 1px ${theme.palette.divider}`,
                   }}
                 />
@@ -105,7 +105,7 @@ export default function ShopTagFiltered({ isFiltered, onResetFilter }: Props) {
               sx={{
                 m: 0.5,
                 color: theme.palette.getContrastText(color),
-                '& .MuiChip-label': { pl: 0.25 },
+                "& .MuiChip-label": { pl: 0.25 },
               }}
             />
           ))}
@@ -162,7 +162,7 @@ function Panel({ label, children, sx }: PanelProps) {
       sx={{
         m: 0.5,
         borderRadius: 1,
-        overflow: 'hidden',
+        overflow: "hidden",
         border: (theme) => `solid 1px ${theme.palette.divider}`,
         ...sx,
       }}
@@ -173,9 +173,9 @@ function Panel({ label, children, sx }: PanelProps) {
         alignItems="center"
         sx={{
           px: 1,
-          typography: 'subtitle2',
-          color: 'text.secondary',
-          bgcolor: 'background.neutral',
+          typography: "subtitle2",
+          color: "text.secondary",
+          bgcolor: "background.neutral",
           borderRight: (theme) => `solid 1px ${theme.palette.divider}`,
         }}
       >

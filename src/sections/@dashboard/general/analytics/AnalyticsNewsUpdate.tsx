@@ -9,13 +9,13 @@ import {
   Typography,
   CardHeader,
   CardProps,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fToNow } from '../../../../utils/formatTime';
+import { fToNow } from "../../../../utils/formatTime";
 // components
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AnalyticsNewsUpdate({ title, subheader, list, ...other }: Props) {
+export default function AnalyticsNewsUpdate({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -48,7 +53,7 @@ export default function AnalyticsNewsUpdate({ title, subheader, list, ...other }
 
       <Divider />
 
-      <Box sx={{ p: 2, textAlign: 'right' }}>
+      <Box sx={{ p: 2, textAlign: "right" }}>
         <Button
           size="small"
           color="inherit"
@@ -83,12 +88,15 @@ function NewsItem({ news }: NewsItemProps) {
           {title}
         </Link>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+        <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
           {description}
         </Typography>
       </Box>
 
-      <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
+      <Typography
+        variant="caption"
+        sx={{ pr: 3, flexShrink: 0, color: "text.secondary" }}
+      >
         {fToNow(postedAt)}
       </Typography>
     </Stack>

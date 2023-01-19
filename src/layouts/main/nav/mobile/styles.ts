@@ -1,17 +1,17 @@
 // @mui
-import { styled, alpha } from '@mui/material/styles';
-import { ListItemButton } from '@mui/material';
+import { styled, alpha } from "@mui/material/styles";
+import { ListItemButton } from "@mui/material";
 // config
-import { NAV } from '../../../../config-global';
+import { NAV } from "../../../../config-global";
 //
-import { NavItemMobileProps } from '../types';
+import { NavItemMobileProps } from "../types";
 
 // ----------------------------------------------------------------------
 
-type ListItemProps = Omit<NavItemMobileProps, 'item'>;
+type ListItemProps = Omit<NavItemMobileProps, "item">;
 
 export const ListItem = styled(ListItemButton, {
-  shouldForwardProp: (prop) => prop !== 'active',
+  shouldForwardProp: (prop) => prop !== "active",
 })<ListItemProps>(({ active, theme }) => ({
   ...theme.typography.body2,
   color: theme.palette.text.secondary,
@@ -20,6 +20,9 @@ export const ListItem = styled(ListItemButton, {
   ...(active && {
     color: theme.palette.primary.main,
     ...theme.typography.subtitle2,
-    backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+    backgroundColor: alpha(
+      theme.palette.primary.main,
+      theme.palette.action.selectedOpacity
+    ),
   }),
 }));

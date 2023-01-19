@@ -1,21 +1,21 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
 const series = [
   {
-    name: 'Series 1',
+    name: "Series 1",
     data: [80, 50, 30, 40, 100, 20],
   },
   {
-    name: 'Series 2',
+    name: "Series 2",
     data: [20, 30, 40, 80, 20, 80],
   },
   {
-    name: 'Series 3',
+    name: "Series 3",
     data: [44, 76, 78, 13, 43, 10],
   },
 ];
@@ -31,11 +31,11 @@ export default function ChartRadarBar() {
       opacity: 0.48,
     },
     legend: {
-      position: 'bottom',
-      horizontalAlign: 'center',
+      position: "bottom",
+      horizontalAlign: "center",
     },
     xaxis: {
-      categories: ['2011', '2012', '2013', '2014', '2015', '2016'],
+      categories: ["2011", "2012", "2013", "2014", "2015", "2016"],
       labels: {
         style: {
           colors: [
@@ -51,5 +51,7 @@ export default function ChartRadarBar() {
     },
   });
 
-  return <Chart type="radar" series={series} options={chartOptions} width={540} />;
+  return (
+    <Chart type="radar" series={series} options={chartOptions} width={540} />
+  );
 }

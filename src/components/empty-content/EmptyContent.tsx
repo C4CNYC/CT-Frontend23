@@ -1,7 +1,7 @@
 // @mui
-import { Typography, Stack, StackProps } from '@mui/material';
+import { Typography, Stack, StackProps } from "@mui/material";
 //
-import Image from '../image';
+import Image from "../image";
 
 // ----------------------------------------------------------------------
 
@@ -11,14 +11,20 @@ interface EmptyContentProps extends StackProps {
   description?: string;
 }
 
-export default function EmptyContent({ title, description, img, sx, ...other }: EmptyContentProps) {
+export default function EmptyContent({
+  title,
+  description,
+  img,
+  sx,
+  ...other
+}: EmptyContentProps) {
   return (
     <Stack
       alignItems="center"
       justifyContent="center"
       sx={{
         height: 1,
-        textAlign: 'center',
+        textAlign: "center",
         p: (theme) => theme.spacing(8, 2),
         ...sx,
       }}
@@ -27,7 +33,7 @@ export default function EmptyContent({ title, description, img, sx, ...other }: 
       <Image
         disabledEffect
         alt="empty content"
-        src={img || '/assets/illustrations/illustration_empty_content.svg'}
+        src={img || "/assets/illustrations/illustration_empty_content.svg"}
         sx={{ height: 240, mb: 3 }}
       />
 
@@ -36,7 +42,7 @@ export default function EmptyContent({ title, description, img, sx, ...other }: 
       </Typography>
 
       {description && (
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {description}
         </Typography>
       )}

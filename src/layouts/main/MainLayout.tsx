@@ -1,11 +1,11 @@
 // next
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 // @mui
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 //
-const Header = dynamic(() => import('./Header'), { ssr: false });
-const Footer = dynamic(() => import('./Footer'), { ssr: false });
+const Header = dynamic(() => import("./Header"), { ssr: false });
+const Footer = dynamic(() => import("./Footer"), { ssr: false });
 
 // ----------------------------------------------------------------------
 
@@ -16,10 +16,10 @@ type Props = {
 export default function MainLayout({ children }: Props) {
   const { pathname } = useRouter();
 
-  const isHome = pathname === '/';
+  const isHome = pathname === "/";
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: 1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: 1 }}>
       <Header />
 
       <Box

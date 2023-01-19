@@ -1,9 +1,9 @@
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 // utils
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -13,9 +13,9 @@ export default function ChartRadialBar() {
   const theme = useTheme();
 
   const chartOptions = useChart({
-    labels: ['Apples', 'Oranges'],
+    labels: ["Apples", "Oranges"],
     fill: {
-      type: 'gradient',
+      type: "gradient",
       gradient: {
         colorStops: [
           [
@@ -30,12 +30,12 @@ export default function ChartRadialBar() {
       },
     },
     legend: {
-      horizontalAlign: 'center',
+      horizontalAlign: "center",
     },
     plotOptions: {
       radialBar: {
         hollow: {
-          size: '68%',
+          size: "68%",
         },
         dataLabels: {
           value: {
@@ -49,5 +49,12 @@ export default function ChartRadialBar() {
     },
   });
 
-  return <Chart type="radialBar" series={series} options={chartOptions} height={400} />;
+  return (
+    <Chart
+      type="radialBar"
+      series={series}
+      options={chartOptions}
+      height={400}
+    />
+  );
 }

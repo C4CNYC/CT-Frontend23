@@ -1,6 +1,6 @@
 // @mui
-import { Theme, alpha } from '@mui/material/styles';
-import { Paper, CardHeader, Box, Typography, SxProps } from '@mui/material';
+import { Theme, alpha } from "@mui/material/styles";
+import { Paper, CardHeader, Box, Typography, SxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +42,12 @@ type LabelProps = {
 
 export function Label({ title }: LabelProps) {
   return (
-    <Typography variant="overline" component="p" gutterBottom sx={{ color: 'text.secondary' }}>
+    <Typography
+      variant="overline"
+      component="p"
+      gutterBottom
+      sx={{ color: "text.secondary" }}
+    >
       {title}
     </Typography>
   );

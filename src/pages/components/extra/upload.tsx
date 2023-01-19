@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
 import {
   Box,
@@ -12,21 +12,23 @@ import {
   Typography,
   CardContent,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // utils
-import { fData } from '../../../utils/formatNumber';
+import { fData } from "../../../utils/formatNumber";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { UploadAvatar, Upload, UploadBox } from '../../../components/upload';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { UploadAvatar, Upload, UploadBox } from "../../../components/upload";
 
 // ----------------------------------------------------------------------
 
-DemoUploadPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoUploadPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +78,9 @@ export default function DemoUploadPage() {
   );
 
   const handleRemoveFile = (inputFile: File | string) => {
-    const filesFiltered = files.filter((fileFiltered) => fileFiltered !== inputFile);
+    const filesFiltered = files.filter(
+      (fileFiltered) => fileFiltered !== inputFile
+    );
     setFiles(filesFiltered);
   };
 
@@ -94,7 +98,8 @@ export default function DemoUploadPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -102,12 +107,12 @@ export default function DemoUploadPage() {
             heading="Upload"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Upload' },
+              { name: "Upload" },
             ]}
-            moreLink={['https://react-dropzone.js.org/#section-basic-example']}
+            moreLink={["https://react-dropzone.js.org/#section-basic-example"]}
           />
         </Container>
       </Box>
@@ -137,7 +142,7 @@ export default function DemoUploadPage() {
                 onDrop={handleDropMultiFile}
                 onRemove={handleRemoveFile}
                 onRemoveAll={handleRemoveAllFiles}
-                onUpload={() => console.log('ON UPLOAD')}
+                onUpload={() => console.log("ON UPLOAD")}
               />
             </CardContent>
           </Card>
@@ -145,7 +150,11 @@ export default function DemoUploadPage() {
           <Card>
             <CardHeader title="Upload Single File" />
             <CardContent>
-              <Upload file={file} onDrop={handleDropSingleFile} onDelete={() => setFile(null)} />
+              <Upload
+                file={file}
+                onDrop={handleDropSingleFile}
+                onDelete={() => setFile(null)}
+              />
             </CardContent>
           </Card>
 
@@ -160,10 +169,10 @@ export default function DemoUploadPage() {
                     variant="caption"
                     sx={{
                       mt: 2,
-                      mx: 'auto',
-                      display: 'block',
-                      textAlign: 'center',
-                      color: 'text.secondary',
+                      mx: "auto",
+                      display: "block",
+                      textAlign: "center",
+                      color: "text.secondary",
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -187,7 +196,7 @@ export default function DemoUploadPage() {
                       <Typography variant="body2">Upload file</Typography>
                     </Stack>
                   }
-                  sx={{ flexGrow: 1, height: 'auto', py: 2.5, mb: 3 }}
+                  sx={{ flexGrow: 1, height: "auto", py: 2.5, mb: 3 }}
                 />
               </Stack>
             </CardContent>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Stack,
@@ -10,14 +10,14 @@ import {
   TableCell,
   IconButton,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IUserAccountGeneral } from '../../../../@types/user';
+import { IUserAccountGeneral } from "../../../../@types/user";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 
 // ----------------------------------------------------------------------
 
@@ -77,18 +77,20 @@ export default function UserTableRow({
 
         <TableCell align="left">{company}</TableCell>
 
-        <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
+        <TableCell align="left" sx={{ textTransform: "capitalize" }}>
           {role}
         </TableCell>
 
         <TableCell align="center">
           <Iconify
-            icon={isVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
+            icon={
+              isVerified ? "eva:checkmark-circle-fill" : "eva:clock-outline"
+            }
             sx={{
               width: 20,
               height: 20,
-              color: 'success.main',
-              ...(!isVerified && { color: 'warning.main' }),
+              color: "success.main",
+              ...(!isVerified && { color: "warning.main" }),
             }}
           />
         </TableCell>
@@ -96,15 +98,18 @@ export default function UserTableRow({
         <TableCell align="left">
           <Label
             variant="soft"
-            color={(status === 'banned' && 'error') || 'success'}
-            sx={{ textTransform: 'capitalize' }}
+            color={(status === "banned" && "error") || "success"}
+            sx={{ textTransform: "capitalize" }}
           >
             {status}
           </Label>
         </TableCell>
 
         <TableCell align="right">
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -121,7 +126,7 @@ export default function UserTableRow({
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete

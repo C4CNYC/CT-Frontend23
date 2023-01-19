@@ -1,6 +1,10 @@
-import { Theme } from '@mui/material/styles';
+import { Theme } from "@mui/material/styles";
 //
-import { TreeViewCollapseIcon, TreeViewExpandIcon, TreeViewEndIcon } from './CustomIcons';
+import {
+  TreeViewCollapseIcon,
+  TreeViewExpandIcon,
+  TreeViewEndIcon,
+} from "./CustomIcons";
 
 // ----------------------------------------------------------------------
 
@@ -8,9 +12,17 @@ export default function TreeView(theme: Theme) {
   return {
     MuiTreeView: {
       defaultProps: {
-        defaultCollapseIcon: <TreeViewCollapseIcon sx={{ width: 20, height: 20 }} />,
-        defaultExpandIcon: <TreeViewExpandIcon sx={{ width: 20, height: 20 }} />,
-        defaultEndIcon: <TreeViewEndIcon sx={{ color: 'text.secondary', width: 20, height: 20 }} />,
+        defaultCollapseIcon: (
+          <TreeViewCollapseIcon sx={{ width: 20, height: 20 }} />
+        ),
+        defaultExpandIcon: (
+          <TreeViewExpandIcon sx={{ width: 20, height: 20 }} />
+        ),
+        defaultEndIcon: (
+          <TreeViewEndIcon
+            sx={{ color: "text.secondary", width: 20, height: 20 }}
+          />
+        ),
       },
     },
     MuiTreeItem: {
@@ -19,7 +31,7 @@ export default function TreeView(theme: Theme) {
           ...theme.typography.body2,
         },
         iconContainer: {
-          width: 'auto',
+          width: "auto",
         },
       },
     },

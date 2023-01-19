@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -9,9 +9,9 @@ import {
   ListItem,
   TextField,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fDate } from '../../../../utils/formatTime';
+import { fDate } from "../../../../utils/formatTime";
 
 // ----------------------------------------------------------------------
 
@@ -39,19 +39,23 @@ export default function BlogPostCommentItem({
       <ListItem
         disableGutters
         sx={{
-          alignItems: 'flex-start',
+          alignItems: "flex-start",
           py: 3,
           ...(hasReply && {
             ml: 8,
           }),
         }}
       >
-        <Avatar alt={name} src={avatarUrl} sx={{ mr: 2, width: 48, height: 48 }} />
+        <Avatar
+          alt={name}
+          src={avatarUrl}
+          sx={{ mr: 2, width: 48, height: 48 }}
+        />
 
         <Stack>
           <Typography variant="subtitle1"> {name} </Typography>
 
-          <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+          <Typography variant="caption" sx={{ color: "text.disabled" }}>
             {fDate(postedAt)}
           </Typography>
 
@@ -69,7 +73,7 @@ export default function BlogPostCommentItem({
           <Button
             size="small"
             onClick={() => setOpenReply(!openReply)}
-            sx={{ right: 0, position: 'absolute' }}
+            sx={{ right: 0, position: "absolute" }}
           >
             Reply
           </Button>
@@ -80,7 +84,7 @@ export default function BlogPostCommentItem({
         <Box
           sx={{
             mb: 3,
-            ml: 'auto',
+            ml: "auto",
             width: (theme) => `calc(100% - ${theme.spacing(7)})`,
           }}
         >

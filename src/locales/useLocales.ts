@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 // utils
-import localStorageAvailable from '../utils/localStorageAvailable';
+import localStorageAvailable from "../utils/localStorageAvailable";
 // components
-import { useSettingsContext } from '../components/settings';
+import { useSettingsContext } from "../components/settings";
 //
-import { allLangs, defaultLang } from './config-lang';
+import { allLangs, defaultLang } from "./config-lang";
 
 // ----------------------------------------------------------------------
 
@@ -15,9 +15,12 @@ export default function useLocales() {
 
   const storageAvailable = localStorageAvailable();
 
-  const langStorage = storageAvailable ? localStorage.getItem('i18nextLng') : '';
+  const langStorage = storageAvailable
+    ? localStorage.getItem("i18nextLng")
+    : "";
 
-  const currentLang = allLangs.find((_lang) => _lang.value === langStorage) || defaultLang;
+  const currentLang =
+    allLangs.find((_lang) => _lang.value === langStorage) || defaultLang;
 
   const handleChangeLanguage = (newlang: string) => {
     i18n.changeLanguage(newlang);

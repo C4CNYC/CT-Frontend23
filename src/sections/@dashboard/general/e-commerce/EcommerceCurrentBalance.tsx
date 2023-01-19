@@ -1,7 +1,7 @@
 // @mui
-import { Button, Card, Typography, Stack, CardProps } from '@mui/material';
+import { Button, Card, Typography, Stack, CardProps } from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 
 // ----------------------------------------------------------------------
 
@@ -30,21 +30,21 @@ export default function EcommerceCurrentBalance({
         <Typography variant="h3">{fCurrency(totalAmount)}</Typography>
 
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Your Current Balance
           </Typography>
           <Typography variant="body2">{fCurrency(currentBalance)}</Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Sent Amount
           </Typography>
           <Typography variant="body2">- {fCurrency(sentAmount)}</Typography>
         </Stack>
 
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Total Amount
           </Typography>
           <Typography variant="subtitle1">{fCurrency(totalAmount)}</Typography>

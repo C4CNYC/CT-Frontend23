@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
 import {
   Box,
@@ -12,52 +12,54 @@ import {
   IconButton,
   ListItemText,
   ListItemButton,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = [
-  'Show some love to Material-UI',
-  'Show all notification content',
-  'Hide sensitive notification content',
-  'Hide all notification content',
+  "Show some love to Material-UI",
+  "Show all notification content",
+  "Hide sensitive notification content",
+  "Hide all notification content",
 ];
 
 const OPTIONS_MAXHEIGHT = [
-  'None',
-  'Atria',
-  'Callisto',
-  'Dione',
-  'Ganymede',
-  'Hangouts Call',
-  'Luna',
-  'Oberon',
-  'Phobos',
-  'Pyxis',
-  'Sedna',
-  'Titania',
-  'Triton',
-  'Umbriel',
+  "None",
+  "Atria",
+  "Callisto",
+  "Dione",
+  "Ganymede",
+  "Hangouts Call",
+  "Luna",
+  "Oberon",
+  "Phobos",
+  "Pyxis",
+  "Sedna",
+  "Titania",
+  "Triton",
+  "Umbriel",
 ];
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 };
 
 // ----------------------------------------------------------------------
 
-MUIMenuPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIMenuPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -68,7 +70,9 @@ export default function MUIMenuPage() {
 
   const [isOpenList, setOpenList] = useState<null | HTMLElement>(null);
 
-  const [isOpenMaxHeight, setOpenMaxHeight] = useState<null | HTMLElement>(null);
+  const [isOpenMaxHeight, setOpenMaxHeight] = useState<null | HTMLElement>(
+    null
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenMaxHeight(event.currentTarget);
@@ -78,7 +82,10 @@ export default function MUIMenuPage() {
     setOpenList(event.currentTarget);
   };
 
-  const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
+  const handleMenuItemClick = (
+    event: React.MouseEvent<HTMLElement>,
+    index: number
+  ) => {
     setSelectedIndex(index);
     setOpenList(null);
   };
@@ -105,7 +112,8 @@ export default function MUIMenuPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -113,12 +121,12 @@ export default function MUIMenuPage() {
             heading="Menu"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Menu' },
+              { name: "Menu" },
             ]}
-            moreLink={['https://mui.com/components/menus']}
+            moreLink={["https://mui.com/components/menus"]}
           />
         </Container>
       </Box>
@@ -128,8 +136,8 @@ export default function MUIMenuPage() {
           gap={3}
           display="grid"
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            md: 'repeat(3, 1fr)',
+            xs: "repeat(1, 1fr)",
+            md: "repeat(3, 1fr)",
           }}
         >
           <Block title="Simple" sx={style}>
@@ -143,7 +151,7 @@ export default function MUIMenuPage() {
               onClose={handleClose}
               open={Boolean(isOpen)}
             >
-              {['Profile', 'My account', 'Logout'].map((option) => (
+              {["Profile", "My account", "Logout"].map((option) => (
                 <MenuItem key={option} onClick={handleClose}>
                   {option}
                 </MenuItem>
@@ -159,7 +167,10 @@ export default function MUIMenuPage() {
                 aria-label="when device is locked"
                 onClick={handleClickListItem}
               >
-                <ListItemText primary="When device is locked" secondary={OPTIONS[selectedIndex]} />
+                <ListItemText
+                  primary="When device is locked"
+                  secondary={OPTIONS[selectedIndex]}
+                />
               </ListItemButton>
             </List>
 
@@ -202,12 +213,16 @@ export default function MUIMenuPage() {
               PaperProps={{
                 style: {
                   maxHeight: 48 * 4.5,
-                  width: '20ch',
+                  width: "20ch",
                 },
               }}
             >
               {OPTIONS_MAXHEIGHT.map((option) => (
-                <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleMaxHeightClose}>
+                <MenuItem
+                  key={option}
+                  selected={option === "Pyxis"}
+                  onClick={handleMaxHeightClose}
+                >
                   {option}
                 </MenuItem>
               ))}

@@ -1,14 +1,19 @@
 // @mui
-import { Box, ListItemText, ListItemAvatar, ListItemButton } from '@mui/material';
+import {
+  Box,
+  ListItemText,
+  ListItemAvatar,
+  ListItemButton,
+} from "@mui/material";
 // @types
-import { IChatParticipant } from '../../../../@types/chat';
+import { IChatParticipant } from "../../../../@types/chat";
 // components
-import { CustomAvatar } from '../../../../components/custom-avatar';
-import Scrollbar from '../../../../components/scrollbar';
-import BadgeStatus from '../../../../components/badge-status';
+import { CustomAvatar } from "../../../../components/custom-avatar";
+import Scrollbar from "../../../../components/scrollbar";
+import BadgeStatus from "../../../../components/badge-status";
 //
-import ChatRoomParticipantInfoDialog from './ChatRoomParticipantInfoDialog';
-import ChatRoomCollapseButton from './ChatRoomCollapseButton';
+import ChatRoomParticipantInfoDialog from "./ChatRoomParticipantInfoDialog";
+import ChatRoomCollapseButton from "./ChatRoomCollapseButton";
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +44,7 @@ export default function ChatRoomGroup({
         sx={{
           height: isCollapse ? HEIGHT * 4 : 0,
           transition: (theme) =>
-            theme.transitions.create('height', {
+            theme.transitions.create("height", {
               duration: theme.transitions.duration.shorter,
             }),
         }}
@@ -88,12 +93,16 @@ function Participant({ participant, open, onClose, onOpen }: ParticipantProps) {
         <ListItemText
           primary={name}
           secondary={role}
-          primaryTypographyProps={{ noWrap: true, variant: 'subtitle2' }}
+          primaryTypographyProps={{ noWrap: true, variant: "subtitle2" }}
           secondaryTypographyProps={{ noWrap: true }}
         />
       </ListItemButton>
 
-      <ChatRoomParticipantInfoDialog participant={participant} open={open} onClose={onClose} />
+      <ChatRoomParticipantInfoDialog
+        participant={participant}
+        open={open}
+        onClose={onClose}
+      />
     </>
   );
 }

@@ -1,18 +1,28 @@
 // @mui
-import { alpha } from '@mui/material/styles';
-import { RadioGroup } from '@mui/material';
+import { alpha } from "@mui/material/styles";
+import { RadioGroup } from "@mui/material";
 //
-import { useSettingsContext } from '../SettingsContext';
-import { StyledCard, StyledWrap, MaskControl, StyledCircleColor } from '../styles';
+import { useSettingsContext } from "../SettingsContext";
+import {
+  StyledCard,
+  StyledWrap,
+  MaskControl,
+  StyledCircleColor,
+} from "../styles";
 
 // ----------------------------------------------------------------------
 
 export default function ColorPresetsOptions() {
-  const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext();
+  const { themeColorPresets, onChangeColorPresets, presetsOption } =
+    useSettingsContext();
 
   return (
-    <RadioGroup name="themeColorPresets" value={themeColorPresets} onChange={onChangeColorPresets}>
-      <StyledWrap sx={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+    <RadioGroup
+      name="themeColorPresets"
+      value={themeColorPresets}
+      onChange={onChangeColorPresets}
+    >
+      <StyledWrap sx={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
         {presetsOption.map((color) => {
           const { name, value } = color;
 

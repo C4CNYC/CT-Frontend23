@@ -1,10 +1,10 @@
-import { ApexOptions } from 'apexcharts';
-import { useState } from 'react';
+import { ApexOptions } from "apexcharts";
+import { useState } from "react";
 // @mui
-import { Card, CardHeader, Box, CardProps } from '@mui/material';
+import { Card, CardHeader, Box, CardProps } from "@mui/material";
 // components
-import { CustomSmallSelect } from '../../../../components/custom-input';
-import Chart, { useChart } from '../../../../components/chart';
+import { CustomSmallSelect } from "../../../../components/custom-input";
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -25,17 +25,22 @@ interface Props extends CardProps {
   };
 }
 
-export default function BookingReservationStats({ title, subheader, chart, ...other }: Props) {
+export default function BookingReservationStats({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { categories, colors, series, options } = chart;
 
-  const [seriesData, setSeriesData] = useState('Year');
+  const [seriesData, setSeriesData] = useState("Year");
 
   const chartOptions = useChart({
     colors,
     stroke: {
       show: true,
       width: 2,
-      colors: ['transparent'],
+      colors: ["transparent"],
     },
     xaxis: {
       categories,
@@ -72,7 +77,12 @@ export default function BookingReservationStats({ title, subheader, chart, ...ot
       {series.map((item) => (
         <Box key={item.type} sx={{ mt: 3, mx: 3 }} dir="ltr">
           {item.type === seriesData && (
-            <Chart type="bar" series={item.data} options={chartOptions} height={364} />
+            <Chart
+              type="bar"
+              series={item.data}
+              options={chartOptions}
+              height={364}
+            />
           )}
         </Box>
       ))}

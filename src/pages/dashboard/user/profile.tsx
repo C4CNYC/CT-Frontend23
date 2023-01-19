@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Tab, Card, Tabs, Container, Box } from '@mui/material';
+import { Tab, Card, Tabs, Container, Box } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // auth
-import { useAuthContext } from '../../../auth/useAuthContext';
+import { useAuthContext } from "../../../auth/useAuthContext";
 // _mock_
 import {
   _userAbout,
@@ -14,13 +14,13 @@ import {
   _userFriends,
   _userGallery,
   _userFollowers,
-} from '../../../_mock/arrays';
+} from "../../../_mock/arrays";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../../components/settings';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../components/settings";
 // sections
 import {
   Profile,
@@ -28,11 +28,13 @@ import {
   ProfileFriends,
   ProfileGallery,
   ProfileFollowers,
-} from '../../../sections/@dashboard/user/profile';
+} from "../../../sections/@dashboard/user/profile";
 
 // ----------------------------------------------------------------------
 
-UserProfilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+UserProfilePage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -41,26 +43,26 @@ export default function UserProfilePage() {
 
   const { user } = useAuthContext();
 
-  const [searchFriends, setSearchFriends] = useState('');
+  const [searchFriends, setSearchFriends] = useState("");
 
-  const [currentTab, setCurrentTab] = useState('profile');
+  const [currentTab, setCurrentTab] = useState("profile");
 
   const TABS = [
     {
-      value: 'profile',
-      label: 'Profile',
+      value: "profile",
+      label: "Profile",
       icon: <Iconify icon="ic:round-account-box" />,
       component: <Profile info={_userAbout} posts={_userFeeds} />,
     },
     {
-      value: 'followers',
-      label: 'Followers',
+      value: "followers",
+      label: "Followers",
       icon: <Iconify icon="eva:heart-fill" />,
       component: <ProfileFollowers followers={_userFollowers} />,
     },
     {
-      value: 'friends',
-      label: 'Friends',
+      value: "friends",
+      label: "Friends",
       icon: <Iconify icon="eva:people-fill" />,
       component: (
         <ProfileFriends
@@ -73,8 +75,8 @@ export default function UserProfilePage() {
       ),
     },
     {
-      value: 'gallery',
-      label: 'Gallery',
+      value: "gallery",
+      label: "Gallery",
       icon: <Iconify icon="ic:round-perm-media" />,
       component: <ProfileGallery gallery={_userGallery} />,
     },
@@ -86,12 +88,12 @@ export default function UserProfilePage() {
         <title> User: Profile | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Profile"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
+            { name: "User", href: PATH_DASHBOARD.user.root },
             { name: user?.displayName },
           ]}
         />
@@ -99,10 +101,14 @@ export default function UserProfilePage() {
           sx={{
             mb: 3,
             height: 280,
-            position: 'relative',
+            position: "relative",
           }}
         >
-          <ProfileCover name={user?.displayName} role={_userAbout.role} cover={_userAbout.cover} />
+          <ProfileCover
+            name={user?.displayName}
+            role={_userAbout.role}
+            cover={_userAbout.cover}
+          />
 
           <Tabs
             value={currentTab}
@@ -111,25 +117,33 @@ export default function UserProfilePage() {
               width: 1,
               bottom: 0,
               zIndex: 9,
-              position: 'absolute',
-              bgcolor: 'background.paper',
-              '& .MuiTabs-flexContainer': {
+              position: "absolute",
+              bgcolor: "background.paper",
+              "& .MuiTabs-flexContainer": {
                 pr: { md: 3 },
                 justifyContent: {
-                  sm: 'center',
-                  md: 'flex-end',
+                  sm: "center",
+                  md: "flex-end",
                 },
               },
             }}
           >
             {TABS.map((tab) => (
-              <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
+              <Tab
+                key={tab.value}
+                value={tab.value}
+                icon={tab.icon}
+                label={tab.label}
+              />
             ))}
           </Tabs>
         </Card>
 
         {TABS.map(
-          (tab) => tab.value === currentTab && <Box key={tab.value}> {tab.component} </Box>
+          (tab) =>
+            tab.value === currentTab && (
+              <Box key={tab.value}> {tab.component} </Box>
+            )
         )}
       </Container>
     </>

@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Card, Container, Stack } from '@mui/material';
+import { Card, Container, Stack } from "@mui/material";
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
+import { useDispatch, useSelector } from "../../../redux/store";
 import {
   getContacts,
   getConversation,
@@ -14,25 +14,25 @@ import {
   sendMessage,
   markConversationAsRead,
   resetActiveConversation,
-} from '../../../redux/slices/chat';
+} from "../../../redux/slices/chat";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // components
-import { useSettingsContext } from '../../../components/settings';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import { useSettingsContext } from "../../../components/settings";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // @types
-import { IChatParticipant, IChatSendMessage } from '../../../@types/chat';
+import { IChatParticipant, IChatSendMessage } from "../../../@types/chat";
 // sections
-import ChatNav from './nav/ChatNav';
-import ChatRoom from './room/ChatRoom';
-import ChatMessageInput from './message/ChatMessageInput';
-import ChatMessageList from './message/ChatMessageList';
-import ChatHeaderDetail from './header/ChatHeaderDetail';
-import ChatHeaderCompose from './header/ChatHeaderCompose';
+import ChatNav from "./nav/ChatNav";
+import ChatRoom from "./room/ChatRoom";
+import ChatMessageInput from "./message/ChatMessageInput";
+import ChatMessageList from "./message/ChatMessageList";
+import ChatHeaderDetail from "./header/ChatHeaderDetail";
+import ChatHeaderCompose from "./header/ChatHeaderCompose";
 
 // ----------------------------------------------------------------------
 
-const CURRENT_USER_ID = '8864c717-587d-472a-929a-8e5f298024da-0';
+const CURRENT_USER_ID = "8864c717-587d-472a-929a-8e5f298024da-0";
 
 export default function Chat() {
   const { themeStretch } = useSettingsContext();
@@ -45,9 +45,13 @@ export default function Chat() {
     query: { conversationKey },
   } = useRouter();
 
-  const { contacts, recipients, participants, activeConversationId, conversations } = useSelector(
-    (state) => state.chat
-  );
+  const {
+    contacts,
+    recipients,
+    participants,
+    activeConversationId,
+    conversations,
+  } = useSelector((state) => state.chat);
 
   const selectedConversation = useSelector(() => {
     if (activeConversationId) {
@@ -55,17 +59,19 @@ export default function Chat() {
     }
 
     return {
-      id: '',
+      id: "",
       messages: [],
       participants: [],
       unreadCount: 0,
-      type: '',
+      type: "",
     };
   });
 
   const detailView = !!conversationKey;
 
-  const displayParticipants = participants.filter((item) => item.id !== CURRENT_USER_ID);
+  const displayParticipants = participants.filter(
+    (item) => item.id !== CURRENT_USER_ID
+  );
 
   useEffect(() => {
     dispatch(getConversations());
@@ -111,20 +117,23 @@ export default function Chat() {
   };
 
   return (
-    <Container maxWidth={themeStretch ? false : 'xl'}>
+    <Container maxWidth={themeStretch ? false : "xl"}>
       <CustomBreadcrumbs
         heading="Chat"
         links={[
           {
-            name: 'Dashboard',
+            name: "Dashboard",
             href: PATH_DASHBOARD.root,
           },
-          { name: 'Chat' },
+          { name: "Chat" },
         ]}
       />
 
-      <Card sx={{ height: '72vh', display: 'flex' }}>
-        <ChatNav conversations={conversations} activeConversationId={activeConversationId} />
+      <Card sx={{ height: "72vh", display: "flex" }}>
+        <ChatNav
+          conversations={conversations}
+          activeConversationId={activeConversationId}
+        />
 
         <Stack flexGrow={1}>
           {detailView ? (
@@ -141,7 +150,7 @@ export default function Chat() {
             direction="row"
             flexGrow={1}
             sx={{
-              overflow: 'hidden',
+              overflow: "hidden",
               borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
             }}
           >
@@ -152,13 +161,17 @@ export default function Chat() {
                 conversationId={activeConversationId}
                 onSend={handleSendMessage}
                 disabled={
-                  pathname === PATH_DASHBOARD.chat.root || pathname === PATH_DASHBOARD.chat.new
+                  pathname === PATH_DASHBOARD.chat.root ||
+                  pathname === PATH_DASHBOARD.chat.new
                 }
               />
             </Stack>
 
             {detailView && (
-              <ChatRoom conversation={selectedConversation} participants={displayParticipants} />
+              <ChatRoom
+                conversation={selectedConversation}
+                participants={displayParticipants}
+              />
             )}
           </Stack>
         </Stack>

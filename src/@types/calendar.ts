@@ -1,8 +1,12 @@
-import { EventInput } from '@fullcalendar/common';
+import { EventInput } from "@fullcalendar/common";
 
 // ----------------------------------------------------------------------
 
-export type ICalendarViewValue = 'dayGridMonth' | 'timeGridWeek' | 'timeGridDay' | 'listWeek';
+export type ICalendarViewValue =
+  | "dayGridMonth"
+  | "timeGridWeek"
+  | "timeGridDay"
+  | "listWeek";
 
 export type ICalendarEvent = {
   title: string;

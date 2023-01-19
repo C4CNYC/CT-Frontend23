@@ -1,37 +1,47 @@
-import { Theme, alpha } from '@mui/material/styles';
-import { ToggleButtonProps } from '@mui/material';
+import { Theme, alpha } from "@mui/material/styles";
+import { ToggleButtonProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
 export default function ToggleButton(theme: Theme) {
   const rootStyle = (ownerState: ToggleButtonProps) => {
-    const standardColor = ownerState.color === 'standard';
+    const standardColor = ownerState.color === "standard";
 
     const defaultStyle = {
       ...(standardColor && {
-        '&.Mui-selected': {
-          borderColor: 'inherit',
+        "&.Mui-selected": {
+          borderColor: "inherit",
         },
       }),
     };
 
     const colorStyle = COLORS.map((color) => ({
       ...(ownerState.color === color && {
-        '&:hover': {
+        "&:hover": {
           borderColor: alpha(theme.palette[color].main, 0.48),
-          backgroundColor: alpha(theme.palette[color].main, theme.palette.action.hoverOpacity),
+          backgroundColor: alpha(
+            theme.palette[color].main,
+            theme.palette.action.hoverOpacity
+          ),
         },
-        '&.Mui-selected': {
+        "&.Mui-selected": {
           borderColor: theme.palette[color].main,
         },
       }),
     }));
 
     const disabledState = {
-      '&.Mui-disabled': {
-        '&.Mui-selected': {
+      "&.Mui-disabled": {
+        "&.Mui-selected": {
           color: theme.palette.action.disabled,
           backgroundColor: theme.palette.action.selected,
           borderColor: theme.palette.action.disabledBackground,
@@ -45,7 +55,8 @@ export default function ToggleButton(theme: Theme) {
   return {
     MuiToggleButton: {
       styleOverrides: {
-        root: ({ ownerState }: { ownerState: ToggleButtonProps }) => rootStyle(ownerState),
+        root: ({ ownerState }: { ownerState: ToggleButtonProps }) =>
+          rootStyle(ownerState),
       },
     },
     MuiToggleButtonGroup: {
@@ -57,7 +68,7 @@ export default function ToggleButton(theme: Theme) {
         },
         grouped: {
           margin: 4,
-          borderColor: 'transparent !important',
+          borderColor: "transparent !important",
           borderRadius: `${theme.shape.borderRadius}px !important`,
         },
       },

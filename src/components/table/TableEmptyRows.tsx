@@ -1,5 +1,5 @@
 // @mui
-import { TableRow, TableCell } from '@mui/material';
+import { TableRow, TableCell } from "@mui/material";
 
 // ----------------------------------------------------------------------
 

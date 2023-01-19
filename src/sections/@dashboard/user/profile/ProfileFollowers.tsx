@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Box, Card, Button, Avatar, Typography, Stack } from '@mui/material';
+import { Box, Card, Button, Avatar, Typography, Stack } from "@mui/material";
 // @types
-import { IUserProfileFollower } from '../../../../@types/user';
+import { IUserProfileFollower } from "../../../../@types/user";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -23,9 +23,9 @@ export default function ProfileFollowers({ followers }: Props) {
         gap={3}
         display="grid"
         gridTemplateColumns={{
-          xs: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
-          md: 'repeat(3, 1fr)',
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
         }}
       >
         {followers.map((follower) => (
@@ -51,8 +51,8 @@ function FollowerCard({ follower }: FollowerCardProps) {
     <Card
       sx={{
         p: 3,
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
       }}
     >
       <Avatar alt={name} src={avatarUrl} sx={{ width: 48, height: 48 }} />
@@ -69,7 +69,12 @@ function FollowerCard({ follower }: FollowerCardProps) {
           {name}
         </Typography>
 
-        <Stack spacing={0.5} direction="row" alignItems="center" sx={{ color: 'text.secondary' }}>
+        <Stack
+          spacing={0.5}
+          direction="row"
+          alignItems="center"
+          sx={{ color: "text.secondary" }}
+        >
           <Iconify icon="eva:pin-fill" width={16} sx={{ flexShrink: 0 }} />
 
           <Typography variant="body2" component="span" noWrap>
@@ -81,12 +86,12 @@ function FollowerCard({ follower }: FollowerCardProps) {
       <Button
         size="small"
         onClick={() => setToogle(!toggle)}
-        variant={toggle ? 'text' : 'outlined'}
-        color={toggle ? 'primary' : 'inherit'}
+        variant={toggle ? "text" : "outlined"}
+        color={toggle ? "primary" : "inherit"}
         startIcon={toggle && <Iconify icon="eva:checkmark-fill" />}
         sx={{ flexShrink: 0 }}
       >
-        {toggle ? 'Followed' : 'Follow'}
+        {toggle ? "Followed" : "Follow"}
       </Button>
     </Card>
   );

@@ -1,19 +1,19 @@
 // next
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import { useRouter } from "next/router";
 // @mui
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // _mock_
-import { _invoices } from '../../../../_mock/arrays';
+import { _invoices } from "../../../../_mock/arrays";
 // layouts
-import DashboardLayout from '../../../../layouts/dashboard';
+import DashboardLayout from "../../../../layouts/dashboard";
 // components
-import { useSettingsContext } from '../../../../components/settings';
-import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import { useSettingsContext } from "../../../../components/settings";
+import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 // sections
-import InvoiceDetails from '../../../../sections/@dashboard/invoice/details';
+import InvoiceDetails from "../../../../sections/@dashboard/invoice/details";
 
 // ----------------------------------------------------------------------
 
@@ -38,13 +38,13 @@ export default function InvoiceDetailsPage() {
         <title> Invoice: View | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Invoice Details"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             {
-              name: 'Invoices',
+              name: "Invoices",
               href: PATH_DASHBOARD.invoice.root,
             },
             { name: `INV-${currentInvoice?.invoiceNumber}` },

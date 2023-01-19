@@ -1,16 +1,27 @@
 // @mui
-import { ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps } from '@mui/material';
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  ToggleButtonGroupProps,
+} from "@mui/material";
 // components
-import Iconify from '../../../components/iconify';
+import Iconify from "../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
 interface Props extends ToggleButtonGroupProps {
   value: string;
-  onChange: (event: React.MouseEvent<HTMLElement>, newView: string | null) => void;
+  onChange: (
+    event: React.MouseEvent<HTMLElement>,
+    newView: string | null
+  ) => void;
 }
 
-export default function FileChangeViewButton({ value, onChange, ...other }: Props) {
+export default function FileChangeViewButton({
+  value,
+  onChange,
+  ...other
+}: Props) {
   return (
     <ToggleButtonGroup
       size="small"

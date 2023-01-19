@@ -1,14 +1,21 @@
-import { m } from 'framer-motion';
-import { useState, useRef } from 'react';
+import { m } from "framer-motion";
+import { useState, useRef } from "react";
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import { Box, Card, Paper, Button, Typography, CardContent } from '@mui/material';
+import { alpha, useTheme } from "@mui/material/styles";
+import {
+  Box,
+  Card,
+  Paper,
+  Button,
+  Typography,
+  CardContent,
+} from "@mui/material";
 // utils
-import { bgGradient } from '../../../../utils/cssStyles';
+import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from '../../../../components/image';
-import { MotionContainer, varFade } from '../../../../components/animate';
-import Carousel, { CarouselArrowIndex } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import { MotionContainer, varFade } from "../../../../components/animate";
+import Carousel, { CarouselArrowIndex } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +33,9 @@ export default function CarouselAnimation({ data }: Props) {
 
   const carouselRef = useRef<Carousel | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(theme.direction === 'rtl' ? data.length - 1 : 0);
+  const [currentIndex, setCurrentIndex] = useState(
+    theme.direction === "rtl" ? data.length - 1 : 0
+  );
 
   const carouselSettings = {
     speed: 800,
@@ -35,7 +44,7 @@ export default function CarouselAnimation({ data }: Props) {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     beforeChange: (current: number, next: number) => setCurrentIndex(next),
   };
 
@@ -51,7 +60,11 @@ export default function CarouselAnimation({ data }: Props) {
     <Card>
       <Carousel ref={carouselRef} {...carouselSettings}>
         {data.map((item, index) => (
-          <CarouselItem key={item.id} item={item} isActive={index === currentIndex} />
+          <CarouselItem
+            key={item.id}
+            item={item}
+            isActive={index === currentIndex}
+          />
         ))}
       </Carousel>
 
@@ -82,7 +95,7 @@ function CarouselItem({ item, isActive }: CarouselItemProps) {
   const { image, title } = item;
 
   return (
-    <Paper sx={{ position: 'relative' }}>
+    <Paper sx={{ position: "relative" }}>
       <Image alt={title} src={image} ratio="16/9" />
 
       <Box
@@ -90,9 +103,9 @@ function CarouselItem({ item, isActive }: CarouselItemProps) {
           top: 0,
           width: 1,
           height: 1,
-          position: 'absolute',
+          position: "absolute",
           ...bgGradient({
-            direction: 'to top',
+            direction: "to top",
             startColor: `${theme.palette.grey[900]} 0%`,
             endColor: `${alpha(theme.palette.grey[900], 0)} 100%`,
           }),
@@ -107,9 +120,9 @@ function CarouselItem({ item, isActive }: CarouselItemProps) {
           bottom: 0,
           width: 1,
           maxWidth: 720,
-          textAlign: 'left',
-          position: 'absolute',
-          color: 'common.white',
+          textAlign: "left",
+          position: "absolute",
+          color: "common.white",
         }}
       >
         <m.div variants={varFade().inRight}>

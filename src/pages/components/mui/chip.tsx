@@ -1,19 +1,21 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Card, Container, CardHeader, CardContent } from '@mui/material';
+import { Box, Card, Container, CardHeader, CardContent } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import Chips from '../../../sections/_examples/mui/Chips';
+import Chips from "../../../sections/_examples/mui/Chips";
 
 // ----------------------------------------------------------------------
 
-MUIChipPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIChipPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +30,8 @@ export default function MUIChipPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -36,12 +39,12 @@ export default function MUIChipPage() {
             heading="Chip"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Chip' },
+              { name: "Chip" },
             ]}
-            moreLink={['https://mui.com/components/chips']}
+            moreLink={["https://mui.com/components/chips"]}
           />
         </Container>
       </Box>
@@ -51,8 +54,8 @@ export default function MUIChipPage() {
           gap={3}
           display="grid"
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            md: 'repeat(3, 1fr)',
+            xs: "repeat(1, 1fr)",
+            md: "repeat(3, 1fr)",
           }}
         >
           <Card>

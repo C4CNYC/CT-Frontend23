@@ -1,6 +1,6 @@
-import { Theme } from '@mui/material/styles';
-import { SxProps } from '@mui/material';
-import { Options } from 'react-markdown';
+import { Theme } from "@mui/material/styles";
+import { SxProps } from "@mui/material";
+import { Options } from "react-markdown";
 
 // ----------------------------------------------------------------------
 

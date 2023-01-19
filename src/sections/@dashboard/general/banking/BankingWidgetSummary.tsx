@@ -1,14 +1,14 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Card, Typography, Stack, CardProps, Box } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Card, Typography, Stack, CardProps, Box } from "@mui/material";
 // utils
-import { fCurrency, fPercent } from '../../../../utils/formatNumber';
+import { fCurrency, fPercent } from "../../../../utils/formatNumber";
 // theme
-import { ColorSchema } from '../../../../theme/palette';
+import { ColorSchema } from "../../../../theme/palette";
 // components
-import Iconify from '../../../../components/iconify';
-import Chart, { useChart } from '../../../../components/chart';
+import Iconify from "../../../../components/iconify";
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ export default function BankingWidgetSummary({
   total,
   icon,
   percent,
-  color = 'primary',
+  color = "primary",
   chart,
   sx,
   ...other
@@ -65,7 +65,7 @@ export default function BankingWidgetSummary({
       y: {
         formatter: (value: number) => fCurrency(value),
         title: {
-          formatter: () => '',
+          formatter: () => "",
         },
       },
     },
@@ -97,8 +97,8 @@ export default function BankingWidgetSummary({
           right: 24,
           width: 48,
           height: 48,
-          borderRadius: '50%',
-          position: 'absolute',
+          borderRadius: "50%",
+          position: "absolute",
           color: theme.palette[color].lighter,
           bgcolor: theme.palette[color].dark,
         }}
@@ -112,7 +112,12 @@ export default function BankingWidgetSummary({
         <TrendingInfo percent={percent} />
       </Stack>
 
-      <Chart type="area" series={[{ data: series }]} options={chartOptions} height={120} />
+      <Chart
+        type="area"
+        series={[{ data: series }]}
+        options={chartOptions}
+        height={120}
+      />
     </Card>
   );
 }
@@ -126,15 +131,17 @@ type TrendingInfoProps = {
 function TrendingInfo({ percent }: TrendingInfoProps) {
   return (
     <Stack direction="row" alignItems="center" flexWrap="wrap" spacing={0.5}>
-      <Iconify icon={percent < 0 ? 'eva:trending-down-fill' : 'eva:trending-up-fill'} />
+      <Iconify
+        icon={percent < 0 ? "eva:trending-down-fill" : "eva:trending-up-fill"}
+      />
 
       <Typography variant="subtitle2" component="span">
-        {percent > 0 && '+'}
+        {percent > 0 && "+"}
 
         {fPercent(percent)}
 
-        <Box component="span" sx={{ opacity: 0.72, typography: 'body2' }}>
-          {' than last month'}
+        <Box component="span" sx={{ opacity: 0.72, typography: "body2" }}>
+          {" than last month"}
         </Box>
       </Typography>
     </Stack>

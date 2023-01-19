@@ -1,11 +1,11 @@
 // @mui
-import { Theme, styled } from '@mui/material/styles';
+import { Theme, styled } from "@mui/material/styles";
 //
-import { BadgeStatusValue, BadgeSizeValue } from './types';
+import { BadgeStatusValue, BadgeSizeValue } from "./types";
 
 // ----------------------------------------------------------------------
 
-export const StyledBadgeStatus = styled('span')(
+export const StyledBadgeStatus = styled("span")(
   ({
     theme,
     ownerState,
@@ -21,55 +21,55 @@ export const StyledBadgeStatus = styled('span')(
     return {
       width: 10,
       height: 10,
-      display: 'flex',
-      borderRadius: '50%',
-      alignItems: 'center',
-      justifyContent: 'center',
-      '&:before, &:after': {
+      display: "flex",
+      borderRadius: "50%",
+      alignItems: "center",
+      justifyContent: "center",
+      "&:before, &:after": {
         content: "''",
         borderRadius: 1,
         backgroundColor: theme.palette.common.white,
       },
 
-      ...(size === 'small' && { width: 8, height: 8 }),
+      ...(size === "small" && { width: 8, height: 8 }),
 
-      ...(size === 'large' && { width: 12, height: 12 }),
+      ...(size === "large" && { width: 12, height: 12 }),
 
-      ...(status === 'offline' && { backgroundColor: 'transparent' }),
+      ...(status === "offline" && { backgroundColor: "transparent" }),
 
-      ...(status === 'away' && {
+      ...(status === "away" && {
         backgroundColor: theme.palette.warning.main,
-        '&:before': {
+        "&:before": {
           width: 2,
           height: 4,
-          transform: 'translateX(1px) translateY(-1px)',
+          transform: "translateX(1px) translateY(-1px)",
         },
-        '&:after': {
+        "&:after": {
           width: 2,
           height: 4,
-          transform: 'translateY(1px) rotate(125deg)',
+          transform: "translateY(1px) rotate(125deg)",
         },
       }),
 
-      ...(status === 'busy' && {
+      ...(status === "busy" && {
         backgroundColor: theme.palette.error.main,
-        '&:before': { width: 6, height: 2 },
+        "&:before": { width: 6, height: 2 },
       }),
 
-      ...(status === 'online' && {
+      ...(status === "online" && {
         backgroundColor: theme.palette.success.main,
       }),
 
-      ...(status === 'invisible' && {
+      ...(status === "invisible" && {
         backgroundColor: theme.palette.text.disabled,
-        '&:before': {
+        "&:before": {
           width: 6,
           height: 6,
-          borderRadius: '50%',
+          borderRadius: "50%",
         },
       }),
 
-      ...(status === 'unread' && {
+      ...(status === "unread" && {
         backgroundColor: theme.palette.info.main,
       }),
     };

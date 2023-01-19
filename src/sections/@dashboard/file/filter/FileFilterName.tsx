@@ -1,7 +1,7 @@
 // @mui
-import { TextField, InputAdornment } from '@mui/material';
+import { TextField, InputAdornment } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ export default function FileFilterName({ filterName, onFilterName }: Props) {
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+            <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
           </InputAdornment>
         ),
       }}

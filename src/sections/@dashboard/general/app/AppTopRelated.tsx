@@ -1,11 +1,19 @@
 // @mui
-import { Box, Card, Rating, CardHeader, Typography, Stack, CardProps } from '@mui/material';
+import {
+  Box,
+  Card,
+  Rating,
+  CardHeader,
+  Typography,
+  Stack,
+  CardProps,
+} from "@mui/material";
 // utils
-import { fCurrency, fShortenNumber } from '../../../../utils/formatNumber';
+import { fCurrency, fShortenNumber } from "../../../../utils/formatNumber";
 // components
-import Label from '../../../../components/label';
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
+import Label from "../../../../components/label";
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +33,12 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AppTopRelated({ title, subheader, list, ...other }: Props) {
+export default function AppTopRelated({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -57,11 +70,11 @@ function ApplicationItem({ app }: ApplicationItemProps) {
           width: 48,
           height: 48,
           flexShrink: 0,
-          display: 'flex',
+          display: "flex",
           borderRadius: 1.5,
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'background.neutral',
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "background.neutral",
         }}
       >
         <Box component="img" src={shortcut} sx={{ width: 24, height: 24 }} />
@@ -69,25 +82,39 @@ function ApplicationItem({ app }: ApplicationItemProps) {
 
       <Box sx={{ flexGrow: 1, minWidth: 160 }}>
         <Typography variant="subtitle2">{name}</Typography>
-        <Stack direction="row" alignItems="center" sx={{ mt: 0.5, color: 'text.secondary' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ mt: 0.5, color: "text.secondary" }}
+        >
           <Iconify
             width={16}
-            icon={system === 'Mac' ? 'ant-design:apple-filled' : 'ant-design:windows-filled'}
+            icon={
+              system === "Mac"
+                ? "ant-design:apple-filled"
+                : "ant-design:windows-filled"
+            }
           />
 
           <Typography variant="caption" sx={{ ml: 0.5, mr: 1 }}>
             {system}
           </Typography>
 
-          <Label variant="soft" color={price === 0 ? 'success' : 'error'}>
-            {price === 0 ? 'Free' : fCurrency(price)}
+          <Label variant="soft" color={price === 0 ? "success" : "error"}>
+            {price === 0 ? "Free" : fCurrency(price)}
           </Label>
         </Stack>
       </Box>
 
       <Stack alignItems="flex-end" sx={{ pr: 3 }}>
-        <Rating readOnly size="small" precision={0.5} name="reviews" value={rating} />
-        <Typography variant="caption" sx={{ mt: 0.5, color: 'text.secondary' }}>
+        <Rating
+          readOnly
+          size="small"
+          precision={0.5}
+          name="reviews"
+          value={rating}
+        />
+        <Typography variant="caption" sx={{ mt: 0.5, color: "text.secondary" }}>
           {fShortenNumber(review)} reviews
         </Typography>
       </Stack>

@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { TextField, Stack } from '@mui/material';
-import { DateTimePicker, MobileDateTimePicker, DesktopDateTimePicker } from '@mui/x-date-pickers';
+import { TextField, Stack } from "@mui/material";
+import {
+  DateTimePicker,
+  MobileDateTimePicker,
+  DesktopDateTimePicker,
+} from "@mui/x-date-pickers";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
@@ -11,11 +15,11 @@ export default function PickerDateTime() {
   const [value, setValue] = useState<Date | null>(new Date());
 
   const [valueResponsive, setValueResponsive] = useState<Date | null>(
-    new Date('2018-01-01T00:00:00.000Z')
+    new Date("2018-01-01T00:00:00.000Z")
   );
 
   return (
-    <Stack spacing={3} direction={{ xs: 'column', md: 'row' }}>
+    <Stack spacing={3} direction={{ xs: "column", md: "row" }}>
       <Block title="Basic">
         <DateTimePicker
           renderInput={(props) => <TextField {...props} fullWidth />}
@@ -31,7 +35,9 @@ export default function PickerDateTime() {
           onChange={(newValue) => {
             setValueResponsive(newValue);
           }}
-          renderInput={(params) => <TextField {...params} fullWidth margin="normal" />}
+          renderInput={(params) => (
+            <TextField {...params} fullWidth margin="normal" />
+          )}
         />
 
         <DesktopDateTimePicker
@@ -39,7 +45,9 @@ export default function PickerDateTime() {
           onChange={(newValue) => {
             setValueResponsive(newValue);
           }}
-          renderInput={(params) => <TextField {...params} margin="normal" fullWidth />}
+          renderInput={(params) => (
+            <TextField {...params} margin="normal" fullWidth />
+          )}
         />
 
         <DateTimePicker
@@ -47,7 +55,9 @@ export default function PickerDateTime() {
           onChange={(newValue) => {
             setValueResponsive(newValue);
           }}
-          renderInput={(params) => <TextField {...params} margin="normal" fullWidth />}
+          renderInput={(params) => (
+            <TextField {...params} margin="normal" fullWidth />
+          )}
         />
       </Block>
     </Stack>

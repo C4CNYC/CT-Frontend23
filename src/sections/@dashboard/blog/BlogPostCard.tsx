@@ -1,32 +1,40 @@
-import { paramCase } from 'change-case';
+import { paramCase } from "change-case";
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { alpha, styled } from '@mui/material/styles';
-import { Box, Card, Avatar, Typography, CardContent, Stack, Link } from '@mui/material';
+import { alpha, styled } from "@mui/material/styles";
+import {
+  Box,
+  Card,
+  Avatar,
+  Typography,
+  CardContent,
+  Stack,
+  Link,
+} from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // hooks
-import useResponsive from '../../../hooks/useResponsive';
+import useResponsive from "../../../hooks/useResponsive";
 // utils
-import { fDate } from '../../../utils/formatTime';
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fDate } from "../../../utils/formatTime";
+import { fShortenNumber } from "../../../utils/formatNumber";
 // @types
-import { IBlogPost } from '../../../@types/blog';
+import { IBlogPost } from "../../../@types/blog";
 // components
-import Image from '../../../components/image';
-import Iconify from '../../../components/iconify';
-import TextMaxLine from '../../../components/text-max-line';
-import SvgColor from '../../../components/svg-color';
+import Image from "../../../components/image";
+import Iconify from "../../../components/iconify";
+import TextMaxLine from "../../../components/text-max-line";
+import SvgColor from "../../../components/svg-color";
 
 // ----------------------------------------------------------------------
 
-const StyledOverlay = styled('div')(({ theme }) => ({
+const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,
   zIndex: 1,
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
+  width: "100%",
+  height: "100%",
+  position: "absolute",
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
 }));
 
@@ -38,7 +46,7 @@ type Props = {
 };
 
 export default function BlogPostCard({ post, index }: Props) {
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   const { cover, title, view, comment, share, author, createdAt } = post;
 
@@ -54,7 +62,7 @@ export default function BlogPostCard({ post, index }: Props) {
             top: 24,
             left: 24,
             zIndex: 9,
-            position: 'absolute',
+            position: "absolute",
           }}
         />
 
@@ -76,7 +84,7 @@ export default function BlogPostCard({ post, index }: Props) {
 
   return (
     <Card>
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: "relative" }}>
         <SvgColor
           src="/assets/shape_avatar.svg"
           sx={{
@@ -84,8 +92,8 @@ export default function BlogPostCard({ post, index }: Props) {
             height: 36,
             zIndex: 9,
             bottom: -15,
-            position: 'absolute',
-            color: 'background.paper',
+            position: "absolute",
+            color: "background.paper",
           }}
         />
 
@@ -98,7 +106,7 @@ export default function BlogPostCard({ post, index }: Props) {
             width: 32,
             height: 32,
             bottom: -16,
-            position: 'absolute',
+            position: "absolute",
           }}
         />
 
@@ -127,8 +135,15 @@ type PostContentProps = {
   index?: number;
 };
 
-export function PostContent({ title, view, comment, share, createdAt, index }: PostContentProps) {
-  const isDesktop = useResponsive('up', 'md');
+export function PostContent({
+  title,
+  view,
+  comment,
+  share,
+  createdAt,
+  index,
+}: PostContentProps) {
+  const isDesktop = useResponsive("up", "md");
 
   const linkTo = PATH_DASHBOARD.blog.view(paramCase(title));
 
@@ -137,9 +152,9 @@ export function PostContent({ title, view, comment, share, createdAt, index }: P
   const latestPostSmall = index === 1 || index === 2;
 
   const POST_INFO = [
-    { id: 'comment', value: comment, icon: 'eva:message-circle-fill' },
-    { id: 'view', value: view, icon: 'eva:eye-fill' },
-    { id: 'share', value: share, icon: 'eva:share-fill' },
+    { id: "comment", value: comment, icon: "eva:message-circle-fill" },
+    { id: "view", value: view, icon: "eva:eye-fill" },
+    { id: "share", value: share, icon: "eva:share-fill" },
   ];
 
   return (
@@ -151,8 +166,8 @@ export function PostContent({ title, view, comment, share, createdAt, index }: P
           pt: 0,
           zIndex: 9,
           bottom: 0,
-          position: 'absolute',
-          color: 'common.white',
+          position: "absolute",
+          color: "common.white",
         }),
       }}
     >
@@ -161,10 +176,10 @@ export function PostContent({ title, view, comment, share, createdAt, index }: P
         variant="caption"
         component="div"
         sx={{
-          color: 'text.disabled',
+          color: "text.disabled",
           ...((latestPostLarge || latestPostSmall) && {
             opacity: 0.64,
-            color: 'common.white',
+            color: "common.white",
           }),
         }}
       >
@@ -173,7 +188,7 @@ export function PostContent({ title, view, comment, share, createdAt, index }: P
 
       <Link component={NextLink} href={linkTo} color="inherit">
         <TextMaxLine
-          variant={isDesktop && latestPostLarge ? 'h5' : 'subtitle2'}
+          variant={isDesktop && latestPostLarge ? "h5" : "subtitle2"}
           line={2}
           persistent
         >
@@ -187,10 +202,10 @@ export function PostContent({ title, view, comment, share, createdAt, index }: P
         justifyContent="flex-end"
         sx={{
           mt: 3,
-          color: 'text.disabled',
+          color: "text.disabled",
           ...((latestPostLarge || latestPostSmall) && {
             opacity: 0.64,
-            color: 'common.white',
+            color: "common.white",
           }),
         }}
       >
@@ -199,7 +214,7 @@ export function PostContent({ title, view, comment, share, createdAt, index }: P
             key={info.id}
             direction="row"
             alignItems="center"
-            sx={{ typography: 'caption', ml: info.id === 'comment' ? 0 : 1.5 }}
+            sx={{ typography: "caption", ml: info.id === "comment" ? 0 : 1.5 }}
           >
             <Iconify icon={info.icon} width={16} sx={{ mr: 0.5 }} />
             {fShortenNumber(info.value)}

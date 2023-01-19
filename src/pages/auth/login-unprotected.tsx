@@ -1,7 +1,7 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // sections
-import Login from '../../sections/auth/Login';
+import Login from "../../sections/auth/Login";
 
 // ----------------------------------------------------------------------
 

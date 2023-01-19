@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Collapse } from '@mui/material';
+import { Collapse } from "@mui/material";
 // hooks
-import useActiveLink from '../../../../hooks/useActiveLink';
+import useActiveLink from "../../../../hooks/useActiveLink";
 // components
-import { NavSectionVertical } from '../../../../components/nav-section';
+import { NavSectionVertical } from "../../../../components/nav-section";
 //
-import { NavItemProps } from '../types';
-import NavItem from './NavItem';
+import { NavItemProps } from "../types";
+import NavItem from "./NavItem";
 
 // ----------------------------------------------------------------------
 
@@ -41,14 +41,15 @@ export default function NavList({ item }: NavListProps) {
           <NavSectionVertical
             data={children}
             sx={{
-              '& .MuiList-root:last-of-type .MuiListItemButton-root': {
+              "& .MuiList-root:last-of-type .MuiListItemButton-root": {
                 height: 160,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                bgcolor: 'background.neutral',
-                backgroundRepeat: 'no-repeat',
-                backgroundImage: 'url(/assets/illustrations/illustration_dashboard.png)',
-                '& > *:not(.MuiTouchRipple-root)': { display: 'none' },
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                bgcolor: "background.neutral",
+                backgroundRepeat: "no-repeat",
+                backgroundImage:
+                  "url(/assets/illustrations/illustration_dashboard.png)",
+                "& > *:not(.MuiTouchRipple-root)": { display: "none" },
               },
             }}
           />

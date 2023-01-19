@@ -1,8 +1,8 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { Card, CardHeader, Box, CardProps } from '@mui/material';
+import { Card, CardHeader, Box, CardProps } from "@mui/material";
 // components
-import Chart, { useChart } from '../../../../components/chart';
+import Chart, { useChart } from "../../../../components/chart";
 
 // ----------------------------------------------------------------------
 
@@ -22,14 +22,19 @@ interface Props extends CardProps {
   };
 }
 
-export default function AnalyticsWebsiteVisits({ title, subheader, chart, ...other }: Props) {
+export default function AnalyticsWebsiteVisits({
+  title,
+  subheader,
+  chart,
+  ...other
+}: Props) {
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({
     colors,
     plotOptions: {
       bar: {
-        columnWidth: '16%',
+        columnWidth: "16%",
       },
     },
     fill: {
@@ -37,14 +42,14 @@ export default function AnalyticsWebsiteVisits({ title, subheader, chart, ...oth
     },
     labels,
     xaxis: {
-      type: 'datetime',
+      type: "datetime",
     },
     tooltip: {
       shared: true,
       intersect: false,
       y: {
         formatter: (value: number) => {
-          if (typeof value !== 'undefined') {
+          if (typeof value !== "undefined") {
             return `${value.toFixed(0)} visits`;
           }
           return value;
@@ -59,7 +64,12 @@ export default function AnalyticsWebsiteVisits({ title, subheader, chart, ...oth
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
-        <Chart type="line" series={series} options={chartOptions} height={364} />
+        <Chart
+          type="line"
+          series={series}
+          options={chartOptions}
+          height={364}
+        />
       </Box>
     </Card>
   );

@@ -12,14 +12,14 @@ import {
   CardHeader,
   Typography,
   TableContainer,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Label from '../../../../components/label';
-import Image from '../../../../components/image';
-import Scrollbar from '../../../../components/scrollbar';
-import { TableHeadCustom } from '../../../../components/table';
+import Label from "../../../../components/label";
+import Image from "../../../../components/image";
+import Scrollbar from "../../../../components/scrollbar";
+import { TableHeadCustom } from "../../../../components/table";
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ export default function EcommerceBestSalesman({
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
 
-      <TableContainer sx={{ overflow: 'unset' }}>
+      <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar>
           <Table sx={{ minWidth: 720 }}>
             <TableHeadCustom headLabel={tableLabels} />
@@ -84,7 +84,7 @@ function EcommerceBestSalesmanRow({ row }: EcommerceBestSalesmanRowProps) {
 
           <Box sx={{ ml: 2 }}>
             <Typography variant="subtitle2"> {row.name} </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {row.email}
             </Typography>
           </Box>
@@ -94,7 +94,11 @@ function EcommerceBestSalesmanRow({ row }: EcommerceBestSalesmanRowProps) {
       <TableCell>{row.category}</TableCell>
 
       <TableCell>
-        <Image src={row.flag} alt="country flag" sx={{ maxWidth: 28, mx: 'auto' }} />
+        <Image
+          src={row.flag}
+          alt="country flag"
+          sx={{ maxWidth: 28, mx: "auto" }}
+        />
       </TableCell>
 
       <TableCell>{fCurrency(row.total)}</TableCell>
@@ -103,11 +107,11 @@ function EcommerceBestSalesmanRow({ row }: EcommerceBestSalesmanRowProps) {
         <Label
           variant="soft"
           color={
-            (row.rank === 'Top 1' && 'primary') ||
-            (row.rank === 'Top 2' && 'info') ||
-            (row.rank === 'Top 3' && 'success') ||
-            (row.rank === 'Top 4' && 'warning') ||
-            'error'
+            (row.rank === "Top 1" && "primary") ||
+            (row.rank === "Top 2" && "info") ||
+            (row.rank === "Top 3" && "success") ||
+            (row.rank === "Top 4" && "warning") ||
+            "error"
           }
         >
           {row.rank}

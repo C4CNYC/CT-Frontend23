@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -11,22 +11,22 @@ import {
   PaperProps,
   IconButton,
   AvatarGroup,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
-import useCopyToClipboard from '../../../../hooks/useCopyToClipboard';
+import useResponsive from "../../../../hooks/useResponsive";
+import useCopyToClipboard from "../../../../hooks/useCopyToClipboard";
 // utils
-import { fData } from '../../../../utils/formatNumber';
-import { fDateTime } from '../../../../utils/formatTime';
+import { fData } from "../../../../utils/formatNumber";
+import { fDateTime } from "../../../../utils/formatTime";
 // @types
-import { IFileManager } from '../../../../@types/file';
+import { IFileManager } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
-import { useSnackbar } from '../../../../components/snackbar';
-import MenuPopover from '../../../../components/menu-popover';
-import FileThumbnail from '../../../../components/file-thumbnail';
+import Iconify from "../../../../components/iconify";
+import { useSnackbar } from "../../../../components/snackbar";
+import MenuPopover from "../../../../components/menu-popover";
+import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import { FileShareDialog, FileDetailsDrawer } from '../../file';
+import { FileShareDialog, FileDetailsDrawer } from "../../file";
 
 // ----------------------------------------------------------------------
 
@@ -35,14 +35,19 @@ interface Props extends PaperProps {
   onDelete: VoidFunction;
 }
 
-export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: Props) {
+export default function FileGeneralRecentCard({
+  file,
+  onDelete,
+  sx,
+  ...other
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
 
-  const isDesktop = useResponsive('up', 'sm');
+  const isDesktop = useResponsive("up", "sm");
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -85,7 +90,7 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
   };
 
   const handleCopy = () => {
-    enqueueSnackbar('Copied!');
+    enqueueSnackbar("Copied!");
     copy(file.url);
   };
 
@@ -93,15 +98,15 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
     <>
       <Stack
         spacing={isDesktop ? 1.5 : 2}
-        direction={isDesktop ? 'row' : 'column'}
-        alignItems={isDesktop ? 'center' : 'flex-start'}
+        direction={isDesktop ? "row" : "column"}
+        alignItems={isDesktop ? "center" : "flex-start"}
         sx={{
           p: 2.5,
           borderRadius: 2,
-          position: 'relative',
+          position: "relative",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
-          '&:hover': {
-            bgcolor: 'background.paper',
+          "&:hover": {
+            bgcolor: "background.paper",
             boxShadow: (theme) => theme.customShadows.z20,
           },
           ...(isDesktop && {
@@ -119,7 +124,7 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
           sx={{
             width: 1,
             flexGrow: { sm: 1 },
-            minWidth: { sm: '1px' },
+            minWidth: { sm: "1px" },
           }}
         >
           <Typography variant="subtitle2" noWrap>
@@ -130,11 +135,18 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
             spacing={0.75}
             direction="row"
             alignItems="center"
-            sx={{ typography: 'caption', color: 'text.disabled', mt: 0.5 }}
+            sx={{ typography: "caption", color: "text.disabled", mt: 0.5 }}
           >
             <Box> {fData(file.size)} </Box>
 
-            <Box sx={{ width: 2, height: 2, borderRadius: '50%', bgcolor: 'currentColor' }} />
+            <Box
+              sx={{
+                width: 2,
+                height: 2,
+                borderRadius: "50%",
+                bgcolor: "currentColor",
+              }}
+            />
 
             <Box> {fDateTime(file.dateModified)} </Box>
           </Stack>
@@ -145,10 +157,10 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
             max={4}
             sx={{
               mx: 1.5,
-              '& .MuiAvatarGroup-avatar': {
+              "& .MuiAvatarGroup-avatar": {
                 width: 24,
                 height: 24,
-                '&:first-of-type': {
+                "&:first-of-type": {
                   fontSize: 12,
                 },
               },
@@ -165,9 +177,9 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
             top: 8,
             right: 8,
             flexShrink: 0,
-            position: 'absolute',
+            position: "absolute",
             ...(isDesktop && {
-              position: 'unset',
+              position: "unset",
             }),
           }}
         >
@@ -180,7 +192,10 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
             sx={{ p: 0.75 }}
           />
 
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Box>
@@ -212,14 +227,14 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
           onClick={() => {
             handleClosePopover();
             onDelete();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete
@@ -247,7 +262,7 @@ export default function FileGeneralRecentCard({ file, onDelete, sx, ...other }: 
         onCopyLink={handleCopy}
         onClose={() => {
           handleCloseShare();
-          setInviteEmail('');
+          setInviteEmail("");
         }}
       />
     </>

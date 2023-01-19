@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import { Tooltip, Box } from '@mui/material';
+import { alpha, useTheme } from "@mui/material/styles";
+import { Tooltip, Box } from "@mui/material";
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
+import { bgBlur } from "../../../utils/cssStyles";
 //
-import { IconButtonAnimate } from '../../animate';
-import SvgColor from '../../svg-color';
+import { IconButtonAnimate } from "../../animate";
+import SvgColor from "../../svg-color";
 //
-import BadgeDot from './BadgeDot';
+import BadgeDot from "./BadgeDot";
 
 // ----------------------------------------------------------------------
 
@@ -36,10 +36,12 @@ export default function ToggleButton({ notDefault, open, onToggle }: Props) {
         right: 24,
         bottom: 24,
         zIndex: 999,
-        position: 'fixed',
-        borderRadius: '50%',
+        position: "fixed",
+        borderRadius: "50%",
         boxShadow: `-12px 12px 32px -4px ${alpha(
-          theme.palette.mode === 'light' ? theme.palette.grey[600] : theme.palette.common.black,
+          theme.palette.mode === "light"
+            ? theme.palette.grey[600]
+            : theme.palette.common.black,
           0.36
         )}`,
         ...bgBlur({ color: theme.palette.background.default }),

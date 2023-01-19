@@ -1,35 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container, Pagination, TablePagination } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { Box, Container, Pagination, TablePagination } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['standard', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "standard",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ["small", "medium", "large"] as const;
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { my: 1 },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { my: 1 },
 } as const;
 
 // ----------------------------------------------------------------------
 
-MUIPaginationPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIPaginationPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +52,10 @@ export default function MUIPaginationPage() {
 
   useEffect(() => setMounted(true), []);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
@@ -67,7 +80,8 @@ export default function MUIPaginationPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -75,12 +89,12 @@ export default function MUIPaginationPage() {
             heading="Pagination"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Pagination' },
+              { name: "Pagination" },
             ]}
-            moreLink={['https://mui.com/components/pagination']}
+            moreLink={["https://mui.com/components/pagination"]}
           />
         </Container>
       </Box>
@@ -91,7 +105,12 @@ export default function MUIPaginationPage() {
             <Pagination shape="circular" count={10} />
             <Pagination shape="circular" count={10} disabled />
             <Pagination shape="circular" count={10} variant="outlined" />
-            <Pagination shape="circular" count={10} variant="outlined" disabled />
+            <Pagination
+              shape="circular"
+              count={10}
+              variant="outlined"
+              disabled
+            />
             <Pagination shape="circular" count={10} variant="soft" />
             <Pagination shape="circular" count={10} variant="soft" disabled />
           </Block>
@@ -100,7 +119,12 @@ export default function MUIPaginationPage() {
             <Pagination shape="rounded" count={10} />
             <Pagination shape="rounded" count={10} disabled />
             <Pagination shape="rounded" count={10} variant="outlined" />
-            <Pagination shape="rounded" count={10} variant="outlined" disabled />
+            <Pagination
+              shape="rounded"
+              count={10}
+              variant="outlined"
+              disabled
+            />
             <Pagination shape="rounded" count={10} variant="soft" />
             <Pagination shape="rounded" count={10} variant="soft" disabled />
           </Block>
@@ -111,7 +135,12 @@ export default function MUIPaginationPage() {
             ))}
 
             {COLORS.map((color) => (
-              <Pagination key={color} color={color} count={10} variant="outlined" />
+              <Pagination
+                key={color}
+                color={color}
+                count={10}
+                variant="outlined"
+              />
             ))}
 
             {COLORS.map((color) => (
@@ -133,7 +162,12 @@ export default function MUIPaginationPage() {
           <Block title="Ranges" sx={style}>
             <Pagination count={11} defaultPage={6} siblingCount={0} />
             <Pagination count={11} defaultPage={6} />
-            <Pagination count={11} defaultPage={6} siblingCount={0} boundaryCount={2} />
+            <Pagination
+              count={11}
+              defaultPage={6}
+              siblingCount={0}
+              boundaryCount={2}
+            />
             <Pagination count={11} defaultPage={6} boundaryCount={2} />
           </Block>
 

@@ -1,7 +1,7 @@
 //
-import Image from '../../image';
+import Image from "../../image";
 //
-import { CustomFile } from '../types';
+import { CustomFile } from "../types";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ export default function AvatarPreview({ file }: Props) {
     return null;
   }
 
-  const imgUrl = typeof file === 'string' ? file : file.preview;
+  const imgUrl = typeof file === "string" ? file : file.preview;
 
   return (
     <Image
@@ -22,9 +22,9 @@ export default function AvatarPreview({ file }: Props) {
       src={imgUrl}
       sx={{
         zIndex: 8,
-        overflow: 'hidden',
-        borderRadius: '50%',
-        position: 'absolute',
+        overflow: "hidden",
+        borderRadius: "50%",
+        position: "absolute",
         width: `calc(100% - 16px)`,
         height: `calc(100% - 16px)`,
       }}

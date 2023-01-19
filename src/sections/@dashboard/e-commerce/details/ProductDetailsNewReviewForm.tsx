@@ -1,7 +1,7 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // form
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
 import {
   Stack,
@@ -14,10 +14,10 @@ import {
   DialogActions,
   DialogContent,
   FormHelperText,
-} from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // components
-import FormProvider, { RHFTextField } from '../../../../components/hook-form';
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -32,19 +32,24 @@ interface Props extends DialogProps {
   onClose: VoidFunction;
 }
 
-export default function ProductDetailsNewReviewForm({ onClose, ...other }: Props) {
+export default function ProductDetailsNewReviewForm({
+  onClose,
+  ...other
+}: Props) {
   const ReviewSchema = Yup.object().shape({
-    rating: Yup.mixed().required('Rating is required'),
-    review: Yup.string().required('Review is required'),
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    rating: Yup.mixed().required("Rating is required"),
+    review: Yup.string().required("Review is required"),
+    name: Yup.string().required("Name is required"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email must be a valid email address"),
   });
 
   const defaultValues = {
     rating: null,
-    review: '',
-    name: '',
-    email: '',
+    review: "",
+    name: "",
+    email: "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -64,7 +69,7 @@ export default function ProductDetailsNewReviewForm({ onClose, ...other }: Props
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       onClose();
-      console.log('DATA', data);
+      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -81,19 +86,36 @@ export default function ProductDetailsNewReviewForm({ onClose, ...other }: Props
         <DialogTitle> Add Review </DialogTitle>
 
         <DialogContent>
-          <Stack direction="row" flexWrap="wrap" alignItems="center" spacing={1.5}>
-            <Typography variant="body2">Your review about this product:</Typography>
+          <Stack
+            direction="row"
+            flexWrap="wrap"
+            alignItems="center"
+            spacing={1.5}
+          >
+            <Typography variant="body2">
+              Your review about this product:
+            </Typography>
 
             <Controller
               name="rating"
               control={control}
-              render={({ field }) => <Rating {...field} value={Number(field.value)} />}
+              render={({ field }) => (
+                <Rating {...field} value={Number(field.value)} />
+              )}
             />
           </Stack>
 
-          {!!errors.rating && <FormHelperText error> {errors.rating?.message}</FormHelperText>}
+          {!!errors.rating && (
+            <FormHelperText error> {errors.rating?.message}</FormHelperText>
+          )}
 
-          <RHFTextField name="review" label="Review *" multiline rows={3} sx={{ mt: 3 }} />
+          <RHFTextField
+            name="review"
+            label="Review *"
+            multiline
+            rows={3}
+            sx={{ mt: 3 }}
+          />
 
           <RHFTextField name="name" label="Name *" sx={{ mt: 3 }} />
 
@@ -105,7 +127,11 @@ export default function ProductDetailsNewReviewForm({ onClose, ...other }: Props
             Cancel
           </Button>
 
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Post review
           </LoadingButton>
         </DialogActions>

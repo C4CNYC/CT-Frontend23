@@ -1,1 +1,1 @@
-export { default as PricingPlanCard } from './PricingPlanCard';
+export { default as PricingPlanCard } from "./PricingPlanCard";

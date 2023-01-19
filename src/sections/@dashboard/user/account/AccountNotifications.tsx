@@ -1,32 +1,32 @@
 // form
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 // @mui
-import { Card, Stack, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Card, Stack, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // @types
-import { IUserAccountNotificationSettings } from '../../../../@types/user';
+import { IUserAccountNotificationSettings } from "../../../../@types/user";
 // components
-import { useSnackbar } from '../../../../components/snackbar';
-import FormProvider, { RHFSwitch } from '../../../../components/hook-form';
+import { useSnackbar } from "../../../../components/snackbar";
+import FormProvider, { RHFSwitch } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
 const ACTIVITY_OPTIONS = [
   {
-    value: 'activityComments',
-    label: 'Email me when someone comments onmy article',
+    value: "activityComments",
+    label: "Email me when someone comments onmy article",
   },
   {
-    value: 'activityAnswers',
-    label: 'Email me when someone answers on my form',
+    value: "activityAnswers",
+    label: "Email me when someone answers on my form",
   },
-  { value: 'activityFollows', label: 'Email me hen someone follows me' },
+  { value: "activityFollows", label: "Email me hen someone follows me" },
 ] as const;
 
 const APPLICATION_OPTIONS = [
-  { value: 'applicationNews', label: 'News and announcements' },
-  { value: 'applicationProduct', label: 'Weekly product updates' },
-  { value: 'applicationBlog', label: 'Weekly blog digest' },
+  { value: "applicationNews", label: "News and announcements" },
+  { value: "applicationProduct", label: "Weekly product updates" },
+  { value: "applicationBlog", label: "Weekly blog digest" },
 ] as const;
 
 const NOTIFICATION_SETTINGS = {
@@ -66,8 +66,8 @@ export default function AccountNotifications() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar('Update success!');
-      console.log('DATA', data);
+      enqueueSnackbar("Update success!");
+      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -76,7 +76,11 @@ export default function AccountNotifications() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Card sx={{ p: 3 }}>
-        <Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
+        <Typography
+          variant="overline"
+          component="div"
+          sx={{ color: "text.secondary" }}
+        >
           Activity
         </Typography>
 
@@ -91,7 +95,11 @@ export default function AccountNotifications() {
           ))}
         </Stack>
 
-        <Typography variant="overline" component="div" sx={{ color: 'text.secondary', mt: 5 }}>
+        <Typography
+          variant="overline"
+          component="div"
+          sx={{ color: "text.secondary", mt: 5 }}
+        >
           Application
         </Typography>
 
@@ -111,7 +119,7 @@ export default function AccountNotifications() {
             type="submit"
             variant="contained"
             loading={isSubmitting}
-            sx={{ ml: 'auto' }}
+            sx={{ ml: "auto" }}
           >
             Save Changes
           </LoadingButton>

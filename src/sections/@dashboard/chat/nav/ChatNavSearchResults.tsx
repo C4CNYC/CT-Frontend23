@@ -1,9 +1,9 @@
 // @mui
-import { Avatar, Typography, ListItemButton } from '@mui/material';
+import { Avatar, Typography, ListItemButton } from "@mui/material";
 // @types
-import { IChatContact } from '../../../../@types/chat';
+import { IChatContact } from "../../../../@types/chat";
 //
-import SearchNotFound from '../../../../components/search-not-found';
+import SearchNotFound from "../../../../components/search-not-found";
 
 // ----------------------------------------------------------------------
 
@@ -37,9 +37,9 @@ export default function ChatNavSearchResults({
           query={searchContacts}
           sx={{
             p: 3,
-            mx: 'auto',
+            mx: "auto",
             width: `calc(100% - 40px)`,
-            bgcolor: 'background.neutral',
+            bgcolor: "background.neutral",
           }}
         />
       ) : (
@@ -51,7 +51,7 @@ export default function ChatNavSearchResults({
               sx={{
                 px: 2.5,
                 py: 1.5,
-                typography: 'subtitle2',
+                typography: "subtitle2",
               }}
             >
               <Avatar alt={result.name} src={result.avatar} sx={{ mr: 2 }} />

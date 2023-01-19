@@ -1,30 +1,32 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Container, Stack } from '@mui/material';
+import { Box, Container, Stack } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
-import SimpleTransferList from '../../../sections/_examples/mui/transfer-list/SimpleTransferList';
-import EnhancedTransferList from '../../../sections/_examples/mui/transfer-list/EnhancedTransferList';
+import { Block } from "../../../sections/_examples/Block";
+import SimpleTransferList from "../../../sections/_examples/mui/transfer-list/SimpleTransferList";
+import EnhancedTransferList from "../../../sections/_examples/mui/transfer-list/EnhancedTransferList";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
 } as const;
 
 // ----------------------------------------------------------------------
 
-MUITransferListPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUITransferListPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +41,8 @@ export default function MUITransferListPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -47,12 +50,12 @@ export default function MUITransferListPage() {
             heading="Transfer List"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Transfer List' },
+              { name: "Transfer List" },
             ]}
-            moreLink={['https://mui.com/components/transfer-list']}
+            moreLink={["https://mui.com/components/transfer-list"]}
           />
         </Container>
       </Box>

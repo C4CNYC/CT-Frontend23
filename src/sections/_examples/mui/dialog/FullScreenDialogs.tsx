@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useState } from "react";
 // @mui
 import {
   List,
@@ -12,10 +12,10 @@ import {
   Typography,
   ListItemText,
   ListItemButton,
-} from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
+} from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +45,12 @@ export default function FullScreenDialogs() {
         Full Screen Dialogs
       </Button>
 
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+      >
         <AppBar position="relative">
           <Toolbar>
             <IconButton color="inherit" edge="start" onClick={handleClose}>
@@ -67,7 +72,10 @@ export default function FullScreenDialogs() {
           <Divider />
 
           <ListItemButton>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+            <ListItemText
+              primary="Default notification ringtone"
+              secondary="Tethys"
+            />
           </ListItemButton>
         </List>
       </Dialog>

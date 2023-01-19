@@ -1,33 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Rating, Container } from '@mui/material';
-import { Masonry } from '@mui/lab';
-import { IconContainerProps } from '@mui/material/Rating';
+import { Box, Rating, Container } from "@mui/material";
+import { Masonry } from "@mui/lab";
+import { IconContainerProps } from "@mui/material/Rating";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const labels: { [index: string]: string } = {
-  0.5: 'Useless',
-  1: 'Useless+',
-  1.5: 'Poor',
-  2: 'Poor+',
-  2.5: 'Ok',
-  3: 'Ok+',
-  3.5: 'Good',
-  4: 'Good+',
-  4.5: 'Excellent',
-  5: 'Excellent+',
+  0.5: "Useless",
+  1: "Useless+",
+  1.5: "Poor",
+  2: "Poor+",
+  2.5: "Ok",
+  3: "Ok+",
+  3.5: "Good",
+  4: "Good+",
+  4.5: "Excellent",
+  5: "Excellent+",
 };
 
 const customIcons: {
@@ -38,37 +38,39 @@ const customIcons: {
 } = {
   1: {
     icon: <Iconify icon="ic:round-sentiment-very-dissatisfied" />,
-    label: 'Very Dissatisfied',
+    label: "Very Dissatisfied",
   },
   2: {
     icon: <Iconify icon="ic:round-sentiment-dissatisfied" />,
-    label: 'Dissatisfied',
+    label: "Dissatisfied",
   },
   3: {
     icon: <Iconify icon="ic:round-sentiment-neutral" />,
-    label: 'Neutral',
+    label: "Neutral",
   },
   4: {
     icon: <Iconify icon="ic:round-sentiment-satisfied" />,
-    label: 'Satisfied',
+    label: "Satisfied",
   },
   5: {
     icon: <Iconify icon="ic:round-sentiment-very-satisfied" />,
-    label: 'Very Satisfied',
+    label: "Very Satisfied",
   },
 };
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { mx: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { mx: "8px !important" },
 } as const;
 
 // ----------------------------------------------------------------------
 
-MUIRatingPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIRatingPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -95,7 +97,8 @@ export default function MUIRatingPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -103,12 +106,12 @@ export default function MUIRatingPage() {
             heading="Rating"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Rating' },
+              { name: "Rating" },
             ]}
-            moreLink={['https://mui.com/components/rating']}
+            moreLink={["https://mui.com/components/rating"]}
           />
         </Container>
       </Box>
@@ -145,13 +148,15 @@ export default function MUIRatingPage() {
             <Rating
               name="customized-color"
               defaultValue={2}
-              getLabelText={(ratingValue) => `${ratingValue} Heart${ratingValue !== 1 ? 's' : ''}`}
+              getLabelText={(ratingValue) =>
+                `${ratingValue} Heart${ratingValue !== 1 ? "s" : ""}`
+              }
               precision={0.5}
               icon={<Iconify icon="eva:heart-fill" />}
               emptyIcon={<Iconify icon="eva:heart-fill" />}
               sx={{
-                color: 'info.main',
-                '&:hover': { color: 'info.dark' },
+                color: "info.main",
+                "&:hover": { color: "info.dark" },
               }}
             />
           </Block>
@@ -179,13 +184,20 @@ export default function MUIRatingPage() {
                 setHover(newHover);
               }}
             />
-            {value !== null && <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>}
+            {value !== null && (
+              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+            )}
           </Block>
 
           <Block title="Half ratings" sx={style}>
             <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
             <br />
-            <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+            <Rating
+              name="half-rating-read"
+              defaultValue={2.5}
+              precision={0.5}
+              readOnly
+            />
           </Block>
 
           <Block title="Sizes" sx={style}>

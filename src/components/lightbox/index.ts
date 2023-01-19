@@ -1,4 +1,4 @@
-export * from './types';
-export * from 'yet-another-react-lightbox';
+export * from "./types";
+export * from "yet-another-react-lightbox";
 
-export { default } from './Lightbox';
+export { default } from "./Lightbox";

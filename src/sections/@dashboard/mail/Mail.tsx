@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // @mui
-import { Container, Card, Stack } from '@mui/material';
+import { Container, Card, Stack } from "@mui/material";
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
-import { getMail, getLabels, getMails } from '../../../redux/slices/mail';
+import { useDispatch, useSelector } from "../../../redux/store";
+import { getMail, getLabels, getMails } from "../../../redux/slices/mail";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // components
-import { useSettingsContext } from '../../../components/settings';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import { useSettingsContext } from "../../../components/settings";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import MailNav from './nav/MailNav';
-import MailList from './list/MailList';
-import MailHeader from './header/MailHeader';
-import MailDetails from './details/MailDetails';
-import MailComposePortal from './MailComposePortal';
-import MailHeaderDetails from './header/MailHeaderDetails';
+import MailNav from "./nav/MailNav";
+import MailList from "./list/MailList";
+import MailHeader from "./header/MailHeader";
+import MailDetails from "./details/MailDetails";
+import MailComposePortal from "./MailComposePortal";
+import MailHeaderDetails from "./header/MailHeaderDetails";
 
 // ----------------------------------------------------------------------
 
@@ -58,9 +58,9 @@ export default function Mail() {
 
   useEffect(() => {
     if (openCompose) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
   }, [openCompose]);
 
@@ -98,7 +98,9 @@ export default function Mail() {
   };
 
   const handleDeselectMail = (selectedMailId: string) => {
-    setSelectedMails((selected) => selected.filter((id) => id !== selectedMailId));
+    setSelectedMails((selected) =>
+      selected.filter((id) => id !== selectedMailId)
+    );
   };
 
   const handleDeselectAllMails = () => {
@@ -107,21 +109,21 @@ export default function Mail() {
 
   return (
     <>
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <CustomBreadcrumbs
           heading="Mail"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: 'Mail' },
+            { name: "Mail" },
           ]}
         />
         <Card
           sx={{
-            height: { md: '72vh' },
-            display: { md: 'flex' },
+            height: { md: "72vh" },
+            display: { md: "flex" },
           }}
         >
           <MailNav

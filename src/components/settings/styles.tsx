@@ -1,13 +1,19 @@
 // @mui
-import { alpha, styled } from '@mui/material/styles';
-import { CardActionArea, Radio, FormControlLabel, Stack, Box } from '@mui/material';
+import { alpha, styled } from "@mui/material/styles";
+import {
+  CardActionArea,
+  Radio,
+  FormControlLabel,
+  Stack,
+  Box,
+} from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 export const StyledWrap = styled(Box)(() => ({
   gap: 8,
-  display: 'grid',
-  gridTemplateColumns: 'repeat(2, 1fr)',
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
 }));
 
 // ----------------------------------------------------------------------
@@ -17,16 +23,16 @@ type StyledCardProps = {
 };
 
 export const StyledCard = styled(CardActionArea, {
-  shouldForwardProp: (prop) => prop !== 'selected',
+  shouldForwardProp: (prop) => prop !== "selected",
 })<StyledCardProps>(({ selected, theme }) => ({
   height: 72,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   color: theme.palette.text.disabled,
   borderRadius: theme.shape.borderRadius,
   border: `solid 1px ${alpha(theme.palette.grey[500], 0.12)}`,
-  '& .svg-color': {
+  "& .svg-color": {
     width: 28,
     height: 28,
   },
@@ -44,14 +50,14 @@ type StyledCircleColorProps = {
   color: string;
 };
 
-export const StyledCircleColor = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'selected',
+export const StyledCircleColor = styled("div", {
+  shouldForwardProp: (prop) => prop !== "selected",
 })<StyledCircleColorProps>(({ selected, color, theme }) => ({
   width: 12,
   height: 12,
-  borderRadius: '50%',
+  borderRadius: "50%",
   backgroundColor: color,
-  transition: theme.transitions.create(['width', 'height'], {
+  transition: theme.transitions.create(["width", "height"], {
     easing: theme.transitions.easing.easeInOut,
     duration: theme.transitions.duration.shorter,
   }),
@@ -73,14 +79,14 @@ export function MaskControl({ value }: MaskControlProps) {
     <FormControlLabel
       label=""
       value={value}
-      control={<Radio sx={{ display: 'none' }} />}
+      control={<Radio sx={{ display: "none" }} />}
       sx={{
         m: 0,
         top: 0,
         right: 0,
         bottom: 0,
         left: 0,
-        position: 'absolute',
+        position: "absolute",
       }}
     />
   );
@@ -89,7 +95,7 @@ export function MaskControl({ value }: MaskControlProps) {
 // ----------------------------------------------------------------------
 
 type LayoutIconValue = {
-  layout: 'vertical' | 'horizontal' | 'mini';
+  layout: "vertical" | "horizontal" | "mini";
 };
 
 export function LayoutIcon({ layout }: LayoutIconValue) {
@@ -101,26 +107,29 @@ export function LayoutIcon({ layout }: LayoutIconValue) {
 
   const RADIUS = 0.5;
 
-  const isNavHorizontal = layout === 'horizontal';
+  const isNavHorizontal = layout === "horizontal";
 
-  const isNavMini = layout === 'mini';
+  const isNavMini = layout === "mini";
 
   const styles = {
     width: 1,
     height: 1,
     borderRadius: RADIUS,
-    position: 'absolute',
+    position: "absolute",
   };
 
   return (
-    <Stack direction={layout === 'horizontal' ? 'column' : 'row'} sx={{ width: 1, height: 1 }}>
+    <Stack
+      direction={layout === "horizontal" ? "column" : "row"}
+      sx={{ width: 1, height: 1 }}
+    >
       <Box
         sx={{
           mr: SPACING,
           width: WIDTH,
           opacity: 0.72,
           borderRadius: RADIUS,
-          bgcolor: 'currentColor',
+          bgcolor: "currentColor",
           ...(isNavHorizontal && {
             width: 1,
             mb: SPACING,
@@ -134,9 +143,11 @@ export function LayoutIcon({ layout }: LayoutIconValue) {
         }}
       />
 
-      <Box sx={{ flexGrow: 1, position: 'relative', borderRadius: RADIUS }}>
-        <Box sx={{ ...styles, opacity: 0.16, bgcolor: 'currentColor' }} />
-        <Box sx={{ ...styles, opacity: 0.48, border: `dashed 1px currentColor` }} />
+      <Box sx={{ flexGrow: 1, position: "relative", borderRadius: RADIUS }}>
+        <Box sx={{ ...styles, opacity: 0.16, bgcolor: "currentColor" }} />
+        <Box
+          sx={{ ...styles, opacity: 0.48, border: `dashed 1px currentColor` }}
+        />
       </Box>
     </Stack>
   );

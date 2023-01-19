@@ -8,11 +8,11 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -34,13 +34,15 @@ export default function MailHeader({
   onToggleDense,
   ...other
 }: Props) {
-  const smUp = useResponsive('up', 'sm');
+  const smUp = useResponsive("up", "sm");
 
-  const mdUp = useResponsive('up', 'md');
+  const mdUp = useResponsive("up", "md");
 
-  const selectedAllMails = mailsLength > 0 && selectedMailsLength === mailsLength;
+  const selectedAllMails =
+    mailsLength > 0 && selectedMailsLength === mailsLength;
 
-  const selectedSomeMails = selectedMailsLength > 0 && selectedMailsLength < mailsLength;
+  const selectedSomeMails =
+    selectedMailsLength > 0 && selectedMailsLength < mailsLength;
 
   return (
     <Stack
@@ -98,7 +100,7 @@ export default function MailHeader({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
             </InputAdornment>
           ),
         }}
@@ -106,8 +108,8 @@ export default function MailHeader({
       />
 
       {smUp && (
-        <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Box sx={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
             1 - {mailsLength} of {mailsLength}
           </Typography>
 

@@ -1,19 +1,21 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import Masonry from '@mui/lab/Masonry';
-import { Box, Card, CardHeader, Container, CardContent } from '@mui/material';
+import Masonry from "@mui/lab/Masonry";
+import { Box, Card, CardHeader, Container, CardContent } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import TextMaxLine from '../../../components/text-max-line';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import TextMaxLine from "../../../components/text-max-line";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
-DemoTextMaxLinePage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoTextMaxLinePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +30,8 @@ export default function DemoTextMaxLinePage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -36,10 +39,10 @@ export default function DemoTextMaxLinePage() {
             heading="TextMaxLine"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'TextMaxLine' },
+              { name: "TextMaxLine" },
             ]}
           />
         </Container>
@@ -51,10 +54,11 @@ export default function DemoTextMaxLinePage() {
             <CardHeader title="1 Line" />
             <CardContent>
               <TextMaxLine line={1}>
-                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien. Phasellus magna.
-                Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Suspendisse faucibus, nunc
-                et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id
-                tortor.
+                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien.
+                Phasellus magna. Proin sapien ipsum, porta a, auctor quis,
+                euismod ut, mi. Suspendisse faucibus, nunc et pellentesque
+                egestas, lacus ante convallis tellus, vitae iaculis lacus elit
+                id tortor.
               </TextMaxLine>
             </CardContent>
           </Card>
@@ -63,10 +67,11 @@ export default function DemoTextMaxLinePage() {
             <CardHeader title="2 Line" />
             <CardContent>
               <TextMaxLine>
-                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien. Phasellus magna.
-                Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Suspendisse faucibus, nunc
-                et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id
-                tortor.
+                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien.
+                Phasellus magna. Proin sapien ipsum, porta a, auctor quis,
+                euismod ut, mi. Suspendisse faucibus, nunc et pellentesque
+                egestas, lacus ante convallis tellus, vitae iaculis lacus elit
+                id tortor.
               </TextMaxLine>
             </CardContent>
           </Card>
@@ -75,10 +80,11 @@ export default function DemoTextMaxLinePage() {
             <CardHeader title="3 Line" />
             <CardContent>
               <TextMaxLine line={3}>
-                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien. Phasellus magna.
-                Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Suspendisse faucibus, nunc
-                et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id
-                tortor.
+                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien.
+                Phasellus magna. Proin sapien ipsum, porta a, auctor quis,
+                euismod ut, mi. Suspendisse faucibus, nunc et pellentesque
+                egestas, lacus ante convallis tellus, vitae iaculis lacus elit
+                id tortor.
               </TextMaxLine>
             </CardContent>
           </Card>
@@ -87,10 +93,11 @@ export default function DemoTextMaxLinePage() {
             <CardHeader title="4 Line" />
             <CardContent>
               <TextMaxLine line={4}>
-                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien. Phasellus magna.
-                Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Suspendisse faucibus, nunc
-                et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id
-                tortor.
+                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien.
+                Phasellus magna. Proin sapien ipsum, porta a, auctor quis,
+                euismod ut, mi. Suspendisse faucibus, nunc et pellentesque
+                egestas, lacus ante convallis tellus, vitae iaculis lacus elit
+                id tortor.
               </TextMaxLine>
             </CardContent>
           </Card>
@@ -98,11 +105,18 @@ export default function DemoTextMaxLinePage() {
           <Card>
             <CardHeader title="As Link" />
             <CardContent>
-              <TextMaxLine asLink line={3} href="#" color="primary" sx={{ maxWidth: 300 }}>
-                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien. Phasellus magna.
-                Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Suspendisse faucibus, nunc
-                et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id
-                tortor.
+              <TextMaxLine
+                asLink
+                line={3}
+                href="#"
+                color="primary"
+                sx={{ maxWidth: 300 }}
+              >
+                Donec posuere vulputate arcu. Fusce vulputate eleifend sapien.
+                Phasellus magna. Proin sapien ipsum, porta a, auctor quis,
+                euismod ut, mi. Suspendisse faucibus, nunc et pellentesque
+                egestas, lacus ante convallis tellus, vitae iaculis lacus elit
+                id tortor.
               </TextMaxLine>
             </CardContent>
           </Card>
@@ -110,7 +124,12 @@ export default function DemoTextMaxLinePage() {
           <Card>
             <CardHeader title="Persistent" />
             <CardContent>
-              <TextMaxLine persistent line={3} href="#" sx={{ bgcolor: 'background.neutral' }}>
+              <TextMaxLine
+                persistent
+                line={3}
+                href="#"
+                sx={{ bgcolor: "background.neutral" }}
+              >
                 Donec posuere vulputate arcu.
               </TextMaxLine>
             </CardContent>

@@ -1,19 +1,27 @@
-import { useState } from 'react';
-import * as Yup from 'yup';
+import { useState } from "react";
+import * as Yup from "yup";
 // next
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
-import { Stack, IconButton, InputAdornment, FormHelperText } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import {
+  Stack,
+  IconButton,
+  InputAdornment,
+  FormHelperText,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from "../../routes/paths";
 // components
-import Iconify from '../../components/iconify';
-import { useSnackbar } from '../../components/snackbar';
-import FormProvider, { RHFTextField, RHFCodes } from '../../components/hook-form';
+import Iconify from "../../components/iconify";
+import { useSnackbar } from "../../components/snackbar";
+import FormProvider, {
+  RHFTextField,
+  RHFCodes,
+} from "../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -37,38 +45,42 @@ export default function AuthNewPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const emailRecovery =
-    typeof window !== 'undefined' ? sessionStorage.getItem('email-recovery') : '';
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("email-recovery")
+      : "";
 
   const VerifyCodeSchema = Yup.object().shape({
-    code1: Yup.string().required('Code is required'),
-    code2: Yup.string().required('Code is required'),
-    code3: Yup.string().required('Code is required'),
-    code4: Yup.string().required('Code is required'),
-    code5: Yup.string().required('Code is required'),
-    code6: Yup.string().required('Code is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    code1: Yup.string().required("Code is required"),
+    code2: Yup.string().required("Code is required"),
+    code3: Yup.string().required("Code is required"),
+    code4: Yup.string().required("Code is required"),
+    code5: Yup.string().required("Code is required"),
+    code6: Yup.string().required("Code is required"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email must be a valid email address"),
     password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
     confirmPassword: Yup.string()
-      .required('Confirm password is required')
-      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      .required("Confirm password is required")
+      .oneOf([Yup.ref("password"), null], "Passwords must match"),
   });
 
   const defaultValues = {
-    code1: '',
-    code2: '',
-    code3: '',
-    code4: '',
-    code5: '',
-    code6: '',
-    email: emailRecovery || '',
-    password: '',
-    confirmPassword: '',
+    code1: "",
+    code2: "",
+    code3: "",
+    code4: "",
+    code5: "",
+    code6: "",
+    email: emailRecovery || "",
+    password: "",
+    confirmPassword: "",
   };
 
   const methods = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     resolver: yupResolver(VerifyCodeSchema),
     defaultValues,
   });
@@ -81,15 +93,15 @@ export default function AuthNewPasswordForm() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      console.log('DATA:', {
+      console.log("DATA:", {
         email: data.email,
         code: `${data.code1}${data.code2}${data.code3}${data.code4}${data.code5}${data.code6}`,
         password: data.password,
       });
 
-      sessionStorage.removeItem('email-recovery');
+      sessionStorage.removeItem("email-recovery");
 
-      enqueueSnackbar('Change password success!');
+      enqueueSnackbar("Change password success!");
 
       push(PATH_DASHBOARD.root);
     } catch (error) {
@@ -107,7 +119,10 @@ export default function AuthNewPasswordForm() {
           InputLabelProps={{ shrink: true }}
         />
 
-        <RHFCodes keyName="code" inputs={['code1', 'code2', 'code3', 'code4', 'code5', 'code6']} />
+        <RHFCodes
+          keyName="code"
+          inputs={["code1", "code2", "code3", "code4", "code5", "code6"]}
+        />
 
         {(!!errors.code1 ||
           !!errors.code2 ||
@@ -123,12 +138,17 @@ export default function AuthNewPasswordForm() {
         <RHFTextField
           name="password"
           label="Password"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  <Iconify
+                    icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
+                  />
                 </IconButton>
               </InputAdornment>
             ),
@@ -138,12 +158,17 @@ export default function AuthNewPasswordForm() {
         <RHFTextField
           name="confirmPassword"
           label="Confirm New Password"
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  <Iconify
+                    icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
+                  />
                 </IconButton>
               </InputAdornment>
             ),

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   List,
@@ -9,23 +9,25 @@ import {
   MenuItem,
   Typography,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // auth
-import { useAuthContext } from '../../../../auth/useAuthContext';
+import { useAuthContext } from "../../../../auth/useAuthContext";
 // components
-import Iconify from '../../../../components/iconify';
-import { CustomAvatar } from '../../../../components/custom-avatar';
-import MenuPopover from '../../../../components/menu-popover';
-import BadgeStatus, { BadgeStatusValue } from '../../../../components/badge-status';
+import Iconify from "../../../../components/iconify";
+import { CustomAvatar } from "../../../../components/custom-avatar";
+import MenuPopover from "../../../../components/menu-popover";
+import BadgeStatus, {
+  BadgeStatusValue,
+} from "../../../../components/badge-status";
 
 // ----------------------------------------------------------------------
 
-const STATUS = ['online', 'invisible', 'away'] as const;
+const STATUS = ["online", "invisible", "away"] as const;
 
 export default function ChatNavAccount() {
   const { user } = useAuthContext();
 
-  const [status, setStatus] = useState<BadgeStatusValue>('online');
+  const [status, setStatus] = useState<BadgeStatusValue>("online");
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -47,17 +49,27 @@ export default function ChatNavAccount() {
           badgeContent: <BadgeStatus status={status} />,
         }}
         onClick={handleOpenPopover}
-        sx={{ cursor: 'pointer', width: 48, height: 48 }}
+        sx={{ cursor: "pointer", width: 48, height: 48 }}
       />
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} arrow="top-left" sx={{ p: 0 }}>
-        <Stack direction="row" alignItems="center" spacing={2} sx={{ py: 2, pr: 1, pl: 2.5 }}>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        arrow="top-left"
+        sx={{ p: 0 }}
+      >
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={2}
+          sx={{ py: 2, pr: 1, pl: 2.5 }}
+        >
           <div>
             <Typography noWrap variant="subtitle2">
               {user?.displayName}
             </Typography>
 
-            <Typography noWrap variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography noWrap variant="body2" sx={{ color: "text.secondary" }}>
               {user?.email}
             </Typography>
           </div>
@@ -73,7 +85,11 @@ export default function ChatNavAccount() {
 
         <List sx={{ px: 1 }}>
           <MenuItem>
-            <BadgeStatus size="large" status={status} sx={{ m: 0.5, flexShrink: 0 }} />
+            <BadgeStatus
+              size="large"
+              status={status}
+              sx={{ m: 0.5, flexShrink: 0 }}
+            />
 
             <Select
               native
@@ -81,18 +97,18 @@ export default function ChatNavAccount() {
               value={status}
               onChange={(event) => setStatus(event.target.value)}
               sx={{
-                '& .MuiInputBase-input': {
+                "& .MuiInputBase-input": {
                   p: 0,
                   pl: 2,
-                  typography: 'body2',
-                  textTransform: 'capitalize',
+                  typography: "body2",
+                  textTransform: "capitalize",
                 },
-                '& .MuiNativeSelect-icon': {
+                "& .MuiNativeSelect-icon": {
                   right: -16,
-                  top: 'unset',
+                  top: "unset",
                 },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  display: 'none',
+                "& .MuiOutlinedInput-notchedOutline": {
+                  display: "none",
                 },
               }}
             >

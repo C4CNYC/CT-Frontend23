@@ -1,14 +1,14 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 // @mui
-import { alpha, useTheme } from '@mui/material/styles';
-import { Box, Paper, Link, CardContent } from '@mui/material';
+import { alpha, useTheme } from "@mui/material/styles";
+import { Box, Paper, Link, CardContent } from "@mui/material";
 // utils
-import { bgGradient } from '../../../../utils/cssStyles';
+import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import TextMaxLine from '../../../../components/text-max-line';
-import Carousel, { CarouselArrows } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import TextMaxLine from "../../../../components/text-max-line";
+import Carousel, { CarouselArrows } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +29,8 @@ export default function CarouselCenterMode({ data }: Props) {
   const carouselSettings = {
     slidesToShow: 3,
     centerMode: true,
-    centerPadding: '60px',
-    rtl: Boolean(theme.direction === 'rtl'),
+    centerPadding: "60px",
+    rtl: Boolean(theme.direction === "rtl"),
     responsive: [
       {
         breakpoint: 1024,
@@ -42,7 +42,7 @@ export default function CarouselCenterMode({ data }: Props) {
       },
       {
         breakpoint: 480,
-        settings: { slidesToShow: 1, centerPadding: '0' },
+        settings: { slidesToShow: 1, centerPadding: "0" },
       },
     ],
   };
@@ -58,8 +58,8 @@ export default function CarouselCenterMode({ data }: Props) {
   return (
     <Box
       sx={{
-        overflow: 'hidden',
-        position: 'relative',
+        overflow: "hidden",
+        position: "relative",
       }}
     >
       <CarouselArrows
@@ -97,8 +97,8 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
     <Paper
       sx={{
         borderRadius: 2,
-        overflow: 'hidden',
-        position: 'relative',
+        overflow: "hidden",
+        position: "relative",
       }}
     >
       <Image alt={title} src={image} ratio="3/4" />
@@ -106,12 +106,12 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
         sx={{
           bottom: 0,
           zIndex: 9,
-          width: '100%',
-          textAlign: 'left',
-          position: 'absolute',
-          color: 'common.white',
+          width: "100%",
+          textAlign: "left",
+          position: "absolute",
+          color: "common.white",
           ...bgGradient({
-            direction: 'to top',
+            direction: "to top",
             startColor: `${theme.palette.grey[900]} 25%`,
             endColor: `${alpha(theme.palette.grey[900], 0)} 100%`,
           }),
@@ -126,10 +126,10 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
           variant="overline"
           sx={{
             opacity: 0.72,
-            alignItems: 'center',
-            display: 'inline-flex',
-            transition: theme.transitions.create('opacity'),
-            '&:hover': { opacity: 1 },
+            alignItems: "center",
+            display: "inline-flex",
+            transition: theme.transitions.create("opacity"),
+            "&:hover": { opacity: 1 },
           }}
         >
           learn More

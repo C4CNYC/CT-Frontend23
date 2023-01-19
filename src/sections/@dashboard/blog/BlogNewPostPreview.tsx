@@ -1,14 +1,22 @@
 // @mui
-import { LoadingButton } from '@mui/lab';
-import { alpha } from '@mui/material/styles';
-import { Box, Button, Container, Typography, DialogActions, Dialog, Divider } from '@mui/material';
+import { LoadingButton } from "@mui/lab";
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Button,
+  Container,
+  Typography,
+  DialogActions,
+  Dialog,
+  Divider,
+} from "@mui/material";
 // @types
-import { IBlogNewPost } from '../../../@types/blog';
+import { IBlogNewPost } from "../../../@types/blog";
 // components
-import Image from '../../../components/image';
-import Markdown from '../../../components/markdown';
-import Scrollbar from '../../../components/scrollbar';
-import EmptyContent from '../../../components/empty-content';
+import Image from "../../../components/image";
+import Markdown from "../../../components/markdown";
+import Scrollbar from "../../../components/scrollbar";
+import EmptyContent from "../../../components/empty-content";
 
 // ----------------------------------------------------------------------
 
@@ -29,9 +37,10 @@ export default function BlogNewPostPreview({
   onSubmit,
   isSubmitting,
 }: Props) {
-  const { title = '', content = '', description = '' } = values;
+  const { title = "", content = "", description = "" } = values;
 
-  const cover = typeof values.cover === 'string' ? values.cover : values.cover?.preview;
+  const cover =
+    typeof values.cover === "string" ? values.cover : values.cover?.preview;
 
   const hasContent = title || description || content || cover;
 
@@ -88,15 +97,15 @@ type PreviewHeroProps = {
 
 function PreviewHero({ title, cover }: PreviewHeroProps) {
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: "relative" }}>
       <Container
         sx={{
           top: 0,
           left: 0,
           right: 0,
           zIndex: 9,
-          position: 'absolute',
-          color: 'common.white',
+          position: "absolute",
+          color: "common.white",
           pt: { xs: 3, lg: 10 },
         }}
       >
@@ -112,7 +121,7 @@ function PreviewHero({ title, cover }: PreviewHeroProps) {
           right: 0,
           bottom: 0,
           zIndex: 8,
-          position: 'absolute',
+          position: "absolute",
           bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
         }}
       />

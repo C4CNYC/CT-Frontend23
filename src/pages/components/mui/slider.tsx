@@ -1,42 +1,49 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Stack, Slider, Container, Typography, alpha } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import {
+  Box,
+  Stack,
+  Slider,
+  Container,
+  Typography,
+  alpha,
+} from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const marks = [
-  { value: 0, label: '0°C' },
-  { value: 20, label: '20°C' },
-  { value: 37, label: '37°C' },
-  { value: 100, label: '100°C' },
+  { value: 0, label: "0°C" },
+  { value: 20, label: "20°C" },
+  { value: 37, label: "37°C" },
+  { value: 100, label: "100°C" },
 ];
 
 const prices = [
-  { value: 0, label: '$0' },
-  { value: 25, label: '250' },
-  { value: 50, label: '500' },
-  { value: 75, label: '750' },
-  { value: 100, label: '1000' },
+  { value: 0, label: "$0" },
+  { value: 25, label: "250" },
+  { value: 50, label: "500" },
+  { value: 75, label: "750" },
+  { value: 100, label: "1000" },
 ];
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { mx: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { mx: "8px !important" },
 } as const;
 
 // ----------------------------------------------------------------------
@@ -59,7 +66,9 @@ function valueLabelFormat(value: number) {
 
 // ----------------------------------------------------------------------
 
-MUISliderPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUISliderPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -86,7 +95,8 @@ export default function MUISliderPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -94,12 +104,12 @@ export default function MUISliderPage() {
             heading="Slider"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Slider' },
+              { name: "Slider" },
             ]}
-            moreLink={['https://mui.com/components/slider']}
+            moreLink={["https://mui.com/components/slider"]}
           />
         </Container>
       </Box>
@@ -109,7 +119,11 @@ export default function MUISliderPage() {
           <Block title="Volume" sx={style}>
             <Stack direction="row" alignItems="center" spacing={1} width={1}>
               <Iconify icon="eva:volume-mute-fill" width={24} />
-              <Slider value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
+              <Slider
+                value={value}
+                onChange={handleChange}
+                aria-labelledby="continuous-slider"
+              />
               <Iconify icon="eva:volume-up-fill" width={24} />
             </Stack>
           </Block>
@@ -187,7 +201,7 @@ export default function MUISliderPage() {
           </Block>
 
           <Block title="Range" sx={style}>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ width: "100%" }}>
               <Slider
                 scale={(x) => x * 10}
                 step={10}
@@ -202,7 +216,7 @@ export default function MUISliderPage() {
             <Box
               sx={{
                 p: 2,
-                width: '100%',
+                width: "100%",
                 borderRadius: 1,
                 bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
               }}
@@ -210,7 +224,9 @@ export default function MUISliderPage() {
               <Typography variant="subtitle2" gutterBottom>
                 Min: {valuePrice(price[0])}
               </Typography>
-              <Typography variant="subtitle2">Max: {valuePrice(price[1])}</Typography>
+              <Typography variant="subtitle2">
+                Max: {valuePrice(price[1])}
+              </Typography>
             </Box>
           </Block>
         </Masonry>

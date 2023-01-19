@@ -1,39 +1,48 @@
 // next
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 // @mui
-import { Box, Grid, Link, Stack, Divider, Container, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Link,
+  Stack,
+  Divider,
+  Container,
+  Typography,
+  IconButton,
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../routes/paths';
+import { PATH_PAGE } from "../../routes/paths";
 // _mock
-import { _socials } from '../../_mock/arrays';
+import { _socials } from "../../_mock/arrays";
 // components
-import Logo from '../../components/logo';
-import Iconify from '../../components/iconify';
+import Logo from "../../components/logo";
+import Iconify from "../../components/iconify";
 
 // ----------------------------------------------------------------------
 
 const LINKS = [
   {
-    headline: 'Minimal',
+    headline: "Minimal",
     children: [
-      { name: 'About us', href: PATH_PAGE.about },
-      { name: 'Contact us', href: PATH_PAGE.contact },
-      { name: 'FAQs', href: PATH_PAGE.faqs },
+      { name: "About us", href: PATH_PAGE.about },
+      { name: "Contact us", href: PATH_PAGE.contact },
+      { name: "FAQs", href: PATH_PAGE.faqs },
     ],
   },
   {
-    headline: 'Legal',
+    headline: "Legal",
     children: [
-      { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' },
+      { name: "Terms and Condition", href: "#" },
+      { name: "Privacy Policy", href: "#" },
     ],
   },
   {
-    headline: 'Contact',
+    headline: "Contact",
     children: [
-      { name: 'support@minimals.cc', href: '#' },
-      { name: 'Los Angeles, 359  Hidden Valley Road', href: '#' },
+      { name: "support@minimals.cc", href: "#" },
+      { name: "Los Angeles, 359  Hidden Valley Road", href: "#" },
     ],
   },
 ];
@@ -43,20 +52,20 @@ const LINKS = [
 export default function Footer() {
   const { pathname } = useRouter();
 
-  const isHome = pathname === '/';
+  const isHome = pathname === "/";
 
   const simpleFooter = (
     <Box
       component="footer"
       sx={{
         py: 5,
-        textAlign: 'center',
-        position: 'relative',
-        bgcolor: 'background.default',
+        textAlign: "center",
+        position: "relative",
+        bgcolor: "background.default",
       }}
     >
       <Container>
-        <Logo sx={{ mb: 1, mx: 'auto' }} />
+        <Logo sx={{ mb: 1, mx: "auto" }} />
 
         <Typography variant="caption" component="div">
           © All rights reserved
@@ -71,8 +80,8 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        position: 'relative',
-        bgcolor: 'background.default',
+        position: "relative",
+        bgcolor: "background.default",
       }}
     >
       <Divider />
@@ -81,30 +90,31 @@ export default function Footer() {
         <Grid
           container
           justifyContent={{
-            xs: 'center',
-            md: 'space-between',
+            xs: "center",
+            md: "space-between",
           }}
           sx={{
             textAlign: {
-              xs: 'center',
-              md: 'left',
+              xs: "center",
+              md: "left",
             },
           }}
         >
           <Grid item xs={12} sx={{ mb: 3 }}>
-            <Logo sx={{ mx: { xs: 'auto', md: 'inherit' } }} />
+            <Logo sx={{ mx: { xs: "auto", md: "inherit" } }} />
           </Grid>
 
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              The starting point for your next project with Minimal UI Kit, built on the newest
-              version of Material-UI ©, ready to be customized to your style.
+              The starting point for your next project with Minimal UI Kit,
+              built on the newest version of Material-UI ©, ready to be
+              customized to your style.
             </Typography>
 
             <Stack
               spacing={1}
               direction="row"
-              justifyContent={{ xs: 'center', md: 'flex-start' }}
+              justifyContent={{ xs: "center", md: "flex-start" }}
               sx={{
                 mt: 5,
                 mb: { xs: 5, md: 0 },
@@ -122,13 +132,13 @@ export default function Footer() {
             <Stack
               spacing={5}
               justifyContent="space-between"
-              direction={{ xs: 'column', md: 'row' }}
+              direction={{ xs: "column", md: "row" }}
             >
               {LINKS.map((list) => (
                 <Stack
                   key={list.headline}
                   spacing={2}
-                  alignItems={{ xs: 'center', md: 'flex-start' }}
+                  alignItems={{ xs: "center", md: "flex-start" }}
                 >
                   <Typography component="div" variant="overline">
                     {list.headline}
@@ -157,7 +167,7 @@ export default function Footer() {
           sx={{
             mt: 10,
             pb: 5,
-            textAlign: { xs: 'center', md: 'left' },
+            textAlign: { xs: "center", md: "left" },
           }}
         >
           © 2021. All rights reserved

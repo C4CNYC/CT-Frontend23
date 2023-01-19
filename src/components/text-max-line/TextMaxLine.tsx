@@ -1,22 +1,33 @@
-import { forwardRef } from 'react';
+import { forwardRef } from "react";
 // @mui
-import { Typography, Link } from '@mui/material';
+import { Typography, Link } from "@mui/material";
 //
-import { TextMaxLineProps } from './types';
-import useTypography from './useTypography';
+import { TextMaxLineProps } from "./types";
+import useTypography from "./useTypography";
 
 // ----------------------------------------------------------------------
 
 const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
-  ({ asLink, variant = 'body1', line = 2, persistent = false, children, sx, ...other }, ref) => {
+  (
+    {
+      asLink,
+      variant = "body1",
+      line = 2,
+      persistent = false,
+      children,
+      sx,
+      ...other
+    },
+    ref
+  ) => {
     const { lineHeight } = useTypography(variant);
 
     const styles = {
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      display: '-webkit-box',
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      display: "-webkit-box",
       WebkitLineClamp: line,
-      WebkitBoxOrient: 'vertical',
+      WebkitBoxOrient: "vertical",
       ...(persistent && {
         height: lineHeight * line,
       }),
@@ -25,7 +36,13 @@ const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
 
     if (asLink) {
       return (
-        <Link color="inherit" ref={ref} variant={variant} sx={{ ...styles }} {...other}>
+        <Link
+          color="inherit"
+          ref={ref}
+          variant={variant}
+          sx={{ ...styles }}
+          {...other}
+        >
           {children}
         </Link>
       );

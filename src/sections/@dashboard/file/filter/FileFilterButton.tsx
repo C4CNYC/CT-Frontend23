@@ -1,5 +1,5 @@
 // @mui
-import { Box, Button, ButtonProps } from '@mui/material';
+import { Box, Button, ButtonProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -8,19 +8,23 @@ interface Props extends ButtonProps {
   isSelected: boolean;
 }
 
-export default function FileFilterButton({ children, isSelected, ...other }: Props) {
+export default function FileFilterButton({
+  children,
+  isSelected,
+  ...other
+}: Props) {
   return (
     <Button
       variant="soft"
       color="inherit"
       sx={{
-        textTransform: 'unset',
-        color: 'text.secondary',
-        width: { xs: 1, md: 'auto' },
-        justifyContent: 'flex-start',
-        fontWeight: 'fontWeightMedium',
+        textTransform: "unset",
+        color: "text.secondary",
+        width: { xs: 1, md: "auto" },
+        justifyContent: "flex-start",
+        fontWeight: "fontWeightMedium",
         ...(isSelected && {
-          color: 'text.primary',
+          color: "text.primary",
         }),
       }}
       {...other}

@@ -1,18 +1,18 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 // @mui
-import { Collapse, Box, Divider, Button } from '@mui/material';
+import { Collapse, Box, Divider, Button } from "@mui/material";
 // @types
-import { IFile } from '../../../../@types/file';
+import { IFile } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
-import { TableProps } from '../../../../components/table';
+import Iconify from "../../../../components/iconify";
+import { TableProps } from "../../../../components/table";
 //
-import FilePanel from '../FilePanel';
-import FileCard from '../item/FileCard';
-import FileFolderCard from '../item/FileFolderCard';
-import FileShareDialog from '../portal/FileShareDialog';
-import FileActionSelected from '../portal/FileActionSelected';
-import FileNewFolderDialog from '../portal/FileNewFolderDialog';
+import FilePanel from "../FilePanel";
+import FileCard from "../item/FileCard";
+import FileFolderCard from "../item/FileFolderCard";
+import FileShareDialog from "../portal/FileShareDialog";
+import FileActionSelected from "../portal/FileActionSelected";
+import FileNewFolderDialog from "../portal/FileNewFolderDialog";
 
 // ----------------------------------------------------------------------
 
@@ -31,13 +31,17 @@ export default function FileGridView({
   onDeleteItem,
   onOpenConfirm,
 }: Props) {
-  const { selected, onSelectRow: onSelectItem, onSelectAllRows: onSelectAllItems } = table;
+  const {
+    selected,
+    onSelectRow: onSelectItem,
+    onSelectAllRows: onSelectAllItems,
+  } = table;
 
   const containerRef = useRef(null);
 
-  const [folderName, setFolderName] = useState('');
+  const [folderName, setFolderName] = useState("");
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const [openShare, setOpenShare] = useState(false);
 
@@ -82,7 +86,9 @@ export default function FileGridView({
       <Box ref={containerRef}>
         <FilePanel
           title="Folders"
-          subTitle={`${data.filter((item) => item.type === 'folder').length} folders`}
+          subTitle={`${
+            data.filter((item) => item.type === "folder").length
+          } folders`}
           onOpen={handleOpenNewFolder}
           collapse={collapseFolders}
           onCollapse={() => setCollapseFolders(!collapseFolders)}
@@ -93,14 +99,14 @@ export default function FileGridView({
             gap={3}
             display="grid"
             gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)',
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
             }}
           >
             {dataFiltered
-              .filter((i) => i.type === 'folder')
+              .filter((i) => i.type === "folder")
               .map((folder) => (
                 <FileFolderCard
                   key={folder.id}
@@ -108,17 +114,19 @@ export default function FileGridView({
                   selected={selected.includes(folder.id)}
                   onSelect={() => onSelectItem(folder.id)}
                   onDelete={() => onDeleteItem(folder.id)}
-                  sx={{ maxWidth: 'auto' }}
+                  sx={{ maxWidth: "auto" }}
                 />
               ))}
           </Box>
         </Collapse>
 
-        <Divider sx={{ my: 5, borderStyle: 'dashed' }} />
+        <Divider sx={{ my: 5, borderStyle: "dashed" }} />
 
         <FilePanel
           title="Files"
-          subTitle={`${data.filter((item) => item.type !== 'folder').length} files`}
+          subTitle={`${
+            data.filter((item) => item.type !== "folder").length
+          } files`}
           onOpen={handleOpenUploadFile}
           collapse={collapseFiles}
           onCollapse={() => setCollapseFiles(!collapseFiles)}
@@ -128,15 +136,15 @@ export default function FileGridView({
           <Box
             display="grid"
             gridTemplateColumns={{
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)',
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(4, 1fr)",
             }}
             gap={3}
           >
             {dataFiltered
-              .filter((i) => i.type !== 'folder')
+              .filter((i) => i.type !== "folder")
               .map((file) => (
                 <FileCard
                   key={file.id}
@@ -144,7 +152,7 @@ export default function FileGridView({
                   selected={selected.includes(file.id)}
                   onSelect={() => onSelectItem(file.id)}
                   onDelete={() => onDeleteItem(file.id)}
-                  sx={{ maxWidth: 'auto' }}
+                  sx={{ maxWidth: "auto" }}
                 />
               ))}
           </Box>
@@ -182,14 +190,22 @@ export default function FileGridView({
                   onClick={handleOpenShare}
                   sx={{
                     color: (theme) =>
-                      theme.palette.mode === 'light' ? 'grey.800' : 'common.white',
+                      theme.palette.mode === "light"
+                        ? "grey.800"
+                        : "common.white",
                     bgcolor: (theme) =>
-                      theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
-                    '&:hover': {
+                      theme.palette.mode === "light"
+                        ? "common.white"
+                        : "grey.800",
+                    "&:hover": {
                       color: (theme) =>
-                        theme.palette.mode === 'light' ? 'grey.800' : 'common.white',
+                        theme.palette.mode === "light"
+                          ? "grey.800"
+                          : "common.white",
                       bgcolor: (theme) =>
-                        theme.palette.mode === 'light' ? 'common.white' : 'grey.800',
+                        theme.palette.mode === "light"
+                          ? "common.white"
+                          : "grey.800",
                     },
                   }}
                 >
@@ -207,11 +223,14 @@ export default function FileGridView({
         onChangeInvite={handleChangeInvite}
         onClose={() => {
           handleCloseShare();
-          setInviteEmail('');
+          setInviteEmail("");
         }}
       />
 
-      <FileNewFolderDialog open={openUploadFile} onClose={handleCloseUploadFile} />
+      <FileNewFolderDialog
+        open={openUploadFile}
+        onClose={handleCloseUploadFile}
+      />
 
       <FileNewFolderDialog
         open={openNewFolder}
@@ -219,8 +238,8 @@ export default function FileGridView({
         title="New Folder"
         onCreate={() => {
           handleCloseNewFolder();
-          setFolderName('');
-          console.log('CREATE NEW FOLDER', folderName);
+          setFolderName("");
+          console.log("CREATE NEW FOLDER", folderName);
         }}
         folderName={folderName}
         onChangeFolderName={(event) => setFolderName(event.target.value)}

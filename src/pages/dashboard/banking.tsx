@@ -1,18 +1,18 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Stack } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Grid, Container, Stack } from "@mui/material";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // _mock_
 import {
   _bankingContacts,
   _bankingCreditCard,
   _bankingRecentTransitions,
-} from '../../_mock/arrays';
+} from "../../_mock/arrays";
 // components
-import { useSettingsContext } from '../../components/settings';
+import { useSettingsContext } from "../../components/settings";
 // sections
 import {
   BankingContacts,
@@ -23,7 +23,7 @@ import {
   BankingBalanceStatistics,
   BankingRecentTransitions,
   BankingExpensesCategories,
-} from '../../sections/@dashboard/general/banking';
+} from "../../sections/@dashboard/general/banking";
 
 // ----------------------------------------------------------------------
 
@@ -43,10 +43,10 @@ export default function GeneralBankingPage() {
         <title> General: Banking | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={7}>
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
               <BankingWidgetSummary
                 title="Income"
                 icon="eva:diagonal-arrow-left-down-fill"
@@ -80,28 +80,59 @@ export default function GeneralBankingPage() {
                 title="Balance Statistics"
                 subheader="(+43% Income | +12% Expense) than last year"
                 chart={{
-                  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-                  colors: [theme.palette.primary.main, theme.palette.warning.main],
+                  categories: [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                  ],
+                  colors: [
+                    theme.palette.primary.main,
+                    theme.palette.warning.main,
+                  ],
                   series: [
                     {
-                      type: 'Week',
+                      type: "Week",
                       data: [
-                        { name: 'Income', data: [10, 41, 35, 151, 49, 62, 69, 91, 48] },
-                        { name: 'Expenses', data: [10, 34, 13, 56, 77, 88, 99, 77, 45] },
+                        {
+                          name: "Income",
+                          data: [10, 41, 35, 151, 49, 62, 69, 91, 48],
+                        },
+                        {
+                          name: "Expenses",
+                          data: [10, 34, 13, 56, 77, 88, 99, 77, 45],
+                        },
                       ],
                     },
                     {
-                      type: 'Month',
+                      type: "Month",
                       data: [
-                        { name: 'Income', data: [148, 91, 69, 62, 49, 51, 35, 41, 10] },
-                        { name: 'Expenses', data: [45, 77, 99, 88, 77, 56, 13, 34, 10] },
+                        {
+                          name: "Income",
+                          data: [148, 91, 69, 62, 49, 51, 35, 41, 10],
+                        },
+                        {
+                          name: "Expenses",
+                          data: [45, 77, 99, 88, 77, 56, 13, 34, 10],
+                        },
                       ],
                     },
                     {
-                      type: 'Year',
+                      type: "Year",
                       data: [
-                        { name: 'Income', data: [76, 42, 29, 41, 27, 138, 117, 86, 63] },
-                        { name: 'Expenses', data: [80, 55, 34, 114, 80, 130, 15, 28, 55] },
+                        {
+                          name: "Income",
+                          data: [76, 42, 29, 41, 27, 138, 117, 86, 63],
+                        },
+                        {
+                          name: "Expenses",
+                          data: [80, 55, 34, 114, 80, 130, 15, 28, 55],
+                        },
                       ],
                     },
                   ],
@@ -112,15 +143,15 @@ export default function GeneralBankingPage() {
                 title="Expenses Categories"
                 chart={{
                   series: [
-                    { label: 'Category 1', value: 14 },
-                    { label: 'Category 2', value: 23 },
-                    { label: 'Category 3', value: 21 },
-                    { label: 'Category 4', value: 17 },
-                    { label: 'Category 5', value: 15 },
-                    { label: 'Category 6', value: 10 },
-                    { label: 'Category 7', value: 12 },
-                    { label: 'Category 8', value: 17 },
-                    { label: 'Category 9', value: 21 },
+                    { label: "Category 1", value: 14 },
+                    { label: "Category 2", value: 23 },
+                    { label: "Category 3", value: 21 },
+                    { label: "Category 4", value: 17 },
+                    { label: "Category 5", value: 15 },
+                    { label: "Category 6", value: 10 },
+                    { label: "Category 7", value: 12 },
+                    { label: "Category 8", value: 17 },
+                    { label: "Category 9", value: 21 },
                   ],
                   colors: [
                     theme.palette.primary.main,
@@ -140,11 +171,11 @@ export default function GeneralBankingPage() {
                 title="Recent Transitions"
                 tableData={_bankingRecentTransitions}
                 tableLabels={[
-                  { id: 'description', label: 'Description' },
-                  { id: 'date', label: 'Date' },
-                  { id: 'amount', label: 'Amount' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
+                  { id: "description", label: "Description" },
+                  { id: "date", label: "Date" },
+                  { id: "amount", label: "Amount" },
+                  { id: "status", label: "Status" },
+                  { id: "" },
                 ]}
               />
             </Stack>
@@ -152,7 +183,10 @@ export default function GeneralBankingPage() {
 
           <Grid item xs={12} md={4}>
             <Stack spacing={3}>
-              <BankingQuickTransfer title="Quick Transfer" list={_bankingContacts} />
+              <BankingQuickTransfer
+                title="Quick Transfer"
+                list={_bankingContacts}
+              />
 
               <BankingContacts
                 title="Contacts"

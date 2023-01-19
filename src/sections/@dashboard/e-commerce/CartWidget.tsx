@@ -1,22 +1,22 @@
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Badge, Link } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import { Badge, Link } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // components
-import Iconify from '../../../components/iconify';
+import Iconify from "../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
+const StyledRoot = styled("div")(({ theme }) => ({
   zIndex: 999,
   right: 0,
-  display: 'flex',
-  cursor: 'pointer',
-  position: 'fixed',
-  alignItems: 'center',
+  display: "flex",
+  cursor: "pointer",
+  position: "fixed",
+  alignItems: "center",
   top: theme.spacing(16),
   height: theme.spacing(5),
   paddingLeft: theme.spacing(2),
@@ -27,8 +27,8 @@ const StyledRoot = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   borderTopLeftRadius: Number(theme.shape.borderRadius) * 2,
   borderBottomLeftRadius: Number(theme.shape.borderRadius) * 2,
-  transition: theme.transitions.create('opacity'),
-  '&:hover': { opacity: 0.72 },
+  transition: theme.transitions.create("opacity"),
+  "&:hover": { opacity: 0.72 },
 }));
 
 // ----------------------------------------------------------------------

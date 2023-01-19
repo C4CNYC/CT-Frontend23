@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { Stack } from '@mui/material';
+import { Stack } from "@mui/material";
 // utils
-import { hideScrollbarY } from '../../../utils/cssStyles';
+import { hideScrollbarY } from "../../../utils/cssStyles";
 //
-import { NavSectionProps, NavListProps } from '../types';
-import NavList from './NavList';
+import { NavSectionProps, NavListProps } from "../types";
+import NavList from "./NavList";
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ function NavSectionHorizontal({ data, sx, ...other }: NavSectionProps) {
       direction="row"
       spacing={1}
       sx={{
-        mx: 'auto',
+        mx: "auto",
         ...hideScrollbarY,
         ...sx,
       }}
@@ -40,7 +40,12 @@ function Items({ items }: ItemsProps) {
   return (
     <>
       {items.map((list) => (
-        <NavList key={list.title + list.path} data={list} depth={1} hasChild={!!list.children} />
+        <NavList
+          key={list.title + list.path}
+          data={list}
+          depth={1}
+          hasChild={!!list.children}
+        />
       ))}
     </>
   );

@@ -1,22 +1,24 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Card, Container, CardHeader, Stack } from '@mui/material';
+import { Box, Card, Container, CardHeader, Stack } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import BasicTable from '../../../sections/_examples/mui/table/BasicTable';
-import CollapsibleTable from '../../../sections/_examples/mui/table/collapsible-table';
-import SortingSelecting from '../../../sections/_examples/mui/table/sorting-selecting';
-import GroupingFixedHeader from '../../../sections/_examples/mui/table/GroupingFixedHeader';
+import BasicTable from "../../../sections/_examples/mui/table/BasicTable";
+import CollapsibleTable from "../../../sections/_examples/mui/table/collapsible-table";
+import SortingSelecting from "../../../sections/_examples/mui/table/sorting-selecting";
+import GroupingFixedHeader from "../../../sections/_examples/mui/table/GroupingFixedHeader";
 
 // ----------------------------------------------------------------------
 
-MUITablePage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUITablePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -31,7 +33,8 @@ export default function MUITablePage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -39,12 +42,12 @@ export default function MUITablePage() {
             heading="Table"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Table' },
+              { name: "Table" },
             ]}
-            moreLink={['https://mui.com/components/tables']}
+            moreLink={["https://mui.com/components/tables"]}
           />
         </Container>
       </Box>

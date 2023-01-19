@@ -1,12 +1,12 @@
 // @mui
-import { Chip, Avatar, Checkbox, Stack, FormControlLabel } from '@mui/material';
+import { Chip, Avatar, Checkbox, Stack, FormControlLabel } from "@mui/material";
 // utils
-import { fShortenNumber } from '../../../utils/formatNumber';
+import { fShortenNumber } from "../../../utils/formatNumber";
 // @types
-import { IBlogPost } from '../../../@types/blog';
+import { IBlogPost } from "../../../@types/blog";
 // components
-import Iconify from '../../../components/iconify';
-import { CustomAvatarGroup } from '../../../components/custom-avatar';
+import Iconify from "../../../components/iconify";
+import { CustomAvatarGroup } from "../../../components/custom-avatar";
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,11 @@ export default function BlogPostTags({ post }: Props) {
 
         <CustomAvatarGroup>
           {favoritePerson.map((person) => (
-            <Avatar key={person.name} alt={person.name} src={person.avatarUrl} />
+            <Avatar
+              key={person.name}
+              alt={person.name}
+              src={person.avatarUrl}
+            />
           ))}
         </CustomAvatarGroup>
       </Stack>

@@ -1,15 +1,23 @@
 // @mui
-import { Box, Stack, Divider, TableRow, TableCell, Typography, IconButton } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Divider,
+  TableRow,
+  TableCell,
+  Typography,
+  IconButton,
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../../utils/formatNumber';
+import { fCurrency } from "../../../../../utils/formatNumber";
 // @types
-import { ICheckoutCartItem } from '../../../../../@types/product';
+import { ICheckoutCartItem } from "../../../../../@types/product";
 // components
-import Image from '../../../../../components/image';
-import Label from '../../../../../components/label';
-import Iconify from '../../../../../components/iconify';
-import { ColorPreview } from '../../../../../components/color-utils';
-import { IncrementerButton } from '../../../../../components/custom-input';
+import Image from "../../../../../components/image";
+import Label from "../../../../../components/label";
+import Iconify from "../../../../../components/iconify";
+import { ColorPreview } from "../../../../../components/color-utils";
+import { IncrementerButton } from "../../../../../components/custom-input";
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +38,7 @@ export default function CheckoutCartProduct({
 
   return (
     <TableRow>
-      <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+      <TableCell sx={{ display: "flex", alignItems: "center" }}>
         <Image
           alt="product image"
           src={cover}
@@ -45,7 +53,7 @@ export default function CheckoutCartProduct({
           <Stack
             direction="row"
             alignItems="center"
-            sx={{ typography: 'body2', color: 'text.secondary' }}
+            sx={{ typography: "body2", color: "text.secondary" }}
           >
             size: <Label sx={{ ml: 0.5 }}> {size} </Label>
             <Divider orientation="vertical" sx={{ mx: 1, height: 16 }} />
@@ -57,7 +65,7 @@ export default function CheckoutCartProduct({
       <TableCell>{fCurrency(price)}</TableCell>
 
       <TableCell>
-        <Box sx={{ width: 96, textAlign: 'right' }}>
+        <Box sx={{ width: 96, textAlign: "right" }}>
           <IncrementerButton
             quantity={quantity}
             onDecrease={onDecrease}
@@ -66,7 +74,7 @@ export default function CheckoutCartProduct({
             disabledIncrease={quantity >= available}
           />
 
-          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+          <Typography variant="caption" sx={{ color: "text.secondary" }}>
             available: {available}
           </Typography>
         </Box>

@@ -1,9 +1,16 @@
 // @mui
-import { Table, Tooltip, TableBody, IconButton, TableContainer, Box } from '@mui/material';
+import {
+  Table,
+  Tooltip,
+  TableBody,
+  IconButton,
+  TableContainer,
+  Box,
+} from "@mui/material";
 // @types
-import { IFile } from '../../../../@types/file';
+import { IFile } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 import {
   emptyRows,
   TableProps,
@@ -12,19 +19,19 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-} from '../../../../components/table';
+} from "../../../../components/table";
 //
-import FileTableRow from '../item/FileTableRow';
+import FileTableRow from "../item/FileTableRow";
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', align: 'left' },
-  { id: 'size', label: 'Size', align: 'left', width: 120 },
-  { id: 'type', label: 'Type', align: 'center', width: 120 },
-  { id: 'dateModified', label: 'Modified', align: 'left', width: 160 },
-  { id: 'shared', label: 'Shared', align: 'right', width: 100 },
-  { id: '' },
+  { id: "name", label: "Name", align: "left" },
+  { id: "size", label: "Size", align: "left", width: 120 },
+  { id: "type", label: "Type", align: "center", width: 120 },
+  { id: "dateModified", label: "Modified", align: "left", width: 160 },
+  { id: "shared", label: "Shared", align: "right", width: 100 },
+  { id: "" },
 ];
 
 type Props = {
@@ -65,7 +72,14 @@ export default function FileListView({
 
   return (
     <>
-      <Box sx={{ px: 1, position: 'relative', borderRadius: 1.5, bgcolor: 'background.neutral' }}>
+      <Box
+        sx={{
+          px: 1,
+          position: "relative",
+          borderRadius: 1.5,
+          bgcolor: "background.neutral",
+        }}
+      >
         <TableSelectedAction
           dense={dense}
           numSelected={selected.length}
@@ -97,20 +111,20 @@ export default function FileListView({
             top: 8,
             left: 8,
             right: 8,
-            width: 'auto',
+            width: "auto",
             borderRadius: 1,
           }}
         />
 
         <TableContainer>
           <Table
-            size={dense ? 'small' : 'medium'}
+            size={dense ? "small" : "medium"}
             sx={{
               minWidth: 960,
-              borderCollapse: 'separate',
-              borderSpacing: '0 8px',
-              '& .MuiTableCell-head': {
-                boxShadow: 'none !important',
+              borderCollapse: "separate",
+              borderSpacing: "0 8px",
+              "& .MuiTableCell-head": {
+                boxShadow: "none !important",
               },
             }}
           >
@@ -128,8 +142,8 @@ export default function FileListView({
                 )
               }
               sx={{
-                '& .MuiTableCell-head': {
-                  bgcolor: 'transparent',
+                "& .MuiTableCell-head": {
+                  bgcolor: "transparent",
                 },
               }}
             />
@@ -168,8 +182,8 @@ export default function FileListView({
         dense={dense}
         onChangeDense={onChangeDense}
         sx={{
-          '& .MuiTablePagination-root': { borderTop: 'none' },
-          '& .MuiFormControlLabel-root': { px: 0 },
+          "& .MuiTablePagination-root": { borderTop: "none" },
+          "& .MuiFormControlLabel-root": { px: 0 },
         }}
       />
     </>

@@ -1,21 +1,21 @@
-import { m } from 'framer-motion';
+import { m } from "framer-motion";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Button, Container, Typography, Grid, Stack } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import { Box, Button, Container, Typography, Grid, Stack } from "@mui/material";
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from "../../hooks/useResponsive";
 // routes
-import { PATH_ZONE_ON_STORE } from '../../routes/paths';
+import { PATH_ZONE_ON_STORE } from "../../routes/paths";
 // components
-import Image from '../../components/image';
-import Iconify from '../../components/iconify';
-import { MotionViewport, varFade } from '../../components/animate';
+import Image from "../../components/image";
+import Iconify from "../../components/iconify";
+import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
-const StyledRoot = styled('div')(({ theme }) => ({
+const StyledRoot = styled("div")(({ theme }) => ({
   padding: theme.spacing(10, 0),
-  [theme.breakpoints.up('md')]: {
+  [theme.breakpoints.up("md")]: {
     padding: theme.spacing(15, 0),
   },
 }));
@@ -23,7 +23,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomeLookingFor() {
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   return (
     <StyledRoot>
@@ -43,7 +43,7 @@ export default function HomeLookingFor() {
           </Grid>
 
           {!isDesktop && (
-            <Grid item xs={12} sx={{ textAlign: 'center' }}>
+            <Grid item xs={12} sx={{ textAlign: "center" }}>
               {VisitButton}
             </Grid>
           )}
@@ -56,19 +56,23 @@ export default function HomeLookingFor() {
 // ----------------------------------------------------------------------
 
 function Description() {
-  const isDesktop = useResponsive('up', 'md');
+  const isDesktop = useResponsive("up", "md");
 
   return (
     <Stack
       sx={{
         textAlign: {
-          xs: 'center',
-          md: 'left',
+          xs: "center",
+          md: "left",
         },
       }}
     >
       <m.div variants={varFade().inDown}>
-        <Typography variant="overline" component="div" sx={{ color: 'text.disabled' }}>
+        <Typography
+          variant="overline"
+          component="div"
+          sx={{ color: "text.disabled" }}
+        >
           Looking For a
         </Typography>
       </m.div>
@@ -95,7 +99,11 @@ function Description() {
 function Content() {
   return (
     <Box component={m.div} variants={varFade().inUp}>
-      <Image disabledEffect alt="rocket" src="/assets/images/home/zone_landing.png" />
+      <Image
+        disabledEffect
+        alt="rocket"
+        src="/assets/images/home/zone_landing.png"
+      />
     </Box>
   );
 }

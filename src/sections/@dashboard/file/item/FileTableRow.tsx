@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Stack,
@@ -12,24 +12,24 @@ import {
   IconButton,
   Typography,
   AvatarGroup,
-} from '@mui/material';
+} from "@mui/material";
 // hooks
-import useDoubleClick from '../../../../hooks/useDoubleClick';
-import useCopyToClipboard from '../../../../hooks/useCopyToClipboard';
+import useDoubleClick from "../../../../hooks/useDoubleClick";
+import useCopyToClipboard from "../../../../hooks/useCopyToClipboard";
 // utils
-import { fDate } from '../../../../utils/formatTime';
-import { fData } from '../../../../utils/formatNumber';
+import { fDate } from "../../../../utils/formatTime";
+import { fData } from "../../../../utils/formatNumber";
 // @types
-import { IFileManager } from '../../../../@types/file';
+import { IFileManager } from "../../../../@types/file";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import { useSnackbar } from '../../../../components/snackbar';
-import ConfirmDialog from '../../../../components/confirm-dialog';
-import FileThumbnail from '../../../../components/file-thumbnail';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import { useSnackbar } from "../../../../components/snackbar";
+import ConfirmDialog from "../../../../components/confirm-dialog";
+import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import FileShareDialog from '../portal/FileShareDialog';
-import FileDetailsDrawer from '../portal/FileDetailsDrawer';
+import FileShareDialog from "../portal/FileShareDialog";
+import FileDetailsDrawer from "../portal/FileDetailsDrawer";
 
 // ----------------------------------------------------------------------
 
@@ -40,14 +40,19 @@ type Props = {
   onDeleteRow: VoidFunction;
 };
 
-export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }: Props) {
+export default function FileTableRow({
+  row,
+  selected,
+  onSelectRow,
+  onDeleteRow,
+}: Props) {
   const { name, size, type, dateModified, shared, isFavorited } = row;
 
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
 
-  const [inviteEmail, setInviteEmail] = useState('');
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const [openShare, setOpenShare] = useState(false);
 
@@ -103,11 +108,11 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
     click: () => {
       handleOpenDetails();
     },
-    doubleClick: () => console.log('DOUBLE CLICK'),
+    doubleClick: () => console.log("DOUBLE CLICK"),
   });
 
   const handleCopy = () => {
-    enqueueSnackbar('Copied!');
+    enqueueSnackbar("Copied!");
     copy(row.url);
   };
 
@@ -116,14 +121,14 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
       <TableRow
         sx={{
           borderRadius: 1,
-          '& .MuiTableCell-root': {
-            bgcolor: 'background.default',
+          "& .MuiTableCell-root": {
+            bgcolor: "background.default",
           },
           ...(openDetails && {
-            '& .MuiTableCell-root': {
-              color: 'text.primary',
-              typography: 'subtitle2',
-              bgcolor: 'background.default',
+            "& .MuiTableCell-root": {
+              color: "text.primary",
+              typography: "subtitle2",
+              bgcolor: "background.default",
             },
           }),
         }}
@@ -137,7 +142,7 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
         >
           <Checkbox
             checked={selected}
-            onDoubleClick={() => console.log('ON DOUBLE CLICK')}
+            onDoubleClick={() => console.log("ON DOUBLE CLICK")}
             onClick={onSelectRow}
           />
         </TableCell>
@@ -146,7 +151,11 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
           <Stack direction="row" alignItems="center" spacing={2}>
             <FileThumbnail file={type} />
 
-            <Typography noWrap variant="inherit" sx={{ maxWidth: 360, cursor: 'pointer' }}>
+            <Typography
+              noWrap
+              variant="inherit"
+              sx={{ maxWidth: 360, cursor: "pointer" }}
+            >
               {name}
             </Typography>
           </Stack>
@@ -155,7 +164,7 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
         <TableCell
           align="left"
           onClick={handleClick}
-          sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+          sx={{ color: "text.secondary", whiteSpace: "nowrap" }}
         >
           {fData(size)}
         </TableCell>
@@ -163,7 +172,7 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
         <TableCell
           align="center"
           onClick={handleClick}
-          sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+          sx={{ color: "text.secondary", whiteSpace: "nowrap" }}
         >
           {type}
         </TableCell>
@@ -171,7 +180,7 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
         <TableCell
           align="left"
           onClick={handleClick}
-          sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+          sx={{ color: "text.secondary", whiteSpace: "nowrap" }}
         >
           {fDate(dateModified)}
         </TableCell>
@@ -180,10 +189,10 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
           <AvatarGroup
             max={4}
             sx={{
-              '& .MuiAvatarGroup-avatar': {
+              "& .MuiAvatarGroup-avatar": {
                 width: 24,
                 height: 24,
-                '&:first-of-type': {
+                "&:first-of-type": {
                   fontSize: 12,
                 },
               },
@@ -199,7 +208,7 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
         <TableCell
           align="right"
           sx={{
-            whiteSpace: 'nowrap',
+            whiteSpace: "nowrap",
             borderTopRightRadius: 8,
             borderBottomRightRadius: 8,
           }}
@@ -213,7 +222,10 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
             sx={{ p: 0.75 }}
           />
 
-          <IconButton color={openPopover ? 'inherit' : 'default'} onClick={handleOpenPopover}>
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </TableCell>
@@ -245,14 +257,14 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
             handleClosePopover();
           }}
-          sx={{ color: 'error.main' }}
+          sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
           Delete
@@ -277,7 +289,7 @@ export default function FileTableRow({ row, selected, onSelectRow, onDeleteRow }
         onCopyLink={handleCopy}
         onClose={() => {
           handleCloseShare();
-          setInviteEmail('');
+          setInviteEmail("");
         }}
       />
 

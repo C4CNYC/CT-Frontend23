@@ -1,17 +1,19 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Container, Box } from '@mui/material';
+import { Container, Box } from "@mui/material";
 // layouts
-import MainLayout from '../layouts/main';
+import MainLayout from "../layouts/main";
 // _mock
-import { _mapContact } from '../_mock/arrays';
+import { _mapContact } from "../_mock/arrays";
 // sections
-import { ContactHero, ContactForm, ContactMap } from '../sections/contact';
+import { ContactHero, ContactForm, ContactMap } from "../sections/contact";
 
 // ----------------------------------------------------------------------
 
-ContactPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+ContactPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +31,8 @@ export default function ContactPage() {
           gap={10}
           display="grid"
           gridTemplateColumns={{
-            xs: 'repeat(1, 1fr)',
-            md: 'repeat(2, 1fr)',
+            xs: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
           }}
         >
           <ContactForm />

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from "react";
 
 // ----------------------------------------------------------------------
 
@@ -8,7 +8,11 @@ type Props = {
   doubleClick: (e: React.SyntheticEvent) => void;
 };
 
-export default function useDoubleClick({ click, doubleClick, timeout = 250 }: Props) {
+export default function useDoubleClick({
+  click,
+  doubleClick,
+  timeout = 250,
+}: Props) {
   const clickTimeout = useRef<any>();
 
   const clearClickTimeout = () => {

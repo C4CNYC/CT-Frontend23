@@ -1,12 +1,12 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // form
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
-import { Stack } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Stack } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // components
-import FormProvider, { RHFTextField } from '../../../../components/hook-form';
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
@@ -18,15 +18,17 @@ type FormValuesProps = {
 
 export default function BlogPostCommentForm() {
   const CommentSchema = Yup.object().shape({
-    comment: Yup.string().required('Comment is required'),
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
+    comment: Yup.string().required("Comment is required"),
+    name: Yup.string().required("Name is required"),
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email must be a valid email address"),
   });
 
   const defaultValues = {
-    comment: '',
-    name: '',
-    email: '',
+    comment: "",
+    name: "",
+    email: "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -44,7 +46,7 @@ export default function BlogPostCommentForm() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      console.log('DATA', data);
+      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }

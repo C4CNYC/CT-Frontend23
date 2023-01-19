@@ -1,12 +1,12 @@
 // @mui
-import { useTheme, styled, Theme } from '@mui/material/styles';
-import { Typography, Box, IconButton, SxProps } from '@mui/material';
+import { useTheme, styled, Theme } from "@mui/material/styles";
+import { Typography, Box, IconButton, SxProps } from "@mui/material";
 // utils
-import { bgBlur } from '../../utils/cssStyles';
+import { bgBlur } from "../../utils/cssStyles";
 //
-import { IconifyProps } from '../iconify';
+import { IconifyProps } from "../iconify";
 //
-import { LeftIcon, RightIcon } from './Icon';
+import { LeftIcon, RightIcon } from "./Icon";
 
 // ----------------------------------------------------------------------
 
@@ -16,9 +16,9 @@ const StyledRoot = styled(Box)(({ theme }) => ({
     color: theme.palette.grey[900],
   }),
   zIndex: 9,
-  display: 'inline-flex',
-  alignItems: 'center',
-  position: 'absolute',
+  display: "inline-flex",
+  alignItems: "center",
+  position: "absolute",
   bottom: theme.spacing(2),
   right: theme.spacing(2),
   padding: theme.spacing(0.25),
@@ -31,7 +31,7 @@ const StyledIconButton = styled(IconButton)({
   height: 28,
   padding: 0,
   opacity: 0.48,
-  '&:hover': { opacity: 1 },
+  "&:hover": { opacity: 1 },
 });
 
 // ----------------------------------------------------------------------
@@ -56,7 +56,7 @@ export default function CarouselArrowIndex({
 }: Props) {
   const theme = useTheme();
 
-  const isRTL = theme.direction === 'rtl';
+  const isRTL = theme.direction === "rtl";
 
   return (
     <StyledRoot sx={sx} {...other}>

@@ -1,6 +1,6 @@
 // @mui
-import { styled, Theme } from '@mui/material/styles';
-import { Box, BoxProps, Stack, SxProps } from '@mui/material';
+import { styled, Theme } from "@mui/material/styles";
+import { Box, BoxProps, Stack, SxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -9,25 +9,25 @@ type StyledRootProps = {
 };
 
 const StyledRoot = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'rounded',
+  shouldForwardProp: (prop) => prop !== "rounded",
 })<StyledRootProps>(({ rounded, theme }) => ({
   zIndex: 9,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   color: theme.palette.primary.main,
-  '& li': {
+  "& li": {
     width: 18,
     height: 18,
     opacity: 0.32,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    '&.slick-active': {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    "&.slick-active": {
       opacity: 1,
       ...(rounded && {
-        '& span': {
+        "& span": {
           width: 16,
           borderRadius: 6,
         },
@@ -36,11 +36,11 @@ const StyledRoot = styled(Box, {
   },
 }));
 
-const StyledDot = styled('span')(({ theme }) => ({
+const StyledDot = styled("span")(({ theme }) => ({
   width: 8,
   height: 8,
-  borderRadius: '50%',
-  transition: theme.transitions.create('width', {
+  borderRadius: "50%",
+  transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.short,
   }),
@@ -73,7 +73,7 @@ export default function CarouselDots(props?: Props) {
       >
         <StyledDot
           sx={{
-            bgcolor: 'currentColor',
+            bgcolor: "currentColor",
           }}
         />
       </Stack>

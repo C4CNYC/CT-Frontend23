@@ -10,9 +10,9 @@ import {
   Typography,
   CardHeader,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +27,12 @@ interface Props extends CardProps {
   }[];
 }
 
-export default function BankingContacts({ title, subheader, list, ...other }: Props) {
+export default function BankingContacts({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
   return (
     <Card {...other}>
       <CardHeader
@@ -52,7 +57,11 @@ export default function BankingContacts({ title, subheader, list, ...other }: Pr
                 {contact.name}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              <Typography
+                variant="body2"
+                sx={{ color: "text.secondary" }}
+                noWrap
+              >
                 {contact.email}
               </Typography>
             </Box>

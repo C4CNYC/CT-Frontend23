@@ -1,9 +1,9 @@
-import { useState, useEffect, memo } from 'react';
-import Map, { Layer, LayerProps, Source } from 'react-map-gl';
+import { useState, useEffect, memo } from "react";
+import Map, { Layer, LayerProps, Source } from "react-map-gl";
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 // components
-import { MapControl, MapBoxProps } from '../../../../components/map';
+import { MapControl, MapBoxProps } from "../../../../components/map";
 
 // ----------------------------------------------------------------------
 
@@ -11,11 +11,11 @@ function MapGeoJSONAnimation({ ...other }: MapBoxProps) {
   const theme = useTheme();
 
   const pointLayer: LayerProps = {
-    id: 'point',
-    type: 'circle',
+    id: "point",
+    type: "circle",
     paint: {
-      'circle-radius': 10,
-      'circle-color': theme.palette.error.main,
+      "circle-radius": 10,
+      "circle-color": theme.palette.error.main,
     },
   };
 
@@ -76,7 +76,10 @@ function pointOnCircle({
   radius: number;
 }) {
   return {
-    type: 'Point',
-    coordinates: [center[0] + Math.cos(angle) * radius, center[1] + Math.sin(angle) * radius],
+    type: "Point",
+    coordinates: [
+      center[0] + Math.cos(angle) * radius,
+      center[1] + Math.sin(angle) * radius,
+    ],
   };
 }

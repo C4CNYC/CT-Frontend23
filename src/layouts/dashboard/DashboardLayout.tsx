@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from "../../hooks/useResponsive";
 // auth
-import AuthGuard from '../../auth/AuthGuard';
+import AuthGuard from "../../auth/AuthGuard";
 // components
-import { useSettingsContext } from '../../components/settings';
+import { useSettingsContext } from "../../components/settings";
 //
-import Main from './Main';
-import Header from './header';
-import NavMini from './nav/NavMini';
-import NavVertical from './nav/NavVertical';
-import NavHorizontal from './nav/NavHorizontal';
+import Main from "./Main";
+import Header from "./header";
+import NavMini from "./nav/NavMini";
+import NavVertical from "./nav/NavVertical";
+import NavHorizontal from "./nav/NavHorizontal";
 
 // ----------------------------------------------------------------------
 
@@ -23,13 +23,13 @@ type Props = {
 export default function DashboardLayout({ children }: Props) {
   const { themeLayout } = useSettingsContext();
 
-  const isDesktop = useResponsive('up', 'lg');
+  const isDesktop = useResponsive("up", "lg");
 
   const [open, setOpen] = useState(false);
 
-  const isNavHorizontal = themeLayout === 'horizontal';
+  const isNavHorizontal = themeLayout === "horizontal";
 
-  const isNavMini = themeLayout === 'mini';
+  const isNavMini = themeLayout === "mini";
 
   const handleOpen = () => {
     setOpen(true);
@@ -39,7 +39,9 @@ export default function DashboardLayout({ children }: Props) {
     setOpen(false);
   };
 
-  const renderNavVertical = <NavVertical openNav={open} onCloseNav={handleClose} />;
+  const renderNavVertical = (
+    <NavVertical openNav={open} onCloseNav={handleClose} />
+  );
 
   const renderContent = () => {
     if (isNavHorizontal) {
@@ -61,7 +63,7 @@ export default function DashboardLayout({ children }: Props) {
 
           <Box
             sx={{
-              display: { lg: 'flex' },
+              display: { lg: "flex" },
               minHeight: { lg: 1 },
             }}
           >
@@ -79,7 +81,7 @@ export default function DashboardLayout({ children }: Props) {
 
         <Box
           sx={{
-            display: { lg: 'flex' },
+            display: { lg: "flex" },
             minHeight: { lg: 1 },
           }}
         >

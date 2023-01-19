@@ -1,7 +1,7 @@
-import { m } from 'framer-motion';
-import { forwardRef } from 'react';
+import { m } from "framer-motion";
+import { forwardRef } from "react";
 // @mui
-import { Box, Fab, FabProps, SxProps } from '@mui/material';
+import { Box, Fab, FabProps, SxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ export interface FabButtonAnimateProps extends FabProps {
 }
 
 const FabButtonAnimate = forwardRef<HTMLButtonElement, FabButtonAnimateProps>(
-  ({ size = 'large', children, sx, sxWrap, ...other }, ref) => (
+  ({ size = "large", children, sx, sxWrap, ...other }, ref) => (
     <AnimateWrap size={size} sxWrap={sxWrap}>
       <Fab ref={ref} size={size} sx={sx} {...other}>
         {children}
@@ -25,7 +25,7 @@ export default FabButtonAnimate;
 
 type AnimateWrapProp = {
   children: React.ReactNode;
-  size: 'small' | 'medium' | 'large';
+  size: "small" | "medium" | "large";
   sxWrap?: SxProps;
 };
 
@@ -45,8 +45,8 @@ const varLarge = {
 };
 
 function AnimateWrap({ size, children, sxWrap }: AnimateWrapProp) {
-  const isSmall = size === 'small';
-  const isLarge = size === 'large';
+  const isSmall = size === "small";
+  const isLarge = size === "large";
 
   return (
     <Box
@@ -55,7 +55,7 @@ function AnimateWrap({ size, children, sxWrap }: AnimateWrapProp) {
       whileHover="hover"
       variants={(isSmall && varSmall) || (isLarge && varLarge) || varMedium}
       sx={{
-        display: 'inline-flex',
+        display: "inline-flex",
         ...sxWrap,
       }}
     >

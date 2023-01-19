@@ -1,36 +1,49 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Container, Tooltip } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { useTheme } from "@mui/material/styles";
+import { Box, Container, Tooltip } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // _mock
-import _mock from '../../../_mock';
+import _mock from "../../../_mock";
 // components
-import Iconify from '../../../components/iconify';
-import BadgeStatus from '../../../components/badge-status';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { CustomAvatar, CustomAvatarGroup } from '../../../components/custom-avatar';
+import Iconify from "../../../components/iconify";
+import BadgeStatus from "../../../components/badge-status";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import {
+  CustomAvatar,
+  CustomAvatarGroup,
+} from "../../../components/custom-avatar";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const COLORS = ['default', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "default",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
-const SIZES = ['tiny', 'small', 'medium', 'large'] as const;
+const SIZES = ["tiny", "small", "medium", "large"] as const;
 
-const VARIANTS = ['circular', 'rounded', 'square'] as const;
+const VARIANTS = ["circular", "rounded", "square"] as const;
 
-const STATUS = ['online', 'away', 'busy', 'invisible'];
+const STATUS = ["online", "away", "busy", "invisible"];
 
 // ----------------------------------------------------------------------
 
-MUIAvatarPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUIAvatarPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +60,7 @@ export default function MUIAvatarPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: theme.palette.mode === 'light' ? 'grey.200' : 'grey.800',
+          bgcolor: theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -55,12 +68,12 @@ export default function MUIAvatarPage() {
             heading="Avatar"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Avatar' },
+              { name: "Avatar" },
             ]}
-            moreLink={['https://mui.com/components/avatars']}
+            moreLink={["https://mui.com/components/avatars"]}
           />
         </Container>
       </Box>
@@ -70,24 +83,28 @@ export default function MUIAvatarPage() {
           <Block
             title="Image avatars"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             {[1, 2, 3, 4, 5].map((_, index) => (
-              <CustomAvatar key={index} alt="Remy Sharp" src={_mock.image.avatar(index + 1)} />
+              <CustomAvatar
+                key={index}
+                alt="Remy Sharp"
+                src={_mock.image.avatar(index + 1)}
+              />
             ))}
           </Block>
 
           <Block
             title="Letter avatars"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             {COLORS.map((color, index) => (
@@ -100,10 +117,10 @@ export default function MUIAvatarPage() {
           <Block
             title="Icon avatars"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             {COLORS.map((color) => (
@@ -116,10 +133,10 @@ export default function MUIAvatarPage() {
           <Block
             title="Variant"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             {VARIANTS.map((variant) => (
@@ -132,10 +149,10 @@ export default function MUIAvatarPage() {
           <Block
             title="Grouped"
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             {SIZES.map((size) => (
@@ -155,7 +172,11 @@ export default function MUIAvatarPage() {
             <Tooltip title="compact">
               <CustomAvatarGroup compact sx={{ width: 48, height: 48 }}>
                 {COLORS.slice(0, 2).map((color, index) => (
-                  <CustomAvatar key={color} alt="Remy Sharp" src={_mock.image.avatar(index + 1)} />
+                  <CustomAvatar
+                    key={color}
+                    alt="Remy Sharp"
+                    src={_mock.image.avatar(index + 1)}
+                  />
                 ))}
               </CustomAvatarGroup>
             </Tooltip>
@@ -164,10 +185,10 @@ export default function MUIAvatarPage() {
           <Block
             title="With badge"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             <CustomAvatar
@@ -203,10 +224,10 @@ export default function MUIAvatarPage() {
           <Block
             title="Sizes"
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              '& > *': { mx: 1 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              "& > *": { mx: 1 },
             }}
           >
             {[24, 32, 48, 56, 64, 80, 128].map((size, index) => (

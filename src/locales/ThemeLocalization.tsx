@@ -1,7 +1,7 @@
 // @mui
-import { ThemeProvider, createTheme, useTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 //
-import useLocales from './useLocales';
+import useLocales from "./useLocales";
 
 // ----------------------------------------------------------------------
 

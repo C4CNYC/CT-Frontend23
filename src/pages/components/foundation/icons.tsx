@@ -1,31 +1,33 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Stack, Container, Link, Tooltip } from '@mui/material';
+import { Box, Stack, Container, Link, Tooltip } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import SvgColor from '../../../components/svg-color';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import SvgColor from "../../../components/svg-color";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
 } as const;
 
 // ----------------------------------------------------------------------
 
-FoundationIconsPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+FoundationIconsPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +42,8 @@ export default function FoundationIconsPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -48,14 +51,14 @@ export default function FoundationIconsPage() {
             heading="Icons"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Icons' },
+              { name: "Icons" },
             ]}
             moreLink={[
-              'https://mui.com/components/material-icons',
-              'https://iconify.design/icon-sets',
+              "https://mui.com/components/material-icons",
+              "https://iconify.design/icon-sets",
             ]}
           />
         </Container>
@@ -78,14 +81,46 @@ export default function FoundationIconsPage() {
               <Iconify icon="eva:color-palette-fill" width={24} />
             </Tooltip>
 
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'action.active' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'action.disabled' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'primary.main' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'secondary.main' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'info.main' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'success.main' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'warning.main' }} />
-            <Iconify icon="eva:color-palette-fill" width={24} sx={{ color: 'error.main' }} />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "action.active" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "action.disabled" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "primary.main" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "secondary.main" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "info.main" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "success.main" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "warning.main" }}
+            />
+            <Iconify
+              icon="eva:color-palette-fill"
+              width={24}
+              sx={{ color: "error.main" }}
+            />
           </Block>
 
           <Block title="Local Icons" sx={style}>
@@ -93,20 +128,38 @@ export default function FoundationIconsPage() {
               <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" />
             </Tooltip>
 
-            <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" sx={{ color: 'action.active' }} />
             <SvgColor
               src="/assets/icons/navbar/ic_dashboard.svg"
-              sx={{ color: 'action.disabled' }}
+              sx={{ color: "action.active" }}
             />
-            <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" sx={{ color: 'primary.main' }} />
             <SvgColor
               src="/assets/icons/navbar/ic_dashboard.svg"
-              sx={{ color: 'secondary.main' }}
+              sx={{ color: "action.disabled" }}
             />
-            <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" sx={{ color: 'info.main' }} />
-            <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" sx={{ color: 'success.main' }} />
-            <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" sx={{ color: 'warning.main' }} />
-            <SvgColor src="/assets/icons/navbar/ic_dashboard.svg" sx={{ color: 'error.main' }} />
+            <SvgColor
+              src="/assets/icons/navbar/ic_dashboard.svg"
+              sx={{ color: "primary.main" }}
+            />
+            <SvgColor
+              src="/assets/icons/navbar/ic_dashboard.svg"
+              sx={{ color: "secondary.main" }}
+            />
+            <SvgColor
+              src="/assets/icons/navbar/ic_dashboard.svg"
+              sx={{ color: "info.main" }}
+            />
+            <SvgColor
+              src="/assets/icons/navbar/ic_dashboard.svg"
+              sx={{ color: "success.main" }}
+            />
+            <SvgColor
+              src="/assets/icons/navbar/ic_dashboard.svg"
+              sx={{ color: "warning.main" }}
+            />
+            <SvgColor
+              src="/assets/icons/navbar/ic_dashboard.svg"
+              sx={{ color: "error.main" }}
+            />
           </Block>
         </Stack>
       </Container>

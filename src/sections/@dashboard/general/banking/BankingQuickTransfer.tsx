@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import {
   Box,
   Card,
@@ -21,11 +21,11 @@ import {
   DialogProps,
   CardContent,
   DialogActions,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import { fCurrency } from '../../../../utils/formatNumber';
+import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Carousel, { CarouselArrows } from '../../../../components/carousel';
+import Carousel, { CarouselArrows } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +50,13 @@ interface Props extends CardProps {
   }[];
 }
 
-export default function BankingQuickTransfer({ title, subheader, list, sx, ...other }: Props) {
+export default function BankingQuickTransfer({
+  title,
+  subheader,
+  list,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -71,9 +77,9 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
     centerMode: true,
     swipeToSlide: true,
     focusOnSelect: true,
-    centerPadding: '0px',
+    centerPadding: "0px",
     slidesToShow: list.length > 7 ? 7 : list.length,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     beforeChange: (current: number, next: number) => setSelectContact(next),
     responsive: [
       {
@@ -111,7 +117,7 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
   };
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(event.target.value === '' ? '' : Number(event.target.value));
+    setAmount(event.target.value === "" ? "" : Number(event.target.value));
   };
 
   const handleBlur = () => {
@@ -135,7 +141,7 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
       <Card
         sx={{
           boxShadow: 0,
-          bgcolor: 'background.neutral',
+          bgcolor: "background.neutral",
           ...sx,
         }}
         {...other}
@@ -143,15 +149,19 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
         <CardHeader title={title} subheader={subheader} />
 
         <CardContent>
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <Typography variant="overline" sx={{ color: 'text.secondary' }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography variant="overline" sx={{ color: "text.secondary" }}>
               Recent
             </Typography>
 
-            <Link sx={{ typography: 'button' }}>View All</Link>
+            <Link sx={{ typography: "button" }}>View All</Link>
           </Stack>
 
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: "relative" }}>
             <CarouselArrows
               filled
               onPrevious={handlePrev}
@@ -161,7 +171,7 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
                   p: 0.5,
                   mt: -1.5,
                   left: -16,
-                  '& svg': { width: 16, height: 16 },
+                  "& svg": { width: 16, height: 16 },
                 },
               }}
               rightButtonProps={{
@@ -169,13 +179,13 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
                   p: 0.5,
                   mt: -1.5,
                   right: -16,
-                  '& svg': { width: 16, height: 16 },
+                  "& svg": { width: 16, height: 16 },
                 },
               }}
             >
               <Box
                 sx={{
-                  mx: 'auto',
+                  mx: "auto",
                   maxWidth: AVATAR_SIZE * 7,
                   width: AVATAR_SIZE * (list.length + 1),
                 }}
@@ -183,18 +193,23 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
                 <Carousel ref={carouselRef} {...carouselSettings}>
                   {list.map((contact, index) => (
                     <Box key={contact.id} sx={{ py: 5 }}>
-                      <Tooltip key={contact.id} title={contact.name} arrow placement="top">
+                      <Tooltip
+                        key={contact.id}
+                        title={contact.name}
+                        arrow
+                        placement="top"
+                      >
                         <Avatar
                           src={contact.avatar}
                           sx={{
-                            mx: 'auto',
+                            mx: "auto",
                             opacity: 0.48,
-                            cursor: 'pointer',
-                            transition: theme.transitions.create('all'),
+                            cursor: "pointer",
+                            transition: theme.transitions.create("all"),
                             ...(selectContact === index && {
                               opacity: 1,
-                              transform: 'scale(1.25)',
-                              boxShadow: '-4px 12px 24px 0 rgb(0,0,0,0.24)',
+                              transform: "scale(1.25)",
+                              boxShadow: "-4px 12px 24px 0 rgb(0,0,0,0.24)",
                             }),
                           }}
                         />
@@ -207,7 +222,7 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
           </Box>
 
           <Stack spacing={3}>
-            <Typography variant="overline" sx={{ color: 'text.secondary' }}>
+            <Typography variant="overline" sx={{ color: "text.secondary" }}>
               insert amount
             </Typography>
 
@@ -219,7 +234,7 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
             />
 
             <Slider
-              value={typeof amount === 'number' ? amount : 0}
+              value={typeof amount === "number" ? amount : 0}
               valueLabelDisplay="auto"
               step={STEP}
               marks
@@ -228,8 +243,12 @@ export default function BankingQuickTransfer({ title, subheader, list, sx, ...ot
               onChange={handleChangeSlider}
             />
 
-            <Stack direction="row" alignItems="center" justifyContent="space-between">
-              <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
                 Your Balance
               </Typography>
               <Typography variant="subtitle1">{fCurrency(34212)}</Typography>
@@ -269,7 +288,14 @@ interface InputAmountProps extends InputProps {
   amount: AmountProps;
 }
 
-function InputAmount({ autoWidth, amount, onBlur, onChange, sx, ...other }: InputAmountProps) {
+function InputAmount({
+  autoWidth,
+  amount,
+  onBlur,
+  onChange,
+  sx,
+  ...other
+}: InputAmountProps) {
   return (
     <Stack direction="row" justifyContent="center" spacing={1} sx={sx}>
       <Typography variant="h5">$</Typography>
@@ -280,12 +306,17 @@ function InputAmount({ autoWidth, amount, onBlur, onChange, sx, ...other }: Inpu
         value={amount}
         onChange={onChange}
         onBlur={onBlur}
-        inputProps={{ step: STEP, min: MIN_AMOUNT, max: MAX_AMOUNT, type: 'number' }}
+        inputProps={{
+          step: STEP,
+          min: MIN_AMOUNT,
+          max: MAX_AMOUNT,
+          type: "number",
+        }}
         sx={{
-          typography: 'h3',
-          '& input': {
+          typography: "h3",
+          "& input": {
             p: 0,
-            textAlign: 'center',
+            textAlign: "center",
             width: autoWidth,
           },
         }}
@@ -328,7 +359,7 @@ function ConfirmTransferDialog({
 
           <div>
             <Typography variant="subtitle2">{contactInfo?.name}</Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               {contactInfo?.email}
             </Typography>
           </div>
@@ -340,10 +371,15 @@ function ConfirmTransferDialog({
           autoWidth={autoWidth}
           amount={amount}
           disableUnderline={false}
-          sx={{ justifyContent: 'flex-end' }}
+          sx={{ justifyContent: "flex-end" }}
         />
 
-        <TextField fullWidth multiline rows={2} placeholder="Write a message..." />
+        <TextField
+          fullWidth
+          multiline
+          rows={2}
+          placeholder="Write a message..."
+        />
       </Stack>
 
       <DialogActions>

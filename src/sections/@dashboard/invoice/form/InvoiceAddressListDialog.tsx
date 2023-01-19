@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Stack,
@@ -8,13 +8,13 @@ import {
   Typography,
   ListItemButton,
   InputAdornment,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IInvoiceAddress } from '../../../../@types/invoice';
+import { IInvoiceAddress } from "../../../../@types/invoice";
 // components
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import SearchNotFound from '../../../../components/search-not-found';
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import SearchNotFound from "../../../../components/search-not-found";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ export default function InvoiceAddressListDialog({
   onSelect,
   addressOptions,
 }: Props) {
-  const [searchAddress, setSearchAddress] = useState('');
+  const [searchAddress, setSearchAddress] = useState("");
 
   const dataFiltered = applyFilter(addressOptions, searchAddress);
 
@@ -45,7 +45,7 @@ export default function InvoiceAddressListDialog({
 
   const handleSelectAddress = (address: IInvoiceAddress | null) => {
     onSelect(address);
-    setSearchAddress('');
+    setSearchAddress("");
     onClose();
   };
 
@@ -62,7 +62,7 @@ export default function InvoiceAddressListDialog({
         <Button
           size="small"
           startIcon={<Iconify icon="eva:plus-fill" />}
-          sx={{ alignSelf: 'flex-end' }}
+          sx={{ alignSelf: "flex-end" }}
         >
           Add New
         </Button>
@@ -76,7 +76,10 @@ export default function InvoiceAddressListDialog({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ color: "text.disabled" }}
+                />
               </InputAdornment>
             ),
           }}
@@ -95,12 +98,12 @@ export default function InvoiceAddressListDialog({
               sx={{
                 p: 1.5,
                 borderRadius: 1,
-                flexDirection: 'column',
-                alignItems: 'flex-start',
-                '&.Mui-selected': {
-                  bgcolor: 'action.selected',
-                  '&:hover': {
-                    bgcolor: 'action.selected',
+                flexDirection: "column",
+                alignItems: "flex-start",
+                "&.Mui-selected": {
+                  bgcolor: "action.selected",
+                  "&:hover": {
+                    bgcolor: "action.selected",
                   },
                 },
               }}
@@ -112,14 +115,14 @@ export default function InvoiceAddressListDialog({
                 component="div"
                 sx={{
                   my: 0.5,
-                  color: 'info.main',
-                  fontWeight: 'fontWeightMedium',
+                  color: "info.main",
+                  fontWeight: "fontWeightMedium",
                 }}
               >
                 {address.company}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography variant="body2" sx={{ color: "text.secondary" }}>
                 {address.address}
               </Typography>
             </ListItemButton>

@@ -1,17 +1,19 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Switch, Container, Typography, Stack } from '@mui/material';
+import { Box, Switch, Container, Typography, Stack } from "@mui/material";
 // _mock_
-import { _pricingPlans } from '../_mock/arrays';
+import { _pricingPlans } from "../_mock/arrays";
 // layouts
-import SimpleLayout from '../layouts/simple';
+import SimpleLayout from "../layouts/simple";
 // sections
-import { PricingPlanCard } from '../sections/pricing';
+import { PricingPlanCard } from "../sections/pricing";
 
 // ----------------------------------------------------------------------
 
-PricingPage.getLayout = (page: React.ReactElement) => <SimpleLayout>{page}</SimpleLayout>;
+PricingPage.getLayout = (page: React.ReactElement) => (
+  <SimpleLayout>{page}</SimpleLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +36,7 @@ export default function PricingPage() {
           <br /> community&apos;s size and needs
         </Typography>
 
-        <Typography align="center" sx={{ color: 'text.secondary' }}>
+        <Typography align="center" sx={{ color: "text.secondary" }}>
           Choose your plan and make modern online conversation magic
         </Typography>
 
@@ -53,15 +55,23 @@ export default function PricingPage() {
           <Typography
             variant="caption"
             align="right"
-            sx={{ color: 'text.secondary', display: 'block' }}
+            sx={{ color: "text.secondary", display: "block" }}
           >
             * Plus applicable taxes
           </Typography>
         </Box>
 
-        <Box gap={3} display="grid" gridTemplateColumns={{ md: 'repeat(3, 1fr)' }}>
+        <Box
+          gap={3}
+          display="grid"
+          gridTemplateColumns={{ md: "repeat(3, 1fr)" }}
+        >
           {_pricingPlans.map((card, index) => (
-            <PricingPlanCard key={card.subscription} card={card} index={index} />
+            <PricingPlanCard
+              key={card.subscription}
+              card={card}
+              index={index}
+            />
           ))}
         </Box>
       </Container>

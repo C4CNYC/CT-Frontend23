@@ -1,14 +1,22 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Stack, Paper, Avatar, BoxProps, Typography, CardHeader } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import {
+  Box,
+  Stack,
+  Paper,
+  Avatar,
+  BoxProps,
+  Typography,
+  CardHeader,
+} from "@mui/material";
 // utils
-import { fDateTime } from '../../../../utils/formatTime';
+import { fDateTime } from "../../../../utils/formatTime";
 // components
-import Label from '../../../../components/label';
-import Image from '../../../../components/image';
-import Iconify from '../../../../components/iconify';
-import Carousel, { CarouselArrows } from '../../../../components/carousel';
+import Label from "../../../../components/label";
+import Image from "../../../../components/image";
+import Iconify from "../../../../components/iconify";
+import Carousel, { CarouselArrows } from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +37,13 @@ interface Props extends BoxProps {
   list: ItemProps[];
 }
 
-export default function BookingNewestBooking({ title, subheader, list, sx, ...other }: Props) {
+export default function BookingNewestBooking({
+  title,
+  subheader,
+  list,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -39,7 +53,7 @@ export default function BookingNewestBooking({ title, subheader, list, sx, ...ot
     arrows: false,
     slidesToShow: 4,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     responsive: [
       {
         breakpoint: theme.breakpoints.values.lg,
@@ -79,7 +93,7 @@ export default function BookingNewestBooking({ title, subheader, list, sx, ...ot
         sx={{
           p: 0,
           mb: 3,
-          '& .MuiCardHeader-action': { alignSelf: 'center' },
+          "& .MuiCardHeader-action": { alignSelf: "center" },
         }}
       />
 
@@ -102,7 +116,7 @@ function BookingItem({ item }: BookingItemProps) {
   const { avatar, name, roomNumber, bookdAt, person, cover, roomType } = item;
 
   return (
-    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: 'background.neutral' }}>
+    <Paper sx={{ mx: 1.5, borderRadius: 2, bgcolor: "background.neutral" }}>
       <Stack spacing={2.5} sx={{ p: 3, pb: 2.5 }}>
         <Stack direction="row" alignItems="center" spacing={2}>
           <Avatar alt={name} src={avatar} />
@@ -112,14 +126,19 @@ function BookingItem({ item }: BookingItemProps) {
 
             <Typography
               variant="caption"
-              sx={{ color: 'text.disabled', mt: 0.5, display: 'block' }}
+              sx={{ color: "text.disabled", mt: 0.5, display: "block" }}
             >
               {fDateTime(bookdAt)}
             </Typography>
           </div>
         </Stack>
 
-        <Stack direction="row" alignItems="center" spacing={3} sx={{ color: 'text.secondary' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={3}
+          sx={{ color: "text.secondary" }}
+        >
           <Stack direction="row" alignItems="center" spacing={1}>
             <Iconify icon="ic:round-vpn-key" width={16} />
             <Typography variant="caption">Room {roomNumber}</Typography>
@@ -132,15 +151,19 @@ function BookingItem({ item }: BookingItemProps) {
         </Stack>
       </Stack>
 
-      <Box sx={{ p: 1, position: 'relative' }}>
+      <Box sx={{ p: 1, position: "relative" }}>
         <Label
           variant="filled"
-          color={(roomType === 'king' && 'error') || (roomType === 'double' && 'info') || 'warning'}
+          color={
+            (roomType === "king" && "error") ||
+            (roomType === "double" && "info") ||
+            "warning"
+          }
           sx={{
             right: 16,
             zIndex: 9,
             bottom: 16,
-            position: 'absolute',
+            position: "absolute",
           }}
         >
           {roomType}

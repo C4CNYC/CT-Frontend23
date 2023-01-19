@@ -1,51 +1,68 @@
 // next
-import Head from 'next/head';
-import dynamic from 'next/dynamic';
+import Head from "next/head";
+import dynamic from "next/dynamic";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box, Card, Stack, Container, CardHeader, CardContent } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import {
+  Box,
+  Card,
+  Stack,
+  Container,
+  CardHeader,
+  CardContent,
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // config
-import { MAP_API } from '../../../config-global';
+import { MAP_API } from "../../../config-global";
 // _mock_
-import { cities as CITIES } from '../../../_mock/map/cities';
-import { countries as COUNTRIES } from '../../../_mock/map/countries';
+import { cities as CITIES } from "../../../_mock/map/cities";
+import { countries as COUNTRIES } from "../../../_mock/map/countries";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-const MapHeatmap = dynamic(() => import('../../../sections/_examples/extra/map/heatmap'));
-const MapClusters = dynamic(() => import('../../../sections/_examples/extra/map/clusters'));
-const MapInteraction = dynamic(() => import('../../../sections/_examples/extra/map/interaction'));
-const MapChangeTheme = dynamic(() => import('../../../sections/_examples/extra/map/change-theme'));
+const MapHeatmap = dynamic(
+  () => import("../../../sections/_examples/extra/map/heatmap")
+);
+const MapClusters = dynamic(
+  () => import("../../../sections/_examples/extra/map/clusters")
+);
+const MapInteraction = dynamic(
+  () => import("../../../sections/_examples/extra/map/interaction")
+);
+const MapChangeTheme = dynamic(
+  () => import("../../../sections/_examples/extra/map/change-theme")
+);
 const MapMarkersPopups = dynamic(
-  () => import('../../../sections/_examples/extra/map/MapMarkersPopups')
+  () => import("../../../sections/_examples/extra/map/MapMarkersPopups")
 );
 const MapDraggableMarkers = dynamic(
-  () => import('../../../sections/_examples/extra/map/draggable-markers')
+  () => import("../../../sections/_examples/extra/map/draggable-markers")
 );
 const MapGeoJSONAnimation = dynamic(
-  () => import('../../../sections/_examples/extra/map/MapGeoJSONAnimation')
+  () => import("../../../sections/_examples/extra/map/MapGeoJSONAnimation")
 );
 const MapViewportAnimation = dynamic(
-  () => import('../../../sections/_examples/extra/map/viewport-animation')
+  () => import("../../../sections/_examples/extra/map/viewport-animation")
 );
 const MapHighlightByFilter = dynamic(
-  () => import('../../../sections/_examples/extra/map/MapHighlightByFilter')
+  () => import("../../../sections/_examples/extra/map/MapHighlightByFilter")
 );
-const MapSideBySide = dynamic(() => import('../../../sections/_examples/extra/map/side-by-side'));
+const MapSideBySide = dynamic(
+  () => import("../../../sections/_examples/extra/map/side-by-side")
+);
 
 // ----------------------------------------------------------------------
 
 const THEMES = {
-  streets: 'mapbox://styles/mapbox/streets-v11',
-  outdoors: 'mapbox://styles/mapbox/outdoors-v11',
-  light: 'mapbox://styles/mapbox/light-v10',
-  dark: 'mapbox://styles/mapbox/dark-v10',
-  satellite: 'mapbox://styles/mapbox/satellite-v9',
-  satelliteStreets: 'mapbox://styles/mapbox/satellite-streets-v11',
+  streets: "mapbox://styles/mapbox/streets-v11",
+  outdoors: "mapbox://styles/mapbox/outdoors-v11",
+  light: "mapbox://styles/mapbox/light-v10",
+  dark: "mapbox://styles/mapbox/dark-v10",
+  satellite: "mapbox://styles/mapbox/satellite-v9",
+  satelliteStreets: "mapbox://styles/mapbox/satellite-streets-v11",
 };
 
 const baseSettings = {
@@ -53,20 +70,22 @@ const baseSettings = {
   minZoom: 1,
 };
 
-const StyledMapContainer = styled('div')(({ theme }) => ({
+const StyledMapContainer = styled("div")(({ theme }) => ({
   zIndex: 0,
   height: 560,
-  overflow: 'hidden',
-  position: 'relative',
+  overflow: "hidden",
+  position: "relative",
   borderRadius: theme.shape.borderRadius,
-  '& .mapboxgl-ctrl-logo, .mapboxgl-ctrl-bottom-right': {
-    display: 'none',
+  "& .mapboxgl-ctrl-logo, .mapboxgl-ctrl-bottom-right": {
+    display: "none",
   },
 }));
 
 // ----------------------------------------------------------------------
 
-DemoMapPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoMapPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -81,7 +100,8 @@ export default function DemoMapPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -89,14 +109,14 @@ export default function DemoMapPage() {
             heading="Map"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Map' },
+              { name: "Map" },
             ]}
             moreLink={[
-              'http://visgl.github.io/react-map-gl',
-              'http://visgl.github.io/react-map-gl/examples',
+              "http://visgl.github.io/react-map-gl",
+              "http://visgl.github.io/react-map-gl/examples",
             ]}
           />
         </Container>
@@ -117,7 +137,11 @@ export default function DemoMapPage() {
             <CardHeader title="Markers & Popups" />
             <CardContent>
               <StyledMapContainer>
-                <MapMarkersPopups {...baseSettings} data={COUNTRIES} mapStyle={THEMES.light} />
+                <MapMarkersPopups
+                  {...baseSettings}
+                  data={COUNTRIES}
+                  mapStyle={THEMES.light}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>
@@ -126,7 +150,10 @@ export default function DemoMapPage() {
             <CardHeader title="Draggable Markers" />
             <CardContent>
               <StyledMapContainer>
-                <MapDraggableMarkers {...baseSettings} mapStyle={THEMES.light} />
+                <MapDraggableMarkers
+                  {...baseSettings}
+                  mapStyle={THEMES.light}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>
@@ -135,7 +162,10 @@ export default function DemoMapPage() {
             <CardHeader title="Geojson Animation" />
             <CardContent>
               <StyledMapContainer>
-                <MapGeoJSONAnimation {...baseSettings} mapStyle={THEMES.satelliteStreets} />
+                <MapGeoJSONAnimation
+                  {...baseSettings}
+                  mapStyle={THEMES.satelliteStreets}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>
@@ -164,7 +194,7 @@ export default function DemoMapPage() {
               <StyledMapContainer>
                 <MapViewportAnimation
                   {...baseSettings}
-                  data={CITIES.filter((city) => city.state === 'Texas')}
+                  data={CITIES.filter((city) => city.state === "Texas")}
                   mapStyle={THEMES.light}
                 />
               </StyledMapContainer>
@@ -175,7 +205,10 @@ export default function DemoMapPage() {
             <CardHeader title="Highlight By Filter" />
             <CardContent>
               <StyledMapContainer>
-                <MapHighlightByFilter {...baseSettings} mapStyle={THEMES.light} />
+                <MapHighlightByFilter
+                  {...baseSettings}
+                  mapStyle={THEMES.light}
+                />
               </StyledMapContainer>
             </CardContent>
           </Card>

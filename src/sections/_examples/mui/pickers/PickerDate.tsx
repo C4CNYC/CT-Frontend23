@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import isWeekend from 'date-fns/isWeekend';
+import { useState } from "react";
+import isWeekend from "date-fns/isWeekend";
 // @mui
-import { TextField } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { TextField } from "@mui/material";
+import { Masonry } from "@mui/lab";
 import {
   DatePicker,
   StaticDatePicker,
   MobileDatePicker,
   DesktopDatePicker,
-} from '@mui/x-date-pickers';
+} from "@mui/x-date-pickers";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
@@ -23,11 +23,13 @@ export default function PickerDate() {
         <DesktopDatePicker
           label="For desktop"
           value={value}
-          minDate={new Date('2017-01-01')}
+          minDate={new Date("2017-01-01")}
           onChange={(newValue) => {
             setValue(newValue);
           }}
-          renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
+          renderInput={(params) => (
+            <TextField fullWidth {...params} margin="normal" />
+          )}
         />
 
         <MobileDatePicker
@@ -37,7 +39,9 @@ export default function PickerDate() {
           onChange={(newValue) => {
             setValue(newValue);
           }}
-          renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
+          renderInput={(params) => (
+            <TextField fullWidth {...params} margin="normal" />
+          )}
         />
       </Block>
 
@@ -56,61 +60,86 @@ export default function PickerDate() {
 
       <Block title="Views playground">
         <DatePicker
-          views={['year']}
+          views={["year"]}
           label="Year only"
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth margin="normal" helperText={null} />
+            <TextField
+              {...params}
+              fullWidth
+              margin="normal"
+              helperText={null}
+            />
           )}
         />
         <DatePicker
-          views={['year', 'month']}
+          views={["year", "month"]}
           label="Year and Month"
-          minDate={new Date('2012-03-01')}
-          maxDate={new Date('2023-06-01')}
+          minDate={new Date("2012-03-01")}
+          maxDate={new Date("2023-06-01")}
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth margin="normal" helperText={null} />
+            <TextField
+              {...params}
+              fullWidth
+              margin="normal"
+              helperText={null}
+            />
           )}
         />
         <DatePicker
           openTo="year"
-          views={['year', 'month', 'day']}
+          views={["year", "month", "day"]}
           label="Year, month and date"
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth margin="normal" helperText={null} />
+            <TextField
+              {...params}
+              fullWidth
+              margin="normal"
+              helperText={null}
+            />
           )}
         />
         <DatePicker
-          views={['day', 'month', 'year']}
+          views={["day", "month", "year"]}
           label="Invert the order of views"
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth margin="normal" helperText={null} />
+            <TextField
+              {...params}
+              fullWidth
+              margin="normal"
+              helperText={null}
+            />
           )}
         />
         <DatePicker
-          views={['day']}
+          views={["day"]}
           label="Just date"
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
           }}
           renderInput={(params) => (
-            <TextField {...params} fullWidth margin="normal" helperText={null} />
+            <TextField
+              {...params}
+              fullWidth
+              margin="normal"
+              helperText={null}
+            />
           )}
         />
       </Block>

@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 // next
-import Head from 'next/head';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import { useRouter } from "next/router";
 // @mui
-import { Grid, Container } from '@mui/material';
+import { Grid, Container } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
+import { useDispatch, useSelector } from "../../../redux/store";
 import {
   resetCart,
   getCart,
@@ -22,12 +22,12 @@ import {
   applyDiscount,
   increaseQuantity,
   decreaseQuantity,
-} from '../../../redux/slices/product';
+} from "../../../redux/slices/product";
 // @types
-import { ICheckoutBillingAddress } from '../../../@types/product';
+import { ICheckoutBillingAddress } from "../../../@types/product";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { useSettingsContext } from '../../../components/settings';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../components/settings";
 // sections
 import {
   CheckoutCart,
@@ -35,11 +35,11 @@ import {
   CheckoutPayment,
   CheckoutOrderComplete,
   CheckoutBillingAddress,
-} from '../../../sections/@dashboard/e-commerce/checkout';
+} from "../../../sections/@dashboard/e-commerce/checkout";
 
 // ----------------------------------------------------------------------
 
-const STEPS = ['Cart', 'Billing & address', 'Payment'];
+const STEPS = ["Cart", "Billing & address", "Payment"];
 
 // ----------------------------------------------------------------------
 
@@ -124,27 +124,31 @@ export default function EcommerceCheckoutPage() {
         <title> Ecommerce: Checkout | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Checkout"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             {
-              name: 'E-Commerce',
+              name: "E-Commerce",
               href: PATH_DASHBOARD.eCommerce.root,
             },
-            { name: 'Checkout' },
+            { name: "Checkout" },
           ]}
         />
 
-        <Grid container justifyContent={completed ? 'center' : 'flex-start'}>
+        <Grid container justifyContent={completed ? "center" : "flex-start"}>
           <Grid item xs={12} md={8}>
             <CheckoutSteps activeStep={activeStep} steps={STEPS} />
           </Grid>
         </Grid>
 
         {completed ? (
-          <CheckoutOrderComplete open={completed} onReset={handleReset} onDownloadPDF={() => {}} />
+          <CheckoutOrderComplete
+            open={completed}
+            onReset={handleReset}
+            onDownloadPDF={() => {}}
+          />
         ) : (
           <>
             {activeStep === 0 && (

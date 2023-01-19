@@ -1,22 +1,22 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Box, Stack, Typography } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Grid, Container, Box, Stack, Typography } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from "../../routes/paths";
 // hooks
-import useResponsive from '../../hooks/useResponsive';
+import useResponsive from "../../hooks/useResponsive";
 // _mock
-import { _folders, _files } from '../../_mock/arrays';
+import { _folders, _files } from "../../_mock/arrays";
 // layouts
-import DashboardLayout from '../../layouts/dashboard';
+import DashboardLayout from "../../layouts/dashboard";
 // components
-import Iconify from '../../components/iconify';
-import Scrollbar from '../../components/scrollbar';
-import { UploadBox } from '../../components/upload';
-import { useSettingsContext } from '../../components/settings';
+import Iconify from "../../components/iconify";
+import Scrollbar from "../../components/scrollbar";
+import { UploadBox } from "../../components/upload";
+import { useSettingsContext } from "../../components/settings";
 // sections
 import {
   FileGeneralWidget,
@@ -24,33 +24,52 @@ import {
   FileGeneralRecentCard,
   FileGeneralDataActivity,
   FileGeneralStorageOverview,
-} from '../../sections/@dashboard/general/file';
-import { FilePanel, FileFolderCard, FileNewFolderDialog } from '../../sections/@dashboard/file';
+} from "../../sections/@dashboard/general/file";
+import {
+  FilePanel,
+  FileFolderCard,
+  FileNewFolderDialog,
+} from "../../sections/@dashboard/file";
 
 // ----------------------------------------------------------------------
 
 const GB = 1000000000 * 24;
 
 const TIME_LABELS = {
-  week: ['Mon', 'Tue', 'Web', 'Thu', 'Fri', 'Sat', 'Sun'],
-  month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  year: ['2018', '2019', '2020', '2021', '2022'],
+  week: ["Mon", "Tue", "Web", "Thu", "Fri", "Sat", "Sun"],
+  month: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ],
+  year: ["2018", "2019", "2020", "2021", "2022"],
 };
 
 // ----------------------------------------------------------------------
 
-GeneralFilePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+GeneralFilePage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
 export default function GeneralFilePage() {
   const theme = useTheme();
 
-  const smDown = useResponsive('down', 'sm');
+  const smDown = useResponsive("down", "sm");
 
   const { themeStretch } = useSettingsContext();
 
-  const [folderName, setFolderName] = useState('');
+  const [folderName, setFolderName] = useState("");
 
   const [files, setFiles] = useState<(File | string)[]>([]);
 
@@ -74,14 +93,16 @@ export default function GeneralFilePage() {
     setOpenUploadFile(false);
   };
 
-  const handleChangeFolderName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFolderName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setFolderName(event.target.value);
   };
 
   const handleCreateNewFolder = () => {
     handleCloseNewFolder();
-    setFolderName('');
-    console.log('CREATE NEW FOLDER', folderName);
+    setFolderName("");
+    console.log("CREATE NEW FOLDER", folderName);
   };
 
   const handleDrop = useCallback(
@@ -105,28 +126,36 @@ export default function GeneralFilePage() {
       }}
       data={[
         {
-          name: 'Images',
+          name: "Images",
           usedStorage: GB / 2,
           filesCount: 223,
           icon: <Box component="img" src="/assets/icons/files/ic_img.svg" />,
         },
         {
-          name: 'Media',
+          name: "Media",
           usedStorage: GB / 5,
           filesCount: 223,
           icon: <Box component="img" src="/assets/icons/files/ic_video.svg" />,
         },
         {
-          name: 'Documents',
+          name: "Documents",
           usedStorage: GB / 5,
           filesCount: 223,
-          icon: <Box component="img" src="/assets/icons/files/ic_document.svg" />,
+          icon: (
+            <Box component="img" src="/assets/icons/files/ic_document.svg" />
+          ),
         },
         {
-          name: 'Other',
+          name: "Other",
           usedStorage: GB / 10,
           filesCount: 223,
-          icon: <Iconify icon="eva:file-fill" width={24} sx={{ color: 'text.disabled' }} />,
+          icon: (
+            <Iconify
+              icon="eva:file-fill"
+              width={24}
+              sx={{ color: "text.disabled" }}
+            />
+          ),
         },
       ]}
     />
@@ -138,7 +167,7 @@ export default function GeneralFilePage() {
         <title> General: File | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'xl'}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <Grid container spacing={3}>
           {smDown && (
             <Grid item xs={12}>
@@ -186,30 +215,42 @@ export default function GeneralFilePage() {
                 ],
                 series: [
                   {
-                    type: 'Week',
+                    type: "Week",
                     data: [
-                      { name: 'Images', data: [20, 34, 48, 65, 37, 48] },
-                      { name: 'Media', data: [10, 34, 13, 26, 27, 28] },
-                      { name: 'Documents', data: [10, 14, 13, 16, 17, 18] },
-                      { name: 'Other', data: [5, 12, 6, 7, 8, 9] },
+                      { name: "Images", data: [20, 34, 48, 65, 37, 48] },
+                      { name: "Media", data: [10, 34, 13, 26, 27, 28] },
+                      { name: "Documents", data: [10, 14, 13, 16, 17, 18] },
+                      { name: "Other", data: [5, 12, 6, 7, 8, 9] },
                     ],
                   },
                   {
-                    type: 'Month',
+                    type: "Month",
                     data: [
-                      { name: 'Images', data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34] },
-                      { name: 'Media', data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34] },
-                      { name: 'Documents', data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34] },
-                      { name: 'Other', data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34] },
+                      {
+                        name: "Images",
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
+                      },
+                      {
+                        name: "Media",
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
+                      },
+                      {
+                        name: "Documents",
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
+                      },
+                      {
+                        name: "Other",
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45, 12, 43, 34],
+                      },
                     ],
                   },
                   {
-                    type: 'Year',
+                    type: "Year",
                     data: [
-                      { name: 'Images', data: [10, 34, 13, 56, 77] },
-                      { name: 'Media', data: [10, 34, 13, 56, 77] },
-                      { name: 'Documents', data: [10, 34, 13, 56, 77] },
-                      { name: 'Other', data: [10, 34, 13, 56, 77] },
+                      { name: "Images", data: [10, 34, 13, 56, 77] },
+                      { name: "Media", data: [10, 34, 13, 56, 77] },
+                      { name: "Documents", data: [10, 34, 13, 56, 77] },
+                      { name: "Other", data: [10, 34, 13, 56, 77] },
                     ],
                   },
                 ],
@@ -230,7 +271,7 @@ export default function GeneralFilePage() {
                     <FileFolderCard
                       key={folder.id}
                       folder={folder}
-                      onDelete={() => console.log('DELETE', folder.id)}
+                      onDelete={() => console.log("DELETE", folder.id)}
                       sx={{
                         ...(_folders.length > 3 && {
                           minWidth: 222,
@@ -253,7 +294,7 @@ export default function GeneralFilePage() {
                   <FileGeneralRecentCard
                     key={file.id}
                     file={file}
-                    onDelete={() => console.log('DELETE', file.id)}
+                    onDelete={() => console.log("DELETE", file.id)}
                   />
                 ))}
               </Stack>
@@ -264,7 +305,11 @@ export default function GeneralFilePage() {
             <UploadBox
               onDrop={handleDrop}
               placeholder={
-                <Stack spacing={0.5} alignItems="center" sx={{ color: 'text.disabled' }}>
+                <Stack
+                  spacing={0.5}
+                  alignItems="center"
+                  sx={{ color: "text.disabled" }}
+                >
                   <Iconify icon="eva:cloud-upload-fill" width={40} />
                   <Typography variant="body2">Upload file</Typography>
                 </Stack>
@@ -272,20 +317,25 @@ export default function GeneralFilePage() {
               sx={{
                 mb: 3,
                 py: 2.5,
-                width: 'auto',
-                height: 'auto',
+                width: "auto",
+                height: "auto",
                 borderRadius: 1.5,
               }}
             />
 
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>{renderStorageOverview}</Box>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              {renderStorageOverview}
+            </Box>
 
             <FileGeneralUpgrade sx={{ mt: 3 }} />
           </Grid>
         </Grid>
       </Container>
 
-      <FileNewFolderDialog open={openUploadFile} onClose={handleCloseUploadFile} />
+      <FileNewFolderDialog
+        open={openUploadFile}
+        onClose={handleCloseUploadFile}
+      />
 
       <FileNewFolderDialog
         open={openNewFolder}

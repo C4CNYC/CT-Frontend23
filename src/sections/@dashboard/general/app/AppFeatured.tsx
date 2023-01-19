@@ -1,22 +1,25 @@
-import { m } from 'framer-motion';
-import { useState, useRef } from 'react';
+import { m } from "framer-motion";
+import { useState, useRef } from "react";
 // @mui
-import { alpha, useTheme, styled } from '@mui/material/styles';
-import { Stack, Card, Typography, Link, CardProps } from '@mui/material';
+import { alpha, useTheme, styled } from "@mui/material/styles";
+import { Stack, Card, Typography, Link, CardProps } from "@mui/material";
 // components
-import Image from '../../../../components/image';
-import { MotionContainer, varFade } from '../../../../components/animate';
-import Carousel, { CarouselDots, CarouselArrows } from '../../../../components/carousel';
+import Image from "../../../../components/image";
+import { MotionContainer, varFade } from "../../../../components/animate";
+import Carousel, {
+  CarouselDots,
+  CarouselArrows,
+} from "../../../../components/carousel";
 
 // ----------------------------------------------------------------------
 
-const StyledOverlay = styled('div')(({ theme }) => ({
+const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
   zIndex: 8,
-  position: 'absolute',
+  position: "absolute",
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
 }));
 
@@ -38,7 +41,9 @@ export default function AppFeatured({ list, ...other }: Props) {
 
   const carouselRef = useRef<Carousel>(null);
 
-  const [currentIndex, setCurrentIndex] = useState(theme.direction === 'rtl' ? list.length - 1 : 0);
+  const [currentIndex, setCurrentIndex] = useState(
+    theme.direction === "rtl" ? list.length - 1 : 0
+  );
 
   const carouselSettings = {
     speed: 800,
@@ -47,13 +52,13 @@ export default function AppFeatured({ list, ...other }: Props) {
     autoplay: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     beforeChange: (current: number, next: number) => setCurrentIndex(next),
     ...CarouselDots({
       sx: {
         top: 20,
         left: 20,
-        position: 'absolute',
+        position: "absolute",
       },
     }),
   };
@@ -70,14 +75,18 @@ export default function AppFeatured({ list, ...other }: Props) {
     <Card {...other}>
       <Carousel ref={carouselRef} {...carouselSettings}>
         {list.map((app, index) => (
-          <CarouselItem key={app.id} item={app} isActive={index === currentIndex} />
+          <CarouselItem
+            key={app.id}
+            item={app}
+            isActive={index === currentIndex}
+          />
         ))}
       </Carousel>
 
       <CarouselArrows
         onNext={handleNext}
         onPrevious={handlePrev}
-        sx={{ top: 8, right: 8, position: 'absolute', color: 'common.white' }}
+        sx={{ top: 8, right: 8, position: "absolute", color: "common.white" }}
       />
     </Card>
   );
@@ -94,7 +103,7 @@ function CarouselItem({ item, isActive }: CarouselItemProps) {
   const { image, title, description } = item;
 
   return (
-    <MotionContainer action animate={isActive} sx={{ position: 'relative' }}>
+    <MotionContainer action animate={isActive} sx={{ position: "relative" }}>
       <Stack
         spacing={1}
         sx={{
@@ -102,9 +111,9 @@ function CarouselItem({ item, isActive }: CarouselItemProps) {
           width: 1,
           bottom: 0,
           zIndex: 9,
-          textAlign: 'left',
-          position: 'absolute',
-          color: 'common.white',
+          textAlign: "left",
+          position: "absolute",
+          color: "common.white",
         }}
       >
         <m.div variants={varFade().inRight}>

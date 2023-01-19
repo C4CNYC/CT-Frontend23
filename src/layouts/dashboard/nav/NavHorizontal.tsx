@@ -1,15 +1,15 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { AppBar, Box, BoxProps, Toolbar } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
 // config
-import { HEADER } from '../../../config-global';
+import { HEADER } from "../../../config-global";
 // utils
-import { bgBlur } from '../../../utils/cssStyles';
+import { bgBlur } from "../../../utils/cssStyles";
 // components
-import { NavSectionHorizontal } from '../../../components/nav-section';
+import { NavSectionHorizontal } from "../../../components/nav-section";
 //
-import navConfig from './config-navigation';
+import navConfig from "./config-navigation";
 
 // ----------------------------------------------------------------------
 
@@ -54,9 +54,9 @@ function Shadow({ sx, ...other }: BoxProps) {
         height: 24,
         zIndex: -1,
         width: 1,
-        m: 'auto',
-        borderRadius: '50%',
-        position: 'absolute',
+        m: "auto",
+        borderRadius: "50%",
+        position: "absolute",
         boxShadow: (theme) => theme.customShadows.z8,
         ...sx,
       }}

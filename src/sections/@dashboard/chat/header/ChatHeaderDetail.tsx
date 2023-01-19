@@ -1,13 +1,16 @@
 // @mui
-import { Stack, Box, Link, Typography, IconButton } from '@mui/material';
+import { Stack, Box, Link, Typography, IconButton } from "@mui/material";
 // utils
-import { fToNow } from '../../../../utils/formatTime';
+import { fToNow } from "../../../../utils/formatTime";
 // @types
-import { IChatParticipant } from '../../../../@types/chat';
+import { IChatParticipant } from "../../../../@types/chat";
 // components
-import Iconify from '../../../../components/iconify';
-import BadgeStatus from '../../../../components/badge-status';
-import { CustomAvatar, CustomAvatarGroup } from '../../../../components/custom-avatar';
+import Iconify from "../../../../components/iconify";
+import BadgeStatus from "../../../../components/badge-status";
+import {
+  CustomAvatar,
+  CustomAvatarGroup,
+} from "../../../../components/custom-avatar";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +35,11 @@ export default function ChatHeaderDetail({ participants }: Props) {
         <Stack flexGrow={1}>
           <CustomAvatarGroup max={3}>
             {participants.map((participant) => (
-              <CustomAvatar key={participant.id} alt={participant.name} src={participant.avatar} />
+              <CustomAvatar
+                key={participant.id}
+                alt={participant.name}
+                src={participant.avatar}
+              />
             ))}
           </CustomAvatarGroup>
 
@@ -40,9 +47,9 @@ export default function ChatHeaderDetail({ participants }: Props) {
             variant="body2"
             sx={{
               mt: 0.5,
-              alignItems: 'center',
-              display: 'inline-flex',
-              color: 'text.secondary',
+              alignItems: "center",
+              display: "inline-flex",
+              color: "text.secondary",
             }}
           >
             {participants.length} persons
@@ -62,11 +69,12 @@ export default function ChatHeaderDetail({ participants }: Props) {
           <div>
             <Typography variant="subtitle2">{participantInfo?.name}</Typography>
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {participantInfo?.status === 'offline' ? (
-                participantInfo?.lastActivity && fToNow(participantInfo?.lastActivity)
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {participantInfo?.status === "offline" ? (
+                participantInfo?.lastActivity &&
+                fToNow(participantInfo?.lastActivity)
               ) : (
-                <Box component="span" sx={{ textTransform: 'capitalize' }}>
+                <Box component="span" sx={{ textTransform: "capitalize" }}>
                   {participantInfo?.status}
                 </Box>
               )}

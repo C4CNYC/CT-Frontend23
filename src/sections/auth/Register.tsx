@@ -1,43 +1,61 @@
-// next
-import NextLink from 'next/link';
-// @mui
-import { Stack, Typography, Link } from '@mui/material';
-// layouts
-import LoginLayout from '../../layouts/login';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
-//
-import AuthWithSocial from './AuthWithSocial';
-import AuthRegisterForm from './AuthRegisterForm';
-
-// ----------------------------------------------------------------------
+import NextLink from "next/link";
+import {useState} from 'react';
+import { Stack, Typography, Link } from "@mui/material";
+import LoginLayout from "../../layouts/login";
+import { PATH_AUTH } from "../../routes/paths";
+import AuthWithSocial from "./AuthWithSocial";
+import AuthRegisterForm from "./AuthRegisterForm";
+import {useTheme} from "@mui/material/styles";
+import Stepper from './Stepper/Stepper'
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import IconButton from '@mui/material/IconButton';
 
 export default function Register() {
+  const theme = useTheme();
+  const [stepperVisible, setStepperVisible] = useState(false);
+
   return (
-    <LoginLayout title="Manage the job more effectively with Minimal">
-      <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-        <Typography variant="h4">Get started absolutely free.</Typography>
+    <LoginLayout title="Hi, I’m Mumu." subtitle="So glad you’re here!">
 
-        <Stack direction="row" spacing={0.5}>
-          <Typography variant="body2"> Already have an account? </Typography>
-
-          <Link component={NextLink} href={PATH_AUTH.login} variant="subtitle2">
-            Sign in
-          </Link>
-        </Stack>
+      <Stack spacing={2} sx={{ position: "relative" }}>
+        <Typography variant="h4" sx={{textAlign: 'center'}}>Sign up as a Teacher</Typography>
+        <Typography variant="h6" sx={{color: theme.palette.grey[600], fontWeight: 400, textAlign: 'center'}}>& sign-up your school.</Typography>
+        <IconButton aria-label="info"
+                    sx={{position: 'absolute',
+                      right: '-40px',
+                      padding: '10px',
+                      backgroundColor: '#FBDD3F',
+                      borderTopLeftRadius: '8px',
+                      borderBottomLeftRadius: '8px',
+                      borderBottomRightRadius: 0,
+                      borderTopRightRadius: 0
+                    }}>
+          <EmojiObjectsIcon sx={{color: '#000'}}/>
+        </IconButton>
       </Stack>
 
-      <AuthRegisterForm />
+      {!stepperVisible ?
+        <AuthRegisterForm /> :
+        <Stack direction="row" spacing={0.5} sx={{ mt: 2, justifyContent: 'center' }}>
+          <Stepper />
+        </Stack>
+      }
+      <span onClick={() => setStepperVisible(!stepperVisible)}>show/hide stepper</span>
 
       <Typography
         component="div"
-        sx={{ color: 'text.secondary', mt: 3, typography: 'caption', textAlign: 'center' }}
+        sx={{
+          color: "text.secondary",
+          mt: 3,
+          typography: "caption",
+          textAlign: "center",
+        }}
       >
-        {'By signing up, I agree to '}
+        {"By signing up, I agree to "}
         <Link underline="always" color="text.primary">
           Terms of Service
         </Link>
-        {' and '}
+        {" and "}
         <Link underline="always" color="text.primary">
           Privacy Policy
         </Link>

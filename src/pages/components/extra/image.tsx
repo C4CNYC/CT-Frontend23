@@ -1,24 +1,36 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Box, Card, Container, Typography, CardHeader } from '@mui/material';
+import { Box, Card, Container, Typography, CardHeader } from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // _mock
-import _mock from '../../../_mock';
+import _mock from "../../../_mock";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Image from '../../../components/image';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Image from "../../../components/image";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
-DemoImagePage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoImagePage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
-const RATIO = ['4/3', '3/4', '6/4', '4/6', '16/9', '9/16', '21/9', '9/21', '1/1'] as const;
+const RATIO = [
+  "4/3",
+  "3/4",
+  "6/4",
+  "4/6",
+  "16/9",
+  "9/16",
+  "21/9",
+  "9/21",
+  "1/1",
+] as const;
 
 const IMAGES = RATIO.map((value, index) => ({
   value,
@@ -36,7 +48,8 @@ export default function DemoImagePage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -44,10 +57,10 @@ export default function DemoImagePage() {
             heading="Image"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Image' },
+              { name: "Image" },
             ]}
           />
         </Container>
@@ -60,15 +73,15 @@ export default function DemoImagePage() {
             gap={3}
             display="grid"
             gridTemplateColumns={{
-              xs: 'repeat(2, 1fr)',
-              sm: 'repeat(3, 1fr)',
-              md: 'repeat(4, 1fr)',
+              xs: "repeat(2, 1fr)",
+              sm: "repeat(3, 1fr)",
+              md: "repeat(4, 1fr)",
             }}
             sx={{ p: 3 }}
           >
             {IMAGES.map((img) => (
               <Box key={img.value}>
-                <Typography variant="overline" sx={{ color: 'text.secondary' }}>
+                <Typography variant="overline" sx={{ color: "text.secondary" }}>
                   {img.value}
                 </Typography>
 

@@ -1,22 +1,24 @@
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
+import Head from "next/head";
+import NextLink from "next/link";
 // @mui
-import { Link, Typography } from '@mui/material';
+import { Link, Typography } from "@mui/material";
 // layouts
-import CompactLayout from '../../layouts/compact';
+import CompactLayout from "../../layouts/compact";
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from "../../routes/paths";
 // components
-import Iconify from '../../components/iconify';
+import Iconify from "../../components/iconify";
 // sections
-import AuthNewPasswordForm from '../../sections/auth/AuthNewPasswordForm';
+import AuthNewPasswordForm from "../../sections/auth/AuthNewPasswordForm";
 // assets
-import { SentIcon } from '../../assets/icons';
+import { SentIcon } from "../../assets/icons";
 
 // ----------------------------------------------------------------------
 
-NewPasswordPage.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>;
+NewPasswordPage.getLayout = (page: React.ReactElement) => (
+  <CompactLayout>{page}</CompactLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +35,7 @@ export default function NewPasswordPage() {
         Request sent successfully!
       </Typography>
 
-      <Typography sx={{ color: 'text.secondary', mb: 5 }}>
+      <Typography sx={{ color: "text.secondary", mb: 5 }}>
         We&apos;ve sent a 6-digit confirmation email to your email.
         <br />
         Please enter the code in below box to verify your email.
@@ -52,9 +54,9 @@ export default function NewPasswordPage() {
         color="inherit"
         variant="subtitle2"
         sx={{
-          mx: 'auto',
-          alignItems: 'center',
-          display: 'inline-flex',
+          mx: "auto",
+          alignItems: "center",
+          display: "inline-flex",
         }}
       >
         <Iconify icon="eva:chevron-left-fill" width={16} />

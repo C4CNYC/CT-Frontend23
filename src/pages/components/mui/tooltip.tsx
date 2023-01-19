@@ -1,18 +1,27 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Masonry } from '@mui/lab';
-import { Box, Fab, Zoom, Fade, Button, Tooltip, Container, IconButton } from '@mui/material';
+import { Masonry } from "@mui/lab";
+import {
+  Box,
+  Fab,
+  Zoom,
+  Fade,
+  Button,
+  Tooltip,
+  Container,
+  IconButton,
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Iconify from '../../../components/iconify';
-import { FabButtonAnimate } from '../../../components/animate';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Iconify from "../../../components/iconify";
+import { FabButtonAnimate } from "../../../components/animate";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 // sections
-import { Block } from '../../../sections/_examples/Block';
+import { Block } from "../../../sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
@@ -23,16 +32,18 @@ Nullam eget est sed sem iaculis gravida eget vitae justo.
 `;
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
 } as const;
 
 // ----------------------------------------------------------------------
 
-MUITooltipPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+MUITooltipPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +58,8 @@ export default function MUITooltipPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -55,12 +67,12 @@ export default function MUITooltipPage() {
             heading="Tooltip"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Tooltip' },
+              { name: "Tooltip" },
             ]}
-            moreLink={['https://mui.com/components/tooltips']}
+            moreLink={["https://mui.com/components/tooltips"]}
           />
         </Container>
       </Box>
@@ -116,7 +128,7 @@ export default function MUITooltipPage() {
               <Button color="inherit">Custom Width [500px]</Button>
             </Tooltip>
 
-            <Tooltip title={LONG_TEXT} sx={{ maxWidth: 'none' }}>
+            <Tooltip title={LONG_TEXT} sx={{ maxWidth: "none" }}>
               <Button color="inherit">No wrapping</Button>
             </Tooltip>
           </Block>
@@ -126,7 +138,11 @@ export default function MUITooltipPage() {
               <Button color="inherit">Grow</Button>
             </Tooltip>
 
-            <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title="Add">
+            <Tooltip
+              TransitionComponent={Fade}
+              TransitionProps={{ timeout: 600 }}
+              title="Add"
+            >
               <Button color="inherit">Fade</Button>
             </Tooltip>
 

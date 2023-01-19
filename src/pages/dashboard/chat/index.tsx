@@ -1,13 +1,15 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // sections
-import { Chat } from '../../../sections/@dashboard/chat';
+import { Chat } from "../../../sections/@dashboard/chat";
 
 // ----------------------------------------------------------------------
 
-ChatPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+ChatPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 

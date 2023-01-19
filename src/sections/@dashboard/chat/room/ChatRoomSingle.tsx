@@ -1,11 +1,11 @@
 // @mui
-import { Avatar, Divider, Collapse, Typography, Stack } from '@mui/material';
+import { Avatar, Divider, Collapse, Typography, Stack } from "@mui/material";
 // @types
-import { IChatParticipant } from '../../../../@types/chat';
+import { IChatParticipant } from "../../../../@types/chat";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import ChatRoomCollapseButton from './ChatRoomCollapseButton';
+import ChatRoomCollapseButton from "./ChatRoomCollapseButton";
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,11 @@ type Props = {
   onCollapse: VoidFunction;
 };
 
-export default function ChatRoomSingle({ participant, isCollapse, onCollapse }: Props) {
+export default function ChatRoomSingle({
+  participant,
+  isCollapse,
+  onCollapse,
+}: Props) {
   if (!participant) {
     return null;
   }
@@ -31,7 +35,7 @@ export default function ChatRoomSingle({ participant, isCollapse, onCollapse }: 
 
         <Typography variant="subtitle1">{participant.name}</Typography>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+        <Typography variant="body2" sx={{ color: "text.secondary", mt: 0.5 }}>
           {participant.role}
         </Typography>
       </Stack>
@@ -50,9 +54,9 @@ export default function ChatRoomSingle({ participant, isCollapse, onCollapse }: 
           }}
         >
           {[
-            { icon: 'eva:pin-fill', value: participant.address },
-            { icon: 'eva:phone-fill', value: participant.phone },
-            { icon: 'eva:email-fill', value: participant.email },
+            { icon: "eva:pin-fill", value: participant.address },
+            { icon: "eva:phone-fill", value: participant.phone },
+            { icon: "eva:email-fill", value: participant.email },
           ].map((row, index) => (
             <Stack key={row.icon} direction="row">
               <Iconify
@@ -61,7 +65,7 @@ export default function ChatRoomSingle({ participant, isCollapse, onCollapse }: 
                   mr: 1,
                   mt: 0.5,
                   flexShrink: 0,
-                  color: 'text.disabled',
+                  color: "text.disabled",
                 }}
               />
               <Typography variant="body2" noWrap={index === 2}>

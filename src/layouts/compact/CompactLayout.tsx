@@ -1,13 +1,13 @@
 // next
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 // @mui
-import { Stack, Container } from '@mui/material';
+import { Stack, Container } from "@mui/material";
 // hooks
-import useOffSetTop from '../../hooks/useOffSetTop';
+import useOffSetTop from "../../hooks/useOffSetTop";
 // config
-import { HEADER } from '../../config-global';
+import { HEADER } from "../../config-global";
 //
-const Header = dynamic(() => import('./Header'), { ssr: false });
+const Header = dynamic(() => import("./Header"), { ssr: false });
 
 // ----------------------------------------------------------------------
 
@@ -26,11 +26,11 @@ export default function CompactLayout({ children }: Props) {
         <Stack
           sx={{
             py: 12,
-            m: 'auto',
+            m: "auto",
             maxWidth: 400,
-            minHeight: '100vh',
-            textAlign: 'center',
-            justifyContent: 'center',
+            minHeight: "100vh",
+            textAlign: "center",
+            justifyContent: "center",
           }}
         >
           {children}

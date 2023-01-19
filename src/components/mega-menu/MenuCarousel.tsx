@@ -1,19 +1,23 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 // next
-import NextLink from 'next/link';
+import NextLink from "next/link";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, Link } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, Link } from "@mui/material";
 // @types
-import { MenuCarouselProps } from './types';
+import { MenuCarouselProps } from "./types";
 //
-import Image from '../image';
-import TextMaxLine from '../text-max-line';
-import Carousel, { CarouselDots, CarouselArrows } from '../carousel';
+import Image from "../image";
+import TextMaxLine from "../text-max-line";
+import Carousel, { CarouselDots, CarouselArrows } from "../carousel";
 
 // ----------------------------------------------------------------------
 
-export default function MenuCarousel({ products, numberShow, sx }: MenuCarouselProps) {
+export default function MenuCarousel({
+  products,
+  numberShow,
+  sx,
+}: MenuCarouselProps) {
   const theme = useTheme();
   const carouselRef = useRef<Carousel | null>(null);
 
@@ -22,7 +26,7 @@ export default function MenuCarousel({ products, numberShow, sx }: MenuCarouselP
     arrows: false,
     slidesToShow: numberShow,
     slidesToScroll: numberShow,
-    rtl: Boolean(theme.direction === 'rtl'),
+    rtl: Boolean(theme.direction === "rtl"),
     ...CarouselDots(),
   };
 
@@ -35,32 +39,32 @@ export default function MenuCarousel({ products, numberShow, sx }: MenuCarouselP
   };
 
   return (
-    <Box sx={{ position: 'relative', ...sx }}>
+    <Box sx={{ position: "relative", ...sx }}>
       <CarouselArrows
         filled
         onNext={handleNext}
         onPrevious={handlePrev}
         leftButtonProps={{
-          size: 'small',
+          size: "small",
           sx: { top: 56, left: -8 },
         }}
         rightButtonProps={{
-          size: 'small',
+          size: "small",
           sx: { top: 56, right: -8 },
         }}
       >
         <Carousel ref={carouselRef} {...carouselSettings}>
           {products.map((product) => (
-            <Box key={product.name} sx={{ px: 1, textAlign: 'center' }}>
+            <Box key={product.name} sx={{ px: 1, textAlign: "center" }}>
               <Link
                 component={NextLink}
                 href={product.path}
                 color="inherit"
                 underline="none"
                 sx={{
-                  display: 'block',
-                  transition: theme.transitions.create('all'),
-                  '&:hover': { color: 'primary.main' },
+                  display: "block",
+                  transition: theme.transitions.create("all"),
+                  "&:hover": { color: "primary.main" },
                 }}
               >
                 <Image
@@ -71,7 +75,11 @@ export default function MenuCarousel({ products, numberShow, sx }: MenuCarouselP
                   sx={{ borderRadius: 1, mb: 1 }}
                 />
 
-                <TextMaxLine line={2} variant="caption" sx={{ fontWeight: 'fontWeightMedium' }}>
+                <TextMaxLine
+                  line={2}
+                  variant="caption"
+                  sx={{ fontWeight: "fontWeightMedium" }}
+                >
                   {product.name}
                 </TextMaxLine>
               </Link>

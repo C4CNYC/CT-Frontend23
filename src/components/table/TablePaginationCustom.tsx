@@ -1,5 +1,5 @@
 // @mui
-import { Theme } from '@mui/material/styles';
+import { Theme } from "@mui/material/styles";
 import {
   Box,
   Switch,
@@ -7,7 +7,7 @@ import {
   TablePagination,
   FormControlLabel,
   TablePaginationProps,
-} from '@mui/material';
+} from "@mui/material";
 //
 
 // ----------------------------------------------------------------------
@@ -26,8 +26,12 @@ export default function TablePaginationCustom({
   ...other
 }: Props & TablePaginationProps) {
   return (
-    <Box sx={{ position: 'relative', ...sx }}>
-      <TablePagination rowsPerPageOptions={rowsPerPageOptions} component="div" {...other} />
+    <Box sx={{ position: "relative", ...sx }}>
+      <TablePagination
+        rowsPerPageOptions={rowsPerPageOptions}
+        component="div"
+        {...other}
+      />
 
       {onChangeDense && (
         <FormControlLabel
@@ -38,7 +42,7 @@ export default function TablePaginationCustom({
             py: 1.5,
             top: 0,
             position: {
-              md: 'absolute',
+              md: "absolute",
             },
           }}
         />

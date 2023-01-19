@@ -1,7 +1,7 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,12 @@ function PlanFreeIcon({ ...other }: BoxProps) {
 
   return (
     <Box {...other}>
-      <svg width="100%" height="100%" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 80 80"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <g transform="translate(9.167 20)">
           <path fill={PRIMARY_DARK} d="M53.333 17.5H61.666V25H53.333z" />
 

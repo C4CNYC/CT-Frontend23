@@ -1,14 +1,14 @@
-import { ApexOptions } from 'apexcharts';
+import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Card, Typography, Stack, CardProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Card, Typography, Stack, CardProps } from "@mui/material";
 // utils
-import { fCurrency, fPercent } from '../../../../utils/formatNumber';
+import { fCurrency, fPercent } from "../../../../utils/formatNumber";
 // components
-import Iconify from '../../../../components/iconify';
-import Chart, { useChart } from '../../../../components/chart';
+import Iconify from "../../../../components/iconify";
+import Chart, { useChart } from "../../../../components/chart";
 //
-import { ColorSchema } from '../../../../theme/palette';
+import { ColorSchema } from "../../../../theme/palette";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ interface Props extends CardProps {
 export default function BookingTotalIncomes({
   total,
   percent,
-  color = 'primary',
+  color = "primary",
   chart,
   sx,
   ...other
@@ -67,7 +67,7 @@ export default function BookingTotalIncomes({
       y: {
         formatter: (value: number) => fCurrency(value),
         title: {
-          formatter: () => '',
+          formatter: () => "",
         },
       },
     },
@@ -88,16 +88,27 @@ export default function BookingTotalIncomes({
     >
       <Stack direction="row" justifyContent="space-between" sx={{ mb: 3 }}>
         <div>
-          <Typography sx={{ mb: 2, typography: 'subtitle2' }}>Total Incomes</Typography>
-          <Typography sx={{ typography: 'h3' }}>{fCurrency(total)}</Typography>
+          <Typography sx={{ mb: 2, typography: "subtitle2" }}>
+            Total Incomes
+          </Typography>
+          <Typography sx={{ typography: "h3" }}>{fCurrency(total)}</Typography>
         </div>
 
         <div>
-          <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ mb: 0.6 }}>
-            <Iconify icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'} />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{ mb: 0.6 }}
+          >
+            <Iconify
+              icon={
+                percent >= 0 ? "eva:trending-up-fill" : "eva:trending-down-fill"
+              }
+            />
 
             <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
-              {percent > 0 && '+'}
+              {percent > 0 && "+"}
               {fPercent(percent)}
             </Typography>
           </Stack>
@@ -108,7 +119,12 @@ export default function BookingTotalIncomes({
         </div>
       </Stack>
 
-      <Chart type="area" series={[{ data: series }]} options={chartOptions} height={132} />
+      <Chart
+        type="area"
+        series={[{ data: series }]}
+        options={chartOptions}
+        height={132}
+      />
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Card,
@@ -11,10 +11,10 @@ import {
   IconButton,
   CheckboxProps,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
 
 // ----------------------------------------------------------------------
 
@@ -29,8 +29,13 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AnalyticsTasks({ title, subheader, list, ...other }: Props) {
-  const [selected, setSelected] = useState(['2']);
+export default function AnalyticsTasks({
+  title,
+  subheader,
+  list,
+  ...other
+}: Props) {
+  const [selected, setSelected] = useState(["2"]);
 
   const handleClickComplete = (taskId: string) => {
     const tasksCompleted = selected.includes(taskId)
@@ -75,22 +80,22 @@ function TaskItem({ task, checked, onChange }: TaskItemProps) {
 
   const handleMarkComplete = () => {
     handleClosePopover();
-    console.log('MARK COMPLETE', task.id);
+    console.log("MARK COMPLETE", task.id);
   };
 
   const handleShare = () => {
     handleClosePopover();
-    console.log('SHARE', task.id);
+    console.log("SHARE", task.id);
   };
 
   const handleEdit = () => {
     handleClosePopover();
-    console.log('EDIT', task.id);
+    console.log("EDIT", task.id);
   };
 
   const handleDelete = () => {
     handleClosePopover();
-    console.log('DELETE', task.id);
+    console.log("DELETE", task.id);
   };
 
   return (
@@ -101,8 +106,8 @@ function TaskItem({ task, checked, onChange }: TaskItemProps) {
           px: 2,
           py: 0.75,
           ...(checked && {
-            color: 'text.disabled',
-            textDecoration: 'line-through',
+            color: "text.disabled",
+            textDecoration: "line-through",
           }),
         }}
       >
@@ -114,14 +119,18 @@ function TaskItem({ task, checked, onChange }: TaskItemProps) {
 
         <IconButton
           size="large"
-          color={openPopover ? 'inherit' : 'default'}
+          color={openPopover ? "inherit" : "default"}
           onClick={handleOpenPopover}
         >
           <Iconify icon="eva:more-vertical-fill" />
         </IconButton>
       </Stack>
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} arrow="right-top">
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        arrow="right-top"
+      >
         <MenuItem onClick={handleMarkComplete}>
           <Iconify icon="eva:checkmark-circle-2-fill" />
           Mark Complete
@@ -137,9 +146,9 @@ function TaskItem({ task, checked, onChange }: TaskItemProps) {
           Share
         </MenuItem>
 
-        <Divider sx={{ borderStyle: 'dashed' }} />
+        <Divider sx={{ borderStyle: "dashed" }} />
 
-        <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
+        <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" />
           Delete
         </MenuItem>

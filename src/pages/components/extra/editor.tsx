@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState } from "react";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
 import {
   Box,
@@ -11,26 +11,28 @@ import {
   CardHeader,
   Typography,
   CardContent,
-} from '@mui/material';
+} from "@mui/material";
 // routes
-import { PATH_PAGE } from '../../../routes/paths';
+import { PATH_PAGE } from "../../../routes/paths";
 // layouts
-import MainLayout from '../../../layouts/main';
+import MainLayout from "../../../layouts/main";
 // components
-import Editor from '../../../components/editor';
-import Markdown from '../../../components/markdown';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
+import Editor from "../../../components/editor";
+import Markdown from "../../../components/markdown";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
-DemoEditorPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+DemoEditorPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
 export default function DemoEditorPage() {
-  const [quillSimple, setQuillSimple] = useState('');
+  const [quillSimple, setQuillSimple] = useState("");
 
-  const [quillFull, setQuillFull] = useState('');
+  const [quillFull, setQuillFull] = useState("");
 
   return (
     <>
@@ -42,7 +44,8 @@ export default function DemoEditorPage() {
         sx={{
           pt: 6,
           pb: 1,
-          bgcolor: (theme) => (theme.palette.mode === 'light' ? 'grey.200' : 'grey.800'),
+          bgcolor: (theme) =>
+            theme.palette.mode === "light" ? "grey.200" : "grey.800",
         }}
       >
         <Container>
@@ -50,12 +53,12 @@ export default function DemoEditorPage() {
             heading="Editor"
             links={[
               {
-                name: 'Components',
+                name: "Components",
                 href: PATH_PAGE.components,
               },
-              { name: 'Editor' },
+              { name: "Editor" },
             ]}
-            moreLink={['https://github.com/zenoamaro/react-quill']}
+            moreLink={["https://github.com/zenoamaro/react-quill"]}
           />
         </Container>
       </Box>
@@ -78,13 +81,17 @@ export default function DemoEditorPage() {
 
           <Grid item xs={12} md={4}>
             <Stack spacing={3} sx={{ height: 1 }}>
-              <Card sx={{ height: 1, boxShadow: 0, bgcolor: 'background.neutral' }}>
+              <Card
+                sx={{ height: 1, boxShadow: 0, bgcolor: "background.neutral" }}
+              >
                 <CardHeader title="Preview Plain Text" />
                 <Box sx={{ p: 3 }}>
                   <Markdown children={quillSimple} />
                 </Box>
               </Card>
-              <Card sx={{ height: 1, boxShadow: 0, bgcolor: 'background.neutral' }}>
+              <Card
+                sx={{ height: 1, boxShadow: 0, bgcolor: "background.neutral" }}
+              >
                 <CardHeader title="Preview Html" />
                 <Typography sx={{ p: 3 }}>{quillSimple}</Typography>
               </Card>

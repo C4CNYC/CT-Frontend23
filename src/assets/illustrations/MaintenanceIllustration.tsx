@@ -1,9 +1,9 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box, BoxProps } from '@mui/material';
+import { useTheme } from "@mui/material/styles";
+import { Box, BoxProps } from "@mui/material";
 //
-import BackgroundIllustration from './BackgroundIllustration';
+import BackgroundIllustration from "./BackgroundIllustration";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +20,12 @@ function MaintenanceIllustration({ ...other }: BoxProps) {
 
   return (
     <Box {...other}>
-      <svg width="100%" height="100%" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 480 360"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <BackgroundIllustration />
 
         <path
@@ -107,11 +112,20 @@ function MaintenanceIllustration({ ...other }: BoxProps) {
           opacity="0.2"
         />
 
-        <path fill="#FF5630" d="M118.108 103.182a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+        <path
+          fill="#FF5630"
+          d="M118.108 103.182a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+        />
 
-        <path fill="#FFAB00" d="M126.108 103.182a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+        <path
+          fill="#FFAB00"
+          d="M126.108 103.182a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+        />
 
-        <path fill="#36B37E" d="M134.108 103.182a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" />
+        <path
+          fill="#36B37E"
+          d="M134.108 103.182a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"
+        />
 
         <defs>
           <linearGradient

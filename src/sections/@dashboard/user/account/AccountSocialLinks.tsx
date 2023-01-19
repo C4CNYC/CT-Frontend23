@@ -1,32 +1,32 @@
 // form
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 // @mui
-import { Stack, Card, InputAdornment } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Stack, Card, InputAdornment } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 // @types
-import { IUserSocialLink } from '../../../../@types/user';
+import { IUserSocialLink } from "../../../../@types/user";
 // components
-import Iconify from '../../../../components/iconify';
-import { useSnackbar } from '../../../../components/snackbar';
-import FormProvider, { RHFTextField } from '../../../../components/hook-form';
+import Iconify from "../../../../components/iconify";
+import { useSnackbar } from "../../../../components/snackbar";
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
 const SOCIAL_LINKS = [
   {
-    value: 'facebookLink',
+    value: "facebookLink",
     icon: <Iconify icon="eva:facebook-fill" width={24} />,
   },
   {
-    value: 'instagramLink',
+    value: "instagramLink",
     icon: <Iconify icon="ant-design:instagram-filled" width={24} />,
   },
   {
-    value: 'linkedinLink',
+    value: "linkedinLink",
     icon: <Iconify icon="eva:linkedin-fill" width={24} />,
   },
   {
-    value: 'twitterLink',
+    value: "twitterLink",
     icon: <Iconify icon="eva:twitter-fill" width={24} />,
   },
 ] as const;
@@ -61,8 +61,8 @@ export default function AccountSocialLinks({ socialLinks }: Props) {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar('Update success!');
-      console.log('DATA', data);
+      enqueueSnackbar("Update success!");
+      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -77,12 +77,18 @@ export default function AccountSocialLinks({ socialLinks }: Props) {
               key={link.value}
               name={link.value}
               InputProps={{
-                startAdornment: <InputAdornment position="start">{link.icon}</InputAdornment>,
+                startAdornment: (
+                  <InputAdornment position="start">{link.icon}</InputAdornment>
+                ),
               }}
             />
           ))}
 
-          <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Save Changes
           </LoadingButton>
         </Stack>

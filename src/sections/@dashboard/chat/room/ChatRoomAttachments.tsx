@@ -1,16 +1,16 @@
-import uniq from 'lodash/uniq';
-import flatten from 'lodash/flatten';
+import uniq from "lodash/uniq";
+import flatten from "lodash/flatten";
 // @mui
-import { Box, Typography, Stack } from '@mui/material';
+import { Box, Typography, Stack } from "@mui/material";
 // utils
-import { fDateTime } from '../../../../utils/formatTime';
+import { fDateTime } from "../../../../utils/formatTime";
 // @types
-import { IChatConversation, IChatAttachment } from '../../../../@types/chat';
+import { IChatConversation, IChatAttachment } from "../../../../@types/chat";
 // components
-import Scrollbar from '../../../../components/scrollbar';
-import FileThumbnail from '../../../../components/file-thumbnail';
+import Scrollbar from "../../../../components/scrollbar";
+import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import ChatRoomCollapseButton from './ChatRoomCollapseButton';
+import ChatRoomCollapseButton from "./ChatRoomCollapseButton";
 
 // ----------------------------------------------------------------------
 
@@ -20,8 +20,14 @@ type Props = {
   onCollapse: VoidFunction;
 };
 
-export default function ChatRoomAttachments({ conversation, isCollapse, onCollapse }: Props) {
-  const totalAttachments = uniq(flatten(conversation.messages.map((item) => item.attachments)));
+export default function ChatRoomAttachments({
+  conversation,
+  isCollapse,
+  onCollapse,
+}: Props) {
+  const totalAttachments = uniq(
+    flatten(conversation.messages.map((item) => item.attachments))
+  );
 
   return (
     <Stack
@@ -29,7 +35,7 @@ export default function ChatRoomAttachments({ conversation, isCollapse, onCollap
       sx={{
         pb: 2,
         height: 1,
-        overflow: 'hidden',
+        overflow: "hidden",
         borderTop: (theme) => `solid 1px ${theme.palette.divider}`,
       }}
     >
@@ -48,17 +54,20 @@ export default function ChatRoomAttachments({ conversation, isCollapse, onCollap
 
       <Box
         sx={{
-          overflow: 'hidden',
+          overflow: "hidden",
           height: isCollapse ? 1 : 0,
           transition: (theme) =>
-            theme.transitions.create('height', {
+            theme.transitions.create("height", {
               duration: theme.transitions.duration.shorter,
             }),
         }}
       >
         <Scrollbar>
           {totalAttachments.map((attachment, index) => (
-            <AttachmentItem key={attachment.name + index} attachment={attachment} />
+            <AttachmentItem
+              key={attachment.name + index}
+              attachment={attachment}
+            />
           ))}
         </Scrollbar>
       </Box>
@@ -83,15 +92,15 @@ function AttachmentItem({ attachment }: AttachmentItemProps) {
           height: 40,
           flexShrink: 0,
           borderRadius: 1,
-          overflow: 'hidden',
-          position: 'relative',
-          backgroundColor: 'background.neutral',
+          overflow: "hidden",
+          position: "relative",
+          backgroundColor: "background.neutral",
         }}
       >
         <FileThumbnail
           imageView
           file={attachment.preview}
-          onDownload={() => console.log('DOWNLOAD')}
+          onDownload={() => console.log("DOWNLOAD")}
           sx={{ width: 28, height: 28 }}
         />
       </Stack>
@@ -101,7 +110,11 @@ function AttachmentItem({ attachment }: AttachmentItemProps) {
           {attachment.name}
         </Typography>
 
-        <Typography noWrap variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+        <Typography
+          noWrap
+          variant="caption"
+          sx={{ color: "text.secondary", display: "block" }}
+        >
           {fDateTime(attachment.dateCreated)}
         </Typography>
       </Stack>

@@ -1,32 +1,40 @@
 // @mui
-import { Button } from '@mui/material';
-import { LoadingButton, Masonry } from '@mui/lab';
+import { Button } from "@mui/material";
+import { LoadingButton, Masonry } from "@mui/lab";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { mx: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { mx: "8px !important" },
 } as const;
 
-const COLORS = ['inherit', 'primary', 'secondary', 'info', 'success', 'warning', 'error'] as const;
+const COLORS = [
+  "inherit",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
+] as const;
 
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ["small", "medium", "large"] as const;
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  variant?: 'text' | 'contained' | 'outlined' | 'soft';
+  variant?: "text" | "contained" | "outlined" | "soft";
 };
 
-export default function ButtonVariant({ variant = 'text' }: Props) {
+export default function ButtonVariant({ variant = "text" }: Props) {
   return (
     <Masonry columns={2} spacing={3}>
       <Block title="Base" sx={style}>
@@ -50,7 +58,7 @@ export default function ButtonVariant({ variant = 'text' }: Props) {
       <Block title="Colors" sx={style}>
         {COLORS.map((color) => (
           <Button key={color} variant={variant} color={color}>
-            {color === 'inherit' ? 'default' : color}
+            {color === "inherit" ? "default" : color}
           </Button>
         ))}
       </Block>
@@ -64,7 +72,11 @@ export default function ButtonVariant({ variant = 'text' }: Props) {
           Icon Left
         </Button>
 
-        <Button variant={variant} color="error" endIcon={<Iconify icon="ic:round-access-alarm" />}>
+        <Button
+          variant={variant}
+          color="error"
+          endIcon={<Iconify icon="ic:round-access-alarm" />}
+        >
           Icon Right
         </Button>
 

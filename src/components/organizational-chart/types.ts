@@ -1,11 +1,11 @@
-import { TreeProps } from 'react-organizational-chart';
+import { TreeProps } from "react-organizational-chart";
 // @mui
-import { Theme } from '@mui/material/styles';
-import { SxProps } from '@mui/material';
+import { Theme } from "@mui/material/styles";
+import { SxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-type VariantValue = 'simple' | 'standard' | 'group';
+type VariantValue = "simple" | "standard" | "group";
 
 export type ItemProps = {
   name: string;

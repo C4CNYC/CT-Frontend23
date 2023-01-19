@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Stack,
@@ -11,10 +11,10 @@ import {
   DialogActions,
   DialogContent,
   InputAdornment,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../components/iconify';
-import MenuPopover from '../../components/menu-popover';
+import Iconify from "../../components/iconify";
+import MenuPopover from "../../components/menu-popover";
 
 // ----------------------------------------------------------------------
 
@@ -38,13 +38,13 @@ export default function PaymentNewCardDialog({ onClose, ...other }: Props) {
       <Dialog maxWidth="xs" onClose={onClose} {...other}>
         <DialogTitle> Add new card </DialogTitle>
 
-        <DialogContent sx={{ overflow: 'unset' }}>
+        <DialogContent sx={{ overflow: "unset" }}>
           <Stack spacing={3}>
             <TextField fullWidth label="Name on card" />
 
             <TextField fullWidth label="Card number" />
 
-            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <TextField label="MM/YY" />
 
               <TextField
@@ -52,7 +52,11 @@ export default function PaymentNewCardDialog({ onClose, ...other }: Props) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton size="small" edge="end" onClick={handleOpenPopover}>
+                      <IconButton
+                        size="small"
+                        edge="end"
+                        onClick={handleOpenPopover}
+                      >
                         <Iconify icon="eva:info-fill" />
                       </IconButton>
                     </InputAdornment>
@@ -78,7 +82,7 @@ export default function PaymentNewCardDialog({ onClose, ...other }: Props) {
         open={openPopover}
         onClose={handleClosePopover}
         arrow="bottom-center"
-        sx={{ maxWidth: 200, typography: 'body2', textAlign: 'center' }}
+        sx={{ maxWidth: 200, typography: "body2", textAlign: "center" }}
       >
         Three-digit number on the back of your VISA card
       </MenuPopover>

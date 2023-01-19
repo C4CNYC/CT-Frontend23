@@ -1,9 +1,9 @@
-import { paramCase } from 'change-case';
-import { useState, useEffect } from 'react';
+import { paramCase } from "change-case";
+import { useState, useEffect } from "react";
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 // @mui
 import {
   Card,
@@ -14,19 +14,19 @@ import {
   Container,
   IconButton,
   TableContainer,
-} from '@mui/material';
-import { SelectChangeEvent } from '@mui/material/Select';
+} from "@mui/material";
+import { SelectChangeEvent } from "@mui/material/Select";
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
-import { getProducts } from '../../../redux/slices/product';
+import { useDispatch, useSelector } from "../../../redux/store";
+import { getProducts } from "../../../redux/slices/product";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // @types
-import { IProduct } from '../../../@types/product';
+import { IProduct } from "../../../@types/product";
 // layouts
-import DashboardLayout from '../../../layouts/dashboard';
+import DashboardLayout from "../../../layouts/dashboard";
 // components
-import { useSettingsContext } from '../../../components/settings';
+import { useSettingsContext } from "../../../components/settings";
 import {
   useTable,
   getComparator,
@@ -37,28 +37,31 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-} from '../../../components/table';
-import Iconify from '../../../components/iconify';
-import Scrollbar from '../../../components/scrollbar';
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import ConfirmDialog from '../../../components/confirm-dialog';
+} from "../../../components/table";
+import Iconify from "../../../components/iconify";
+import Scrollbar from "../../../components/scrollbar";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import ConfirmDialog from "../../../components/confirm-dialog";
 // sections
-import { ProductTableRow, ProductTableToolbar } from '../../../sections/@dashboard/e-commerce/list';
+import {
+  ProductTableRow,
+  ProductTableToolbar,
+} from "../../../sections/@dashboard/e-commerce/list";
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Product', align: 'left' },
-  { id: 'createdAt', label: 'Create at', align: 'left' },
-  { id: 'inventoryType', label: 'Status', align: 'center', width: 180 },
-  { id: 'price', label: 'Price', align: 'right' },
-  { id: '' },
+  { id: "name", label: "Product", align: "left" },
+  { id: "createdAt", label: "Create at", align: "left" },
+  { id: "inventoryType", label: "Status", align: "center", width: 180 },
+  { id: "price", label: "Price", align: "right" },
+  { id: "" },
 ];
 
 const STATUS_OPTIONS = [
-  { value: 'in_stock', label: 'In stock' },
-  { value: 'low_stock', label: 'Low stock' },
-  { value: 'out_of_stock', label: 'Out of stock' },
+  { value: "in_stock", label: "In stock" },
+  { value: "low_stock", label: "Low stock" },
+  { value: "out_of_stock", label: "Out of stock" },
 ];
 
 // ----------------------------------------------------------------------
@@ -88,7 +91,7 @@ export default function EcommerceProductListPage() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({
-    defaultOrderBy: 'createdAt',
+    defaultOrderBy: "createdAt",
   });
 
   const { themeStretch } = useSettingsContext();
@@ -101,7 +104,7 @@ export default function EcommerceProductListPage() {
 
   const [tableData, setTableData] = useState<IProduct[]>([]);
 
-  const [filterName, setFilterName] = useState('');
+  const [filterName, setFilterName] = useState("");
 
   const [filterStatus, setFilterStatus] = useState<string[]>([]);
 
@@ -124,13 +127,18 @@ export default function EcommerceProductListPage() {
     filterStatus,
   });
 
-  const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const dataInPage = dataFiltered.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   const denseHeight = dense ? 60 : 80;
 
-  const isFiltered = filterName !== '' || !!filterStatus.length;
+  const isFiltered = filterName !== "" || !!filterStatus.length;
 
-  const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
+  const isNotFound =
+    (!dataFiltered.length && !!filterName) ||
+    (!isLoading && !dataFiltered.length);
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -150,7 +158,7 @@ export default function EcommerceProductListPage() {
       target: { value },
     } = event;
     setPage(0);
-    setFilterStatus(typeof value === 'string' ? value.split(',') : value);
+    setFilterStatus(typeof value === "string" ? value.split(",") : value);
   };
 
   const handleDeleteRow = (id: string) => {
@@ -166,7 +174,9 @@ export default function EcommerceProductListPage() {
   };
 
   const handleDeleteRows = (selectedRows: string[]) => {
-    const deleteRows = tableData.filter((row) => !selectedRows.includes(row.id));
+    const deleteRows = tableData.filter(
+      (row) => !selectedRows.includes(row.id)
+    );
     setSelected([]);
     setTableData(deleteRows);
 
@@ -176,7 +186,8 @@ export default function EcommerceProductListPage() {
       } else if (selectedRows.length === dataFiltered.length) {
         setPage(0);
       } else if (selectedRows.length > dataInPage.length) {
-        const newPage = Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1;
+        const newPage =
+          Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1;
         setPage(newPage);
       }
     }
@@ -191,7 +202,7 @@ export default function EcommerceProductListPage() {
   };
 
   const handleResetFilter = () => {
-    setFilterName('');
+    setFilterName("");
     setFilterStatus([]);
   };
 
@@ -201,16 +212,16 @@ export default function EcommerceProductListPage() {
         <title> Ecommerce: Product List | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Product List"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             {
-              name: 'E-Commerce',
+              name: "E-Commerce",
               href: PATH_DASHBOARD.eCommerce.root,
             },
-            { name: 'List' },
+            { name: "List" },
           ]}
           action={
             <Button
@@ -235,7 +246,7 @@ export default function EcommerceProductListPage() {
             onResetFilter={handleResetFilter}
           />
 
-          <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+          <TableContainer sx={{ position: "relative", overflow: "unset" }}>
             <TableSelectedAction
               dense={dense}
               numSelected={selected.length}
@@ -256,7 +267,7 @@ export default function EcommerceProductListPage() {
             />
 
             <Scrollbar>
-              <Table size={dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
+              <Table size={dense ? "small" : "medium"} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
                   order={order}
                   orderBy={orderBy}
@@ -287,7 +298,12 @@ export default function EcommerceProductListPage() {
                           onViewRow={() => handleViewRow(row.name)}
                         />
                       ) : (
-                        !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
+                        !isNotFound && (
+                          <TableSkeleton
+                            key={index}
+                            sx={{ height: denseHeight }}
+                          />
+                        )
                       )
                     )}
 
@@ -321,7 +337,8 @@ export default function EcommerceProductListPage() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {selected.length} </strong> items?
+            Are you sure want to delete <strong> {selected.length} </strong>{" "}
+            items?
           </>
         }
         action={
@@ -366,12 +383,15 @@ function applyFilter({
 
   if (filterName) {
     inputData = inputData.filter(
-      (product) => product.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (product) =>
+        product.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
   if (filterStatus.length) {
-    inputData = inputData.filter((product) => filterStatus.includes(product.inventoryType));
+    inputData = inputData.filter((product) =>
+      filterStatus.includes(product.inventoryType)
+    );
   }
 
   return inputData;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 // @mui
 import {
   Table,
@@ -9,10 +9,10 @@ import {
   TableCell,
   IconButton,
   TableContainer,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../../components/iconify';
-import Scrollbar from '../../../../../components/scrollbar';
+import Iconify from "../../../../../components/iconify";
+import Scrollbar from "../../../../../components/scrollbar";
 import {
   useTable,
   emptyRows,
@@ -21,9 +21,9 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-} from '../../../../../components/table';
+} from "../../../../../components/table";
 //
-import SortingSelectingToolbar from './SortingSelectingToolbar';
+import SortingSelectingToolbar from "./SortingSelectingToolbar";
 
 // ----------------------------------------------------------------------
 
@@ -35,31 +35,37 @@ type RowDataType = {
   protein: number;
 };
 
-function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
+function createData(
+  name: string,
+  calories: number,
+  fat: number,
+  carbs: number,
+  protein: number
+) {
   return { name, calories, fat, carbs, protein };
 }
 
 const TABLE_DATA = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
+  createData("Cupcake", 305, 3.7, 67, 4.3),
+  createData("Donut", 452, 25.0, 51, 4.9),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Gingerbread", 356, 16.0, 49, 3.9),
+  createData("Honeycomb", 408, 3.2, 87, 6.5),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Jelly Bean", 375, 0.0, 94, 0.0),
+  createData("KitKat", 518, 26.0, 65, 7.0),
+  createData("Lollipop", 392, 0.2, 98, 0.0),
+  createData("Marshmallow", 318, 0, 81, 2.0),
+  createData("Nougat", 360, 19.0, 9, 37.0),
 ];
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Dessert (100g serving)', align: 'left' },
-  { id: 'calories', label: 'Calories', align: 'center' },
-  { id: 'fat', label: 'Fat (g)', align: 'center' },
-  { id: 'carbs', label: 'Carbs (g)', align: 'center' },
-  { id: 'protein', label: 'Protein (g)', align: 'center' },
+  { id: "name", label: "Dessert (100g serving)", align: "left" },
+  { id: "calories", label: "Calories", align: "center" },
+  { id: "fat", label: "Fat (g)", align: "center" },
+  { id: "carbs", label: "Carbs (g)", align: "center" },
+  { id: "protein", label: "Protein (g)", align: "center" },
 ];
 
 // ----------------------------------------------------------------------
@@ -81,7 +87,7 @@ export default function SortingSelecting() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({
-    defaultOrderBy: 'calories',
+    defaultOrderBy: "calories",
   });
 
   const [tableData, setTableData] = useState<RowDataType[]>([]);
@@ -105,7 +111,7 @@ export default function SortingSelecting() {
     <div>
       <SortingSelectingToolbar />
 
-      <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
+      <TableContainer sx={{ position: "relative", overflow: "unset" }}>
         <TableSelectedAction
           dense={dense}
           numSelected={selected.length}
@@ -126,7 +132,7 @@ export default function SortingSelecting() {
         />
 
         <Scrollbar>
-          <Table size={dense ? 'small' : 'medium'} sx={{ minWidth: 800 }}>
+          <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
             <TableHeadCustom
               order={order}
               orderBy={orderBy}

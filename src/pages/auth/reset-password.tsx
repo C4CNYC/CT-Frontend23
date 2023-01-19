@@ -1,22 +1,24 @@
 // next
-import Head from 'next/head';
-import NextLink from 'next/link';
+import Head from "next/head";
+import NextLink from "next/link";
 // @mui
-import { Link, Typography } from '@mui/material';
+import { Link, Typography } from "@mui/material";
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from "../../routes/paths";
 // layouts
-import CompactLayout from '../../layouts/compact';
+import CompactLayout from "../../layouts/compact";
 // components
-import Iconify from '../../components/iconify';
+import Iconify from "../../components/iconify";
 // sections
-import AuthResetPasswordForm from '../../sections/auth/AuthResetPasswordForm';
+import AuthResetPasswordForm from "../../sections/auth/AuthResetPasswordForm";
 // assets
-import { PasswordIcon } from '../../assets/icons';
+import { PasswordIcon } from "../../assets/icons";
 
 // ----------------------------------------------------------------------
 
-ResetPasswordPage.getLayout = (page: React.ReactElement) => <CompactLayout>{page}</CompactLayout>;
+ResetPasswordPage.getLayout = (page: React.ReactElement) => (
+  <CompactLayout>{page}</CompactLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -33,9 +35,9 @@ export default function ResetPasswordPage() {
         Forgot your password?
       </Typography>
 
-      <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-        Please enter the email address associated with your account and We will email you a link to
-        reset your password.
+      <Typography sx={{ color: "text.secondary", mb: 5 }}>
+        Please enter the email address associated with your account and We will
+        email you a link to reset your password.
       </Typography>
 
       <AuthResetPasswordForm />
@@ -47,9 +49,9 @@ export default function ResetPasswordPage() {
         variant="subtitle2"
         sx={{
           mt: 3,
-          mx: 'auto',
-          alignItems: 'center',
-          display: 'inline-flex',
+          mx: "auto",
+          alignItems: "center",
+          display: "inline-flex",
         }}
       >
         <Iconify icon="eva:chevron-left-fill" width={16} />

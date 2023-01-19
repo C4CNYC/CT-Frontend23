@@ -1,7 +1,7 @@
 // @mui
-import { Button, ButtonProps } from '@mui/material';
+import { Button, ButtonProps } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -25,16 +25,20 @@ export default function ChatRoomCollapseButton({
       endIcon={
         <Iconify
           width={16}
-          icon={isCollapse ? 'eva:arrow-ios-downward-fill' : 'eva:arrow-ios-forward-fill'}
+          icon={
+            isCollapse
+              ? "eva:arrow-ios-downward-fill"
+              : "eva:arrow-ios-forward-fill"
+          }
         />
       }
       sx={{
         height: 40,
         flexShrink: 0,
         borderRadius: 0,
-        typography: 'overline',
-        color: 'text.disabled',
-        justifyContent: 'space-between',
+        typography: "overline",
+        color: "text.disabled",
+        justifyContent: "space-between",
         p: (theme) => theme.spacing(1, 1.5, 1, 2.5),
         ...sx,
       }}

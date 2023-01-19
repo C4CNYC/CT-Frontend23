@@ -1,20 +1,24 @@
-import { memo } from 'react';
+import { memo } from "react";
 // @mui
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 //
-import { StyledRootScrollbar, StyledScrollbar } from './styles';
-import { ScrollbarProps } from './types';
+import { StyledRootScrollbar, StyledScrollbar } from "./styles";
+import { ScrollbarProps } from "./types";
 
 // ----------------------------------------------------------------------
 
 function Scrollbar({ children, sx, ...other }: ScrollbarProps) {
-  const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
+  const userAgent =
+    typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
 
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent
+    );
 
   if (isMobile) {
     return (
-      <Box sx={{ overflowX: 'auto', ...sx }} {...other}>
+      <Box sx={{ overflowX: "auto", ...sx }} {...other}>
         {children}
       </Box>
     );

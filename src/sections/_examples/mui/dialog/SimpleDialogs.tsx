@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -11,13 +11,13 @@ import {
   ListItemText,
   ListItemAvatar,
   ListItemButton,
-} from '@mui/material';
+} from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
+import Iconify from "../../../../components/iconify";
 
 // ----------------------------------------------------------------------
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
+const emails = ["username@gmail.com", "user02@gmail.com"];
 
 export default function SimpleDialog() {
   const [open, setOpen] = useState(false);
@@ -34,7 +34,7 @@ export default function SimpleDialog() {
   };
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: "center" }}>
       <Typography variant="subtitle1" component="div">
         Selected: {selectedValue}
       </Typography>
@@ -51,8 +51,8 @@ export default function SimpleDialog() {
               <ListItemAvatar>
                 <Avatar
                   sx={{
-                    color: 'info.main',
-                    backgroundColor: 'info.lighter',
+                    color: "info.main",
+                    backgroundColor: "info.lighter",
                   }}
                 >
                   <Iconify icon="eva:person-fill" />
@@ -62,7 +62,7 @@ export default function SimpleDialog() {
             </ListItemButton>
           ))}
 
-          <ListItemButton autoFocus onClick={() => handleClose('addAccount')}>
+          <ListItemButton autoFocus onClick={() => handleClose("addAccount")}>
             <ListItemAvatar>
               <Avatar>
                 <Iconify icon="eva:plus-fill" />

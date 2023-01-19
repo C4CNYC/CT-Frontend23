@@ -1,9 +1,9 @@
-import keyBy from 'lodash/keyBy';
-import { createSlice, Dispatch } from '@reduxjs/toolkit';
+import keyBy from "lodash/keyBy";
+import { createSlice, Dispatch } from "@reduxjs/toolkit";
 // utils
-import axios from '../../utils/axios';
+import axios from "../../utils/axios";
 // @types
-import { IMailState } from '../../@types/mail';
+import { IMailState } from "../../@types/mail";
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ const initialState: IMailState = {
 };
 
 const slice = createSlice({
-  name: 'mail',
+  name: "mail",
   initialState,
   reducers: {
     // START LOADING
@@ -40,7 +40,7 @@ const slice = createSlice({
       const mails = action.payload;
 
       state.isLoading = false;
-      state.mails.byId = keyBy(mails, 'id');
+      state.mails.byId = keyBy(mails, "id");
       state.mails.allIds = Object.keys(state.mails.byId);
     },
 
@@ -65,7 +65,7 @@ export function getLabels() {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/mail/labels');
+      const response = await axios.get("/api/mail/labels");
       dispatch(slice.actions.getLabelsSuccess(response.data.labels));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -79,7 +79,7 @@ export function getMails(params: Record<string, string>) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/mail/mails', { params });
+      const response = await axios.get("/api/mail/mails", { params });
       dispatch(slice.actions.getMailsSuccess(response.data.mails));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -93,7 +93,7 @@ export function getMail(mailId: string) {
   return async (dispatch: Dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/mail/mail', {
+      const response = await axios.get("/api/mail/mail", {
         params: { mailId },
       });
       dispatch(slice.actions.getMailSuccess(response.data.mail));

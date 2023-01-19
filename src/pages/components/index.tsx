@@ -1,17 +1,31 @@
-import orderBy from 'lodash/orderBy';
+import orderBy from "lodash/orderBy";
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Container, Typography, Stack, Link, Box, BoxProps, Divider } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Stack,
+  Link,
+  Box,
+  BoxProps,
+  Divider,
+} from "@mui/material";
 // layouts
-import MainLayout from '../../layouts/main';
+import MainLayout from "../../layouts/main";
 // sections
-import { ComponentHero, ComponentCard } from '../../sections/_examples';
-import { foundation, mui, extra } from '../../sections/_examples/config-navigation';
+import { ComponentHero, ComponentCard } from "../../sections/_examples";
+import {
+  foundation,
+  mui,
+  extra,
+} from "../../sections/_examples/config-navigation";
 
 // ----------------------------------------------------------------------
 
-ComponentsOverviewPage.getLayout = (page: React.ReactElement) => <MainLayout>{page}</MainLayout>;
+ComponentsOverviewPage.getLayout = (page: React.ReactElement) => (
+  <MainLayout>{page}</MainLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +43,7 @@ export default function ComponentsOverviewPage() {
           <Stack spacing={1}>
             <Typography variant="h5">Foundation</Typography>
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
               Colors, Typography, Shadows…
             </Typography>
           </Stack>
@@ -41,24 +55,28 @@ export default function ComponentsOverviewPage() {
           </Grid>
         </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed', my: 8 }} />
+        <Divider sx={{ borderStyle: "dashed", my: 8 }} />
 
         <Stack spacing={3}>
           <Stack spacing={1}>
             <Typography variant="h5">MUI</Typography>
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Components from{' '}
-              <Link href="https://mui.com/components/" target="_blank" rel="noopener">
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              Components from{" "}
+              <Link
+                href="https://mui.com/components/"
+                target="_blank"
+                rel="noopener"
+              >
                 MUI
               </Link>
               .
             </Typography>
 
-            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+            <Typography variant="caption" sx={{ color: "text.secondary" }}>
               <i>
-                Some advanced components from MUI X will not be included. So you need to purchase a
-                separate
+                Some advanced components from MUI X will not be included. So you
+                need to purchase a separate
                 <Link
                   href="https://mui.com/pricing/"
                   target="_blank"
@@ -73,20 +91,21 @@ export default function ComponentsOverviewPage() {
           </Stack>
 
           <Grid>
-            {orderBy(mui, ['name'], ['asc']).map((item) => (
+            {orderBy(mui, ["name"], ["asc"]).map((item) => (
               <ComponentCard key={item.name} item={item} />
             ))}
           </Grid>
         </Stack>
 
-        <Divider sx={{ borderStyle: 'dashed', my: 8 }} />
+        <Divider sx={{ borderStyle: "dashed", my: 8 }} />
 
         <Stack spacing={3}>
           <Stack spacing={1}>
             <Typography variant="h5">Extra Components</Typography>
 
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Some custom components / use 3rd party dependencies (chart, map, editor…).
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              Some custom components / use 3rd party dependencies (chart, map,
+              editor…).
             </Typography>
           </Stack>
 
@@ -108,10 +127,10 @@ function Grid({ children }: BoxProps) {
     <Box
       display="grid"
       gridTemplateColumns={{
-        xs: 'repeat(2, 1fr)',
-        sm: 'repeat(3, 1fr)',
-        md: 'repeat(4, 1fr)',
-        lg: 'repeat(6, 1fr)',
+        xs: "repeat(2, 1fr)",
+        sm: "repeat(3, 1fr)",
+        md: "repeat(4, 1fr)",
+        lg: "repeat(6, 1fr)",
       }}
       gap={2.5}
     >

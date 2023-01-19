@@ -1,34 +1,34 @@
 // @mui
-import { Fab } from '@mui/material';
-import { Masonry } from '@mui/lab';
+import { Fab } from "@mui/material";
+import { Masonry } from "@mui/lab";
 // components
-import Iconify from '../../../../components/iconify';
-import { FabButtonAnimate } from '../../../../components/animate';
+import Iconify from "../../../../components/iconify";
+import { FabButtonAnimate } from "../../../../components/animate";
 //
-import { Block } from '../../Block';
+import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
 const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexWrap: 'wrap',
-  '& > *': { m: '8px !important' },
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  "& > *": { m: "8px !important" },
 } as const;
 
 const COLORS = [
-  'default',
-  'inherit',
-  'primary',
-  'secondary',
-  'info',
-  'success',
-  'warning',
-  'error',
+  "default",
+  "inherit",
+  "primary",
+  "secondary",
+  "info",
+  "success",
+  "warning",
+  "error",
 ] as const;
 
-const SIZES = ['small', 'medium', 'large'] as const;
+const SIZES = ["small", "medium", "large"] as const;
 
 // ----------------------------------------------------------------------
 
@@ -150,7 +150,12 @@ export default function FloatingActionButton() {
 
       <Block title="With Animate" sx={style}>
         {SIZES.map((size) => (
-          <FabButtonAnimate key={size} variant="extended" size={size} color="info">
+          <FabButtonAnimate
+            key={size}
+            variant="extended"
+            size={size}
+            color="info"
+          >
             <Iconify icon="ic:round-access-alarm" width={24} />
             {size}
           </FabButtonAnimate>
