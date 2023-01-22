@@ -16,7 +16,6 @@ export default function Register() {
 
   return (
     <LoginLayout title="Hi, I’m Mumu." subtitle="So glad you’re here!">
-
       <Stack spacing={2} sx={{ position: "relative" }}>
         <Typography variant="h4" sx={{textAlign: 'center'}}>Sign up as a Teacher</Typography>
         <Typography variant="h6" sx={{color: theme.palette.grey[600], fontWeight: 400, textAlign: 'center'}}>& sign-up your school.</Typography>

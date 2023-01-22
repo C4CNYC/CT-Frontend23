@@ -13,9 +13,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 // @types
-import { IUserProfileFriend } from "../../../../@types/user";
-// _mock
-import { _socials } from "../../../../_mock/arrays";
+import {IUserProfileFriend, IUserProfileSchool} from "../../../../@types/user";
 // components
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
@@ -25,19 +23,16 @@ import SearchNotFound from "../../../../components/search-not-found";
 // ----------------------------------------------------------------------
 
 type Props = {
-  friends: IUserProfileFriend[];
-  searchFriends: string;
-  onSearchFriends: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  school: IUserProfileSchool[];
 };
 
-export default function ProfileFriends({
-  friends,
-  searchFriends,
-  onSearchFriends,
-}: Props) {
-  const dataFiltered = applyFilter(friends, searchFriends);
+const school = {
+  name: 'Name',
+  url: 'Url'
+}
 
-  const isNotFound = !dataFiltered.length && !!searchFriends;
+export default function Schools({}: Props) {
+  const [isNotFound, setIsNotFound] = useState(false);
 
   return (
     <>
@@ -47,29 +42,11 @@ export default function ProfileFriends({
         direction={{ xs: "column", sm: "row" }}
         sx={{ my: 5 }}
       >
-        <Typography variant="h4">Friends</Typography>
-
-        <CustomTextField
-          width={220}
-          size="small"
-          value={searchFriends}
-          onChange={onSearchFriends}
-          placeholder="Search friends..."
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Iconify
-                  icon="eva:search-fill"
-                  sx={{ color: "text.disabled" }}
-                />
-              </InputAdornment>
-            ),
-          }}
-        />
+        <Typography variant="h4">Schools</Typography>
       </Stack>
 
       {isNotFound ? (
-        <SearchNotFound query={searchFriends} sx={{ mt: 10 }} />
+        <Typography variant="body2">not found</Typography>
       ) : (
         <Box
           gap={3}
@@ -80,9 +57,7 @@ export default function ProfileFriends({
             md: "repeat(3, 1fr)",
           }}
         >
-          {dataFiltered.map((friend) => (
-            <FriendCard key={friend.id} friend={friend} />
-          ))}
+          <SchoolCard school={school} />
         </Box>
       )}
     </>
@@ -91,12 +66,12 @@ export default function ProfileFriends({
 
 // ----------------------------------------------------------------------
 
-type FriendCardProps = {
-  friend: IUserProfileFriend;
+type SchoolCardProps = {
+  school: IUserProfileSchool;
 };
 
-function FriendCard({ friend }: FriendCardProps) {
-  const { name, role, avatarUrl } = friend;
+function SchoolCard({ school }: SchoolCardProps) {
+  const { name, avatarUrl } = school;
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -139,29 +114,6 @@ function FriendCard({ friend }: FriendCardProps) {
           {name}
         </Link>
 
-        <Typography
-          variant="body2"
-          sx={{ color: "text.secondary", mb: 1, mt: 0.5 }}
-        >
-          {role}
-        </Typography>
-
-        <Stack alignItems="center" justifyContent="center" direction="row">
-          {_socials.map((social) => (
-            <IconButton
-              key={social.name}
-              sx={{
-                color: social.color,
-                "&:hover": {
-                  bgcolor: alpha(social.color, 0.08),
-                },
-              }}
-            >
-              <Iconify icon={social.icon} />
-            </IconButton>
-          ))}
-        </Stack>
-
         <IconButton
           color={openPopover ? "inherit" : "default"}
           onClick={handleOpenPopover}
@@ -178,7 +130,7 @@ function FriendCard({ friend }: FriendCardProps) {
       >
         <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          Archive
         </MenuItem>
 
         <MenuItem onClick={handleEdit}>
@@ -190,14 +142,3 @@ function FriendCard({ friend }: FriendCardProps) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-function applyFilter(inputData: IUserProfileFriend[], query: string) {
-  if (query) {
-    return inputData.filter(
-      (friend) => friend.name.toLowerCase().indexOf(query.toLowerCase()) !== -1
-    );
-  }
-
-  return inputData;
-}

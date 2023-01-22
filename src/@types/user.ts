@@ -38,7 +38,6 @@ export type IUserProfileFollower = {
   avatarUrl: string;
   name: string;
   country: string;
-  isFollowed: boolean;
 };
 
 export type IUserProfileGallery = {
@@ -48,11 +47,11 @@ export type IUserProfileGallery = {
   imageUrl: string;
 };
 
-export type IUserProfileFriend = {
+export type IUserProfileSchool = {
   id: string;
   avatarUrl: string;
   name: string;
-  role: string;
+
 };
 
 export type IUserProfilePost = {
