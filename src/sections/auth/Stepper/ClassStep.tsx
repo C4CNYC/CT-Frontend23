@@ -7,6 +7,7 @@ import InputInfo from "./InputInfo";
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useCreateClassMutation } from 'src/redux/services/manager';
+import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 export default function ClassStep() {
 	const theme = useTheme();
@@ -20,7 +21,7 @@ export default function ClassStep() {
 				schoolId,
 				...data
 			}).unwrap();
-			
+			router.replace(PATH_AFTER_LOGIN);
 		} catch(e) {
 			// #TODO show error
 		}
