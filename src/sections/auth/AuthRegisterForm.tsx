@@ -20,14 +20,20 @@ type FormValuesProps = {
   firstName: string;
   lastName: string;
   afterSubmit?: string;
+  tenantName: string;
 };
 
-export default function AuthRegisterForm() {
+type AuthRegisterFormProps = {
+  next: () => void;
+}
+
+export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
   const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
+    tenantName: Yup.string().required("Tenant name required"),
     firstName: Yup.string().required("First name required"),
     lastName: Yup.string().required("Last name required"),
     email: Yup.string()
@@ -37,6 +43,7 @@ export default function AuthRegisterForm() {
   });
 
   const defaultValues = {
+    tenantName: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -62,12 +69,13 @@ export default function AuthRegisterForm() {
           data.email,
           data.password,
           data.firstName,
-          data.lastName
+          data.lastName,
+          data.tenantName,
         );
+        next();
       }
     } catch (error) {
       console.error(error);
-      reset();
       setError("afterSubmit", {
         ...error,
         message: error.message,
@@ -81,6 +89,8 @@ export default function AuthRegisterForm() {
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
+
+         <RHFTextField name="tenantName" label="Tenant name" />
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <RHFTextField name="firstName" label="First name" />

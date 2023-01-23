@@ -16,12 +16,8 @@ import {
   AuthUserType,
   JWTContextType,
 } from "./types";
-
-// ----------------------------------------------------------------------
-
-// NOTE:
-// We only build demo at basic level.
-// Customer will need to do some extra handling yourself if you want to extend the logic and other features...
+import { useCreateTenantMutation, useProfileQuery, useRegisterMutation } from "src/redux/services/auth";
+import { useLoginMutation } from "app/services/auth";
 
 // ----------------------------------------------------------------------
 
@@ -109,10 +105,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         ? localStorage.getItem("accessToken")
         : "";
 
-      if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+      const tenantName = localStorage.getItem("tenantName");
 
-        const response = await axios.get("/api/account/my-account");
+      if (accessToken && isValidToken(accessToken)) {
+        setSession(accessToken, tenantName);
+
+        const response = await axios.get("/auth/profile");
 
         const { user } = response.data;
 
@@ -150,13 +148,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGIN
   const login = useCallback(async (email: string, password: string) => {
-    const response = await axios.post("/api/account/login", {
+    const [loginUser] = useLoginMutation();
+    const data = await loginUser({
       email,
       password,
-    });
-    const { accessToken, user } = response.data;
+    }).unwrap();
+    const { access_token, user } = data;
 
-    setSession(accessToken);
+    setSession(access_token, localStorage.getItem('tenantName'));
 
     dispatch({
       type: Types.LOGIN,
@@ -172,17 +171,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
       email: string,
       password: string,
       firstName: string,
-      lastName: string
+      lastName: string,
+      tenantName: string
     ) => {
-      const response = await axios.post("/api/account/register", {
+      const { data: tenant } = await axios.post('/tenant', {
+        name: tenantName
+      })
+      localStorage.setItem('tenantName', tenant.name);
+
+      const { data } = await axios.post('/auth/signup', {
         email,
         password,
-        firstName,
-        lastName,
-      });
-      const { accessToken, user } = response.data;
+        first_name: firstName,
+        last_name: lastName,
+      })
+      
+      const { access_token, user } = data;
 
-      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accessToken", access_token);
 
       dispatch({
         type: Types.REGISTER,
@@ -196,7 +202,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGOUT
   const logout = useCallback(() => {
-    setSession(null);
+    setSession(null, null);
     dispatch({
       type: Types.LOGOUT,
     });

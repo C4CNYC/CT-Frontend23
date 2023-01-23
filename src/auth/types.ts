@@ -31,7 +31,8 @@ export type JWTContextType = {
     email: string,
     password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    tenantName: string
   ) => Promise<void>;
   logout: () => void;
   loginWithGoogle?: () => void;

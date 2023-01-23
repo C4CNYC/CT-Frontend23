@@ -34,12 +34,11 @@ export default function Register() {
       </Stack>
 
       {!stepperVisible ?
-        <AuthRegisterForm /> :
+        <AuthRegisterForm next={() => setStepperVisible(true)}/> :
         <Stack direction="row" spacing={0.5} sx={{ mt: 2, justifyContent: 'center' }}>
           <Stepper />
         </Stack>
       }
-      <span onClick={() => setStepperVisible(!stepperVisible)}>show/hide stepper</span>
 
       <Typography
         component="div"
