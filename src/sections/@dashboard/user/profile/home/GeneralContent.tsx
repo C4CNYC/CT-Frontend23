@@ -7,20 +7,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Grid, Card, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 // auth
-import { useAuthContext } from "../../../../auth/useAuthContext";
+import { useAuthContext } from "../../../../../auth/useAuthContext";
 // utils
-import { fData } from "../../../../utils/formatNumber";
+import { fData } from "../../../../../utils/formatNumber";
 // assets
-import { countries } from "../../../../assets/data";
+import { countries } from "../../../../../assets/data";
 // components
-import { CustomFile } from "../../../../components/upload";
-import { useSnackbar } from "../../../../components/snackbar";
+import { CustomFile } from "../../../../../components/upload";
+import { useSnackbar } from "../../../../../components/snackbar";
 import FormProvider, {
   RHFSwitch,
   RHFSelect,
   RHFTextField,
   RHFUploadAvatar,
-} from "../../../../components/hook-form";
+} from "../../../../../components/hook-form";
 
 // ----------------------------------------------------------------------
 

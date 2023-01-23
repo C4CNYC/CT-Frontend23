@@ -10,7 +10,6 @@ import { useAuthContext } from "../../../auth/useAuthContext";
 // _mock_
 import {
   _userAbout,
-  _userFeeds,
   _userFriends,
   _userGallery,
   _userFollowers,
@@ -23,12 +22,13 @@ import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 import { useSettingsContext } from "../../../components/settings";
 // sections
 import {
-  Profile,
+  General,
   ProfileCover,
-  ProfileFriends,
-  ProfileGallery,
-  ProfileFollowers,
+  Schools,
+  Billing,
+  Contacts,
 } from "../../../sections/@dashboard/user/profile";
+import Link from 'next/link';
 
 // ----------------------------------------------------------------------
 
@@ -45,47 +45,55 @@ export default function UserProfilePage() {
 
   const [searchFriends, setSearchFriends] = useState("");
 
-  const [currentTab, setCurrentTab] = useState("profile");
+  const [currentTab, setCurrentTab] = useState("general");
 
   const TABS = [
     {
-      value: "profile",
-      label: "Profile",
+      value: "general",
+      label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <Profile info={_userAbout} posts={_userFeeds} />,
+      component: <General info={_userAbout} />,
     },
     {
-      value: "followers",
-      label: "Followers",
-      icon: <Iconify icon="eva:heart-fill" />,
-      component: <ProfileFollowers followers={_userFollowers} />,
-    },
-    {
-      value: "friends",
-      label: "Friends",
-      icon: <Iconify icon="eva:people-fill" />,
+      value: "schools",
+      label: "Schools",
+      icon: <Iconify icon="ic:baseline-domain" />,
       component: (
-        <ProfileFriends
-          friends={_userFriends}
-          searchFriends={searchFriends}
-          onSearchFriends={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchFriends(event.target.value)
-          }
+        <Schools
+          school={_userFriends}
         />
       ),
     },
     {
-      value: "gallery",
-      label: "Gallery",
-      icon: <Iconify icon="ic:round-perm-media" />,
-      component: <ProfileGallery gallery={_userGallery} />,
+      value: "contacts",
+      label: "Contacts",
+      icon: <Iconify icon="ic:baseline-perm-contact-calendar" />,
+      component: <Contacts followers={_userFollowers} />,
+    },
+    {
+      value: "billing",
+      label: "Billing",
+      icon: <Iconify icon="ic:round-monetization-on" />,
+      component: <Billing gallery={_userGallery} />,
+    },
+    {
+      value: "settings",
+      label: "Settings",
+      icon: <Iconify icon="ic:baseline-settings-applications" />,
+      component: <Billing gallery={_userGallery} />,
+    },
+    {
+      value: "customization",
+      label: "Customization",
+      icon: <Iconify icon="ic:baseline-dashboard-customize" />,
+      component: <Billing gallery={_userGallery} />,
     },
   ];
 
   return (
     <>
       <Head>
-        <title> User: Profile | Minimal UI</title>
+        <title> Organisations: Codetribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
@@ -130,6 +138,7 @@ export default function UserProfilePage() {
           >
             {TABS.map((tab) => (
               <Tab
+                href={`${PATH_DASHBOARD.user.profile}/#${tab.value}`}
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}

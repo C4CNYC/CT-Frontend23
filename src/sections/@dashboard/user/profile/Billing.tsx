@@ -18,7 +18,7 @@ type Props = {
   gallery: IUserProfileGallery[];
 };
 
-export default function ProfileGallery({ gallery }: Props) {
+export default function Billing({ gallery }: Props) {
   const [selectedImage, setSelectedImage] = useState<number>(-1);
 
   const imagesLightbox = gallery.map((img) => ({
