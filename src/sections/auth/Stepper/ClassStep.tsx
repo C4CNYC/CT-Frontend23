@@ -17,7 +17,7 @@ export default function ClassStep() {
 	const { schoolId } = router.query;
 	const onSubmit = async (data: any) => {
 		try {
-			const school = await createClass({
+			await createClass({
 				schoolId,
 				...data
 			}).unwrap();
