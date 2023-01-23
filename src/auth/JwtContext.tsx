@@ -16,8 +16,6 @@ import {
   AuthUserType,
   JWTContextType,
 } from "./types";
-import { useCreateTenantMutation, useProfileQuery, useRegisterMutation } from "src/redux/services/auth";
-import { useLoginMutation } from "app/services/auth";
 
 // ----------------------------------------------------------------------
 
@@ -148,11 +146,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGIN
   const login = useCallback(async (email: string, password: string) => {
-    const [loginUser] = useLoginMutation();
-    const data = await loginUser({
+    const data = await axios.post<any, any>('/login', {
       email,
-      password,
-    }).unwrap();
+      password
+    });
+
     const { access_token, user } = data;
 
     setSession(access_token, localStorage.getItem('tenantName'));

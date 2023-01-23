@@ -1,43 +1,59 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { url } from "inspector";
-import { RootState } from "../store";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 
-export interface User {
-  first_name: string;
-  last_name: string;
+export interface OrganizationResponce extends BaseResponseInterface {
+  name: string;
+  web: string;
 }
 
-export interface UserResponse {
-  user: User;
-  access_token: string;
-}
-
-export interface LoginRequest {
-  username: string;
-  password: string;
+export interface OrganizationRequest {
+  name: string;
+  web: string;
 }
 
 export const adminApi = createApi({
   reducerPath: "api/admin",
   baseQuery: baseQueryWithAuth(
-    baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
+    baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}`)
   ),
   endpoints: (builder) => ({
-    getUsers: builder.query<UserResponse, void>({
-      query: () => ({
-        url: "users",
+    // -------------- organization -------------------
+    getOrganization: builder.query<OrganizationResponce, { id: string }>({
+      query: (data) => ({
+        url: `/org/${data.id}`,
         method: "GET",
       }),
     }),
-    getTeams: builder.query<any, any>({
-      query: () => ({
-        url: "team",
-        method: "GET",
+    createOrganization: builder.mutation<
+      OrganizationResponce,
+      OrganizationRequest
+    >({
+      query: (body) => ({
+        url: "/org",
+        method: "POST",
+        body,
+      }),
+    }),
+    updateOrganization: builder.mutation<
+      OrganizationResponce,
+      {
+        id: string;
+        body: OrganizationRequest;
+      }
+    >({
+      query: (data) => ({
+        url: `/org/${data.id}`,
+        method: "PATCH",
+        body: data.body,
       }),
     }),
   }),
 });
 
-export const { useGetUsersQuery, useGetTeamsQuery } = adminApi;
+export const {
+  useCreateOrganizationMutation,
+  useGetOrganizationQuery,
+  useUpdateOrganizationMutation,
+} = adminApi;
