@@ -8,8 +8,10 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useCreateClassMutation } from 'src/redux/services/manager';
 import { PATH_AFTER_LOGIN } from 'src/config-global';
+import { useAuthContext } from "src/auth/useAuthContext";
 
 export default function ClassStep() {
+	const { authenticate } = useAuthContext();
 	const theme = useTheme();
 	const router = useRouter();
 	const [createClass, { isLoading }] = useCreateClassMutation();
@@ -21,6 +23,7 @@ export default function ClassStep() {
 				schoolId,
 				...data
 			}).unwrap();
+			authenticate()
 			router.replace(PATH_AFTER_LOGIN);
 		} catch(e) {
 			// #TODO show error
