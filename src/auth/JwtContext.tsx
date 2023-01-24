@@ -161,7 +161,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = useCallback(async (email: string, password: string, tenantName: string) => {
     localStorage.setItem('tenantName', tenantName)
     // Update <any, any> to normall types
-    const data = await axios.post<any, any>('auth/signin', {
+    const { data } = await axios.post<any, any>('auth/signin', {
       email,
       password
     });

@@ -5,8 +5,10 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import mailReducer from "./slices/mail";
 import chatReducer from "./slices/chat";
 import productReducer from "./slices/product";
-import calendarReducer from "./slices/calendar";
 import kanbanReducer from "./slices/kanban";
+import globalRducer from "./slices/global";
+import { adminApi } from "./services/admin";
+import { managerApi } from "./services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -42,9 +44,11 @@ export const productPersistConfig = {
 };
 
 const rootReducer = combineReducers({
+  [adminApi.reducerPath]: adminApi.reducer,
+  [managerApi.reducerPath]: managerApi.reducer,
+  global: globalRducer,
   mail: mailReducer,
   chat: chatReducer,
-  calendar: calendarReducer,
   kanban: kanbanReducer,
   product: persistReducer(productPersistConfig, productReducer),
 });

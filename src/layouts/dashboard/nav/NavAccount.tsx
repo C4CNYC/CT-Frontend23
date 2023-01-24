@@ -1,57 +1,57 @@
-// next
-import NextLink from "next/link";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
-import { Box, Link, Typography } from "@mui/material";
-// auth
-import { useAuthContext } from "../../../auth/useAuthContext";
-// routes
-import { PATH_DASHBOARD } from "../../../routes/paths";
+import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 // components
-import { CustomAvatar } from "../../../components/custom-avatar";
+import { useGetOrganizationListQuery } from "src/redux/services/admin";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrganization } from "src/redux/slices/global";
+import { age } from "src/_mock/assets";
+import { RootState } from "src/redux/store";
+import { useEffect } from "react";
+import { group } from "console";
+import { StyledSubheader } from "src/components/nav-section/vertical/styles";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
-// ----------------------------------------------------------------------
-
-const StyledRoot = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(2, 2.5),
-  borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: alpha(theme.palette.grey[500], 0.12),
-  transition: theme.transitions.create("opacity", {
-    duration: theme.transitions.duration.shorter,
-  }),
-}));
-
-// ----------------------------------------------------------------------
 
 export default function NavAccount() {
-  const { user } = useAuthContext();
+  const dispatch = useDispatch();
+  const organizationId = useSelector((state: RootState) => state.global.organizationId)
+  const { data, isLoading } = useGetOrganizationListQuery();
 
+  const onChange = (event: SelectChangeEvent) => {
+    dispatch(setOrganization(event.target.value))
+  }
+
+  useEffect(() => {
+    if(data?.data) {
+      dispatch(setOrganization(data?.data[0].id))
+    }
+  }, [data])
+
+  if (isLoading) { 
+    return null;
+  }
   return (
-    <Link
-      component={NextLink}
-      href={PATH_DASHBOARD.organization.account}
-      underline="none"
-      color="inherit"
-    >
-      <StyledRoot>
-        <CustomAvatar
-          src={user?.photoURL}
-          alt={user?.displayName}
-          name={user?.displayName}
-        />
+    <Box>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Organization</InputLabel>
+        <Select
+            value={organizationId}
+            label="Organization"
+            onChange={onChange}
+            sx={{
+              outline: 'none',
+              height: 48,
+              width: '100%',
+            }}
+          >
+          {data?.data.map((organization) => (
+              <MenuItem key={organization.id} value={organization.id}>
+                {organization.name}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    </Box>
 
-        <Box sx={{ ml: 2, minWidth: 0 }}>
-          <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
-          </Typography>
-
-          <Typography variant="body2" noWrap sx={{ color: "text.secondary" }}>
-            {user?.role}
-          </Typography>
-        </Box>
-      </StyledRoot>
-    </Link>
   );
 }

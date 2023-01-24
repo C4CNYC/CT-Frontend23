@@ -5,12 +5,21 @@ import { baseQueryWithAuth } from "./helpers/query_with_auth";
 
 export interface OrganizationResponce extends BaseResponseInterface {
   name: string;
-  web: string;
+  email: string;
+  url: string;
+  address: string;
+}
+
+export interface OrganizationListResponce {
+  data: OrganizationResponce[];
+  meta: {};
 }
 
 export interface OrganizationRequest {
   name: string;
-  web: string;
+  email: string | null;
+  url: string;
+  address: string;
 }
 
 export const adminApi = createApi({
@@ -18,11 +27,19 @@ export const adminApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}`)
   ),
+  tagTypes: ["Organization"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, { id: string }>({
       query: (data) => ({
         url: `/org/${data.id}`,
+        method: "GET",
+      }),
+      providesTags: ["Organization"],
+    }),
+    getOrganizationList: builder.query<OrganizationListResponce, void>({
+      query: () => ({
+        url: `/org`,
         method: "GET",
       }),
     }),
@@ -48,11 +65,13 @@ export const adminApi = createApi({
         method: "PATCH",
         body: data.body,
       }),
+      invalidatesTags: [{ type: "Organization" }],
     }),
   }),
 });
 
 export const {
+  useGetOrganizationListQuery,
   useCreateOrganizationMutation,
   useGetOrganizationQuery,
   useUpdateOrganizationMutation,

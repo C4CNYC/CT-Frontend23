@@ -15,6 +15,8 @@ import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
+import router from "next/router";
+import { PATH_AFTER_LOGIN } from "src/config-global";
 
 // ----------------------------------------------------------------------
 
@@ -53,6 +55,7 @@ export default function AuthLoginForm() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await login(data.email, data.password, data.tenantName);
+      router.replace(PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
