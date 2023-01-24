@@ -26,7 +26,7 @@ import { useSnackbar } from "../../../../components/snackbar";
 import MenuPopover from "../../../../components/menu-popover";
 import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import { FileShareDialog, FileDetailsDrawer } from "../../file";
+import { FileShareDialog, FileDetailsDrawer } from "../../schools";
 
 // ----------------------------------------------------------------------
 

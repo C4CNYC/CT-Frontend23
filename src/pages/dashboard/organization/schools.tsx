@@ -1,185 +1,216 @@
 import { useState } from "react";
+// next
+import Head from "next/head";
 // @mui
-import { alpha } from "@mui/material/styles";
-import {
-  Box,
-  Card,
-  Link,
-  Stack,
-  Avatar,
-  MenuItem,
-  IconButton,
-  Typography,
-  InputAdornment,
-} from "@mui/material";
+import { Stack, Button, Container } from "@mui/material";
+// routes
+import { PATH_DASHBOARD } from "../../../routes/paths";
+// utils
+import { fTimestamp } from "../../../utils/formatTime";
+// layouts
+import DashboardLayout from "../../../layouts/dashboard";
+// _mock_
+import { _allFiles } from "../../../_mock/arrays";
 // @types
-import {IUserProfileSchool} from "../../../@types/user";
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+import { IFile } from "../../../@types/file";
 // components
 import Iconify from "../../../components/iconify";
-import MenuPopover from "../../../components/menu-popover";
-import AddSchool from './AddSchool'
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import DashboardLayout from "../../../layouts/dashboard";
-import UserProfilePage from "./profile";
+import ConfirmDialog from "../../../components/confirm-dialog";
+import { fileFormat } from "../../../components/file-thumbnail";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { useSettingsContext } from "../../../components/settings";
+import { useTable, getComparator } from "../../../components/table";
+import DateRangePicker, {
+  useDateRangePicker,
+} from "../../../components/date-range-picker";
+// sections
+import {
+  FileFilterType,
+  FileFilterName,
+  FileFilterButton, SchoolGridView,
+} from "../../../sections/@dashboard/schools";
 
-type Props = {
-  school: IUserProfileSchool[];
-};
+import AddSchoolDialog from '../../../sections/@dashboard/schools/portal/AddSchoolDialog'
 
-const school = {
-  name: 'Name',
-  url: 'Url'
-}
 
-SchoolsPage.getLayout = (page: React.ReactElement) => (
+Schools.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
-export default function SchoolsPage() {
-  const [isNotFound, setIsNotFound] = useState(false);
+// ----------------------------------------------------------------------
+
+export default function Schools() {
+  const table = useTable({ defaultRowsPerPage: 10 });
+
+  const {
+    startDate,
+    endDate,
+    open: openPicker,
+    onOpen: onOpenPicker,
+    onClose: onClosePicker,
+    onReset: onResetPicker,
+    isSelected: isSelectedValuePicker,
+    isError,
+  } = useDateRangePicker(null, null);
+
+  const { themeStretch } = useSettingsContext();
+
+  const [filterName, setFilterName] = useState("");
+
+  const [tableData, setTableData] = useState(_allFiles);
+
+  const [filterType, setFilterType] = useState<string[]>([]);
+
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+
+  const dataFiltered = applyFilter({
+    inputData: tableData,
+    comparator: getComparator(table.order, table.orderBy),
+    filterName,
+    filterType,
+    filterStartDate: startDate,
+    filterEndDate: endDate,
+    isError: !!isError,
+  });
+
+  const dataInPage = dataFiltered.slice(
+    table.page * table.rowsPerPage,
+    table.page * table.rowsPerPage + table.rowsPerPage
+  );
+
+  const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    table.setPage(0);
+    setFilterName(event.target.value);
+  };
+
+  const handleDeleteItem = (id: string) => {
+    const { page, setPage, setSelected } = table;
+    const deleteRow = tableData.filter((row) => row.id !== id);
+    setSelected([]);
+    setTableData(deleteRow);
+
+    if (page > 0) {
+      if (dataInPage.length < 2) {
+        setPage(page - 1);
+      }
+    }
+  };
+
+  const handleOpenConfirm = () => {
+    setOpenConfirm(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+  };
 
   return (
     <>
-      <Stack
-        spacing={3}
-        justifyContent="space-between"
-        direction={{ xs: "column", sm: "row" }}
-        sx={{ my: 5 }}
-      >
-        <Typography variant="h4">Schools</Typography>
-        <AddSchool />
-      </Stack>
-
-      {isNotFound ? (
-        <Typography variant="body2">not found</Typography>
-      ) : (
-        <Box
-          gap={3}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-          }}
+      <Head>
+        <title> Schools | Codetribe</title>
+      </Head>
+      <Container maxWidth={themeStretch ? false : "lg"}>
+        <CustomBreadcrumbs
+          heading="Schools"
+          links={[
+            {
+              name: "Organizations",
+              href: PATH_DASHBOARD.root,
+            },
+            { name: "Schools" },
+          ]}
+          action={
+            <AddSchoolDialog />
+          }
+        />
+        <Stack
+          spacing={2.5}
+          direction={{ xs: "column", md: "row" }}
+          alignItems={{ xs: "flex-end", md: "center" }}
+          justifyContent="space-between"
+          sx={{ mb: 5 }}
         >
-          <SchoolCard school={school} />
-        </Box>
-      )}
+          <FileFilterName
+            filterName={filterName}
+            onFilterName={handleFilterName}
+          />
+        </Stack>
+        <SchoolGridView
+          table={table}
+          data={tableData}
+          dataFiltered={dataFiltered}
+          onDeleteItem={handleDeleteItem}
+          onOpenConfirm={handleOpenConfirm}
+        />
+      </Container>
+
+      <ConfirmDialog
+        open={openConfirm}
+        onClose={handleCloseConfirm}
+        title="Archive"
+        content={
+          <>
+            Are you sure want to archive{" "}
+            <strong> {table.selected.length} </strong> items?
+          </>
+        }
+        action={
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              handleCloseConfirm();
+            }}
+          >
+            Archive
+          </Button>
+        }
+      />
     </>
   );
 }
 
 // ----------------------------------------------------------------------
 
-type SchoolCardProps = {
-  school: IUserProfileSchool;
-};
+function applyFilter({
+                       inputData,
+                       comparator,
+                       filterName,
+                       filterType,
+                       filterStartDate,
+                       filterEndDate,
+                       isError,
+                     }: {
+  inputData: IFile[];
+  comparator: (a: any, b: any) => number;
+  filterName: string;
+  filterType: string[];
+  filterStartDate: Date | null;
+  filterEndDate: Date | null;
+  isError: boolean;
+}) {
+  const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
-function SchoolCard({ school }: SchoolCardProps) {
-  const { name, avatarUrl } = school;
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const [openDialog, setOpenDialog] = useState(false);
+  inputData = stabilizedThis.map((el) => el[0]);
 
-  const handleClickOpen = () => {
-    setOpenDialog(true);
-  };
+  if (filterName) {
+    inputData = inputData.filter(
+      (file) => file.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+    );
+  }
 
-  const handleClose = () => {
-    setOpenDialog(false);
-  };
+  if (filterType.length) {
+    inputData = inputData.filter((file) =>
+      filterType.includes(fileFormat(file.type))
+    );
+  }
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
-    setOpenPopover(event.currentTarget);
-  };
-
-  const handleClosePopover = () => {
-    setOpenPopover(null);
-  };
-
-  const handleArchive = () => {
-    handleClickOpen();
-    handleClosePopover();
-    console.log("ARCHIVE", name);
-  };
-
-  const handleEdit = () => {
-    handleClosePopover();
-    console.log("EDIT", name);
-  };
-
-  return (
-    <>
-      <Card
-        sx={{
-          py: 5,
-          display: "flex",
-          position: "relative",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Avatar
-          alt={name}
-          src={avatarUrl}
-          sx={{ width: 64, height: 64, mb: 3 }}
-        />
-
-        <Link variant="subtitle1" color="text.primary">
-          {name}
-        </Link>
-
-        <IconButton
-          color={openPopover ? "inherit" : "default"}
-          onClick={handleOpenPopover}
-          sx={{ top: 8, right: 8, position: "absolute" }}
-        >
-          <Iconify icon="eva:more-vertical-fill" />
-        </IconButton>
-      </Card>
-
-      <MenuPopover
-        open={openPopover}
-        onClose={handleClosePopover}
-        arrow="right-top"
-      >
-        <MenuItem onClick={handleArchive} sx={{ color: "error.main" }}>
-          <Iconify icon="eva:trash-2-outline" />
-          Archive
-        </MenuItem>
-
-        <MenuItem onClick={handleEdit}>
-          <Iconify icon="eva:edit-fill" />
-          Edit
-        </MenuItem>
-      </MenuPopover>
-      <Dialog
-        open={openDialog}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          Archive School
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to archive this school? This will disable all all classes. Learners will still be able to login.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
+  return inputData;
 }

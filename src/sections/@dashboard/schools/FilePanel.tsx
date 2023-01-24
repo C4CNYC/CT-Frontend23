@@ -26,8 +26,6 @@ export default function FilePanel({
   subTitle,
   link,
   onOpen,
-  collapse,
-  onCollapse,
   sx,
   ...other
 }: Props) {
@@ -71,14 +69,6 @@ export default function FilePanel({
         >
           View All
         </Button>
-      )}
-
-      {onCollapse && (
-        <IconButton onClick={onCollapse}>
-          <Iconify
-            icon={collapse ? "eva:chevron-down-fill" : "eva:chevron-up-fill"}
-          />
-        </IconButton>
       )}
     </Stack>
   );
