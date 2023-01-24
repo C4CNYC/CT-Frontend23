@@ -8,18 +8,12 @@ export type IFileShared = {
   permission: string;
 };
 
-export type IFolderManager = {
+export type ISchoolManager = {
   id: string;
   name: string;
   size: number;
   type: string;
   url: string;
-  tags: string[];
-  totalFiles?: number;
-  isFavorited: boolean;
-  shared: IFileShared[] | null;
-  dateCreated: Date | number | string;
-  dateModified: Date | number | string;
 };
 
 export type IFileManager = {
@@ -35,4 +29,4 @@ export type IFileManager = {
   dateModified: Date | number | string;
 };
 
-export type IFile = IFileManager | IFolderManager;
+export type IFile = IFileManager | ISchoolManager;

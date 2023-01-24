@@ -7,39 +7,29 @@ import {
   Button,
   Divider,
   MenuItem,
-  Checkbox,
   CardProps,
   IconButton,
 } from "@mui/material";
 // hooks
-import useCopyToClipboard from "../../../../hooks/useCopyToClipboard";
-// utils
-import { fDateTime } from "../../../../utils/formatTime";
-import { fData } from "../../../../utils/formatNumber";
-// @types
-import { IFileManager } from "../../../../@types/file";
-// components
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
-import { useSnackbar } from "../../../../components/snackbar";
 import TextMaxLine from "../../../../components/text-max-line";
-import FileThumbnail from "../../../../components/file-thumbnail";
+import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import FileShareDialog from "../portal/FileShareDialog";
-import FileDetailsDrawer from "../portal/FileDetailsDrawer";
-
+import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
+import SchoolIcon from '@mui/icons-material/School';
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
-  file: IFileManager;
+  school: IFolderManager;
   selected?: boolean;
   onSelect?: VoidFunction;
   onDelete: VoidFunction;
 }
 
-export default function FileCard({
-  file,
+export default function SchoolCard({
+  folder,
   selected,
   onSelect,
   onDelete,
@@ -48,25 +38,15 @@ export default function FileCard({
 }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { copy } = useCopyToClipboard();
-
-  const [inviteEmail, setInviteEmail] = useState("");
-
   const [showCheckbox, setShowCheckbox] = useState(false);
-
-  const [openShare, setOpenShare] = useState(false);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openDetails, setOpenDetails] = useState(false);
 
-  const [favorited, setFavorited] = useState(file.isFavorited);
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleFavorite = () => {
-    setFavorited(!favorited);
-  };
+
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -84,14 +64,6 @@ export default function FileCard({
     setShowCheckbox(false);
   };
 
-  const handleOpenShare = () => {
-    setOpenShare(true);
-  };
-
-  const handleCloseShare = () => {
-    setOpenShare(false);
-  };
-
   const handleOpenDetails = () => {
     setOpenDetails(true);
   };
@@ -106,15 +78,6 @@ export default function FileCard({
 
   const handleClosePopover = () => {
     setOpenPopover(null);
-  };
-
-  const handleChangeInvite = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  };
-
-  const handleCopy = () => {
-    enqueueSnackbar("Copied!");
-    copy(file.url);
   };
 
   return (
@@ -138,60 +101,11 @@ export default function FileCard({
         }}
         {...other}
       >
-        {(showCheckbox || selected) && onSelect ? (
-          <Checkbox
-            checked={selected}
-            onClick={onSelect}
-            icon={<Iconify icon="eva:radio-button-off-fill" />}
-            checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          />
-        ) : (
-          <FileThumbnail file={file.type} sx={{ width: 40, height: 40 }} />
-        )}
-
-        <TextMaxLine
-          variant="subtitle2"
-          persistent
-          onClick={handleOpenDetails}
-          sx={{ mt: 2, mb: 0.5 }}
-        >
-          {file.name}
-        </TextMaxLine>
-
-        <Stack
-          spacing={0.75}
-          direction="row"
-          alignItems="center"
-          sx={{ typography: "caption", color: "text.disabled", mt: 0.5 }}
-        >
-          <Box> {fData(file.size)} </Box>
-
-          <Box
-            sx={{
-              width: 2,
-              height: 2,
-              borderRadius: "50%",
-              bgcolor: "currentColor",
-            }}
-          />
-
-          <Box> {fDateTime(file.dateModified)} </Box>
-        </Stack>
-
         <Stack
           direction="row"
           alignItems="center"
           sx={{ top: 8, right: 8, position: "absolute" }}
         >
-          <Checkbox
-            color="warning"
-            icon={<Iconify icon="eva:star-outline" />}
-            checkedIcon={<Iconify icon="eva:star-fill" />}
-            checked={favorited}
-            onChange={handleFavorite}
-            sx={{ p: 0.75 }}
-          />
-
           <IconButton
             color={openPopover ? "inherit" : "default"}
             onClick={handleOpenPopover}
@@ -199,6 +113,20 @@ export default function FileCard({
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
+
+        <Box
+          sx={{ width: 40, height: 40 }}
+        >
+          <SchoolIcon/>
+        </Box>
+
+        <TextMaxLine
+          variant="h6"
+          onClick={handleOpenDetails}
+          sx={{ mt: 1, mb: 0.5 }}
+        >
+          {folder.name}
+        </TextMaxLine>
       </Card>
 
       <MenuPopover
@@ -207,6 +135,18 @@ export default function FileCard({
         arrow="right-top"
         sx={{ width: 160 }}
       >
+        <MenuItem
+          onClick={() => {
+            handleOpenDetails();
+            handleClosePopover();
+          }}
+        >
+          <Iconify icon="eva:edit-fill" />
+          Edit
+        </MenuItem>
+
+        <Divider sx={{ borderStyle: "dashed" }} />
+
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
@@ -219,11 +159,8 @@ export default function FileCard({
         </MenuItem>
       </MenuPopover>
 
-      <FileDetailsDrawer
-        item={file}
-        favorited={favorited}
-        onFavorite={handleFavorite}
-        onCopyLink={handleCopy}
+      <SchoolDetailsDrawer
+        item={folder}
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => {
@@ -236,10 +173,10 @@ export default function FileCard({
         open={openConfirm}
         onClose={handleCloseConfirm}
         title="Delete"
-        content="Are you sure want to delete?"
+        content="Are you sure want to archive?"
         action={
           <Button variant="contained" color="error" onClick={onDelete}>
-            Delete
+            Archive
           </Button>
         }
       />
