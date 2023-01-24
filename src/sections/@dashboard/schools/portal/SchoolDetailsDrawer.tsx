@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {
   Box,
   Stack,
@@ -8,6 +9,7 @@ import {
   IconButton,
   StackProps,
   DrawerProps,
+  List
 } from "@mui/material";
 import { IFile } from "../../../../@types/file";
 import Iconify from "../../../../components/iconify";
@@ -20,12 +22,16 @@ import * as React from "react";
 import * as Yup from "yup";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
+import FileInvitedItem from '../FileInvitedItem';
+import FileShareDialog from '../FileShareDialog';
+
 // ----------------------------------------------------------------------
 
 interface Props extends DrawerProps {
   item: IFile;
   onClose: VoidFunction;
   onDelete: VoidFunction;
+  onCopyLink: VoidFunction;
 }
 
 type FormValuesProps = {
@@ -41,9 +47,11 @@ export default function SchoolDetailsDrawer({
   open,
   onClose,
   onDelete,
+                                              onCopyLink,
   ...other
 }: Props) {
-  const { name } = item;
+  const { name, shared } = item;
+  const [openShare, setOpenShare] = useState(false);
 
   const UpdateUserSchema = Yup.object().shape({
     schoolName: Yup.string().required("Name is required"),
@@ -80,7 +88,17 @@ export default function SchoolDetailsDrawer({
       console.error(error);
     }
   };
+  const handleOpenShare = () => {
+    setOpenShare(true);
+  };
 
+  const handleCloseShare = () => {
+    setOpenShare(false);
+  };
+
+  const handleChangeInvite = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInviteEmail(event.target.value);
+  };
 
   return (
     <>
@@ -96,7 +114,13 @@ export default function SchoolDetailsDrawer({
         }}
         {...other}
       >
-        <Scrollbar sx={{ height: 1 }}>
+        <Scrollbar sx={{ height: 1,
+          bgcolor: "background.neutral",
+          "& .simplebar-content": {
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100vh'
+          }, }}>
           <Stack
             direction="row"
             alignItems="center"
@@ -109,66 +133,104 @@ export default function SchoolDetailsDrawer({
           <Stack
             spacing={2.5}
             justifyContent="center"
-            sx={{ p: 2.5, bgcolor: "background.neutral" }}
+            sx={{ p: 2.5 }}
           >
             <SchoolIcon/>
             <Typography variant="h6" sx={{ wordBreak: "break-all" }}>
               {name}
             </Typography>
             <Divider sx={{ borderStyle: "dashed" }} />
-            <Stack spacing={1}>
-              <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-                <Box
-                  rowGap={4}
-                  display="grid"
-                  gridTemplateRows="repeat(8, 1fr)"
-                >
-                  <RHFTextField name="schoolName" label="School name" required/>
-
-                  <RHFSelect
-                    native
-                    name="country"
-                    label="Country"
-                    placeholder="Country"
-                  >
-                    <option value=""/>
-                    {countries.map((country) => (
-                      <option key={country.code} value={country.label}>
-                        {country.label}
-                      </option>
-                    ))}
-                  </RHFSelect>
-                  <RHFTextField name="cite" label="City" required/>
-                </Box>
-                <Box sx={{mt: 2, height: '100%'}}></Box>
-                <Box sx={{mt: 2}}>
-                  <LoadingButton
-                    fullWidth
-                    variant="soft"
-                    color="primary"
-                    size="large"
-                    type="submit"
-                    loading={isSubmitting}
-                    sx={{mb: 2}}
-                    startIcon={<Iconify icon="eva:save-outline" />}
-                  >
-                    Save Changes
-                  </LoadingButton>
-                  <Button
-                    fullWidth
-                    variant="soft"
-                    color="error"
-                    size="large"
-                    startIcon={<Iconify icon="eva:trash-2-outline" />}
-                    onClick={onDelete}
-                  >
-                    Archive
-                  </Button>
-                </Box>
-              </FormProvider>
-            </Stack>
           </Stack>
+          <Stack spacing={2.5}
+                 sx={{ p: 2.5, bgcolor: "background.neutral" }}
+
+          >
+            <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+              <Box
+                rowGap={4}
+                display="grid"
+                gridTemplateRows="repeat(4, 1fr)"
+              >
+                <RHFTextField name="schoolName" label="School name" required/>
+
+                <RHFSelect
+                  native
+                  name="country"
+                  label="Country"
+                  placeholder="Country"
+                >
+                  <option value=""/>
+                  {countries.map((country) => (
+                    <option key={country.code} value={country.label}>
+                      {country.label}
+                    </option>
+                  ))}
+                </RHFSelect>
+                <RHFTextField name="cite" label="City" required/>
+              </Box>
+              <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ py: 2.5 }}>
+                <Typography variant="subtitle2"> School admins </Typography>
+                <IconButton
+                  size="small"
+                  color="success"
+                  onClick={handleOpenShare}
+                  sx={{
+                    p: 0,
+                    width: 24,
+                    height: 24,
+                    color: 'common.white',
+                    bgcolor: 'success.main',
+                    '&:hover': {
+                      bgcolor: 'success.main',
+                    },
+                  }}
+                >
+                  <Iconify icon="eva:plus-fill" />
+                </IconButton>
+              </Stack>
+              <List disablePadding>
+                {shared.map((person: any) => (
+                  <FileInvitedItem key={person.id} person={person} />
+                ))}
+              </List>
+              <Box sx={{mt: 2, position: 'absolute', bottom: '15px', left:  '15px'}}>
+                <LoadingButton
+                  fullWidth
+                  variant="soft"
+                  color="primary"
+                  size="large"
+                  type="submit"
+                  loading={isSubmitting}
+                  sx={{mb: 2}}
+                  startIcon={<Iconify icon="eva:save-outline" />}
+                >
+                  Save Changes
+                </LoadingButton>
+                <Button
+                  fullWidth
+                  variant="soft"
+                  color="error"
+                  size="large"
+                  startIcon={<Iconify icon="eva:trash-2-outline" />}
+                  onClick={onDelete}
+                >
+                  Archive
+                </Button>
+              </Box>
+            </FormProvider>
+          </Stack>
+
         </Scrollbar>
+        <FileShareDialog
+          open={openShare}
+          shared={shared}
+          inviteEmail='email@codetribe.io'
+          onChangeInvite={handleChangeInvite}
+          onCopyLink={onCopyLink}
+          onClose={() => {
+            handleCloseShare();
+          }}
+        />
       </Drawer>
     </>
   );
