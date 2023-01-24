@@ -36,7 +36,7 @@ export default function UserCardsPage() {
           heading="User Cards"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "User", href: PATH_DASHBOARD.user.root },
+            { name: "User", href: PATH_DASHBOARD.organization.root },
             { name: "Cards" },
           ]}
         />

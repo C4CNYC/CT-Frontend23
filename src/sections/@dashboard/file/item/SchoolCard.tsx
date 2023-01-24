@@ -24,7 +24,6 @@ import TextMaxLine from "../../../../components/text-max-line";
 import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import FileShareDialog from "../portal/FileShareDialog";
 import FileDetailsDrawer from "../portal/FileDetailsDrawer";
 import FileNewFolderDialog from "../portal/FileNewFolderDialog";
 
@@ -37,7 +36,7 @@ interface Props extends CardProps {
   onDelete: VoidFunction;
 }
 
-export default function FileFolderCard({
+export default function SchoolCard({
   folder,
   selected,
   onSelect,
@@ -171,14 +170,6 @@ export default function FileFolderCard({
           </IconButton>
         </Stack>
 
-        {(showCheckbox || selected) && onSelect ? (
-          <Checkbox
-            checked={selected}
-            onClick={onSelect}
-            icon={<Iconify icon="eva:radio-button-off-fill" />}
-            checkedIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          />
-        ) : (
           <Box
             component="img"
             src="/assets/icons/files/ic_folder.svg"
@@ -193,26 +184,6 @@ export default function FileFolderCard({
         >
           {folder.name}
         </TextMaxLine>
-
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={0.75}
-          sx={{ typography: "caption", color: "text.disabled" }}
-        >
-          <Box> {fData(folder.size)} </Box>
-
-          <Box
-            sx={{
-              width: 2,
-              height: 2,
-              borderRadius: "50%",
-              bgcolor: "currentColor",
-            }}
-          />
-
-          <Box> {folder.totalFiles} files </Box>
-        </Stack>
       </Card>
 
       <MenuPopover
@@ -221,26 +192,6 @@ export default function FileFolderCard({
         arrow="right-top"
         sx={{ width: 160 }}
       >
-        <MenuItem
-          onClick={() => {
-            handleClosePopover();
-            handleCopy();
-          }}
-        >
-          <Iconify icon="eva:link-2-fill" />
-          Copy Link
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            handleClosePopover();
-            handleOpenShare();
-          }}
-        >
-          <Iconify icon="eva:share-fill" />
-          Share
-        </MenuItem>
-
         <MenuItem
           onClick={() => {
             handleClosePopover();
@@ -261,7 +212,7 @@ export default function FileFolderCard({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          Archive
         </MenuItem>
       </MenuPopover>
 
@@ -275,18 +226,6 @@ export default function FileFolderCard({
         onDelete={() => {
           handleCloseDetails();
           onDelete();
-        }}
-      />
-
-      <FileShareDialog
-        open={openShare}
-        shared={folder.shared}
-        inviteEmail={inviteEmail}
-        onChangeInvite={handleChangeInvite}
-        onCopyLink={handleCopy}
-        onClose={() => {
-          handleCloseShare();
-          setInviteEmail("");
         }}
       />
 
@@ -310,7 +249,7 @@ export default function FileFolderCard({
         content="Are you sure want to delete?"
         action={
           <Button variant="contained" color="error" onClick={onDelete}>
-            Delete
+            Archive
           </Button>
         }
       />

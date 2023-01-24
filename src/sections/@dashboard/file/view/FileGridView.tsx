@@ -9,7 +9,7 @@ import { TableProps } from "../../../../components/table";
 //
 import FilePanel from "../FilePanel";
 import FileCard from "../item/FileCard";
-import FileFolderCard from "../item/FileFolderCard";
+import SchoolCard from "../item/SchoolCard";
 import FileShareDialog from "../portal/FileShareDialog";
 import FileActionSelected from "../portal/FileActionSelected";
 import FileNewFolderDialog from "../portal/FileNewFolderDialog";
@@ -108,50 +108,12 @@ export default function FileGridView({
             {dataFiltered
               .filter((i) => i.type === "folder")
               .map((folder) => (
-                <FileFolderCard
+                <SchoolCard
                   key={folder.id}
                   folder={folder}
                   selected={selected.includes(folder.id)}
                   onSelect={() => onSelectItem(folder.id)}
                   onDelete={() => onDeleteItem(folder.id)}
-                  sx={{ maxWidth: "auto" }}
-                />
-              ))}
-          </Box>
-        </Collapse>
-
-        <Divider sx={{ my: 5, borderStyle: "dashed" }} />
-
-        <FilePanel
-          title="Files"
-          subTitle={`${
-            data.filter((item) => item.type !== "folder").length
-          } files`}
-          onOpen={handleOpenUploadFile}
-          collapse={collapseFiles}
-          onCollapse={() => setCollapseFiles(!collapseFiles)}
-        />
-
-        <Collapse in={!collapseFiles} unmountOnExit>
-          <Box
-            display="grid"
-            gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
-              lg: "repeat(4, 1fr)",
-            }}
-            gap={3}
-          >
-            {dataFiltered
-              .filter((i) => i.type !== "folder")
-              .map((file) => (
-                <FileCard
-                  key={file.id}
-                  file={file}
-                  selected={selected.includes(file.id)}
-                  onSelect={() => onSelectItem(file.id)}
-                  onDelete={() => onDeleteItem(file.id)}
                   sx={{ maxWidth: "auto" }}
                 />
               ))}
@@ -179,7 +141,7 @@ export default function FileGridView({
                   onClick={onOpenConfirm}
                   sx={{ mr: 1 }}
                 >
-                  Delete
+                  Archive
                 </Button>
 
                 <Button

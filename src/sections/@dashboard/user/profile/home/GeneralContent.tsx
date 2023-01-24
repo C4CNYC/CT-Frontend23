@@ -25,17 +25,16 @@ import FormProvider, {
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
-  displayName: string;
+  organizationName: string;
   email: string;
   photoURL: CustomFile | string | null;
   phoneNumber: string | null;
   country: string | null;
   address: string | null;
-  state: string | null;
   city: string | null;
-  zipCode: string | null;
-  about: string | null;
-  isPublic: boolean;
+  site: string | null;
+  brandName: string | null;
+  domain: string | null;
 };
 
 export default function AccountGeneral() {
@@ -44,7 +43,7 @@ export default function AccountGeneral() {
   const { user } = useAuthContext();
 
   const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required("Name is required"),
+    organizationName: Yup.string().required("Name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -52,24 +51,23 @@ export default function AccountGeneral() {
     phoneNumber: Yup.string().required("Phone number is required"),
     country: Yup.string().required("Country is required"),
     address: Yup.string().required("Address is required"),
-    state: Yup.string().required("State is required"),
     city: Yup.string().required("City is required"),
-    zipCode: Yup.string().required("Zip code is required"),
-    about: Yup.string().required("About is required"),
+    site: Yup.string().required("Company / Organization Website is required"),
+    brandName: Yup.string().required("Brand name is required"),
+    domain: Yup.string().required("Domain is required"),
   });
 
   const defaultValues = {
-    displayName: user?.displayName || "",
+    organizationName: user?.organizationName || "",
     email: user?.email || "",
     photoURL: user?.photoURL || null,
     phoneNumber: user?.phoneNumber || "",
     country: user?.country || "",
     address: user?.address || "",
-    state: user?.state || "",
     city: user?.city || "",
-    zipCode: user?.zipCode || "",
-    about: user?.about || "",
-    isPublic: user?.isPublic || false,
+    site: user?.site || "",
+    brandName: user?.brandName || "",
+    domain: user?.domain || "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -115,7 +113,7 @@ export default function AccountGeneral() {
           <Card sx={{ py: 10, px: 3, textAlign: "center" }}>
             <RHFUploadAvatar
               name="photoURL"
-              maxSize={3145728}
+              maxSize={30000}
               onDrop={handleDrop}
               helperText={
                 <Typography
@@ -128,17 +126,10 @@ export default function AccountGeneral() {
                     color: "text.secondary",
                   }}
                 >
-                  Allowed *.jpeg, *.jpg, *.png, *.gif
-                  <br /> max size of {fData(3145728)}
+                  Allowed transparent *.png
+                  <br /> max size of {fData(30000)}
                 </Typography>
               }
-            />
-
-            <RHFSwitch
-              name="isPublic"
-              labelPlacement="start"
-              label="Public Profile"
-              sx={{ mt: 5 }}
             />
           </Card>
         </Grid>
@@ -154,7 +145,7 @@ export default function AccountGeneral() {
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="displayName" label="Name" />
+              <RHFTextField name="organizationName" label="Name" />
 
               <RHFTextField name="email" label="Email Address" />
 
@@ -176,16 +167,11 @@ export default function AccountGeneral() {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="state" label="State/Region" />
-
               <RHFTextField name="city" label="City" />
 
-              <RHFTextField name="zipCode" label="Zip/Code" />
             </Box>
 
-            <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <RHFTextField name="about" multiline rows={4} label="About" />
-
+            <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>
               <LoadingButton
                 type="submit"
                 variant="contained"

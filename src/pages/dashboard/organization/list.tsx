@@ -198,7 +198,7 @@ export default function UserListPage() {
   };
 
   const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.user.edit(paramCase(id)));
+    push(PATH_DASHBOARD.organization.edit(paramCase(id)));
   };
 
   const handleResetFilter = () => {
@@ -218,13 +218,13 @@ export default function UserListPage() {
           heading="User List"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "User", href: PATH_DASHBOARD.user.root },
+            { name: "User", href: PATH_DASHBOARD.organization.root },
             { name: "List" },
           ]}
           action={
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.user.new}
+              href={PATH_DASHBOARD.organization.new}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >

@@ -38,11 +38,11 @@ export default function NavItem({
     >
       {icon && <StyledIcon>{icon}</StyledIcon>}
 
-      {/*{subItem && (*/}
-      {/*  <StyledIcon>*/}
-      {/*    <StyledDotIcon active={active && subItem} />*/}
-      {/*  </StyledIcon>*/}
-      {/*)}*/}
+      {subItem && (
+        <StyledIcon>
+          <StyledDotIcon active={active && subItem} />
+        </StyledIcon>
+      )}
 
       <ListItemText
         primary={`${translate(title)}`}

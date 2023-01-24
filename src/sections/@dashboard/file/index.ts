@@ -1,6 +1,6 @@
 export { default as FileCard } from "./item/FileCard";
 export { default as FileTableRow } from "./item/FileTableRow";
-export { default as FileFolderCard } from "./item/FileFolderCard";
+export { default as FileFolderCard } from "./item/SchoolCard";
 
 export { default as FileFilterName } from "./filter/FileFilterName";
 export { default as FileFilterType } from "./filter/FileFilterType";
