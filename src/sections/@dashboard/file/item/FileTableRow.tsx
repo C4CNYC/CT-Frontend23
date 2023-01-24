@@ -28,7 +28,6 @@ import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import FileShareDialog from "../portal/FileShareDialog";
 import FileDetailsDrawer from "../portal/FileDetailsDrawer";
 
 // ----------------------------------------------------------------------
@@ -51,10 +50,6 @@ export default function FileTableRow({
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
-
-  const [inviteEmail, setInviteEmail] = useState("");
-
-  const [openShare, setOpenShare] = useState(false);
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -281,17 +276,6 @@ export default function FileTableRow({
         onDelete={onDeleteRow}
       />
 
-      <FileShareDialog
-        open={openShare}
-        shared={shared}
-        inviteEmail={inviteEmail}
-        onChangeInvite={handleChangeInvite}
-        onCopyLink={handleCopy}
-        onClose={() => {
-          handleCloseShare();
-          setInviteEmail("");
-        }}
-      />
 
       <ConfirmDialog
         open={openConfirm}

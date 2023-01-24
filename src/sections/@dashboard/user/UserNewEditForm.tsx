@@ -120,7 +120,7 @@ export default function UserNewEditForm({
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      push(PATH_DASHBOARD.user.list);
+      push(PATH_DASHBOARD.organization.list);
       console.log("DATA", data);
     } catch (error) {
       console.error(error);

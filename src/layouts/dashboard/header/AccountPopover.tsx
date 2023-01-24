@@ -23,11 +23,11 @@ const OPTIONS = [
   },
   {
     label: "Profile",
-    linkTo: PATH_DASHBOARD.user.profile,
+    linkTo: PATH_DASHBOARD.organization.profile,
   },
   {
     label: "Settings",
-    linkTo: PATH_DASHBOARD.user.account,
+    linkTo: PATH_DASHBOARD.organization.account,
   },
 ];
 

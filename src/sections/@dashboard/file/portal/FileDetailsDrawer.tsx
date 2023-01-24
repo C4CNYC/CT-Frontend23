@@ -141,98 +141,12 @@ export default function FileDetailsDrawer({
             <Divider sx={{ borderStyle: "dashed" }} />
 
             <Stack spacing={1}>
-              <Panel
-                label="Tags"
-                toggle={toggleTags}
-                onToggle={handleToggleTags}
-              />
 
-              {toggleTags && (
-                <Autocomplete
-                  multiple
-                  freeSolo
-                  limitTags={2}
-                  options={item.tags.map((option) => option)}
-                  value={tags}
-                  onChange={(event, newValue) => {
-                    setTags([
-                      ...tags,
-                      ...newValue.filter(
-                        (option) => tags.indexOf(option) === -1
-                      ),
-                    ]);
-                  }}
-                  renderTags={(value: readonly string[], getTagProps) =>
-                    value.map((option: string, index: number) => (
-                      <Chip
-                        {...getTagProps({ index })}
-                        size="small"
-                        variant="soft"
-                        label={option}
-                        key={option}
-                      />
-                    ))
-                  }
-                  renderInput={(params) => (
-                    <TextField {...params} placeholder="#Add a tags" />
-                  )}
-                />
-              )}
             </Stack>
 
-            <Stack spacing={1.5}>
-              <Panel
-                label="Properties"
-                toggle={toggleProperties}
-                onToggle={handleToggleProperties}
-              />
 
-              {toggleProperties && (
-                <Stack spacing={1.5}>
-                  <Row label="Size" value={fData(size)} />
-
-                  <Row label="Modified" value={fDateTime(dateModified)} />
-
-                  <Row label="Type" value={fileFormat(type)} />
-                </Stack>
-              )}
-            </Stack>
           </Stack>
 
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
-            sx={{ p: 2.5 }}
-          >
-            <Typography variant="subtitle2"> File Share With </Typography>
-
-            <IconButton
-              size="small"
-              color="success"
-              onClick={handleOpenShare}
-              sx={{
-                p: 0,
-                width: 24,
-                height: 24,
-                color: "common.white",
-                bgcolor: "success.main",
-                "&:hover": {
-                  bgcolor: "success.main",
-                },
-              }}
-            >
-              <Iconify icon="eva:plus-fill" />
-            </IconButton>
-          </Stack>
-
-          {hasShared && (
-            <List disablePadding sx={{ pl: 2.5, pr: 1 }}>
-              {shared.map((person) => (
-                <FileInvitedItem key={person.id} person={person} />
-              ))}
-            </List>
-          )}
         </Scrollbar>
 
         <Box sx={{ p: 2.5 }}>
@@ -244,22 +158,11 @@ export default function FileDetailsDrawer({
             startIcon={<Iconify icon="eva:trash-2-outline" />}
             onClick={onDelete}
           >
-            Delete
+            Archive
           </Button>
         </Box>
       </Drawer>
 
-      <FileShareDialog
-        open={openShare}
-        shared={shared}
-        inviteEmail={inviteEmail}
-        onChangeInvite={handleChangeInvite}
-        onCopyLink={onCopyLink}
-        onClose={() => {
-          handleCloseShare();
-          setInviteEmail("");
-        }}
-      />
     </>
   );
 }

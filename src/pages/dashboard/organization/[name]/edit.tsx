@@ -49,7 +49,7 @@ export default function UserEditPage() {
             },
             {
               name: "User",
-              href: PATH_DASHBOARD.user.list,
+              href: PATH_DASHBOARD.organization.list,
             },
             { name: currentUser?.name },
           ]}

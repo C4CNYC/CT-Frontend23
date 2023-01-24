@@ -31,7 +31,7 @@ export default function NavAccount() {
   return (
     <Link
       component={NextLink}
-      href={PATH_DASHBOARD.user.account}
+      href={PATH_DASHBOARD.organization.account}
       underline="none"
       color="inherit"
     >

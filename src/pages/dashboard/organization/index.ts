@@ -10,8 +10,8 @@ export default function Index() {
   const { pathname, push } = useRouter();
 
   useEffect(() => {
-    if (pathname === PATH_DASHBOARD.user.root) {
-      push(PATH_DASHBOARD.user.profile);
+    if (pathname === PATH_DASHBOARD.organization.root) {
+      push(PATH_DASHBOARD.organization.profile);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);

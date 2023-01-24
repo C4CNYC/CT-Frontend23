@@ -209,35 +209,13 @@ export default function FileCard({
       >
         <MenuItem
           onClick={() => {
-            handleClosePopover();
-            handleCopy();
-          }}
-        >
-          <Iconify icon="eva:link-2-fill" />
-          Copy Link
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            handleClosePopover();
-            handleOpenShare();
-          }}
-        >
-          <Iconify icon="eva:share-fill" />
-          Share
-        </MenuItem>
-
-        <Divider sx={{ borderStyle: "dashed" }} />
-
-        <MenuItem
-          onClick={() => {
             handleOpenConfirm();
             handleClosePopover();
           }}
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          Archive
         </MenuItem>
       </MenuPopover>
 
@@ -251,18 +229,6 @@ export default function FileCard({
         onDelete={() => {
           handleCloseDetails();
           onDelete();
-        }}
-      />
-
-      <FileShareDialog
-        open={openShare}
-        shared={file.shared}
-        inviteEmail={inviteEmail}
-        onChangeInvite={handleChangeInvite}
-        onCopyLink={handleCopy}
-        onClose={() => {
-          handleCloseShare();
-          setInviteEmail("");
         }}
       />
 

@@ -13,14 +13,21 @@ import {
   InputAdornment,
 } from "@mui/material";
 // @types
-import {IUserProfileFriend, IUserProfileSchool} from "../../../../@types/user";
+import {IUserProfileSchool} from "../../../../../@types/user";
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
 // components
-import Iconify from "../../../../components/iconify";
-import MenuPopover from "../../../../components/menu-popover";
-import { CustomTextField } from "../../../../components/custom-input";
-import SearchNotFound from "../../../../components/search-not-found";
-
-// ----------------------------------------------------------------------
+import Iconify from "../../../../../components/iconify";
+import MenuPopover from "../../../../../components/menu-popover";
+import { CustomTextField } from "../../../../../components/custom-input";
+import SearchNotFound from "../../../../../components/search-not-found";
+import * as React from "react";
+import AddSchool from './AddSchool'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 type Props = {
   school: IUserProfileSchool[];
@@ -43,6 +50,7 @@ export default function Schools({}: Props) {
         sx={{ my: 5 }}
       >
         <Typography variant="h4">Schools</Typography>
+        <AddSchool />
       </Stack>
 
       {isNotFound ? (
@@ -74,6 +82,15 @@ function SchoolCard({ school }: SchoolCardProps) {
   const { name, avatarUrl } = school;
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
+  };
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpenPopover(event.currentTarget);
@@ -83,9 +100,10 @@ function SchoolCard({ school }: SchoolCardProps) {
     setOpenPopover(null);
   };
 
-  const handleDelete = () => {
+  const handleArchive = () => {
+    handleClickOpen();
     handleClosePopover();
-    console.log("DELETE", name);
+    console.log("ARCHIVE", name);
   };
 
   const handleEdit = () => {
@@ -128,7 +146,7 @@ function SchoolCard({ school }: SchoolCardProps) {
         onClose={handleClosePopover}
         arrow="right-top"
       >
-        <MenuItem onClick={handleDelete} sx={{ color: "error.main" }}>
+        <MenuItem onClick={handleArchive} sx={{ color: "error.main" }}>
           <Iconify icon="eva:trash-2-outline" />
           Archive
         </MenuItem>
@@ -138,7 +156,27 @@ function SchoolCard({ school }: SchoolCardProps) {
           Edit
         </MenuItem>
       </MenuPopover>
+      <Dialog
+        open={openDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Archive School
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to archive this school? This will disable all all classes. Learners will still be able to login.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
-

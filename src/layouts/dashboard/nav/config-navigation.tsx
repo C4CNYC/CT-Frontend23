@@ -39,27 +39,20 @@ const navConfig = [
   {
     subheader: "management",
     items: [
-      // USER
+      // organizations
       {
-        title: "Organisation",
-        path: PATH_DASHBOARD.user.root,
+        title: "Organization",
+        path: PATH_DASHBOARD.organization.root,
         icon: ICONS.user,
         children: [
           { title: "profile",
-            path: PATH_DASHBOARD.user.profile,
-            icon: ICONS.user
-          },
-          { title: "General",
-            path: PATH_DASHBOARD.user.general,
-            icon: ICONS.user
+            path: PATH_DASHBOARD.organization.profile,
           },
           { title: "Schools",
-            path: PATH_DASHBOARD.user.schools,
-            icon: ICONS.user
+            path: PATH_DASHBOARD.organization.schools,
           },
           { title: "Contacts",
-            path: PATH_DASHBOARD.user.contacts,
-            icon: ICONS.user
+            path: PATH_DASHBOARD.organization.contacts,
           },
         ],
       },

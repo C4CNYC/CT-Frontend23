@@ -39,7 +39,7 @@ export default function UserCreatePage() {
             },
             {
               name: "User",
-              href: PATH_DASHBOARD.user.list,
+              href: PATH_DASHBOARD.organization.list,
             },
             { name: "New user" },
           ]}
