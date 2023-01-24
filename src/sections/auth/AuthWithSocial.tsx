@@ -4,7 +4,6 @@ import { Divider, IconButton, Stack, Button } from "@mui/material";
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
-import {DeleteIcon} from '@mui/icons-material'
 
 // ----------------------------------------------------------------------
 
