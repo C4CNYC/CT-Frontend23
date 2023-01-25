@@ -17,7 +17,11 @@ import { bgBlur } from "../../utils/cssStyles";
 // config
 import { HEADER } from "../../config-global";
 // routes
-import { PATH_AUTH, PATH_DOCS, PATH_MINIMAL_ON_STORE } from "../../routes/paths";
+import {
+  PATH_AUTH,
+  PATH_DOCS,
+  PATH_MINIMAL_ON_STORE,
+} from "../../routes/paths";
 // components
 import Logo from "../../components/logo";
 import Label from "../../components/label";

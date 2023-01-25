@@ -9,14 +9,14 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IFileShared } from '../../../@types/file';
+import { IFileShared } from "../../../@types/file";
 // components
-import Iconify from '../../../components/iconify';
-import Scrollbar from '../../../components/scrollbar';
+import Iconify from "../../../components/iconify";
+import Scrollbar from "../../../components/scrollbar";
 //
-import FileInvitedItem from './FileInvitedItem';
+import FileInvitedItem from "./FileInvitedItem";
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ export default function FileShareDialog({
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
       <DialogTitle> Invite </DialogTitle>
 
-      <DialogContent sx={{ overflow: 'unset' }}>
+      <DialogContent sx={{ overflow: "unset" }}>
         {onChangeInvite && (
           <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
             <TextField
@@ -56,7 +56,11 @@ export default function FileShareDialog({
               placeholder="Email"
               onChange={onChangeInvite}
             />
-            <Button disabled={!inviteEmail} variant="contained" sx={{ flexShrink: 0 }}>
+            <Button
+              disabled={!inviteEmail}
+              variant="contained"
+              sx={{ flexShrink: 0 }}
+            >
               Send Invite
             </Button>
           </Stack>
@@ -73,9 +77,12 @@ export default function FileShareDialog({
         )}
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: 'space-between' }}>
+      <DialogActions sx={{ justifyContent: "space-between" }}>
         {onCopyLink && (
-          <Button startIcon={<Iconify icon="eva:link-2-fill" />} onClick={onCopyLink}>
+          <Button
+            startIcon={<Iconify icon="eva:link-2-fill" />}
+            onClick={onCopyLink}
+          >
             Copy link
           </Button>
         )}

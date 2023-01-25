@@ -18,11 +18,13 @@ import Label from "../../../../components/label";
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
+import { IUser } from "src/redux/services/interfaces/user.interface";
+import _mock, { randomInArray } from "src/_mock";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IUserAccountGeneral;
+  row: IUser;
   selected: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
@@ -36,7 +38,8 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { name, avatarUrl, company, role, isVerified, status } = row;
+  const { first_name, last_name, email, role } = row;
+  const isVerified = true;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -67,15 +70,18 @@ export default function UserTableRow({
 
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={avatarUrl} />
-
-            <Typography variant="subtitle2" noWrap>
-              {name}
-            </Typography>
+            <Avatar
+              alt={first_name}
+              src={_mock.image.avatar(randomInArray([2, 3, 4, 5, 6]) || 2)}
+            />
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{company}</TableCell>
+        <TableCell align="left">{email}</TableCell>
+
+        <TableCell align="left">{first_name}</TableCell>
+
+        <TableCell align="left">{last_name}</TableCell>
 
         <TableCell align="left" sx={{ textTransform: "capitalize" }}>
           {role}
@@ -89,8 +95,7 @@ export default function UserTableRow({
             sx={{
               width: 20,
               height: 20,
-              color: "success.main",
-              ...(!isVerified && { color: "warning.main" }),
+              color: !isVerified ? "warning.main" : "success.main",
             }}
           />
         </TableCell>
@@ -98,10 +103,10 @@ export default function UserTableRow({
         <TableCell align="left">
           <Label
             variant="soft"
-            color={(status === "banned" && "error") || "success"}
+            color={"success"}
             sx={{ textTransform: "capitalize" }}
           >
-            {status}
+            active
           </Label>
         </TableCell>
 

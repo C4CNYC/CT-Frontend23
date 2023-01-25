@@ -24,7 +24,7 @@ enum Types {
   LOGIN = "LOGIN",
   REGISTER = "REGISTER",
   LOGOUT = "LOGOUT",
-  AUTHENTICATE='AUTHENTICATE'
+  AUTHENTICATE = "AUTHENTICATE",
 }
 
 type Payload = {
@@ -53,7 +53,7 @@ const initialState: AuthStateType = {
 };
 
 const reducer = (state: AuthStateType, action: ActionsType) => {
-  switch(action.type){
+  switch (action.type) {
     case Types.INITIAL:
       return {
         isInitialized: true,
@@ -71,17 +71,17 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
         ...state,
         user: action.payload.user,
       };
-    case Types.AUTHENTICATE: 
+    case Types.AUTHENTICATE:
       return {
         ...state,
         isAuthenticated: true,
-      }
+      };
     case Types.LOGOUT:
       return {
-      ...state,
-      isAuthenticated: false,
-      user: null,
-    };
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
     default:
       return state;
   }
@@ -151,32 +151,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // AUTHENTICATE
   const authenticate = () => {
-      dispatch({
-        type: Types.AUTHENTICATE,
-        payload: {}
-      });
-  }
+    dispatch({
+      type: Types.AUTHENTICATE,
+      payload: {},
+    });
+  };
 
   // LOGIN
-  const login = useCallback(async (email: string, password: string, tenantName: string) => {
-    localStorage.setItem('tenantName', tenantName)
-    // Update <any, any> to normall types
-    const { data } = await axios.post<any, any>('auth/signin', {
-      email,
-      password
-    });
+  const login = useCallback(
+    async (email: string, password: string, tenantName: string) => {
+      localStorage.setItem("tenantName", tenantName);
+      // Update <any, any> to normall types
+      const { data } = await axios.post<any, any>("auth/signin", {
+        email,
+        password,
+      });
 
-    const { access_token, user } = data;
+      const { access_token, user } = data;
 
-    setSession(access_token, localStorage.getItem('tenantName'));
+      setSession(access_token, localStorage.getItem("tenantName"));
 
-    dispatch({
-      type: Types.LOGIN,
-      payload: {
-        user,
-      },
-    });
-  }, []);
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+    },
+    []
+  );
 
   // REGISTER
   const register = useCallback(
@@ -187,18 +190,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
       lastName: string,
       tenantName: string
     ) => {
-      const { data: tenant } = await axios.post('/tenant', {
-        name: tenantName
-      })
-      localStorage.setItem('tenantName', tenant.name);
+      const { data: tenant } = await axios.post("/tenant", {
+        name: tenantName,
+      });
+      localStorage.setItem("tenantName", tenant.name);
 
-      const { data } = await axios.post('/auth/signup', {
+      const { data } = await axios.post("/auth/signup", {
         email,
         password,
         first_name: firstName,
         last_name: lastName,
-      })
-      
+      });
+
       const { access_token, user } = data;
 
       localStorage.setItem("accessToken", access_token);

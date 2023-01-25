@@ -20,32 +20,39 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function LoginLayout({ children, illustration, title, subtitle }: Props) {
+export default function LoginLayout({
+  children,
+  illustration,
+  title,
+  subtitle,
+}: Props) {
   return (
     <StyledRoot>
       <StyledSection>
         <Logo
           sx={{
             zIndex: 9,
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
-            justifyContent: 'center',
-            width: '100%',
+            justifyContent: "center",
+            width: "100%",
             mt: { xs: 1.5, md: 5 },
           }}
         />
-        <Typography
-          variant="h3"
-          sx={{ maxWidth: 480, textAlign: "left" }}
-        >
+        <Typography variant="h3" sx={{ maxWidth: 480, textAlign: "left" }}>
           {title || "Hi, Welcome back"}
         </Typography>
 
         <Typography
           variant="subtitle2"
-          sx={{ mb: 10, maxWidth: 480, textAlign: "left", color: "text.secondary", }}
+          sx={{
+            mb: 10,
+            maxWidth: 480,
+            textAlign: "left",
+            color: "text.secondary",
+          }}
         >
           {subtitle || "Hi, Welcome back"}
         </Typography>

@@ -7,26 +7,13 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 // @mui
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Card,
-  Grid,
-  Stack,
-  Switch,
-  Typography,
-  FormControlLabel,
-} from "@mui/material";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 // utils
 import { fData } from "../../../utils/formatNumber";
 // routes
 import { PATH_DASHBOARD } from "../../../routes/paths";
-// @types
-import { IUserAccountGeneral } from "../../../@types/user";
-// assets
-import { countries } from "../../../assets/data";
 // components
 import Label from "../../../components/label";
-import { CustomFile } from "../../../components/upload";
 import { useSnackbar } from "../../../components/snackbar";
 import FormProvider, {
   RHFSelect,
@@ -34,16 +21,23 @@ import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "../../../components/hook-form";
+import { IUser } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { Role } from "src/redux/services/enums/role.enum";
+import {
+  useCreateOrgMemberMutation,
+  useUpdateOrgMemberMutation,
+} from "src/redux/services/admin";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<IUserAccountGeneral, "avatarUrl"> {
-  avatarUrl: CustomFile | string | null;
-}
+interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {}
 
 type Props = {
   isEdit?: boolean;
-  currentUser?: IUserAccountGeneral;
+  currentUser?: IUser & BaseResponseInterface;
 };
 
 export default function UserNewEditForm({
@@ -51,39 +45,30 @@ export default function UserNewEditForm({
   currentUser,
 }: Props) {
   const { push } = useRouter();
+  const organizationId = useSelector(
+    (state: RootState) => state.global.organizationId
+  );
+  const [createUser] = useCreateOrgMemberMutation();
+  const [updateUser] = useUpdateOrgMemberMutation();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
+    first_name: Yup.string().required("Name is required"),
+    last_name: Yup.string().required("Surename is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    phoneNumber: Yup.string().required("Phone number is required"),
-    address: Yup.string().required("Address is required"),
-    country: Yup.string().required("Country is required"),
-    company: Yup.string().required("Company is required"),
-    state: Yup.string().required("State is required"),
-    city: Yup.string().required("City is required"),
     role: Yup.string().required("Role is required"),
-    avatarUrl: Yup.string().required("Avatar is required").nullable(true),
+    // avatarUrl: Yup.string().required("Avatar is required").nullable(true),
   });
 
   const defaultValues = useMemo(
     () => ({
-      name: currentUser?.name || "",
+      first_name: currentUser?.first_name || "",
+      last_name: currentUser?.last_name || "",
       email: currentUser?.email || "",
-      phoneNumber: currentUser?.phoneNumber || "",
-      address: currentUser?.address || "",
-      country: currentUser?.country || "",
-      state: currentUser?.state || "",
-      city: currentUser?.city || "",
-      zipCode: currentUser?.zipCode || "",
-      avatarUrl: currentUser?.avatarUrl || null,
-      isVerified: currentUser?.isVerified || true,
-      status: currentUser?.status,
-      company: currentUser?.company || "",
-      role: currentUser?.role || "",
+      role: (currentUser?.role as Role) || Role.Manager,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
@@ -96,14 +81,14 @@ export default function UserNewEditForm({
 
   const {
     reset,
-    watch,
-    control,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
+  const values = {
+    status: "active",
+  };
 
   useEffect(() => {
     if (isEdit && currentUser) {
@@ -117,13 +102,27 @@ export default function UserNewEditForm({
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (!isEdit) {
+        await createUser({
+          org_id: organizationId,
+          ...data,
+        }).unwrap();
+      } else {
+        await updateUser({
+          org_id: organizationId,
+          user_id: currentUser?.id,
+          ...data,
+        });
+      }
+
       reset();
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      push(PATH_DASHBOARD.organization.list);
-      console.log("DATA", data);
+      push(PATH_DASHBOARD.organization.members);
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(error.data.message, {
+        variant: "error",
+      });
+      console.error(error, "test");
     }
   };
 
@@ -136,7 +135,7 @@ export default function UserNewEditForm({
       });
 
       if (file) {
-        setValue("avatarUrl", newFile, { shouldValidate: true });
+        //#TODO upload file
       }
     },
     [setValue]
@@ -184,43 +183,6 @@ export default function UserNewEditForm({
               />
             </Box>
 
-            {isEdit && (
-              <FormControlLabel
-                labelPlacement="start"
-                control={
-                  <Controller
-                    name="status"
-                    control={control}
-                    render={({ field }) => (
-                      <Switch
-                        {...field}
-                        checked={field.value !== "active"}
-                        onChange={(event) =>
-                          field.onChange(
-                            event.target.checked ? "banned" : "active"
-                          )
-                        }
-                      />
-                    )}
-                  />
-                }
-                label={
-                  <>
-                    <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                      Banned
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ color: "text.secondary" }}
-                    >
-                      Apply disable account
-                    </Typography>
-                  </>
-                }
-                sx={{ mx: 0, mb: 3, width: 1, justifyContent: "space-between" }}
-              />
-            )}
-
             <RHFSwitch
               name="isVerified"
               labelPlacement="start"
@@ -251,30 +213,17 @@ export default function UserNewEditForm({
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
+              <RHFTextField name="first_name" label="First Name" />
+              <RHFTextField name="last_name" label="Last Name" />
               <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phoneNumber" label="Phone Number" />
 
-              <RHFSelect
-                native
-                name="country"
-                label="Country"
-                placeholder="Country"
-              >
-                <option value="" />
-                {countries.map((country) => (
-                  <option key={country.code} value={country.label}>
-                    {country.label}
+              <RHFSelect native name="role" label="Role" placeholder="Role">
+                {(Object.keys(Role) as Array<keyof typeof Role>).map((role) => (
+                  <option key={Role[role]} value={Role[role]}>
+                    {role}
                   </option>
                 ))}
               </RHFSelect>
-
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="address" label="Address" />
-              <RHFTextField name="zipCode" label="Zip/Code" />
-              <RHFTextField name="company" label="Company" />
-              <RHFTextField name="role" label="Role" />
             </Box>
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>

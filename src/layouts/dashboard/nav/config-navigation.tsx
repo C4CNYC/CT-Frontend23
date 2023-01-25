@@ -45,18 +45,10 @@ const navConfig = [
         path: PATH_DASHBOARD.organization.root,
         icon: ICONS.user,
         children: [
-          { title: "profile",
-            path: PATH_DASHBOARD.organization.profile,
-          },
-          { title: "Schools",
-            path: PATH_DASHBOARD.organization.schools,
-          },
-          { title: "Members",
-            path: PATH_DASHBOARD.organization.members,
-          },
-          { title: "Contacts",
-            path: PATH_DASHBOARD.organization.contacts,
-          },
+          { title: "profile", path: PATH_DASHBOARD.organization.profile },
+          { title: "Schools", path: PATH_DASHBOARD.organization.schools },
+          { title: "Members", path: PATH_DASHBOARD.organization.members },
+          { title: "Contacts", path: PATH_DASHBOARD.organization.contacts },
         ],
       },
 
@@ -73,6 +65,6 @@ const navConfig = [
         ],
       },
     ],
-  }
-]
+  },
+];
 export default navConfig;

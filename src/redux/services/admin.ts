@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQueryWrapper } from "../helpers/base_query_wrapper";
-import { baseQueryWithAuth } from "../helpers/query_with_auth";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { baseQueryWrapper } from "./helpers/base_query_wrapper";
+import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import {
   OrganizationResponce,
   OrganizationListResponce,
@@ -12,6 +13,14 @@ import {
   SchoolListResponce,
   SchoolRequest,
 } from "./interfaces/school.interface";
+import {
+  CreateUserRequest,
+  IUser,
+  UpdateUserRequest,
+  UserListResponse,
+  UserResponse,
+  UserSearchParams,
+} from "./interfaces/user.interface";
 
 export const adminApi = createApi({
   reducerPath: "api/admin",
@@ -78,11 +87,47 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "School" }],
     }),
+    // ------------ members ------------------
+    createOrgMember: builder.mutation<
+      IUser & BaseResponseInterface,
+      CreateUserRequest
+    >({
+      query: ({ org_id, ...body }) => ({
+        url: `/org/${org_id}/user`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
+    updateOrgMember: builder.mutation<
+      IUser & BaseResponseInterface,
+      UpdateUserRequest
+    >({
+      query: ({ org_id, user_id, ...body }) => ({
+        url: `/org/${org_id}/user/${user_id}`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
+    getOrgMembers: builder.query<
+      UserListResponse<IUser & BaseResponseInterface>,
+      UserSearchParams
+    >({
+      query: ({ org_id, ...params }) => ({
+        url: `org/${org_id}/user`,
+        method: "GET",
+        params,
+      }),
+    }),
   }),
 });
 
 export const {
+  useGetOrgMembersQuery,
   useGetSchoolListQuery,
+  useUpdateOrgMemberMutation,
+  useCreateOrgMemberMutation,
   useCreateOrganizationSchoolMutation,
   useGetOrganizationListQuery,
   useCreateOrganizationMutation,

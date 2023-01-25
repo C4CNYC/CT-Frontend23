@@ -10,15 +10,17 @@ import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "../../../components/hook-form";
-import { OrganizationResponce, useUpdateOrganizationMutation } from "src/redux/services/admin/admin";
+import {
+  OrganizationResponce,
+  useUpdateOrganizationMutation,
+} from "src/redux/services/admin";
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  email: Yup.string()
-    .email("Email must be a valid email address"),
+  email: Yup.string().email("Email must be a valid email address"),
   url: Yup.string()
-  .url('Url mast be a valid')
-  .required("Company / Organization Website is required"),
+    .url("Url mast be a valid")
+    .required("Company / Organization Website is required"),
 });
 
 type FormValuesProps = {
@@ -29,11 +31,13 @@ type FormValuesProps = {
 };
 
 type OrganizationFormProps = {
-  organization?: OrganizationResponce
-}
+  organization?: OrganizationResponce;
+};
 
-export default function OrganizationForm({ organization }: OrganizationFormProps) {
-  const [ updateOrg, { isLoading } ] = useUpdateOrganizationMutation()
+export default function OrganizationForm({
+  organization,
+}: OrganizationFormProps) {
+  const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
@@ -48,21 +52,18 @@ export default function OrganizationForm({ organization }: OrganizationFormProps
     defaultValues,
   });
 
-  const {
-    setValue,
-    handleSubmit,
-  } = methods;
+  const { setValue, handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await updateOrg({
         id: organization?.id as string,
         body: {
-            name: data.name,
-            email: data.email || null,
-            url: data.url,
-            address: data.address
-        }
+          name: data.name,
+          email: data.email || null,
+          url: data.url,
+          address: data.address,
+        },
       });
       enqueueSnackbar("Update success!");
       console.log("DATA", data);
@@ -132,7 +133,6 @@ export default function OrganizationForm({ organization }: OrganizationFormProps
               <RHFTextField name="url" label="Url" />
 
               <RHFTextField name="address" label="Address" />
-
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>

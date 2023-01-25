@@ -33,8 +33,7 @@ export default function AuthLoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    tenantName: Yup.string()
-      .required("Tenant name is required"),
+    tenantName: Yup.string().required("Tenant name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),

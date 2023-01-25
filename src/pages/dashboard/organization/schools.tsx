@@ -23,11 +23,10 @@ import {
   SchoolGridView,
 } from "../../../sections/@dashboard/schools";
 
-import AddSchoolDialog from '../../../sections/@dashboard/schools/portal/AddSchoolDialog'
-import { useGetSchoolListQuery } from "src/redux/services/admin/admin";
+import AddSchoolDialog from "../../../sections/@dashboard/schools/portal/AddSchoolDialog";
+import { useGetSchoolListQuery } from "src/redux/services/admin";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-
 
 Schools.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -36,7 +35,9 @@ Schools.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function Schools() {
-  const organizationId = useSelector((state: RootState) => state.global.organizationId)
+  const organizationId = useSelector(
+    (state: RootState) => state.global.organizationId
+  );
   const table = useTable({ defaultRowsPerPage: 10 });
 
   const { themeStretch } = useSettingsContext();
@@ -45,7 +46,10 @@ export default function Schools() {
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const { data, isLoading } = useGetSchoolListQuery({ id: organizationId, name: filterName })
+  const { data, isLoading } = useGetSchoolListQuery({
+    id: organizationId,
+    name: filterName,
+  });
 
   const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
     table.setPage(0);
@@ -77,9 +81,7 @@ export default function Schools() {
             },
             { name: "Schools" },
           ]}
-          action={
-            <AddSchoolDialog />
-          }
+          action={<AddSchoolDialog />}
         />
         <Stack
           spacing={2.5}
@@ -93,15 +95,13 @@ export default function Schools() {
             onFilterName={handleFilterName}
           />
         </Stack>
-        {
-          isLoading || !data?.data ? null : (
-            <SchoolGridView
-              table={table}
-              data={data?.data}
-              onDeleteItem={handleDeleteItem}
-            />
-          )
-        }
+        {isLoading || !data?.data ? null : (
+          <SchoolGridView
+            table={table}
+            data={data?.data}
+            onDeleteItem={handleDeleteItem}
+          />
+        )}
       </Container>
 
       <ConfirmDialog

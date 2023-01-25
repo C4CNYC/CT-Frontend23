@@ -38,9 +38,12 @@ export default function AuthWithSocial() {
       </Divider>
 
       <Stack direction="row" justifyContent="center" spacing={2}>
-        <Button variant="outlined"
-                startIcon={<Iconify icon="eva:google-fill" color="#DF3E30" sx={{mr: 2}}/>}
-                sx={{ width: '100%', borderRadius: '50px'}}
+        <Button
+          variant="outlined"
+          startIcon={
+            <Iconify icon="eva:google-fill" color="#DF3E30" sx={{ mr: 2 }} />
+          }
+          sx={{ width: "100%", borderRadius: "50px" }}
         >
           Register with Google
         </Button>

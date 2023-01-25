@@ -6,7 +6,7 @@ import {
 } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import rootReducer, { rootPersistConfig } from "./rootReducer";
-import { adminApi } from "./services/admin/admin";
+import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
 

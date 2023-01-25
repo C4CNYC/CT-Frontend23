@@ -51,7 +51,6 @@ export type IUserProfileSchool = {
   id: string;
   avatarUrl: string;
   name: string;
-
 };
 
 export type IUserProfilePost = {

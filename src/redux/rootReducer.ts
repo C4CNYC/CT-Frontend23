@@ -7,7 +7,7 @@ import chatReducer from "./slices/chat";
 import productReducer from "./slices/product";
 import kanbanReducer from "./slices/kanban";
 import globalRducer from "./slices/global";
-import { adminApi } from "./services/admin/admin";
+import { adminApi } from "./services/admin";
 import { managerApi } from "./services/manager";
 
 // ----------------------------------------------------------------------

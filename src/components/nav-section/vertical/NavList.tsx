@@ -51,7 +51,7 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
       />
 
       {hasChild && (
-        <Collapse in={open} unmountOnExit >
+        <Collapse in={open} unmountOnExit>
           <NavSubList data={data.children} depth={depth} />
         </Collapse>
       )}

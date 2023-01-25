@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from "react";
 import {
   Box,
   Stack,
@@ -9,13 +9,13 @@ import {
   StackProps,
   DrawerProps,
 } from "@mui/material";
-import Image from 'next/image'
+import Image from "next/image";
 import Iconify from "../../../../components/iconify";
 import Scrollbar from "../../../../components/scrollbar";
-import {countries} from "../../../../assets/data";
+import { countries } from "../../../../assets/data";
 import * as React from "react";
-import FileShareDialog from '../FileShareDialog';
-import { SchoolResponce } from 'src/redux/services/admin/admin';
+import FileShareDialog from "../FileShareDialog";
+import { SchoolResponce } from "src/redux/services/admin";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,6 @@ type FormValuesProps = {
   city: string | null;
 };
 
-
 export default function SchoolDetailsDrawer({
   item,
   open,
@@ -41,7 +40,6 @@ export default function SchoolDetailsDrawer({
   ...other
 }: Props) {
   const [openShare, setOpenShare] = useState(false);
-
 
   const handleOpenShare = () => {
     setOpenShare(true);
@@ -56,10 +54,12 @@ export default function SchoolDetailsDrawer({
   };
 
   const countryName = React.useMemo(() => {
-    const country = countries.find(country => country.code.toLowerCase() === item.country.toLowerCase());
+    const country = countries.find(
+      (country) => country.code.toLowerCase() === item.country.toLowerCase()
+    );
     if (country) return country.label;
-    return '';
-  }, [item])
+    return "";
+  }, [item]);
 
   return (
     <>
@@ -75,13 +75,17 @@ export default function SchoolDetailsDrawer({
         }}
         {...other}
       >
-        <Scrollbar sx={{ height: 1,
-          bgcolor: "background.neutral",
-          "& .simplebar-content": {
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100vh'
-          }, }}>
+        <Scrollbar
+          sx={{
+            height: 1,
+            bgcolor: "background.neutral",
+            "& .simplebar-content": {
+              display: "flex",
+              flexDirection: "column",
+              height: "100vh",
+            },
+          }}
+        >
           <Stack
             direction="row"
             alignItems="center"
@@ -91,12 +95,13 @@ export default function SchoolDetailsDrawer({
             <Typography variant="h4"> School Info </Typography>
           </Stack>
 
-          <Stack
-            spacing={2.5}
-            justifyContent="center"
-            sx={{ p: 2.5 }}
-          >
-            <Image width="30" height="30" alt="school" src="/assets/icons/shool/school-icon.svg"/>
+          <Stack spacing={2.5} justifyContent="center" sx={{ p: 2.5 }}>
+            <Image
+              width="30"
+              height="30"
+              alt="school"
+              src="/assets/icons/shool/school-icon.svg"
+            />
             <Typography variant="h6" sx={{ wordBreak: "break-all" }}>
               {item.name}
             </Typography>
@@ -109,7 +114,7 @@ export default function SchoolDetailsDrawer({
         <FileShareDialog
           open={openShare}
           shared={null}
-          inviteEmail='email@codetribe.io'
+          inviteEmail="email@codetribe.io"
           onChangeInvite={handleChangeInvite}
           onCopyLink={() => {}}
           onClose={() => {

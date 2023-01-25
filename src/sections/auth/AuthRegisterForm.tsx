@@ -11,7 +11,7 @@ import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
@@ -25,7 +25,7 @@ type FormValuesProps = {
 
 type AuthRegisterFormProps = {
   next: () => void;
-}
+};
 
 export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
   const { register } = useAuthContext();
@@ -70,7 +70,7 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
           data.password,
           data.firstName,
           data.lastName,
-          data.tenantName,
+          data.tenantName
         );
         next();
       }
@@ -85,12 +85,12 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2.5} sx={{mt: 5}}>
+      <Stack spacing={2.5} sx={{ mt: 5 }}>
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
-         <RHFTextField name="tenantName" label="Tenant name" />
+        <RHFTextField name="tenantName" label="Tenant name" />
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <RHFTextField name="firstName" label="First name" />
@@ -127,9 +127,9 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
           variant="contained"
           loading={isSubmitting || isSubmitSuccessful}
           sx={{
-            boxShadow: '0px 8px 16px rgba(2, 211, 215, 0.24)',
+            boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
             bgcolor: "#FBDD3F",
-            borderRadius: '50px',
+            borderRadius: "50px",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
@@ -139,7 +139,7 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
             },
           }}
         >
-          <RocketLaunchIcon sx={{mr: '5px'}}/>
+          <RocketLaunchIcon sx={{ mr: "5px" }} />
           Let’s GO!
         </LoadingButton>
       </Stack>

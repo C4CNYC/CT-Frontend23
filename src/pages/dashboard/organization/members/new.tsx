@@ -1,20 +1,22 @@
 // next
-import Head from 'next/head';
+import Head from "next/head";
 // @mui
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../../routes/paths";
 // layouts
-import DashboardLayout from '../../../../layouts/dashboard';
+import DashboardLayout from "../../../../layouts/dashboard";
 // components
-import { useSettingsContext } from '../../../../components/settings';
-import CustomBreadcrumbs from '../../../../components/custom-breadcrumbs';
+import { useSettingsContext } from "../../../../components/settings";
+import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 // sections
-import UserNewEditForm from '../../../../sections/@dashboard/user/UserNewEditForm';
+import UserNewEditForm from "../../../../sections/@dashboard/user/UserNewEditForm";
 
 // ----------------------------------------------------------------------
 
-UserCreatePage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
+UserCreatePage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
 // ----------------------------------------------------------------------
 
@@ -27,19 +29,19 @@ export default function UserCreatePage() {
         <title> User: Create a new user | Minimal UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : 'lg'}>
+      <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading="Create a new user"
           links={[
             {
-              name: 'Organization',
+              name: "Organization",
               href: PATH_DASHBOARD.organization.root,
             },
             {
-              name: 'Members',
+              name: "Members",
               href: PATH_DASHBOARD.organization.members,
             },
-            { name: 'New user' },
+            { name: "New user" },
           ]}
         />
         <UserNewEditForm />

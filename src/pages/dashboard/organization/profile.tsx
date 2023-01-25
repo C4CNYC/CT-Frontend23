@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import { useCallback, useState } from "react";
 import Head from "next/head";
 import { Card, Container, Box, Grid, Typography, Stack } from "@mui/material";
 import { PATH_DASHBOARD } from "../../../routes/paths";
@@ -10,10 +10,10 @@ import {
 } from "../../../_mock/arrays";
 import DashboardLayout from "../../../layouts/dashboard";
 import { useSettingsContext } from "../../../components/settings";
-import {ProfileCover} from "../../../sections/@dashboard/user/profile";
+import { ProfileCover } from "../../../sections/@dashboard/user/profile";
 // auth
 import OrganizationForm from "src/sections/@dashboard/organization/OrganizationForm";
-import { useGetOrganizationQuery } from 'src/redux/services/admin/admin';
+import { useGetOrganizationQuery } from "src/redux/services/admin";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 // components
@@ -25,13 +25,14 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-
 export default function UserProfilePage() {
   const { themeStretch } = useSettingsContext();
-  const organizationId = useSelector((state: RootState) => state.global.organizationId)
-  const { data, isLoading } = useGetOrganizationQuery({ id: organizationId })
+  const organizationId = useSelector(
+    (state: RootState) => state.global.organizationId
+  );
+  const { data, isLoading } = useGetOrganizationQuery({ id: organizationId });
 
-  console.log({data});
+  console.log({ data });
 
   return (
     <>
@@ -47,17 +48,13 @@ export default function UserProfilePage() {
           }}
         >
           <ProfileCover
-            name={data?.name || ''}
-            role={data?.email || ''}
+            name={data?.name || ""}
+            role={data?.email || ""}
             cover={""}
           />
         </Card>
-          
-        {
-          isLoading ? null : (
-            <OrganizationForm organization={data}/>
-          )
-        }  
+
+        {isLoading ? null : <OrganizationForm organization={data} />}
       </Container>
     </>
   );
