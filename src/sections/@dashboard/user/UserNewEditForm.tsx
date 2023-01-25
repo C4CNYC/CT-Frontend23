@@ -108,14 +108,13 @@ export default function UserNewEditForm({
           ...data,
         }).unwrap();
       } else {
+        const { email, ...body} = data
         await updateUser({
           org_id: organizationId,
-          user_id: currentUser?.id,
-          ...data,
+          user_id: currentUser?.id as string,
+          ...body,
         });
       }
-
-      reset();
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.organization.members);
     } catch (error) {
@@ -215,7 +214,7 @@ export default function UserNewEditForm({
             >
               <RHFTextField name="first_name" label="First Name" />
               <RHFTextField name="last_name" label="Last Name" />
-              <RHFTextField name="email" label="Email Address" />
+              <RHFTextField disabled={isEdit} name="email" label="Email Address" />
 
               <RHFSelect native name="role" label="Role" placeholder="Role">
                 {(Object.keys(Role) as Array<keyof typeof Role>).map((role) => (

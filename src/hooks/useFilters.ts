@@ -21,9 +21,10 @@ export const useFilters = (filters: FiltersType = {}) => {
         ...filters,
       });
     },
-    setFilter: (name: string, value: string) => {
+    setFilter: (name: string, value: string | number) => {
       setFilter({
         ...filter,
+        page: 1,
         [name]: value,
       });
     },

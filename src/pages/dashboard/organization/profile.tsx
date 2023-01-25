@@ -32,8 +32,6 @@ export default function UserProfilePage() {
   );
   const { data, isLoading } = useGetOrganizationQuery({ id: organizationId });
 
-  console.log({ data });
-
   return (
     <>
       <Head>
@@ -50,7 +48,7 @@ export default function UserProfilePage() {
           <ProfileCover
             name={data?.name || ""}
             role={data?.email || ""}
-            cover={""}
+            cover={"/assets/icons/shool/organization.svg"}
           />
         </Card>
 

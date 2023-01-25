@@ -33,7 +33,7 @@ export interface CreateUserRequest extends IUser {
   org_id: string;
 }
 
-export interface UpdateUserRequest extends IUser {
+export interface UpdateUserRequest extends Omit<IUser, "email"> {
   org_id: string;
   user_id: string;
 }

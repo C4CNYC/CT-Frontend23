@@ -9,6 +9,7 @@ export interface ClassResponce extends BaseResponseInterface {
 export interface ClassRequest {
   name: string;
   schoolId: string;
+  org_id: string;
 }
 
 export const managerApi = createApi({
@@ -18,8 +19,8 @@ export const managerApi = createApi({
   ),
   endpoints: (builder) => ({
     createClass: builder.mutation<ClassResponce, ClassRequest>({
-      query: ({ schoolId, ...body }) => ({
-        url: `/school/${schoolId}/class`,
+      query: ({ schoolId, org_id, ...body }) => ({
+        url: `admin/org/${org_id}/school/${schoolId}/class`,
         method: "POST",
         body,
       }),

@@ -12,6 +12,7 @@ import { useAuthContext } from "src/auth/useAuthContext";
 
 export default function ClassStep() {
   const { authenticate } = useAuthContext();
+
   const theme = useTheme();
   const router = useRouter();
   const [createClass, { isLoading }] = useCreateClassMutation();
@@ -20,11 +21,12 @@ export default function ClassStep() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { schoolId } = router.query;
+  const { schoolId, orgId } = router.query;
   const onSubmit = async (data: any) => {
     try {
       await createClass({
         schoolId,
+        org_id: orgId,
         ...data,
       }).unwrap();
       authenticate();

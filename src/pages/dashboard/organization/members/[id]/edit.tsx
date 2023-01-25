@@ -10,6 +10,8 @@ import DashboardLayout from "src/layouts/dashboard";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import UserNewEditForm from "src/sections/@dashboard/user/UserNewEditForm";
 import { _userList } from "src/_mock/arrays";
+import { useGetOrgMemberQuery } from "src/redux/services/admin";
+import { RootState, useSelector } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
@@ -20,13 +22,18 @@ UserEditPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function UserEditPage() {
+    const organizationId = useSelector(
+    (state: RootState) => state.global.organizationId
+  );
+  const {
+    query: { id },
+  } = useRouter();
   const { themeStretch } = useSettingsContext();
 
-  const {
-    query: { name },
-  } = useRouter();
-
-  const currentUser = _userList.find((user) => paramCase(user.name) === name);
+  const { data } = useGetOrgMemberQuery({
+    org_id: organizationId,
+    user_id: id as string
+  })
 
   return (
     <>
@@ -42,11 +49,11 @@ export default function UserEditPage() {
               name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: currentUser?.name },
+            { name: data?.email },
           ]}
         />
 
-        <UserNewEditForm isEdit currentUser={currentUser} />
+        <UserNewEditForm isEdit currentUser={data} />
       </Container>
     </>
   );

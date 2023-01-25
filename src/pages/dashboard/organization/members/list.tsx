@@ -1,4 +1,3 @@
-import { paramCase } from "change-case";
 import { useState } from "react";
 // next
 import Head from "next/head";
@@ -20,8 +19,7 @@ import {
 } from "@mui/material";
 // routes
 import { PATH_DASHBOARD } from "../../../../routes/paths";
-// @types
-import { IUserAccountGeneral } from "../../../../@types/user";
+
 // _mock_
 import { _userList } from "../../../../_mock/arrays";
 // layouts
@@ -87,17 +85,13 @@ export default function UserListPage() {
     order,
     orderBy,
     rowsPerPage,
-    setPage,
     //
     selected,
-    setSelected,
     onSelectRow,
     onSelectAllRows,
     //
     onSort,
     onChangeDense,
-    onChangePage,
-    onChangeRowsPerPage,
   } = useTable();
 
   const { themeStretch } = useSettingsContext();
@@ -127,7 +121,7 @@ export default function UserListPage() {
   const handleDeleteRows = (selectedRows: string[]) => {};
 
   const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.organization.edit(paramCase(id)));
+    push(PATH_DASHBOARD.organization.edit(id));
   };
 
   return (
@@ -230,7 +224,7 @@ export default function UserListPage() {
                         selected={selected.includes(row.id)}
                         onSelectRow={() => onSelectRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.first_name)}
+                        onEditRow={() => handleEditRow(row.id)}
                       />
                     ))}
 
@@ -249,11 +243,15 @@ export default function UserListPage() {
               </Scrollbar>
             </TableContainer>
             <TablePaginationCustom
-              count={data?.meta.pageCount ? data?.meta.pageCount : 0}
+              count={data?.meta.itemCount ? data?.meta.itemCount : 0}
               page={data?.meta.page ? data?.meta.page - 1 : 0}
               rowsPerPage={data?.meta.take || 0}
-              onPageChange={onChangePage}
-              onRowsPerPageChange={onChangeRowsPerPage}
+              onPageChange={(e, page) => {
+								setFilter('page', page + 1)
+							}}
+              onRowsPerPageChange={(e) => {
+								setFilter('take', e.target.value)
+							}}
               dense={dense}
               onChangeDense={onChangeDense}
             />

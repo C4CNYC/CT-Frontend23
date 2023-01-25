@@ -66,13 +66,14 @@ export default function AddSchoolDialog() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await createSchool({
-        org_Id: organizationId,
+        org_id: organizationId,
         ...data,
-      });
+      }).unwrap;
       enqueueSnackbar(`School ${data.name} created successfuly!`);
-      methods.reset();
       handleClose();
+      methods.reset();
     } catch (error) {
+      enqueueSnackbar('Something went wrong', { variant: 'error' })
       console.error(error);
     }
   };

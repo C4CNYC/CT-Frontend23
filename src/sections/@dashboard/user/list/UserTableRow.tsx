@@ -72,7 +72,7 @@ export default function UserTableRow({
           <Stack direction="row" alignItems="center" spacing={2}>
             <Avatar
               alt={first_name}
-              src={_mock.image.avatar(randomInArray([2, 3, 4, 5, 6]) || 2)}
+              src={_mock.image.avatar(1)}
             />
           </Stack>
         </TableCell>

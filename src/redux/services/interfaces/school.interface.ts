@@ -17,7 +17,7 @@ export interface SchoolRequest {
 }
 
 export interface OrganizationSchoolRequest {
-  org_Id: string;
+  org_id: string;
   name: string;
   city: string;
   country: string;

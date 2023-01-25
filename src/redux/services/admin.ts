@@ -27,7 +27,7 @@ export const adminApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
   ),
-  tagTypes: ["Organization", "School"],
+  tagTypes: ["Organization", "School", "Members"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, { id: string }>({
@@ -80,8 +80,8 @@ export const adminApi = createApi({
       OrganizationSchoolResponse,
       OrganizationSchoolRequest
     >({
-      query: ({ org_Id, ...body }) => ({
-        url: `/org/${org_Id}/school`,
+      query: ({ org_id, ...body }) => ({
+        url: `/org/${org_id}/school`,
         method: "POST",
         body,
       }),
@@ -97,7 +97,7 @@ export const adminApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: "Members" }],
     }),
     updateOrgMember: builder.mutation<
       IUser & BaseResponseInterface,
@@ -105,10 +105,20 @@ export const adminApi = createApi({
     >({
       query: ({ org_id, user_id, ...body }) => ({
         url: `/org/${org_id}/user/${user_id}`,
-        method: "POST",
+        method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{ type: "Members" }],
+    }),
+    getOrgMember: builder.query<
+      IUser & BaseResponseInterface,
+      { org_id: string; user_id: string }
+    >({
+      query: ({ org_id, user_id }) => ({
+        url: `org/${org_id}/user/${user_id}`,
+        method: "GET",
+      }),
+      providesTags: ["Members"],
     }),
     getOrgMembers: builder.query<
       UserListResponse<IUser & BaseResponseInterface>,
@@ -119,11 +129,13 @@ export const adminApi = createApi({
         method: "GET",
         params,
       }),
+      providesTags: ["Members"],
     }),
   }),
 });
 
 export const {
+  useGetOrgMemberQuery,
   useGetOrgMembersQuery,
   useGetSchoolListQuery,
   useUpdateOrgMemberMutation,
