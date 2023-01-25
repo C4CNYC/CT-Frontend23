@@ -1,47 +1,36 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 // @mui
-import { Collapse, Box, Button } from "@mui/material";
-// @types
-import { IFile } from "../../../../@types/file";
+import { Box } from "@mui/material";
 // components
-import Iconify from "../../../../components/iconify";
 import { TableProps } from "../../../../components/table";
 //
 import SchoolCard from "../item/SchoolCard";
+import { SchoolResponce } from "src/redux/services/admin";
 
 // ----------------------------------------------------------------------
 
 type Props = {
   table: TableProps;
-  data: IFile[];
-  dataFiltered: IFile[];
-  onOpenConfirm: VoidFunction;
+  data: SchoolResponce[];
   onDeleteItem: (id: string) => void;
 };
 
 export default function SchoolGridView({
   table,
   data,
-  dataFiltered,
-  onDeleteItem,
-  onOpenConfirm,
+  onDeleteItem
 }: Props) {
   const {
     selected,
     onSelectRow: onSelectItem,
-    onSelectAllRows: onSelectAllItems,
   } = table;
 
   const containerRef = useRef(null);
 
 
-  const [collapseFolders, setCollapseFolders] = useState(false);
-
   return (
     <>
       <Box ref={containerRef}>
-
-        <Collapse in={!collapseFolders} unmountOnExit>
           <Box
             gap={3}
             display="grid"
@@ -52,48 +41,17 @@ export default function SchoolGridView({
               lg: "repeat(4, 1fr)",
             }}
           >
-            {dataFiltered
-              .filter((i) => i.type === "folder")
-              .map((folder) => (
+            {data.map((school) => (
                 <SchoolCard
-                  key={folder.id}
-                  folder={folder}
-                  selected={selected.includes(folder.id)}
-                  onSelect={() => onSelectItem(folder.id)}
-                  onDelete={() => onDeleteItem(folder.id)}
-                  sx={{ maxWidth: "auto" }}
+                  key={school.id}
+                  school={school}
+                  selected={selected.includes(school.id)}
+                  onSelect={() => onSelectItem(school.id)}
+                  onDelete={() => onDeleteItem(school.id)}
+                  sx={{ maxWidth: "auto", cursor: "pointer" }}
                 />
               ))}
           </Box>
-        </Collapse>
-
-        {!!selected?.length && (
-          <FileActionSelected
-            numSelected={selected.length}
-            rowCount={data.length}
-            selected={selected}
-            onSelectAllItems={(checked) =>
-              onSelectAllItems(
-                checked,
-                data.map((row) => row.id)
-              )
-            }
-            action={
-              <>
-                <Button
-                  size="small"
-                  color="error"
-                  variant="contained"
-                  startIcon={<Iconify icon="eva:trash-2-outline" />}
-                  onClick={onOpenConfirm}
-                  sx={{ mr: 1 }}
-                >
-                  Archive
-                </Button>
-              </>
-            }
-          />
-        )}
       </Box>
     </>
   );

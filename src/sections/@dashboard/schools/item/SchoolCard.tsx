@@ -18,18 +18,19 @@ import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
-import SchoolIcon from '@mui/icons-material/School';
+import Image from "next/image";
+import { SchoolResponce } from "src/redux/services/admin";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
-  school: IFolderManager;
+  school: SchoolResponce;
   selected?: boolean;
   onSelect?: VoidFunction;
   onDelete: VoidFunction;
 }
 
 export default function SchoolCard({
-  folder,
+  school,
   selected,
   onSelect,
   onDelete,
@@ -83,6 +84,7 @@ export default function SchoolCard({
   return (
     <>
       <Card
+        onClick={handleOpenDetails}
         onMouseEnter={handleShowCheckbox}
         onMouseLeave={handleHideCheckbox}
         sx={{
@@ -117,15 +119,14 @@ export default function SchoolCard({
         <Box
           sx={{ width: 40, height: 40 }}
         >
-          <SchoolIcon/>
+          <Image width="30" height="30" alt="school" src="/assets/icons/shool/school-icon.svg"/>
         </Box>
 
         <TextMaxLine
           variant="h6"
-          onClick={handleOpenDetails}
           sx={{ mt: 1, mb: 0.5 }}
         >
-          {folder.name}
+          {school.name}
         </TextMaxLine>
       </Card>
 
@@ -160,7 +161,7 @@ export default function SchoolCard({
       </MenuPopover>
 
       <SchoolDetailsDrawer
-        item={folder}
+        item={school}
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => {

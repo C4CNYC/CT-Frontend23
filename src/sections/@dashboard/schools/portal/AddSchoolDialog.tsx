@@ -17,15 +17,19 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useCallback} from "react";
 import AddIcon from "@mui/icons-material/Add";
+import { useCreateOrganizationSchoolMutation } from 'src/redux/services/admin';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/redux/store';
 
 type FormValuesProps = {
-  organizationName: string;
-  country: string | null;
-  address: string | null;
-  city: string | null;
+  name: string;
+  country: string;
+  city: string;
 };
 
 export default function AddSchoolDialog() {
+  const organizationId = useSelector((state: RootState) => state.global.organizationId)
+  const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation()
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,18 +41,14 @@ export default function AddSchoolDialog() {
   const {enqueueSnackbar} = useSnackbar();
 
   const UpdateUserSchema = Yup.object().shape({
-    schoolName: Yup.string().required("Name is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
+    name: Yup.string().required("Name is required"),
     country: Yup.string().required("Country is required"),
     city: Yup.string().required("City is required"),
-    address: Yup.string().required("Address is required"),
   });
 
   const defaultValues = {
-    schoolName: "",
-    phoneNumber: "",
+    name: "",
     country: "",
-    address: "",
     city: "",
   };
 
@@ -57,16 +57,15 @@ export default function AddSchoolDialog() {
     defaultValues,
   });
 
-  const {
-    handleSubmit,
-    formState: {isSubmitting},
-  } = methods;
-
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar("Update success!");
-      console.log("DATA", data);
+      await createSchool({
+        org_Id: organizationId,
+        ...data
+      });
+      enqueueSnackbar(`School ${data.name} created successfuly!`);
+      methods.reset()
+      handleClose() 
     } catch (error) {
       console.error(error);
     }
@@ -84,7 +83,7 @@ export default function AddSchoolDialog() {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add School</DialogTitle>
         <DialogContent sx={{p: 0}}>
-          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+          <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
                 <Card sx={{p: 3}}>
@@ -92,7 +91,7 @@ export default function AddSchoolDialog() {
                     rowGap={3}
                     display="grid"
                   >
-                    <RHFTextField name="schoolName" label="School name" required/>
+                    <RHFTextField name="name" label="School name" required/>
 
                     <RHFSelect
                       native
@@ -102,20 +101,19 @@ export default function AddSchoolDialog() {
                     >
                       <option value=""/>
                       {countries.map((country) => (
-                        <option key={country.code} value={country.label}>
+                        <option key={country.code} value={country.code}>
                           {country.label}
                         </option>
                       ))}
                     </RHFSelect>
-                    <RHFTextField name="cite" label="City" required/>
+                    <RHFTextField name="city" label="City" required/>
                   </Box>
-
                   <Box sx={{display: "flex", justifyContent: "flex-end", gap: 2, mt: 7}}>
                     <Button onClick={handleClose}>Close</Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
-                      loading={isSubmitting}
+                      loading={isLoading}
                     >
                       Save Changes
                     </LoadingButton>

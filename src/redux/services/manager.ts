@@ -11,34 +11,12 @@ export interface ClassRequest {
   schoolId: string;
 }
 
-export interface OrganizationSchoolRequest {
-  org_Id: string;
-  name: string;
-  city: string;
-  country: string;
-}
-export interface OrganizationSchoolResponse extends BaseResponseInterface {
-  name: string;
-  city: string;
-  country: string;
-}
-
 export const managerApi = createApi({
   reducerPath: "api/manager",
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}`)
   ),
   endpoints: (builder) => ({
-    createOrganizationSchool: builder.mutation<
-      OrganizationSchoolResponse,
-      OrganizationSchoolRequest
-    >({
-      query: (body) => ({
-        url: `/school`,
-        method: "POST",
-        body,
-      }),
-    }),
     createClass: builder.mutation<ClassResponce, ClassRequest>({
       query: ({ schoolId, ...body }) => ({
         url: `/school/${schoolId}/class`,
@@ -49,5 +27,4 @@ export const managerApi = createApi({
   }),
 });
 
-export const { useCreateClassMutation, useCreateOrganizationSchoolMutation } =
-  managerApi;
+export const { useCreateClassMutation } = managerApi;

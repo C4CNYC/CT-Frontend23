@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import TextField from '@mui/material/TextField';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useCreateOrganizationSchoolMutation } from 'src/redux/services/manager';
+import { useCreateOrganizationSchoolMutation } from 'src/redux/services/admin';
 
 type SchoolStepProps = {
 	next: () => void;

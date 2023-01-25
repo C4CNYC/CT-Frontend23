@@ -22,12 +22,40 @@ export interface OrganizationRequest {
   address: string;
 }
 
+export interface SchoolResponce extends BaseResponseInterface {
+  name: string;
+  city: string;
+  country: string;
+}
+
+export interface SchoolListResponce {
+  data: SchoolResponce[];
+  meta: {};
+}
+
+export interface SchoolRequest {
+  id: string;
+  name?: string;
+}
+
+export interface OrganizationSchoolRequest {
+  org_Id: string;
+  name: string;
+  city: string;
+  country: string;
+}
+export interface OrganizationSchoolResponse extends BaseResponseInterface {
+  name: string;
+  city: string;
+  country: string;
+}
+
 export const adminApi = createApi({
   reducerPath: "api/admin",
   baseQuery: baseQueryWithAuth(
-    baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}`)
+    baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
   ),
-  tagTypes: ["Organization"],
+  tagTypes: ["Organization", "School"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, { id: string }>({
@@ -67,10 +95,32 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "Organization" }],
     }),
+    // ------------ school ------------------
+    getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
+      query: ({ id, ...params }) => ({
+        url: `/org/${id}/school`,
+        method: "GET",
+        params,
+      }),
+      providesTags: ["School"],
+    }),
+    createOrganizationSchool: builder.mutation<
+      OrganizationSchoolResponse,
+      OrganizationSchoolRequest
+    >({
+      query: ({ org_Id, ...body }) => ({
+        url: `/org/${org_Id}/school`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
   }),
 });
 
 export const {
+  useGetSchoolListQuery,
+  useCreateOrganizationSchoolMutation,
   useGetOrganizationListQuery,
   useCreateOrganizationMutation,
   useGetOrganizationQuery,
