@@ -24,7 +24,7 @@ import {
 } from "../../../sections/@dashboard/schools";
 
 import AddSchoolDialog from '../../../sections/@dashboard/schools/portal/AddSchoolDialog'
-import { useGetSchoolListQuery } from "src/redux/services/admin";
+import { useGetSchoolListQuery } from "src/redux/services/admin/admin";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 

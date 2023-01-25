@@ -19,7 +19,7 @@ import ConfirmDialog from "../../../../components/confirm-dialog";
 //
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import Image from "next/image";
-import { SchoolResponce } from "src/redux/services/admin";
+import { SchoolResponce } from "src/redux/services/admin/admin";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {

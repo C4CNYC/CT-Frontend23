@@ -13,7 +13,7 @@ import { useSettingsContext } from "../../../components/settings";
 import {ProfileCover} from "../../../sections/@dashboard/user/profile";
 // auth
 import OrganizationForm from "src/sections/@dashboard/organization/OrganizationForm";
-import { useGetOrganizationQuery } from 'src/redux/services/admin';
+import { useGetOrganizationQuery } from 'src/redux/services/admin/admin';
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 // components

@@ -51,7 +51,7 @@ const navConfig = [
           { title: "Schools",
             path: PATH_DASHBOARD.organization.schools,
           },
-          { title: "Members List",
+          { title: "Members",
             path: PATH_DASHBOARD.organization.members,
           },
           { title: "Contacts",

@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import { TableProps } from "../../../../components/table";
 //
 import SchoolCard from "../item/SchoolCard";
-import { SchoolResponce } from "src/redux/services/admin";
+import { SchoolResponce } from "src/redux/services/admin/admin";
 
 // ----------------------------------------------------------------------
 

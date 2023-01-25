@@ -3,3 +3,7 @@ export interface BaseResponseInterface {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface BaseListResponseInterface<Data> {
+  data: Data;
+}

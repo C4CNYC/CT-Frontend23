@@ -1,7 +1,7 @@
 // @mui
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 // components
-import { useGetOrganizationListQuery } from "src/redux/services/admin";
+import { useGetOrganizationListQuery } from "src/redux/services/admin/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrganization } from "src/redux/slices/global";
 import { age } from "src/_mock/assets";

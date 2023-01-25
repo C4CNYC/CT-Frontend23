@@ -1,54 +1,17 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { baseQueryWrapper } from "./helpers/base_query_wrapper";
-import { baseQueryWithAuth } from "./helpers/query_with_auth";
-
-export interface OrganizationResponce extends BaseResponseInterface {
-  name: string;
-  email: string;
-  url: string;
-  address: string;
-}
-
-export interface OrganizationListResponce {
-  data: OrganizationResponce[];
-  meta: {};
-}
-
-export interface OrganizationRequest {
-  name: string;
-  email: string | null;
-  url: string;
-  address: string;
-}
-
-export interface SchoolResponce extends BaseResponseInterface {
-  name: string;
-  city: string;
-  country: string;
-}
-
-export interface SchoolListResponce {
-  data: SchoolResponce[];
-  meta: {};
-}
-
-export interface SchoolRequest {
-  id: string;
-  name?: string;
-}
-
-export interface OrganizationSchoolRequest {
-  org_Id: string;
-  name: string;
-  city: string;
-  country: string;
-}
-export interface OrganizationSchoolResponse extends BaseResponseInterface {
-  name: string;
-  city: string;
-  country: string;
-}
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWrapper } from "../helpers/base_query_wrapper";
+import { baseQueryWithAuth } from "../helpers/query_with_auth";
+import {
+  OrganizationResponce,
+  OrganizationListResponce,
+  OrganizationRequest,
+} from "./interfaces/organization.interface";
+import {
+  OrganizationSchoolRequest,
+  OrganizationSchoolResponse,
+  SchoolListResponce,
+  SchoolRequest,
+} from "./interfaces/school.interface";
 
 export const adminApi = createApi({
   reducerPath: "api/admin",

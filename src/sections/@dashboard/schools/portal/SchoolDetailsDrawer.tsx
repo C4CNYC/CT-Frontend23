@@ -15,7 +15,7 @@ import Scrollbar from "../../../../components/scrollbar";
 import {countries} from "../../../../assets/data";
 import * as React from "react";
 import FileShareDialog from '../FileShareDialog';
-import { SchoolResponce } from 'src/redux/services/admin';
+import { SchoolResponce } from 'src/redux/services/admin/admin';
 
 // ----------------------------------------------------------------------
 

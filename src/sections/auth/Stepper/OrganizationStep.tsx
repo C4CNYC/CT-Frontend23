@@ -5,7 +5,7 @@ import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import InputInfo from './InputInfo'
 import { useForm } from 'react-hook-form';
-import { useCreateOrganizationMutation } from 'src/redux/services/admin';
+import { useCreateOrganizationMutation } from 'src/redux/services/admin/admin';
 import { useRouter } from 'next/router';
 
 type OrganizationStepProps = {

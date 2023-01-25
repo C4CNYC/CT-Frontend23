@@ -1,0 +1,29 @@
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+
+export interface SchoolResponce extends BaseResponseInterface {
+  name: string;
+  city: string;
+  country: string;
+}
+
+export interface SchoolListResponce {
+  data: SchoolResponce[];
+  meta: {};
+}
+
+export interface SchoolRequest {
+  id: string;
+  name?: string;
+}
+
+export interface OrganizationSchoolRequest {
+  org_Id: string;
+  name: string;
+  city: string;
+  country: string;
+}
+export interface OrganizationSchoolResponse extends BaseResponseInterface {
+  name: string;
+  city: string;
+  country: string;
+}

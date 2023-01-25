@@ -10,7 +10,7 @@ import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "../../../components/hook-form";
-import { OrganizationResponce, useUpdateOrganizationMutation } from "src/redux/services/admin";
+import { OrganizationResponce, useUpdateOrganizationMutation } from "src/redux/services/admin/admin";
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),

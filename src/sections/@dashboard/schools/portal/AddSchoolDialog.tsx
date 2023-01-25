@@ -17,7 +17,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useCallback} from "react";
 import AddIcon from "@mui/icons-material/Add";
-import { useCreateOrganizationSchoolMutation } from 'src/redux/services/admin';
+import { useCreateOrganizationSchoolMutation } from 'src/redux/services/admin/admin';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/redux/store';
 
