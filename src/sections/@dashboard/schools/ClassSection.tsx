@@ -62,7 +62,7 @@ export default function ClassesSection({school_id}: ClassesSectionProps) {
               sx={{ alignItems: "center", display: "flex", cursor: "pointer" }}
               variant="subtitle2"
             >
-              Casses
+              Classes
               <Iconify
                 icon={
                   open ? "eva:chevron-up-fill" : "eva:chevron-down-fill"

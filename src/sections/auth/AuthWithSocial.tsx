@@ -43,7 +43,7 @@ export default function AuthWithSocial() {
           startIcon={
             <Iconify icon="eva:google-fill" color="#DF3E30" sx={{ mr: 2 }} />
           }
-          sx={{ width: "100%", borderRadius: "50px" }}
+          sx={{ width: "100%", borderRadius: "50px", border: "1px solid rgba(145, 158, 171, 0.32)", color: '#000' }}
         >
           Register with Google
         </Button>

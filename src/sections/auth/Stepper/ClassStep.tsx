@@ -67,7 +67,24 @@ export default function ClassStep() {
         <TextField label="Class Name" {...register("name")} />
       </Stack>
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-        <Button disabled={isLoading} type="submit" sx={{ mr: 1 }}>
+        <Button
+          disabled={isLoading}
+          type="submit"
+          fullWidth
+          sx={{
+            boxShadow: "0px 8px 16px rgba(196, 196, 196, 0.59)",
+            bgcolor: "#FBDD3F",
+            borderRadius: "50px",
+            textTransform: "uppercase",
+            fontSize: '22px',
+            color: (theme) =>
+              theme.palette.mode === "light" ? "common.white" : "grey.800",
+            "&:hover": {
+              bgcolor: "text.primary",
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
+          }}>
           Next
         </Button>
       </Box>

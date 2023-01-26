@@ -42,7 +42,7 @@ export default function LoginLayout({
           }}
         />
         <Typography variant="h3" sx={{ maxWidth: 480, textAlign: "left" }}>
-          {title || "Hi, Welcome back"}
+          {title || "Hi!"}
         </Typography>
 
         <Typography
@@ -54,7 +54,7 @@ export default function LoginLayout({
             color: "text.secondary",
           }}
         >
-          {subtitle || "Hi, Welcome back"}
+          {subtitle || "Welcome back"}
         </Typography>
 
         <Image

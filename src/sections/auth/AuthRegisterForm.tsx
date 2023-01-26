@@ -130,6 +130,7 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
             boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
             bgcolor: "#FBDD3F",
             borderRadius: "50px",
+            fontSize: '22px',
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
