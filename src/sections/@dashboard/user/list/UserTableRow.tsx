@@ -70,10 +70,7 @@ export default function UserTableRow({
 
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar
-              alt={first_name}
-              src={_mock.image.avatar(1)}
-            />
+            <Avatar alt={first_name} src={_mock.image.avatar(1)} />
           </Stack>
         </TableCell>
 

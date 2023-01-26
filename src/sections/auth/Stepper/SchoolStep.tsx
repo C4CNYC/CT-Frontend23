@@ -31,7 +31,7 @@ export default function SchoolStep({ next }: SchoolStepProps) {
       }).unwrap();
       router.push(
         {
-          pathname: "/auth/register-unprotected/",
+          pathname: "/auth/register",
           query: { orgId, schoolId: school.id },
         },
         undefined,

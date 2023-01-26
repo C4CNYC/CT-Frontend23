@@ -19,7 +19,6 @@ export default function ClassStep() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
   const { schoolId, orgId } = router.query;
   const onSubmit = async (data: any) => {

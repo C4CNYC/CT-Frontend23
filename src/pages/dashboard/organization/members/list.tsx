@@ -75,8 +75,8 @@ UserListPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function UserListPage() {
-  const organizationId = useSelector(
-    (state: RootState) => state.global.organizationId
+  const org_id = useSelector(
+    (state: RootState) => state.global.org_id
   );
 
   const {
@@ -95,14 +95,17 @@ export default function UserListPage() {
   } = useTable();
 
   const { themeStretch } = useSettingsContext();
-	const { filters, setFilter, resetFilters } = useFilters({
-		name: '',
-		role: ''
-	});
-	const { data } = useGetOrgMembersQuery({
-    org_id: organizationId,
-		...filters
+  const { filters, setFilter, resetFilters } = useFilters({
+    name: "",
+    role: "",
   });
+  const { data } = useGetOrgMembersQuery(
+    {
+      org_id: org_id,
+      ...filters,
+    },
+    { skip: !org_id }
+  );
 
   const { push } = useRouter();
 
@@ -152,8 +155,8 @@ export default function UserListPage() {
 
         <Card>
           <Tabs
-            value={'all'}
-            onChange={() => ''}
+            value={"all"}
+            onChange={() => ""}
             sx={{
               px: 2,
               bgcolor: "background.neutral",
@@ -167,17 +170,17 @@ export default function UserListPage() {
           <Divider />
 
           <UserTableToolbar
-						filterName={filters.name as string}
-						filterRole={filters.role as string}
-						optionsRole={Object.values(Role)}
-						onFilterName={(e) => {
-							setFilter('name', e.target.value)
-						}}
-						onFilterRole={(e) => {
-							setFilter('role', e.target.value)
-						}}
-						onResetFilter={resetFilters}
-					/>
+            filterName={filters.name as string}
+            filterRole={filters.role as string}
+            optionsRole={Object.values(Role)}
+            onFilterName={(e) => {
+              setFilter("name", e.target.value);
+            }}
+            onFilterRole={(e) => {
+              setFilter("role", e.target.value);
+            }}
+            onResetFilter={resetFilters}
+          />
           <>
             <TableContainer sx={{ position: "relative", overflow: "unset" }}>
               <TableSelectedAction
@@ -247,11 +250,11 @@ export default function UserListPage() {
               page={data?.meta.page ? data?.meta.page - 1 : 0}
               rowsPerPage={data?.meta.take || 0}
               onPageChange={(e, page) => {
-								setFilter('page', page + 1)
-							}}
+                setFilter("page", page + 1);
+              }}
               onRowsPerPageChange={(e) => {
-								setFilter('take', e.target.value)
-							}}
+                setFilter("take", e.target.value);
+              }}
               dense={dense}
               onChangeDense={onChangeDense}
             />

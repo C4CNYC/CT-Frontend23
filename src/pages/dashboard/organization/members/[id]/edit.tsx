@@ -22,18 +22,21 @@ UserEditPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function UserEditPage() {
-    const organizationId = useSelector(
-    (state: RootState) => state.global.organizationId
+  const org_id = useSelector(
+    (state: RootState) => state.global.org_id
   );
   const {
     query: { id },
   } = useRouter();
   const { themeStretch } = useSettingsContext();
 
-  const { data } = useGetOrgMemberQuery({
-    org_id: organizationId,
-    user_id: id as string
-  })
+  const { data } = useGetOrgMemberQuery(
+    {
+      org_id: org_id,
+      user_id: id as string,
+    },
+    { skip: !org_id }
+  );
 
   return (
     <>

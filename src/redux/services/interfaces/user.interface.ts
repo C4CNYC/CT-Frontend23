@@ -18,6 +18,7 @@ export interface UserListResponse<Data>
 
 export interface UserSearchParams {
   org_id: string;
+  school_id?: string;
   name?: string;
   role?: string;
 }

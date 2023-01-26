@@ -28,7 +28,7 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
       const org = await createOrganization(data).unwrap();
       router.push(
         {
-          pathname: "/auth/register-unprotected/",
+          pathname: "/auth/register",
           query: { orgId: org.id },
         },
         undefined,

@@ -1,21 +1,29 @@
 import { useState } from "react";
 import {
-  Box,
   Stack,
   Drawer,
   Divider,
   Typography,
-  IconButton,
-  StackProps,
   DrawerProps,
+  IconButton,
+  List,
+  Collapse,
 } from "@mui/material";
 import Image from "next/image";
-import Iconify from "../../../../components/iconify";
 import Scrollbar from "../../../../components/scrollbar";
 import { countries } from "../../../../assets/data";
 import * as React from "react";
 import FileShareDialog from "../FileShareDialog";
-import { SchoolResponce } from "src/redux/services/admin";
+import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import Iconify from "src/components/iconify";
+import FileInvitedItem from "../FileInvitedItem";
+import { SHARED_PERSON } from "src/_mock/arrays/_files";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { useDeleteTeacherMutation, useGetTeacherListQuery } from "src/redux/services/admin";
+import { useSnackbar } from "notistack";
+import TeacherSection from "../TeachersSection";
+import ClassSection from "../ClassSection";
 
 // ----------------------------------------------------------------------
 
@@ -25,13 +33,6 @@ interface Props extends DrawerProps {
   onDelete: VoidFunction;
 }
 
-type FormValuesProps = {
-  organizationName: string;
-  country: string | null;
-  address: string | null;
-  city: string | null;
-};
-
 export default function SchoolDetailsDrawer({
   item,
   open,
@@ -39,20 +40,6 @@ export default function SchoolDetailsDrawer({
   onDelete,
   ...other
 }: Props) {
-  const [openShare, setOpenShare] = useState(false);
-
-  const handleOpenShare = () => {
-    setOpenShare(true);
-  };
-
-  const handleCloseShare = () => {
-    setOpenShare(false);
-  };
-
-  const handleChangeInvite = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setInviteEmail(event.target.value);
-  };
-
   const countryName = React.useMemo(() => {
     const country = countries.find(
       (country) => country.code.toLowerCase() === item.country.toLowerCase()
@@ -108,19 +95,18 @@ export default function SchoolDetailsDrawer({
             <Typography variant="subtitle1" sx={{ wordBreak: "break-all" }}>
               {item.city}, {countryName}
             </Typography>
-            <Divider sx={{ borderStyle: "dashed" }} />
           </Stack>
+          <Divider sx={{ borderStyle: "dashed" }} />
+          <TeacherSection
+            school_id={item.id}
+          />
+          <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
+          <ClassSection
+            school_id={item.id}
+          />
+          <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
+          
         </Scrollbar>
-        <FileShareDialog
-          open={openShare}
-          shared={null}
-          inviteEmail="email@codetribe.io"
-          onChangeInvite={handleChangeInvite}
-          onCopyLink={() => {}}
-          onClose={() => {
-            handleCloseShare();
-          }}
-        />
       </Drawer>
     </>
   );

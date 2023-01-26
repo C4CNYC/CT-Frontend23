@@ -32,8 +32,8 @@ type FormValuesProps = {
 };
 
 export default function AddSchoolDialog() {
-  const organizationId = useSelector(
-    (state: RootState) => state.global.organizationId
+  const org_id = useSelector(
+    (state: RootState) => state.global.org_id
   );
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const [open, setOpen] = useState(false);
@@ -66,14 +66,14 @@ export default function AddSchoolDialog() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await createSchool({
-        org_id: organizationId,
+        org_id: org_id,
         ...data,
       }).unwrap;
       enqueueSnackbar(`School ${data.name} created successfuly!`);
       handleClose();
       methods.reset();
     } catch (error) {
-      enqueueSnackbar('Something went wrong', { variant: 'error' })
+      enqueueSnackbar("Something went wrong", { variant: "error" });
       console.error(error);
     }
   };

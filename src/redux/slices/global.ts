@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface CounterState {
-  organizationId: string;
+  org_id: string;
 }
 
 const initialState: CounterState = {
-  organizationId: "",
+  org_id: "",
 };
 
 export const globalSlice = createSlice({
@@ -14,7 +14,7 @@ export const globalSlice = createSlice({
   initialState,
   reducers: {
     setOrganization: (state, action: PayloadAction<string>) => {
-      state.organizationId = action.payload;
+      state.org_id = action.payload;
     },
   },
 });

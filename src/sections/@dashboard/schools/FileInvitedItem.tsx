@@ -3,28 +3,27 @@ import { useState } from "react";
 import {
   Avatar,
   Button,
-  Divider,
   Tooltip,
   ListItem,
   MenuItem,
   ListItemText,
   ListItemAvatar,
 } from "@mui/material";
-// @types
-import { IFileShared } from "../../../@types/file";
 // components
 import Iconify from "../../../components/iconify";
 import MenuPopover from "../../../components/menu-popover";
+import { IUser } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import _mock from "src/_mock";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  person: IFileShared;
+  person: IUser & BaseResponseInterface;
+  handleDeleteTeacher: () => void;
 };
 
-export default function FileInvitedItem({ person }: Props) {
-  const [permission, setPermission] = useState(person.permission);
-
+export default function FileInvitedItem({ person, handleDeleteTeacher }: Props) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,19 +34,15 @@ export default function FileInvitedItem({ person }: Props) {
     setOpenPopover(null);
   };
 
-  const handleChangePermission = (newPermission: string) => {
-    setPermission(newPermission);
-  };
-
   return (
     <>
       <ListItem disableGutters>
         <ListItemAvatar>
-          <Avatar alt={person.name} src={person.avatar} />
+          <Avatar alt={person.first_name} src={_mock.image.avatar(1)} />
         </ListItemAvatar>
 
         <ListItemText
-          primary={person.name}
+          primary={`${person.first_name} ${person.last_name}`}
           secondary={
             <Tooltip title={person.email}>
               <span>{person.email}</span>
@@ -63,9 +58,7 @@ export default function FileInvitedItem({ person }: Props) {
           color="inherit"
           endIcon={
             <Iconify
-              icon={
-                openPopover ? "eva:chevron-up-fill" : "eva:chevron-down-fill"
-              }
+              icon="eva:chevron-down-fill"
             />
           }
           onClick={handleOpenPopover}
@@ -81,7 +74,6 @@ export default function FileInvitedItem({ person }: Props) {
             }),
           }}
         >
-          Can {permission}
         </Button>
       </ListItem>
 
@@ -93,38 +85,7 @@ export default function FileInvitedItem({ person }: Props) {
         <>
           <MenuItem
             onClick={() => {
-              handleClosePopover();
-              handleChangePermission("view");
-            }}
-            sx={{
-              ...(permission === "view" && {
-                bgcolor: "action.selected",
-              }),
-            }}
-          >
-            <Iconify icon="eva:eye-fill" />
-            Can view
-          </MenuItem>
-
-          <MenuItem
-            onClick={() => {
-              handleClosePopover();
-              handleChangePermission("edit");
-            }}
-            sx={{
-              ...(permission === "edit" && {
-                bgcolor: "action.selected",
-              }),
-            }}
-          >
-            <Iconify icon="eva:edit-fill" />
-            Can edit
-          </MenuItem>
-
-          <Divider sx={{ borderStyle: "dashed" }} />
-
-          <MenuItem
-            onClick={() => {
+              handleDeleteTeacher();
               handleClosePopover();
             }}
             sx={{ color: "error.main" }}

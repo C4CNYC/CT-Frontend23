@@ -27,3 +27,13 @@ export interface OrganizationSchoolResponse extends BaseResponseInterface {
   city: string;
   country: string;
 }
+
+export interface AddTeacherRequest {
+  org_id: string;
+  school_id: string;
+  user_id: string;
+}
+
+export interface ClassListReponce extends BaseResponseInterface {
+  name: string;
+}

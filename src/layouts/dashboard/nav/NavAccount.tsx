@@ -20,8 +20,8 @@ import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export default function NavAccount() {
   const dispatch = useDispatch();
-  const organizationId = useSelector(
-    (state: RootState) => state.global.organizationId
+  const org_id = useSelector(
+    (state: RootState) => state.global.org_id
   );
   const { data, isLoading } = useGetOrganizationListQuery();
 
@@ -43,7 +43,7 @@ export default function NavAccount() {
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Organization</InputLabel>
         <Select
-          value={organizationId}
+          value={org_id}
           label="Organization"
           onChange={onChange}
           sx={{

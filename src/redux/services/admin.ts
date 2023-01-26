@@ -8,6 +8,8 @@ import {
   OrganizationRequest,
 } from "./interfaces/organization.interface";
 import {
+  AddTeacherRequest,
+  ClassListReponce,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
   SchoolListResponce,
@@ -18,7 +20,6 @@ import {
   IUser,
   UpdateUserRequest,
   UserListResponse,
-  UserResponse,
   UserSearchParams,
 } from "./interfaces/user.interface";
 
@@ -27,7 +28,7 @@ export const adminApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
   ),
-  tagTypes: ["Organization", "School", "Members"],
+  tagTypes: ["Organization", "School", "Members", "Teachers"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, { id: string }>({
@@ -73,6 +74,42 @@ export const adminApi = createApi({
         url: `/org/${id}/school`,
         method: "GET",
         params,
+      }),
+      providesTags: ["School"],
+    }),
+    deleteTeacher: builder.mutation<void, AddTeacherRequest>({
+      query: ({ org_id, school_id, ...body }) => ({
+        url: `/org/${org_id}/school/${school_id}/teacher`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Teachers" }],
+    }),
+    addTeacher: builder.mutation<void, AddTeacherRequest>({
+      query: ({ org_id, school_id, ...body }) => ({
+        url: `/org/${org_id}/school/${school_id}/teacher`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Teachers" }],
+    }),
+    getTeacherList: builder.query<
+      (IUser & BaseResponseInterface)[],
+      { id: string; school_id: string }
+    >({
+      query: ({ id, school_id }) => ({
+        url: `/org/${id}/school/${school_id}/teacher`,
+        method: "GET",
+      }),
+      providesTags: ["Teachers"],
+    }),
+    getClassList: builder.query<
+      ClassListReponce[],
+      { id: string; school_id: string }
+    >({
+      query: ({ id, school_id }) => ({
+        url: `/org/${id}/school/${school_id}/class`,
+        method: "GET",
       }),
       providesTags: ["School"],
     }),
@@ -135,14 +172,20 @@ export const adminApi = createApi({
 });
 
 export const {
+  // ------------ query ---------------
+  useGetClassListQuery,
   useGetOrgMemberQuery,
   useGetOrgMembersQuery,
   useGetSchoolListQuery,
+  useGetTeacherListQuery,
+  useGetOrganizationListQuery,
+  useGetOrganizationQuery,
+  // ---------------- mutations ---------
+  useDeleteTeacherMutation,
+  useAddTeacherMutation,
   useUpdateOrgMemberMutation,
   useCreateOrgMemberMutation,
-  useCreateOrganizationSchoolMutation,
-  useGetOrganizationListQuery,
   useCreateOrganizationMutation,
-  useGetOrganizationQuery,
   useUpdateOrganizationMutation,
+  useCreateOrganizationSchoolMutation,
 } = adminApi;

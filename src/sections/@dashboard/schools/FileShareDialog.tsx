@@ -10,18 +10,24 @@ import {
   DialogActions,
   DialogContent,
 } from "@mui/material";
+import { useFilters } from "src/hooks/useFilters";
+import { useGetOrgMembersQuery } from "src/redux/services/admin";
+import { Role } from "src/redux/services/enums/role.enum";
+import { RootState, useSelector } from "src/redux/store";
 // @types
 import { IFileShared } from "../../../@types/file";
 // components
 import Iconify from "../../../components/iconify";
 import Scrollbar from "../../../components/scrollbar";
 //
-import FileInvitedItem from "./FileInvitedItem";
+import UserItem from "./UserItem";
 
 // ----------------------------------------------------------------------
 
 interface Props extends DialogProps {
   inviteEmail?: string;
+  schoolId: string;
+  teachersIds: string[];
   shared?: IFileShared[] | null;
   onCopyLink?: VoidFunction;
   onChangeInvite?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -32,6 +38,8 @@ interface Props extends DialogProps {
 
 export default function FileShareDialog({
   shared,
+  teachersIds = [],
+  schoolId,
   inviteEmail,
   onCopyLink,
   onChangeInvite,
@@ -40,7 +48,19 @@ export default function FileShareDialog({
   onClose,
   ...other
 }: Props) {
-  const hasShared = shared && !!shared.length;
+  const { filters, setFilter } = useFilters({ email: "", role: Role.Manager });
+  const org_id = useSelector(
+    (state: RootState) => state.global.org_id
+  );
+  const { data: members } = useGetOrgMembersQuery(
+    {
+      org_id: org_id,
+      ...filters,
+    },
+    {
+      skip: !org_id || !filters.email,
+    }
+  );
 
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
@@ -52,9 +72,11 @@ export default function FileShareDialog({
             <TextField
               fullWidth
               size="small"
-              value={inviteEmail}
+              value={filters.email}
               placeholder="Email"
-              onChange={onChangeInvite}
+              onChange={(e) => {
+                setFilter("email", e.target.value);
+              }}
             />
             <Button
               disabled={!inviteEmail}
@@ -66,27 +88,23 @@ export default function FileShareDialog({
           </Stack>
         )}
 
-        {hasShared && (
+        {members && (
           <Scrollbar sx={{ maxHeight: 60 * 6 }}>
             <List disablePadding>
-              {shared.map((person) => (
-                <FileInvitedItem key={person.id} person={person} />
+              {members.data.map((person) => (
+                <UserItem
+                  invited={teachersIds.includes(person.id)}
+                  schoolId={schoolId}
+                  key={person.id}
+                  person={person}
+                />
               ))}
             </List>
           </Scrollbar>
         )}
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: "space-between" }}>
-        {onCopyLink && (
-          <Button
-            startIcon={<Iconify icon="eva:link-2-fill" />}
-            onClick={onCopyLink}
-          >
-            Copy link
-          </Button>
-        )}
-
+      <DialogActions sx={{ justifyContent: "space-end" }}>
         {onClose && (
           <Button variant="outlined" color="inherit" onClick={onClose}>
             Close

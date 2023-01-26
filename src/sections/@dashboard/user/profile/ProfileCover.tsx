@@ -57,7 +57,7 @@ export default function ProfileCover({ name, role, cover }: IUserProfileCover) {
           sx={{
             mx: "auto",
             borderWidth: 2,
-            objectFit: 'contain',
+            objectFit: "contain",
             borderStyle: "solid",
             borderColor: "common.white",
             width: { xs: 80, md: 128 },

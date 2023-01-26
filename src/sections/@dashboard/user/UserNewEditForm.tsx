@@ -45,8 +45,8 @@ export default function UserNewEditForm({
   currentUser,
 }: Props) {
   const { push } = useRouter();
-  const organizationId = useSelector(
-    (state: RootState) => state.global.organizationId
+  const org_id = useSelector(
+    (state: RootState) => state.global.org_id
   );
   const [createUser] = useCreateOrgMemberMutation();
   const [updateUser] = useUpdateOrgMemberMutation();
@@ -104,13 +104,13 @@ export default function UserNewEditForm({
     try {
       if (!isEdit) {
         await createUser({
-          org_id: organizationId,
+          org_id: org_id,
           ...data,
         }).unwrap();
       } else {
-        const { email, ...body} = data
+        const { email, ...body } = data;
         await updateUser({
-          org_id: organizationId,
+          org_id: org_id,
           user_id: currentUser?.id as string,
           ...body,
         });
@@ -214,7 +214,11 @@ export default function UserNewEditForm({
             >
               <RHFTextField name="first_name" label="First Name" />
               <RHFTextField name="last_name" label="Last Name" />
-              <RHFTextField disabled={isEdit} name="email" label="Email Address" />
+              <RHFTextField
+                disabled={isEdit}
+                name="email"
+                label="Email Address"
+              />
 
               <RHFSelect native name="role" label="Role" placeholder="Role">
                 {(Object.keys(Role) as Array<keyof typeof Role>).map((role) => (
