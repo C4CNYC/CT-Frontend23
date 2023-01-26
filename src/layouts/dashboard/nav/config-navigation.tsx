@@ -57,6 +57,9 @@ const navConfig = [
           { title: "Contacts",
             path: PATH_DASHBOARD.organization.contacts,
           },
+          { title: "Customization",
+            path: PATH_DASHBOARD.organization.customization,
+          },
         ],
       },
 
