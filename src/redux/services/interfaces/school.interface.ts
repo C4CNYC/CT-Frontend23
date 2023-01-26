@@ -37,3 +37,12 @@ export interface AddTeacherRequest {
 export interface ClassListReponce extends BaseResponseInterface {
   name: string;
 }
+
+export interface ClassResponce extends BaseResponseInterface {
+  name: string;
+}
+export interface ClassRequest {
+  name: string;
+  schoolId: string;
+  org_id: string;
+}

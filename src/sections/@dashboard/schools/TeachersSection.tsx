@@ -25,7 +25,7 @@ export default function TeacherSection({school_id}: TeacherSectionProps) {
       id: org_id,
       school_id: school_id,
     },
-    { skip: !org_id || !school_id || !open }
+    { skip: !org_id || !school_id }
   );
 
 
@@ -89,7 +89,7 @@ export default function TeacherSection({school_id}: TeacherSectionProps) {
             </IconButton>
           </Stack>
           <Collapse in={open}>
-            <List disablePadding sx={{ pl: 2.5, pr: 1 }}>
+            <List disablePadding sx={{ pl: 2.5, pr: 1, pt:1 }}>
               {teachers &&
                 teachers.map((person) => (
                   <FileInvitedItem

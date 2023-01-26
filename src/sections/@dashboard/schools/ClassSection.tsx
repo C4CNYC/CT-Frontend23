@@ -8,6 +8,7 @@ import { useDeleteTeacherMutation, useGetClassListQuery, useGetTeacherListQuery 
 import { RootState } from "src/redux/store"
 import { SHARED_PERSON } from "src/_mock/arrays"
 import ClassItem from "./ClassItem"
+import AddClassDialog from "./CreateClassDialog"
 import FileInvitedItem from "./FileInvitedItem"
 import FileShareDialog from "./FileShareDialog"
 
@@ -26,7 +27,7 @@ export default function ClassesSection({school_id}: ClassesSectionProps) {
       id: org_id,
       school_id: school_id,
     },
-    { skip: !org_id || !school_id || !open }
+    { skip: !org_id || !school_id }
   );
 
 
@@ -69,26 +70,10 @@ export default function ClassesSection({school_id}: ClassesSectionProps) {
               />
             </Typography>
 
-            <IconButton
-              size="small"
-              color="success"
-              onClick={() =>  setOpenShare(true)}
-              sx={{
-                p: 0,
-                width: 24,
-                height: 24,
-                color: "common.white",
-                bgcolor: "success.main",
-                "&:hover": {
-                  bgcolor: "success.main",
-                },
-              }}
-            >
-              <Iconify icon="eva:plus-fill" />
-            </IconButton>
+            <AddClassDialog school_id={school_id}/>
           </Stack>
           <Collapse in={open}>
-            <List disablePadding sx={{ pl: 2.5, pr: 1 }}>
+            <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
               {classes &&  classes.map((classes: any) => (
                   <ClassItem
                     handleDeleteClass={() => handleDeleteClass(classes.id)}

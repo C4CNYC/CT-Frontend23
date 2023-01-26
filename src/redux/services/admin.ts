@@ -10,6 +10,8 @@ import {
 import {
   AddTeacherRequest,
   ClassListReponce,
+  ClassRequest,
+  ClassResponce,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
   SchoolListResponce,
@@ -28,7 +30,7 @@ export const adminApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
   ),
-  tagTypes: ["Organization", "School", "Members", "Teachers"],
+  tagTypes: ["Organization", "School", "Members", "Teachers", "Classes"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, { id: string }>({
@@ -69,6 +71,14 @@ export const adminApi = createApi({
       invalidatesTags: [{ type: "Organization" }],
     }),
     // ------------ school ------------------
+    createClass: builder.mutation<ClassResponce, ClassRequest>({
+      query: ({ schoolId, org_id, ...body }) => ({
+        url: `/org/${org_id}/school/${schoolId}/class`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Classes" }],
+    }),
     getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
       query: ({ id, ...params }) => ({
         url: `/org/${id}/school`,
@@ -111,7 +121,7 @@ export const adminApi = createApi({
         url: `/org/${id}/school/${school_id}/class`,
         method: "GET",
       }),
-      providesTags: ["School"],
+      providesTags: ["Classes"],
     }),
     createOrganizationSchool: builder.mutation<
       OrganizationSchoolResponse,
@@ -181,6 +191,7 @@ export const {
   useGetOrganizationListQuery,
   useGetOrganizationQuery,
   // ---------------- mutations ---------
+  useCreateClassMutation,
   useDeleteTeacherMutation,
   useAddTeacherMutation,
   useUpdateOrgMemberMutation,
