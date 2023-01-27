@@ -46,7 +46,7 @@ export const PATH_DASHBOARD = {
   },
   organization: {
     root: path(ROOTS_DASHBOARD, "/organization"),
-    profile: path(ROOTS_DASHBOARD, "/organization/profile"),
+    general: path(ROOTS_DASHBOARD, "/organization/general"),
     account: path(ROOTS_DASHBOARD, "/organization/account"),
     members: path(ROOTS_DASHBOARD, "/organization/members/list"),
     new: path(ROOTS_DASHBOARD, "/organization/members/new"),
@@ -55,8 +55,6 @@ export const PATH_DASHBOARD = {
     schools: path(ROOTS_DASHBOARD, "/organization/schools"),
     contacts: path(ROOTS_DASHBOARD, "/organization/contacts"),
     billing: path(ROOTS_DASHBOARD, "/organization/billing"),
-    settings: path(ROOTS_DASHBOARD, "/organization/settings"),
-    customization: path(ROOTS_DASHBOARD, "/organization/customization"),
   },
   invoice: {
     root: path(ROOTS_DASHBOARD, "/invoice"),

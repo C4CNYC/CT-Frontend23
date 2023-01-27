@@ -125,6 +125,9 @@ export default function OrganizationForm({
                 xs: "repeat(1, 1fr)",
                 sm: "repeat(2, 1fr)",
               }}
+              gridTemplateRows={{
+                xs: "repeat(3, 1fr)"
+              }}
             >
               <RHFTextField name="name" label="Name" />
 

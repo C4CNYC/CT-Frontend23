@@ -11,7 +11,7 @@ type Props = {
 export const OrganizationProvider = ({ children }: Props) => {
   const dispatch = useDispatch();
   const org_id = useSelector((state: RootState) => state.global.org_id);
-  
+
   const { data, isLoading } = useGetOrganizationListQuery();
 
   useEffect(() => {
