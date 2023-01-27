@@ -1,5 +1,7 @@
 // ----------------------------------------------------------------------
 
+import Customization from "../pages/dashboard/organization/customization";
+
 function path(root: string, sublink: string) {
   return `${root}${sublink}`;
 }
