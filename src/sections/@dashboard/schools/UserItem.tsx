@@ -28,9 +28,6 @@ type Props = {
 
 export default function UserItem({ person, schoolId, invited }: Props) {
   const { enqueueSnackbar } = useSnackbar();
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
   const [addTeacher] = useAddTeacherMutation();
 
   const handleAddUser = async () => {
@@ -38,7 +35,6 @@ export default function UserItem({ person, schoolId, invited }: Props) {
       await addTeacher({
         user_id: person.id,
         school_id: schoolId,
-        org_id: org_id,
       }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, { variant: "error" });
@@ -49,7 +45,7 @@ export default function UserItem({ person, schoolId, invited }: Props) {
     <>
       <ListItem disableGutters>
         <ListItemAvatar>
-          <Avatar alt={person.first_name} src={_mock.image.avatar(1)} />
+          <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
         </ListItemAvatar>
 
         <ListItemText

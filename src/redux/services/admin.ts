@@ -1,4 +1,10 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import {
+  BaseQueryFn,
+  createApi,
+  FetchArgs,
+  FetchBaseQueryError,
+} from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
@@ -33,16 +39,16 @@ export const adminApi = createApi({
   tagTypes: ["Organization", "School", "Members", "Teachers", "Classes"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
-    getOrganization: builder.query<OrganizationResponce, { id: string }>({
-      query: (data) => ({
-        url: `/org/${data.id}`,
+    getOrganization: builder.query<OrganizationResponce, void>({
+      query: () => ({
+        url: `/org`,
         method: "GET",
       }),
       providesTags: ["Organization"],
     }),
     getOrganizationList: builder.query<OrganizationListResponce, void>({
       query: () => ({
-        url: `/org`,
+        url: `/org/list`,
         method: "GET",
       }),
     }),
@@ -64,7 +70,7 @@ export const adminApi = createApi({
       }
     >({
       query: (data) => ({
-        url: `/org/${data.id}`,
+        url: `/org`,
         method: "PATCH",
         body: data.body,
       }),
@@ -72,32 +78,32 @@ export const adminApi = createApi({
     }),
     // ------------ school ------------------
     createClass: builder.mutation<ClassResponce, ClassRequest>({
-      query: ({ schoolId, org_id, ...body }) => ({
-        url: `/org/${org_id}/school/${schoolId}/class`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/class`,
         method: "POST",
         body,
       }),
       invalidatesTags: [{ type: "Classes" }],
     }),
     getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
-      query: ({ id, ...params }) => ({
-        url: `/org/${id}/school`,
+      query: ({ ...params }) => ({
+        url: `/school`,
         method: "GET",
         params,
       }),
       providesTags: ["School"],
     }),
     deleteTeacher: builder.mutation<void, AddTeacherRequest>({
-      query: ({ org_id, school_id, ...body }) => ({
-        url: `/org/${org_id}/school/${school_id}/teacher`,
+      query: ({ school_id, ...body }) => ({
+        url: `/school/${school_id}/teacher`,
         method: "DELETE",
         body,
       }),
       invalidatesTags: [{ type: "Teachers" }],
     }),
     addTeacher: builder.mutation<void, AddTeacherRequest>({
-      query: ({ org_id, school_id, ...body }) => ({
-        url: `/org/${org_id}/school/${school_id}/teacher`,
+      query: ({ school_id, ...body }) => ({
+        url: `/school/${school_id}/teacher`,
         method: "POST",
         body,
       }),
@@ -105,20 +111,17 @@ export const adminApi = createApi({
     }),
     getTeacherList: builder.query<
       (IUser & BaseResponseInterface)[],
-      { id: string; school_id: string }
+      { school_id: string }
     >({
-      query: ({ id, school_id }) => ({
-        url: `/org/${id}/school/${school_id}/teacher`,
+      query: ({ school_id }) => ({
+        url: `/school/${school_id}/teacher`,
         method: "GET",
       }),
       providesTags: ["Teachers"],
     }),
-    getClassList: builder.query<
-      ClassListReponce[],
-      { id: string; school_id: string }
-    >({
-      query: ({ id, school_id }) => ({
-        url: `/org/${id}/school/${school_id}/class`,
+    getClassList: builder.query<ClassListReponce[], { school_id: string }>({
+      query: ({ school_id }) => ({
+        url: `/school/${school_id}/class`,
         method: "GET",
       }),
       providesTags: ["Classes"],
@@ -127,8 +130,8 @@ export const adminApi = createApi({
       OrganizationSchoolResponse,
       OrganizationSchoolRequest
     >({
-      query: ({ org_id, ...body }) => ({
-        url: `/org/${org_id}/school`,
+      query: ({ ...body }) => ({
+        url: `/school`,
         method: "POST",
         body,
       }),
@@ -139,8 +142,8 @@ export const adminApi = createApi({
       IUser & BaseResponseInterface,
       CreateUserRequest
     >({
-      query: ({ org_id, ...body }) => ({
-        url: `/org/${org_id}/user`,
+      query: ({ ...body }) => ({
+        url: `/org/user`,
         method: "POST",
         body,
       }),
@@ -150,8 +153,8 @@ export const adminApi = createApi({
       IUser & BaseResponseInterface,
       UpdateUserRequest
     >({
-      query: ({ org_id, user_id, ...body }) => ({
-        url: `/org/${org_id}/user/${user_id}`,
+      query: ({ user_id, ...body }) => ({
+        url: `/org/user/${user_id}`,
         method: "PATCH",
         body,
       }),
@@ -159,10 +162,10 @@ export const adminApi = createApi({
     }),
     getOrgMember: builder.query<
       IUser & BaseResponseInterface,
-      { org_id: string; user_id: string }
+      { user_id: string }
     >({
-      query: ({ org_id, user_id }) => ({
-        url: `org/${org_id}/user/${user_id}`,
+      query: ({ user_id }) => ({
+        url: `org/user/${user_id}`,
         method: "GET",
       }),
       providesTags: ["Members"],
@@ -171,8 +174,8 @@ export const adminApi = createApi({
       UserListResponse<IUser & BaseResponseInterface>,
       UserSearchParams
     >({
-      query: ({ org_id, ...params }) => ({
-        url: `org/${org_id}/user`,
+      query: ({ ...params }) => ({
+        url: `org/user`,
         method: "GET",
         params,
       }),

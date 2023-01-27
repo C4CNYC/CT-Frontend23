@@ -7,6 +7,8 @@ import InputInfo from "./InputInfo";
 import { useForm } from "react-hook-form";
 import { useCreateOrganizationMutation } from "src/redux/services/admin";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setOrganization } from "src/redux/slices/global";
 
 type OrganizationStepProps = {
   next: () => void;
@@ -14,6 +16,7 @@ type OrganizationStepProps = {
 
 export default function OrganizationStep({ next }: OrganizationStepProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [createOrganization, { isLoading }] = useCreateOrganizationMutation();
   const theme = useTheme();
   const {
@@ -26,6 +29,7 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
     console.log(data);
     try {
       const org = await createOrganization(data).unwrap();
+      dispatch(setOrganization(org.id))
       router.push(
         {
           pathname: "/auth/register",
@@ -61,7 +65,7 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
         <InputInfo text="Leave empty if no district website." />
         <TextField label="Website" {...register("url")} />
       </Stack>
-      <Box sx={{ display: "flex", flexDirection: "row"}}>
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Button
           disabled={isLoading}
           fullWidth
@@ -71,7 +75,7 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
             bgcolor: "#FBDD3F",
             borderRadius: "50px",
             textTransform: "uppercase",
-            fontSize: '22px',
+            fontSize: "22px",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
@@ -79,7 +83,8 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
               color: (theme) =>
                 theme.palette.mode === "light" ? "common.white" : "grey.800",
             },
-          }}>
+          }}
+        >
           Next
         </Button>
       </Box>

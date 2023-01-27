@@ -23,7 +23,10 @@ type Props = {
   handleDeleteTeacher: () => void;
 };
 
-export default function FileInvitedItem({ person, handleDeleteTeacher }: Props) {
+export default function FileInvitedItem({
+  person,
+  handleDeleteTeacher,
+}: Props) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -38,7 +41,7 @@ export default function FileInvitedItem({ person, handleDeleteTeacher }: Props) 
     <>
       <ListItem disableGutters>
         <ListItemAvatar>
-          <Avatar alt={person.first_name} src={_mock.image.avatar(1)} />
+          <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
         </ListItemAvatar>
 
         <ListItemText
@@ -56,11 +59,7 @@ export default function FileInvitedItem({ person, handleDeleteTeacher }: Props) 
         <Button
           size="small"
           color="inherit"
-          endIcon={
-            <Iconify
-              icon="eva:chevron-down-fill"
-            />
-          }
+          endIcon={<Iconify icon="eva:chevron-down-fill" />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
@@ -73,8 +72,7 @@ export default function FileInvitedItem({ person, handleDeleteTeacher }: Props) 
               bgcolor: "action.selected",
             }),
           }}
-        >
-        </Button>
+        ></Button>
       </ListItem>
 
       <MenuPopover

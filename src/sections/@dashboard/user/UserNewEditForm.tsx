@@ -45,9 +45,6 @@ export default function UserNewEditForm({
   currentUser,
 }: Props) {
   const { push } = useRouter();
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
   const [createUser] = useCreateOrgMemberMutation();
   const [updateUser] = useUpdateOrgMemberMutation();
 
@@ -104,13 +101,11 @@ export default function UserNewEditForm({
     try {
       if (!isEdit) {
         await createUser({
-          org_id: org_id,
           ...data,
         }).unwrap();
       } else {
         const { email, ...body } = data;
         await updateUser({
-          org_id: org_id,
           user_id: currentUser?.id as string,
           ...body,
         });

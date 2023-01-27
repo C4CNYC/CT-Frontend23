@@ -9,8 +9,6 @@ import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
 import FormProvider, { RHFTextField } from "src/components/hook-form";
 import Iconify from "src/components/iconify";
@@ -22,13 +20,10 @@ type FormValuesProps = {
 
 type Prop = {
   school_id: string;
-}
+};
 
 export default function AddClassDialog({ school_id }: Prop) {
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
-  const [createSchool, { isLoading }] = useCreateClassMutation();
+  const [createClass, { isLoading }] = useCreateClassMutation();
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -54,8 +49,7 @@ export default function AddClassDialog({ school_id }: Prop) {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await createSchool({
-        org_id: org_id,
+      await createClass({
         schoolId: school_id,
         ...data,
       }).unwrap;
@@ -71,22 +65,22 @@ export default function AddClassDialog({ school_id }: Prop) {
   return (
     <>
       <IconButton
-              size="small"
-              color="success"
-              onClick={() =>  handleClickOpen()}
-              sx={{
-                p: 0,
-                width: 24,
-                height: 24,
-                color: "common.white",
-                bgcolor: "success.main",
-                "&:hover": {
-                  bgcolor: "success.main",
-                },
-              }}
-            >
-              <Iconify icon="eva:plus-fill" />
-            </IconButton>
+        size="small"
+        color="success"
+        onClick={() => handleClickOpen()}
+        sx={{
+          p: 0,
+          width: 24,
+          height: 24,
+          color: "common.white",
+          bgcolor: "success.main",
+          "&:hover": {
+            bgcolor: "success.main",
+          },
+        }}
+      >
+        <Iconify icon="eva:plus-fill" />
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Class</DialogTitle>
         <DialogContent sx={{ p: 0 }}>

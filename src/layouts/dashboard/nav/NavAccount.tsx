@@ -11,33 +11,20 @@ import {
 import { useGetOrganizationListQuery } from "src/redux/services/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrganization } from "src/redux/slices/global";
-import { age } from "src/_mock/assets";
 import { RootState } from "src/redux/store";
 import { useEffect } from "react";
-import { group } from "console";
-import { StyledSubheader } from "src/components/nav-section/vertical/styles";
-import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export default function NavAccount() {
   const dispatch = useDispatch();
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
+  const org_id = useSelector((state: RootState) => state.global.org_id);
+  const organizationList = useSelector(
+    (state: RootState) => state.global.organizations
   );
-  const { data, isLoading } = useGetOrganizationListQuery();
 
   const onChange = (event: SelectChangeEvent) => {
     dispatch(setOrganization(event.target.value));
   };
 
-  useEffect(() => {
-    if (data?.data) {
-      dispatch(setOrganization(data?.data[0].id));
-    }
-  }, [data]);
-
-  if (isLoading) {
-    return null;
-  }
   return (
     <Box>
       <FormControl fullWidth>
@@ -52,7 +39,7 @@ export default function NavAccount() {
             width: "100%",
           }}
         >
-          {data?.data.map((organization) => (
+          {organizationList?.map((organization) => (
             <MenuItem key={organization.id} value={organization.id}>
               {organization.name}
             </MenuItem>

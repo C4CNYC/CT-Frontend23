@@ -297,7 +297,7 @@ function Content() {
           <Chip
             color="warning"
             onDelete={() => {}}
-            avatar={<CustomAvatar src={_mock.image.avatar(2)} />}
+            avatar={<CustomAvatar src="/assets/images/avatar_2.jpg" />}
             label="Chip"
           />
         </m.div>

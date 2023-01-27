@@ -26,7 +26,6 @@ export default function SchoolStep({ next }: SchoolStepProps) {
   const onSubmit = async (data: any) => {
     try {
       const school = await createSchool({
-        org_id: orgId,
         ...data,
       }).unwrap();
       router.push(
@@ -74,7 +73,7 @@ export default function SchoolStep({ next }: SchoolStepProps) {
             bgcolor: "#FBDD3F",
             borderRadius: "50px",
             textTransform: "uppercase",
-            fontSize: '22px',
+            fontSize: "22px",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
@@ -82,7 +81,8 @@ export default function SchoolStep({ next }: SchoolStepProps) {
               color: (theme) =>
                 theme.palette.mode === "light" ? "common.white" : "grey.800",
             },
-          }}>
+          }}
+        >
           Next
         </Button>
       </Box>

@@ -45,9 +45,7 @@ import {
   UserTableToolbar,
   UserTableRow,
 } from "../../../../sections/@dashboard/user/list";
-import { useSelector } from "react-redux";
 import { useGetOrgMembersQuery } from "src/redux/services/admin";
-import { RootState } from "src/redux/store";
 import { useFilters } from "src/hooks/useFilters";
 import { Role } from "src/redux/services/enums/role.enum";
 
@@ -75,10 +73,6 @@ UserListPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function UserListPage() {
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
-
   const {
     dense,
     page,
@@ -99,13 +93,7 @@ export default function UserListPage() {
     name: "",
     role: "",
   });
-  const { data } = useGetOrgMembersQuery(
-    {
-      org_id: org_id,
-      ...filters,
-    },
-    { skip: !org_id }
-  );
+  const { data, isLoading } = useGetOrgMembersQuery(filters);
 
   const { push } = useRouter();
 
@@ -240,7 +228,9 @@ export default function UserListPage() {
                       )}
                     />
 
-                    <TableNoData isNotFound={!data?.data.length} />
+                    <TableNoData
+                      isNotFound={!data?.data.length && !isLoading}
+                    />
                   </TableBody>
                 </Table>
               </Scrollbar>

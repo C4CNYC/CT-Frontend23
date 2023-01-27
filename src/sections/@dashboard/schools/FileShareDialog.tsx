@@ -13,11 +13,9 @@ import {
 import { useFilters } from "src/hooks/useFilters";
 import { useGetOrgMembersQuery } from "src/redux/services/admin";
 import { Role } from "src/redux/services/enums/role.enum";
-import { RootState, useSelector } from "src/redux/store";
 // @types
 import { IFileShared } from "../../../@types/file";
 // components
-import Iconify from "../../../components/iconify";
 import Scrollbar from "../../../components/scrollbar";
 //
 import UserItem from "./UserItem";
@@ -49,16 +47,12 @@ export default function FileShareDialog({
   ...other
 }: Props) {
   const { filters, setFilter } = useFilters({ email: "", role: Role.Manager });
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
   const { data: members } = useGetOrgMembersQuery(
     {
-      org_id: org_id,
       ...filters,
     },
     {
-      skip: !org_id || !filters.email,
+      skip: !filters.email,
     }
   );
 

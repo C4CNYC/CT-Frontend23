@@ -17,7 +17,6 @@ export interface UserListResponse<Data>
   extends BaseListResponseInterface<Data> {}
 
 export interface UserSearchParams {
-  org_id: string;
   school_id?: string;
   name?: string;
   role?: string;
@@ -30,11 +29,8 @@ export interface IUser {
   role: Role;
 }
 
-export interface CreateUserRequest extends IUser {
-  org_id: string;
-}
+export interface CreateUserRequest extends IUser {}
 
 export interface UpdateUserRequest extends Omit<IUser, "email"> {
-  org_id: string;
   user_id: string;
 }

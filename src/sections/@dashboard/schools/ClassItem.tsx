@@ -50,11 +50,7 @@ export default function ClassItem({ classes, handleDeleteClass }: Props) {
         <Button
           size="small"
           color="inherit"
-          endIcon={
-            <Iconify
-              icon="eva:chevron-down-fill"
-            />
-          }
+          endIcon={<Iconify icon="eva:chevron-down-fill" />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
@@ -67,8 +63,7 @@ export default function ClassItem({ classes, handleDeleteClass }: Props) {
               bgcolor: "action.selected",
             }),
           }}
-        >
-        </Button>
+        ></Button>
       </ListItem>
 
       <MenuPopover

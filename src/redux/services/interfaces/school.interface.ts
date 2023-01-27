@@ -12,12 +12,10 @@ export interface SchoolListResponce {
 }
 
 export interface SchoolRequest {
-  id: string;
   name?: string;
 }
 
 export interface OrganizationSchoolRequest {
-  org_id: string;
   name: string;
   city: string;
   country: string;
@@ -29,7 +27,6 @@ export interface OrganizationSchoolResponse extends BaseResponseInterface {
 }
 
 export interface AddTeacherRequest {
-  org_id: string;
   school_id: string;
   user_id: string;
 }
@@ -44,5 +41,4 @@ export interface ClassResponce extends BaseResponseInterface {
 export interface ClassRequest {
   name: string;
   schoolId: string;
-  org_id: string;
 }

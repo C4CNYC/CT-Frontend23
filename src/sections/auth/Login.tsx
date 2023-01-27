@@ -22,16 +22,18 @@ export default function Login() {
   return (
     <LoginLayout>
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-        <Typography variant="h4" sx={{textAlign: 'center'}}>Sign in as a Teacher</Typography>
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Sign in as a Teacher
+        </Typography>
 
-        <Stack direction="row" spacing={0.5} sx={{justifyContent: 'center'}}>
-          <Typography variant="body2" >New user?</Typography>
+        <Stack direction="row" spacing={0.5} sx={{ justifyContent: "center" }}>
+          <Typography variant="body2">New user?</Typography>
           <IconButton
             aria-label="info"
             sx={{
               position: "absolute",
               right: "-40px",
-              top: '10px',
+              top: "10px",
               padding: "10px",
               backgroundColor: "#FBDD3F",
               borderTopLeftRadius: "8px",
@@ -46,12 +48,11 @@ export default function Login() {
             component={NextLink}
             href={PATH_AUTH.register}
             variant="subtitle2"
-            sx={{color: '#02D3D7'}}
+            sx={{ color: "#02D3D7" }}
           >
             Create an account
           </Link>
         </Stack>
-
       </Stack>
       <AuthLoginForm />
 

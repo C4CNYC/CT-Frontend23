@@ -27,13 +27,7 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfilePage() {
   const { themeStretch } = useSettingsContext();
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
-  const { data, isLoading } = useGetOrganizationQuery(
-    { id: org_id },
-    { skip: !org_id }
-  );
+  const { data, isLoading } = useGetOrganizationQuery();
 
   return (
     <>

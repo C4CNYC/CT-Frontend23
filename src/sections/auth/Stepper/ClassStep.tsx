@@ -16,16 +16,12 @@ export default function ClassStep() {
   const theme = useTheme();
   const router = useRouter();
   const [createClass, { isLoading }] = useCreateClassMutation();
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const { schoolId, orgId } = router.query;
   const onSubmit = async (data: any) => {
     try {
       await createClass({
         schoolId,
-        org_id: orgId,
         ...data,
       }).unwrap();
       authenticate();
@@ -76,7 +72,7 @@ export default function ClassStep() {
             bgcolor: "#FBDD3F",
             borderRadius: "50px",
             textTransform: "uppercase",
-            fontSize: '22px',
+            fontSize: "22px",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
@@ -84,7 +80,8 @@ export default function ClassStep() {
               color: (theme) =>
                 theme.palette.mode === "light" ? "common.white" : "grey.800",
             },
-          }}>
+          }}
+        >
           Next
         </Button>
       </Box>

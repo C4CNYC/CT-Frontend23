@@ -9,7 +9,7 @@ import { useTheme } from "@mui/material/styles";
 import Stepper from "./Stepper/Stepper";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import IconButton from "@mui/material/IconButton";
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 export default function Register() {
   const theme = useTheme();
@@ -22,8 +22,15 @@ export default function Register() {
           component={NextLink}
           href={PATH_AUTH.login}
           variant="subtitle2"
-          sx={{position: 'absolute', right: '-30px', top: '-70px', color: "#02D3D7", display: 'flex'}}>
-          go to login <ArrowRightAltIcon sx={{ml: 1}}/>
+          sx={{
+            position: "absolute",
+            right: "-30px",
+            top: "-70px",
+            color: "#02D3D7",
+            display: "flex",
+          }}
+        >
+          go to login <ArrowRightAltIcon sx={{ ml: 1 }} />
         </Link>
         <Typography variant="h4" sx={{ textAlign: "center" }}>
           Sign up as a Teacher

@@ -35,9 +35,6 @@ Schools.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function Schools() {
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
   const table = useTable({ defaultRowsPerPage: 10 });
 
   const { themeStretch } = useSettingsContext();
@@ -46,13 +43,9 @@ export default function Schools() {
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const { data, isLoading } = useGetSchoolListQuery(
-    {
-      id: org_id,
-      name: filterName,
-    },
-    { skip: !org_id }
-  );
+  const { data, isLoading } = useGetSchoolListQuery({
+    name: filterName,
+  });
 
   const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
     table.setPage(0);

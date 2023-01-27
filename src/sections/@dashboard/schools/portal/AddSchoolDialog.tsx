@@ -19,11 +19,8 @@ import { useSnackbar } from "../../../../components/snackbar";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 
 type FormValuesProps = {
   name: string;
@@ -32,9 +29,6 @@ type FormValuesProps = {
 };
 
 export default function AddSchoolDialog() {
-  const org_id = useSelector(
-    (state: RootState) => state.global.org_id
-  );
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -66,7 +60,6 @@ export default function AddSchoolDialog() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await createSchool({
-        org_id: org_id,
         ...data,
       }).unwrap;
       enqueueSnackbar(`School ${data.name} created successfuly!`);

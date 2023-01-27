@@ -20,7 +20,10 @@ import FileInvitedItem from "../FileInvitedItem";
 import { SHARED_PERSON } from "src/_mock/arrays/_files";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import { useDeleteTeacherMutation, useGetTeacherListQuery } from "src/redux/services/admin";
+import {
+  useDeleteTeacherMutation,
+  useGetTeacherListQuery,
+} from "src/redux/services/admin";
 import { useSnackbar } from "notistack";
 import TeacherSection from "../TeachersSection";
 import ClassSection from "../ClassSection";
@@ -97,15 +100,10 @@ export default function SchoolDetailsDrawer({
             </Typography>
           </Stack>
           <Divider sx={{ borderStyle: "dashed" }} />
-          <TeacherSection
-            school_id={item.id}
-          />
+          <TeacherSection school_id={item.id} />
           <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
-          <ClassSection
-            school_id={item.id}
-          />
+          <ClassSection school_id={item.id} />
           <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
-          
         </Scrollbar>
       </Drawer>
     </>
