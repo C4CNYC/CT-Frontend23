@@ -171,7 +171,7 @@ export default function Customization() {
               name="groupsName"
               label="Groups Name"
               sx={{mb: 2}}
-              helperText="What would you like your Groups to be called? Note: Learners are either invited by an admin or auto-added to a Group on registration/signup.
+              helperText="Note: Learners are either invited by an admin or auto-added to a Group on registration/signup.
               Some ideas, but you can choose your own: Class/esClub/sHub/sHive/sGroup/sAnything else that is fun and engaging."
             />
 
@@ -184,15 +184,16 @@ export default function Customization() {
               sx={{mb: 2}}
               helperText={"Note: Should be about 10-15 words and welcome new users to the platform in your own way. What is this? When you first arrive on the Coding Panel you see an \"Intro Guide\" with a sequence of explainer modals. Here you can customize the text for the first slide in the sequence."}
             />
-
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-              sx={{mt: 2}}
-            >
-              Save Changes
-            </LoadingButton>
+            <Stack>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+                sx={{ ml: 'auto', mt: 4 }}
+              >
+                Save Changes
+              </LoadingButton>
+            </Stack>
           </FormProvider>
       </Container>
     </>

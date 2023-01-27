@@ -12,6 +12,7 @@ import { IUserAccountNotificationSettings } from '../../../@types/user';
 import { useSnackbar } from '../../../components/snackbar';
 import FormProvider, { RHFSwitch, RHFTextField } from '../../../components/hook-form';
 import { useSettingsContext } from "../../../components/settings";
+import LanguagePopover from "../../../layouts/dashboard/header/LanguagePopover";
 
 
 Settings.getLayout = (page: React.ReactElement) => (
@@ -45,6 +46,13 @@ const USER_SETTINGS = [
   { value: 'inviteUsers', label: 'Invite-only users' },
 ] as const;
 
+
+const INTERACTIONS_SETTINGS = [
+  { value: 'chat', label: 'Disable Chat' },
+  { value: 'gallery', label: 'Disable Gallery' },
+  { value: 'globalGallery', label: 'Disable Global Gallery' },
+] as const;
+
 const NOTIFICATION_SETTINGS = {
   activityComments: true,
   activityAnswers: true,
@@ -62,17 +70,8 @@ export default function Settings() {
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
 
-  const defaultValues = {
-    activityComments: NOTIFICATION_SETTINGS.activityComments,
-    activityAnswers: NOTIFICATION_SETTINGS.activityAnswers,
-    activityFollows: NOTIFICATION_SETTINGS.activityFollows,
-    applicationNews: NOTIFICATION_SETTINGS.applicationNews,
-    applicationProduct: NOTIFICATION_SETTINGS.applicationProduct,
-    applicationBlog: NOTIFICATION_SETTINGS.applicationBlog,
-  };
-
   const methods = useForm({
-    defaultValues,
+    // defaultValues,
   });
 
   const {
@@ -159,13 +158,43 @@ export default function Settings() {
                   name={item.value}
                   label={item.label}
                   sx={{ m: 0 }}
-                  sx={{ m: 0 }}
                 />
               ))}
               <Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
                 Note: Only allow users to sign-up when invited by and teacher
               </Typography>
             </Stack>
+          </Card>
+
+          <Card sx={{ p: 3, mt: 2 }}>
+            <Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
+              Language Settings:
+            </Typography>
+            <Stack alignItems="center" direction="row" spacing={1} sx={{ mt: 2 }}>
+              <Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
+                Default Language:
+              </Typography>
+              <LanguagePopover />
+            </Stack>
+          </Card>
+
+          <Card sx={{ p: 3, mt: 2 }}>
+            <Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
+              Interaction Settings:
+            </Typography>
+            <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
+              {INTERACTIONS_SETTINGS.map((item) => (
+              <RHFSwitch
+                key={item.value}
+                name={item.value}
+                label={item.label}
+                sx={{ m: 0 }}
+              />
+              ))}
+            </Stack>
+            <Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary', mt: 1 }}>
+              Note: Users can not see or comments on external projects.
+            </Typography>
           </Card>
 
           <Stack>
