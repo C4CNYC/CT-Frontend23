@@ -6,6 +6,9 @@ import {
 } from "react-redux";
 import { persistStore, persistReducer } from "redux-persist";
 import rootReducer, { rootPersistConfig } from "./rootReducer";
+import { adminApi } from "./services/admin";
+import { authApi } from "./services/auth";
+import { managerApi } from "./services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +22,10 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }),
+    })
+      .concat(authApi.middleware)
+      .concat(adminApi.middleware)
+      .concat(managerApi.middleware),
 });
 
 const persistor = persistStore(store);

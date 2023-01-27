@@ -11,6 +11,8 @@ import { PATH_AUTH } from "../../routes/paths";
 //
 import AuthLoginForm from "./AuthLoginForm";
 import AuthWithSocial from "./AuthWithSocial";
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+import IconButton from "@mui/material/IconButton";
 
 // ----------------------------------------------------------------------
 
@@ -20,35 +22,38 @@ export default function Login() {
   return (
     <LoginLayout>
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-        <Typography variant="h4">Sign in to Minimal</Typography>
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Sign in as a Teacher
+        </Typography>
 
-        <Stack direction="row" spacing={0.5}>
+        <Stack direction="row" spacing={0.5} sx={{ justifyContent: "center" }}>
           <Typography variant="body2">New user?</Typography>
-
+          <IconButton
+            aria-label="info"
+            sx={{
+              position: "absolute",
+              right: "-40px",
+              top: "10px",
+              padding: "10px",
+              backgroundColor: "#FBDD3F",
+              borderTopLeftRadius: "8px",
+              borderBottomLeftRadius: "8px",
+              borderBottomRightRadius: 0,
+              borderTopRightRadius: 0,
+            }}
+          >
+            <EmojiObjectsIcon sx={{ color: "#000" }} />
+          </IconButton>
           <Link
             component={NextLink}
             href={PATH_AUTH.register}
             variant="subtitle2"
+            sx={{ color: "#02D3D7" }}
           >
             Create an account
           </Link>
         </Stack>
-
-        <Tooltip title={method} placement="left">
-          <Box
-            component="img"
-            alt={method}
-            src={`/assets/icons/auth/ic_${method}.png`}
-            sx={{ width: 32, height: 32, position: "absolute", right: 0 }}
-          />
-        </Tooltip>
       </Stack>
-
-      <Alert severity="info" sx={{ mb: 3 }}>
-        Use email : <strong>demo@minimals.cc</strong> / password :
-        <strong> demo1234</strong>
-      </Alert>
-
       <AuthLoginForm />
 
       <AuthWithSocial />

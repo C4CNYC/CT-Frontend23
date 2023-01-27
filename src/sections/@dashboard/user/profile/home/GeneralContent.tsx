@@ -168,7 +168,6 @@ export default function AccountGeneral() {
               </RHFSelect>
 
               <RHFTextField name="city" label="City" />
-
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>

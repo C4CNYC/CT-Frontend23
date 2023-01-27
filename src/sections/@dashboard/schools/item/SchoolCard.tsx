@@ -18,18 +18,19 @@ import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
-import SchoolIcon from '@mui/icons-material/School';
+import Image from "next/image";
+import { SchoolResponce } from "src/redux/services/admin";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
-  school: IFolderManager;
+  school: SchoolResponce;
   selected?: boolean;
   onSelect?: VoidFunction;
   onDelete: VoidFunction;
 }
 
 export default function SchoolCard({
-  folder,
+  school,
   selected,
   onSelect,
   onDelete,
@@ -45,8 +46,6 @@ export default function SchoolCard({
   const [openDetails, setOpenDetails] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-
-
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -64,7 +63,7 @@ export default function SchoolCard({
     setShowCheckbox(false);
   };
 
-  const handleOpenDetails = () => {
+  const handleOpenDetails = (e) => {
     setOpenDetails(true);
   };
 
@@ -74,6 +73,7 @@ export default function SchoolCard({
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpenPopover(event.currentTarget);
+    event.stopPropagation();
   };
 
   const handleClosePopover = () => {
@@ -83,6 +83,7 @@ export default function SchoolCard({
   return (
     <>
       <Card
+        onClick={handleOpenDetails}
         onMouseEnter={handleShowCheckbox}
         onMouseLeave={handleHideCheckbox}
         sx={{
@@ -114,18 +115,17 @@ export default function SchoolCard({
           </IconButton>
         </Stack>
 
-        <Box
-          sx={{ width: 40, height: 40 }}
-        >
-          <SchoolIcon/>
+        <Box sx={{ width: 40, height: 40 }}>
+          <Image
+            width="30"
+            height="30"
+            alt="school"
+            src="/assets/icons/shool/school-icon.svg"
+          />
         </Box>
 
-        <TextMaxLine
-          variant="h6"
-          onClick={handleOpenDetails}
-          sx={{ mt: 1, mb: 0.5 }}
-        >
-          {folder.name}
+        <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+          {school.name}
         </TextMaxLine>
       </Card>
 
@@ -160,7 +160,7 @@ export default function SchoolCard({
       </MenuPopover>
 
       <SchoolDetailsDrawer
-        item={folder}
+        item={school}
         open={openDetails}
         onClose={handleCloseDetails}
         onDelete={() => {

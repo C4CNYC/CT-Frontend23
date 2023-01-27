@@ -1,30 +1,32 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Avatar,
   Button,
-  Divider,
   Tooltip,
   ListItem,
   MenuItem,
   ListItemText,
   ListItemAvatar,
-} from '@mui/material';
-// @types
-import { IFileShared } from '../../../@types/file';
+} from "@mui/material";
 // components
-import Iconify from '../../../components/iconify';
-import MenuPopover from '../../../components/menu-popover';
+import Iconify from "../../../components/iconify";
+import MenuPopover from "../../../components/menu-popover";
+import { IUser } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import _mock from "src/_mock";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  person: IFileShared;
+  person: IUser & BaseResponseInterface;
+  handleDeleteTeacher: () => void;
 };
 
-export default function FileInvitedItem({ person }: Props) {
-  const [permission, setPermission] = useState(person.permission);
-
+export default function FileInvitedItem({
+  person,
+  handleDeleteTeacher,
+}: Props) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,25 +37,21 @@ export default function FileInvitedItem({ person }: Props) {
     setOpenPopover(null);
   };
 
-  const handleChangePermission = (newPermission: string) => {
-    setPermission(newPermission);
-  };
-
   return (
     <>
       <ListItem disableGutters>
         <ListItemAvatar>
-          <Avatar alt={person.name} src={person.avatar} />
+          <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
         </ListItemAvatar>
 
         <ListItemText
-          primary={person.name}
+          primary={`${person.first_name} ${person.last_name}`}
           secondary={
             <Tooltip title={person.email}>
               <span>{person.email}</span>
             </Tooltip>
           }
-          primaryTypographyProps={{ noWrap: true, typography: 'subtitle2' }}
+          primaryTypographyProps={{ noWrap: true, typography: "subtitle2" }}
           secondaryTypographyProps={{ noWrap: true }}
           sx={{ flexGrow: 1, pr: 1 }}
         />
@@ -61,63 +59,34 @@ export default function FileInvitedItem({ person }: Props) {
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon={openPopover ? 'eva:chevron-up-fill' : 'eva:chevron-down-fill'} />}
+          endIcon={<Iconify icon="eva:chevron-down-fill" />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
-            textTransform: 'unset',
-            fontWeight: 'fontWeightMedium',
-            '& .MuiButton-endIcon': {
+            textTransform: "unset",
+            fontWeight: "fontWeightMedium",
+            "& .MuiButton-endIcon": {
               ml: 0,
             },
             ...(openPopover && {
-              bgcolor: 'action.selected',
+              bgcolor: "action.selected",
             }),
           }}
-        >
-          Can {permission}
-        </Button>
+        ></Button>
       </ListItem>
 
-      <MenuPopover open={openPopover} onClose={handleClosePopover} sx={{ width: 160 }}>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        sx={{ width: 160 }}
+      >
         <>
           <MenuItem
             onClick={() => {
-              handleClosePopover();
-              handleChangePermission('view');
-            }}
-            sx={{
-              ...(permission === 'view' && {
-                bgcolor: 'action.selected',
-              }),
-            }}
-          >
-            <Iconify icon="eva:eye-fill" />
-            Can view
-          </MenuItem>
-
-          <MenuItem
-            onClick={() => {
-              handleClosePopover();
-              handleChangePermission('edit');
-            }}
-            sx={{
-              ...(permission === 'edit' && {
-                bgcolor: 'action.selected',
-              }),
-            }}
-          >
-            <Iconify icon="eva:edit-fill" />
-            Can edit
-          </MenuItem>
-
-          <Divider sx={{ borderStyle: 'dashed' }} />
-
-          <MenuItem
-            onClick={() => {
+              handleDeleteTeacher();
               handleClosePopover();
             }}
-            sx={{ color: 'error.main' }}
+            sx={{ color: "error.main" }}
           >
             <Iconify icon="eva:trash-2-outline" />
             Remove

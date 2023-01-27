@@ -10,16 +10,14 @@ import { fileFormat } from "../../../components/file-thumbnail";
 import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 import { useSettingsContext } from "../../../components/settings";
 import { useTable, getComparator } from "../../../components/table";
-import {
-  useDateRangePicker,
-} from "../../../components/date-range-picker";
+import { useDateRangePicker } from "../../../components/date-range-picker";
 // sections
 import {
-  ContactsFilterName, ContactsGridView,
+  ContactsFilterName,
+  ContactsGridView,
 } from "../../../sections/@dashboard/contacts";
 
-import AddContactsDialog from '../../../sections/@dashboard/contacts/portal/AddContactsDialog'
-
+import AddContactsDialog from "../../../sections/@dashboard/contacts/portal/AddContactsDialog";
 
 Contacts.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -50,7 +48,6 @@ export default function Contacts() {
   const [filterType, setFilterType] = useState<string[]>([]);
 
   const [openConfirm, setOpenConfirm] = useState(false);
-
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -108,9 +105,7 @@ export default function Contacts() {
             },
             { name: "Contacts" },
           ]}
-          action={
-            <AddContactsDialog />
-          }
+          action={<AddContactsDialog />}
         />
         <Stack
           spacing={2.5}
@@ -162,14 +157,14 @@ export default function Contacts() {
 // ----------------------------------------------------------------------
 
 function applyFilter({
-                       inputData,
-                       comparator,
-                       filterName,
-                       filterType,
-                       filterStartDate,
-                       filterEndDate,
-                       isError,
-                     }: {
+  inputData,
+  comparator,
+  filterName,
+  filterType,
+  filterStartDate,
+  filterEndDate,
+  isError,
+}: {
   inputData: IFile[];
   comparator: (a: any, b: any) => number;
   filterName: string;

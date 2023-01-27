@@ -14,4 +14,16 @@ axiosInstance.interceptors.response.use(
     )
 );
 
+axiosInstance.interceptors.request.use(
+  function (config) {
+    if (config.headers) {
+      config.headers["x-tenant-id"] = localStorage.getItem("tenantName") || "";
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

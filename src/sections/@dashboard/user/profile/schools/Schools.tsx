@@ -13,30 +13,30 @@ import {
   InputAdornment,
 } from "@mui/material";
 // @types
-import {IUserProfileSchool} from "../../../../../@types/user";
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+import { IUserProfileSchool } from "../../../../../@types/user";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 // components
 import Iconify from "../../../../../components/iconify";
 import MenuPopover from "../../../../../components/menu-popover";
 import { CustomTextField } from "../../../../../components/custom-input";
 import SearchNotFound from "../../../../../components/search-not-found";
 import * as React from "react";
-import AddSchool from './AddSchool'
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import AddSchool from "./AddSchool";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 type Props = {
   school: IUserProfileSchool[];
 };
 
 const school = {
-  name: 'Name',
-  url: 'Url'
-}
+  name: "Name",
+  url: "Url",
+};
 
 export default function Schools({}: Props) {
   const [isNotFound, setIsNotFound] = useState(false);
@@ -162,12 +162,11 @@ function SchoolCard({ school }: SchoolCardProps) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          Archive School
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Archive School</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to archive this school? This will disable all all classes. Learners will still be able to login.
+            Are you sure you want to archive this school? This will disable all
+            all classes. Learners will still be able to login.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

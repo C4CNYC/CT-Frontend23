@@ -9,18 +9,18 @@ export const StyledRoot = styled("main")(() => ({
   height: "100%",
   display: "flex",
   position: "relative",
-  backgroundColor: '#E6FBFC',
+  backgroundColor: "#E6FBFC",
 }));
 
 export const StyledSection = styled("div")(({ theme }) => ({
   display: "none",
   position: "relative",
-  backgroundColor: 'white',
+  backgroundColor: "white",
   margin: 16,
   borderRadius: "8px",
   [theme.breakpoints.up("md")]: {
     // flexGrow: 1,
-    padding: '45px',
+    padding: "45px",
     display: "flex",
     // alignItems: "center",
     justifyContent: "center",
@@ -49,10 +49,10 @@ export const StyledContent = styled("div")(({ theme }) => ({
   width: 480,
   margin: "auto",
   display: "flex",
-  borderRadius: '8px',
+  borderRadius: "8px",
   // minHeight: "100vh",
   justifyContent: "center",
-  backgroundColor: '#fff',
+  backgroundColor: "#fff",
   padding: theme.spacing(5),
   [theme.breakpoints.up("md")]: {
     flexShrink: 0,

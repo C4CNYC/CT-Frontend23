@@ -14,7 +14,6 @@ import Iconify from "../../../../components/iconify";
 type Props = {
   filterName: string;
   filterRole: string;
-  isFiltered: boolean;
   optionsRole: string[];
   onResetFilter: VoidFunction;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,7 +21,6 @@ type Props = {
 };
 
 export default function UserTableToolbar({
-  isFiltered,
   filterName,
   filterRole,
   optionsRole,
@@ -89,17 +87,14 @@ export default function UserTableToolbar({
           ),
         }}
       />
-
-      {isFiltered && (
-        <Button
-          color="error"
-          sx={{ flexShrink: 0 }}
-          onClick={onResetFilter}
-          startIcon={<Iconify icon="eva:trash-2-outline" />}
-        >
-          Clear
-        </Button>
-      )}
+      <Button
+        color="error"
+        sx={{ flexShrink: 0 }}
+        onClick={onResetFilter}
+        startIcon={<Iconify icon="eva:trash-2-outline" />}
+      >
+        Clear
+      </Button>
     </Stack>
   );
 }

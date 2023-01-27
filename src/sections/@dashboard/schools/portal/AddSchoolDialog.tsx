@@ -1,31 +1,35 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {Button} from '@mui/material';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import FormProvider, {RHFSelect, RHFTextField, RHFUploadAvatar} from "../../../../components/hook-form";
-import {Box, Card, Grid, Stack, Typography} from "@mui/material";
-import {countries} from "../../../../assets/data";
-import {LoadingButton} from "@mui/lab";
-import {useSnackbar} from "../../../../components/snackbar";
+import * as React from "react";
+import { useState } from "react";
+import { Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+  RHFUploadAvatar,
+} from "../../../../components/hook-form";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { countries } from "../../../../assets/data";
+import { LoadingButton } from "@mui/lab";
+import { useSnackbar } from "../../../../components/snackbar";
 import * as Yup from "yup";
-import {useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {useCallback} from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import AddIcon from "@mui/icons-material/Add";
+import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
 
 type FormValuesProps = {
-  organizationName: string;
-  country: string | null;
-  address: string | null;
-  city: string | null;
+  name: string;
+  country: string;
+  city: string;
 };
 
 export default function AddSchoolDialog() {
+  const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,21 +38,17 @@ export default function AddSchoolDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const UpdateUserSchema = Yup.object().shape({
-    schoolName: Yup.string().required("Name is required"),
-    phoneNumber: Yup.string().required("Phone number is required"),
+    name: Yup.string().required("Name is required"),
     country: Yup.string().required("Country is required"),
     city: Yup.string().required("City is required"),
-    address: Yup.string().required("Address is required"),
   });
 
   const defaultValues = {
-    schoolName: "",
-    phoneNumber: "",
+    name: "",
     country: "",
-    address: "",
     city: "",
   };
 
@@ -57,17 +57,16 @@ export default function AddSchoolDialog() {
     defaultValues,
   });
 
-  const {
-    handleSubmit,
-    formState: {isSubmitting},
-  } = methods;
-
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      enqueueSnackbar("Update success!");
-      console.log("DATA", data);
+      await createSchool({
+        ...data,
+      }).unwrap;
+      enqueueSnackbar(`School ${data.name} created successfuly!`);
+      handleClose();
+      methods.reset();
     } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
       console.error(error);
     }
   };
@@ -77,22 +76,22 @@ export default function AddSchoolDialog() {
       <Button
         onClick={handleClickOpen}
         variant="contained"
-        startIcon={<AddIcon/>}
+        startIcon={<AddIcon />}
       >
         Add School
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add School</DialogTitle>
-        <DialogContent sx={{p: 0}}>
-          <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent sx={{ p: 0 }}>
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
             <Grid container spacing={3}>
               <Grid item xs={12} md={12}>
-                <Card sx={{p: 3}}>
-                  <Box
-                    rowGap={3}
-                    display="grid"
-                  >
-                    <RHFTextField name="schoolName" label="School name" required/>
+                <Card sx={{ p: 3 }}>
+                  <Box rowGap={3} display="grid">
+                    <RHFTextField name="name" label="School name" required />
 
                     <RHFSelect
                       native
@@ -100,22 +99,28 @@ export default function AddSchoolDialog() {
                       label="Country"
                       placeholder="Country"
                     >
-                      <option value=""/>
+                      <option value="" />
                       {countries.map((country) => (
-                        <option key={country.code} value={country.label}>
+                        <option key={country.code} value={country.code}>
                           {country.label}
                         </option>
                       ))}
                     </RHFSelect>
-                    <RHFTextField name="cite" label="City" required/>
+                    <RHFTextField name="city" label="City" required />
                   </Box>
-
-                  <Box sx={{display: "flex", justifyContent: "flex-end", gap: 2, mt: 7}}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      gap: 2,
+                      mt: 7,
+                    }}
+                  >
                     <Button onClick={handleClose}>Close</Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
-                      loading={isSubmitting}
+                      loading={isLoading}
                     >
                       Save Changes
                     </LoadingButton>

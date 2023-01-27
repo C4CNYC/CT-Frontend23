@@ -8,7 +8,8 @@ import {
   Divider,
   MenuItem,
   CardProps,
-  IconButton, Typography,
+  IconButton,
+  Typography,
 } from "@mui/material";
 // hooks
 import Iconify from "../../../../components/iconify";
@@ -18,7 +19,8 @@ import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
-import SchoolIcon from '@mui/icons-material/School';
+import SchoolIcon from "@mui/icons-material/School";
+import Image from "next/image";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
@@ -43,8 +45,6 @@ export default function ContactsCard({
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-
-
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -71,10 +71,10 @@ export default function ContactsCard({
   };
 
   let contact = {
-    name: 'name',
-    phone: '+1 000 000 000',
-    email: 'test@codetribe.com',
-  }
+    name: "name",
+    phone: "+1 000 000 000",
+    email: "test@codetribe.com",
+  };
 
   return (
     <>
@@ -108,17 +108,22 @@ export default function ContactsCard({
           </IconButton>
         </Stack>
 
-        <Iconify icon="ic:outline-contact-emergency" width="32px" height="32px" />
+        <Image
+          alt="contact"
+          src="/assets/icons/shool/users-user-svgrepo-com.svg"
+          width="30"
+          height="30"
+        />
 
-        <TextMaxLine
-          variant="h6"
-          sx={{ mt: 1, mb: 2 }}
-        >
+        <TextMaxLine variant="h6" sx={{ mt: 3, mb: 1 }}>
           {folder.name}
         </TextMaxLine>
-        <Typography variant="subtitle2" sx={{mb: 1}}>Full name: {`${contact.name}`}</Typography>
-        <Typography variant="subtitle2" sx={{mb: 1}}>Phone: {`${contact.phone}`}</Typography>
-        <Typography variant="subtitle2" sx={{mb: 1}}>Email: {`${contact.email}`}</Typography>
+        <Typography variant="subtitle2" sx={{ mb: 1 }}>
+          <strong>Phone:</strong> {`${contact.phone}`}
+        </Typography>
+        <Typography variant="subtitle2" sx={{ mb: 1 }}>
+          <strong>Email:</strong> {`${contact.email}`}
+        </Typography>
       </Card>
 
       <MenuPopover

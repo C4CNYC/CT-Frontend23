@@ -15,10 +15,13 @@ import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
+import router from "next/router";
+import { PATH_AFTER_LOGIN } from "src/config-global";
 
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
+  tenantName: string;
   email: string;
   password: string;
   afterSubmit?: string;
@@ -30,20 +33,15 @@ export default function AuthLoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
+    tenantName: Yup.string().required("Tenant name is required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
     password: Yup.string().required("Password is required"),
   });
 
-  const defaultValues = {
-    email: "demo@minimals.cc",
-    password: "demo1234",
-  };
-
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(LoginSchema),
-    defaultValues,
   });
 
   const {
@@ -55,7 +53,8 @@ export default function AuthLoginForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await login(data.email, data.password);
+      await login(data.email, data.password, data.tenantName);
+      router.replace(PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
@@ -72,6 +71,8 @@ export default function AuthLoginForm() {
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
+
+        <RHFTextField name="tenantName" label="Tenant name" />
 
         <RHFTextField name="email" label="Email address" />
 
@@ -104,7 +105,7 @@ export default function AuthLoginForm() {
           color="inherit"
           underline="always"
         >
-          Forgot password?
+          {/* Forgot password? */}
         </Link>
       </Stack>
 
@@ -116,7 +117,11 @@ export default function AuthLoginForm() {
         variant="contained"
         loading={isSubmitSuccessful || isSubmitting}
         sx={{
-          bgcolor: "text.primary",
+          boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
+          bgcolor: "#FBDD3F",
+          borderRadius: "50px",
+          fontSize: "22px",
+          textTransform: "uppercase",
           color: (theme) =>
             theme.palette.mode === "light" ? "common.white" : "grey.800",
           "&:hover": {

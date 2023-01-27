@@ -19,17 +19,12 @@ import {
 
 // ----------------------------------------------------------------------
 
-// NOTE:
-// We only build demo at basic level.
-// Customer will need to do some extra handling yourself if you want to extend the logic and other features...
-
-// ----------------------------------------------------------------------
-
 enum Types {
   INITIAL = "INITIAL",
   LOGIN = "LOGIN",
   REGISTER = "REGISTER",
   LOGOUT = "LOGOUT",
+  AUTHENTICATE = "AUTHENTICATE",
 }
 
 type Payload = {
@@ -43,6 +38,7 @@ type Payload = {
   [Types.REGISTER]: {
     user: AuthUserType;
   };
+  [Types.AUTHENTICATE]: {};
   [Types.LOGOUT]: undefined;
 };
 
@@ -57,35 +53,38 @@ const initialState: AuthStateType = {
 };
 
 const reducer = (state: AuthStateType, action: ActionsType) => {
-  if (action.type === Types.INITIAL) {
-    return {
-      isInitialized: true,
-      isAuthenticated: action.payload.isAuthenticated,
-      user: action.payload.user,
-    };
+  switch (action.type) {
+    case Types.INITIAL:
+      return {
+        isInitialized: true,
+        isAuthenticated: action.payload.isAuthenticated,
+        user: action.payload.user,
+      };
+    case Types.LOGIN:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+      };
+    case Types.REGISTER:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
+    case Types.AUTHENTICATE:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case Types.LOGOUT:
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
+    default:
+      return state;
   }
-  if (action.type === Types.LOGIN) {
-    return {
-      ...state,
-      isAuthenticated: true,
-      user: action.payload.user,
-    };
-  }
-  if (action.type === Types.REGISTER) {
-    return {
-      ...state,
-      isAuthenticated: true,
-      user: action.payload.user,
-    };
-  }
-  if (action.type === Types.LOGOUT) {
-    return {
-      ...state,
-      isAuthenticated: false,
-      user: null,
-    };
-  }
-  return state;
 };
 
 // ----------------------------------------------------------------------
@@ -109,10 +108,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
         ? localStorage.getItem("accessToken")
         : "";
 
-      if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+      const tenantName = localStorage.getItem("tenantName");
 
-        const response = await axios.get("/api/account/my-account");
+      if (accessToken && isValidToken(accessToken)) {
+        setSession(accessToken, tenantName);
+
+        const response = await axios.get("/auth/profile");
 
         const { user } = response.data;
 
@@ -148,23 +149,37 @@ export function AuthProvider({ children }: AuthProviderProps) {
     initialize();
   }, [initialize]);
 
-  // LOGIN
-  const login = useCallback(async (email: string, password: string) => {
-    const response = await axios.post("/api/account/login", {
-      email,
-      password,
-    });
-    const { accessToken, user } = response.data;
-
-    setSession(accessToken);
-
+  // AUTHENTICATE
+  const authenticate = () => {
     dispatch({
-      type: Types.LOGIN,
-      payload: {
-        user,
-      },
+      type: Types.AUTHENTICATE,
+      payload: {},
     });
-  }, []);
+  };
+
+  // LOGIN
+  const login = useCallback(
+    async (email: string, password: string, tenantName: string) => {
+      localStorage.setItem("tenantName", tenantName);
+      // Update <any, any> to normall types
+      const { data } = await axios.post<any, any>("auth/signin", {
+        email,
+        password,
+      });
+
+      const { access_token, user } = data;
+
+      setSession(access_token, localStorage.getItem("tenantName"));
+
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+    },
+    []
+  );
 
   // REGISTER
   const register = useCallback(
@@ -172,17 +187,24 @@ export function AuthProvider({ children }: AuthProviderProps) {
       email: string,
       password: string,
       firstName: string,
-      lastName: string
+      lastName: string,
+      tenantName: string
     ) => {
-      const response = await axios.post("/api/account/register", {
+      const { data: tenant } = await axios.post("/tenant", {
+        name: tenantName,
+      });
+      localStorage.setItem("tenantName", tenant.name);
+
+      const { data } = await axios.post("/auth/signup", {
         email,
         password,
-        firstName,
-        lastName,
+        first_name: firstName,
+        last_name: lastName,
       });
-      const { accessToken, user } = response.data;
 
-      localStorage.setItem("accessToken", accessToken);
+      const { access_token, user } = data;
+
+      localStorage.setItem("accessToken", access_token);
 
       dispatch({
         type: Types.REGISTER,
@@ -196,7 +218,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGOUT
   const logout = useCallback(() => {
-    setSession(null);
+    setSession(null, null);
     dispatch({
       type: Types.LOGOUT,
     });
@@ -209,6 +231,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       user: state.user,
       method: "jwt",
       login,
+      authenticate,
       loginWithGoogle: () => {},
       loginWithGithub: () => {},
       loginWithTwitter: () => {},
@@ -219,6 +242,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       state.isAuthenticated,
       state.isInitialized,
       state.user,
+      authenticate,
       login,
       logout,
       register,

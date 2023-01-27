@@ -10,7 +10,10 @@ type Props = {
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function ContactsFilterName({ filterName, onFilterName }: Props) {
+export default function ContactsFilterName({
+  filterName,
+  onFilterName,
+}: Props) {
   return (
     <TextField
       size="small"

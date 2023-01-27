@@ -4,7 +4,6 @@ import { Divider, IconButton, Stack, Button } from "@mui/material";
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
-import {DeleteIcon} from '@mui/icons-material'
 
 // ----------------------------------------------------------------------
 
@@ -39,9 +38,17 @@ export default function AuthWithSocial() {
       </Divider>
 
       <Stack direction="row" justifyContent="center" spacing={2}>
-        <Button variant="outlined"
-                startIcon={<Iconify icon="eva:google-fill" color="#DF3E30" sx={{mr: 2}}/>}
-                sx={{ width: '100%', borderRadius: '50px'}}
+        <Button
+          variant="outlined"
+          startIcon={
+            <Iconify icon="eva:google-fill" color="#DF3E30" sx={{ mr: 2 }} />
+          }
+          sx={{
+            width: "100%",
+            borderRadius: "50px",
+            border: "1px solid rgba(145, 158, 171, 0.32)",
+            color: "#000",
+          }}
         >
           Register with Google
         </Button>

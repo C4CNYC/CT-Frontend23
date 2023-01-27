@@ -1,57 +1,51 @@
-// next
-import NextLink from "next/link";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
-import { Box, Link, Typography } from "@mui/material";
-// auth
-import { useAuthContext } from "../../../auth/useAuthContext";
-// routes
-import { PATH_DASHBOARD } from "../../../routes/paths";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 // components
-import { CustomAvatar } from "../../../components/custom-avatar";
-
-// ----------------------------------------------------------------------
-
-const StyledRoot = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(2, 2.5),
-  borderRadius: Number(theme.shape.borderRadius) * 1.5,
-  backgroundColor: alpha(theme.palette.grey[500], 0.12),
-  transition: theme.transitions.create("opacity", {
-    duration: theme.transitions.duration.shorter,
-  }),
-}));
-
-// ----------------------------------------------------------------------
+import { useGetOrganizationListQuery } from "src/redux/services/admin";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrganization } from "src/redux/slices/global";
+import { RootState } from "src/redux/store";
+import { useEffect } from "react";
 
 export default function NavAccount() {
-  const { user } = useAuthContext();
+  const dispatch = useDispatch();
+  const org_id = useSelector((state: RootState) => state.global.org_id);
+  const organizationList = useSelector(
+    (state: RootState) => state.global.organizations
+  );
+
+  const onChange = (event: SelectChangeEvent) => {
+    dispatch(setOrganization(event.target.value));
+  };
 
   return (
-    <Link
-      component={NextLink}
-      href={PATH_DASHBOARD.organization.account}
-      underline="none"
-      color="inherit"
-    >
-      <StyledRoot>
-        <CustomAvatar
-          src={user?.photoURL}
-          alt={user?.displayName}
-          name={user?.displayName}
-        />
-
-        <Box sx={{ ml: 2, minWidth: 0 }}>
-          <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
-          </Typography>
-
-          <Typography variant="body2" noWrap sx={{ color: "text.secondary" }}>
-            {user?.role}
-          </Typography>
-        </Box>
-      </StyledRoot>
-    </Link>
+    <Box>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Organization</InputLabel>
+        <Select
+          value={org_id}
+          label="Organization"
+          onChange={onChange}
+          sx={{
+            outline: "none",
+            height: 48,
+            width: "100%",
+          }}
+        >
+          {organizationList?.map((organization) => (
+            <MenuItem key={organization.id} value={organization.id}>
+              {organization.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }

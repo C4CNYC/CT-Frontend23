@@ -11,7 +11,7 @@ import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
-import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 // ----------------------------------------------------------------------
 
 type FormValuesProps = {
@@ -20,14 +20,20 @@ type FormValuesProps = {
   firstName: string;
   lastName: string;
   afterSubmit?: string;
+  tenantName: string;
 };
 
-export default function AuthRegisterForm() {
+type AuthRegisterFormProps = {
+  next: () => void;
+};
+
+export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
   const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
+    tenantName: Yup.string().required("Tenant name required"),
     firstName: Yup.string().required("First name required"),
     lastName: Yup.string().required("Last name required"),
     email: Yup.string()
@@ -37,6 +43,7 @@ export default function AuthRegisterForm() {
   });
 
   const defaultValues = {
+    tenantName: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -62,12 +69,13 @@ export default function AuthRegisterForm() {
           data.email,
           data.password,
           data.firstName,
-          data.lastName
+          data.lastName,
+          data.tenantName
         );
+        next();
       }
     } catch (error) {
       console.error(error);
-      reset();
       setError("afterSubmit", {
         ...error,
         message: error.message,
@@ -77,10 +85,12 @@ export default function AuthRegisterForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2.5} sx={{mt: 5}}>
+      <Stack spacing={2.5} sx={{ mt: 5 }}>
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
+
+        <RHFTextField name="tenantName" label="Tenant name" />
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <RHFTextField name="firstName" label="First name" />
@@ -117,9 +127,10 @@ export default function AuthRegisterForm() {
           variant="contained"
           loading={isSubmitting || isSubmitSuccessful}
           sx={{
-            boxShadow: '0px 8px 16px rgba(2, 211, 215, 0.24)',
+            boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
             bgcolor: "#FBDD3F",
-            borderRadius: '50px',
+            borderRadius: "50px",
+            fontSize: "22px",
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
@@ -129,7 +140,7 @@ export default function AuthRegisterForm() {
             },
           }}
         >
-          <RocketLaunchIcon sx={{mr: '5px'}}/>
+          <RocketLaunchIcon sx={{ mr: "5px" }} />
           Let’s GO!
         </LoadingButton>
       </Stack>
