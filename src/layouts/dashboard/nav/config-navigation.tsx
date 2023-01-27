@@ -22,17 +22,17 @@ const ICONS = {
 const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
-  {
-    subheader: "general",
-    items: [
-      { title: "app", path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
-      {
-        title: "analytics",
-        path: PATH_DASHBOARD.general.analytics,
-        icon: ICONS.analytics,
-      },
-    ],
-  },
+  // {
+  //   subheader: "general",
+  //   items: [
+  //     { title: "app", path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
+  //     {
+  //       title: "analytics",
+  //       path: PATH_DASHBOARD.general.analytics,
+  //       icon: ICONS.analytics,
+  //     },
+  //   ],
+  // },
 
   // MANAGEMENT
   // ----------------------------------------------------------------------
@@ -51,7 +51,7 @@ const navConfig = [
           { title: "Schools",
             path: PATH_DASHBOARD.organization.schools,
           },
-          { title: "Members List",
+          { title: "Members",
             path: PATH_DASHBOARD.organization.members,
           },
           { title: "Contacts",

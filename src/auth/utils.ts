@@ -72,6 +72,7 @@ export const setSession = (
     tokenExpired(exp);
   } else {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("tenantName");
 
     delete axios.defaults.headers.common.Authorization;
     delete axios.defaults.headers.common["x-tenant-id"];

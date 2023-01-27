@@ -29,7 +29,8 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
     console.log(data);
     try {
       const org = await createOrganization(data).unwrap();
-      dispatch(setOrganization(org.id))
+      dispatch(setOrganization(org.id));
+      localStorage.setItem("org_id", org.id);
       router.push(
         {
           pathname: "/auth/register",

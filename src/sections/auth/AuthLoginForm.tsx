@@ -17,6 +17,8 @@ import Iconify from "../../components/iconify";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
 import router from "next/router";
 import { PATH_AFTER_LOGIN } from "src/config-global";
+import { useDispatch } from "react-redux";
+import { authorize } from "src/redux/slices/global";
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,7 @@ type FormValuesProps = {
 
 export default function AuthLoginForm() {
   const { login } = useAuthContext();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -54,6 +57,7 @@ export default function AuthLoginForm() {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await login(data.email, data.password, data.tenantName);
+      dispatch(authorize(true));
       router.replace(PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
