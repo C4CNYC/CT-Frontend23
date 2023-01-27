@@ -63,7 +63,7 @@ export default function SchoolCard({
     setShowCheckbox(false);
   };
 
-  const handleOpenDetails = () => {
+  const handleOpenDetails = (e) => {
     setOpenDetails(true);
   };
 
@@ -73,6 +73,7 @@ export default function SchoolCard({
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpenPopover(event.currentTarget);
+    event.stopPropagation();
   };
 
   const handleClosePopover = () => {

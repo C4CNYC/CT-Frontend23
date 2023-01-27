@@ -1,11 +1,13 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import { Box, Button, Stack } from "@mui/material";
+import {Box, Button, Select, Stack} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
+import {countries} from "../../../assets/data";
+import {RHFSelect} from "../../../components/hook-form";
 
 type SchoolStepProps = {
   next: () => void;
@@ -61,7 +63,18 @@ export default function SchoolStep({ next }: SchoolStepProps) {
         </Typography>
         <TextField label="School name" {...register("name")} />
         <TextField label="City" {...register("city")} />
-        <TextField label="Country" {...register("country")} />
+        <Select
+          {...register("country")}
+          native
+          fullWidth
+        >
+          <option value="Choose country">Choose Country</option>
+          {countries.map((option) => (
+            <option key={option.code} value={option.code}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
       </Stack>
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Button
