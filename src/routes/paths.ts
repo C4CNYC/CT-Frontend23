@@ -53,7 +53,6 @@ export const PATH_DASHBOARD = {
     edit: (name: string) => path(ROOTS_DASHBOARD, `/organization/members/${name}/edit`),
     schools: path(ROOTS_DASHBOARD, '/organization/schools'),
     contacts: path(ROOTS_DASHBOARD, '/organization/contacts'),
-    // customization: path(ROOTS_DASHBOARD, '/organization/customization'),
     billing: path(ROOTS_DASHBOARD, '/organization/billing'),
     settings: path(ROOTS_DASHBOARD, '/organization/settings'),
     customization: path(ROOTS_DASHBOARD, '/organization/customization'),

@@ -60,6 +60,9 @@ const navConfig = [
           { title: "Customization",
             path: PATH_DASHBOARD.organization.customization,
           },
+          { title: "Settings",
+            path: PATH_DASHBOARD.organization.settings,
+          },
         ],
       },
 

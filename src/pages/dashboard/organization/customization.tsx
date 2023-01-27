@@ -155,7 +155,7 @@ export default function Customization() {
               </Box>
             </Box>
 
-            <Typography variant="h6" sx={{mt:4, mb: 1}}>Short description of platform for SEO</Typography>
+            <Typography variant="h6" sx={{mt:4, mb: 2}}>Short description of platform for SEO</Typography>
             <RHFTextField
               name="description"
               label="Meta description"
@@ -166,7 +166,7 @@ export default function Customization() {
               Max 70 characters words - Approximately 10 words."
             />
 
-            <Typography variant="h6" sx={{mt:2, mb: 1}}>Customized Groups Name</Typography>
+            <Typography variant="h6" sx={{mt:2, mb: 2}}>Customized Groups Name</Typography>
             <RHFTextField
               name="groupsName"
               label="Groups Name"
@@ -175,7 +175,7 @@ export default function Customization() {
               Some ideas, but you can choose your own: Class/esClub/sHub/sHive/sGroup/sAnything else that is fun and engaging."
             />
 
-            <Typography variant="h6" sx={{mt:2, mb: 1}}>Welcome text for Slide 1</Typography>
+            <Typography variant="h6" sx={{mt:2, mb: 2}}>Welcome text for Slide 1</Typography>
             <RHFTextField
               name="intro"
               label="Intro Guide"
