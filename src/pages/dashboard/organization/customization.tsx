@@ -63,6 +63,11 @@ export default function Customization() {
     }
   };
 
+  const [color, setColor] = useState<MuiColorInputValue>('#ffffff')
+
+  const handleChange = (newColor: string, colors: MuiColorInputColors) => {
+    setColor(newColor)
+  }
 
   return (
     <>
@@ -97,10 +102,13 @@ export default function Customization() {
                   render={({ field, fieldState }) => (
                     <MuiColorInput
                       {...field}
+                      value={color}
                       format="hex"
                       isAlphaHidden
                       helperText={fieldState.invalid ? "Color is invalid" : ""}
                       error={fieldState.invalid}
+                      onChange={handleChange}
+                      style={{width: '100%'}}
                     />
                   )}
                 />
@@ -114,10 +122,13 @@ export default function Customization() {
                   render={({ field, fieldState }) => (
                     <MuiColorInput
                       {...field}
+                      value={color}
                       format="hex"
                       isAlphaHidden
                       helperText={fieldState.invalid ? "Color is invalid" : ""}
                       error={fieldState.invalid}
+                      onChange={handleChange}
+                      style={{width: '100%'}}
                     />
                   )}
                 />
@@ -131,10 +142,13 @@ export default function Customization() {
                   render={({ field, fieldState }) => (
                     <MuiColorInput
                       {...field}
+                      value={color}
                       format="hex"
                       isAlphaHidden
                       helperText={fieldState.invalid ? "Color is invalid" : ""}
                       error={fieldState.invalid}
+                      onChange={handleChange}
+                      style={{width: '100%'}}
                     />
                   )}
                 />
@@ -161,13 +175,14 @@ export default function Customization() {
               Some ideas, but you can choose your own: Class/esClub/sHub/sHive/sGroup/sAnything else that is fun and engaging."
             />
 
-            <Typography variant="h6" sx={{mt:2, mb: 1}}>Welcome-text for Slide 1</Typography>
-            <RHFTextField name="intro"
-                          label="Intro Guide"
-                          multiline
-                          rows={3}
-                          sx={{mb: 2}}
-                          helperText={"Note: Should be about 10-15 words and welcome new users to the platform in your own way. What is this? When you first arrive on the Coding Panel you see an \"Intro Guide\" with a sequence of explainer modals. Here you can customize the text for the first slide in the sequence."}
+            <Typography variant="h6" sx={{mt:2, mb: 1}}>Welcome text for Slide 1</Typography>
+            <RHFTextField
+              name="intro"
+              label="Intro Guide"
+              multiline
+              rows={3}
+              sx={{mb: 2}}
+              helperText={"Note: Should be about 10-15 words and welcome new users to the platform in your own way. What is this? When you first arrive on the Coding Panel you see an \"Intro Guide\" with a sequence of explainer modals. Here you can customize the text for the first slide in the sequence."}
             />
 
             <LoadingButton
