@@ -22,9 +22,6 @@ import MenuPopover from "../../../../../components/menu-popover";
 import { CustomTextField } from "../../../../../components/custom-input";
 import SearchNotFound from "../../../../../components/search-not-found";
 import * as React from "react";
-import AddSchool from "./AddSchool";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -50,7 +47,7 @@ export default function Schools({}: Props) {
         sx={{ my: 5 }}
       >
         <Typography variant="h4">Schools</Typography>
-        <AddSchool />
+        {/*<AddSchool />*/}
       </Stack>
 
       {isNotFound ? (

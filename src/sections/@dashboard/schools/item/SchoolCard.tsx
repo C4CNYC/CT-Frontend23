@@ -20,6 +20,7 @@ import ConfirmDialog from "../../../../components/confirm-dialog";
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import Image from "next/image";
 import { SchoolResponce } from "src/redux/services/admin";
+import {useLocales} from "../../../../locales";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
@@ -37,6 +38,7 @@ export default function SchoolCard({
   sx,
   ...other
 }: Props) {
+  const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
 
   const [showCheckbox, setShowCheckbox] = useState(false);
@@ -142,11 +144,10 @@ export default function SchoolCard({
           }}
         >
           <Iconify icon="eva:edit-fill" />
-          Edit
+          {translate('actions_edit')}
         </MenuItem>
 
         <Divider sx={{ borderStyle: "dashed" }} />
-
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
@@ -155,7 +156,7 @@ export default function SchoolCard({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Archive
+          {`${translate('actions_archive')}`}
         </MenuItem>
       </MenuPopover>
 
@@ -172,11 +173,11 @@ export default function SchoolCard({
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to archive?"
+        title={`${translate('actions_archive')}`}
+        content={`${translate('organizations_schools__archive_dialog_content')}`}
         action={
           <Button variant="contained" color="error" onClick={onDelete}>
-            Archive
+            {`${translate('actions_archive')}`}
           </Button>
         }
       />

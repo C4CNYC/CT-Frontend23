@@ -5,6 +5,7 @@ import { IUserAccountNotificationSettings } from '../../../@types/user';
 import { useSnackbar } from '../../../../../components/snackbar';
 import FormProvider, { RHFSwitch } from '../../../../../components/hook-form';
 import LanguagePopover from "../../../../../layouts/dashboard/header/LanguagePopover";
+import {useLocales} from "../../../../../locales";
 
 
 const MARKET_PLACE_OPTIONS = [
@@ -41,20 +42,12 @@ const INTERACTIONS_SETTINGS = [
 	{ value: 'globalGallery', label: 'Disable Global Gallery' },
 ] as const;
 
-const NOTIFICATION_SETTINGS = {
-	activityComments: true,
-	activityAnswers: true,
-	activityFollows: false,
-	applicationNews: true,
-	applicationProduct: false,
-	applicationBlog: false,
-};
-
 // ----------------------------------------------------------------------
 
 type FormValuesProps = IUserAccountNotificationSettings;
 
 export default function SettingsTab() {
+	const { translate } = useLocales();
 	const { enqueueSnackbar } = useSnackbar();
 
 	const methods = useForm({
@@ -69,19 +62,18 @@ export default function SettingsTab() {
 	const onSubmit = async (data: FormValuesProps) => {
 		try {
 			await new Promise((resolve) => setTimeout(resolve, 500));
-			enqueueSnackbar('Update success!');
+			enqueueSnackbar(`${translate('messages_update_success')}`);
 			console.log('DATA', data);
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
-
 	return (
 				<FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
 					<Card sx={{ p: 3 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							Content Settings
+							{`${translate('organizations_general__tabs_settings_content_settings')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
 							{MARKET_PLACE_OPTIONS.map((activity) => (
@@ -97,7 +89,7 @@ export default function SettingsTab() {
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							SSO
+							{`${translate('organizations_general__tabs_settings_content_sso')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
 							{SSO_OPTIONS.map((activity) => (
@@ -108,20 +100,16 @@ export default function SettingsTab() {
 									sx={{ m: 0 }}
 								/>
 							))}
-							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
-								Note: Single-sign-on allows interfacing with:
-								Google Classroom
-								Schoolology
-								Clever <br/>
-								More about Edu SSO: <Link href="https://ed.link/community/single-sign-on-for-education/" target="_blank">https://ed.link/community/single-sign-on-for-education/</Link>
+							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary', whiteSpace: 'pre-line'  }}>
+								{`${translate('organizations_general__tabs_settings_content_sso_note')}`}
+								<Link href="https://ed.link/community/single-sign-on-for-education/" target="_blank">https://ed.link/community/single-sign-on-for-education/</Link>
 							</Typography>
-
 						</Stack>
 					</Card>
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							User Settings
+							{`${translate('organizations_general__tabs_settings_content_user_settings')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2, }}>
 							{USER_SETTINGS.map((item) => (
@@ -133,18 +121,18 @@ export default function SettingsTab() {
 								/>
 							))}
 							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
-								Note: Only allow users to sign-up when invited by and teacher
+								{`${translate('organizations_general__tabs_settings_content_user_settings_note')}`}
 							</Typography>
 						</Stack>
 					</Card>
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							Language Settings:
+							{`${translate('organizations_general__tabs_settings_content_lang_settings')}`}
 						</Typography>
 						<Stack alignItems="center" direction="row" spacing={1} sx={{ mt: 2 }}>
 							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
-								Default Language:
+								{`${translate('organizations_general__tabs_settings_content_def_lang')}`}
 							</Typography>
 							<LanguagePopover />
 						</Stack>
@@ -152,7 +140,7 @@ export default function SettingsTab() {
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							Interaction Settings:
+							{`${translate('organizations_general__tabs_settings_content_interactions_settings')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
 							{INTERACTIONS_SETTINGS.map((item) => (
@@ -165,7 +153,7 @@ export default function SettingsTab() {
 							))}
 						</Stack>
 						<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary', mt: 1 }}>
-							Note: Users can not see or comments on external projects.
+							{`${translate('organizations_general__tabs_settings_content_interactions_settings_note')}`}
 						</Typography>
 					</Card>
 
@@ -176,7 +164,7 @@ export default function SettingsTab() {
 							loading={isSubmitting}
 							sx={{ ml: 'auto', mt: 4 }}
 						>
-							Save Changes
+							{`${translate('actions_save_changes')}`}
 						</LoadingButton>
 					</Stack>
 				</FormProvider>

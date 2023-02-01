@@ -14,6 +14,7 @@ import {
   OrganizationResponce,
   useUpdateOrganizationMutation,
 } from "src/redux/services/admin";
+import {useLocales} from "../../../locales";
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -37,6 +38,7 @@ type OrganizationFormProps = {
 export default function OrganizationForm({
   organization,
 }: OrganizationFormProps) {
+  const { translate } = useLocales();
   const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -105,10 +107,13 @@ export default function OrganizationForm({
                     display: "block",
                     textAlign: "center",
                     color: "text.secondary",
+                    whiteSpace: "pre-line"
                   }}
                 >
-                  Allowed transparent *.png
-                  <br /> max size of {fData(30000)}
+                  {`${translate('organizations_general__tabs_profile_form_upload_image', {
+                    formats: 'png',
+                    size: fData(30000),
+                  })}`}
                 </Typography>
               }
             />
@@ -129,13 +134,13 @@ export default function OrganizationForm({
                 xs: "repeat(3, 1fr)"
               }}
             >
-              <RHFTextField name="name" label="Name" />
+              <RHFTextField name="name" label={`${translate('organizations_general__tabs_profile_form_name_input')}`} />
 
-              <RHFTextField name="email" label="Email Address" />
+              <RHFTextField name="email" label={`${translate('organizations_general__tabs_profile_form_email_input')}`} />
 
-              <RHFTextField name="url" label="Url" />
+              <RHFTextField name="url" label={`${translate('organizations_general__tabs_profile_form_url_input')}`} />
 
-              <RHFTextField name="address" label="Address" />
+              <RHFTextField name="address" label={`${translate('organizations_general__tabs_profile_form_address_input')}`} />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>
@@ -144,7 +149,7 @@ export default function OrganizationForm({
                 variant="contained"
                 loading={isLoading}
               >
-                Save Changes
+                {`${translate('actions_save_changes')}`}
               </LoadingButton>
             </Stack>
           </Card>

@@ -1,23 +1,11 @@
 import { useState } from "react";
-// next
 import Head from "next/head";
-// @mui
-import { Stack, Button, Container } from "@mui/material";
-// routes
+import { Stack, Container } from "@mui/material";
 import { PATH_DASHBOARD } from "../../../routes/paths";
-// layouts
 import DashboardLayout from "../../../layouts/dashboard";
-// _mock_
-import { _allFiles } from "../../../_mock/arrays";
-// @types
-import { IFile } from "../../../@types/file";
-// components;
-import ConfirmDialog from "../../../components/confirm-dialog";
-import { fileFormat } from "../../../components/file-thumbnail";
 import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 import { useSettingsContext } from "../../../components/settings";
-import { useTable, getComparator } from "../../../components/table";
-// sections
+import { useTable } from "../../../components/table";
 import {
   FileFilterName,
   SchoolGridView,
@@ -25,8 +13,7 @@ import {
 
 import AddSchoolDialog from "../../../sections/@dashboard/schools/portal/AddSchoolDialog";
 import { useGetSchoolListQuery } from "src/redux/services/admin";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
+import {useLocales} from "../../../locales";
 
 Schools.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -35,6 +22,8 @@ Schools.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function Schools() {
+  const { translate } = useLocales();
+
   const table = useTable({ defaultRowsPerPage: 10 });
 
   const { themeStretch } = useSettingsContext();
@@ -54,10 +43,6 @@ export default function Schools() {
 
   const handleDeleteItem = (id: string) => {};
 
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
-
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
   };
@@ -65,17 +50,17 @@ export default function Schools() {
   return (
     <>
       <Head>
-        <title> Schools | Codetribe</title>
+        <title> {`${translate('organizations_title')} | Codetribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Schools"
+          heading={`${translate('organizations_title')}`}
           links={[
             {
-              name: "Organizations",
+              name: `${translate('organizations_title')}`,
               href: PATH_DASHBOARD.root,
             },
-            { name: "Schools" },
+            { name: `${translate('organizations_schools__title')}` },
           ]}
           action={<AddSchoolDialog />}
         />
@@ -99,29 +84,6 @@ export default function Schools() {
           />
         )}
       </Container>
-
-      <ConfirmDialog
-        open={openConfirm}
-        onClose={handleCloseConfirm}
-        title="Archive"
-        content={
-          <>
-            Are you sure want to archive{" "}
-            <strong> {table.selected.length} </strong> items?
-          </>
-        }
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handleCloseConfirm();
-            }}
-          >
-            Archive
-          </Button>
-        }
-      />
     </>
   );
 }
