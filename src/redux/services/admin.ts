@@ -65,7 +65,6 @@ export const adminApi = createApi({
     updateOrganization: builder.mutation<
       OrganizationResponce,
       {
-        id: string;
         body: OrganizationRequest;
       }
     >({

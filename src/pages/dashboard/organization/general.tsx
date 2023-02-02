@@ -70,7 +70,7 @@ export default function UserProfilePage() {
           }}
         >
           <ProfileCover
-            name={data?.name || ""}
+            name={data?.title || ""}
             role={data?.email || ""}
             cover={"/assets/icons/shool/organization.svg"}
           />

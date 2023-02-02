@@ -5,10 +5,8 @@ import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import InputInfo from "./InputInfo";
 import { useForm } from "react-hook-form";
-import { useCreateOrganizationMutation } from "src/redux/services/admin";
+import { useUpdateOrganizationMutation } from "src/redux/services/admin";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setOrganization } from "src/redux/slices/global";
 
 type OrganizationStepProps = {
   next: () => void;
@@ -16,8 +14,7 @@ type OrganizationStepProps = {
 
 export default function OrganizationStep({ next }: OrganizationStepProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const [createOrganization, { isLoading }] = useCreateOrganizationMutation();
+  const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
   const theme = useTheme();
   const {
     register,
@@ -26,11 +23,8 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
   } = useForm();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     try {
-      const org = await createOrganization(data).unwrap();
-      dispatch(setOrganization(org.id));
-      localStorage.setItem("org_id", org.id);
+      const org = await updateOrg({body: data}).unwrap();
       router.push(
         {
           pathname: "/auth/register",
@@ -62,7 +56,7 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
         >
           Skip this step if not applicable.
         </Typography>
-        <TextField label="District / Organization Name" {...register("name")} />
+        <TextField label="District / Organization Name" {...register("title")} />
         <InputInfo text="Leave empty if no district website." />
         <TextField label="Website" {...register("url")} />
       </Stack>

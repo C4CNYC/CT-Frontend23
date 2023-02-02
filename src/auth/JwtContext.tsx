@@ -193,7 +193,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const { data: tenant } = await axios.post("/tenant", {
         name: tenantName,
       });
-      localStorage.setItem("tenantName", tenant.name);
+      localStorage.setItem("tenantName", tenantName);
 
       const { data } = await axios.post("/auth/signup", {
         email,

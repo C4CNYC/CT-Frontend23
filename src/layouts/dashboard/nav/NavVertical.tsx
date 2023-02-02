@@ -57,7 +57,6 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
           p: "14px 15px 0 16px",
         }}
       >
-        <NavAccount />
       </Stack>
 
       <NavSectionVertical data={navConfig} />
