@@ -36,19 +36,19 @@ export default function UserProfilePage() {
   const TABS = [
     {
       value: 'profile',
-      label: `${translate('organizations_general__tabs_tab_profile')}`,
+      label: translate('organizations.general_page.tabs.labels.profile'),
       icon: <Iconify icon="ic:round-account-box" />,
       component: <UserProfileTab />,
     },
     {
       value: 'settings',
-      label: `${translate('organizations_general__tabs_tab_settings')}`,
+      label: translate('organizations.general_page.tabs.labels.settings'),
       icon: <Iconify icon="ic:baseline-settings-applications" />,
       component: <SettingsTab />,
     },
     {
       value: 'customization',
-      label: `${translate('organizations_general__tabs_tab_customization')}`,
+      label: `${translate('organizations.general_page.tabs.labels.customization')}`,
       icon: <Iconify icon="ic:round-dashboard-customize" />,
       component: <CustomizationTab />,
     },
@@ -60,7 +60,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Head>
-        <title>{`${translate('organizations_page.title')} : Codetribe`}</title>
+        <title>{`${translate('organizations.title')} : Codetribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card

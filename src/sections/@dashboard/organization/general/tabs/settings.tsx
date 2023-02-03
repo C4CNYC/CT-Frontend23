@@ -73,7 +73,7 @@ export default function SettingsTab() {
 				<FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
 					<Card sx={{ p: 3 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							{`${translate('organizations_general__tabs_settings_content_settings')}`}
+							{`${translate('organizations.general_page.tabs.content.settings.content_settings')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
 							{MARKET_PLACE_OPTIONS.map((activity) => (
@@ -101,7 +101,7 @@ export default function SettingsTab() {
 								/>
 							))}
 							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary', whiteSpace: 'pre-line'  }}>
-								{`${translate('organizations_general__tabs_settings_content_sso_note')}`}
+								{`${translate('organizations.general_page.tabs.content.settings.sso_note')}`}
 								<Link href="https://ed.link/community/single-sign-on-for-education/" target="_blank">https://ed.link/community/single-sign-on-for-education/</Link>
 							</Typography>
 						</Stack>
@@ -109,7 +109,7 @@ export default function SettingsTab() {
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							{`${translate('organizations_general__tabs_settings_content_user_settings')}`}
+							{`${translate('organizations.general_page.tabs.content.settings.user_settings')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2, }}>
 							{USER_SETTINGS.map((item) => (
@@ -121,18 +121,18 @@ export default function SettingsTab() {
 								/>
 							))}
 							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
-								{`${translate('organizations_general__tabs_settings_content_user_settings_note')}`}
+								{`${translate('organizations.general_page.tabs.content.settings.user_settings_note')}`}
 							</Typography>
 						</Stack>
 					</Card>
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							{`${translate('organizations_general__tabs_settings_content_lang_settings')}`}
+							{`${translate('organizations.general_page.tabs.content.settings.lang_settings')}`}
 						</Typography>
 						<Stack alignItems="center" direction="row" spacing={1} sx={{ mt: 2 }}>
 							<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary' }}>
-								{`${translate('organizations_general__tabs_settings_content_def_lang')}`}
+								{`${translate('organizations.general_page.tabs.content.settings.def_lang')}`}
 							</Typography>
 							<LanguagePopover />
 						</Stack>
@@ -140,7 +140,7 @@ export default function SettingsTab() {
 
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
-							{`${translate('organizations_general__tabs_settings_content_interactions_settings')}`}
+							{`${translate('organizations.general_page.tabs.content.settings.interactions_settings')}`}
 						</Typography>
 						<Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
 							{INTERACTIONS_SETTINGS.map((item) => (
@@ -153,7 +153,7 @@ export default function SettingsTab() {
 							))}
 						</Stack>
 						<Typography variant="subtitle2" component="div" sx={{ color: 'text.secondary', mt: 1 }}>
-							{`${translate('organizations_general__tabs_settings_content_interactions_settings_note')}`}
+							{`${translate('organizations.general_page.tabs.content.settings.interactions_settings_note')}`}
 						</Typography>
 					</Card>
 

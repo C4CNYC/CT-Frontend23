@@ -50,17 +50,17 @@ export default function Schools() {
   return (
     <>
       <Head>
-        <title> {`${translate('organizations_title')} | Codetribe`}</title>
+        <title> {`${translate('organizations.title')} | Codetribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading={`${translate('organizations_title')}`}
+          heading={`${translate('organizations.title')}`}
           links={[
             {
-              name: `${translate('organizations_title')}`,
+              name: `${translate('organizations.title')}`,
               href: PATH_DASHBOARD.root,
             },
-            { name: `${translate('organizations_schools__title')}` },
+            { name: `${translate('organizations.schools_page.title')}` },
           ]}
           action={<AddSchoolDialog />}
         />

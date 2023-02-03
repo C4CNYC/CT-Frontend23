@@ -48,21 +48,11 @@ import {
 import { useGetOrgMembersQuery } from "src/redux/services/admin";
 import { useFilters } from "src/hooks/useFilters";
 import { Role } from "src/redux/services/enums/role.enum";
+import {useLocales} from "../../../../locales";
 
 // ----------------------------------------------------------------------
 
 const STATUS_OPTIONS = ["all"];
-
-const TABLE_HEAD = [
-  { id: "" },
-  { id: "email", label: "Email", align: "left" },
-  { id: "first_name", label: "Name", align: "left" },
-  { id: "last_name", label: "Surename", align: "left" },
-  { id: "role", label: "Role", align: "left" },
-  { id: "isVerified", label: "Verified", align: "center" },
-  { id: "status", label: "Status", align: "left" },
-  { id: "" },
-];
 
 // ----------------------------------------------------------------------
 
@@ -87,6 +77,19 @@ export default function UserListPage() {
     onSort,
     onChangeDense,
   } = useTable();
+  const { translate } = useLocales();
+
+  const TABLE_HEAD = [
+    { id: "" },
+    { id: "email", label: `${translate('organizations.members_page.table.email')}`, align: "left" },
+    { id: "first_name", label: `${translate('organizations.members_page.table.email')}`, align: "left" },
+    { id: "last_name", label: `${translate('organizations.members_page.table.email')}`, align: "left" },
+    { id: "role", label: `${translate('organizations.members_page.table.role')}`, align: "left" },
+    { id: "isVerified", label: `${translate('organizations.members_page.table.verified')}`, align: "center" },
+    { id: "status", label: `${translate('organizations.members_page.table.status')}`, align: "left" },
+    { id: "" },
+  ];
+
 
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter, resetFilters } = useFilters({
@@ -125,9 +128,9 @@ export default function UserListPage() {
         <CustomBreadcrumbs
           heading="User List"
           links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "User", href: PATH_DASHBOARD.organization.root },
-            { name: "List" },
+            { name: `${translate('organizations.dashboard_title')}`, href: PATH_DASHBOARD.root },
+            { name: `${translate('organizations.members_page.title')}`, href: PATH_DASHBOARD.organization.root },
+            { name: `${translate('organizations.members_page.list_title')}` },
           ]}
           action={
             <Button
@@ -136,7 +139,7 @@ export default function UserListPage() {
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              New User
+              {`${translate('organizations.members_page.new_user_btn')}`}
             </Button>
           }
         />
@@ -258,8 +261,10 @@ export default function UserListPage() {
         title="Delete"
         content={
           <>
-            Are you sure want to delete <strong> {selected.length} </strong>{" "}
-            items?
+            {`${translate('organizations.members_page.delete_dialog.content', 
+              {items: selected.length }
+            )}
+           `}
           </>
         }
         action={
@@ -271,7 +276,7 @@ export default function UserListPage() {
               handleCloseConfirm();
             }}
           >
-            Delete
+            {`${translate('actions_delete')}`}
           </Button>
         }
       />

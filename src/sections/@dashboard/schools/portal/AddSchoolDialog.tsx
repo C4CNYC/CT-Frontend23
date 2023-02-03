@@ -61,7 +61,7 @@ export default function AddSchoolDialog() {
       await createSchool({
         ...data,
       }).unwrap;
-      enqueueSnackbar(`${translate('organizations_schools__create_dialog_success', {name: data.name} )}`);
+      enqueueSnackbar(`${translate('organizations.schools_page.create_dialog.success_msg', {name: data.name} )}`);
       handleClose();
       methods.reset();
     } catch (error) {
@@ -77,7 +77,7 @@ export default function AddSchoolDialog() {
         variant="contained"
         startIcon={<AddIcon />}
       >
-        {`${translate('organizations_schools__create_button')}`}
+        {`${translate('organizations.schools_page.create_school_btn')}`}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add School</DialogTitle>
@@ -92,14 +92,14 @@ export default function AddSchoolDialog() {
                   <Box rowGap={3} display="grid">
                     <RHFTextField
                       name="name"
-                      label={`${translate('organizations_schools__create_dialog_school_name_input_label')}`}
+                      label={`${translate('organizations.schools_page.create_dialog.inputs.school_name')}`}
                       required
                     />
                     <RHFSelect
                       native
                       name="country"
-                      label={`${translate('organizations_schools__create_dialog_country_input_label')}`}
-                      placeholder={`${translate('organizations_schools__create_dialog_country_input_label')}`}
+                      label={`${translate('organizations.schools_page.create_dialog.inputs.country')}`}
+                      placeholder={`${translate('organizations.schools_page.create_dialog.inputs.country')}`}
                     >
                       <option value="" />
                       {countries.map((country) => (
@@ -110,7 +110,7 @@ export default function AddSchoolDialog() {
                     </RHFSelect>
                     <RHFTextField
                       name="city"
-                      label={`${translate('organizations_schools__create_dialog_city_input_label')}`}
+                      label={`${translate('organizations.schools_page.create_dialog.inputs.city')}`}
                       required
                     />
                   </Box>

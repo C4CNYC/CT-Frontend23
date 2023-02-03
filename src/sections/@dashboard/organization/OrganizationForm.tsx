@@ -110,7 +110,7 @@ export default function OrganizationForm({
                     whiteSpace: "pre-line"
                   }}
                 >
-                  {`${translate('organizations_general__tabs_profile_form_upload_image', {
+                  {`${translate('organizations.general_page.tabs.content.profile.upload_image', {
                     formats: 'png',
                     size: fData(30000),
                   })}`}
@@ -134,13 +134,13 @@ export default function OrganizationForm({
                 xs: "repeat(3, 1fr)"
               }}
             >
-              <RHFTextField name="name" label={`${translate('organizations_general__tabs_profile_form_name_input')}`} />
+              <RHFTextField name="name" label={`${translate('organizations.general_page.tabs.content.profile.name_input')}`} />
 
-              <RHFTextField name="email" label={`${translate('organizations_general__tabs_profile_form_email_input')}`} />
+              <RHFTextField name="email" label={`${translate('organizations.general_page.tabs.content.profile.email_input')}`} />
 
-              <RHFTextField name="url" label={`${translate('organizations_general__tabs_profile_form_url_input')}`} />
+              <RHFTextField name="url" label={`${translate('organizations.general_page.tabs.content.profile.url_input')}`} />
 
-              <RHFTextField name="address" label={`${translate('organizations_general__tabs_profile_form_address_input')}`} />
+              <RHFTextField name="address" label={`${translate('organizations.general_page.tabs.content.profile.address_input')}`} />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>

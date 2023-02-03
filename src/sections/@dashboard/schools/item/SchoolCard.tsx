@@ -174,7 +174,7 @@ export default function SchoolCard({
         open={openConfirm}
         onClose={handleCloseConfirm}
         title={`${translate('actions_archive')}`}
-        content={`${translate('organizations_schools__archive_dialog_content')}`}
+        content={`${translate('organizations.schools_page.archive_dialog.content')}`}
         action={
           <Button variant="contained" color="error" onClick={onDelete}>
             {`${translate('actions_archive')}`}
