@@ -9,6 +9,9 @@ import { NavSectionVertical } from "../../../components/nav-section";
 import navConfig from "./config-navigation";
 import NavAccount from "./NavAccount";
 import NavToggleButton from "./NavToggleButton";
+import RoleAccess from "src/components/role-access/RoleAccess";
+import { Role } from "src/redux/services/enums/role.enum";
+import navConfigManager from "./config-navigation-manager";
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +43,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
         },
       }}
     >
-      <Stack
+      <RoleAccess roles={[Role.Owner, Role.Admin]}>
+        <>
+              <Stack
         spacing={3}
         sx={{
           pt: 3,
@@ -60,6 +65,35 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       </Stack>
 
       <NavSectionVertical data={navConfig} />
+        </>
+      </RoleAccess>
+
+        <RoleAccess roles={[Role.Manager]}>
+        <>
+              <Stack
+        spacing={3}
+        sx={{
+          pt: 3,
+          pb: 2,
+          px: 2.5,
+          flexShrink: 0,
+        }}
+      >
+        <Logo />
+      </Stack>
+
+      <Stack
+        sx={{
+          p: "14px 15px 0 16px",
+        }}
+      >
+       
+          <NavAccount />
+      </Stack>
+
+      <NavSectionVertical data={navConfigManager} />
+        </>
+      </RoleAccess>
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>

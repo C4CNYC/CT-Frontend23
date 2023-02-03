@@ -81,8 +81,8 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
 
+      <ReduxProvider store={store}>
       <AuthProvider>
-        <ReduxProvider store={store}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <SettingsProvider>
                 <MotionLazyContainer>
@@ -100,8 +100,9 @@ export default function MyApp(props: MyAppProps) {
                 </MotionLazyContainer>
               </SettingsProvider>
             </LocalizationProvider>
-        </ReduxProvider>
+        
       </AuthProvider>
+      </ReduxProvider>
     </CacheProvider>
   );
 }
