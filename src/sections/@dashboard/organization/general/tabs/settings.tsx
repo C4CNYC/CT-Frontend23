@@ -70,7 +70,7 @@ export default function SettingsTab() {
 	};
 
 	return (
-				<FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+		<FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
 					<Card sx={{ p: 3 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
 							{`${translate('organizations.general_page.tabs.content.settings.content_settings')}`}
@@ -86,7 +86,6 @@ export default function SettingsTab() {
 							))}
 						</Stack>
 					</Card>
-
 					<Card sx={{ p: 3, mt: 2 }}>
 						<Typography variant="overline" component="div" sx={{ color: 'text.secondary' }}>
 							{`${translate('organizations_general__tabs_settings_content_sso')}`}

@@ -22,33 +22,6 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-
-const TABS = [
-  {
-    value: 'profile',
-    label: 'Profile',
-    icon: <Iconify icon="ic:round-account-box" />,
-    component: <UserProfileTab />,
-  },
-  {
-    value: 'settings',
-    label: 'Settings',
-    icon: <Iconify icon="ic:baseline-settings-applications" />,
-    component: <SettingsTab />,
-  },
-  {
-    value: 'customization',
-    label: 'Customization',
-    icon: <Iconify icon="ic:round-dashboard-customize" />,
-    component: <CustomizationTab />,
-  },
-  {
-    value: 'contacts',
-    label: 'Contacts',
-    icon: <Iconify icon="ic:outline-contacts" />,
-    component: <ContactsTab />,
-  },
-];
 export default function UserProfilePage() {
   const { translate } = useLocales();
   const TABS = [
@@ -69,6 +42,12 @@ export default function UserProfilePage() {
       label: `${translate('organizations.general_page.tabs.labels.customization')}`,
       icon: <Iconify icon="ic:round-dashboard-customize" />,
       component: <CustomizationTab />,
+    },
+    {
+      value: 'contacts',
+      label: 'Contacts',
+      icon: <Iconify icon="ic:outline-contacts" />,
+      component: <ContactsTab />,
     },
   ];
   const [currentTab, setCurrentTab] = useState('profile');
