@@ -16,6 +16,8 @@ import {
   AuthUserType,
   JWTContextType,
 } from "./types";
+import { useDispatch } from "react-redux";
+import { cleanUser, setUser } from "src/redux/slices/global";
 
 // ----------------------------------------------------------------------
 
@@ -99,6 +101,7 @@ type AuthProviderProps = {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const reduxDispatch = useDispatch();
 
   const storageAvailable = localStorageAvailable();
 
@@ -115,7 +118,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         const response = await axios.get("/auth/profile");
 
-        const { user } = response.data;
+        const user = response.data;
+        reduxDispatch(setUser(user));
 
         dispatch({
           type: Types.INITIAL,
@@ -168,6 +172,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       const { access_token, user } = data;
+      reduxDispatch(setUser(user));
 
       setSession(access_token, localStorage.getItem("tenantName"));
 
@@ -203,6 +208,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
 
       const { access_token, user } = data;
+      reduxDispatch(setUser(user));
 
       localStorage.setItem("accessToken", access_token);
 
@@ -219,6 +225,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // LOGOUT
   const logout = useCallback(() => {
     setSession(null, null);
+    reduxDispatch(cleanUser());
     dispatch({
       type: Types.LOGOUT,
     });
