@@ -13,12 +13,11 @@ import Logo from "../../../components/logo";
 import Iconify from "../../../components/iconify";
 import { useSettingsContext } from "../../../components/settings";
 //
-import Searchbar from "./Searchbar";
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
-import ContactsPopover from "./ContactsPopover";
 import NotificationsPopover from "./NotificationsPopover";
 import NavAccount from "./SchoolAccount";
+import { useRouter } from "next/router";
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +27,7 @@ type Props = {
 
 export default function Header({ onOpenNav }: Props) {
   const theme = useTheme();
+  const router = useRouter();
 
   const { themeLayout } = useSettingsContext();
 
@@ -36,6 +36,8 @@ export default function Header({ onOpenNav }: Props) {
   const isNavMini = themeLayout === "mini";
 
   const isDesktop = useResponsive("up", "lg");
+
+  const isSchoolSection = router.pathname.includes('dashboard/school');
 
   const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal;
 
@@ -49,7 +51,7 @@ export default function Header({ onOpenNav }: Props) {
         </IconButton>
       )}
 
-      <NavAccount/>
+      {isSchoolSection ? <NavAccount/> : null}
 
       <Stack
         flexGrow={1}

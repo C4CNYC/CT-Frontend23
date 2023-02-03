@@ -27,7 +27,7 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = user?.role === Role.Manager ? [managment] : [admin, managment];
+  const menu = [Role.Owner, Role.Admin].includes(user?.role || Role.Manager) ? [admin, managment] : [managment];
 
   useEffect(() => {
     if (openNav) {

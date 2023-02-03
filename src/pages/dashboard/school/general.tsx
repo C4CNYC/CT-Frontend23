@@ -1,31 +1,27 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
-import { Card, Container, Box, Grid, Typography, Stack, Tabs, Tab } from "@mui/material";
-import { PATH_DASHBOARD } from "../../../routes/paths";
+import { Card, Container, Box, Tabs, Tab } from "@mui/material";
 import {
   _userAbout,
   _userFriends,
   _userGallery,
   _userFollowers,
 } from "../../../_mock/arrays";
-import DashboardLayout from "../../../layouts/dashboard";
 import { useSettingsContext } from "../../../components/settings";
 import { ProfileCover } from "../../../sections/@dashboard/user/profile";
 // auth
-import OrganizationForm from "src/sections/@dashboard/organization/OrganizationForm";
 import { useGetOrganizationQuery } from "src/redux/services/admin";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 import Iconify from "../../../components/iconify";
 import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile";
 import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization";
 import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 
 // components
 // ----------------------------------------------------------------------
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
 // ----------------------------------------------------------------------
