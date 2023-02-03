@@ -11,6 +11,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import FormProvider, { RHFTextField } from "../../../../../components/hook-form";
 import * as Yup from "yup";
 import {LoadingButton} from "@mui/lab";
+import {useLocales} from "../../../../../locales";
 
 
 type FormValuesProps = {
@@ -24,6 +25,8 @@ const Customize = Yup.object().shape({
 });
 
 export default function CustomizationTab() {
+	const { translate } = useLocales();
+
 	const defaultValues = {
 		firstName: "All",
 		lastName: "featured",
@@ -68,7 +71,7 @@ export default function CustomizationTab() {
 						}}
 					>
 						<Box>
-							<Typography variant="h6" sx={{mt: 2, mb: 1}}>Primary Brand Color</Typography>
+							<Typography variant="h6" sx={{mt: 2, mb: 1}}>{`${translate("organizations.general_page.tabs.content.customization.primary_color")}`}</Typography>
 							<Controller
 								name="primaryBrandColor"
 								control={control}
@@ -79,7 +82,7 @@ export default function CustomizationTab() {
 										value={color}
 										format="hex"
 										isAlphaHidden
-										helperText={fieldState.invalid ? "Color is invalid" : ""}
+										helperText={fieldState.invalid ? `${translate("organizations.general_page.tabs.content.customization.invalid_color_msg")}` : ""}
 										error={fieldState.invalid}
 										onChange={handleChange}
 										style={{width: '100%'}}
@@ -88,7 +91,7 @@ export default function CustomizationTab() {
 							/>
 						</Box>
 						<Box>
-							<Typography variant="h6" sx={{mt:2, mb: 1}}>Secondary Brand Color</Typography>
+							<Typography variant="h6" sx={{mt:2, mb: 1}}>{`${translate("organizations.general_page.tabs.content.customization.secondary_color")}`}</Typography>
 							<Controller
 								name="secondaryBrandColor"
 								control={control}
@@ -99,7 +102,7 @@ export default function CustomizationTab() {
 										value={color}
 										format="hex"
 										isAlphaHidden
-										helperText={fieldState.invalid ? "Color is invalid" : ""}
+										helperText={fieldState.invalid ? `${translate("organizations.general_page.tabs.content.customization.invalid_color_msg")}` : ""}
 										error={fieldState.invalid}
 										onChange={handleChange}
 										style={{width: '100%'}}
@@ -108,7 +111,7 @@ export default function CustomizationTab() {
 							/>
 						</Box>
 						<Box>
-							<Typography variant="h6" sx={{mt:2, mb: 1}}>Alternative Brand Color</Typography>
+							<Typography variant="h6" sx={{mt:2, mb: 1}}>{`${translate("organizations.general_page.tabs.content.customization.alternative_color")}`}</Typography>
 							<Controller
 								name="alternativeBrandColor"
 								control={control}
@@ -119,7 +122,7 @@ export default function CustomizationTab() {
 										value={color}
 										format="hex"
 										isAlphaHidden
-										helperText={fieldState.invalid ? "Color is invalid" : ""}
+										helperText={fieldState.invalid ? `${translate("organizations.general_page.tabs.content.customization.invalid_color_msg")}` : ""}
 										error={fieldState.invalid}
 										onChange={handleChange}
 										style={{width: '100%'}}
@@ -129,34 +132,32 @@ export default function CustomizationTab() {
 						</Box>
 					</Box>
 
-					<Typography variant="h6" sx={{mt:4, mb: 2}}>Short description of platform for SEO</Typography>
+					<Typography variant="h6" sx={{mt:4, mb: 2}}>{`${translate("organizations.general_page.tabs.content.customization.seo_description")}`}</Typography>
 					<RHFTextField
 						name="description"
-						label="Meta description"
+						label={`${translate("organizations.general_page.tabs.content.customization.seo_input_label")}`}
 						multiline
 						rows={3}
 						sx={{mb: 2}}
-						helperText="Note: This will be added as the page meta description for the platform.
-              Max 70 characters words - Approximately 10 words."
+						helperText={`${translate("organizations.general_page.tabs.content.customization.seo_description_note")}`}
 					/>
 
-					<Typography variant="h6" sx={{mt:2, mb: 2}}>Customized Groups Name</Typography>
+				<Typography variant="h6" sx={{mt:4, mb: 2}}>{`${translate("organizations.general_page.tabs.content.customization.groups_name")}`}</Typography>
 					<RHFTextField
 						name="groupsName"
-						label="Groups Name"
+						label={`${translate("organizations.general_page.tabs.content.customization.groups_input_label")}`}
 						sx={{mb: 2}}
-						helperText="Note: Learners are either invited by an admin or auto-added to a Group on registration/signup.
-              Some ideas, but you can choose your own: Class/esClub/sHub/sHive/sGroup/sAnything else that is fun and engaging."
+						helperText={`${translate("organizations.general_page.tabs.content.customization.groups_note")}`}
 					/>
 
-					<Typography variant="h6" sx={{mt:2, mb: 2}}>Welcome text for Slide 1</Typography>
+				<Typography variant="h6" sx={{mt:4, mb: 2}}>{`${translate("organizations.general_page.tabs.content.customization.first_slide_text")}`}</Typography>
 					<RHFTextField
 						name="intro"
-						label="Intro Guide"
+						label={`${translate("organizations.general_page.tabs.content.customization.first_slide_input_label")}`}
 						multiline
 						rows={3}
 						sx={{mb: 2}}
-						helperText={"Note: Should be about 10-15 words and welcome new users to the platform in your own way. What is this? When you first arrive on the Coding Panel you see an \"Intro Guide\" with a sequence of explainer modals. Here you can customize the text for the first slide in the sequence."}
+						helperText={`${translate("organizations.general_page.tabs.content.customization.first_slide_note")}`}
 					/>
 					<Stack>
 						<LoadingButton
@@ -165,7 +166,7 @@ export default function CustomizationTab() {
 							loading={isSubmitting}
 							sx={{ ml: 'auto', mt: 4 }}
 						>
-							Save Changes
+							{`${translate("actions_save_changes")}`}
 						</LoadingButton>
 					</Stack>
 				</FormProvider>

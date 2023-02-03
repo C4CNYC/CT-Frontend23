@@ -57,6 +57,7 @@
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.11.0",
     "mui-color-input": "^1.0.4",
+    "mui-tel-input": "^3.0.2",
     "next": "^13.0.5",
     "next-transpile-modules": "^10.0.0",
     "notistack": "^2.0.8",
