@@ -7,7 +7,7 @@ import Logo from "../../../components/logo";
 import Scrollbar from "../../../components/scrollbar";
 import { NavSectionVertical } from "../../../components/nav-section";
 import { admin, managment } from "./config-navigation";
-import NavAccount from "./NavAccount";
+import NavAccount from "../header/SchoolAccount";
 import NavToggleButton from "./NavToggleButton";
 import RoleAccess from "src/components/role-access/RoleAccess";
 import { Role } from "src/redux/services/enums/role.enum";

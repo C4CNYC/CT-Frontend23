@@ -46,12 +46,6 @@ export const adminApi = createApi({
       }),
       providesTags: ["Organization"],
     }),
-    getOrganizationList: builder.query<OrganizationListResponce, void>({
-      query: () => ({
-        url: `/org/list`,
-        method: "GET",
-      }),
-    }),
     createOrganization: builder.mutation<
       OrganizationResponce,
       OrganizationRequest
@@ -190,7 +184,6 @@ export const {
   useGetOrgMembersQuery,
   useGetSchoolListQuery,
   useGetTeacherListQuery,
-  useGetOrganizationListQuery,
   useGetOrganizationQuery,
   // ---------------- mutations ---------
   useCreateClassMutation,

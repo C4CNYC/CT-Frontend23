@@ -10,8 +10,8 @@ export default function Index() {
   const { pathname, push } = useRouter();
 
   useEffect(() => {
-    if (pathname === PATH_DASHBOARD.mail.root) {
-      push(PATH_DASHBOARD.mail.all);
+    if (pathname === PATH_DASHBOARD.school.root) {
+      push(PATH_DASHBOARD.school.general);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);

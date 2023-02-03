@@ -18,6 +18,7 @@ import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
 import ContactsPopover from "./ContactsPopover";
 import NotificationsPopover from "./NotificationsPopover";
+import NavAccount from "./SchoolAccount";
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +49,7 @@ export default function Header({ onOpenNav }: Props) {
         </IconButton>
       )}
 
-      <Searchbar />
+      <NavAccount/>
 
       <Stack
         flexGrow={1}
@@ -60,8 +61,6 @@ export default function Header({ onOpenNav }: Props) {
         <LanguagePopover />
 
         <NotificationsPopover />
-
-        <ContactsPopover />
 
         <AccountPopover />
       </Stack>

@@ -8,31 +8,33 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 // components
-import { useGetOrganizationListQuery, useGetSchoolListQuery } from "src/redux/services/admin";
+import { useGetSchoolListQuery } from "src/redux/services/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrganization } from "src/redux/slices/global";
 import { RootState } from "src/redux/store";
 import { useEffect } from "react";
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import { useRouter } from "next/router";
 
-export default function NavAccount() {
+export default function SchoolAccount() {
+  const router = useRouter();
   const { data: schools, isLoading } = useGetSchoolListQuery({});
+  const isSchoolSection = router.pathname.includes('dashboard/school');
 
-
-  if (isLoading && !schools) return null;
+  if ((isLoading && !schools) || !isSchoolSection) return null;
 
   return (
     <Box>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">School</InputLabel>
+        <InputLabel sx={{ top: -8}}>School</InputLabel>
         <Select
           // value={org_id}
           label="School"
           // onChange={onChange}
           sx={{
             outline: "none",
-            height: 48,
-            width: "100%",
+            height: 40,
+            width: "250px",
           }}
         >
           {schools?.data?.map((school: SchoolResponce) => (

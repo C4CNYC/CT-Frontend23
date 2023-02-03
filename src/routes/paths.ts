@@ -55,6 +55,7 @@ export const PATH_DASHBOARD = {
     billing: path(ROOTS_DASHBOARD, "/organization/billing"),
   },
   school: {
+    root: path(ROOTS_DASHBOARD, "/school"),
     general: path(ROOTS_DASHBOARD, "/school/general"),
     assigments: path(ROOTS_DASHBOARD, "/school/assigments"),
     modules: path(ROOTS_DASHBOARD, "/school/modules/list"),

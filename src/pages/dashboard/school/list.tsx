@@ -1,78 +1,88 @@
 import { paramCase } from "change-case";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // next
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 // @mui
 import {
+  Tab,
+  Tabs,
   Card,
   Table,
   Button,
   Tooltip,
+  Divider,
   TableBody,
   Container,
   IconButton,
   TableContainer,
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material/Select";
-// redux
-import { useDispatch, useSelector } from "../../../redux/store";
-import { getProducts } from "../../../redux/slices/product";
 // routes
 import { PATH_DASHBOARD } from "../../../routes/paths";
 // @types
-import { IProduct } from "../../../@types/product";
+import { IUserAccountGeneral } from "../../../@types/user";
+// _mock_
+import { _userList } from "../../../_mock/arrays";
 // layouts
 import DashboardLayout from "../../../layouts/dashboard";
 // components
+import Iconify from "../../../components/iconify";
+import Scrollbar from "../../../components/scrollbar";
+import ConfirmDialog from "../../../components/confirm-dialog";
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
 import { useSettingsContext } from "../../../components/settings";
 import {
   useTable,
   getComparator,
   emptyRows,
   TableNoData,
-  TableSkeleton,
   TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
 } from "../../../components/table";
-import Iconify from "../../../components/iconify";
-import Scrollbar from "../../../components/scrollbar";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
-import ConfirmDialog from "../../../components/confirm-dialog";
 // sections
 import {
-  ProductTableRow,
-  ProductTableToolbar,
-} from "../../../sections/@dashboard/e-commerce/list";
+  UserTableToolbar,
+  UserTableRow,
+} from "../../../sections/@dashboard/user/list";
 
 // ----------------------------------------------------------------------
 
+const STATUS_OPTIONS = ["all", "active", "banned"];
+
+const ROLE_OPTIONS = [
+  "all",
+  "ux designer",
+  "full stack designer",
+  "backend developer",
+  "project manager",
+  "leader",
+  "ui designer",
+  "ui/ux designer",
+  "front end developer",
+  "full stack developer",
+];
+
 const TABLE_HEAD = [
-  { id: "name", label: "Product", align: "left" },
-  { id: "createdAt", label: "Create at", align: "left" },
-  { id: "inventoryType", label: "Status", align: "center", width: 180 },
-  { id: "price", label: "Price", align: "right" },
+  { id: "name", label: "Name", align: "left" },
+  { id: "company", label: "Company", align: "left" },
+  { id: "role", label: "Role", align: "left" },
+  { id: "isVerified", label: "Verified", align: "center" },
+  { id: "status", label: "Status", align: "left" },
   { id: "" },
 ];
 
-const STATUS_OPTIONS = [
-  { value: "in_stock", label: "In stock" },
-  { value: "low_stock", label: "Low stock" },
-  { value: "out_of_stock", label: "Out of stock" },
-];
-
 // ----------------------------------------------------------------------
 
-EcommerceProductListPage.getLayout = (page: React.ReactElement) => (
+UserListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
 
-export default function EcommerceProductListPage() {
+export default function UserListPage() {
   const {
     dense,
     page,
@@ -90,40 +100,27 @@ export default function EcommerceProductListPage() {
     onChangeDense,
     onChangePage,
     onChangeRowsPerPage,
-  } = useTable({
-    defaultOrderBy: "createdAt",
-  });
+  } = useTable();
 
   const { themeStretch } = useSettingsContext();
 
   const { push } = useRouter();
 
-  const dispatch = useDispatch();
-
-  const { products, isLoading } = useSelector((state) => state.product);
-
-  const [tableData, setTableData] = useState<IProduct[]>([]);
+  const [tableData, setTableData] = useState(_userList);
 
   const [filterName, setFilterName] = useState("");
 
-  const [filterStatus, setFilterStatus] = useState<string[]>([]);
+  const [filterRole, setFilterRole] = useState("all");
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (products.length) {
-      setTableData(products);
-    }
-  }, [products]);
+  const [filterStatus, setFilterStatus] = useState("all");
 
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(order, orderBy),
     filterName,
+    filterRole,
     filterStatus,
   });
 
@@ -132,13 +129,15 @@ export default function EcommerceProductListPage() {
     page * rowsPerPage + rowsPerPage
   );
 
-  const denseHeight = dense ? 60 : 80;
+  const denseHeight = dense ? 52 : 72;
 
-  const isFiltered = filterName !== "" || !!filterStatus.length;
+  const isFiltered =
+    filterName !== "" || filterRole !== "all" || filterStatus !== "all";
 
   const isNotFound =
     (!dataFiltered.length && !!filterName) ||
-    (!isLoading && !dataFiltered.length);
+    (!dataFiltered.length && !!filterRole) ||
+    (!dataFiltered.length && !!filterStatus);
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -148,17 +147,22 @@ export default function EcommerceProductListPage() {
     setOpenConfirm(false);
   };
 
+  const handleFilterStatus = (
+    event: React.SyntheticEvent<Element, Event>,
+    newValue: string
+  ) => {
+    setPage(0);
+    setFilterStatus(newValue);
+  };
+
   const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPage(0);
     setFilterName(event.target.value);
   };
 
-  const handleFilterStatus = (event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
+  const handleFilterRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPage(0);
-    setFilterStatus(typeof value === "string" ? value.split(",") : value);
+    setFilterRole(event.target.value);
   };
 
   const handleDeleteRow = (id: string) => {
@@ -194,55 +198,64 @@ export default function EcommerceProductListPage() {
   };
 
   const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.eCommerce.edit(paramCase(id)));
-  };
-
-  const handleViewRow = (id: string) => {
-    push(PATH_DASHBOARD.eCommerce.view(paramCase(id)));
+    push(PATH_DASHBOARD.organization.edit(paramCase(id)));
   };
 
   const handleResetFilter = () => {
     setFilterName("");
-    setFilterStatus([]);
+    setFilterRole("all");
+    setFilterStatus("all");
   };
 
   return (
     <>
       <Head>
-        <title> Ecommerce: Product List | Minimal UI</title>
+        <title> User: List | Minimal UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Product List"
+          heading="User List"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            {
-              name: "E-Commerce",
-              href: PATH_DASHBOARD.eCommerce.root,
-            },
+            { name: "User", href: PATH_DASHBOARD.organization.root },
             { name: "List" },
           ]}
           action={
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.eCommerce.new}
+              href={PATH_DASHBOARD.organization.new}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              New Product
+              New User
             </Button>
           }
         />
 
         <Card>
-          <ProductTableToolbar
-            filterName={filterName}
-            filterStatus={filterStatus}
-            onFilterName={handleFilterName}
-            onFilterStatus={handleFilterStatus}
-            statusOptions={STATUS_OPTIONS}
+          <Tabs
+            value={filterStatus}
+            onChange={handleFilterStatus}
+            sx={{
+              px: 2,
+              bgcolor: "background.neutral",
+            }}
+          >
+            {STATUS_OPTIONS.map((tab) => (
+              <Tab key={tab} label={tab} value={tab} />
+            ))}
+          </Tabs>
+
+          <Divider />
+
+          <UserTableToolbar
             isFiltered={isFiltered}
+            filterName={filterName}
+            filterRole={filterRole}
+            optionsRole={ROLE_OPTIONS}
+            onFilterName={handleFilterName}
+            onFilterRole={handleFilterRole}
             onResetFilter={handleResetFilter}
           />
 
@@ -267,7 +280,7 @@ export default function EcommerceProductListPage() {
             />
 
             <Scrollbar>
-              <Table size={dense ? "small" : "medium"} sx={{ minWidth: 960 }}>
+              <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
                 <TableHeadCustom
                   order={order}
                   orderBy={orderBy}
@@ -284,28 +297,18 @@ export default function EcommerceProductListPage() {
                 />
 
                 <TableBody>
-                  {(isLoading ? [...Array(rowsPerPage)] : dataFiltered)
+                  {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) =>
-                      row ? (
-                        <ProductTableRow
-                          key={row.id}
-                          row={row}
-                          selected={selected.includes(row.id)}
-                          onSelectRow={() => onSelectRow(row.id)}
-                          onDeleteRow={() => handleDeleteRow(row.id)}
-                          onEditRow={() => handleEditRow(row.name)}
-                          onViewRow={() => handleViewRow(row.name)}
-                        />
-                      ) : (
-                        !isNotFound && (
-                          <TableSkeleton
-                            key={index}
-                            sx={{ height: denseHeight }}
-                          />
-                        )
-                      )
-                    )}
+                    .map((row) => (
+                      <UserTableRow
+                        key={row.id}
+                        row={row}
+                        selected={selected.includes(row.id)}
+                        onSelectRow={() => onSelectRow(row.id)}
+                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        onEditRow={() => handleEditRow(row.name)}
+                      />
+                    ))}
 
                   <TableEmptyRows
                     height={denseHeight}
@@ -365,11 +368,13 @@ function applyFilter({
   comparator,
   filterName,
   filterStatus,
+  filterRole,
 }: {
-  inputData: IProduct[];
+  inputData: IUserAccountGeneral[];
   comparator: (a: any, b: any) => number;
   filterName: string;
-  filterStatus: string[];
+  filterStatus: string;
+  filterRole: string;
 }) {
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -383,15 +388,16 @@ function applyFilter({
 
   if (filterName) {
     inputData = inputData.filter(
-      (product) =>
-        product.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 
-  if (filterStatus.length) {
-    inputData = inputData.filter((product) =>
-      filterStatus.includes(product.inventoryType)
-    );
+  if (filterStatus !== "all") {
+    inputData = inputData.filter((user) => user.status === filterStatus);
+  }
+
+  if (filterRole !== "all") {
+    inputData = inputData.filter((user) => user.role === filterRole);
   }
 
   return inputData;
