@@ -1,7 +1,5 @@
 // ----------------------------------------------------------------------
 
-import Customization from "../pages/dashboard/organization/customization";
-
 function path(root: string, sublink: string) {
   return `${root}${sublink}`;
 }
@@ -55,6 +53,16 @@ export const PATH_DASHBOARD = {
     schools: path(ROOTS_DASHBOARD, "/organization/schools"),
     contacts: path(ROOTS_DASHBOARD, "/organization/contacts"),
     billing: path(ROOTS_DASHBOARD, "/organization/billing"),
+  },
+  school: {
+    general: path(ROOTS_DASHBOARD, "/school/general"),
+    assigments: path(ROOTS_DASHBOARD, "/school/assigments"),
+    modules: path(ROOTS_DASHBOARD, "/school/modules/list"),
+    students: path(ROOTS_DASHBOARD, "/school/students"),
+    classes: path(ROOTS_DASHBOARD, "/school/classes"),
+    prgogress: path(ROOTS_DASHBOARD, "/school/prgogress"),
+    edit: (name: string) =>
+      path(ROOTS_DASHBOARD, `/school/members/${name}/edit`),
   },
   invoice: {
     root: path(ROOTS_DASHBOARD, "/invoice"),

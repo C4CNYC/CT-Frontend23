@@ -6,12 +6,14 @@ import { NAV } from "../../../config-global";
 import Logo from "../../../components/logo";
 import Scrollbar from "../../../components/scrollbar";
 import { NavSectionVertical } from "../../../components/nav-section";
-import navConfig from "./config-navigation";
+import { admin, managment } from "./config-navigation";
 import NavAccount from "./NavAccount";
 import NavToggleButton from "./NavToggleButton";
 import RoleAccess from "src/components/role-access/RoleAccess";
 import { Role } from "src/redux/services/enums/role.enum";
 import navConfigManager from "./config-navigation-manager";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
@@ -21,9 +23,11 @@ type Props = {
 };
 
 export default function NavVertical({ openNav, onCloseNav }: Props) {
+  const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
+  const menu = user?.role === Role.Manager ? [managment] : [admin, managment];
 
   useEffect(() => {
     if (openNav) {
@@ -43,7 +47,6 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
         },
       }}
     >
-      <RoleAccess roles={[Role.Owner, Role.Admin]}>
         <>
               <Stack
         spacing={3}
@@ -64,36 +67,8 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
       >
       </Stack>
 
-      <NavSectionVertical data={navConfig} />
+      <NavSectionVertical data={menu} />
         </>
-      </RoleAccess>
-
-        <RoleAccess roles={[Role.Manager]}>
-        <>
-              <Stack
-        spacing={3}
-        sx={{
-          pt: 3,
-          pb: 2,
-          px: 2.5,
-          flexShrink: 0,
-        }}
-      >
-        <Logo />
-      </Stack>
-
-      <Stack
-        sx={{
-          p: "14px 15px 0 16px",
-        }}
-      >
-       
-          <NavAccount />
-      </Stack>
-
-      <NavSectionVertical data={navConfigManager} />
-        </>
-      </RoleAccess>
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
