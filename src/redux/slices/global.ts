@@ -7,6 +7,9 @@ export interface CounterState {
   organizations: OrganizationResponce[];
 }
 
+const token =
+  typeof window === "object" ? localStorage.getItem("accessToken") : "";
+
 const initialState: CounterState = {
   org_id: "",
   organizations: [],

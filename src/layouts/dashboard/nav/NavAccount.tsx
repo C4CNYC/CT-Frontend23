@@ -17,10 +17,7 @@ import { useEffect } from "react";
 export default function NavAccount() {
   const dispatch = useDispatch();
   const org_id = useSelector((state: RootState) => state.global.org_id);
-  const organizationList = useSelector(
-    (state: RootState) => state.global.organizations
-  );
-
+  const organizationList = useSelector((state: RootState) => state.global.organizations);
   const onChange = (event: SelectChangeEvent) => {
     dispatch(setOrganization(event.target.value));
   };
@@ -39,7 +36,7 @@ export default function NavAccount() {
             width: "100%",
           }}
         >
-          {organizationList?.map((organization) => (
+          {organizationList.map((organization) => (
             <MenuItem key={organization.id} value={organization.id}>
               {organization.name}
             </MenuItem>

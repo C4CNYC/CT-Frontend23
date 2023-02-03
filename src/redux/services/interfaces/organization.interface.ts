@@ -1,6 +1,7 @@
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 export interface OrganizationResponce extends BaseResponseInterface {
+  title: string;
   name: string;
   email: string;
   url: string;
@@ -13,7 +14,7 @@ export interface OrganizationListResponce {
 }
 
 export interface OrganizationRequest {
-  name: string;
+  title: string;
   email: string | null;
   url: string;
   address: string;

@@ -53,7 +53,6 @@ import { ThemeSettings, SettingsProvider } from "../components/settings";
 // https://docs.minimals.cc/authentication/ts-version
 
 import { AuthProvider } from "../auth/JwtContext";
-import { OrganizationProvider } from "src/redux/providers/OrganizationProvider";
 // import { AuthProvider } from '../auth/Auth0Context';
 // import { AuthProvider } from '../auth/FirebaseContext';
 // import { AuthProvider } from '../auth/AwsCognitoContext';
@@ -84,7 +83,6 @@ export default function MyApp(props: MyAppProps) {
 
       <AuthProvider>
         <ReduxProvider store={store}>
-          <OrganizationProvider>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <SettingsProvider>
                 <MotionLazyContainer>
@@ -102,7 +100,6 @@ export default function MyApp(props: MyAppProps) {
                 </MotionLazyContainer>
               </SettingsProvider>
             </LocalizationProvider>
-          </OrganizationProvider>
         </ReduxProvider>
       </AuthProvider>
     </CacheProvider>

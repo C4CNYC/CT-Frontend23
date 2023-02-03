@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // @mui
 import { Box } from "@mui/material";
 // hooks
@@ -13,6 +13,10 @@ import Header from "./header";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";
 import NavHorizontal from "./nav/NavHorizontal";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetOrganizationListQuery } from "src/redux/services/admin";
+import { setOrganizationList, setOrganization } from "src/redux/slices/global";
+import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
@@ -22,6 +26,16 @@ type Props = {
 
 export default function DashboardLayout({ children }: Props) {
   const { themeLayout } = useSettingsContext();
+  const org_id = useSelector((state: RootState) => state.global.org_id);
+  const dispatch = useDispatch();
+   const { data, isLoading } = useGetOrganizationListQuery();
+
+   useEffect(() => {
+     if (data?.data) {
+       dispatch(setOrganizationList(data.data));
+       dispatch(setOrganization(data?.data[0].id));
+     }
+   }, [data]);
 
   const isDesktop = useResponsive("up", "lg");
 
@@ -55,6 +69,8 @@ export default function DashboardLayout({ children }: Props) {
         </>
       );
     }
+
+    if(!org_id) return null
 
     if (isNavMini) {
       return (

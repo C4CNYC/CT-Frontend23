@@ -11,9 +11,9 @@ import FormProvider, {
   RHFUploadAvatar,
 } from "../../../components/hook-form";
 import {
-  OrganizationResponce,
   useUpdateOrganizationMutation,
 } from "src/redux/services/admin";
+import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 import {useLocales} from "../../../locales";
 
 const UpdateUserSchema = Yup.object().shape({
@@ -43,7 +43,7 @@ export default function OrganizationForm({
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    name: organization?.name || "",
+    name: organization?.title || "",
     email: organization?.email || "",
     address: organization?.address || "",
     url: organization?.url || "",
@@ -59,9 +59,8 @@ export default function OrganizationForm({
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await updateOrg({
-        id: organization?.id as string,
         body: {
-          name: data.name,
+          title: data.name,
           email: data.email || null,
           url: data.url,
           address: data.address,
