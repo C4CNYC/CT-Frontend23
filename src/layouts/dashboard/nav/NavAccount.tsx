@@ -8,37 +8,36 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 // components
-import { useGetOrganizationListQuery } from "src/redux/services/admin";
+import { useGetOrganizationListQuery, useGetSchoolListQuery } from "src/redux/services/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrganization } from "src/redux/slices/global";
 import { RootState } from "src/redux/store";
 import { useEffect } from "react";
+import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
 
 export default function NavAccount() {
-  const dispatch = useDispatch();
-  const org_id = useSelector((state: RootState) => state.global.org_id);
-  const organizationList = useSelector((state: RootState) => state.global.organizations);
-  const onChange = (event: SelectChangeEvent) => {
-    dispatch(setOrganization(event.target.value));
-  };
+  const { data: schools, isLoading } = useGetSchoolListQuery({});
+
+
+  if (isLoading && !schools) return null;
 
   return (
     <Box>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Organization</InputLabel>
+        <InputLabel id="demo-simple-select-label">School</InputLabel>
         <Select
-          value={org_id}
-          label="Organization"
-          onChange={onChange}
+          // value={org_id}
+          label="School"
+          // onChange={onChange}
           sx={{
             outline: "none",
             height: 48,
             width: "100%",
           }}
         >
-          {organizationList.map((organization) => (
-            <MenuItem key={organization.id} value={organization.id}>
-              {organization.name}
+          {schools?.data?.map((school: SchoolResponce) => (
+            <MenuItem key={school.id} value={school.id}>
+              {school.name}
             </MenuItem>
           ))}
         </Select>
