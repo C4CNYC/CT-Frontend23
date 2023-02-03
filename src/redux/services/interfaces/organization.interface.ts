@@ -8,6 +8,20 @@ export interface OrganizationResponce extends BaseResponseInterface {
   address: string;
 }
 
+export interface ContactsResponce extends BaseResponseInterface {
+  email: string;
+  title: string;
+  name: string;
+  phone: string;
+}
+
+export interface IContacts {
+  email: string;
+  title: string;
+  name: string;
+  phone: string;
+}
+
 export interface OrganizationListResponce {
   data: OrganizationResponce[];
   meta: {};

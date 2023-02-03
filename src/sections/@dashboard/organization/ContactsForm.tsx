@@ -1,120 +1,74 @@
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
-import { Grid, Card, Typography, Stack, Box } from "@mui/material";
-import { fData } from "src/utils/formatNumber";
+import { Grid, Card, Stack, Box } from "@mui/material";
+import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFTextField,
-  RHFUploadAvatar,
 } from "../../../components/hook-form";
 import {
-  useUpdateOrganizationMutation,
+  useUpdateOrgContactsMutation,
 } from "src/redux/services/admin";
-import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
+import {ContactsResponce} from "src/redux/services/interfaces/organization.interface";
 
 const UpdateUserSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
   email: Yup.string().email("Email must be a valid email address"),
-  url: Yup.string()
-    .url("Url mast be a valid")
-    .required("Company / Organization Website is required"),
+  title: Yup.string().required("Title is required"),
+  name: Yup.string().required("Name is required"),
+  phone: Yup.string().required("Phone is required"),
 });
 
 type FormValuesProps = {
-  name: string;
   email: string;
-  address: string;
-  url: string;
+  title: string;
+  name: string;
+  phone: string;
 };
 
-type OrganizationFormProps = {
-  organization?: OrganizationResponce;
+type ContactsFormProps = {
+  contacts?: ContactsResponce;
 };
 
 export default function ContactsForm({
-  organization,
-}: OrganizationFormProps) {
-  const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
+   contacts,
+}: ContactsFormProps) {
+  const [updateContacts, { isLoading }] = useUpdateOrgContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    name: organization?.title || "",
-    email: organization?.email || "",
-    title: organization?.address || "",
-    phone: organization?.url || "",
+    email: contacts?.email || "",
+    title: contacts?.title || "",
+    name: contacts?.name || "",
+    phone: contacts?.phone || "",
   };
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
     defaultValues,
   });
+  const { handleSubmit } = methods;
 
-  const { setValue, handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await updateOrg({
-        body: {
-          title: data.name,
-          email: data.email || null,
-          url: data.url,
-          address: data.address,
-        },
+      await updateContacts({
+        email: data.email,
+        title: data.title,
+        name: data.name,
+        phone: data.phone,
       });
       enqueueSnackbar("Update success!");
-      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file) {
-        // setValue("photoURL", newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Card sx={{ py: 10, px: 3, textAlign: "center" }}>
-            <RHFUploadAvatar
-              name="photoURL"
-              maxSize={30000}
-              onDrop={handleDrop}
-              helperText={
-                <Typography
-                  variant="caption"
-                  sx={{
-                    mt: 2,
-                    mx: "auto",
-                    display: "block",
-                    textAlign: "center",
-                    color: "text.secondary",
-                  }}
-                >
-                  Allowed transparent *.png
-                  <br /> max size of {fData(30000)}
-                </Typography>
-              }
-            />
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12}>
           <Card sx={{ p: 3 }}>
             <Box
               rowGap={3}
@@ -132,9 +86,19 @@ export default function ContactsForm({
 
               <RHFTextField name="email" label="Email Address" />
 
-              <RHFTextField name="url" label="Url" />
+              <RHFTextField name="title" label="Title" />
 
-              <RHFTextField name="address" label="Address" />
+              <Controller
+                name="phone"
+                rules={{ validate: matchIsValidTel }}
+                render={({ field, fieldState }) => (
+                  <MuiTelInput
+                    {...field}
+                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    error={fieldState.invalid}
+                  />
+                )}
+              />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>

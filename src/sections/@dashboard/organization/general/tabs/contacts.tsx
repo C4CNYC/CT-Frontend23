@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 // auth
 import ContactsForm from "src/sections/@dashboard/organization/ContactsForm";
-import { useGetOrganizationQuery } from "src/redux/services/admin";
+import { useGetOrgContactsQuery } from "src/redux/services/admin";
 
 export default function ContactsTab() {
-	const { data, isLoading } = useGetOrganizationQuery();
+	const { data, isLoading } = useGetOrgContactsQuery();
 
 	return (
 		<>
@@ -16,7 +16,7 @@ export default function ContactsTab() {
 						position: "relative",
 					}}
 				>
-					{isLoading ? null : <ContactsForm organization={data} />}
+					{isLoading ? null : <ContactsForm contacts={data} />}
 				</Box>
 		</>
 	);
