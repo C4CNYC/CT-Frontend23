@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import { TableProps } from "../../../../components/table";
 //
 import SchoolCard from "../item/SchoolCard";
-import { SchoolResponce } from "src/redux/services/admin";
+import {useLocales} from "../../../../locales";
 
 // ----------------------------------------------------------------------
 
@@ -16,8 +16,8 @@ type Props = {
 };
 
 export default function SchoolGridView({ table, data, onDeleteItem }: Props) {
-  const { selected, onSelectRow: onSelectItem } = table;
 
+  const { selected, onSelectRow: onSelectItem } = table;
   const containerRef = useRef(null);
 
   return (

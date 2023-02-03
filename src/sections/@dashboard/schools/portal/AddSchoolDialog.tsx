@@ -1,18 +1,14 @@
 import * as React from "react";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormProvider, {
   RHFSelect,
   RHFTextField,
-  RHFUploadAvatar,
 } from "../../../../components/hook-form";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, Grid } from "@mui/material";
 import { countries } from "../../../../assets/data";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "../../../../components/snackbar";
@@ -21,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AddIcon from "@mui/icons-material/Add";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
+import {useLocales} from "../../../../locales";
 
 type FormValuesProps = {
   name: string;
@@ -29,6 +26,8 @@ type FormValuesProps = {
 };
 
 export default function AddSchoolDialog() {
+  const { translate } = useLocales();
+
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -62,11 +61,11 @@ export default function AddSchoolDialog() {
       await createSchool({
         ...data,
       }).unwrap;
-      enqueueSnackbar(`School ${data.name} created successfuly!`);
+      enqueueSnackbar(`${translate('organizations.schools_page.create_dialog.success_msg', {name: data.name} )}`);
       handleClose();
       methods.reset();
     } catch (error) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(`${translate('messages_error')}`, { variant: "error" });
       console.error(error);
     }
   };
@@ -78,7 +77,7 @@ export default function AddSchoolDialog() {
         variant="contained"
         startIcon={<AddIcon />}
       >
-        Add School
+        {`${translate('organizations.schools_page.create_school_btn')}`}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add School</DialogTitle>
@@ -91,13 +90,16 @@ export default function AddSchoolDialog() {
               <Grid item xs={12} md={12}>
                 <Card sx={{ p: 3 }}>
                   <Box rowGap={3} display="grid">
-                    <RHFTextField name="name" label="School name" required />
-
+                    <RHFTextField
+                      name="name"
+                      label={`${translate('organizations.schools_page.create_dialog.inputs.school_name')}`}
+                      required
+                    />
                     <RHFSelect
                       native
                       name="country"
-                      label="Country"
-                      placeholder="Country"
+                      label={`${translate('organizations.schools_page.create_dialog.inputs.country')}`}
+                      placeholder={`${translate('organizations.schools_page.create_dialog.inputs.country')}`}
                     >
                       <option value="" />
                       {countries.map((country) => (
@@ -106,7 +108,11 @@ export default function AddSchoolDialog() {
                         </option>
                       ))}
                     </RHFSelect>
-                    <RHFTextField name="city" label="City" required />
+                    <RHFTextField
+                      name="city"
+                      label={`${translate('organizations.schools_page.create_dialog.inputs.city')}`}
+                      required
+                    />
                   </Box>
                   <Box
                     sx={{
@@ -116,13 +122,13 @@ export default function AddSchoolDialog() {
                       mt: 7,
                     }}
                   >
-                    <Button onClick={handleClose}>Close</Button>
+                    <Button onClick={handleClose}>{`${translate("actions_close")}`}</Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
                       loading={isLoading}
                     >
-                      Save Changes
+                      {`${translate("actions_save_changes")}`}
                     </LoadingButton>
                   </Box>
                 </Card>

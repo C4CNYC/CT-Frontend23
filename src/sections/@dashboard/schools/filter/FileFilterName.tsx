@@ -1,9 +1,6 @@
-// @mui
 import { TextField, InputAdornment } from "@mui/material";
-// components
 import Iconify from "../../../../components/iconify";
-
-// ----------------------------------------------------------------------
+import {useLocales} from "../../../../locales";
 
 type Props = {
   filterName: string;
@@ -11,12 +8,14 @@ type Props = {
 };
 
 export default function FileFilterName({ filterName, onFilterName }: Props) {
+  const { translate } = useLocales();
+
   return (
     <TextField
       size="small"
       value={filterName}
       onChange={onFilterName}
-      placeholder="Search..."
+      placeholder={`${translate('actions_search')}`}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">

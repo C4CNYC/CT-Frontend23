@@ -35,6 +35,7 @@ i18n
     },
     lng,
     fallbackLng: defaultLang.value,
+    keySeparator: '.',
     debug: false,
     ns: ["translations"],
     defaultNS: "translations",

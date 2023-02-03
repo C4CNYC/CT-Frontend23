@@ -10,6 +10,7 @@ import Iconify from "../../../components/iconify";
 import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile";
 import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization";
 import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings";
+import {useLocales} from "../../../locales";
 import ContactsTab from "../../../sections/@dashboard/organization/general/tabs/contacts";
 
 // components
@@ -20,6 +21,7 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 );
 
 // ----------------------------------------------------------------------
+
 
 const TABS = [
   {
@@ -47,8 +49,28 @@ const TABS = [
     component: <ContactsTab />,
   },
 ];
-
 export default function UserProfilePage() {
+  const { translate } = useLocales();
+  const TABS = [
+    {
+      value: 'profile',
+      label: translate('organizations.general_page.tabs.labels.profile'),
+      icon: <Iconify icon="ic:round-account-box" />,
+      component: <UserProfileTab />,
+    },
+    {
+      value: 'settings',
+      label: translate('organizations.general_page.tabs.labels.settings'),
+      icon: <Iconify icon="ic:baseline-settings-applications" />,
+      component: <SettingsTab />,
+    },
+    {
+      value: 'customization',
+      label: `${translate('organizations.general_page.tabs.labels.customization')}`,
+      icon: <Iconify icon="ic:round-dashboard-customize" />,
+      component: <CustomizationTab />,
+    },
+  ];
   const [currentTab, setCurrentTab] = useState('profile');
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetOrganizationQuery();
@@ -56,7 +78,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Head>
-        <title> Organizations: Codetribe</title>
+        <title>{`${translate('organizations.title')} : Codetribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card
