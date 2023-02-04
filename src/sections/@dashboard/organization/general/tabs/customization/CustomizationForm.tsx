@@ -3,19 +3,14 @@ import {useState} from 'react';
 import {Card, Stack, Typography, Link, Box} from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFSelect,
-  RHFSwitch, RHFTextField,
+import FormProvider, { RHFTextField,
 } from "../../../../../../components/hook-form";
 import {
   useUpdateOrgCustomizationMutation,
 } from "src/redux/services/admin";
 import {CustomizationResponce} from "src/redux/services/interfaces/organization.interface";
 import {useLocales} from "../../../../../../locales";
-import {matchIsColorValid, MuiColorInput,   MuiColorInputValue,
-  MuiColorInputColors,
-  } from "mui-color-input";
-import RHFColorField from "../../../../../../components/hook-form/RHFColorField";
+import { matchIsColorValid, MuiColorInput } from "mui-color-input";
 
 
 type FormValuesProps = {
@@ -26,7 +21,6 @@ type FormValuesProps = {
   secondaryColor: string,
   alternativeColor: string,
 };
-
 
 
 type CustomizationFormProps = {
@@ -47,9 +41,9 @@ export default function CustomizationForm({
     welcome_message: customization?.welcome_message,
     custom_group_name: customization?.custom_group_name,
     theme: {
-      primaryColor: customization?.primaryColor || '#000',
-      secondaryColor: customization?.secondaryColor || '#fff',
-      alternativeColor: customization?.alternativeColor || '#000',
+      primaryColor: customization?.primaryColor,
+      secondaryColor: customization?.secondaryColor,
+      alternativeColor: customization?.alternativeColor,
     }
   };
 
@@ -90,26 +84,25 @@ export default function CustomizationForm({
             xs: "repeat(3, 1fr)",
           }}
         >
-          <RHFColorField name="primaryColor" label="qwe"/>
           <Box>
             <Typography variant="h6" sx={{mt: 2, mb: 1}}>{`${translate("organizations.general_page.tabs.content.customization.primary_color")}`}</Typography>
-            {/*<Controller*/}
-            {/*  control={control}*/}
-            {/*  name="primaryColor"*/}
-            {/*  rules={{*/}
-            {/*    validate: matchIsColorValid*/}
-            {/*  }}*/}
-            {/*  render={({ field, fieldState }) => (*/}
-            {/*    <MuiColorInput*/}
-            {/*      {...field}*/}
-            {/*      value={field.value || customization.theme.primaryColor}*/}
-            {/*      helperText={fieldState.invalid ? "Color is invalid" : ""}*/}
-            {/*      error={fieldState.invalid}*/}
-            {/*      isAlphaHidden*/}
-            {/*      format="hex"*/}
-            {/*    />*/}
-            {/*  )}*/}
-            {/*/>*/}
+            <Controller
+              control={control}
+              name="primaryColor"
+              rules={{
+                validate: matchIsColorValid
+              }}
+              render={({ field, fieldState }) => (
+                <MuiColorInput
+                  {...field}
+                  value={field.value || customization.theme.primaryColor}
+                  helperText={fieldState.invalid ? "Color is invalid" : ""}
+                  error={fieldState.invalid}
+                  isAlphaHidden
+                  format="hex"
+                />
+              )}
+            />
           </Box>
           <Box>
             <Typography variant="h6" sx={{mt: 2, mb: 1}}>{`${translate("organizations.general_page.tabs.content.customization.secondary_color")}`}</Typography>
