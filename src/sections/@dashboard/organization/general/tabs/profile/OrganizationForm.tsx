@@ -9,12 +9,12 @@ import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
-} from "../../../components/hook-form";
+} from "../../../../../../components/hook-form";
 import {
   useUpdateOrganizationMutation,
 } from "src/redux/services/admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
-import {useLocales} from "../../../locales";
+import {useLocales} from "../../../../../../locales";
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),

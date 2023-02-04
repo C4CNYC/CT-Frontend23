@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 // auth
-import ContactsForm from "src/sections/@dashboard/organization/ContactsForm";
+import ContactsForm from "src/sections/@dashboard/organization/general/tabs/contacts/ContactsForm";
 import { useGetOrgContactsQuery } from "src/redux/services/admin";
 
 export default function ContactsTab() {
