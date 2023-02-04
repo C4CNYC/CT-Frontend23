@@ -27,7 +27,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = [Role.Owner, Role.Admin].includes(user?.role || Role.Manager) ? [admin, managment] : [managment];
+  const menu = [Role.Owner, Role.Admin].includes(user?.role || Role.Manager)
+    ? [admin, managment]
+    : [managment];
 
   useEffect(() => {
     if (openNav) {
@@ -47,28 +49,27 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
         },
       }}
     >
-        <>
-              <Stack
-        spacing={3}
-        sx={{
-          pt: 3,
-          pb: 2,
-          px: 2.5,
-          flexShrink: 0,
-        }}
-      >
-        <Logo />
-      </Stack>
+      <>
+        <Stack
+          spacing={3}
+          sx={{
+            pt: 3,
+            pb: 2,
+            px: 2.5,
+            flexShrink: 0,
+          }}
+        >
+          <Logo />
+        </Stack>
 
-      <Stack
-        sx={{
-          p: "14px 15px 0 16px",
-        }}
-      >
-      </Stack>
+        <Stack
+          sx={{
+            p: "14px 15px 0 16px",
+          }}
+        ></Stack>
 
-      <NavSectionVertical data={menu} />
-        </>
+        <NavSectionVertical data={menu} />
+      </>
 
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>

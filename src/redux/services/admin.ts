@@ -12,7 +12,9 @@ import {
   OrganizationResponce,
   OrganizationListResponce,
   OrganizationRequest,
-  IContacts, ISettings, ICustomization
+  IContacts,
+  ISettings,
+  ICustomization,
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
@@ -37,7 +39,16 @@ export const adminApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
   ),
-  tagTypes: ["Organization", "School", "Members", "Teachers", "Classes", "OrganizationContacts", "OrganizationSettings", "OrganizationCustomization"],
+  tagTypes: [
+    "Organization",
+    "School",
+    "Members",
+    "Teachers",
+    "Classes",
+    "OrganizationContacts",
+    "OrganizationSettings",
+    "OrganizationCustomization",
+  ],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, void>({
@@ -186,10 +197,7 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "OrganizationContacts" }],
     }),
-    getOrgContacts: builder.query<
-      IContacts & OrganizationResponce,
-      IContacts
-    >({
+    getOrgContacts: builder.query<IContacts & OrganizationResponce, IContacts>({
       query: () => ({
         url: `/org/contact/`,
         method: "GET",
@@ -207,10 +215,7 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "OrganizationSettings" }],
     }),
-    getOrgSettings: builder.query<
-      ISettings & OrganizationResponce,
-      ISettings
-    >({
+    getOrgSettings: builder.query<ISettings & OrganizationResponce, ISettings>({
       query: () => ({
         url: `/org/setting/`,
         method: "GET",

@@ -4,20 +4,20 @@ import OrganizationForm from "src/sections/@dashboard/organization/general/tabs/
 import { useGetOrganizationQuery } from "src/redux/services/admin";
 
 export default function UserProfileTab() {
-	const { data, isLoading } = useGetOrganizationQuery();
+  const { data, isLoading } = useGetOrganizationQuery();
 
-	return (
-		<>
-				<Box
-					sx={{
-						backgroundColor: 'transparent !important',
-						mb: 3,
-						height: 420,
-						position: "relative",
-					}}
-				>
-					{isLoading ? null : <OrganizationForm organization={data} />}
-				</Box>
-		</>
-	);
+  return (
+    <>
+      <Box
+        sx={{
+          backgroundColor: "transparent !important",
+          mb: 3,
+          height: 420,
+          position: "relative",
+        }}
+      >
+        {isLoading ? null : <OrganizationForm organization={data} />}
+      </Box>
+    </>
+  );
 }

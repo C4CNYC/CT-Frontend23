@@ -10,11 +10,9 @@ import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "../../../../../../components/hook-form";
-import {
-  useUpdateOrganizationMutation,
-} from "src/redux/services/admin";
+import { useUpdateOrganizationMutation } from "src/redux/services/admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
-import {useLocales} from "../../../../../../locales";
+import { useLocales } from "../../../../../../locales";
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -106,13 +104,16 @@ export default function OrganizationForm({
                     display: "block",
                     textAlign: "center",
                     color: "text.secondary",
-                    whiteSpace: "pre-line"
+                    whiteSpace: "pre-line",
                   }}
                 >
-                  {`${translate('organizations.general_page.tabs.content.profile.upload_image', {
-                    formats: 'png',
-                    size: fData(30000),
-                  })}`}
+                  {`${translate(
+                    "organizations.general_page.tabs.content.profile.upload_image",
+                    {
+                      formats: "png",
+                      size: fData(30000),
+                    }
+                  )}`}
                 </Typography>
               }
             />
@@ -130,16 +131,36 @@ export default function OrganizationForm({
                 sm: "repeat(2, 1fr)",
               }}
               gridTemplateRows={{
-                xs: "repeat(3, 1fr)"
+                xs: "repeat(3, 1fr)",
               }}
             >
-              <RHFTextField name="name" label={`${translate('organizations.general_page.tabs.content.profile.name_input')}`} />
+              <RHFTextField
+                name="name"
+                label={`${translate(
+                  "organizations.general_page.tabs.content.profile.name_input"
+                )}`}
+              />
 
-              <RHFTextField name="email" label={`${translate('organizations.general_page.tabs.content.profile.email_input')}`} />
+              <RHFTextField
+                name="email"
+                label={`${translate(
+                  "organizations.general_page.tabs.content.profile.email_input"
+                )}`}
+              />
 
-              <RHFTextField name="url" label={`${translate('organizations.general_page.tabs.content.profile.url_input')}`} />
+              <RHFTextField
+                name="url"
+                label={`${translate(
+                  "organizations.general_page.tabs.content.profile.url_input"
+                )}`}
+              />
 
-              <RHFTextField name="address" label={`${translate('organizations.general_page.tabs.content.profile.address_input')}`} />
+              <RHFTextField
+                name="address"
+                label={`${translate(
+                  "organizations.general_page.tabs.content.profile.address_input"
+                )}`}
+              />
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>
@@ -148,7 +169,7 @@ export default function OrganizationForm({
                 variant="contained"
                 loading={isLoading}
               >
-                {`${translate('actions_save_changes')}`}
+                {`${translate("actions_save_changes")}`}
               </LoadingButton>
             </Stack>
           </Card>

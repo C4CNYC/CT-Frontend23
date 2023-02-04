@@ -10,7 +10,7 @@ import Iconify from "../../../components/iconify";
 import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile/profile";
 import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization/customization";
 import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings/settings";
-import {useLocales} from "../../../locales";
+import { useLocales } from "../../../locales";
 import ContactsTab from "../../../sections/@dashboard/organization/general/tabs/contacts/contacts";
 
 // components
@@ -26,38 +26,40 @@ export default function UserProfilePage() {
   const { translate } = useLocales();
   const TABS = [
     {
-      value: 'profile',
-      label: translate('organizations.general_page.tabs.labels.profile'),
+      value: "profile",
+      label: translate("organizations.general_page.tabs.labels.profile"),
       icon: <Iconify icon="ic:round-account-box" />,
       component: <UserProfileTab />,
     },
     {
-      value: 'settings',
-      label: translate('organizations.general_page.tabs.labels.settings'),
+      value: "settings",
+      label: translate("organizations.general_page.tabs.labels.settings"),
       icon: <Iconify icon="ic:baseline-settings-applications" />,
       component: <SettingsTab />,
     },
     {
-      value: 'customization',
-      label: `${translate('organizations.general_page.tabs.labels.customization')}`,
+      value: "customization",
+      label: `${translate(
+        "organizations.general_page.tabs.labels.customization"
+      )}`,
       icon: <Iconify icon="ic:round-dashboard-customize" />,
       component: <CustomizationTab />,
     },
     {
-      value: 'contacts',
-      label: 'Contacts',
+      value: "contacts",
+      label: "Contacts",
       icon: <Iconify icon="ic:outline-contacts" />,
       component: <ContactsTab />,
     },
   ];
-  const [currentTab, setCurrentTab] = useState('profile');
+  const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetOrganizationQuery();
 
   return (
     <>
       <Head>
-        <title>{`${translate('organizations.title')} : Codetribe`}</title>
+        <title>{`${translate("organizations.title")} : Codetribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card
@@ -79,25 +81,33 @@ export default function UserProfilePage() {
               width: 1,
               bottom: 0,
               zIndex: 9,
-              position: 'absolute',
-              bgcolor: 'background.paper',
-              '& .MuiTabs-flexContainer': {
+              position: "absolute",
+              bgcolor: "background.paper",
+              "& .MuiTabs-flexContainer": {
                 pr: { md: 3 },
                 justifyContent: {
-                  sm: 'center',
-                  md: 'flex-end',
+                  sm: "center",
+                  md: "flex-end",
                 },
               },
             }}
           >
             {TABS.map((tab) => (
-              <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
+              <Tab
+                key={tab.value}
+                value={tab.value}
+                icon={tab.icon}
+                label={tab.label}
+              />
             ))}
           </Tabs>
         </Card>
 
         {TABS.map(
-          (tab) => tab.value === currentTab && <Box key={tab.value}> {tab.component} </Box>
+          (tab) =>
+            tab.value === currentTab && (
+              <Box key={tab.value}> {tab.component} </Box>
+            )
         )}
       </Container>
     </>

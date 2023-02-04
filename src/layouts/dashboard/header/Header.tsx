@@ -37,7 +37,7 @@ export default function Header({ onOpenNav }: Props) {
 
   const isDesktop = useResponsive("up", "lg");
 
-  const isSchoolSection = router.pathname.includes('dashboard/school');
+  const isSchoolSection = router.pathname.includes("dashboard/school");
 
   const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal;
 
@@ -51,7 +51,7 @@ export default function Header({ onOpenNav }: Props) {
         </IconButton>
       )}
 
-      {isSchoolSection ? <NavAccount/> : null}
+      {isSchoolSection ? <NavAccount /> : null}
 
       <Stack
         flexGrow={1}

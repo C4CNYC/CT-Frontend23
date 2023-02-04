@@ -16,21 +16,23 @@ export interface ContactsResponce extends BaseResponseInterface {
 }
 
 export interface SettingsResponce extends BaseResponseInterface {
-  language: string,
-  marketplace_content_allowed: boolean,
-  github_login_allowed: boolean,
-  google_login_allowed: boolean,
-  invite_only: boolean,
-  chat_allowed: boolean,
-  gallery_allowed: boolean,
-  global_gallery_allowed: boolean
+  language: string;
+  marketplace_content_allowed: boolean;
+  github_login_allowed: boolean;
+  google_login_allowed: boolean;
+  invite_only: boolean;
+  chat_allowed: boolean;
+  gallery_allowed: boolean;
+  global_gallery_allowed: boolean;
 }
 
 export interface CustomizationResponce extends BaseResponseInterface {
-  description: string,
-  welcome_message: string,
-  custom_group_name: string,
-  theme: {},
+  description: string;
+  welcome_message: string;
+  custom_group_name: string;
+  theme: {
+    [key: string]: number | string;
+  };
 }
 
 export interface IContacts {
@@ -40,27 +42,26 @@ export interface IContacts {
   phone: string;
 }
 
-
 export interface ISettings {
-  language: string,
-  marketplace_content_allowed: boolean,
-  github_login_allowed: boolean,
-  google_login_allowed: boolean,
-  invite_only: boolean,
-  chat_allowed: boolean,
-  gallery_allowed: boolean,
-  global_gallery_allowed: boolean
+  language: string;
+  marketplace_content_allowed: boolean;
+  github_login_allowed: boolean;
+  google_login_allowed: boolean;
+  invite_only: boolean;
+  chat_allowed: boolean;
+  gallery_allowed: boolean;
+  global_gallery_allowed: boolean;
 }
 
 export interface ICustomization {
-  description: string,
-  welcome_message: string,
-  custom_group_name: string,
+  description: string;
+  welcome_message: string;
+  custom_group_name: string;
   theme: {
-    primaryColor: string,
-    secondaryColor: string,
-    alternativeColor: string,
-  },
+    primaryColor: string;
+    secondaryColor: string;
+    alternativeColor: string;
+  };
 }
 
 export interface OrganizationListResponce {

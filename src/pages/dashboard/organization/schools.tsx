@@ -13,7 +13,7 @@ import {
 
 import AddSchoolDialog from "../../../sections/@dashboard/schools/portal/AddSchoolDialog";
 import { useGetSchoolListQuery } from "src/redux/services/admin";
-import {useLocales} from "../../../locales";
+import { useLocales } from "../../../locales";
 
 Schools.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -50,17 +50,17 @@ export default function Schools() {
   return (
     <>
       <Head>
-        <title> {`${translate('organizations.title')} | Codetribe`}</title>
+        <title> {`${translate("organizations.title")} | Codetribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading={`${translate('organizations.title')}`}
+          heading={`${translate("organizations.title")}`}
           links={[
             {
-              name: `${translate('organizations.title')}`,
+              name: `${translate("organizations.title")}`,
               href: PATH_DASHBOARD.root,
             },
-            { name: `${translate('organizations.schools_page.title')}` },
+            { name: `${translate("organizations.schools_page.title")}` },
           ]}
           action={<AddSchoolDialog />}
         />

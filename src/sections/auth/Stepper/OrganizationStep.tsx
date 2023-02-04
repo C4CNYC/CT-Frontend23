@@ -24,7 +24,7 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
 
   const onSubmit = async (data: any) => {
     try {
-      const org = await updateOrg({body: data}).unwrap();
+      const org = await updateOrg({ body: data }).unwrap();
       router.push(
         {
           pathname: "/auth/register",
@@ -56,7 +56,10 @@ export default function OrganizationStep({ next }: OrganizationStepProps) {
         >
           Skip this step if not applicable.
         </Typography>
-        <TextField label="District / Organization Name" {...register("title")} />
+        <TextField
+          label="District / Organization Name"
+          {...register("title")}
+        />
         <InputInfo text="Leave empty if no district website." />
         <TextField label="Website" {...register("url")} />
       </Stack>

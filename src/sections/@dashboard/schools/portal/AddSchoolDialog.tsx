@@ -17,7 +17,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AddIcon from "@mui/icons-material/Add";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
-import {useLocales} from "../../../../locales";
+import { useLocales } from "../../../../locales";
 
 type FormValuesProps = {
   name: string;
@@ -61,11 +61,15 @@ export default function AddSchoolDialog() {
       await createSchool({
         ...data,
       }).unwrap;
-      enqueueSnackbar(`${translate('organizations.schools_page.create_dialog.success_msg', {name: data.name} )}`);
+      enqueueSnackbar(
+        `${translate("organizations.schools_page.create_dialog.success_msg", {
+          name: data.name,
+        })}`
+      );
       handleClose();
       methods.reset();
     } catch (error) {
-      enqueueSnackbar(`${translate('messages_error')}`, { variant: "error" });
+      enqueueSnackbar(`${translate("messages_error")}`, { variant: "error" });
       console.error(error);
     }
   };
@@ -77,7 +81,7 @@ export default function AddSchoolDialog() {
         variant="contained"
         startIcon={<AddIcon />}
       >
-        {`${translate('organizations.schools_page.create_school_btn')}`}
+        {`${translate("organizations.schools_page.create_school_btn")}`}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add School</DialogTitle>
@@ -92,14 +96,20 @@ export default function AddSchoolDialog() {
                   <Box rowGap={3} display="grid">
                     <RHFTextField
                       name="name"
-                      label={`${translate('organizations.schools_page.create_dialog.inputs.school_name')}`}
+                      label={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.school_name"
+                      )}`}
                       required
                     />
                     <RHFSelect
                       native
                       name="country"
-                      label={`${translate('organizations.schools_page.create_dialog.inputs.country')}`}
-                      placeholder={`${translate('organizations.schools_page.create_dialog.inputs.country')}`}
+                      label={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.country"
+                      )}`}
+                      placeholder={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.country"
+                      )}`}
                     >
                       <option value="" />
                       {countries.map((country) => (
@@ -110,7 +120,9 @@ export default function AddSchoolDialog() {
                     </RHFSelect>
                     <RHFTextField
                       name="city"
-                      label={`${translate('organizations.schools_page.create_dialog.inputs.city')}`}
+                      label={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.city"
+                      )}`}
                       required
                     />
                   </Box>
@@ -122,7 +134,9 @@ export default function AddSchoolDialog() {
                       mt: 7,
                     }}
                   >
-                    <Button onClick={handleClose}>{`${translate("actions_close")}`}</Button>
+                    <Button onClick={handleClose}>{`${translate(
+                      "actions_close"
+                    )}`}</Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"

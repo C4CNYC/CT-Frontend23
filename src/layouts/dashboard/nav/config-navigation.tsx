@@ -2,15 +2,15 @@
 import { PATH_DASHBOARD } from "../../../routes/paths";
 // components
 import SvgColor from "../../../components/svg-color";
-import { RiOrganizationChart } from 'react-icons/ri'
-import { GrOrganization } from 'react-icons/gr';
-import { FaUserShield } from 'react-icons/fa';
-import { FaSchool } from 'react-icons/fa';
-import { MdPlayLesson } from 'react-icons/md';
-import { VscSymbolClass } from 'react-icons/vsc'
-import { GiProgression } from 'react-icons/gi'
-import { AiOutlineSolution } from 'react-icons/ai';
-import { FaUsers } from 'react-icons/fa';
+import { RiOrganizationChart } from "react-icons/ri";
+import { GrOrganization } from "react-icons/gr";
+import { FaUserShield } from "react-icons/fa";
+import { FaSchool } from "react-icons/fa";
+import { MdPlayLesson } from "react-icons/md";
+import { VscSymbolClass } from "react-icons/vsc";
+import { GiProgression } from "react-icons/gi";
+import { AiOutlineSolution } from "react-icons/ai";
+import { FaUsers } from "react-icons/fa";
 
 // ----------------------------------------------------------------------
 
@@ -29,57 +29,63 @@ const ICONS = {
 };
 
 export const admin = {
-    subheader: "administration",
-    items: [
-      // organizations
-       { title: "organization",
-          path: PATH_DASHBOARD.organization.general,
-          icon: <GrOrganization/>,
-        },
-        { title: "Members",
-          path: PATH_DASHBOARD.organization.members,
-          icon: <FaUserShield/>,
-        },
-        { title: "Schools",
-          path: PATH_DASHBOARD.organization.schools,
-          icon: <RiOrganizationChart/>,
-        }
-    ],
-}
+  subheader: "administration",
+  items: [
+    // organizations
+    {
+      title: "organization",
+      path: PATH_DASHBOARD.organization.general,
+      icon: <GrOrganization />,
+    },
+    {
+      title: "Members",
+      path: PATH_DASHBOARD.organization.members,
+      icon: <FaUserShield />,
+    },
+    {
+      title: "Schools",
+      path: PATH_DASHBOARD.organization.schools,
+      icon: <RiOrganizationChart />,
+    },
+  ],
+};
 
 export const managment = {
-    subheader: "managment",
-    items: [
-      // organizations
-       { title: "school",
-          path: PATH_DASHBOARD.school.general,
-          icon: <FaSchool/>,
-        },
-        { title: "prgogress",
-          path: PATH_DASHBOARD.school.prgogress,
-          icon: <GiProgression/>,
-        },
-        { title: "students",
-          path: PATH_DASHBOARD.school.students,
-          icon: <FaUsers/>,
-        },
-        { title: "classes",
-          path: PATH_DASHBOARD.school.classes,
-          icon: <VscSymbolClass/>,
-        },
-        { title: "modules",
-          path: PATH_DASHBOARD.school.modules,
-          icon: <MdPlayLesson/>,
-        },
-        { title: "assigments",
-          path: PATH_DASHBOARD.school.assigments,
-          icon: <AiOutlineSolution/>,
-        }
-    ],
-}
+  subheader: "managment",
+  items: [
+    // organizations
+    {
+      title: "school",
+      path: PATH_DASHBOARD.school.general,
+      icon: <FaSchool />,
+    },
+    {
+      title: "prgogress",
+      path: PATH_DASHBOARD.school.prgogress,
+      icon: <GiProgression />,
+    },
+    {
+      title: "students",
+      path: PATH_DASHBOARD.school.students,
+      icon: <FaUsers />,
+    },
+    {
+      title: "classes",
+      path: PATH_DASHBOARD.school.classes,
+      icon: <VscSymbolClass />,
+    },
+    {
+      title: "modules",
+      path: PATH_DASHBOARD.school.modules,
+      icon: <MdPlayLesson />,
+    },
+    {
+      title: "assigments",
+      path: PATH_DASHBOARD.school.assigments,
+      icon: <AiOutlineSolution />,
+    },
+  ],
+};
 
-const navConfig = [
-admin,
-managment
-];
+const navConfig = [admin, managment];
 export default navConfig;

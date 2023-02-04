@@ -82,26 +82,25 @@ export default function MyApp(props: MyAppProps) {
       </Head>
 
       <ReduxProvider store={store}>
-      <AuthProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <SettingsProvider>
-                <MotionLazyContainer>
-                  <ThemeProvider>
-                    <ThemeSettings>
-                      <ThemeLocalization>
-                        <SnackbarProvider>
-                          <StyledChart />
-                          <ProgressBar />
-                          {getLayout(<Component {...pageProps} />)}
-                        </SnackbarProvider>
-                      </ThemeLocalization>
-                    </ThemeSettings>
-                  </ThemeProvider>
-                </MotionLazyContainer>
-              </SettingsProvider>
-            </LocalizationProvider>
-        
-      </AuthProvider>
+        <AuthProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <SettingsProvider>
+              <MotionLazyContainer>
+                <ThemeProvider>
+                  <ThemeSettings>
+                    <ThemeLocalization>
+                      <SnackbarProvider>
+                        <StyledChart />
+                        <ProgressBar />
+                        {getLayout(<Component {...pageProps} />)}
+                      </SnackbarProvider>
+                    </ThemeLocalization>
+                  </ThemeSettings>
+                </ThemeProvider>
+              </MotionLazyContainer>
+            </SettingsProvider>
+          </LocalizationProvider>
+        </AuthProvider>
       </ReduxProvider>
     </CacheProvider>
   );

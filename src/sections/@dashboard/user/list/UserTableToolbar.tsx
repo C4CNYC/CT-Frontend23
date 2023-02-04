@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 // components
 import Iconify from "../../../../components/iconify";
-import {useLocales} from "../../../../locales";
+import { useLocales } from "../../../../locales";
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +44,7 @@ export default function UserTableToolbar({
       <TextField
         fullWidth
         select
-        label={`${translate('organizations.members_page.role_label')}`}
+        label={`${translate("organizations.members_page.role_label")}`}
         value={filterRole}
         onChange={onFilterRole}
         SelectProps={{
@@ -81,7 +81,7 @@ export default function UserTableToolbar({
         fullWidth
         value={filterName}
         onChange={onFilterName}
-        placeholder={`${translate('actions_search')}`}
+        placeholder={`${translate("actions_search")}`}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -96,7 +96,7 @@ export default function UserTableToolbar({
         onClick={onResetFilter}
         startIcon={<Iconify icon="eva:trash-2-outline" />}
       >
-        {`${translate('actions_clear')}`}
+        {`${translate("actions_clear")}`}
       </Button>
     </Stack>
   );

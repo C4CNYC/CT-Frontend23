@@ -28,27 +28,27 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 const TABS = [
   {
-    value: 'profile',
-    label: 'Profile',
+    value: "profile",
+    label: "Profile",
     icon: <Iconify icon="ic:round-account-box" />,
     component: <UserProfileTab />,
   },
   {
-    value: 'settings',
-    label: 'Settings',
+    value: "settings",
+    label: "Settings",
     icon: <Iconify icon="ic:baseline-settings-applications" />,
     component: <SettingsTab />,
   },
   {
-    value: 'customization',
-    label: 'Customization',
+    value: "customization",
+    label: "Customization",
     icon: <Iconify icon="ic:round-dashboard-customize" />,
     component: <CustomizationTab />,
   },
 ];
 
 export default function UserProfilePage() {
-  const [currentTab, setCurrentTab] = useState('profile');
+  const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetOrganizationQuery();
 
@@ -77,25 +77,33 @@ export default function UserProfilePage() {
               width: 1,
               bottom: 0,
               zIndex: 9,
-              position: 'absolute',
-              bgcolor: 'background.paper',
-              '& .MuiTabs-flexContainer': {
+              position: "absolute",
+              bgcolor: "background.paper",
+              "& .MuiTabs-flexContainer": {
                 pr: { md: 3 },
                 justifyContent: {
-                  sm: 'center',
-                  md: 'flex-end',
+                  sm: "center",
+                  md: "flex-end",
                 },
               },
             }}
           >
             {TABS.map((tab) => (
-              <Tab key={tab.value} value={tab.value} icon={tab.icon} label={tab.label} />
+              <Tab
+                key={tab.value}
+                value={tab.value}
+                icon={tab.icon}
+                label={tab.label}
+              />
             ))}
           </Tabs>
         </Card>
 
         {TABS.map(
-          (tab) => tab.value === currentTab && <Box key={tab.value}> {tab.component} </Box>
+          (tab) =>
+            tab.value === currentTab && (
+              <Box key={tab.value}> {tab.component} </Box>
+            )
         )}
       </Container>
     </>

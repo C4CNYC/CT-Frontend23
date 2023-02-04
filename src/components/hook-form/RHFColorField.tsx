@@ -2,7 +2,7 @@
 import { useFormContext, Controller } from "react-hook-form";
 // @mui
 import { TextFieldProps } from "@mui/material";
-import {MuiColorInput} from "mui-color-input";
+import { MuiColorInput } from "mui-color-input";
 
 // ----------------------------------------------------------------------
 

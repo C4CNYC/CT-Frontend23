@@ -1,17 +1,15 @@
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import { Grid, Card, Stack, Box } from "@mui/material";
-import { MuiTelInput, matchIsValidTel } from 'mui-tel-input'
+import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFTextField,
 } from "../../../../../../components/hook-form";
-import {
-  useUpdateOrgContactsMutation,
-} from "src/redux/services/admin";
-import {ContactsResponce} from "src/redux/services/interfaces/organization.interface";
+import { useUpdateOrgContactsMutation } from "src/redux/services/admin";
+import { ContactsResponce } from "src/redux/services/interfaces/organization.interface";
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email("Email must be a valid email address"),
@@ -31,9 +29,7 @@ type ContactsFormProps = {
   contacts?: ContactsResponce;
 };
 
-export default function ContactsForm({
-   contacts,
-}: ContactsFormProps) {
+export default function ContactsForm({ contacts }: ContactsFormProps) {
   const [updateContacts, { isLoading }] = useUpdateOrgContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -49,7 +45,6 @@ export default function ContactsForm({
     defaultValues,
   });
   const { handleSubmit } = methods;
-
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
@@ -79,7 +74,7 @@ export default function ContactsForm({
                 sm: "repeat(2, 1fr)",
               }}
               gridTemplateRows={{
-                xs: "repeat(3, 1fr)"
+                xs: "repeat(3, 1fr)",
               }}
             >
               <RHFTextField name="name" label="Name" />
