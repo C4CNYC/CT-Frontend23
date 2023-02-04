@@ -126,8 +126,8 @@ const en = {
 						groups_input_label: 'Customized Groups Name',
 						groups_note: 'Note: Learners are either invited by an admin or auto-added to a Group on registration/signup.\n' +
 							'ome ideas, but you can choose your own: Class/esClub/sHub/sHive/sGroup/sAnything else that is fun and engaging.',
-						first_slide_text: 'Customized Groups Name',
-						first_slide_input_label: 'Intro Guide',
+						first_slide_text: 'Welcome Message of your organization',
+						first_slide_input_label: 'Welcome Message',
 						first_slide_note: 'Note: Should be about 10-15 words and welcome new users to the platform in your own way. What is this? When you first arrive on the Coding Panel you see an \"Intro Guide\" with a sequence of explainer modals. Here you can customize the text for the first slide in the sequence.',
 					},
 				},

@@ -12,7 +12,7 @@ import {
   OrganizationResponce,
   OrganizationListResponce,
   OrganizationRequest,
-  IContacts, ISettings
+  IContacts, ISettings, ICustomization
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
@@ -37,7 +37,7 @@ export const adminApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/admin`)
   ),
-  tagTypes: ["Organization", "School", "Members", "Teachers", "Classes", "OrganizationContacts", "OrganizationSettings"],
+  tagTypes: ["Organization", "School", "Members", "Teachers", "Classes", "OrganizationContacts", "OrganizationSettings", "OrganizationCustomization"],
   endpoints: (builder) => ({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, void>({
@@ -217,6 +217,24 @@ export const adminApi = createApi({
       }),
       providesTags: ["OrganizationSettings"],
     }),
+    updateOrgCustomization: builder.mutation<
+      ICustomization & BaseResponseInterface,
+      ICustomization
+    >({
+      query: ({ ...body }) => ({
+        url: `/org/custom/`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "OrganizationCustomization" }],
+    }),
+    getOrgCustomization: builder.query<OrganizationResponce, void>({
+      query: () => ({
+        url: `/org/custom/`,
+        method: "GET",
+      }),
+      providesTags: ["OrganizationCustomization"],
+    }),
   }),
 });
 
@@ -230,6 +248,7 @@ export const {
   useGetOrganizationQuery,
   useGetOrgContactsQuery,
   useGetOrgSettingsQuery,
+  useGetOrgCustomizationQuery,
   // ---------------- mutations ---------
   useCreateClassMutation,
   useDeleteTeacherMutation,
@@ -240,5 +259,6 @@ export const {
   useUpdateOrganizationMutation,
   useCreateOrganizationSchoolMutation,
   useUpdateOrgContactsMutation,
-  useUpdateOrgSettingsMutation
+  useUpdateOrgSettingsMutation,
+  useUpdateOrgCustomizationMutation,
 } = adminApi;

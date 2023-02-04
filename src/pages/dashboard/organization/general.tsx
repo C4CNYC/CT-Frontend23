@@ -8,7 +8,7 @@ import { ProfileCover } from "../../../sections/@dashboard/user/profile";
 import { useGetOrganizationQuery } from "src/redux/services/admin";
 import Iconify from "../../../components/iconify";
 import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile/profile";
-import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization";
+import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization/customization";
 import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings/settings";
 import {useLocales} from "../../../locales";
 import ContactsTab from "../../../sections/@dashboard/organization/general/tabs/contacts/contacts";

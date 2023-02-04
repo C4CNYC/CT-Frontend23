@@ -26,6 +26,13 @@ export interface SettingsResponce extends BaseResponseInterface {
   global_gallery_allowed: boolean
 }
 
+export interface CustomizationResponce extends BaseResponseInterface {
+  description: string,
+  welcome_message: string,
+  custom_group_name: string,
+  theme: {},
+}
+
 export interface IContacts {
   email: string;
   title: string;
@@ -43,6 +50,17 @@ export interface ISettings {
   chat_allowed: boolean,
   gallery_allowed: boolean,
   global_gallery_allowed: boolean
+}
+
+export interface ICustomization {
+  description: string,
+  welcome_message: string,
+  custom_group_name: string,
+  theme: {
+    primaryColor: string,
+    secondaryColor: string,
+    alternativeColor: string,
+  },
 }
 
 export interface OrganizationListResponce {
