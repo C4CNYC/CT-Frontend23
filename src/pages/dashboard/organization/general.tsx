@@ -7,11 +7,11 @@ import { ProfileCover } from "../../../sections/@dashboard/user/profile";
 // auth
 import { useGetOrganizationQuery } from "src/redux/services/admin";
 import Iconify from "../../../components/iconify";
-import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile";
+import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile/profile";
 import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization";
-import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings";
+import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings/settings";
 import {useLocales} from "../../../locales";
-import ContactsTab from "../../../sections/@dashboard/organization/general/tabs/contacts";
+import ContactsTab from "../../../sections/@dashboard/organization/general/tabs/contacts/contacts";
 
 // components
 // ----------------------------------------------------------------------

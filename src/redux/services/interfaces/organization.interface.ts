@@ -15,11 +15,34 @@ export interface ContactsResponce extends BaseResponseInterface {
   phone: string;
 }
 
+export interface SettingsResponce extends BaseResponseInterface {
+  language: string,
+  marketplace_content_allowed: boolean,
+  github_login_allowed: boolean,
+  google_login_allowed: boolean,
+  invite_only: boolean,
+  chat_allowed: boolean,
+  gallery_allowed: boolean,
+  global_gallery_allowed: boolean
+}
+
 export interface IContacts {
   email: string;
   title: string;
   name: string;
   phone: string;
+}
+
+
+export interface ISettings {
+  language: string,
+  marketplace_content_allowed: boolean,
+  github_login_allowed: boolean,
+  google_login_allowed: boolean,
+  invite_only: boolean,
+  chat_allowed: boolean,
+  gallery_allowed: boolean,
+  global_gallery_allowed: boolean
 }
 
 export interface OrganizationListResponce {

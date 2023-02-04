@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 // auth
-import OrganizationForm from "src/sections/@dashboard/organization/OrganizationForm";
+import OrganizationForm from "src/sections/@dashboard/organization/general/tabs/profile/OrganizationForm";
 import { useGetOrganizationQuery } from "src/redux/services/admin";
 
 export default function UserProfileTab() {
