@@ -18,6 +18,7 @@ import {
   IContacts,
   ISettings,
   ICustomization,
+  ISubmitInvite
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
@@ -243,6 +244,17 @@ export const adminApi = createApi({
       }),
       providesTags: ["OrganizationCustomization"],
     }),
+    inviteSubmit: builder.mutation<
+      ISubmitInvite & BaseResponseInterface,
+      ISubmitInvite
+    >({
+      query: ({ ...body }) => ({
+        url: `/org/user/submitInvite`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Organization" }],
+    }),
   }),
 });
 
@@ -269,4 +281,5 @@ export const {
   useUpdateOrgContactsMutation,
   useUpdateOrgSettingsMutation,
   useUpdateOrgCustomizationMutation,
+  useInviteSubmitMutation,
 } = adminApi;
