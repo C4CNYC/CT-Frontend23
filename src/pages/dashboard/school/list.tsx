@@ -25,7 +25,7 @@ import { IUserAccountGeneral } from "../../../@types/user";
 // _mock_
 import { _userList } from "../../../_mock/arrays";
 // layouts
-import DashboardLayout from "../../../layouts/dashboard";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 // components
 import Iconify from "../../../components/iconify";
 import Scrollbar from "../../../components/scrollbar";
@@ -77,7 +77,7 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 UserListPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
 // ----------------------------------------------------------------------

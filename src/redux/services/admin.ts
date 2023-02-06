@@ -5,7 +5,10 @@ import {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import {
+  BaseListResponseInterface,
+  BaseResponseInterface,
+} from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import {
@@ -115,7 +118,7 @@ export const adminApi = createApi({
       invalidatesTags: [{ type: "Teachers" }],
     }),
     getTeacherList: builder.query<
-      (IUser & BaseResponseInterface)[],
+      BaseListResponseInterface<IUser & BaseResponseInterface>,
       { school_id: string }
     >({
       query: ({ school_id }) => ({

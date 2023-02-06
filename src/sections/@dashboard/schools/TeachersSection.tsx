@@ -35,7 +35,7 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
     { skip: !school_id }
   );
 
-  const teachersIds = teachers ? teachers.map((t) => t.id) : null;
+  const teachersIds = teachers ? teachers.data.map((t) => t.id) : null;
 
   const handleDeleteTeacher = async (user_id: string) => {
     try {
@@ -94,14 +94,14 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
       <Collapse in={open}>
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
           {teachers &&
-            teachers.map((person) => (
+            teachers.data.map((person) => (
               <FileInvitedItem
                 handleDeleteTeacher={() => handleDeleteTeacher(person.id)}
                 key={person.id}
                 person={person}
               />
             ))}
-          {!isLoading && !teachers?.length ? (
+          {!isLoading && !teachers?.data.length ? (
             <ListItem
               sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
               disableGutters

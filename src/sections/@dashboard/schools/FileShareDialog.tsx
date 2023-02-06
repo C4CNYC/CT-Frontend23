@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useFilters } from "src/hooks/useFilters";
 import { useGetOrgMembersQuery } from "src/redux/services/admin";
-import { Role } from "src/redux/services/enums/role.enum";
 // @types
 import { IFileShared } from "../../../@types/file";
 // components
@@ -46,7 +45,7 @@ export default function FileShareDialog({
   onClose,
   ...other
 }: Props) {
-  const { filters, setFilter } = useFilters({ email: "", role: Role.Manager });
+  const { filters, setFilter } = useFilters({ email: "" });
   const { data: members } = useGetOrgMembersQuery(
     {
       ...filters,
