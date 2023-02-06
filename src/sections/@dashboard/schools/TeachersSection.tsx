@@ -15,7 +15,7 @@ import {
 } from "src/redux/services/admin";
 import { SHARED_PERSON } from "src/_mock/arrays";
 import FileInvitedItem from "./FileInvitedItem";
-import FileShareDialog from "./FileShareDialog";
+import InviteUser from "./InviteUserDialog";
 import Image from "next/image";
 
 type TeacherSectionProps = {
@@ -128,7 +128,7 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
           ) : null}
         </List>
       </Collapse>
-      <FileShareDialog
+      <InviteUser
         teachersIds={teachersIds || []}
         schoolId={school_id}
         open={openShare}

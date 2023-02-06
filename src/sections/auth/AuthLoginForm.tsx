@@ -46,7 +46,7 @@ export default function AuthLoginForm() {
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(LoginSchema),
-    // defaultValues: { tenantName: tenant_name as string },
+    defaultValues: { tenantName: tenant_name as string },
   });
 
   const {
@@ -77,7 +77,7 @@ export default function AuthLoginForm() {
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
-        <RHFTextField name="tenantName" label="Tenant name" />
+        <RHFTextField name="tenantName" label="Tenant name" disabled={tenant_name}/>
 
         <RHFTextField name="email" label="Email address" />
 

@@ -68,11 +68,11 @@ export default function InviteForm() {
         password: data.password,
         inviteId: inviteId,
       }).unwrap();
-      // router.replace(
-      //   {
-      //     pathname: PATH_AUTH.login,
-      //     query: { tenant_name: tenant_name },
-      //   });
+      router.replace(
+        {
+          pathname: PATH_AUTH.login,
+          query: { tenant_name: tenant_name },
+        });
     } catch (error) {
       console.error(error);
       reset();
@@ -87,7 +87,7 @@ export default function InviteForm() {
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
         {!!errors.afterSubmit && (
-          <Alert severity="error">{errors.afterSubmit.message}</Alert>
+          <Alert severity="error">{errors.afterSubmit.data.message}</Alert>
         )}
 
         <RHFTextField
@@ -153,7 +153,7 @@ export default function InviteForm() {
           },
         }}
       >
-        Login
+        Submit Invite
       </LoadingButton>
     </FormProvider>
   );
