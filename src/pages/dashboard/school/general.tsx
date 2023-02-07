@@ -1,18 +1,11 @@
 import { useState } from "react";
 import Head from "next/head";
 import { Card, Container, Box, Tabs, Tab } from "@mui/material";
-import {
-  _userAbout,
-  _userFriends,
-  _userGallery,
-  _userFollowers,
-} from "../../../_mock/arrays";
 import { useSettingsContext } from "../../../components/settings";
 import { ProfileCover } from "../../../sections/@dashboard/user/profile";
-// auth
 import { useGetOrganizationQuery } from "src/redux/services/admin";
 import Iconify from "../../../components/iconify";
-import UserProfileTab from "../../../sections/@dashboard/organization/general/tabs/profile/profile";
+import SchoolProfileTab from "../../../sections/schools/tabs/profile/schoolProfileTab";
 import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization/customization";
 import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings/settings";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
@@ -29,9 +22,9 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 const TABS = [
   {
     value: "profile",
-    label: "Profile",
+    label: "General1",
     icon: <Iconify icon="ic:round-account-box" />,
-    component: <UserProfileTab />,
+    component: <SchoolProfileTab />,
   },
   {
     value: "settings",
