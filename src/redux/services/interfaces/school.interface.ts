@@ -31,6 +31,12 @@ export interface AddTeacherRequest {
   user_id: string;
 }
 
+export interface DeleteMemberRequest {
+  user_id: string;
+}
+
+
+
 export interface ClassListReponce extends BaseResponseInterface {
   name: string;
 }

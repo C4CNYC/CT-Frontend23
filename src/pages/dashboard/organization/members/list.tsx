@@ -45,10 +45,15 @@ import {
   UserTableToolbar,
   UserTableRow,
 } from "../../../../sections/@dashboard/user/list";
-import { useGetOrgMembersQuery } from "src/redux/services/admin";
+import {
+  useDeleteOrgMemberMutation,
+  useGetOrgMembersQuery,
+  useGetTeacherListQuery
+} from "src/redux/services/admin";
 import { useFilters } from "src/hooks/useFilters";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useLocales } from "../../../../locales";
+import {useSnackbar} from "notistack";
 
 // ----------------------------------------------------------------------
 
@@ -78,6 +83,29 @@ export default function UserListPage() {
     onChangeDense,
   } = useTable();
   const { translate } = useLocales();
+  const { enqueueSnackbar } = useSnackbar();
+  const [deleteMember] = useDeleteOrgMemberMutation();
+  // console.log(selected);
+
+  const useDeleteMember = async (user_id: string) => {
+    try {
+      await deleteMember({
+        user_id,
+      }).unwrap();
+    } catch (e) {
+      enqueueSnackbar(e.data.message, {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleDeleteRow = (user_id: string) =>{
+    useDeleteMember(user_id);
+    enqueueSnackbar("Member deleted");
+  }
+
+
+
 
   const TABLE_HEAD = [
     { id: "" },
@@ -133,9 +161,12 @@ export default function UserListPage() {
     setOpenConfirm(false);
   };
 
-  const handleDeleteRow = (id: string) => {};
-
-  const handleDeleteRows = (selectedRows: string[]) => {};
+  const handleDeleteRows = (selected: string[]) => {
+    for (let i = 0; i < selected.length; i++) {
+      useDeleteMember(selected[i])
+    }
+    enqueueSnackbar("Members deleted");
+  };
 
   const handleEditRow = (id: string) => {
     push(PATH_DASHBOARD.organization.edit(id));

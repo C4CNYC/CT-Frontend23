@@ -60,14 +60,12 @@ export default function UserTableRow({
   const handleClosePopover = () => {
     setOpenPopover(null);
   };
-
   return (
     <>
       <TableRow hover selected={selected}>
         <TableCell padding="checkbox">
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
-
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Avatar alt={first_name} src="/assets/images/avatar_2.jpg" />

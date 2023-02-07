@@ -25,7 +25,6 @@ interface Props extends DialogProps {
   inviteEmail: string;
   onChangeInvite: void | null;
   onClose: VoidFunction;
-
 };
 
 export default function InviteUser({

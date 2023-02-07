@@ -24,7 +24,7 @@ import {
   AddTeacherRequest,
   ClassListReponce,
   ClassRequest,
-  ClassResponce,
+  ClassResponce, DeleteMemberRequest,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
   SchoolListResponce,
@@ -190,6 +190,14 @@ export const adminApi = createApi({
       }),
       providesTags: ["Members"],
     }),
+    deleteOrgMember: builder.mutation<void, DeleteMemberRequest>({
+      query: ({ user_id, ...body }) => ({
+        url: `org/user/${user_id}/`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Members" }],
+    }),
     updateOrgContacts: builder.mutation<
       IContacts & BaseResponseInterface,
       IContacts
@@ -286,6 +294,7 @@ export const {
   useAddTeacherMutation,
   useUpdateOrgMemberMutation,
   useCreateOrgMemberMutation,
+  useDeleteOrgMemberMutation,
   useCreateOrganizationMutation,
   useUpdateOrganizationMutation,
   useCreateOrganizationSchoolMutation,
