@@ -18,12 +18,13 @@ import {
   IContacts,
   ISettings,
   ICustomization,
+  ISubmitInvite, ISendInvite
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
   ClassListReponce,
   ClassRequest,
-  ClassResponce,
+  ClassResponce, DeleteMemberRequest,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
   SchoolListResponce,
@@ -189,6 +190,14 @@ export const adminApi = createApi({
       }),
       providesTags: ["Members"],
     }),
+    deleteOrgMember: builder.mutation<void, DeleteMemberRequest>({
+      query: ({ user_id, ...body }) => ({
+        url: `org/user/${user_id}/`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Members" }],
+    }),
     updateOrgContacts: builder.mutation<
       IContacts & BaseResponseInterface,
       IContacts
@@ -243,6 +252,28 @@ export const adminApi = createApi({
       }),
       providesTags: ["OrganizationCustomization"],
     }),
+    inviteSubmit: builder.mutation<
+      ISubmitInvite & BaseResponseInterface,
+      ISubmitInvite
+    >({
+      query: ({ ...body }) => ({
+        url: `/org/user/submitInvite`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Organization" }],
+    }),
+    sendInvite: builder.mutation<
+      ISendInvite & BaseResponseInterface,
+      ISendInvite
+    >({
+      query: ({ ...body }) => ({
+        url: `/org/user/invite`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Teachers" }],
+    }),
   }),
 });
 
@@ -263,10 +294,13 @@ export const {
   useAddTeacherMutation,
   useUpdateOrgMemberMutation,
   useCreateOrgMemberMutation,
+  useDeleteOrgMemberMutation,
   useCreateOrganizationMutation,
   useUpdateOrganizationMutation,
   useCreateOrganizationSchoolMutation,
   useUpdateOrgContactsMutation,
   useUpdateOrgSettingsMutation,
   useUpdateOrgCustomizationMutation,
+  useInviteSubmitMutation,
+  useSendInviteMutation,
 } = adminApi;

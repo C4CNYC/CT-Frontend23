@@ -15,7 +15,7 @@ import { useAuthContext } from "../../auth/useAuthContext";
 // components
 import Iconify from "../../components/iconify";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
-import router from "next/router";
+import router, {useRouter} from "next/router";
 import { PATH_AFTER_LOGIN } from "src/config-global";
 import { useDispatch } from "react-redux";
 
@@ -31,6 +31,8 @@ type FormValuesProps = {
 export default function AuthLoginForm() {
   const { login } = useAuthContext();
   const dispatch = useDispatch();
+  const router = useRouter();
+  const {tenant_name} = router.query;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,6 +46,7 @@ export default function AuthLoginForm() {
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(LoginSchema),
+    defaultValues: { tenantName: tenant_name as string },
   });
 
   const {
@@ -74,7 +77,7 @@ export default function AuthLoginForm() {
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
-        <RHFTextField name="tenantName" label="Tenant name" />
+        <RHFTextField name="tenantName" label="Tenant name" disabled={tenant_name}/>
 
         <RHFTextField name="email" label="Email address" />
 

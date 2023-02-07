@@ -1,50 +1,43 @@
-// @mui
+import React from 'react';
 import {
   List,
   Stack,
   Dialog,
   Button,
   TextField,
-  DialogProps,
   DialogTitle,
   DialogActions,
-  DialogContent,
+  DialogContent, DialogProps,
 } from "@mui/material";
 import { useFilters } from "src/hooks/useFilters";
-import { useGetOrgMembersQuery } from "src/redux/services/admin";
-// @types
-import { IFileShared } from "../../../@types/file";
-// components
+import {useGetOrgMembersQuery} from "src/redux/services/admin";
 import Scrollbar from "../../../components/scrollbar";
-//
 import UserItem from "./UserItem";
+import { Role } from "src/redux/services/enums/role.enum";
+import {useSendInviteMutation} from "../../../redux/services/admin";
+import { useSnackbar } from "../../../components/snackbar";
 
 // ----------------------------------------------------------------------
 
 interface Props extends DialogProps {
-  inviteEmail?: string;
+  teachersIds: [];
   schoolId: string;
-  teachersIds: string[];
-  shared?: IFileShared[] | null;
-  onCopyLink?: VoidFunction;
-  onChangeInvite?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  //
-  open: boolean;
+  inviteEmail: string;
+  onChangeInvite: void | null;
   onClose: VoidFunction;
-}
+};
 
-export default function FileShareDialog({
-  shared,
+export default function InviteUser({
   teachersIds = [],
   schoolId,
   inviteEmail,
-  onCopyLink,
   onChangeInvite,
-  //
   open,
   onClose,
   ...other
 }: Props) {
+  const [sendInvite, { isLoading }] = useSendInviteMutation();
+  const { enqueueSnackbar } = useSnackbar();
   const { filters, setFilter } = useFilters({ email: "" });
   const { data: members } = useGetOrgMembersQuery(
     {
@@ -55,11 +48,27 @@ export default function FileShareDialog({
     }
   );
 
+
+  const onSendInvite = async () => {
+    try {
+      await sendInvite({
+        email: filters.email as string,
+        role: Role.Manager
+      }).unwrap();
+      await enqueueSnackbar("Invite sent" );
+    } catch (error) {
+      enqueueSnackbar(error.data.message, {
+        variant: "error",
+      });
+      console.error(error);
+    }
+  };
+
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
       <DialogTitle> Invite </DialogTitle>
-
       <DialogContent sx={{ overflow: "unset" }}>
+        <>
         {onChangeInvite && (
           <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
             <TextField
@@ -72,9 +81,11 @@ export default function FileShareDialog({
               }}
             />
             <Button
-              disabled={!inviteEmail}
+              sx={{width: '150px'}}
               variant="contained"
-              sx={{ flexShrink: 0 }}
+              loading={isLoading}
+              disabled={members?.data.length || !filters.email}
+              onClick={onSendInvite}
             >
               Send Invite
             </Button>
@@ -95,11 +106,16 @@ export default function FileShareDialog({
             </List>
           </Scrollbar>
         )}
+        </>
       </DialogContent>
 
       <DialogActions sx={{ justifyContent: "space-end" }}>
         {onClose && (
-          <Button variant="outlined" color="inherit" onClick={onClose}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            onClick={onClose}
+          >
             Close
           </Button>
         )}
