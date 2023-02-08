@@ -10,12 +10,12 @@ import InviteAuth from "../sections/auth/InviteAuth";
 // ----------------------------------------------------------------------
 
 export default function InvitePage() {
-	return (
-		<>
-			<Head>
-				<title> Invite Login | Codetribe</title>
-			</Head>
-			<InviteAuth />
-		</>
-	);
+  return (
+    <>
+      <Head>
+        <title> Invite Login | Codetribe</title>
+      </Head>
+      <InviteAuth />
+    </>
+  );
 }

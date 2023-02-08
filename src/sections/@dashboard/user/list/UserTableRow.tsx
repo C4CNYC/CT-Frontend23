@@ -9,17 +9,14 @@ import {
   MenuItem,
   TableCell,
   IconButton,
-  Typography,
 } from "@mui/material";
-// @types
-import { IUserAccountGeneral } from "../../../../@types/user";
 // components
 import Label from "../../../../components/label";
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import _mock, { randomInArray } from "src/_mock";
+import _mock from "src/_mock";
 
 // ----------------------------------------------------------------------
 
@@ -38,8 +35,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-const { first_name, last_name, email, verified, active, role } = row;
-  const isVerified = true;
+  const { first_name, last_name, email, verified, active, role } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -78,19 +74,17 @@ const { first_name, last_name, email, verified, active, role } = row;
 
         <TableCell align="left">{last_name}</TableCell>
 
-        <TableCell align="left" sx={{ textTransform: "capitalize" }}>
+        {role ? (<TableCell align="left" sx={{ textTransform: "capitalize" }}>
           {role}
-        </TableCell>
+        </TableCell>) : null }
 
         <TableCell align="center">
           <Iconify
-            icon={
-              verified ? "eva:checkmark-circle-fill" : "eva:clock-outline"
-            }
+            icon={verified ? "eva:checkmark-circle-fill" : "eva:clock-outline"}
             sx={{
               width: 20,
               height: 20,
-              color: !isVerified ? "warning.main" : "success.main",
+              color: !verified ? "warning.main" : "success.main",
             }}
           />
         </TableCell>

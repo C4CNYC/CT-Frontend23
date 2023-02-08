@@ -1,5 +1,3 @@
-import { paramCase } from "change-case";
-// next
 import Head from "next/head";
 import { useRouter } from "next/router";
 // @mui
@@ -8,10 +6,11 @@ import CustomBreadcrumbs from "src/components/custom-breadcrumbs";
 import { useSettingsContext } from "src/components/settings";
 import DashboardLayout from "src/layouts/dashboard";
 import { PATH_DASHBOARD } from "src/routes/paths";
-import UserNewEditForm from "src/sections/@dashboard/user/UserNewEditForm";
 import { _userList } from "src/_mock/arrays";
-import { useGetOrgMemberQuery } from "src/redux/services/admin";
-import { RootState, useSelector } from "src/redux/store";
+import StudentNewEditForm from "src/sections/@dashboard/student/StudentNewEditForm";
+import { useGetStudentQuery } from "src/redux/services/manager";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
@@ -22,14 +21,14 @@ UserEditPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function UserEditPage() {
-  const {
-    query: { id },
-  } = useRouter();
+  const { query: { id } } = useRouter();
   const { themeStretch } = useSettingsContext();
+  const school_id = useSelector((state: RootState) => state.manager.school_id);
 
-  const { data } = useGetOrgMemberQuery({
-    user_id: id as string,
-  });
+  const { data } = useGetStudentQuery({
+    student_id: id as string,
+    school_id
+  }, { skip: !school_id || !id });
 
   return (
     <>
@@ -49,7 +48,7 @@ export default function UserEditPage() {
           ]}
         />
 
-        <UserNewEditForm isEdit currentUser={data} />
+        <StudentNewEditForm isEdit currentUser={data} />
       </Container>
     </>
   );

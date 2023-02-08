@@ -10,7 +10,7 @@ import DashboardLayout from "../../../../layouts/dashboard";
 import { useSettingsContext } from "../../../../components/settings";
 import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 // sections
-import UserNewEditForm from "../../../../sections/@dashboard/user/UserNewEditForm";
+import StudentNewEditForm from "src/sections/@dashboard/student/StudentNewEditForm";
 
 // ----------------------------------------------------------------------
 
@@ -26,25 +26,25 @@ export default function UserCreatePage() {
   return (
     <>
       <Head>
-        <title> User: Create a new user | Minimal UI</title>
+        <title> Student: Create a new student | Minimal UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Create a new user"
+          heading="Create a new student"
           links={[
             {
-              name: "Organization",
-              href: PATH_DASHBOARD.organization.root,
+              name: "School",
+              href: PATH_DASHBOARD.school.general,
             },
             {
-              name: "Members",
-              href: PATH_DASHBOARD.organization.members,
+              name: "Students",
+              href: PATH_DASHBOARD.school.students,
             },
-            { name: "New user" },
+            { name: "New student" },
           ]}
         />
-        <UserNewEditForm />
+        <StudentNewEditForm />
       </Container>
     </>
   );

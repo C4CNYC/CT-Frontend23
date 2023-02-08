@@ -50,7 +50,7 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
       });
     }
   };
-  
+
   return (
     <>
       <Stack

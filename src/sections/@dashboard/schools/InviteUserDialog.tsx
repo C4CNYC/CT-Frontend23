@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   List,
   Stack,
@@ -7,14 +7,19 @@ import {
   TextField,
   DialogTitle,
   DialogActions,
-  DialogContent, DialogProps,
+  DialogContent,
+  DialogProps,
 } from "@mui/material";
 import { useFilters } from "src/hooks/useFilters";
-import {useAddTeacherMutation, useCreateOrgMemberMutation, useGetOrgMembersQuery} from "src/redux/services/admin";
+import {
+  useAddTeacherMutation,
+  useCreateOrgMemberMutation,
+  useGetOrgMembersQuery,
+} from "src/redux/services/admin";
 import Scrollbar from "../../../components/scrollbar";
 import UserItem from "./UserItem";
 import { Role } from "src/redux/services/enums/role.enum";
-import {useSendInviteMutation} from "../../../redux/services/admin";
+import { useSendInviteMutation } from "../../../redux/services/admin";
 import { useSnackbar } from "../../../components/snackbar";
 
 // ----------------------------------------------------------------------
@@ -24,7 +29,7 @@ interface Props extends DialogProps {
   schoolId: string;
   inviteEmail: string;
   onClose: VoidFunction;
-};
+}
 
 export default function InviteUser({
   teachersIds = [],
@@ -52,16 +57,15 @@ export default function InviteUser({
     }
   };
 
-
   const onSendInvite = async () => {
     try {
       const user = await createUser({
         email: filters.email as string,
-        role: Role.Manager
+        role: Role.Manager,
       }).unwrap();
       console.log(user);
-      enqueueSnackbar("Invite sent" );
-      await addUserToSchool(user.id, schoolId)
+      enqueueSnackbar("Invite sent");
+      await addUserToSchool(user.id, schoolId);
       setFilter("email", "");
       onClose();
     } catch (e) {
@@ -85,7 +89,7 @@ export default function InviteUser({
               }}
             />
             <Button
-              sx={{width: '150px'}}
+              sx={{ width: "150px" }}
               variant="contained"
               loading={isLoading}
               disabled={members?.data.length || !filters.email}
@@ -95,30 +99,26 @@ export default function InviteUser({
             </Button>
           </Stack>
 
-        {members && (
-          <Scrollbar sx={{ maxHeight: 60 * 6 }}>
-            <List disablePadding>
-              {members.data.map((person) => (
-                <UserItem
-                  addHandler={() => addUserToSchool(person.id, schoolId)}
-                  invited={teachersIds.includes(person.id)}
-                  key={person.id}
-                  person={person}
-                />
-              ))}
-            </List>
-          </Scrollbar>
-        )}
+          {members && (
+            <Scrollbar sx={{ maxHeight: 60 * 6 }}>
+              <List disablePadding>
+                {members.data.map((person) => (
+                  <UserItem
+                    addHandler={() => addUserToSchool(person.id, schoolId)}
+                    invited={teachersIds.includes(person.id)}
+                    key={person.id}
+                    person={person}
+                  />
+                ))}
+              </List>
+            </Scrollbar>
+          )}
         </>
       </DialogContent>
 
       <DialogActions sx={{ justifyContent: "space-end" }}>
         {onClose && (
-          <Button
-            variant="outlined"
-            color="inherit"
-            onClick={onClose}
-          >
+          <Button variant="outlined" color="inherit" onClick={onClose}>
             Close
           </Button>
         )}

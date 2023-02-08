@@ -48,12 +48,12 @@ import {
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
-  useGetTeacherListQuery
+  useGetTeacherListQuery,
 } from "src/redux/services/admin";
 import { useFilters } from "src/hooks/useFilters";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useLocales } from "../../../../locales";
-import {useSnackbar} from "notistack";
+import { useSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 
@@ -85,7 +85,6 @@ export default function UserListPage() {
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
   const [deleteMember] = useDeleteOrgMemberMutation();
-  // console.log(selected);
 
   const useDeleteMember = async (user_id: string) => {
     try {
@@ -99,13 +98,10 @@ export default function UserListPage() {
     }
   };
 
-  const handleDeleteRow = (user_id: string) =>{
+  const handleDeleteRow = (user_id: string) => {
     useDeleteMember(user_id);
     enqueueSnackbar("Member deleted");
-  }
-
-
-
+  };
 
   const TABLE_HEAD = [
     { id: "" },
@@ -163,7 +159,7 @@ export default function UserListPage() {
 
   const handleDeleteRows = (selected: string[]) => {
     for (let i = 0; i < selected.length; i++) {
-      useDeleteMember(selected[i])
+      useDeleteMember(selected[i]);
     }
     enqueueSnackbar("Members deleted");
   };

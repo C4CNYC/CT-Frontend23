@@ -31,6 +31,20 @@ export interface IUser {
   role?: Role;
 }
 
+export interface IStudent {
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  country: string;
+  state: string;
+  city: string;
+  post_code: string;
+  about: string;
+  verified: boolean;
+  active: boolean;
+}
+
 export interface CreateUserRequest extends IUser {}
 
 export interface UpdateUserRequest extends Omit<IUser, "email"> {

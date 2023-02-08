@@ -35,8 +35,6 @@ export interface DeleteMemberRequest {
   user_id: string;
 }
 
-
-
 export interface ClassListReponce extends BaseResponseInterface {
   name: string;
 }

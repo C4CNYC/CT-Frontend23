@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 // next
 import NextLink from "next/link";
@@ -18,8 +18,8 @@ import FormProvider, { RHFTextField } from "../../components/hook-form";
 import router from "next/router";
 import { PATH_AFTER_LOGIN } from "src/config-global";
 import { useDispatch } from "react-redux";
-import {useInviteSubmitMutation} from "../../redux/services/admin";
-import { useRouter } from 'next/router'
+import { useInviteSubmitMutation } from "../../redux/services/admin";
+import { useRouter } from "next/router";
 
 // ----------------------------------------------------------------------
 
@@ -31,8 +31,8 @@ type FormValuesProps = {
 export default function InviteForm() {
   const { login } = useAuthContext();
   const router = useRouter();
-  const {id} = router.query;
-  const {tenant_name} = router.query;
+  const { id } = router.query;
+  const { tenant_name } = router.query;
 
   useEffect(() => {
     localStorage.setItem("tenantName", tenant_name as string);
@@ -44,11 +44,10 @@ export default function InviteForm() {
   const inviteId = id as string;
 
   const InviteSchema = Yup.object().shape({
-    password: Yup.string()
-      .required('Password is required'),
+    password: Yup.string().required("Password is required"),
     confirmPwd: Yup.string()
-      .required('Password is required')
-      .oneOf([Yup.ref('password')], 'Passwords does not match'),
+      .required("Password is required")
+      .oneOf([Yup.ref("password")], "Passwords does not match"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -68,11 +67,10 @@ export default function InviteForm() {
         password: data.password,
         inviteId: inviteId,
       }).unwrap();
-      router.replace(
-        {
-          pathname: PATH_AUTH.login,
-          query: { tenant_name: tenant_name },
-        });
+      router.replace({
+        pathname: PATH_AUTH.login,
+        query: { tenant_name: tenant_name },
+      });
     } catch (error) {
       console.error(error);
       reset();

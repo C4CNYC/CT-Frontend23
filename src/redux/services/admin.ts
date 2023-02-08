@@ -18,13 +18,15 @@ import {
   IContacts,
   ISettings,
   ICustomization,
-  ISubmitInvite, ISendInvite
+  ISubmitInvite,
+  ISendInvite,
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
   ClassListReponce,
   ClassRequest,
-  ClassResponce, DeleteMemberRequest,
+  ClassResponce,
+  DeleteMemberRequest,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
   SchoolListResponce,

@@ -14,11 +14,11 @@ import { useLocales } from "../../../../locales";
 
 type Props = {
   filterName: string;
-  filterRole: string;
-  optionsRole: string[];
+  filterRole?: string;
+  optionsRole?: string[];
   onResetFilter: VoidFunction;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFilterRole: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFilterRole?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function UserTableToolbar({
@@ -41,41 +41,43 @@ export default function UserTableToolbar({
       }}
       sx={{ px: 2.5, py: 3 }}
     >
-      <TextField
-        fullWidth
-        select
-        label={`${translate("organizations.members_page.role_label")}`}
-        value={filterRole}
-        onChange={onFilterRole}
-        SelectProps={{
-          MenuProps: {
-            PaperProps: {
-              sx: {
-                maxHeight: 260,
+      {optionsRole ? (
+        <TextField
+          fullWidth
+          select
+          label={`${translate("organizations.members_page.role_label")}`}
+          value={filterRole}
+          onChange={onFilterRole}
+          SelectProps={{
+            MenuProps: {
+              PaperProps: {
+                sx: {
+                  maxHeight: 260,
+                },
               },
             },
-          },
-        }}
-        sx={{
-          maxWidth: { sm: 240 },
-          textTransform: "capitalize",
-        }}
-      >
-        {optionsRole.map((option) => (
-          <MenuItem
-            key={option}
-            value={option}
-            sx={{
-              mx: 1,
-              borderRadius: 0.75,
-              typography: "body2",
-              textTransform: "capitalize",
-            }}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
+          }}
+          sx={{
+            maxWidth: { sm: 240 },
+            textTransform: "capitalize",
+          }}
+        >
+          {optionsRole?.map((option) => (
+            <MenuItem
+              key={option}
+              value={option}
+              sx={{
+                mx: 1,
+                borderRadius: 0.75,
+                typography: "body2",
+                textTransform: "capitalize",
+              }}
+            >
+              {option}
+            </MenuItem>
+          ))}
+        </TextField>
+      ) : null}
 
       <TextField
         fullWidth
