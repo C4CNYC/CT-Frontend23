@@ -50,10 +50,7 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
       });
     }
   };
-
-  const handleChangeInvite = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setInviteEmail(event.target.value);
-  };
+  
   return (
     <>
       <Stack
@@ -134,7 +131,6 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
         open={openShare}
         shared={SHARED_PERSON}
         inviteEmail="email@codetribe.io"
-        onChangeInvite={handleChangeInvite}
         onCopyLink={() => {}}
         onClose={() => {
           setOpenShare(false);

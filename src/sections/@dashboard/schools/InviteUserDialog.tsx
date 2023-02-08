@@ -10,7 +10,7 @@ import {
   DialogContent, DialogProps,
 } from "@mui/material";
 import { useFilters } from "src/hooks/useFilters";
-import {useGetOrgMembersQuery} from "src/redux/services/admin";
+import {useAddTeacherMutation, useCreateOrgMemberMutation, useGetOrgMembersQuery} from "src/redux/services/admin";
 import Scrollbar from "../../../components/scrollbar";
 import UserItem from "./UserItem";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -20,10 +20,9 @@ import { useSnackbar } from "../../../components/snackbar";
 // ----------------------------------------------------------------------
 
 interface Props extends DialogProps {
-  teachersIds: [];
+  teachersIds: string[];
   schoolId: string;
   inviteEmail: string;
-  onChangeInvite: void | null;
   onClose: VoidFunction;
 };
 
@@ -31,36 +30,42 @@ export default function InviteUser({
   teachersIds = [],
   schoolId,
   inviteEmail,
-  onChangeInvite,
   open,
   onClose,
   ...other
 }: Props) {
-  const [sendInvite, { isLoading }] = useSendInviteMutation();
+  const [addTeacher] = useAddTeacherMutation();
+  const [createUser, { isLoading }] = useCreateOrgMemberMutation();
   const { enqueueSnackbar } = useSnackbar();
   const { filters, setFilter } = useFilters({ email: "" });
   const { data: members } = useGetOrgMembersQuery(
-    {
-      ...filters,
-    },
-    {
-      skip: !filters.email,
-    }
+    { ...filters },
+    { skip: !filters.email }
   );
+
+  const addUserToSchool = async (user_id: string, school_id: string) => {
+    try {
+      await addTeacher({ user_id, school_id }).unwrap();
+      enqueueSnackbar("teacher added");
+    } catch (e) {
+      enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
 
 
   const onSendInvite = async () => {
     try {
-      await sendInvite({
+      const user = await createUser({
         email: filters.email as string,
         role: Role.Manager
       }).unwrap();
-      await enqueueSnackbar("Invite sent" );
-    } catch (error) {
-      enqueueSnackbar(error.data.message, {
-        variant: "error",
-      });
-      console.error(error);
+      console.log(user);
+      enqueueSnackbar("Invite sent" );
+      await addUserToSchool(user.id, schoolId)
+      setFilter("email", "");
+      onClose();
+    } catch (e) {
+      enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };
 
@@ -69,7 +74,6 @@ export default function InviteUser({
       <DialogTitle> Invite </DialogTitle>
       <DialogContent sx={{ overflow: "unset" }}>
         <>
-        {onChangeInvite && (
           <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
             <TextField
               fullWidth
@@ -90,15 +94,14 @@ export default function InviteUser({
               Send Invite
             </Button>
           </Stack>
-        )}
 
         {members && (
           <Scrollbar sx={{ maxHeight: 60 * 6 }}>
             <List disablePadding>
               {members.data.map((person) => (
                 <UserItem
+                  addHandler={() => addUserToSchool(person.id, schoolId)}
                   invited={teachersIds.includes(person.id)}
-                  schoolId={schoolId}
                   key={person.id}
                   person={person}
                 />

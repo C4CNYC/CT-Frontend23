@@ -24,9 +24,11 @@ export interface UserSearchParams {
 
 export interface IUser {
   email: string;
-  first_name: string;
-  last_name: string;
-  role: Role;
+  first_name?: string;
+  last_name?: string;
+  verified?: boolean;
+  active?: boolean;
+  role?: Role;
 }
 
 export interface CreateUserRequest extends IUser {}

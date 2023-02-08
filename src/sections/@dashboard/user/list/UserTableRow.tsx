@@ -38,7 +38,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { first_name, last_name, email, role } = row;
+const { first_name, last_name, email, verified, active, role } = row;
   const isVerified = true;
 
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -85,7 +85,7 @@ export default function UserTableRow({
         <TableCell align="center">
           <Iconify
             icon={
-              isVerified ? "eva:checkmark-circle-fill" : "eva:clock-outline"
+              verified ? "eva:checkmark-circle-fill" : "eva:clock-outline"
             }
             sx={{
               width: 20,
@@ -98,10 +98,10 @@ export default function UserTableRow({
         <TableCell align="left">
           <Label
             variant="soft"
-            color={"success"}
+            color={active ? "success" : "warning"}
             sx={{ textTransform: "capitalize" }}
           >
-            active
+            {active ? "active" : "not active"}
           </Label>
         </TableCell>
 
