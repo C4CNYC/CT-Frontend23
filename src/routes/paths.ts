@@ -60,7 +60,8 @@ export const PATH_DASHBOARD = {
     assigments: path(ROOTS_DASHBOARD, "/school/assigments"),
     modules: path(ROOTS_DASHBOARD, "/school/modules/list"),
     students: path(ROOTS_DASHBOARD, "/school/students/list"),
-    classes: path(ROOTS_DASHBOARD, "/school/classes"),
+    classes: path(ROOTS_DASHBOARD, "/school/classes/list"),
+    classes_new: path(ROOTS_DASHBOARD, "/school/classes/new"),
     prgogress: path(ROOTS_DASHBOARD, "/school/prgogress"),
     new: path(ROOTS_DASHBOARD, "/school/students/new"),
     edit: (name: string) =>

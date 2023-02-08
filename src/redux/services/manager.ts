@@ -5,6 +5,7 @@ import {
 } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
+import { ClassSearchParams, IClass } from "./interfaces/class.interface";
 import { SchoolResponce } from "./interfaces/school.interface";
 import { IStudent, UserSearchParams } from "./interfaces/user.interface";
 
@@ -13,7 +14,7 @@ export const managerApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/manager`)
   ),
-  tagTypes: ["School", "Students"],
+  tagTypes: ["School", "Students", "Classes"],
   endpoints: (builder) => ({
     getMySchools: builder.query<
       BaseListResponseInterface<SchoolResponce>,
@@ -75,12 +76,25 @@ export const managerApi = createApi({
       }),
       invalidatesTags: ["Students"],
     }),
+    // --------------------- classes --------------------------
+    getClasses: builder.query<
+      BaseListResponseInterface<IClass & BaseResponseInterface>,
+      { school_id: string } & ClassSearchParams
+    >({
+      query: ({ school_id, ...params }) => ({
+        url: `/school/${school_id}/class`,
+        method: "GET",
+        params,
+      }),
+      providesTags: ["Classes"],
+    }),
   }),
 });
 
 export const {
   useGetMySchoolsQuery,
   useGetStudentsQuery,
+  useGetClassesQuery,
   useGetStudentQuery,
   //---------------- mutations --------------
   useUpdateStudentMutation,
