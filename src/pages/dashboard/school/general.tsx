@@ -9,6 +9,8 @@ import SchoolProfileTab from "../../../sections/schools/tabs/profile/schoolProfi
 import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization/customization";
 import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings/settings";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../redux/store";
 
 // components
 // ----------------------------------------------------------------------
@@ -19,31 +21,34 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-const TABS = [
-  {
-    value: "profile",
-    label: "General1",
-    icon: <Iconify icon="ic:round-account-box" />,
-    component: <SchoolProfileTab />,
-  },
-  {
-    value: "settings",
-    label: "Settings",
-    icon: <Iconify icon="ic:baseline-settings-applications" />,
-    component: <SettingsTab />,
-  },
-  {
-    value: "customization",
-    label: "Customization",
-    icon: <Iconify icon="ic:round-dashboard-customize" />,
-    component: <CustomizationTab />,
-  },
-];
-
 export default function UserProfilePage() {
+  const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetOrganizationQuery();
+
+  const TABS = [
+    {
+      value: "profile",
+      label: "General1",
+      icon: <Iconify icon="ic:round-account-box" />,
+      component: <SchoolProfileTab school_id={school_id}/>,
+    },
+    {
+      value: "settings",
+      label: "Settings",
+      icon: <Iconify icon="ic:baseline-settings-applications" />,
+      component: <SettingsTab />,
+    },
+    {
+      value: "customization",
+      label: "Customization",
+      icon: <Iconify icon="ic:round-dashboard-customize" />,
+      component: <CustomizationTab />,
+    },
+  ];
+
+  console.log(data);
 
   return (
     <>

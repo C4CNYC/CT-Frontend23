@@ -20,6 +20,19 @@ export interface OrganizationSchoolRequest {
   city: string;
   country: string;
 }
+
+export interface SchoolProfile {
+  name?: string;
+  school_id: string;
+  country?: string;
+  address?: string;
+  city?: string;
+  active?: boolean;
+  phone?: string;
+  about?: string;
+}
+
+
 export interface OrganizationSchoolResponse extends BaseResponseInterface {
   name: string;
   city: string;
