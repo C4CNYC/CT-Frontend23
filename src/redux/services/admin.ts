@@ -96,6 +96,17 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "Classes" }],
     }),
+    updateClass: builder.mutation<
+      ClassResponce,
+      { schoolId: string; class_id: string; name: string }
+    >({
+      query: ({ schoolId, class_id, ...body }) => ({
+        url: `/school/${schoolId}/class/${class_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Classes" }],
+    }),
     getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
       query: ({ ...params }) => ({
         url: `/school`,
@@ -291,6 +302,7 @@ export const {
   useGetOrgSettingsQuery,
   useGetOrgCustomizationQuery,
   // ---------------- mutations ---------
+  useUpdateClassMutation,
   useCreateClassMutation,
   useDeleteTeacherMutation,
   useAddTeacherMutation,

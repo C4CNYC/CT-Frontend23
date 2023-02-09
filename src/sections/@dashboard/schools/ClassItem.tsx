@@ -13,16 +13,26 @@ import {
 import Iconify from "../../../components/iconify";
 import MenuPopover from "../../../components/menu-popover";
 import _mock from "src/_mock";
-import { ClassResponce } from "src/redux/services/manager";
+import { IClass } from "src/redux/services/interfaces/class.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import AddClassDialog from "./CreateClassDialog";
+import { useSnackbar } from "notistack";
+import { useUpdateClassMutation } from "src/redux/services/admin";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  classes: ClassResponce;
+  classes: IClass & BaseResponseInterface;
+  schoolId: string;
+  handleEditClass?: (id: string) => void;
   handleDeleteClass: () => void;
 };
 
-export default function ClassItem({ classes, handleDeleteClass }: Props) {
+export default function ClassItem({ classes, handleDeleteClass, schoolId }: Props) {
+  const { enqueueSnackbar } = useSnackbar();
+  const [updateClass] = useUpdateClassMutation();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,6 +42,15 @@ export default function ClassItem({ classes, handleDeleteClass }: Props) {
   const handleClosePopover = () => {
     setOpenPopover(null);
   };
+
+  const updateClassByAdmin = async (name: string) => {
+    try {
+      const data = await updateClass({ schoolId, class_id: classes.id, name }).unwrap();
+      enqueueSnackbar(`School ${data.name} created successfuly!`);
+    } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
+  }
 
   return (
     <>
@@ -72,6 +91,16 @@ export default function ClassItem({ classes, handleDeleteClass }: Props) {
         sx={{ width: 160 }}
       >
         <>
+          <AddClassDialog
+            isEdit
+            defaultValues={{ name: classes.name }} 
+            updateClass={updateClassByAdmin}
+          >
+            <MenuItem>
+            <Iconify icon="eva:edit-fill" />
+            Edit
+          </MenuItem>
+        </AddClassDialog>
           <MenuItem
             onClick={() => {
               handleDeleteClass();
