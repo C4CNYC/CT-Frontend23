@@ -9,17 +9,14 @@ import {
   MenuItem,
   TableCell,
   IconButton,
-  Typography,
 } from "@mui/material";
-// @types
-import { IUserAccountGeneral } from "../../../../@types/user";
 // components
 import Label from "../../../../components/label";
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import _mock, { randomInArray } from "src/_mock";
+import _mock from "src/_mock";
 
 // ----------------------------------------------------------------------
 
@@ -38,8 +35,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { first_name, last_name, email, role } = row;
-  const isVerified = true;
+  const { first_name, last_name, email, verified, active, role } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -60,14 +56,12 @@ export default function UserTableRow({
   const handleClosePopover = () => {
     setOpenPopover(null);
   };
-
   return (
     <>
       <TableRow hover selected={selected}>
         <TableCell padding="checkbox">
           <Checkbox checked={selected} onClick={onSelectRow} />
         </TableCell>
-
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Avatar alt={first_name} src="/assets/images/avatar_2.jpg" />
@@ -80,19 +74,17 @@ export default function UserTableRow({
 
         <TableCell align="left">{last_name}</TableCell>
 
-        <TableCell align="left" sx={{ textTransform: "capitalize" }}>
+        {role ? (<TableCell align="left" sx={{ textTransform: "capitalize" }}>
           {role}
-        </TableCell>
+        </TableCell>) : null }
 
         <TableCell align="center">
           <Iconify
-            icon={
-              isVerified ? "eva:checkmark-circle-fill" : "eva:clock-outline"
-            }
+            icon={verified ? "eva:checkmark-circle-fill" : "eva:clock-outline"}
             sx={{
               width: 20,
               height: 20,
-              color: !isVerified ? "warning.main" : "success.main",
+              color: !verified ? "warning.main" : "success.main",
             }}
           />
         </TableCell>
@@ -100,10 +92,10 @@ export default function UserTableRow({
         <TableCell align="left">
           <Label
             variant="soft"
-            color={"success"}
+            color={active ? "success" : "warning"}
             sx={{ textTransform: "capitalize" }}
           >
-            active
+            {active ? "active" : "not active"}
           </Label>
         </TableCell>
 

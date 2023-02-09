@@ -59,11 +59,13 @@ export const PATH_DASHBOARD = {
     general: path(ROOTS_DASHBOARD, "/school/general"),
     assigments: path(ROOTS_DASHBOARD, "/school/assigments"),
     modules: path(ROOTS_DASHBOARD, "/school/modules/list"),
-    students: path(ROOTS_DASHBOARD, "/school/students"),
-    classes: path(ROOTS_DASHBOARD, "/school/classes"),
+    students: path(ROOTS_DASHBOARD, "/school/students/list"),
+    classes: path(ROOTS_DASHBOARD, "/school/classes/list"),
+    classes_new: path(ROOTS_DASHBOARD, "/school/classes/new"),
     prgogress: path(ROOTS_DASHBOARD, "/school/prgogress"),
+    new: path(ROOTS_DASHBOARD, "/school/students/new"),
     edit: (name: string) =>
-      path(ROOTS_DASHBOARD, `/school/members/${name}/edit`),
+      path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
   },
   invoice: {
     root: path(ROOTS_DASHBOARD, "/invoice"),

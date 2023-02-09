@@ -64,6 +64,16 @@ export interface ICustomization {
   };
 }
 
+export interface ISubmitInvite {
+  password: string;
+  inviteId: string;
+}
+
+export interface ISendInvite {
+  email: string;
+  role: string;
+}
+
 export interface OrganizationListResponce {
   data: OrganizationResponce[];
   meta: {};

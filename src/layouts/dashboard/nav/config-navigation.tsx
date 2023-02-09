@@ -60,11 +60,6 @@ export const managment = {
       icon: <FaSchool />,
     },
     {
-      title: "prgogress",
-      path: PATH_DASHBOARD.school.prgogress,
-      icon: <GiProgression />,
-    },
-    {
       title: "students",
       path: PATH_DASHBOARD.school.students,
       icon: <FaUsers />,
@@ -75,7 +70,18 @@ export const managment = {
       icon: <VscSymbolClass />,
     },
     {
-      title: "modules",
+      title: "prgogress",
+      path: PATH_DASHBOARD.school.prgogress,
+      icon: <GiProgression />,
+    },
+  ],
+};
+
+export const content = {
+  subheader: "content",
+  items: [
+    {
+      title: "courses",
       path: PATH_DASHBOARD.school.modules,
       icon: <MdPlayLesson />,
     },

@@ -32,7 +32,6 @@ import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 import { useSettingsContext } from "../../../../components/settings";
 import {
   useTable,
-  getComparator,
   emptyRows,
   TableNoData,
   TableEmptyRows,
@@ -45,20 +44,21 @@ import {
   UserTableToolbar,
   UserTableRow,
 } from "../../../../sections/@dashboard/user/list";
-import { useGetOrgMembersQuery } from "src/redux/services/admin";
 import { useFilters } from "src/hooks/useFilters";
-import { Role } from "src/redux/services/enums/role.enum";
+import { useDeleteStudentMutation, useGetStudentsQuery } from "src/redux/services/manager";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { useSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 
 const STATUS_OPTIONS = ["all"];
 
 const TABLE_HEAD = [
-  { id: "" },
+  { id: "", label: "Avatar" },
   { id: "email", label: "Email", align: "left" },
-  { id: "first_name", label: "Name", align: "left" },
-  { id: "last_name", label: "Surename", align: "left" },
-  { id: "role", label: "Role", align: "left" },
+  { id: "first_name", label: "first name", align: "left" },
+  { id: "last_name", label: "last name", align: "left" },
   { id: "isVerified", label: "Verified", align: "center" },
   { id: "status", label: "Status", align: "left" },
   { id: "" },
@@ -88,37 +88,50 @@ export default function UserListPage() {
     onChangeDense,
   } = useTable();
 
-  const { themeStretch } = useSettingsContext();
-  const { filters, setFilter, resetFilters } = useFilters({
-    name: "",
-    role: "",
-  });
-  const { data, isLoading } = useGetOrgMembersQuery(filters);
-
-  const { push } = useRouter();
-
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
+  const { push } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const { themeStretch } = useSettingsContext();
+  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const { filters, setFilter, resetFilters } = useFilters({ name: "" });
+
+  const [deleteStudent] = useDeleteStudentMutation();
+  const { data, isLoading } = useGetStudentsQuery(
+    { school_id, ...filters },
+    { skip: !school_id }
+  );
+
+  const handleDeleteMember = async (student_id: string) => {
+    try {
+      await deleteStudent({ student_id, school_id }).unwrap();
+    } catch (e) {
+      enqueueSnackbar(e.data.message, {
+        variant: "error",
+      });
+    }
   };
 
-  const handleCloseConfirm = () => {
-    setOpenConfirm(false);
+  const handleDeleteRow = (user_id: string) => {
+    handleDeleteMember(user_id);
+    enqueueSnackbar("Member deleted");
   };
 
-  const handleDeleteRow = (id: string) => {};
-
-  const handleDeleteRows = (selectedRows: string[]) => {};
+  const handleDeleteRows = (selected: string[]) => {
+    for (let i = 0; i < selected.length; i++) {
+      handleDeleteMember(selected[i]);
+    }
+    enqueueSnackbar("Members deleted");
+  };
 
   const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.organization.edit(id));
+    push(PATH_DASHBOARD.school.edit(id));
   };
 
   return (
     <>
       <Head>
-        <title> Members | CodeTribe</title>
+        <title> Students | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
@@ -126,17 +139,17 @@ export default function UserListPage() {
           heading="User List"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "User", href: PATH_DASHBOARD.organization.root },
+            { name: "Students", href: PATH_DASHBOARD.organization.root },
             { name: "List" },
           ]}
           action={
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.organization.new}
+              href={PATH_DASHBOARD.school.new}
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              New User
+              Add Student
             </Button>
           }
         />
@@ -159,13 +172,8 @@ export default function UserListPage() {
 
           <UserTableToolbar
             filterName={filters.name as string}
-            filterRole={filters.role as string}
-            optionsRole={Object.values(Role)}
             onFilterName={(e) => {
               setFilter("name", e.target.value);
-            }}
-            onFilterRole={(e) => {
-              setFilter("role", e.target.value);
             }}
             onResetFilter={resetFilters}
           />
@@ -183,7 +191,10 @@ export default function UserListPage() {
                 }
                 action={
                   <Tooltip title="Delete">
-                    <IconButton color="primary" onClick={handleOpenConfirm}>
+                    <IconButton
+                      color="primary"
+                      onClick={() => setOpenConfirm(true)}
+                    >
                       <Iconify icon="eva:trash-2-outline" />
                     </IconButton>
                   </Tooltip>
@@ -254,7 +265,7 @@ export default function UserListPage() {
 
       <ConfirmDialog
         open={openConfirm}
-        onClose={handleCloseConfirm}
+        onClose={() => setOpenConfirm(false)}
         title="Delete"
         content={
           <>
@@ -268,7 +279,7 @@ export default function UserListPage() {
             color="error"
             onClick={() => {
               handleDeleteRows(selected);
-              handleCloseConfirm();
+              setOpenConfirm(false);
             }}
           >
             Delete

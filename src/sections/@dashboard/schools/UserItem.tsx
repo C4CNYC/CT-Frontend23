@@ -1,4 +1,3 @@
-import { useState } from "react";
 // @mui
 import {
   Avatar,
@@ -14,33 +13,17 @@ import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import _mock from "src/_mock";
 import { useAddTeacherMutation } from "src/redux/services/admin";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  schoolId: string;
   invited: boolean;
+  addHandler: () => void;
   person: IUser & BaseResponseInterface;
 };
 
-export default function UserItem({ person, schoolId, invited }: Props) {
-  const { enqueueSnackbar } = useSnackbar();
-  const [addTeacher] = useAddTeacherMutation();
-
-  const handleAddUser = async () => {
-    try {
-      await addTeacher({
-        user_id: person.id,
-        school_id: schoolId,
-      }).unwrap();
-    } catch (e) {
-      enqueueSnackbar(e.data.message, { variant: "error" });
-    }
-  };
-
+export default function UserItem({ person, addHandler, invited }: Props) {
   return (
     <>
       <ListItem disableGutters>
@@ -64,7 +47,7 @@ export default function UserItem({ person, schoolId, invited }: Props) {
           disabled={invited}
           size="small"
           variant="outlined"
-          onClick={handleAddUser}
+          onClick={addHandler}
         >
           {invited ? "Invited" : "Add"}
         </Button>

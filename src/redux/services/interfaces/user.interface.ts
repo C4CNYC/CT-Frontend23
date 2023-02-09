@@ -24,9 +24,25 @@ export interface UserSearchParams {
 
 export interface IUser {
   email: string;
+  first_name?: string;
+  last_name?: string;
+  verified?: boolean;
+  active?: boolean;
+  role?: Role;
+}
+
+export interface IStudent {
+  email: string;
   first_name: string;
   last_name: string;
-  role: Role;
+  phone: string;
+  country: string;
+  state: string;
+  city: string;
+  post_code: string;
+  about: string;
+  verified: boolean;
+  active: boolean;
 }
 
 export interface CreateUserRequest extends IUser {}

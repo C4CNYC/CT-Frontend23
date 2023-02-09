@@ -6,12 +6,9 @@ import { NAV } from "../../../config-global";
 import Logo from "../../../components/logo";
 import Scrollbar from "../../../components/scrollbar";
 import { NavSectionVertical } from "../../../components/nav-section";
-import { admin, managment } from "./config-navigation";
-import NavAccount from "../header/SchoolAccount";
+import { admin, managment, content } from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
-import RoleAccess from "src/components/role-access/RoleAccess";
 import { Role } from "src/redux/services/enums/role.enum";
-import navConfigManager from "./config-navigation-manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 
@@ -28,8 +25,8 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
 
   const isDesktop = useResponsive("up", "lg");
   const menu = [Role.Owner, Role.Admin].includes(user?.role || Role.Manager)
-    ? [admin, managment]
-    : [managment];
+    ? [admin, managment, content]
+    : [managment, content];
 
   useEffect(() => {
     if (openNav) {

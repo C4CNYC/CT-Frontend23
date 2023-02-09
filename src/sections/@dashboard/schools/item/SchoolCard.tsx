@@ -65,7 +65,7 @@ export default function SchoolCard({
     setShowCheckbox(false);
   };
 
-  const handleOpenDetails = (e) => {
+  const handleOpenDetails = () => {
     setOpenDetails(true);
   };
 
@@ -143,8 +143,10 @@ export default function SchoolCard({
             handleClosePopover();
           }}
         >
-          <Iconify icon="eva:edit-fill" />
-          {translate("actions_edit")}
+          <>
+            <Iconify icon="eva:edit-fill" />
+            {translate("actions_edit")}
+          </>
         </MenuItem>
 
         <Divider sx={{ borderStyle: "dashed" }} />

@@ -45,7 +45,7 @@ export default function FileInvitedItem({
         </ListItemAvatar>
 
         <ListItemText
-          primary={`${person.first_name} ${person.last_name}`}
+          primary={`${person.first_name || ""} ${person.last_name || ""}`}
           secondary={
             <Tooltip title={person.email}>
               <span>{person.email}</span>
