@@ -9,21 +9,21 @@ import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSnackbar } from "notistack";
 import FormProvider, { RHFTextField } from "src/components/hook-form";
-import Iconify from "src/components/iconify";
-import { useCreateClassMutation } from "src/redux/services/admin";
 
 type FormValuesProps = {
   name: string;
 };
 
 type Prop = {
-  school_id: string;
+  isEdit?: boolean;
+  createClass?: (name: string) => void;
+  updateClass?: (name: string) => void;
+  defaultValues?: FormValuesProps;
+  children: React.ReactElement;
 };
 
-export default function AddClassDialog({ school_id }: Prop) {
-  const [createClass, { isLoading }] = useCreateClassMutation();
+export default function AddClassDialog({ isEdit = false, createClass, updateClass, children, defaultValues }: Prop) {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,15 +32,10 @@ export default function AddClassDialog({ school_id }: Prop) {
   const handleClose = () => {
     setOpen(false);
   };
-  const { enqueueSnackbar } = useSnackbar();
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
   });
-
-  const defaultValues = {
-    name: "",
-  };
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
@@ -48,39 +43,20 @@ export default function AddClassDialog({ school_id }: Prop) {
   });
 
   const onSubmit = async (data: FormValuesProps) => {
-    try {
-      await createClass({
-        schoolId: school_id,
-        ...data,
-      }).unwrap;
-      enqueueSnackbar(`School ${data.name} created successfuly!`);
-      handleClose();
-      methods.reset();
-    } catch (error) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
+    if(isEdit) {
+      updateClass && updateClass(data.name);
+    } else {
+      createClass && createClass(data.name);
     }
-  };
+  }
 
   return (
     <>
-      <IconButton
-        size="small"
-        color="success"
+      <Box
         onClick={() => handleClickOpen()}
-        sx={{
-          p: 0,
-          width: 24,
-          height: 24,
-          color: "common.white",
-          bgcolor: "success.main",
-          "&:hover": {
-            bgcolor: "success.main",
-          },
-        }}
       >
-        <Iconify icon="eva:plus-fill" />
-      </IconButton>
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Class</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
@@ -92,7 +68,7 @@ export default function AddClassDialog({ school_id }: Prop) {
               <Grid item xs={12} md={12}>
                 <Card sx={{ p: 3 }}>
                   <Box rowGap={3} display="grid">
-                    <RHFTextField name="name" label="Class name" required />
+                    <RHFTextField sx={{ width: "350px" }} name="name" label="Class name" required />
                   </Box>
                   <Box
                     sx={{
@@ -106,7 +82,6 @@ export default function AddClassDialog({ school_id }: Prop) {
                     <LoadingButton
                       type="submit"
                       variant="contained"
-                      loading={isLoading}
                     >
                       Save
                     </LoadingButton>

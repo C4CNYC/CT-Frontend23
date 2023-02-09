@@ -42,12 +42,15 @@ import {
   UserTableToolbar,
 } from "../../../../sections/@dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
-import { useDeleteStudentMutation, useGetClassesQuery, useGetStudentsQuery } from "src/redux/services/manager";
+import { useCreateСlassesMutation, useDeleteСlassesMutation, useGetClassesQuery } from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import { ClassesTableRow } from "src/sections/@dashboard/classes/list";
+import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
+import AddClassDialog from "src/sections/@dashboard/schools/CreateClassDialog";
+import { useUpdateСlassesMutation } from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -88,21 +91,22 @@ export default function UserListPage() {
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters({ name: "" });
+  const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({ name: "" });
 
-  const [deleteStudent] = useDeleteStudentMutation();
+  const [updateClassByManager] = useUpdateСlassesMutation();
+  const [createClassByManager] = useCreateСlassesMutation();
+  const [deleteCasses] = useDeleteСlassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { school_id, ...filters },
     { skip: !school_id }
   );
 
-  const handleDeleteMember = async (student_id: string) => {
+  const handleDeleteMember = async (class_id: string) => {
     try {
-      await deleteStudent({ student_id, school_id }).unwrap();
+      await deleteCasses({ class_id, school_id }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -122,8 +126,24 @@ export default function UserListPage() {
     enqueueSnackbar("Members deleted");
   };
 
-  const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.school.edit(id));
+  const handleEditRow = async (id: string, name: string) => {
+     try {
+      await updateClassByManager({ school_id, class_id: id, name }).unwrap()
+      enqueueSnackbar(`Class updated successfuly!`);
+    } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+      console.error(error);
+    }
+  };
+
+  const createClass = async (name: string) => {
+    try {
+      await createClassByManager({ school_id, name }).unwrap()
+      enqueueSnackbar(`School ${name} created successfuly!`);
+    } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+      console.error(error);
+    }
   };
 
   return (
@@ -141,14 +161,16 @@ export default function UserListPage() {
             { name: "List" },
           ]}
           action={
-            <Button
-              component={NextLink}
-              href={PATH_DASHBOARD.school.classes_new}
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
+            <AddClassDialog
+              createClass={createClass}
             >
-              Add Class
-            </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+              >
+                Add Class
+              </Button>
+            </AddClassDialog>
           }
         />
 
@@ -224,7 +246,7 @@ export default function UserListPage() {
                         selected={selected.includes(row.id)}
                         onSelectRow={() => onSelectRow(row.id)}
                         onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
+                        onEditRow={handleEditRow}
                       />
                     ))}
 

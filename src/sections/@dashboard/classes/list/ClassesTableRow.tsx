@@ -20,13 +20,14 @@ import { FcFolder } from 'react-icons/fc';
 import _mock from "src/_mock";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import AddClassDialog from "../../schools/CreateClassDialog";
 
 // ----------------------------------------------------------------------
 
 type Props = {
   row: IClass & BaseResponseInterface;
   selected: boolean;
-  onEditRow: VoidFunction;
+  onEditRow: (id: string, name: string) => void;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
@@ -123,16 +124,19 @@ export default function ClassesTableRow({
           <Iconify icon="eva:trash-2-outline" />
           Delete
         </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            onEditRow();
-            handleClosePopover();
-          }}
-        >
-          <Iconify icon="eva:edit-fill" />
-          Edit
-        </MenuItem>
+         <AddClassDialog
+          isEdit
+          defaultValues={{ name: row.name }}
+          updateClass={(name) => {
+                onEditRow(row.id, name);
+                handleClosePopover();
+              }}
+         >
+          <MenuItem>
+            <Iconify icon="eva:edit-fill" />
+            Edit
+          </MenuItem>
+        </AddClassDialog> 
       </MenuPopover>
 
       <ConfirmDialog

@@ -1,27 +1,22 @@
 import {
   Stack,
   Typography,
-  IconButton,
   Collapse,
   List,
   ListItem,
+  IconButton,
 } from "@mui/material";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import Iconify from "src/components/iconify";
 import {
+  useCreateClassMutation,
   useDeleteTeacherMutation,
   useGetClassListQuery,
-  useGetTeacherListQuery,
 } from "src/redux/services/admin";
-import { RootState } from "src/redux/store";
-import { SHARED_PERSON } from "src/_mock/arrays";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
-import FileInvitedItem from "./FileInvitedItem";
-import FileShareDialog from "./FileShareDialog";
 
 type ClassesSectionProps = {
   school_id: string;
@@ -29,9 +24,9 @@ type ClassesSectionProps = {
 
 export default function ClassesSection({ school_id }: ClassesSectionProps) {
   const { enqueueSnackbar } = useSnackbar();
+  const [createClass] = useCreateClassMutation();
   const [deleteTeacher] = useDeleteTeacherMutation();
   const [open, setOpen] = useState(false);
-  const [openShare, setOpenShare] = useState(false);
   const { data: classes, isLoading } = useGetClassListQuery(
     {
       school_id: school_id,
@@ -53,9 +48,15 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
     }
   };
 
-  const handleChangeInvite = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setInviteEmail(event.target.value);
-  };
+  const createClassByAdmin = async (name: string) => {
+    try {
+      const data = await createClass({ schoolId: school_id, name }).unwrap();
+      enqueueSnackbar(`School ${data.name} created successfuly!`);
+    } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
+  }
+
   return (
     <>
       <Stack
@@ -75,13 +76,30 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
           />
         </Typography>
 
-        <AddClassDialog school_id={school_id} />
+        <AddClassDialog
+          createClass={createClassByAdmin}
+        >
+        <IconButton
+          size="small"
+          color="success"
+          sx={{
+            p: 0,
+            height: 24,
+            color: "common.white",
+            bgcolor: "success.main",
+            "&:hover": {
+              bgcolor: "success.main",
+            },
+          }}
+        > <Iconify sx={{ width: 24 }} icon="eva:plus-fill" /> </IconButton>
+        </AddClassDialog>
       </Stack>
       <Collapse in={open}>
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
           {classes &&
             classes.map((classes: any) => (
               <ClassItem
+                schoolId={school_id}
                 handleDeleteClass={() => handleDeleteClass(classes.id)}
                 key={classes.id}
                 classes={classes}

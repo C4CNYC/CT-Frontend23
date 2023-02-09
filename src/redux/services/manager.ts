@@ -88,16 +88,50 @@ export const managerApi = createApi({
       }),
       providesTags: ["Classes"],
     }),
+    createСlasses: builder.mutation<void, { school_id: string; name: string }>({
+      query: ({ school_id, ...body }) => ({
+        url: `/school/${school_id}/class`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Classes"],
+    }),
+    updateСlasses: builder.mutation<
+      void,
+      { school_id: string; class_id: string; name: string }
+    >({
+      query: ({ school_id, class_id, ...body }) => ({
+        url: `/school/${school_id}/class/${class_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Classes"],
+    }),
+    deleteСlasses: builder.mutation<
+      void,
+      { school_id: string; class_id: string }
+    >({
+      query: ({ school_id, class_id }) => ({
+        url: `/school/${school_id}/class/${class_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Classes"],
+    }),
   }),
 });
 
 export const {
   useGetMySchoolsQuery,
   useGetStudentsQuery,
-  useGetClassesQuery,
   useGetStudentQuery,
+  //---classes----
+  useGetClassesQuery,
   //---------------- mutations --------------
   useUpdateStudentMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,
+  //---classes----
+  useUpdateСlassesMutation,
+  useCreateСlassesMutation,
+  useDeleteСlassesMutation,
 } = managerApi;

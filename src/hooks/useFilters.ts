@@ -1,14 +1,15 @@
 import { useState } from "react";
 
-type FiltersType = {
-  [key: string]: string | number;
+export type BaseFiltersType = {
+  page: number;
+  take: number;
 };
-const defaultFilter: FiltersType = {
+const defaultFilter: BaseFiltersType = {
   page: 1,
   take: 10,
 };
-export const useFilters = (filters: FiltersType = {}) => {
-  const [filter, setFilter] = useState<FiltersType>({
+export const useFilters = <T>(filters: T) => {
+  const [filter, setFilter] = useState<BaseFiltersType & T>({
     ...defaultFilter,
     ...filters,
   });
