@@ -3,34 +3,31 @@ import Head from "next/head";
 import { Card, Container, Box, Tabs, Tab } from "@mui/material";
 import { useSettingsContext } from "../../../components/settings";
 import { ProfileCover } from "../../../sections/@dashboard/user/profile";
-import { useGetOrganizationQuery } from "src/redux/services/admin";
+import { useGetMySchoolsQuery } from "src/redux/services/manager";
 import Iconify from "../../../components/iconify";
 import SchoolProfileTab from "../../../sections/schools/tabs/profile/schoolProfileTab";
-import CustomizationTab from "../../../sections/@dashboard/organization/general/tabs/customization/customization";
-import SettingsTab from "../../../sections/@dashboard/organization/general/tabs/settings/settings";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../redux/store";
+import SchoolSettingTab from "../../../sections/schools/tabs/settings/SchoolSettingsTab";
+import SchoolContactsTab from "../../../sections/schools/tabs/contacts/SchoolContactsTab";
 
-// components
-// ----------------------------------------------------------------------
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-// ----------------------------------------------------------------------
-
 export default function UserProfilePage() {
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetOrganizationQuery();
+  const { data, isLoading } = useGetMySchoolsQuery();
 
+  console.log(school_id, 'qweqwe');
   const TABS = [
     {
       value: "profile",
-      label: "General1",
+      label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
       component: <SchoolProfileTab school_id={school_id}/>,
     },
@@ -38,17 +35,16 @@ export default function UserProfilePage() {
       value: "settings",
       label: "Settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
-      component: <SettingsTab />,
+      component: <SchoolSettingTab school_id={school_id}/>,
     },
     {
-      value: "customization",
-      label: "Customization",
-      icon: <Iconify icon="ic:round-dashboard-customize" />,
-      component: <CustomizationTab />,
+      value: "contacts",
+      label: "Contacts",
+      icon: <Iconify icon="ic:outline-contacts" />,
+      component: <SchoolContactsTab school_id={school_id}/>,
     },
   ];
 
-  console.log(data);
 
   return (
     <>

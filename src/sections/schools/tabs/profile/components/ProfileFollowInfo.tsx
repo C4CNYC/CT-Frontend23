@@ -1,5 +1,5 @@
 import { Card, Stack, Typography, Divider } from '@mui/material';
-import { fNumber } from '../../../../utils/formatNumber';
+import { fNumber } from '../../../../../utils/formatNumber';
 
 type Props = {
   students?: number | null;

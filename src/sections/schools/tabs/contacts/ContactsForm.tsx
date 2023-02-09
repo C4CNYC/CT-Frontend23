@@ -1,61 +1,86 @@
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
-import { Grid, Card, Stack, Box } from "@mui/material";
+import { Grid, Card, Stack, Box, Typography } from "@mui/material";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import FormProvider, {
-  RHFTextField,
-} from "../../../../../../components/hook-form";
-import { useUpdateOrgContactsMutation } from "src/redux/services/admin";
-import { ContactsResponce } from "src/redux/services/interfaces/organization.interface";
+  RHFTextField
+} from "../../../../components/hook-form";
+import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
+import { useUpdateSchoolContactsMutation } from "../../../../redux/services/manager";
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email("Email must be a valid email address"),
-  title: Yup.string().required("Title is required"),
   name: Yup.string().required("Name is required"),
   phone: Yup.string().required("Phone is required"),
+  technical_email: Yup.string().email("Email must be a valid email address"),
+  technical_name: Yup.string().required("Technical name is required"),
+  technical_phone: Yup.string().required("Technical phone is required"),
+  billing_email: Yup.string().email("Billing email must be a valid email address"),
+  billing_name: Yup.string().required("Billing name is required"),
+  billing_phone: Yup.string().required("Billing phone is required")
 });
 
 type FormValuesProps = {
+  school_id: string;
   email: string;
-  title: string;
   name: string;
   phone: string;
+  technical_email: string;
+  technical_name: string;
+  technical_phone: string;
+  billing_email: string;
+  billing_name: string;
+  billing_phone: string;
 };
 
 type ContactsFormProps = {
-  contacts?: ContactsResponce;
+  contacts?: SchoolContacts;
+  school_id: string;
 };
 
-export default function ContactsForm({ contacts }: ContactsFormProps) {
-  const [updateContacts, { isLoading }] = useUpdateOrgContactsMutation();
+export default function ContactsForm({ contacts, school_id }: ContactsFormProps) {
+  const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    email: contacts?.email || "",
-    title: contacts?.title || "",
-    name: contacts?.name || "",
-    phone: contacts?.phone || "",
+    school_id: school_id,
+    email: contacts?.email,
+    name: contacts?.name,
+    phone: contacts?.phone,
+    technical_email: contacts?.technical_email,
+    technical_name: contacts?.technical_name,
+    technical_phone: contacts?.technical_phone,
+    billing_email: contacts?.billing_email,
+    billing_name: contacts?.billing_name,
+    billing_phone: contacts?.billing_phone
   };
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
-    defaultValues,
+    defaultValues
   });
   const { handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await updateContacts({
+        school_id: data.school_id,
         email: data.email,
-        title: data.title,
         name: data.name,
         phone: data.phone,
+        technical_email: data.technical_email,
+        technical_name: data.technical_name,
+        technical_phone: data.technical_phone,
+        billing_email: data.billing_email,
+        billing_name: data.billing_name,
+        billing_phone: data.billing_phone
       });
       enqueueSnackbar("Update success!");
     } catch (error) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
       console.error(error);
     }
   };
@@ -65,26 +90,95 @@ export default function ContactsForm({ contacts }: ContactsFormProps) {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Card sx={{ p: 3 }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>Contacts</Typography>
+
             <Box
               rowGap={3}
               columnGap={2}
               display="grid"
               gridTemplateColumns={{
                 xs: "repeat(1, 1fr)",
-                sm: "repeat(2, 1fr)",
+                sm: "repeat(3, 1fr)",
               }}
               gridTemplateRows={{
-                xs: "repeat(3, 1fr)",
+                xs: "repeat(4, 1fr)",
+                sm: "repeat(2, 1fr)",
               }}
             >
+
               <RHFTextField name="name" label="Name" />
 
               <RHFTextField name="email" label="Email Address" />
 
-              <RHFTextField name="title" label="Title" />
-
               <Controller
                 name="phone"
+                rules={{ validate: matchIsValidTel }}
+                render={({ field, fieldState }) => (
+                  <MuiTelInput
+                    {...field}
+                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    error={fieldState.invalid}
+                  />
+                )}
+              />
+            </Box>
+
+
+            <Typography variant="h6" sx={{ mb: 2 }}>Technical Contacts</Typography>
+
+            <Box
+              rowGap={3}
+              columnGap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(3, 1fr)",
+              }}
+              gridTemplateRows={{
+                xs: "repeat(4, 1fr)",
+                sm: "repeat(2, 1fr)",
+              }}
+            >
+
+              <RHFTextField name="technical_name" label="Name" />
+
+              <RHFTextField name="technical_email" label="Email Address" />
+
+              <Controller
+                name="technical_phone"
+                rules={{ validate: matchIsValidTel }}
+                render={({ field, fieldState }) => (
+                  <MuiTelInput
+                    {...field}
+                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    error={fieldState.invalid}
+                  />
+                )}
+              />
+            </Box>
+
+            <Typography variant="h6" sx={{ mb: 2 }}>Billing Contacts</Typography>
+
+            <Box
+              rowGap={3}
+              columnGap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(3, 1fr)",
+              }}
+              gridTemplateRows={{
+                xs: "repeat(4, 1fr)",
+                sm: "repeat(2, 1fr)",
+              }}
+            >
+
+              <RHFTextField name="billing_name" label="Name" />
+
+              <RHFTextField name="billing_email" label="Email Address" />
+
+              <Controller
+                name="billing_phone"
                 rules={{ validate: matchIsValidTel }}
                 render={({ field, fieldState }) => (
                   <MuiTelInput

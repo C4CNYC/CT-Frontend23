@@ -110,7 +110,7 @@ const en = {
             user_settings_note:
               "Note: Only allow users to sign-up when invited by and teacher",
             lang_settings: "Language Settings:",
-            def_lang: "Default Organization Language:",
+            def_lang: "Default Language:",
             interactions_settings: "Interaction Settings:",
             interactions_settings_note:
               "Note: Users can not see or comments on external projects.",

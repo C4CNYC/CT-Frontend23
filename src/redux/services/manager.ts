@@ -2,16 +2,14 @@ import {createApi} from "@reduxjs/toolkit/query/react";
 import {BaseListResponseInterface, BaseResponseInterface} from "src/utils/baseResponce.interface";
 import {baseQueryWrapper} from "./helpers/base_query_wrapper";
 import {baseQueryWithAuth} from "./helpers/query_with_auth";
-import {SchoolProfile, SchoolProfileResponce, SchoolResponce} from "./interfaces/school.interface";
-import {OrganizationResponce} from "./interfaces/organization.interface";
-import {IUser} from "./interfaces/user.interface";
+import { SchoolProfile, SchoolContacts, SchoolResponce, SchoolSettings } from "./interfaces/school.interface";
 
 export const managerApi = createApi({
 	reducerPath: "api/manager",
 	baseQuery: baseQueryWithAuth(
 		baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/manager`)
 	),
-	tagTypes: ["School"],
+	tagTypes: ["School", "SchoolSettings", "SchoolContacts"],
 	endpoints: (builder) => ({
 		getMySchools: builder.query<
 			BaseListResponseInterface<SchoolResponce>,
@@ -44,12 +42,58 @@ export const managerApi = createApi({
 			}),
 			providesTags: ["School"],
 		}),
+		updateSchoolSettings: builder.mutation<
+			SchoolSettings & BaseResponseInterface,
+			SchoolSettings
+		>({
+			query: ({school_id, ...body }) => ({
+				url: `/school/${school_id}/setting/`,
+				method: "PATCH",
+				body,
+			}),
+			invalidatesTags: [{ type: "SchoolSettings" }],
+		}),
+		getSchoolSettings: builder.query<
+			SchoolSettings & BaseResponseInterface,
+			{ school_id: string }
+		>({
+			query: ({ school_id }) => ({
+				url: `/school/${school_id}/setting/`,
+				method: "GET",
+			}),
+			providesTags: ["SchoolSettings"],
+		}),
+		updateSchoolContacts: builder.mutation<
+			SchoolContacts & BaseResponseInterface,
+			SchoolContacts
+		>({
+			query: ({school_id, ...body }) => ({
+				url: `/school/${school_id}/contact/`,
+				method: "PATCH",
+				body,
+			}),
+			invalidatesTags: [{ type: "SchoolContacts" }],
+		}),
+		getSchoolContacts: builder.query<
+			SchoolContacts & BaseResponseInterface,
+			{ school_id: string }
+		>({
+			query: ({ school_id }) => ({
+				url: `/school/${school_id}/contact/`,
+				method: "GET",
+			}),
+			providesTags: ["SchoolContacts"],
+		}),
 	}),
 });
 
 export const {
 	useGetMySchoolsQuery,
 	useGetSchoolProfileQuery,
+	useGetSchoolSettingsQuery,
+	useGetSchoolContactsQuery,
 	//---------------- mutations --------------
-	useUpdateSchoolProfileMutation
+	useUpdateSchoolProfileMutation,
+	useUpdateSchoolSettingsMutation,
+	useUpdateSchoolContactsMutation,
 } = managerApi;

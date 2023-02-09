@@ -1,13 +1,10 @@
-import {Box, Container, Card, Grid, Typography, Stack, Link, TextFieldProps} from "@mui/material";
+import { Grid, Stack } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import SchoolProfileForm from "./form/SchoolProfileForm";
+import ProfileAbout from './components/ProfileAbout';
+import ProfileFollowInfo from './components/ProfileFollowInfo';
+import ProfileSocialInfo from './components/ProfileSocialInfo';
 import { useGetSchoolProfileQuery } from "src/redux/services/manager";
-import {useSettingsContext} from "../../../../components/settings";
-import { styled } from '@mui/material/styles';
-import ProfileAbout from './ProfileAbout';
-import ProfilePostCard from './ProfilePostCard';
-import ProfilePostInput from './ProfilePostInput';
-import ProfileFollowInfo from './ProfileFollowInfo';
-import ProfileSocialInfo from './ProfileSocialInfo';
 
 type Props =  {
   school_id: string;
@@ -17,7 +14,7 @@ export default function SchoolProfileTab({school_id} :Props) {
 
   const { data, isLoading } = useGetSchoolProfileQuery({school_id}, {skip: !school_id});
 
-  if (isLoading) return 'Loading';
+  if (isLoading) return <CircularProgress />;
 
   if (!data) return 'No data';
 
@@ -38,7 +35,7 @@ export default function SchoolProfileTab({school_id} :Props) {
           </Grid>
 
           <Grid item xs={12} md={8}>
-            {isLoading ? null : <SchoolProfileForm schoolProfile={data} />}
+            {isLoading ? null : <SchoolProfileForm schoolProfile={data} school_id={school_id}/>}
           </Grid>
 
         </Grid>

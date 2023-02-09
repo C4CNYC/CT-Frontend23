@@ -1,15 +1,12 @@
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import { Grid, Card, Typography, Stack, Box } from "@mui/material";
-import { fData } from "src/utils/formatNumber";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback } from "react";
 import {Controller, useForm} from "react-hook-form";
 import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFSelect,
   RHFTextField,
-  RHFUploadAvatar,
 } from "../../../../../components/hook-form";
 import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../../locales";
@@ -37,17 +34,19 @@ type FormValuesProps = {
 
 type SchoolProfileFormProps = {
   schoolProfile?: SchoolProfile;
+  school_id: string;
 };
 
 export default function SchoolProfileForm({
   schoolProfile,
+  school_id,
 }: SchoolProfileFormProps) {
   const { translate } = useLocales();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id: schoolProfile?.id,
+    school_id: school_id,
     name: schoolProfile?.name || "",
     country: schoolProfile?.country || "",
     address: schoolProfile?.address || "",
@@ -65,10 +64,9 @@ export default function SchoolProfileForm({
   const { setValue, handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
-    console.log(data);
     try {
       await updateSchoolProfile({
-        school_id: data.school_id,
+        school_id: school_id,
         name: data.name,
         country: data.country,
         address: data.address,

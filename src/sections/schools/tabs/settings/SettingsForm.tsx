@@ -5,13 +5,14 @@ import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
-} from "../../../../../../components/hook-form";
-import { useUpdateOrgSettingsMutation } from "src/redux/services/admin";
-import { SettingsResponce } from "src/redux/services/interfaces/organization.interface";
-import { useLocales } from "../../../../../../locales";
+} from "../../../../components/hook-form";
+import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager";
+import { useLocales } from "../../../../locales";
+import {SchoolSettings} from "../../../../redux/services/interfaces/school.interface";
 
 type FormValuesProps = {
   language: string;
+  school_id: string;
   marketplace_content_allowed: boolean;
   github_login_allowed: boolean;
   google_login_allowed: boolean;
@@ -22,16 +23,18 @@ type FormValuesProps = {
 };
 
 type SettingsFormProps = {
-  settings?: SettingsResponce;
+  settings?: SchoolSettings;
+  school_id: string;
 };
 
-export default function SettingsForm({ settings }: SettingsFormProps) {
-  const [updateSettings, { isLoading }] = useUpdateOrgSettingsMutation();
+export default function SettingsForm({ settings, school_id }: SettingsFormProps) {
+  const [updateSettings, { isLoading }] = useUpdateSchoolSettingsMutation();
   const { translate } = useLocales();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
+    school_id: school_id,
     language: settings?.language || "en",
     marketplace_content_allowed: settings?.marketplace_content_allowed || false,
     github_login_allowed: settings?.github_login_allowed || false,
@@ -52,6 +55,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await updateSettings({
+        school_id: school_id,
         language: data.language,
         marketplace_content_allowed: data.marketplace_content_allowed,
         github_login_allowed: data.github_login_allowed,

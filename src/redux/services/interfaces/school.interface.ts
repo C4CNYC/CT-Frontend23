@@ -32,6 +32,31 @@ export interface SchoolProfile {
   about?: string;
 }
 
+export interface SchoolSettings {
+  school_id: string;
+  language?: string;
+  marketplace_content_allowed: boolean;
+  github_login_allowed: boolean;
+  google_login_allowed: boolean;
+  invite_only: boolean;
+  chat_allowed: boolean;
+  gallery_allowed: boolean;
+  global_gallery_allowed: boolean;
+}
+
+
+export interface SchoolContacts {
+  school_id: string;
+  email: string;
+  name: string;
+  phone: string;
+  technical_email: string;
+  technical_name: string;
+  technical_phone: string;
+  billing_email: string;
+  billing_name: string;
+  billing_phone: string;
+}
 
 export interface OrganizationSchoolResponse extends BaseResponseInterface {
   name: string;
