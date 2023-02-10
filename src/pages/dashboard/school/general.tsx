@@ -7,11 +7,13 @@ import { useGetMySchoolsQuery } from "src/redux/services/manager";
 import Iconify from "../../../components/iconify";
 import SchoolProfileTab from "../../../sections/schools/tabs/profile/schoolProfileTab";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
-import {useSelector} from "react-redux";
-import {RootState} from "../../../redux/store";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 import SchoolSettingTab from "../../../sections/schools/tabs/settings/SchoolSettingsTab";
 import SchoolContactsTab from "../../../sections/schools/tabs/contacts/SchoolContactsTab";
-
+import SocialsTab from "../../../sections/schools/tabs/socials/SocialsTab";
+import { BsPeopleFill } from "react-icons/bs";
+import { MdContacts } from "react-icons/md";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
@@ -23,26 +25,31 @@ export default function UserProfilePage() {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetMySchoolsQuery();
 
-  console.log(school_id, 'qweqwe');
   const TABS = [
     {
       value: "profile",
       label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <SchoolProfileTab school_id={school_id}/>,
+      component: <SchoolProfileTab school_id={school_id} />
     },
     {
       value: "settings",
       label: "Settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
-      component: <SchoolSettingTab school_id={school_id}/>,
+      component: <SchoolSettingTab school_id={school_id} />
     },
     {
       value: "contacts",
       label: "Contacts",
-      icon: <Iconify icon="ic:outline-contacts" />,
-      component: <SchoolContactsTab school_id={school_id}/>,
+      icon: <MdContacts />,
+      component: <SchoolContactsTab school_id={school_id} />
     },
+    {
+      value: "socials",
+      label: "Social Networks",
+      icon: <BsPeopleFill />,
+      component: <SocialsTab school_id={school_id} />
+    }
   ];
 
 
@@ -56,7 +63,7 @@ export default function UserProfilePage() {
           sx={{
             mb: 3,
             height: 280,
-            position: "relative",
+            position: "relative"
           }}
         >
           <ProfileCover
@@ -77,9 +84,9 @@ export default function UserProfilePage() {
                 pr: { md: 3 },
                 justifyContent: {
                   sm: "center",
-                  md: "flex-end",
-                },
-              },
+                  md: "flex-end"
+                }
+              }
             }}
           >
             {TABS.map((tab) => (

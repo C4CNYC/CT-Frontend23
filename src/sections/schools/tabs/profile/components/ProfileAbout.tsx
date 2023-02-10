@@ -22,20 +22,20 @@ export default function ProfileAbout({data}: Props) {
     <Card>
       <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{data?.about}</Typography>
+        <Typography variant="body2">{data?.about || "N/A"}</Typography>
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
           <Typography variant="body2">
             Live at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {data?.country}, {data?.city}
+              {data?.country || "N/A"}, {data?.city || "N/A"}
             </Link>
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <StyledIcon icon="eva:email-fill" />
-          <Typography variant="body2">{data?.email}</Typography>
+          <Typography variant="body2">{data?.email || "N/A"}</Typography>
         </Stack>
         <Stack direction="row">
           <StyledIcon icon="ic:round-business-center" />
@@ -54,7 +54,7 @@ export default function ProfileAbout({data}: Props) {
           <Typography variant="body2">
             Phone &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {data?.phone || "No phone"}
+              {data?.phone || "N/A"}
             </Link>
           </Typography>
         </Stack>

@@ -93,7 +93,7 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
             <Typography variant="h6" sx={{ mb: 2 }}>Contacts</Typography>
 
             <Box
-              rowGap={3}
+              rowGap={2}
               columnGap={2}
               display="grid"
               gridTemplateColumns={{
@@ -123,11 +123,10 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
               />
             </Box>
 
-
             <Typography variant="h6" sx={{ mb: 2 }}>Technical Contacts</Typography>
 
             <Box
-              rowGap={3}
+              rowGap={2}
               columnGap={2}
               display="grid"
               gridTemplateColumns={{
@@ -160,7 +159,7 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
             <Typography variant="h6" sx={{ mb: 2 }}>Billing Contacts</Typography>
 
             <Box
-              rowGap={3}
+              rowGap={2}
               columnGap={2}
               display="grid"
               gridTemplateColumns={{

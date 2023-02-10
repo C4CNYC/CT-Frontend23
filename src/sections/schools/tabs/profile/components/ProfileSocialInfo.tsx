@@ -1,38 +1,36 @@
 import { Link, Card, CardHeader, Stack } from '@mui/material';
-import { IUserSocialLink } from '../../../../../@types/user';
-import Iconify from '../../../../../components/iconify';
-
+import { SOCIAL_ICONS } from "../../../../../assets/data"
 
 type Props = {
-  // socialLinks: IUserSocialLink;
+  socialLinks?: [];
+  SOCIAL_ICONS?: [];
 };
 
-export default function ProfileSocialInfo() {
-  // const { facebookLink, instagramLink, linkedinLink, twitterLink } = socialLinks;
+
+export default function ProfileSocialInfo({socialLinks}: Props) {
 
   return (
     <Card>
       <CardHeader title="Social" />
-
       <Stack spacing={2} sx={{ p: 3 }}>
-        {/*{_socials.map((link) => (*/}
-          <Stack  direction="row" sx={{ wordBreak: 'break-all' }}>
-            {/*<Iconify*/}
-            {/*  // icon={link.icon}*/}
-            {/*  sx={{*/}
-            {/*    mr: 2,*/}
-            {/*    flexShrink: 0,*/}
-            {/*    // color: link.color,*/}
-            {/*  }}*/}
-            {/*/>*/}
-            <Link component="span" variant="body2" color="text.primary">
-              {/*{(link.value === 'facebook' && facebookLink) ||*/}
-              {/*  (link.value === 'instagram' && instagramLink) ||*/}
-              {/*  (link.value === 'linkedin' && linkedinLink) ||*/}
-              {/*  twitterLink}*/}
+        {socialLinks?.map((item: any) => (
+          <Stack direction="row" sx={{ wordBreak: 'break-all' }} key={item.id}>
+            <Link
+              component="a"
+              href={item.link}
+              target="_blank"
+              variant="body2"
+              color="text.primary"
+              sx={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              {SOCIAL_ICONS[item.type]}
+              <Stack sx={{ml: 1}}>{item.link}</Stack>
             </Link>
           </Stack>
-        {/*))}*/}
+        ))}
       </Stack>
     </Card>
   );

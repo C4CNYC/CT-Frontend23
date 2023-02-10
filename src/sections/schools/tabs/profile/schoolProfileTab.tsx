@@ -2,7 +2,7 @@ import { Grid, Stack } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import SchoolProfileForm from "./form/SchoolProfileForm";
 import ProfileAbout from './components/ProfileAbout';
-import ProfileFollowInfo from './components/ProfileFollowInfo';
+import ProfileUsersInfo from './components/ProfileUsersInfo';
 import ProfileSocialInfo from './components/ProfileSocialInfo';
 import { useGetSchoolProfileQuery } from "src/redux/services/manager";
 
@@ -16,7 +16,7 @@ export default function SchoolProfileTab({school_id} :Props) {
 
   if (isLoading) return <CircularProgress />;
 
-  if (!data) return 'No data';
+  if (!data) return <>No Data</>;
 
   return (
     <>
@@ -28,12 +28,11 @@ export default function SchoolProfileTab({school_id} :Props) {
         >
           <Grid item xs={12} md={4}>
             <Stack spacing={3}>
-              <ProfileFollowInfo />
+              <ProfileUsersInfo student_count={data?.student_count} teacher_count={data?.teacher_count}/>
               <ProfileAbout data={data}/>
-              <ProfileSocialInfo />
+              <ProfileSocialInfo socialLinks={data?.socials}/>
             </Stack>
           </Grid>
-
           <Grid item xs={12} md={8}>
             {isLoading ? null : <SchoolProfileForm schoolProfile={data} school_id={school_id}/>}
           </Grid>

@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import SettingsForm from "./SettingsForm";
 import { useGetSchoolSettingsQuery } from "src/redux/services/manager";
+import CircularProgress from "@mui/material/CircularProgress";
+import React from "react";
 
 type Props = {
   school_id: string;
@@ -9,11 +11,9 @@ type Props = {
 export default function SchoolSettingTab({ school_id } :Props) {
   const { data, isLoading } = useGetSchoolSettingsQuery({school_id}, {skip: !school_id});
 
-  if (isLoading) return 'Loading';
+  if (isLoading) return <CircularProgress />;
 
-  if (!data) return 'No data';
-
-  console.log(data.id)
+  if (!data) return <>No Data</>;
 
   return (
     <>

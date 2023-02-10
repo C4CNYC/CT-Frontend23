@@ -22,6 +22,7 @@ export interface OrganizationSchoolRequest {
 }
 
 export interface SchoolProfile {
+  email?: string,
   name?: string;
   school_id: string;
   country?: string;
@@ -30,6 +31,16 @@ export interface SchoolProfile {
   active?: boolean;
   phone?: string;
   about?: string;
+  socials?: [];
+  student_count?: number;
+  teacher_count?: number;
+}
+
+export interface SchoolSocials {
+  id: string;
+  link: string;
+  name?: string;
+  type: string;
 }
 
 export interface SchoolSettings {
