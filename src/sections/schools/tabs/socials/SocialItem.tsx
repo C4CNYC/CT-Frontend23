@@ -91,22 +91,6 @@ export default function SocialItem({ school_id, socialItem }: Props) {
   return (
     <>
       <Stack direction="row" sx={{ wordBreak: "break-all" }} key={socialItem.type}>
-        <Link
-          component="a"
-          href={socialItem.link}
-          target="_blank"
-          variant="body2"
-          color="text.primary"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            mb: 4,
-            mt: 4
-          }}
-        >
-          {/*<Stack sx={{ ml: 1, mr: 2 }}>{socialItem.link}</Stack>*/}
-        </Link>
-        {/*{edit &&*/}
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(handleEditSocial)}
@@ -128,6 +112,7 @@ export default function SocialItem({ school_id, socialItem }: Props) {
             </Box>
             <RHFTextField
               sx={{
+                height: '20px',
                 width: "350px",
                 "& fieldset": {
                   borderTopRightRadius: 0,
