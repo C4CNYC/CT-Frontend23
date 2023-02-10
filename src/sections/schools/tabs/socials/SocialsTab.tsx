@@ -33,6 +33,7 @@ export default function SocialsTab({ school_id }: Props) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Card sx={{ p: 3 }}>
+              {isLoading ? null : <SocialsForm socialLinks={data.socials} school_id={school_id} />}
               <Typography variant="h6" sx={{ mb: 2 }}>Your networks</Typography>
               {socialLinks?.map((item: any) => (
                 <Stack direction="row" sx={{ wordBreak: "break-all" }} key={item.id}>
@@ -42,8 +43,6 @@ export default function SocialsTab({ school_id }: Props) {
                   />
                 </Stack>
               ))}
-              {isLoading ? null : <SocialsForm socialLinks={data.socials} school_id={school_id} />}
-
             </Card>
           </Grid>
         </Grid>

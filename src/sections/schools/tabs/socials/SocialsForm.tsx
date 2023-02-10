@@ -45,7 +45,7 @@ export default function SocialsForm({ school_id }: SocialFormProps) {
     school_id: school_id,
     link: "",
     name: "",
-    type: ""
+    type: "youtube"
   };
 
   const methods = useForm<FormValuesProps>({
@@ -75,39 +75,49 @@ export default function SocialsForm({ school_id }: SocialFormProps) {
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-            <Box
-              rowGap={1}
-              columnGap={2}
-              display="flex"
+          <Box
+            rowGap={1}
+            columnGap={2}
+            display="flex"
+          >
+            <RHFSelect
+              name="type"
+              label="Network"
+              sx={{
+                width: "106px", height: "44px !important",
+                "& .MuiOutlinedInput-root": {
+                  padding: "0 !important",
+                  height: "56px"
+                },
+                "& .MuiSelect-select": {
+                  display: "flex",
+                  justifyContent: "center"
+                }
+              }}>
+              {Socials.map((anObjectMapped, index) => {
+                return (
+                  <MenuItem
+                    value={anObjectMapped.name}
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center"
+                    }}>
+                    {anObjectMapped.icon}
+                  </MenuItem>
+                );
+              })}
+            </RHFSelect>
+            <RHFTextField name="link" label="Link" sx={{ maxWidth: "410px", height: "86px" }} />
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isLoading}
+              sx={{ height: "54px", pl: 4, pr: 4 }}
             >
-              <RHFSelect
-                name="type"
-                label="Network"
-                sx={{
-                  width: "106px", height: "44px !important",
-                  "& .MuiOutlinedInput-root": {
-                    padding: "0 !important",
-                    height: '56px'
-                  }
-                }}>
-                {Socials.map((anObjectMapped, index) => {
-                  return (
-                    <MenuItem value={anObjectMapped.name} key={index}>
-                      {anObjectMapped.icon}
-                    </MenuItem>
-                  );
-                })}
-              </RHFSelect>
-              <RHFTextField name="link" label="Link" sx={{ maxWidth: "410px", height: "86px" }} />
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isLoading}
-                sx={{height: '54px', pl: 4, pr: 4}}
-              >
-                Add
-              </LoadingButton>
-            </Box>
+              Add
+            </LoadingButton>
+          </Box>
         </Grid>
       </Grid>
     </FormProvider>
