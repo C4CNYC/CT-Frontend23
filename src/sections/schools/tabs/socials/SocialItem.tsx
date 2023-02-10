@@ -106,13 +106,14 @@ export default function SocialItem({ school_id, socialItem }: Props) {
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
                 alignItems: 'center',
-                padding: '0 10px'
+                padding: '0 10px',
+                height: '40px'
               }}>
               {SOCIAL_ICONS[socialItem.type]}
             </Box>
             <RHFTextField
+              size="small"
               sx={{
-                height: '20px',
                 width: "350px",
                 "& fieldset": {
                   borderTopRightRadius: 0,
@@ -130,11 +131,14 @@ export default function SocialItem({ school_id, socialItem }: Props) {
             <LoadingButton
               type="submit"
               variant="contained"
+              size="small"
               disabled={edit || !isFormEdited}
               sx={{
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
-                textTransform: "lowercase"
+                textTransform: "lowercase",
+                height: '40px'
+
               }}
             >
               Save
@@ -142,12 +146,12 @@ export default function SocialItem({ school_id, socialItem }: Props) {
             <LoadingButton
               variant="outlined"
               onClick={() => setEdit(!edit)}
-              sx={{ml: 2, height: "56px"}}
+              sx={{ml: 2, height: "40px"}}
             >
               {edit ? "Edit" : 'Cancel'}
             </LoadingButton>
             <LoadingButton
-              sx={{ml: 2, mr: 2, height: "56px"}}
+              sx={{ml: 2, mr: 2, height: "40px"}}
               variant="outlined"
               color="error"
               onClick={() => handleDeleteSocial(socialItem.id)}
