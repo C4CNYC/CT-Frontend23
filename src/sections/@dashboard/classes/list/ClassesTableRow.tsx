@@ -21,6 +21,8 @@ import _mock from "src/_mock";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddClassDialog from "../../schools/CreateClassDialog";
+import Link from "next/link";
+import { PATH_DASHBOARD } from "src/routes/paths";
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +41,7 @@ export default function ClassesTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { name, active, createdAt } = row;
+  const { name, active, total_students, createdAt } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -72,7 +74,9 @@ export default function ClassesTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{name}</TableCell>
+        <TableCell align="left">
+          {name}
+        </TableCell>
 
         <TableCell align="left">
           <Label
@@ -80,7 +84,7 @@ export default function ClassesTableRow({
             color="secondary"
             sx={{ textTransform: "capitalize" }}
           >
-            0
+            {total_students}
           </Label>
         </TableCell>
 
@@ -114,17 +118,7 @@ export default function ClassesTableRow({
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <MenuItem
-          onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
-          }}
-          sx={{ color: "error.main" }}
-        >
-          <Iconify icon="eva:trash-2-outline" />
-          Delete
-        </MenuItem>
-         <AddClassDialog
+        <AddClassDialog
           isEdit
           defaultValues={{ name: row.name }}
           updateClass={(name) => {
@@ -136,7 +130,21 @@ export default function ClassesTableRow({
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>
-        </AddClassDialog> 
+        </AddClassDialog>
+        <MenuItem  component={Link} href={PATH_DASHBOARD.school.setting}>
+          <Iconify icon="ant-design:setting-outlined" />
+          Settings
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleOpenConfirm();
+            handleClosePopover();
+          }}
+          sx={{ color: "error.main" }}
+        >
+          <Iconify icon="eva:trash-2-outline" />
+          Delete
+        </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog

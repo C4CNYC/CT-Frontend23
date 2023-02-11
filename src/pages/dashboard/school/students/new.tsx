@@ -11,11 +11,12 @@ import { useSettingsContext } from "../../../../components/settings";
 import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
 // sections
 import StudentNewEditForm from "src/sections/@dashboard/student/StudentNewEditForm";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 
 // ----------------------------------------------------------------------
 
 UserCreatePage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
 // ----------------------------------------------------------------------

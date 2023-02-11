@@ -149,7 +149,7 @@ export default function UserListPage() {
   return (
     <>
       <Head>
-        <title> Students | CodeTribe</title>
+        <title> Classes | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

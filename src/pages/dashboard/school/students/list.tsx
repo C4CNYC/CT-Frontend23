@@ -49,6 +49,7 @@ import { useDeleteStudentMutation, useGetStudentsQuery } from "src/redux/service
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +68,7 @@ const TABLE_HEAD = [
 // ----------------------------------------------------------------------
 
 UserListPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
 // ----------------------------------------------------------------------
@@ -136,7 +137,7 @@ export default function UserListPage() {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="User List"
+          heading="Students"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Students", href: PATH_DASHBOARD.organization.root },

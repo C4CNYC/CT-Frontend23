@@ -11,11 +11,12 @@ import StudentNewEditForm from "src/sections/@dashboard/student/StudentNewEditFo
 import { useGetStudentQuery } from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 
 // ----------------------------------------------------------------------
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
 // ----------------------------------------------------------------------
@@ -33,7 +34,7 @@ export default function UserEditPage() {
   return (
     <>
       <Head>
-        <title> User: Edit user | Minimal UI</title>
+        <title> Student: Edit student | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

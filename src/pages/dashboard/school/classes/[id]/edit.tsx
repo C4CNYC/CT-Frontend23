@@ -4,18 +4,18 @@ import { useRouter } from "next/router";
 import { Container } from "@mui/material";
 import CustomBreadcrumbs from "src/components/custom-breadcrumbs";
 import { useSettingsContext } from "src/components/settings";
-import DashboardLayout from "src/layouts/dashboard";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import { _userList } from "src/_mock/arrays";
 import StudentNewEditForm from "src/sections/@dashboard/student/StudentNewEditForm";
 import { useGetStudentQuery } from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 
 // ----------------------------------------------------------------------
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
 // ----------------------------------------------------------------------
