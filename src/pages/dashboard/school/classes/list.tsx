@@ -42,7 +42,7 @@ import {
   UserTableToolbar,
 } from "../../../../sections/@dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
-import { useCreateСlassesMutation, useDeleteСlassesMutation, useGetClassesQuery } from "src/redux/services/manager";
+import { useCreateClassesMutation, useDeleteClassesMutation, useGetClassesQuery } from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
@@ -50,7 +50,7 @@ import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import { ClassesTableRow } from "src/sections/@dashboard/classes/list";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
 import AddClassDialog from "src/sections/@dashboard/schools/CreateClassDialog";
-import { useUpdateСlassesMutation } from "src/redux/services/manager";
+import { useUpdateClassesMutation } from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -96,9 +96,9 @@ export default function UserListPage() {
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({ name: "" });
 
-  const [updateClassByManager] = useUpdateСlassesMutation();
-  const [createClassByManager] = useCreateСlassesMutation();
-  const [deleteCasses] = useDeleteСlassesMutation();
+  const [updateClassByManager] = useUpdateClassesMutation();
+  const [createClassByManager] = useCreateClassesMutation();
+  const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { school_id, ...filters },
     { skip: !school_id }

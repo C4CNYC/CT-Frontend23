@@ -6,7 +6,7 @@ import {
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
-import { SchoolResponce } from "./interfaces/school.interface";
+import { SchoolResponce, SchoolProfile, SchoolContacts, SchoolSocials, SchoolSettings } from "./interfaces/school.interface";
 import { IStudent, UserSearchParams } from "./interfaces/user.interface";
 
 export const managerApi = createApi({
@@ -14,7 +14,7 @@ export const managerApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/manager`)
   ),
-  tagTypes: ["School", "Students", "Classes"],
+  tagTypes: ["School", "Students", "Classes",  "SchoolSettings", "SchoolContacts"],
   endpoints: (builder) => ({
     getMySchools: builder.query<
       BaseListResponseInterface<SchoolResponce>,
@@ -88,7 +88,7 @@ export const managerApi = createApi({
       }),
       providesTags: ["Classes"],
     }),
-    createСlasses: builder.mutation<void, { school_id: string; name: string }>({
+    createClasses: builder.mutation<void, { school_id: string; name: string }>({
       query: ({ school_id, ...body }) => ({
         url: `/school/${school_id}/class`,
         method: "POST",
@@ -96,7 +96,7 @@ export const managerApi = createApi({
       }),
       invalidatesTags: ["Classes"],
     }),
-    updateСlasses: builder.mutation<
+    updateClasses: builder.mutation<
       void,
       { school_id: string; class_id: string; name: string }
     >({
@@ -107,7 +107,7 @@ export const managerApi = createApi({
       }),
       invalidatesTags: ["Classes"],
     }),
-    deleteСlasses: builder.mutation<
+    deleteClasses: builder.mutation<
       void,
       { school_id: string; class_id: string }
     >({
@@ -116,6 +116,101 @@ export const managerApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Classes"],
+    }),
+    updateSchoolProfile: builder.mutation<
+      SchoolProfile & BaseResponseInterface,
+      SchoolProfile
+    >({
+      query: ({school_id, ...body}) => ({
+        url: `school/${school_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{type: "School"}],
+    }),
+    getSchoolProfile: builder.query<
+      SchoolProfile & BaseResponseInterface,
+      { school_id: string }
+    >({
+      query: ({ school_id }) => ({
+        url: `/school/${school_id}`,
+        method: "GET",
+      }),
+      providesTags: ["School"],
+    }),
+    updateSchoolSettings: builder.mutation<
+      SchoolSettings & BaseResponseInterface,
+      SchoolSettings
+    >({
+      query: ({school_id, ...body }) => ({
+        url: `/school/${school_id}/setting/`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "SchoolSettings" }],
+    }),
+    getSchoolSettings: builder.query<
+      SchoolSettings & BaseResponseInterface,
+      { school_id: string }
+    >({
+      query: ({ school_id }) => ({
+        url: `/school/${school_id}/setting/`,
+        method: "GET",
+      }),
+      providesTags: ["SchoolSettings"],
+    }),
+    updateSchoolContacts: builder.mutation<
+      SchoolContacts & BaseResponseInterface,
+      SchoolContacts
+    >({
+      query: ({school_id, ...body }) => ({
+        url: `/school/${school_id}/contact/`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "SchoolContacts" }],
+    }),
+    getSchoolContacts: builder.query<
+      SchoolContacts & BaseResponseInterface,
+      { school_id: string }
+    >({
+      query: ({ school_id }) => ({
+        url: `/school/${school_id}/contact/`,
+        method: "GET",
+      }),
+      providesTags: ["SchoolContacts"],
+    }),
+    createSchoolSocial: builder.mutation<
+      SchoolSocials & BaseResponseInterface,
+      { school_id: string }
+    >({
+      query: ({school_id, ...body }) => ({
+        url: `/school/${school_id}/social`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
+    deleteSchoolSocial: builder.mutation<
+      SchoolSocials & BaseResponseInterface,
+      { school_id: string; social_id: string }
+    >({
+      query: ({school_id, social_id }) => ({
+        url: `/school/${school_id}/social/${social_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
+    updateSchoolSocial: builder.mutation<
+      SchoolSocials & BaseResponseInterface,
+      { school_id: string; social_id: string }
+    >({
+      query: ({school_id, social_id, ...body }) => ({
+        url: `/school/${school_id}/social/${social_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "School" }],
     }),
   }),
 });
@@ -126,12 +221,27 @@ export const {
   useGetStudentQuery,
   //---classes----
   useGetClassesQuery,
+  useGetSchoolProfileQuery,
+  useGetSchoolSettingsQuery,
+  useGetSchoolContactsQuery,
+  //---social links----
+
+
   //---------------- mutations --------------
   useUpdateStudentMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,
   //---classes----
-  useUpdateСlassesMutation,
-  useCreateСlassesMutation,
-  useDeleteСlassesMutation,
+  useUpdateClassesMutation,
+  useCreateClassesMutation,
+  useDeleteClassesMutation,
+  //---school settings----
+  useUpdateSchoolProfileMutation,
+  useUpdateSchoolSettingsMutation,
+  useUpdateSchoolContactsMutation,
+  //---social links----
+  useCreateSchoolSocialMutation,
+  useDeleteSchoolSocialMutation,
+  useUpdateSchoolSocialMutation
+
 } = managerApi;
