@@ -1,5 +1,4 @@
 import { useState } from "react";
-// @mui
 import {
   Avatar,
   Button,
@@ -7,14 +6,12 @@ import {
   ListItem,
   MenuItem,
   ListItemText,
-  ListItemAvatar,
+  ListItemAvatar
 } from "@mui/material";
-// components
 import Iconify from "../../../components/iconify";
 import MenuPopover from "../../../components/menu-popover";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import _mock from "src/_mock";
 
 // ----------------------------------------------------------------------
 
@@ -23,10 +20,10 @@ type Props = {
   handleDeleteTeacher: () => void;
 };
 
-export default function FileInvitedItem({
-  person,
-  handleDeleteTeacher,
-}: Props) {
+export default function TeacherItem({
+                                      person,
+                                      handleDeleteTeacher
+                                    }: Props) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -66,11 +63,11 @@ export default function FileInvitedItem({
             textTransform: "unset",
             fontWeight: "fontWeightMedium",
             "& .MuiButton-endIcon": {
-              ml: 0,
+              ml: 0
             },
             ...(openPopover && {
-              bgcolor: "action.selected",
-            }),
+              bgcolor: "action.selected"
+            })
           }}
         ></Button>
       </ListItem>

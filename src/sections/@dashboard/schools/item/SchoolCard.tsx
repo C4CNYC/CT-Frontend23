@@ -1,5 +1,4 @@
 import { useState } from "react";
-// @mui
 import {
   Box,
   Card,
@@ -10,18 +9,15 @@ import {
   CardProps,
   IconButton,
 } from "@mui/material";
-// hooks
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
 import TextMaxLine from "../../../../components/text-max-line";
-import { useSnackbar } from "../../../../components/snackbar";
+import { useSnackbar } from "notistack";
 import ConfirmDialog from "../../../../components/confirm-dialog";
-//
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import Image from "next/image";
-import { SchoolResponce } from "src/redux/services/admin";
+import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
 import { useLocales } from "../../../../locales";
-// ----------------------------------------------------------------------
 
 interface Props extends CardProps {
   school: SchoolResponce;

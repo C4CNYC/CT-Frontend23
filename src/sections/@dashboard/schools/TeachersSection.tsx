@@ -13,10 +13,9 @@ import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
 } from "src/redux/services/admin";
-import { SHARED_PERSON } from "src/_mock/arrays";
-import FileInvitedItem from "./FileInvitedItem";
 import InviteUser from "./InviteUserDialog";
 import Image from "next/image";
+import TeacherItem from './TeacherItem'
 
 type TeacherSectionProps = {
   school_id: string;
@@ -92,7 +91,7 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
           {teachers &&
             teachers.data.map((person) => (
-              <FileInvitedItem
+              <TeacherItem
                 handleDeleteTeacher={() => handleDeleteTeacher(person.id)}
                 key={person.id}
                 person={person}
@@ -129,9 +128,7 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
         teachersIds={teachersIds || []}
         schoolId={school_id}
         open={openShare}
-        shared={SHARED_PERSON}
         inviteEmail="email@codetribe.io"
-        onCopyLink={() => {}}
         onClose={() => {
           setOpenShare(false);
         }}

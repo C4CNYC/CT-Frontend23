@@ -1,30 +1,15 @@
-import { useState } from "react";
 import {
   Stack,
   Drawer,
   Divider,
   Typography,
   DrawerProps,
-  IconButton,
-  List,
-  Collapse,
 } from "@mui/material";
 import Image from "next/image";
 import Scrollbar from "../../../../components/scrollbar";
 import { countries } from "../../../../assets/data";
 import * as React from "react";
-import FileShareDialog from "../FileShareDialog";
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
-import Iconify from "src/components/iconify";
-import FileInvitedItem from "../FileInvitedItem";
-import { SHARED_PERSON } from "src/_mock/arrays/_files";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
-import {
-  useDeleteTeacherMutation,
-  useGetTeacherListQuery,
-} from "src/redux/services/admin";
-import { useSnackbar } from "notistack";
 import TeacherSection from "../TeachersSection";
 import ClassSection from "../ClassSection";
 

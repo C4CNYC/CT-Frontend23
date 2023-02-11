@@ -1,19 +1,13 @@
-// @mui
 import {
   Avatar,
   Button,
   Tooltip,
   ListItem,
   ListItemText,
-  ListItemAvatar,
+  ListItemAvatar
 } from "@mui/material";
-
-// components
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import _mock from "src/_mock";
-import { useAddTeacherMutation } from "src/redux/services/admin";
-import { useSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +21,7 @@ export default function UserItem({ person, addHandler, invited }: Props) {
   return (
     <>
       <ListItem disableGutters>
+
         <ListItemAvatar>
           <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
         </ListItemAvatar>
@@ -51,6 +46,7 @@ export default function UserItem({ person, addHandler, invited }: Props) {
         >
           {invited ? "Invited" : "Add"}
         </Button>
+
       </ListItem>
     </>
   );

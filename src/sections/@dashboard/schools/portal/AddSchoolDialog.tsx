@@ -11,7 +11,7 @@ import FormProvider, {
 import { Box, Card, Grid } from "@mui/material";
 import { countries } from "../../../../assets/data";
 import { LoadingButton } from "@mui/lab";
-import { useSnackbar } from "../../../../components/snackbar";
+import { useSnackbar } from "notistack";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

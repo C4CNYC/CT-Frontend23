@@ -1,25 +1,19 @@
 import { useState } from "react";
-// @mui
 import {
   Avatar,
   Button,
-  Tooltip,
   ListItem,
   MenuItem,
   ListItemText,
-  ListItemAvatar,
+  ListItemAvatar
 } from "@mui/material";
-// components
 import Iconify from "../../../components/iconify";
 import MenuPopover from "../../../components/menu-popover";
-import _mock from "src/_mock";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddClassDialog from "./CreateClassDialog";
 import { useSnackbar } from "notistack";
 import { useUpdateClassMutation } from "src/redux/services/admin";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
@@ -50,11 +44,11 @@ export default function ClassItem({ classes, handleDeleteClass, schoolId }: Prop
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
-  }
+  };
 
   return (
     <>
-      <ListItem disableGutters>
+      <ListItem disableGutters sx={{ borderBottom: "solid 1px rgba(145, 158, 171, 0.24)" }}>
         <ListItemAvatar>
           <Avatar alt={classes.name} src="/assets/images/classes.png" />
         </ListItemAvatar>
@@ -69,18 +63,18 @@ export default function ClassItem({ classes, handleDeleteClass, schoolId }: Prop
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon="eva:chevron-down-fill" />}
+          endIcon={<Iconify icon="eva:more-vertical-fill" />}
           onClick={handleOpenPopover}
           sx={{
             flexShrink: 0,
             textTransform: "unset",
             fontWeight: "fontWeightMedium",
             "& .MuiButton-endIcon": {
-              ml: 0,
+              ml: 0
             },
             ...(openPopover && {
-              bgcolor: "action.selected",
-            }),
+              bgcolor: "action.selected"
+            })
           }}
         ></Button>
       </ListItem>
@@ -93,14 +87,17 @@ export default function ClassItem({ classes, handleDeleteClass, schoolId }: Prop
         <>
           <AddClassDialog
             isEdit
-            defaultValues={{ name: classes.name }} 
-            updateClass={updateClassByAdmin}
+            defaultValues={{ name: classes.name }}
+            updateClass={() => {
+              updateClassByAdmin;
+              handleClosePopover();
+            }}
           >
             <MenuItem>
-            <Iconify icon="eva:edit-fill" />
-            Edit
-          </MenuItem>
-        </AddClassDialog>
+              <Iconify icon="eva:edit-fill" />
+              Edit
+            </MenuItem>
+          </AddClassDialog>
           <MenuItem
             onClick={() => {
               handleDeleteClass();
