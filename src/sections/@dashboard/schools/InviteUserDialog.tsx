@@ -19,8 +19,7 @@ import {
 import Scrollbar from "../../../components/scrollbar";
 import UserItem from "./UserItem";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useSendInviteMutation } from "../../../redux/services/admin";
-import { useSnackbar } from "../../../components/snackbar";
+import { useSnackbar } from "notistack";
 
 // ----------------------------------------------------------------------
 

@@ -1,13 +1,8 @@
 import { useRef } from "react";
-// @mui
 import { Box } from "@mui/material";
-// components
 import { TableProps } from "../../../../components/table";
-//
 import SchoolCard from "../item/SchoolCard";
-import { useLocales } from "../../../../locales";
-
-// ----------------------------------------------------------------------
+import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
 
 type Props = {
   table: TableProps;

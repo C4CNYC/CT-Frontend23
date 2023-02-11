@@ -48,6 +48,7 @@ export default function AddClassDialog({ isEdit = false, createClass, updateClas
     } else {
       createClass && createClass(data.name);
     }
+    handleClose();
   }
 
   return (
