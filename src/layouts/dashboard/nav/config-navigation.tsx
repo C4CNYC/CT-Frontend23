@@ -82,7 +82,7 @@ export const content = {
   items: [
     {
       title: "courses",
-      path: PATH_DASHBOARD.school.modules,
+      path: PATH_DASHBOARD.courses.root,
       icon: <MdPlayLesson />,
     },
     {
