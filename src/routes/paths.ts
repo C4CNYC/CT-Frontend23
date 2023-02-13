@@ -66,7 +66,7 @@ export const PATH_DASHBOARD = {
     students: path(ROOTS_DASHBOARD, "/school/students/list"),
     classes: path(ROOTS_DASHBOARD, "/school/classes/list"),
     classes_new: path(ROOTS_DASHBOARD, "/school/classes/new"),
-    prgogress: path(ROOTS_DASHBOARD, "/school/prgogress"),
+    progress: path(ROOTS_DASHBOARD, "/school/progress"),
     new: path(ROOTS_DASHBOARD, "/school/students/new"),
     setting: path(ROOTS_DASHBOARD, "/school/classes/setting"),
     edit: (name: string) =>
