@@ -70,8 +70,8 @@ export const managment = {
       icon: <VscSymbolClass />,
     },
     {
-      title: "prgogress",
-      path: PATH_DASHBOARD.school.prgogress,
+      title: "progress",
+      path: PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
     },
   ],
