@@ -3,7 +3,7 @@ import { Stack, Typography, Box } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import FormProvider, {
-  RHFTextField,
+  RHFTextField
 } from "../../../../../../components/hook-form";
 import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
@@ -24,8 +24,8 @@ type CustomizationFormProps = {
 };
 
 export default function CustomizationForm({
-  customization,
-}: CustomizationFormProps) {
+                                            customization
+                                          }: CustomizationFormProps) {
   const [updateCustomization, { isLoading }] =
     useUpdateOrgCustomizationMutation();
   const { translate } = useLocales();
@@ -38,12 +38,12 @@ export default function CustomizationForm({
     custom_group_name: customization?.custom_group_name as string,
     primaryColor: customization?.theme?.primaryColor as string,
     secondaryColor: customization?.theme?.secondaryColor as string,
-    alternativeColor: customization?.theme?.alternativeColor as string,
+    alternativeColor: customization?.theme?.alternativeColor as string
   };
 
   const methods = useForm<FormValuesProps>({
     // resolver: yupResolver(UpdateUserSchema),
-    defaultValues,
+    defaultValues
   });
 
   const { handleSubmit, formState, reset, control } = methods;
@@ -58,8 +58,8 @@ export default function CustomizationForm({
         theme: {
           primaryColor: data.primaryColor,
           secondaryColor: data.secondaryColor,
-          alternativeColor: data.alternativeColor,
-        },
+          alternativeColor: data.alternativeColor
+        }
       }).unwrap();
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
@@ -74,7 +74,7 @@ export default function CustomizationForm({
         gap={2.5}
         display="grid"
         gridTemplateColumns={{
-          xs: "repeat(3, 1fr)",
+          xs: "repeat(3, 1fr)"
         }}
       >
         <Box>
@@ -85,7 +85,7 @@ export default function CustomizationForm({
             control={control}
             name="primaryColor"
             rules={{
-              validate: matchIsColorValid,
+              validate: matchIsColorValid
             }}
             render={({ field, fieldState }) => (
               <MuiColorInput
@@ -106,15 +106,12 @@ export default function CustomizationForm({
           <Controller
             control={control}
             rules={{
-              validate: matchIsColorValid,
+              validate: matchIsColorValid
             }}
             render={({ field, fieldState }) => (
               <MuiColorInput
                 {...field}
-                value={
-                  field.value ||
-                  (customization?.theme.secondary_color as string)
-                }
+                value={field.value}
                 helperText={fieldState.invalid ? "Color is invalid" : ""}
                 error={fieldState.invalid}
                 isAlphaHidden
@@ -131,7 +128,7 @@ export default function CustomizationForm({
           <Controller
             control={control}
             rules={{
-              validate: matchIsColorValid,
+              validate: matchIsColorValid
             }}
             render={({ field, fieldState }) => (
               <MuiColorInput
