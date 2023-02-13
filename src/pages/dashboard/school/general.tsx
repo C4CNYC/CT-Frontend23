@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Card, Container, Box, Tabs, Tab } from "@mui/material";
 import { useSettingsContext } from "../../../components/settings";
 import { ProfileCover } from "../../../sections/@dashboard/user/profile";
-import { useGetMySchoolsQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager";
 import Iconify from "../../../components/iconify";
 import SchoolProfileTab from "../../../sections/schools/tabs/profile/schoolProfileTab";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
@@ -23,7 +23,7 @@ export default function UserProfilePage() {
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetMySchoolsQuery();
+  const { data } = useGetSchoolProfileQuery({ school_id }, { skip: !school_id });
 
   const TABS = [
     {
@@ -67,8 +67,8 @@ export default function UserProfilePage() {
           }}
         >
           <ProfileCover
-            name={data?.title || ""}
-            role={data?.email || ""}
+            name={data?.name || ""}
+            role={data?.phone || ""}
             cover={"/assets/icons/shool/organization.svg"}
           />
           <Tabs

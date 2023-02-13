@@ -72,8 +72,8 @@ export default function SchoolProfileForm({
         address: data.address,
         city: data.city,
         active: data.active || false,
-        // about: data.about || false,
-        // phone: data.phone,
+        about: data.about || "",
+        phone: data.phone,
       });
       enqueueSnackbar("Update success!");
       console.log("DATA", data);

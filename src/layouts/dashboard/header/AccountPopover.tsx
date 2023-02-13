@@ -14,22 +14,6 @@ import { useSnackbar } from "../../../components/snackbar";
 import MenuPopover from "../../../components/menu-popover";
 import { IconButtonAnimate } from "../../../components/animate";
 
-// ----------------------------------------------------------------------
-
-const OPTIONS = [
-  {
-    label: "Home",
-    linkTo: "/",
-  },
-  {
-    label: "Profile",
-    linkTo: PATH_DASHBOARD.organization.profile,
-  },
-  {
-    label: "Settings",
-    linkTo: PATH_DASHBOARD.organization.account,
-  },
-];
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +25,13 @@ export default function AccountPopover() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const OPTIONS = [
+  {
+    label: "Profile",
+    linkTo: PATH_DASHBOARD.organization.edit(user?.id),
+  },
+];
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpenPopover(event.currentTarget);
