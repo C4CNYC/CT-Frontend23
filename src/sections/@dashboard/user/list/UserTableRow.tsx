@@ -74,9 +74,11 @@ export default function UserTableRow({
 
         <TableCell align="left">{last_name}</TableCell>
 
-        {role ? (<TableCell align="left" sx={{ textTransform: "capitalize" }}>
-          {role}
-        </TableCell>) : null }
+        {role ? (
+          <TableCell align="left" sx={{ textTransform: "capitalize" }}>
+            {role}
+          </TableCell>
+        ) : null}
 
         <TableCell align="center">
           <Iconify

@@ -216,12 +216,13 @@ export default function UserNewEditForm({
               />
 
               <RHFSelect native name="role" label="Role" placeholder="Role">
-                {(Object.keys(Role) as Array<keyof typeof Role>).map(
-                  (role) => role === "Owner" ? null : (
-                  <option key={Role[role]} value={Role[role]}>
-                    {role}
-                  </option>
-                ))}
+                {(Object.keys(Role) as Array<keyof typeof Role>).map((role) =>
+                  role === "Owner" ? null : (
+                    <option key={Role[role]} value={Role[role]}>
+                      {role}
+                    </option>
+                  )
+                )}
               </RHFSelect>
             </Box>
 

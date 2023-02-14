@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 // @mui
 import {
   Stack,
@@ -16,7 +16,7 @@ import Label from "../../../../components/label";
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
-import { FcFolder } from 'react-icons/fc';
+import { FcFolder } from "react-icons/fc";
 import _mock from "src/_mock";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -70,13 +70,11 @@ export default function ClassesTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} children={<FcFolder/>} />
+            <Avatar alt={name} children={<FcFolder />} />
           </Stack>
         </TableCell>
 
-        <TableCell align="left">
-          {name}
-        </TableCell>
+        <TableCell align="left">{name}</TableCell>
 
         <TableCell align="left">
           <Label
@@ -89,7 +87,7 @@ export default function ClassesTableRow({
         </TableCell>
 
         <TableCell align="left">
-            {format(new Date(createdAt), "MM/dd/yyyy")}
+          {format(new Date(createdAt), "MM/dd/yyyy")}
         </TableCell>
 
         <TableCell align="left">
@@ -122,16 +120,16 @@ export default function ClassesTableRow({
           isEdit
           defaultValues={{ name: row.name }}
           updateClass={(name) => {
-                onEditRow(row.id, name);
-                handleClosePopover();
-              }}
-         >
+            onEditRow(row.id, name);
+            handleClosePopover();
+          }}
+        >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>
         </AddClassDialog>
-        <MenuItem  component={Link} href={PATH_DASHBOARD.school.setting}>
+        <MenuItem component={Link} href={PATH_DASHBOARD.school.setting(row.id)}>
           <Iconify icon="ant-design:setting-outlined" />
           Settings
         </MenuItem>

@@ -23,35 +23,37 @@ export default function UserProfilePage() {
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-  const { data } = useGetSchoolProfileQuery({ school_id }, { skip: !school_id });
+  const { data } = useGetSchoolProfileQuery(
+    { school_id },
+    { skip: !school_id }
+  );
 
   const TABS = [
     {
       value: "profile",
       label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <SchoolProfileTab school_id={school_id} />
+      component: <SchoolProfileTab school_id={school_id} />,
     },
     {
       value: "settings",
       label: "Settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
-      component: <SchoolSettingTab school_id={school_id} />
+      component: <SchoolSettingTab school_id={school_id} />,
     },
     {
       value: "contacts",
       label: "Contacts",
       icon: <MdContacts />,
-      component: <SchoolContactsTab school_id={school_id} />
+      component: <SchoolContactsTab school_id={school_id} />,
     },
     {
       value: "socials",
       label: "Social Networks",
       icon: <BsPeopleFill />,
-      component: <SocialsTab school_id={school_id} />
-    }
+      component: <SocialsTab school_id={school_id} />,
+    },
   ];
-
 
   return (
     <>
@@ -63,7 +65,7 @@ export default function UserProfilePage() {
           sx={{
             mb: 3,
             height: 280,
-            position: "relative"
+            position: "relative",
           }}
         >
           <ProfileCover
@@ -84,9 +86,9 @@ export default function UserProfilePage() {
                 pr: { md: 3 },
                 justifyContent: {
                   sm: "center",
-                  md: "flex-end"
-                }
-              }
+                  md: "flex-end",
+                },
+              },
             }}
           >
             {TABS.map((tab) => (

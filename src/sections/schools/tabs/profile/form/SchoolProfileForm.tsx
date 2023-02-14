@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import { Grid, Card, Stack, Box } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {Controller, useForm} from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFSelect,
@@ -10,9 +10,9 @@ import FormProvider, {
 } from "../../../../../components/hook-form";
 import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../../locales";
-import {SchoolProfile} from "../../../../../redux/services/interfaces/school.interface";
-import {countries} from "../../../../../assets/data";
-import {matchIsValidTel, MuiTelInput} from "mui-tel-input";
+import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
+import { countries } from "../../../../../assets/data";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 
 const UpdateSchoolSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -28,8 +28,8 @@ type FormValuesProps = {
   address: string;
   city: string;
   active: boolean;
-  about: string,
-  phone: string,
+  about: string;
+  phone: string;
 };
 
 type SchoolProfileFormProps = {
@@ -98,10 +98,7 @@ export default function SchoolProfileForm({
                 xs: "repeat(1, 1fr)",
               }}
             >
-              <RHFTextField
-                name="name"
-                label="Name"
-              />
+              <RHFTextField name="name" label="Name" />
 
               <RHFSelect native name="country" label="Country">
                 <option value="" />
@@ -112,15 +109,9 @@ export default function SchoolProfileForm({
                 ))}
               </RHFSelect>
 
-              <RHFTextField
-                name="address"
-                label="Address"
-              />
+              <RHFTextField name="address" label="Address" />
 
-              <RHFTextField
-                name="city"
-                label="City"
-              />
+              <RHFTextField name="city" label="City" />
 
               <Controller
                 name="phone"
@@ -141,7 +132,6 @@ export default function SchoolProfileForm({
                 multiline
                 rows={5}
               />
-
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>

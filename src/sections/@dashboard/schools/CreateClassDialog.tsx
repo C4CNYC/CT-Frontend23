@@ -23,7 +23,13 @@ type Prop = {
   children: React.ReactElement;
 };
 
-export default function AddClassDialog({ isEdit = false, createClass, updateClass, children, defaultValues }: Prop) {
+export default function AddClassDialog({
+  isEdit = false,
+  createClass,
+  updateClass,
+  children,
+  defaultValues,
+}: Prop) {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,21 +49,17 @@ export default function AddClassDialog({ isEdit = false, createClass, updateClas
   });
 
   const onSubmit = async (data: FormValuesProps) => {
-    if(isEdit) {
+    if (isEdit) {
       updateClass && updateClass(data.name);
     } else {
       createClass && createClass(data.name);
     }
     handleClose();
-  }
+  };
 
   return (
     <>
-      <Box
-        onClick={() => handleClickOpen()}
-      >
-        {children}
-      </Box>
+      <Box onClick={() => handleClickOpen()}>{children}</Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Class</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
@@ -69,7 +71,12 @@ export default function AddClassDialog({ isEdit = false, createClass, updateClas
               <Grid item xs={12} md={12}>
                 <Card sx={{ p: 3 }}>
                   <Box rowGap={3} display="grid">
-                    <RHFTextField sx={{ width: "350px" }} name="name" label="Class name" required />
+                    <RHFTextField
+                      sx={{ width: "350px" }}
+                      name="name"
+                      label="Class name"
+                      required
+                    />
                   </Box>
                   <Box
                     sx={{
@@ -80,10 +87,7 @@ export default function AddClassDialog({ isEdit = false, createClass, updateClas
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                    >
+                    <LoadingButton type="submit" variant="contained">
                       Save
                     </LoadingButton>
                   </Box>

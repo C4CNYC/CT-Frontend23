@@ -55,7 +55,7 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
-  }
+  };
 
   return (
     <>
@@ -76,22 +76,23 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
           />
         </Typography>
 
-        <AddClassDialog
-          createClass={createClassByAdmin}
-        >
-        <IconButton
-          size="small"
-          color="success"
-          sx={{
-            p: 0,
-            height: 24,
-            color: "common.white",
-            bgcolor: "success.main",
-            "&:hover": {
+        <AddClassDialog createClass={createClassByAdmin}>
+          <IconButton
+            size="small"
+            color="success"
+            sx={{
+              p: 0,
+              height: 24,
+              color: "common.white",
               bgcolor: "success.main",
-            },
-          }}
-        > <Iconify sx={{ width: 24 }} icon="eva:plus-fill" /> </IconButton>
+              "&:hover": {
+                bgcolor: "success.main",
+              },
+            }}
+          >
+            {" "}
+            <Iconify sx={{ width: 24 }} icon="eva:plus-fill" />{" "}
+          </IconButton>
         </AddClassDialog>
       </Stack>
       <Collapse in={open}>

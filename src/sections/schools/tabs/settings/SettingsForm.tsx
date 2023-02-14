@@ -8,7 +8,7 @@ import FormProvider, {
 } from "../../../../components/hook-form";
 import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../locales";
-import {SchoolSettings} from "../../../../redux/services/interfaces/school.interface";
+import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
 
 type FormValuesProps = {
   language: string;
@@ -27,7 +27,10 @@ type SettingsFormProps = {
   school_id: string;
 };
 
-export default function SettingsForm({ settings, school_id }: SettingsFormProps) {
+export default function SettingsForm({
+  settings,
+  school_id,
+}: SettingsFormProps) {
   const [updateSettings, { isLoading }] = useUpdateSchoolSettingsMutation();
   const { translate } = useLocales();
 

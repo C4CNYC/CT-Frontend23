@@ -41,10 +41,9 @@ export const PATH_DASHBOARD = {
   general: {
     app: path(ROOTS_DASHBOARD, "/app"),
     analytics: path(ROOTS_DASHBOARD, "/analytics"),
-  
   },
-  courses:{
-    root:path(ROOTS_DASHBOARD, "/courses"),
+  courses: {
+    root: path(ROOTS_DASHBOARD, "/courses"),
   },
   organization: {
     root: path(ROOTS_DASHBOARD, "/organization"),
@@ -68,7 +67,8 @@ export const PATH_DASHBOARD = {
     classes_new: path(ROOTS_DASHBOARD, "/school/classes/new"),
     progress: path(ROOTS_DASHBOARD, "/school/progress"),
     new: path(ROOTS_DASHBOARD, "/school/students/new"),
-    setting: path(ROOTS_DASHBOARD, "/school/classes/setting"),
+    setting: (id: string) =>
+      path(ROOTS_DASHBOARD, `/school/classes/${id}/setting`),
     edit: (name: string) =>
       path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
   },

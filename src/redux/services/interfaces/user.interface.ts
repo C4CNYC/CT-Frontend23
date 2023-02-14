@@ -31,6 +31,12 @@ export interface IUser {
   role?: Role;
 }
 
+export interface StudentSearchParams {
+  school_id?: string;
+  name?: string;
+  class_id?: string;
+}
+
 export interface IStudent {
   email: string;
   first_name: string;

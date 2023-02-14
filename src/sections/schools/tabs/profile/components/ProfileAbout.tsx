@@ -1,8 +1,7 @@
-import { styled } from '@mui/material/styles';
-import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
-import Iconify from '../../../../../components/iconify';
-import {SchoolProfile} from "../../../../../redux/services/interfaces/school.interface";
-
+import { styled } from "@mui/material/styles";
+import { Link, Card, Typography, CardHeader, Stack } from "@mui/material";
+import Iconify from "../../../../../components/iconify";
+import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -16,13 +15,16 @@ type Props = {
   data: SchoolProfile;
 };
 
-export default function ProfileAbout({data}: Props) {
-
+export default function ProfileAbout({ data }: Props) {
   return (
     <Card>
       <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
-        {data?.about ? <Typography variant="body2">{data?.about}</Typography> : "" }
+        {data?.about ? (
+          <Typography variant="body2">{data?.about}</Typography>
+        ) : (
+          ""
+        )}
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
           <Typography variant="body2">
@@ -48,7 +50,6 @@ export default function ProfileAbout({data}: Props) {
             </Link>
           </Typography>
         </Stack>
-
       </Stack>
     </Card>
   );

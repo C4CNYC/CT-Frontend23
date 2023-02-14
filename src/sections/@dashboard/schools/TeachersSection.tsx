@@ -15,7 +15,7 @@ import {
 } from "src/redux/services/admin";
 import InviteUser from "./InviteUserDialog";
 import Image from "next/image";
-import TeacherItem from './TeacherItem'
+import TeacherItem from "./TeacherItem";
 
 type TeacherSectionProps = {
   school_id: string;

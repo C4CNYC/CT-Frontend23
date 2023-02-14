@@ -6,7 +6,7 @@ import {
   ListItem,
   MenuItem,
   ListItemText,
-  ListItemAvatar
+  ListItemAvatar,
 } from "@mui/material";
 import Iconify from "../../../components/iconify";
 import MenuPopover from "../../../components/menu-popover";
@@ -20,10 +20,7 @@ type Props = {
   handleDeleteTeacher: () => void;
 };
 
-export default function TeacherItem({
-                                      person,
-                                      handleDeleteTeacher
-                                    }: Props) {
+export default function TeacherItem({ person, handleDeleteTeacher }: Props) {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
@@ -63,11 +60,11 @@ export default function TeacherItem({
             textTransform: "unset",
             fontWeight: "fontWeightMedium",
             "& .MuiButton-endIcon": {
-              ml: 0
+              ml: 0,
             },
             ...(openPopover && {
-              bgcolor: "action.selected"
-            })
+              bgcolor: "action.selected",
+            }),
           }}
         ></Button>
       </ListItem>
