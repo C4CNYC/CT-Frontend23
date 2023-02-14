@@ -1,3 +1,4 @@
+import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 import {
   BaseListResponseInterface,
   BaseResponseInterface,
@@ -31,7 +32,7 @@ export interface IUser {
   role?: Role;
 }
 
-export interface StudentSearchParams {
+export interface StudentSearchParams extends BaseSearchInterface {
   school_id?: string;
   name?: string;
   class_id?: string;

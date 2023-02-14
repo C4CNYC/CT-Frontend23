@@ -37,12 +37,12 @@ export default function ClassMembersAutocomplete() {
   const class_id = router.query.id as string;
   const school_id = useSelector((state: RootState) => state.manager.school_id);
 
-  const { filters, setFilter } = useFilters({ email: "" });
+  const { filters, setFilter } = useFilters({ email: "", take: 50 });
 
   const [joinClass] = useStudentJoinClassMutation();
   const [leftClass] = useStudentLeftClassMutation();
   const { data: classMembers } = useGetStudentsQuery(
-    { school_id, class_id },
+    { school_id, class_id, take: 50 },
     { skip: !school_id || !class_id }
   );
   const { data: students } = useGetStudentsQuery(
@@ -91,6 +91,7 @@ export default function ClassMembersAutocomplete() {
       onChange={onChange}
       options={students.data}
       popupIcon={null}
+      onLoadStart={() => {console.log('work')}}
       noOptionsText={<SearchNotFound sx={{ p: '20px 0' }} query={filters.email} />}
       onInputChange={(event, value) => setFilter("email", value)}
       getOptionLabel={(option) => option.email}
