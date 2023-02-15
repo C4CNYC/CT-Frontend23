@@ -16,6 +16,7 @@ import { SkeletonKanbanColumn } from '../../../components/skeleton';
 import { KanbanColumn, KanbanColumnAdd } from '../../../sections/@dashboard/kanban';
 import SchoolDashboardLayout from "../../../layouts/dashboard/SchoolDashboardLayout";
 import UserProfilePage from "./general";
+import Stepper from "../../../sections/@dashboard/kanban/createAssignment/Stepper";
 
 // ----------------------------------------------------------------------
 
@@ -118,6 +119,7 @@ export default function Assignments() {
             { name: 'Assignments' },
           ]}
         />
+        <Stepper />
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="all-columns" direction="horizontal" type="column">
             {(provided) => (
