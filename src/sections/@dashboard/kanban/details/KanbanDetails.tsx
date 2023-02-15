@@ -16,6 +16,8 @@ import KanbanDetailsCommentList from './KanbanDetailsCommentList';
 import KanbanDetailsAttachments from './KanbanDetailsAttachments';
 import KanbanDetailsPrioritizes from './KanbanDetailsPrioritizes';
 import KanbanDetailsCommentInput from './KanbanDetailsCommentInput';
+import { IAssigment } from 'src/redux/services/interfaces/assigment.interface';
+import { BaseResponseInterface } from 'src/utils/baseResponce.interface';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +31,7 @@ const StyledLabel = styled('span')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 type Props = {
-  task: IKanbanCard;
+  task: IAssigment & BaseResponseInterface;
   openDetails: boolean;
   onCloseDetails: VoidFunction;
   onDeleteTask: VoidFunction;
@@ -46,8 +48,6 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
 
   const [openContacts, setOpenContacts] = useState(false);
 
-  const [completed, setCompleted] = useState(task.completed);
-
   const [taskDescription, setTaskDescription] = useState(task.description);
 
   const {
@@ -61,15 +61,13 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
     isSelected: isSelectedValuePicker,
     isError,
     shortLabel,
-  } = useDateRangePicker(task.due[0], task.due[1]);
+  } = useDateRangePicker(new Date(task.start_date), new Date(task.end_date));
 
   const handleLiked = () => {
     setLiked(!liked);
   };
 
-  const handleCompleted = () => {
-    setCompleted(!completed);
-  };
+  const handleCompleted = () => {};
 
   const handleOpenContacts = () => {
     setOpenContacts(true);
@@ -113,7 +111,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
         taskName={task.name}
         fileInputRef={fileInputRef}
         liked={liked}
-        completed={completed}
+        completed={false}
         onLike={handleLiked}
         onAttach={handleClickAttach}
         onDelete={onDeleteTask}
@@ -137,8 +135,8 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
             <StyledLabel sx={{ height: 40, lineHeight: '40px', my: 0.5 }}>Assignee</StyledLabel>
 
             <Stack direction="row" flexWrap="wrap" alignItems="center">
-              {task.assignee.map((user) => (
-                <Avatar key={user.id} alt={user.name} src={user.avatar} sx={{ m: 0.5 }} />
+              {task?.assignee_classes?.map((assigment_class) => (
+                <Avatar key={assigment_class.id} alt={assigment_class.name} src={assigment_class.id} sx={{ m: 0.5 }} />
               ))}
 
               <Tooltip title="Add assignee">
@@ -156,7 +154,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
               </Tooltip>
 
               <KanbanContactsDialog
-                assignee={task.assignee}
+                assignee={task.assignee_classes}
                 open={openContacts}
                 onClose={handleCloseContacts}
               />
@@ -238,11 +236,11 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
           {/* Attachments */}
           <Stack direction="row">
             <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
-            <KanbanDetailsAttachments attachments={task.attachments} />
+            {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
           </Stack>
         </Stack>
 
-        {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />}
+        {/* {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />} */}
       </Scrollbar>
 
       <Divider />
