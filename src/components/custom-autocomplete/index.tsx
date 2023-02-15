@@ -37,12 +37,12 @@ export default function CustomAutocomplete({
   onFilterClass,
   onResetFilter,
 }: Props) {
-  const [value, setValue] = useState<(ClassType) | null>(null);
+  const [value, setValue] = useState<ClassType | null>(null);
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const {
     filters,
     setFilter,
-    resetFilters: resetClassFilter
+    resetFilters: resetClassFilter,
   } = useFilters<ClassSearchParams>({ name: "" });
 
   const { data: clases } = useGetClassesQuery(
@@ -52,7 +52,7 @@ export default function CustomAutocomplete({
 
   const onChange = (
     event: React.SyntheticEvent<any>,
-    newValue: (ClassType) | null,
+    newValue: ClassType | null,
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<ClassType>
   ) => {
@@ -62,10 +62,10 @@ export default function CustomAutocomplete({
   };
 
   const onReset = () => {
-    onResetFilter()
+    onResetFilter();
     resetClassFilter();
     setValue(null);
-  }
+  };
 
   if (!clases?.data) {
     return (
@@ -85,7 +85,7 @@ export default function CustomAutocomplete({
       <Autocomplete<ClassType>
         options={clases.data || []}
         renderInput={(params) => <TextField {...params} label="Class" />}
-        onInputChange= {(e, value) => setFilter("name", value)}
+        onInputChange={(e, value) => setFilter("name", value)}
         onChange={onChange}
         value={value}
         getOptionLabel={(option) => option.name}

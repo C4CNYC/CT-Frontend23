@@ -39,9 +39,7 @@ import {
   TableLoader,
 } from "../../../../components/table";
 // sections
-import {
-  UserTableRow,
-} from "../../../../sections/@dashboard/user/list";
+import { UserTableRow } from "../../../../sections/@dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
 import {
   useDeleteStudentMutation,
@@ -96,7 +94,10 @@ export default function UserListPage() {
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters({ name: "", class_id: "" });
+  const { filters, setFilter, resetFilters } = useFilters({
+    name: "",
+    class_id: "",
+  });
   const [deleteStudent] = useDeleteStudentMutation();
 
   const { data, isLoading } = useGetStudentsQuery(
@@ -224,7 +225,7 @@ export default function UserListPage() {
                     }
                   />
 
-                  <TableBody sx={{ minHeight: 12}}>
+                  <TableBody sx={{ minHeight: 12 }}>
                     {data?.data.map((row) => (
                       <UserTableRow
                         key={row.id}
@@ -297,4 +298,3 @@ export default function UserListPage() {
     </>
   );
 }
-
