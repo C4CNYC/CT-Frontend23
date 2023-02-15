@@ -3,7 +3,7 @@ import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 
 const defaultFilter: BaseSearchInterface = {
   page: 1,
-  take: 10,
+  take: 5,
 };
 export const useFilters = <T>(filters: T) => {
   const [filter, setFilter] = useState<BaseSearchInterface & T>({

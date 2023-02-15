@@ -5,7 +5,9 @@ export function emptyRows(
   rowsPerPage: number,
   arrayLength: number
 ) {
-  return page > 0 ? Math.max(0, (1 + page) * rowsPerPage - arrayLength) : 0;
+  return page + 1 && arrayLength > 0
+    ? Math.max(0, (1 + page) * rowsPerPage - arrayLength)
+    : 0;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {

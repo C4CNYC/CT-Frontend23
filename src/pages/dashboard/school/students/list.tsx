@@ -16,19 +16,12 @@ import {
   Container,
   IconButton,
   TableContainer,
-  Autocomplete,
-  AutocompleteRenderInputParams,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
-  TextField,
 } from "@mui/material";
 // routes
 import { PATH_DASHBOARD } from "../../../../routes/paths";
 
 // _mock_
 import { _userList } from "../../../../_mock/arrays";
-// layouts
-import DashboardLayout from "../../../../layouts/dashboard";
 // components
 import Iconify from "../../../../components/iconify";
 import Scrollbar from "../../../../components/scrollbar";
@@ -43,10 +36,10 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
+  TableLoader,
 } from "../../../../components/table";
 // sections
 import {
-  UserTableToolbar,
   UserTableRow,
 } from "../../../../sections/@dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
@@ -89,8 +82,6 @@ export default function UserListPage() {
     page,
     order,
     orderBy,
-    rowsPerPage,
-    //
     selected,
     onSelectRow,
     onSelectAllRows,
@@ -105,19 +96,12 @@ export default function UserListPage() {
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters({ name: "" });
-  const router = useRouter();
-  const class_id = router.query.id as string;
+  const { filters, setFilter, resetFilters } = useFilters({ name: "", class_id: "" });
   const [deleteStudent] = useDeleteStudentMutation();
 
   const { data, isLoading } = useGetStudentsQuery(
     { school_id, ...filters },
     { skip: !school_id }
-  );
-
-  const { data: students } = useGetStudentsQuery(
-    { school_id, ...filters },
-    { skip: !school_id || !class_id }
   );
 
   const handleDeleteMember = async (student_id: string) => {
@@ -190,8 +174,11 @@ export default function UserListPage() {
 
           <CustomAutocomplete
             filterName={filters.name as string}
-            onFilterName={(e) => {
-              setFilter("name", e.target.value);
+            onFilterName={(name: string) => {
+              setFilter("name", name);
+            }}
+            onFilterClass={(class_id: string) => {
+              setFilter("class_id", class_id);
             }}
             onResetFilter={resetFilters}
           />
@@ -237,7 +224,7 @@ export default function UserListPage() {
                     }
                   />
 
-                  <TableBody>
+                  <TableBody sx={{ minHeight: 12}}>
                     {data?.data.map((row) => (
                       <UserTableRow
                         key={row.id}
@@ -249,17 +236,19 @@ export default function UserListPage() {
                       />
                     ))}
 
+                    <TableLoader isLoading={isLoading} />
+
+                    <TableNoData
+                      isNotFound={!data?.data.length && !isLoading}
+                    />
+
                     <TableEmptyRows
                       height={dense ? 52 : 72}
                       emptyRows={emptyRows(
                         page,
-                        rowsPerPage,
+                        filters?.take || 10,
                         data?.data.length || 0
                       )}
-                    />
-
-                    <TableNoData
-                      isNotFound={!data?.data.length && !isLoading}
                     />
                   </TableBody>
                 </Table>

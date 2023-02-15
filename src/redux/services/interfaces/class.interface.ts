@@ -6,5 +6,4 @@ export interface IClass {
 
 export interface ClassSearchParams {
   name: string;
-  class_id: string;
 }
