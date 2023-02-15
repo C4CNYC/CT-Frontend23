@@ -159,8 +159,8 @@ const en = {
       role_label: "Role",
       table: {
         email: "Email",
-        name: "Name",
-        surname: "Surname",
+        first_name: "First name",
+        last_name: "Last name",
         role: "Role",
         verified: "Verified",
         status: "Status",
