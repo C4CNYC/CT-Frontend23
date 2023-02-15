@@ -9,19 +9,19 @@ import Image from '../../../components/image';
 import Iconify from '../../../components/iconify';
 //
 import KanbanDetails from './details/KanbanDetails';
+import { IAssigment } from 'src/redux/services/interfaces/assigment.interface';
+import { BaseResponseInterface } from 'src/utils/baseResponce.interface';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   index: number;
-  card: IKanbanCard;
+  card: IAssigment & BaseResponseInterface;
   onDeleteTask: (id: string) => void;
 };
 
 export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
-  const { name, attachments } = card;
-
-  const [completed, setCompleted] = useState(card.completed);
+  const { name } = card;
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -31,10 +31,6 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
 
   const handleCloseDetails = () => {
     setOpenDetails(false);
-  };
-
-  const handleChangeComplete = (event: ChangeEvent<HTMLInputElement>) => {
-    setCompleted(event.target.checked);
   };
 
   return (
