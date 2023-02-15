@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 // next
 import Head from "next/head";
 import NextLink from "next/link";
@@ -16,6 +16,11 @@ import {
   Container,
   IconButton,
   TableContainer,
+  Autocomplete,
+  AutocompleteRenderInputParams,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
+  TextField,
 } from "@mui/material";
 // routes
 import { PATH_DASHBOARD } from "../../../../routes/paths";
@@ -53,6 +58,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+
+import CustomAutocomplete from "src/components/custom-autocomplete";
 
 // ----------------------------------------------------------------------
 
@@ -99,11 +106,18 @@ export default function UserListPage() {
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const { filters, setFilter, resetFilters } = useFilters({ name: "" });
-
+  const router = useRouter();
+  const class_id = router.query.id as string;
   const [deleteStudent] = useDeleteStudentMutation();
+
   const { data, isLoading } = useGetStudentsQuery(
     { school_id, ...filters },
     { skip: !school_id }
+  );
+
+  const { data: students } = useGetStudentsQuery(
+    { school_id, ...filters },
+    { skip: !school_id || !class_id }
   );
 
   const handleDeleteMember = async (student_id: string) => {
@@ -174,13 +188,14 @@ export default function UserListPage() {
 
           <Divider />
 
-          <UserTableToolbar
+          <CustomAutocomplete
             filterName={filters.name as string}
             onFilterName={(e) => {
               setFilter("name", e.target.value);
             }}
             onResetFilter={resetFilters}
           />
+
           <>
             <TableContainer sx={{ position: "relative", overflow: "unset" }}>
               <TableSelectedAction
@@ -293,3 +308,4 @@ export default function UserListPage() {
     </>
   );
 }
+
