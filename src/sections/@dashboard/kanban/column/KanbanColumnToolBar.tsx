@@ -1,12 +1,17 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from 'react';
 // @mui
-import { Stack, MenuItem, IconButton, Button, Box } from "@mui/material";
+import { Stack, MenuItem, IconButton, Button, Box, Typography } from "@mui/material";
 // components
-import Iconify from "../../../../components/iconify";
-import MenuPopover from "../../../../components/menu-popover";
-import ConfirmDialog from "../../../../components/confirm-dialog";
+import Iconify from '../../../../components/iconify';
+import MenuPopover from '../../../../components/menu-popover';
+import ConfirmDialog from '../../../../components/confirm-dialog';
 //
-import KanbanInputName from "../KanbanInputName";
+import KanbanInputName from '../KanbanInputName';
+import KanbanTaskAdd from "../KanbanTaskAdd";
+import { IKanbanCard } from "../../../../@types/kanban";
+import { addTask } from "../../../../redux/slices/kanban";
+import { useDispatch } from '../../../../redux/store';
+
 
 // ----------------------------------------------------------------------
 
@@ -16,11 +21,9 @@ type Props = {
   onUpdate: (name: string) => void;
 };
 
-export default function KanbanColumnToolBar({
-  columnName,
-  onDelete,
-  onUpdate,
-}: Props) {
+export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: Props) {
+  const dispatch = useDispatch();
+
   const renameRef = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(columnName);
@@ -28,6 +31,9 @@ export default function KanbanColumnToolBar({
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const [openAddTask, setOpenAddTask] = useState(false);
+
 
   useEffect(() => {
     const { current } = renameRef;
@@ -59,18 +65,30 @@ export default function KanbanColumnToolBar({
     handleClosePopover();
   };
 
-  const handleChangeColumnName = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeColumnName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
 
   const handleUpdateColumn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && renameRef.current) {
+    if (event.key === 'Enter' && renameRef.current) {
       renameRef.current.blur();
       onUpdate(value);
     }
   };
+
+  const handleToggleAddTask = () => {
+    setOpenAddTask(!openAddTask);
+  };
+
+  const handleCloseAddTask = () => {
+    setOpenAddTask(false);
+  };
+
+  const handleAddTask = (task: IKanbanCard) => {
+    handleCloseAddTask();
+    console.log('qwe');
+  };
+
 
   return (
     <>
@@ -81,44 +99,19 @@ export default function KanbanColumnToolBar({
         spacing={1}
         sx={{ pt: 3 }}
       >
-        <KanbanInputName
-          inputRef={renameRef}
-          placeholder="Section name"
-          value={value}
-          onChange={handleChangeColumnName}
-          onKeyUp={handleUpdateColumn}
-        />
-
+        <Typography variant="h6">{value}</Typography>
         <IconButton
-          size="small"
-          color={openPopover ? "inherit" : "default"}
-          onClick={handleOpenPopover}
+          onClick={handleToggleAddTask}
+          sx={{ fontSize: 14 }}
         >
-          <Iconify icon="eva:more-horizontal-fill" />
+          <Iconify icon="eva:plus-fill" />
         </IconButton>
+
       </Stack>
 
-      <MenuPopover
-        open={openPopover}
-        onClose={handleClosePopover}
-        sx={{ mt: 0, ml: 1.25 }}
-      >
-        <MenuItem
-          onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
-          }}
-          sx={{ color: "error.main" }}
-        >
-          <Iconify icon="eva:trash-2-outline" />
-          Delete section
-        </MenuItem>
-
-        <MenuItem onClick={handleClickRename}>
-          <Iconify icon="eva:edit-fill" />
-          Rename section
-        </MenuItem>
-      </MenuPopover>
+      {openAddTask && (
+        <KanbanTaskAdd onAddTask={handleAddTask} onCloseAddTask={handleCloseAddTask} />
+      )}
 
       <ConfirmDialog
         open={openConfirm}
@@ -127,9 +120,8 @@ export default function KanbanColumnToolBar({
         content={
           <>
             Are you sure want to delete column?
-            <Box sx={{ typography: "caption", color: "error.main", mt: 2 }}>
-              <strong> NOTE: </strong> All tasks related to this category will
-              also be deleted.
+            <Box sx={{ typography: 'caption', color: 'error.main', mt: 2 }}>
+              <strong> NOTE: </strong> All tasks related to this category will also be deleted.
             </Box>
           </>
         }

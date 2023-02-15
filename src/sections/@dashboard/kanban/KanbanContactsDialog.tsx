@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 // @mui
 import {
   Box,
@@ -13,15 +13,15 @@ import {
   InputAdornment,
   DialogTitle,
   DialogContent,
-} from "@mui/material";
+} from '@mui/material';
 // _mock_
-import { _contacts } from "../../../_mock/arrays";
+import { _contacts } from '../../../_mock/arrays';
 // @types
-import { IKanbanAssignee } from "../../../@types/kanban";
+import { IKanbanAssignee } from '../../../@types/kanban';
 // components
-import Iconify from "../../../components/iconify";
-import Scrollbar from "../../../components/scrollbar";
-import SearchNotFound from "../../../components/search-not-found";
+import Iconify from '../../../components/iconify';
+import Scrollbar from '../../../components/scrollbar';
+import SearchNotFound from '../../../components/search-not-found';
 
 // ----------------------------------------------------------------------
 
@@ -33,12 +33,8 @@ type Props = {
   onClose: VoidFunction;
 };
 
-export default function KanbanContactsDialog({
-  assignee = [],
-  open,
-  onClose,
-}: Props) {
-  const [searchContacts, setSearchContacts] = useState("");
+export default function KanbanContactsDialog({ assignee = [], open, onClose }: Props) {
+  const [searchContacts, setSearchContacts] = useState('');
 
   const handleSearchContacts = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchContacts(event.target.value);
@@ -66,10 +62,7 @@ export default function KanbanContactsDialog({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Iconify
-                  icon="eva:search-fill"
-                  sx={{ color: "text.disabled" }}
-                />
+                <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
               </InputAdornment>
             ),
           }}
@@ -87,9 +80,7 @@ export default function KanbanContactsDialog({
             }}
           >
             {dataFiltered.map((contact) => {
-              const checked = assignee
-                .map((person) => person.name)
-                .includes(contact.name);
+              const checked = assignee.map((person) => person.name).includes(contact.name);
 
               return (
                 <ListItem
@@ -98,16 +89,12 @@ export default function KanbanContactsDialog({
                   secondaryAction={
                     <Button
                       size="small"
-                      color={checked ? "primary" : "inherit"}
+                      color={checked ? 'primary' : 'inherit'}
                       startIcon={
-                        <Iconify
-                          icon={
-                            checked ? "eva:checkmark-fill" : "eva:plus-fill"
-                          }
-                        />
+                        <Iconify icon={checked ? 'eva:checkmark-fill' : 'eva:plus-fill'} />
                       }
                     >
-                      {checked ? "assigned" : "assign"}
+                      {checked ? 'assigned' : 'assign'}
                     </Button>
                   }
                   sx={{ height: ITEM_HEIGHT }}
@@ -117,11 +104,8 @@ export default function KanbanContactsDialog({
                   </ListItemAvatar>
 
                   <ListItemText
-                    primaryTypographyProps={{
-                      typography: "subtitle2",
-                      sx: { mb: 0.25 },
-                    }}
-                    secondaryTypographyProps={{ typography: "caption" }}
+                    primaryTypographyProps={{ typography: 'subtitle2', sx: { mb: 0.25 } }}
+                    secondaryTypographyProps={{ typography: 'caption' }}
                     primary={contact.name}
                     secondary={contact.email}
                   />
@@ -137,13 +121,7 @@ export default function KanbanContactsDialog({
 
 // ----------------------------------------------------------------------
 
-function applyFilter({
-  inputData,
-  query,
-}: {
-  inputData: IKanbanAssignee[];
-  query: string;
-}) {
+function applyFilter({ inputData, query }: { inputData: IKanbanAssignee[]; query: string }) {
   if (query) {
     inputData = inputData.filter(
       (contact) =>

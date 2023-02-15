@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useState } from 'react';
 // @mui
-import { Paper, Button, ClickAwayListener, TextField } from "@mui/material";
+import { Paper, Button, ClickAwayListener, TextField } from '@mui/material';
 // redux
-import { useDispatch } from "../../../../redux/store";
-import { createColumn } from "../../../../redux/slices/kanban";
+import { useDispatch } from '../../../../redux/store';
+import { createColumn } from '../../../../redux/slices/kanban';
 // components
-import Iconify from "../../../../components/iconify";
+import Iconify from '../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
 export default function KanbanColumnAdd() {
   const dispatch = useDispatch();
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
   const [open, setOpen] = useState(false);
 
@@ -32,7 +32,7 @@ export default function KanbanColumnAdd() {
     try {
       if (name) {
         dispatch(createColumn({ name }));
-        setName("");
+        setName('');
       }
       handleClose();
     } catch (error) {
@@ -41,7 +41,7 @@ export default function KanbanColumnAdd() {
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleCreateColumn();
     }
   };
@@ -58,7 +58,7 @@ export default function KanbanColumnAdd() {
             onChange={handleChangeName}
             onKeyUp={handleKeyUp}
             InputProps={{
-              sx: { typography: "h6" },
+              sx: { typography: 'h6' },
             }}
           />
         </ClickAwayListener>

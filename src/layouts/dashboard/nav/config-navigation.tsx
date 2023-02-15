@@ -86,8 +86,8 @@ export const content = {
       icon: <MdPlayLesson />,
     },
     {
-      title: "assigments",
-      path: PATH_DASHBOARD.school.assigments,
+      title: "assignments",
+      path: PATH_DASHBOARD.school.assignments,
       icon: <AiOutlineSolution />,
     },
   ],

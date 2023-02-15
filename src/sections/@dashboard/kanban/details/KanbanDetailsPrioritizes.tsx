@@ -1,15 +1,15 @@
 // @mui
-import { alpha } from "@mui/material/styles";
-import { Box, Stack, Radio, RadioGroup, FormControlLabel } from "@mui/material";
+import { alpha } from '@mui/material/styles';
+import { Box, Stack, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 // components
-import Iconify from "../../../../components/iconify";
+import Iconify from '../../../../components/iconify';
 
 // ----------------------------------------------------------------------
 
 const PRIORITIZES_OPTIONS = [
-  { value: "low", label: "Low", color: "info" },
-  { value: "medium", label: "Medium", color: "warning" },
-  { value: "hight", label: "Hight", color: "error" },
+  { value: 'low', label: 'Low', color: 'info' },
+  { value: 'medium', label: 'Medium', color: 'warning' },
+  { value: 'hight', label: 'Hight', color: 'error' },
 ] as const;
 
 type Props = {
@@ -17,36 +17,30 @@ type Props = {
   onChangePrioritize: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function KanbanDetailsPrioritizes({
-  prioritize,
-  onChangePrioritize,
-}: Props) {
+export default function KanbanDetailsPrioritizes({ prioritize, onChangePrioritize }: Props) {
   return (
     <RadioGroup row value={prioritize} onChange={onChangePrioritize}>
       {PRIORITIZES_OPTIONS.map((option) => {
         const selected = option.value === prioritize;
 
         return (
-          <Box key={option.value} sx={{ position: "relative", mr: 1 }}>
+          <Box key={option.value} sx={{ position: 'relative', mr: 1 }}>
             <Stack
               spacing={0.5}
               direction="row"
               alignItems="center"
               sx={{
-                pl: "4px",
-                pr: "10px",
-                fontWeight: "fontWeightBold",
+                pl: '4px',
+                pr: '10px',
+                fontWeight: 'fontWeightBold',
                 height: 28,
                 fontSize: 12,
                 borderRadius: 0.75,
-                border: (theme) =>
-                  `solid 1px ${alpha(theme.palette.grey[500], 0.24)}`,
+                border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.24)}`,
                 ...(selected && {
                   color: (theme) => theme.palette[option.color].main,
-                  border: (theme) =>
-                    `solid 1px ${theme.palette[option.color].main}`,
-                  bgcolor: (theme) =>
-                    alpha(theme.palette[option.color].main, 0.08),
+                  border: (theme) => `solid 1px ${theme.palette[option.color].main}`,
+                  bgcolor: (theme) => alpha(theme.palette[option.color].main, 0.08),
                 }),
               }}
             >
@@ -62,7 +56,7 @@ export default function KanbanDetailsPrioritizes({
                     sx={{
                       width: 8,
                       height: 8,
-                      borderRadius: "50%",
+                      borderRadius: '50%',
                       bgcolor: (theme) => theme.palette[option.color].main,
                     }}
                   />
@@ -73,7 +67,7 @@ export default function KanbanDetailsPrioritizes({
 
             <FormControlLabel
               value={option.value}
-              control={<Radio sx={{ display: "none" }} />}
+              control={<Radio sx={{ display: 'none' }} />}
               label=""
               sx={{
                 m: 0,
@@ -81,7 +75,7 @@ export default function KanbanDetailsPrioritizes({
                 left: 0,
                 right: 0,
                 bottom: 0,
-                position: "absolute",
+                position: 'absolute',
               }}
             />
           </Box>
