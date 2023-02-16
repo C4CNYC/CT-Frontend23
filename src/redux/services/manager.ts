@@ -5,15 +5,8 @@ import {
 } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
-import { IAssigment, IAssigmentUpdate } from "./interfaces/assigment.interface";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
-import {
-  SchoolResponce,
-  SchoolProfile,
-  SchoolContacts,
-  SchoolSocials,
-  SchoolSettings,
-} from "./interfaces/school.interface";
+import { SchoolResponce, SchoolProfile, SchoolContacts, SchoolSocials, SchoolSettings } from "./interfaces/school.interface";
 import { IStudent, UserSearchParams } from "./interfaces/user.interface";
 
 export const managerApi = createApi({
@@ -21,40 +14,8 @@ export const managerApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/manager`)
   ),
-  tagTypes: [
-    "School",
-    "Students",
-    "Classes",
-    "SchoolSettings",
-    "SchoolContacts",
-    "Assigments",
-  ],
+  tagTypes: ["School", "Students", "Classes",  "SchoolSettings", "SchoolContacts"],
   endpoints: (builder) => ({
-    getAssigmentList: builder.query<
-      (IAssigment & BaseResponseInterface)[],
-      { school_id: string }
-    >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/assigment`,
-        method: "GET",
-      }),
-      providesTags: ["Assigments"],
-    }),
-    udpateAssigment: builder.mutation<
-      void,
-      {
-        assigment_id: string;
-        school_id: string;
-      } & IAssigmentUpdate
-    >({
-      query: ({ school_id, assigment_id, ...body }) => ({
-        url: `/school/${school_id}/assigment/${assigment_id}`,
-        method: "PATCH",
-        body,
-      }),
-      invalidatesTags: [{ type: "Assigments" }],
-    }),
-
     getMySchools: builder.query<
       BaseListResponseInterface<SchoolResponce>,
       void
@@ -160,12 +121,12 @@ export const managerApi = createApi({
       SchoolProfile & BaseResponseInterface,
       SchoolProfile
     >({
-      query: ({ school_id, ...body }) => ({
+      query: ({school_id, ...body}) => ({
         url: `school/${school_id}`,
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "School" }],
+      invalidatesTags: [{type: "School"}],
     }),
     getSchoolProfile: builder.query<
       SchoolProfile & BaseResponseInterface,
@@ -181,7 +142,7 @@ export const managerApi = createApi({
       SchoolSettings & BaseResponseInterface,
       SchoolSettings
     >({
-      query: ({ school_id, ...body }) => ({
+      query: ({school_id, ...body }) => ({
         url: `/school/${school_id}/setting/`,
         method: "PATCH",
         body,
@@ -202,7 +163,7 @@ export const managerApi = createApi({
       SchoolContacts & BaseResponseInterface,
       SchoolContacts
     >({
-      query: ({ school_id, ...body }) => ({
+      query: ({school_id, ...body }) => ({
         url: `/school/${school_id}/contact/`,
         method: "PATCH",
         body,
@@ -223,7 +184,7 @@ export const managerApi = createApi({
       SchoolSocials & BaseResponseInterface,
       { school_id: string }
     >({
-      query: ({ school_id, ...body }) => ({
+      query: ({school_id, ...body }) => ({
         url: `/school/${school_id}/social`,
         method: "POST",
         body,
@@ -234,7 +195,7 @@ export const managerApi = createApi({
       SchoolSocials & BaseResponseInterface,
       { school_id: string; social_id: string }
     >({
-      query: ({ school_id, social_id }) => ({
+      query: ({school_id, social_id }) => ({
         url: `/school/${school_id}/social/${social_id}`,
         method: "DELETE",
       }),
@@ -244,7 +205,7 @@ export const managerApi = createApi({
       SchoolSocials & BaseResponseInterface,
       { school_id: string; social_id: string }
     >({
-      query: ({ school_id, social_id, ...body }) => ({
+      query: ({school_id, social_id, ...body }) => ({
         url: `/school/${school_id}/social/${social_id}`,
         method: "PATCH",
         body,
@@ -265,8 +226,6 @@ export const {
   useGetSchoolContactsQuery,
   //---social links----
 
-  //----assigment ---------
-  useGetAssigmentListQuery,
 
   //---------------- mutations --------------
   useUpdateStudentMutation,
@@ -283,7 +242,6 @@ export const {
   //---social links----
   useCreateSchoolSocialMutation,
   useDeleteSchoolSocialMutation,
-  useUpdateSchoolSocialMutation,
-  //----assigment ---------
-  useUdpateAssigmentMutation,
+  useUpdateSchoolSocialMutation
+
 } = managerApi;

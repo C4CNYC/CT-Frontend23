@@ -22,15 +22,13 @@ import { IKanbanAssignee } from '../../../@types/kanban';
 import Iconify from '../../../components/iconify';
 import Scrollbar from '../../../components/scrollbar';
 import SearchNotFound from '../../../components/search-not-found';
-import { IClass } from 'src/redux/services/interfaces/class.interface';
-import { BaseResponseInterface } from 'src/utils/baseResponce.interface';
 
 // ----------------------------------------------------------------------
 
 const ITEM_HEIGHT = 64;
 
 type Props = {
-  assignee?: (IClass & BaseResponseInterface)[];
+  assignee?: IKanbanAssignee[];
   open: boolean;
   onClose: VoidFunction;
 };

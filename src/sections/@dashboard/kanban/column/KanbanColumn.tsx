@@ -14,14 +14,12 @@ import { useSnackbar } from '../../../../components/snackbar';
 import KanbanTaskAdd from '../KanbanTaskAdd';
 import KanbanTaskCard from '../KanbanTaskCard';
 import KanbanColumnToolBar from './KanbanColumnToolBar';
-import { IAssigment } from 'src/redux/services/interfaces/assigment.interface';
-import { BaseResponseInterface } from 'src/utils/baseResponce.interface';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  column: string;
-  cards: (IAssigment & BaseResponseInterface)[];
+  column: IKanbanColumn;
+  cards: Record<string, IKanbanCard>;
   index: number;
 };
 
@@ -34,19 +32,40 @@ export default function KanbanColumn({ column, index, cards }: Props) {
     dispatch(
       deleteTask({
         cardId,
-        columnId: column,
+        columnId: column.id,
       })
     );
     enqueueSnackbar('Delete success!');
   };
 
-  const handleUpdateColumn = async (newName: string) => {};
+  const handleUpdateColumn = async (newName: string) => {
+    try {
+      if (newName !== column.name) {
+        dispatch(
+          updateColumn(column.id, {
+            ...column,
+            name: newName,
+          })
+        );
+        enqueueSnackbar('Update success!');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const handleDeleteColumn = async () => {};
+  const handleDeleteColumn = async () => {
+    try {
+      dispatch(deleteColumn(column.id));
+      enqueueSnackbar('Delete success!');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
   return (
-    <Draggable draggableId={column} index={index}>
+    <Draggable draggableId={column.id} index={index}>
       {(provided) => (
         <Paper
           {...provided.draggableProps}
@@ -62,12 +81,12 @@ export default function KanbanColumn({ column, index, cards }: Props) {
         >
           <Stack spacing={3} {...provided.dragHandleProps}>
             <KanbanColumnToolBar
-              columnName={column}
+              columnName={column.name}
               onDelete={handleDeleteColumn}
               onUpdate={handleUpdateColumn}
             />
 
-            <Droppable droppableId={column} type="task">
+            <Droppable droppableId={column.id} type="task">
               {(columnProvided) => (
                 <Stack
                   ref={columnProvided.innerRef}
@@ -75,12 +94,12 @@ export default function KanbanColumn({ column, index, cards }: Props) {
                   spacing={2}
                   sx={{ width: 320, pb: 4 }}
                 >
-                  {cards.map((assigment, assigmentIndex) => (
+                  {column.cardIds.map((cardId, cardIndex) => (
                     <KanbanTaskCard
-                      key={assigment.id}
-                      index={assigmentIndex}
+                      key={cardId}
+                      index={cardIndex}
                       onDeleteTask={handleDeleteTask}
-                      card={assigment}
+                      card={cards[cardId]}
                     />
                   ))}
                   {columnProvided.placeholder}
