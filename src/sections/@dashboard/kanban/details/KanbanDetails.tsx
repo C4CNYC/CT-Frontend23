@@ -159,7 +159,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
 
           {/* Due date */}
           <Stack direction="row" alignItems="center">
-            <StyledLabel> Due date </StyledLabel>
+            <StyledLabel> Start date </StyledLabel>
             <>
               {isSelectedValuePicker ? (
                 <Box
@@ -173,7 +173,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
                   {format(new Date(task.start_date), "dd MMM yyyy, HH:MM")}
                 </Box>
               ) : (
-                <Tooltip title="Add due date">
+                <Tooltip title="Add start date">
                   <IconButton
                     onClick={onOpenPicker}
                     sx={{

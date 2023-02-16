@@ -110,7 +110,6 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
         sx={{ pt: 3 }}
       >
         <Typography variant="h6">{value}</Typography>
-        {console.log(columnName)}
         {columnName === 'BACKLOG' &&
           <IconButton
             onClick={handleToggleAddTask}
