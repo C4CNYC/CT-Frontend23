@@ -23,17 +23,17 @@ type Props = {
 };
 
 export default function KanbanDetailsToolbar({
-                                               fileInputRef,
-                                               taskName,
-                                               liked,
-                                               completed,
-                                               onLike,
-                                               onAttach,
-                                               onDelete,
-                                               onCompleted,
-                                               onCloseDetails,
-                                               task_id
-                                             }: Props) {
+ fileInputRef,
+ taskName,
+ liked,
+ completed,
+ onLike,
+ onAttach,
+ onDelete,
+ onCompleted,
+ onCloseDetails,
+ task_id
+}: Props) {
   const isDesktop = useResponsive("up", "sm");
 
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -67,7 +67,12 @@ export default function KanbanDetailsToolbar({
           {completed ? "Completed" : "Mark Complete"}
         </Button>
 
-        <Stack direction="row" spacing={1} justifyContent="flex-end" flexGrow={1}>
+        <Stack
+          direction="row"
+          spacing={1}
+          justifyContent="flex-end"
+          flexGrow={1}
+        >
           <Tooltip title="Like this">
             <IconButton color={liked ? "default" : "primary"} size="small" onClick={onLike}>
               <Iconify icon="ic:round-thumb-up" />

@@ -26,7 +26,10 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { countries } from "src/assets/data";
-import { useCreateStudentMutation, useUpdateStudentMutation } from "src/redux/services/manager";
+import {
+  useCreateStudentMutation,
+  useUpdateStudentMutation,
+} from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +45,7 @@ export default function StudentNewEditForm({
   currentUser,
 }: Props) {
   const { push } = useRouter();
-  const school_id = useSelector((state: RootState) => state.manager.school_id)
+  const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [createStudent] = useCreateStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
 
@@ -71,7 +74,7 @@ export default function StudentNewEditForm({
       country: currentUser?.country || "",
       city: currentUser?.city || "",
       post_code: currentUser?.post_code || "",
-      about: currentUser?.about || ""
+      about: currentUser?.about || "",
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
@@ -207,11 +210,11 @@ export default function StudentNewEditForm({
         <Grid item xs={12} md={8}>
           <Card sx={{ p: 3 }}>
             <RHFTextField
-                sx={{ mb: 3 }}
-                disabled={isEdit}
-                name="email"
-                label="Email Address"
-              />
+              sx={{ mb: 3 }}
+              disabled={isEdit}
+              name="email"
+              label="Email Address"
+            />
             <Box
               rowGap={3}
               columnGap={2}
@@ -237,7 +240,14 @@ export default function StudentNewEditForm({
               <RHFTextField name="post_code" label="Zip" />
             </Box>
 
-            <RHFTextField fullWidth multiline rows={3} sx={{ h: 10 }} name="about" label="About" />
+            <RHFTextField
+              fullWidth
+              multiline
+              rows={3}
+              sx={{ h: 10 }}
+              name="about"
+              label="About"
+            />
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton

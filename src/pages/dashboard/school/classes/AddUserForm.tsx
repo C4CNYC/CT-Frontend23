@@ -14,9 +14,8 @@ export default function AddUserForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    code1: ""
+    code1: "",
   };
-
 
   type Prop = {
     defaultValues?: FormValuesProps;
@@ -25,13 +24,12 @@ export default function AddUserForm() {
   const methods = useForm({
     mode: "onChange",
     // resolver: yupResolver(VerifyCodeSchema),
-    defaultValues
+    defaultValues,
   });
-
 
   const {
     handleSubmit,
-    formState: { isSubmitting, errors }
+    formState: { isSubmitting, errors },
   } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
@@ -42,7 +40,6 @@ export default function AddUserForm() {
       console.error(error);
     }
   };
-
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>

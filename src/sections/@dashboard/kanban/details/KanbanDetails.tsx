@@ -1,19 +1,38 @@
-import { useState, useRef } from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import { Stack, Drawer, Avatar, Tooltip, Divider, TextField, Box, IconButton } from '@mui/material';
-import { IKanbanCard } from '../../../../@types/kanban';
-import Iconify from '../../../../components/iconify';
-import Scrollbar from '../../../../components/scrollbar';
-import DateRangePicker, { useDateRangePicker } from '../../../../components/date-range-picker';
-import KanbanInputName from '../KanbanInputName';
-import KanbanDetailsToolbar from './KanbanDetailsToolbar';
-import KanbanDetailsPrioritizes from './KanbanDetailsPrioritizes';
-import KanbanDetailsCommentInput from './KanbanDetailsCommentInput';
+
+import { useState, useRef } from "react";
+// @mui
+import { styled, alpha } from "@mui/material/styles";
+import {
+  Stack,
+  Drawer,
+  Avatar,
+  Tooltip,
+  Divider,
+  TextField,
+  Box,
+  IconButton,
+} from "@mui/material";
+// @types
+import { IKanbanCard } from "../../../../@types/kanban";
+// components
+import Iconify from "../../../../components/iconify";
+import Scrollbar from "../../../../components/scrollbar";
+import DateRangePicker, {
+  useDateRangePicker,
+} from "../../../../components/date-range-picker";
+//
+import KanbanInputName from "../KanbanInputName";
+import KanbanDetailsToolbar from "./KanbanDetailsToolbar";
+import KanbanContactsDialog from "../KanbanContactsDialog";
+import KanbanDetailsCommentList from "./KanbanDetailsCommentList";
+import KanbanDetailsAttachments from "./KanbanDetailsAttachments";
+import KanbanDetailsPrioritizes from "./KanbanDetailsPrioritizes";
+import KanbanDetailsCommentInput from "./KanbanDetailsCommentInput";
 import { format } from 'date-fns'
 
 // ----------------------------------------------------------------------
 
-const StyledLabel = styled('span')(({ theme }) => ({
+const StyledLabel = styled("span")(({ theme }) => ({
   ...theme.typography.caption,
   width: 120,
   flexShrink: 0,
@@ -29,11 +48,16 @@ type Props = {
   onDeleteTask: () => void;
 };
 
-export default function KanbanDetails({ task, openDetails, onCloseDetails, onDeleteTask }: Props) {
+export default function KanbanDetails({
+  task,
+  openDetails,
+  onCloseDetails,
+  onDeleteTask,
+}: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [liked, setLiked] = useState(false);
 
-  const [prioritize, setPrioritize] = useState('low');
+  const [prioritize, setPrioritize] = useState("low");
 
   const [taskName, setTaskName] = useState(task.name);
 
@@ -80,11 +104,15 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
     setTaskName(event.target.value);
   };
 
-  const handleChangeTaskDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeTaskDescription = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setTaskDescription(event.target.value);
   };
 
-  const handleChangePrioritize = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePrioritize = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPrioritize((event.target as HTMLInputElement).value);
   };
 
@@ -128,12 +156,20 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
 
           {/* Assignee */}
           <Stack direction="row">
-            <StyledLabel sx={{ height: 40, lineHeight: '40px', my: 0.5 }}>Assignee</StyledLabel>
+            <StyledLabel sx={{ height: 40, lineHeight: "40px", my: 0.5 }}>
+              Assignee
+            </StyledLabel>
 
             <Stack direction="row" flexWrap="wrap" alignItems="center">
-              {task.assignee_classes && task.assignee_classes.map((user) => (
-                <Avatar key={user.id} alt={user.name} src="/" sx={{ m: 0.5 }} />
-              ))}
+              {task.assignee_classes &&
+                task.assignee_classes.map((user) => (
+                  <Avatar
+                    key={user.id}
+                    alt={user.name}
+                    src="/"
+                    sx={{ m: 0.5 }}
+                  />
+                ))}
 
               <Tooltip title="Add assignee">
                 <IconButton
@@ -210,9 +246,9 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
                 <Box
                   onClick={onOpenPicker}
                   sx={{
-                    typography: 'body2',
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.72 },
+                    typography: "body2",
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.72 },
                   }}
                 >
                   {format(new Date(task.end_date), "dd MMM yyyy, HH:MM")}
@@ -269,7 +305,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
               value={taskDescription}
               onChange={handleChangeTaskDescription}
               InputProps={{
-                sx: { typography: 'body2' },
+                sx: { typography: "body2" },
               }}
             />
           </Stack>

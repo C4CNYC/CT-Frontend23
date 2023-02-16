@@ -29,27 +29,31 @@ export default function ClassSettingPage() {
         <title> Class Setting: CodeTribe UI</title>
       </Head>
 
-      <Container maxWidth={themeStretch ? false : "lg"} sx={{height: '100%'}}>
+      <Container maxWidth={themeStretch ? false : "lg"} sx={{ height: "100%" }}>
         <CustomBreadcrumbs
           heading="Class Setting"
           links={[
             {
               name: "Class",
-              href: PATH_DASHBOARD.school.classes
+              href: PATH_DASHBOARD.school.classes,
             },
-            { name: "Setting" }
+            { name: "Setting" },
           ]}
         />
         <Box
           gap={3}
           display="grid"
           gridTemplateRows={{ md: "repeat(2, 1fr)" }}
-          sx={{height: '100%'}}
+          sx={{ height: "100%" }}
         >
           <Card sx={{ p: 3 }}>
-            <Typography variant="h4" sx={{ mb: 4}}>Add someone to class</Typography>
+            <Typography variant="h4" sx={{ mb: 4 }}>
+              Add someone to class
+            </Typography>
             <AddUserForm />
-            <Typography variant="h4" sx={{ mb: 4, mt: 8 }}>Add someone to class</Typography>
+            <Typography variant="h4" sx={{ mb: 4, mt: 8 }}>
+              Add someone to class
+            </Typography>
             <AddUserForm />
           </Card>
         </Box>

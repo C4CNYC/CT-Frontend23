@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, Stack, FormGroup, Box } from "@mui/material";
-import { useDeleteSchoolSocialMutation, useUpdateSchoolSocialMutation } from "src/redux/services/manager";
+import {
+  useDeleteSchoolSocialMutation,
+  useUpdateSchoolSocialMutation,
+} from "src/redux/services/manager";
 import { SOCIAL_ICONS } from "../../../../assets/data";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
@@ -9,13 +12,11 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 type FormValuesProps = {
   social_id: string;
   school_id: string;
   link: string;
 };
-
 
 type Props = {
   school_id: string;
@@ -25,16 +26,16 @@ type Props = {
     id: string;
     social_id: string;
     link: string;
-  },
+  };
   defaultValues?: FormValuesProps;
 };
 
-const URL = /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
+const URL =
+  /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
 
 const UpdateLinkSchema = Yup.object().shape({
-  link: Yup.string().matches(URL, "Enter a valid url")
+  link: Yup.string().matches(URL, "Enter a valid url"),
 });
-
 
 export default function SocialItem({ school_id, socialItem }: Props) {
   const [edit, setEdit] = useState(true);
@@ -43,7 +44,7 @@ export default function SocialItem({ school_id, socialItem }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    link: socialItem?.link || ""
+    link: socialItem?.link || "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -51,10 +52,7 @@ export default function SocialItem({ school_id, socialItem }: Props) {
     defaultValues,
   });
 
-
-  const {
-    formState,
-  } = methods;
+  const { formState } = methods;
 
   const isFormEdited = formState.isDirty;
 
@@ -69,7 +67,7 @@ export default function SocialItem({ school_id, socialItem }: Props) {
       setEdit(!edit);
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error"
+        variant: "error",
       });
     }
   };
@@ -77,38 +75,42 @@ export default function SocialItem({ school_id, socialItem }: Props) {
     try {
       await deleteSocial({
         school_id: school_id,
-        social_id: social_id
+        social_id: social_id,
       }).unwrap();
       enqueueSnackbar("Social link deleted");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error"
+        variant: "error",
       });
     }
   };
 
-
   return (
     <>
-      <Stack direction="row" sx={{ wordBreak: "break-all" }} key={socialItem.type}>
+      <Stack
+        direction="row"
+        sx={{ wordBreak: "break-all" }}
+        key={socialItem.type}
+      >
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(handleEditSocial)}
         >
-          <FormGroup row sx={{mb: 4}}>
+          <FormGroup row sx={{ mb: 4 }}>
             <Box
               sx={{
-                display: 'flex',
-                border: '1px solid #919eab42',
+                display: "flex",
+                border: "1px solid #919eab42",
                 borderRight: "none",
                 color: "#627380",
-                borderRadius: '8px',
+                borderRadius: "8px",
                 borderTopRightRadius: 0,
                 borderBottomRightRadius: 0,
-                alignItems: 'center',
-                padding: '0 10px',
-                height: '40px'
-              }}>
+                alignItems: "center",
+                padding: "0 10px",
+                height: "40px",
+              }}
+            >
               {SOCIAL_ICONS[socialItem.type]}
             </Box>
             <RHFTextField
@@ -119,8 +121,8 @@ export default function SocialItem({ school_id, socialItem }: Props) {
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
                   borderTopLeftRadius: 0,
-                  borderBottomLeftRadius: 0
-                }
+                  borderBottomLeftRadius: 0,
+                },
               }}
               name="link"
               label="Link"
@@ -137,8 +139,7 @@ export default function SocialItem({ school_id, socialItem }: Props) {
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
                 textTransform: "lowercase",
-                height: '40px'
-
+                height: "40px",
               }}
             >
               Save
@@ -146,12 +147,12 @@ export default function SocialItem({ school_id, socialItem }: Props) {
             <LoadingButton
               variant="outlined"
               onClick={() => setEdit(!edit)}
-              sx={{ml: 2, height: "40px"}}
+              sx={{ ml: 2, height: "40px" }}
             >
-              {edit ? "Edit" : 'Cancel'}
+              {edit ? "Edit" : "Cancel"}
             </LoadingButton>
             <LoadingButton
-              sx={{ml: 2, mr: 2, height: "40px"}}
+              sx={{ ml: 2, mr: 2, height: "40px" }}
               variant="outlined"
               color="error"
               onClick={() => handleDeleteSocial(socialItem.id)}

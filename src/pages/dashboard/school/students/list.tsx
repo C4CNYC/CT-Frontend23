@@ -45,7 +45,10 @@ import {
   UserTableRow,
 } from "../../../../sections/@dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
-import { useDeleteStudentMutation, useGetStudentsQuery } from "src/redux/services/manager";
+import {
+  useDeleteStudentMutation,
+  useGetStudentsQuery,
+} from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";

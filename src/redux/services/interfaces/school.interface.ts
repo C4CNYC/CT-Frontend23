@@ -22,7 +22,7 @@ export interface OrganizationSchoolRequest {
 }
 
 export interface SchoolProfile {
-  email?: string,
+  email?: string;
   name?: string;
   school_id: string;
   country?: string;
@@ -54,7 +54,6 @@ export interface SchoolSettings {
   gallery_allowed: boolean;
   global_gallery_allowed: boolean;
 }
-
 
 export interface SchoolContacts {
   school_id: string;

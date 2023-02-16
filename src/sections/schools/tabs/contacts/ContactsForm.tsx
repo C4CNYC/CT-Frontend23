@@ -5,9 +5,7 @@ import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFTextField
-} from "../../../../components/hook-form";
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
 import { useUpdateSchoolContactsMutation } from "../../../../redux/services/manager";
 
@@ -18,9 +16,11 @@ const UpdateUserSchema = Yup.object().shape({
   technical_email: Yup.string().email("Email must be a valid email address"),
   technical_name: Yup.string().required("Technical name is required"),
   technical_phone: Yup.string().required("Technical phone is required"),
-  billing_email: Yup.string().email("Billing email must be a valid email address"),
+  billing_email: Yup.string().email(
+    "Billing email must be a valid email address"
+  ),
   billing_name: Yup.string().required("Billing name is required"),
-  billing_phone: Yup.string().required("Billing phone is required")
+  billing_phone: Yup.string().required("Billing phone is required"),
 });
 
 type FormValuesProps = {
@@ -41,7 +41,10 @@ type ContactsFormProps = {
   school_id: string;
 };
 
-export default function ContactsForm({ contacts, school_id }: ContactsFormProps) {
+export default function ContactsForm({
+  contacts,
+  school_id,
+}: ContactsFormProps) {
   const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -55,12 +58,12 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
     technical_phone: contacts?.technical_phone,
     billing_email: contacts?.billing_email,
     billing_name: contacts?.billing_name,
-    billing_phone: contacts?.billing_phone
+    billing_phone: contacts?.billing_phone,
   };
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
-    defaultValues
+    defaultValues,
   });
   const { handleSubmit } = methods;
 
@@ -76,7 +79,7 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
         technical_phone: data.technical_phone,
         billing_email: data.billing_email,
         billing_name: data.billing_name,
-        billing_phone: data.billing_phone
+        billing_phone: data.billing_phone,
       });
       enqueueSnackbar("Update success!");
     } catch (error) {
@@ -90,7 +93,9 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Card sx={{ p: 3 }}>
-            <Typography variant="h6" sx={{ mb: 2 }}>Contacts</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Contacts
+            </Typography>
 
             <Box
               rowGap={2}
@@ -105,7 +110,6 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
                 sm: "repeat(2, 1fr)",
               }}
             >
-
               <RHFTextField name="name" label="Name" />
 
               <RHFTextField name="email" label="Email Address" />
@@ -123,7 +127,9 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
               />
             </Box>
 
-            <Typography variant="h6" sx={{ mb: 2 }}>Technical Contacts</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Technical Contacts
+            </Typography>
 
             <Box
               rowGap={2}
@@ -138,7 +144,6 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
                 sm: "repeat(2, 1fr)",
               }}
             >
-
               <RHFTextField name="technical_name" label="Name" />
 
               <RHFTextField name="technical_email" label="Email Address" />
@@ -156,7 +161,9 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
               />
             </Box>
 
-            <Typography variant="h6" sx={{ mb: 2 }}>Billing Contacts</Typography>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Billing Contacts
+            </Typography>
 
             <Box
               rowGap={2}
@@ -171,7 +178,6 @@ export default function ContactsForm({ contacts, school_id }: ContactsFormProps)
                 sm: "repeat(2, 1fr)",
               }}
             >
-
               <RHFTextField name="billing_name" label="Name" />
 
               <RHFTextField name="billing_email" label="Email Address" />

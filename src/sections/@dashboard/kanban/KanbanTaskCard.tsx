@@ -1,14 +1,11 @@
-import { useState, ChangeEvent } from 'react';
-import { Draggable } from '@hello-pangea/dnd';
+import { useState, ChangeEvent } from "react";
+import { Draggable } from "@hello-pangea/dnd";
 // @mui
-import { Paper, Typography, Box, Checkbox } from '@mui/material';
+import { Paper, Typography, Box, Checkbox } from "@mui/material";
 // @types
-import { IKanbanCard } from '../../../@types/kanban';
-// components
-import Image from '../../../components/image';
-import Iconify from '../../../components/iconify';
+import { IKanbanCard } from "../../../@types/kanban";
 //
-import KanbanDetails from './details/KanbanDetails';
+import KanbanDetails from "./details/KanbanDetails";
 
 // ----------------------------------------------------------------------
 
@@ -19,9 +16,9 @@ type Props = {
 };
 
 export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
-  const { name, attachments } = card;
+  const { name } = card;
 
-  const [completed, setCompleted] = useState(card.completed);
+  const [completed, setCompleted] = useState(false);
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -48,24 +45,24 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
             sx={{
               width: 1,
               borderRadius: 1,
-              overflow: 'hidden',
-              position: 'relative',
+              overflow: "hidden",
+              position: "relative",
               boxShadow: (theme) => theme.customShadows.z1,
-              '&:hover': {
+              "&:hover": {
                 boxShadow: (theme) => theme.customShadows.z20,
               },
             }}
           >
-            <Box onClick={handleOpenDetails} sx={{ cursor: 'pointer' }}>
+            <Box onClick={handleOpenDetails} sx={{ cursor: "pointer" }}>
               <Typography
                 noWrap
                 variant="subtitle2"
                 sx={{
                   pl: 2,
                   height: 72,
-                  lineHeight: '72px',
+                  lineHeight: "72px",
                   transition: (theme) =>
-                    theme.transitions.create('opacity', {
+                    theme.transitions.create("opacity", {
                       duration: theme.transitions.duration.shortest,
                     }),
                   // ...(completed && {
@@ -73,7 +70,10 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
                   // }),
                 }}
               >
-                {name}
+                Name: {name}{" "}
+                <strong style={{ fontSize: 8 }}>
+                  Order: {card?.meta?.order}
+                </strong>
               </Typography>
             </Box>
           </Paper>

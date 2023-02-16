@@ -1,4 +1,12 @@
-import { AiFillYoutube, AiFillTwitterSquare, AiFillLinkedin, AiFillFacebook, AiOutlineWhatsApp, AiFillInstagram, AiFillDribbbleCircle } from "react-icons/ai";
+import {
+  AiFillYoutube,
+  AiFillTwitterSquare,
+  AiFillLinkedin,
+  AiFillFacebook,
+  AiOutlineWhatsApp,
+  AiFillInstagram,
+  AiFillDribbbleCircle,
+} from "react-icons/ai";
 import { BsTelegram } from "react-icons/bs";
 import { SiViber } from "react-icons/si";
 import React from "react";
@@ -6,7 +14,7 @@ import React from "react";
 type SocialTypes = {
   name: string;
   icon: React.ReactElement;
-}
+};
 
 type Props = {
   [key: string]: React.ReactElement;
@@ -21,44 +29,44 @@ export const SOCIAL_ICONS: Props = {
   whatsapp: <AiOutlineWhatsApp size={32} />,
   viber: <SiViber size={32} />,
   instagram: <AiFillInstagram size={32} />,
-  dribble: <AiFillDribbbleCircle size={32} />
+  dribble: <AiFillDribbbleCircle size={32} />,
 };
 
-export const Socials:SocialTypes[] = [
+export const Socials: SocialTypes[] = [
   {
     name: "youtube",
-    icon: <AiFillYoutube size={32}/>
+    icon: <AiFillYoutube size={32} />,
   },
   {
     name: "facebook",
-    icon: <AiFillFacebook size={32} />
+    icon: <AiFillFacebook size={32} />,
   },
   {
     name: "twitter",
-    icon: <AiFillTwitterSquare size={32} />
+    icon: <AiFillTwitterSquare size={32} />,
   },
   {
     name: "linkedin",
-    icon: <AiFillLinkedin size={32} />
+    icon: <AiFillLinkedin size={32} />,
   },
   {
     name: "telegram",
-    icon: <BsTelegram size={32} />
+    icon: <BsTelegram size={32} />,
   },
   {
     name: "whatsapp",
-    icon: <AiOutlineWhatsApp size={32} />
+    icon: <AiOutlineWhatsApp size={32} />,
   },
   {
     name: "viber",
-    icon: <SiViber size={32} />
+    icon: <SiViber size={32} />,
   },
   {
     name: "instagram",
-    icon: <AiFillInstagram size={32} />
+    icon: <AiFillInstagram size={32} />,
   },
   {
     name: "dribble",
-    icon: <AiFillDribbbleCircle size={32} />
-  }
+    icon: <AiFillDribbbleCircle size={32} />,
+  },
 ];

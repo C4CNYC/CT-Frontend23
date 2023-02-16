@@ -1,10 +1,29 @@
-import { Droppable, Draggable } from '@hello-pangea/dnd';
-import { Paper, Stack } from '@mui/material';
+
+import { useState } from "react";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
+// @mui
+import { Paper, Stack, Button } from "@mui/material";
+// redux
+import { useDispatch } from "../../../../redux/store";
+import {
+  deleteColumn,
+  updateColumn,
+  addTask,
+  deleteTask,
+} from "../../../../redux/slices/kanban";
+// components
+import Iconify from "../../../../components/iconify";
+import { useSnackbar } from "../../../../components/snackbar";
+//
+import KanbanTaskAdd from "../KanbanTaskAdd";
+import KanbanTaskCard from "../KanbanTaskCard";
+import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
+
+// ----------------------------------------------------------------------
 import { IKanbanColumn, IKanbanCard } from '../../../../@types/kanban';
-import { useSnackbar } from "notistack";
-import KanbanTaskCard from '../KanbanTaskCard';
 import KanbanColumnToolBar from './KanbanColumnToolBar';
 import { useDeleteAssigmentMutation } from "../../../../redux/services/manager";
+
 
 type Props = {
   column: IKanbanColumn;
@@ -41,9 +60,11 @@ export default function KanbanColumn({ column, index, cards, school_id }: Props)
           sx={{
             px: 2,
             borderRadius: 1,
-            borderStyle: 'dashed',
+            borderStyle: "dashed",
             bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'grey.100' : 'background.default',
+              theme.palette.mode === "light"
+                ? "grey.100"
+                : "background.default",
           }}
         >
           <Stack spacing={3} {...provided.dragHandleProps}>

@@ -65,7 +65,7 @@ export const managerApi = createApi({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["Assigments"],
+      invalidatesTags: [{ type: "Assigments" }],
     }),
     deleteAssigment: builder.mutation<
       void,

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 // @mui
+
 import { Stack, MenuItem, IconButton, Button, Box, Typography, Grid, Card } from "@mui/material";
 // components
 import Iconify from "../../../../components/iconify";
@@ -12,13 +13,13 @@ import Stepper from "./../createAssignment/Stepper";
 import { IKanbanCard } from "../../../../@types/kanban";
 import { addTask } from "../../../../redux/slices/kanban";
 import { useDispatch } from "../../../../redux/store";
+
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 import { LoadingButton } from "@mui/lab";
 import Dialog from "@mui/material/Dialog";
 import * as React from "react";
-
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,9 @@ type Props = {
   onUpdate: (name: string) => void;
 };
 
+
 export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, school_id }: Props) {
+  const dispatch = useDispatch();
 
   const renameRef = useRef<HTMLInputElement>(null);
 
@@ -40,7 +43,6 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const [openAddTask, setOpenAddTask] = useState(false);
-
 
   useEffect(() => {
     const { current } = renameRef;
@@ -72,7 +74,9 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
     handleClosePopover();
   };
 
-  const handleChangeColumnName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeColumnName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setValue(event.target.value);
   };
 

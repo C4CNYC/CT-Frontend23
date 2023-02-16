@@ -8,8 +8,11 @@ type Props = {
   school_id: string;
 };
 
-export default function SchoolSettingTab({ school_id } :Props) {
-  const { data, isLoading } = useGetSchoolSettingsQuery({school_id}, {skip: !school_id});
+export default function SchoolSettingTab({ school_id }: Props) {
+  const { data, isLoading } = useGetSchoolSettingsQuery(
+    { school_id },
+    { skip: !school_id }
+  );
 
   if (isLoading) return <CircularProgress />;
 
@@ -25,7 +28,9 @@ export default function SchoolSettingTab({ school_id } :Props) {
           position: "relative",
         }}
       >
-        {isLoading ? null : <SettingsForm settings={data} school_id={school_id}/>}
+        {isLoading ? null : (
+          <SettingsForm settings={data} school_id={school_id} />
+        )}
       </Box>
     </>
   );
