@@ -5,7 +5,11 @@ import {
 } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
-import { IAssigment, IAssigmentUpdate, IAssigmentCreate } from "./interfaces/assigment.interface";
+import {
+  IAssigment,
+  IAssigmentUpdate,
+  IAssigmentCreate,
+} from "./interfaces/assigment.interface";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
 import {
   SchoolResponce,
@@ -309,5 +313,5 @@ export const {
   //----assigment ---------
   useUdpateAssigmentMutation,
   useCreateAssigmentMutation,
-  useDeleteAssigmentMutation
+  useDeleteAssigmentMutation,
 } = managerApi;

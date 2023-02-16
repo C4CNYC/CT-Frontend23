@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 // @mui
@@ -20,10 +19,9 @@ import KanbanTaskCard from "../KanbanTaskCard";
 import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
 
 // ----------------------------------------------------------------------
-import { IKanbanColumn, IKanbanCard } from '../../../../@types/kanban';
-import KanbanColumnToolBar from './KanbanColumnToolBar';
+import { IKanbanColumn, IKanbanCard } from "../../../../@types/kanban";
+import KanbanColumnToolBar from "./KanbanColumnToolBar";
 import { useDeleteAssigmentMutation } from "../../../../redux/services/manager";
-
 
 type Props = {
   column: IKanbanColumn;
@@ -32,7 +30,12 @@ type Props = {
   school_id: string;
 };
 
-export default function KanbanColumn({ column, index, cards, school_id }: Props) {
+export default function KanbanColumn({
+  column,
+  index,
+  cards,
+  school_id,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAssignment] = useDeleteAssigmentMutation();
 
@@ -45,7 +48,7 @@ export default function KanbanColumn({ column, index, cards, school_id }: Props)
       enqueueSnackbar("Assignment deleted");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error"
+        variant: "error",
       });
     }
   };

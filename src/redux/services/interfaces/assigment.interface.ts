@@ -33,9 +33,7 @@ export interface IAssigmentUpdate {
   };
 }
 
-export interface IAssigmentDelete {
-
-}
+export interface IAssigmentDelete {}
 
 export interface IAssigmentCreate {
   createdAt?: string;
@@ -45,5 +43,5 @@ export interface IAssigmentCreate {
   type?: string;
   start_date?: string;
   end_date?: string;
-  meta?: {},
+  meta?: {};
 }

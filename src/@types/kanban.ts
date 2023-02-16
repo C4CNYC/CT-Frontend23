@@ -42,6 +42,7 @@ export type IKanbanBoard = {
 // ----------------------------------------------------------------------
 
 export type IKanbanState = {
+  minOrder: number;
   isLoading: boolean;
   error: Error | string | null;
   board: {

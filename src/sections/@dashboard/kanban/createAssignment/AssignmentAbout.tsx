@@ -2,17 +2,15 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import FormProvider, { RHFAutocomplete, RHFSelect } from "../../../../components/hook-form";
+import FormProvider, {
+  RHFAutocomplete,
+  RHFSelect,
+} from "../../../../components/hook-form";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
 
-const TECH_OPTIONS = [
-  "css", "html", "js"
-];
+const TECH_OPTIONS = ["css", "html", "js"];
 
-const DRILLDOWN_OPTIONS = [
-  "theme", "files", "grid"
-];
-
+const DRILLDOWN_OPTIONS = ["theme", "files", "grid"];
 
 type AssignmentStepProps = {
   next: () => void;
@@ -21,22 +19,26 @@ type AssignmentStepProps = {
   school_id: string;
 };
 
-
 type FormValuesProps = {
   name: string;
   description: string;
   tags: string;
 };
 
-export default function AssignmentAbout({ next, back, school_id, assignmentId }: AssignmentStepProps) {
+export default function AssignmentAbout({
+  next,
+  back,
+  school_id,
+  assignmentId,
+}: AssignmentStepProps) {
   const [updateAssignment, { isLoading }] = useUdpateAssigmentMutation();
 
   const defaultValues = {
-    description: ""
+    description: "",
   };
 
   const methods = useForm<FormValuesProps>({
-    defaultValues
+    defaultValues,
   });
 
   const { handleSubmit } = methods;
@@ -82,7 +84,7 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
           native
           name="lesson"
           label="Target grade"
-          style={{marginBottom: '20px'}}
+          style={{ marginBottom: "20px" }}
         >
           <option key="empty" value="en"></option>
           <option key="grade1" value="grade1">
@@ -97,7 +99,7 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
           native
           name="lesson"
           label="Select difficulty level"
-          style={{marginBottom: '20px'}}
+          style={{ marginBottom: "20px" }}
         >
           <option key="empty" value="en"></option>
           <option key="level1" value="level1">
@@ -112,17 +114,16 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
           native
           name="time"
           label="Time to complete"
-          style={{marginBottom: '20px'}}
+          style={{ marginBottom: "20px" }}
         >
           <option key="empty" value="en"></option>
           <option key="1h" value="1h">
             1h
           </option>
           <option key="2h" value="2h">
-           2h
+            2h
           </option>
         </RHFSelect>
-
       </Stack>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Button
@@ -142,8 +143,8 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
             "&:hover": {
               bgcolor: "text.primary",
               color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800"
-            }
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
           }}
         >
           Back
@@ -163,8 +164,8 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
             "&:hover": {
               bgcolor: "text.primary",
               color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800"
-            }
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
           }}
         >
           Next

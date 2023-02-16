@@ -2,9 +2,16 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import FormProvider, { RHFSelect, RHFSwitch } from "../../../../components/hook-form";
+import FormProvider, {
+  RHFSelect,
+  RHFSwitch,
+} from "../../../../components/hook-form";
 import { useCreateAssigmentMutation } from "../../../../redux/services/manager";
 import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { AssigmentTypes } from "src/redux/services/enums/assigment-types.enum";
+import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
 
 type AssignmentStepProps = {
   next: () => void;
@@ -20,30 +27,42 @@ type FormValuesProps = {
   name: string;
 };
 
-
-export default function AssignmentSettings({ next, getAssignmentId, school_id }: AssignmentStepProps) {
+export default function AssignmentSettings({
+  next,
+  getAssignmentId,
+  school_id,
+}: AssignmentStepProps) {
   const [createAssignment, { isLoading }] = useCreateAssigmentMutation();
+  const board = useSelector((state: RootState) => state.kanban.board);
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
     type: "coding_idea",
     course: "",
-    lesson: ""
+    lesson: "",
   };
 
   const methods = useForm<FormValuesProps>({
-    defaultValues
+    defaultValues,
   });
 
   const { handleSubmit } = methods;
 
   const onSubmit = async (data: any) => {
+    const backlogCol = board.columns[AssigmentStatuses.BACKLOG];
+    const idCardWithMinOrder = backlogCol.cardIds[0];
+
     try {
       const assignment = await createAssignment({
         school_id,
         type: data.type,
         name: "(Draft)",
-        meta: {}
+        meta: {
+          order: idCardWithMinOrder
+            ? parseFloat(board.cards[idCardWithMinOrder].meta.order as string) /
+              2
+            : 1,
+        },
       });
       getAssignmentId(assignment?.data?.id);
       next();
@@ -51,7 +70,6 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };
-
 
   return (
     <>
@@ -65,8 +83,7 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
             native
             name="type"
             label="Select Type"
-            style={{marginBottom: '20px'}}
-
+            style={{ marginBottom: "20px" }}
           >
             <option key="coding_idea" value="coding_idea">
               Coding idea
@@ -77,8 +94,7 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
             native
             name="course"
             label="Select Course"
-            style={{marginBottom: '20px'}}
-
+            style={{ marginBottom: "20px" }}
           >
             <option key="empty" value="en"></option>
             <option key="course1" value="course1">
@@ -93,7 +109,7 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
             native
             name="lesson"
             label="Select Course"
-            style={{marginBottom: '20px'}}
+            style={{ marginBottom: "20px" }}
           >
             <option key="empty" value="en"></option>
             <option key="lesson1" value="lesson1">
@@ -112,10 +128,9 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
               mb: 1,
               mx: 0,
               width: 1,
-              justifyContent: "flex-end"
+              justifyContent: "flex-end",
             }}
           />
-
         </Stack>
         <Box sx={{ display: "flex", flexDirection: "row" }}>
           <Button
@@ -133,8 +148,8 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
               "&:hover": {
                 bgcolor: "text.primary",
                 color: (theme) =>
-                  theme.palette.mode === "light" ? "common.white" : "grey.800"
-              }
+                  theme.palette.mode === "light" ? "common.white" : "grey.800",
+              },
             }}
           >
             Next

@@ -70,10 +70,7 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
                   // }),
                 }}
               >
-                Name: {name}{" "}
-                <strong style={{ fontSize: 8 }}>
-                  Order: {card?.meta?.order}
-                </strong>
+                {name}
               </Typography>
             </Box>
           </Paper>

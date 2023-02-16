@@ -3,7 +3,10 @@ import Typography from "@mui/material/Typography";
 import { Box, Button, Select, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useUdpateAssigmentMutation } from "src/redux/services/manager";
-import FormProvider, { RHFSelect, RHFTextField } from "../../../../components/hook-form";
+import FormProvider, {
+  RHFSelect,
+  RHFTextField,
+} from "../../../../components/hook-form";
 
 type AssignmentStepProps = {
   next: () => void;
@@ -12,13 +15,17 @@ type AssignmentStepProps = {
   assignmentId: string;
 };
 
-
 type FormValuesProps = {
   name: string;
   description: string;
 };
 
-export default function AssignmentContent({ next, back, school_id, assignmentId }: AssignmentStepProps) {
+export default function AssignmentContent({
+  next,
+  back,
+  school_id,
+  assignmentId,
+}: AssignmentStepProps) {
   const [updateAssignment, { isLoading }] = useUdpateAssigmentMutation();
 
   const defaultValues = {
@@ -27,7 +34,7 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
   };
 
   const methods = useForm<FormValuesProps>({
-    defaultValues
+    defaultValues,
   });
 
   const { handleSubmit } = methods;
@@ -55,7 +62,7 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
         <RHFTextField
           name="name"
           label="Assignment name"
-          style={{marginBottom: '20px'}}
+          style={{ marginBottom: "20px" }}
         />
 
         <RHFTextField
@@ -63,10 +70,8 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
           rows={8}
           name="description"
           label="Assignment description"
-          style={{marginBottom: '20px'}}
+          style={{ marginBottom: "20px" }}
         />
-
-
       </Stack>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Button
@@ -86,8 +91,8 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
             "&:hover": {
               bgcolor: "text.primary",
               color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800"
-            }
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
           }}
         >
           Back
@@ -107,8 +112,8 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
             "&:hover": {
               bgcolor: "text.primary",
               color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800"
-            }
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
           }}
         >
           Next

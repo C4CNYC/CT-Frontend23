@@ -13,6 +13,7 @@ import { AssigmentStatuses } from "../services/enums/assigment-status.enum";
 
 const initialState: IKanbanState = {
   isLoading: false,
+  minOrder: 1,
   error: null,
   board: {
     cards: {},

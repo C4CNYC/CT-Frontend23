@@ -23,16 +23,16 @@ type Props = {
 };
 
 export default function KanbanDetailsToolbar({
- fileInputRef,
- taskName,
- liked,
- completed,
- onLike,
- onAttach,
- onDelete,
- onCompleted,
- onCloseDetails,
- task_id
+  fileInputRef,
+  taskName,
+  liked,
+  completed,
+  onLike,
+  onAttach,
+  onDelete,
+  onCompleted,
+  onCloseDetails,
+  task_id,
 }: Props) {
   const isDesktop = useResponsive("up", "sm");
 
@@ -61,7 +61,9 @@ export default function KanbanDetailsToolbar({
           size="small"
           variant="outlined"
           color={completed ? "primary" : "inherit"}
-          startIcon={completed && <Iconify icon="eva:checkmark-fill" width={16} />}
+          startIcon={
+            completed && <Iconify icon="eva:checkmark-fill" width={16} />
+          }
           onClick={onCompleted}
         >
           {completed ? "Completed" : "Mark Complete"}
@@ -74,7 +76,11 @@ export default function KanbanDetailsToolbar({
           flexGrow={1}
         >
           <Tooltip title="Like this">
-            <IconButton color={liked ? "default" : "primary"} size="small" onClick={onLike}>
+            <IconButton
+              color={liked ? "default" : "primary"}
+              size="small"
+              onClick={onLike}
+            >
               <Iconify icon="ic:round-thumb-up" />
             </IconButton>
           </Tooltip>
@@ -109,7 +115,11 @@ export default function KanbanDetailsToolbar({
           </>
         }
         action={
-          <Button variant="contained" color="error" onClick={() => onDelete(task_id)}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => onDelete(task_id)}
+          >
             Delete
           </Button>
         }

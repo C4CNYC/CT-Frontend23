@@ -17,10 +17,13 @@ import { KanbanColumn } from "../../../sections/@dashboard/kanban";
 import SchoolDashboardLayout from "../../../layouts/dashboard/SchoolDashboardLayout";
 import { getOrder } from "src/utils/getTaskOrder";
 import UserProfilePage from "./general";
-import { AssigmentStatuses } from 'src/redux/services/enums/assigment-status.enum';
-import { useGetAssigmentListQuery, useUdpateAssigmentMutation } from 'src/redux/services/manager';
-import { BaseResponseInterface } from 'src/utils/baseResponce.interface';
-import { IAssigment } from 'src/redux/services/interfaces/assigment.interface';
+import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
+import {
+  useGetAssigmentListQuery,
+  useUdpateAssigmentMutation,
+} from "src/redux/services/manager";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
 import Stepper from "../../../sections/@dashboard/kanban/createAssignment/Stepper";
 
 // ----------------------------------------------------------------------
@@ -48,7 +51,7 @@ export default function Assignments() {
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
-    if (!destination) return;
+    if (!destination || type !== "task") return;
 
     if (
       destination.droppableId === source.droppableId &&

@@ -2,7 +2,10 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import FormProvider, { RHFSwitch, RHFTextField } from "../../../../components/hook-form";
+import FormProvider, {
+  RHFSwitch,
+  RHFTextField,
+} from "../../../../components/hook-form";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
@@ -14,7 +17,6 @@ type AssignmentStepProps = {
   school_id: string;
 };
 
-
 type FormValuesProps = {
   class: string;
   due_date: string;
@@ -23,7 +25,12 @@ type FormValuesProps = {
   points: string;
 };
 
-export default function AssignmentAssigning({ back, assignmentId, school_id, next }: AssignmentStepProps) {
+export default function AssignmentAssigning({
+  back,
+  assignmentId,
+  school_id,
+  next,
+}: AssignmentStepProps) {
   const [updateAssignment, { isLoading }] = useUdpateAssigmentMutation();
 
   const defaultValues = {
@@ -32,11 +39,11 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
     start_date: new Date(),
     notes: "",
     graded: false,
-    points: ""
+    points: "",
   };
 
   const methods = useForm<FormValuesProps>({
-    defaultValues
+    defaultValues,
   });
 
   const { handleSubmit, control } = methods;
@@ -47,7 +54,7 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
         school_id,
         assigment_id: assignmentId,
         start_date: data.start_date,
-        end_date: data.end_date
+        end_date: data.end_date,
       });
       next();
     } catch (e) {
@@ -69,44 +76,49 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
         />
 
         <Box sx={{ display: "flex", flexDirection: "row" }}>
-
-
           <Controller
             name="start_date"
             control={control}
-            render={
-              ({ field: { onChange, value, ...restField } }) =>
-                <DateTimePicker
-                  label="Start Date"
-                  value={value}
-                  onChange={(event) => {
-                    onChange(event);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} margin="normal" fullWidth style={{marginRight: '10px'}}/>
-                  )}
-                />
-            }
+            render={({ field: { onChange, value, ...restField } }) => (
+              <DateTimePicker
+                label="Start Date"
+                value={value}
+                onChange={(event) => {
+                  onChange(event);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    margin="normal"
+                    fullWidth
+                    style={{ marginRight: "10px" }}
+                  />
+                )}
+              />
+            )}
           />
 
           <Controller
             name="end_date"
             control={control}
-            render={
-              ({ field: { onChange, value, ...restField } }) =>
-                <DateTimePicker
-                  label="End Date"
-                  value={value}
-                  onChange={(event) => {
-                    onChange(event);
-                  }}
-                  renderInput={(params) => (
-                    <TextField {...params} margin="normal" fullWidth style={{marginLeft: '10px'}}/>
-                  )}
-                />
-            }
+            render={({ field: { onChange, value, ...restField } }) => (
+              <DateTimePicker
+                label="End Date"
+                value={value}
+                onChange={(event) => {
+                  onChange(event);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    margin="normal"
+                    fullWidth
+                    style={{ marginLeft: "10px" }}
+                  />
+                )}
+              />
+            )}
           />
-
         </Box>
         <RHFTextField
           multiline
@@ -124,16 +136,11 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
             mb: 1,
             mx: 0,
             width: 1,
-            justifyContent: "flex-end"
+            justifyContent: "flex-end",
           }}
         />
 
-        <RHFTextField
-          name="points"
-          label="Points"
-          type="number"
-        />
-
+        <RHFTextField name="points" label="Points" type="number" />
       </Stack>
 
       <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -154,8 +161,8 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
             "&:hover": {
               bgcolor: "text.primary",
               color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800"
-            }
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
           }}
         >
           Back
@@ -175,8 +182,8 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
             "&:hover": {
               bgcolor: "text.primary",
               color: (theme) =>
-                theme.palette.mode === "light" ? "common.white" : "grey.800"
-            }
+                theme.palette.mode === "light" ? "common.white" : "grey.800",
+            },
           }}
         >
           Next

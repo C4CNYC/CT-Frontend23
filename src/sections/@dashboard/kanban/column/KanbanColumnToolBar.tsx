@@ -1,7 +1,16 @@
 import { useRef, useState, useEffect } from "react";
 // @mui
 
-import { Stack, MenuItem, IconButton, Button, Box, Typography, Grid, Card } from "@mui/material";
+import {
+  Stack,
+  MenuItem,
+  IconButton,
+  Button,
+  Box,
+  Typography,
+  Grid,
+  Card,
+} from "@mui/material";
 // components
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
@@ -30,8 +39,12 @@ type Props = {
   onUpdate: (name: string) => void;
 };
 
-
-export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, school_id }: Props) {
+export default function KanbanColumnToolBar({
+  columnName,
+  onDelete,
+  onUpdate,
+  school_id,
+}: Props) {
   const dispatch = useDispatch();
 
   const renameRef = useRef<HTMLInputElement>(null);
@@ -102,7 +115,7 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
 
   const handleCloseStepper = () => {
     setOpenAddTask(false);
-  }
+  };
 
   return (
     <>
@@ -114,7 +127,7 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
         sx={{ pt: 3 }}
       >
         <Typography variant="h6">{value}</Typography>
-        {columnName === 'BACKLOG' &&
+        {columnName === "BACKLOG" && (
           <IconButton
             onClick={handleToggleAddTask}
             sx={{ fontSize: 14 }}
@@ -122,14 +135,19 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
           >
             <Iconify icon="eva:plus-fill" />
           </IconButton>
-        }
+        )}
       </Stack>
 
       {openAddTask && (
-        <Dialog open={openAddTask} onClose={() => setOpenAddTask(false)} maxWidth="md" fullWidth>
+        <Dialog
+          open={openAddTask}
+          onClose={() => setOpenAddTask(false)}
+          maxWidth="md"
+          fullWidth
+        >
           <DialogTitle>Create new assignment</DialogTitle>
-          <DialogContent sx={{pb: 5}}>
-            <Stepper school_id={school_id} closeStepper={handleCloseStepper}/>
+          <DialogContent sx={{ pb: 5 }}>
+            <Stepper school_id={school_id} closeStepper={handleCloseStepper} />
           </DialogContent>
         </Dialog>
       )}
@@ -142,7 +160,8 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
           <>
             Are you sure want to delete column?
             <Box sx={{ typography: "caption", color: "error.main", mt: 2 }}>
-              <strong> NOTE: </strong> All tasks related to this category will also be deleted.
+              <strong> NOTE: </strong> All tasks related to this category will
+              also be deleted.
             </Box>
           </>
         }

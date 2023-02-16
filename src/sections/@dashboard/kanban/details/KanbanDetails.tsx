@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 // @mui
 import { styled, alpha } from "@mui/material/styles";
@@ -28,7 +27,7 @@ import KanbanDetailsCommentList from "./KanbanDetailsCommentList";
 import KanbanDetailsAttachments from "./KanbanDetailsAttachments";
 import KanbanDetailsPrioritizes from "./KanbanDetailsPrioritizes";
 import KanbanDetailsCommentInput from "./KanbanDetailsCommentInput";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 
 // ----------------------------------------------------------------------
 
@@ -201,9 +200,9 @@ export default function KanbanDetails({
                 <Box
                   onClick={onOpenPicker}
                   sx={{
-                    typography: 'body2',
-                    cursor: 'pointer',
-                    '&:hover': { opacity: 0.72 },
+                    typography: "body2",
+                    cursor: "pointer",
+                    "&:hover": { opacity: 0.72 },
                   }}
                 >
                   {format(new Date(task.start_date), "dd MMM yyyy, HH:MM")}
@@ -310,7 +309,7 @@ export default function KanbanDetails({
             />
           </Stack>
 
-           {/*Attachments*/}
+          {/*Attachments*/}
           <Stack direction="row">
             <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
             {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
