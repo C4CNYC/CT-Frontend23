@@ -14,6 +14,7 @@ import { useSnackbar } from '../../../../components/snackbar';
 import KanbanTaskAdd from '../KanbanTaskAdd';
 import KanbanTaskCard from '../KanbanTaskCard';
 import KanbanColumnToolBar from './KanbanColumnToolBar';
+import { AssigmentStatuses } from 'src/redux/services/enums/assigment-status.enum';
 
 // ----------------------------------------------------------------------
 
@@ -38,31 +39,6 @@ export default function KanbanColumn({ column, index, cards }: Props) {
     enqueueSnackbar('Delete success!');
   };
 
-  const handleUpdateColumn = async (newName: string) => {
-    try {
-      if (newName !== column.name) {
-        dispatch(
-          updateColumn(column.id, {
-            ...column,
-            name: newName,
-          })
-        );
-        enqueueSnackbar('Update success!');
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleDeleteColumn = async () => {
-    try {
-      dispatch(deleteColumn(column.id));
-      enqueueSnackbar('Delete success!');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
 
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -82,8 +58,8 @@ export default function KanbanColumn({ column, index, cards }: Props) {
           <Stack spacing={3} {...provided.dragHandleProps}>
             <KanbanColumnToolBar
               columnName={column.name}
-              onDelete={handleDeleteColumn}
-              onUpdate={handleUpdateColumn}
+              onDelete={() => {}}
+              onUpdate={() => {}}
             />
 
             <Droppable droppableId={column.id} type="task">

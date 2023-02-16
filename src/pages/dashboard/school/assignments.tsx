@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { Container, Stack } from '@mui/material';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 // redux
-import { useDispatch, useSelector } from '../../../redux/store';
-import { getBoard, persistColumn, persistCard } from '../../../redux/slices/kanban';
+import { RootState, useDispatch, useSelector } from '../../../redux/store';
+import { getBoard, persistCard } from '../../../redux/slices/kanban';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // utils
@@ -16,6 +16,8 @@ import { SkeletonKanbanColumn } from '../../../components/skeleton';
 import { KanbanColumn, KanbanColumnAdd } from '../../../sections/@dashboard/kanban';
 import SchoolDashboardLayout from "../../../layouts/dashboard/SchoolDashboardLayout";
 import UserProfilePage from "./general";
+import { AssigmentStatuses } from 'src/redux/services/enums/assigment-status.enum';
+import { useGetAssigmentListQuery } from 'src/redux/services/manager';
 
 // ----------------------------------------------------------------------
 
@@ -26,14 +28,17 @@ Assignments.getLayout = (page: React.ReactElement) => (
 
 export default function Assignments() {
   const dispatch = useDispatch();
+  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const { data } = useGetAssigmentListQuery({ school_id }, { skip: !school_id })
 
   const { board } = useSelector((state) => state.kanban);
 
+  console.log(board);
 
-  console.log(board)
   useEffect(() => {
-    dispatch(getBoard());
-  }, [dispatch]);
+    if(!data) return;
+    dispatch(getBoard(data));
+  }, [data]);
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
@@ -42,17 +47,6 @@ export default function Assignments() {
 
     if (destination.droppableId === source.droppableId && destination.index === source.index)
       return;
-
-    if (type === 'column') {
-      const newColumnOrder = Array.from(board.columnOrder);
-
-      newColumnOrder.splice(source.index, 1);
-
-      newColumnOrder.splice(destination.index, 0, draggableId);
-
-      dispatch(persistColumn(newColumnOrder));
-      return;
-    }
 
     const start = board.columns[source.droppableId];
     const finish = board.columns[destination.droppableId];
@@ -133,10 +127,10 @@ export default function Assignments() {
                   ...hideScrollbarX,
                 }}
               >
-                {!board.columnOrder.length ? (
+                {!Object.keys(board.columns).length ? (
                   <SkeletonKanbanColumn />
                 ) : (
-                  board.columnOrder.map((columnId, index) => (
+                  Object.values(AssigmentStatuses).map((columnId, index) => (
                     <KanbanColumn
                       index={index}
                       key={columnId}

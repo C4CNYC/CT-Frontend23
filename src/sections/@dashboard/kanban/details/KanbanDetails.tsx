@@ -46,7 +46,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
 
   const [openContacts, setOpenContacts] = useState(false);
 
-  const [completed, setCompleted] = useState(task.completed);
+  const [completed, setCompleted] = useState(false);
 
   const [taskDescription, setTaskDescription] = useState(task.description);
 
@@ -61,7 +61,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
     isSelected: isSelectedValuePicker,
     isError,
     shortLabel,
-  } = useDateRangePicker(task.due[0], task.due[1]);
+  } = useDateRangePicker(new Date(task.start_date), new Date(task.end_date));
 
   const handleLiked = () => {
     setLiked(!liked);
@@ -137,8 +137,8 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
             <StyledLabel sx={{ height: 40, lineHeight: '40px', my: 0.5 }}>Assignee</StyledLabel>
 
             <Stack direction="row" flexWrap="wrap" alignItems="center">
-              {task.assignee.map((user) => (
-                <Avatar key={user.id} alt={user.name} src={user.avatar} sx={{ m: 0.5 }} />
+              {task.assignee_classes && task.assignee_classes.map((user) => (
+                <Avatar key={user.id} alt={user.name} src="/" sx={{ m: 0.5 }} />
               ))}
 
               <Tooltip title="Add assignee">
@@ -155,11 +155,11 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
                 </IconButton>
               </Tooltip>
 
-              <KanbanContactsDialog
+              {/* <KanbanContactsDialog
                 assignee={task.assignee}
                 open={openContacts}
                 onClose={handleCloseContacts}
-              />
+              /> */}
             </Stack>
           </Stack>
 
@@ -238,11 +238,11 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
           {/* Attachments */}
           <Stack direction="row">
             <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
-            <KanbanDetailsAttachments attachments={task.attachments} />
+            {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
           </Stack>
         </Stack>
 
-        {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />}
+        {/* {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />} */}
       </Scrollbar>
 
       <Divider />
