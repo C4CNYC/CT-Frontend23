@@ -2,13 +2,14 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Button, Select, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
-import { countries } from "../../../../assets/data";
+import { useUdpateAssigmentMutation } from "src/redux/services/manager";
 import FormProvider, { RHFSelect, RHFTextField } from "../../../../components/hook-form";
 
-type SchoolStepProps = {
+type AssignmentStepProps = {
   next: () => void;
+  back: () => void;
+  school_id: string;
+  assignmentId: string;
 };
 
 
@@ -17,8 +18,8 @@ type FormValuesProps = {
   description: string;
 };
 
-export default function AssignmentContent({ next }: SchoolStepProps) {
-  const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
+export default function AssignmentContent({ next, back, school_id, assignmentId }: AssignmentStepProps) {
+  const [updateAssignment, { isLoading }] = useUdpateAssigmentMutation();
 
   const defaultValues = {
     name: "",
@@ -33,7 +34,11 @@ export default function AssignmentContent({ next }: SchoolStepProps) {
 
   const onSubmit = async (data: any) => {
     try {
-      console.log('consoel');
+      updateAssignment({
+        school_id,
+        assigment_id: assignmentId,
+        name: data.name,
+      });
       next();
     } catch (e) {
       // #TODO show error
@@ -56,7 +61,7 @@ export default function AssignmentContent({ next }: SchoolStepProps) {
         <RHFTextField
           multiline
           rows={8}
-          name="name"
+          name="description"
           label="Assignment description"
           sx={{ width: "320px" }}
         />
@@ -64,6 +69,29 @@ export default function AssignmentContent({ next }: SchoolStepProps) {
 
       </Stack>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Button
+          disabled={isLoading}
+          fullWidth
+          type="submit"
+          onClick={back}
+          sx={{
+            boxShadow: "0px 8px 16px rgba(196, 196, 196, 0.59)",
+            bgcolor: "#FBDD3F",
+            borderRadius: "50px",
+            textTransform: "uppercase",
+            fontSize: "22px",
+            mr: 2,
+            color: (theme) =>
+              theme.palette.mode === "light" ? "common.white" : "grey.800",
+            "&:hover": {
+              bgcolor: "text.primary",
+              color: (theme) =>
+                theme.palette.mode === "light" ? "common.white" : "grey.800"
+            }
+          }}
+        >
+          Back
+        </Button>
         <Button
           disabled={isLoading}
           fullWidth

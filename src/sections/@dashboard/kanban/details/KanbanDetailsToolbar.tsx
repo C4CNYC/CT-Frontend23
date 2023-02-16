@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Stack, Button, Tooltip, IconButton } from '@mui/material';
+import { Stack, Button, Tooltip, IconButton } from "@mui/material";
 // hooks
-import useResponsive from '../../../../hooks/useResponsive';
+import useResponsive from "../../../../hooks/useResponsive";
 // components
-import Iconify from '../../../../components/iconify';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Iconify from "../../../../components/iconify";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 
 // ----------------------------------------------------------------------
 
@@ -16,23 +16,25 @@ type Props = {
   completed: boolean;
   onLike: VoidFunction;
   onAttach: VoidFunction;
-  onDelete: VoidFunction;
+  onDelete: (task_id: string) => VoidFunction;
   onCompleted: VoidFunction;
   onCloseDetails: VoidFunction;
+  task_id: string;
 };
 
 export default function KanbanDetailsToolbar({
-  fileInputRef,
-  taskName,
-  liked,
-  completed,
-  onLike,
-  onAttach,
-  onDelete,
-  onCompleted,
-  onCloseDetails,
-}: Props) {
-  const isDesktop = useResponsive('up', 'sm');
+                                               fileInputRef,
+                                               taskName,
+                                               liked,
+                                               completed,
+                                               onLike,
+                                               onAttach,
+                                               onDelete,
+                                               onCompleted,
+                                               onCloseDetails,
+                                               task_id
+                                             }: Props) {
+  const isDesktop = useResponsive("up", "sm");
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -58,16 +60,16 @@ export default function KanbanDetailsToolbar({
         <Button
           size="small"
           variant="outlined"
-          color={completed ? 'primary' : 'inherit'}
+          color={completed ? "primary" : "inherit"}
           startIcon={completed && <Iconify icon="eva:checkmark-fill" width={16} />}
           onClick={onCompleted}
         >
-          {completed ? 'Completed' : 'Mark Complete'}
+          {completed ? "Completed" : "Mark Complete"}
         </Button>
 
         <Stack direction="row" spacing={1} justifyContent="flex-end" flexGrow={1}>
           <Tooltip title="Like this">
-            <IconButton color={liked ? 'default' : 'primary'} size="small" onClick={onLike}>
+            <IconButton color={liked ? "default" : "primary"} size="small" onClick={onLike}>
               <Iconify icon="ic:round-thumb-up" />
             </IconButton>
           </Tooltip>
@@ -90,7 +92,7 @@ export default function KanbanDetailsToolbar({
         </Stack>
       </Stack>
 
-      <input ref={fileInputRef} type="file" style={{ display: 'none' }} />
+      <input ref={fileInputRef} type="file" style={{ display: "none" }} />
 
       <ConfirmDialog
         open={openConfirm}
@@ -102,7 +104,7 @@ export default function KanbanDetailsToolbar({
           </>
         }
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <Button variant="contained" color="error" onClick={() => onDelete(task_id)}>
             Delete
           </Button>
         }

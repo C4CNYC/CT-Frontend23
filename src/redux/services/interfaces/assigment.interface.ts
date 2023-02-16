@@ -26,3 +26,18 @@ export interface IAssigmentUpdate {
   start_date?: string;
   end_date?: string;
 }
+
+export interface IAssigmentDelete {
+
+}
+
+export interface IAssigmentCreate {
+  createdAt?: string;
+  updatedAt?: string;
+  name?: string;
+  description?: string;
+  type?: string;
+  start_date?: string;
+  end_date?: string;
+  meta?: {},
+}

@@ -1,21 +1,15 @@
 import { useState, useRef } from 'react';
-// @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Stack, Drawer, Avatar, Tooltip, Divider, TextField, Box, IconButton } from '@mui/material';
-// @types
 import { IKanbanCard } from '../../../../@types/kanban';
-// components
 import Iconify from '../../../../components/iconify';
 import Scrollbar from '../../../../components/scrollbar';
 import DateRangePicker, { useDateRangePicker } from '../../../../components/date-range-picker';
-//
 import KanbanInputName from '../KanbanInputName';
 import KanbanDetailsToolbar from './KanbanDetailsToolbar';
-import KanbanContactsDialog from '../KanbanContactsDialog';
-import KanbanDetailsCommentList from './KanbanDetailsCommentList';
-import KanbanDetailsAttachments from './KanbanDetailsAttachments';
 import KanbanDetailsPrioritizes from './KanbanDetailsPrioritizes';
 import KanbanDetailsCommentInput from './KanbanDetailsCommentInput';
+import { format } from 'date-fns'
 
 // ----------------------------------------------------------------------
 
@@ -32,12 +26,11 @@ type Props = {
   task: IKanbanCard;
   openDetails: boolean;
   onCloseDetails: VoidFunction;
-  onDeleteTask: VoidFunction;
+  onDeleteTask: () => void;
 };
 
 export default function KanbanDetails({ task, openDetails, onCloseDetails, onDeleteTask }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [liked, setLiked] = useState(false);
 
   const [prioritize, setPrioritize] = useState('low');
@@ -119,6 +112,7 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
         onDelete={onDeleteTask}
         onCompleted={handleCompleted}
         onCloseDetails={onCloseDetails}
+        task_id={task.id}
       />
 
       <Divider />
@@ -176,7 +170,52 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
                     '&:hover': { opacity: 0.72 },
                   }}
                 >
-                  {shortLabel}
+                  {format(new Date(task.start_date), "dd MMM yyyy, HH:MM")}
+                </Box>
+              ) : (
+                <Tooltip title="Add due date">
+                  <IconButton
+                    onClick={onOpenPicker}
+                    sx={{
+                      p: 1,
+                      ml: 0.5,
+                      bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
+                      border: (theme) => `dashed 1px ${theme.palette.divider}`,
+                    }}
+                  >
+                    <Iconify icon="eva:plus-fill" />
+                  </IconButton>
+                </Tooltip>
+              )}
+
+              <DateRangePicker
+                variant="calendar"
+                title="Choose due date"
+                startDate={startDate}
+                endDate={endDate}
+                onChangeStartDate={onChangeStartDate}
+                onChangeEndDate={onChangeEndDate}
+                open={openPicker}
+                onClose={onClosePicker}
+                isSelected={isSelectedValuePicker}
+                isError={isError}
+              />
+            </>
+          </Stack>
+
+          <Stack direction="row" alignItems="center">
+            <StyledLabel> Due date </StyledLabel>
+            <>
+              {isSelectedValuePicker ? (
+                <Box
+                  onClick={onOpenPicker}
+                  sx={{
+                    typography: 'body2',
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.72 },
+                  }}
+                >
+                  {format(new Date(task.end_date), "dd MMM yyyy, HH:MM")}
                 </Box>
               ) : (
                 <Tooltip title="Add due date">
@@ -210,14 +249,14 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
           </Stack>
 
           {/* Prioritize */}
-          <Stack direction="row" alignItems="center">
-            <StyledLabel>Prioritize</StyledLabel>
+          {/*<Stack direction="row" alignItems="center">*/}
+          {/*  <StyledLabel>Prioritize</StyledLabel>*/}
 
-            <KanbanDetailsPrioritizes
-              prioritize={prioritize}
-              onChangePrioritize={handleChangePrioritize}
-            />
-          </Stack>
+          {/*  <KanbanDetailsPrioritizes*/}
+          {/*    prioritize={prioritize}*/}
+          {/*    onChangePrioritize={handleChangePrioritize}*/}
+          {/*  />*/}
+          {/*</Stack>*/}
 
           {/* Description */}
           <Stack direction="row">
@@ -236,10 +275,10 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
           </Stack>
 
           {/* Attachments */}
-          <Stack direction="row">
-            <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
-            {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
-          </Stack>
+          {/*<Stack direction="row">*/}
+          {/*  <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>*/}
+          {/*  /!* <KanbanDetailsAttachments attachments={task.attachments} /> *!/*/}
+          {/*</Stack>*/}
         </Stack>
 
         {/* {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />} */}

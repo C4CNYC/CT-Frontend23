@@ -37,7 +37,6 @@ export default function Assignments() {
 
   const { board } = useSelector((state) => state.kanban);
 
-  console.log(board);
 
   useEffect(() => {
     if(!data) return;
@@ -142,6 +141,7 @@ export default function Assignments() {
                 ) : (
                   Object.values(AssigmentStatuses).map((columnId, index) => (
                     <KanbanColumn
+                      school_id={school_id}
                       index={index}
                       key={columnId}
                       column={board.columns[columnId]}

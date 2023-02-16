@@ -1,31 +1,32 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Button, Stack } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import InputInfo from "./InputInfo";
 import { useForm } from "react-hook-form";
-import { useUpdateOrganizationMutation } from "src/redux/services/admin";
-import { useRouter } from "next/router";
-import FormProvider, { RHFSelect } from "../../../../components/hook-form";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import FormProvider, { RHFSelect, RHFSwitch } from "../../../../components/hook-form";
+import { useCreateAssigmentMutation } from "../../../../redux/services/manager";
+import { useSnackbar } from "notistack";
 
-type OrganizationStepProps = {
+type AssignmentStepProps = {
   next: () => void;
+  school_id: string;
+  getAssignmentId: (param: string) => void;
 };
 
 type FormValuesProps = {
   type: string;
   course: string;
   lesson: string;
+  publish: boolean;
+  name: string;
 };
 
 
-export default function AssignmentSettings({ next }: OrganizationStepProps) {
-  const router = useRouter();
-  const [createAssignment, { isLoading }] = useUpdateOrganizationMutation();
+export default function AssignmentSettings({ next, getAssignmentId, school_id }: AssignmentStepProps) {
+  const [createAssignment, { isLoading }] = useCreateAssigmentMutation();
+  const { enqueueSnackbar } = useSnackbar();
+
   const defaultValues = {
-    type: "",
+    type: "coding_idea",
     course: "",
     lesson: ""
   };
@@ -38,13 +39,19 @@ export default function AssignmentSettings({ next }: OrganizationStepProps) {
 
   const onSubmit = async (data: any) => {
     try {
-      console.log("qwe");
+      const assignment = await createAssignment({
+        school_id,
+        type: data.type,
+        name: "(Draft)",
+        meta: {}
+      });
+      getAssignmentId(assignment?.data?.id);
       next();
-      // const org = await updateOrg({ body: data }).unwrap();
     } catch (e) {
-      // #TODO show error
+      enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };
+
 
   return (
     <>
@@ -55,43 +62,58 @@ export default function AssignmentSettings({ next }: OrganizationStepProps) {
           </Typography>
 
           <RHFSelect
+            native
             name="type"
             label="Select Type"
             sx={{ width: "320px" }}
           >
-            <option key="en" value="en">
-              English
+            <option key="coding_idea" value="coding_idea">
+              Coding idea
             </option>
-            <option key="fr" value="fr">
-              French
-            </option>
+
           </RHFSelect>
 
           <RHFSelect
+            native
             name="course"
             label="Select Course"
             sx={{ width: "320px" }}
           >
-            <option key="en" value="en">
-              English
+            <option key="empty" value="en"></option>
+            <option key="course1" value="course1">
+              Course of assignment 1
             </option>
-            <option key="fr" value="fr">
-              French
+            <option key="course2" value="course2">
+              Course of assignment 2
             </option>
           </RHFSelect>
 
           <RHFSelect
+            native
             name="lesson"
-            label="Select Lesson"
+            label="Select Course"
             sx={{ width: "320px" }}
           >
-            <option key="en" value="en">
-              English
+            <option key="empty" value="en"></option>
+            <option key="lesson1" value="lesson1">
+              Lesson of assignment 1
             </option>
-            <option key="fr" value="fr">
-              French
+            <option key="lesson2" value="lesson2">
+              Lesson of assignment 2
             </option>
           </RHFSelect>
+
+          <RHFSwitch
+            name="publish"
+            label="Publish"
+            labelPlacement="start"
+            sx={{
+              mb: 1,
+              mx: 0,
+              width: 1,
+              justifyContent: "flex-end"
+            }}
+          />
 
         </Stack>
         <Box sx={{ display: "flex", flexDirection: "row" }}>

@@ -7,18 +7,39 @@ import StepButton from "@mui/material/StepButton";
 import AssignmentContent from "./AssignmentContent";
 import AssignmentSettings from "./AssignmentSettings";
 import AssignmentAssigning from "./AssignmentAssigning";
+import AssignmentAbout from "./AssignmentAbout";
 
-const steps = ["Assignment Settings", "Assignment Content", "Assignment Assigning"];
+const steps = ["Assignment Settings", "Assignment Content", "Assignment About", "Assignment Assigning"];
 
-export default function HorizontalNonLinearStepper() {
+type Props = {
+  school_id: string;
+  closeStepper: () => void;
+};
+
+export default function HorizontalNonLinearStepper({ school_id, closeStepper }: Props) {
   const [activeStep, setActiveStep] = useState(0);
+  const [assignmentId, setAssignmentId] = useState('');
+
+
   const [completed, setCompleted] = useState<{
     [k: number]: boolean;
   }>({});
+
   const handleNext = () => {
     if (activeStep === steps.length) return;
+    if (activeStep === 3) closeStepper();
     setActiveStep(activeStep + 1);
   };
+
+  const handleAssignmentId = (id: string) => {
+    setAssignmentId(id);
+  }
+
+  const handleBack = () => {
+    if (activeStep === 0) return;
+    setActiveStep(activeStep - 1);
+  };
+
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -28,7 +49,7 @@ export default function HorizontalNonLinearStepper() {
             <StepButton
               color="inherit"
               sx={{
-                pointerEvents: "none",
+                pointerEvents: "none"
               }}
             />
           </Step>
@@ -36,9 +57,10 @@ export default function HorizontalNonLinearStepper() {
       </Stepper>
       <div>
         <>
-          {activeStep === 0 && <AssignmentSettings next={handleNext} />}
-          {activeStep === 1 && <AssignmentContent next={handleNext} />}
-          {activeStep === 2 && <AssignmentAssigning />}
+          {activeStep === 0 && <AssignmentSettings getAssignmentId={handleAssignmentId} next={handleNext} school_id={school_id}/>}
+          {activeStep === 1 && <AssignmentContent assignmentId={assignmentId} next={handleNext} back={handleBack} school_id={school_id}/>}
+          {activeStep === 2 && <AssignmentAbout assignmentId={assignmentId} next={handleNext} back={handleBack} school_id={school_id}/>}
+          {activeStep === 3 && <AssignmentAssigning assignmentId={assignmentId} next={handleNext} back={handleBack} school_id={school_id} />}
         </>
       </div>
     </Box>

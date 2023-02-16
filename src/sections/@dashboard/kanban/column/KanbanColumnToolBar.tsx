@@ -1,27 +1,35 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from "react";
 // @mui
-import { Stack, MenuItem, IconButton, Button, Box, Typography } from "@mui/material";
+import { Stack, MenuItem, IconButton, Button, Box, Typography, Grid, Card } from "@mui/material";
 // components
-import Iconify from '../../../../components/iconify';
-import MenuPopover from '../../../../components/menu-popover';
-import ConfirmDialog from '../../../../components/confirm-dialog';
+import Iconify from "../../../../components/iconify";
+import MenuPopover from "../../../../components/menu-popover";
+import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import KanbanInputName from '../KanbanInputName';
+import KanbanInputName from "../KanbanInputName";
 import KanbanTaskAdd from "../KanbanTaskAdd";
+import Stepper from "./../createAssignment/Stepper";
 import { IKanbanCard } from "../../../../@types/kanban";
 import { addTask } from "../../../../redux/slices/kanban";
-import { useDispatch } from '../../../../redux/store';
+import { useDispatch } from "../../../../redux/store";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
+import { LoadingButton } from "@mui/lab";
+import Dialog from "@mui/material/Dialog";
+import * as React from "react";
 
 
 // ----------------------------------------------------------------------
 
 type Props = {
   columnName: string;
+  school_id: string;
   onDelete: VoidFunction;
   onUpdate: (name: string) => void;
 };
 
-export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: Props) {
+export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, school_id }: Props) {
   const dispatch = useDispatch();
 
   const renameRef = useRef<HTMLInputElement>(null);
@@ -70,7 +78,7 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
   };
 
   const handleUpdateColumn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && renameRef.current) {
+    if (event.key === "Enter" && renameRef.current) {
       renameRef.current.blur();
       onUpdate(value);
     }
@@ -86,9 +94,12 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
 
   const handleAddTask = (task: IKanbanCard) => {
     handleCloseAddTask();
-    console.log('qwe');
+    console.log("qwe");
   };
 
+  const handleCloseStepper = () => {
+    setOpenAddTask(false);
+  }
 
   return (
     <>
@@ -110,7 +121,12 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
       </Stack>
 
       {openAddTask && (
-        <KanbanTaskAdd onAddTask={handleAddTask} onCloseAddTask={handleCloseAddTask} />
+        <Dialog open={openAddTask} onClose={() => setOpenAddTask(false)}>
+          <DialogTitle>Create new assignment</DialogTitle>
+          <DialogContent sx={{pb: 5}}>
+            <Stepper school_id={school_id} closeStepper={handleCloseStepper}/>
+          </DialogContent>
+        </Dialog>
       )}
 
       <ConfirmDialog
@@ -120,7 +136,7 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate }: 
         content={
           <>
             Are you sure want to delete column?
-            <Box sx={{ typography: 'caption', color: 'error.main', mt: 2 }}>
+            <Box sx={{ typography: "caption", color: "error.main", mt: 2 }}>
               <strong> NOTE: </strong> All tasks related to this category will also be deleted.
             </Box>
           </>
