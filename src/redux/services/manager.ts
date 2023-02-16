@@ -52,6 +52,7 @@ export const managerApi = createApi({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: [{ type: "Assigments" }],
     }),
 
     getMySchools: builder.query<

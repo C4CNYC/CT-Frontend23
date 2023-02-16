@@ -4,7 +4,7 @@ import {
   Tooltip,
   ListItem,
   ListItemText,
-  ListItemAvatar
+  ListItemAvatar,
 } from "@mui/material";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -21,7 +21,6 @@ export default function UserItem({ person, addHandler, invited }: Props) {
   return (
     <>
       <ListItem disableGutters>
-
         <ListItemAvatar>
           <Avatar alt={person.first_name} src="/assets/images/avatar_2.jpg" />
         </ListItemAvatar>
@@ -46,7 +45,6 @@ export default function UserItem({ person, addHandler, invited }: Props) {
         >
           {invited ? "Invited" : "Add"}
         </Button>
-
       </ListItem>
     </>
   );

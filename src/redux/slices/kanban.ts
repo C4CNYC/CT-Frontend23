@@ -92,6 +92,18 @@ export function getBoard(data: (IAssigment & BaseResponseInterface)[]) {
               name: "BACKLOG",
               cardIds: data
                 .filter((d) => d.status === AssigmentStatuses.BACKLOG)
+                .sort((a, b) => {
+                  console.log(
+                    a.meta,
+                    b.meta,
+                    parseFloat(a.meta?.order as string),
+                    parseFloat(b.meta?.order as string)
+                  );
+                  return (
+                    parseFloat(a.meta?.order as string) -
+                    parseFloat(b.meta?.order as string)
+                  );
+                })
                 .map((d) => d.id),
             },
             {
@@ -99,6 +111,11 @@ export function getBoard(data: (IAssigment & BaseResponseInterface)[]) {
               name: "PROGRESS",
               cardIds: data
                 .filter((d) => d.status === AssigmentStatuses.PROGRESS)
+                .sort(
+                  (a, b) =>
+                    parseFloat(a.meta?.order as string) -
+                    parseFloat(b.meta?.order as string)
+                )
                 .map((d) => d.id),
             },
             {
@@ -106,6 +123,11 @@ export function getBoard(data: (IAssigment & BaseResponseInterface)[]) {
               name: "DONE",
               cardIds: data
                 .filter((d) => d.status === AssigmentStatuses.DONE)
+                .sort(
+                  (a, b) =>
+                    parseFloat(a?.meta?.order as string) -
+                    parseFloat(b?.meta?.order as string)
+                )
                 .map((d) => d.id),
             },
           ],

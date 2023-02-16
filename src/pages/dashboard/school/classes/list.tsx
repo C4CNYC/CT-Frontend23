@@ -38,11 +38,13 @@ import {
   TablePaginationCustom,
 } from "../../../../components/table";
 // sections
-import {
-  UserTableToolbar,
-} from "../../../../sections/@dashboard/user/list";
+import { UserTableToolbar } from "../../../../sections/@dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
-import { useCreateClassesMutation, useDeleteClassesMutation, useGetClassesQuery } from "src/redux/services/manager";
+import {
+  useCreateClassesMutation,
+  useDeleteClassesMutation,
+  useGetClassesQuery,
+} from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
@@ -94,7 +96,9 @@ export default function UserListPage() {
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({ name: "" });
+  const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
+    name: "",
+  });
 
   const [updateClassByManager] = useUpdateClassesMutation();
   const [createClassByManager] = useCreateClassesMutation();
@@ -127,8 +131,8 @@ export default function UserListPage() {
   };
 
   const handleEditRow = async (id: string, name: string) => {
-     try {
-      await updateClassByManager({ school_id, class_id: id, name }).unwrap()
+    try {
+      await updateClassByManager({ school_id, class_id: id, name }).unwrap();
       enqueueSnackbar(`Class updated successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -138,7 +142,7 @@ export default function UserListPage() {
 
   const createClass = async (name: string) => {
     try {
-      await createClassByManager({ school_id, name }).unwrap()
+      await createClassByManager({ school_id, name }).unwrap();
       enqueueSnackbar(`School ${name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -161,9 +165,7 @@ export default function UserListPage() {
             { name: "List" },
           ]}
           action={
-            <AddClassDialog
-              createClass={createClass}
-            >
+            <AddClassDialog createClass={createClass}>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}

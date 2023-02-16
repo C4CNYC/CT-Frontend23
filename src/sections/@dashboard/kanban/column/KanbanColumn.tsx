@@ -1,20 +1,25 @@
-import { useState } from 'react';
-import { Droppable, Draggable } from '@hello-pangea/dnd';
+import { useState } from "react";
+import { Droppable, Draggable } from "@hello-pangea/dnd";
 // @mui
-import { Paper, Stack, Button } from '@mui/material';
+import { Paper, Stack, Button } from "@mui/material";
 // redux
-import { useDispatch } from '../../../../redux/store';
-import { deleteColumn, updateColumn, addTask, deleteTask } from '../../../../redux/slices/kanban';
+import { useDispatch } from "../../../../redux/store";
+import {
+  deleteColumn,
+  updateColumn,
+  addTask,
+  deleteTask,
+} from "../../../../redux/slices/kanban";
 // @types
-import { IKanbanColumn, IKanbanCard } from '../../../../@types/kanban';
+import { IKanbanColumn, IKanbanCard } from "../../../../@types/kanban";
 // components
-import Iconify from '../../../../components/iconify';
-import { useSnackbar } from '../../../../components/snackbar';
+import Iconify from "../../../../components/iconify";
+import { useSnackbar } from "../../../../components/snackbar";
 //
-import KanbanTaskAdd from '../KanbanTaskAdd';
-import KanbanTaskCard from '../KanbanTaskCard';
-import KanbanColumnToolBar from './KanbanColumnToolBar';
-import { AssigmentStatuses } from 'src/redux/services/enums/assigment-status.enum';
+import KanbanTaskAdd from "../KanbanTaskAdd";
+import KanbanTaskCard from "../KanbanTaskCard";
+import KanbanColumnToolBar from "./KanbanColumnToolBar";
+import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
 
 // ----------------------------------------------------------------------
 
@@ -36,9 +41,8 @@ export default function KanbanColumn({ column, index, cards }: Props) {
         columnId: column.id,
       })
     );
-    enqueueSnackbar('Delete success!');
+    enqueueSnackbar("Delete success!");
   };
-
 
   return (
     <Draggable draggableId={column.id} index={index}>
@@ -50,9 +54,11 @@ export default function KanbanColumn({ column, index, cards }: Props) {
           sx={{
             px: 2,
             borderRadius: 1,
-            borderStyle: 'dashed',
+            borderStyle: "dashed",
             bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'grey.100' : 'background.default',
+              theme.palette.mode === "light"
+                ? "grey.100"
+                : "background.default",
           }}
         >
           <Stack spacing={3} {...provided.dragHandleProps}>

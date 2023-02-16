@@ -4,15 +4,17 @@ import { useGetSchoolContactsQuery } from "src/redux/services/manager";
 import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 
-
 type Props = {
   school_id: string;
 };
 
-export default function SchoolContactsTab({school_id} : Props) {
-  const { data, isLoading } = useGetSchoolContactsQuery({school_id}, {skip: !school_id});
+export default function SchoolContactsTab({ school_id }: Props) {
+  const { data, isLoading } = useGetSchoolContactsQuery(
+    { school_id },
+    { skip: !school_id }
+  );
 
-  if (isLoading) return <CircularProgress /> ;
+  if (isLoading) return <CircularProgress />;
 
   if (!data) return <>No Data</>;
 
@@ -26,7 +28,9 @@ export default function SchoolContactsTab({school_id} : Props) {
           position: "relative",
         }}
       >
-        {isLoading ? null : <ContactsForm contacts={data} school_id={school_id}/>}
+        {isLoading ? null : (
+          <ContactsForm contacts={data} school_id={school_id} />
+        )}
       </Box>
     </>
   );

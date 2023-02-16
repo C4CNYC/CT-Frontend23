@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
 import {
   Box,
@@ -9,23 +9,25 @@ import {
   IconButton,
   InputBase,
   ClickAwayListener,
-} from '@mui/material';
+} from "@mui/material";
 // utils
-import uuidv4 from '../../../utils/uuidv4';
+import uuidv4 from "../../../utils/uuidv4";
 // @types
-import { IKanbanCard } from '../../../@types/kanban';
+import { IKanbanCard } from "../../../@types/kanban";
 // components
-import Iconify from '../../../components/iconify';
-import DateRangePicker, { useDateRangePicker } from '../../../components/date-range-picker';
+import Iconify from "../../../components/iconify";
+import DateRangePicker, {
+  useDateRangePicker,
+} from "../../../components/date-range-picker";
 //
-import KanbanContactsDialog from './KanbanContactsDialog';
+import KanbanContactsDialog from "./KanbanContactsDialog";
 
 // ----------------------------------------------------------------------
 
 const defaultTask = {
   attachments: [],
   comments: [],
-  description: '',
+  description: "",
   due: [null, null],
   assignee: [],
 };
@@ -36,7 +38,7 @@ type Props = {
 };
 
 export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   const [completed, setCompleted] = useState(false);
 
@@ -64,8 +66,8 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
   };
 
   const handleKeyUpAddTask = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      if (name.trim() !== '') {
+    if (event.key === "Enter") {
+      if (name.trim() !== "") {
         onAddTask({
           ...defaultTask,
           id: uuidv4(),
@@ -91,7 +93,9 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
     }
   };
 
-  const handleChangeCompleted = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeCompleted = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setCompleted(event.target.checked);
   };
 
@@ -109,7 +113,11 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
             sx={{ px: 2, pt: 2 }}
           />
 
-          <Stack direction="row" justifyContent="flex-end" sx={{ pl: 1, pr: 1.5, pb: 2 }}>
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            sx={{ pl: 1, pr: 1.5, pb: 2 }}
+          >
             <Stack direction="row" spacing={1.5} alignItems="center">
               <Tooltip title="Assign" onClick={handleOpenContacts}>
                 <IconButton size="small">
@@ -121,9 +129,9 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
                 <Box
                   onClick={onOpenPicker}
                   sx={{
-                    cursor: 'pointer',
-                    typography: 'caption',
-                    '&:hover': { opacity: 0.72 },
+                    cursor: "pointer",
+                    typography: "caption",
+                    "&:hover": { opacity: 0.72 },
                   }}
                 >
                   {shortLabel}
@@ -139,7 +147,10 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
           </Stack>
         </Paper>
 
-        <KanbanContactsDialog open={openContacts} onClose={handleCloseContacts} />
+        <KanbanContactsDialog
+          open={openContacts}
+          onClose={handleCloseContacts}
+        />
 
         <DateRangePicker
           variant="calendar"

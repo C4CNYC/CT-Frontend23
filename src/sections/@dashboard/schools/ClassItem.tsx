@@ -5,7 +5,7 @@ import {
   ListItem,
   MenuItem,
   ListItemText,
-  ListItemAvatar
+  ListItemAvatar,
 } from "@mui/material";
 import Iconify from "../../../components/iconify";
 import MenuPopover from "../../../components/menu-popover";
@@ -24,7 +24,11 @@ type Props = {
   handleDeleteClass: () => void;
 };
 
-export default function ClassItem({ classes, handleDeleteClass, schoolId }: Props) {
+export default function ClassItem({
+  classes,
+  handleDeleteClass,
+  schoolId,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const [updateClass] = useUpdateClassMutation();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -39,7 +43,11 @@ export default function ClassItem({ classes, handleDeleteClass, schoolId }: Prop
 
   const updateClassByAdmin = async (name: string) => {
     try {
-      const data = await updateClass({ schoolId, class_id: classes.id, name }).unwrap();
+      const data = await updateClass({
+        schoolId,
+        class_id: classes.id,
+        name,
+      }).unwrap();
       enqueueSnackbar(`School ${data.name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -48,7 +56,10 @@ export default function ClassItem({ classes, handleDeleteClass, schoolId }: Prop
 
   return (
     <>
-      <ListItem disableGutters sx={{ borderBottom: "solid 1px rgba(145, 158, 171, 0.24)" }}>
+      <ListItem
+        disableGutters
+        sx={{ borderBottom: "solid 1px rgba(145, 158, 171, 0.24)" }}
+      >
         <ListItemAvatar>
           <Avatar alt={classes.name} src="/assets/images/classes.png" />
         </ListItemAvatar>
@@ -70,11 +81,11 @@ export default function ClassItem({ classes, handleDeleteClass, schoolId }: Prop
             textTransform: "unset",
             fontWeight: "fontWeightMedium",
             "& .MuiButton-endIcon": {
-              ml: 0
+              ml: 0,
             },
             ...(openPopover && {
-              bgcolor: "action.selected"
-            })
+              bgcolor: "action.selected",
+            }),
           }}
         ></Button>
       </ListItem>

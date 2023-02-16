@@ -13,6 +13,9 @@ export interface IAssigment {
   start_date: string;
   end_date: string;
   assignee_classes: (IClass & BaseResponseInterface)[];
+  meta: {
+    [key: string]: number | string;
+  };
 }
 
 export interface IAssigmentUpdate {
@@ -25,4 +28,7 @@ export interface IAssigmentUpdate {
   active?: boolean;
   start_date?: string;
   end_date?: string;
+  meta?: {
+    [key: string]: number | string;
+  };
 }

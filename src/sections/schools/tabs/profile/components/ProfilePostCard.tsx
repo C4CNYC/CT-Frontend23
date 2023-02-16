@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef } from "react";
 // @mui
-import { alpha } from '@mui/material/styles';
+import { alpha } from "@mui/material/styles";
 import {
   Box,
   Link,
@@ -14,18 +14,21 @@ import {
   IconButton,
   InputAdornment,
   FormControlLabel,
-} from '@mui/material';
+} from "@mui/material";
 // @types
-import { IUserProfilePost } from '../../../../../@types/user';
+import { IUserProfilePost } from "../../../../../@types/user";
 // auth
-import { useAuthContext } from '../../../../../auth/useAuthContext';
+import { useAuthContext } from "../../../../../auth/useAuthContext";
 // utils
-import { fDate } from '../../../../../utils/formatTime';
-import { fShortenNumber } from '../../../../../utils/formatNumber';
+import { fDate } from "../../../../../utils/formatTime";
+import { fShortenNumber } from "../../../../../utils/formatNumber";
 // components
-import Image from '../../../../../components/image';
-import Iconify from '../../../../../components/iconify';
-import { CustomAvatar, CustomAvatarGroup } from '../../../../../components/custom-avatar';
+import Image from "../../../../../components/image";
+import Iconify from "../../../../../components/iconify";
+import {
+  CustomAvatar,
+  CustomAvatarGroup,
+} from "../../../../../components/custom-avatar";
 
 // ----------------------------------------------------------------------
 
@@ -44,7 +47,7 @@ export default function ProfilePostCard({ post }: Props) {
 
   const [likes, setLikes] = useState(post.personLikes.length);
 
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const hasComments = post.comments.length > 0;
 
@@ -81,7 +84,11 @@ export default function ProfilePostCard({ post }: Props) {
       <CardHeader
         disableTypography
         avatar={
-          <CustomAvatar src={user?.photoURL} alt={user?.displayName} name={user?.displayName} />
+          <CustomAvatar
+            src={user?.photoURL}
+            alt={user?.displayName}
+            name={user?.displayName}
+          />
         }
         title={
           <Link color="inherit" variant="subtitle2">
@@ -89,7 +96,11 @@ export default function ProfilePostCard({ post }: Props) {
           </Link>
         }
         subheader={
-          <Typography variant="caption" component="div" sx={{ color: 'text.secondary' }}>
+          <Typography
+            variant="caption"
+            component="div"
+            sx={{ color: "text.secondary" }}
+          >
             {fDate(post.createdAt)}
           </Typography>
         }
@@ -109,7 +120,12 @@ export default function ProfilePostCard({ post }: Props) {
       </Typography>
 
       <Box sx={{ p: 1 }}>
-        <Image alt="post media" src={post.media} ratio="16/9" sx={{ borderRadius: 1 }} />
+        <Image
+          alt="post media"
+          src={post.media}
+          ratio="16/9"
+          sx={{ borderRadius: 1 }}
+        />
       </Box>
 
       <Stack
@@ -134,7 +150,11 @@ export default function ProfilePostCard({ post }: Props) {
 
         <CustomAvatarGroup>
           {post.personLikes.map((person) => (
-            <CustomAvatar key={person.name} alt={person.name} src={person.avatarUrl} />
+            <CustomAvatar
+              key={person.name}
+              alt={person.name}
+              src={person.avatarUrl}
+            />
           ))}
         </CustomAvatarGroup>
 
@@ -153,29 +173,34 @@ export default function ProfilePostCard({ post }: Props) {
         <Stack spacing={1.5} sx={{ px: 3, pb: 2 }}>
           {post.comments.map((comment) => (
             <Stack key={comment.id} direction="row" spacing={2}>
-              <CustomAvatar alt={comment.author.name} src={comment.author.avatarUrl} />
+              <CustomAvatar
+                alt={comment.author.name}
+                src={comment.author.avatarUrl}
+              />
 
               <Paper
                 sx={{
                   p: 1.5,
                   flexGrow: 1,
-                  bgcolor: 'background.neutral',
+                  bgcolor: "background.neutral",
                 }}
               >
                 <Stack
                   justifyContent="space-between"
-                  direction={{ xs: 'column', sm: 'row' }}
-                  alignItems={{ sm: 'center' }}
+                  direction={{ xs: "column", sm: "row" }}
+                  alignItems={{ sm: "center" }}
                   sx={{ mb: 0.5 }}
                 >
-                  <Typography variant="subtitle2">{comment.author.name}</Typography>
+                  <Typography variant="subtitle2">
+                    {comment.author.name}
+                  </Typography>
 
-                  <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+                  <Typography variant="caption" sx={{ color: "text.disabled" }}>
                     {fDate(comment.createdAt)}
                   </Typography>
                 </Stack>
 
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   {comment.message}
                 </Typography>
               </Paper>
@@ -192,7 +217,11 @@ export default function ProfilePostCard({ post }: Props) {
           p: (theme) => theme.spacing(0, 3, 3, 3),
         }}
       >
-        <CustomAvatar src={user?.photoURL} alt={user?.displayName} name={user?.displayName} />
+        <CustomAvatar
+          src={user?.photoURL}
+          alt={user?.displayName}
+          name={user?.displayName}
+        />
 
         <InputBase
           fullWidth
@@ -215,11 +244,12 @@ export default function ProfilePostCard({ post }: Props) {
             pl: 1.5,
             height: 40,
             borderRadius: 1,
-            border: (theme) => `solid 1px ${alpha(theme.palette.grey[500], 0.32)}`,
+            border: (theme) =>
+              `solid 1px ${alpha(theme.palette.grey[500], 0.32)}`,
           }}
         />
 
-        <input type="file" ref={fileInputRef} style={{ display: 'none' }} />
+        <input type="file" ref={fileInputRef} style={{ display: "none" }} />
       </Stack>
     </Card>
   );

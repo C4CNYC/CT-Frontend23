@@ -22,14 +22,19 @@ UserEditPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function UserEditPage() {
-  const { query: { id } } = useRouter();
+  const {
+    query: { id },
+  } = useRouter();
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
 
-  const { data } = useGetStudentQuery({
-    student_id: id as string,
-    school_id
-  }, { skip: !school_id || !id });
+  const { data } = useGetStudentQuery(
+    {
+      student_id: id as string,
+      school_id,
+    },
+    { skip: !school_id || !id }
+  );
 
   return (
     <>

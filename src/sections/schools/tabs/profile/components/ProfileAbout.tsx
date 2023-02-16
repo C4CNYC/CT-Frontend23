@@ -1,8 +1,7 @@
-import { styled } from '@mui/material/styles';
-import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
-import Iconify from '../../../../../components/iconify';
-import {SchoolProfile} from "../../../../../redux/services/interfaces/school.interface";
-
+import { styled } from "@mui/material/styles";
+import { Link, Card, Typography, CardHeader, Stack } from "@mui/material";
+import Iconify from "../../../../../components/iconify";
+import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -16,8 +15,7 @@ type Props = {
   data: SchoolProfile;
 };
 
-export default function ProfileAbout({data}: Props) {
-
+export default function ProfileAbout({ data }: Props) {
   return (
     <Card>
       <CardHeader title="About" />
@@ -69,7 +67,6 @@ export default function ProfileAbout({data}: Props) {
             </Link>
           </Typography>
         </Stack>
-
       </Stack>
     </Card>
   );

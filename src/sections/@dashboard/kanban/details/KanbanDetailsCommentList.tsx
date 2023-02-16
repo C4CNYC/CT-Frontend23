@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
 // @mui
-import { Stack, Avatar, Typography } from '@mui/material';
+import { Stack, Avatar, Typography } from "@mui/material";
 // utils
-import { fToNow } from '../../../../utils/formatTime';
+import { fToNow } from "../../../../utils/formatTime";
 // @types
-import { IKanbanComment } from '../../../../@types/kanban';
+import { IKanbanComment } from "../../../../@types/kanban";
 // components
-import Image from '../../../../components/image';
-import Lightbox from '../../../../components/lightbox';
+import Image from "../../../../components/image";
+import Lightbox from "../../../../components/lightbox";
 
 // ----------------------------------------------------------------------
 
@@ -19,11 +19,13 @@ export default function KanbanDetailsCommentList({ comments }: Props) {
   const [selectedImage, setSelectedImage] = useState<number>(-1);
 
   const imagesLightbox = comments
-    .filter((comment) => comment.messageType === 'image')
+    .filter((comment) => comment.messageType === "image")
     .map((item) => ({ src: item.message }));
 
   const handleOpenLightbox = (imageUrl: string) => {
-    const imageIndex = imagesLightbox.findIndex((image) => image.src === imageUrl);
+    const imageIndex = imagesLightbox.findIndex(
+      (image) => image.src === imageUrl
+    );
     setSelectedImage(imageIndex);
   };
 
@@ -38,7 +40,7 @@ export default function KanbanDetailsCommentList({ comments }: Props) {
         sx={{
           py: 3,
           px: 2.5,
-          bgcolor: 'background.neutral',
+          bgcolor: "background.neutral",
         }}
       >
         {comments.map((comment) => (
@@ -49,12 +51,12 @@ export default function KanbanDetailsCommentList({ comments }: Props) {
               <Stack direction="row" alignItems="center" spacing={1}>
                 <Typography variant="subtitle2"> {comment.name}</Typography>
 
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                <Typography variant="caption" sx={{ color: "text.secondary" }}>
                   {fToNow(comment.createdAt)}
                 </Typography>
               </Stack>
 
-              {comment.messageType === 'image' ? (
+              {comment.messageType === "image" ? (
                 <Image
                   alt={comment.message}
                   src={comment.message}

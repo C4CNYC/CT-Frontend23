@@ -1,23 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 // @mui
-import { Container, Stack } from '@mui/material';
-import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
+import { Container, Stack } from "@mui/material";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 // redux
-import { RootState, useDispatch, useSelector } from '../../../redux/store';
-import { getBoard, persistCard } from '../../../redux/slices/kanban';
+import { RootState, useDispatch, useSelector } from "../../../redux/store";
+import { getBoard, persistCard } from "../../../redux/slices/kanban";
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // utils
-import { hideScrollbarX } from '../../../utils/cssStyles';
+import { hideScrollbarX } from "../../../utils/cssStyles";
 // components
-import CustomBreadcrumbs from '../../../components/custom-breadcrumbs';
-import { SkeletonKanbanColumn } from '../../../components/skeleton';
+import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import { SkeletonKanbanColumn } from "../../../components/skeleton";
 // sections
-import { KanbanColumn, KanbanColumnAdd } from '../../../sections/@dashboard/kanban';
+import { KanbanColumn } from "../../../sections/@dashboard/kanban";
 import SchoolDashboardLayout from "../../../layouts/dashboard/SchoolDashboardLayout";
-import UserProfilePage from "./general";
-import { AssigmentStatuses } from 'src/redux/services/enums/assigment-status.enum';
-import { useGetAssigmentListQuery, useUdpateAssigmentMutation } from 'src/redux/services/manager';
+import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
+import {
+  useGetAssigmentListQuery,
+  useUdpateAssigmentMutation,
+} from "src/redux/services/manager";
+import { getOrder } from "src/utils/getTaskOrder";
 
 // ----------------------------------------------------------------------
 
@@ -25,19 +28,19 @@ Assignments.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-
 export default function Assignments() {
   const dispatch = useDispatch();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { data } = useGetAssigmentListQuery({ school_id }, { skip: !school_id })
+  const { data } = useGetAssigmentListQuery(
+    { school_id },
+    { skip: !school_id }
+  );
   const [updateAssigment] = useUdpateAssigmentMutation();
 
   const { board } = useSelector((state) => state.kanban);
 
-  console.log(board);
-
   useEffect(() => {
-    if(!data) return;
+    if (!data) return;
     dispatch(getBoard(data));
   }, [data]);
 
@@ -46,7 +49,10 @@ export default function Assignments() {
 
     if (!destination) return;
 
-    if (destination.droppableId === source.droppableId && destination.index === source.index)
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
       return;
 
     const start = board.columns[source.droppableId];
@@ -70,14 +76,16 @@ export default function Assignments() {
           [updatedColumn.id]: updatedColumn,
         })
       );
+
+      updateAssigment({
+        assigment_id: draggableId,
+        school_id,
+        meta: {
+          order: getOrder(result, finish, board.cards, start.id === finish.id),
+        },
+      });
       return;
     }
-
-    updateAssigment({
-      assigment_id: draggableId,
-      school_id,
-      status: destination.droppableId as AssigmentStatuses
-    })
 
     const startCardIds = [...start.cardIds];
 
@@ -104,6 +112,14 @@ export default function Assignments() {
         [updatedFinish.id]: updatedFinish,
       })
     );
+    updateAssigment({
+      assigment_id: draggableId,
+      school_id,
+      status: destination.droppableId as AssigmentStatuses,
+      meta: {
+        order: getOrder(result, finish, board.cards, start.id === finish.id),
+      },
+    });
   };
 
   return (
@@ -113,14 +129,18 @@ export default function Assignments() {
           heading="Assignments"
           links={[
             {
-              name: 'Dashboard',
+              name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: 'Assignments' },
+            { name: "Assignments" },
           ]}
         />
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="all-columns" direction="horizontal" type="column">
+          <Droppable
+            droppableId="all-columns"
+            direction="horizontal"
+            type="column"
+          >
             {(provided) => (
               <Stack
                 {...provided.droppableProps}
@@ -130,7 +150,7 @@ export default function Assignments() {
                 alignItems="flex-start"
                 sx={{
                   height: 1,
-                  overflowY: 'hidden',
+                  overflowY: "hidden",
                   ...hideScrollbarX,
                 }}
               >
