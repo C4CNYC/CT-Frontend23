@@ -65,48 +65,55 @@ export default function AssignmentAssigning({ back, assignmentId, school_id, nex
         <RHFTextField
           name="class"
           label="Assign to class"
-          sx={{ width: "320px" }}
+          style={{ marginBottom: "20px" }}
         />
 
-        <Controller
-          name="start_date"
-          control={control}
-          render={
-            ({ field: { onChange, value,...restField } }) =>
-              <DateTimePicker
-                label="Start Date"
-                value={value}
-                onChange={(event) => { onChange(event); }}
-                renderInput={(params) => (
-                  <TextField {...params} margin="normal" fullWidth />
-                )}
-              />
-          }
-        />
-
-        <Controller
-          name="end_date"
-          control={control}
-          render={
-            ({ field: { onChange, value,...restField } }) =>
-              <DateTimePicker
-                label="End Date"
-                value={value}
-                onChange={(event) => { onChange(event); }}
-                renderInput={(params) => (
-                  <TextField {...params} margin="normal" fullWidth />
-                )}
-              />
-          }
-        />
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
 
 
+          <Controller
+            name="start_date"
+            control={control}
+            render={
+              ({ field: { onChange, value, ...restField } }) =>
+                <DateTimePicker
+                  label="Start Date"
+                  value={value}
+                  onChange={(event) => {
+                    onChange(event);
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} margin="normal" fullWidth style={{marginRight: '10px'}}/>
+                  )}
+                />
+            }
+          />
+
+          <Controller
+            name="end_date"
+            control={control}
+            render={
+              ({ field: { onChange, value, ...restField } }) =>
+                <DateTimePicker
+                  label="End Date"
+                  value={value}
+                  onChange={(event) => {
+                    onChange(event);
+                  }}
+                  renderInput={(params) => (
+                    <TextField {...params} margin="normal" fullWidth style={{marginLeft: '10px'}}/>
+                  )}
+                />
+            }
+          />
+
+        </Box>
         <RHFTextField
           multiline
           rows={8}
           name="name"
           label="Class notes"
-          sx={{ width: "320px" }}
+          style={{ marginBottom: "20px" }}
         />
 
         <RHFSwitch

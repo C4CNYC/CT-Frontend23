@@ -82,7 +82,7 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
           native
           name="lesson"
           label="Target grade"
-          sx={{ width: "320px" }}
+          style={{marginBottom: '20px'}}
         >
           <option key="empty" value="en"></option>
           <option key="grade1" value="grade1">
@@ -97,7 +97,7 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
           native
           name="lesson"
           label="Select difficulty level"
-          sx={{ width: "320px" }}
+          style={{marginBottom: '20px'}}
         >
           <option key="empty" value="en"></option>
           <option key="level1" value="level1">
@@ -112,7 +112,7 @@ export default function AssignmentAbout({ next, back, school_id, assignmentId }:
           native
           name="time"
           label="Time to complete"
-          sx={{ width: "320px" }}
+          style={{marginBottom: '20px'}}
         >
           <option key="empty" value="en"></option>
           <option key="1h" value="1h">

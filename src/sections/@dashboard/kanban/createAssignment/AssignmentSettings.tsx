@@ -65,19 +65,20 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
             native
             name="type"
             label="Select Type"
-            sx={{ width: "320px" }}
+            style={{marginBottom: '20px'}}
+
           >
             <option key="coding_idea" value="coding_idea">
               Coding idea
             </option>
-
           </RHFSelect>
 
           <RHFSelect
             native
             name="course"
             label="Select Course"
-            sx={{ width: "320px" }}
+            style={{marginBottom: '20px'}}
+
           >
             <option key="empty" value="en"></option>
             <option key="course1" value="course1">
@@ -92,7 +93,7 @@ export default function AssignmentSettings({ next, getAssignmentId, school_id }:
             native
             name="lesson"
             label="Select Course"
-            sx={{ width: "320px" }}
+            style={{marginBottom: '20px'}}
           >
             <option key="empty" value="en"></option>
             <option key="lesson1" value="lesson1">

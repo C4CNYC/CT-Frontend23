@@ -55,7 +55,7 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
         <RHFTextField
           name="name"
           label="Assignment name"
-          sx={{ width: "320px" }}
+          style={{marginBottom: '20px'}}
         />
 
         <RHFTextField
@@ -63,7 +63,7 @@ export default function AssignmentContent({ next, back, school_id, assignmentId 
           rows={8}
           name="description"
           label="Assignment description"
-          sx={{ width: "320px" }}
+          style={{marginBottom: '20px'}}
         />
 
 

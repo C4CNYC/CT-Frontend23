@@ -55,7 +55,7 @@ export default function HorizontalNonLinearStepper({ school_id, closeStepper }: 
           </Step>
         ))}
       </Stepper>
-      <div>
+      <div style={{marginTop: '40px'}}>
         <>
           {activeStep === 0 && <AssignmentSettings getAssignmentId={handleAssignmentId} next={handleNext} school_id={school_id}/>}
           {activeStep === 1 && <AssignmentContent assignmentId={assignmentId} next={handleNext} back={handleBack} school_id={school_id}/>}

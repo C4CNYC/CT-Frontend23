@@ -30,7 +30,6 @@ type Props = {
 };
 
 export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, school_id }: Props) {
-  const dispatch = useDispatch();
 
   const renameRef = useRef<HTMLInputElement>(null);
 
@@ -111,17 +110,20 @@ export default function KanbanColumnToolBar({ columnName, onDelete, onUpdate, sc
         sx={{ pt: 3 }}
       >
         <Typography variant="h6">{value}</Typography>
-        <IconButton
-          onClick={handleToggleAddTask}
-          sx={{ fontSize: 14 }}
-        >
-          <Iconify icon="eva:plus-fill" />
-        </IconButton>
-
+        {console.log(columnName)}
+        {columnName === 'BACKLOG' &&
+          <IconButton
+            onClick={handleToggleAddTask}
+            sx={{ fontSize: 14 }}
+            color="primary"
+          >
+            <Iconify icon="eva:plus-fill" />
+          </IconButton>
+        }
       </Stack>
 
       {openAddTask && (
-        <Dialog open={openAddTask} onClose={() => setOpenAddTask(false)}>
+        <Dialog open={openAddTask} onClose={() => setOpenAddTask(false)} maxWidth="md" fullWidth>
           <DialogTitle>Create new assignment</DialogTitle>
           <DialogContent sx={{pb: 5}}>
             <Stepper school_id={school_id} closeStepper={handleCloseStepper}/>

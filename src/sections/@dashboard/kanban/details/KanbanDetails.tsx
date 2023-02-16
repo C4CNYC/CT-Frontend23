@@ -249,14 +249,14 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
           </Stack>
 
           {/* Prioritize */}
-          {/*<Stack direction="row" alignItems="center">*/}
-          {/*  <StyledLabel>Prioritize</StyledLabel>*/}
+          <Stack direction="row" alignItems="center">
+            <StyledLabel>Prioritize</StyledLabel>
 
-          {/*  <KanbanDetailsPrioritizes*/}
-          {/*    prioritize={prioritize}*/}
-          {/*    onChangePrioritize={handleChangePrioritize}*/}
-          {/*  />*/}
-          {/*</Stack>*/}
+            <KanbanDetailsPrioritizes
+              prioritize={prioritize}
+              onChangePrioritize={handleChangePrioritize}
+            />
+          </Stack>
 
           {/* Description */}
           <Stack direction="row">
@@ -274,11 +274,11 @@ export default function KanbanDetails({ task, openDetails, onCloseDetails, onDel
             />
           </Stack>
 
-          {/* Attachments */}
-          {/*<Stack direction="row">*/}
-          {/*  <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>*/}
-          {/*  /!* <KanbanDetailsAttachments attachments={task.attachments} /> *!/*/}
-          {/*</Stack>*/}
+           {/*Attachments*/}
+          <Stack direction="row">
+            <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
+            {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
+          </Stack>
         </Stack>
 
         {/* {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />} */}
