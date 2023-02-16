@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 // @mui
 import { styled, alpha } from "@mui/material/styles";
@@ -27,6 +28,7 @@ import KanbanDetailsCommentList from "./KanbanDetailsCommentList";
 import KanbanDetailsAttachments from "./KanbanDetailsAttachments";
 import KanbanDetailsPrioritizes from "./KanbanDetailsPrioritizes";
 import KanbanDetailsCommentInput from "./KanbanDetailsCommentInput";
+import { format } from 'date-fns'
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +45,7 @@ type Props = {
   task: IKanbanCard;
   openDetails: boolean;
   onCloseDetails: VoidFunction;
-  onDeleteTask: VoidFunction;
+  onDeleteTask: () => void;
 };
 
 export default function KanbanDetails({
@@ -53,7 +55,6 @@ export default function KanbanDetails({
   onDeleteTask,
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [liked, setLiked] = useState(false);
 
   const [prioritize, setPrioritize] = useState("low");
@@ -139,6 +140,7 @@ export default function KanbanDetails({
         onDelete={onDeleteTask}
         onCompleted={handleCompleted}
         onCloseDetails={onCloseDetails}
+        task_id={task.id}
       />
 
       <Divider />
@@ -193,6 +195,51 @@ export default function KanbanDetails({
 
           {/* Due date */}
           <Stack direction="row" alignItems="center">
+            <StyledLabel> Start date </StyledLabel>
+            <>
+              {isSelectedValuePicker ? (
+                <Box
+                  onClick={onOpenPicker}
+                  sx={{
+                    typography: 'body2',
+                    cursor: 'pointer',
+                    '&:hover': { opacity: 0.72 },
+                  }}
+                >
+                  {format(new Date(task.start_date), "dd MMM yyyy, HH:MM")}
+                </Box>
+              ) : (
+                <Tooltip title="Add start date">
+                  <IconButton
+                    onClick={onOpenPicker}
+                    sx={{
+                      p: 1,
+                      ml: 0.5,
+                      bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
+                      border: (theme) => `dashed 1px ${theme.palette.divider}`,
+                    }}
+                  >
+                    <Iconify icon="eva:plus-fill" />
+                  </IconButton>
+                </Tooltip>
+              )}
+
+              <DateRangePicker
+                variant="calendar"
+                title="Choose due date"
+                startDate={startDate}
+                endDate={endDate}
+                onChangeStartDate={onChangeStartDate}
+                onChangeEndDate={onChangeEndDate}
+                open={openPicker}
+                onClose={onClosePicker}
+                isSelected={isSelectedValuePicker}
+                isError={isError}
+              />
+            </>
+          </Stack>
+
+          <Stack direction="row" alignItems="center">
             <StyledLabel> Due date </StyledLabel>
             <>
               {isSelectedValuePicker ? (
@@ -204,7 +251,7 @@ export default function KanbanDetails({
                     "&:hover": { opacity: 0.72 },
                   }}
                 >
-                  {shortLabel}
+                  {format(new Date(task.end_date), "dd MMM yyyy, HH:MM")}
                 </Box>
               ) : (
                 <Tooltip title="Add due date">
@@ -263,7 +310,7 @@ export default function KanbanDetails({
             />
           </Stack>
 
-          {/* Attachments */}
+           {/*Attachments*/}
           <Stack direction="row">
             <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
             {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}

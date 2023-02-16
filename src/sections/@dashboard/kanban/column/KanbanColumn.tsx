@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
 // @mui
@@ -10,38 +11,43 @@ import {
   addTask,
   deleteTask,
 } from "../../../../redux/slices/kanban";
-// @types
-import { IKanbanColumn, IKanbanCard } from "../../../../@types/kanban";
 // components
 import Iconify from "../../../../components/iconify";
 import { useSnackbar } from "../../../../components/snackbar";
 //
 import KanbanTaskAdd from "../KanbanTaskAdd";
 import KanbanTaskCard from "../KanbanTaskCard";
-import KanbanColumnToolBar from "./KanbanColumnToolBar";
 import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
 
 // ----------------------------------------------------------------------
+import { IKanbanColumn, IKanbanCard } from '../../../../@types/kanban';
+import KanbanColumnToolBar from './KanbanColumnToolBar';
+import { useDeleteAssigmentMutation } from "../../../../redux/services/manager";
+
 
 type Props = {
   column: IKanbanColumn;
   cards: Record<string, IKanbanCard>;
   index: number;
+  school_id: string;
 };
 
-export default function KanbanColumn({ column, index, cards }: Props) {
-  const dispatch = useDispatch();
-
+export default function KanbanColumn({ column, index, cards, school_id }: Props) {
   const { enqueueSnackbar } = useSnackbar();
+  const [deleteAssignment] = useDeleteAssigmentMutation();
 
-  const handleDeleteTask = (cardId: string) => {
-    dispatch(
-      deleteTask({
-        cardId,
-        columnId: column.id,
-      })
-    );
-    enqueueSnackbar("Delete success!");
+  const handleDeleteTask = async (assigment_id: string) => {
+    try {
+      await deleteAssignment({
+        school_id,
+        assigment_id,
+      }).unwrap();
+      enqueueSnackbar("Assignment deleted");
+    } catch (e) {
+      enqueueSnackbar(e.data.message, {
+        variant: "error"
+      });
+    }
   };
 
   return (
@@ -63,6 +69,7 @@ export default function KanbanColumn({ column, index, cards }: Props) {
         >
           <Stack spacing={3} {...provided.dragHandleProps}>
             <KanbanColumnToolBar
+              school_id={school_id}
               columnName={column.name}
               onDelete={() => {}}
               onUpdate={() => {}}
