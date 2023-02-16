@@ -17,7 +17,7 @@ import { KanbanColumn, KanbanColumnAdd } from '../../../sections/@dashboard/kanb
 import SchoolDashboardLayout from "../../../layouts/dashboard/SchoolDashboardLayout";
 import UserProfilePage from "./general";
 import { AssigmentStatuses } from 'src/redux/services/enums/assigment-status.enum';
-import { useGetAssigmentListQuery } from 'src/redux/services/manager';
+import { useGetAssigmentListQuery, useUdpateAssigmentMutation } from 'src/redux/services/manager';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +30,7 @@ export default function Assignments() {
   const dispatch = useDispatch();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const { data } = useGetAssigmentListQuery({ school_id }, { skip: !school_id })
+  const [updateAssigment] = useUdpateAssigmentMutation();
 
   const { board } = useSelector((state) => state.kanban);
 
@@ -71,6 +72,12 @@ export default function Assignments() {
       );
       return;
     }
+
+    updateAssigment({
+      assigment_id: draggableId,
+      school_id,
+      status: destination.droppableId as AssigmentStatuses
+    })
 
     const startCardIds = [...start.cardIds];
 
