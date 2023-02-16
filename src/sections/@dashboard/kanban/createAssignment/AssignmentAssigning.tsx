@@ -10,7 +10,7 @@ import { PATH_AFTER_LOGIN } from "src/config-global";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useCreateClassMutation } from "src/redux/services/admin";
 
-export default function ClassStep() {
+export default function AssignmentAssigning() {
   const { authenticate } = useAuthContext();
 
   const theme = useTheme();

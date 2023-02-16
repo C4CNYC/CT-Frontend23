@@ -7,86 +7,117 @@ import InputInfo from "./InputInfo";
 import { useForm } from "react-hook-form";
 import { useUpdateOrganizationMutation } from "src/redux/services/admin";
 import { useRouter } from "next/router";
-import { RHFSelect } from "../../../../components/hook-form";
+import FormProvider, { RHFSelect } from "../../../../components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 
 type OrganizationStepProps = {
   next: () => void;
 };
 
+type FormValuesProps = {
+  type: string;
+  course: string;
+  lesson: string;
+};
+
+
 export default function AssignmentSettings({ next }: OrganizationStepProps) {
   const router = useRouter();
-  const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
-  const theme = useTheme();
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [createAssignment, { isLoading }] = useUpdateOrganizationMutation();
+  const defaultValues = {
+    type: "",
+    course: "",
+    lesson: ""
+  };
+
+  const methods = useForm<FormValuesProps>({
+    defaultValues
+  });
+
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: any) => {
     try {
-      const org = await updateOrg({ body: data }).unwrap();
-      router.push(
-        {
-          pathname: "/auth/register",
-          query: { orgId: org.id },
-        },
-        undefined,
-        { shallow: true }
-      );
+      console.log("qwe");
       next();
+      // const org = await updateOrg({ body: data }).unwrap();
     } catch (e) {
       // #TODO show error
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-        <Typography variant="h4" sx={{ textAlign: "center" }}>
-          New assignment
-        </Typography>
+    <>
+      <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
+          <Typography variant="h4" sx={{ textAlign: "center" }}>
+            New assignment
+          </Typography>
 
-        <RHFSelect
-          native
-          control={control}
-          name="type"
-          label="Select Type"
-          sx={{ width: "320px" }}
-        >
-          <option key="en" value="en">
-            English
-          </option>
-          <option key="fr" value="fr">
-            French
-          </option>
-        </RHFSelect>
+          <RHFSelect
+            name="type"
+            label="Select Type"
+            sx={{ width: "320px" }}
+          >
+            <option key="en" value="en">
+              English
+            </option>
+            <option key="fr" value="fr">
+              French
+            </option>
+          </RHFSelect>
 
-      </Stack>
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
-        <Button
-          disabled={isLoading}
-          fullWidth
-          type="submit"
-          sx={{
-            boxShadow: "0px 8px 16px rgba(196, 196, 196, 0.59)",
-            bgcolor: "#FBDD3F",
-            borderRadius: "50px",
-            textTransform: "uppercase",
-            fontSize: "22px",
-            color: (theme) =>
-              theme.palette.mode === "light" ? "common.white" : "grey.800",
-            "&:hover": {
-              bgcolor: "text.primary",
+          <RHFSelect
+            name="course"
+            label="Select Course"
+            sx={{ width: "320px" }}
+          >
+            <option key="en" value="en">
+              English
+            </option>
+            <option key="fr" value="fr">
+              French
+            </option>
+          </RHFSelect>
+
+          <RHFSelect
+            name="lesson"
+            label="Select Lesson"
+            sx={{ width: "320px" }}
+          >
+            <option key="en" value="en">
+              English
+            </option>
+            <option key="fr" value="fr">
+              French
+            </option>
+          </RHFSelect>
+
+        </Stack>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Button
+            disabled={isLoading}
+            fullWidth
+            type="submit"
+            sx={{
+              boxShadow: "0px 8px 16px rgba(196, 196, 196, 0.59)",
+              bgcolor: "#FBDD3F",
+              borderRadius: "50px",
+              textTransform: "uppercase",
+              fontSize: "22px",
               color: (theme) =>
                 theme.palette.mode === "light" ? "common.white" : "grey.800",
-            },
-          }}
-        >
-          Next
-        </Button>
-      </Box>
-    </form>
+              "&:hover": {
+                bgcolor: "text.primary",
+                color: (theme) =>
+                  theme.palette.mode === "light" ? "common.white" : "grey.800"
+              }
+            }}
+          >
+            Next
+          </Button>
+        </Box>
+      </FormProvider>
+    </>
   );
 }

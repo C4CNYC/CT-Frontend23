@@ -4,11 +4,11 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 
-import SchoolStep from "./SchoolStep";
+import AssignmentContent from "./AssignmentContent";
 import AssignmentSettings from "./AssignmentSettings";
-import ClassStep from "./ClassStep";
+import AssignmentAssigning from "./AssignmentAssigning";
 
-const steps = ["Assignment Settings", "School / Location", "Class Created"];
+const steps = ["Assignment Settings", "Assignment Content", "Assignment Assigning"];
 
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = useState(0);
@@ -37,8 +37,8 @@ export default function HorizontalNonLinearStepper() {
       <div>
         <>
           {activeStep === 0 && <AssignmentSettings next={handleNext} />}
-          {activeStep === 1 && <SchoolStep next={handleNext} />}
-          {activeStep === 2 && <ClassStep />}
+          {activeStep === 1 && <AssignmentContent next={handleNext} />}
+          {activeStep === 2 && <AssignmentAssigning />}
         </>
       </div>
     </Box>
