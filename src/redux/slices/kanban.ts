@@ -1,8 +1,6 @@
 import omit from "lodash/omit";
 import keyBy from "lodash/keyBy";
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
-// utils
-import axios from "../../utils/axios";
 // @types
 import { IKanbanState, IKanbanCard, IKanbanColumn } from "../../@types/kanban";
 import { IAssigment } from "../services/interfaces/assigment.interface";
@@ -93,18 +91,11 @@ export function getBoard(data: (IAssigment & BaseResponseInterface)[]) {
               name: "BACKLOG",
               cardIds: data
                 .filter((d) => d.status === AssigmentStatuses.BACKLOG)
-                .sort((a, b) => {
-                  console.log(
-                    a.meta,
-                    b.meta,
-                    parseFloat(a.meta?.order as string),
-                    parseFloat(b.meta?.order as string)
-                  );
-                  return (
+                .sort(
+                  (a, b) =>
                     parseFloat(a.meta?.order as string) -
                     parseFloat(b.meta?.order as string)
-                  );
-                })
+                )
                 .map((d) => d.id),
             },
             {
