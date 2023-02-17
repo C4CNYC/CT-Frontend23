@@ -111,12 +111,12 @@ export default function UserListPage() {
     },
     {
       id: "first_name",
-      label: `${translate("organizations.members_page.table.name")}`,
+      label: `${translate("organizations.members_page.table.first_name")}`,
       align: "left",
     },
     {
       id: "last_name",
-      label: `${translate("organizations.members_page.table.name")}`,
+      label: `${translate("organizations.members_page.table.last_name")}`,
       align: "left",
     },
     {

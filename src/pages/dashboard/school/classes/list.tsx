@@ -62,6 +62,7 @@ const TABLE_HEAD = [
   { id: "", label: "Icon" },
   { id: "name", label: "Name", align: "left" },
   { id: "total_students", label: "Total (Students)", align: "left" },
+  { id: "total_students", label: "Total (Courses)", align: "left" },
   { id: "started_id", label: "Start date", align: "left" },
   { id: "status", label: "Status", align: "left" },
   { id: "" },

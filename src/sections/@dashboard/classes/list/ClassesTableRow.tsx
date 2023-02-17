@@ -87,6 +87,16 @@ export default function ClassesTableRow({
         </TableCell>
 
         <TableCell align="left">
+          <Label
+            variant="soft"
+            color="secondary"
+            sx={{ textTransform: "capitalize" }}
+          >
+            0
+          </Label>
+        </TableCell>
+
+        <TableCell align="left">
           {format(new Date(createdAt), "MM/dd/yyyy")}
         </TableCell>
 

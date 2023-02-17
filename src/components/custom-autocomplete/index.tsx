@@ -22,31 +22,49 @@ import { useState } from "react";
 
 type Props = {
   filterName: string;
-  filterRole?: string;
-  optionsRole?: string[];
   onResetFilter: VoidFunction;
-  onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onFilterRole?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFilterName: (name: string) => void;
+  onFilterClass: (class_id: string) => void;
 };
 
+type ClassType = IClass & BaseResponseInterface;
 
 export default function CustomAutocomplete({
   filterName,
   onFilterName,
+  onFilterClass,
   onResetFilter,
 }: Props) {
-  const [value, setValue] = useState<(IClass & BaseResponseInterface) | null>(
-    null
-  );
+  const [value, setValue] = useState<ClassType | null>(null);
   const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
-    class_id: "",
-    name: "",
-  });
+  const {
+    filters,
+    setFilter,
+    resetFilters: resetClassFilter,
+  } = useFilters<ClassSearchParams>({ name: "" });
+
   const { data: clases } = useGetClassesQuery(
     { school_id, ...filters },
     { skip: !school_id }
   );
+
+  const onChange = (
+    event: React.SyntheticEvent<any>,
+    newValue: ClassType | null,
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<ClassType>
+  ) => {
+    onFilterClass(details?.option.id as string);
+    setValue(newValue);
+    resetClassFilter();
+  };
+
+  const onReset = () => {
+    onResetFilter();
+    resetClassFilter();
+    setValue(null);
+  };
+
   if (!clases?.data) {
     return (
       <Stack padding="24px 20px">
@@ -54,15 +72,6 @@ export default function CustomAutocomplete({
       </Stack>
     );
   }
-  const onChange = (
-    event: React.SyntheticEvent<any>,
-    newValue: (IClass & BaseResponseInterface) | null,
-    reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<IClass & BaseResponseInterface>
-  ) => {
-    setFilter("class_id", details?.option.id as string);
-    setValue(newValue);
-  };
 
   return (
     <Stack
@@ -71,9 +80,10 @@ export default function CustomAutocomplete({
       justifyContent="space-between"
       padding="24px 20px"
     >
-      <Autocomplete<IClass & BaseResponseInterface>
+      <Autocomplete<ClassType>
         options={clases.data || []}
         renderInput={(params) => <TextField {...params} label="Class" />}
+        onInputChange={(e, value) => setFilter("name", value)}
         onChange={onChange}
         value={value}
         getOptionLabel={(option) => option.name}
@@ -84,7 +94,7 @@ export default function CustomAutocomplete({
         fullWidth
         placeholder="Search"
         value={filterName}
-        onChange={onFilterName}
+        onChange={(e) => onFilterName(e.target.value)}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -98,7 +108,7 @@ export default function CustomAutocomplete({
       <Button
         color="error"
         sx={{ flexShrink: 0, marginLeft: 2, px: 2 }}
-        onClick={onResetFilter}
+        onClick={onReset}
         startIcon={<Iconify icon="eva:trash-2-outline" />}
       >
         Clear
