@@ -263,6 +263,8 @@ export default function KanbanDetails({
           <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
             <StyledLabel>Type:</StyledLabel>
             <Select
+              native
+              value={taskType}
               size="small"
               onChange={handleChangeType}
               sx={{
@@ -283,7 +285,6 @@ export default function KanbanDetails({
                   }
                 }
               }}
-              native
             >
               {Object.keys(AssigmentTypes).map((t) => (
                 <option
@@ -520,11 +521,12 @@ export default function KanbanDetails({
             <Autocomplete
               sx={{
                 "& .MuiSvgIcon-root": {
-                  display: "none"
+                  display: "none",
+                  border: "solid 1px transparent !important",
                 },
                 "& .MuiOutlinedInput-input": {
                   fontSize: "14px",
-                  border: "solid 1px transparent"
+                  border: "solid 1px transparent !important",
                 },
                 "& .MuiOutlinedInput-notchedOutline": {
                   border: `solid 1px transparent`
@@ -551,15 +553,16 @@ export default function KanbanDetails({
             <Autocomplete
               sx={{
                 "& .MuiSvgIcon-root": {
-                  display: "none"
+                  display: "none",
+                  border: "solid 1px transparent !important",
+
                 },
                 "& .MuiOutlinedInput-input": {
                   fontSize: "14px",
-                  border: "solid 1px transparent"
+                  border: "solid 1px transparent !important",
                 },
                 "& .MuiOutlinedInput-notchedOutline": {
-                  border: `solid 1px transparent`
-
+                  border: "solid 1px transparent"
                 }
               }}
               size="small"
@@ -598,7 +601,7 @@ export default function KanbanDetails({
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                       py: 1,
-                      border: "solid 1px transparent",
+                      border: "solid 1px transparent !important",
                       typography: "caption",
                       transition: (theme) =>
                         theme.transitions.create(["padding-left", "border-color"]),
@@ -629,11 +632,11 @@ export default function KanbanDetails({
                   sx={{
                     "& .MuiOutlinedInput-input": {
                       fontSize: "14px",
-                      border: "solid 1px transparent !important"
+                      border: "solid 1px transparent !important",
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                       py: 1,
-                      border: `solid 1px transparent`,
+                      border: "solid 1px transparent !important",
                       typography: "caption",
                       transition: (theme) =>
                         theme.transitions.create(["padding-left", "border-color"]),
