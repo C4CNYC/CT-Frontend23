@@ -94,12 +94,10 @@ export function getBoard(data: (IAssigment & BaseResponseInterface)[]) {
               cardIds: data
                 .filter((d) => d.status === AssigmentStatuses.BACKLOG)
                 .sort((a, b) => {
-                  console.log(
-                    a.meta,
-                    b.meta,
-                    parseFloat(a.meta?.order as string),
-                    parseFloat(b.meta?.order as string)
-                  );
+                  a.meta,
+                  b.meta,
+                  parseFloat(a.meta?.order as string),
+                  parseFloat(b.meta?.order as string)
                   return (
                     parseFloat(a.meta?.order as string) -
                     parseFloat(b.meta?.order as string)

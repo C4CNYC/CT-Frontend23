@@ -7,9 +7,9 @@ import Iconify from "../../../../components/iconify";
 // ----------------------------------------------------------------------
 
 const PRIORITIZES_OPTIONS = [
-  { value: "low", label: "Low", color: "info" },
-  { value: "medium", label: "Medium", color: "warning" },
-  { value: "hight", label: "Hight", color: "error" },
+  { value: "level_1", label: "Easy", color: "info" },
+  { value: "level_2", label: "Medium", color: "warning" },
+  { value: "level_3", label: "Hard", color: "error" },
 ] as const;
 
 type Props = {
@@ -27,7 +27,7 @@ export default function KanbanDetailsPrioritizes({
         const selected = option.value === prioritize;
 
         return (
-          <Box key={option.value} sx={{ position: "relative", mr: 1 }}>
+          <Box key={option.value} sx={{ position: "relative", mr: 1, ml: 1.5 }}>
             <Stack
               spacing={0.5}
               direction="row"
