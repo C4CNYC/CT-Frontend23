@@ -9,6 +9,8 @@ import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
 import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { AssigmentComplexity } from "src/redux/services/enums/assigment-complexity.enum";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const TECH_OPTIONS = ["css", "html", "js"];
 
@@ -41,7 +43,13 @@ export default function AssignmentAbout({
     duration: assigment?.duration ? `${assigment.duration.hours} H` : ""
   };
 
+  const createAssignmentSchema = Yup.object().shape({
+    complexity: Yup.string().required("Complexity is required"),
+    duration: Yup.string().required("Duration is required"),
+  });
+
   const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(createAssignmentSchema),
     defaultValues,
   });
 
@@ -77,7 +85,7 @@ export default function AssignmentAbout({
             label="Time to complete"
           >
             <option key="empty" value="null">
-              no limit
+
             </option>
             <option key="0.25h" value="0.25 H">
               0.25h
@@ -105,6 +113,9 @@ export default function AssignmentAbout({
             label="Select complexity level"
             sx={{ width: "47%" }}
           >
+            <option key="empty" value="null">
+
+            </option>
             {Object.keys(AssigmentComplexity).map((c) => (
               <option
                 key={c}

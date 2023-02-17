@@ -6,6 +6,8 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
 import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type AssignmentStepProps = {
   next: () => void;
@@ -42,7 +44,14 @@ export default function AssignmentAssigning({
     points: "",
   };
 
+  const createAssignmentSchema = Yup.object().shape({
+    end_date: Yup.string().required("End date is required"),
+    start_date: Yup.string().required("Start date is required"),
+  });
+
+
   const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(createAssignmentSchema),
     defaultValues,
   });
 
