@@ -17,11 +17,13 @@ import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import _mock from "src/_mock";
+import RoleSelector from "src/components/drop-dawn-menu";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IUser;
+  row: IUser & BaseResponseInterface;
   selected: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
@@ -35,7 +37,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { first_name, last_name, email, verified, active, role } = row;
+  const { first_name, last_name, email, verified, active, role, id } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -70,13 +72,19 @@ export default function UserTableRow({
 
         <TableCell align="left">{email}</TableCell>
 
-        <TableCell align="left">{first_name}</TableCell>
+        <TableCell align="left">
+          {first_name &&
+            first_name?.charAt(0).toUpperCase() + first_name?.slice(1)}
+        </TableCell>
 
-        <TableCell align="left">{last_name}</TableCell>
+        <TableCell align="left">
+          {last_name &&
+            last_name?.charAt(0).toUpperCase() + last_name?.slice(1)}
+        </TableCell>
 
         {role ? (
           <TableCell align="left" sx={{ textTransform: "capitalize" }}>
-            {role}
+            <RoleSelector user_id={id} role={role} email={email} />
           </TableCell>
         ) : null}
 

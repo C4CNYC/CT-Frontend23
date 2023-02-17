@@ -1,15 +1,12 @@
 import { useState } from "react";
+import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 
-export type BaseFiltersType = {
-  page: number;
-  take: number;
-};
-const defaultFilter: BaseFiltersType = {
+const defaultFilter: BaseSearchInterface = {
   page: 1,
-  take: 10,
+  take: 5,
 };
 export const useFilters = <T>(filters: T) => {
-  const [filter, setFilter] = useState<BaseFiltersType & T>({
+  const [filter, setFilter] = useState<BaseSearchInterface & T>({
     ...defaultFilter,
     ...filters,
   });

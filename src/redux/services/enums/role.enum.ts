@@ -1,5 +1,5 @@
 export enum Role {
   Owner = "owner",
   Admin = "admin",
-  Manager = "manager", //teacher
+  Manager = "manager",
 }

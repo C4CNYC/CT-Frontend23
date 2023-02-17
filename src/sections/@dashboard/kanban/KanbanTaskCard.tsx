@@ -1,11 +1,23 @@
 import { useState, ChangeEvent } from "react";
 import { Draggable } from "@hello-pangea/dnd";
+import * as _ from "lodash";
 // @mui
-import { Paper, Typography, Box, Checkbox } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Box,
+  Checkbox,
+  Stack,
+  Tooltip,
+} from "@mui/material";
 // @types
 import { IKanbanCard } from "../../../@types/kanban";
 //
+import NextImage from "next/image";
+import Image from "../../../components/image";
 import KanbanDetails from "./details/KanbanDetails";
+import { AssigmentTypes } from "src/redux/services/enums/assigment-types.enum";
+import { AssigmentComplexity } from "src/redux/services/enums/assigment-complexity.enum";
 
 // ----------------------------------------------------------------------
 
@@ -16,8 +28,24 @@ type Props = {
   school_id: string;
 };
 
+const ImageCardType: { [key: string]: string } = {
+  [AssigmentTypes.REVIEW]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.CODING_IDEA]: "/assets/assigment/code-idea.svg",
+  [AssigmentTypes.CODING_PROJECT]: "/assets/assigment/project.svg",
+  [AssigmentTypes.CODING_SNIPETS]: "/assets/assigment/snipets.svg",
+  [AssigmentTypes.GROUP_CODING_PROJECT]: "/assets/assigment/group-share.svg",
+  [AssigmentTypes.PEER_PREVIEW]: "/assets/assigment/review.svg",
+  [AssigmentTypes.RESEARCH]: "/assets/assigment/research.svg",
+};
+
+const IconComplexity: { [key: string]: string } = {
+  [AssigmentComplexity.Hight]: '/assets/assigment/high-priority.svg',
+  [AssigmentComplexity.Medium]: '/assets/assigment/medium-priority.svg',
+  [AssigmentComplexity.Low]: '/assets/assigment/low-priority.svg'
+}
+
 export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }: Props) {
-  const { name } = card;
+  const { name, type, duration, complexity } = card;
 
   const [completed, setCompleted] = useState(false);
 
@@ -55,13 +83,32 @@ export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }:
             }}
           >
             <Box onClick={handleOpenDetails} sx={{ cursor: "pointer" }}>
+              <Image
+                disabledEffect
+                alt={type}
+                src={ImageCardType[type]}
+                // ratio="4/3"
+                sx={{
+                  width: "40px",
+                  height: "40px",
+                  m: 3,
+                  ml: 2,
+                  marginBottom: 0,
+                  transition: (theme) =>
+                    theme.transitions.create("opacity", {
+                      duration: theme.transitions.duration.shortest,
+                    }),
+                  ...(completed && {
+                    opacity: 0.48,
+                  }),
+                }}
+              />
               <Typography
                 noWrap
-                variant="subtitle2"
+                variant="h6"
                 sx={{
+                  p: 3,
                   pl: 2,
-                  height: 72,
-                  lineHeight: "72px",
                   transition: (theme) =>
                     theme.transitions.create("opacity", {
                       duration: theme.transitions.duration.shortest,
@@ -71,8 +118,50 @@ export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }:
                   // }),
                 }}
               >
-                {name}
+                {_.capitalize(name)}
               </Typography>
+              <Stack
+                display="flex"
+                flexDirection="column"
+                justifyContent="end"
+                position="absolute"
+                padding={3}
+                paddingRight={2}
+                right="0"
+                top="0"
+                bottom="0"
+              >
+                {
+                  duration ? (
+                  <Tooltip title="Time limited" placement="right">
+                    <NextImage
+                      width="20"
+                      height="20"
+                      alt="priority"
+                      src="/assets/assigment/time.svg"
+                      style={{ marginBottom: "7px" }}
+                    />
+                  </Tooltip>) : null
+                }
+                <Tooltip title="Linked to content" placement="right">
+                  <NextImage
+                    width="20"
+                    height="20"
+                    alt="priority"
+                    src="/assets/assigment/linked.svg"
+                    style={{ marginBottom: "7px" }}
+                  />
+                </Tooltip>
+                <Tooltip title="Low complexity" placement="right">
+                  <NextImage
+                    width="20"
+                    height="20"
+                    alt="priority"
+                    style={{ marginBottom: "10px" }}
+                    src={IconComplexity[complexity]}
+                  />
+                </Tooltip>
+              </Stack>
             </Box>
           </Paper>
         )}

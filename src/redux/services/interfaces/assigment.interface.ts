@@ -1,4 +1,5 @@
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { AssigmentComplexity } from "../enums/assigment-complexity.enum";
 import { AssigmentStatuses } from "../enums/assigment-status.enum";
 import { IClass } from "./class.interface";
 
@@ -12,6 +13,8 @@ export interface IAssigment {
   active: boolean;
   start_date: string;
   end_date: string;
+  complexity: AssigmentComplexity;
+  duration?: { hours: string };
   assignee_classes: (IClass & BaseResponseInterface)[];
   meta: {
     [key: string]: number | string;
@@ -28,6 +31,8 @@ export interface IAssigmentUpdate {
   active?: boolean;
   start_date?: string;
   end_date?: string;
+  complexity?: AssigmentComplexity;
+  duration?: string;
   meta?: {
     [key: string]: number | string;
   };

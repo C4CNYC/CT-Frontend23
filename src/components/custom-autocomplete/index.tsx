@@ -1,0 +1,118 @@
+import Autocomplete, {
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
+} from "@mui/material/Autocomplete";
+import Button from "@mui/material/Button";
+import InputAdornment from "@mui/material/InputAdornment";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import { useFilters } from "src/hooks/useFilters";
+import {
+  ClassSearchParams,
+  IClass,
+} from "src/redux/services/interfaces/class.interface";
+import { useGetClassesQuery } from "src/redux/services/manager";
+import { useSelector } from "src/redux/store";
+import { RootState } from "src/redux/store";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import Iconify from "../iconify/Iconify";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { useState } from "react";
+
+type Props = {
+  filterName: string;
+  onResetFilter: VoidFunction;
+  onFilterName: (name: string) => void;
+  onFilterClass: (class_id: string) => void;
+};
+
+type ClassType = IClass & BaseResponseInterface;
+
+export default function CustomAutocomplete({
+  filterName,
+  onFilterName,
+  onFilterClass,
+  onResetFilter,
+}: Props) {
+  const [value, setValue] = useState<ClassType | null>(null);
+  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const {
+    filters,
+    setFilter,
+    resetFilters: resetClassFilter,
+  } = useFilters<ClassSearchParams>({ name: "" });
+
+  const { data: clases } = useGetClassesQuery(
+    { school_id, ...filters },
+    { skip: !school_id }
+  );
+
+  const onChange = (
+    event: React.SyntheticEvent<any>,
+    newValue: ClassType | null,
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<ClassType>
+  ) => {
+    onFilterClass(details?.option.id as string);
+    setValue(newValue);
+    resetClassFilter();
+  };
+
+  const onReset = () => {
+    onResetFilter();
+    resetClassFilter();
+    setValue(null);
+  };
+
+  if (!clases?.data) {
+    return (
+      <Stack padding="24px 20px">
+        <CircularProgress />
+      </Stack>
+    );
+  }
+
+  return (
+    <Stack
+      display="flex"
+      flexDirection="row"
+      justifyContent="space-between"
+      padding="24px 20px"
+    >
+      <Autocomplete<ClassType>
+        options={clases.data || []}
+        renderInput={(params) => <TextField {...params} label="Class" />}
+        onInputChange={(e, value) => setFilter("name", value)}
+        onChange={onChange}
+        value={value}
+        getOptionLabel={(option) => option.name}
+        sx={{ width: 350, marginRight: 2 }}
+      />
+
+      <TextField
+        fullWidth
+        placeholder="Search"
+        value={filterName}
+        onChange={(e) => onFilterName(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
+            </InputAdornment>
+          ),
+        }}
+        sx={{ marginRight: 2 }}
+      />
+
+      <Button
+        color="error"
+        sx={{ flexShrink: 0, marginLeft: 2, px: 2 }}
+        onClick={onReset}
+        startIcon={<Iconify icon="eva:trash-2-outline" />}
+      >
+        Clear
+      </Button>
+    </Stack>
+  );
+}

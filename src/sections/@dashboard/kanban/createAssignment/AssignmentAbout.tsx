@@ -8,6 +8,7 @@ import FormProvider, {
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
 import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { AssigmentComplexity } from "src/redux/services/enums/assigment-complexity.enum";
 
 const TECH_OPTIONS = ["css", "html", "js"];
 
@@ -17,14 +18,13 @@ type AssignmentStepProps = {
   next: () => void;
   back: () => void;
   assignmentId: string;
-  assigment: IAssigment & BaseResponseInterface;
+  assigment?: IAssigment & BaseResponseInterface;
   school_id: string;
 };
 
 type FormValuesProps = {
-  name: string;
-  description: string;
-  tags: string;
+  complexity: AssigmentComplexity;
+  duration: string;
 };
 
 export default function AssignmentAbout({
@@ -37,7 +37,8 @@ export default function AssignmentAbout({
   const [updateAssignment, { isLoading }] = useUdpateAssigmentMutation();
 
   const defaultValues = {
-    description: "",
+    complexity: assigment?.complexity,
+    duration: assigment?.duration ? `${assigment.duration.hours} H` : ""
   };
 
   const methods = useForm<FormValuesProps>({
@@ -46,11 +47,13 @@ export default function AssignmentAbout({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormValuesProps) => {
     try {
       updateAssignment({
         school_id,
         assigment_id: assignmentId,
+        duration: data.duration,
+        complexity: data.complexity,
       });
       next();
     } catch (e) {
@@ -61,29 +64,6 @@ export default function AssignmentAbout({
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={5} sx={{ mb: 5, position: "relative" }}>
-        <RHFSelect native name="time" label="Time to complete">
-          <option key="empty" value="en">
-            no limit
-          </option>
-          <option key="0.25h" value="0.25h">
-            0.25h
-          </option>
-          <option key="0.5h" value="0.5h">
-            0.5h
-          </option>
-          <option key="1h" value="1h">
-            1h
-          </option>
-          <option key="1h" value="1h">
-            1.5h
-          </option>
-          <option key="2h" value="2h">
-            2h
-          </option>
-          <option key="2h" value="2h">
-            3h
-          </option>
-        </RHFSelect>
         <Stack
           display="flex"
           flexDirection="row"
@@ -91,33 +71,50 @@ export default function AssignmentAbout({
           justifyContent="space-between"
         >
           <RHFSelect
-            native
-            name="grade"
-            label="Target grade"
             sx={{ width: "47%" }}
+            native
+            name="duration"
+            label="Time to complete"
           >
-            <option key="empty" value="en"></option>
-            <option key="grade1" value="grade1">
-              Grade 1
+            <option key="empty" value="null">
+              no limit
             </option>
-            <option key="grade2" value="grade2">
-              Grade 2
+            <option key="0.25h" value="0.25 H">
+              0.25h
+            </option>
+            <option key="0.5h" value="0.5 H">
+              0.5h
+            </option>
+            <option key="1h" value="1 H">
+              1h
+            </option>
+            <option key="1h" value="1 H">
+              1.5h
+            </option>
+            <option key="2h" value="2 H">
+              2h
+            </option>
+            <option key="3h" value="3 H">
+              3h
             </option>
           </RHFSelect>
 
           <RHFSelect
             native
-            name="level"
-            label="Select difficulty level"
+            name="complexity"
+            label="Select complexity level"
             sx={{ width: "47%" }}
           >
-            <option key="empty" value="en"></option>
-            <option key="level1" value="level1">
-              level 1
-            </option>
-            <option key="level2" value="level2">
-              level 2
-            </option>
+            {Object.keys(AssigmentComplexity).map((c) => (
+              <option
+                key={c}
+                value={
+                  AssigmentComplexity[c as keyof typeof AssigmentComplexity]
+                }
+              >
+                {c}
+              </option>
+            ))}
           </RHFSelect>
         </Stack>
 
