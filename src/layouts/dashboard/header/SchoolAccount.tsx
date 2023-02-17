@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 // components
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
-import { useRouter } from "next/router";
 import { useGetMySchoolsQuery } from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";

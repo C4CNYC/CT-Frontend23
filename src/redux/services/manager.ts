@@ -18,7 +18,7 @@ import {
   SchoolSocials,
   SchoolSettings,
 } from "./interfaces/school.interface";
-import { IStudent, UserSearchParams } from "./interfaces/user.interface";
+import { IStudent, StudentSearchParams } from "./interfaces/user.interface";
 
 export const managerApi = createApi({
   reducerPath: "api/manager",
@@ -112,7 +112,7 @@ export const managerApi = createApi({
     }),
     getStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
-      { school_id: string } & UserSearchParams
+      { school_id: string } & StudentSearchParams
     >({
       query: ({ school_id, ...params }) => ({
         url: `/school/${school_id}/student`,
@@ -127,7 +127,7 @@ export const managerApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Students"],
+      invalidatesTags: ["Students", "School"],
     }),
     updateStudent: builder.mutation<
       void,
@@ -136,6 +136,28 @@ export const managerApi = createApi({
       query: ({ school_id, student_id, ...body }) => ({
         url: `/school/${school_id}/student/${student_id}`,
         method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Students"],
+    }),
+    studentJoinClass: builder.mutation<
+      void,
+      { school_id: string; class_id: string; student_id: string }
+    >({
+      query: ({ school_id, class_id, ...body }) => ({
+        url: `/school/${school_id}/class/${class_id}/student`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Students"],
+    }),
+    studentLeftClass: builder.mutation<
+      void,
+      { school_id: string; class_id: string; student_id: string }
+    >({
+      query: ({ school_id, class_id, ...body }) => ({
+        url: `/school/${school_id}/class/${class_id}/student`,
+        method: "DELETE",
         body,
       }),
       invalidatesTags: ["Students"],
@@ -298,6 +320,8 @@ export const {
   useGetSchoolProfileQuery,
   useGetSchoolSettingsQuery,
   useGetSchoolContactsQuery,
+  useStudentJoinClassMutation,
+  useStudentLeftClassMutation,
   //---social links----
 
   //----assigment ---------
@@ -320,6 +344,7 @@ export const {
   useCreateSchoolSocialMutation,
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
+
   //----assigment ---------
   useUdpateAssigmentMutation,
   useCreateAssigmentMutation,

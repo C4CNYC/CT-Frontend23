@@ -87,6 +87,16 @@ export default function ClassesTableRow({
         </TableCell>
 
         <TableCell align="left">
+          <Label
+            variant="soft"
+            color="secondary"
+            sx={{ textTransform: "capitalize" }}
+          >
+            0
+          </Label>
+        </TableCell>
+
+        <TableCell align="left">
           {format(new Date(createdAt), "MM/dd/yyyy")}
         </TableCell>
 
@@ -129,7 +139,7 @@ export default function ClassesTableRow({
             Edit
           </MenuItem>
         </AddClassDialog>
-        <MenuItem component={Link} href={PATH_DASHBOARD.school.setting}>
+        <MenuItem component={Link} href={PATH_DASHBOARD.school.setting(row.id)}>
           <Iconify icon="ant-design:setting-outlined" />
           Settings
         </MenuItem>
