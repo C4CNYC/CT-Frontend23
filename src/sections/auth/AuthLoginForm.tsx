@@ -80,7 +80,7 @@ export default function AuthLoginForm() {
         <RHFTextField
           name="tenantName"
           label="Tenant name"
-          disabled={tenant_name}
+          disabled={!!tenant_name}
         />
 
         <RHFTextField name="email" label="Email address" />

@@ -11,6 +11,8 @@ import {
   IconButton,
   Typography,
   InputAdornment,
+  Dialog,
+  DialogActions,
 } from "@mui/material";
 // @types
 import { IUserProfileSchool } from "../../../../../@types/user";
@@ -27,7 +29,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 type Props = {
-  school: IUserProfileSchool[];
+  school: IUserProfileSchool;
 };
 
 const school = {
@@ -35,7 +37,7 @@ const school = {
   url: "Url",
 };
 
-export default function Schools({}: Props) {
+export default function Schools({ school }: Props) {
   const [isNotFound, setIsNotFound] = useState(false);
 
   return (

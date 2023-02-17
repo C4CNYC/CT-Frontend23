@@ -20,6 +20,7 @@ import {
   ICustomization,
   ISubmitInvite,
   ISendInvite,
+  CustomizationResponce,
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
@@ -222,7 +223,7 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "OrganizationContacts" }],
     }),
-    getOrgContacts: builder.query<IContacts & OrganizationResponce, IContacts>({
+    getOrgContacts: builder.query<IContacts & OrganizationResponce, void>({
       query: () => ({
         url: `/org/contact/`,
         method: "GET",
@@ -240,7 +241,7 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "OrganizationSettings" }],
     }),
-    getOrgSettings: builder.query<ISettings & OrganizationResponce, ISettings>({
+    getOrgSettings: builder.query<ISettings & OrganizationResponce, void>({
       query: () => ({
         url: `/org/setting/`,
         method: "GET",
@@ -258,7 +259,7 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "OrganizationCustomization" }],
     }),
-    getOrgCustomization: builder.query<OrganizationResponce, void>({
+    getOrgCustomization: builder.query<CustomizationResponce, void>({
       query: () => ({
         url: `/org/custom/`,
         method: "GET",

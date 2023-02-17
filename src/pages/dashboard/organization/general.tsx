@@ -97,7 +97,7 @@ export default function UserProfilePage() {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label}
+                label={tab.label as string}
               />
             ))}
           </Tabs>

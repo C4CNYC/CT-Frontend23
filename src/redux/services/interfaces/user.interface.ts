@@ -17,7 +17,7 @@ export interface UserResponse extends User, BaseResponseInterface {}
 export interface UserListResponse<Data>
   extends BaseListResponseInterface<Data> {}
 
-export interface UserSearchParams {
+export interface UserSearchParams extends BaseSearchInterface {
   school_id?: string;
   name?: string;
   role?: string;

@@ -5,8 +5,6 @@ import { Paper, Stack, Button } from "@mui/material";
 // redux
 import { useDispatch } from "../../../../redux/store";
 import {
-  deleteColumn,
-  updateColumn,
   addTask,
   deleteTask,
 } from "../../../../redux/slices/kanban";

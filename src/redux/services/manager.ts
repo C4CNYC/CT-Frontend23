@@ -280,7 +280,13 @@ export const managerApi = createApi({
     }),
     createSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
-      { school_id: string }
+      {
+        school_id: string;
+        type?: string;
+        name?: string;
+        link?: string;
+        social_id: string;
+      }
     >({
       query: ({ school_id, ...body }) => ({
         url: `/school/${school_id}/social`,
@@ -301,7 +307,7 @@ export const managerApi = createApi({
     }),
     updateSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
-      { school_id: string; social_id: string }
+      { school_id: string; social_id: string; link?: string; type?: string }
     >({
       query: ({ school_id, social_id, ...body }) => ({
         url: `/school/${school_id}/social/${social_id}`,

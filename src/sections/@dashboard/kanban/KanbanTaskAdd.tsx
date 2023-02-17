@@ -66,31 +66,31 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
   };
 
   const handleKeyUpAddTask = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      if (name.trim() !== "") {
-        onAddTask({
-          ...defaultTask,
-          id: uuidv4(),
-          name,
-          due: [startDate, endDate],
-          completed,
-        });
-      }
-    }
+    // if (event.key === "Enter") {
+    //   if (name.trim() !== "") {
+    //     onAddTask({
+    //       ...defaultTask,
+    //       id: uuidv4(),
+    //       name,
+    //       // due: [startDate, endDate],
+    //       // completed,
+    //     });
+    //   }
+    // }
   };
 
   const handleClickAddTask = () => {
-    if (name) {
-      onAddTask({
-        ...defaultTask,
-        id: uuidv4(),
-        name,
-        due: [startDate, endDate],
-        completed,
-      });
-    } else {
-      onCloseAddTask();
-    }
+    // if (name) {
+    //   onAddTask({
+    //     ...defaultTask,
+    //     id: uuidv4(),
+    //     name,
+    //     // due: [startDate, endDate],
+    //     // completed,
+    //   });
+    // } else {
+    //   onCloseAddTask();
+    // }
   };
 
   const handleChangeCompleted = (

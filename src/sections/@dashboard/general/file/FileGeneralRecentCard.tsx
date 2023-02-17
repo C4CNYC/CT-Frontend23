@@ -26,7 +26,7 @@ import { useSnackbar } from "../../../../components/snackbar";
 import MenuPopover from "../../../../components/menu-popover";
 import FileThumbnail from "../../../../components/file-thumbnail";
 //
-import { FileShareDialog, FileDetailsDrawer } from "../../schools";
+// import { FileShareDialog, FileDetailsDrawer } from "../../schools";
 
 // ----------------------------------------------------------------------
 
@@ -241,7 +241,7 @@ export default function FileGeneralRecentCard({
         </MenuItem>
       </MenuPopover>
 
-      <FileDetailsDrawer
+      {/* <FileDetailsDrawer
         item={file}
         favorited={favorited}
         onFavorite={handleFavorite}
@@ -264,7 +264,7 @@ export default function FileGeneralRecentCard({
           handleCloseShare();
           setInviteEmail("");
         }}
-      />
+      /> */}
     </>
   );
 }

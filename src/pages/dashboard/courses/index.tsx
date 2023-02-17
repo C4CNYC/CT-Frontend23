@@ -33,15 +33,14 @@ import {
   useTable,
 } from "src/components/table";
 import {
-  useCreateСlassesMutation,
-  useDeleteСlassesMutation,
+  useCreateClassesMutation,
+  useDeleteClassesMutation,
   useGetClassesQuery,
-  useUpdateСlassesMutation,
+  useUpdateClassesMutation,
 } from "src/redux/services/manager";
 import Iconify from "src/components/iconify";
 import { RootState } from "src/redux/store";
 import { useSelector } from "react-redux";
-import { useUpdateClassMutation } from "src/redux/services/admin";
 import { useSnackbar } from "src/components/snackbar";
 import Scrollbar from "src/components/scrollbar/Scrollbar";
 import { ClassesTableRow } from "src/sections/@dashboard/classes/list";
@@ -90,9 +89,9 @@ export default function CoursesListPage() {
     name: "",
   });
 
-  const [updateClassByManager] = useUpdateСlassesMutation();
-  const [createClassByManager] = useCreateСlassesMutation();
-  const [deleteCasses] = useDeleteСlassesMutation();
+  const [updateClassByManager] = useUpdateClassesMutation();
+  const [createClassByManager] = useCreateClassesMutation();
+  const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { school_id, ...filters },
     { skip: !school_id }

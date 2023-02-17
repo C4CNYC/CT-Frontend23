@@ -20,7 +20,6 @@ type FormValuesProps = {
 
 type Props = {
   school_id: string;
-  link: string;
   socialItem: {
     type: string;
     id: string;

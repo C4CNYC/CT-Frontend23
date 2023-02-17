@@ -74,19 +74,12 @@ export default function InviteForm() {
     } catch (error) {
       console.error(error);
       reset();
-      setError("afterSubmit", {
-        ...error,
-        message: error.message,
-      });
     }
   };
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && (
-          <Alert severity="error">{errors.afterSubmit.data.message}</Alert>
-        )}
 
         <RHFTextField
           name="password"

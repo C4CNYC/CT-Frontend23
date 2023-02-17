@@ -8,7 +8,8 @@ import FormProvider, {
 import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
 import { useLocales } from "../../../../../../locales";
-import { matchIsColorValid, MuiColorInput } from "mui-color-input";
+import { MuiColorInput } from "mui-color-input";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type FormValuesProps = {
   description: string;
@@ -20,7 +21,7 @@ type FormValuesProps = {
 };
 
 type CustomizationFormProps = {
-  customization?: CustomizationResponce;
+  customization?: CustomizationResponce & BaseResponseInterface;
 };
 
 export default function CustomizationForm({
@@ -84,9 +85,6 @@ export default function CustomizationForm({
           <Controller
             control={control}
             name="primaryColor"
-            rules={{
-              validate: matchIsColorValid,
-            }}
             render={({ field, fieldState }) => (
               <MuiColorInput
                 {...field}
@@ -105,9 +103,6 @@ export default function CustomizationForm({
           )}`}</Typography>
           <Controller
             control={control}
-            rules={{
-              validate: matchIsColorValid,
-            }}
             render={({ field, fieldState }) => (
               <MuiColorInput
                 {...field}
@@ -127,9 +122,6 @@ export default function CustomizationForm({
           )}`}</Typography>
           <Controller
             control={control}
-            rules={{
-              validate: matchIsColorValid,
-            }}
             render={({ field, fieldState }) => (
               <MuiColorInput
                 {...field}

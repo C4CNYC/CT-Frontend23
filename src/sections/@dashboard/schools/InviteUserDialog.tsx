@@ -90,8 +90,7 @@ export default function InviteUser({
             <Button
               sx={{ width: "150px" }}
               variant="contained"
-              loading={isLoading}
-              disabled={members?.data.length || !filters.email}
+              disabled={(!!members?.data.length || !filters.email) as boolean}
               onClick={onSendInvite}
             >
               Send Invite

@@ -12,27 +12,17 @@ import ConfirmDialog from "../../../../components/confirm-dialog";
 type Props = {
   fileInputRef: React.RefObject<HTMLInputElement>;
   taskName: string;
-  liked: boolean;
-  completed: boolean;
-  onLike: VoidFunction;
   onAttach: VoidFunction;
-  onDelete: (task_id: string) => VoidFunction;
-  onCompleted: VoidFunction;
+  onDelete: () => void;
   onCloseDetails: VoidFunction;
-  task_id: string;
 };
 
 export default function KanbanDetailsToolbar({
   fileInputRef,
   taskName,
-  liked,
-  completed,
-  onLike,
   onAttach,
   onDelete,
-  onCompleted,
   onCloseDetails,
-  task_id,
 }: Props) {
   const isDesktop = useResponsive("up", "sm");
 
@@ -65,15 +55,6 @@ export default function KanbanDetailsToolbar({
           justifyContent="flex-end"
           flexGrow={1}
         >
-          <Tooltip title="Like this">
-            <IconButton
-              color={liked ? "default" : "primary"}
-              size="small"
-              onClick={onLike}
-            >
-              <Iconify icon="ic:round-thumb-up" />
-            </IconButton>
-          </Tooltip>
 
           <Tooltip title="Attachment">
             <IconButton size="small" onClick={onAttach}>
@@ -108,7 +89,7 @@ export default function KanbanDetailsToolbar({
           <Button
             variant="contained"
             color="error"
-            onClick={() => onDelete(task_id)}
+            onClick={onDelete}
           >
             Delete
           </Button>

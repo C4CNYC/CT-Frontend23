@@ -114,9 +114,7 @@ export default function KanbanDetails({
         fileInputRef={fileInputRef}
         onAttach={handleClickAttach}
         onDelete={onDeleteTask}
-        // onCompleted={handleCompleted}
         onCloseDetails={onCloseDetails}
-        task_id={task.id}
       />
 
       <Divider />

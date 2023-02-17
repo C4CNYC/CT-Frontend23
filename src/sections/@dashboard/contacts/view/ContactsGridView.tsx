@@ -47,22 +47,22 @@ export default function ContactsGridView({
               md: "repeat(3, 1fr)",
             }}
           >
-            {dataFiltered
+            {/* {dataFiltered
               .filter((i) => i.type === "folder")
               .map((folder) => (
                 <ContactsCard
                   key={folder.id}
-                  folder={folder}
+                  // folder={folder}
                   selected={selected.includes(folder.id)}
                   onSelect={() => onSelectItem(folder.id)}
                   onDelete={() => onDeleteItem(folder.id)}
                   sx={{ maxWidth: "auto" }}
                 />
-              ))}
+              ))} */}
           </Box>
         </Collapse>
 
-        {!!selected?.length && (
+        {/* {!!selected?.length && (
           <FileActionSelected
             numSelected={selected.length}
             rowCount={data.length}
@@ -88,7 +88,7 @@ export default function ContactsGridView({
               </>
             }
           />
-        )}
+        )} */}
       </Box>
     </>
   );

@@ -18,20 +18,20 @@ import TextMaxLine from "../../../../components/text-max-line";
 import { useSnackbar } from "../../../../components/snackbar";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
-import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
+// import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import SchoolIcon from "@mui/icons-material/School";
 import Image from "next/image";
+import { IUserProfileSchool } from "src/@types/user";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
-  school: IFolderManager;
+  school: IUserProfileSchool;
   selected?: boolean;
   onSelect?: VoidFunction;
   onDelete: VoidFunction;
 }
 
 export default function ContactsCard({
-  folder,
   selected,
   onSelect,
   onDelete,
@@ -116,7 +116,7 @@ export default function ContactsCard({
         />
 
         <TextMaxLine variant="h6" sx={{ mt: 3, mb: 1 }}>
-          {folder.name}
+          {/* {folder.name} */}
         </TextMaxLine>
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
           <strong>Phone:</strong> {`${contact.phone}`}
@@ -134,7 +134,7 @@ export default function ContactsCard({
       >
         <MenuItem
           onClick={() => {
-            handleOpenEdit();
+            // handleOpenEdit();
             handleClosePopover();
           }}
         >

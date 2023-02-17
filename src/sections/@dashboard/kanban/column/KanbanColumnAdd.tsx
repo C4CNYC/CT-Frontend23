@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Paper, Button, ClickAwayListener, TextField } from "@mui/material";
 // redux
 import { useDispatch } from "../../../../redux/store";
-import { createColumn } from "../../../../redux/slices/kanban";
+// import { createColumn } from "../../../../redux/slices/kanban";
 // components
 import Iconify from "../../../../components/iconify";
 
@@ -31,7 +31,7 @@ export default function KanbanColumnAdd() {
   const handleCreateColumn = async () => {
     try {
       if (name) {
-        dispatch(createColumn({ name }));
+        // dispatch(createColumn({ name }));
         setName("");
       }
       handleClose();
