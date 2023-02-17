@@ -32,6 +32,7 @@ export const managerApi = createApi({
     "SchoolSettings",
     "SchoolContacts",
     "Assigments",
+    "Assigment",
   ],
   endpoints: (builder) => ({
     getAssigment: builder.query<
@@ -42,6 +43,7 @@ export const managerApi = createApi({
         url: `/school/${school_id}/assigment/${assigment_id}`,
         method: "GET",
       }),
+      providesTags: ["Assigment"],
     }),
     getAssigmentList: builder.query<
       (IAssigment & BaseResponseInterface)[],
@@ -78,7 +80,7 @@ export const managerApi = createApi({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "Assigments" }],
+      invalidatesTags: ["Assigments", "Assigment"],
     }),
     deleteAssigment: builder.mutation<
       void,

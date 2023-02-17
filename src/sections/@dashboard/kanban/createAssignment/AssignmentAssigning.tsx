@@ -4,10 +4,13 @@ import { useForm, Controller } from "react-hook-form";
 import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
+import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type AssignmentStepProps = {
   next: () => void;
   back: () => void;
+  assigment?: IAssigment & BaseResponseInterface;
   assignmentId: string;
   school_id: string;
 };
@@ -24,6 +27,7 @@ type FormValuesProps = {
 export default function AssignmentAssigning({
   back,
   assignmentId,
+  assigment,
   school_id,
   next,
 }: AssignmentStepProps) {
@@ -31,8 +35,8 @@ export default function AssignmentAssigning({
 
   const defaultValues = {
     class: "",
-    end_date: new Date().toISOString(),
-    start_date: new Date().toISOString(),
+    end_date: assigment?.end_date || new Date().toISOString(),
+    start_date: assigment?.start_date || new Date().toISOString(),
     notes: "",
     graded: false,
     points: "",
