@@ -1,17 +1,40 @@
 import { useRef, useState, useEffect } from "react";
 // @mui
-import { Stack, MenuItem, IconButton, Button, Box } from "@mui/material";
+
+import {
+  Stack,
+  MenuItem,
+  IconButton,
+  Button,
+  Box,
+  Typography,
+  Grid,
+  Card,
+} from "@mui/material";
 // components
 import Iconify from "../../../../components/iconify";
 import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 //
 import KanbanInputName from "../KanbanInputName";
+import KanbanTaskAdd from "../KanbanTaskAdd";
+import Stepper from "./../createAssignment/Stepper";
+import { IKanbanCard } from "../../../../@types/kanban";
+import { addTask } from "../../../../redux/slices/kanban";
+import { useDispatch } from "../../../../redux/store";
+
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
+import { LoadingButton } from "@mui/lab";
+import Dialog from "@mui/material/Dialog";
+import * as React from "react";
 
 // ----------------------------------------------------------------------
 
 type Props = {
   columnName: string;
+  school_id: string;
   onDelete: VoidFunction;
   onUpdate: (name: string) => void;
 };
@@ -20,7 +43,10 @@ export default function KanbanColumnToolBar({
   columnName,
   onDelete,
   onUpdate,
+  school_id,
 }: Props) {
+  const dispatch = useDispatch();
+
   const renameRef = useRef<HTMLInputElement>(null);
 
   const [value, setValue] = useState(columnName);
@@ -28,6 +54,8 @@ export default function KanbanColumnToolBar({
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const [openAddTask, setOpenAddTask] = useState(false);
 
   useEffect(() => {
     const { current } = renameRef;
@@ -72,6 +100,23 @@ export default function KanbanColumnToolBar({
     }
   };
 
+  const handleToggleAddTask = () => {
+    setOpenAddTask(!openAddTask);
+  };
+
+  const handleCloseAddTask = () => {
+    setOpenAddTask(false);
+  };
+
+  const handleAddTask = (task: IKanbanCard) => {
+    handleCloseAddTask();
+    console.log("qwe");
+  };
+
+  const handleCloseStepper = () => {
+    setOpenAddTask(false);
+  };
+
   return (
     <>
       <Stack
@@ -81,44 +126,33 @@ export default function KanbanColumnToolBar({
         spacing={1}
         sx={{ pt: 3 }}
       >
-        <KanbanInputName
-          inputRef={renameRef}
-          placeholder="Section name"
-          value={value}
-          onChange={handleChangeColumnName}
-          onKeyUp={handleUpdateColumn}
-        />
-
-        <IconButton
-          size="small"
-          color={openPopover ? "inherit" : "default"}
-          onClick={handleOpenPopover}
-        >
-          <Iconify icon="eva:more-horizontal-fill" />
-        </IconButton>
+        <Typography variant="h6">{value}</Typography>
+        {columnName === "BACKLOG" && (
+          <IconButton
+            onClick={handleToggleAddTask}
+            sx={{ fontSize: 14 }}
+            color="primary"
+          >
+            <Iconify icon="eva:plus-fill" />
+          </IconButton>
+        )}
       </Stack>
 
-      <MenuPopover
-        open={openPopover}
-        onClose={handleClosePopover}
-        sx={{ mt: 0, ml: 1.25 }}
-      >
-        <MenuItem
-          onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
-          }}
-          sx={{ color: "error.main" }}
+      {openAddTask && (
+        <Dialog
+          open={openAddTask}
+          onClose={() => setOpenAddTask(false)}
+          PaperProps={{ sx: { padding: "20px" } }}
+          fullWidth
         >
-          <Iconify icon="eva:trash-2-outline" />
-          Delete section
-        </MenuItem>
-
-        <MenuItem onClick={handleClickRename}>
-          <Iconify icon="eva:edit-fill" />
-          Rename section
-        </MenuItem>
-      </MenuPopover>
+          <DialogTitle sx={{ marginBottom: 2 }}>
+            <Typography variant="h4">Create new assignment</Typography>
+          </DialogTitle>
+          <DialogContent sx={{ padding: "30px" }}>
+            <Stepper school_id={school_id} closeStepper={handleCloseStepper} />
+          </DialogContent>
+        </Dialog>
+      )}
 
       <ConfirmDialog
         open={openConfirm}

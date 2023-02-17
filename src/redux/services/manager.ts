@@ -5,6 +5,11 @@ import {
 } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
+import {
+  IAssigment,
+  IAssigmentUpdate,
+  IAssigmentCreate,
+} from "./interfaces/assigment.interface";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
 import {
   SchoolResponce,
@@ -26,8 +31,65 @@ export const managerApi = createApi({
     "Classes",
     "SchoolSettings",
     "SchoolContacts",
+    "Assigments",
   ],
   endpoints: (builder) => ({
+    getAssigment: builder.query<
+      IAssigment & BaseResponseInterface,
+      { school_id: string; assigment_id: string }
+    >({
+      query: ({ school_id, assigment_id }) => ({
+        url: `/school/${school_id}/assigment/${assigment_id}`,
+        method: "GET",
+      }),
+    }),
+    getAssigmentList: builder.query<
+      (IAssigment & BaseResponseInterface)[],
+      { school_id: string }
+    >({
+      query: ({ school_id }) => ({
+        url: `/school/${school_id}/assigment`,
+        method: "GET",
+      }),
+      providesTags: ["Assigments"],
+    }),
+    createAssigment: builder.mutation<
+      IAssigment & BaseResponseInterface,
+      {
+        school_id: string;
+      } & IAssigmentCreate
+    >({
+      query: ({ school_id, ...body }) => ({
+        url: `/school/${school_id}/assigment/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Assigments"],
+    }),
+    udpateAssigment: builder.mutation<
+      void,
+      {
+        assigment_id: string;
+        school_id: string;
+      } & IAssigmentUpdate
+    >({
+      query: ({ school_id, assigment_id, ...body }) => ({
+        url: `/school/${school_id}/assigment/${assigment_id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Assigments" }],
+    }),
+    deleteAssigment: builder.mutation<
+      void,
+      { school_id: string; assigment_id: string }
+    >({
+      query: ({ school_id, assigment_id }) => ({
+        url: `/school/${school_id}/assigment/${assigment_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Assigments"],
+    }),
     getMySchools: builder.query<
       BaseListResponseInterface<SchoolResponce>,
       void
@@ -262,6 +324,10 @@ export const {
   useStudentLeftClassMutation,
   //---social links----
 
+  //----assigment ---------
+  useGetAssigmentQuery,
+  useGetAssigmentListQuery,
+
   //---------------- mutations --------------
   useUpdateStudentMutation,
   useCreateStudentMutation,
@@ -278,4 +344,9 @@ export const {
   useCreateSchoolSocialMutation,
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
+
+  //----assigment ---------
+  useUdpateAssigmentMutation,
+  useCreateAssigmentMutation,
+  useDeleteAssigmentMutation,
 } = managerApi;

@@ -1,5 +1,8 @@
 // ----------------------------------------------------------------------
 
+import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+
 export type IKanbanComment = {
   id: string;
   avatar: string;
@@ -22,16 +25,7 @@ export type IKanbanAssignee = {
   role: string;
 };
 
-export type IKanbanCard = {
-  id: string;
-  name: string;
-  description?: string;
-  assignee: IKanbanAssignee[];
-  due: [Date | null, Date | null];
-  attachments: string[];
-  comments: IKanbanComment[];
-  completed: boolean;
-};
+export type IKanbanCard = IAssigment & BaseResponseInterface;
 
 export type IKanbanColumn = {
   id: string;
@@ -48,11 +42,11 @@ export type IKanbanBoard = {
 // ----------------------------------------------------------------------
 
 export type IKanbanState = {
+  minOrder: number;
   isLoading: boolean;
   error: Error | string | null;
   board: {
     cards: Record<string, IKanbanCard>;
     columns: Record<string, IKanbanColumn>;
-    columnOrder: string[];
   };
 };

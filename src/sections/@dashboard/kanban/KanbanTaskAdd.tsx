@@ -115,19 +115,9 @@ export default function KanbanTaskAdd({ onAddTask, onCloseAddTask }: Props) {
 
           <Stack
             direction="row"
-            justifyContent="space-between"
+            justifyContent="flex-end"
             sx={{ pl: 1, pr: 1.5, pb: 2 }}
           >
-            <Tooltip title="Mark complete">
-              <Checkbox
-                disableRipple
-                checked={completed}
-                onChange={handleChangeCompleted}
-                icon={<Iconify icon="eva:radio-button-off-outline" />}
-                checkedIcon={<Iconify icon="eva:checkmark-circle-2-outline" />}
-              />
-            </Tooltip>
-
             <Stack direction="row" spacing={1.5} alignItems="center">
               <Tooltip title="Assign" onClick={handleOpenContacts}>
                 <IconButton size="small">

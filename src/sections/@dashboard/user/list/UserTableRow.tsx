@@ -17,14 +17,13 @@ import MenuPopover from "../../../../components/menu-popover";
 import ConfirmDialog from "../../../../components/confirm-dialog";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import _mock from "src/_mock";
-import DropDownMenuCustom from "src/components/drop-dawn-menu";
 import RoleSelector from "src/components/drop-dawn-menu";
-import { Role } from "src/redux/services/enums/role.enum";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IUser;
+  row: IUser & BaseResponseInterface;
   selected: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;

@@ -4,11 +4,10 @@ import { Draggable } from "@hello-pangea/dnd";
 import { Paper, Typography, Box, Checkbox } from "@mui/material";
 // @types
 import { IKanbanCard } from "../../../@types/kanban";
-// components
-import Image from "../../../components/image";
-import Iconify from "../../../components/iconify";
 //
+import Image from '../../../components/image';
 import KanbanDetails from "./details/KanbanDetails";
+import { AssigmentTypes } from "src/redux/services/enums/assigment-types.enum";
 
 // ----------------------------------------------------------------------
 
@@ -18,10 +17,20 @@ type Props = {
   onDeleteTask: (id: string) => void;
 };
 
-export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
-  const { name, attachments } = card;
+const ImageCardType: { [key: string]: string } = {
+  [AssigmentTypes.REVIEW]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.CODING_IDEA]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.CODING_PROJECT]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.CODING_SNIPETS]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.GROUP_CODING_PROJECT]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.PEER_PREVIEW]: "/assets/assigment/code-review.svg",
+  [AssigmentTypes.RESEARCH]: "/assets/assigment/code-review.svg",
+}
 
-  const [completed, setCompleted] = useState(card.completed);
+export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
+  const { name, type } = card;
+
+  const [completed, setCompleted] = useState(false);
 
   const [openDetails, setOpenDetails] = useState(false);
 
@@ -39,7 +48,7 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
 
   return (
     <>
-      <Draggable draggableId={card.id} index={index}>
+      <Draggable  draggableId={card.id} index={index}>
         {(provided) => (
           <Paper
             {...provided.draggableProps}
@@ -57,15 +66,16 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
             }}
           >
             <Box onClick={handleOpenDetails} sx={{ cursor: "pointer" }}>
-              {!!attachments.length && (
-                <Image
+               <Image
                   disabledEffect
-                  alt={attachments[0]}
-                  src={attachments[0]}
+                  alt={type}
+                  src={ImageCardType[type]}
                   ratio="4/3"
                   sx={{
+                    width: "150px",
+                    height: "150px",
                     transition: (theme) =>
-                      theme.transitions.create("opacity", {
+                      theme.transitions.create('opacity', {
                         duration: theme.transitions.duration.shortest,
                       }),
                     ...(completed && {
@@ -73,37 +83,25 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
                     }),
                   }}
                 />
-              )}
-
               <Typography
                 noWrap
                 variant="subtitle2"
                 sx={{
-                  pr: 1,
-                  pl: 6,
+                  pl: 2,
                   height: 72,
                   lineHeight: "72px",
                   transition: (theme) =>
                     theme.transitions.create("opacity", {
                       duration: theme.transitions.duration.shortest,
                     }),
-                  ...(completed && {
-                    opacity: 0.48,
-                  }),
+                  // ...(completed && {
+                  //   opacity: 0.48,
+                  // }),
                 }}
               >
                 {name}
               </Typography>
             </Box>
-
-            <Checkbox
-              disableRipple
-              checked={completed}
-              icon={<Iconify icon="eva:radio-button-off-outline" />}
-              checkedIcon={<Iconify icon="eva:checkmark-circle-2-outline" />}
-              onChange={handleChangeComplete}
-              sx={{ position: "absolute", bottom: 16, left: 8 }}
-            />
           </Paper>
         )}
       </Draggable>

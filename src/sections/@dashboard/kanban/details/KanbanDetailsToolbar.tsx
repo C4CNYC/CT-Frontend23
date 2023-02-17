@@ -16,9 +16,10 @@ type Props = {
   completed: boolean;
   onLike: VoidFunction;
   onAttach: VoidFunction;
-  onDelete: VoidFunction;
+  onDelete: (task_id: string) => VoidFunction;
   onCompleted: VoidFunction;
   onCloseDetails: VoidFunction;
+  task_id: string;
 };
 
 export default function KanbanDetailsToolbar({
@@ -31,6 +32,7 @@ export default function KanbanDetailsToolbar({
   onDelete,
   onCompleted,
   onCloseDetails,
+  task_id,
 }: Props) {
   const isDesktop = useResponsive("up", "sm");
 
@@ -113,7 +115,11 @@ export default function KanbanDetailsToolbar({
           </>
         }
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => onDelete(task_id)}
+          >
             Delete
           </Button>
         }

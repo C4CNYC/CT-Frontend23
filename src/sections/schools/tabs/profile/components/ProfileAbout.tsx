@@ -18,7 +18,6 @@ type Props = {
 
 export default function ProfileAbout({ data }: Props) {
   const { data: profile } = useGetMySchoolsQuery();
-  console.log(profile);
 
   return (
     <Card>
@@ -51,6 +50,16 @@ export default function ProfileAbout({ data }: Props) {
             Phone &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {data?.phone}
+            </Link>
+          </Typography>
+        </Stack>
+        <Stack direction="row">
+          <StyledIcon icon="ic:round-business-center" />
+
+          <Typography variant="body2">
+            Studied at &nbsp;
+            <Link component="span" variant="subtitle2" color="text.primary">
+              school
             </Link>
           </Typography>
         </Stack>
