@@ -7,6 +7,7 @@ import StepButton from "@mui/material/StepButton";
 import AssignmentSettings from "./AssignmentSettings";
 import AssignmentAssigning from "./AssignmentAssigning";
 import AssignmentAbout from "./AssignmentAbout";
+import { useGetAssigmentQuery } from "src/redux/services/manager";
 
 const steps = [
   "Assignment Content",
@@ -25,6 +26,11 @@ export default function HorizontalNonLinearStepper({
 }: Props) {
   const [activeStep, setActiveStep] = useState(0);
   const [assignmentId, setAssignmentId] = useState("");
+
+  const { data: assigment } = useGetAssigmentQuery(
+    { school_id, assigment_id: assignmentId },
+    { skip: !school_id || !assignmentId }
+  );
 
   const [completed, setCompleted] = useState<{
     [k: number]: boolean;
@@ -59,10 +65,11 @@ export default function HorizontalNonLinearStepper({
           </Step>
         ))}
       </Stepper>
-      <div style={{ marginTop: "50px"}}>
+      <div style={{ marginTop: "50px" }}>
         <>
           {activeStep === 0 && (
             <AssignmentSettings
+              assigment={assigment}
               getAssignmentId={handleAssignmentId}
               next={handleNext}
               school_id={school_id}
@@ -70,6 +77,7 @@ export default function HorizontalNonLinearStepper({
           )}
           {activeStep === 1 && (
             <AssignmentAbout
+              assigment={assigment}
               assignmentId={assignmentId}
               next={handleNext}
               back={handleBack}
@@ -78,6 +86,7 @@ export default function HorizontalNonLinearStepper({
           )}
           {activeStep === 2 && (
             <AssignmentAssigning
+              assigment={assigment}
               assignmentId={assignmentId}
               next={handleNext}
               back={handleBack}

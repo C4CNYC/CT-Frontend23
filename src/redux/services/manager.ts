@@ -34,6 +34,15 @@ export const managerApi = createApi({
     "Assigments",
   ],
   endpoints: (builder) => ({
+    getAssigment: builder.query<
+      IAssigment & BaseResponseInterface,
+      { school_id: string; assigment_id: string }
+    >({
+      query: ({ school_id, assigment_id }) => ({
+        url: `/school/${school_id}/assigment/${assigment_id}`,
+        method: "GET",
+      }),
+    }),
     getAssigmentList: builder.query<
       (IAssigment & BaseResponseInterface)[],
       { school_id: string }
@@ -45,7 +54,7 @@ export const managerApi = createApi({
       providesTags: ["Assigments"],
     }),
     createAssigment: builder.mutation<
-      void,
+      IAssigment & BaseResponseInterface,
       {
         school_id: string;
       } & IAssigmentCreate
@@ -292,6 +301,7 @@ export const {
   //---social links----
 
   //----assigment ---------
+  useGetAssigmentQuery,
   useGetAssigmentListQuery,
 
   //---------------- mutations --------------

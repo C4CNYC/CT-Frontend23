@@ -1,5 +1,4 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import { Box, Button, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import FormProvider, {
@@ -7,6 +6,8 @@ import FormProvider, {
   RHFSelect,
 } from "../../../../components/hook-form";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
+import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 const TECH_OPTIONS = ["css", "html", "js"];
 
@@ -16,6 +17,7 @@ type AssignmentStepProps = {
   next: () => void;
   back: () => void;
   assignmentId: string;
+  assigment: IAssigment & BaseResponseInterface;
   school_id: string;
 };
 
@@ -28,6 +30,7 @@ type FormValuesProps = {
 export default function AssignmentAbout({
   next,
   back,
+  assigment,
   school_id,
   assignmentId,
 }: AssignmentStepProps) {
@@ -58,12 +61,10 @@ export default function AssignmentAbout({
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={5} sx={{ mb: 5, position: "relative" }}>
-      <RHFSelect
-          native
-          name="time"
-          label="Time to complete"
-        >
-          <option key="empty" value="en">no limit</option>
+        <RHFSelect native name="time" label="Time to complete">
+          <option key="empty" value="en">
+            no limit
+          </option>
           <option key="0.25h" value="0.25h">
             0.25h
           </option>
@@ -83,36 +84,41 @@ export default function AssignmentAbout({
             3h
           </option>
         </RHFSelect>
-        <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
-        <RHFSelect
-          native
-          name="grade"
-          label="Target grade"
-          sx={{ width: "47%"}}
+        <Stack
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          <option key="empty" value="en"></option>
-          <option key="grade1" value="grade1">
-            Grade 1
-          </option>
-          <option key="grade2" value="grade2">
-            Grade 2
-          </option>
-        </RHFSelect>
+          <RHFSelect
+            native
+            name="grade"
+            label="Target grade"
+            sx={{ width: "47%" }}
+          >
+            <option key="empty" value="en"></option>
+            <option key="grade1" value="grade1">
+              Grade 1
+            </option>
+            <option key="grade2" value="grade2">
+              Grade 2
+            </option>
+          </RHFSelect>
 
-        <RHFSelect
-          native
-          name="level"
-          label="Select difficulty level"
-          sx={{ width: "47%"}}
-        >
-          <option key="empty" value="en"></option>
-          <option key="level1" value="level1">
-            level 1
-          </option>
-          <option key="level2" value="level2">
-            level 2
-          </option>
-        </RHFSelect>
+          <RHFSelect
+            native
+            name="level"
+            label="Select difficulty level"
+            sx={{ width: "47%" }}
+          >
+            <option key="empty" value="en"></option>
+            <option key="level1" value="level1">
+              level 1
+            </option>
+            <option key="level2" value="level2">
+              level 2
+            </option>
+          </RHFSelect>
         </Stack>
 
         <RHFAutocomplete

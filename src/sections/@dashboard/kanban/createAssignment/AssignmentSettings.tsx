@@ -7,16 +7,22 @@ import FormProvider, {
   RHFSwitch,
   RHFTextField,
 } from "../../../../components/hook-form";
-import { useCreateAssigmentMutation } from "../../../../redux/services/manager";
+import {
+  useCreateAssigmentMutation,
+  useUdpateAssigmentMutation,
+} from "../../../../redux/services/manager";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { AssigmentTypes } from "src/redux/services/enums/assigment-types.enum";
 import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
+import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type AssignmentStepProps = {
   next: () => void;
   school_id: string;
+  assigment?: IAssigment & BaseResponseInterface;
   getAssignmentId: (param: string) => void;
 };
 
@@ -29,18 +35,20 @@ type FormValuesProps = {
 };
 
 export default function AssignmentSettings({
+  assigment,
   next,
   getAssignmentId,
   school_id,
 }: AssignmentStepProps) {
   const [createAssignment, { isLoading }] = useCreateAssigmentMutation();
+  const [updateAssigment] = useUdpateAssigmentMutation();
   const board = useSelector((state: RootState) => state.kanban.board);
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    name: "",
-    description: "",
-    type: "coding_idea",
+    name: assigment?.name,
+    description: assigment?.description,
+    type: assigment?.type,
     course: "",
     lesson: "",
   };
@@ -56,19 +64,31 @@ export default function AssignmentSettings({
     const idCardWithMinOrder = backlogCol.cardIds[0];
 
     try {
-      const assignment = await createAssignment({
-        school_id,
-        type: data.type,
-        name: data.name,
-        description: data.description,
-        meta: {
-          order: idCardWithMinOrder
-            ? parseFloat(board.cards[idCardWithMinOrder].meta.order as string) /
-              2
-            : 1,
-        },
-      });
-      getAssignmentId(assignment?.data?.id);
+      if (assigment) {
+        await updateAssigment({
+          assigment_id: assigment.id,
+          school_id,
+          type: data.type,
+          name: data.name,
+          description: data.description,
+        });
+      } else {
+        console.log(data.type);
+        const assignment = await createAssignment({
+          school_id,
+          type: data.type,
+          name: data.name,
+          description: data.description,
+          meta: {
+            order: idCardWithMinOrder
+              ? parseFloat(
+                  board.cards[idCardWithMinOrder].meta.order as string
+                ) / 2
+              : 1,
+          },
+        }).unwrap();
+        getAssignmentId(assignment?.id);
+      }
       next();
     } catch (e) {
       enqueueSnackbar(e.data.message, { variant: "error" });
@@ -79,30 +99,37 @@ export default function AssignmentSettings({
     <>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={5} sx={{ mb: 5, position: "relative" }}>
-          <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
-            <RHFTextField sx={{ width: "47%"}} name="name" label="Assignment name" />
+          <Stack
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <RHFTextField
+              sx={{ width: "47%" }}
+              name="name"
+              label="Assignment name"
+            />
 
-            <RHFSelect sx={{ width: "47%"}} native name="type" label="Select Type">
-              {
-                Object.keys(AssigmentTypes).map((t) => (
-                  <option
-                    key={AssigmentTypes[t as keyof typeof AssigmentTypes]}
-                    value={AssigmentTypes[t as keyof typeof AssigmentTypes]}
-                  >
-                      {t.split('_').join(' ').toLocaleLowerCase()}
-                  </option>
-                ))
-              }
-              
-          
+            <RHFSelect
+              sx={{ width: "47%" }}
+              native
+              name="type"
+              label="Select Type"
+            >
+              <option value=""></option>
+              {Object.keys(AssigmentTypes).map((t) => (
+                <option
+                  key={AssigmentTypes[t as keyof typeof AssigmentTypes]}
+                  value={AssigmentTypes[t as keyof typeof AssigmentTypes]}
+                >
+                  {t.split("_").join(" ").toLocaleLowerCase()}
+                </option>
+              ))}
             </RHFSelect>
           </Stack>
 
-          <RHFSelect
-            native
-            name="course"
-            label="Select Course"
-          >
+          <RHFSelect native name="course" label="Select Course">
             <option key="empty" value="en"></option>
             <option key="course1" value="course1">
               Javascript Base
@@ -112,11 +139,7 @@ export default function AssignmentSettings({
             </option>
           </RHFSelect>
 
-          <RHFSelect
-            native
-            name="lesson"
-            label="Select Lesson"
-          >
+          <RHFSelect native name="lesson" label="Select Lesson">
             <option key="empty" value="en"></option>
             <option key="lesson1" value="lesson1">
               Variables types

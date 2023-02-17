@@ -1,9 +1,7 @@
 import * as React from "react";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import FormProvider, {
-  RHFTextField,
-} from "../../../../components/hook-form";
+import FormProvider, { RHFTextField } from "../../../../components/hook-form";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
 
@@ -109,19 +107,11 @@ export default function AssignmentAssigning({
           />
         </Box>
 
-      <RHFTextField name="points" label="Points" type="number" />
+        <RHFTextField name="points" label="Points" type="number" />
 
-        <RHFTextField
-          name="class"
-          label="Assign to class"
-        />
+        <RHFTextField name="class" label="Assign to class" />
 
-        <RHFTextField
-          multiline
-          rows={8}
-          name="name"
-          label="Class notes"
-        />
+        <RHFTextField multiline rows={8} name="name" label="Class notes" />
       </Stack>
 
       <Box sx={{ display: "flex", flexDirection: "row" }}>

@@ -142,13 +142,11 @@ export default function KanbanColumnToolBar({
         <Dialog
           open={openAddTask}
           onClose={() => setOpenAddTask(false)}
-          PaperProps={{ sx: {padding: "20px"}}}
+          PaperProps={{ sx: { padding: "20px" } }}
           fullWidth
         >
           <DialogTitle sx={{ marginBottom: 2 }}>
-            <Typography variant="h4">
-              Create new assignment
-            </Typography>
+            <Typography variant="h4">Create new assignment</Typography>
           </DialogTitle>
           <DialogContent sx={{ padding: "30px" }}>
             <Stepper school_id={school_id} closeStepper={handleCloseStepper} />
