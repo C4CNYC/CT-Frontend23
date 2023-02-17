@@ -4,13 +4,11 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 
-import AssignmentContent from "./AssignmentContent";
 import AssignmentSettings from "./AssignmentSettings";
 import AssignmentAssigning from "./AssignmentAssigning";
 import AssignmentAbout from "./AssignmentAbout";
 
 const steps = [
-  "Assignment Settings",
   "Assignment Content",
   "Assignment About",
   "Assignment Assigning",
@@ -34,7 +32,7 @@ export default function HorizontalNonLinearStepper({
 
   const handleNext = () => {
     if (activeStep === steps.length) return;
-    if (activeStep === 3) closeStepper();
+    if (activeStep === 2) closeStepper();
     setActiveStep(activeStep + 1);
   };
 
@@ -48,8 +46,8 @@ export default function HorizontalNonLinearStepper({
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Stepper nonLinear activeStep={activeStep} sx={{ mb: 2 }}>
+    <Box>
+      <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
           <Step key={index} completed={completed[index]}>
             <StepButton
@@ -61,7 +59,7 @@ export default function HorizontalNonLinearStepper({
           </Step>
         ))}
       </Stepper>
-      <div style={{ marginTop: "40px" }}>
+      <div style={{ marginTop: "50px"}}>
         <>
           {activeStep === 0 && (
             <AssignmentSettings
@@ -71,14 +69,6 @@ export default function HorizontalNonLinearStepper({
             />
           )}
           {activeStep === 1 && (
-            <AssignmentContent
-              assignmentId={assignmentId}
-              next={handleNext}
-              back={handleBack}
-              school_id={school_id}
-            />
-          )}
-          {activeStep === 2 && (
             <AssignmentAbout
               assignmentId={assignmentId}
               next={handleNext}
@@ -86,7 +76,7 @@ export default function HorizontalNonLinearStepper({
               school_id={school_id}
             />
           )}
-          {activeStep === 3 && (
+          {activeStep === 2 && (
             <AssignmentAssigning
               assignmentId={assignmentId}
               next={handleNext}

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
+  RHFTextField,
 } from "../../../../components/hook-form";
 import { useCreateAssigmentMutation } from "../../../../redux/services/manager";
 import { useSnackbar } from "notistack";
@@ -23,7 +24,7 @@ type FormValuesProps = {
   type: string;
   course: string;
   lesson: string;
-  publish: boolean;
+  description: string;
   name: string;
 };
 
@@ -37,6 +38,8 @@ export default function AssignmentSettings({
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
+    name: "",
+    description: "",
     type: "coding_idea",
     course: "",
     lesson: "",
@@ -48,7 +51,7 @@ export default function AssignmentSettings({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormValuesProps) => {
     const backlogCol = board.columns[AssigmentStatuses.BACKLOG];
     const idCardWithMinOrder = backlogCol.cardIds[0];
 
@@ -56,7 +59,8 @@ export default function AssignmentSettings({
       const assignment = await createAssignment({
         school_id,
         type: data.type,
-        name: "(Draft)",
+        name: data.name,
+        description: data.description,
         meta: {
           order: idCardWithMinOrder
             ? parseFloat(board.cards[idCardWithMinOrder].meta.order as string) /
@@ -74,62 +78,60 @@ export default function AssignmentSettings({
   return (
     <>
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            New assignment
-          </Typography>
+        <Stack spacing={5} sx={{ mb: 5, position: "relative" }}>
+          <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
+            <RHFTextField sx={{ width: "47%"}} name="name" label="Assignment name" />
 
-          <RHFSelect
-            native
-            name="type"
-            label="Select Type"
-            style={{ marginBottom: "20px" }}
-          >
-            <option key="coding_idea" value="coding_idea">
-              Coding idea
-            </option>
-          </RHFSelect>
+            <RHFSelect sx={{ width: "47%"}} native name="type" label="Select Type">
+              {
+                Object.keys(AssigmentTypes).map((t) => (
+                  <option
+                    key={AssigmentTypes[t as keyof typeof AssigmentTypes]}
+                    value={AssigmentTypes[t as keyof typeof AssigmentTypes]}
+                  >
+                      {t.split('_').join(' ').toLocaleLowerCase()}
+                  </option>
+                ))
+              }
+              
+          
+            </RHFSelect>
+          </Stack>
 
           <RHFSelect
             native
             name="course"
             label="Select Course"
-            style={{ marginBottom: "20px" }}
           >
             <option key="empty" value="en"></option>
             <option key="course1" value="course1">
-              Course of assignment 1
+              Javascript Base
             </option>
             <option key="course2" value="course2">
-              Course of assignment 2
+              Javascript Advance
             </option>
           </RHFSelect>
 
           <RHFSelect
             native
             name="lesson"
-            label="Select Course"
-            style={{ marginBottom: "20px" }}
+            label="Select Lesson"
           >
             <option key="empty" value="en"></option>
             <option key="lesson1" value="lesson1">
-              Lesson of assignment 1
+              Variables types
             </option>
             <option key="lesson2" value="lesson2">
-              Lesson of assignment 2
+              Loop
             </option>
           </RHFSelect>
 
-          <RHFSwitch
-            name="publish"
-            label="Publish"
-            labelPlacement="start"
-            sx={{
-              mb: 1,
-              mx: 0,
-              width: 1,
-              justifyContent: "flex-end",
-            }}
+          <RHFTextField
+            multiline
+            rows={8}
+            name="description"
+            label="Assignment description"
+            style={{ marginBottom: "20px" }}
           />
         </Stack>
         <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -146,7 +148,7 @@ export default function AssignmentSettings({
               color: (theme) =>
                 theme.palette.mode === "light" ? "common.white" : "grey.800",
               "&:hover": {
-                bgcolor: "text.primary",
+                bgcolor: "#FBDD3F",
                 color: (theme) =>
                   theme.palette.mode === "light" ? "common.white" : "grey.800",
               },

@@ -1,13 +1,10 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import { Box, Button, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import FormProvider, {
-  RHFSwitch,
   RHFTextField,
 } from "../../../../components/hook-form";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { useState } from "react";
 import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
 
 type AssignmentStepProps = {
@@ -19,7 +16,8 @@ type AssignmentStepProps = {
 
 type FormValuesProps = {
   class: string;
-  due_date: string;
+  end_date: string;
+  start_date: string;
   notes: string;
   graded: boolean;
   points: string;
@@ -35,8 +33,8 @@ export default function AssignmentAssigning({
 
   const defaultValues = {
     class: "",
-    due_date: "",
-    start_date: new Date(),
+    end_date: new Date().toISOString(),
+    start_date: new Date().toISOString(),
     notes: "",
     graded: false,
     points: "",
@@ -48,7 +46,7 @@ export default function AssignmentAssigning({
 
   const { handleSubmit, control } = methods;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: FormValuesProps) => {
     try {
       updateAssignment({
         school_id,
@@ -64,17 +62,7 @@ export default function AssignmentAssigning({
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-        <Typography variant="h4" sx={{ textAlign: "center" }}>
-          New assignment assigning
-        </Typography>
-
-        <RHFTextField
-          name="class"
-          label="Assign to class"
-          style={{ marginBottom: "20px" }}
-        />
-
+      <Stack spacing={5} sx={{ mb: 5, position: "relative" }}>
         <Box sx={{ display: "flex", flexDirection: "row" }}>
           <Controller
             name="start_date"
@@ -120,27 +108,20 @@ export default function AssignmentAssigning({
             )}
           />
         </Box>
+
+      <RHFTextField name="points" label="Points" type="number" />
+
+        <RHFTextField
+          name="class"
+          label="Assign to class"
+        />
+
         <RHFTextField
           multiline
           rows={8}
           name="name"
           label="Class notes"
-          style={{ marginBottom: "20px" }}
         />
-
-        <RHFSwitch
-          name="graded"
-          label="Graded"
-          labelPlacement="start"
-          sx={{
-            mb: 1,
-            mx: 0,
-            width: 1,
-            justifyContent: "flex-end",
-          }}
-        />
-
-        <RHFTextField name="points" label="Points" type="number" />
       </Stack>
 
       <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -151,7 +132,7 @@ export default function AssignmentAssigning({
           onClick={back}
           sx={{
             boxShadow: "0px 8px 16px rgba(196, 196, 196, 0.59)",
-            bgcolor: "#FBDD3F",
+            bgcolor: "text.primary",
             borderRadius: "50px",
             textTransform: "uppercase",
             fontSize: "22px",

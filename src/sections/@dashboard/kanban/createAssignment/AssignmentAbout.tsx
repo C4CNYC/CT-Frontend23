@@ -57,10 +57,63 @@ export default function AssignmentAbout({
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
-        <Typography variant="h4" sx={{ textAlign: "center" }}>
-          New assignment about
-        </Typography>
+      <Stack spacing={5} sx={{ mb: 5, position: "relative" }}>
+      <RHFSelect
+          native
+          name="time"
+          label="Time to complete"
+        >
+          <option key="empty" value="en">no limit</option>
+          <option key="0.25h" value="0.25h">
+            0.25h
+          </option>
+          <option key="0.5h" value="0.5h">
+            0.5h
+          </option>
+          <option key="1h" value="1h">
+            1h
+          </option>
+          <option key="1h" value="1h">
+            1.5h
+          </option>
+          <option key="2h" value="2h">
+            2h
+          </option>
+          <option key="2h" value="2h">
+            3h
+          </option>
+        </RHFSelect>
+        <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
+        <RHFSelect
+          native
+          name="grade"
+          label="Target grade"
+          sx={{ width: "47%"}}
+        >
+          <option key="empty" value="en"></option>
+          <option key="grade1" value="grade1">
+            Grade 1
+          </option>
+          <option key="grade2" value="grade2">
+            Grade 2
+          </option>
+        </RHFSelect>
+
+        <RHFSelect
+          native
+          name="level"
+          label="Select difficulty level"
+          sx={{ width: "47%"}}
+        >
+          <option key="empty" value="en"></option>
+          <option key="level1" value="level1">
+            level 1
+          </option>
+          <option key="level2" value="level2">
+            level 2
+          </option>
+        </RHFSelect>
+        </Stack>
 
         <RHFAutocomplete
           name="tags"
@@ -79,51 +132,6 @@ export default function AssignmentAbout({
           options={DRILLDOWN_OPTIONS.map((option) => option)}
           ChipProps={{ size: "small" }}
         />
-
-        <RHFSelect
-          native
-          name="lesson"
-          label="Target grade"
-          style={{ marginBottom: "20px" }}
-        >
-          <option key="empty" value="en"></option>
-          <option key="grade1" value="grade1">
-            Grade 1
-          </option>
-          <option key="grade2" value="grade2">
-            Grade 2
-          </option>
-        </RHFSelect>
-
-        <RHFSelect
-          native
-          name="lesson"
-          label="Select difficulty level"
-          style={{ marginBottom: "20px" }}
-        >
-          <option key="empty" value="en"></option>
-          <option key="level1" value="level1">
-            level 1
-          </option>
-          <option key="level2" value="level2">
-            level 2
-          </option>
-        </RHFSelect>
-
-        <RHFSelect
-          native
-          name="time"
-          label="Time to complete"
-          style={{ marginBottom: "20px" }}
-        >
-          <option key="empty" value="en"></option>
-          <option key="1h" value="1h">
-            1h
-          </option>
-          <option key="2h" value="2h">
-            2h
-          </option>
-        </RHFSelect>
       </Stack>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <Button
@@ -133,7 +141,7 @@ export default function AssignmentAbout({
           onClick={back}
           sx={{
             boxShadow: "0px 8px 16px rgba(196, 196, 196, 0.59)",
-            bgcolor: "#FBDD3F",
+            bgcolor: "text.primary",
             borderRadius: "50px",
             textTransform: "uppercase",
             fontSize: "22px",
@@ -162,7 +170,7 @@ export default function AssignmentAbout({
             color: (theme) =>
               theme.palette.mode === "light" ? "common.white" : "grey.800",
             "&:hover": {
-              bgcolor: "text.primary",
+              bgcolor: "#FBDD3F",
               color: (theme) =>
                 theme.palette.mode === "light" ? "common.white" : "grey.800",
             },
