@@ -18,6 +18,7 @@ import Image from "../../../components/image";
 import KanbanDetails from "./details/KanbanDetails";
 import { AssigmentTypes } from "src/redux/services/enums/assigment-types.enum";
 import { AssigmentComplexity } from "src/redux/services/enums/assigment-complexity.enum";
+import { convertDuration } from "src/utils/convertDuration";
 
 // ----------------------------------------------------------------------
 
@@ -39,12 +40,17 @@ const ImageCardType: { [key: string]: string } = {
 };
 
 const IconComplexity: { [key: string]: string } = {
-  [AssigmentComplexity.Hight]: '/assets/assigment/high-priority.svg',
-  [AssigmentComplexity.Medium]: '/assets/assigment/medium-priority.svg',
-  [AssigmentComplexity.Low]: '/assets/assigment/low-priority.svg'
-}
+  [AssigmentComplexity.Hight]: "/assets/assigment/high-priority.svg",
+  [AssigmentComplexity.Medium]: "/assets/assigment/medium-priority.svg",
+  [AssigmentComplexity.Low]: "/assets/assigment/low-priority.svg",
+};
 
-export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }: Props) {
+export default function KanbanTaskCard({
+  card,
+  onDeleteTask,
+  index,
+  school_id,
+}: Props) {
   const { name, type, duration, complexity } = card;
 
   const [completed, setCompleted] = useState(false);
@@ -131,9 +137,11 @@ export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }:
                 top="0"
                 bottom="0"
               >
-                {
-                  duration ? (
-                  <Tooltip title="Time limited" placement="right">
+                {duration?.hours || duration?.minutes ? (
+                  <Tooltip
+                    title={`Duration ( ${convertDuration(duration)} )`}
+                    placement="right"
+                  >
                     <NextImage
                       width="20"
                       height="20"
@@ -141,8 +149,8 @@ export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }:
                       src="/assets/assigment/time.svg"
                       style={{ marginBottom: "7px" }}
                     />
-                  </Tooltip>) : null
-                }
+                  </Tooltip>
+                ) : null}
                 <Tooltip title="Linked to content" placement="right">
                   <NextImage
                     width="20"
@@ -152,7 +160,10 @@ export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }:
                     style={{ marginBottom: "7px" }}
                   />
                 </Tooltip>
-                <Tooltip title="Low complexity" placement="right">
+                <Tooltip
+                  title={`${_.capitalize(complexity)} complexity level`}
+                  placement="right"
+                >
                   <NextImage
                     width="20"
                     height="20"

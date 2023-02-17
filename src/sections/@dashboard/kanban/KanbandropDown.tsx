@@ -6,7 +6,6 @@ import { InputBase, InputBaseProps } from "@mui/material";
 export default function AssignmentInput({ sx, ...other }: InputBaseProps) {
   return (
     <InputBase
-
       sx={{
         flexGrow: 1,
         "& .MuiInputBase-input": {

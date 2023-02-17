@@ -1,6 +1,6 @@
 import { useState } from "react";
 // @mui
-import { Stack, Button, Tooltip, IconButton } from "@mui/material";
+import { Stack, Button, Tooltip, IconButton, Typography } from "@mui/material";
 // hooks
 import useResponsive from "../../../../hooks/useResponsive";
 // components
@@ -57,17 +57,7 @@ export default function KanbanDetailsToolbar({
           </Tooltip>
         )}
 
-        <Button
-          size="small"
-          variant="outlined"
-          color={completed ? "primary" : "inherit"}
-          startIcon={
-            completed && <Iconify icon="eva:checkmark-fill" width={16} />
-          }
-          onClick={onCompleted}
-        >
-          {completed ? "Completed" : "Mark Complete"}
-        </Button>
+        <Typography variant="h5">Details</Typography>
 
         <Stack
           direction="row"

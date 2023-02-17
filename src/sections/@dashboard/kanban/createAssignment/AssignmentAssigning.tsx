@@ -49,7 +49,6 @@ export default function AssignmentAssigning({
     start_date: Yup.string().required("Start date is required"),
   });
 
-
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(createAssignmentSchema),
     defaultValues,

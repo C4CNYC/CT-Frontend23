@@ -3,18 +3,19 @@ import { alpha } from "@mui/material/styles";
 import { Box, Stack, Radio, RadioGroup, FormControlLabel } from "@mui/material";
 // components
 import Iconify from "../../../../components/iconify";
+import { AssigmentComplexity } from "src/redux/services/enums/assigment-complexity.enum";
 
 // ----------------------------------------------------------------------
 
 const PRIORITIZES_OPTIONS = [
-  { value: "level_1", label: "Easy", color: "info" },
-  { value: "level_2", label: "Medium", color: "warning" },
-  { value: "level_3", label: "Hard", color: "error" },
+  { value: AssigmentComplexity.Low, label: "Easy", color: "info" },
+  { value: AssigmentComplexity.Medium, label: "Medium", color: "warning" },
+  { value: AssigmentComplexity.Hight, label: "Hard", color: "error" },
 ] as const;
 
 type Props = {
   prioritize: string;
-  onChangePrioritize: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangePrioritize: (value: string) => void;
 };
 
 export default function KanbanDetailsPrioritizes({
@@ -22,7 +23,11 @@ export default function KanbanDetailsPrioritizes({
   onChangePrioritize,
 }: Props) {
   return (
-    <RadioGroup row value={prioritize} onChange={onChangePrioritize}>
+    <RadioGroup
+      row
+      value={prioritize}
+      onChange={(e) => onChangePrioritize(e.target.value)}
+    >
       {PRIORITIZES_OPTIONS.map((option) => {
         const selected = option.value === prioritize;
 

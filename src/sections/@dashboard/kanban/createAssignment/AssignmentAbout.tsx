@@ -40,7 +40,7 @@ export default function AssignmentAbout({
 
   const defaultValues = {
     complexity: assigment?.complexity,
-    duration: assigment?.duration ? `${assigment.duration.hours} H` : ""
+    duration: assigment?.duration ? `${assigment.duration.hours} H` : "",
   };
 
   const createAssignmentSchema = Yup.object().shape({
@@ -84,9 +84,7 @@ export default function AssignmentAbout({
             name="duration"
             label="Time to complete"
           >
-            <option key="empty" value="null">
-
-            </option>
+            <option key="empty" value="null"></option>
             <option key="0.25h" value="0.25 H">
               0.25h
             </option>
@@ -113,9 +111,7 @@ export default function AssignmentAbout({
             label="Select complexity level"
             sx={{ width: "47%" }}
           >
-            <option key="empty" value="null">
-
-            </option>
+            <option key="empty" value="null"></option>
             {Object.keys(AssigmentComplexity).map((c) => (
               <option
                 key={c}

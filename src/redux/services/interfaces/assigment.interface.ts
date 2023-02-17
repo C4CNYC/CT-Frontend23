@@ -14,7 +14,7 @@ export interface IAssigment {
   start_date: string;
   end_date: string;
   complexity: AssigmentComplexity;
-  duration?: { hours: string };
+  duration?: { hours: string; minutes: string };
   assignee_classes: (IClass & BaseResponseInterface)[];
   meta: {
     [key: string]: number | string;
