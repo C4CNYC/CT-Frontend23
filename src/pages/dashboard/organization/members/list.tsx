@@ -48,7 +48,6 @@ import {
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
-  useGetTeacherListQuery,
 } from "src/redux/services/admin";
 import { useFilters } from "src/hooks/useFilters";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -112,12 +111,12 @@ export default function UserListPage() {
     },
     {
       id: "first_name",
-      label: `${translate("organizations.members_page.table.email")}`,
+      label: `${translate("organizations.members_page.table.name")}`,
       align: "left",
     },
     {
       id: "last_name",
-      label: `${translate("organizations.members_page.table.email")}`,
+      label: `${translate("organizations.members_page.table.name")}`,
       align: "left",
     },
     {
@@ -137,7 +136,6 @@ export default function UserListPage() {
     },
     { id: "" },
   ];
-
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
