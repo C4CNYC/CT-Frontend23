@@ -25,6 +25,7 @@ type Props = {
   index: number;
   card: IKanbanCard;
   onDeleteTask: (id: string) => void;
+  school_id: string;
 };
 
 const ImageCardType: { [key: string]: string } = {
@@ -43,7 +44,7 @@ const IconComplexity: { [key: string]: string } = {
   [AssigmentComplexity.Low]: '/assets/assigment/low-priority.svg'
 }
 
-export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
+export default function KanbanTaskCard({ card, onDeleteTask, index, school_id }: Props) {
   const { name, type, duration, complexity } = card;
 
   const [completed, setCompleted] = useState(false);
@@ -167,6 +168,8 @@ export default function KanbanTaskCard({ card, onDeleteTask, index }: Props) {
       </Draggable>
 
       <KanbanDetails
+        school_id={school_id}
+        assigment={card}
         task={card}
         openDetails={openDetails}
         onCloseDetails={handleCloseDetails}

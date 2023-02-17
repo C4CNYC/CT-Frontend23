@@ -88,6 +88,7 @@ export default function KanbanColumn({
                 >
                   {column.cardIds.map((cardId, cardIndex) => (
                     <KanbanTaskCard
+                      school_id={school_id}
                       key={cardId}
                       index={cardIndex}
                       onDeleteTask={handleDeleteTask}

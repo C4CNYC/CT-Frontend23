@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-// @mui
 import { styled, alpha } from "@mui/material/styles";
 import {
   Stack,
@@ -9,25 +8,19 @@ import {
   Divider,
   TextField,
   Box,
-  IconButton,
+  IconButton, Select, Autocomplete
 } from "@mui/material";
-// @types
 import { IKanbanCard } from "../../../../@types/kanban";
-// components
 import Iconify from "../../../../components/iconify";
 import Scrollbar from "../../../../components/scrollbar";
-import DateRangePicker, {
-  useDateRangePicker,
-} from "../../../../components/date-range-picker";
-//
-import KanbanInputName from "../KanbanInputName";
 import KanbanDetailsToolbar from "./KanbanDetailsToolbar";
-import KanbanContactsDialog from "../KanbanContactsDialog";
-import KanbanDetailsCommentList from "./KanbanDetailsCommentList";
-import KanbanDetailsAttachments from "./KanbanDetailsAttachments";
 import KanbanDetailsPrioritizes from "./KanbanDetailsPrioritizes";
-import KanbanDetailsCommentInput from "./KanbanDetailsCommentInput";
-import { format } from "date-fns";
+import { AssigmentTypes } from "../../../../redux/services/enums/assigment-types.enum";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import { useUdpateAssigmentMutation } from "../../../../redux/services/manager";
+import { DateTimePicker } from "@mui/x-date-pickers";
+import AssignmentInput from "../KanbanInputName";
 
 // ----------------------------------------------------------------------
 
@@ -35,72 +28,153 @@ const StyledLabel = styled("span")(({ theme }) => ({
   ...theme.typography.caption,
   width: 120,
   flexShrink: 0,
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.secondary
 }));
 
 // ----------------------------------------------------------------------
 
 type Props = {
   task: IKanbanCard;
+  assigment: [];
   openDetails: boolean;
   onCloseDetails: VoidFunction;
   onDeleteTask: () => void;
+  school_id: string;
+
 };
 
+
+type FormValuesProps = {
+  type: string;
+  course: string;
+  lesson: string;
+  description: string;
+  name: string;
+  tags: string;
+  class: string;
+  end_date: string;
+  start_date: string;
+  notes: string;
+  graded: boolean;
+  points: string;
+};
+
+
 export default function KanbanDetails({
-  task,
-  openDetails,
-  onCloseDetails,
-  onDeleteTask,
-}: Props) {
+                                        task,
+                                        openDetails,
+                                        onCloseDetails,
+                                        onDeleteTask,
+                                        assigment,
+                                        school_id
+                                      }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [liked, setLiked] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const [prioritize, setPrioritize] = useState("low");
 
   const [taskName, setTaskName] = useState(task.name);
+  const [taskType, setTaskType] = useState(task.type);
+  const [startDate, setStartDate] = useState(task.start_date);
+  const [endDate, setEndDate] = useState(task.end_date);
+  const [taskPoints, setTaskPoints] = useState(task.points || 0);
 
-  const [openContacts, setOpenContacts] = useState(false);
-
-  const [completed, setCompleted] = useState(false);
+  const TECH_OPTIONS = ["css", "html", "js"];
+  const DRILLDOWN_OPTIONS = ["theme", "files", "grid"];
 
   const [taskDescription, setTaskDescription] = useState(task.description);
+  const [updateAssigment] = useUdpateAssigmentMutation();
 
-  const {
-    startDate,
-    endDate,
-    onChangeStartDate,
-    onChangeEndDate,
-    open: openPicker,
-    onOpen: onOpenPicker,
-    onClose: onClosePicker,
-    isSelected: isSelectedValuePicker,
-    isError,
-    shortLabel,
-  } = useDateRangePicker(new Date(task.start_date), new Date(task.end_date));
-
-  const handleLiked = () => {
-    setLiked(!liked);
-  };
-
-  const handleCompleted = () => {
-    setCompleted(!completed);
-  };
-
-  const handleOpenContacts = () => {
-    setOpenContacts(true);
-  };
-
-  const handleCloseContacts = () => {
-    setOpenContacts(false);
-  };
 
   const handleClickAttach = () => {
     fileInputRef.current?.click();
   };
 
-  const handleChangeTaskName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeTaskName = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName(event.target.value);
+    try {
+      await updateAssigment({
+        assigment_id: assigment.id,
+        school_id,
+        name: event.target.value
+      }).unwrap();
+    } catch (e) {
+      console.log(e);
+      // enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
+
+  const handleChangeType = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskType(event.target.value);
+    try {
+      await updateAssigment({
+        assigment_id: assigment.id,
+        school_id,
+        type: event.target.value
+      }).unwrap();
+    } catch (e) {
+      console.log(e);
+      // enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
+
+  const handleChangeDescription = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskDescription(event.target.value);
+    try {
+      await updateAssigment({
+        assigment_id: assigment.id,
+        school_id,
+        description: event.target.value
+      }).unwrap();
+    } catch (e) {
+      console.log(e);
+      // enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
+
+
+  const handleChangeStartDate = async (newValue: React.ChangeEvent<HTMLInputElement>) => {
+    setStartDate(new Date(newValue).toISOString());
+
+    try {
+      await updateAssigment({
+        assigment_id: assigment.id,
+        school_id,
+        start_date: startDate
+      }).unwrap();
+    } catch (e) {
+      console.log(e);
+      // enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
+
+  const handleChangeEndDate = async (newValue: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(new Date(newValue).toISOString());
+
+    try {
+      await updateAssigment({
+        assigment_id: assigment.id,
+        school_id,
+        end_date: endDate
+      }).unwrap();
+    } catch (e) {
+      console.log(e);
+      // enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
+
+  const handleChangePoints = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskPoints(event.target.value);
+
+    // try {
+    //   await updateAssigment({
+    //     assigment_id: assigment.id,
+    //     school_id,
+    //   }).unwrap();
+    // } catch (e) {
+    //   console.log(e);
+    //   // enqueueSnackbar(e.data.message, { variant: "error" });
+    // }
   };
 
   const handleChangeTaskDescription = (
@@ -125,19 +199,17 @@ export default function KanbanDetails({
           width: {
             xs: 1,
             sm: 480,
-          },
-        },
+            md: 678
+          }
+        }
       }}
     >
       <KanbanDetailsToolbar
         taskName={task.name}
         fileInputRef={fileInputRef}
-        liked={liked}
-        completed={completed}
-        onLike={handleLiked}
         onAttach={handleClickAttach}
         onDelete={onDeleteTask}
-        onCompleted={handleCompleted}
+        // onCompleted={handleCompleted}
         onCloseDetails={onCloseDetails}
         task_id={task.id}
       />
@@ -145,14 +217,12 @@ export default function KanbanDetails({
       <Divider />
 
       <Scrollbar>
-        <Stack spacing={3} sx={{ px: 2.5, pt: 3, pb: 5 }}>
-          {/* Task name */}
-          <KanbanInputName
+        <Stack spacing={3} sx={{ px: 2.5, pt: 3, pb: 3 }}>
+          <AssignmentInput
             placeholder="Task name"
             value={taskName}
             onChange={handleChangeTaskName}
           />
-
           {/* Assignee */}
           <Stack direction="row">
             <StyledLabel sx={{ height: 40, lineHeight: "40px", my: 0.5 }}>
@@ -172,12 +242,11 @@ export default function KanbanDetails({
 
               <Tooltip title="Add assignee">
                 <IconButton
-                  onClick={handleOpenContacts}
                   sx={{
                     p: 1,
                     ml: 0.5,
                     bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
-                    border: (theme) => `dashed 1px ${theme.palette.divider}`,
+                    border: (theme) => `dashed 1px ${theme.palette.divider}`
                   }}
                 >
                   <Iconify icon="eva:plus-fill" />
@@ -191,137 +260,436 @@ export default function KanbanDetails({
               /> */}
             </Stack>
           </Stack>
-
-          {/* Due date */}
-          <Stack direction="row" alignItems="center">
-            <StyledLabel> Start date </StyledLabel>
-            <>
-              {isSelectedValuePicker ? (
-                <Box
-                  onClick={onOpenPicker}
-                  sx={{
-                    typography: "body2",
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.72 },
-                  }}
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Type:</StyledLabel>
+            <Select
+              native
+              value={taskType}
+              size="small"
+              onChange={handleChangeType}
+              sx={{
+                "& .MuiOutlinedInput-input": {
+                  fontSize: "14px"
+                },
+                "& .MuiNativeSelect-icon": {
+                  display: "none"
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  py: 1,
+                  border: `solid 1px transparent`,
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+            >
+              {Object.keys(AssigmentTypes).map((t) => (
+                <option
+                  key={AssigmentTypes[t as keyof typeof AssigmentTypes]}
+                  value={AssigmentTypes[t as keyof typeof AssigmentTypes]}
                 >
-                  {format(new Date(task.start_date), "dd MMM yyyy, HH:MM")}
-                </Box>
-              ) : (
-                <Tooltip title="Add start date">
-                  <IconButton
-                    onClick={onOpenPicker}
-                    sx={{
-                      p: 1,
-                      ml: 0.5,
-                      bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
-                      border: (theme) => `dashed 1px ${theme.palette.divider}`,
-                    }}
-                  >
-                    <Iconify icon="eva:plus-fill" />
-                  </IconButton>
-                </Tooltip>
-              )}
-
-              <DateRangePicker
-                variant="calendar"
-                title="Choose due date"
-                startDate={startDate}
-                endDate={endDate}
-                onChangeStartDate={onChangeStartDate}
-                onChangeEndDate={onChangeEndDate}
-                open={openPicker}
-                onClose={onClosePicker}
-                isSelected={isSelectedValuePicker}
-                isError={isError}
-              />
-            </>
+                  {t.split("_").join(" ").toLocaleLowerCase()}
+                </option>
+              ))}
+            </Select>
           </Stack>
-
-          <Stack direction="row" alignItems="center">
-            <StyledLabel> Due date </StyledLabel>
-            <>
-              {isSelectedValuePicker ? (
-                <Box
-                  onClick={onOpenPicker}
-                  sx={{
-                    typography: "body2",
-                    cursor: "pointer",
-                    "&:hover": { opacity: 0.72 },
-                  }}
-                >
-                  {format(new Date(task.end_date), "dd MMM yyyy, HH:MM")}
-                </Box>
-              ) : (
-                <Tooltip title="Add due date">
-                  <IconButton
-                    onClick={onOpenPicker}
-                    sx={{
-                      p: 1,
-                      ml: 0.5,
-                      bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
-                      border: (theme) => `dashed 1px ${theme.palette.divider}`,
-                    }}
-                  >
-                    <Iconify icon="eva:plus-fill" />
-                  </IconButton>
-                </Tooltip>
-              )}
-
-              <DateRangePicker
-                variant="calendar"
-                title="Choose due date"
-                startDate={startDate}
-                endDate={endDate}
-                onChangeStartDate={onChangeStartDate}
-                onChangeEndDate={onChangeEndDate}
-                open={openPicker}
-                onClose={onClosePicker}
-                isSelected={isSelectedValuePicker}
-                isError={isError}
-              />
-            </>
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Points:</StyledLabel>
+            <AssignmentInput
+              type="number"
+              value={taskPoints}
+              onChange={handleChangePoints}
+              sx={{
+                "& .MuiInputBase-input": {
+                  py: 1,
+                  pl: "12px",
+                  borderRadius: 1,
+                  typography: "body2",
+                  border: `solid 1px transparent`,
+                  width: "auto",
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+            />
           </Stack>
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Course:</StyledLabel>
+            <Select
+              size="small"
+              sx={{
+                "& .MuiOutlinedInput-input": {
+                  fontSize: "14px",
+                  width: "220px"
+                },
+                "& .MuiNativeSelect-icon": {
+                  display: "none"
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  py: 1,
+                  border: `solid 1px transparent`,
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+              native
+            >
+              <option key="empty" value="en">no data</option>
+              <option key="course1" value="course1">
+                Javascript Base
+              </option>
+              <option key="course2" value="course2">
+                Javascript Advance
+              </option>
+            </Select>
+          </Stack>
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important", mr: 2 }}>
+            <StyledLabel>Lesson:</StyledLabel>
+            <Select
+              size="small"
+              native
+              sx={{
+                "& .MuiOutlinedInput-input": {
+                  fontSize: "14px"
+                },
+                "& .MuiNativeSelect-icon": {
+                  display: "none"
+                },
+                "& .MuiOutlinedInput": {
+                  fontSize: "14px"
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  py: 1,
+                  border: `solid 1px transparent`,
+                  typography: "caption",
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+            >
+              <option key="empty" value="en">Lesson</option>
+              <option key="lesson1" value="lesson1">
+                Variables types
+              </option>
+              <option key="lesson2" value="lesson2">
+                Loop
+              </option>
+            </Select>
 
-          {/* Prioritize */}
-          <Stack direction="row" alignItems="center">
-            <StyledLabel>Prioritize</StyledLabel>
+          </Stack>
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Complexity:</StyledLabel>
 
             <KanbanDetailsPrioritizes
               prioritize={prioritize}
               onChangePrioritize={handleChangePrioritize}
             />
           </Stack>
-
-          {/* Description */}
-          <Stack direction="row">
-            <StyledLabel> Description </StyledLabel>
-
-            <TextField
-              fullWidth
+          <Stack alignItems="start" sx={{ mt: "24px !important" }}>
+            <StyledLabel>Description:</StyledLabel>
+            <AssignmentInput
               multiline
-              size="small"
+              rows={4}
+              fullWidth
               value={taskDescription}
-              onChange={handleChangeTaskDescription}
-              InputProps={{
-                sx: { typography: "body2" },
+              onChange={handleChangeDescription}
+              sx={{
+                "& .MuiInputBase-input": {
+                  py: 1,
+                  borderRadius: 1,
+                  typography: "body2",
+                  border: `solid 1px transparent`,
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+            />
+          </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Time to complete</StyledLabel>
+            <Select
+              native
+              name="time"
+              size="small"
+              sx={{
+                "& .MuiOutlinedInput-input": {
+                  fontSize: "14px"
+                },
+                "& .MuiNativeSelect-icon": {
+                  display: "none"
+                },
+                "& .MuiOutlinedInput": {
+                  fontSize: "14px"
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  py: 1,
+                  border: `solid 1px transparent`,
+                  typography: "caption",
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+            >
+              <option key="empty" value="en">
+                no limit
+              </option>
+              <option key="0.25h" value="0.25h">
+                0.25h
+              </option>
+              <option key="0.5h" value="0.5h">
+                0.5h
+              </option>
+              <option key="1h" value="1h">
+                1h
+              </option>
+              <option key="1.5h" value="1.5h">
+                1.5h
+              </option>
+              <option key="2h" value="2h">
+                2h
+              </option>
+              <option key="3h" value="3h">
+                3h
+              </option>
+            </Select>
+          </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Grade:</StyledLabel>
+            <Select
+              native
+              name="time"
+              size="small"
+              sx={{
+                "& .MuiOutlinedInput-input": {
+                  fontSize: "14px"
+                },
+                "& .MuiNativeSelect-icon": {
+                  display: "none"
+                },
+                "& .MuiOutlinedInput": {
+                  fontSize: "14px"
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  py: 1,
+                  border: `solid 1px transparent`,
+                  typography: "caption",
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+            >
+              <option key="empty" value="en">Grade 0</option>
+              <option key="grade1" value="grade1">
+                Grade 1
+              </option>
+              <option key="grade2" value="grade2">
+                Grade 2
+              </option>
+            </Select>
+          </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Technologies:</StyledLabel>
+            <Autocomplete
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  display: "none",
+                  border: "solid 1px transparent !important",
+                },
+
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "solid 1px transparent",
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+              size="small"
+              multiple
+              fullWidth
+              options={TECH_OPTIONS}
+              getOptionLabel={(option) => option}
+              defaultValue={[TECH_OPTIONS[1]]}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  style={{ marginRight: "10px", border: "none !important", width: "auto" }}
+
+                />
+              )}
+            />
+          </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel>Drilldown tags:</StyledLabel>
+            <Autocomplete
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  display: "none",
+                  border: "solid 1px transparent !important",
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "solid 1px transparent",
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
+              }}
+              size="small"
+              multiple
+              fullWidth
+              options={DRILLDOWN_OPTIONS}
+              getOptionLabel={(option) => option}
+              defaultValue={[DRILLDOWN_OPTIONS[1]]}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  style={{ marginRight: "10px", border: "none !important", width: "auto" }}
+                />
+              )}
+            />
+          </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel> Start Date: </StyledLabel>
+            <DateTimePicker
+              value={startDate}
+              onChange={(newValue) => {
+                handleChangeStartDate(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  margin="normal"
+                  fullWidth
+                  size="small"
+                  sx={{
+                    "& .MuiOutlinedInput-input": {
+                      fontSize: "14px",
+                      border: "solid 1px transparent !important"
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      py: 1,
+                      border: "solid 1px transparent !important",
+                      typography: "caption",
+                      transition: (theme) =>
+                        theme.transitions.create(["padding-left", "border-color"]),
+                      "&:hover, &:focus": {
+                        pl: 1,
+                        border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                      }
+                    }
+                  }}
+                  style={{ margin: 0, width: "auto" }}
+                />
+              )}
+            />
+          </Stack>
+          <Stack direction="row" alignItems="center" sx={{ mt: "10px !important" }}>
+            <StyledLabel> End Date: </StyledLabel>
+            <DateTimePicker
+              value={endDate}
+              onChange={(newValue) => {
+                handleChangeEndDate(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  size="small"
+                  margin="normal"
+                  fullWidth
+                  sx={{
+                    "& .MuiOutlinedInput-input": {
+                      fontSize: "14px",
+                      border: "solid 1px transparent !important",
+                    },
+                    "& .MuiOutlinedInput-notchedOutline": {
+                      py: 1,
+                      border: "solid 1px transparent !important",
+                      typography: "caption",
+                      transition: (theme) =>
+                        theme.transitions.create(["padding-left", "border-color"]),
+                      "&:hover, &:focus": {
+                        pl: 1,
+                        border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                      }
+                    }
+                  }}
+                  style={{ margin: 0, border: "none !important", width: "auto" }}
+                />
+              )}
+            />
+          </Stack>
+
+
+          <Stack sx={{ mt: "15px !important" }}>
+            <StyledLabel>Class notes:</StyledLabel>
+            <AssignmentInput
+              multiline
+              fullWidth
+              rows={3}
+              value={taskDescription}
+              onChange={handleChangeDescription}
+              sx={{
+                "& .MuiInputBase-input": {
+                  py: 1,
+                  borderRadius: 1,
+                  typography: "body2",
+                  border: `solid 1px transparent`,
+                  transition: (theme) =>
+                    theme.transitions.create(["padding-left", "border-color"]),
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
+                }
               }}
             />
           </Stack>
 
           {/*Attachments*/}
-          <Stack direction="row">
-            <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>
-            {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
-          </Stack>
+          {/*<Stack direction="row">*/}
+          {/*<StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>*/}
+          {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
+          {/*</Stack>*/}
         </Stack>
 
         {/* {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />} */}
       </Scrollbar>
 
-      <Divider />
+      {/*<Divider />*/}
 
-      <KanbanDetailsCommentInput />
+      {/*<KanbanDetailsCommentInput />*/}
     </Drawer>
   );
 }

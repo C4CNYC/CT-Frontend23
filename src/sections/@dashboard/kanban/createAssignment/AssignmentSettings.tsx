@@ -18,6 +18,8 @@ import { AssigmentTypes } from "src/redux/services/enums/assigment-types.enum";
 import { AssigmentStatuses } from "src/redux/services/enums/assigment-status.enum";
 import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 type AssignmentStepProps = {
   next: () => void;
@@ -53,7 +55,14 @@ export default function AssignmentSettings({
     lesson: "",
   };
 
+  const createAssignmentSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Description is required"),
+    type: Yup.string().required("Please select a tag"),
+  });
+
   const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(createAssignmentSchema),
     defaultValues,
   });
 

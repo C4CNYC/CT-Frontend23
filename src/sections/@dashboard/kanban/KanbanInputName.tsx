@@ -3,7 +3,7 @@ import { InputBase, InputBaseProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function KanbanInputName({ sx, ...other }: InputBaseProps) {
+export default function AssignmentInput({ sx, ...other }: InputBaseProps) {
   return (
     <InputBase
       sx={{
