@@ -34,7 +34,7 @@ export default function SchoolProfileTab({ school_id }: Props) {
               student_count={data?.student_count}
               teacher_count={data?.teacher_count}
             />
-            <ProfileAbout data={data} />
+            <ProfileAbout data={data} school_id={""} />
             <ProfileSocialInfo socialLinks={data?.socials} />
           </Stack>
         </Grid>

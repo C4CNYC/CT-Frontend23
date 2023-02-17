@@ -48,7 +48,6 @@ import {
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
-  useGetTeacherListQuery,
 } from "src/redux/services/admin";
 import { useFilters } from "src/hooks/useFilters";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -137,7 +136,6 @@ export default function UserListPage() {
     },
     { id: "" },
   ];
-
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",

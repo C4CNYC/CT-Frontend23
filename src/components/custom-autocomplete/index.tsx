@@ -3,9 +3,7 @@ import Autocomplete, {
   AutocompleteChangeReason,
 } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 import InputAdornment from "@mui/material/InputAdornment";
-import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useFilters } from "src/hooks/useFilters";

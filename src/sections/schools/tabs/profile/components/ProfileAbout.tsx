@@ -2,6 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Link, Card, Typography, CardHeader, Stack } from "@mui/material";
 import Iconify from "../../../../../components/iconify";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
+import { useGetMySchoolsQuery } from "src/redux/services/manager";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -16,6 +17,9 @@ type Props = {
 };
 
 export default function ProfileAbout({ data }: Props) {
+  const { data: profile } = useGetMySchoolsQuery();
+  console.log(profile);
+
   return (
     <Card>
       <CardHeader title="About" />
@@ -37,7 +41,7 @@ export default function ProfileAbout({ data }: Props) {
 
         <Stack direction="row">
           <StyledIcon icon="eva:email-fill" />
-          <Typography variant="body2">{data?.email || "N/A"}</Typography>
+          <Typography variant="body2">{data?.address || "N/A"}</Typography>
         </Stack>
 
         <Stack direction="row">
@@ -46,7 +50,7 @@ export default function ProfileAbout({ data }: Props) {
           <Typography variant="body2">
             Phone &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {data?.phone || "N/A"}
+              {data?.phone}
             </Link>
           </Typography>
         </Stack>
