@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link, Stack, FormGroup, Box } from "@mui/material";
+import { Link, Stack, FormGroup, Box, MenuItem, Select } from "@mui/material";
 import {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 } from "src/redux/services/manager";
-import { SOCIAL_ICONS } from "../../../../assets/data";
+import { Socials, SOCIAL_ICONS } from "../../../../assets/data";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
 import FormProvider, { RHFTextField } from "../../../../components/hook-form";
@@ -109,6 +109,8 @@ export default function SocialItem({ school_id, socialItem }: Props) {
                 alignItems: "center",
                 padding: "0 10px",
                 height: "40px",
+                width: "80px",
+                justifyContent: "center",
               }}
             >
               {SOCIAL_ICONS[socialItem.type]}

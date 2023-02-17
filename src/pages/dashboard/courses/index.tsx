@@ -33,10 +33,10 @@ import {
   useTable,
 } from "src/components/table";
 import {
-  useCreateСlassesMutation,
-  useDeleteСlassesMutation,
+  useCreateClassesMutation,
+  useDeleteClassesMutation,
   useGetClassesQuery,
-  useUpdateСlassesMutation,
+  useUpdateClassesMutation,
 } from "src/redux/services/manager";
 import Iconify from "src/components/iconify";
 import { RootState } from "src/redux/store";
@@ -90,9 +90,9 @@ export default function CoursesListPage() {
     name: "",
   });
 
-  const [updateClassByManager] = useUpdateСlassesMutation();
-  const [createClassByManager] = useCreateСlassesMutation();
-  const [deleteCasses] = useDeleteСlassesMutation();
+  const [updateClassByManager] = useUpdateClassesMutation();
+  const [createClassByManager] = useCreateClassesMutation();
+  const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { school_id, ...filters },
     { skip: !school_id }
