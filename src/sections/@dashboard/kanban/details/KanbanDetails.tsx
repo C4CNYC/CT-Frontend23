@@ -524,12 +524,13 @@ export default function KanbanDetails({
                   display: "none",
                   border: "solid 1px transparent !important",
                 },
-                "& .MuiOutlinedInput-input": {
-                  fontSize: "14px",
-                  border: "solid 1px transparent !important",
-                },
+
                 "& .MuiOutlinedInput-notchedOutline": {
-                  border: `solid 1px transparent`
+                  border: "solid 1px transparent",
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
                 }
               }}
               size="small"
@@ -555,14 +556,13 @@ export default function KanbanDetails({
                 "& .MuiSvgIcon-root": {
                   display: "none",
                   border: "solid 1px transparent !important",
-
-                },
-                "& .MuiOutlinedInput-input": {
-                  fontSize: "14px",
-                  border: "solid 1px transparent !important",
                 },
                 "& .MuiOutlinedInput-notchedOutline": {
-                  border: "solid 1px transparent"
+                  border: "solid 1px transparent",
+                  "&:hover, &:focus": {
+                    pl: 1,
+                    border: (theme) => `solid 1px ${theme.palette.text.primary}`
+                  }
                 }
               }}
               size="small"
@@ -575,7 +575,6 @@ export default function KanbanDetails({
                 <TextField
                   {...params}
                   style={{ marginRight: "10px", border: "none !important", width: "auto" }}
-
                 />
               )}
             />
