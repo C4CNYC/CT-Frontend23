@@ -25,6 +25,7 @@ import {
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { IAssigment } from "src/redux/services/interfaces/assigment.interface";
 import Stepper from "../../../sections/@dashboard/kanban/createAssignment/Stepper";
+import FilterAssignments from "./filter";
 
 // ----------------------------------------------------------------------
 
@@ -136,9 +137,13 @@ export default function Assignments() {
               name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: "Assignments" },
+            { name: "Assignments", href: PATH_DASHBOARD.school.assignments },
           ]}
         />
+        <Stack display="flex" marginLeft="-25px" marginBottom="20px">
+          <FilterAssignments />
+        </Stack>
+
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
             droppableId="all-columns"

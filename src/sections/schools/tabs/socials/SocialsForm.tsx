@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
-import { Grid, Box, MenuItem } from "@mui/material";
+import { Grid, Box, MenuItem, Select } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
@@ -74,16 +74,21 @@ export default function SocialsForm({ school_id }: SocialFormProps) {
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Box rowGap={1} columnGap={2} display="flex">
+          <Box rowGap={0} columnGap={0} display="flex">
             <RHFSelect
               name="type"
-              label="Network"
               sx={{
-                width: "106px",
-                height: "44px !important",
+                width: "80px",
+                height: "40px !important",
+                borderRight: "none",
+                borderTopRightRadius: 0,
+                borderBottomRightRadius: 0,
                 "& .MuiOutlinedInput-root": {
                   padding: "0 !important",
-                  height: "56px",
+                  height: "40px",
+                  border: "none",
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
                 },
                 "& .MuiSelect-select": {
                   display: "flex",
@@ -109,13 +114,32 @@ export default function SocialsForm({ school_id }: SocialFormProps) {
             <RHFTextField
               name="link"
               label="Link"
-              sx={{ maxWidth: "410px", height: "86px" }}
+              size="small"
+              sx={{
+                maxWidth: "350px",
+                height: "86px",
+                borderLeft: "none",
+                "& fieldset": {
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                },
+              }}
             />
             <LoadingButton
               type="submit"
               variant="contained"
               loading={isLoading}
-              sx={{ height: "54px", pl: 4, pr: 4 }}
+              sx={{
+                height: "40px",
+                pl: 1,
+                pr: 1,
+                borderTopRightRadius: "8px",
+                borderBottomRightRadius: "8px",
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+              }}
             >
               Add
             </LoadingButton>
