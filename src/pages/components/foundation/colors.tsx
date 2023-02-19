@@ -15,13 +15,13 @@ import {
 } from "@mui/material";
 import useCopyToClipboard from "../../../hooks/useCopyToClipboard";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "../../../components/iconify";
-import { useSnackbar } from "../../../components/snackbar";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import { useSnackbar } from "@components/snackbar";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 

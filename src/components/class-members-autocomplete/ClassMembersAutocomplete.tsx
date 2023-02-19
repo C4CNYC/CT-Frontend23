@@ -23,11 +23,11 @@ import {
 import { useRouter } from "next/router";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { CustomAvatar } from "src/components/custom-avatar";
+import { CustomAvatar } from "@components/custom-avatar";
 import { useFilters } from "src/hooks/useFilters";
 import { useSnackbar } from "notistack";
-import Iconify from "src/components/iconify";
-import SearchNotFound from "src/components/search-not-found";
+import Iconify from "@components/iconify";
+import SearchNotFound from "@components/search-not-found";
 
 type StudentType = IStudent & BaseResponseInterface;
 

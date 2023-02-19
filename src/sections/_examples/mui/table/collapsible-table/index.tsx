@@ -8,7 +8,7 @@ import {
   TableContainer,
 } from "@mui/material";
 // components
-import Scrollbar from "../../../../../components/scrollbar";
+import Scrollbar from "@components/scrollbar";
 //
 import createData from "./createData";
 import CollapsibleTableRow from "./CollapsibleTableRow";

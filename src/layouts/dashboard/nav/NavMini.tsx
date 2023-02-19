@@ -5,8 +5,8 @@ import { NAV } from "../../../config-global";
 // utils
 import { hideScrollbarX } from "../../../utils/cssStyles";
 // components
-import Logo from "../../../components/logo";
-import { NavSectionMini } from "../../../components/nav-section";
+import Logo from "@components/logo";
+import { NavSectionMini } from "@components/nav-section";
 //
 import navConfig from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";

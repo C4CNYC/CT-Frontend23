@@ -4,7 +4,7 @@ import { Box, Paper } from "@mui/material";
 // _mock
 import _mock from "../../../../../_mock";
 // components
-import { MotionContainer } from "../../../../../components/animate";
+import { MotionContainer } from "@components/animate";
 //
 import getVariant from "../getVariant";
 

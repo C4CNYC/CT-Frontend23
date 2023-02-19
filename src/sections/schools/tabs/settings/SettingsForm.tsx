@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
-} from "../../../../components/hook-form";
+} from "@components/hook-form";
 import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../locales";
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
@@ -67,7 +67,7 @@ export default function SettingsForm({
         chat_allowed: data.chat_allowed,
         gallery_allowed: data.gallery_allowed,
         global_gallery_allowed: data.global_gallery_allowed,
-      });
+      }).unwrap();
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
     } catch (error) {

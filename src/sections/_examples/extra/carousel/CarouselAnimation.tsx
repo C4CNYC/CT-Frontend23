@@ -13,9 +13,9 @@ import {
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from "../../../../components/image";
-import { MotionContainer, varFade } from "../../../../components/animate";
-import Carousel, { CarouselArrowIndex } from "../../../../components/carousel";
+import Image from "@components/image";
+import { MotionContainer, varFade } from "@components/animate";
+import Carousel, { CarouselArrowIndex } from "@components/carousel";
 
 // ----------------------------------------------------------------------
 

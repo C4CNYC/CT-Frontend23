@@ -20,9 +20,9 @@ import {
 // utils
 import { fPercent } from "../../../../utils/formatNumber";
 // components
-import Label from "../../../../components/label";
-import Iconify from "../../../../components/iconify";
-import { CustomAvatar } from "../../../../components/custom-avatar";
+import Label from "@components/label";
+import Iconify from "@components/iconify";
+import { CustomAvatar } from "@components/custom-avatar";
 
 // ----------------------------------------------------------------------
 

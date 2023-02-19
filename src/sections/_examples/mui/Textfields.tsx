@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MenuItem, TextField, IconButton, InputAdornment } from "@mui/material";
 import { Masonry } from "@mui/lab";
 // components
-import Iconify from "../../../components/iconify";
+import Iconify from "@components/iconify";
 //
 import { Block } from "../Block";
 

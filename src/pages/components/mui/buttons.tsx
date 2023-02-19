@@ -4,17 +4,17 @@ import Head from "next/head";
 // @mui
 import { Box, Container, Tab, Tabs } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import IconButtons from "../../../sections/_examples/mui/button/IconButtons";
-import ButtonGroups from "../../../sections/_examples/mui/button/ButtonGroups";
-import ToggleButtons from "../../../sections/_examples/mui/button/ToggleButtons";
-import ButtonVariants from "../../../sections/_examples/mui/button/ButtonVariants";
-import FloatingActionButton from "../../../sections/_examples/mui/button/FloatingActionButton";
+import IconButtons from "@sections/_examples/mui/button/IconButtons";
+import ButtonGroups from "@sections/_examples/mui/button/ButtonGroups";
+import ToggleButtons from "@sections/_examples/mui/button/ToggleButtons";
+import ButtonVariants from "@sections/_examples/mui/button/ButtonVariants";
+import FloatingActionButton from "@sections/_examples/mui/button/FloatingActionButton";
 
 // ----------------------------------------------------------------------
 

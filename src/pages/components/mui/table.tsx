@@ -3,16 +3,16 @@ import Head from "next/head";
 // @mui
 import { Box, Card, Container, CardHeader, Stack } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import BasicTable from "../../../sections/_examples/mui/table/BasicTable";
-import CollapsibleTable from "../../../sections/_examples/mui/table/collapsible-table";
-import SortingSelecting from "../../../sections/_examples/mui/table/sorting-selecting";
-import GroupingFixedHeader from "../../../sections/_examples/mui/table/GroupingFixedHeader";
+import BasicTable from "@sections/_examples/mui/table/BasicTable";
+import CollapsibleTable from "@sections/_examples/mui/table/collapsible-table";
+import SortingSelecting from "@sections/_examples/mui/table/sorting-selecting";
+import GroupingFixedHeader from "@sections/_examples/mui/table/GroupingFixedHeader";
 
 // ----------------------------------------------------------------------
 

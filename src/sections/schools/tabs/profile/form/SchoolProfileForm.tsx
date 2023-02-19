@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFSelect,
   RHFTextField,
-} from "../../../../../components/hook-form";
+} from "@components/hook-form";
 import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../../locales";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
@@ -74,7 +74,7 @@ export default function SchoolProfileForm({
         active: data.active || false,
         about: data.about || "",
         phone: data.phone,
-      });
+      }).unwrap();
       enqueueSnackbar("Update success!");
       console.log("DATA", data);
     } catch (error) {

@@ -4,11 +4,11 @@ import Head from "next/head";
 // @mui
 import { Box, Container, Tab, Tabs } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import {
   Inview,
@@ -16,7 +16,7 @@ import {
   ScrollView,
   DialogView,
   BackgroundView,
-} from "../../../sections/_examples/extra/animate";
+} from "@sections/_examples/extra/animate";
 
 // ----------------------------------------------------------------------
 

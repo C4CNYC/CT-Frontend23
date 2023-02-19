@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
 import { countries } from "../../../assets/data";
-import { RHFSelect } from "../../../components/hook-form";
+import { RHFSelect } from "@components/hook-form";
 
 type SchoolStepProps = {
   next: () => void;

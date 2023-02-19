@@ -5,21 +5,21 @@ import { useTheme } from "@mui/material/styles";
 import { Box, Container, Tooltip } from "@mui/material";
 import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // _mock
 import _mock from "../../../_mock";
 // components
-import Iconify from "../../../components/iconify";
-import BadgeStatus from "../../../components/badge-status";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import BadgeStatus from "@components/badge-status";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import {
   CustomAvatar,
   CustomAvatarGroup,
-} from "../../../components/custom-avatar";
+} from "@components/custom-avatar";
 // sections
-import { Block } from "../../../sections/_examples/Block";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

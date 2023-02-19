@@ -11,8 +11,8 @@ import {
   TableContainer,
 } from "@mui/material";
 // components
-import Iconify from "../../../../../components/iconify";
-import Scrollbar from "../../../../../components/scrollbar";
+import Iconify from "@components/iconify";
+import Scrollbar from "@components/scrollbar";
 import {
   useTable,
   emptyRows,
@@ -21,7 +21,7 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-} from "../../../../../components/table";
+} from "@components/table";
 //
 import SortingSelectingToolbar from "./SortingSelectingToolbar";
 

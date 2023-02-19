@@ -11,7 +11,7 @@ import {
   CardHeader,
 } from "@mui/material";
 // components
-import Iconify from "../../../../../components/iconify";
+import Iconify from "@components/iconify";
 //
 import Logo from "./Logo";
 import Button from "./Button";

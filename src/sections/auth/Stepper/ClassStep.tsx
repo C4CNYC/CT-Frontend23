@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import { Box, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import InputInfo from "./InputInfo";
+import InputInfo from "@components/inputInfo/InputInfo";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { PATH_AFTER_LOGIN } from "src/config-global";

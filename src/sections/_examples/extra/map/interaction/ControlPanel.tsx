@@ -7,7 +7,7 @@ import {
   MapSettingKeys,
   MapSettings,
   StyledControlPanel,
-} from "../../../../../components/map";
+} from "@components/map";
 
 // ----------------------------------------------------------------------
 

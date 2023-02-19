@@ -1,6 +1,6 @@
 import { Tooltip, Typography, IconButton, Stack } from "@mui/material";
 // components
-import Iconify from "../../../../../components/iconify";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 

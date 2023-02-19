@@ -1,12 +1,12 @@
 import { DropResult } from "@hello-pangea/dnd";
-import { IKanbanColumn, IKanbanCard } from "src/@types/kanban";
+import { IAssignmentsColumn, IAssignmentsCard } from "src/@types/assignments";
 
 // solution for count order depend of new position
 
 export function getOrder(
   result: DropResult,
-  destColumn: IKanbanColumn,
-  cards: Record<string, IKanbanCard>,
+  destColumn: IAssignmentsColumn,
+  cards: Record<string, IAssignmentsCard>,
   isSameColumn: boolean
 ) {
   const { cardIds } = destColumn;

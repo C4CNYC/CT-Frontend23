@@ -5,14 +5,14 @@ import { alpha, styled } from "@mui/material/styles";
 import { Box, Container } from "@mui/material";
 import { TreeView, TreeItem, TreeItemProps, treeItemClasses } from "@mui/lab";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "../../../components/iconify";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import { Block } from "../../../sections/_examples/Block";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

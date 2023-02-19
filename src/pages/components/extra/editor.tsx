@@ -13,13 +13,13 @@ import {
   CardContent,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Editor from "../../../components/editor";
-import Markdown from "../../../components/markdown";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Editor from "@components/editor";
+import Markdown from "@components/markdown";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 

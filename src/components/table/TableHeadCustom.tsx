@@ -1,4 +1,3 @@
-// @mui
 import { Theme } from "@mui/material/styles";
 import {
   Box,

@@ -1,15 +1,10 @@
-// next
 import Head from "next/head";
-// @mui
 import { Container } from "@mui/material";
-// routes
-import { PATH_DASHBOARD } from "../../../../routes/paths";
-// components
-import { useSettingsContext } from "../../../../components/settings";
-import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
-// sections
-import StudentNewEditForm from "src/sections/@dashboard/student/StudentNewEditForm";
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { useSettingsContext } from "@components/settings";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import StudentNewEditForm from "@sections/dashboard/student/StudentNewEditForm";
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 
 // ----------------------------------------------------------------------
 

@@ -1,12 +1,9 @@
 import { useState } from "react";
-//next
 import Head from "next/head";
-//path
-import { PATH_DASHBOARD } from "src/routes/paths";
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { Container } from "@mui/system";
-import CustomBreadcrumbs from "src/components/custom-breadcrumbs";
-import AddClassDialog from "src/sections/@dashboard/schools/CreateClassDialog";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import {
   Button,
   Card,
@@ -17,35 +14,35 @@ import {
   TableBody,
   TableContainer,
   Tabs,
-  Tooltip,
+  Tooltip
 } from "@mui/material";
-import { UserTableToolbar } from "src/sections/@dashboard/user/list";
-import { useFilters } from "src/hooks/useFilters";
+import { UserTableToolbar } from "@sections/dashboard/user/list";
+import { useFilters } from "@hooks/useFilters";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
-import { useSettingsContext } from "src/components/settings";
-import TableSelectedAction from "src/components/table/TableSelectedAction";
+import { useSettingsContext } from "@components/settings";
+import TableSelectedAction from "@components/table/TableSelectedAction";
 import {
   emptyRows,
   TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
-  useTable,
-} from "src/components/table";
+  useTable
+} from "@components/table";
 import {
   useCreateClassesMutation,
   useDeleteClassesMutation,
   useGetClassesQuery,
-  useUpdateClassesMutation,
+  useUpdateClassesMutation
 } from "src/redux/services/manager";
-import Iconify from "src/components/iconify";
+import Iconify from "@components/iconify";
 import { RootState } from "src/redux/store";
 import { useSelector } from "react-redux";
-import { useSnackbar } from "src/components/snackbar";
-import Scrollbar from "src/components/scrollbar/Scrollbar";
-import { ClassesTableRow } from "src/sections/@dashboard/classes/list";
-import ConfirmDialog from "src/components/confirm-dialog";
-import DashboardLayout from "src/layouts/dashboard/DashboardLayout";
+import { useSnackbar } from "@components/snackbar";
+import Scrollbar from "@components/scrollbar/Scrollbar";
+import { ClassesTableRow } from "@sections/dashboard/classes/list";
+import ConfirmDialog from "@components/confirm-dialog";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 
 const STATUS_OPTIONS = ["all"];
 const TABLE_HEAD = [
@@ -54,7 +51,7 @@ const TABLE_HEAD = [
   { id: "total_students", label: "Total (Students)" },
   { id: "started_id", label: "Start Date", align: "left" },
   { id: "status", label: "Status", align: "left" },
-  { id: "" },
+  { id: "" }
 ];
 // ----------------------------------------------------------------------
 
@@ -71,13 +68,11 @@ export default function CoursesListPage() {
     order,
     orderBy,
     rowsPerPage,
-    //
     selected,
     onSelectRow,
     onSelectAllRows,
-    //
     onSort,
-    onChangeDense,
+    onChangeDense
   } = useTable();
 
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -86,7 +81,7 @@ export default function CoursesListPage() {
   const { themeStretch } = useSettingsContext();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
-    name: "",
+    name: ""
   });
 
   const [updateClassByManager] = useUpdateClassesMutation();
@@ -102,7 +97,7 @@ export default function CoursesListPage() {
       await deleteCasses({ class_id, school_id }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error",
+        variant: "error"
       });
     }
   };
@@ -149,7 +144,7 @@ export default function CoursesListPage() {
           heading="Courses"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "Courses", href: PATH_DASHBOARD.courses.root },
+            { name: "Courses", href: PATH_DASHBOARD.courses.root }
           ]}
           action={
             <AddClassDialog createClass={createClass}>
@@ -168,7 +163,7 @@ export default function CoursesListPage() {
             onChange={() => ""}
             sx={{
               px: 2,
-              bgcolor: "background.neutral",
+              bgcolor: "background.neutral"
             }}
           >
             {STATUS_OPTIONS.map((tab) => (

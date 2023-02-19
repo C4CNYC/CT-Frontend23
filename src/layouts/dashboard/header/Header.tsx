@@ -9,9 +9,9 @@ import useResponsive from "../../../hooks/useResponsive";
 // config
 import { HEADER, NAV } from "../../../config-global";
 // components
-import Logo from "../../../components/logo";
-import Iconify from "../../../components/iconify";
-import { useSettingsContext } from "../../../components/settings";
+import Logo from "@components/logo";
+import Iconify from "@components/iconify";
+import { useSettingsContext } from "@components/settings";
 //
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
