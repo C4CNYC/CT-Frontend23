@@ -18,6 +18,8 @@ import { SOCIAL_ICONS } from "../../../../assets/data";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
 import SocialItem from "./SocialItem";
+import IitemSocials from "src/components/iitem-socials";
+import ItemSocials from "src/components/iitem-socials";
 
 type Props = {
   school_id: string;
@@ -59,7 +61,11 @@ export default function SchoolSocialsTab({ school_id }: Props) {
                   sx={{ wordBreak: "break-all" }}
                   key={item.id}
                 >
-                  <SocialItem socialItem={item} school_id={school_id} />
+                  <SocialItem
+                    socialItem={item}
+                    school_id={school_id}
+                    link={""}
+                  />
                 </Stack>
               ))}
             </Card>

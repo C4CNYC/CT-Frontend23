@@ -23,6 +23,10 @@ export type IBlogPostComment = {
 };
 
 export type IBlogNewPost = {
+  id: any;
+  link: any;
+  name: any;
+  type: any;
   title: string;
   description: string;
   content: string;

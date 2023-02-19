@@ -15,6 +15,7 @@ import {
   useGetAssignmentListQuery,
   useUdpateAssignmentMutation,
 } from "src/redux/services/manager";
+import FilterAssignments from "./filter";
 
 // ----------------------------------------------------------------------
 
@@ -126,10 +127,14 @@ export default function Index() {
               name: "Dashboard",
               href: PATH_DASHBOARD.root,
             },
-            { name: "Assignments" },
+            { name: "Assignments", href: PATH_DASHBOARD.school.assignments },
           ]}
         />
-        <DragDropContext onDragEnd={onDragEnd} >
+        <Stack display="flex" marginLeft="-25px" marginBottom="20px">
+          <FilterAssignments />
+        </Stack>
+
+        <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
             droppableId="all-columns"
             direction="horizontal"
