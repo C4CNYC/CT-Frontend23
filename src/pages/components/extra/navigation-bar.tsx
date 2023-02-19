@@ -10,19 +10,19 @@ import {
   Typography,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // config
 import { NAV, HEADER } from "../../../config-global";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "../../../components/iconify";
+import Iconify from "@components/iconify";
 import {
   NavSectionMini,
   NavSectionVertical,
   NavSectionHorizontal,
-} from "../../../components/nav-section";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+} from "@components/nav-section";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 

@@ -4,11 +4,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 // @mui
 import { Container } from "@mui/material";
-import CustomBreadcrumbs from "src/components/custom-breadcrumbs";
-import { useSettingsContext } from "src/components/settings";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
 import DashboardLayout from "src/layouts/dashboard";
 import { PATH_DASHBOARD } from "src/routes/paths";
-import UserNewEditForm from "src/sections/@dashboard/user/UserNewEditForm";
+import UserNewEditForm from "src/sections/dashboard/user/UserNewEditForm";
 import { _userList } from "src/_mock/arrays";
 import { useGetOrgMemberQuery } from "src/redux/services/admin";
 import { RootState, useSelector } from "src/redux/store";

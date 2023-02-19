@@ -24,14 +24,14 @@ import {
 } from "@mui/material";
 import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "../../../components/iconify";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import { Block } from "../../../sections/_examples/Block";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

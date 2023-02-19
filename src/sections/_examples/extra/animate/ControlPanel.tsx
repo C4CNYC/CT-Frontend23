@@ -9,7 +9,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 // components
-import Scrollbar from "../../../../components/scrollbar";
+import Scrollbar from "@components/scrollbar";
 
 // ----------------------------------------------------------------------
 

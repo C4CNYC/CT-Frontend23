@@ -1,9 +1,6 @@
-// next
 import Head from "next/head";
-// sections
-import Login from "../../sections/auth/Login";
+import Login from "@sections/auth/Login";
 
-// ----------------------------------------------------------------------
 
 export default function LoginUnprotectedPage() {
   return (

@@ -16,14 +16,14 @@ import {
   FormControlLabel,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // locales
 import { useLocales } from "../../../locales";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Image from "../../../components/image";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Image from "@components/image";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 

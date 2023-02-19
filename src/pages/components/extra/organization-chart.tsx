@@ -4,16 +4,16 @@ import Head from "next/head";
 import { useTheme } from "@mui/material/styles";
 import { Box, Stack, Container } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // _mock
 import _mock from "../../../_mock";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
-import OrganizationalChart from "../../../components/organizational-chart";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import OrganizationalChart from "@components/organizational-chart";
 // sections
-import { Block } from "../../../sections/_examples/Block";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

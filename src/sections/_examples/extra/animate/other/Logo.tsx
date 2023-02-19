@@ -3,7 +3,7 @@ import { m } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 // components
-import { varPath } from "../../../../../components/animate";
+import { varPath } from "@components/animate";
 
 // ----------------------------------------------------------------------
 

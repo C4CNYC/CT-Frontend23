@@ -1,7 +1,5 @@
 import { useState } from "react";
-// next
 import Head from "next/head";
-// @mui
 import {
   Box,
   Card,
@@ -11,14 +9,10 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-// layouts
-import DashboardLayout from "../../layouts/dashboard";
-// routes
-import { PATH_DASHBOARD } from "../../routes/paths";
-// components
-import { useSettingsContext } from "../../components/settings";
-import CustomBreadcrumbs from "../../components/custom-breadcrumbs";
-// auth
+import DashboardLayout from "@layouts/dashboard";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { useSettingsContext } from "@components/settings";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import RoleBasedGuard from "../../auth/RoleBasedGuard";
 
 // ----------------------------------------------------------------------

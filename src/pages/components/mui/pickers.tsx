@@ -4,16 +4,16 @@ import Head from "next/head";
 // @mui
 import { Box, Container, Tab, Tabs } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import PickerDate from "../../../sections/_examples/mui/pickers/PickerDate";
-import PickerTime from "../../../sections/_examples/mui/pickers/PickerTime";
-import PickerDateTime from "../../../sections/_examples/mui/pickers/PickerDateTime";
-import PickerDateRange from "../../../sections/_examples/mui/pickers/PickerDateRange";
+import PickerDate from "@sections/_examples/mui/pickers/PickerDate";
+import PickerTime from "@sections/_examples/mui/pickers/PickerTime";
+import PickerDateTime from "@sections/_examples/mui/pickers/PickerDateTime";
+import PickerDateRange from "@sections/_examples/mui/pickers/PickerDateRange";
 
 // ----------------------------------------------------------------------
 

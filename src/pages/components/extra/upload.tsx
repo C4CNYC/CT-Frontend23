@@ -14,15 +14,15 @@ import {
   FormControlLabel,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // utils
 import { fData } from "../../../utils/formatNumber";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "../../../components/iconify";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
-import { UploadAvatar, Upload, UploadBox } from "../../../components/upload";
+import Iconify from "@components/iconify";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { UploadAvatar, Upload, UploadBox } from "@components/upload";
 
 // ----------------------------------------------------------------------
 

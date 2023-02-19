@@ -5,7 +5,7 @@ import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, { RHFTextField } from "../../../../components/hook-form";
+import FormProvider, { RHFTextField } from "@components/hook-form";
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
 import { useUpdateSchoolContactsMutation } from "../../../../redux/services/manager";
 
@@ -80,7 +80,7 @@ export default function ContactsForm({
         billing_email: data.billing_email,
         billing_name: data.billing_name,
         billing_phone: data.billing_phone,
-      });
+      }).unwrap();
       enqueueSnackbar("Update success!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });

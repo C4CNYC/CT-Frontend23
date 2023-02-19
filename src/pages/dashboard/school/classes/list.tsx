@@ -1,9 +1,5 @@
 import { useState } from "react";
-// next
 import Head from "next/head";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-// @mui
 import {
   Tab,
   Tabs,
@@ -17,17 +13,12 @@ import {
   IconButton,
   TableContainer,
 } from "@mui/material";
-// routes
-import { PATH_DASHBOARD } from "../../../../routes/paths";
-
-// _mock_
-import { _userList } from "../../../../_mock/arrays";
-// components
-import Iconify from "../../../../components/iconify";
-import Scrollbar from "../../../../components/scrollbar";
-import ConfirmDialog from "../../../../components/confirm-dialog";
-import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
-import { useSettingsContext } from "../../../../components/settings";
+import { PATH_DASHBOARD } from "@routes/paths";
+import Iconify from "@components/iconify";
+import Scrollbar from "@components/scrollbar";
+import ConfirmDialog from "@components/confirm-dialog";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
 import {
   useTable,
   emptyRows,
@@ -36,9 +27,8 @@ import {
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-} from "../../../../components/table";
-// sections
-import { UserTableToolbar } from "../../../../sections/@dashboard/user/list";
+} from "@components/table";
+import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { useFilters } from "src/hooks/useFilters";
 import {
   useCreateClassesMutation,
@@ -49,9 +39,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
-import { ClassesTableRow } from "src/sections/@dashboard/classes/list";
+import { ClassesTableRow } from "src/sections/dashboard/classes/list";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
-import AddClassDialog from "src/sections/@dashboard/schools/CreateClassDialog";
+import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import { useUpdateClassesMutation } from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------

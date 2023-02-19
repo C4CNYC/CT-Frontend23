@@ -4,7 +4,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
-import { MotionContainer, varBounce } from "src/components/animate";
+import { MotionContainer, varBounce } from "@components/animate";
 import { useGetMySchoolsQuery } from "src/redux/services/manager";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
@@ -14,8 +14,6 @@ type Props = {
 };
 export default function SchoolDashboardLayout({ children }: Props) {
   const { data, isLoading } = useGetMySchoolsQuery();
-
-  console.log(!data?.data.length && !isLoading);
 
   if (!data?.data.length && !isLoading) {
     return (

@@ -12,16 +12,16 @@ import {
   AccordionDetails,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // _mock_
 import _mock from "../../../_mock";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "../../../components/iconify";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import { Block } from "../../../sections/_examples/Block";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

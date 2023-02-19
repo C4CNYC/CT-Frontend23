@@ -8,7 +8,7 @@ import { bgBlur } from "../../../../utils/cssStyles";
 // hooks
 import useResponsive from "../../../../hooks/useResponsive";
 // components
-import { fileData } from "../../../../components/file-thumbnail";
+import { fileData } from "@components/file-thumbnail";
 
 // ----------------------------------------------------------------------
 

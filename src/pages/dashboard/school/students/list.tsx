@@ -1,9 +1,7 @@
-import { ReactNode, useState } from "react";
-// next
+import { useState } from "react";
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-// @mui
 import {
   Tab,
   Tabs,
@@ -17,17 +15,12 @@ import {
   IconButton,
   TableContainer,
 } from "@mui/material";
-// routes
-import { PATH_DASHBOARD } from "../../../../routes/paths";
-
-// _mock_
-import { _userList } from "../../../../_mock/arrays";
-// components
-import Iconify from "../../../../components/iconify";
-import Scrollbar from "../../../../components/scrollbar";
-import ConfirmDialog from "../../../../components/confirm-dialog";
-import CustomBreadcrumbs from "../../../../components/custom-breadcrumbs";
-import { useSettingsContext } from "../../../../components/settings";
+import { PATH_DASHBOARD } from "@routes/paths";
+import Iconify from "@components/iconify";
+import Scrollbar from "@components/scrollbar";
+import ConfirmDialog from "@components/confirm-dialog";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
 import {
   useTable,
   emptyRows,
@@ -37,10 +30,9 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
   TableLoader,
-} from "../../../../components/table";
-// sections
-import { UserTableRow } from "../../../../sections/@dashboard/user/list";
-import { useFilters } from "src/hooks/useFilters";
+} from "@components/table";
+import { UserTableRow } from "@sections/dashboard/user/list";
+import { useFilters } from "@hooks/useFilters";
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
@@ -48,9 +40,8 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useSnackbar } from "notistack";
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
-
-import CustomAutocomplete from "src/components/custom-autocomplete";
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import CustomAutocomplete from "@components/custom-autocomplete";
 
 // ----------------------------------------------------------------------
 
@@ -224,7 +215,6 @@ export default function UserListPage() {
                       )
                     }
                   />
-
                   <TableBody sx={{ minHeight: 12 }}>
                     {data?.data.map((row) => (
                       <UserTableRow
@@ -236,7 +226,6 @@ export default function UserListPage() {
                         onEditRow={() => handleEditRow(row.id)}
                       />
                     ))}
-
                     <TableLoader isLoading={isLoading} />
 
                     <TableNoData

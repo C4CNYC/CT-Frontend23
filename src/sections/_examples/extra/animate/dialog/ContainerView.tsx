@@ -8,7 +8,7 @@ import {
   DialogContentText,
 } from "@mui/material";
 // components
-import { DialogAnimate } from "../../../../../components/animate";
+import { DialogAnimate } from "@components/animate";
 //
 import getVariant from "../getVariant";
 

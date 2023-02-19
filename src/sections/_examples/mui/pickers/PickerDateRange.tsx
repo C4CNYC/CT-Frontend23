@@ -2,7 +2,7 @@
 import { Box, Button, Stack, Link } from "@mui/material";
 import DateRangePicker, {
   useDateRangePicker,
-} from "../../../../components/date-range-picker";
+} from "@components/date-range-picker";
 // utils
 import { fDate } from "../../../../utils/formatTime";
 //

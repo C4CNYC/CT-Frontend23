@@ -5,8 +5,8 @@ import useResponsive from "../../../hooks/useResponsive";
 // config
 import { NAV } from "../../../config-global";
 // components
-import Iconify from "../../../components/iconify";
-import { useSettingsContext } from "../../../components/settings";
+import Iconify from "@components/iconify";
+import { useSettingsContext } from "@components/settings";
 
 // ----------------------------------------------------------------------
 

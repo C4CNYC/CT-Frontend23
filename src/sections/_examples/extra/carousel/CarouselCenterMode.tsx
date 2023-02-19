@@ -5,10 +5,10 @@ import { Box, Paper, Link, CardContent } from "@mui/material";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from "../../../../components/image";
-import Iconify from "../../../../components/iconify";
-import TextMaxLine from "../../../../components/text-max-line";
-import Carousel, { CarouselArrows } from "../../../../components/carousel";
+import Image from "@components/image";
+import Iconify from "@components/iconify";
+import TextMaxLine from "@components/text-max-line";
+import Carousel, { CarouselArrows } from "@components/carousel";
 
 // ----------------------------------------------------------------------
 
