@@ -3,8 +3,8 @@ import { useState, useRef } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Card } from "@mui/material";
 // components
-import Image from "../../../../components/image";
-import Carousel, { CarouselArrowIndex } from "../../../../components/carousel";
+import Image from "@components/image";
+import Carousel, { CarouselArrowIndex } from "@components/carousel";
 
 // ----------------------------------------------------------------------
 

@@ -2,7 +2,7 @@ import { memo } from "react";
 // @mui
 import { Radio, RadioGroup, FormControlLabel } from "@mui/material";
 // components
-import { StyledControlPanel } from "../../../../../components/map";
+import { StyledControlPanel } from "@components/map";
 
 // ----------------------------------------------------------------------
 

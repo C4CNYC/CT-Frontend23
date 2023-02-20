@@ -4,13 +4,13 @@ import Head from "next/head";
 // @mui
 import { Box, Container, Tab, Tabs } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import Textfields from "../../../sections/_examples/mui/Textfields";
+import Textfields from "@sections/_examples/mui/Textfields";
 
 // ----------------------------------------------------------------------
 

@@ -4,20 +4,20 @@ import Head from "next/head";
 import { Box, Container } from "@mui/material";
 import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import FormDialogs from "../../../sections/_examples/mui/dialog/FormDialogs";
-import AlertDialog from "../../../sections/_examples/mui/dialog/AlertDialog";
-import ScrollDialog from "../../../sections/_examples/mui/dialog/ScrollDialog";
-import SimpleDialogs from "../../../sections/_examples/mui/dialog/SimpleDialogs";
-import MaxWidthDialog from "../../../sections/_examples/mui/dialog/MaxWidthDialog";
-import FullScreenDialogs from "../../../sections/_examples/mui/dialog/FullScreenDialogs";
-import TransitionsDialogs from "../../../sections/_examples/mui/dialog/TransitionsDialogs";
-import { Block } from "../../../sections/_examples/Block";
+import FormDialogs from "@sections/_examples/mui/dialog/FormDialogs";
+import AlertDialog from "@sections/_examples/mui/dialog/AlertDialog";
+import ScrollDialog from "@sections/_examples/mui/dialog/ScrollDialog";
+import SimpleDialogs from "@sections/_examples/mui/dialog/SimpleDialogs";
+import MaxWidthDialog from "@sections/_examples/mui/dialog/MaxWidthDialog";
+import FullScreenDialogs from "@sections/_examples/mui/dialog/FullScreenDialogs";
+import TransitionsDialogs from "@sections/_examples/mui/dialog/TransitionsDialogs";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

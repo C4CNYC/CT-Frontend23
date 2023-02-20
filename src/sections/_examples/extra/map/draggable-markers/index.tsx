@@ -5,7 +5,7 @@ import {
   MapMarker,
   MapControl,
   MapBoxProps,
-} from "../../../../../components/map";
+} from "@components/map";
 //
 import ControlPanel from "./ControlPanel";
 

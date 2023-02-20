@@ -11,13 +11,13 @@ import {
 } from "@mui/material";
 import { Masonry } from "@mui/lab";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // _mock
 import _mock from "../../../_mock";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import {
   CarouselBasic1,
@@ -27,7 +27,7 @@ import {
   CarouselAnimation,
   CarouselThumbnail,
   CarouselCenterMode,
-} from "../../../sections/_examples/extra/carousel";
+} from "@sections/_examples/extra/carousel";
 
 // ----------------------------------------------------------------------
 

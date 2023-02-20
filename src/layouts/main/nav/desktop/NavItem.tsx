@@ -5,8 +5,8 @@ import NextLink from "next/link";
 // @mui
 import { Link, LinkProps, CardActionArea } from "@mui/material";
 // components
-import Image from "../../../../components/image";
-import Iconify from "../../../../components/iconify";
+import Image from "@components/image";
+import Iconify from "@components/iconify";
 //
 import { NavItemDesktopProps, NavItemProps } from "../types";
 import { ListItem } from "./styles";

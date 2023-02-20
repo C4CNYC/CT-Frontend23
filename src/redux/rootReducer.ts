@@ -3,7 +3,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 // slices
 import globalRducer from "./slices/global";
 import managerReducer from "./slices/manager";
-import kanbanReducer from "./slices/kanban";
+import assignmentsReducer from "./slices/assignments";
 import { adminApi } from "./services/admin";
 import { managerApi } from "./services/manager";
 
@@ -38,7 +38,7 @@ const rootReducer = combineReducers({
   [managerApi.reducerPath]: managerApi.reducer,
   global: globalRducer,
   manager: managerReducer,
-  kanban: kanbanReducer,
+  assignments: assignmentsReducer,
 });
 
 export default rootReducer;

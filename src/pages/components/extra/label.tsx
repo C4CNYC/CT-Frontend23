@@ -11,13 +11,13 @@ import {
   Tooltip,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Label from "../../../components/label";
-import Iconify from "../../../components/iconify";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Label from "@components/label";
+import Iconify from "@components/iconify";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 

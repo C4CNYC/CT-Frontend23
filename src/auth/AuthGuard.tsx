@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
-// next
 import { useRouter } from "next/router";
-// components
-import LoadingScreen from "../components/loading-screen";
-//
-import Login from "../pages/auth/login";
+import LoadingScreen from "@components/loading-screen";
+import Login from "@pages/auth/login";
 import { useAuthContext } from "./useAuthContext";
 
 // ----------------------------------------------------------------------

@@ -10,11 +10,11 @@ import {
   CardContent,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import {
   ChartPie,
@@ -29,7 +29,7 @@ import {
   ChartColumnStacked,
   ChartColumnNegative,
   ChartColumnMultiple,
-} from "../../../sections/_examples/extra/chart";
+} from "@sections/_examples/extra/chart";
 
 // ----------------------------------------------------------------------
 

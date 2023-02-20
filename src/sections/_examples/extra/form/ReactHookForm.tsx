@@ -19,7 +19,7 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { DatePicker } from "@mui/x-date-pickers";
 // components
-import Iconify from "../../../../components/iconify";
+import Iconify from "@components/iconify";
 import FormProvider, {
   RHFEditor,
   RHFSelect,
@@ -32,7 +32,7 @@ import FormProvider, {
   RHFMultiSelect,
   RHFAutocomplete,
   RHFMultiCheckbox,
-} from "../../../../components/hook-form";
+} from "@components/hook-form";
 //
 import { FormSchema } from "./schema";
 import ValuesPreview from "./ValuesPreview";

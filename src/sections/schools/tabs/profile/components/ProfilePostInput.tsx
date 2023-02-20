@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { alpha } from "@mui/material/styles";
 import { Card, Button, Fab, Stack, InputBase } from "@mui/material";
 // components
-import Iconify from "../../../../../components/iconify";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 

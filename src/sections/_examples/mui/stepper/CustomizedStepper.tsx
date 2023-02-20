@@ -16,7 +16,7 @@ import { StepIconProps } from "@mui/material/StepIcon";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Iconify from "../../../../components/iconify";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 

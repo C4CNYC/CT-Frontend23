@@ -6,10 +6,10 @@ import {
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import {
-  IAssigment,
-  IAssigmentUpdate,
-  IAssigmentCreate,
-} from "./interfaces/assigment.interface";
+  IAssignment,
+  IAssignmentUpdate,
+  IAssignmentCreate,
+} from "./interfaces/assignment.interface";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
 import {
   SchoolResponce,
@@ -31,66 +31,66 @@ export const managerApi = createApi({
     "Classes",
     "SchoolSettings",
     "SchoolContacts",
-    "Assigments",
-    "Assigment",
+    "Assignments",
+    "Assignment",
   ],
   endpoints: (builder) => ({
-    getAssigment: builder.query<
-      IAssigment & BaseResponseInterface,
-      { school_id: string; assigment_id: string }
+    getAssignment: builder.query<
+      IAssignment & BaseResponseInterface,
+      { school_id: string; assignment_id: string }
     >({
-      query: ({ school_id, assigment_id }) => ({
-        url: `/school/${school_id}/assigment/${assigment_id}`,
+      query: ({ school_id, assignment_id }) => ({
+        url: `/school/${school_id}/assignment/${assignment_id}`,
         method: "GET",
       }),
-      providesTags: ["Assigment"],
+      providesTags: ["Assignment"],
     }),
-    getAssigmentList: builder.query<
-      (IAssigment & BaseResponseInterface)[],
+    getAssignmentList: builder.query<
+      (IAssignment & BaseResponseInterface)[],
       { school_id: string }
     >({
       query: ({ school_id }) => ({
-        url: `/school/${school_id}/assigment`,
+        url: `/school/${school_id}/assignment`,
         method: "GET",
       }),
-      providesTags: ["Assigments"],
+      providesTags: ["Assignments"],
     }),
-    createAssigment: builder.mutation<
-      IAssigment & BaseResponseInterface,
+    createAssignment: builder.mutation<
+      IAssignment & BaseResponseInterface,
       {
         school_id: string;
-      } & IAssigmentCreate
+      } & IAssignmentCreate
     >({
       query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/assigment/`,
+        url: `/school/${school_id}/assignment/`,
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Assigments"],
+      invalidatesTags: ["Assignments"],
     }),
-    udpateAssigment: builder.mutation<
+    udpateAssignment: builder.mutation<
       void,
       {
-        assigment_id: string;
+        assignment_id: string;
         school_id: string;
-      } & IAssigmentUpdate
+      } & IAssignmentUpdate
     >({
-      query: ({ school_id, assigment_id, ...body }) => ({
-        url: `/school/${school_id}/assigment/${assigment_id}`,
+      query: ({ school_id, assignment_id, ...body }) => ({
+        url: `/school/${school_id}/assignment/${assignment_id}`,
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["Assigments", "Assigment"],
+      invalidatesTags: ["Assignments", "Assignment"],
     }),
-    deleteAssigment: builder.mutation<
+    deleteAssignment: builder.mutation<
       void,
-      { school_id: string; assigment_id: string }
+      { school_id: string; assignment_id: string }
     >({
-      query: ({ school_id, assigment_id }) => ({
-        url: `/school/${school_id}/assigment/${assigment_id}`,
+      query: ({ school_id, assignment_id }) => ({
+        url: `/school/${school_id}/assignment/${assignment_id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Assigments"],
+      invalidatesTags: ["Assignments"],
     }),
     getMySchools: builder.query<
       BaseListResponseInterface<SchoolResponce>,
@@ -332,9 +332,9 @@ export const {
   useStudentLeftClassMutation,
   //---social links----
 
-  //----assigment ---------
-  useGetAssigmentQuery,
-  useGetAssigmentListQuery,
+  //----assignment ---------
+  useGetAssignmentQuery,
+  useGetAssignmentListQuery,
 
   //---------------- mutations --------------
   useUpdateStudentMutation,
@@ -353,8 +353,8 @@ export const {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 
-  //----assigment ---------
-  useUdpateAssigmentMutation,
-  useCreateAssigmentMutation,
-  useDeleteAssigmentMutation,
+  //----assignment ---------
+  useUdpateAssignmentMutation,
+  useCreateAssignmentMutation,
+  useDeleteAssignmentMutation,
 } = managerApi;

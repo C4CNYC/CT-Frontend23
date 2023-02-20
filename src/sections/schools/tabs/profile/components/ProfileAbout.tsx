@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Link, Card, Typography, CardHeader, Stack } from "@mui/material";
-import Iconify from "../../../../../components/iconify";
+import Iconify from "@components/iconify";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 import { useGetMySchoolsQuery } from "src/redux/services/manager";
 

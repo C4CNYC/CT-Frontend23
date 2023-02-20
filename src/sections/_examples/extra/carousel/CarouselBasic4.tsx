@@ -5,9 +5,9 @@ import { Box, Card, Typography, IconButton } from "@mui/material";
 // utils
 import { bgBlur } from "../../../../utils/cssStyles";
 // components
-import Image from "../../../../components/image";
-import Iconify from "../../../../components/iconify";
-import Carousel, { CarouselArrows } from "../../../../components/carousel";
+import Image from "@components/image";
+import Iconify from "@components/iconify";
+import Carousel, { CarouselArrows } from "@components/carousel";
 
 // ----------------------------------------------------------------------
 

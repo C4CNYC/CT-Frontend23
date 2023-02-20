@@ -9,7 +9,7 @@ import Map, {
 import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 // components
-import { MapPopup, MapControl, MapBoxProps } from "../../../../components/map";
+import { MapPopup, MapControl, MapBoxProps } from "@components/map";
 
 // ----------------------------------------------------------------------
 

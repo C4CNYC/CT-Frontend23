@@ -9,8 +9,8 @@ import {
   TableContainer,
 } from "@mui/material";
 // components
-import Scrollbar from "../../../../components/scrollbar";
-import { useTable, TablePaginationCustom } from "../../../../components/table";
+import Scrollbar from "@components/scrollbar";
+import { useTable, TablePaginationCustom } from "@components/table";
 
 // ----------------------------------------------------------------------
 

@@ -1,15 +1,10 @@
-// next
 import Head from "next/head";
-// @mui
 import { Card, Container, Typography, Box } from "@mui/material";
-// routes
-import { PATH_DASHBOARD } from "../../../../../routes/paths";
-// components
-import { useSettingsContext } from "../../../../../components/settings";
-import CustomBreadcrumbs from "../../../../../components/custom-breadcrumbs";
-// sections
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
-import { ClassMembersAutocomplete } from "src/components/class-members-autocomplete";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { useSettingsContext } from "@components/settings";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
 
 // ----------------------------------------------------------------------
 

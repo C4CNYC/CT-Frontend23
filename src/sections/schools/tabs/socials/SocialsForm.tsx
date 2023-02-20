@@ -7,7 +7,7 @@ import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFSelect,
   RHFTextField,
-} from "../../../../components/hook-form";
+} from "@components/hook-form";
 import { SchoolSocials } from "../../../../redux/services/interfaces/school.interface";
 import { useCreateSchoolSocialMutation } from "../../../../redux/services/manager";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -61,7 +61,7 @@ export default function SocialsForm({ school_id }: SocialFormProps) {
         link: data?.link,
         name: data?.name,
         type: data?.type,
-      });
+      }).unwrap();
       enqueueSnackbar("Update success!");
       methods.reset();
     } catch (error) {

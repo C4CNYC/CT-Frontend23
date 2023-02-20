@@ -17,13 +17,13 @@ import {
   FormControlLabel,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import { Block } from "../../../sections/_examples/Block";
+import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 

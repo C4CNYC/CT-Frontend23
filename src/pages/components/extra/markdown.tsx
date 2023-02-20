@@ -11,12 +11,12 @@ import {
   Divider,
 } from "@mui/material";
 // routes
-import { PATH_PAGE } from "../../../routes/paths";
+import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Markdown from "../../../components/markdown";
-import CustomBreadcrumbs from "../../../components/custom-breadcrumbs";
+import Markdown from "@components/markdown";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
