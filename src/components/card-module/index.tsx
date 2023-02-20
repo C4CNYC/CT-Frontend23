@@ -9,27 +9,30 @@ import { MdAddCircleOutline, MdEdit } from "react-icons/md";
 import { FcInfo } from "react-icons/fc";
 import { CgMenuMotion } from "react-icons/cg";
 import Image from "next/image";
+import _ from "lodash";
 
 type Props = {
-  lesson: string;
-  course: string;
-  module: string;
+  type: "lesson" | "course" | "module";
+  id: string;
 };
 
-export default function CardModule({ lesson, course, module }: Props) {
+export default function CardModule({ type, id }: Props) {
   return (
     <>
       <Container maxWidth={false}>
         <Card
           sx={{
-            maxWidth: "348px",
+            maxWidth: "328px",
+            height: "292px",
             padding: "24px",
+            borderRadius: "16px",
+            border: "1px solid rgba(145, 158, 171, 0.24) ",
           }}
         >
           <Stack display="flex" flexDirection="row">
             <Stack>
               <Typography fontSize="22px" mb="16px">
-                Module
+                {_.capitalize(type)}
               </Typography>
               <Stack
                 display="flex"
@@ -39,7 +42,9 @@ export default function CardModule({ lesson, course, module }: Props) {
                 mb="9px"
               >
                 <MdAddCircleOutline />
-                <Typography color="#637381">Add New</Typography>
+                <Typography color="#637381" fontSize="14px">
+                  Add New
+                </Typography>
               </Stack>
               <Stack
                 display="flex"
@@ -49,9 +54,11 @@ export default function CardModule({ lesson, course, module }: Props) {
                 mb="9px"
               >
                 <MdEdit />
-                <Typography color="#637381">Edit Existing</Typography>
+                <Typography color="#637381" fontSize="14px">
+                  Edit Existing
+                </Typography>
               </Stack>
-              <Typography variant="h6" mb="9px">
+              <Typography variant="h6" mb="9px" fontSize="20px">
                 56 so far
               </Typography>
               <Stack
@@ -62,7 +69,9 @@ export default function CardModule({ lesson, course, module }: Props) {
                 mb="9px"
               >
                 <FcInfo />
-                <Typography color="#637381">What’s a module?</Typography>
+                <Typography color="#637381" fontSize="14px">
+                  What’s a module?
+                </Typography>
               </Stack>
               <Stack
                 display="flex"
@@ -72,7 +81,9 @@ export default function CardModule({ lesson, course, module }: Props) {
                 mb="9px"
               >
                 <VisibilityIcon fontSize="small" />
-                <Typography color="#637381">Watch a tutorial</Typography>
+                <Typography color="#637381" fontSize="14px">
+                  Watch a tutorial
+                </Typography>
               </Stack>
               <Stack
                 display="flex"
@@ -82,10 +93,12 @@ export default function CardModule({ lesson, course, module }: Props) {
                 mb="9px"
               >
                 <CgMenuMotion />
-                <Typography color="#637381">See all</Typography>
+                <Typography color="#637381" fontSize="14px">
+                  See all
+                </Typography>
               </Stack>
             </Stack>
-            <Stack mt="60px" ml="34px">
+            <Stack mt="68px" ml="34px">
               <Image
                 src="/assets/images/card-image.png"
                 alt={""}
