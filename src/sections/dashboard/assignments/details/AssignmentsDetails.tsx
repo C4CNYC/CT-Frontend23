@@ -64,6 +64,8 @@ export default function AssignmentsDetails({
     value: string | number | null
   ) => {
     try {
+      if(assignment[fieldName] === value) return;
+
       await updateAssignment({
         assignment_id: assignment.id,
         school_id,
