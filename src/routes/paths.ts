@@ -45,6 +45,12 @@ export const PATH_DASHBOARD = {
   courses: {
     root: path(ROOTS_DASHBOARD, "/courses")
   },
+  modules: {
+    root: path(ROOTS_DASHBOARD, "/modules/list")
+  },
+  lessons: {
+    root: path(ROOTS_DASHBOARD, "/lessons/list")
+  },
   organization: {
     root: path(ROOTS_DASHBOARD, "/organization"),
     general: path(ROOTS_DASHBOARD, "/organization/general"),

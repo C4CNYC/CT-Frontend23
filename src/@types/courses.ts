@@ -1,4 +1,14 @@
 // ----------------------------------------------------------------------
+export type ICourse = {
+  name: string;
+  level: string;
+  price: string;
+  description: string;
+  cover?: string;
+  active: boolean;
+  draft?: boolean;
+};
+
 
 export type IUserSocialLink = {
   facebookLink: string;
@@ -29,9 +39,9 @@ export type IUserProfileAbout = {
 
 export type IUserProfile = IUserProfileFollowers &
   IUserProfileAbout & {
-    id: string;
-    socialLinks: IUserSocialLink;
-  };
+  id: string;
+  socialLinks: IUserSocialLink;
+};
 
 export type IUserProfileFollower = {
   id: string;

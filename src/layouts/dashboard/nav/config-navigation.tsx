@@ -1,16 +1,14 @@
-// routes
 import { PATH_DASHBOARD } from "@routes/paths";
-// components
 import SvgColor from "@components/svg-color";
 import { RiOrganizationChart } from "react-icons/ri";
 import { GrOrganization } from "react-icons/gr";
-import { FaUserShield } from "react-icons/fa";
-import { FaSchool } from "react-icons/fa";
+import { FaUserShield, FaSchool, FaUsers } from "react-icons/fa";
 import { MdPlayLesson } from "react-icons/md";
 import { VscSymbolClass } from "react-icons/vsc";
+import { GoFileSubmodule } from "react-icons/go";
 import { GiProgression } from "react-icons/gi";
 import { AiOutlineSolution } from "react-icons/ai";
-import { FaUsers } from "react-icons/fa";
+import { IoMdSchool } from "react-icons/io";
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +65,7 @@ export const managment = {
     {
       title: "classes",
       path: PATH_DASHBOARD.school.classes,
-      icon: <VscSymbolClass />,
+      icon: <IoMdSchool />,
     },
     {
       title: "progress",
@@ -83,6 +81,16 @@ export const content = {
     {
       title: "courses",
       path: PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
+    },
+    {
+      title: "modules",
+      path: PATH_DASHBOARD.modules.root,
+      icon: <GoFileSubmodule />,
+    },
+    {
+      title: "lessons",
+      path: PATH_DASHBOARD.lessons.root,
       icon: <MdPlayLesson />,
     },
     {
