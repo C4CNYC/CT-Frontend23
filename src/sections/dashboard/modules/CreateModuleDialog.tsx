@@ -10,6 +10,8 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
+import { useUpdateModuleMutation, useCreateModuleMutation } from "../../../redux/services/manager";
+import { useSnackbar } from "@components/snackbar";
 
 type FormValuesProps = {
   name: string;
@@ -18,21 +20,24 @@ type FormValuesProps = {
 };
 
 type Prop = {
-  createModule?: (name: string) => void;
-  updateModule?: (name: string, description: string) => void;
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
   isEdit?: boolean;
+  id?: string;
 };
 
 export default function CreateModuleDialog({
+                                             id,
                                              isEdit,
                                              children,
-                                             createModule,
-                                             updateModule,
-                                             defaultValues
+                                             defaultValues,
                                            }: Prop) {
   const [open, setOpen] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const [editModule] = useUpdateModuleMutation();
+  const [createModule] = useCreateModuleMutation();
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -52,9 +57,27 @@ export default function CreateModuleDialog({
   });
 
   const onSubmit = async (data: FormValuesProps) => {
-    // createModule();
+    try {
+      if (!isEdit) {
+        await createModule({
+          ...data
+        }).unwrap();
+      } else {
+        await editModule({
+          id,
+          ...data
+        });
+      }
+      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+    } catch (error) {
+      enqueueSnackbar(error.data.message, {
+        variant: "error",
+      });
+      console.error(error, "test");
+    }
     handleClose();
   };
+
 
   return (
     <>

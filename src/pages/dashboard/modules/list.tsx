@@ -3,7 +3,7 @@ import Head from "next/head";
 import {
   Button,
   Box,
-  Container
+  Container, IconButton
 } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Iconify from "@components/iconify";
@@ -13,7 +13,7 @@ import { useFilters } from "@hooks/useFilters";
 import {
   useCreateClassesMutation,
   useDeleteClassesMutation,
-  useGetClassesQuery
+  useGetClassesQuery, useGetModulesQuery, useGetMySchoolsQuery
 } from "src/redux/services/manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
@@ -23,6 +23,8 @@ import { ClassSearchParams } from "src/redux/services/interfaces/class.interface
 import { useUpdateClassesMutation } from "src/redux/services/manager";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { _socials } from "../../../_mock/arrays";
+import { alpha } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -42,28 +44,26 @@ export default function ModulesListPage() {
     name: ""
   });
 
-  const [updateClassByManager] = useUpdateClassesMutation();
-  const [createClassByManager] = useCreateClassesMutation();
-  const [deleteCasses] = useDeleteClassesMutation();
-  const { data, isLoading } = useGetClassesQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
-  );
+  const { data, isLoading } = useGetModulesQuery();
 
-  const handleDeleteMember = async (class_id: string) => {
-    try {
-      await deleteCasses({ class_id, school_id }).unwrap();
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
-        variant: "error"
-      });
-    }
-  };
+  // const handleDeleteMember = async (class_id: string) => {
+  //   try {
+  //     await deleteCasses({ class_id, school_id }).unwrap();
+  //   } catch (e) {
+  //     enqueueSnackbar(e.data.message, {
+  //       variant: "error"
+  //     });
+  //   }
+  // };
 
 
   const createModule = async (data: string) => {
-    console.log('create module')
+    console.log("create module");
   };
+
+  if (isLoading) return "loading";
+  if (data.data.length === 0) return "no data";
+
 
   return (
     <>
@@ -80,7 +80,7 @@ export default function ModulesListPage() {
             { name: "List" }
           ]}
           action={
-            <CreateModuleDialog createModule={createModule}>
+            <CreateModuleDialog>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
@@ -99,14 +99,17 @@ export default function ModulesListPage() {
             md: "repeat(3, 1fr)"
           }}
         >
-          <ModuleCard
-            key="qwe"
-            // folder="folder"
-            // selected={selected.includes("folder.id")}
-            onSelect={() => console.log("qwe")}
-            onDelete={() => console.log("qwe")}
-            sx={{ maxWidth: "auto" }}
-          />
+          {data?.data.map((module) => (
+            <ModuleCard
+              key={module.id}
+              module={module}
+              // selected={selected.includes("folder.id")}
+              onSelect={() => console.log("qwe")}
+              onDelete={() => console.log("qwe")}
+
+            />
+          ))}
+
         </Box>
       </Container>
     </>

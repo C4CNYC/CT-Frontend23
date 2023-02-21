@@ -6,41 +6,51 @@ import {
   Button,
   Divider,
   MenuItem,
-  Checkbox,
-  CardProps,
   IconButton
 } from "@mui/material";
-import useCopyToClipboard from "@hooks/useCopyToClipboard";
-import { fData } from "../../../utils/formatNumber";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
 import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
 import ConfirmDialog from "@components/confirm-dialog";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { IModule } from "../../../redux/services/interfaces/class.interface";
+import { useDeleteAssignmentMutation, useDeleteModuleMutation } from "../../../redux/services/manager";
 
 // ----------------------------------------------------------------------
 
-interface Props extends CardProps {
+interface Props extends IModule {
   // folder: IFolderManager;
   selected?: boolean;
   onSelect?: VoidFunction;
-  onDelete: VoidFunction;
+  module: {
+    name: string;
+    description: string;
+    id: string;
+    active: boolean;
+  };
 }
 
 export default function ModuleCard({
-                                     folder,
-                                     selected,
-                                     onSelect,
-                                     onDelete,
-                                     sx,
-                                     ...other
+                                     module
                                    }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [deleteModule] = useDeleteModuleMutation();
 
+
+  const onDelete = async () => {
+    try {
+      await deleteModule({ id: module.id }).unwrap();
+      enqueueSnackbar("Module deleted!");
+    } catch (e) {
+      enqueueSnackbar(e.data.message, {
+        variant: "error"
+      });
+    }
+  };
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
@@ -67,16 +77,14 @@ export default function ModuleCard({
           textDecoration: "none",
           p: 2.5,
           width: 1,
-          maxWidth: 222,
           boxShadow: 0,
           bgcolor: "background.default",
+          maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
             bgcolor: "grey.100"
-          },
-          ...sx
+          }
         }}
-        {...other}
       >
         <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: "absolute" }}>
           <IconButton color={openPopover ? "inherit" : "default"} onClick={handleOpenPopover}>
@@ -90,7 +98,7 @@ export default function ModuleCard({
         />
 
         <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
-          Name
+          {module.name}
         </TextMaxLine>
 
         <Stack
@@ -99,12 +107,11 @@ export default function ModuleCard({
           spacing={0.75}
           sx={{ typography: "caption", color: "text.disabled" }}
         >
-          <Box> Description </Box>
-
+          <Box>{module.description}</Box>
           <Box sx={{ width: 2, height: 2, borderRadius: "50%", bgcolor: "currentColor" }} />
-
         </Stack>
       </Card>
+
 
       <MenuPopover
         open={openPopover}
@@ -114,10 +121,8 @@ export default function ModuleCard({
       >
         <CreateModuleDialog
           isEdit
-          defaultValues={{ name: "name", description: "qwe", active: true }}
-          updateModule={() => {
-            handleClosePopover();
-          }}
+          id={module.id}
+          defaultValues={{ name: module.name, description: module.description, active: module.active }}
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
