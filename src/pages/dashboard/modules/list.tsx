@@ -106,42 +106,7 @@ export default function ModulesListPage() {
             onSelect={() => console.log("qwe")}
             onDelete={() => console.log("qwe")}
             sx={{ maxWidth: "auto" }}
-          /><ModuleCard
-          key="qwe"
-          // folder="folder"
-          // selected={selected.includes("folder.id")}
-          onSelect={() => console.log("qwe")}
-          onDelete={() => console.log("qwe")}
-          sx={{ maxWidth: "auto" }}
-        /><ModuleCard
-          key="qwe"
-          // folder="folder"
-          // selected={selected.includes("folder.id")}
-          onSelect={() => console.log("qwe")}
-          onDelete={() => console.log("qwe")}
-          sx={{ maxWidth: "auto" }}
-        /><ModuleCard
-          key="qwe"
-          // folder="folder"
-          // selected={selected.includes("folder.id")}
-          onSelect={() => console.log("qwe")}
-          onDelete={() => console.log("qwe")}
-          sx={{ maxWidth: "auto" }}
-        /><ModuleCard
-          key="qwe"
-          // folder="folder"
-          // selected={selected.includes("folder.id")}
-          onSelect={() => console.log("qwe")}
-          onDelete={() => console.log("qwe")}
-          sx={{ maxWidth: "auto" }}
-        /><ModuleCard
-          key="qwe"
-          // folder="folder"
-          // selected={selected.includes("folder.id")}
-          onSelect={() => console.log("qwe")}
-          onDelete={() => console.log("qwe")}
-          sx={{ maxWidth: "auto" }}
-        />
+          />
         </Box>
       </Container>
     </>

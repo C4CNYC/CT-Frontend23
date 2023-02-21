@@ -17,6 +17,7 @@ import MenuPopover from "@components/menu-popover";
 import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
 import ConfirmDialog from "@components/confirm-dialog";
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +64,7 @@ export default function ModuleCard({
         component="a"
         href="#"
         sx={{
-          textDecoration: 'none',
+          textDecoration: "none",
           p: 2.5,
           width: 1,
           maxWidth: 222,
@@ -71,7 +72,7 @@ export default function ModuleCard({
           bgcolor: "background.default",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
-            bgcolor: "grey.100",
+            bgcolor: "grey.100"
           },
           ...sx
         }}
@@ -111,14 +112,18 @@ export default function ModuleCard({
         arrow="right-top"
         sx={{ width: 160 }}
       >
-        <MenuItem
-          onClick={() => {
+        <CreateModuleDialog
+          isEdit
+          defaultValues={{ name: "name", description: "qwe", active: true }}
+          updateModule={() => {
             handleClosePopover();
           }}
         >
-          <Iconify icon="eva:edit-fill" />
-          Edit
-        </MenuItem>
+          <MenuItem>
+            <Iconify icon="eva:edit-fill" />
+            Edit
+          </MenuItem>
+        </CreateModuleDialog>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

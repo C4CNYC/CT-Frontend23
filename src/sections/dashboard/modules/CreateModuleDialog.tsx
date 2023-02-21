@@ -13,19 +13,23 @@ import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
 
 type FormValuesProps = {
   name: string;
-  price: string;
+  description: string;
   active: boolean;
 };
 
 type Prop = {
   createModule?: (name: string) => void;
+  updateModule?: (name: string, description: string) => void;
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
+  isEdit?: boolean;
 };
 
 export default function CreateModuleDialog({
+                                             isEdit,
                                              children,
                                              createModule,
+                                             updateModule,
                                              defaultValues
                                            }: Prop) {
   const [open, setOpen] = useState(false);
@@ -56,7 +60,7 @@ export default function CreateModuleDialog({
     <>
       <Box onClick={() => handleClickOpen()}>{children}</Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create Module</DialogTitle>
+        <DialogTitle>{isEdit ? "Edit" : "Create"} Module</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
