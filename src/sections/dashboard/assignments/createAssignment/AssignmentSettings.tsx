@@ -44,7 +44,7 @@ export default function AssignmentSettings({
 }: AssignmentStepProps) {
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
   const [updateAssignment] = useUdpateAssignmentMutation();
-  const board = useSelector((state: RootState) => state.assignment.board);
+  const board = useSelector((state: RootState) => state?.assignment?.board);
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
@@ -69,8 +69,8 @@ export default function AssignmentSettings({
   const { handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
-    const backlogCol = board.columns[AssignmentStatuses.BACKLOG];
-    const idCardWithMinOrder = backlogCol.cardIds[0];
+    const backlogCol = board?.columns[AssignmentStatuses.BACKLOG];
+    const idCardWithMinOrder = backlogCol?.cardIds[0];
 
     try {
       if (assignment) {
