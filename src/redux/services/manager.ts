@@ -12,14 +12,19 @@ import {
 } from "./interfaces/assignment.interface";
 import {
   ClassSearchParams,
-  IClass,
-  IModule,
-  IModuleCreate,
-  IModuleDelete,
-  ILessonDelete,
-  ILesson,
-  ILessonCreate
+  IClass
 } from "./interfaces/class.interface";
+import {
+  ILesson,
+  IModule,
+  ICourse,
+  ILessonDelete,
+  IModuleDelete,
+  ICourseDelete,
+  IModuleCreate,
+  ILessonCreate,
+  ICourseCreate
+} from "./interfaces/courseUnits.interface";
 import {
   SchoolResponce,
   SchoolProfile,
@@ -28,7 +33,6 @@ import {
   SchoolSettings
 } from "./interfaces/school.interface";
 import { IStudent, StudentSearchParams } from "./interfaces/user.interface";
-import { User } from "./auth";
 
 export const managerApi = createApi({
   reducerPath: "api/manager",
@@ -44,7 +48,8 @@ export const managerApi = createApi({
     "Assignments",
     "Assignment",
     "Modules",
-    "Lessons"
+    "Lessons",
+    "Courses"
   ],
   endpoints: (builder) => ({
     getAssignment: builder.query<
@@ -328,6 +333,47 @@ export const managerApi = createApi({
       }),
       invalidatesTags: [{ type: "School" }]
     }),
+// --------------------- courses --------------------------
+    getCourse: builder.query<IModule, void>({
+      query: () => ({
+        url: "/course",
+        method: "GET"
+      }),
+      providesTags: ["Courses"]
+    }),
+    updateCourse: builder.mutation<
+      ICourse & BaseResponseInterface,
+      { id: string; }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/course/${id}`,
+        method: "PATCH",
+        body
+      }),
+      invalidatesTags: [{ type: "Courses" }]
+    }),
+    createCourse: builder.mutation<
+      ICourseCreate & BaseResponseInterface,
+      ICourseCreate
+    >({
+      query: ({ ...body }) => ({
+        url: `/course`,
+        method: "POST",
+        body
+      }),
+      invalidatesTags: [{ type: "Courses" }]
+    }),
+    deleteCourse: builder.mutation<
+      ICourseDelete & BaseResponseInterface,
+      ICourseDelete
+    >({
+      query: ({ id }) => ({
+        url: `/course/${id}`,
+        method: "DELETE"
+      }),
+      invalidatesTags: [{ type: "Courses" }]
+    }),
+
 // --------------------- modules --------------------------
     getModules: builder.query<IModule, void>({
       query: () => ({
@@ -409,8 +455,6 @@ export const managerApi = createApi({
       }),
       invalidatesTags: [{ type: "Lessons" }]
     })
-
-
   })
 });
 
@@ -425,17 +469,15 @@ export const {
   useGetSchoolContactsQuery,
   useStudentJoinClassMutation,
   useStudentLeftClassMutation,
-  //---social links----
-
   //----assignment ---------
   useGetAssignmentQuery,
   useGetAssignmentListQuery,
-
   //---------------- modules --------------
   useGetModulesQuery,
-
   //---------------- lessons --------------
   useGetLessonsQuery,
+  //---------------- courses --------------
+  useGetCourseQuery,
 
   //---------------- mutations --------------
   useUpdateStudentMutation,
@@ -467,5 +509,11 @@ export const {
   //---------------- lessons --------------
   useUpdateLessonMutation,
   useCreateLessonMutation,
-  useDeleteLessonMutation
+  useDeleteLessonMutation,
+
+  //---------------- courses --------------
+  useCreateCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation
+
 } = managerApi;

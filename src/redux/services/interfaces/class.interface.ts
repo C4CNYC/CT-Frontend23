@@ -12,8 +12,10 @@ export interface ClassSearchParams {
 }
 
 export interface IModule {
-  active: boolean;
+  active?: boolean;
+  key: any;
   name: string;
+  type: string;
   description: string;
 }
 
@@ -21,6 +23,7 @@ export interface ILesson {
   active: boolean;
   name: string;
   description: string;
+  data: [];
 }
 
 export interface IModuleCreate {

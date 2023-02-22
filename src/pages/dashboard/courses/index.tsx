@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { useState } from "react";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { Container } from "@mui/system";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
@@ -10,8 +9,9 @@ import {
 import Iconify from "@components/iconify";
 import { useSnackbar } from "@components/snackbar";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { UserCard } from "@sections/dashboard/courses/cards";
+import { CourseCard } from "@sections/dashboard/courses/cards";
 import { useSettingsContext } from "@components/settings";
+import { useGetCourseQuery } from "../../../redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -21,24 +21,11 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-const _courseCards = [...Array(8)].map((_, index) => ({
-  cover: "/assets/assignment/code-idea.svg",
-  name: "name",
-  level: "123",
-  price: "123",
-  description: "123",
-  active: false
-}));
-
 export default function CoursesListPage() {
-  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
+  const { data, isLoading } = useGetCourseQuery();
 
-
-  const createCourse = async (name: string) => {
-    console.log("log");
-  };
-
+  if (isLoading) return "Loading";
 
   return (
     <>
@@ -53,7 +40,7 @@ export default function CoursesListPage() {
             { name: "Courses", href: PATH_DASHBOARD.courses.root }
           ]}
           action={
-            <CreateCourseDialog createCourse={createCourse}>
+            <CreateCourseDialog>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
@@ -72,8 +59,8 @@ export default function CoursesListPage() {
             md: "repeat(3, 1fr)"
           }}
         >
-          {_courseCards.map((course, index) => (
-            <UserCard key={index} course={course} />
+          {data?.data.map((course, index) => (
+            <CourseCard key={index} course={course} />
           ))}
         </Box>
       </Container>

@@ -72,9 +72,6 @@ export default function LessonsListPage() {
             <LessonCard
               key={lesson.id}
               lesson={lesson}
-              // selected={selected.includes("folder.id")}
-              onSelect={() => console.log("qwe")}
-              onDelete={() => console.log("qwe")}
             />
           ))}
 

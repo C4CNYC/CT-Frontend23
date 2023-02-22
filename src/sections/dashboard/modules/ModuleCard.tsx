@@ -124,7 +124,9 @@ export default function ModuleCard({
           id={module.id}
           defaultValues={{ name: module.name, description: module.description, active: module.active }}
         >
-          <MenuItem>
+          <MenuItem onClick={() => {
+            handleClosePopover();
+          }}>
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>

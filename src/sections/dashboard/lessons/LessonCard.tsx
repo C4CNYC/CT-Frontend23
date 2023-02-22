@@ -13,7 +13,7 @@ import MenuPopover from "@components/menu-popover";
 import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
 import ConfirmDialog from "@components/confirm-dialog";
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
+import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { IModule } from "../../../redux/services/interfaces/class.interface";
 import {
   useDeleteLessonMutation
@@ -22,14 +22,13 @@ import {
 // ----------------------------------------------------------------------
 
 interface Props extends IModule {
-  // folder: IFolderManager;
-  selected?: boolean;
-  onSelect?: VoidFunction;
   lesson: {
     name: string;
     description: string;
-    id: string;
+    id?: string;
+    type: string;
     active: boolean;
+    key: any;
   };
 }
 
@@ -121,7 +120,7 @@ export default function LessonCard({
         arrow="right-top"
         sx={{ width: 160 }}
       >
-        <CreateLessonDialog
+        <CreateCourseDialog
           isEdit
           id={lesson.id}
           defaultValues={{
@@ -135,7 +134,7 @@ export default function LessonCard({
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>
-        </CreateLessonDialog>
+        </CreateCourseDialog>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

@@ -1,5 +1,6 @@
 // ----------------------------------------------------------------------
 export type ICourse = {
+  id?: string | undefined;
   name: string;
   level: string;
   price: string;
