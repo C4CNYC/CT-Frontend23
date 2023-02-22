@@ -7,11 +7,11 @@ import {
   Button, Box
 } from "@mui/material";
 import Iconify from "@components/iconify";
-import { useSnackbar } from "@components/snackbar";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { CourseCard } from "@sections/dashboard/courses/cards";
 import { useSettingsContext } from "@components/settings";
 import { useGetCourseQuery } from "../../../redux/services/manager";
+import FilterCourses from "@pages/dashboard/courses/filter";
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +50,7 @@ export default function CoursesListPage() {
             </CreateCourseDialog>
           }
         />
+        <FilterCourses />
         <Box
           gap={3}
           display="grid"

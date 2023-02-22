@@ -14,6 +14,7 @@ import {
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import FilterModules from "@pages/dashboard/modules/filter";
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +56,7 @@ export default function ModulesListPage() {
             </CreateModuleDialog>
           }
         />
-
+        <FilterModules />
         <Box
           gap={2}
           display="grid"

@@ -15,6 +15,7 @@ import { useGetLessonsQuery } from "src/redux/services/manager";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
+import FilterLessons from "@pages/dashboard/lessons/filter";
 
 // ----------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ export default function LessonsListPage() {
           }
         />
 
+        <FilterLessons />
         <Box
           gap={2}
           display="grid"
