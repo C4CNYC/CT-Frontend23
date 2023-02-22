@@ -17,7 +17,10 @@ import { _contacts } from "../../../_mock/arrays";
 import Iconify from "@components/iconify";
 import Scrollbar from "@components/scrollbar";
 import SearchNotFound from "@components/search-not-found";
-import { IAssignments, IAssignmentsAssignee } from "../../../@types/assignments";
+import {
+  IAssignments,
+  IAssignmentsAssignee,
+} from "../../../@types/assignments";
 
 // ----------------------------------------------------------------------
 

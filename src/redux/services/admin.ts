@@ -88,6 +88,22 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "Organization" }],
     }),
+    updateOrgAvatar: builder.mutation<
+      void,
+      {
+        file: FormData;
+      }
+    >({
+      query: ({ file }) => ({
+        url: `/org/avatar`,
+        method: "PATCH",
+        headers: {
+          // "Content-Type": "multipart/form-data",
+        },
+        body: file,
+      }),
+      invalidatesTags: [{ type: "Organization" }],
+    }),
     // ------------ school ------------------
     createClass: builder.mutation<ClassResponce, ClassRequest>({
       query: ({ schoolId, ...body }) => ({
@@ -169,6 +185,17 @@ export const adminApi = createApi({
         url: `/org/user`,
         method: "POST",
         body,
+      }),
+      invalidatesTags: [{ type: "Members" }],
+    }),
+    udpateMemberAvatar: builder.mutation<
+      IUser & BaseResponseInterface,
+      { user_id: string; file: FormData }
+    >({
+      query: ({ user_id, file }) => ({
+        url: `/org/user/${user_id}/avatar`,
+        method: "PATCH",
+        body: file,
       }),
       invalidatesTags: [{ type: "Members" }],
     }),
@@ -303,6 +330,8 @@ export const {
   useGetOrgSettingsQuery,
   useGetOrgCustomizationQuery,
   // ---------------- mutations ---------
+  useUdpateMemberAvatarMutation,
+  useUpdateOrgAvatarMutation,
   useUpdateClassMutation,
   useCreateClassMutation,
   useDeleteTeacherMutation,

@@ -10,7 +10,10 @@ import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
-import { useUpdateModuleMutation, useCreateModuleMutation } from "../../../redux/services/manager";
+import {
+  useUpdateModuleMutation,
+  useCreateModuleMutation,
+} from "../../../redux/services/manager";
 import { useSnackbar } from "@components/snackbar";
 
 type FormValuesProps = {
@@ -27,16 +30,15 @@ type Prop = {
 };
 
 export default function CreateModuleDialog({
-                                             id,
-                                             isEdit,
-                                             children,
-                                             defaultValues,
-                                           }: Prop) {
+  id,
+  isEdit,
+  children,
+  defaultValues,
+}: Prop) {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editModule] = useUpdateModuleMutation();
   const [createModule] = useCreateModuleMutation();
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -48,24 +50,24 @@ export default function CreateModuleDialog({
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required")
+    description: Yup.string().required("Description is required"),
   });
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateCourseSchema),
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
       if (!isEdit) {
         await createModule({
-          ...data
+          ...data,
         }).unwrap();
       } else {
         await editModule({
           id,
-          ...data
+          ...data,
         });
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -77,7 +79,6 @@ export default function CreateModuleDialog({
     }
     handleClose();
   };
-
 
   return (
     <>
@@ -108,18 +109,14 @@ export default function CreateModuleDialog({
                       rows={3}
                     />
 
-                    <RHFSwitch
-                      name="active"
-                      label="Module active"
-                    />
-
+                    <RHFSwitch name="active" label="Module active" />
                   </Box>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
                       gap: 2,
-                      mt: 7
+                      mt: 7,
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>

@@ -1,10 +1,7 @@
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { Role } from "src/redux/services/enums/role.enum";
-import {
-  Button,
-  Menu,
-} from "@mui/material";
+import { Button, Menu } from "@mui/material";
 import { useUpdateOrgMemberMutation } from "src/redux/services/admin";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useSnackbar } from "notistack";

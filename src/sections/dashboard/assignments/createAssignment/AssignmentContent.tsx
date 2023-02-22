@@ -3,10 +3,7 @@ import Typography from "@mui/material/Typography";
 import { Box, Button, Select, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useUdpateAssignmentMutation } from "src/redux/services/manager";
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-} from "@components/hook-form";
+import FormProvider, { RHFSelect, RHFTextField } from "@components/hook-form";
 
 type AssignmentStepProps = {
   next: () => void;

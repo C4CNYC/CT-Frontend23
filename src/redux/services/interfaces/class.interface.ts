@@ -1,6 +1,5 @@
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-
 export interface IClass {
   total_students: number;
   name: string;

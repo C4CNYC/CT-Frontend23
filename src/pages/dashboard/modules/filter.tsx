@@ -37,66 +37,66 @@ export default function FilterModules() {
   };
   return (
     <>
-        <Stack
-          spacing={2}
-          sx={{mb: 4}}
-          alignItems="center"
-          direction={{
-            xs: "column",
-            sm: "row",
+      <Stack
+        spacing={2}
+        sx={{ mb: 4 }}
+        alignItems="center"
+        direction={{
+          xs: "column",
+          sm: "row",
+        }}
+      >
+        <TextField
+          sx={{
+            width: "260px",
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" sx={{ cursor: "pointer" }}>
+                <SearchOutlined />
+              </InputAdornment>
+            ),
+          }}
+        ></TextField>
+        <MenuPopover
+          open={openPopover}
+          onClose={handleClosePopover}
+          sx={{ width: 200, p: 0 }}
+        >
+          <Box sx={{ my: 1.5, px: 2.5 }}>
+            <Typography variant="subtitle2" noWrap>
+              Profile
+            </Typography>
+          </Box>
+          <Divider sx={{ borderStyle: "dashed" }} />
+        </MenuPopover>
+        <Button
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+          color="inherit"
+          sx={{ padding: "10px", height: "60px" }}
+        >
+          Course
+          <ListItemIcon>
+            <KeyboardArrowDownIcon fontSize="small" />
+          </ListItemIcon>
+        </Button>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
           }}
         >
-          <TextField
-            sx={{
-              width: "260px",
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end" sx={{ cursor: "pointer" }}>
-                  <SearchOutlined />
-                </InputAdornment>
-              ),
-            }}
-          ></TextField>
-          <MenuPopover
-            open={openPopover}
-            onClose={handleClosePopover}
-            sx={{ width: 200, p: 0 }}
-          >
-            <Box sx={{ my: 1.5, px: 2.5 }}>
-              <Typography variant="subtitle2" noWrap>
-                Profile
-              </Typography>
-            </Box>
-            <Divider sx={{ borderStyle: "dashed" }} />
-          </MenuPopover>
-          <Button
-            aria-controls={open ? "basic-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-            color="inherit"
-            sx={{ padding: "10px", height: "60px" }}
-          >
-            Course
-            <ListItemIcon>
-              <KeyboardArrowDownIcon fontSize="small" />
-            </ListItemIcon>
-          </Button>
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-          >
-            <MenuItem onClick={handleClose}>Low priority</MenuItem>
-            <MenuItem onClick={handleClose}>Medium priority</MenuItem>
-            <MenuItem onClick={handleClose}>Hight priority</MenuItem>
-          </Menu>
-        </Stack>
+          <MenuItem onClick={handleClose}>Low priority</MenuItem>
+          <MenuItem onClick={handleClose}>Medium priority</MenuItem>
+          <MenuItem onClick={handleClose}>Hight priority</MenuItem>
+        </Menu>
+      </Stack>
     </>
   );
 }

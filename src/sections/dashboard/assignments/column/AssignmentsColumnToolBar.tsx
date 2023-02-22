@@ -1,11 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  Stack,
-  IconButton,
-  Button,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Stack, IconButton, Button, Box, Typography } from "@mui/material";
 import Iconify from "@components/iconify";
 import ConfirmDialog from "@components/confirm-dialog";
 import Stepper from "./../createAssignment/Stepper";

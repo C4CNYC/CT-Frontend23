@@ -14,10 +14,7 @@ import _mock from "../../../_mock";
 import Iconify from "@components/iconify";
 import BadgeStatus from "@components/badge-status";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import {
-  CustomAvatar,
-  CustomAvatarGroup,
-} from "@components/custom-avatar";
+import { CustomAvatar, CustomAvatarGroup } from "@components/custom-avatar";
 // sections
 import { Block } from "@sections/_examples/Block";
 

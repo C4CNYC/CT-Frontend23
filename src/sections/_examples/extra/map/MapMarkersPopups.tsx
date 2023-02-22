@@ -4,12 +4,7 @@ import Map from "react-map-gl";
 import { Box, Typography } from "@mui/material";
 // components
 import Image from "@components/image";
-import {
-  MapPopup,
-  MapMarker,
-  MapControl,
-  MapBoxProps,
-} from "@components/map";
+import { MapPopup, MapMarker, MapControl, MapBoxProps } from "@components/map";
 
 // ----------------------------------------------------------------------
 

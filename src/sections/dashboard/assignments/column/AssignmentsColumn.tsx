@@ -4,7 +4,10 @@ import { useSnackbar } from "@components/snackbar";
 import AssignmentsTaskCard from "../AssignmentsTaskCard";
 
 // ----------------------------------------------------------------------
-import { IAssignmentsCard, IAssignmentsColumn } from "../../../../@types/assignments";
+import {
+  IAssignmentsCard,
+  IAssignmentsColumn,
+} from "../../../../@types/assignments";
 import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
 import { useDeleteAssignmentMutation } from "../../../../redux/services/manager";
 

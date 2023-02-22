@@ -3,9 +3,11 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 export interface OrganizationResponce extends BaseResponseInterface {
   title: string;
   name: string;
-  email: string;
+  email?: string;
   url: string;
   address: string;
+  cover?: string;
+  avatar?: string;
 }
 
 export interface ContactsResponce extends BaseResponseInterface {

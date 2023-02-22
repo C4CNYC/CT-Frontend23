@@ -6,10 +6,7 @@ import { Stack, Card, Typography, Link, CardProps } from "@mui/material";
 // components
 import Image from "@components/image";
 import { MotionContainer, varFade } from "@components/animate";
-import Carousel, {
-  CarouselDots,
-  CarouselArrows,
-} from "@components/carousel";
+import Carousel, { CarouselDots, CarouselArrows } from "@components/carousel";
 
 // ----------------------------------------------------------------------
 

@@ -4,10 +4,7 @@ import { Grid, Card, Stack, Box } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-} from "@components/hook-form";
+import FormProvider, { RHFSelect, RHFTextField } from "@components/hook-form";
 import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../../locales";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";

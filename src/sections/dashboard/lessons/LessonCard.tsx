@@ -6,7 +6,7 @@ import {
   Button,
   Divider,
   MenuItem,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
@@ -14,9 +14,7 @@ import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
 import ConfirmDialog from "@components/confirm-dialog";
 import { ILessonCreate } from "../../../redux/services/interfaces/courseUnits.interface";
-import {
-  useDeleteLessonMutation
-} from "../../../redux/services/manager";
+import { useDeleteLessonMutation } from "../../../redux/services/manager";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 
 // ----------------------------------------------------------------------
@@ -32,15 +30,12 @@ interface Props extends ILessonCreate {
   };
 }
 
-export default function LessonCard({
-                                     lesson
-                                   }: Props) {
+export default function LessonCard({ lesson }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteLesson] = useDeleteLessonMutation();
-
 
   const onDelete = async () => {
     if (lesson.id) {
@@ -49,7 +44,7 @@ export default function LessonCard({
         enqueueSnackbar("lesson deleted!");
       } catch (e) {
         enqueueSnackbar(e.data.message, {
-          variant: "error"
+          variant: "error",
         });
       }
     }
@@ -85,12 +80,19 @@ export default function LessonCard({
           maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
-            bgcolor: "grey.100"
-          }
+            bgcolor: "grey.100",
+          },
         }}
       >
-        <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: "absolute" }}>
-          <IconButton color={openPopover ? "inherit" : "default"} onClick={handleOpenPopover}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ top: 8, right: 8, position: "absolute" }}
+        >
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
@@ -111,10 +113,16 @@ export default function LessonCard({
           sx={{ typography: "caption", color: "text.disabled" }}
         >
           <Box>{lesson.description}</Box>
-          <Box sx={{ width: 2, height: 2, borderRadius: "50%", bgcolor: "currentColor" }} />
+          <Box
+            sx={{
+              width: 2,
+              height: 2,
+              borderRadius: "50%",
+              bgcolor: "currentColor",
+            }}
+          />
         </Stack>
       </Card>
-
 
       <MenuPopover
         open={openPopover}
@@ -129,7 +137,7 @@ export default function LessonCard({
             name: lesson.name,
             description: lesson.description,
             active: lesson.active,
-            type: lesson.type
+            type: lesson.type,
           }}
         >
           <MenuItem>

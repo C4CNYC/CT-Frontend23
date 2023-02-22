@@ -2,10 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Card, Stack, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFSelect,
-  RHFSwitch,
-} from "@components/hook-form";
+import FormProvider, { RHFSelect, RHFSwitch } from "@components/hook-form";
 import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../locales";
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";

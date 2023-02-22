@@ -1,6 +1,13 @@
 import { useState } from "react";
 import Head from "next/head";
-import { Card, Container, Box, Tabs, Tab } from "@mui/material";
+import {
+  Card,
+  Container,
+  Box,
+  Tabs,
+  Tab,
+  CircularProgress,
+} from "@mui/material";
 import DashboardLayout from "@layouts/dashboard";
 import { useSettingsContext } from "@components/settings";
 import { ProfileCover } from "@sections/dashboard/user/profile";
@@ -56,6 +63,8 @@ export default function UserProfilePage() {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetOrganizationQuery();
 
+  if (isLoading) return <CircularProgress />;
+
   return (
     <>
       <Head>
@@ -71,8 +80,9 @@ export default function UserProfilePage() {
         >
           <ProfileCover
             name={data?.title || ""}
-            role={data?.email || ""}
-            cover={"/assets/icons/shool/organization.svg"}
+            cover={data?.cover}
+            avatar={data?.avatar}
+            email={data?.email}
           />
           <Tabs
             value={currentTab}

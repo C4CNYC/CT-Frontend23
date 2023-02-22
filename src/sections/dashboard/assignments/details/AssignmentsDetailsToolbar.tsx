@@ -52,7 +52,6 @@ export default function AssignmentsDetailsToolbar({
           justifyContent="flex-end"
           flexGrow={1}
         >
-
           <Tooltip title="Attachment">
             <IconButton size="small" onClick={onAttach} disabled>
               <Iconify icon="eva:attach-2-fill" />
@@ -83,11 +82,7 @@ export default function AssignmentsDetailsToolbar({
           </>
         }
         action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={onDelete}
-          >
+          <Button variant="contained" color="error" onClick={onDelete}>
             Delete
           </Button>
         }

@@ -9,8 +9,15 @@ import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormProvider, { RHFSelect, RHFSwitch, RHFTextField } from "@components/hook-form";
-import { useUpdateLessonMutation, useCreateLessonMutation } from "../../../redux/services/manager";
+import FormProvider, {
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+} from "@components/hook-form";
+import {
+  useUpdateLessonMutation,
+  useCreateLessonMutation,
+} from "../../../redux/services/manager";
 import { useSnackbar } from "@components/snackbar";
 
 type FormValuesProps = {
@@ -28,16 +35,15 @@ type Prop = {
 };
 
 export default function CreateLessonDialog({
-                                             id,
-                                             isEdit,
-                                             children,
-                                             defaultValues
-                                           }: Prop) {
+  id,
+  isEdit,
+  children,
+  defaultValues,
+}: Prop) {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editLesson] = useUpdateLessonMutation();
   const [createLesson] = useCreateLessonMutation();
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,12 +56,12 @@ export default function CreateLessonDialog({
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("Description is required"),
-    type: Yup.string().required("Type is required")
+    type: Yup.string().required("Type is required"),
   });
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateCourseSchema),
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (data: FormValuesProps) => {
@@ -63,23 +69,22 @@ export default function CreateLessonDialog({
       if (isEdit && id) {
         await editLesson({
           id,
-          ...data
+          ...data,
         }).unwrap();
       } else {
         await createLesson({
-          ...data
+          ...data,
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {
       enqueueSnackbar(error.data.message, {
-        variant: "error"
+        variant: "error",
       });
       console.error(error, "test");
     }
     handleClose();
   };
-
 
   return (
     <>
@@ -110,28 +115,21 @@ export default function CreateLessonDialog({
                       rows={3}
                     />
 
-                    <RHFSelect
-                      name="type"
-                      required
-                      native
-                      label="Lesson type"
-                    >
+                    <RHFSelect name="type" required native label="Lesson type">
                       <option key="empty" value="empty"></option>
-                      <option key="multy_media" value="multy_media">MultyMedia</option>
+                      <option key="multy_media" value="multy_media">
+                        MultyMedia
+                      </option>
                     </RHFSelect>
 
-                    <RHFSwitch
-                      name="active"
-                      label="Module active"
-                    />
-
+                    <RHFSwitch name="active" label="Module active" />
                   </Box>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
                       gap: 2,
-                      mt: 7
+                      mt: 7,
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>

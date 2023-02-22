@@ -80,7 +80,6 @@ export default function InviteForm() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-
         <RHFTextField
           name="password"
           label="Password"

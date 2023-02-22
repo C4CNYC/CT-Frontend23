@@ -8,11 +8,7 @@ import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import {
-  useSnackbar,
-  VariantType,
-  SnackbarOrigin,
-} from "@components/snackbar";
+import { useSnackbar, VariantType, SnackbarOrigin } from "@components/snackbar";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import { Block } from "@sections/_examples/Block";

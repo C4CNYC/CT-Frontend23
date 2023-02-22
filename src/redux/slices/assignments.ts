@@ -4,7 +4,7 @@ import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import { IAssignment } from "../services/interfaces/assignment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { AssignmentStatuses } from "../services/enums/assignment-status.enum";
-import { IAssignmentsState, IAssignmentsCard} from "../../@types/assignments";
+import { IAssignmentsState, IAssignmentsCard } from "../../@types/assignments";
 
 // ----------------------------------------------------------------------
 

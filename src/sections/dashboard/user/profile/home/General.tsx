@@ -16,7 +16,7 @@ export default function General({ info }: Props) {
     <Grid container spacing={12}>
       <Grid item xs={12} md={12}>
         <Stack spacing={12}>
-          <GeneralContent/>
+          <GeneralContent />
         </Stack>
       </Grid>
     </Grid>

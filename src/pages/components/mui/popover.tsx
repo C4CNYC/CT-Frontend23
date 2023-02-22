@@ -20,9 +20,7 @@ import { PATH_PAGE } from "@routes/paths";
 import MainLayout from "../../../layouts/main";
 // components
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import MenuPopover, {
-  MenuPopoverArrowValue,
-} from "@components/menu-popover";
+import MenuPopover, { MenuPopoverArrowValue } from "@components/menu-popover";
 // sections
 import { Block } from "@sections/_examples/Block";
 

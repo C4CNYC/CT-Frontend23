@@ -9,8 +9,15 @@ import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormProvider, { RHFSelect, RHFSwitch, RHFTextField } from "@components/hook-form";
-import { useCreateCourseMutation, useUpdateCourseMutation } from "../../../redux/services/manager";
+import FormProvider, {
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+} from "@components/hook-form";
+import {
+  useCreateCourseMutation,
+  useUpdateCourseMutation,
+} from "../../../redux/services/manager";
 import { useSnackbar } from "@components/snackbar";
 
 type FormValuesProps = {
@@ -30,29 +37,27 @@ type Prop = {
 };
 
 export default function CreateCourseDialog({
-                                             id,
-                                             isEdit = false,
-                                             children,
-                                             defaultValues
-                                           }: Prop) {
+  id,
+  isEdit = false,
+  children,
+  defaultValues,
+}: Prop) {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editCourse] = useUpdateCourseMutation();
   const [createCourse] = useCreateCourseMutation();
 
-
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     level: Yup.string().required("Level is required"),
     price: Yup.string().required("Price is required"),
-    description: Yup.string().required("Description is required")
+    description: Yup.string().required("Description is required"),
   });
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateCourseSchema),
-    defaultValues
+    defaultValues,
   });
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -67,17 +72,17 @@ export default function CreateCourseDialog({
       if (isEdit && id) {
         await editCourse({
           id,
-          ...data
+          ...data,
         }).unwrap();
       } else {
         await createCourse({
-          ...data
+          ...data,
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {
       enqueueSnackbar(error.data.message, {
-        variant: "error"
+        variant: "error",
       });
       console.error(error, "test");
     }
@@ -104,12 +109,10 @@ export default function CreateCourseDialog({
                       label="Course name"
                     />
 
-                    <RHFSelect
-                      native
-                      name="level"
-                      label="Course level"
-                    >
-                      <option key="empty" value="empty">Select Level</option>
+                    <RHFSelect native name="level" label="Course level">
+                      <option key="empty" value="empty">
+                        Select Level
+                      </option>
                       <option key="beginner" value="beginner">
                         Beginner
                       </option>
@@ -121,7 +124,6 @@ export default function CreateCourseDialog({
                       </option>
                     </RHFSelect>
 
-
                     <FormGroup row style={{ flexWrap: "nowrap" }}>
                       <Button
                         variant="contained"
@@ -129,7 +131,7 @@ export default function CreateCourseDialog({
                           bgcolor: "grey.400",
                           color: "grey.800",
                           borderTopRightRadius: 0,
-                          borderBottomRightRadius: 0
+                          borderBottomRightRadius: 0,
                         }}
                         disableElevation
                       >
@@ -140,8 +142,8 @@ export default function CreateCourseDialog({
                           "& .MuiOutlinedInput-root": {
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
-                            borderLeftColor: "transparent"
-                          }
+                            borderLeftColor: "transparent",
+                          },
                         }}
                         name="price"
                         label="Course price"
@@ -157,23 +159,16 @@ export default function CreateCourseDialog({
                     />
 
                     <Stack direction="row" justifyContent="space-between">
-                      <RHFSwitch
-                        name="active"
-                        label="Course active"
-                      />
-                      <RHFSwitch
-                        name="draft"
-                        label="Draft"
-                      />
+                      <RHFSwitch name="active" label="Course active" />
+                      <RHFSwitch name="draft" label="Draft" />
                     </Stack>
-
                   </Box>
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
                       gap: 2,
-                      mt: 7
+                      mt: 7,
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>

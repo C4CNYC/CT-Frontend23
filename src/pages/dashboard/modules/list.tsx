@@ -1,16 +1,10 @@
 import Head from "next/head";
-import {
-  Button,
-  Box,
-  Container
-} from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
-import {
-  useGetModulesQuery
-} from "src/redux/services/manager";
+import { useGetModulesQuery } from "src/redux/services/manager";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
@@ -43,7 +37,7 @@ export default function ModulesListPage() {
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Modules", href: PATH_DASHBOARD.modules.root },
-            { name: "List" }
+            { name: "List" },
           ]}
           action={
             <CreateModuleDialog>
@@ -62,16 +56,12 @@ export default function ModulesListPage() {
           display="grid"
           gridTemplateColumns={{
             xs: "repeat(1, 1fr)",
-            md: "repeat(3, 1fr)"
+            md: "repeat(3, 1fr)",
           }}
         >
           {data?.data.map((module, index) => (
-            <ModuleCard
-              key={index}
-              module={module}
-            />
+            <ModuleCard key={index} module={module} />
           ))}
-
         </Box>
       </Container>
     </>

@@ -10,7 +10,6 @@ export type ICourse = {
   draft: boolean;
 };
 
-
 export type IUserSocialLink = {
   facebookLink: string;
   instagramLink: string;
@@ -40,9 +39,9 @@ export type IUserProfileAbout = {
 
 export type IUserProfile = IUserProfileFollowers &
   IUserProfileAbout & {
-  id: string;
-  socialLinks: IUserSocialLink;
-};
+    id: string;
+    socialLinks: IUserSocialLink;
+  };
 
 export type IUserProfileFollower = {
   id: string;

@@ -10,7 +10,10 @@ import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "@components/hook-form";
-import { useUpdateOrganizationMutation } from "src/redux/services/admin";
+import {
+  useUpdateOrganizationMutation,
+  useUpdateOrgAvatarMutation,
+} from "src/redux/services/admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 import { useLocales } from "../../../../../../locales";
 
@@ -27,6 +30,7 @@ type FormValuesProps = {
   email: string;
   address: string;
   url: string;
+  photoURL: File | null;
 };
 
 type OrganizationFormProps = {
@@ -38,6 +42,7 @@ export default function OrganizationForm({
 }: OrganizationFormProps) {
   const { translate } = useLocales();
   const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
+  const [updateOrgAvatar] = useUpdateOrgAvatarMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
@@ -45,6 +50,7 @@ export default function OrganizationForm({
     email: organization?.email || "",
     address: organization?.address || "",
     url: organization?.url || "",
+    photoURL: null,
   };
 
   const methods = useForm<FormValuesProps>({
@@ -63,9 +69,15 @@ export default function OrganizationForm({
           url: data.url,
           address: data.address,
         },
-      });
+      }).unwrap();
+      if (data.photoURL) {
+        const file = new FormData();
+        file.append("file", data.photoURL);
+        updateOrgAvatar({
+          file,
+        }).unwrap();
+      }
       enqueueSnackbar("Update success!");
-      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -80,7 +92,7 @@ export default function OrganizationForm({
       });
 
       if (file) {
-        // setValue("photoURL", newFile, { shouldValidate: true });
+        setValue("photoURL", newFile, { shouldValidate: true });
       }
     },
     [setValue]

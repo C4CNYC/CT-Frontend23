@@ -6,10 +6,7 @@ import DashboardLayout from "@layouts/dashboard";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import { useTable } from "@components/table";
-import {
-  FileFilterName,
-  SchoolGridView,
-} from "@sections/dashboard/schools";
+import { FileFilterName, SchoolGridView } from "@sections/dashboard/schools";
 
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
 import { useGetSchoolListQuery } from "src/redux/services/admin";

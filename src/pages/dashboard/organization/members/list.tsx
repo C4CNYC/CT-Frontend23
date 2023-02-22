@@ -31,10 +31,7 @@ import {
   TableSelectedAction,
   TablePaginationCustom,
 } from "@components/table";
-import {
-  UserTableToolbar,
-  UserTableRow,
-} from "@sections/dashboard/user/list";
+import { UserTableToolbar, UserTableRow } from "@sections/dashboard/user/list";
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,

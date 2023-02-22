@@ -1,9 +1,6 @@
 // components
 import Iconify from "@components/iconify";
-import {
-  IconButtonAnimate,
-  FabButtonAnimate,
-} from "@components/animate";
+import { IconButtonAnimate, FabButtonAnimate } from "@components/animate";
 
 // ----------------------------------------------------------------------
 

@@ -60,8 +60,7 @@ export default function LoadingScreen() {
           width: 100,
           height: 100,
           position: "absolute",
-          border: (theme) =>
-            `solid 3px ${alpha('#EA3569', 0.24)}`,
+          border: (theme) => `solid 3px ${alpha("#EA3569", 0.24)}`,
         }}
       />
 
@@ -82,8 +81,7 @@ export default function LoadingScreen() {
           width: 120,
           height: 120,
           position: "absolute",
-          border: (theme) =>
-            `solid 8px ${alpha("#FBDD3F", 0.24)}`,
+          border: (theme) => `solid 8px ${alpha("#FBDD3F", 0.24)}`,
         }}
       />
 
@@ -104,8 +102,7 @@ export default function LoadingScreen() {
           width: 120,
           height: 120,
           position: "absolute",
-          border: (theme) =>
-            `solid 8px ${alpha("#02D3D7", 0.24)}`,
+          border: (theme) => `solid 8px ${alpha("#02D3D7", 0.24)}`,
         }}
       />
     </StyledRoot>

@@ -4,10 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 // components
 import Image from "@components/image";
-import Carousel, {
-  CarouselDots,
-  CarouselArrows,
-} from "@components/carousel";
+import Carousel, { CarouselDots, CarouselArrows } from "@components/carousel";
 
 // ----------------------------------------------------------------------
 

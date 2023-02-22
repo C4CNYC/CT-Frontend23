@@ -7,7 +7,7 @@ import {
   Tooltip,
   Divider,
   TextField,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { IAssignmentsCard } from "../../../../@types/assignments";
 import Iconify from "@components/iconify";
@@ -26,14 +26,13 @@ import _ from "lodash";
 import { convertDuration } from "src/utils/convertDuration";
 import { CustomSmallSelect } from "@components/custom-input";
 
-
 // ----------------------------------------------------------------------
 
 const StyledLabel = styled("span")(({ theme }) => ({
   ...theme.typography.caption,
   width: 120,
   flexShrink: 0,
-  color: theme.palette.text.secondary
+  color: theme.palette.text.secondary,
 }));
 
 // ----------------------------------------------------------------------
@@ -48,13 +47,13 @@ type Props = {
 };
 
 export default function AssignmentsDetails({
-                                             task,
-                                             openDetails,
-                                             onCloseDetails,
-                                             onDeleteTask,
-                                             assignment,
-                                             school_id
-                                           }: Props) {
+  task,
+  openDetails,
+  onCloseDetails,
+  onDeleteTask,
+  assignment,
+  school_id,
+}: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { enqueueSnackbar } = useSnackbar();
   const [updateAssignment] = useUdpateAssignmentMutation();
@@ -64,12 +63,12 @@ export default function AssignmentsDetails({
     value: string | number | null
   ) => {
     try {
-      if(assignment[fieldName] === value) return;
+      if (assignment[fieldName] === value) return;
 
       await updateAssignment({
         assignment_id: assignment.id,
         school_id,
-        [fieldName]: value
+        [fieldName]: value,
       }).unwrap();
       enqueueSnackbar(`${fieldName} updated`);
     } catch (e) {
@@ -90,9 +89,9 @@ export default function AssignmentsDetails({
         sx: {
           width: {
             xs: 1,
-            sm: 480
-          }
-        }
+            sm: 480,
+          },
+        },
       }}
     >
       <AssignmentsDetailsToolbar
@@ -135,7 +134,7 @@ export default function AssignmentsDetails({
                     p: 1,
                     ml: 0.5,
                     bgcolor: (theme) => alpha(theme.palette.grey[500], 0.08),
-                    border: (theme) => `dashed 1px ${theme.palette.divider}`
+                    border: (theme) => `dashed 1px ${theme.palette.divider}`,
                   }}
                 >
                   <Iconify icon="eva:plus-fill" />
@@ -149,10 +148,7 @@ export default function AssignmentsDetails({
               /> */}
             </Stack>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Type:</StyledLabel>
             <CustomSmallSelect
               value={assignment.type}
@@ -168,10 +164,7 @@ export default function AssignmentsDetails({
               ))}
             </CustomSmallSelect>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Complexity:</StyledLabel>
 
             <AssignmentsDetailsPrioritizes
@@ -179,10 +172,7 @@ export default function AssignmentsDetails({
               onChangePrioritize={(value) => updateField("complexity", value)}
             />
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel> Start Date: </StyledLabel>
             <DateTimePicker
               value={assignment.start_date}
@@ -202,17 +192,14 @@ export default function AssignmentsDetails({
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                       border: "solid 1px transparent !important",
-                    }
+                    },
                   }}
                   style={{ margin: 0, width: "200px" }}
                 />
               )}
             />
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel> End Date: </StyledLabel>
             <DateTimePicker
               value={assignment.end_date}
@@ -230,20 +217,21 @@ export default function AssignmentsDetails({
                     },
                     "& .MuiOutlinedInput-notchedOutline": {
                       border: "solid 1px transparent !important",
-                    }
+                    },
                   }}
                   style={{ margin: 0, width: "200px" }}
                 />
               )}
             />
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Duration:</StyledLabel>
             <CustomSmallSelect
-              value={assignment.duration ? convertDuration(assignment.duration) : null}
+              value={
+                assignment.duration
+                  ? convertDuration(assignment.duration)
+                  : null
+              }
               onChange={(e) =>
                 updateField("duration", (e.target.value as string) || null)
               }
@@ -274,14 +262,9 @@ export default function AssignmentsDetails({
               </option>
             </CustomSmallSelect>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Grade:</StyledLabel>
-            <CustomSmallSelect
-              value=""
-            >
+            <CustomSmallSelect value="">
               <option key="empty" value="en">
                 Grade 0
               </option>
@@ -294,10 +277,7 @@ export default function AssignmentsDetails({
             </CustomSmallSelect>
           </Stack>
 
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Points:</StyledLabel>
             <AssignmentInput
               type="number"
@@ -313,16 +293,13 @@ export default function AssignmentsDetails({
                   transition: (theme) =>
                     theme.transitions.create(["padding-left"]),
                   "&:hover, &:focus": {
-                    pl: 1
-                  }
-                }
+                    pl: 1,
+                  },
+                },
               }}
             />
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Course:</StyledLabel>
 
             <CustomSmallSelect>
@@ -337,10 +314,7 @@ export default function AssignmentsDetails({
               </option>
             </CustomSmallSelect>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="center"
-          >
+          <Stack direction="row" alignItems="center">
             <StyledLabel>Lesson:</StyledLabel>
             <CustomSmallSelect>
               <option key="empty" value="en">
@@ -354,7 +328,7 @@ export default function AssignmentsDetails({
               </option>
             </CustomSmallSelect>
           </Stack>
-          <Stack alignItems="start" >
+          <Stack alignItems="start">
             <StyledLabel>Description:</StyledLabel>
             <AssignmentInput
               multiline
@@ -371,9 +345,9 @@ export default function AssignmentsDetails({
                   transition: (theme) =>
                     theme.transitions.create(["padding-left"]),
                   "&:hover, &:focus": {
-                    pl: 1
-                  }
-                }
+                    pl: 1,
+                  },
+                },
               }}
             />
           </Stack>

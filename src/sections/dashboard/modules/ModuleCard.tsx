@@ -6,7 +6,7 @@ import {
   Button,
   Divider,
   MenuItem,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
@@ -15,7 +15,10 @@ import { useSnackbar } from "@components/snackbar";
 import ConfirmDialog from "@components/confirm-dialog";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import { IModule } from "../../../redux/services/interfaces/class.interface";
-import { useDeleteAssignmentMutation, useDeleteModuleMutation } from "../../../redux/services/manager";
+import {
+  useDeleteAssignmentMutation,
+  useDeleteModuleMutation,
+} from "../../../redux/services/manager";
 import { PATH_DASHBOARD } from "@routes/paths";
 
 // ----------------------------------------------------------------------
@@ -33,15 +36,12 @@ interface Props extends IModule {
   };
 }
 
-export default function ModuleCard({
-                                     module
-                                   }: Props) {
+export default function ModuleCard({ module }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteModule] = useDeleteModuleMutation();
-
 
   const onDelete = async () => {
     try {
@@ -49,7 +49,7 @@ export default function ModuleCard({
       enqueueSnackbar("Module deleted!");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error"
+        variant: "error",
       });
     }
   };
@@ -84,12 +84,19 @@ export default function ModuleCard({
           maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
-            bgcolor: "grey.100"
-          }
+            bgcolor: "grey.100",
+          },
         }}
       >
-        <Stack direction="row" alignItems="center" sx={{ top: 8, right: 8, position: "absolute" }}>
-          <IconButton color={openPopover ? "inherit" : "default"} onClick={handleOpenPopover}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ top: 8, right: 8, position: "absolute" }}
+        >
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
@@ -110,10 +117,16 @@ export default function ModuleCard({
           sx={{ typography: "caption", color: "text.disabled" }}
         >
           <Box>{module.description}</Box>
-          <Box sx={{ width: 2, height: 2, borderRadius: "50%", bgcolor: "currentColor" }} />
+          <Box
+            sx={{
+              width: 2,
+              height: 2,
+              borderRadius: "50%",
+              bgcolor: "currentColor",
+            }}
+          />
         </Stack>
       </Card>
-
 
       <MenuPopover
         open={openPopover}
@@ -124,11 +137,17 @@ export default function ModuleCard({
         <CreateModuleDialog
           isEdit
           id={module.id}
-          defaultValues={{ name: module.name, description: module.description, active: module.active }}
+          defaultValues={{
+            name: module.name,
+            description: module.description,
+            active: module.active,
+          }}
         >
-          <MenuItem onClick={() => {
-            handleClosePopover();
-          }}>
+          <MenuItem
+            onClick={() => {
+              handleClosePopover();
+            }}
+          >
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>

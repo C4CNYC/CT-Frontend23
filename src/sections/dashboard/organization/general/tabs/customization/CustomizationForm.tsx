@@ -2,9 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Stack, Typography, Box } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFTextField,
-} from "@components/hook-form";
+import FormProvider, { RHFTextField } from "@components/hook-form";
 import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
 import { useLocales } from "../../../../../../locales";

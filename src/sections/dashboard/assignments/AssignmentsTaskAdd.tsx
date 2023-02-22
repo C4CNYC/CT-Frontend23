@@ -31,7 +31,10 @@ type Props = {
   onCloseAddTask: VoidFunction;
 };
 
-export default function AssignmentsTaskAdd({ onAddTask, onCloseAddTask }: Props) {
+export default function AssignmentsTaskAdd({
+  onAddTask,
+  onCloseAddTask,
+}: Props) {
   const [name, setName] = useState("");
 
   const [completed, setCompleted] = useState(false);

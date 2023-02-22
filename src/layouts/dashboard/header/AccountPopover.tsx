@@ -76,7 +76,7 @@ export default function AccountPopover() {
         }}
       >
         <CustomAvatar
-          src={user?.photoURL}
+          src={user?.avatar}
           alt={user?.displayName}
           name={user?.displayName}
         />

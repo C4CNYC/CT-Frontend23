@@ -8,7 +8,12 @@ import Iconify from "@components/iconify";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";
-import { SchoolSettingsTab, SchoolProfileTab, SchoolSocialsTab, SchoolContactsTab } from "@sections/schools/tabs";
+import {
+  SchoolSettingsTab,
+  SchoolProfileTab,
+  SchoolSocialsTab,
+  SchoolContactsTab,
+} from "@sections/schools/tabs";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 
@@ -30,26 +35,26 @@ export default function UserProfilePage() {
       value: "profile",
       label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <SchoolProfileTab school_id={school_id} />
+      component: <SchoolProfileTab school_id={school_id} />,
     },
     {
       value: "settings",
       label: "Settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
-      component: <SchoolSettingsTab school_id={school_id} />
+      component: <SchoolSettingsTab school_id={school_id} />,
     },
     {
       value: "contacts",
       label: "Contacts",
       icon: <MdContacts />,
-      component: <SchoolContactsTab school_id={school_id} />
+      component: <SchoolContactsTab school_id={school_id} />,
     },
     {
       value: "socials",
       label: "Social Networks",
       icon: <BsPeopleFill />,
-      component: <SchoolSocialsTab school_id={school_id} />
-    }
+      component: <SchoolSocialsTab school_id={school_id} />,
+    },
   ];
 
   return (
@@ -62,7 +67,7 @@ export default function UserProfilePage() {
           sx={{
             mb: 3,
             height: 280,
-            position: "relative"
+            position: "relative",
           }}
         >
           <ProfileCover
@@ -83,9 +88,9 @@ export default function UserProfilePage() {
                 pr: { md: 3 },
                 justifyContent: {
                   sm: "center",
-                  md: "flex-end"
-                }
-              }
+                  md: "flex-end",
+                },
+              },
             }}
           >
             {TABS.map((tab) => (

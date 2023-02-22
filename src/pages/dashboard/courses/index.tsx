@@ -3,9 +3,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import { Container } from "@mui/system";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import {
-  Button, Box
-} from "@mui/material";
+import { Button, Box } from "@mui/material";
 import Iconify from "@components/iconify";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { CourseCard } from "@sections/dashboard/courses/cards";
@@ -37,7 +35,7 @@ export default function CoursesListPage() {
           heading="Courses"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "Courses", href: PATH_DASHBOARD.courses.root }
+            { name: "Courses", href: PATH_DASHBOARD.courses.root },
           ]}
           action={
             <CreateCourseDialog>
@@ -57,7 +55,7 @@ export default function CoursesListPage() {
           gridTemplateColumns={{
             xs: "repeat(1, 1fr)",
             sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)"
+            md: "repeat(3, 1fr)",
           }}
         >
           {data?.data.map((course, index) => (

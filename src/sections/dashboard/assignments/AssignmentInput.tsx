@@ -13,8 +13,7 @@ export default function AssignmentInput({ sx, ...other }: InputBaseProps) {
           borderRadius: 1,
           typography: "h6",
           border: `solid 1px transparent`,
-          transition: (theme) =>
-            theme.transitions.create(["padding-left"]),
+          transition: (theme) => theme.transitions.create(["padding-left"]),
           "&:hover, &:focus": {
             pl: 1,
           },

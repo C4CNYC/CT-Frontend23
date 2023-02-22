@@ -1,10 +1,6 @@
 import { useState } from "react";
 import Head from "next/head";
-import {
-  Button,
-  Box,
-  Container
-} from "@mui/material";
+import { Button, Box, Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
@@ -47,7 +43,7 @@ export default function LessonsListPage() {
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Lessons", href: PATH_DASHBOARD.lessons.root },
-            { name: "List" }
+            { name: "List" },
           ]}
           action={
             <CreateLessonDialog>
@@ -67,16 +63,12 @@ export default function LessonsListPage() {
           display="grid"
           gridTemplateColumns={{
             xs: "repeat(1, 1fr)",
-            md: "repeat(3, 1fr)"
+            md: "repeat(3, 1fr)",
           }}
         >
           {data?.data.map((lesson) => (
-            <LessonCard
-              key={lesson.id}
-              lesson={lesson}
-            />
+            <LessonCard key={lesson.id} lesson={lesson} />
           ))}
-
         </Box>
       </Container>
     </>

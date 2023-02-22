@@ -4,10 +4,7 @@ import { Grid, Box, MenuItem, Select } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-} from "@components/hook-form";
+import FormProvider, { RHFSelect, RHFTextField } from "@components/hook-form";
 import { SchoolSocials } from "../../../../redux/services/interfaces/school.interface";
 import { useCreateSchoolSocialMutation } from "../../../../redux/services/manager";
 import { yupResolver } from "@hookform/resolvers/yup";

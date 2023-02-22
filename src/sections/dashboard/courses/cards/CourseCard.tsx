@@ -1,4 +1,13 @@
-import { Box, Card, Divider, Typography, Stack, MenuItem, IconButton, Button } from "@mui/material";
+import {
+  Box,
+  Card,
+  Divider,
+  Typography,
+  Stack,
+  MenuItem,
+  IconButton,
+  Button,
+} from "@mui/material";
 import { ICourse } from "../../../../@types/courses";
 import Label from "@components/label";
 import Image from "@components/image";
@@ -16,14 +25,7 @@ type Props = {
 };
 
 export default function CourseCard({ course }: Props) {
-  const {
-    name,
-    level,
-    price,
-    description,
-    active,
-    cover
-  } = course;
+  const { name, level, price, description, active, cover } = course;
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [deleteCourse] = useDeleteCourseMutation();
@@ -52,41 +54,66 @@ export default function CourseCard({ course }: Props) {
       enqueueSnackbar("Course deleted!");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error"
+        variant: "error",
       });
     }
   };
 
   return (
     <>
-      <Card sx={{
-        textAlign: "center",
-        pb: 2,
-        textDecoration: "none",
-        border: "1px solid transparent",
-        "&:hover": {
-          borderColor: "grey.400",
-          borderWidth: 1,
-          borderStyle: "solid"
-        }
-      }} component="a"
-            href={`${PATH_DASHBOARD.modules.root}?id=${course.id}`}>
-        <Stack direction="row" alignItems="center" sx={{ zIndex: 2, top: 8, right: 8, position: "absolute" }}>
-          <IconButton color={openPopover ? "inherit" : "default"} onClick={handleOpenPopover}>
+      <Card
+        sx={{
+          textAlign: "center",
+          pb: 2,
+          textDecoration: "none",
+          border: "1px solid transparent",
+          "&:hover": {
+            borderColor: "grey.400",
+            borderWidth: 1,
+            borderStyle: "solid",
+          },
+        }}
+        component="a"
+        href={`${PATH_DASHBOARD.modules.root}?id=${course.id}`}
+      >
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ zIndex: 2, top: 8, right: 8, position: "absolute" }}
+        >
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
 
-        <Box sx={{ position: "relative", borderBottom: "1px solid rgba(145, 158, 171, 0.24)" }}>
-          <Image src={cover || "/assets/icons/files/ic_folder.svg"} alt={cover} ratio="16/9"
-                 style={{ objectFit: "contain", padding: 10 }} />
+        <Box
+          sx={{
+            position: "relative",
+            borderBottom: "1px solid rgba(145, 158, 171, 0.24)",
+          }}
+        >
+          <Image
+            src={cover || "/assets/icons/files/ic_folder.svg"}
+            alt={cover}
+            ratio="16/9"
+            style={{ objectFit: "contain", padding: 10 }}
+          />
         </Box>
 
         <Box sx={{ position: "relative" }}>
           <Label
             variant="soft"
             color={active ? "success" : "error"}
-            sx={{ textTransform: "uppercase", mr: "auto", position: "absolute", top: 10, right: 10 }}
+            sx={{
+              textTransform: "uppercase",
+              mr: "auto",
+              position: "absolute",
+              top: 10,
+              right: 10,
+            }}
           >
             {active ? "Active" : "Not Active"}
           </Label>
@@ -99,17 +126,24 @@ export default function CourseCard({ course }: Props) {
           </Typography>
         </Box>
 
-
         <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" sx={{ pt: 3 }}>
           <div>
-            <Typography variant="caption" component="div" sx={{ mb: 0.75, color: "text.disabled" }}>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ mb: 0.75, color: "text.disabled" }}
+            >
               Level
             </Typography>
             <Typography variant="subtitle1">{level}</Typography>
           </div>
 
           <div>
-            <Typography variant="caption" component="div" sx={{ mb: 0.75, color: "text.disabled" }}>
+            <Typography
+              variant="caption"
+              component="div"
+              sx={{ mb: 0.75, color: "text.disabled" }}
+            >
               Price
             </Typography>
             <Typography variant="subtitle1">{price}</Typography>
@@ -122,7 +156,6 @@ export default function CourseCard({ course }: Props) {
           {/*    <Typography variant="subtitle1">10H</Typography>*/}
           {/*  </div>*/}
         </Box>
-
       </Card>
       <MenuPopover
         open={openPopover}
@@ -139,7 +172,7 @@ export default function CourseCard({ course }: Props) {
             price: course.price.substring(1),
             description: course.description,
             active: course.active,
-            draft: course.draft
+            draft: course.draft,
           }}
         >
           <MenuItem>

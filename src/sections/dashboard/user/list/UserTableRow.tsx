@@ -34,7 +34,7 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { first_name, last_name, email, verified, active, role, id } = row;
+  const { first_name, last_name, email, verified, active, avatar, role, id } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -62,7 +62,7 @@ export default function UserTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={first_name} src="/assets/images/avatar_2.jpg" />
+            <Avatar alt={first_name} src={avatar || "/assets/images/avatar_2.jpg"} />
           </Stack>
         </TableCell>
 

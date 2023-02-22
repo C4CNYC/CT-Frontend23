@@ -2,7 +2,6 @@ import Head from "next/head";
 import GuestGuard from "../../auth/GuestGuard";
 import Login from "@sections/auth/Login";
 
-
 export default function LoginPage() {
   return (
     <>
@@ -13,7 +12,6 @@ export default function LoginPage() {
       <GuestGuard>
         <Login />
       </GuestGuard>
-
     </>
   );
 }

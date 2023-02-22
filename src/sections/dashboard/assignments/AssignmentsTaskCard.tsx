@@ -1,13 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import * as _ from "lodash";
-import {
-  Paper,
-  Typography,
-  Box,
-  Stack,
-  Tooltip,
-} from "@mui/material";
+import { Paper, Typography, Box, Stack, Tooltip } from "@mui/material";
 
 import NextImage from "next/image";
 import Image from "@components/image";
