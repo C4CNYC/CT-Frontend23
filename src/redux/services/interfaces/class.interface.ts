@@ -16,32 +16,5 @@ export interface IModule {
   key: any;
   name: string;
   type: string;
-  description: string;
-}
-
-export interface ILesson {
-  active: boolean;
-  name: string;
-  description: string;
-  data: [];
-}
-
-export interface IModuleCreate {
-  active: boolean;
-  name: string;
-  description: string;
-}
-
-export interface ILessonCreate {
-  active: boolean;
-  name: string;
-  description: string;
-}
-
-export interface IModuleDelete {
-  id: string;
-}
-
-export interface ILessonDelete {
-  id: string;
+  description?: string;
 }

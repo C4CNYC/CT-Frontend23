@@ -13,15 +13,15 @@ import MenuPopover from "@components/menu-popover";
 import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
 import ConfirmDialog from "@components/confirm-dialog";
-import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import { IModule } from "../../../redux/services/interfaces/class.interface";
+import { ILessonCreate } from "../../../redux/services/interfaces/courseUnits.interface";
 import {
   useDeleteLessonMutation
 } from "../../../redux/services/manager";
+import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 
 // ----------------------------------------------------------------------
 
-interface Props extends IModule {
+interface Props extends ILessonCreate {
   lesson: {
     name: string;
     description: string;
@@ -43,13 +43,15 @@ export default function LessonCard({
 
 
   const onDelete = async () => {
-    try {
-      await deleteLesson({ id: lesson.id }).unwrap();
-      enqueueSnackbar("lesson deleted!");
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
-        variant: "error"
-      });
+    if (lesson.id) {
+      try {
+        await deleteLesson({ id: lesson.id }).unwrap();
+        enqueueSnackbar("lesson deleted!");
+      } catch (e) {
+        enqueueSnackbar(e.data.message, {
+          variant: "error"
+        });
+      }
     }
   };
 
@@ -94,7 +96,7 @@ export default function LessonCard({
         </Stack>
         <Box
           component="img"
-          src="/assets/icons/files/ic_folder.svg"
+          src="/assets/icons/files/ic_file.svg"
           sx={{ width: 40, height: 40 }}
         />
 
@@ -120,7 +122,7 @@ export default function LessonCard({
         arrow="right-top"
         sx={{ width: 160 }}
       >
-        <CreateCourseDialog
+        <CreateLessonDialog
           isEdit
           id={lesson.id}
           defaultValues={{
@@ -134,7 +136,7 @@ export default function LessonCard({
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>
-        </CreateCourseDialog>
+        </CreateLessonDialog>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

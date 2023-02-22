@@ -60,15 +60,15 @@ export default function CreateLessonDialog({
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      if (!isEdit) {
-        await createLesson({
-          ...data
-        }).unwrap();
-      } else {
+      if (isEdit && id) {
         await editLesson({
           id,
           ...data
-        });
+        }).unwrap();
+      } else {
+        await createLesson({
+          ...data
+        }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {

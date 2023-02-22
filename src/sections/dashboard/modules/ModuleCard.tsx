@@ -16,6 +16,7 @@ import ConfirmDialog from "@components/confirm-dialog";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import { IModule } from "../../../redux/services/interfaces/class.interface";
 import { useDeleteAssignmentMutation, useDeleteModuleMutation } from "../../../redux/services/manager";
+import { PATH_DASHBOARD } from "@routes/paths";
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +24,7 @@ interface Props extends IModule {
   // folder: IFolderManager;
   selected?: boolean;
   onSelect?: VoidFunction;
+  key: number;
   module: {
     name: string;
     description: string;
@@ -72,7 +74,7 @@ export default function ModuleCard({
     <>
       <Card
         component="a"
-        href="#"
+        href={`${PATH_DASHBOARD.lessons.root}?id=${module.id}`}
         sx={{
           textDecoration: "none",
           p: 2.5,

@@ -15,12 +15,11 @@ import { useSnackbar } from "@components/snackbar";
 
 type FormValuesProps = {
   name: string;
-  level?: string;
-  price?: string;
+  level: string;
+  price: string;
   description: string;
   active: boolean;
-  draft?: boolean;
-  type?: string;
+  draft: boolean;
 };
 
 type Prop = {
@@ -28,9 +27,6 @@ type Prop = {
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
-  type?: string;
-  level?: string;
-  price?: string;
 };
 
 export default function CreateCourseDialog({
@@ -68,15 +64,15 @@ export default function CreateCourseDialog({
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      if (!isEdit) {
-        await createCourse({
-          ...data
-        }).unwrap();
-      } else {
+      if (isEdit && id) {
         await editCourse({
           id,
           ...data
-        });
+        }).unwrap();
+      } else {
+        await createCourse({
+          ...data
+        }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {

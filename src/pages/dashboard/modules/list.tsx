@@ -1,30 +1,19 @@
-import { useState } from "react";
 import Head from "next/head";
 import {
   Button,
   Box,
-  Container, IconButton
+  Container
 } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
-import { useFilters } from "@hooks/useFilters";
 import {
-  useCreateClassesMutation,
-  useDeleteClassesMutation,
-  useGetClassesQuery, useGetModulesQuery, useGetMySchoolsQuery
+  useGetModulesQuery
 } from "src/redux/services/manager";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
-import { useSnackbar } from "notistack";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
-import { useUpdateClassesMutation } from "src/redux/services/manager";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import { _socials } from "../../../_mock/arrays";
-import { alpha } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -35,35 +24,11 @@ ModulesListPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function ModulesListPage() {
-  const [openConfirm, setOpenConfirm] = useState(false);
-
-  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
-    name: ""
-  });
-
   const { data, isLoading } = useGetModulesQuery();
-
-  // const handleDeleteMember = async (class_id: string) => {
-  //   try {
-  //     await deleteCasses({ class_id, school_id }).unwrap();
-  //   } catch (e) {
-  //     enqueueSnackbar(e.data.message, {
-  //       variant: "error"
-  //     });
-  //   }
-  // };
-
-
-  const createModule = async (data: string) => {
-    console.log("create module");
-  };
 
   if (isLoading) return "loading";
   if (data.data.length === 0) return "no data";
-
 
   return (
     <>
@@ -99,14 +64,10 @@ export default function ModulesListPage() {
             md: "repeat(3, 1fr)"
           }}
         >
-          {data?.data.map((module) => (
+          {data?.data.map((module, index) => (
             <ModuleCard
-              key={module.id}
+              key={index}
               module={module}
-              // selected={selected.includes("folder.id")}
-              onSelect={() => console.log("qwe")}
-              onDelete={() => console.log("qwe")}
-
             />
           ))}
 

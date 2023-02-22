@@ -7,7 +7,7 @@ export type ICourse = {
   description: string;
   cover?: string;
   active: boolean;
-  draft?: boolean;
+  draft: boolean;
 };
 
 

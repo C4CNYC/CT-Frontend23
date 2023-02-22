@@ -1,4 +1,3 @@
-import { alpha, styled } from "@mui/material/styles";
 import { Box, Card, Divider, Typography, Stack, MenuItem, IconButton, Button } from "@mui/material";
 import { ICourse } from "../../../../@types/courses";
 import Label from "@components/label";
@@ -10,6 +9,7 @@ import { useSnackbar } from "@components/snackbar";
 import { useState } from "react";
 import ConfirmDialog from "@components/confirm-dialog";
 import { useDeleteCourseMutation } from "../../../../redux/services/manager";
+import { PATH_DASHBOARD } from "@routes/paths";
 
 type Props = {
   course: ICourse;
@@ -59,7 +59,18 @@ export default function CourseCard({ course }: Props) {
 
   return (
     <>
-      <Card sx={{ textAlign: "center", pb: 2 }}>
+      <Card sx={{
+        textAlign: "center",
+        pb: 2,
+        textDecoration: "none",
+        border: "1px solid transparent",
+        "&:hover": {
+          borderColor: "grey.400",
+          borderWidth: 1,
+          borderStyle: "solid"
+        }
+      }} component="a"
+            href={`${PATH_DASHBOARD.modules.root}?id=${course.id}`}>
         <Stack direction="row" alignItems="center" sx={{ zIndex: 2, top: 8, right: 8, position: "absolute" }}>
           <IconButton color={openPopover ? "inherit" : "default"} onClick={handleOpenPopover}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -130,7 +141,7 @@ export default function CourseCard({ course }: Props) {
             active: course.active,
             draft: course.draft
           }}
-         >
+        >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
             Edit
