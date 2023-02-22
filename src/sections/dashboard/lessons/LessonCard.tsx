@@ -19,7 +19,7 @@ import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 
 // ----------------------------------------------------------------------
 
-interface Props extends ILessonCreate {
+type Props  = {
   lesson: {
     name: string;
     description: string;

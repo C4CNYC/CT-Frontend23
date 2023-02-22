@@ -58,6 +58,8 @@ export default function LessonsListPage() {
         />
 
         <FilterLessons />
+
+
         <Box
           gap={2}
           display="grid"
@@ -66,8 +68,8 @@ export default function LessonsListPage() {
             md: "repeat(3, 1fr)",
           }}
         >
-          {data?.data.map((lesson) => (
-            <LessonCard key={lesson.id} lesson={lesson} />
+          {data?.data.map((lesson, index) => (
+            <LessonCard key={index} lesson={lesson} />
           ))}
         </Box>
       </Container>
