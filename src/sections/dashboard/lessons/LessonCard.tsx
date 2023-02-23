@@ -14,12 +14,11 @@ import {
 } from "@mui/material";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import { useState } from "react";
-import { ILessonCreate } from "../../../redux/services/interfaces/courseUnits.interface";
 import { useDeleteLessonMutation } from "../../../redux/services/manager";
 
 // ----------------------------------------------------------------------
 
-type Props  = {
+interface Props {
   lesson: {
     name: string;
     description: string;
