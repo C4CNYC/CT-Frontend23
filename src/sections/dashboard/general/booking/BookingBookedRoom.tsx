@@ -1,14 +1,14 @@
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
+  Box,
   Card,
   CardHeader,
-  Typography,
-  Stack,
-  LinearProgress,
-  Box,
   CardProps,
+  LinearProgress,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 
@@ -17,11 +17,11 @@ import { fShortenNumber } from "../../../../utils/formatNumber";
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  data: {
+  data: Array<{
     status: string;
     quantity: number;
     value: number;
-  }[];
+  }>;
 }
 
 export default function BookingBookedRoom({
@@ -29,7 +29,7 @@ export default function BookingBookedRoom({
   subheader,
   data,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />

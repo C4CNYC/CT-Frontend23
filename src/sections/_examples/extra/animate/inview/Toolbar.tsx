@@ -1,23 +1,23 @@
 // @mui
 import {
   Box,
-  Paper,
   FormControlLabel,
-  Switch,
   IconButton,
+  Paper,
+  Switch,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-type ToolbarProps = {
+interface ToolbarProps {
   isText: boolean;
   isMulti: boolean;
   onChangeText: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangeMulti: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onRefresh: VoidFunction;
-};
+}
 
 export default function Toolbar({
   isText,
@@ -26,7 +26,7 @@ export default function Toolbar({
   onChangeMulti,
   onRefresh,
   ...other
-}: ToolbarProps) {
+}: ToolbarProps): React.ReactElement | null {
   return (
     <Paper
       sx={{

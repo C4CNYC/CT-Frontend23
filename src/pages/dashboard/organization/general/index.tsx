@@ -1,24 +1,24 @@
-import { useState } from "react";
-import Head from "next/head";
-import {
-  Card,
-  Container,
-  Box,
-  Tabs,
-  Tab,
-  CircularProgress,
-} from "@mui/material";
-import DashboardLayout from "@layouts/dashboard";
 import { useSettingsContext } from "@components/settings";
+import DashboardLayout from "@layouts/dashboard";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Container,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import { ProfileCover } from "@sections/dashboard/user/profile";
+import Head from "next/head";
+import { useState } from "react";
 // auth
-import { useGetOrganizationQuery } from "src/redux/services/admin";
 import Iconify from "@components/iconify";
-import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
-import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
-import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
-import { useLocales } from "../../../../locales";
 import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
+import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
+import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
+import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
+import { useGetOrganizationQuery } from "src/redux/services/admin";
+import { useLocales } from "../../../../locales";
 
 // components
 // ----------------------------------------------------------------------
@@ -29,7 +29,7 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function UserProfilePage() {
+export default function UserProfilePage(): React.ReactElement {
   const { translate } = useLocales();
   const TABS = [
     {
@@ -79,14 +79,16 @@ export default function UserProfilePage() {
           }}
         >
           <ProfileCover
-            name={data?.title || ""}
+            name={data?.title ?? ""}
             cover={data?.cover}
             avatar={data?.avatar}
             email={data?.email}
           />
           <Tabs
             value={currentTab}
-            onChange={(event, newValue) => setCurrentTab(newValue)}
+            onChange={(event, newValue) => {
+              setCurrentTab(newValue);
+            }}
             sx={{
               width: 1,
               bottom: 0,
@@ -107,7 +109,7 @@ export default function UserProfilePage() {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label as string}
+                label={tab.label}
               />
             ))}
           </Tabs>

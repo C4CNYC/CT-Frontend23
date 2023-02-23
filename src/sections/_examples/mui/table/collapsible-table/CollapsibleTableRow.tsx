@@ -1,15 +1,15 @@
 import { useState } from "react";
 // @mui
 import {
+  Collapse,
+  IconButton,
   Paper,
   Table,
-  Collapse,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableRow,
   Typography,
-  IconButton,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
@@ -18,11 +18,13 @@ import createData from "./createData";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   row: ReturnType<typeof createData>;
-};
+}
 
-export default function CollapsibleTableRow({ row }: Props) {
+export default function CollapsibleTableRow({
+  row,
+}: Props): React.ReactElement | null {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,7 +34,9 @@ export default function CollapsibleTableRow({ row }: Props) {
           <IconButton
             size="small"
             color={open ? "inherit" : "default"}
-            onClick={() => setOpen(!open)}
+            onClick={() => {
+              setOpen(!open);
+            }}
           >
             <Iconify
               icon={

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import NProgress from "nprogress";
+import { useEffect } from "react";
 // next
 import { useRouter } from "next/router";
 //
@@ -7,16 +7,16 @@ import StyledProgressBar from "./styles";
 
 // ----------------------------------------------------------------------
 
-export default function ProgressBar() {
+export default function ProgressBar(): React.ReactElement {
   const router = useRouter();
 
   NProgress.configure({ showSpinner: false });
 
   useEffect(() => {
-    const handleStart = () => {
+    const handleStart = (): void => {
       NProgress.start();
     };
-    const handleStop = () => {
+    const handleStop = (): void => {
       NProgress.done();
     };
 

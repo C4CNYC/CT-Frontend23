@@ -15,10 +15,8 @@ export interface IAssignment {
   end_date: string;
   complexity: AssignmentComplexity;
   duration?: { hours: string; minutes: string };
-  assignee_classes: (IClass & BaseResponseInterface)[];
-  meta: {
-    [key: string]: number | string;
-  };
+  assignee_classes: Array<IClass & BaseResponseInterface>;
+  meta: Record<string, number | string>;
 }
 
 export interface IAssignmentUpdate {
@@ -33,12 +31,8 @@ export interface IAssignmentUpdate {
   end_date?: string;
   complexity?: AssignmentComplexity;
   duration?: string;
-  meta?: {
-    [key: string]: number | string;
-  };
+  meta?: Record<string, number | string>;
 }
-
-export interface IAssignmentDelete {}
 
 export interface IAssignmentCreate {
   createdAt?: string;
@@ -48,5 +42,5 @@ export interface IAssignmentCreate {
   type?: string;
   start_date?: string;
   end_date?: string;
-  meta?: {};
+  meta?: Record<string, unknown>;
 }

@@ -1,12 +1,12 @@
 // @mui
-import { alpha, useTheme } from "@mui/material/styles";
 import { GlobalStyles } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../utils/cssStyles";
 
 // ----------------------------------------------------------------------
 
-export default function StyledChart() {
+export default function StyledChart(): React.ReactElement {
   const theme = useTheme();
 
   const inputGlobalStyles = (

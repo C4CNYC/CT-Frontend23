@@ -1,47 +1,46 @@
-import * as React from "react";
-import { useState } from "react";
-import { Button, Stack } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Card, Grid, FormGroup } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import * as Yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
 } from "@components/hook-form";
+import { useSnackbar } from "@components/snackbar";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Card, FormGroup, Grid, Stack } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import * as React from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
 import {
   useCreateCourseMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager";
-import { useSnackbar } from "@components/snackbar";
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
   level: string;
   price: string;
   description: string;
   active: boolean;
   draft: boolean;
-};
+}
 
-type Prop = {
+interface Prop {
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
-};
+}
 
 export default function CreateCourseDialog({
   id,
   isEdit = false,
   children,
   defaultValues,
-}: Prop) {
+}: Prop): React.ReactElement | null {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editCourse] = useUpdateCourseMutation();
@@ -59,15 +58,15 @@ export default function CreateCourseDialog({
     defaultValues,
   });
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       if (isEdit && id) {
         await editCourse({
@@ -91,7 +90,13 @@ export default function CreateCourseDialog({
 
   return (
     <>
-      <Box onClick={() => handleClickOpen()}>{children}</Box>
+      <Box
+        onClick={() => {
+          handleClickOpen();
+        }}
+      >
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create Course</DialogTitle>
         <DialogContent sx={{ p: 0 }}>

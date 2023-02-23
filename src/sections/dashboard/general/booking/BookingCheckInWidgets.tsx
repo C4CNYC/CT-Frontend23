@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 // @mui
+import { Card, CardProps, Divider, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Card, Typography, Stack, Divider, CardProps } from "@mui/material";
 // hooks
 import useResponsive from "../../../../hooks/useResponsive";
 // utils
@@ -16,16 +16,19 @@ const CHART_SIZE = { width: 106, height: 106 };
 interface Props extends CardProps {
   chart: {
     colors?: string[];
-    series: {
+    series: Array<{
       label: string;
       percent: number;
       total: number;
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
 
-export default function BookingCheckInWidgets({ chart, ...other }: Props) {
+export default function BookingCheckInWidgets({
+  chart,
+  ...other
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const isDesktop = useResponsive("up", "sm");

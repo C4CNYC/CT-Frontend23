@@ -1,6 +1,6 @@
 // @mui
+import { LinkProps, TypographyProps } from "@mui/material";
 import { Variant } from "@mui/material/styles/createTypography";
-import { TypographyProps, LinkProps } from "@mui/material";
 //
 
 // ----------------------------------------------------------------------

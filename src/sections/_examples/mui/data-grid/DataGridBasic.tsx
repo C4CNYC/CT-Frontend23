@@ -1,6 +1,6 @@
 // @mui
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { IconButton } from "@mui/material";
+import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 // components
 import Iconify from "@components/iconify";
 
@@ -56,8 +56,8 @@ const columns: GridColDef[] = [
   },
 ];
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     name: string;
     email: string;
@@ -69,10 +69,12 @@ type Props = {
     lastName: string;
     firstName: string;
     age: number;
-  }[];
-};
+  }>;
+}
 
-export default function DataGridBasic({ data }: Props) {
+export default function DataGridBasic({
+  data,
+}: Props): React.ReactElement | null {
   return (
     <DataGrid
       columns={columns}

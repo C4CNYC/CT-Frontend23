@@ -1,38 +1,40 @@
-import { useState, useEffect, forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 // next
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 // @mui
 import {
   Box,
-  List,
-  Link,
-  Stack,
-  Drawer,
   Button,
   Divider,
-  Typography,
+  Drawer,
   IconButton,
-  ListItemText,
-  ListItemIcon,
+  Link,
+  List,
   ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  Typography,
 } from "@mui/material";
 // config
-import { NAV, ICON } from "../../config-global";
+import { ICON, NAV } from "../../config-global";
 // @types
-import { ParentItemProps, MegaMenuItemProps } from "./types";
+import { MegaMenuItemProps, ParentItemProps } from "./types";
 //
-import Logo from "../logo";
 import Iconify from "../iconify";
+import Logo from "../logo";
 import Scrollbar from "../scrollbar";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   data: MegaMenuItemProps[];
-};
+}
 
-export default function MegaMenuMobile({ data }: Props) {
+export default function MegaMenuMobile({
+  data,
+}: Props): React.ReactElement | null {
   const { pathname } = useRouter();
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -41,14 +43,13 @@ export default function MegaMenuMobile({ data }: Props) {
     if (openDrawer) {
       handleCloseDrawer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleOpenDrawer = () => {
+  const handleOpenDrawer = (): void => {
     setOpenDrawer(true);
   };
 
-  const handleCloseDrawer = () => {
+  const handleCloseDrawer = (): void => {
     setOpenDrawer(false);
   };
 
@@ -89,6 +90,7 @@ export default function MegaMenuMobile({ data }: Props) {
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const ParentItem = forwardRef<HTMLDivElement, ParentItemProps>(
   ({ icon, title, hasSub, ...other }, ref) => (
     <ListItemButton
@@ -107,12 +109,15 @@ const ParentItem = forwardRef<HTMLDivElement, ParentItemProps>(
 
 // ----------------------------------------------------------------------
 
-type SubMenuProps = {
+interface SubMenuProps {
   parent: MegaMenuItemProps;
   pathname: string;
-};
+}
 
-function SubMenu({ parent, pathname }: SubMenuProps) {
+function SubMenu({
+  parent,
+  pathname,
+}: SubMenuProps): React.ReactElement | null {
   const { title, icon, path, children } = parent;
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -121,14 +126,13 @@ function SubMenu({ parent, pathname }: SubMenuProps) {
     if (openDrawer) {
       handleCloseDrawer();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleOpenDrawer = () => {
+  const handleOpenDrawer = (): void => {
     setOpenDrawer(true);
   };
 
-  const handleCloseDrawer = () => {
+  const handleCloseDrawer = (): void => {
     setOpenDrawer(false);
   };
 

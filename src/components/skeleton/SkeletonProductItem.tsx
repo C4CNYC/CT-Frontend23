@@ -1,9 +1,11 @@
 // @mui
-import { Card, Skeleton, Stack, CardProps } from "@mui/material";
+import { Card, CardProps, Skeleton, Stack } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonProductItem({ ...other }: CardProps) {
+export default function SkeletonProductItem({
+  ...other
+}: CardProps): React.ReactElement | null {
   return (
     <Card {...other}>
       <Skeleton variant="rectangular" sx={{ paddingTop: "100%" }} />

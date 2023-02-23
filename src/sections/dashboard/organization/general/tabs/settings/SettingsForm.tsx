@@ -1,13 +1,13 @@
-import { LoadingButton } from "@mui/lab";
-import { Card, Stack, Typography, Link } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { useSnackbar } from "notistack";
 import FormProvider, { RHFSelect, RHFSwitch } from "@components/hook-form";
+import { LoadingButton } from "@mui/lab";
+import { Card, Link, Stack, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 import { useUpdateOrgSettingsMutation } from "src/redux/services/admin";
 import { SettingsResponce } from "src/redux/services/interfaces/organization.interface";
 import { useLocales } from "../../../../../../locales";
 
-type FormValuesProps = {
+interface FormValuesProps {
   language: string;
   marketplace_content_allowed: boolean;
   github_login_allowed: boolean;
@@ -16,27 +16,29 @@ type FormValuesProps = {
   chat_allowed: boolean;
   gallery_allowed: boolean;
   global_gallery_allowed: boolean;
-};
+}
 
-type SettingsFormProps = {
+interface SettingsFormProps {
   settings?: SettingsResponce;
-};
+}
 
-export default function SettingsForm({ settings }: SettingsFormProps) {
+export default function SettingsForm({
+  settings,
+}: SettingsFormProps): React.ReactElement | null {
   const [updateSettings, { isLoading }] = useUpdateOrgSettingsMutation();
   const { translate } = useLocales();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    language: settings?.language || "en",
-    marketplace_content_allowed: settings?.marketplace_content_allowed || false,
-    github_login_allowed: settings?.github_login_allowed || false,
-    google_login_allowed: settings?.google_login_allowed || false,
-    invite_only: settings?.invite_only || false,
-    chat_allowed: settings?.chat_allowed || false,
-    gallery_allowed: settings?.gallery_allowed || false,
-    global_gallery_allowed: settings?.global_gallery_allowed || false,
+    language: settings?.language ?? "en",
+    marketplace_content_allowed: settings?.marketplace_content_allowed ?? false,
+    github_login_allowed: settings?.github_login_allowed ?? false,
+    google_login_allowed: settings?.google_login_allowed ?? false,
+    invite_only: settings?.invite_only ?? false,
+    chat_allowed: settings?.chat_allowed ?? false,
+    gallery_allowed: settings?.gallery_allowed ?? false,
+    global_gallery_allowed: settings?.global_gallery_allowed ?? false,
   };
 
   const methods = useForm<FormValuesProps>({
@@ -46,7 +48,7 @@ export default function SettingsForm({ settings }: SettingsFormProps) {
   const { handleSubmit, formState, reset } = methods;
   const isFormEdited = formState.isDirty;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateSettings({
         language: data.language,

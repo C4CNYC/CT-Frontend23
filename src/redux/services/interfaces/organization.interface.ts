@@ -32,9 +32,7 @@ export interface CustomizationResponce extends BaseResponseInterface {
   description: string;
   welcome_message: string;
   custom_group_name: string;
-  theme: {
-    [key: string]: number | string;
-  };
+  theme: Record<string, number | string>;
 }
 
 export interface IContacts {
@@ -78,7 +76,7 @@ export interface ISendInvite {
 
 export interface OrganizationListResponce {
   data: OrganizationResponce[];
-  meta: {};
+  meta: Record<string, unknown>;
 }
 
 export interface OrganizationRequest {

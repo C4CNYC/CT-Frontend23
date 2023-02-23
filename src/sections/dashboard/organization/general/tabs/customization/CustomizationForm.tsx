@@ -1,30 +1,30 @@
-import { LoadingButton } from "@mui/lab";
-import { Stack, Typography, Box } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import { useSnackbar } from "notistack";
 import FormProvider, { RHFTextField } from "@components/hook-form";
+import { LoadingButton } from "@mui/lab";
+import { Box, Stack, Typography } from "@mui/material";
+import { MuiColorInput } from "mui-color-input";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
 import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
-import { useLocales } from "../../../../../../locales";
-import { MuiColorInput } from "mui-color-input";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { useLocales } from "../../../../../../locales";
 
-type FormValuesProps = {
+interface FormValuesProps {
   description: string;
   welcome_message: string;
   custom_group_name: string;
   primaryColor: string;
   secondaryColor: string;
   alternativeColor: string;
-};
+}
 
-type CustomizationFormProps = {
+interface CustomizationFormProps {
   customization?: CustomizationResponce & BaseResponseInterface;
-};
+}
 
 export default function CustomizationForm({
   customization,
-}: CustomizationFormProps) {
+}: CustomizationFormProps): React.ReactElement | null {
   const [updateCustomization, { isLoading }] =
     useUpdateOrgCustomizationMutation();
   const { translate } = useLocales();
@@ -48,7 +48,7 @@ export default function CustomizationForm({
   const { handleSubmit, formState, reset, control } = methods;
   const isFormEdited = formState.isDirty;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await updateCustomization({
         description: data.description,

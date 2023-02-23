@@ -1,31 +1,31 @@
 // @mui
-import { Theme } from "@mui/material/styles";
 import { SxProps } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-type Products = {
+interface Products {
   name: string;
   image: string;
   path: string;
-};
+}
 
-type Tags = {
+interface Tags {
   name: string;
   path: string;
-};
+}
 
-export type MenuCarouselProps = {
+export interface MenuCarouselProps {
   products: Products[];
   numberShow?: number;
   sx?: SxProps<Theme>;
-};
+}
 
-export type MenuHotProductsProps = {
+export interface MenuHotProductsProps {
   tags: Tags[];
-};
+}
 
-export type ParentItemProps = {
+export interface ParentItemProps {
   title: string;
   path?: string;
   icon?: React.ReactElement;
@@ -36,9 +36,9 @@ export type ParentItemProps = {
   onMouseLeave?: VoidFunction;
   component?: React.ReactNode;
   to?: string;
-};
+}
 
-export type MegaMenuItemProps = {
+export interface MegaMenuItemProps {
   title: string;
   path: string;
   icon: React.ReactElement;
@@ -48,11 +48,11 @@ export type MegaMenuItemProps = {
   };
   products?: Products[];
   tags?: Tags[];
-  children?: {
+  children?: Array<{
     subheader: string;
-    items: {
+    items: Array<{
       title: string;
       path: string;
-    }[];
-  }[];
-};
+    }>;
+  }>;
+}

@@ -3,13 +3,13 @@ import { RadioGroup } from "@mui/material";
 //
 import SvgColor from "../../svg-color";
 import { useSettingsContext } from "../SettingsContext";
-import { StyledCard, StyledWrap, MaskControl } from "../styles";
+import { MaskControl, StyledCard, StyledWrap } from "../styles";
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = ["default", "bold"] as const;
 
-export default function ContrastOptions() {
+export default function ContrastOptions(): React.ReactElement {
   const { themeContrast, onChangeContrast } = useSettingsContext();
 
   return (

@@ -1,15 +1,15 @@
-import Head from "next/head";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { Container } from "@mui/system";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import { Button, Box } from "@mui/material";
 import Iconify from "@components/iconify";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { CourseCard } from "@sections/dashboard/courses/cards";
 import { useSettingsContext } from "@components/settings";
-import { useGetCourseQuery } from "../../../redux/services/manager";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { Box, Button } from "@mui/material";
+import { Container } from "@mui/system";
 import FilterCourses from "@pages/dashboard/courses/filter";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { CourseCard } from "@sections/dashboard/courses/cards";
+import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import Head from "next/head";
+import { useGetCourseQuery } from "../../../redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function CoursesListPage() {
+export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetCourseQuery();
 

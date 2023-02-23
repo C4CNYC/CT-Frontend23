@@ -1,8 +1,7 @@
-/* eslint-disable jsx-a11y/alt-text */
-import { Page, View, Text, Image, Document } from "@react-pdf/renderer";
+import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 // utils
-import { fDate } from "../../../../utils/formatTime";
 import { fCurrency } from "../../../../utils/formatNumber";
+import { fDate } from "../../../../utils/formatTime";
 // @types
 import { IInvoice } from "../../../../@types/invoice";
 //
@@ -10,11 +9,13 @@ import styles from "./InvoiceStyle";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   invoice: IInvoice;
-};
+}
 
-export default function InvoicePDF({ invoice }: Props) {
+export default function InvoicePDF({
+  invoice,
+}: Props): React.ReactElement | null {
   const {
     items,
     taxes,

@@ -1,10 +1,10 @@
-import Head from "next/head";
-import { Card, Container, Typography, Box } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { useSettingsContext } from "@components/settings";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { Box, Card, Container, Typography } from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
+import Head from "next/head";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ ClassSettingPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ClassSettingPage() {
+export default function ClassSettingPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   return (

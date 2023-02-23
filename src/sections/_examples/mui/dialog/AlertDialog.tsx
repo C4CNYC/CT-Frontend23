@@ -3,22 +3,22 @@ import { useState } from "react";
 import {
   Button,
   Dialog,
-  DialogTitle,
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function AlertDialog() {
+export default function AlertDialog(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -29,7 +29,7 @@ export default function AlertDialog() {
       </Button>
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{`Use Google's location service?`}</DialogTitle>
+        <DialogTitle>{"Use Google's location service?"}</DialogTitle>
 
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

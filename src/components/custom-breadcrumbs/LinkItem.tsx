@@ -7,13 +7,17 @@ import { BreadcrumbsLinkProps } from "./types";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   link: BreadcrumbsLinkProps;
   activeLast?: boolean;
   disabled: boolean;
-};
+}
 
-export default function BreadcrumbsLink({ link, activeLast, disabled }: Props) {
+export default function BreadcrumbsLink({
+  link,
+  activeLast,
+  disabled,
+}: Props): React.ReactElement | null {
   const { name, href, icon } = link;
 
   const styles = {

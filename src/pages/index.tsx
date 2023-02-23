@@ -2,22 +2,22 @@ import { m, useScroll, useSpring } from "framer-motion";
 // next
 import Head from "next/head";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // layouts
 import MainLayout from "../layouts/main";
 // sections
 import {
-  HomeHero,
-  HomeMinimal,
-  HomeDarkMode,
-  HomeLookingFor,
-  HomeForDesigner,
-  HomeColorPresets,
-  HomePricingPlans,
   HomeAdvertisement,
   HomeCleanInterfaces,
+  HomeColorPresets,
+  HomeDarkMode,
+  HomeForDesigner,
+  HomeHero,
   HomeHugePackElements,
+  HomeLookingFor,
+  HomeMinimal,
+  HomePricingPlans,
 } from "../sections/home";
 
 // ----------------------------------------------------------------------
@@ -28,7 +28,7 @@ HomePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function HomePage() {
+export default function HomePage(): React.ReactElement {
   const theme = useTheme();
 
   const { scrollYProgress } = useScroll();

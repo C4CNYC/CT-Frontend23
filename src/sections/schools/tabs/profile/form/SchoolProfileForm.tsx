@@ -1,15 +1,15 @@
-import * as Yup from "yup";
-import { LoadingButton } from "@mui/lab";
-import { Grid, Card, Stack, Box } from "@mui/material";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
-import { useSnackbar } from "notistack";
 import FormProvider, { RHFSelect, RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack } from "@mui/material";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
 import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
+import * as Yup from "yup";
+import { countries } from "../../../../../assets/data";
 import { useLocales } from "../../../../../locales";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
-import { countries } from "../../../../../assets/data";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 
 const UpdateSchoolSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -18,7 +18,7 @@ const UpdateSchoolSchema = Yup.object().shape({
   city: Yup.string().required("City is required"),
 });
 
-type FormValuesProps = {
+interface FormValuesProps {
   school_id: string;
   name: string;
   country: string;
@@ -27,30 +27,30 @@ type FormValuesProps = {
   active: boolean;
   about: string;
   phone: string;
-};
+}
 
-type SchoolProfileFormProps = {
+interface SchoolProfileFormProps {
   schoolProfile?: SchoolProfile;
   school_id: string;
-};
+}
 
 export default function SchoolProfileForm({
   schoolProfile,
   school_id,
-}: SchoolProfileFormProps) {
+}: SchoolProfileFormProps): React.ReactElement | null {
   const { translate } = useLocales();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id: school_id,
-    name: schoolProfile?.name || "",
-    country: schoolProfile?.country || "",
-    address: schoolProfile?.address || "",
-    city: schoolProfile?.city || "",
-    active: schoolProfile?.active || false,
-    about: schoolProfile?.about || "",
-    phone: schoolProfile?.phone || "",
+    school_id,
+    name: schoolProfile?.name ?? "",
+    country: schoolProfile?.country ?? "",
+    address: schoolProfile?.address ?? "",
+    city: schoolProfile?.city ?? "",
+    active: schoolProfile?.active ?? false,
+    about: schoolProfile?.about ?? "",
+    phone: schoolProfile?.phone ?? "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -58,18 +58,18 @@ export default function SchoolProfileForm({
     defaultValues,
   });
 
-  const { setValue, handleSubmit } = methods;
+  const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await updateSchoolProfile({
-        school_id: school_id,
+        school_id,
         name: data.name,
         country: data.country,
         address: data.address,
         city: data.city,
-        active: data.active || false,
-        about: data.about || "",
+        active: data.active ?? false,
+        about: data.about ?? "",
         phone: data.phone,
       }).unwrap();
       enqueueSnackbar("Update success!");

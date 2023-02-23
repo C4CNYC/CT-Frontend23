@@ -1,13 +1,13 @@
 import { m } from "framer-motion";
 // @mui
-import { Box, Container, Typography, Stack } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 // components
-import Image from "../../components/image";
 import { MotionViewport, varFade } from "../../components/animate";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
-export default function AboutVision() {
+export default function AboutVision(): React.ReactElement {
   return (
     <Container component={MotionViewport} sx={{ mt: 10 }}>
       <Box

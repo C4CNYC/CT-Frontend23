@@ -1,8 +1,8 @@
-import { styled } from "@mui/material/styles";
-import { Link, Card, Typography, CardHeader, Stack } from "@mui/material";
 import Iconify from "@components/iconify";
-import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
+import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { useGetMySchoolsQuery } from "src/redux/services/manager";
+import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -12,20 +12,24 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
   marginRight: theme.spacing(2),
 }));
 
-type Props = {
+interface Props {
   data: SchoolProfile;
-};
+}
 
-export default function ProfileAbout({ data }: Props) {
-  const { data: profile } = useGetMySchoolsQuery();
+export default function ProfileAbout({
+  data,
+}: Props): React.ReactElement | null {
+  useGetMySchoolsQuery();
 
   return (
     <Card>
       <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
-        {data?.about ? (
+        {data?.about
+? (
           <Typography variant="body2">{data?.about}</Typography>
-        ) : (
+        )
+: (
           ""
         )}
         <Stack direction="row">
@@ -33,14 +37,14 @@ export default function ProfileAbout({ data }: Props) {
           <Typography variant="body2">
             Live at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              {data?.country || "N/A"}, {data?.city || "N/A"}
+              {data?.country ?? "N/A"}, {data?.city ?? "N/A"}
             </Link>
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <StyledIcon icon="eva:email-fill" />
-          <Typography variant="body2">{data?.address || "N/A"}</Typography>
+          <Typography variant="body2">{data?.address ?? "N/A"}</Typography>
         </Stack>
 
         <Stack direction="row">

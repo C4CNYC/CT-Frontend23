@@ -3,13 +3,13 @@ import { useState } from "react";
 import Head from "next/head";
 // @mui
 import {
-  Box,
-  Stack,
-  Container,
   Accordion,
-  Typography,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  Box,
+  Container,
+  Stack,
+  Typography,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -18,8 +18,8 @@ import _mock from "../../../_mock";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -41,7 +41,7 @@ MUIAccordionPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIAccordionPage() {
+export default function MUIAccordionPage(): React.ReactElement {
   const [controlled, setControlled] = useState<string | false>(false);
 
   const handleChangeControlled =

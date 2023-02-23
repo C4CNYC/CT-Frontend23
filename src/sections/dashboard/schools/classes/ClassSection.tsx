@@ -1,15 +1,15 @@
+import Iconify from "@components/iconify";
 import {
-  Stack,
-  Typography,
   Collapse,
+  IconButton,
   List,
   ListItem,
-  IconButton,
+  Stack,
+  Typography,
 } from "@mui/material";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import Iconify from "@components/iconify";
 import {
   useCreateClassMutation,
   useDeleteTeacherMutation,
@@ -18,27 +18,29 @@ import {
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 
-type ClassesSectionProps = {
+interface ClassesSectionProps {
   school_id: string;
-};
+}
 
-export default function ClassesSection({ school_id }: ClassesSectionProps) {
+export default function ClassesSection({
+  school_id,
+}: ClassesSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [createClass] = useCreateClassMutation();
   const [deleteTeacher] = useDeleteTeacherMutation();
   const [open, setOpen] = useState(false);
   const { data: classes, isLoading } = useGetClassListQuery(
     {
-      school_id: school_id,
+      school_id,
     },
     { skip: !school_id }
   );
 
-  const handleDeleteClass = async (user_id: string) => {
+  const handleDeleteClass = async (user_id: string): Promise<void> => {
     try {
       await deleteTeacher({
         user_id,
-        school_id: school_id,
+        school_id,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
     } catch (e) {
@@ -48,7 +50,7 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
     }
   };
 
-  const createClassByAdmin = async (name: string) => {
+  const createClassByAdmin = async (name: string): Promise<void> => {
     try {
       const data = await createClass({ schoolId: school_id, name }).unwrap();
       enqueueSnackbar(`School ${data.name} created successfuly!`);
@@ -66,7 +68,9 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
         sx={{ p: 2.5, pb: 0 }}
       >
         <Typography
-          onClick={() => setOpen(!open)}
+          onClick={() => {
+            setOpen(!open);
+          }}
           sx={{ alignItems: "center", display: "flex", cursor: "pointer" }}
           variant="subtitle2"
         >
@@ -97,16 +101,19 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
       </Stack>
       <Collapse in={open}>
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
-          {classes &&
-            classes.map((classes: any) => (
-              <ClassItem
-                schoolId={school_id}
-                handleDeleteClass={() => handleDeleteClass(classes.id)}
-                key={classes.id}
-                classes={classes}
-              />
-            ))}
-          {!isLoading && !classes?.length ? (
+          {classes?.map((classes: any) => (
+            <ClassItem
+              schoolId={school_id}
+              handleDeleteClass={async () => {
+                await handleDeleteClass(classes.id);
+              }}
+              key={classes.id}
+              classes={classes}
+              Props={undefined}
+            />
+          ))}
+          {!isLoading && !classes?.length
+? (
             <ListItem
               sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
               disableGutters
@@ -130,7 +137,8 @@ export default function ClassesSection({ school_id }: ClassesSectionProps) {
                 src="/assets/images/arrow.png"
               />
             </ListItem>
-          ) : null}
+          )
+: null}
         </List>
       </Collapse>
     </>

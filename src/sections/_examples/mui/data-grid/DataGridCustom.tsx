@@ -1,28 +1,28 @@
 import { useState } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
+  Box,
+  IconButton,
+  LinearProgress,
+  Rating,
   Stack,
   Typography,
-  Box,
-  Rating,
-  LinearProgress,
-  IconButton,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import {
   DataGrid,
-  GridColDef,
-  GridToolbar,
-  GridSelectionModel,
   getGridNumericOperators,
+  GridColDef,
   GridFilterInputValueProps,
+  GridSelectionModel,
+  GridToolbar,
 } from "@mui/x-data-grid";
 // utils
 import { fPercent } from "../../../../utils/formatNumber";
 // components
-import Label from "@components/label";
-import Iconify from "@components/iconify";
 import { CustomAvatar } from "@components/custom-avatar";
+import Iconify from "@components/iconify";
+import Label from "@components/label";
 
 // ----------------------------------------------------------------------
 
@@ -114,12 +114,14 @@ const columns: GridColDef[] = [
     width: 120,
 
     renderCell: (params) =>
-      params.row.isAdmin ? (
+      params.row.isAdmin
+? (
         <Iconify
           icon="eva:checkmark-circle-2-fill"
           sx={{ color: "primary.main" }}
         />
-      ) : (
+      )
+: (
         "-"
       ),
   },
@@ -164,7 +166,11 @@ const columns: GridColDef[] = [
     filterable: false,
     disableColumnMenu: true,
     renderCell: (params) => (
-      <IconButton onClick={() => console.log("ID", params.row.id)}>
+      <IconButton
+        onClick={() => {
+          console.log("ID", params.row.id);
+        }}
+      >
         <Iconify icon="eva:more-vertical-fill" />
       </IconButton>
     ),
@@ -173,8 +179,8 @@ const columns: GridColDef[] = [
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     name: string;
     email: string;
@@ -186,14 +192,17 @@ type Props = {
     lastName: string;
     firstName: string;
     age: number;
-  }[];
-};
+  }>;
+}
 
-export default function DataGridCustom({ data }: Props) {
+export default function DataGridCustom({
+  data,
+}: Props): React.ReactElement | null {
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
   if (columns.length > 0) {
-    const ratingColumn = columns.find((column) => column.field === "rating")!;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const ratingColumn = columns.find((column) => column?.field === "rating")!;
     const ratingColIndex = columns.findIndex((col) => col.field === "rating");
 
     const ratingFilterOperators = getGridNumericOperators().map((operator) => ({
@@ -229,7 +238,7 @@ export default function DataGridCustom({ data }: Props) {
 
 // ----------------------------------------------------------------------
 
-function RenderStatus(getStatus: string) {
+function RenderStatus(getStatus: string): React.ReactElement {
   const theme = useTheme();
   const isLight = theme.palette.mode === "light";
   return (
@@ -249,7 +258,10 @@ function RenderStatus(getStatus: string) {
 
 // ----------------------------------------------------------------------
 
-function RatingInputValue({ item, applyValue }: GridFilterInputValueProps) {
+function RatingInputValue({
+  item,
+  applyValue,
+}: GridFilterInputValueProps): React.ReactElement | null {
   return (
     <Box sx={{ p: 1, height: 1, alignItems: "flex-end", display: "flex" }}>
       <Rating

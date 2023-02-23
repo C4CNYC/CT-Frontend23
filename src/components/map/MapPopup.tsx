@@ -1,6 +1,6 @@
 import { PopupProps } from "react-map-gl";
 // @mui
-import { Theme, SxProps } from "@mui/material/styles";
+import { SxProps, Theme } from "@mui/material/styles";
 //
 import { StyledPopup } from "./styles";
 
@@ -16,7 +16,7 @@ export default function MapPopup({
   sx,
   children,
   ...other
-}: MapControlPopupProps) {
+}: MapControlPopupProps): React.ReactElement | null {
   return (
     <StyledPopup anchor="bottom" sx={sx} {...other}>
       {children}

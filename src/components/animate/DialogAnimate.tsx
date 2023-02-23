@@ -1,6 +1,6 @@
-import { m, AnimatePresence } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 // @mui
-import { Dialog, Box, Paper, DialogProps } from "@mui/material";
+import { Box, Dialog, DialogProps, Paper } from "@mui/material";
 //
 import { varFade } from "./variants";
 
@@ -18,7 +18,7 @@ export default function DialogAnimate({
   children,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <AnimatePresence>
       {open && (
@@ -30,7 +30,7 @@ export default function DialogAnimate({
           PaperComponent={(props) => (
             <Box
               component={m.div}
-              {...(variants ||
+              {...(variants ??
                 varFade({
                   distance: 120,
                   durationIn: 0.32,

@@ -1,15 +1,13 @@
 // @mui
-import { styled } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";
-// @types
-import { IUserProfileCover } from "../../../../@types/user";
+import { styled } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../../../utils/cssStyles";
 // auth
 import { useAuthContext } from "../../../../auth/useAuthContext";
 // components
-import Image from "@components/image";
 import { CustomAvatar } from "@components/custom-avatar";
+import Image from "@components/image";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 
 // ----------------------------------------------------------------------
@@ -50,7 +48,10 @@ export default function ProfileCover({
   cover,
   avatar,
   email,
-}: Pick<OrganizationResponce, "email" | "name" | "cover" | "avatar">) {
+}: Pick<
+  OrganizationResponce,
+  "email" | "name" | "cover" | "avatar"
+>): React.ReactElement | null {
   const { user } = useAuthContext();
 
   return (

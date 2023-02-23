@@ -1,14 +1,14 @@
-import Head from "next/head";
-import { Button, Box, Container } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
-import { useGetModulesQuery } from "src/redux/services/manager";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import ModuleCard from "@sections/dashboard/modules/ModuleCard";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { Box, Button, Container } from "@mui/material";
 import FilterModules from "@pages/dashboard/modules/filter";
+import { PATH_DASHBOARD } from "@routes/paths";
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import ModuleCard from "@sections/dashboard/modules/ModuleCard";
+import Head from "next/head";
+import { useGetModulesQuery } from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ ModulesListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ModulesListPage() {
+export default function ModulesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetModulesQuery();
 

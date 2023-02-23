@@ -1,16 +1,16 @@
 import { useState } from "react";
 // @mui
 import {
-  Box,
-  List,
   Avatar,
+  Box,
   Button,
   Dialog,
-  Typography,
   DialogTitle,
-  ListItemText,
+  List,
   ListItemAvatar,
   ListItemButton,
+  ListItemText,
+  Typography,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
@@ -19,16 +19,16 @@ import Iconify from "@components/iconify";
 
 const emails = ["username@gmail.com", "user02@gmail.com"];
 
-export default function SimpleDialog() {
+export default function SimpleDialog(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const [selectedValue, setSelectedValue] = useState(emails[1]);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = (value: string) => {
+  const handleClose = (value: string): void => {
     setOpen(false);
     setSelectedValue(value);
   };
@@ -43,11 +43,21 @@ export default function SimpleDialog() {
         Open simple dialog
       </Button>
 
-      <Dialog open={open} onClose={() => handleClose(selectedValue)}>
+      <Dialog
+        open={open}
+        onClose={() => {
+          handleClose(selectedValue);
+        }}
+      >
         <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
         <List>
           {emails.map((email) => (
-            <ListItemButton onClick={() => handleClose(email)} key={email}>
+            <ListItemButton
+              onClick={() => {
+                handleClose(email);
+              }}
+              key={email}
+            >
               <ListItemAvatar>
                 <Avatar
                   sx={{
@@ -62,7 +72,12 @@ export default function SimpleDialog() {
             </ListItemButton>
           ))}
 
-          <ListItemButton autoFocus onClick={() => handleClose("addAccount")}>
+          <ListItemButton
+            autoFocus
+            onClick={() => {
+              handleClose("addAccount");
+            }}
+          >
             <ListItemAvatar>
               <Avatar>
                 <Iconify icon="eva:plus-fill" />

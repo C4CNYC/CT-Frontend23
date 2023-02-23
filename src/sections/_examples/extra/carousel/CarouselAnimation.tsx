@@ -1,34 +1,36 @@
 import { m } from "framer-motion";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 // @mui
-import { alpha, useTheme } from "@mui/material/styles";
 import {
   Box,
-  Card,
-  Paper,
   Button,
-  Typography,
+  Card,
   CardContent,
+  Paper,
+  Typography,
 } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from "@components/image";
 import { MotionContainer, varFade } from "@components/animate";
 import Carousel, { CarouselArrowIndex } from "@components/carousel";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     title: string;
     image: string;
     description: string;
-  }[];
-};
+  }>;
+}
 
-export default function CarouselAnimation({ data }: Props) {
+export default function CarouselAnimation({
+  data,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -45,14 +47,16 @@ export default function CarouselAnimation({ data }: Props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => setCurrentIndex(next),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -80,16 +84,19 @@ export default function CarouselAnimation({ data }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   item: {
     title: string;
     description: string;
     image: string;
   };
   isActive: boolean;
-};
+}
 
-function CarouselItem({ item, isActive }: CarouselItemProps) {
+function CarouselItem({
+  item,
+  isActive,
+}: CarouselItemProps): React.ReactElement | null {
   const theme = useTheme();
 
   const { image, title } = item;

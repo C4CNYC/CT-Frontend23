@@ -114,7 +114,7 @@ const COMMON = {
   },
 };
 
-export default function palette(themeMode: "light" | "dark") {
+export default function palette(themeMode: "light" | "dark"): any {
   const light = {
     ...COMMON,
     mode: "light",

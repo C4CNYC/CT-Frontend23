@@ -1,10 +1,10 @@
 // @mui
 import {
   Table,
-  TableRow,
   TableBody,
   TableCell,
   TableContainer,
+  TableRow,
 } from "@mui/material";
 // components
 import Scrollbar from "@components/scrollbar";
@@ -40,7 +40,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function BasicTable() {
+export default function BasicTable(): React.ReactElement {
   return (
     <TableContainer sx={{ mt: 3, overflow: "unset" }}>
       <Scrollbar>

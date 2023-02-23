@@ -1,7 +1,6 @@
-import * as React from "react";
-import parse from "autosuggest-highlight/parse";
-import match from "autosuggest-highlight/match";
-import CircularProgress from "@mui/material/CircularProgress";
+import { CustomAvatar } from "@components/custom-avatar";
+import Iconify from "@components/iconify";
+import SearchNotFound from "@components/search-not-found";
 import {
   alpha,
   Autocomplete,
@@ -13,25 +12,26 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import * as React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
+import { useFilters } from "src/hooks/useFilters";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useGetStudentsQuery,
   useStudentJoinClassMutation,
   useStudentLeftClassMutation,
 } from "src/redux/services/manager";
-import { useRouter } from "next/router";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { CustomAvatar } from "@components/custom-avatar";
-import { useFilters } from "src/hooks/useFilters";
-import { useSnackbar } from "notistack";
-import Iconify from "@components/iconify";
-import SearchNotFound from "@components/search-not-found";
 
 type StudentType = IStudent & BaseResponseInterface;
 
-export default function ClassMembersAutocomplete() {
+export default function ClassMembersAutocomplete(): React.ReactElement {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const class_id = router.query.id as string;
@@ -55,26 +55,26 @@ export default function ClassMembersAutocomplete() {
   }
 
   const onChange = async (
-    event: React.SyntheticEvent<any>,
-    newValue: StudentType[],
+    _event: React.SyntheticEvent<any>,
+    _newValue: StudentType[],
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<StudentType>
-  ) => {
+  ): Promise<void> => {
     try {
       const payload = {
         school_id,
         class_id,
-        student_id: details?.option.id || "",
+        student_id: details?.option.id ?? "",
       };
       switch (reason) {
         case "selectOption": {
           await joinClass(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email} joined to class`);
+          enqueueSnackbar(`${details?.option.email ?? ""} joined to class`);
           return;
         }
         case "removeOption": {
           await leftClass(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email} left class`);
+          enqueueSnackbar(`${details?.option.email ?? ""} left class`);
           return;
         }
       }
@@ -97,9 +97,11 @@ export default function ClassMembersAutocomplete() {
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.email} />
       }
-      onInputChange={(event, value) => setFilter("email", value)}
+      onInputChange={(event, value) => {
+        setFilter("email", value);
+      }}
       getOptionLabel={(option) => option.email}
-      renderTags={(tagValue, getTagProps) =>
+      renderTags={(tagValue, getTagProps): React.ReactElement[] =>
         tagValue.map((option, index) => (
           <Chip
             avatar={
@@ -110,6 +112,7 @@ export default function ClassMembersAutocomplete() {
             }
             label={option.email}
             {...getTagProps({ index })}
+            key={option.email}
           />
         ))
       }

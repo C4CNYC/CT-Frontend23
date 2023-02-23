@@ -4,7 +4,7 @@ export default function flattenArray<T>(list: T[], key = "children"): T[] {
   let children: T[] = [];
 
   const flatten = list?.map((item: any) => {
-    if (item[key] && item[key].length) {
+    if (item[key]?.length) {
       children = [...children, ...item[key]];
     }
     return item;

@@ -1,19 +1,19 @@
 import { useState } from "react";
 // @mui
-import { TextField, Stack } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Stack, TextField } from "@mui/material";
 import {
-  TimePicker,
+  DesktopTimePicker,
   MobileTimePicker,
   StaticTimePicker,
-  DesktopTimePicker,
+  TimePicker,
 } from "@mui/x-date-pickers";
 //
 import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
-export default function PickerTime() {
+export default function PickerTime(): React.ReactElement {
   const [value, setValue] = useState<Date | null>(new Date());
 
   return (

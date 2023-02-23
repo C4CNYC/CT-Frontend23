@@ -1,13 +1,13 @@
-import { LoadingButton } from "@mui/lab";
-import { Card, Stack, Typography, Link } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { useSnackbar } from "notistack";
 import FormProvider, { RHFSelect, RHFSwitch } from "@components/hook-form";
+import { LoadingButton } from "@mui/lab";
+import { Card, Link, Stack, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager";
 import { useLocales } from "../../../../locales";
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
 
-type FormValuesProps = {
+interface FormValuesProps {
   language: string;
   school_id: string;
   marketplace_content_allowed: boolean;
@@ -17,32 +17,32 @@ type FormValuesProps = {
   chat_allowed: boolean;
   gallery_allowed: boolean;
   global_gallery_allowed: boolean;
-};
+}
 
-type SettingsFormProps = {
+interface SettingsFormProps {
   settings?: SchoolSettings;
   school_id: string;
-};
+}
 
 export default function SettingsForm({
   settings,
   school_id,
-}: SettingsFormProps) {
+}: SettingsFormProps): React.ReactElement {
   const [updateSettings, { isLoading }] = useUpdateSchoolSettingsMutation();
   const { translate } = useLocales();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id: school_id,
-    language: settings?.language || "en",
-    marketplace_content_allowed: settings?.marketplace_content_allowed || false,
-    github_login_allowed: settings?.github_login_allowed || false,
-    google_login_allowed: settings?.google_login_allowed || false,
-    invite_only: settings?.invite_only || false,
-    chat_allowed: settings?.chat_allowed || false,
-    gallery_allowed: settings?.gallery_allowed || false,
-    global_gallery_allowed: settings?.global_gallery_allowed || false,
+    school_id,
+    language: settings?.language ?? "en",
+    marketplace_content_allowed: settings?.marketplace_content_allowed ?? false,
+    github_login_allowed: settings?.github_login_allowed ?? false,
+    google_login_allowed: settings?.google_login_allowed ?? false,
+    invite_only: settings?.invite_only ?? false,
+    chat_allowed: settings?.chat_allowed ?? false,
+    gallery_allowed: settings?.gallery_allowed ?? false,
+    global_gallery_allowed: settings?.global_gallery_allowed ?? false,
   };
 
   const methods = useForm<FormValuesProps>({
@@ -52,10 +52,10 @@ export default function SettingsForm({
   const { handleSubmit, formState, reset } = methods;
   const isFormEdited = formState.isDirty;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateSettings({
-        school_id: school_id,
+        school_id,
         language: data.language,
         marketplace_content_allowed: data.marketplace_content_allowed,
         github_login_allowed: data.github_login_allowed,
@@ -80,9 +80,11 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.content_settings"
-          )}`}
+          {`${
+            translate(
+              "organizations.general_page.tabs.content.settings.content_settings"
+            ) ?? ""
+          }`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
           <RHFSwitch

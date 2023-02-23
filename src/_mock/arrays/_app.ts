@@ -1,5 +1,5 @@
+import { randomInArray, randomNumberRange } from "../utils";
 import _mock from "../_mock";
-import { randomNumberRange, randomInArray } from "../utils";
 
 // ----------------------------------------------------------------------
 

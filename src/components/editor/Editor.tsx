@@ -4,11 +4,11 @@ import dynamic from "next/dynamic";
 // @mui
 import { Skeleton } from "@mui/material";
 //
-import { EditorProps } from "./types";
-import { StyledEditor } from "./styles";
 import EditorToolbar, { formats } from "./EditorToolbar";
+import { StyledEditor } from "./styles";
+import { EditorProps } from "./types";
 
-const ReactQuill = dynamic(() => import("react-quill"), {
+const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
   loading: () => (
     <Skeleton
@@ -36,7 +36,7 @@ export default function Editor({
   helperText,
   sx,
   ...other
-}: EditorProps) {
+}: EditorProps): React.ReactElement | null {
   const modules = {
     toolbar: {
       container: `#${id}`,

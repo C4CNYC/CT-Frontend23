@@ -10,7 +10,7 @@ const series = [
   },
 ];
 
-export default function ChartColumnSingle() {
+export default function ChartColumnSingle(): React.ReactElement {
   const chartOptions = useChart({
     plotOptions: {
       bar: {

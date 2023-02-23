@@ -1,17 +1,15 @@
-import { useState } from "react";
-import Head from "next/head";
-import { Button, Box, Container } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import SearchNotFound from "@components/search-not-found/SearchNotFound";
 import { useSettingsContext } from "@components/settings";
-import { useSnackbar } from "notistack";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { useGetLessonsQuery } from "src/redux/services/manager";
-import ModuleCard from "@sections/dashboard/modules/ModuleCard";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
+import FilterLessons from "@pages/dashboard/lessons/filter";
+import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
-import FilterLessons from "@pages/dashboard/lessons/filter";
+import Head from "next/head";
+import { useGetLessonsQuery } from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -21,15 +19,12 @@ LessonsListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function LessonsListPage() {
-  const [openConfirm, setOpenConfirm] = useState(false);
-
-  const { enqueueSnackbar } = useSnackbar();
+export default function LessonsListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetLessonsQuery();
 
-  if (isLoading) return "loading";
-  if (data.data.length === 0) return "no data";
+  if (isLoading) return <CircularProgress/>;
+  if (data?.data.length === 0) return <SearchNotFound/>;
 
   return (
     <>
@@ -67,7 +62,7 @@ export default function LessonsListPage() {
           }}
         >
           {data?.data.map((lesson) => (
-            <LessonCard key={lesson.id} lesson={lesson} />
+            <LessonCard key={lesson?.id} lesson={lesson} active={false} name={""} description={""} />
           ))}
         </Box>
       </Container>

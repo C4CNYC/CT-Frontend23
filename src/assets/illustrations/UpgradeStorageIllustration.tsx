@@ -1,13 +1,15 @@
 import { memo } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Box, BoxProps } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 //
 import BackgroundIllustration from "./BackgroundIllustration";
 
 // ----------------------------------------------------------------------
 
-function UpgradeStorageIllustration({ ...other }: BoxProps) {
+function UpgradeStorageIllustration({
+  ...other
+}: BoxProps): React.ReactElement {
   const theme = useTheme();
 
   const PRIMARY_LIGHTER = theme.palette.primary.lighter;

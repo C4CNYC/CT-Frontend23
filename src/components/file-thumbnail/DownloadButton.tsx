@@ -1,6 +1,6 @@
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { IconButton } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../utils/cssStyles";
 //
@@ -8,11 +8,13 @@ import Iconify from "../iconify";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   onDownload?: VoidFunction;
-};
+}
 
-export default function DownloadButton({ onDownload }: Props) {
+export default function DownloadButton({
+  onDownload,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   return (

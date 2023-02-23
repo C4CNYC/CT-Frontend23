@@ -4,14 +4,12 @@ import Head from "next/head";
 import { Container } from "@mui/material";
 // routes
 import { PATH_DASHBOARD } from "@routes/paths";
-// layouts
-import DashboardLayout from "../../../../layouts/dashboard";
 // components
-import { useSettingsContext } from "@components/settings";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
 // sections
-import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +19,7 @@ UserCreatePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function UserCreatePage() {
+export default function UserCreatePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   return (

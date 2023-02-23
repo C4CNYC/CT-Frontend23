@@ -1,12 +1,12 @@
 // next
-import Head from "next/head";
-import NextLink from "next/link";
+import { PasswordIcon } from "@assets/icons";
+import Iconify from "@components/iconify";
+import CompactLayout from "@layouts/compact";
 import { Link, Typography } from "@mui/material";
 import { PATH_AUTH } from "@routes/paths";
-import CompactLayout from "@layouts/compact";
-import Iconify from "@components/iconify";
 import AuthResetPasswordForm from "@sections/auth/AuthResetPasswordForm";
-import { PasswordIcon } from "@assets/icons";
+import Head from "next/head";
+import NextLink from "next/link";
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ ResetPasswordPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordPage(): React.ReactElement {
   return (
     <>
       <Head>

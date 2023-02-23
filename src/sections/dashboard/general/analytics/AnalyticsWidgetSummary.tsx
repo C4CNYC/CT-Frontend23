@@ -1,6 +1,6 @@
 // @mui
+import { Card, CardProps, Typography } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import { Card, Typography, CardProps } from "@mui/material";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 import { fShortenNumber } from "../../../../utils/formatNumber";
@@ -25,7 +25,7 @@ export default function AnalyticsWidgetSummary({
   color = "primary",
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   return (

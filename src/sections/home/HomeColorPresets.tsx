@@ -1,22 +1,22 @@
 import { m } from "framer-motion";
 // @mui
-import { styled } from "@mui/material/styles";
 import {
   Box,
-  Stack,
-  Radio,
-  Tooltip,
-  Container,
-  Typography,
-  RadioGroup,
   CardActionArea,
+  Container,
   FormControlLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  Tooltip,
+  Typography,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 // components
-import { useSettingsContext } from "../../components/settings";
-import Image from "../../components/image";
-import Iconify from "../../components/iconify";
 import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
+import Image from "../../components/image";
+import { useSettingsContext } from "../../components/settings";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeColorPresets() {
+export default function HomeColorPresets(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionViewport} sx={{ position: "relative" }}>
@@ -47,7 +47,7 @@ export default function HomeColorPresets() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement | null {
   return (
     <Stack spacing={3} sx={{ textAlign: "center" }}>
       <m.div variants={varFade().inDown}>
@@ -75,7 +75,7 @@ function Description() {
 
 // ----------------------------------------------------------------------
 
-function Content() {
+function Content(): React.ReactElement | null {
   const { themeColorPresets: color } = useSettingsContext();
 
   return (
@@ -146,7 +146,7 @@ function Content() {
 
 // ----------------------------------------------------------------------
 
-function Options() {
+function Options(): React.ReactElement | null {
   const { themeColorPresets, onChangeColorPresets, presetsOption } =
     useSettingsContext();
 

@@ -1,10 +1,10 @@
 // @mui
 import {
-  Dialog,
   Button,
-  DialogTitle,
+  Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
 } from "@mui/material";
 //
 import { ConfirmDialogProps } from "./types";
@@ -18,7 +18,7 @@ export default function ConfirmDialog({
   open,
   onClose,
   ...other
-}: ConfirmDialogProps) {
+}: ConfirmDialogProps): React.ReactElement | null {
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
       <DialogTitle sx={{ pb: 2 }}>{title}</DialogTitle>

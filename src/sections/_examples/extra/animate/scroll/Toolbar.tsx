@@ -1,15 +1,18 @@
 // @mui
-import { Paper, IconButton } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-type ToolbarProps = {
+interface ToolbarProps {
   onRefresh: VoidFunction;
-};
+}
 
-export default function Toolbar({ onRefresh, ...other }: ToolbarProps) {
+export default function Toolbar({
+  onRefresh,
+  ...other
+}: ToolbarProps): React.ReactElement | null {
   return (
     <Paper
       sx={{

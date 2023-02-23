@@ -2,22 +2,22 @@
 import {
   Box,
   Card,
-  Rating,
   CardHeader,
-  Typography,
-  Stack,
   CardProps,
+  Rating,
+  Stack,
+  Typography,
 } from "@mui/material";
 // utils
 import { fCurrency, fShortenNumber } from "../../../../utils/formatNumber";
 // components
-import Label from "@components/label";
 import Iconify from "@components/iconify";
+import Label from "@components/label";
 import Scrollbar from "@components/scrollbar";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   name: string;
   system: string;
@@ -25,7 +25,7 @@ type ItemProps = {
   rating: number;
   review: number;
   shortcut: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -38,7 +38,7 @@ export default function AppTopRelated({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -56,11 +56,13 @@ export default function AppTopRelated({
 
 // ----------------------------------------------------------------------
 
-type ApplicationItemProps = {
+interface ApplicationItemProps {
   app: ItemProps;
-};
+}
 
-function ApplicationItem({ app }: ApplicationItemProps) {
+function ApplicationItem({
+  app,
+}: ApplicationItemProps): React.ReactElement | null {
   const { shortcut, system, price, rating, review, name } = app;
 
   return (

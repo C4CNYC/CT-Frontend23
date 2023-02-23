@@ -1,50 +1,49 @@
-import * as React from "react";
-import { useState } from "react";
-import { Button } from "@mui/material";
+import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
+import { useSnackbar } from "@components/snackbar";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Card, Grid } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import * as Yup from "yup";
+import * as React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
+import * as Yup from "yup";
 import {
-  useUpdateModuleMutation,
   useCreateModuleMutation,
+  useUpdateModuleMutation,
 } from "../../../redux/services/manager";
-import { useSnackbar } from "@components/snackbar";
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
   description: string;
   active: boolean;
-};
+}
 
-type Prop = {
+interface Prop {
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
-};
+}
 
 export default function CreateModuleDialog({
   id,
   isEdit,
   children,
   defaultValues,
-}: Prop) {
+}: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editModule] = useUpdateModuleMutation();
   const [createModule] = useCreateModuleMutation();
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -58,17 +57,17 @@ export default function CreateModuleDialog({
     defaultValues,
   });
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      if (!isEdit) {
-        await createModule({
-          ...data,
-        }).unwrap();
-      } else {
+      if (isEdit && id) {
         await editModule({
           id,
           ...data,
         });
+      } else {
+        await createModule({
+          ...data,
+        }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {
@@ -82,7 +81,13 @@ export default function CreateModuleDialog({
 
   return (
     <>
-      <Box onClick={() => handleClickOpen()}>{children}</Box>
+      <Box
+        onClick={() => {
+          handleClickOpen();
+        }}
+      >
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEdit ? "Edit" : "Create"} Module</DialogTitle>
         <DialogContent sx={{ p: 0 }}>

@@ -1,35 +1,35 @@
 import { useState } from "react";
 // @mui
 import {
+  Button,
+  Card,
+  Checkbox,
   Grid,
   List,
-  Card,
-  Button,
-  Checkbox,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
-  ListItemButton,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-function not(a: number[], b: number[]) {
-  return a.filter((value) => b.indexOf(value) === -1);
+function not(a: number[], b: number[]): number[] {
+  return a.filter((value) => !b.includes(value));
 }
 
-function intersection(a: number[], b: number[]) {
-  return a.filter((value) => b.indexOf(value) !== -1);
+function intersection(a: number[], b: number[]): number[] {
+  return a.filter((value) => b.includes(value));
 }
-export default function SimpleTransferList() {
+export default function SimpleTransferList(): React.ReactElement {
   const [checked, setChecked] = useState<number[]>([]);
   const [left, setLeft] = useState<number[]>([0, 1, 2, 3]);
   const [right, setRight] = useState<number[]>([4, 5, 6, 7]);
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  const handleToggle = (value: number) => () => {
+  const handleToggle = (value: number) => (): void => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
     if (currentIndex === -1) {
@@ -40,29 +40,29 @@ export default function SimpleTransferList() {
     setChecked(newChecked);
   };
 
-  const handleAllRight = () => {
+  const handleAllRight = (): void => {
     setRight(right.concat(left));
     setLeft([]);
   };
 
-  const handleCheckedRight = () => {
+  const handleCheckedRight = (): void => {
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
 
-  const handleCheckedLeft = () => {
+  const handleCheckedLeft = (): void => {
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
-  const handleAllLeft = () => {
+  const handleAllLeft = (): void => {
     setLeft(left.concat(right));
     setRight([]);
   };
 
-  const customList = (items: number[]) => (
+  const customList = (items: number[]): React.ReactElement => (
     <Card
       sx={{
         width: 200,
@@ -82,7 +82,7 @@ export default function SimpleTransferList() {
             >
               <ListItemIcon>
                 <Checkbox
-                  checked={checked.indexOf(value) !== -1}
+                  checked={checked.includes(value)}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ "aria-labelledby": labelId }}

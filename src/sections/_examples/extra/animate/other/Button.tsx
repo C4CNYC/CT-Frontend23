@@ -1,10 +1,10 @@
 // components
+import { FabButtonAnimate, IconButtonAnimate } from "@components/animate";
 import Iconify from "@components/iconify";
-import { IconButtonAnimate, FabButtonAnimate } from "@components/animate";
 
 // ----------------------------------------------------------------------
 
-export default function Button() {
+export default function Button(): React.ReactElement {
   return (
     <>
       <FabButtonAnimate color="primary" size="small">

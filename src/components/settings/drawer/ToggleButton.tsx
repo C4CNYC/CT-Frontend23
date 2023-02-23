@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // @mui
+import { Box, Tooltip } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import { Tooltip, Box } from "@mui/material";
 // utils
 import { bgBlur } from "../../../utils/cssStyles";
 //
@@ -12,18 +12,24 @@ import BadgeDot from "./BadgeDot";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   open: boolean;
   notDefault: boolean;
   onToggle: VoidFunction;
-};
+}
 
-export default function ToggleButton({ notDefault, open, onToggle }: Props) {
+export default function ToggleButton({
+  notDefault,
+  open,
+  onToggle,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return null;

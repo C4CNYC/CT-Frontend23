@@ -1,6 +1,6 @@
 // @mui
-import { alpha, styled } from "@mui/material/styles";
 import { TextField, TextFieldProps } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +10,7 @@ type Props = TextFieldProps & {
 
 const CustomTextField = styled(TextField, {
   shouldForwardProp: (prop) => prop !== "width",
-})<Props>(({ width, theme }) => ({
+})<Props>(({ width, theme }): any => ({
   "& fieldset": {
     display: "none",
   },

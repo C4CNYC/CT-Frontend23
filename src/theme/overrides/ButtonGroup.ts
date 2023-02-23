@@ -1,5 +1,5 @@
-import { alpha, Theme } from "@mui/material/styles";
-import { ButtonGroupProps } from "@mui/material";
+import { type ButtonGroupProps } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -19,8 +19,8 @@ declare module "@mui/material/ButtonGroup" {
   }
 }
 
-export default function ButtonGroup(theme: Theme) {
-  const rootStyle = (ownerState: ButtonGroupProps) => {
+export default function ButtonGroup(theme: Theme): unknown {
+  const rootStyle = (ownerState: ButtonGroupProps): unknown => {
     const inheritColor = ownerState.color === "inherit";
 
     const containedVariant = ownerState.variant === "contained";
@@ -95,7 +95,6 @@ export default function ButtonGroup(theme: Theme) {
       defaultProps: {
         disableElevation: true,
       },
-
       styleOverrides: {
         root: ({ ownerState }: { ownerState: ButtonGroupProps }) =>
           rootStyle(ownerState),

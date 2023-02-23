@@ -1,24 +1,24 @@
-import { useState } from "react";
 import { m } from "framer-motion";
+import { useState } from "react";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
-  Box,
-  Paper,
   AppBar,
-  Drawer,
+  Box,
   Button,
-  Toolbar,
   Divider,
+  Drawer,
   ListItemButton,
+  Paper,
+  Toolbar,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // components
-import Image from "../../components/image";
-import Iconify from "../../components/iconify";
-import TextMaxLine from "../../components/text-max-line";
 import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
+import Image from "../../components/image";
+import TextMaxLine from "../../components/text-max-line";
 
 // ----------------------------------------------------------------------
 
@@ -57,15 +57,15 @@ const CATEGORIES = [
 
 // ----------------------------------------------------------------------
 
-export default function FaqsCategory() {
+export default function FaqsCategory(): React.ReactElement {
   const isDesktop = useResponsive("up", "md");
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -123,14 +123,14 @@ export default function FaqsCategory() {
 
 // ----------------------------------------------------------------------
 
-type CardProps = {
+interface CardProps {
   category: {
     label: string;
     icon: string;
   };
-};
+}
 
-function CardDesktop({ category }: CardProps) {
+function CardDesktop({ category }: CardProps): React.ReactElement | null {
   const { label, icon } = category;
 
   return (
@@ -163,7 +163,7 @@ function CardDesktop({ category }: CardProps) {
 
 // ----------------------------------------------------------------------
 
-function CardMobile({ category }: CardProps) {
+function CardMobile({ category }: CardProps): React.ReactElement | null {
   const { label, icon } = category;
 
   return (

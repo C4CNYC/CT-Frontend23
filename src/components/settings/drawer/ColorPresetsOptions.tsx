@@ -1,18 +1,18 @@
 // @mui
-import { alpha } from "@mui/material/styles";
 import { RadioGroup } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 //
 import { useSettingsContext } from "../SettingsContext";
 import {
-  StyledCard,
-  StyledWrap,
   MaskControl,
+  StyledCard,
   StyledCircleColor,
+  StyledWrap,
 } from "../styles";
 
 // ----------------------------------------------------------------------
 
-export default function ColorPresetsOptions() {
+export default function ColorPresetsOptions(): React.ReactElement {
   const { themeColorPresets, onChangeColorPresets, presetsOption } =
     useSettingsContext();
 

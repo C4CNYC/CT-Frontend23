@@ -1,15 +1,15 @@
 import { m } from "framer-motion";
 // @mui
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Box, Button, Container, Typography, Grid, Stack } from "@mui/material";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // routes
 import { PATH_ZONE_ON_STORE } from "../../routes/paths";
 // components
-import Image from "../../components/image";
-import Iconify from "../../components/iconify";
 import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeLookingFor() {
+export default function HomeLookingFor(): React.ReactElement {
   const isDesktop = useResponsive("up", "md");
 
   return (
@@ -55,7 +55,7 @@ export default function HomeLookingFor() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement {
   const isDesktop = useResponsive("up", "md");
 
   return (
@@ -96,7 +96,7 @@ function Description() {
 
 // ----------------------------------------------------------------------
 
-function Content() {
+function Content(): React.ReactElement {
   return (
     <Box component={m.div} variants={varFade().inUp}>
       <Image

@@ -6,7 +6,10 @@ import NavList from "./NavList";
 
 // ----------------------------------------------------------------------
 
-export default function NavDesktop({ isOffset, data }: NavProps) {
+export default function NavDesktop({
+  isOffset,
+  data,
+}: NavProps): React.ReactElement | null {
   return (
     <Stack
       component="nav"

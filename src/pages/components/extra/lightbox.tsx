@@ -5,14 +5,14 @@ import Head from "next/head";
 import {
   Box,
   Card,
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   Paper,
   Stack,
   Switch,
-  Container,
-  FormLabel,
-  FormControl,
-  FormControlLabel,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -21,9 +21,9 @@ import _mock from "../../../_mock";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Image from "@components/image";
 import Lightbox from "@components/lightbox";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ DemoLightboxPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoLightboxPage() {
+export default function DemoLightboxPage(): React.ReactElement {
   const [state, setState] = useState({
     disabledZoom: false,
     disabledVideo: false,
@@ -52,7 +52,7 @@ export default function DemoLightboxPage() {
     disabledFullscreen: false,
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setState({
       ...state,
       [event.target.name]: event.target.checked,
@@ -61,14 +61,14 @@ export default function DemoLightboxPage() {
 
   const [selectedImage, setSelectedImage] = useState<number>(-1);
 
-  const handleOpenBasic = (imageUrl: string) => {
+  const handleOpenBasic = (imageUrl: string): void => {
     const imageIndex = imagesLightbox.findIndex(
       (image) => image.src === imageUrl
     );
     setSelectedImage(imageIndex);
   };
 
-  const handleCloseBasic = () => {
+  const handleCloseBasic = (): void => {
     setSelectedImage(-1);
   };
 
@@ -123,7 +123,9 @@ export default function DemoLightboxPage() {
                     alt={img.src}
                     src={img.src}
                     ratio="1/1"
-                    onClick={() => handleOpenBasic(img.src)}
+                    onClick={() => {
+                      handleOpenBasic(img.src);
+                    }}
                     sx={{
                       borderRadius: 1,
                       cursor: "pointer",

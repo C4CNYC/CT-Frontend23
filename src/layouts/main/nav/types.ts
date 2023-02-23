@@ -2,18 +2,18 @@ import { ListItemButtonProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export type NavItemProps = {
+export interface NavItemProps {
   title: string;
   path: string;
   icon?: React.ReactElement;
-  children?: {
+  children?: Array<{
     subheader: string;
-    items: {
+    items: Array<{
       title: string;
       path: string;
-    }[];
-  }[];
-};
+    }>;
+  }>;
+}
 
 export interface NavItemDesktopProps extends ListItemButtonProps {
   item: NavItemProps;
@@ -31,7 +31,7 @@ export interface NavItemMobileProps extends ListItemButtonProps {
   isExternalLink?: boolean;
 }
 
-export type NavProps = {
+export interface NavProps {
   isOffset: boolean;
   data: NavItemProps[];
-};
+}

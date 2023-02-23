@@ -1,16 +1,18 @@
 import { Grid, Stack } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import SchoolProfileForm from "./form/SchoolProfileForm";
-import ProfileAbout from "./components/ProfileAbout";
-import ProfileUsersInfo from "./components/ProfileUsersInfo";
-import ProfileSocialInfo from "./components/ProfileSocialInfo";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import ProfileAbout from "./components/ProfileAbout";
+import ProfileSocialInfo from "./components/ProfileSocialInfo";
+import ProfileUsersInfo from "./components/ProfileUsersInfo";
+import SchoolProfileForm from "./form/SchoolProfileForm";
 
-type Props = {
+interface Props {
   school_id: string;
-};
+}
 
-export default function SchoolProfileTab({ school_id }: Props) {
+export default function SchoolProfileTab({
+  school_id,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolProfileQuery(
     { school_id },
     { skip: !school_id }
@@ -39,7 +41,9 @@ export default function SchoolProfileTab({ school_id }: Props) {
           </Stack>
         </Grid>
         <Grid item xs={12} md={8}>
-          {isLoading ? null : (
+          {isLoading
+? null
+: (
             <SchoolProfileForm schoolProfile={data} school_id={school_id} />
           )}
         </Grid>

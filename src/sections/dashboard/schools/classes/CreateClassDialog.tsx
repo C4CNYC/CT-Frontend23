@@ -1,27 +1,26 @@
-import * as React from "react";
-import { useState } from "react";
-import { Button, IconButton } from "@mui/material";
+import FormProvider, { RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Card, Grid } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
-import * as Yup from "yup";
+import * as React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import FormProvider, { RHFTextField } from "@components/hook-form";
+import * as Yup from "yup";
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
-};
+}
 
-type Prop = {
+interface Prop {
   isEdit?: boolean;
   createClass?: (name: string) => void;
   updateClass?: (name: string) => void;
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
-};
+}
 
 export default function AddClassDialog({
   isEdit = false,
@@ -29,13 +28,13 @@ export default function AddClassDialog({
   updateClass,
   children,
   defaultValues,
-}: Prop) {
+}: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -48,18 +47,24 @@ export default function AddClassDialog({
     defaultValues,
   });
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = (data: FormValuesProps): void => {
     if (isEdit) {
-      updateClass && updateClass(data.name);
+      updateClass?.(data.name);
     } else {
-      createClass && createClass(data.name);
+      createClass?.(data.name);
     }
     handleClose();
   };
 
   return (
     <>
-      <Box onClick={() => handleClickOpen()}>{children}</Box>
+      <Box
+        onClick={() => {
+          handleClickOpen();
+        }}
+      >
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add Class</DialogTitle>
         <DialogContent sx={{ p: 0 }}>

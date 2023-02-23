@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { m } from "framer-motion";
-import { alpha, styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
+import { m } from "framer-motion";
+import { useEffect, useState } from "react";
 import LogoSmall from "../logoSmall";
 
 // ----------------------------------------------------------------------
@@ -21,10 +21,10 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoadingScreen() {
+export default function LoadingScreen(): React.ReactElement | null {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => { setMounted(true); }, []);
 
   if (!mounted) {
     return null;

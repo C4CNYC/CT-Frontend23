@@ -1,8 +1,8 @@
 // @mui
-import { Box, Button, Stack, Link } from "@mui/material";
 import DateRangePicker, {
   useDateRangePicker,
 } from "@components/date-range-picker";
+import { Box, Button, Link, Stack } from "@mui/material";
 // utils
 import { fDate } from "../../../../utils/formatTime";
 //
@@ -10,7 +10,7 @@ import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
-export default function PickerDateRange() {
+export default function PickerDateRange(): React.ReactElement {
   const pickerInput = useDateRangePicker(new Date(), new Date());
 
   const pickerCalendar = useDateRangePicker(new Date(), null);

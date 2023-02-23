@@ -37,7 +37,7 @@ const StyledLabel = styled("span")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   task: IAssignmentsCard;
   assignment: IAssignment & BaseResponseInterface;
   openDetails: boolean;
@@ -52,8 +52,9 @@ export default function AssignmentsDetails({
   onCloseDetails,
   onDeleteTask,
   assignment,
-  school_id,
-}: Props) {
+  school_id
+}:
+Props): React.ReactElement | null {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { enqueueSnackbar } = useSnackbar();
   const [updateAssignment] = useUdpateAssignmentMutation();
@@ -61,7 +62,7 @@ export default function AssignmentsDetails({
   const updateField = async (
     fieldName: keyof IAssignment,
     value: string | number | null
-  ) => {
+  ): Promise<void> => {
     try {
       if (assignment[fieldName] === value) return;
 
@@ -76,7 +77,7 @@ export default function AssignmentsDetails({
     }
   };
 
-  const handleClickAttach = () => {
+  const handleClickAttach = (): void => {
     fileInputRef.current?.click();
   };
 
@@ -109,7 +110,7 @@ export default function AssignmentsDetails({
           <AssignmentInput
             placeholder="Task name"
             defaultValue={assignment.name}
-            onBlur={(e) => updateField("name", e.target.value)}
+            onBlur={async (e) => { await updateField("name", e.target.value); }}
           />
           {/* Assignee */}
           <Stack direction="row">
@@ -118,8 +119,7 @@ export default function AssignmentsDetails({
             </StyledLabel>
 
             <Stack direction="row" flexWrap="wrap" alignItems="center">
-              {task.assignee_classes &&
-                task.assignee_classes.map((user) => (
+              {task.assignee_classes?.map((user) => (
                   <Avatar
                     key={user.id}
                     alt={user.name}
@@ -152,7 +152,7 @@ export default function AssignmentsDetails({
             <StyledLabel>Type:</StyledLabel>
             <CustomSmallSelect
               value={assignment.type}
-              onChange={(e) => updateField("type", e.target.value)}
+              onChange={async (e) => { updateField("type", e.target.value); }}
             >
               {Object.keys(AssignmentTypes).map((t) => (
                 <option
@@ -169,15 +169,14 @@ export default function AssignmentsDetails({
 
             <AssignmentsDetailsPrioritizes
               prioritize={assignment.complexity}
-              onChangePrioritize={(value) => updateField("complexity", value)}
+              onChangePrioritize={async (value) => { await updateField("complexity", value); }}
             />
           </Stack>
           <Stack direction="row" alignItems="center">
             <StyledLabel> Start Date: </StyledLabel>
             <DateTimePicker
               value={assignment.start_date}
-              onChange={(newValue) =>
-                updateField("start_date", newValue as string)
+              onChange={async (newValue) => { await updateField("start_date", newValue as string); }
               }
               renderInput={(params) => (
                 <TextField
@@ -185,7 +184,7 @@ export default function AssignmentsDetails({
                   margin="normal"
                   fullWidth
                   size="small"
-                  onKeyDown={(e) => e.preventDefault()}
+                  onKeyDown={(e) => { e.preventDefault(); }}
                   sx={{
                     "& .MuiOutlinedInput-input": {
                       fontSize: "14px",
@@ -203,14 +202,14 @@ export default function AssignmentsDetails({
             <StyledLabel> End Date: </StyledLabel>
             <DateTimePicker
               value={assignment.end_date}
-              onChange={(newValue) => updateField("end_date", newValue)}
+              onChange={async (newValue) => { await updateField("end_date", newValue); }}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   size="small"
                   margin="normal"
                   fullWidth
-                  onKeyDown={(e) => e.preventDefault()}
+                  onKeyDown={(e) => { e.preventDefault(); }}
                   sx={{
                     "& .MuiOutlinedInput-input": {
                       fontSize: "14px",
@@ -232,8 +231,7 @@ export default function AssignmentsDetails({
                   ? convertDuration(assignment.duration)
                   : null
               }
-              onChange={(e) =>
-                updateField("duration", (e.target.value as string) || null)
+              onChange={async (e) => { await updateField("duration", (e.target.value) || null); }
               }
             >
               <option key="empty" value="">
@@ -288,7 +286,7 @@ export default function AssignmentsDetails({
                   py: 1,
                   borderRadius: 1,
                   typography: "body2",
-                  border: `solid 1px transparent`,
+                  border: "solid 1px transparent",
                   width: "auto",
                   transition: (theme) =>
                     theme.transitions.create(["padding-left"]),
@@ -335,13 +333,13 @@ export default function AssignmentsDetails({
               rows={4}
               fullWidth
               defaultValue={assignment.description}
-              onBlur={(e) => updateField("description", e.target.value)}
+              onBlur={async (e) => { await updateField("description", e.target.value); }}
               sx={{
                 "& .MuiInputBase-input": {
                   py: 1,
                   borderRadius: 1,
                   typography: "body2",
-                  border: `solid 1px transparent`,
+                  border: "solid 1px transparent",
                   transition: (theme) =>
                     theme.transitions.create(["padding-left"]),
                   "&:hover, &:focus": {
@@ -352,19 +350,19 @@ export default function AssignmentsDetails({
             />
           </Stack>
 
-          {/*Attachments*/}
-          {/*<Stack direction="row">*/}
-          {/*<StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel>*/}
+          {/* Attachments */}
+          {/* <Stack direction="row"> */}
+          {/* <StyledLabel sx={{ py: 0.5 }}>Attachments</StyledLabel> */}
           {/* <KanbanDetailsAttachments attachments={task.attachments} /> */}
-          {/*</Stack>*/}
+          {/* </Stack> */}
         </Stack>
 
         {/* {!!task.comments.length && <KanbanDetailsCommentList comments={task.comments} />} */}
       </Scrollbar>
 
-      {/*<Divider />*/}
+      {/* <Divider /> */}
 
-      {/*<KanbanDetailsCommentInput />*/}
+      {/* <KanbanDetailsCommentInput /> */}
     </Drawer>
   );
 }

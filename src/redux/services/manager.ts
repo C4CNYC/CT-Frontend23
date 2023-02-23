@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   BaseListResponseInterface,
@@ -7,27 +8,27 @@ import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import {
   IAssignment,
-  IAssignmentUpdate,
   IAssignmentCreate,
+  IAssignmentUpdate,
 } from "./interfaces/assignment.interface";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
 import {
-  ILesson,
-  IModule,
   ICourse,
-  ILessonDelete,
-  IModuleDelete,
-  ICourseDelete,
-  IModuleCreate,
-  ILessonCreate,
   ICourseCreate,
+  ICourseDelete,
+  ILesson,
+  ILessonCreate,
+  ILessonDelete,
+  IModule,
+  IModuleCreate,
+  IModuleDelete,
 } from "./interfaces/courseUnits.interface";
 import {
-  SchoolResponce,
-  SchoolProfile,
   SchoolContacts,
-  SchoolSocials,
+  SchoolProfile,
+  SchoolResponce,
   SchoolSettings,
+  SchoolSocials,
 } from "./interfaces/school.interface";
 import { IStudent, StudentSearchParams } from "./interfaces/user.interface";
 
@@ -60,7 +61,7 @@ export const managerApi = createApi({
       providesTags: ["Assignment"],
     }),
     getAssignmentList: builder.query<
-      (IAssignment & BaseResponseInterface)[],
+      Array<IAssignment & BaseResponseInterface>,
       { school_id: string }
     >({
       query: ({ school_id }) => ({
@@ -111,7 +112,7 @@ export const managerApi = createApi({
       void
     >({
       query: () => ({
-        url: `/school`,
+        url: "/school",
         method: "GET",
       }),
       providesTags: ["School"],
@@ -354,7 +355,7 @@ export const managerApi = createApi({
       ICourseCreate
     >({
       query: ({ ...body }) => ({
-        url: `/course`,
+        url: "/course",
         method: "POST",
         body,
       }),
@@ -395,7 +396,7 @@ export const managerApi = createApi({
       IModuleCreate
     >({
       query: ({ ...body }) => ({
-        url: `/module`,
+        url: "/module",
         method: "POST",
         body,
       }),
@@ -413,7 +414,7 @@ export const managerApi = createApi({
     }),
 
     // --------------------- lessons --------------------------
-    getLessons: builder.query<ILesson, void>({
+    getLessons: builder.query<BaseListResponseInterface<ILesson>, void>({
       query: () => ({
         url: "/lesson",
         method: "GET",
@@ -436,7 +437,7 @@ export const managerApi = createApi({
       ILessonCreate
     >({
       query: ({ ...body }) => ({
-        url: `/lesson`,
+        url: "/lesson",
         method: "POST",
         body,
       }),
@@ -459,56 +460,56 @@ export const {
   useGetMySchoolsQuery,
   useGetStudentsQuery,
   useGetStudentQuery,
-  //---classes----
+  // ---classes----
   useGetClassesQuery,
   useGetSchoolProfileQuery,
   useGetSchoolSettingsQuery,
   useGetSchoolContactsQuery,
   useStudentJoinClassMutation,
   useStudentLeftClassMutation,
-  //----assignment ---------
+  // ----assignment ---------
   useGetAssignmentQuery,
   useGetAssignmentListQuery,
-  //---------------- modules --------------
+  // ---------------- modules --------------
   useGetModulesQuery,
-  //---------------- lessons --------------
+  // ---------------- lessons --------------
   useGetLessonsQuery,
-  //---------------- courses --------------
+  // ---------------- courses --------------
   useGetCourseQuery,
 
-  //---------------- mutations --------------
+  // ---------------- mutations --------------
   useUpdateStudentMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,
-  //---classes----
+  // ---classes----
   useUpdateClassesMutation,
   useCreateClassesMutation,
   useDeleteClassesMutation,
-  //---school settings----
+  // ---school settings----
   useUpdateSchoolProfileMutation,
   useUpdateSchoolSettingsMutation,
   useUpdateSchoolContactsMutation,
-  //---social links----
+  // ---social links----
   useCreateSchoolSocialMutation,
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 
-  //----assignment ---------
+  // ----assignment ---------
   useUdpateAssignmentMutation,
   useCreateAssignmentMutation,
   useDeleteAssignmentMutation,
 
-  //---------------- modules --------------
+  // ---------------- modules --------------
   useUpdateModuleMutation,
   useCreateModuleMutation,
   useDeleteModuleMutation,
 
-  //---------------- lessons --------------
+  // ---------------- lessons --------------
   useUpdateLessonMutation,
   useCreateLessonMutation,
   useDeleteLessonMutation,
 
-  //---------------- courses --------------
+  // ---------------- courses --------------
   useCreateCourseMutation,
   useUpdateCourseMutation,
   useDeleteCourseMutation,

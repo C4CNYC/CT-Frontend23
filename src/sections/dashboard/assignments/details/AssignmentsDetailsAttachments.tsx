@@ -1,15 +1,17 @@
-import { useState, useCallback } from "react";
-import { Stack } from "@mui/material";
 import { MultiFilePreview, UploadBox } from "@components/upload";
+import { Stack } from "@mui/material";
+import { useCallback, useState } from "react";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   attachments: string[];
-};
+}
 
-export default function AssignmentsDetailsAttachments({ attachments }: Props) {
-  const [files, setFiles] = useState<(File | string)[]>(attachments);
+export default function AssignmentsDetailsAttachments({
+  attachments,
+}: Props): React.ReactElement | null {
+  const [files, setFiles] = useState<Array<File | string>>(attachments);
 
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -24,7 +26,7 @@ export default function AssignmentsDetailsAttachments({ attachments }: Props) {
     [files]
   );
 
-  const handleRemoveFile = (inputFile: File | string) => {
+  const handleRemoveFile = (inputFile: File | string): void => {
     const filtered = files.filter((file) => file !== inputFile);
     setFiles(filtered);
   };
@@ -34,7 +36,9 @@ export default function AssignmentsDetailsAttachments({ attachments }: Props) {
       <MultiFilePreview
         thumbnail
         files={files}
-        onRemove={(file) => handleRemoveFile(file)}
+        onRemove={(file) => {
+          handleRemoveFile(file);
+        }}
         sx={{ width: 64, height: 64 }}
       />
 

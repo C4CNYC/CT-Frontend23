@@ -1,50 +1,45 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
+import FormProvider, { RHFSelect, RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Stack } from "@mui/material";
+import { useSnackbar } from "notistack";
+import * as React from "react";
 import { useForm } from "react-hook-form";
-import FormProvider, {
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-} from "@components/hook-form";
+import { useSelector } from "react-redux";
+import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { RootState } from "src/redux/store";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import * as Yup from "yup";
 import {
   useCreateAssignmentMutation,
   useUdpateAssignmentMutation,
 } from "../../../../redux/services/manager";
-import { useSnackbar } from "notistack";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
-import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-type AssignmentStepProps = {
+interface AssignmentStepProps {
   next: () => void;
   school_id: string;
   assignment?: IAssignment & BaseResponseInterface;
   getAssignmentId: (param: string) => void;
-};
+}
 
-type FormValuesProps = {
+interface FormValuesProps {
   type: string;
   course: string;
   lesson: string;
   description: string;
   name: string;
-};
+}
 
 export default function AssignmentSettings({
   assignment,
   next,
   getAssignmentId,
   school_id,
-}: AssignmentStepProps) {
+}: AssignmentStepProps): React.ReactElement | null {
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
   const [updateAssignment] = useUdpateAssignmentMutation();
-  const board = useSelector((state: RootState) => state?.assignment?.board);
+  const board = useSelector((state: RootState) => state?.assignments?.board);
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
@@ -68,7 +63,7 @@ export default function AssignmentSettings({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     const backlogCol = board?.columns[AssignmentStatuses.BACKLOG];
     const idCardWithMinOrder = backlogCol?.cardIds[0];
 
@@ -82,7 +77,6 @@ export default function AssignmentSettings({
           description: data.description,
         });
       } else {
-        console.log(data.type);
         const assignment = await createAssignment({
           school_id,
           type: data.type,

@@ -1,23 +1,16 @@
 // @mui
+import { Card, CardHeader, CardProps, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import {
-  Card,
-  CardHeader,
-  Typography,
-  Stack,
-  StackProps,
-  CardProps,
-} from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 // components
-import Image from "@components/image";
 import Iconify from "@components/iconify";
+import Image from "@components/image";
 import Scrollbar from "@components/scrollbar";
 
 // ----------------------------------------------------------------------
 
-const StyledBlock = styled((props: StackProps) => (
+const StyledBlock = styled((props: any) => (
   <Stack direction="row" alignItems="center" {...props} />
 ))({
   minWidth: 72,
@@ -33,14 +26,14 @@ const StyledItemIcon = styled(Iconify)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   name: string;
   android: number;
   windows: number;
   apple: number;
   flag: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -53,7 +46,7 @@ export default function AppTopInstalledCountries({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -71,11 +64,11 @@ export default function AppTopInstalledCountries({
 
 // ----------------------------------------------------------------------
 
-type CountryItemProps = {
+interface CountryItemProps {
   country: ItemProps;
-};
+}
 
-function CountryItem({ country }: CountryItemProps) {
+function CountryItem({ country }: CountryItemProps): React.ReactElement | null {
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <StyledBlock sx={{ minWidth: 120 }}>

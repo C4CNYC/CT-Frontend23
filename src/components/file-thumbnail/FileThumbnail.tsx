@@ -1,19 +1,19 @@
+import { Box, Stack, SxProps, Tooltip } from "@mui/material";
 import { Theme } from "@mui/material/styles";
-import { Box, Tooltip, SxProps, Stack } from "@mui/material";
 //
-import { fileData, fileFormat, fileThumb } from "./utils";
 import DownloadButton from "./DownloadButton";
+import { fileData, fileFormat, fileThumb } from "./utils";
 
 // ----------------------------------------------------------------------
 
-type FileIconProps = {
+interface FileIconProps {
   file: File | string;
   tooltip?: boolean;
   imageView?: boolean;
   onDownload?: VoidFunction;
   sx?: SxProps<Theme>;
   imgSx?: SxProps<Theme>;
-};
+}
 
 export default function FileThumbnail({
   file,
@@ -22,13 +22,14 @@ export default function FileThumbnail({
   onDownload,
   sx,
   imgSx,
-}: FileIconProps) {
+}: FileIconProps): React.ReactElement | null {
   const { name = "", path = "", preview = "" } = fileData(file);
 
   const format = fileFormat(path || preview);
 
   const renderContent =
-    format === "image" && imageView ? (
+    format === "image" && imageView
+? (
       <Box
         component="img"
         src={preview}
@@ -40,7 +41,8 @@ export default function FileThumbnail({
           ...imgSx,
         }}
       />
-    ) : (
+    )
+: (
       <Box
         component="img"
         src={fileThumb(format)}

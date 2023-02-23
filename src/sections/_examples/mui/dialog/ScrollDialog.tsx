@@ -1,28 +1,28 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 // @mui
 import {
   Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
   DialogActions,
+  DialogContent,
   DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { DialogProps } from "@mui/material/Dialog";
 
 // ----------------------------------------------------------------------
 
-export default function ScrollDialog() {
+export default function ScrollDialog(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const [scroll, setScroll] = useState<DialogProps["scroll"]>("paper");
 
-  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
+  const handleClickOpen = (scrollType: DialogProps["scroll"]) => (): void => {
     setOpen(true);
     setScroll(scrollType);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

@@ -12,15 +12,14 @@ import {
   IClass,
 } from "src/redux/services/interfaces/class.interface";
 import { useGetClassesQuery } from "src/redux/services/manager";
-import { useSelector } from "src/redux/store";
-import { RootState } from "src/redux/store";
+import { useSelector, RootState } from "src/redux/store";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import Iconify from "../iconify/Iconify";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useState } from "react";
 
-type Props = {
+interface Props {
   filterName: string;
   onResetFilter: VoidFunction;
   onFilterName: (name: string) => void;
@@ -33,8 +32,9 @@ export default function CustomAutocomplete({
   filterName,
   onFilterName,
   onFilterClass,
-  onResetFilter,
-}: Props) {
+  onResetFilter
+}:
+Props): React.ReactElement | null {
   const [value, setValue] = useState<ClassType | null>(null);
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const {
@@ -53,13 +53,13 @@ export default function CustomAutocomplete({
     newValue: ClassType | null,
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<ClassType>
-  ) => {
+  ): void => {
     onFilterClass(details?.option.id as string);
     setValue(newValue);
     resetClassFilter();
   };
 
-  const onReset = () => {
+  const onReset = (): void => {
     onResetFilter();
     resetClassFilter();
     setValue(null);
@@ -83,7 +83,7 @@ export default function CustomAutocomplete({
       <Autocomplete<ClassType>
         options={clases.data || []}
         renderInput={(params) => <TextField {...params} label="Class" />}
-        onInputChange={(e, value) => setFilter("name", value)}
+        onInputChange={(e, value) => { setFilter("name", value); }}
         onChange={onChange}
         value={value}
         getOptionLabel={(option) => option.name}
@@ -94,7 +94,7 @@ export default function CustomAutocomplete({
         fullWidth
         placeholder="Search"
         value={filterName}
-        onChange={(e) => onFilterName(e.target.value)}
+        onChange={(e) => { onFilterName(e.target.value); }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

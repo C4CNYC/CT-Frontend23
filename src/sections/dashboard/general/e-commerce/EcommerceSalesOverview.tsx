@@ -2,21 +2,21 @@
 import {
   Card,
   CardHeader,
-  Typography,
-  Stack,
-  LinearProgress,
   CardProps,
+  LinearProgress,
+  Stack,
+  Typography,
 } from "@mui/material";
 // utils
-import { fPercent, fCurrency } from "../../../../utils/formatNumber";
+import { fCurrency, fPercent } from "../../../../utils/formatNumber";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   label: string;
   amount: number;
   value: number;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -29,7 +29,7 @@ export default function EcommerceSalesOverview({
   subheader,
   data,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -45,11 +45,13 @@ export default function EcommerceSalesOverview({
 
 // ----------------------------------------------------------------------
 
-type ProgressItemProps = {
+interface ProgressItemProps {
   progress: ItemProps;
-};
+}
 
-function ProgressItem({ progress }: ProgressItemProps) {
+function ProgressItem({
+  progress,
+}: ProgressItemProps): React.ReactElement | null {
   return (
     <Stack spacing={1}>
       <Stack direction="row" alignItems="center">

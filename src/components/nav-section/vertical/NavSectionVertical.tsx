@@ -4,8 +4,8 @@ import { List, Stack } from "@mui/material";
 import { useLocales } from "../../../locales";
 //
 import { NavSectionProps } from "../types";
-import { StyledSubheader } from "./styles";
 import NavList from "./NavList";
+import { StyledSubheader } from "./styles";
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ export default function NavSectionVertical({
   data,
   sx,
   ...other
-}: NavSectionProps) {
+}: NavSectionProps): React.ReactElement | null {
   const { translate } = useLocales();
 
   return (

@@ -1,33 +1,35 @@
 import { useState } from "react";
 import * as Yup from "yup";
 // form
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
-import { Stack, IconButton, InputAdornment, Alert } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { Alert, IconButton, InputAdornment, Stack } from "@mui/material";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
-import Iconify from "../../components/iconify";
-import FormProvider, { RHFTextField } from "../../components/hook-form";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import FormProvider, { RHFTextField } from "../../components/hook-form";
+import Iconify from "../../components/iconify";
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
   afterSubmit?: string;
   tenantName: string;
-};
+}
 
-type AuthRegisterFormProps = {
+interface AuthRegisterFormProps {
   next: () => void;
-};
+}
 
-export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
+export default function AuthRegisterForm({
+  next,
+}: AuthRegisterFormProps): React.ReactElement | null {
   const { register } = useAuthContext();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -56,13 +58,12 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
   });
 
   const {
-    reset,
     setError,
     handleSubmit,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       if (register) {
         await register(
@@ -107,7 +108,9 @@ export default function AuthRegisterForm({ next }: AuthRegisterFormProps) {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify

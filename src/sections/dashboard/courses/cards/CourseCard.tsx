@@ -1,53 +1,55 @@
-import {
-  Box,
-  Card,
-  Divider,
-  Typography,
-  Stack,
-  MenuItem,
-  IconButton,
-  Button,
-} from "@mui/material";
-import { ICourse } from "../../../../@types/courses";
-import Label from "@components/label";
-import Image from "@components/image";
+import ConfirmDialog from "@components/confirm-dialog";
 import Iconify from "@components/iconify";
-import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import Image from "@components/image";
+import Label from "@components/label";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
-import { useState } from "react";
-import ConfirmDialog from "@components/confirm-dialog";
-import { useDeleteCourseMutation } from "../../../../redux/services/manager";
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
+import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import { useState } from "react";
+import { ICourse } from "../../../../@types/courses";
+import { useDeleteCourseMutation } from "../../../../redux/services/manager";
 
-type Props = {
+interface Props {
   course: ICourse;
-};
+}
 
-export default function CourseCard({ course }: Props) {
+export default function CourseCard({
+  course,
+}: Props): React.ReactElement | null {
   const { name, level, price, description, active, cover } = course;
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [deleteCourse] = useDeleteCourseMutation();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const onDelete = async () => {
+  const onDelete = async (): Promise<void> => {
     try {
       await deleteCourse({ id: course.id }).unwrap();
       setOpenConfirm(false);
@@ -74,7 +76,7 @@ export default function CourseCard({ course }: Props) {
           },
         }}
         component="a"
-        href={`${PATH_DASHBOARD.modules.root}?id=${course.id}`}
+        href={`${PATH_DASHBOARD.modules.root}?id=${course.id as string}`}
       >
         <Stack
           direction="row"
@@ -96,7 +98,7 @@ export default function CourseCard({ course }: Props) {
           }}
         >
           <Image
-            src={cover || "/assets/icons/files/ic_folder.svg"}
+            src={cover ?? "/assets/icons/files/ic_folder.svg"}
             alt={cover}
             ratio="16/9"
             style={{ objectFit: "contain", padding: 10 }}
@@ -149,12 +151,12 @@ export default function CourseCard({ course }: Props) {
             <Typography variant="subtitle1">{price}</Typography>
           </div>
 
-          {/*  <div>*/}
-          {/*    <Typography variant="caption" component="div" sx={{ mb: 0.75, color: "text.disabled" }}>*/}
-          {/*      Total Hours*/}
-          {/*    </Typography>*/}
-          {/*    <Typography variant="subtitle1">10H</Typography>*/}
-          {/*  </div>*/}
+          {/*  <div> */}
+          {/*    <Typography variant="caption" component="div" sx={{ mb: 0.75, color: "text.disabled" }}> */}
+          {/*      Total Hours */}
+          {/*    </Typography> */}
+          {/*    <Typography variant="subtitle1">10H</Typography> */}
+          {/*  </div> */}
         </Box>
       </Card>
       <MenuPopover

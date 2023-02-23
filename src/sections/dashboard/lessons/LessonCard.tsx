@@ -1,21 +1,21 @@
-import { useState } from "react";
-import {
-  Box,
-  Card,
-  Stack,
-  Button,
-  Divider,
-  MenuItem,
-  IconButton,
-} from "@mui/material";
+import ConfirmDialog from "@components/confirm-dialog";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
-import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
-import ConfirmDialog from "@components/confirm-dialog";
+import TextMaxLine from "@components/text-max-line";
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+} from "@mui/material";
+import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
+import { useState } from "react";
 import { ILessonCreate } from "../../../redux/services/interfaces/courseUnits.interface";
 import { useDeleteLessonMutation } from "../../../redux/services/manager";
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 
 // ----------------------------------------------------------------------
 
@@ -30,14 +30,16 @@ interface Props extends ILessonCreate {
   };
 }
 
-export default function LessonCard({ lesson }: Props) {
+export default function LessonCard({
+  lesson,
+}: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteLesson] = useDeleteLessonMutation();
 
-  const onDelete = async () => {
+  const onDelete = async (): Promise<void> => {
     if (lesson.id) {
       try {
         await deleteLesson({ id: lesson.id }).unwrap();
@@ -50,19 +52,19 @@ export default function LessonCard({ lesson }: Props) {
     }
   };
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 

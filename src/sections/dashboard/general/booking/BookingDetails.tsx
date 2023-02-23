@@ -1,36 +1,36 @@
-import { useState } from "react";
-import { format } from "date-fns";
 import { sentenceCase } from "change-case";
+import { format } from "date-fns";
+import { useState } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
+  Avatar,
   Box,
+  Button,
   Card,
+  CardHeader,
+  CardProps,
+  Divider,
+  IconButton,
+  MenuItem,
   Stack,
   Table,
-  Avatar,
-  Button,
-  Divider,
-  MenuItem,
-  TableRow,
   TableBody,
   TableCell,
-  CardProps,
-  CardHeader,
-  Typography,
-  IconButton,
   TableContainer,
+  TableRow,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // components
-import Label from "@components/label";
 import Iconify from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
+import Label from "@components/label";
 import MenuPopover from "@components/menu-popover";
+import Scrollbar from "@components/scrollbar";
 import { TableHeadCustom } from "@components/table";
 
 // ----------------------------------------------------------------------
 
-type RowProps = {
+interface RowProps {
   id: string;
   name: string;
   avatar: string;
@@ -39,7 +39,7 @@ type RowProps = {
   phoneNumber: string;
   status: string;
   roomType: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -54,7 +54,7 @@ export default function BookingDetails({
   tableLabels,
   tableData,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
@@ -90,41 +90,43 @@ export default function BookingDetails({
 
 // ----------------------------------------------------------------------
 
-type BookingDetailsRowProps = {
+interface BookingDetailsRowProps {
   row: RowProps;
-};
+}
 
-function BookingDetailsRow({ row }: BookingDetailsRowProps) {
+function BookingDetailsRow({
+  row,
+}: BookingDetailsRowProps): React.ReactElement | null {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleDownload = () => {
+  const handleDownload = (): void => {
     handleClosePopover();
     console.log("DOWNLOAD", row.id);
   };
 
-  const handlePrint = () => {
+  const handlePrint = (): void => {
     handleClosePopover();
     console.log("PRINT", row.id);
   };
 
-  const handleShare = () => {
+  const handleShare = (): void => {
     handleClosePopover();
     console.log("SHARE", row.id);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     handleClosePopover();
     console.log("DELETE", row.id);
   };

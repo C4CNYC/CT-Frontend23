@@ -1,30 +1,30 @@
 import { useState } from "react";
 // @mui
 import {
-  Box,
-  Stack,
   Avatar,
-  Divider,
-  Checkbox,
-  MenuItem,
-  Typography,
-  PaperProps,
-  IconButton,
   AvatarGroup,
+  Box,
+  Checkbox,
+  Divider,
+  IconButton,
+  MenuItem,
+  PaperProps,
+  Stack,
+  Typography,
 } from "@mui/material";
 // hooks
-import useResponsive from "../../../../hooks/useResponsive";
 import useCopyToClipboard from "../../../../hooks/useCopyToClipboard";
+import useResponsive from "../../../../hooks/useResponsive";
 // utils
 import { fData } from "../../../../utils/formatNumber";
 import { fDateTime } from "../../../../utils/formatTime";
 // @types
 import { IFileManager } from "../../../../@types/file";
 // components
-import Iconify from "@components/iconify";
-import { useSnackbar } from "@components/snackbar";
-import MenuPopover from "@components/menu-popover";
 import FileThumbnail from "@components/file-thumbnail";
+import Iconify from "@components/iconify";
+import MenuPopover from "@components/menu-popover";
+import { useSnackbar } from "@components/snackbar";
 //
 // import { FileShareDialog, FileDetailsDrawer } from "../../schools";
 
@@ -40,56 +40,42 @@ export default function FileGeneralRecentCard({
   onDelete,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
 
   const isDesktop = useResponsive("up", "sm");
 
-  const [inviteEmail, setInviteEmail] = useState("");
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const [favorited, setFavorited] = useState(file.isFavorited);
 
-  const [openShare, setOpenShare] = useState(false);
+  const [, setOpenShare] = useState(false);
 
-  const [openDetails, setOpenDetails] = useState(false);
+  const [, setOpenDetails] = useState(false);
 
-  const handleFavorite = () => {
+  const handleFavorite = (): void => {
     setFavorited(!favorited);
   };
 
-  const handleOpenShare = () => {
+  const handleOpenShare = (): void => {
     setOpenShare(true);
   };
 
-  const handleCloseShare = () => {
-    setOpenShare(false);
-  };
-
-  const handleOpenDetails = () => {
+  const handleOpenDetails = (): void => {
     setOpenDetails(true);
   };
 
-  const handleCloseDetails = () => {
-    setOpenDetails(false);
-  };
-
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleChangeInvite = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInviteEmail(event.target.value);
-  };
-
-  const handleCopy = () => {
+  const handleCopy = (): void => {
     enqueueSnackbar("Copied!");
     copy(file.url);
   };

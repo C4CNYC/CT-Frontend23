@@ -1,14 +1,17 @@
 // @mui
-import { TableRow, TableCell } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   height?: number;
   emptyRows: number;
-};
+}
 
-export default function TableEmptyRows({ emptyRows, height }: Props) {
+export default function TableEmptyRows({
+  emptyRows,
+  height,
+}: Props): React.ReactElement | null {
   if (!emptyRows) {
     return null;
   }

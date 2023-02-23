@@ -1,34 +1,32 @@
 import { useState } from "react";
 // @mui
-import { Paper, Button, ClickAwayListener, TextField } from "@mui/material";
-// redux
-import { useDispatch } from "../../../../redux/store";
+import { Button, ClickAwayListener, Paper, TextField } from "@mui/material";
 // import { createColumn } from "../../../../redux/slices/kanban";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-export default function AssignmentsColumnAdd() {
-  const dispatch = useDispatch();
-
+export default function AssignmentsColumnAdd(): React.ReactElement {
   const [name, setName] = useState("");
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setName(event.target.value);
   };
 
-  const handleCreateColumn = async () => {
+  const handleCreateColumn = (): void => {
     try {
       if (name) {
         // dispatch(createColumn({ name }));
@@ -40,7 +38,7 @@ export default function AssignmentsColumnAdd() {
     }
   };
 
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === "Enter") {
       handleCreateColumn();
     }
@@ -48,7 +46,8 @@ export default function AssignmentsColumnAdd() {
 
   return (
     <Paper sx={{ minWidth: 280, width: 280 }}>
-      {open ? (
+      {open
+? (
         <ClickAwayListener onClickAway={handleCreateColumn}>
           <TextField
             autoFocus
@@ -62,7 +61,8 @@ export default function AssignmentsColumnAdd() {
             }}
           />
         </ClickAwayListener>
-      ) : (
+      )
+: (
         <Button
           fullWidth
           size="large"

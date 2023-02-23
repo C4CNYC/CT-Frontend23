@@ -1,5 +1,5 @@
 // @mui
-import { Card, Typography, Box, CardProps } from "@mui/material";
+import { Box, Card, CardProps, Typography } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 
@@ -17,7 +17,7 @@ export default function BookingWidgetSummary({
   icon,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card
       sx={{

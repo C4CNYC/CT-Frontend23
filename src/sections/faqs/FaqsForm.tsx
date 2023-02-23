@@ -1,16 +1,16 @@
 import { m } from "framer-motion";
 // @mui
-import { Button, Typography, TextField, Stack } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 //
-import { varFade, MotionViewport } from "../../components/animate";
+import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
-export default function FaqsForm() {
+export default function FaqsForm(): React.ReactElement {
   return (
     <Stack component={MotionViewport} spacing={3}>
       <m.div variants={varFade().inUp}>
-        <Typography variant="h4">{`Haven't found the right help?`}</Typography>
+        <Typography variant="h4">{"Haven't found the right help?"}</Typography>
       </m.div>
 
       <m.div variants={varFade().inUp}>

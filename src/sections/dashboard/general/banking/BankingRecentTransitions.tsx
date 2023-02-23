@@ -1,37 +1,37 @@
-import { useState } from "react";
-import { format } from "date-fns";
 import { sentenceCase } from "change-case";
+import { format } from "date-fns";
+import { useState } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
-  Box,
-  Card,
-  Table,
   Avatar,
+  Box,
   Button,
+  Card,
+  CardHeader,
+  CardProps,
   Divider,
+  IconButton,
   MenuItem,
-  TableRow,
+  Table,
   TableBody,
   TableCell,
-  CardProps,
-  CardHeader,
-  Typography,
-  IconButton,
   TableContainer,
+  TableRow,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Label from "@components/label";
 import Iconify, { IconifyProps } from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
+import Label from "@components/label";
 import MenuPopover from "@components/menu-popover";
-import { TableHeadCustom } from "@components/table";
+import Scrollbar from "@components/scrollbar";
+import TableHeadCustom from "@components/table/TableHeadCustom";
 
 // ----------------------------------------------------------------------
 
-type RowProps = {
+interface RowProps {
   id: string;
   name: string | null;
   avatar: string | null;
@@ -41,7 +41,7 @@ type RowProps = {
   date: number;
   status: string;
   amount: number;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -56,7 +56,7 @@ export default function BankingRecentTransitions({
   tableLabels,
   tableData,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
@@ -64,7 +64,15 @@ export default function BankingRecentTransitions({
       <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar sx={{ minWidth: 720 }}>
           <Table>
-            <TableHeadCustom headLabel={tableLabels} />
+            <TableHeadCustom
+              headLabel={tableLabels}
+              order={undefined}
+              orderBy={undefined}
+              onSort={undefined}
+              onSelectAllRows={undefined}
+              sx={undefined}
+              Props={undefined}
+            />
 
             <TableBody>
               {tableData.map((row) => (
@@ -92,43 +100,43 @@ export default function BankingRecentTransitions({
 
 // ----------------------------------------------------------------------
 
-type BankingRecentTransitionsRowProps = {
+interface BankingRecentTransitionsRowProps {
   row: RowProps;
-};
+}
 
 function BankingRecentTransitionsRow({
   row,
-}: BankingRecentTransitionsRowProps) {
+}: BankingRecentTransitionsRowProps): React.ReactElement | null {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleDownload = () => {
+  const handleDownload = (): void => {
     handleClosePopover();
     console.log("DOWNLOAD", row.id);
   };
 
-  const handlePrint = () => {
+  const handlePrint = (): void => {
     handleClosePopover();
     console.log("PRINT", row.id);
   };
 
-  const handleShare = () => {
+  const handleShare = (): void => {
     handleClosePopover();
     console.log("SHARE", row.id);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     handleClosePopover();
     console.log("DELETE", row.id);
   };
@@ -245,11 +253,11 @@ function BankingRecentTransitionsRow({
 
 // ----------------------------------------------------------------------
 
-type AvatarIconProps = {
+interface AvatarIconProps {
   icon: IconifyProps;
-};
+}
 
-function AvatarIcon({ icon }: AvatarIconProps) {
+function AvatarIcon({ icon }: AvatarIconProps): React.ReactElement | null {
   return (
     <Avatar
       sx={{
@@ -266,14 +274,18 @@ function AvatarIcon({ icon }: AvatarIconProps) {
 
 // ----------------------------------------------------------------------
 
-function renderAvatar(category: string, avatar: string | null) {
+function renderAvatar(
+  category: string,
+  avatar: string | null
+): React.ReactElement | null {
   if (category === "Books") {
     return <AvatarIcon icon="eva:book-fill" />;
   }
   if (category === "Beauty & Health") {
     return <AvatarIcon icon="eva:heart-fill" />;
   }
-  return avatar ? (
+  return avatar
+? (
     <Avatar
       alt={category}
       src={avatar}
@@ -283,5 +295,6 @@ function renderAvatar(category: string, avatar: string | null) {
         boxShadow: (theme) => theme.customShadows.z8,
       }}
     />
-  ) : null;
+  )
+: null;
 }

@@ -1,12 +1,12 @@
 import { m } from "framer-motion";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
-import { Container, Typography, Stack, IconButton } from "@mui/material";
+import { Container, IconButton, Stack, Typography } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // components
+import { MotionViewport, varFade } from "../../components/animate";
+import Image from "../../components/image";
 import { useSettingsContext } from "../../components/settings";
 import SvgColor from "../../components/svg-color";
-import Image from "../../components/image";
-import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center center",
-  backgroundImage: `url('/assets/background/overlay_4.jpg')`,
+  backgroundImage: "url('/assets/background/overlay_4.jpg')",
   [theme.breakpoints.up("md")]: {
     padding: theme.spacing(20, 0),
   },
@@ -24,7 +24,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeDarkMode() {
+export default function HomeDarkMode(): React.ReactElement {
   const { themeMode, onToggleMode } = useSettingsContext();
 
   return (

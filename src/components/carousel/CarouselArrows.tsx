@@ -1,6 +1,6 @@
 // @mui
-import { useTheme, styled, alpha } from "@mui/material/styles";
-import { Stack, StackProps, IconButtonProps, IconButton } from "@mui/material";
+import { IconButton, IconButtonProps, Stack, StackProps } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 //
 import { IconifyProps } from "../iconify";
 //
@@ -71,7 +71,7 @@ export default function CarouselArrows({
   rightButtonProps,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const isRTL = theme.direction === "rtl";

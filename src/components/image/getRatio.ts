@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-export default function getRatio(ratio = "1/1") {
+export default function getRatio(ratio = "1/1"): string | undefined {
   return {
     "4/3": "calc(100% / 4 * 3)",
     "3/4": "calc(100% / 3 * 4)",

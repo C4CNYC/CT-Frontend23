@@ -1,23 +1,20 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 // @mui
-import { Collapse, Box, Button } from "@mui/material";
+import { Box, Collapse, TableProps } from "@mui/material";
 // @types
 import { IFile } from "../../../../@types/file";
 // components
-import Iconify from "@components/iconify";
-import { TableProps } from "@components/table";
 //
-import ContactsCard from "../item/ContactsCard";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   table: TableProps;
   data: IFile[];
   dataFiltered: IFile[];
   onOpenConfirm: VoidFunction;
   onDeleteItem: (id: string) => void;
-};
+}
 
 export default function ContactsGridView({
   table,
@@ -25,13 +22,7 @@ export default function ContactsGridView({
   dataFiltered,
   onDeleteItem,
   onOpenConfirm,
-}: Props) {
-  const {
-    selected,
-    onSelectRow: onSelectItem,
-    onSelectAllRows: onSelectAllItems,
-  } = table;
-
+}: Props): React.ReactElement | null {
   const containerRef = useRef(null);
 
   return (

@@ -3,7 +3,7 @@ import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
-export default function AddClassInput() {
+export default function AddClassInput(): React.ReactElement {
   const fixedOptions = [top100Films[6]];
   const [value, setValue] = React.useState([...fixedOptions, top100Films[13]]);
 
@@ -15,7 +15,7 @@ export default function AddClassInput() {
       onChange={(event, newValue) => {
         setValue([
           ...fixedOptions,
-          ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
+          ...newValue.filter((option) => !fixedOptions.includes(option)),
         ]);
       }}
       options={top100Films}
@@ -25,7 +25,8 @@ export default function AddClassInput() {
           <Chip
             label={option.title}
             {...getTagProps({ index })}
-            disabled={fixedOptions.indexOf(option) !== -1}
+            key={option.year}
+            disabled={fixedOptions.includes(option)}
           />
         ))
       }

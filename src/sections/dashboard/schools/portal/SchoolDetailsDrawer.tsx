@@ -1,9 +1,9 @@
-import { Stack, Drawer, Divider, Typography, DrawerProps } from "@mui/material";
-import Image from "next/image";
 import Scrollbar from "@components/scrollbar";
-import { countries } from "../../../../assets/data";
+import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
+import Image from "next/image";
 import * as React from "react";
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import { countries } from "../../../../assets/data";
 import TeacherSection from "../../organization/schools/TeachersSection";
 import ClassSection from "../classes/ClassSection";
 
@@ -21,7 +21,7 @@ export default function SchoolDetailsDrawer({
   onClose,
   onDelete,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const countryName = React.useMemo(() => {
     const country = countries.find(
       (country) => country.code.toLowerCase() === item.country.toLowerCase()

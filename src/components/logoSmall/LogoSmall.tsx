@@ -2,8 +2,7 @@ import { forwardRef } from "react";
 // next
 import NextLink from "next/link";
 // @mui
-import { useTheme } from "@mui/material/styles";
-import { Box, Link, BoxProps } from "@mui/material";
+import { Box, BoxProps, Link } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -11,10 +10,9 @@ export interface LogoProps extends BoxProps {
   disabledLink?: boolean;
 }
 
+// eslint-disable-next-line react/display-name
 const LogoSmall = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref) => {
-    const theme = useTheme();
-
     const logo = (
       <Box
         ref={ref}

@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
 import { AlertProps } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 //
 import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from "./CustomIcons";
 
@@ -7,10 +7,10 @@ import { ErrorIcon, InfoIcon, SuccessIcon, WarningIcon } from "./CustomIcons";
 
 const COLORS = ["info", "success", "warning", "error"] as const;
 
-export default function Alert(theme: Theme) {
+export default function Alert(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
-  const rootStyle = (ownerState: AlertProps) => {
+  const rootStyle = (ownerState: AlertProps): unknown => {
     const standardVariant = ownerState.variant === "standard";
 
     const filledVariant = ownerState.variant === "filled";

@@ -2,22 +2,22 @@ import { useState } from "react";
 // next
 import Head from "next/head";
 // @mui
+import { Masonry } from "@mui/lab";
 import {
   Box,
   Checkbox,
-  FormGroup,
   Container,
   FormControl,
   FormControlLabel,
+  FormGroup,
 } from "@mui/material";
-import { Masonry } from "@mui/lab";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -51,18 +51,18 @@ MUICheckboxPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUICheckboxPage() {
+export default function MUICheckboxPage(): React.ReactElement {
   const [checked, setChecked] = useState([true, false]);
 
-  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setChecked([event.target.checked, event.target.checked]);
   };
 
-  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setChecked([event.target.checked, checked[1]]);
   };
 
-  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setChecked([checked[0], event.target.checked]);
   };
 

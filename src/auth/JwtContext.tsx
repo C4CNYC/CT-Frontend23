@@ -1,23 +1,23 @@
 import {
   createContext,
-  useEffect,
-  useReducer,
   useCallback,
+  useEffect,
   useMemo,
+  useReducer,
 } from "react";
 // utils
 import axios from "../utils/axios";
 import localStorageAvailable from "../utils/localStorageAvailable";
 //
-import { isValidToken, setSession } from "./utils";
+import { useDispatch } from "react-redux";
+import { cleanUser, setUser } from "src/redux/slices/global";
 import {
   ActionMapType,
   AuthStateType,
   AuthUserType,
   JWTContextType,
 } from "./types";
-import { useDispatch } from "react-redux";
-import { cleanUser, setUser } from "src/redux/slices/global";
+import { isValidToken, setSession } from "./utils";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ enum Types {
   AUTHENTICATE = "AUTHENTICATE",
 }
 
-type Payload = {
+interface Payload {
   [Types.INITIAL]: {
     isAuthenticated: boolean;
     user: AuthUserType;
@@ -40,9 +40,9 @@ type Payload = {
   [Types.REGISTER]: {
     user: AuthUserType;
   };
-  [Types.AUTHENTICATE]: {};
+  [Types.AUTHENTICATE]: Record<string, unknown>;
   [Types.LOGOUT]: undefined;
-};
+}
 
 type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 
@@ -54,7 +54,7 @@ const initialState: AuthStateType = {
   user: null,
 };
 
-const reducer = (state: AuthStateType, action: ActionsType) => {
+const reducer = (state: AuthStateType, action: ActionsType): AuthStateType => {
   switch (action.type) {
     case Types.INITIAL:
       return {
@@ -95,11 +95,13 @@ export const AuthContext = createContext<JWTContextType | null>(null);
 
 // ----------------------------------------------------------------------
 
-type AuthProviderProps = {
+interface AuthProviderProps {
   children: React.ReactNode;
-};
+}
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({
+  children,
+}: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
 
@@ -150,11 +152,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [storageAvailable]);
 
   useEffect(() => {
-    initialize();
+    initialize().catch((e) => {
+      console.log("INIT FAIL");
+    });
   }, [initialize]);
 
   // AUTHENTICATE
-  const authenticate = () => {
+  const authenticate = (): void => {
     dispatch({
       type: Types.AUTHENTICATE,
       payload: {},
@@ -195,7 +199,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       lastName: string,
       tenantName: string
     ) => {
-      const { data: tenant } = await axios.post("/tenant", {
+      await axios.post("/tenant", {
         name: tenantName,
       });
       localStorage.setItem("tenantName", tenantName);

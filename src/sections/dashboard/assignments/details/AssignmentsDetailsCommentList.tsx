@@ -1,31 +1,33 @@
-import { useState } from "react";
-import { Stack, Avatar, Typography } from "@mui/material";
-import { fToNow } from "../../../../utils/formatTime";
-import { IAssignmentsComment } from "../../../../@types/assignments";
 import Image from "@components/image";
 import Lightbox from "@components/lightbox";
+import { Avatar, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { IAssignmentsComment } from "../../../../@types/assignments";
+import { fToNow } from "../../../../utils/formatTime";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   comments: IAssignmentsComment[];
-};
+}
 
-export default function AssignmentsDetailsCommentList({ comments }: Props) {
+export default function AssignmentsDetailsCommentList({
+  comments,
+}: Props): React.ReactElement | null {
   const [selectedImage, setSelectedImage] = useState<number>(-1);
 
   const imagesLightbox = comments
     .filter((comment) => comment.messageType === "image")
     .map((item) => ({ src: item.message }));
 
-  const handleOpenLightbox = (imageUrl: string) => {
+  const handleOpenLightbox = (imageUrl: string): void => {
     const imageIndex = imagesLightbox.findIndex(
       (image) => image.src === imageUrl
     );
     setSelectedImage(imageIndex);
   };
 
-  const handleCloseLightbox = () => {
+  const handleCloseLightbox = (): void => {
     setSelectedImage(-1);
   };
 
@@ -52,17 +54,21 @@ export default function AssignmentsDetailsCommentList({ comments }: Props) {
                 </Typography>
               </Stack>
 
-              {comment.messageType === "image" ? (
+              {comment.messageType === "image"
+? (
                 <Image
                   alt={comment.message}
                   src={comment.message}
-                  onClick={() => handleOpenLightbox(comment.message)}
+                  onClick={() => {
+                    handleOpenLightbox(comment.message);
+                  }}
                   sx={{
                     mt: 1,
                     borderRadius: 1,
                   }}
                 />
-              ) : (
+              )
+: (
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   {comment.message}
                 </Typography>

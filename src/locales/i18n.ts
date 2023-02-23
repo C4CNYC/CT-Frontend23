@@ -6,11 +6,11 @@ import localStorageAvailable from "../utils/localStorageAvailable";
 //
 import { defaultLang } from "./config-lang";
 //
+import arLocales from "./langs/ar";
+import cnLocales from "./langs/cn";
 import enLocales from "./langs/en";
 import frLocales from "./langs/fr";
 import vnLocales from "./langs/vn";
-import cnLocales from "./langs/cn";
-import arLocales from "./langs/ar";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ let lng = defaultLang.value;
 const storageAvailable = localStorageAvailable();
 
 if (storageAvailable) {
-  lng = localStorage.getItem("i18nextLng") || defaultLang.value;
+  lng = localStorage.getItem("i18nextLng") ?? defaultLang.value;
 }
 
 i18n

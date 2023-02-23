@@ -19,7 +19,7 @@ Page500.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function Page500() {
+export default function Page500(): React.ReactElement {
   return (
     <>
       <Head>

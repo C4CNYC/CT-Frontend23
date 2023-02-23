@@ -13,10 +13,10 @@ interface Props extends CardProps {
   subheader?: string;
   chart: {
     colors?: string[];
-    series: {
+    series: Array<{
       label: string;
       value: number;
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
@@ -26,7 +26,7 @@ export default function AnalyticsConversionRates({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { colors, series, options } = chart;
 
   const chartSeries = series.map((i) => i.value);

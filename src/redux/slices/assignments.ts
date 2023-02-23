@@ -1,10 +1,10 @@
-import omit from "lodash/omit";
-import keyBy from "lodash/keyBy";
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
-import { IAssignment } from "../services/interfaces/assignment.interface";
+import keyBy from "lodash/keyBy";
+import omit from "lodash/omit";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { IAssignmentsCard, IAssignmentsState } from "../../@types/assignments";
 import { AssignmentStatuses } from "../services/enums/assignment-status.enum";
-import { IAssignmentsState, IAssignmentsCard } from "../../@types/assignments";
+import { IAssignment } from "../services/interfaces/assignment.interface";
 
 // ----------------------------------------------------------------------
 
@@ -77,8 +77,8 @@ export const { actions } = slice;
 
 // ----------------------------------------------------------------------
 
-export function getBoard(data: (IAssignment & BaseResponseInterface)[]) {
-  return async (dispatch: Dispatch) => {
+export function getBoard(data: Array<IAssignment & BaseResponseInterface>) {
+  return async (dispatch: Dispatch): Promise<void> => {
     dispatch(slice.actions.startLoading());
     try {
       const response = {

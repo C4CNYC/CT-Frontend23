@@ -1,12 +1,12 @@
 import { ApexOptions } from "apexcharts";
 // @mui
+import { Box, CardProps, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Typography, Box, CardProps, Stack } from "@mui/material";
 // utils
 import { fNumber } from "../../../../utils/formatNumber";
 // components
-import Iconify from "@components/iconify";
 import Chart, { useChart } from "@components/chart";
+import Iconify from "@components/iconify";
 // theme
 import { ColorSchema } from "../../../../theme/palette";
 
@@ -31,7 +31,7 @@ export default function AppWidget({
   chart,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { series, options } = chart;

@@ -1,25 +1,22 @@
-import { useState } from "react";
-import {
-  Box,
-  Card,
-  Stack,
-  Button,
-  Divider,
-  MenuItem,
-  IconButton,
-} from "@mui/material";
+import ConfirmDialog from "@components/confirm-dialog";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
-import TextMaxLine from "@components/text-max-line";
 import { useSnackbar } from "@components/snackbar";
-import ConfirmDialog from "@components/confirm-dialog";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import { IModule } from "../../../redux/services/interfaces/class.interface";
+import TextMaxLine from "@components/text-max-line";
 import {
-  useDeleteAssignmentMutation,
-  useDeleteModuleMutation,
-} from "../../../redux/services/manager";
+  Box,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { useState } from "react";
+import { IModule } from "../../../redux/services/interfaces/class.interface";
+import { useDeleteModuleMutation } from "../../../redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -36,14 +33,16 @@ interface Props extends IModule {
   };
 }
 
-export default function ModuleCard({ module }: Props) {
+export default function ModuleCard({
+  module,
+}: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteModule] = useDeleteModuleMutation();
 
-  const onDelete = async () => {
+  const onDelete = async (): Promise<void> => {
     try {
       await deleteModule({ id: module.id }).unwrap();
       enqueueSnackbar("Module deleted!");
@@ -54,19 +53,19 @@ export default function ModuleCard({ module }: Props) {
     }
   };
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 

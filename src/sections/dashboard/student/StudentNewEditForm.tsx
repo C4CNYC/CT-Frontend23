@@ -1,10 +1,10 @@
-import * as Yup from "yup";
 import { useCallback, useEffect, useMemo } from "react";
+import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
 // form
-import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
@@ -13,37 +13,37 @@ import { fData } from "../../../utils/formatNumber";
 // routes
 import { PATH_DASHBOARD } from "@routes/paths";
 // components
-import Label from "@components/label";
-import { useSnackbar } from "@components/snackbar";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
 } from "@components/hook-form";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import Label from "@components/label";
+import { useSnackbar } from "@components/snackbar";
 import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 import { countries } from "src/assets/data";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useCreateStudentMutation,
   useUpdateStudentMutation,
 } from "src/redux/services/manager";
+import { RootState } from "src/redux/store";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {}
 
-type Props = {
+interface Props {
   isEdit?: boolean;
   currentUser?: IStudent & BaseResponseInterface;
-};
+}
 
 export default function StudentNewEditForm({
   isEdit = false,
   currentUser,
-}: Props) {
+}: Props): React.ReactElement | null {
   const { push } = useRouter();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [createStudent] = useCreateStudentMutation();
@@ -67,16 +67,15 @@ export default function StudentNewEditForm({
 
   const defaultValues = useMemo(
     () => ({
-      first_name: currentUser?.first_name || "",
-      last_name: currentUser?.last_name || "",
-      email: currentUser?.email || "",
-      phone: currentUser?.phone || "",
-      country: currentUser?.country || "",
-      city: currentUser?.city || "",
-      post_code: currentUser?.post_code || "",
-      about: currentUser?.about || "",
+      first_name: currentUser?.first_name ?? "",
+      last_name: currentUser?.last_name ?? "",
+      email: currentUser?.email ?? "",
+      phone: currentUser?.phone ?? "",
+      country: currentUser?.country ?? "",
+      city: currentUser?.city ?? "",
+      post_code: currentUser?.post_code ?? "",
+      about: currentUser?.about ?? "",
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
   );
 
@@ -92,10 +91,6 @@ export default function StudentNewEditForm({
     formState: { isSubmitting },
   } = methods;
 
-  const values = {
-    status: "active",
-  };
-
   useEffect(() => {
     if (isEdit && currentUser) {
       reset(defaultValues);
@@ -103,10 +98,9 @@ export default function StudentNewEditForm({
     if (!isEdit) {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentUser]);
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       if (!isEdit) {
         await createStudent({
@@ -135,12 +129,12 @@ export default function StudentNewEditForm({
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
 
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
+      // const newFile = Object.assign(file, {
+      //   preview: URL.createObjectURL(file),
+      // });
 
       if (file) {
-        //#TODO upload file
+        // #TODO upload file
       }
     },
     [setValue]

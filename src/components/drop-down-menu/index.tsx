@@ -1,26 +1,30 @@
-import * as React from "react";
-import MenuItem from "@mui/material/MenuItem";
-import { Role } from "src/redux/services/enums/role.enum";
-import { Button, Menu } from "@mui/material";
-import { useUpdateOrgMemberMutation } from "src/redux/services/admin";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Button, Menu } from "@mui/material";
+import MenuItem from "@mui/material/MenuItem";
 import { useSnackbar } from "notistack";
+import * as React from "react";
+import { useUpdateOrgMemberMutation } from "src/redux/services/admin";
+import { Role } from "src/redux/services/enums/role.enum";
 
-type Props = {
+interface Props {
   user_id: string;
   role: Role;
   email: string;
-};
+}
 
-export default function RoleSelector({ user_id, role, email }: Props) {
+export default function RoleSelector({
+  user_id,
+  role,
+  email,
+}: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [updateUser] = useUpdateOrgMemberMutation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = async (role: Role) => {
+  const handleClose = async (role: Role): Promise<void> => {
     setAnchorEl(null);
     try {
       await updateUser({
@@ -55,11 +59,16 @@ export default function RoleSelector({ user_id, role, email }: Props) {
         sx={{ padding: "0 !important" }}
       >
         {Object.keys(Role).map((r) =>
-          r === "Owner" || role === Role[r as keyof typeof Role] ? null : (
+          r === "Owner" || role === Role[r as keyof typeof Role]
+? null
+: (
             <MenuItem
-              onClick={() => handleClose(Role[r as keyof typeof Role])}
+              onClick={async () => {
+                await handleClose(Role[r as keyof typeof Role]);
+              }}
               value={Role[r as keyof typeof Role]}
               sx={{ padding: "5px 40px 5px 20px" }}
+              key={r}
             >
               {r}
             </MenuItem>

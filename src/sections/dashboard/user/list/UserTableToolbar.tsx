@@ -1,10 +1,10 @@
 // @mui
 import {
-  Stack,
-  InputAdornment,
-  TextField,
-  MenuItem,
   Button,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
@@ -12,14 +12,14 @@ import { useLocales } from "../../../../locales";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   filterName: string;
   filterRole?: string;
   optionsRole?: string[];
   onResetFilter: VoidFunction;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterRole?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export default function UserTableToolbar({
   filterName,
@@ -28,7 +28,7 @@ export default function UserTableToolbar({
   onFilterName,
   onFilterRole,
   onResetFilter,
-}: Props) {
+}: Props): React.ReactElement | null {
   const { translate } = useLocales();
 
   return (
@@ -41,7 +41,8 @@ export default function UserTableToolbar({
       }}
       sx={{ px: 2.5, py: 3 }}
     >
-      {optionsRole ? (
+      {optionsRole
+? (
         <TextField
           fullWidth
           select
@@ -77,7 +78,8 @@ export default function UserTableToolbar({
             </MenuItem>
           ))}
         </TextField>
-      ) : null}
+      )
+: null}
 
       <TextField
         fullWidth

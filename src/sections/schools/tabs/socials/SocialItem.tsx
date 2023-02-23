@@ -1,24 +1,24 @@
+import FormProvider, { RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, FormGroup, Stack } from "@mui/material";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import { Link, Stack, FormGroup, Box, MenuItem, Select } from "@mui/material";
+import { useForm } from "react-hook-form";
 import {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 } from "src/redux/services/manager";
-import { Socials, SOCIAL_ICONS } from "../../../../assets/data";
-import { LoadingButton } from "@mui/lab";
-import { useSnackbar } from "notistack";
-import FormProvider, { RHFTextField } from "@components/hook-form";
 import * as Yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { SOCIAL_ICONS } from "../../../../assets/data";
 
-type FormValuesProps = {
+interface FormValuesProps {
   social_id: string;
   school_id: string;
   link: string;
-};
+}
 
-type Props = {
+interface Props {
   school_id: string;
   socialItem: {
     type: string;
@@ -27,23 +27,27 @@ type Props = {
     link: string;
   };
   defaultValues?: FormValuesProps;
-};
+}
 
 const URL =
+  // eslint-disable-next-line no-useless-escape
   /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
 
 const UpdateLinkSchema = Yup.object().shape({
   link: Yup.string().matches(URL, "Enter a valid url"),
 });
 
-export default function SocialItem({ school_id, socialItem }: Props) {
+export default function SocialItem({
+  school_id,
+  socialItem,
+}: Props): React.ReactElement | null {
   const [edit, setEdit] = useState(true);
   const [deleteSocial] = useDeleteSchoolSocialMutation();
   const [editSocial] = useUpdateSchoolSocialMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    link: socialItem?.link || "",
+    link: socialItem?.link ?? "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -55,10 +59,10 @@ export default function SocialItem({ school_id, socialItem }: Props) {
 
   const isFormEdited = formState.isDirty;
 
-  const handleEditSocial = async (data: FormValuesProps) => {
+  const handleEditSocial = async (data: FormValuesProps): Promise<void> => {
     try {
       await editSocial({
-        school_id: school_id,
+        school_id,
         social_id: socialItem.id,
         link: data?.link,
       }).unwrap();
@@ -70,11 +74,11 @@ export default function SocialItem({ school_id, socialItem }: Props) {
       });
     }
   };
-  const handleDeleteSocial = async (social_id: string) => {
+  const handleDeleteSocial = async (social_id: string): Promise<void> => {
     try {
       await deleteSocial({
-        school_id: school_id,
-        social_id: social_id,
+        school_id,
+        social_id,
       }).unwrap();
       enqueueSnackbar("Social link deleted");
     } catch (e) {
@@ -135,7 +139,7 @@ export default function SocialItem({ school_id, socialItem }: Props) {
               type="submit"
               variant="contained"
               size="small"
-              disabled={edit || !isFormEdited}
+              disabled={edit ?? !isFormEdited}
               sx={{
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
@@ -147,7 +151,9 @@ export default function SocialItem({ school_id, socialItem }: Props) {
             </LoadingButton>
             <LoadingButton
               variant="outlined"
-              onClick={() => setEdit(!edit)}
+              onClick={() => {
+                setEdit(!edit);
+              }}
               sx={{ ml: 2, height: "40px" }}
             >
               {edit ? "Edit" : "Cancel"}
@@ -156,7 +162,9 @@ export default function SocialItem({ school_id, socialItem }: Props) {
               sx={{ ml: 2, mr: 2, height: "40px" }}
               variant="outlined"
               color="error"
-              onClick={() => handleDeleteSocial(socialItem.id)}
+              onClick={async () => {
+                await handleDeleteSocial(socialItem.id);
+              }}
             >
               Delete
             </LoadingButton>

@@ -1,23 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
-import { Stack, Fade, Portal } from "@mui/material";
+import { Fade, Portal, Stack } from "@mui/material";
 // hooks
 import useActiveLink from "../../../../hooks/useActiveLink";
 //
 import { NavItemProps } from "../types";
 import { NavItem, NavItemDashboard } from "./NavItem";
-import { StyledSubheader, StyledMenu } from "./styles";
+import { StyledMenu, StyledSubheader } from "./styles";
 
 // ----------------------------------------------------------------------
 
-type NavListProps = {
+interface NavListProps {
   item: NavItemProps;
   isOffset: boolean;
-};
+}
 
-export default function NavList({ item, isOffset }: NavListProps) {
+export default function NavList({
+  item,
+  isOffset,
+}: NavListProps): React.ReactElement | null {
   const { pathname } = useRouter();
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -30,16 +33,15 @@ export default function NavList({ item, isOffset }: NavListProps) {
     if (openMenu) {
       handleCloseMenu();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleOpenMenu = () => {
+  const handleOpenMenu = (): void => {
     if (children) {
       setOpenMenu(true);
     }
   };
 
-  const handleCloseMenu = () => {
+  const handleCloseMenu = (): void => {
     setOpenMenu(false);
   };
 
@@ -81,22 +83,22 @@ export default function NavList({ item, isOffset }: NavListProps) {
 
 // ----------------------------------------------------------------------
 
-type NavSubListProps = {
+interface NavSubListProps {
   isDashboard: boolean;
   subheader: string;
   items: NavItemProps[];
   onClose: VoidFunction;
-};
+}
 
 function NavSubList({
   items,
   isDashboard,
   subheader,
   onClose,
-}: NavSubListProps) {
+}: NavSubListProps): React.ReactElement | null {
   const { pathname } = useRouter();
 
-  const isActive = (path: string) => pathname === path;
+  const isActive = (path: string): boolean => pathname === path;
 
   return (
     <Stack
@@ -107,9 +109,11 @@ function NavSubList({
       <StyledSubheader disableSticky>{subheader}</StyledSubheader>
 
       {items.map((item) =>
-        isDashboard ? (
+        isDashboard
+? (
           <NavItemDashboard key={item.title} item={item} onClick={onClose} />
-        ) : (
+        )
+: (
           <NavItem
             subItem
             key={item.title}

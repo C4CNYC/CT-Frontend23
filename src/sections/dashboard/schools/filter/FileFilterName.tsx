@@ -1,13 +1,16 @@
-import { TextField, InputAdornment } from "@mui/material";
 import Iconify from "@components/iconify";
+import { InputAdornment, TextField } from "@mui/material";
 import { useLocales } from "../../../../locales";
 
-type Props = {
+interface Props {
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
-export default function FileFilterName({ filterName, onFilterName }: Props) {
+export default function FileFilterName({
+  filterName,
+  onFilterName,
+}: Props): React.ReactElement | null {
   const { translate } = useLocales();
 
   return (

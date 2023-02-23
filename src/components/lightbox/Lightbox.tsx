@@ -1,18 +1,18 @@
-import ReactLightbox from "yet-another-react-lightbox";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import Video from "yet-another-react-lightbox/plugins/video";
-import Captions from "yet-another-react-lightbox/plugins/captions";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import ReactLightbox, { Plugin } from "yet-another-react-lightbox";
 import { useLightboxState } from "yet-another-react-lightbox/core";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import Video from "yet-another-react-lightbox/plugins/video";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 // @mui
 import { Typography } from "@mui/material";
 //
 import Iconify from "../iconify";
 //
-import { LightBoxProps } from "./types";
 import StyledLightbox from "./styles";
+import { LightBoxProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ export default function Lightbox({
   disabledFullscreen,
   onGetCurrentIndex,
   ...other
-}: LightBoxProps) {
+}: LightBoxProps): React.ReactElement | null {
   const totalItems = slides ? slides.length : 0;
 
   return (
@@ -107,7 +107,7 @@ export function getPlugins({
   disabledSlideshow,
   disabledThumbnails,
   disabledFullscreen,
-}: LightBoxProps) {
+}: LightBoxProps): Plugin[] {
   let plugins = [Captions, Fullscreen, Slideshow, Thumbnails, Video, Zoom];
 
   if (disabledThumbnails) {
@@ -134,17 +134,17 @@ export function getPlugins({
 
 // ----------------------------------------------------------------------
 
-type DisplayTotalProps = {
+interface DisplayTotalProps {
   totalItems: number;
   disabledTotal?: boolean;
   disabledCaptions?: boolean;
-};
+}
 
 export function DisplayTotal({
   totalItems,
   disabledTotal,
   disabledCaptions,
-}: DisplayTotalProps) {
+}: DisplayTotalProps): React.ReactElement | null {
   const { state } = useLightboxState();
 
   const { currentIndex } = state;

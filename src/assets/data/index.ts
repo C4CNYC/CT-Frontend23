@@ -1,2 +1,2 @@
 export * from "./countries";
-export { SOCIAL_ICONS, Socials } from "./socialIcons";
+export { Socials, SOCIAL_ICONS } from "./socialIcons";

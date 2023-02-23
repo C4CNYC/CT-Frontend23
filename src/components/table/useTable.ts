@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 //
 import { TableProps } from "./types";
 
@@ -6,32 +6,32 @@ import { TableProps } from "./types";
 
 type ReturnType = TableProps;
 
-export type UseTableProps = {
+export interface UseTableProps {
   defaultDense?: boolean;
   defaultOrder?: "asc" | "desc";
   defaultOrderBy?: string;
   defaultSelected?: string[];
   defaultRowsPerPage?: number;
   defaultCurrentPage?: number;
-};
+}
 
 export default function useTable(props?: UseTableProps): ReturnType {
   const [dense, setDense] = useState(!!props?.defaultDense);
 
-  const [orderBy, setOrderBy] = useState(props?.defaultOrderBy || "name");
+  const [orderBy, setOrderBy] = useState(props?.defaultOrderBy ?? "name");
 
   const [order, setOrder] = useState<"asc" | "desc">(
-    props?.defaultOrder || "asc"
+    props?.defaultOrder ?? "asc"
   );
 
-  const [page, setPage] = useState(props?.defaultCurrentPage || 0);
+  const [page, setPage] = useState(props?.defaultCurrentPage ?? 0);
 
   const [rowsPerPage, setRowsPerPage] = useState(
-    props?.defaultRowsPerPage || 5
+    props?.defaultRowsPerPage ?? 5
   );
 
   const [selected, setSelected] = useState<string[]>(
-    props?.defaultSelected || []
+    props?.defaultSelected ?? []
   );
 
   const onSort = useCallback(

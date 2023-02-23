@@ -1,29 +1,29 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from "@components/image";
 import Carousel, { CarouselArrowIndex } from "@components/carousel";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
 const THUMB_SIZE = 64;
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     title: string;
     image: string;
     description: string;
-  }[];
-};
+  }>;
+}
 
-type StyledThumbnailsContainerProps = {
+interface StyledThumbnailsContainerProps {
   length: number;
-};
+}
 
 const StyledThumbnailsContainer = styled("div", {
   shouldForwardProp: (prop) => prop !== "length",
@@ -76,7 +76,9 @@ const StyledThumbnailsContainer = styled("div", {
 
 // ----------------------------------------------------------------------
 
-export default function CarouselThumbnail({ data }: Props) {
+export default function CarouselThumbnail({
+  data,
+}: Props): React.ReactElement | null {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [nav1, setNav1] = useState<Carousel | undefined>(undefined);
@@ -94,7 +96,9 @@ export default function CarouselThumbnail({ data }: Props) {
     draggable: false,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    beforeChange: (current: number, next: number) => setCurrentIndex(next),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
   };
 
   const carouselSettings2 = {
@@ -117,11 +121,11 @@ export default function CarouselThumbnail({ data }: Props) {
     }
   }, []);
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carousel2.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carousel2.current?.slickNext();
   };
 

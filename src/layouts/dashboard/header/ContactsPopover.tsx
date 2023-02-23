@@ -1,36 +1,36 @@
 import { useState } from "react";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
-  Typography,
-  ListItemText,
   ListItemAvatar,
+  ListItemText,
   MenuItem,
+  Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // utils
 import { fToNow } from "../../../utils/formatTime";
 // _mock_
 import { _contacts } from "../../../_mock/arrays";
 // components
+import { IconButtonAnimate } from "@components/animate";
+import BadgeStatus from "@components/badge-status";
 import { CustomAvatar } from "@components/custom-avatar";
 import Iconify from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
 import MenuPopover from "@components/menu-popover";
-import BadgeStatus from "@components/badge-status";
-import { IconButtonAnimate } from "@components/animate";
+import Scrollbar from "@components/scrollbar";
 
 // ----------------------------------------------------------------------
 
 const ITEM_HEIGHT = 64;
 
-export default function ContactsPopover() {
+export default function ContactsPopover(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 

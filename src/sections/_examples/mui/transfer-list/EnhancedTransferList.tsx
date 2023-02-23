@@ -1,35 +1,35 @@
 import { useState } from "react";
 // @mui
 import {
-  Card,
-  List,
-  Grid,
   Button,
-  Divider,
-  Checkbox,
+  Card,
   CardHeader,
-  ListItemText,
-  ListItemIcon,
+  Checkbox,
+  Divider,
+  Grid,
+  List,
   ListItemButton,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-function not(a: number[], b: number[]) {
-  return a.filter((value) => b.indexOf(value) === -1);
+function not(a: number[], b: number[]): number[] {
+  return a.filter((value) => !b.includes(value));
 }
 
-function intersection(a: number[], b: number[]) {
-  return a.filter((value) => b.indexOf(value) !== -1);
+function intersection(a: number[], b: number[]): number[] {
+  return a.filter((value) => b.includes(value));
 }
 
-function union(a: number[], b: number[]) {
+function union(a: number[], b: number[]): number[] {
   return [...a, ...not(b, a)];
 }
 
-export default function EnhancedTransferList() {
+export default function EnhancedTransferList(): React.ReactElement {
   const [checked, setChecked] = useState<number[]>([]);
 
   const [left, setLeft] = useState<number[]>([0, 1, 2, 3]);
@@ -40,7 +40,7 @@ export default function EnhancedTransferList() {
 
   const rightChecked = intersection(checked, right);
 
-  const handleToggle = (value: number) => () => {
+  const handleToggle = (value: number) => (): void => {
     const currentIndex = checked.indexOf(value);
 
     const newChecked = [...checked];
@@ -54,10 +54,10 @@ export default function EnhancedTransferList() {
     setChecked(newChecked);
   };
 
-  const numberOfChecked = (items: number[]) =>
+  const numberOfChecked = (items: number[]): number =>
     intersection(checked, items).length;
 
-  const handleToggleAll = (items: number[]) => () => {
+  const handleToggleAll = (items: number[]) => (): void => {
     if (numberOfChecked(items) === items.length) {
       setChecked(not(checked, items));
     } else {
@@ -65,19 +65,19 @@ export default function EnhancedTransferList() {
     }
   };
 
-  const handleCheckedRight = () => {
+  const handleCheckedRight = (): void => {
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
 
-  const handleCheckedLeft = () => {
+  const handleCheckedLeft = (): void => {
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
-  const customList = (title: React.ReactNode, items: number[]) => (
+  const customList = (title: React.ReactNode, items: number[]): React.ReactElement => (
     <Card sx={{ borderRadius: 1.5 }}>
       <CardHeader
         avatar={
@@ -122,7 +122,7 @@ export default function EnhancedTransferList() {
               <ListItemIcon>
                 <Checkbox
                   disableRipple
-                  checked={checked.indexOf(value) !== -1}
+                  checked={checked.includes(value)}
                   tabIndex={-1}
                   inputProps={{ "aria-labelledby": labelId }}
                 />

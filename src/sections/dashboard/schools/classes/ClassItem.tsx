@@ -17,7 +17,7 @@ import { useUpdateClassMutation } from "src/redux/services/admin";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   classes: IClass & BaseResponseInterface;
   schoolId: string;
   handleEditClass?: (id: string) => void;
@@ -27,21 +27,22 @@ type Props = {
 export default function ClassItem({
   classes,
   handleDeleteClass,
-  schoolId,
-}: Props) {
+  schoolId
+}:
+Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [updateClass] = useUpdateClassMutation();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const updateClassByAdmin = async (name: string) => {
+  const updateClassByAdmin = async (name: string): Promise<void> => {
     try {
       const data = await updateClass({
         schoolId,
@@ -100,7 +101,7 @@ export default function ClassItem({
             isEdit
             defaultValues={{ name: classes.name }}
             updateClass={() => {
-              updateClassByAdmin;
+              updateClassByAdmin();
               handleClosePopover();
             }}
           >

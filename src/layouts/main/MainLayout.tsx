@@ -4,16 +4,18 @@ import { useRouter } from "next/router";
 // @mui
 import { Box } from "@mui/material";
 //
-const Header = dynamic(() => import("./Header"), { ssr: false });
-const Footer = dynamic(() => import("./Footer"), { ssr: false });
+const Header = dynamic(async () => await import("./Header"), { ssr: false });
+const Footer = dynamic(async () => await import("./Footer"), { ssr: false });
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children?: React.ReactNode;
-};
+}
 
-export default function MainLayout({ children }: Props) {
+export default function MainLayout({
+  children,
+}: Props): React.ReactElement | null {
   const { pathname } = useRouter();
 
   const isHome = pathname === "/";

@@ -1,15 +1,15 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Button, Container } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Box, Button, Container } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import { useSnackbar, VariantType, SnackbarOrigin } from "@components/snackbar";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { SnackbarOrigin, useSnackbar, VariantType } from "@components/snackbar";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -31,7 +31,7 @@ DemoSnackbarPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoSnackbarPage() {
+export default function DemoSnackbarPage(): React.ReactElement {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const onSnackbarAction = (color: VariantType, anchor?: SnackbarOrigin) => {
@@ -53,7 +53,9 @@ export default function DemoSnackbarPage() {
           <Button
             size="small"
             color="inherit"
-            onClick={() => closeSnackbar(key)}
+            onClick={() => {
+              closeSnackbar(key);
+            }}
           >
             Dismiss
           </Button>
@@ -206,35 +208,45 @@ export default function DemoSnackbarPage() {
             <Button
               variant="contained"
               color="inherit"
-              onClick={() => onSnackbarAction("default")}
+              onClick={() => {
+                onSnackbarAction("default");
+              }}
             >
               Default
             </Button>
             <Button
               variant="contained"
               color="info"
-              onClick={() => onSnackbarAction("info")}
+              onClick={() => {
+                onSnackbarAction("info");
+              }}
             >
               Info
             </Button>
             <Button
               variant="contained"
               color="success"
-              onClick={() => onSnackbarAction("success")}
+              onClick={() => {
+                onSnackbarAction("success");
+              }}
             >
               Success
             </Button>
             <Button
               variant="contained"
               color="warning"
-              onClick={() => onSnackbarAction("warning")}
+              onClick={() => {
+                onSnackbarAction("warning");
+              }}
             >
               Warning
             </Button>
             <Button
               variant="contained"
               color="error"
-              onClick={() => onSnackbarAction("error")}
+              onClick={() => {
+                onSnackbarAction("error");
+              }}
             >
               Error
             </Button>
@@ -244,67 +256,69 @@ export default function DemoSnackbarPage() {
             <Button
               variant="text"
               color="inherit"
-              onClick={() =>
+              onClick={() => {
                 onSnackbarAction("default", {
                   vertical: "top",
                   horizontal: "left",
-                })
-              }
+                });
+              }}
             >
               Top Left
             </Button>
             <Button
               variant="text"
               color="inherit"
-              onClick={() =>
+              onClick={() => {
                 onSnackbarAction("default", {
                   vertical: "top",
                   horizontal: "center",
-                })
-              }
+                });
+              }}
             >
               Top Center
             </Button>
             <Button
               variant="text"
               color="inherit"
-              onClick={() => onSnackbarAction("default")}
+              onClick={() => {
+                onSnackbarAction("default");
+              }}
             >
               Top Right
             </Button>
             <Button
               variant="text"
               color="inherit"
-              onClick={() =>
+              onClick={() => {
                 onSnackbarAction("default", {
                   vertical: "bottom",
                   horizontal: "left",
-                })
-              }
+                });
+              }}
             >
               Bottom Left
             </Button>
             <Button
               variant="text"
               color="inherit"
-              onClick={() =>
+              onClick={() => {
                 onSnackbarAction("default", {
                   vertical: "bottom",
                   horizontal: "center",
-                })
-              }
+                });
+              }}
             >
               Bottom Center
             </Button>
             <Button
               variant="text"
               color="inherit"
-              onClick={() =>
+              onClick={() => {
                 onSnackbarAction("default", {
                   vertical: "bottom",
                   horizontal: "right",
-                })
-              }
+                });
+              }}
             >
               Bottom Right
             </Button>

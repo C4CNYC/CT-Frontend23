@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import * as _ from "lodash";
 import { Paper, Typography, Box, Stack, Tooltip } from "@mui/material";
@@ -13,14 +13,14 @@ import { IAssignmentsCard } from "../../../@types/assignments";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   index: number;
   card: IAssignmentsCard;
   onDeleteTask: (id: string) => void;
   school_id: string;
 };
 
-const ImageCardType: { [key: string]: string } = {
+const ImageCardType: Record<string, string> = {
   [AssignmentTypes.REVIEW]: "/assets/assignment/code-review.svg",
   [AssignmentTypes.CODING_IDEA]: "/assets/assignment/code-idea.svg",
   [AssignmentTypes.CODING_PROJECT]: "/assets/assignment/project.svg",
@@ -30,7 +30,7 @@ const ImageCardType: { [key: string]: string } = {
   [AssignmentTypes.RESEARCH]: "/assets/assignment/research.svg",
 };
 
-const IconComplexity: { [key: string]: string } = {
+const IconComplexity: Record<string, string> = {
   [AssignmentComplexity.High]: "/assets/assignment/high-priority.svg",
   [AssignmentComplexity.Medium]: "/assets/assignment/medium-priority.svg",
   [AssignmentComplexity.Low]: "/assets/assignment/low-priority.svg",
@@ -40,24 +40,21 @@ export default function AssignmentsTaskCard({
   card,
   onDeleteTask,
   index,
-  school_id,
-}: Props) {
+  school_id
+}:
+Props): React.ReactElement | null {
   const { name, type, duration, complexity } = card;
 
-  const [completed, setCompleted] = useState(false);
+  const [completed] = useState(false);
 
   const [openDetails, setOpenDetails] = useState(false);
 
-  const handleOpenDetails = () => {
+  const handleOpenDetails = (): void => {
     setOpenDetails(true);
   };
 
-  const handleCloseDetails = () => {
+  const handleCloseDetails = (): void => {
     setOpenDetails(false);
-  };
-
-  const handleChangeComplete = (event: ChangeEvent<HTMLInputElement>) => {
-    setCompleted(event.target.checked);
   };
 
   return (
@@ -128,7 +125,8 @@ export default function AssignmentsTaskCard({
                 top="0"
                 bottom="0"
               >
-                {duration?.hours || duration?.minutes ? (
+                {duration?.hours ?? duration?.minutes
+? (
                   <Tooltip
                     title={`Duration ( ${convertDuration(duration)} )`}
                     placement="right"
@@ -141,7 +139,8 @@ export default function AssignmentsTaskCard({
                       style={{ marginBottom: "7px" }}
                     />
                   </Tooltip>
-                ) : null}
+                )
+: null}
                 <Tooltip title="Linked to content" placement="right">
                   <NextImage
                     width="20"
@@ -175,7 +174,7 @@ export default function AssignmentsTaskCard({
         task={card}
         openDetails={openDetails}
         onCloseDetails={handleCloseDetails}
-        onDeleteTask={() => onDeleteTask(card.id)}
+        onDeleteTask={() => { onDeleteTask(card.id); }}
       />
     </>
   );

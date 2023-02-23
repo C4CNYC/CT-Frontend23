@@ -9,6 +9,7 @@ export interface FabButtonAnimateProps extends FabProps {
   sxWrap?: SxProps;
 }
 
+// eslint-disable-next-line react/display-name
 const FabButtonAnimate = forwardRef<HTMLButtonElement, FabButtonAnimateProps>(
   ({ size = "large", children, sx, sxWrap, ...other }, ref) => (
     <AnimateWrap size={size} sxWrap={sxWrap}>
@@ -23,11 +24,11 @@ export default FabButtonAnimate;
 
 // ----------------------------------------------------------------------
 
-type AnimateWrapProp = {
+interface AnimateWrapProp {
   children: React.ReactNode;
   size: "small" | "medium" | "large";
   sxWrap?: SxProps;
-};
+}
 
 const varSmall = {
   hover: { scale: 1.07 },
@@ -44,7 +45,11 @@ const varLarge = {
   tap: { scale: 0.99 },
 };
 
-function AnimateWrap({ size, children, sxWrap }: AnimateWrapProp) {
+function AnimateWrap({
+  size,
+  children,
+  sxWrap,
+}: AnimateWrapProp): React.ReactElement {
   const isSmall = size === "small";
   const isLarge = size === "large";
 

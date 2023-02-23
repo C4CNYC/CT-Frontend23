@@ -4,15 +4,15 @@ import Head from "next/head";
 // @mui
 import {
   Box,
-  Radio,
   Button,
-  Popover,
   Container,
-  FormLabel,
-  Typography,
-  RadioGroup,
   FormControl,
   FormControlLabel,
+  FormLabel,
+  Popover,
+  Radio,
+  RadioGroup,
+  Typography,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -40,7 +40,7 @@ MUIPopoverPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIPopoverPage() {
+export default function MUIPopoverPage(): React.ReactElement {
   const [click, setCLick] = useState<HTMLButtonElement | null>(null);
 
   const [hover, setHover] = useState<HTMLElement | null>(null);
@@ -49,28 +49,28 @@ export default function MUIPopoverPage() {
 
   const [arrow, setArrow] = useState<MenuPopoverArrowValue>("top-left");
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setCLick(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setCLick(null);
   };
 
   const handleHoverOpen = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
+  ): void => {
     setHover(event.currentTarget);
   };
-  const handleHoverClose = () => {
+  const handleHoverClose = (): void => {
     setHover(null);
   };
 
-  const handleOpenCustomized = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenCustomized = (event: React.MouseEvent<HTMLElement>): void => {
     setCustomized(event.currentTarget);
   };
 
-  const handleCloseCustomized = () => {
+  const handleCloseCustomized = (): void => {
     setCustomized(null);
   };
 
@@ -195,9 +195,9 @@ export default function MUIPopoverPage() {
             <FormLabel sx={{ typography: "body2" }}>Arrow</FormLabel>
             <RadioGroup
               value={arrow}
-              onChange={(event) =>
-                setArrow(event.target.value as MenuPopoverArrowValue)
-              }
+              onChange={(event) => {
+                setArrow(event.target.value as MenuPopoverArrowValue);
+              }}
             >
               {[
                 "top-left",

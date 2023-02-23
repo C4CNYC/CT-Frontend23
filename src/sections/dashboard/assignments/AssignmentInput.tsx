@@ -3,7 +3,10 @@ import { InputBase, InputBaseProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function AssignmentInput({ sx, ...other }: InputBaseProps) {
+export default function AssignmentInput({
+  sx,
+  ...other
+}: InputBaseProps): React.ReactElement | null {
   return (
     <InputBase
       sx={{
@@ -12,7 +15,7 @@ export default function AssignmentInput({ sx, ...other }: InputBaseProps) {
           py: 1,
           borderRadius: 1,
           typography: "h6",
-          border: `solid 1px transparent`,
+          border: "solid 1px transparent",
           transition: (theme) => theme.transitions.create(["padding-left"]),
           "&:hover, &:focus": {
             pl: 1,

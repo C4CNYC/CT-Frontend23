@@ -1,27 +1,30 @@
-import { useState, memo } from "react";
+import { memo, useState } from "react";
 import Map from "react-map-gl";
 // @mui
 import { Box, Typography } from "@mui/material";
 // components
 import Image from "@components/image";
-import { MapPopup, MapMarker, MapControl, MapBoxProps } from "@components/map";
+import { MapBoxProps, MapControl, MapMarker, MapPopup } from "@components/map";
 
 // ----------------------------------------------------------------------
 
-type CountryProps = {
+interface CountryProps {
   name: string;
   photo: string;
   capital: string;
   latlng: number[];
   timezones: string[];
   country_code: string;
-};
+}
 
 interface Props extends MapBoxProps {
   data: CountryProps[];
 }
 
-function MapMarkersPopups({ data, ...other }: Props) {
+function MapMarkersPopups({
+  data,
+  ...other
+}: Props): React.ReactElement | null {
   const [popupInfo, setPopupInfo] = useState<CountryProps | null>(null);
 
   return (
@@ -49,7 +52,9 @@ function MapMarkersPopups({ data, ...other }: Props) {
         <MapPopup
           latitude={popupInfo.latlng[0]}
           longitude={popupInfo.latlng[1]}
-          onClose={() => setPopupInfo(null)}
+          onClose={() => {
+            setPopupInfo(null);
+          }}
         >
           <Box sx={{ color: "common.white" }}>
             <Box

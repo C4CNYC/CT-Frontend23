@@ -1,11 +1,13 @@
 import InfoIcon from "@mui/icons-material/Info";
 import * as React from "react";
 
-type InputInfoProps = {
+interface InputInfoProps {
   text: string;
-};
+}
 
-export default function InputInfo({ text }: InputInfoProps) {
+export default function InputInfo({
+  text,
+}: InputInfoProps): React.ReactElement | null {
   return (
     <div
       style={{

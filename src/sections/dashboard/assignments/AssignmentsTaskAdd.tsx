@@ -1,43 +1,30 @@
-import { useState } from "react";
-import {
-  Box,
-  Paper,
-  Stack,
-  Tooltip,
-  Checkbox,
-  IconButton,
-  InputBase,
-  ClickAwayListener,
-} from "@mui/material";
-import { IAssignmentsCard } from "../../../@types/assignments";
-import Iconify from "@components/iconify";
 import DateRangePicker, {
   useDateRangePicker,
 } from "@components/date-range-picker";
+import Iconify from "@components/iconify";
+import {
+  Box,
+  ClickAwayListener,
+  IconButton,
+  InputBase,
+  Paper,
+  Stack,
+  Tooltip,
+} from "@mui/material";
+import { useState } from "react";
+import { IAssignmentsCard } from "../../../@types/assignments";
 import AssignmentsContactsDialog from "./AssignmentsContactsDialog";
 
-// ----------------------------------------------------------------------
-
-const defaultTask = {
-  attachments: [],
-  comments: [],
-  description: "",
-  due: [null, null],
-  assignee: [],
-};
-
-type Props = {
+interface Props {
   onAddTask: (task: IAssignmentsCard) => void;
   onCloseAddTask: VoidFunction;
-};
+}
 
 export default function AssignmentsTaskAdd({
   onAddTask,
   onCloseAddTask,
-}: Props) {
+}: Props): React.ReactElement | null {
   const [name, setName] = useState("");
-
-  const [completed, setCompleted] = useState(false);
 
   const [openContacts, setOpenContacts] = useState(false);
 
@@ -54,15 +41,17 @@ export default function AssignmentsTaskAdd({
     shortLabel,
   } = useDateRangePicker(new Date(), new Date());
 
-  const handleOpenContacts = () => {
+  const handleOpenContacts = (): void => {
     setOpenContacts(true);
   };
 
-  const handleCloseContacts = () => {
+  const handleCloseContacts = (): void => {
     setOpenContacts(false);
   };
 
-  const handleKeyUpAddTask = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUpAddTask = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): any => {
     // if (event.key === "Enter") {
     //   if (name.trim() !== "") {
     //     onAddTask({
@@ -76,7 +65,7 @@ export default function AssignmentsTaskAdd({
     // }
   };
 
-  const handleClickAddTask = () => {
+  const handleClickAddTask = (): void => {
     // if (name) {
     //   onAddTask({
     //     ...defaultTask,
@@ -90,12 +79,6 @@ export default function AssignmentsTaskAdd({
     // }
   };
 
-  const handleChangeCompleted = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCompleted(event.target.checked);
-  };
-
   return (
     <ClickAwayListener onClickAway={handleClickAddTask}>
       <div>
@@ -105,7 +88,9 @@ export default function AssignmentsTaskAdd({
             fullWidth
             placeholder="Task name"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
             onKeyUp={handleKeyUpAddTask}
             sx={{ px: 2, pt: 2 }}
           />
@@ -122,7 +107,8 @@ export default function AssignmentsTaskAdd({
                 </IconButton>
               </Tooltip>
 
-              {isSelectedValuePicker ? (
+              {isSelectedValuePicker
+? (
                 <Box
                   onClick={onOpenPicker}
                   sx={{
@@ -133,7 +119,8 @@ export default function AssignmentsTaskAdd({
                 >
                   {shortLabel}
                 </Box>
-              ) : (
+              )
+: (
                 <Tooltip title="Due date">
                   <IconButton size="small" onClick={onOpenPicker}>
                     <Iconify icon="eva:calendar-fill" />

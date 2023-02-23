@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 // @mui
+import { IconButton, Stack, StackProps } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Stack, IconButton, StackProps } from "@mui/material";
 // components
 import Iconify from "../iconify";
 
@@ -16,6 +16,7 @@ interface IncrementerButtonProps extends StackProps {
   onDecrease: VoidFunction;
 }
 
+// eslint-disable-next-line react/display-name
 const IncrementerButton = forwardRef<HTMLDivElement, IncrementerButtonProps>(
   (
     {

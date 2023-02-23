@@ -1,38 +1,38 @@
-import { useState } from "react";
 import { sentenceCase } from "change-case";
+import { useState } from "react";
 // @mui
 import {
   Box,
-  Card,
-  Table,
   Button,
+  Card,
+  CardHeader,
+  CardProps,
   Divider,
+  IconButton,
   MenuItem,
-  TableRow,
+  Table,
   TableBody,
   TableCell,
-  CardProps,
-  CardHeader,
-  IconButton,
   TableContainer,
+  TableRow,
 } from "@mui/material";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Label from "@components/label";
 import Iconify from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
+import Label from "@components/label";
 import MenuPopover from "@components/menu-popover";
-import { TableHeadCustom } from "@components/table";
+import Scrollbar from "@components/scrollbar";
+import TableHeadCustom from "@components/table/TableHeadCustom";
 
 // ----------------------------------------------------------------------
 
-type RowProps = {
+interface RowProps {
   id: string;
   category: string;
   price: number;
   status: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -47,7 +47,7 @@ export default function AppNewInvoice({
   tableData,
   tableLabels,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
@@ -55,7 +55,15 @@ export default function AppNewInvoice({
       <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar>
           <Table sx={{ minWidth: 720 }}>
-            <TableHeadCustom headLabel={tableLabels} />
+            <TableHeadCustom
+              headLabel={tableLabels}
+              order={undefined}
+              orderBy={undefined}
+              onSort={undefined}
+              onSelectAllRows={undefined}
+              sx={undefined}
+              Props={undefined}
+            />
 
             <TableBody>
               {tableData.map((row) => (
@@ -83,37 +91,39 @@ export default function AppNewInvoice({
 
 // ----------------------------------------------------------------------
 
-type AppNewInvoiceRowProps = {
+interface AppNewInvoiceRowProps {
   row: RowProps;
-};
+}
 
-function AppNewInvoiceRow({ row }: AppNewInvoiceRowProps) {
+function AppNewInvoiceRow({
+  row,
+}: AppNewInvoiceRowProps): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleDownload = () => {
+  const handleDownload = (): void => {
     handleClosePopover();
     console.log("DOWNLOAD", row.id);
   };
 
-  const handlePrint = () => {
+  const handlePrint = (): void => {
     handleClosePopover();
     console.log("PRINT", row.id);
   };
 
-  const handleShare = () => {
+  const handleShare = (): void => {
     handleClosePopover();
     console.log("SHARE", row.id);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     handleClosePopover();
     console.log("DELETE", row.id);
   };

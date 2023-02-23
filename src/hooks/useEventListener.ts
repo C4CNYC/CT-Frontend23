@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef, useLayoutEffect } from "react";
+import { RefObject, useEffect, useLayoutEffect, useRef } from "react";
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ function useEventListener<K extends keyof DocumentEventMap>(
 function useEventListener<
   KW extends keyof WindowEventMap,
   KH extends keyof HTMLElementEventMap,
-  T extends HTMLElement | void = void
+  T extends HTMLElement
 >(
   eventName: KW | KH,
   handler: (
@@ -43,7 +43,7 @@ function useEventListener<
   ) => void,
   element?: RefObject<T>,
   options?: boolean | AddEventListenerOptions
-) {
+): void {
   // Create a ref that stores handler
   const savedHandler = useRef(handler);
 
@@ -53,14 +53,15 @@ function useEventListener<
 
   useEffect(() => {
     // Define the listening target
-    const targetElement: T | Window = element?.current || window;
-    if (!(targetElement && targetElement.addEventListener)) {
+    const targetElement: T | Window = element?.current ?? window;
+    if (!targetElement?.addEventListener) {
       return;
     }
 
     // Create event listener that calls handler function stored in ref
-    const eventListener: typeof handler = (event) =>
+    const eventListener: typeof handler = (event): void => {
       savedHandler.current(event);
+    };
 
     targetElement.addEventListener(eventName, eventListener, options);
 

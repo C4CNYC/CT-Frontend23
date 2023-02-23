@@ -1,23 +1,23 @@
 // next
 import Head from "next/head";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
   Box,
-  Container,
-  Stack,
-  Paper,
   CardHeader,
+  Container,
+  Paper,
+  Stack,
   Tooltip,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Label from "@components/label";
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import Label from "@components/label";
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +39,7 @@ DemoLabelPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoLabelPage() {
+export default function DemoLabelPage(): React.ReactElement {
   return (
     <>
       <Head>
@@ -148,12 +148,15 @@ export default function DemoLabelPage() {
 
 // ----------------------------------------------------------------------
 
-type BlockProps = {
+interface BlockProps {
   title?: string;
   children: React.ReactNode;
-};
+}
 
-export function Block({ title, children }: BlockProps) {
+export function Block({
+  title,
+  children,
+}: BlockProps): React.ReactElement | null {
   return (
     <Paper
       variant="outlined"

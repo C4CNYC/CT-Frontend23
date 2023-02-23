@@ -1,8 +1,8 @@
 // next
 import Head from "next/head";
 // @mui
+import { Box, Container, Grid, Paper, Stack, Typography } from "@mui/material";
 import { Variant } from "@mui/material/styles/createTypography";
-import { Box, Container, Grid, Typography, Stack, Paper } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -53,7 +53,7 @@ FoundationTypographyPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function FoundationTypographyPage() {
+export default function FoundationTypographyPage(): React.ReactElement {
   return (
     <>
       <Head>
@@ -174,14 +174,14 @@ export default function FoundationTypographyPage() {
 
 // ----------------------------------------------------------------------
 
-type BlockVariantProps = {
+interface BlockVariantProps {
   font: {
     variant: Variant;
     label: string;
   };
-};
+}
 
-function BlockVariant({ font }: BlockVariantProps) {
+function BlockVariant({ font }: BlockVariantProps): React.ReactElement | null {
   const { variant, label } = font;
 
   const {

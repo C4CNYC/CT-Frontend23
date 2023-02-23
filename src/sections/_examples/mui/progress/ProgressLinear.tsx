@@ -1,6 +1,6 @@
 // @mui
-import { Paper, LinearProgress } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { LinearProgress, Paper } from "@mui/material";
 //
 import { Label } from "../../Block";
 
@@ -28,12 +28,15 @@ const style = {
 
 // ----------------------------------------------------------------------
 
-type LinearProps = {
+interface LinearProps {
   progress: number;
   buffer: number;
-};
+}
 
-export default function ProgressLinear({ progress, buffer }: LinearProps) {
+export default function ProgressLinear({
+  progress,
+  buffer,
+}: LinearProps): React.ReactElement | null {
   return (
     <Masonry columns={{ xs: 1, md: 2 }} spacing={3}>
       <div>

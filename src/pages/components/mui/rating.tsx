@@ -1,23 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import { Box, Rating, Container } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Box, Container, Rating } from "@mui/material";
 import { IconContainerProps } from "@mui/material/Rating";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-const labels: { [index: string]: string } = {
+const labels: Record<string, string> = {
   0.5: "Useless",
   1: "Useless+",
   1.5: "Poor",
@@ -30,12 +30,13 @@ const labels: { [index: string]: string } = {
   5: "Excellent+",
 };
 
-const customIcons: {
-  [index: string]: {
+const customIcons: Record<
+  string,
+  {
     icon: React.ReactElement;
     label: string;
-  };
-} = {
+  }
+> = {
   1: {
     icon: <Iconify icon="ic:round-sentiment-very-dissatisfied" />,
     label: "Very Dissatisfied",
@@ -74,14 +75,16 @@ MUIRatingPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIRatingPage() {
+export default function MUIRatingPage(): React.ReactElement {
   const [value, setValue] = useState<number | null>(2);
 
   const [hover, setHover] = useState(-1);
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return null;
@@ -215,7 +218,7 @@ export default function MUIRatingPage() {
 
 // ----------------------------------------------------------------------
 
-function IconContainer(props: IconContainerProps) {
+function IconContainer(props: IconContainerProps): React.ReactElement | null {
   const { value, ...other } = props;
 
   return <span {...other}>{customIcons[value].icon}</span>;

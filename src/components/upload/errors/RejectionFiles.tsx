@@ -1,7 +1,7 @@
 import { FileRejection } from "react-dropzone";
 // @mui
-import { alpha } from "@mui/material/styles";
 import { Box, Paper, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // utils
 import { fData } from "../../../utils/formatNumber";
 //
@@ -9,11 +9,13 @@ import { fileData } from "../../file-thumbnail";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   fileRejections: FileRejection[];
-};
+}
 
-export default function RejectionFiles({ fileRejections }: Props) {
+export default function RejectionFiles({
+  fileRejections,
+}: Props): React.ReactElement | null {
   if (!fileRejections.length) {
     return null;
   }

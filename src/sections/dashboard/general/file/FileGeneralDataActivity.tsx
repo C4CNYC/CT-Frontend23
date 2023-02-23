@@ -1,12 +1,12 @@
 import { ApexOptions } from "apexcharts";
 import { useState } from "react";
 // @mui
-import { Card, CardHeader, Box, CardProps } from "@mui/material";
+import { Box, Card, CardHeader, CardProps } from "@mui/material";
 // utils
 import { fData } from "../../../../utils/formatNumber";
 // components
-import { CustomSmallSelect } from "@components/custom-input";
 import Chart, { useChart } from "@components/chart";
+import { CustomSmallSelect } from "@components/custom-input";
 
 // ----------------------------------------------------------------------
 
@@ -14,17 +14,15 @@ interface Props extends CardProps {
   title?: string;
   subheader?: string;
   chart: {
-    labels: {
-      [key: string]: string[];
-    };
+    labels: Record<string, string[]>;
     colors?: string[];
-    series: {
+    series: Array<{
       type: string;
-      data: {
+      data: Array<{
         name: string;
         data: number[];
-      }[];
-    }[];
+      }>;
+    }>;
     options?: ApexOptions;
   };
 }
@@ -34,7 +32,7 @@ export default function FileGeneralDataActivity({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { labels, colors, series, options } = chart;
 
   const [seriesData, setSeriesData] = useState("Week");
@@ -76,9 +74,9 @@ export default function FileGeneralDataActivity({
         action={
           <CustomSmallSelect
             value={seriesData}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setSeriesData(event.target.value)
-            }
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setSeriesData(event.target.value);
+            }}
           >
             {series.map((option) => (
               <option key={option.type} value={option.type}>

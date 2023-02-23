@@ -1,16 +1,20 @@
 // @mui
-import { Theme, alpha } from "@mui/material/styles";
-import { Paper, CardHeader, Box, Typography, SxProps } from "@mui/material";
+import { Box, CardHeader, Paper, SxProps, Typography } from "@mui/material";
+import { alpha, Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-type BlockProps = {
+interface BlockProps {
   title?: string;
   children: React.ReactNode;
   sx?: SxProps<Theme>;
-};
+}
 
-export function Block({ title, sx, children }: BlockProps) {
+export function Block({
+  title,
+  sx,
+  children,
+}: BlockProps): React.ReactElement | null {
   return (
     <Paper
       variant="outlined"
@@ -36,11 +40,11 @@ export function Block({ title, sx, children }: BlockProps) {
 
 // ----------------------------------------------------------------------
 
-type LabelProps = {
+interface LabelProps {
   title: string;
-};
+}
 
-export function Label({ title }: LabelProps) {
+export function Label({ title }: LabelProps): React.ReactElement | null {
   return (
     <Typography
       variant="overline"

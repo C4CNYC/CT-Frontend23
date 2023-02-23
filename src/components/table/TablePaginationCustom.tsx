@@ -1,22 +1,22 @@
 // @mui
-import { Theme } from "@mui/material/styles";
 import {
   Box,
+  FormControlLabel,
   Switch,
   SxProps,
   TablePagination,
-  FormControlLabel,
   TablePaginationProps,
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 //
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   dense?: boolean;
   onChangeDense?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   sx?: SxProps<Theme>;
-};
+}
 
 export default function TablePaginationCustom({
   dense,
@@ -24,7 +24,7 @@ export default function TablePaginationCustom({
   rowsPerPageOptions = [5, 10, 25],
   sx,
   ...other
-}: Props & TablePaginationProps) {
+}: Props & TablePaginationProps): React.ReactElement | null {
   return (
     <Box sx={{ position: "relative", ...sx }}>
       <TablePagination

@@ -1,38 +1,32 @@
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import {
+  Box,
   Button,
   Divider,
   ListItemIcon,
   Menu,
   MenuItem,
   Typography,
-  Box,
-  Avatar,
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
-import Container from "@mui/system/Container";
 import Stack from "@mui/system/Stack";
 import { useState } from "react";
-import IconButtonAnimate from "src/components/animate/IconButtonAnimate";
 import MenuPopover from "src/components/menu-popover/MenuPopover";
 
-export default function FilterModules() {
+export default function FilterModules(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
-    setOpenPopover(event.currentTarget);
-  };
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
   return (

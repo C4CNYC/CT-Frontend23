@@ -1,6 +1,6 @@
 // @mui
-import { Paper, CircularProgress } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { CircularProgress, Paper } from "@mui/material";
 //
 import { Label } from "../../Block";
 
@@ -27,11 +27,13 @@ const COLORS = [
   "error",
 ] as const;
 
-type CircularProps = {
+interface CircularProps {
   progress: number;
-};
+}
 
-export default function ProgressCircular({ progress }: CircularProps) {
+export default function ProgressCircular({
+  progress,
+}: CircularProps): React.ReactElement | null {
   return (
     <Masonry columns={{ xs: 1, md: 3 }} spacing={3}>
       <div>

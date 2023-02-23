@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import { alpha } from "@mui/material/styles";
+import { Masonry } from "@mui/lab";
 import {
-  Box,
   Alert,
+  AlertTitle,
+  Box,
   Button,
   Container,
-  AlertTitle,
   Stack,
 } from "@mui/material";
-import { Masonry } from "@mui/lab";
+import { alpha } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -33,10 +33,12 @@ MUIAlertPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIAlertPage() {
+export default function MUIAlertPage(): React.ReactElement {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return null;

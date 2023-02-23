@@ -1,5 +1,5 @@
 // @mui
-import { Stack, Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 // config
 import { NAV } from "../../../config-global";
 // utils
@@ -13,7 +13,7 @@ import NavToggleButton from "./NavToggleButton";
 
 // ----------------------------------------------------------------------
 
-export default function NavMini() {
+export default function NavMini(): React.ReactElement {
   return (
     <Box
       component="nav"

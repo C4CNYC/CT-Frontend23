@@ -3,17 +3,22 @@ import { alpha } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-type BgBlurProps = {
+interface BgBlurProps {
   blur?: number;
   opacity?: number;
   color?: string;
   imgUrl?: string;
-};
+}
 
-export function bgBlur(props?: BgBlurProps) {
-  const color = props?.color || "#000000";
-  const blur = props?.blur || 6;
-  const opacity = props?.opacity || 0.8;
+type StyleType = Record<
+  string,
+  string | number | Record<string, string | number>
+>;
+
+export function bgBlur(props?: BgBlurProps): StyleType {
+  const color = props?.color ?? "#000000";
+  const blur = props?.blur ?? 6;
+  const opacity = props?.opacity ?? 0.8;
   const imgUrl = props?.imgUrl;
 
   if (imgUrl) {
@@ -44,16 +49,16 @@ export function bgBlur(props?: BgBlurProps) {
 
 // ----------------------------------------------------------------------
 
-type BgGradientProps = {
+interface BgGradientProps {
   direction?: string;
   color?: string;
   startColor?: string;
   endColor?: string;
   imgUrl?: string;
-};
+}
 
-export function bgGradient(props?: BgGradientProps) {
-  const direction = props?.direction || "to bottom";
+export function bgGradient(props?: BgGradientProps): StyleType {
+  const direction = props?.direction ?? "to bottom";
   const startColor = props?.startColor;
   const endColor = props?.endColor;
   const imgUrl = props?.imgUrl;
@@ -61,9 +66,9 @@ export function bgGradient(props?: BgGradientProps) {
 
   if (imgUrl) {
     return {
-      background: `linear-gradient(${direction}, ${startColor || color}, ${
-        endColor || color
-      }), url(${imgUrl})`,
+      background: `linear-gradient(${direction}, ${
+        startColor ?? color ?? ""
+      }, ${endColor ?? color ?? ""}), url(${imgUrl})`,
       backgroundSize: "cover",
       backgroundRepeat: "no-repeat",
       backgroundPosition: "center center",
@@ -71,13 +76,15 @@ export function bgGradient(props?: BgGradientProps) {
   }
 
   return {
-    background: `linear-gradient(${direction}, ${startColor}, ${endColor})`,
+    background: `linear-gradient(${direction}, ${startColor ?? ""}, ${
+      endColor ?? ""
+    })`,
   };
 }
 
 // ----------------------------------------------------------------------
 
-export function textGradient(value: string) {
+export function textGradient(value: string): StyleType {
   return {
     background: `-webkit-linear-gradient(${value})`,
     WebkitBackgroundClip: "text",
@@ -87,7 +94,7 @@ export function textGradient(value: string) {
 
 // ----------------------------------------------------------------------
 
-export function filterStyles(value: string) {
+export function filterStyles(value: string): StyleType {
   return {
     filter: value,
     WebkitFilter: value,

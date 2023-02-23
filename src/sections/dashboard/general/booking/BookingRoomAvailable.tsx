@@ -1,15 +1,15 @@
 import { ApexOptions } from "apexcharts";
 import sumBy from "lodash/sumBy";
 // @mui
-import { useTheme, alpha } from "@mui/material/styles";
 import {
+  Box,
   Card,
   CardHeader,
-  Stack,
-  Box,
-  Typography,
   CardProps,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 // utils
 import { fNumber } from "../../../../utils/formatNumber";
 // components
@@ -17,10 +17,10 @@ import Chart, { useChart } from "@components/chart";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   label: string;
   value: number;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -37,7 +37,7 @@ export default function BookingRoomAvailable({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
@@ -47,7 +47,7 @@ export default function BookingRoomAvailable({
   const chartSeries =
     (series.filter((i) => i.label === "Sold out")[0].value / total) * 100;
 
-  const chartColors = colors || [
+  const chartColors = colors ?? [
     theme.palette.primary.light,
     theme.palette.primary.main,
   ];
@@ -106,11 +106,11 @@ export default function BookingRoomAvailable({
 
 // ----------------------------------------------------------------------
 
-type LegendProps = {
+interface LegendProps {
   item: ItemProps;
-};
+}
 
-function Legend({ item }: LegendProps) {
+function Legend({ item }: LegendProps): React.ReactElement | null {
   return (
     <Stack direction="row" alignItems="center" justifyContent="space-between">
       <Stack direction="row" alignItems="center" spacing={1}>

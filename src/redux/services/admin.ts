@@ -1,10 +1,5 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import {
-  BaseQueryFn,
-  createApi,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query/react";
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   BaseListResponseInterface,
   BaseResponseInterface,
@@ -12,15 +7,14 @@ import {
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import {
-  OrganizationResponce,
-  OrganizationListResponce,
-  OrganizationRequest,
-  IContacts,
-  ISettings,
-  ICustomization,
-  ISubmitInvite,
-  ISendInvite,
   CustomizationResponce,
+  IContacts,
+  ICustomization,
+  ISendInvite,
+  ISettings,
+  ISubmitInvite,
+  OrganizationRequest,
+  OrganizationResponce,
 } from "./interfaces/organization.interface";
 import {
   AddTeacherRequest,
@@ -60,7 +54,7 @@ export const adminApi = createApi({
     // -------------- organization -------------------
     getOrganization: builder.query<OrganizationResponce, void>({
       query: () => ({
-        url: `/org`,
+        url: "/org",
         method: "GET",
       }),
       providesTags: ["Organization"],
@@ -82,7 +76,7 @@ export const adminApi = createApi({
       }
     >({
       query: (data) => ({
-        url: `/org`,
+        url: "/org",
         method: "PATCH",
         body: data.body,
       }),
@@ -95,7 +89,7 @@ export const adminApi = createApi({
       }
     >({
       query: ({ file }) => ({
-        url: `/org/avatar`,
+        url: "/org/avatar",
         method: "PATCH",
         headers: {
           // "Content-Type": "multipart/form-data",
@@ -126,7 +120,7 @@ export const adminApi = createApi({
     }),
     getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
       query: ({ ...params }) => ({
-        url: `/school`,
+        url: "/school",
         method: "GET",
         params,
       }),
@@ -170,7 +164,7 @@ export const adminApi = createApi({
       OrganizationSchoolRequest
     >({
       query: ({ ...body }) => ({
-        url: `/school`,
+        url: "/school",
         method: "POST",
         body,
       }),
@@ -182,7 +176,7 @@ export const adminApi = createApi({
       CreateUserRequest
     >({
       query: ({ ...body }) => ({
-        url: `/org/user`,
+        url: "/org/user",
         method: "POST",
         body,
       }),
@@ -225,7 +219,7 @@ export const adminApi = createApi({
       UserSearchParams
     >({
       query: ({ ...params }) => ({
-        url: `org/user`,
+        url: "org/user",
         method: "GET",
         params,
       }),
@@ -244,7 +238,7 @@ export const adminApi = createApi({
       IContacts
     >({
       query: ({ ...body }) => ({
-        url: `/org/contact/`,
+        url: "/org/contact/",
         method: "PATCH",
         body,
       }),
@@ -252,7 +246,7 @@ export const adminApi = createApi({
     }),
     getOrgContacts: builder.query<IContacts & OrganizationResponce, void>({
       query: () => ({
-        url: `/org/contact/`,
+        url: "/org/contact/",
         method: "GET",
       }),
       providesTags: ["OrganizationContacts"],
@@ -262,7 +256,7 @@ export const adminApi = createApi({
       ISettings
     >({
       query: ({ ...body }) => ({
-        url: `/org/setting/`,
+        url: "/org/setting/",
         method: "PATCH",
         body,
       }),
@@ -270,7 +264,7 @@ export const adminApi = createApi({
     }),
     getOrgSettings: builder.query<ISettings & OrganizationResponce, void>({
       query: () => ({
-        url: `/org/setting/`,
+        url: "/org/setting/",
         method: "GET",
       }),
       providesTags: ["OrganizationSettings"],
@@ -280,7 +274,7 @@ export const adminApi = createApi({
       ICustomization
     >({
       query: ({ ...body }) => ({
-        url: `/org/custom/`,
+        url: "/org/custom/",
         method: "PATCH",
         body,
       }),
@@ -288,7 +282,7 @@ export const adminApi = createApi({
     }),
     getOrgCustomization: builder.query<CustomizationResponce, void>({
       query: () => ({
-        url: `/org/custom/`,
+        url: "/org/custom/",
         method: "GET",
       }),
       providesTags: ["OrganizationCustomization"],
@@ -298,7 +292,7 @@ export const adminApi = createApi({
       ISubmitInvite
     >({
       query: ({ ...body }) => ({
-        url: `/org/user/submitInvite`,
+        url: "/org/user/submitInvite",
         method: "POST",
         body,
       }),
@@ -309,7 +303,7 @@ export const adminApi = createApi({
       ISendInvite
     >({
       query: ({ ...body }) => ({
-        url: `/org/user/invite`,
+        url: "/org/user/invite",
         method: "POST",
         body,
       }),

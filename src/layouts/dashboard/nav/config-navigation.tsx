@@ -1,30 +1,12 @@
 import { PATH_DASHBOARD } from "@routes/paths";
-import SvgColor from "@components/svg-color";
-import { RiOrganizationChart } from "react-icons/ri";
-import { GrOrganization } from "react-icons/gr";
-import { FaUserShield, FaSchool, FaUsers } from "react-icons/fa";
-import { MdPlayLesson } from "react-icons/md";
-import { VscSymbolClass } from "react-icons/vsc";
-import { GoFileSubmodule } from "react-icons/go";
-import { GiProgression } from "react-icons/gi";
 import { AiOutlineSolution } from "react-icons/ai";
+import { FaSchool, FaUsers, FaUserShield } from "react-icons/fa";
+import { GiProgression } from "react-icons/gi";
+import { GoFileSubmodule } from "react-icons/go";
+import { GrOrganization } from "react-icons/gr";
 import { IoMdSchool } from "react-icons/io";
-
-// ----------------------------------------------------------------------
-
-const icon = (name: string) => (
-  <SvgColor
-    src={`/assets/icons/navbar/${name}.svg`}
-    sx={{ width: 1, height: 1 }}
-  />
-);
-
-const ICONS = {
-  user: icon("ic_user"),
-  invoice: icon("ic_invoice"),
-  analytics: icon("ic_analytics"),
-  dashboard: icon("ic_dashboard"),
-};
+import { MdPlayLesson } from "react-icons/md";
+import { RiOrganizationChart } from "react-icons/ri";
 
 export const admin = {
   subheader: "administration",

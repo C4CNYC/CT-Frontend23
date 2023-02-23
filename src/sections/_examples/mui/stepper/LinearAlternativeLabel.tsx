@@ -1,15 +1,15 @@
 import { useState } from "react";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
   Box,
-  Step,
-  Paper,
   Button,
-  Stepper,
+  Paper,
+  Step,
   StepLabel,
+  Stepper,
   Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -19,15 +19,15 @@ const steps = [
   "Create an ad",
 ];
 
-export default function LinearAlternativeLabel() {
+export default function LinearAlternativeLabel(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
 
-  const isStepOptional = (step: number) => step === 1;
+  const isStepOptional = (step: number): boolean => step === 1;
 
-  const isStepSkipped = (step: number) => skipped.has(step);
+  const isStepSkipped = (step: number): boolean => skipped.has(step);
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -38,11 +38,11 @@ export default function LinearAlternativeLabel() {
     setSkipped(newSkipped);
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
+  const handleSkip = (): void => {
     if (!isStepOptional(activeStep)) {
       // You probably want to guard against something like this,
       // it should never occur unless someone's actively trying to break something.
@@ -57,7 +57,7 @@ export default function LinearAlternativeLabel() {
     });
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setActiveStep(0);
   };
 
@@ -80,7 +80,8 @@ export default function LinearAlternativeLabel() {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
+      {activeStep === steps.length
+? (
         <>
           <Paper
             sx={{
@@ -100,7 +101,8 @@ export default function LinearAlternativeLabel() {
             <Button onClick={handleReset}>Reset</Button>
           </Box>
         </>
-      ) : (
+      )
+: (
         <>
           <Paper
             sx={{

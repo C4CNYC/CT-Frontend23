@@ -5,8 +5,8 @@ import { varTranEnter, varTranExit } from "./transition";
 
 // ----------------------------------------------------------------------
 
-export const varSlide = (props?: VariantsType) => {
-  const distance = props?.distance || 160;
+export const varSlide = (props?: VariantsType): Record<string, any> => {
+  const distance = props?.distance ?? 160;
   const durationIn = props?.durationIn;
   const durationOut = props?.durationOut;
   const easeIn = props?.easeIn;

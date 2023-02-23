@@ -1,12 +1,12 @@
-import { Public_Sans, Barlow } from "@next/font/google";
+import { Barlow, Public_Sans } from "@next/font/google";
 
 // ----------------------------------------------------------------------
 
-export function remToPx(value: string) {
+export function remToPx(value: string): number {
   return Math.round(parseFloat(value) * 16);
 }
 
-export function pxToRem(value: number) {
+export function pxToRem(value: number): string {
   return `${value / 16}rem`;
 }
 
@@ -18,7 +18,7 @@ export function responsiveFontSizes({
   sm: number;
   md: number;
   lg: number;
-}) {
+}): Record<string, Record<string, string>> {
   return {
     "@media (min-width:600px)": {
       fontSize: pxToRem(sm),

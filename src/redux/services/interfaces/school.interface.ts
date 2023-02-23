@@ -8,7 +8,7 @@ export interface SchoolResponce extends BaseResponseInterface {
 
 export interface SchoolListResponce {
   data: SchoolResponce[];
-  meta: {};
+  meta: Record<string, unknown>;
 }
 
 export interface SchoolRequest {

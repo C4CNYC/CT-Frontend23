@@ -1,18 +1,18 @@
 import { useState } from "react";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
 import {
   Box,
-  Step,
-  Paper,
   Button,
-  Stepper,
-  StepLabel,
-  Typography,
+  Paper,
+  Step,
   StepConnector,
   stepConnectorClasses,
+  StepLabel,
+  Stepper,
+  Typography,
 } from "@mui/material";
 import { StepIconProps } from "@mui/material/StepIcon";
+import { alpha, styled } from "@mui/material/styles";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
@@ -72,19 +72,21 @@ const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
   })
 );
 
-function QontoStepIcon(props: StepIconProps) {
+function QontoStepIcon(props: StepIconProps): React.ReactElement | null {
   const { active, completed, className } = props;
 
   return (
     <QontoStepIconRoot ownerState={{ active }} className={className}>
-      {completed ? (
+      {completed
+? (
         <Iconify
           icon="eva:checkmark-fill"
           className="QontoStepIcon-completedIcon"
           width={24}
           height={24}
         />
-      ) : (
+      )
+: (
         <div className="QontoStepIcon-circle" />
       )}
     </QontoStepIconRoot>
@@ -151,10 +153,10 @@ const ColorlibStepIconRoot = styled("div")<{
   }),
 }));
 
-function ColorlibStepIcon(props: StepIconProps) {
+function ColorlibStepIcon(props: StepIconProps): React.ReactElement | null {
   const { active, completed, className, icon } = props;
 
-  const icons: { [index: string]: React.ReactElement } = {
+  const icons: Record<string, React.ReactElement> = {
     1: <Iconify icon="eva:settings-2-outline" width={24} />,
     2: <Iconify icon="eva:person-add-outline" width={24} />,
     3: <Iconify icon="eva:monitor-outline" width={24} />,
@@ -170,7 +172,7 @@ function ColorlibStepIcon(props: StepIconProps) {
   );
 }
 
-function getStepContent(step: number) {
+function getStepContent(step: number): string {
   switch (step) {
     case 0:
       return "Select campaign settings...";
@@ -183,18 +185,18 @@ function getStepContent(step: number) {
   }
 }
 
-export default function CustomizedSteppers() {
+export default function CustomizedSteppers(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setActiveStep(0);
   };
 
@@ -226,7 +228,8 @@ export default function CustomizedSteppers() {
         ))}
       </Stepper>
 
-      {activeStep === STEPS.length ? (
+      {activeStep === STEPS.length
+? (
         <>
           <Paper
             sx={{
@@ -245,7 +248,8 @@ export default function CustomizedSteppers() {
             Reset
           </Button>
         </>
-      ) : (
+      )
+: (
         <>
           <Paper
             sx={{

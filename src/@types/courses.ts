@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------
-export type ICourse = {
+export interface ICourse {
   id?: string | undefined;
   name: string;
   level: string;
@@ -8,34 +8,34 @@ export type ICourse = {
   cover?: string;
   active: boolean;
   draft: boolean;
-};
+}
 
-export type IUserSocialLink = {
+export interface IUserSocialLink {
   facebookLink: string;
   instagramLink: string;
   linkedinLink: string;
   twitterLink: string;
-};
+}
 
-export type IUserProfileFollowers = {
+export interface IUserProfileFollowers {
   follower: number;
   following: number;
-};
+}
 
-export type IUserProfileCover = {
+export interface IUserProfileCover {
   name: string;
   cover: string;
   role: string;
-};
+}
 
-export type IUserProfileAbout = {
+export interface IUserProfileAbout {
   quote: string;
   country: string;
   email: string;
   role: string;
   company: string;
   school: string;
-};
+}
 
 export type IUserProfile = IUserProfileFollowers &
   IUserProfileAbout & {
@@ -43,27 +43,27 @@ export type IUserProfile = IUserProfileFollowers &
     socialLinks: IUserSocialLink;
   };
 
-export type IUserProfileFollower = {
+export interface IUserProfileFollower {
   id: string;
   avatarUrl: string;
   name: string;
   country: string;
-};
+}
 
-export type IUserProfileGallery = {
+export interface IUserProfileGallery {
   id: string;
   title: string;
   postAt: Date | string | number;
   imageUrl: string;
-};
+}
 
-export type IUserProfileSchool = {
+export interface IUserProfileSchool {
   id: string;
   avatarUrl: string;
   name: string;
-};
+}
 
-export type IUserProfilePost = {
+export interface IUserProfilePost {
   id: string;
   author: {
     id: string;
@@ -74,11 +74,11 @@ export type IUserProfilePost = {
   createdAt: Date | string | number;
   media: string;
   message: string;
-  personLikes: {
+  personLikes: Array<{
     name: string;
     avatarUrl: string;
-  }[];
-  comments: {
+  }>;
+  comments: Array<{
     id: string;
     author: {
       id: string;
@@ -87,12 +87,12 @@ export type IUserProfilePost = {
     };
     createdAt: Date | string | number;
     message: string;
-  }[];
-};
+  }>;
+}
 
 // ----------------------------------------------------------------------
 
-export type IUserCard = {
+export interface IUserCard {
   id: string;
   avatarUrl: string;
   cover: string;
@@ -101,11 +101,11 @@ export type IUserCard = {
   following: number;
   totalPosts: number;
   role: string;
-};
+}
 
 // ----------------------------------------------------------------------
 
-export type IUserAccountGeneral = {
+export interface IUserAccountGeneral {
   id: string;
   avatarUrl: string;
   name: string;
@@ -120,21 +120,21 @@ export type IUserAccountGeneral = {
   isVerified: boolean;
   status: string;
   role: string;
-};
+}
 
-export type IUserAccountBillingCreditCard = {
+export interface IUserAccountBillingCreditCard {
   id: string;
   cardNumber: string;
   cardType: string;
-};
+}
 
-export type IUserAccountBillingInvoice = {
+export interface IUserAccountBillingInvoice {
   id: string;
   createdAt: Date | string | number;
   price: number;
-};
+}
 
-export type IUserAccountBillingAddress = {
+export interface IUserAccountBillingAddress {
   id: string;
   name: string;
   phone: string;
@@ -143,21 +143,21 @@ export type IUserAccountBillingAddress = {
   city: string;
   street: string;
   zipCode: string;
-};
+}
 
-export type IUserAccountChangePassword = {
+export interface IUserAccountChangePassword {
   oldPassword: string;
   newPassword: string;
   confirmNewPassword: string;
-};
+}
 
 // ----------------------------------------------------------------------
 
-export type IUserAccountNotificationSettings = {
+export interface IUserAccountNotificationSettings {
   activityComments: boolean;
   activityAnswers: boolean;
   activityFollows: boolean;
   applicationNews: boolean;
   applicationProduct: boolean;
   applicationBlog: boolean;
-};
+}

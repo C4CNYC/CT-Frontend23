@@ -77,7 +77,7 @@ export const presetsOption = presets.map((color) => ({
   value: color.main,
 }));
 
-export function getPresets(key: ThemeColorPresetsValue) {
+export function getPresets(key: ThemeColorPresetsValue): string {
   return {
     default: defaultPreset,
     cyan: cyanPreset,

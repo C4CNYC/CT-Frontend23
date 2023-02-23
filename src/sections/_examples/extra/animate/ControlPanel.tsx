@@ -1,12 +1,12 @@
 // @mui
 import {
   Box,
-  Radio,
-  Paper,
-  Typography,
-  RadioGroup,
-  PaperProps,
   FormControlLabel,
+  Paper,
+  PaperProps,
+  Radio,
+  RadioGroup,
+  Typography,
 } from "@mui/material";
 // components
 import Scrollbar from "@components/scrollbar";
@@ -14,10 +14,10 @@ import Scrollbar from "@components/scrollbar";
 // ----------------------------------------------------------------------
 
 interface ControlPanelProps extends PaperProps {
-  variantKey: {
+  variantKey: Array<{
     type: string;
     values: string[];
-  }[];
+  }>;
   selectVariant: string;
   onChangeVariant: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -27,7 +27,7 @@ export default function ControlPanel({
   selectVariant,
   onChangeVariant,
   sx,
-}: ControlPanelProps) {
+}: ControlPanelProps): React.ReactElement | null {
   return (
     <Paper variant="outlined" sx={{ height: 480, ...sx }}>
       <Scrollbar>

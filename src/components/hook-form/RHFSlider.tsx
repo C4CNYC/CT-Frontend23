@@ -1,7 +1,7 @@
 // form
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
-import { Slider, SliderProps, FormHelperText } from "@mui/material";
+import { FormHelperText, Slider, SliderProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -10,7 +10,11 @@ type Props = SliderProps & {
   helperText?: React.ReactNode;
 };
 
-export default function RHFSlider({ name, helperText, ...other }: Props) {
+export default function RHFSlider({
+  name,
+  helperText,
+  ...other
+}: Props): React.ReactElement | null {
   const { control } = useFormContext();
 
   return (

@@ -4,22 +4,22 @@ import Head from "next/head";
 import { Masonry } from "@mui/lab";
 import {
   Box,
-  Fab,
-  Zoom,
-  Fade,
   Button,
-  Tooltip,
   Container,
+  Fab,
+  Fade,
   IconButton,
+  Tooltip,
+  Zoom,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import { FabButtonAnimate } from "@components/animate";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -47,7 +47,7 @@ MUITooltipPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITooltipPage() {
+export default function MUITooltipPage(): React.ReactElement {
   return (
     <>
       <Head>

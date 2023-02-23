@@ -1,20 +1,21 @@
 // @mui
-import { Stack, Link, Button, Typography } from "@mui/material";
+import { Button, Link, Stack, Typography } from "@mui/material";
 // utils
-import { fDate } from "../../../../../utils/formatTime";
 import { fCurrency } from "../../../../../utils/formatNumber";
-// @types
-import { IUserAccountBillingInvoice } from "../../../../../@types/user";
+import { fDate } from "../../../../../utils/formatTime";
 // components
 import Iconify from "@components/iconify";
+import { IUserAccountBillingInvoice } from "src/@types/courses";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   invoices: IUserAccountBillingInvoice[];
-};
+}
 
-export default function AccountBillingInvoiceHistory({ invoices }: Props) {
+export default function AccountBillingInvoiceHistory({
+  invoices,
+}: Props): React.ReactElement | null {
   return (
     <Stack spacing={3} alignItems="flex-end">
       <Typography variant="overline" sx={{ width: 1, color: "text.secondary" }}>

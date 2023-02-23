@@ -1,27 +1,11 @@
 // @mui
-import { Divider, IconButton, Stack, Button } from "@mui/material";
-// auth
-import { useAuthContext } from "../../auth/useAuthContext";
+import { Button, Divider, Stack } from "@mui/material";
 // components
 import Iconify from "../../components/iconify";
 
 // ----------------------------------------------------------------------
 
-export default function AuthWithSocial() {
-  const { loginWithGoogle, loginWithGithub, loginWithTwitter } =
-    useAuthContext();
-
-  const handleGoogleLogin = async () => {
-    try {
-      if (loginWithGoogle) {
-        loginWithGoogle();
-      }
-      console.log("GOOGLE LOGIN");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+export default function AuthWithSocial(): React.ReactElement {
   return (
     <div>
       <Divider

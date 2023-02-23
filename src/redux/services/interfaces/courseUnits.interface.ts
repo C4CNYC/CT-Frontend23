@@ -1,5 +1,3 @@
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-
 export interface IModule {
   active: boolean;
   name: string;

@@ -1,17 +1,17 @@
 // @mui
 import {
   Table,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 // components
 import Scrollbar from "@components/scrollbar";
 //
-import createData from "./createData";
 import CollapsibleTableRow from "./CollapsibleTableRow";
+import createData from "./createData";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ const TABLE_DATA = [
   createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
 ];
 
-export default function CollapsibleTable() {
+export default function CollapsibleTable(): React.ReactElement {
   return (
     <TableContainer sx={{ mt: 3, overflow: "unset" }}>
       <Scrollbar>

@@ -1,18 +1,18 @@
-import { useState } from "react";
 import { m } from "framer-motion";
+import { useState } from "react";
 // @mui
-import { styled } from "@mui/material/styles";
 import {
   Box,
+  Button,
+  Container,
+  Divider,
+  Stack,
+  StackProps,
   Tab,
   Tabs,
-  Stack,
-  Button,
-  Divider,
-  Container,
   Typography,
-  StackProps,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // routes
@@ -20,9 +20,9 @@ import { PATH_MINIMAL_ON_STORE } from "../../routes/paths";
 // _mock_
 import { _homePlans } from "../../_mock/arrays";
 // components
-import SvgColor from "../../components/svg-color";
+import { MotionViewport, varFade } from "../../components/animate";
 import Iconify from "../../components/iconify";
-import { varFade, MotionViewport } from "../../components/animate";
+import SvgColor from "../../components/svg-color";
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomePricingPlans() {
+export default function HomePricingPlans(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionViewport}>
@@ -49,7 +49,7 @@ export default function HomePricingPlans() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement | null {
   return (
     <Stack spacing={3} sx={{ mb: 10, textAlign: "center" }}>
       <m.div variants={varFade().inUp}>
@@ -79,7 +79,7 @@ function Description() {
 
 // ----------------------------------------------------------------------
 
-function Content() {
+function Content(): React.ReactElement | null {
   const isDesktop = useResponsive("up", "md");
 
   const [currentTab, setCurrentTab] = useState("Standard");
@@ -106,7 +106,9 @@ function Content() {
       <Stack alignItems="center" sx={{ mb: 5 }}>
         <Tabs
           value={currentTab}
-          onChange={(event, newValue) => setCurrentTab(newValue)}
+          onChange={(event, newValue) => {
+            setCurrentTab(newValue);
+          }}
         >
           {_homePlans.map((tab) => (
             <Tab key={tab.license} value={tab.license} label={tab.license} />
@@ -195,7 +197,11 @@ interface PlanCardProps extends StackProps {
   };
 }
 
-function PlanCard({ plan, sx, ...other }: PlanCardProps) {
+function PlanCard({
+  plan,
+  sx,
+  ...other
+}: PlanCardProps): React.ReactElement | null {
   const { license, commons, options, icons } = plan;
 
   const standard = license === "Standard";
@@ -243,9 +249,11 @@ function PlanCard({ plan, sx, ...other }: PlanCardProps) {
         </Box>
       </Stack>
 
-      {standard ? (
+      {standard
+? (
         <SvgColor src={icons[2]} sx={{ width: 24, height: 24 }} />
-      ) : (
+      )
+: (
         <Stack direction="row" spacing={2}>
           {icons.map((icon) => (
             <SvgColor key={icon} src={icon} sx={{ width: 24, height: 24 }} />

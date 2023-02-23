@@ -19,7 +19,7 @@ Page403.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function Page403() {
+export default function Page403(): React.ReactElement {
   return (
     <>
       <Head>

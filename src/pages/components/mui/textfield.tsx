@@ -40,7 +40,7 @@ MUITextFieldPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITextFieldPage() {
+export default function MUITextFieldPage(): React.ReactElement {
   const [currentTab, setCurrentTab] = useState("outlined");
 
   return (
@@ -75,7 +75,9 @@ export default function MUITextFieldPage() {
       <Container sx={{ my: 10 }}>
         <Tabs
           value={currentTab}
-          onChange={(event, newValue) => setCurrentTab(newValue)}
+          onChange={(event, newValue) => {
+            setCurrentTab(newValue);
+          }}
         >
           {TABS.map((tab) => (
             <Tab key={tab.value} value={tab.value} label={tab.label} />

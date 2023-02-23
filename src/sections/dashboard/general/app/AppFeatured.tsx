@@ -1,12 +1,12 @@
 import { m } from "framer-motion";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 // @mui
-import { alpha, useTheme, styled } from "@mui/material/styles";
-import { Stack, Card, Typography, Link, CardProps } from "@mui/material";
+import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // components
-import Image from "@components/image";
 import { MotionContainer, varFade } from "@components/animate";
-import Carousel, { CarouselDots, CarouselArrows } from "@components/carousel";
+import Carousel, { CarouselArrows, CarouselDots } from "@components/carousel";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
@@ -22,18 +22,21 @@ const StyledOverlay = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   image: string;
   title: string;
   description: string;
-};
+}
 
 interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AppFeatured({ list, ...other }: Props) {
+export default function AppFeatured({
+  list,
+  ...other
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel>(null);
@@ -50,7 +53,9 @@ export default function AppFeatured({ list, ...other }: Props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => setCurrentIndex(next),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
     ...CarouselDots({
       sx: {
         top: 20,
@@ -60,11 +65,11 @@ export default function AppFeatured({ list, ...other }: Props) {
     }),
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -91,12 +96,15 @@ export default function AppFeatured({ list, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   item: ItemProps;
   isActive?: boolean;
-};
+}
 
-function CarouselItem({ item, isActive }: CarouselItemProps) {
+function CarouselItem({
+  item,
+  isActive,
+}: CarouselItemProps): React.ReactElement | null {
   const { image, title, description } = item;
 
   return (

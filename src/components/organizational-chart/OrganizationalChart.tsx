@@ -4,8 +4,8 @@ import { useTheme } from "@mui/material/styles";
 // utils
 import flattenArray from "../../utils/flattenArray";
 //
-import { ListProps, SubListProps, OrganizationalChartProps } from "./types";
-import { SimpleNode, StandardNode, GroupNode } from "./node";
+import { GroupNode, SimpleNode, StandardNode } from "./node";
+import { ListProps, OrganizationalChartProps, SubListProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ export default function OrganizationalChart({
   variant = "simple",
   sx,
   ...other
-}: OrganizationalChartProps) {
+}: OrganizationalChartProps): React.ReactElement | null {
   const theme = useTheme();
 
   return (
@@ -29,8 +29,12 @@ export default function OrganizationalChart({
           <StandardNode
             sx={sx}
             node={data}
-            onEdit={() => console.log("EDIT", data.name)}
-            onDelete={() => console.log("DELETE", data.name)}
+            onEdit={() => {
+              console.log("EDIT", data.name);
+            }}
+            onDelete={() => {
+              console.log("DELETE", data.name);
+            }}
           />
         )) ||
         (variant === "group" && <GroupNode sx={sx} node={data} />)
@@ -46,7 +50,12 @@ export default function OrganizationalChart({
 
 // ----------------------------------------------------------------------
 
-export function List({ data, depth, variant, sx }: ListProps) {
+export function List({
+  data,
+  depth,
+  variant,
+  sx,
+}: ListProps): React.ReactElement | null {
   const hasChild = data.children && !!data.children;
 
   return (
@@ -57,8 +66,12 @@ export function List({ data, depth, variant, sx }: ListProps) {
           <StandardNode
             sx={sx}
             node={data}
-            onEdit={() => console.log("EDIT", data.name)}
-            onDelete={() => console.log("DELETE", data.name)}
+            onEdit={() => {
+              console.log("EDIT", data.name);
+            }}
+            onDelete={() => {
+              console.log("DELETE", data.name);
+            }}
           />
         )) ||
         (variant === "group" && (
@@ -80,7 +93,12 @@ export function List({ data, depth, variant, sx }: ListProps) {
 
 // ----------------------------------------------------------------------
 
-function SubList({ data, depth, variant, sx }: SubListProps) {
+function SubList({
+  data,
+  depth,
+  variant,
+  sx,
+}: SubListProps): React.ReactElement | null {
   return (
     <>
       {data.map((list) => (

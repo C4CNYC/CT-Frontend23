@@ -1,8 +1,8 @@
-import Map from "react-map-gl";
 import { useState } from "react";
+import Map from "react-map-gl";
 // @mui
-import { useTheme, styled } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // config
 import { MAP_API } from "../../config-global";
 // components
@@ -24,17 +24,19 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type CountryData = {
+interface CountryData {
   latlng: number[];
   address: string;
   phoneNumber: string;
-};
+}
 
-type Props = {
+interface Props {
   contacts: CountryData[];
-};
+}
 
-export default function ContactMap({ contacts }: Props) {
+export default function ContactMap({
+  contacts,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";
@@ -70,7 +72,9 @@ export default function ContactMap({ contacts }: Props) {
           <MapPopup
             longitude={popupInfo.latlng[1]}
             latitude={popupInfo.latlng[0]}
-            onClose={() => setPopupInfo(null)}
+            onClose={() => {
+              setPopupInfo(null);
+            }}
             sx={{
               "& .mapboxgl-popup-content": { bgcolor: "common.white" },
               "&.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip": {

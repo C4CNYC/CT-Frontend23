@@ -1,15 +1,15 @@
 import orderBy from "lodash/orderBy";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
-  Box,
-  Stack,
-  Card,
   Avatar,
+  Box,
+  Card,
   CardHeader,
-  Typography,
   CardProps,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 // components
@@ -17,12 +17,12 @@ import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   name: string;
   avatar: string;
   favourite: number;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -35,7 +35,7 @@ export default function AppTopAuthors({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -51,12 +51,15 @@ export default function AppTopAuthors({
 
 // ----------------------------------------------------------------------
 
-type AuthorItemProps = {
+interface AuthorItemProps {
   author: ItemProps;
   index: number;
-};
+}
 
-function AuthorItem({ author, index }: AuthorItemProps) {
+function AuthorItem({
+  author,
+  index,
+}: AuthorItemProps): React.ReactElement | null {
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
       <Avatar alt={author.name} src={author.avatar} />

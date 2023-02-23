@@ -1,5 +1,5 @@
-import { Theme } from "@mui/material/styles";
-import { alpha, LinearProgressProps } from "@mui/material";
+import { alpha, type LinearProgressProps } from "@mui/material";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -12,8 +12,8 @@ const COLORS = [
   "error",
 ] as const;
 
-export default function Progress(theme: Theme) {
-  const rootStyle = (ownerState: LinearProgressProps) => {
+export default function Progress(theme: Theme): unknown {
+  const rootStyle = (ownerState: LinearProgressProps): unknown => {
     const bufferVariant = ownerState.variant === "buffer";
 
     const defaultStyle = {

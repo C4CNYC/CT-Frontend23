@@ -1,17 +1,17 @@
 import {
-  createContext,
-  useEffect,
-  useReducer,
-  useCallback,
-  useMemo,
-} from "react";
-import {
+  AuthenticationDetails,
   CognitoUser,
+  CognitoUserAttribute,
   CognitoUserPool,
   CognitoUserSession,
-  CognitoUserAttribute,
-  AuthenticationDetails,
 } from "amazon-cognito-identity-js";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 // utils
 import axios from "../utils/axios";
 // routes
@@ -40,13 +40,13 @@ enum Types {
   LOGOUT = "LOGOUT",
 }
 
-type Payload = {
+interface Payload {
   [Types.AUTH]: {
     isAuthenticated: boolean;
     user: AuthUserType;
   };
   [Types.LOGOUT]: undefined;
-};
+}
 
 type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 
@@ -58,11 +58,9 @@ const initialState: AuthStateType = {
   user: null,
 };
 
-interface UserAttributeType {
-  [key: string]: string;
-}
+type UserAttributeType = Record<string, string>;
 
-const reducer = (state: AuthStateType, action: ActionsType) => {
+const reducer = (state: AuthStateType, action: ActionsType): AuthStateType => {
   if (action.type === Types.AUTH) {
     return {
       isInitialized: true,
@@ -87,20 +85,22 @@ export const AuthContext = createContext<AWSCognitoContextType | null>(null);
 // ----------------------------------------------------------------------
 
 const userPool = new CognitoUserPool({
-  UserPoolId: COGNITO_API.userPoolId || "",
-  ClientId: COGNITO_API.clientId || "",
+  UserPoolId: COGNITO_API.userPoolId ?? "",
+  ClientId: COGNITO_API.clientId ?? "",
 });
 
-type AuthProviderProps = {
+interface AuthProviderProps {
   children: React.ReactNode;
-};
+}
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({
+  children,
+}: AuthProviderProps): React.ReactElement {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const getUserAttributes = useCallback(
-    (currentUser: CognitoUser): Promise<UserAttributeType> =>
-      new Promise((resolve, reject) => {
+    async (currentUser: CognitoUser): Promise<UserAttributeType> =>
+      await new Promise((resolve, reject) => {
         currentUser.getUserAttributes((error, attributes) => {
           if (error) {
             reject(error);
@@ -120,8 +120,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 
   const getSession = useCallback(
-    () =>
-      new Promise((resolve, reject) => {
+    async () =>
+      await new Promise((resolve, reject) => {
         const cognitoUser = userPool.getCurrentUser();
 
         if (cognitoUser) {
@@ -197,8 +197,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   // LOGIN
   const login = useCallback(
-    (email: string, password: string) =>
-      new Promise((resolve, reject) => {
+    async (email: string, password: string): Promise<void> => {
+      await new Promise((resolve, reject) => {
         const userData = new CognitoUser({
           Username: email,
           Pool: userPool,
@@ -210,22 +210,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
 
         userData.authenticateUser(authDetails, {
-          onSuccess: (result) => {
+          onSuccess: (result): void => {
             getSession();
             resolve(result);
           },
-          onFailure: (error) => {
+          onFailure: (error): void => {
             reject(error);
           },
         });
-      }),
+      });
+    },
     [getSession]
   );
 
   // REGISTER
   const register = useCallback(
-    (email: string, password: string, firstName: string, lastName: string) =>
-      new Promise((resolve, reject) => {
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string
+    ) =>
+      await new Promise((resolve, reject) => {
         const newAttributes = [
           new CognitoUserAttribute({
             Name: "email",
@@ -237,16 +243,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }),
         ];
 
-        userPool.signUp(email, password, newAttributes, [], async (error) => {
-          if (error) {
-            reject(error);
-            console.error(error);
-            return;
-          }
+        userPool.signUp(
+          email,
+          password,
+          newAttributes,
+          [],
+          async (error): Promise<void> => {
+            if (error) {
+              reject(error);
+              console.error(error);
+              return;
+            }
 
-          resolve(undefined);
-          window.location.href = PATH_AUTH.login;
-        });
+            resolve(undefined);
+            window.location.href = PATH_AUTH.login;
+          }
+        );
       }),
     []
   );

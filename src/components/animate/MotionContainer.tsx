@@ -18,7 +18,7 @@ export default function MotionContainer({
   action = false,
   children,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   if (action) {
     return (
       <Box

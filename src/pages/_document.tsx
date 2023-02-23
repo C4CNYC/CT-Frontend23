@@ -1,6 +1,6 @@
 import * as React from "react";
 // next
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, { Head, Html, Main, NextScript } from "next/document";
 // @emotion
 import createEmotionServer from "@emotion/server/create-instance";
 // utils
@@ -68,7 +68,7 @@ export default class MyDocument extends Document {
 
 // ----------------------------------------------------------------------
 
-MyDocument.getInitialProps = async (ctx) => {
+MyDocument.getInitialProps = async (ctx): Promise<void> => {
   const originalRenderPage = ctx.renderPage;
 
   const cache = createEmotionCache();
@@ -78,7 +78,7 @@ MyDocument.getInitialProps = async (ctx) => {
   ctx.renderPage = () =>
     originalRenderPage({
       enhanceApp: (App: any) =>
-        function EnhanceApp(props) {
+        function EnhanceApp(props): React.ReactElement | null {
           return <App emotionCache={cache} {...props} />;
         },
     });

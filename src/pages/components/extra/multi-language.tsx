@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
 import {
   Box,
   Card,
-  Stack,
-  Radio,
-  Tooltip,
-  Container,
   CardHeader,
-  Typography,
-  RadioGroup,
-  TablePagination,
+  Container,
   FormControlLabel,
+  Radio,
+  RadioGroup,
+  Stack,
+  TablePagination,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -22,8 +22,8 @@ import { useLocales } from "../../../locales";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Image from "@components/image";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ DemoMultiLanguagePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoMultiLanguagePage() {
+export default function DemoMultiLanguagePage(): React.ReactElement | null {
   const { allLangs, currentLang, translate, onChangeLang } = useLocales();
 
   const [page, setPage] = useState(2);
@@ -42,18 +42,20 @@ export default function DemoMultiLanguagePage() {
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
-  ) => {
+  ): void => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -103,7 +105,9 @@ export default function DemoMultiLanguagePage() {
               <RadioGroup
                 row
                 value={currentLang.value}
-                onChange={(event) => onChangeLang(event.target.value)}
+                onChange={async (event) => {
+                  await onChangeLang(event.target.value);
+                }}
               >
                 {allLangs.map((lang) => (
                   <FormControlLabel

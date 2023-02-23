@@ -1,14 +1,16 @@
 import { Box } from "@mui/material";
-import ContactsForm from "./ContactsForm";
-import { useGetSchoolContactsQuery } from "src/redux/services/manager";
 import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
+import { useGetSchoolContactsQuery } from "src/redux/services/manager";
+import ContactsForm from "./ContactsForm";
 
-type Props = {
+interface Props {
   school_id: string;
-};
+}
 
-export default function SchoolContactsTab({ school_id }: Props) {
+export default function SchoolContactsTab({
+  school_id,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolContactsQuery(
     { school_id },
     { skip: !school_id }
@@ -28,7 +30,9 @@ export default function SchoolContactsTab({ school_id }: Props) {
           position: "relative",
         }}
       >
-        {isLoading ? null : (
+        {isLoading
+? null
+: (
           <ContactsForm contacts={data} school_id={school_id} />
         )}
       </Box>

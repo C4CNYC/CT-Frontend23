@@ -2,7 +2,7 @@
 import Head from "next/head";
 import NextLink from "next/link";
 // @mui
-import { Button, Typography, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 // layouts
 import CompactLayout from "../layouts/compact";
 // assets
@@ -16,7 +16,7 @@ MaintenancePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MaintenancePage() {
+export default function MaintenancePage(): React.ReactElement {
   return (
     <>
       <Head>

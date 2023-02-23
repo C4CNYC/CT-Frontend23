@@ -1,31 +1,31 @@
-import { useState } from "react";
+import ConfirmDialog from "@components/confirm-dialog";
+import RoleSelector from "@components/drop-down-menu";
+import Iconify from "@components/iconify";
+import Label from "@components/label";
+import MenuPopover from "@components/menu-popover";
 import {
-  Stack,
   Avatar,
   Button,
   Checkbox,
-  TableRow,
-  MenuItem,
-  TableCell,
   IconButton,
+  MenuItem,
+  Stack,
+  TableCell,
+  TableRow,
 } from "@mui/material";
-import Label from "@components/label";
-import Iconify from "@components/iconify";
-import MenuPopover from "@components/menu-popover";
-import ConfirmDialog from "@components/confirm-dialog";
+import { useState } from "react";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import RoleSelector from "@components/drop-down-menu";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   row: IUser & BaseResponseInterface;
   selected: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
-};
+}
 
 export default function UserTableRow({
   row,
@@ -33,25 +33,26 @@ export default function UserTableRow({
   onEditRow,
   onSelectRow,
   onDeleteRow,
-}: Props) {
-  const { first_name, last_name, email, verified, active, avatar, role, id } = row;
+}: Props): React.ReactElement | null {
+  const { first_name, last_name, email, verified, active, avatar, role, id } =
+    row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
   return (
@@ -62,7 +63,10 @@ export default function UserTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={first_name} src={avatar || "/assets/images/avatar_2.jpg"} />
+            <Avatar
+              alt={first_name}
+              src={avatar ?? "/assets/images/avatar_2.jpg"}
+            />
           </Stack>
         </TableCell>
 
@@ -78,11 +82,13 @@ export default function UserTableRow({
             last_name?.charAt(0).toUpperCase() + last_name?.slice(1)}
         </TableCell>
 
-        {role ? (
+        {role
+? (
           <TableCell align="left" sx={{ textTransform: "capitalize" }}>
             <RoleSelector user_id={id} role={role} email={email} />
           </TableCell>
-        ) : null}
+        )
+: null}
 
         <TableCell align="center">
           <Iconify

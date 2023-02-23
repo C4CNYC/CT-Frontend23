@@ -4,12 +4,16 @@ import { Stack } from "@mui/material";
 // utils
 import { hideScrollbarY } from "../../../utils/cssStyles";
 //
-import { NavSectionProps, NavListProps } from "../types";
+import { NavListProps, NavSectionProps } from "../types";
 import NavList from "./NavList";
 
 // ----------------------------------------------------------------------
 
-function NavSectionHorizontal({ data, sx, ...other }: NavSectionProps) {
+function NavSectionHorizontal({
+  data,
+  sx,
+  ...other
+}: NavSectionProps): React.ReactElement | null {
   return (
     <>
       <Stack
@@ -34,11 +38,11 @@ export default memo(NavSectionHorizontal);
 
 // ----------------------------------------------------------------------
 
-type ItemsProps = {
+interface ItemsProps {
   items: NavListProps[];
-};
+}
 
-function Items({ items }: ItemsProps) {
+function Items({ items }: ItemsProps): React.ReactElement | null {
   return (
     <>
       {items.map((list) => (

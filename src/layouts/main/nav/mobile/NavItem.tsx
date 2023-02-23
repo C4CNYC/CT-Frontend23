@@ -1,7 +1,7 @@
 // next
 import NextLink from "next/link";
 // @mui
-import { Link, ListItemText, ListItemIcon } from "@mui/material";
+import { Link, ListItemIcon, ListItemText } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 //
@@ -16,7 +16,7 @@ export default function NavItem({
   active,
   isExternalLink,
   ...other
-}: NavItemMobileProps) {
+}: NavItemMobileProps): React.ReactElement | null {
   const { title, path, icon, children } = item;
 
   const renderContent = (

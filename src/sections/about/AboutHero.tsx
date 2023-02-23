@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 // @mui
+import { Container, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Stack, Container, Typography } from "@mui/material";
 // components
 import {
   MotionContainer,
@@ -35,7 +35,7 @@ const StyledContent = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AboutHero() {
+export default function AboutHero(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionContainer}>

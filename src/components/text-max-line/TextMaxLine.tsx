@@ -1,12 +1,13 @@
 import { forwardRef } from "react";
 // @mui
-import { Typography, Link } from "@mui/material";
+import { Link, Typography } from "@mui/material";
 //
 import { TextMaxLineProps } from "./types";
 import useTypography from "./useTypography";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
   (
     {
@@ -29,7 +30,7 @@ const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(
       WebkitLineClamp: line,
       WebkitBoxOrient: "vertical",
       ...(persistent && {
-        height: lineHeight * line,
+        height: Number(lineHeight) * line,
       }),
       ...sx,
     } as const;

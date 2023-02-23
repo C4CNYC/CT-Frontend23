@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
@@ -11,13 +11,17 @@ import NavItem from "./NavItem";
 
 // ----------------------------------------------------------------------
 
-type NavListRootProps = {
+interface NavListRootProps {
   data: NavListProps;
   depth: number;
   hasChild: boolean;
-};
+}
 
-export default function NavList({ data, depth, hasChild }: NavListRootProps) {
+export default function NavList({
+  data,
+  depth,
+  hasChild,
+}: NavListRootProps): React.ReactElement | null {
   const { pathname } = useRouter();
 
   const { active, isExternalLink } = useActiveLink(data.path);
@@ -28,14 +32,13 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
     if (!active) {
       handleClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleToggle = () => {
+  const handleToggle = (): void => {
     setOpen(!open);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -61,12 +64,15 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
 
 // ----------------------------------------------------------------------
 
-type NavListSubProps = {
+interface NavListSubProps {
   data: NavListProps[];
   depth: number;
-};
+}
 
-function NavSubList({ data, depth }: NavListSubProps) {
+function NavSubList({
+  data,
+  depth,
+}: NavListSubProps): React.ReactElement | null {
   return (
     <>
       {data.map((list) => (

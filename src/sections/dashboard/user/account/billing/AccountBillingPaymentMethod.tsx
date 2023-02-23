@@ -1,35 +1,36 @@
 import { useState } from "react";
 // @mui
 import {
-  Card,
-  Stack,
-  Paper,
   Button,
-  Typography,
+  Card,
   IconButton,
+  Paper,
+  Stack,
+  Typography,
 } from "@mui/material";
-// @types
-import { IUserAccountBillingCreditCard } from "../../../../../@types/user";
 // components
-import Image from "@components/image";
 import Iconify from "@components/iconify";
+import Image from "@components/image";
 // section
+import { IUserAccountBillingCreditCard } from "src/@types/courses";
 import { PaymentNewCardDialog } from "../../../../payment";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   cards: IUserAccountBillingCreditCard[];
-};
+}
 
-export default function AccountBillingPaymentMethod({ cards }: Props) {
+export default function AccountBillingPaymentMethod({
+  cards,
+}: Props): React.ReactElement | null {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

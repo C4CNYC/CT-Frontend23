@@ -1,19 +1,19 @@
 // @mui
-import { TextField, InputAdornment } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export default function ContactsFilterName({
   filterName,
   onFilterName,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <TextField
       size="small"

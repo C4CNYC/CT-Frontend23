@@ -1,10 +1,10 @@
-import { alpha, Theme } from "@mui/material/styles";
+import { alpha, type Theme } from "@mui/material/styles";
 //
 import { StarIcon } from "./CustomIcons";
 
 // ----------------------------------------------------------------------
 
-export default function Rating(theme: Theme) {
+export default function Rating(theme: Theme): unknown {
   return {
     MuiRating: {
       defaultProps: {

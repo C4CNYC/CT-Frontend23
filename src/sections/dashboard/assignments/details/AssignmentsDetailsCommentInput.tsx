@@ -1,21 +1,21 @@
 // @mui
 import {
-  Stack,
-  Paper,
   Button,
-  Tooltip,
   IconButton,
   InputBase,
+  Paper,
+  Stack,
+  Tooltip,
 } from "@mui/material";
 // auth
 import { useAuthContext } from "../../../../auth/useAuthContext";
 // components
-import Iconify from "@components/iconify";
 import { CustomAvatar } from "@components/custom-avatar";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-export default function AssignmentsDetailsCommentInput() {
+export default function AssignmentsDetailsCommentInput(): React.ReactElement {
   const { user } = useAuthContext();
 
   return (
