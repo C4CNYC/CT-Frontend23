@@ -53,6 +53,7 @@ export default function LessonsListPage(): React.ReactElement {
         />
 
         <FilterLessons />
+
         <Box
           gap={2}
           display="grid"

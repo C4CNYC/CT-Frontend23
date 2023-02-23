@@ -19,7 +19,7 @@ import { useDeleteLessonMutation } from "../../../redux/services/manager";
 
 // ----------------------------------------------------------------------
 
-interface Props extends ILessonCreate {
+type Props  = {
   lesson: {
     name: string;
     description: string;
