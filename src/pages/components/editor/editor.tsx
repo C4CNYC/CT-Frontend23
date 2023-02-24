@@ -10,7 +10,7 @@ import {
   CodeExtension,
   ColumnsExtension,
   IframeExtension,
-  FontFamilyExtension,
+  FontFamilyExtension
 } from "remirror/extensions";
 import {
   BasicFormattingButtonGroup,
@@ -23,6 +23,7 @@ import {
 } from "@remirror/react";
 import AddIframeButton from "./AddIframeButton";
 import AddYoutubeButton from "./AddYoutubeButton";
+import FontFamilyButtons from "./FontFamilyButtons";
 
 const extensions = () => [
   new HeadingExtension(),
@@ -66,7 +67,7 @@ export default function MyEditor() {
           <ToggleColumnsButton />
           <AddIframeButton />
           <AddYoutubeButton />
-
+          <FontFamilyButtons />
         </Toolbar>
       </Remirror>
     </ThemeProvider>
