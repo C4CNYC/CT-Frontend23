@@ -43,21 +43,36 @@ const extensions = () => [
 export default function MyEditor() {
   const { manager, state, setState } = useRemirror({
     extensions,
-    content: "<p><u>Hello</u> there <b>friend</b> and <em>partner</em>.</p>",
     stringHandler: "html"
   });
 
   console.log(state);
   return (
     <ThemeProvider>
+      <style>
+        {`
+          .remirror-theme .ProseMirror:active, .remirror-theme .ProseMirror:focus {
+            box-shadow: none;
+          }
+          .remirror-editor-wrapper { padding: 0; height: 80vh }
+          .remirror-theme .ProseMirror {
+            height: 90vh;
+            box-shadow: none;
+          }
+        `}
+      </style>
       <Remirror
+        placeholder="Start type here ..."
         manager={manager}
         initialContent={state}
         autoFocus autoRender="end"
         onChange={(parameter) => {
           setState(parameter.state.doc);
         }}>
-        <Toolbar>
+        <Toolbar style={{
+          padding: "15px",
+          background: "#f4f5f7"
+        }}>
           <HistoryButtonGroup />
           <BasicFormattingButtonGroup />
           <HeadingLevelButtonGroup showAll />
