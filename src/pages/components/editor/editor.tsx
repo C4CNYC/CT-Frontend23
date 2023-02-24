@@ -1,5 +1,5 @@
 import "remirror/styles/all.css";
-
+import { useS3Upload } from "next-s3-upload";
 import {
   BoldExtension,
   HeadingExtension, ImageExtension,
@@ -11,6 +11,7 @@ import {
   ColumnsExtension,
   IframeExtension,
   FontFamilyExtension,
+  ImageAttributes,
 } from "remirror/extensions";
 import {
   BasicFormattingButtonGroup,
@@ -24,29 +25,81 @@ import {
 import AddIframeButton from "./AddIframeButton";
 import AddYoutubeButton from "./AddYoutubeButton";
 
-const extensions = () => [
-  new HeadingExtension(),
-  new BoldExtension({}),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-  new ImageExtension({ enableResizing: true }),
-  new BlockquoteExtension(),
-  new CodeBlockExtension(),
-  new CodeExtension(),
-  new ColumnsExtension(),
-  new IframeExtension(),
-  new FontFamilyExtension(),
-  // new EmojiExtension(), need fix
+interface FileWithProgress {
+    file: File;
+    progress: SetProgress;
+}
+/**
+ * Set the progress.
+ *
+ * @param progress - a value between `0` and `1`.
+ */
+declare type SetProgress = (progress: number) => void;
 
-];
+export declare type DelayedPromiseCreator<Value> = (props: unknown) => Promise<Value>;
+declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
 export default function MyEditor() {
+  const { uploadToS3 } = useS3Upload();
+
+    // invariant(files.length > 0, {
+    //  code: ErrorConstant.EXTENSION,
+    //  message: 'The upload handler was applied for the image extension without any valid files',
+    // });
+  const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
+    let completed = 0;
+    const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
+
+    for (const { file, progress } of files) {
+      promises.push(
+        async () =>
+          await new Promise<ImageAttributes>((resolve, reject) => {
+            completed += 1;
+            uploadToS3(file).then(({ url, key }) => {
+                progress(completed / files.length);
+                resolve({ src: url, fileName: key })
+            })
+          }),
+      );
+    };
+
+    return promises;
+  }
+
+  // const uploadHandler = async (files: FileWithProgress[]): DelayedImage[] => {
+  //   const images = [];
+  //   for (let i = 0; i < files.length; i++) {
+  //     const { url } = await uploadToS3(files[i].file);
+  //     images.push(async () => ({ src: url }))
+  //   }
+
+  //   console.log(images);
+
+  //   return images;
+  // }
+
+  const extensions = () => [
+    new HeadingExtension(),
+    new BoldExtension({}),
+    new ItalicExtension(),
+    new UnderlineExtension(),
+    new ImageExtension({ enableResizing: true, uploadHandler }),
+    new BlockquoteExtension(),
+    new CodeBlockExtension(),
+    new CodeExtension(),
+    new ColumnsExtension(),
+    new IframeExtension(),
+    new FontFamilyExtension(),
+    // new EmojiExtension(), need fix
+  ];
+
   const { manager, state, setState } = useRemirror({
     extensions,
     stringHandler: "html"
   });
 
   console.log(state);
+
   return (
     <ThemeProvider>
       <style>
