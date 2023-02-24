@@ -7,8 +7,10 @@ import {
   UnderlineExtension,
   BlockquoteExtension,
   CodeBlockExtension,
-  AnnotationExtension
-
+  CodeExtension,
+  ColumnsExtension,
+  IframeExtension,
+  FontFamilyExtension,
 } from "remirror/extensions";
 import {
   BasicFormattingButtonGroup,
@@ -17,11 +19,10 @@ import {
   useRemirror,
   Remirror,
   Toolbar, ToggleBlockquoteButton, ToggleCodeBlockButton,
-  ThemeProvider
+  ThemeProvider, ToggleColumnsButton
 } from "@remirror/react";
-import { ImageAddLineIcon } from "@remirror/react-components/all-icons";
-import { prosemirrorNodeToHtml } from "remirror";
-import { ADD_ANNOTATION } from "@remirror/messages/dist-types/extension-annotation-messages";
+import AddIframeButton from "./AddIframeButton";
+import AddYoutubeButton from "./AddYoutubeButton";
 
 const extensions = () => [
   new HeadingExtension(),
@@ -30,7 +31,13 @@ const extensions = () => [
   new UnderlineExtension(),
   new ImageExtension({ enableResizing: true }),
   new BlockquoteExtension(),
-  new CodeBlockExtension()
+  new CodeBlockExtension(),
+  new CodeExtension(),
+  new ColumnsExtension(),
+  new IframeExtension(),
+  new FontFamilyExtension(),
+  // new EmojiExtension(), need fix
+
 ];
 
 export default function MyEditor() {
@@ -56,10 +63,13 @@ export default function MyEditor() {
           <HeadingLevelButtonGroup showAll />
           <ToggleBlockquoteButton />
           <ToggleCodeBlockButton lang="html" />
+          <ToggleColumnsButton />
+          <AddIframeButton />
+          <AddYoutubeButton />
+
         </Toolbar>
       </Remirror>
     </ThemeProvider>
 
-  )
-    ;
+  );
 }
