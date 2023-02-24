@@ -1,6 +1,6 @@
 // @mui
+import { CardProps, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Typography, CardProps, Stack } from "@mui/material";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 
@@ -59,7 +59,7 @@ export default function AppWelcome({
   action,
   img,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <StyledRoot {...other}>
       <Stack

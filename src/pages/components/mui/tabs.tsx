@@ -2,15 +2,15 @@ import { useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import { Box, Tab, Tabs, Container, Stack } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Box, Container, Stack, Tab, Tabs } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -72,7 +72,7 @@ MUITabsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITabsPage() {
+export default function MUITabsPage(): React.ReactElement {
   const [currentTab, setCurrentTab] = useState("one");
 
   const [scrollable, setScrollable] = useState("one");
@@ -112,7 +112,9 @@ export default function MUITabsPage() {
             <Stack spacing={2} sx={{ width: 1 }}>
               <Tabs
                 value={currentTab}
-                onChange={(event, newValue) => setCurrentTab(newValue)}
+                onChange={(event, newValue) => {
+                  setCurrentTab(newValue);
+                }}
               >
                 {TABS.slice(0, 3).map((tab) => (
                   <Tab key={tab.value} value={tab.value} label={tab.label} />
@@ -140,7 +142,9 @@ export default function MUITabsPage() {
           <Block title="Icon" sx={style}>
             <Tabs
               value={currentTab}
-              onChange={(event, newValue) => setCurrentTab(newValue)}
+              onChange={(event, newValue) => {
+                setCurrentTab(newValue);
+              }}
             >
               {TABS.slice(0, 3).map((tab) => (
                 <Tab key={tab.value} icon={tab.icon} value={tab.value} />
@@ -151,7 +155,9 @@ export default function MUITabsPage() {
           <Block title="Top" sx={style}>
             <Tabs
               value={currentTab}
-              onChange={(event, newValue) => setCurrentTab(newValue)}
+              onChange={(event, newValue) => {
+                setCurrentTab(newValue);
+              }}
             >
               {TABS.slice(0, 3).map((tab) => (
                 <Tab
@@ -169,7 +175,9 @@ export default function MUITabsPage() {
           <Block title="Bottom" sx={style}>
             <Tabs
               value={currentTab}
-              onChange={(event, newValue) => setCurrentTab(newValue)}
+              onChange={(event, newValue) => {
+                setCurrentTab(newValue);
+              }}
             >
               {TABS.slice(0, 3).map((tab) => (
                 <Tab
@@ -187,7 +195,9 @@ export default function MUITabsPage() {
           <Block title="Start" sx={style}>
             <Tabs
               value={currentTab}
-              onChange={(event, newValue) => setCurrentTab(newValue)}
+              onChange={(event, newValue) => {
+                setCurrentTab(newValue);
+              }}
             >
               {TABS.slice(0, 3).map((tab) => (
                 <Tab
@@ -204,7 +214,9 @@ export default function MUITabsPage() {
           <Block title="End" sx={style}>
             <Tabs
               value={currentTab}
-              onChange={(event, newValue) => setCurrentTab(newValue)}
+              onChange={(event, newValue) => {
+                setCurrentTab(newValue);
+              }}
             >
               {TABS.slice(0, 3).map((tab) => (
                 <Tab
@@ -229,7 +241,9 @@ export default function MUITabsPage() {
             >
               <Tabs
                 value={scrollable}
-                onChange={(event, newValue) => setScrollable(newValue)}
+                onChange={(event, newValue) => {
+                  setScrollable(newValue);
+                }}
               >
                 {TABS.map((tab) => (
                   <Tab key={tab.value} label={tab.label} value={tab.value} />

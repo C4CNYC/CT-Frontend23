@@ -1,37 +1,40 @@
-import { useState } from "react";
 import NextLink from "next/link";
+import { useState } from "react";
 // @mui
 import Masonry from "@mui/lab/Masonry";
-import { alpha, Theme } from "@mui/material/styles";
 import {
+  Divider,
   Link,
   List,
-  Paper,
   ListItem,
-  Typography,
-  Divider,
+  Paper,
   Stack,
+  Typography,
 } from "@mui/material";
+import { alpha, Theme } from "@mui/material/styles";
 // @types
-import { ParentItemProps, MegaMenuItemProps } from "./types";
+import { MegaMenuItemProps, ParentItemProps } from "./types";
 // config
 import { NAV } from "../../config-global";
 // components
 import Iconify from "../iconify";
 //
-import MenuHotProducts from "./MenuHotProducts";
 import MegaMenuCarousel from "./MenuCarousel";
+import MenuHotProducts from "./MenuHotProducts";
 
 // ----------------------------------------------------------------------
 
 const MENU_PAPER_WIDTH = 800;
 const PARENT_ITEM_HEIGHT = 40;
 
-type Props = {
+interface Props {
   data: MegaMenuItemProps[];
-};
+}
 
-export default function MegaMenuDesktopVertical({ data, ...other }: Props) {
+export default function MegaMenuDesktopVertical({
+  data,
+  ...other
+}: Props): React.ReactElement | null {
   return (
     <List disablePadding {...other}>
       {data.map((parent) => (
@@ -48,11 +51,11 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -155,7 +158,7 @@ function ParentItem({
   open,
   hasSub,
   ...other
-}: ParentItemProps) {
+}: ParentItemProps): React.ReactElement | null {
   const activeStyle = {
     color: "primary.main",
     bgcolor: (theme: Theme) =>

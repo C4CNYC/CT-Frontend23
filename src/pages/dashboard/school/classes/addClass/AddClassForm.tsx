@@ -1,22 +1,18 @@
-import * as React from "react";
 import FormProvider from "@components/hook-form";
+import { useSnackbar } from "notistack";
+import * as React from "react";
 import { useForm } from "react-hook-form";
 import AddClassInput from "./AddClassInput";
-import { useSnackbar } from "notistack";
 
-type FormValuesProps = {
+interface FormValuesProps {
   code1: string;
-};
+}
 
-export default function AddClassForm() {
+export default function AddClassForm(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
     code1: "",
-  };
-
-  type Prop = {
-    defaultValues?: FormValuesProps;
   };
 
   const methods = useForm({
@@ -27,10 +23,9 @@ export default function AddClassForm() {
 
   const {
     handleSubmit,
-    formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       console.log("DATA");
       enqueueSnackbar("Verify success!");

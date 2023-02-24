@@ -8,21 +8,20 @@ const axiosInstance = axios.create({ baseURL: HOST_API_KEY });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) =>
-    Promise.reject(
-      (error.response && error.response.data) || "Something went wrong"
-    )
+  async (error): Promise<void> => {
+    await Promise.reject(error.response?.data ?? "Something went wrong");
+  }
 );
 
 axiosInstance.interceptors.request.use(
   function (config) {
     if (config.headers) {
-      config.headers["x-tenant-id"] = localStorage.getItem("tenantName") || "";
+      config.headers["x-tenant-id"] = localStorage.getItem("tenantName") ?? "";
     }
     return config;
   },
-  function (error) {
-    return Promise.reject(error);
+  async function (error) {
+    return await Promise.reject(error);
   }
 );
 

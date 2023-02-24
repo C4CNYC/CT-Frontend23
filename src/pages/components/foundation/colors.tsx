@@ -1,27 +1,27 @@
 // next
 import Head from "next/head";
 // @mui
-import { useTheme, hexToRgb, alpha } from "@mui/material/styles";
 import {
   Box,
+  BoxProps,
+  Container,
+  Divider,
+  IconButton,
   Paper,
   Stack,
   Tooltip,
-  Divider,
-  BoxProps,
-  Container,
   Typography,
-  IconButton,
 } from "@mui/material";
+import { alpha, hexToRgb, useTheme } from "@mui/material/styles";
 import useCopyToClipboard from "../../../hooks/useCopyToClipboard";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSnackbar } from "@components/snackbar";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
@@ -56,14 +56,14 @@ FoundationColorsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function FoundationColorsPage() {
+export default function FoundationColorsPage(): React.ReactElement {
   const theme = useTheme();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
 
-  const onCopy = (color: string) => {
+  const onCopy = (color: string): void => {
     if (color) {
       enqueueSnackbar(`Copied! ${color}`);
       copy(color);
@@ -118,7 +118,9 @@ export default function FoundationColorsPage() {
                     key={variation}
                     variation={variation}
                     hexColor={theme.palette[color][variation]}
-                    onCopy={() => onCopy(theme.palette[color][variation])}
+                    onCopy={() => {
+                      onCopy(theme.palette[color][variation]);
+                    }}
                   />
                 ))}
               </Grid>
@@ -139,7 +141,9 @@ export default function FoundationColorsPage() {
                   key={variation}
                   variation={variation}
                   hexColor={theme.palette.grey[variation]}
-                  onCopy={() => onCopy(theme.palette.grey[variation])}
+                  onCopy={() => {
+                    onCopy(theme.palette.grey[variation]);
+                  }}
                 />
               ))}
             </Grid>
@@ -152,13 +156,17 @@ export default function FoundationColorsPage() {
 
 // ----------------------------------------------------------------------
 
-type ColorCardProps = {
+interface ColorCardProps {
   hexColor: string;
   variation: string;
   onCopy: VoidFunction;
-};
+}
 
-function ColorCard({ hexColor, variation, onCopy }: ColorCardProps) {
+function ColorCard({
+  hexColor,
+  variation,
+  onCopy,
+}: ColorCardProps): React.ReactElement | null {
   return (
     <Paper
       variant="outlined"
@@ -219,7 +227,7 @@ function ColorCard({ hexColor, variation, onCopy }: ColorCardProps) {
 
 // ----------------------------------------------------------------------
 
-function Grid({ children }: BoxProps) {
+function Grid({ children }: BoxProps): React.ReactElement {
   return (
     <Box
       gap={2.5}

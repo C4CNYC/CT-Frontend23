@@ -1,8 +1,8 @@
-import { Theme } from "@mui/material/styles";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function ControlLabel(theme: Theme) {
+export default function ControlLabel(theme: Theme): unknown {
   return {
     MuiFormControlLabel: {
       styleOverrides: {

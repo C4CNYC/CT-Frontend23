@@ -1,27 +1,27 @@
 import { m } from "framer-motion";
 import { useRef } from "react";
 // @mui
-import { useTheme, alpha } from "@mui/material/styles";
 import {
   Box,
-  Stack,
-  Card,
   Button,
+  Card,
   Container,
-  Typography,
   IconButton,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 // _mock_
 import { _carouselsMembers, _socials } from "../../_mock/arrays";
 // components
-import Image from "../../components/image";
-import Iconify from "../../components/iconify";
-import Carousel, { CarouselArrows } from "../../components/carousel";
 import { MotionViewport, varFade } from "../../components/animate";
+import Carousel, { CarouselArrows } from "../../components/carousel";
+import Iconify from "../../components/iconify";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
-export default function AboutTeam() {
+export default function AboutTeam(): React.ReactElement {
   const carouselRef = useRef<Carousel>(null);
 
   const theme = useTheme();
@@ -47,11 +47,11 @@ export default function AboutTeam() {
     ],
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -135,15 +135,15 @@ export default function AboutTeam() {
 
 // ----------------------------------------------------------------------
 
-type MemberCardProps = {
+interface MemberCardProps {
   member: {
     name: string;
     role: string | undefined;
     avatar: string;
   };
-};
+}
 
-function MemberCard({ member }: MemberCardProps) {
+function MemberCard({ member }: MemberCardProps): React.ReactElement | null {
   const { name, role, avatar } = member;
   return (
     <Card key={name}>

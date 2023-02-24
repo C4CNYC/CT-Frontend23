@@ -1,21 +1,18 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
+import Stepper from "@mui/material/Stepper";
+import { useState } from "react";
 
-import SchoolStep from "./SchoolStep";
-import OrganizationStep from "./OrganizationStep";
 import ClassStep from "./ClassStep";
+import OrganizationStep from "./OrganizationStep";
+import SchoolStep from "./SchoolStep";
 
 const steps = ["District / Organization", "School / Location", "Class Created"];
 
-export default function HorizontalNonLinearStepper() {
+export default function HorizontalNonLinearStepper(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
-  const [completed, setCompleted] = useState<{
-    [k: number]: boolean;
-  }>({});
-  const handleNext = () => {
+  const handleNext = (): void => {
     if (activeStep === steps.length) return;
     setActiveStep(activeStep + 1);
   };
@@ -24,7 +21,7 @@ export default function HorizontalNonLinearStepper() {
     <Box sx={{ width: "100%" }}>
       <Stepper nonLinear activeStep={activeStep} sx={{ mb: 2 }}>
         {steps.map((label, index) => (
-          <Step key={index} completed={completed[index]}>
+          <Step key={index} completed={true}>
             <StepButton
               color="inherit"
               sx={{

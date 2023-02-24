@@ -6,7 +6,7 @@ import { varTranEnter, varTranExit } from "./transition";
 // ----------------------------------------------------------------------
 
 export const varFade = (props?: VariantsType) => {
-  const distance = props?.distance || 120;
+  const distance = props?.distance ?? 120;
   const durationIn = props?.durationIn;
   const durationOut = props?.durationOut;
   const easeIn = props?.easeIn;

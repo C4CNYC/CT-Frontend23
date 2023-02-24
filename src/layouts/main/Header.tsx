@@ -1,14 +1,14 @@
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
-  Box,
-  Button,
   AppBar,
-  Toolbar,
+  Box,
+  BoxProps,
+  Button,
   Container,
   Link,
-  BoxProps,
+  Toolbar,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // hooks
 import useOffSetTop from "../../hooks/useOffSetTop";
 import useResponsive from "../../hooks/useResponsive";
@@ -17,22 +17,18 @@ import { bgBlur } from "../../utils/cssStyles";
 // config
 import { HEADER } from "../../config-global";
 // routes
-import {
-  PATH_AUTH,
-  PATH_DOCS,
-  PATH_MINIMAL_ON_STORE,
-} from "../../routes/paths";
+import { PATH_AUTH, PATH_DOCS } from "../../routes/paths";
 // components
-import Logo from "../../components/logo";
 import Label from "../../components/label";
+import Logo from "../../components/logo";
 //
-import NavMobile from "./nav/mobile";
 import navConfig from "./nav/config-navigation";
 import NavDesktop from "./nav/desktop";
+import NavMobile from "./nav/mobile";
 
 // ----------------------------------------------------------------------
 
-export default function Header() {
+export default function Header(): React.ReactElement {
   const theme = useTheme();
 
   const isDesktop = useResponsive("up", "md");
@@ -96,7 +92,7 @@ export default function Header() {
 
 // ----------------------------------------------------------------------
 
-function Shadow({ sx, ...other }: BoxProps) {
+function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
   return (
     <Box
       sx={{
@@ -108,7 +104,7 @@ function Shadow({ sx, ...other }: BoxProps) {
         m: "auto",
         borderRadius: "50%",
         position: "absolute",
-        width: `calc(100% - 48px)`,
+        width: "calc(100% - 48px)",
         boxShadow: (theme) => theme.customShadows.z8,
         ...sx,
       }}

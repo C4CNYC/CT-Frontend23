@@ -1,14 +1,16 @@
 import { Box } from "@mui/material";
-import SettingsForm from "./SettingsForm";
-import { useGetSchoolSettingsQuery } from "src/redux/services/manager";
 import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
+import { useGetSchoolSettingsQuery } from "src/redux/services/manager";
+import SettingsForm from "./SettingsForm";
 
-type Props = {
+interface Props {
   school_id: string;
-};
+}
 
-export default function SchoolSettingTab({ school_id }: Props) {
+export default function SchoolSettingTab({
+  school_id,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolSettingsQuery(
     { school_id },
     { skip: !school_id }
@@ -28,7 +30,9 @@ export default function SchoolSettingTab({ school_id }: Props) {
           position: "relative",
         }}
       >
-        {isLoading ? null : (
+        {isLoading
+? null
+: (
           <SettingsForm settings={data} school_id={school_id} />
         )}
       </Box>

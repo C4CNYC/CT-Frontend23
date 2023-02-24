@@ -2,34 +2,34 @@ import { useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import { styled } from "@mui/material/styles";
-import {
-  Box,
-  List,
-  Paper,
-  Avatar,
-  Switch,
-  Divider,
-  Collapse,
-  Checkbox,
-  Container,
-  IconButton,
-  ListItemText,
-  ListItemIcon,
-  ListSubheader,
-  ListItemButton,
-  ListItemAvatar,
-  ListItemButtonProps,
-  ListItemSecondaryAction,
-} from "@mui/material";
 import { Masonry } from "@mui/lab";
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Collapse,
+  Container,
+  Divider,
+  IconButton,
+  List,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemButtonProps,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+  ListSubheader,
+  Paper,
+  Switch,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -48,11 +48,11 @@ MUIListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-function ListItemLink(props: ListItemButtonProps<"a", { button?: true }>) {
+function ListItemLink(props: ListItemButtonProps<"a", { button?: true }>): React.ReactElement | null {
   return <ListItemButton component="a" {...props} />;
 }
 
-export default function MUIListPage() {
+export default function MUIListPage(): React.ReactElement {
   const [open, setOpen] = useState(true);
 
   const [selectedIndex, setSelectedIndex] = useState(1);
@@ -61,18 +61,18 @@ export default function MUIListPage() {
 
   const [toggle, setToggle] = useState(["wifi"]);
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setOpen(!open);
   };
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number
-  ) => {
+  ): void => {
     setSelectedIndex(index);
   };
 
-  const handleCheck = (value: number) => () => {
+  const handleCheck = (value: number) => (): void => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
     if (currentIndex === -1) {
@@ -83,7 +83,7 @@ export default function MUIListPage() {
     setChecked(newChecked);
   };
 
-  const handleToggle = (value: string) => () => {
+  const handleToggle = (value: string) => (): void => {
     const currentIndex = toggle.indexOf(value);
     const newChecked = [...toggle];
 
@@ -185,9 +185,11 @@ export default function MUIListPage() {
                     <Iconify icon="ic:baseline-inbox" width={24} />
                   </ListItemIcon>
                   <ListItemText primary="Inbox" />
-                  {open ? (
+                  {open
+? (
                     <Iconify icon="ic:round-expand-less" width={24} />
-                  ) : (
+                  )
+: (
                     <Iconify icon="ic:round-expand-more" width={24} />
                   )}
                 </ListItemButton>
@@ -241,7 +243,9 @@ export default function MUIListPage() {
               <List component="nav" aria-label="main mailbox folders">
                 <ListItemButton
                   selected={selectedIndex === 0}
-                  onClick={(event) => handleListItemClick(event, 0)}
+                  onClick={(event) => {
+                    handleListItemClick(event, 0);
+                  }}
                 >
                   <ListItemIcon>
                     <Iconify icon="ic:baseline-inbox" width={24} />
@@ -250,7 +254,9 @@ export default function MUIListPage() {
                 </ListItemButton>
                 <ListItemButton
                   selected={selectedIndex === 1}
-                  onClick={(event) => handleListItemClick(event, 1)}
+                  onClick={(event) => {
+                    handleListItemClick(event, 1);
+                  }}
                 >
                   <ListItemIcon>
                     <Iconify icon="ic:round-drafts" width={24} />
@@ -264,13 +270,17 @@ export default function MUIListPage() {
               <List component="nav" aria-label="secondary mailbox folder">
                 <ListItemButton
                   selected={selectedIndex === 2}
-                  onClick={(event) => handleListItemClick(event, 2)}
+                  onClick={(event) => {
+                    handleListItemClick(event, 2);
+                  }}
                 >
                   <ListItemText primary="Trash" />
                 </ListItemButton>
                 <ListItemButton
                   selected={selectedIndex === 3}
-                  onClick={(event) => handleListItemClick(event, 3)}
+                  onClick={(event) => {
+                    handleListItemClick(event, 3);
+                  }}
                 >
                   <ListItemText primary="Spam" />
                 </ListItemButton>
@@ -293,7 +303,7 @@ export default function MUIListPage() {
                       <ListItemIcon>
                         <Checkbox
                           edge="start"
-                          checked={checked.indexOf(value) !== -1}
+                          checked={checked.includes(value)}
                           tabIndex={-1}
                           disableRipple
                           inputProps={{ "aria-labelledby": labelId }}
@@ -329,7 +339,7 @@ export default function MUIListPage() {
                     <Switch
                       edge="end"
                       onChange={handleToggle("wifi")}
-                      checked={toggle.indexOf("wifi") !== -1}
+                      checked={toggle.includes("wifi")}
                       inputProps={{
                         "aria-labelledby": "switch-list-label-wifi",
                       }}
@@ -348,7 +358,7 @@ export default function MUIListPage() {
                     <Switch
                       edge="end"
                       onChange={handleToggle("bluetooth")}
-                      checked={toggle.indexOf("bluetooth") !== -1}
+                      checked={toggle.includes("bluetooth")}
                       inputProps={{
                         "aria-labelledby": "switch-list-label-bluetooth",
                       }}

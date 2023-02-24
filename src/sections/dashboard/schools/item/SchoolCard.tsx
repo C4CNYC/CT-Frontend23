@@ -1,23 +1,22 @@
-import { useState } from "react";
-import {
-  Box,
-  Card,
-  Stack,
-  Button,
-  Divider,
-  MenuItem,
-  CardProps,
-  IconButton,
-} from "@mui/material";
+import ConfirmDialog from "@components/confirm-dialog";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
 import TextMaxLine from "@components/text-max-line";
-import { useSnackbar } from "notistack";
-import ConfirmDialog from "@components/confirm-dialog";
-import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
+import {
+  Box,
+  Button,
+  Card,
+  CardProps,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+} from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
 import { useLocales } from "../../../../locales";
+import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 
 interface Props extends CardProps {
   school: SchoolResponce;
@@ -33,9 +32,8 @@ export default function SchoolCard({
   onDelete,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { translate } = useLocales();
-  const { enqueueSnackbar } = useSnackbar();
 
   const [showCheckbox, setShowCheckbox] = useState(false);
 
@@ -45,36 +43,36 @@ export default function SchoolCard({
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleShowCheckbox = () => {
+  const handleShowCheckbox = (): void => {
     setShowCheckbox(true);
   };
 
-  const handleHideCheckbox = () => {
+  const handleHideCheckbox = (): void => {
     setShowCheckbox(false);
   };
 
-  const handleOpenDetails = () => {
+  const handleOpenDetails = (): void => {
     setOpenDetails(true);
   };
 
-  const handleCloseDetails = () => {
+  const handleCloseDetails = (): void => {
     setOpenDetails(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
     event.stopPropagation();
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 

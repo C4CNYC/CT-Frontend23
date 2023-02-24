@@ -19,7 +19,7 @@ export default function MotionViewport({
   children,
   disableAnimatedMobile = true,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const isMobile = useResponsive("down", "sm");
 
   if (isMobile && disableAnimatedMobile) {

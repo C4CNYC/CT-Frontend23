@@ -9,17 +9,17 @@ import { StyledControlPanel } from "@components/map";
 
 const EVENT_NAMES = ["onDragStart", "onDrag", "onDragEnd"] as const;
 
-function round5(value: number) {
+function round5(value: number): number {
   return (Math.round(value * 1e5) / 1e5).toFixed(5);
 }
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   events: Record<string, LngLat>;
 };
 
-function ControlPanel({ events = {} }: Props) {
+function ControlPanel({ events = {} }: Props): React.ReactElement | null {
   return (
     <StyledControlPanel>
       {EVENT_NAMES.map((event) => {
@@ -31,11 +31,13 @@ function ControlPanel({ events = {} }: Props) {
               {event}:
             </Typography>
 
-            {lngLat ? (
+            {lngLat
+? (
               <Typography variant="subtitle2" sx={{ color: "primary.main" }}>
                 {`${round5(lngLat.lng)}, ${round5(lngLat.lat)}`}
               </Typography>
-            ) : (
+            )
+: (
               <Typography
                 variant="body2"
                 component="em"

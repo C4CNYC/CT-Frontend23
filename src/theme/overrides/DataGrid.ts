@@ -2,13 +2,13 @@ import { Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function DataGrid(theme: Theme) {
+export default function DataGrid(theme: Theme): unknown {
   return {
     MuiDataGrid: {
       styleOverrides: {
         root: {
           borderRadius: 0,
-          border: `1px solid transparent`,
+          border: "1px solid transparent",
           "& .MuiTablePagination-root": {
             borderTop: 0,
           },

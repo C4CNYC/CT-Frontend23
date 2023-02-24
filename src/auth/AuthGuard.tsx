@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import LoadingScreen from "@components/loading-screen";
 import Login from "@pages/auth/login";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
 // ----------------------------------------------------------------------
 
-type AuthGuardProps = {
+interface AuthGuardProps {
   children: React.ReactNode;
-};
+}
 
-export default function AuthGuard({ children }: AuthGuardProps) {
+export default function AuthGuard({
+  children,
+}: AuthGuardProps): React.ReactElement | null {
   const { isAuthenticated, isInitialized } = useAuthContext();
 
   const { pathname, push } = useRouter();

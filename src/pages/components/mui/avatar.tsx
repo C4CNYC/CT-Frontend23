@@ -1,9 +1,9 @@
 // next
 import Head from "next/head";
 // @mui
-import { useTheme } from "@mui/material/styles";
-import { Box, Container, Tooltip } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Box, Container, Tooltip } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -11,13 +11,10 @@ import MainLayout from "../../../layouts/main";
 // _mock
 import _mock from "../../../_mock";
 // components
-import Iconify from "@components/iconify";
 import BadgeStatus from "@components/badge-status";
+import { CustomAvatar, CustomAvatarGroup } from "@components/custom-avatar";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import {
-  CustomAvatar,
-  CustomAvatarGroup,
-} from "@components/custom-avatar";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -47,7 +44,7 @@ MUIAvatarPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIAvatarPage() {
+export default function MUIAvatarPage(): React.ReactElement {
   const theme = useTheme();
 
   return (

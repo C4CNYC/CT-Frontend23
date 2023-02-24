@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 // next
 import NextLink from "next/link";
 // @mui
-import { styled, alpha, useTheme } from "@mui/material/styles";
 import {
-  Button,
   Box,
-  Link,
+  Button,
   Container,
-  Typography,
-  Stack,
   Grid,
+  Link,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // routes
 import {
   PATH_DASHBOARD,
@@ -22,15 +22,15 @@ import {
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // utils
-import { textGradient, bgGradient } from "../../utils/cssStyles";
+import { bgGradient, textGradient } from "../../utils/cssStyles";
 // config
 import { HEADER } from "../../config-global";
 // theme
 import { secondaryFont } from "../../theme/typography";
 // components
-import SvgColor from "../../components/svg-color";
-import Iconify from "../../components/iconify";
 import { MotionContainer, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
+import SvgColor from "../../components/svg-color";
 
 // ----------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ const StyledEllipseBottom = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeHero() {
+export default function HomeHero(): React.ReactElement | null {
   const isDesktop = useResponsive("up", "md");
 
   const { scrollYProgress } = useScroll();
@@ -159,7 +159,7 @@ export default function HomeHero() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement | null {
   return (
     <StyledDescription>
       <m.div variants={varFade().in}>
@@ -271,7 +271,7 @@ function Description() {
 
 // ----------------------------------------------------------------------
 
-function Content() {
+function Content(): React.ReactElement | null {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";

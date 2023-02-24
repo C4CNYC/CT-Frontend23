@@ -1,10 +1,10 @@
 // @mui
 import {
-  Stack,
-  InputAdornment,
-  TextField,
-  MenuItem,
   Button,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 // components
@@ -14,7 +14,7 @@ import Iconify from "@components/iconify";
 
 const INPUT_WIDTH = 160;
 
-type Props = {
+interface Props {
   filterName: string;
   isFiltered: boolean;
   filterService: string;
@@ -26,7 +26,7 @@ type Props = {
   onFilterService: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterStartDate: (value: Date | null) => void;
   onFilterEndDate: (value: Date | null) => void;
-};
+}
 
 export default function InvoiceTableToolbar({
   filterName,
@@ -40,7 +40,7 @@ export default function InvoiceTableToolbar({
   onFilterService,
   onFilterEndDate,
   onFilterStartDate,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Stack
       spacing={2}

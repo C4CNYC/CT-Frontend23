@@ -5,15 +5,15 @@ import { StyledCard } from "../styles";
 
 // ----------------------------------------------------------------------
 
-export default function FullScreenOptions() {
+export default function FullScreenOptions(): React.ReactElement {
   const [fullscreen, setFullscreen] = useState(false);
 
-  const onToggleFullScreen = () => {
+  const onToggleFullScreen = async (): Promise<void> => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+      await document.documentElement.requestFullscreen();
       setFullscreen(true);
     } else if (document.exitFullscreen) {
-      document.exitFullscreen();
+      await document.exitFullscreen();
       setFullscreen(false);
     }
   };

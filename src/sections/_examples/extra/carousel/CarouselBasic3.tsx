@@ -1,26 +1,25 @@
 import { useRef } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // components
+import Carousel, { CarouselArrows, CarouselDots } from "@components/carousel";
 import Image from "@components/image";
-import Carousel, {
-  CarouselDots,
-  CarouselArrows,
-} from "@components/carousel";
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     title: string;
     image: string;
     description: string;
-  }[];
-};
+  }>;
+}
 
-export default function CarouselBasic3({ data }: Props) {
+export default function CarouselBasic3({
+  data,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -38,11 +37,11 @@ export default function CarouselBasic3({ data }: Props) {
     }),
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -74,11 +73,11 @@ export default function CarouselBasic3({ data }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   title: string;
   description: string;
   image: string;
-};
+}
 
 function CarouselItem({ item }: { item: CarouselItemProps }) {
   const { image, title } = item;

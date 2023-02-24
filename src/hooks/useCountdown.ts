@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // ----------------------------------------------------------------------
 
-type ReturnType = {
+interface ReturnType {
   days: string;
   hours: string;
   minutes: string;
   seconds: string;
-};
+}
 
 export default function useCountdown(date: Date): ReturnType {
   const [countdown, setCountdown] = useState({
@@ -18,12 +18,15 @@ export default function useCountdown(date: Date): ReturnType {
   });
 
   useEffect(() => {
-    const interval = setInterval(() => setNewTime(), 1000);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const interval = setInterval(() => {
+      setNewTime();
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
-  const setNewTime = () => {
+  const setNewTime = (): void => {
     const startTime = date;
 
     const endTime = new Date();

@@ -13,11 +13,13 @@ import NavItem from "./NavItem";
 
 // ----------------------------------------------------------------------
 
-type NavListProps = {
+interface NavListProps {
   item: NavItemProps;
-};
+}
 
-export default function NavList({ item }: NavListProps) {
+export default function NavList({
+  item,
+}: NavListProps): React.ReactElement | null {
   const { pathname } = useRouter();
 
   const { path, children } = item;
@@ -31,7 +33,9 @@ export default function NavList({ item }: NavListProps) {
       <NavItem
         item={item}
         open={open}
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          setOpen(!open);
+        }}
         active={pathname === path}
         isExternalLink={isExternalLink}
       />

@@ -2,13 +2,13 @@
 import { RadioGroup } from "@mui/material";
 //
 import { useSettingsContext } from "../SettingsContext";
-import { StyledCard, StyledWrap, MaskControl, LayoutIcon } from "../styles";
+import { LayoutIcon, MaskControl, StyledCard, StyledWrap } from "../styles";
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = ["vertical", "horizontal", "mini"] as const;
 
-export default function LayoutOptions() {
+export default function LayoutOptions(): React.ReactElement {
   const { themeLayout, onChangeLayout } = useSettingsContext();
 
   return (

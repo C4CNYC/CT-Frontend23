@@ -1,7 +1,7 @@
 // next
 import NextLink from "next/link";
 // @mui
-import { Box, Tooltip, Link, ListItemText } from "@mui/material";
+import { Box, Link, ListItemText, Tooltip } from "@mui/material";
 // locales
 import { useLocales } from "../../../locales";
 // auth
@@ -10,7 +10,7 @@ import RoleBasedGuard from "../../../auth/RoleBasedGuard";
 import Iconify from "../../iconify";
 //
 import { NavItemProps } from "../types";
-import { StyledItem, StyledIcon, StyledDotIcon } from "./styles";
+import { StyledDotIcon, StyledIcon, StyledItem } from "./styles";
 
 // ----------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ export default function NavItem({
   active,
   isExternalLink,
   ...other
-}: NavItemProps) {
+}: NavItemProps): React.ReactElement | null {
   const { translate } = useLocales();
 
   const { title, path, icon, info, children, disabled, caption, roles } = item;
@@ -82,14 +82,15 @@ export default function NavItem({
     </StyledItem>
   );
 
-  const renderItem = () => {
+  const renderItem = (): React.ReactElement => {
     // ExternalLink
-    if (isExternalLink)
+    if (isExternalLink) {
       return (
         <Link href={path} target="_blank" rel="noopener" underline="none">
           {renderContent}
         </Link>
       );
+    }
 
     // Has child
     if (children) {

@@ -1,12 +1,12 @@
 import { m } from "framer-motion";
 // @mui
-import { Button, Typography, TextField, Stack } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 // components
 import { MotionViewport, varFade } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
-export default function ContactForm() {
+export default function ContactForm(): React.ReactElement {
   return (
     <Stack component={MotionViewport} spacing={5}>
       <m.div variants={varFade().inUp}>

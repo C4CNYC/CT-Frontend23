@@ -1,7 +1,7 @@
 import { memo } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // config
 import { HEADER } from "../../../config-global";
 // utils
@@ -13,7 +13,7 @@ import navConfig from "./config-navigation";
 
 // ----------------------------------------------------------------------
 
-function NavHorizontal() {
+function NavHorizontal(): React.ReactElement {
   const theme = useTheme();
 
   return (
@@ -44,7 +44,7 @@ export default memo(NavHorizontal);
 
 // ----------------------------------------------------------------------
 
-function Shadow({ sx, ...other }: BoxProps) {
+function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
   return (
     <Box
       sx={{

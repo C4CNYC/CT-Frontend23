@@ -1,10 +1,10 @@
 import { m } from "framer-motion";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
-import { Box, Container, Typography, Stack } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // components
-import Image from "../../components/image";
 import { MotionViewport, varFade } from "../../components/animate";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeCleanInterfaces() {
+export default function HomeCleanInterfaces(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionViewport}>
@@ -30,7 +30,7 @@ export default function HomeCleanInterfaces() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement | null {
   return (
     <Stack
       spacing={3}
@@ -71,7 +71,7 @@ function Description() {
 
 // ----------------------------------------------------------------------
 
-function Content() {
+function Content(): React.ReactElement | null {
   return (
     <Box sx={{ position: "relative" }}>
       {[...Array(10)].map((_, index) => (

@@ -2,6 +2,7 @@ import { useMemo } from "react";
 // @mui
 import { CssBaseline } from "@mui/material";
 import {
+  Components,
   createTheme,
   ThemeOptions,
   ThemeProvider as MUIThemeProvider,
@@ -9,20 +10,22 @@ import {
 // components
 import { useSettingsContext } from "../components/settings";
 //
-import palette from "./palette";
-import typography from "./typography";
-import shadows from "./shadows";
-import componentsOverride from "./overrides";
 import customShadows from "./customShadows";
 import GlobalStyles from "./globalStyles";
+import componentsOverride from "./overrides";
+import palette from "./palette";
+import shadows from "./shadows";
+import typography from "./typography";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-export default function ThemeProvider({ children }: Props) {
+export default function ThemeProvider({
+  children,
+}: Props): React.ReactElement | null {
   const { themeMode, themeDirection } = useSettingsContext();
 
   const themeOptions: ThemeOptions = useMemo(
@@ -39,7 +42,7 @@ export default function ThemeProvider({ children }: Props) {
 
   const theme = createTheme(themeOptions);
 
-  theme.components = componentsOverride(theme);
+  theme.components = componentsOverride(theme) as Components;
 
   return (
     <MUIThemeProvider theme={theme}>

@@ -1,15 +1,15 @@
 // next
 import Head from "next/head";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
   Box,
-  Stack,
   Button,
-  Typography,
   IconButton,
   InputAdornment,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // hooks
 import useCountdown from "../hooks/useCountdown";
 // layouts
@@ -17,8 +17,8 @@ import CompactLayout from "../layouts/compact";
 // _mock
 import { _socials } from "../_mock/arrays";
 // components
-import Iconify from "../components/iconify";
 import { CustomTextField } from "../components/custom-input";
+import Iconify from "../components/iconify";
 // assets
 import { ComingSoonIllustration } from "../assets/illustrations";
 
@@ -30,7 +30,7 @@ ComingSoonPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ComingSoonPage() {
+export default function ComingSoonPage(): React.ReactElement {
   const { days, hours, minutes, seconds } = useCountdown(
     new Date("07/07/2024 21:30")
   );
@@ -108,12 +108,15 @@ export default function ComingSoonPage() {
 
 // ----------------------------------------------------------------------
 
-type TimeBlockProps = {
+interface TimeBlockProps {
   label: string;
   value: string;
-};
+}
 
-function TimeBlock({ label, value }: TimeBlockProps) {
+function TimeBlock({
+  label,
+  value,
+}: TimeBlockProps): React.ReactElement | null {
   return (
     <div>
       <Box> {value} </Box>

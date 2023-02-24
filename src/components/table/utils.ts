@@ -4,13 +4,13 @@ export function emptyRows(
   page: number,
   rowsPerPage: number,
   arrayLength: number
-) {
+): number {
   return page + 1 && arrayLength > 0
     ? Math.max(0, (1 + page) * rowsPerPage - arrayLength)
     : 0;
 }
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T): number {
   if (b[orderBy] < a[orderBy]) {
     return -1;
   }

@@ -1,10 +1,10 @@
-import * as Yup from "yup";
 import { useCallback, useEffect, useMemo } from "react";
+import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
 // form
-import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
@@ -13,40 +13,41 @@ import { fData } from "../../../utils/formatNumber";
 // routes
 import { PATH_DASHBOARD } from "@routes/paths";
 // components
-import Label from "@components/label";
-import { useSnackbar } from "@components/snackbar";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
 } from "@components/hook-form";
-import { IUser } from "src/redux/services/interfaces/user.interface";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { Role } from "src/redux/services/enums/role.enum";
+import Label from "@components/label";
+import { useSnackbar } from "@components/snackbar";
 import {
   useCreateOrgMemberMutation,
+  useUdpateMemberAvatarMutation,
   useUpdateOrgMemberMutation,
 } from "src/redux/services/admin";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
-
+import { Role } from "src/redux/services/enums/role.enum";
+import { IUser } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {}
+interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
+  photoURL: File & { preview: string };
+}
 
-type Props = {
+interface Props {
   isEdit?: boolean;
   currentUser?: IUser & BaseResponseInterface;
-};
+}
 
 export default function UserNewEditForm({
   isEdit = false,
   currentUser,
-}: Props) {
+}: Props): React.ReactElement | null {
   const { push } = useRouter();
   const [createUser] = useCreateOrgMemberMutation();
   const [updateUser] = useUpdateOrgMemberMutation();
+  const [updateMemberAvatar] = useUdpateMemberAvatarMutation();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -57,17 +58,16 @@ export default function UserNewEditForm({
       .required("Email is required")
       .email("Email must be a valid email address"),
     role: Yup.string().required("Role is required"),
-    // avatarUrl: Yup.string().required("Avatar is required").nullable(true),
   });
 
   const defaultValues = useMemo(
     () => ({
-      first_name: currentUser?.first_name || "",
-      last_name: currentUser?.last_name || "",
-      email: currentUser?.email || "",
-      role: (currentUser?.role as Role) || Role.Manager,
+      first_name: currentUser?.first_name ?? "",
+      last_name: currentUser?.last_name ?? "",
+      email: currentUser?.email ?? "",
+      role: (currentUser?.role as Role) ?? Role.Manager,
+      verified: currentUser?.verified,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
   );
 
@@ -94,21 +94,40 @@ export default function UserNewEditForm({
     if (!isEdit) {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentUser]);
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const updateAvatar = async (
+    id: string,
+    photoURL?: File
+  ): Promise<unknown> => {
+    if (!id ?? !photoURL) return;
+
+    const file = new FormData();
+    file.append("file", photoURL);
+
+    return await updateMemberAvatar({
+      user_id: id,
+      file,
+    }).unwrap();
+  };
+
+  const onSubmit = async ({
+    photoURL,
+    ...data
+  }: FormValuesProps): Promise<void> => {
     try {
-      if (!isEdit) {
-        await createUser({
-          ...data,
-        }).unwrap();
-      } else {
+      if (isEdit && currentUser?.id) {
         const { email, ...body } = data;
         await updateUser({
-          user_id: currentUser?.id as string,
+          user_id: currentUser?.id,
           ...body,
-        });
+        }).unwrap();
+        await updateAvatar(currentUser?.id, photoURL);
+      } else {
+        const user = await createUser({
+          ...data,
+        }).unwrap();
+        await updateAvatar(user.id, photoURL);
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.organization.members);
@@ -129,7 +148,7 @@ export default function UserNewEditForm({
       });
 
       if (file) {
-        //#TODO upload file
+        setValue("photoURL", newFile, { shouldValidate: true });
       }
     },
     [setValue]
@@ -156,7 +175,7 @@ export default function UserNewEditForm({
 
             <Box sx={{ mb: 5 }}>
               <RHFUploadAvatar
-                name="avatarUrl"
+                name="photoURL"
                 maxSize={3145728}
                 onDrop={handleDrop}
                 helperText={
@@ -178,7 +197,7 @@ export default function UserNewEditForm({
             </Box>
 
             <RHFSwitch
-              name="isVerified"
+              name="verified"
               labelPlacement="start"
               label={
                 <>
@@ -217,7 +236,9 @@ export default function UserNewEditForm({
 
               <RHFSelect native name="role" label="Role" placeholder="Role">
                 {(Object.keys(Role) as Array<keyof typeof Role>).map((role) =>
-                  role === "Owner" ? null : (
+                  role === "Owner"
+? null
+: (
                     <option key={Role[role]} value={Role[role]}>
                       {role}
                     </option>

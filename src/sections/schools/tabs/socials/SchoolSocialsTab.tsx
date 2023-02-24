@@ -1,31 +1,17 @@
-import React, { useState } from "react";
-import {
-  Box,
-  Card,
-  Link,
-  Stack,
-  Typography,
-  Grid,
-  Button,
-} from "@mui/material";
-import SocialsForm from "./SocialsForm";
-import {
-  useDeleteSchoolSocialMutation,
-  useGetSchoolProfileQuery,
-} from "src/redux/services/manager";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { SOCIAL_ICONS } from "../../../../assets/data";
-import { LoadingButton } from "@mui/lab";
-import { useSnackbar } from "notistack";
+import React from "react";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager";
 import SocialItem from "./SocialItem";
-import IitemSocials from "src/components/iitem-socials";
-import ItemSocials from "src/components/iitem-socials";
+import SocialsForm from "./SocialsForm";
 
-type Props = {
+interface Props {
   school_id: string;
-};
+}
 
-export default function SchoolSocialsTab({ school_id }: Props) {
+export default function SchoolSocialsTab({
+  school_id,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolProfileQuery(
     { school_id },
     { skip: !school_id }
@@ -49,7 +35,9 @@ export default function SchoolSocialsTab({ school_id }: Props) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Card sx={{ p: 3 }}>
-              {isLoading ? null : (
+              {isLoading
+? null
+: (
                 <SocialsForm socialLinks={data.socials} school_id={school_id} />
               )}
               <Typography variant="h6" sx={{ mb: 2 }}>
@@ -61,11 +49,7 @@ export default function SchoolSocialsTab({ school_id }: Props) {
                   sx={{ wordBreak: "break-all" }}
                   key={item.id}
                 >
-                  <SocialItem
-                    socialItem={item}
-                    school_id={school_id}
-                    link={""}
-                  />
+                  <SocialItem socialItem={item} school_id={school_id} />
                 </Stack>
               ))}
             </Card>

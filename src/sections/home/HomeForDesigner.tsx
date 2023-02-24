@@ -1,21 +1,21 @@
 import { m } from "framer-motion";
 // @mui
-import { styled, useTheme, alpha } from "@mui/material/styles";
 import {
   Box,
-  Grid,
-  Container,
-  Typography,
   BoxProps,
   Button,
+  Container,
+  Grid,
+  Typography,
 } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // utils
-import { filterStyles, textGradient, bgGradient } from "../../utils/cssStyles";
+import { bgGradient, filterStyles, textGradient } from "../../utils/cssStyles";
 // routes
 import { PATH_FIGMA_PREVIEW } from "../../routes/paths";
 // components
-import Iconify from "../../components/iconify";
 import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ const StyledContent = styled(m.img)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeForDesigner() {
+export default function HomeForDesigner(): React.ReactElement {
   return (
     <StyledRoot>
       <StyledWrap>
@@ -105,7 +105,7 @@ export default function HomeForDesigner() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement | null {
   const theme = useTheme();
 
   return (
@@ -165,7 +165,10 @@ interface TriangleShapeProps extends BoxProps {
   anchor?: "top" | "bottom";
 }
 
-function TriangleShape({ anchor = "top", ...other }: TriangleShapeProps) {
+function TriangleShape({
+  anchor = "top",
+  ...other
+}: TriangleShapeProps): React.ReactElement | null {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";

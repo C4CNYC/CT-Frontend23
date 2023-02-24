@@ -1,6 +1,6 @@
 // @mui
+import { Avatar, Box, Card, Stack, SxProps, Typography } from "@mui/material";
 import { alpha, Theme, useTheme } from "@mui/material/styles";
-import { SxProps, Typography, Card, Box, Stack, Avatar } from "@mui/material";
 // theme
 import { ColorSchema } from "../../../theme/palette";
 //
@@ -10,19 +10,24 @@ import { ItemProps } from "../types";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   node: ItemProps;
   depth?: number;
   length?: number;
   sx?: SxProps<Theme>;
-};
+}
 
-export default function GroupNode({ node, depth, length, sx }: Props) {
+export default function GroupNode({
+  node,
+  depth,
+  length,
+  sx,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";
 
-  const styles = (color: ColorSchema) => ({
+  const styles = (color: ColorSchema): Record<string, string> => ({
     bgcolor: alpha(theme.palette[color].main, 0.08),
     border: `solid 1px ${alpha(theme.palette[color].main, 0.24)}`,
     color: isLight ? theme.palette[color].darker : theme.palette[color].lighter,
@@ -46,7 +51,7 @@ export default function GroupNode({ node, depth, length, sx }: Props) {
       {!isLabel && (
         <Avatar
           alt={node.name}
-          src={node.avatar || ""}
+          src={node.avatar ?? ""}
           sx={{
             mt: -3.5,
             zIndex: 9,

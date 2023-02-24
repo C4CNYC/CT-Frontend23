@@ -11,7 +11,7 @@ import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
-export default function PickerDateTime() {
+export default function PickerDateTime(): React.ReactElement {
   const [value, setValue] = useState<Date | null>(new Date());
 
   const [valueResponsive, setValueResponsive] = useState<Date | null>(

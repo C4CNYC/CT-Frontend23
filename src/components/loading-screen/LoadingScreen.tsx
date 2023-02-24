@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { m } from "framer-motion";
-import { alpha, styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
+import { m } from "framer-motion";
+import { useEffect, useState } from "react";
 import LogoSmall from "../logoSmall";
 
 // ----------------------------------------------------------------------
@@ -21,10 +21,10 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoadingScreen() {
+export default function LoadingScreen(): React.ReactElement | null {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => { setMounted(true); }, []);
 
   if (!mounted) {
     return null;
@@ -60,8 +60,7 @@ export default function LoadingScreen() {
           width: 100,
           height: 100,
           position: "absolute",
-          border: (theme) =>
-            `solid 3px ${alpha('#EA3569', 0.24)}`,
+          border: (theme) => `solid 3px ${alpha("#EA3569", 0.24)}`,
         }}
       />
 
@@ -82,8 +81,7 @@ export default function LoadingScreen() {
           width: 120,
           height: 120,
           position: "absolute",
-          border: (theme) =>
-            `solid 8px ${alpha("#FBDD3F", 0.24)}`,
+          border: (theme) => `solid 8px ${alpha("#FBDD3F", 0.24)}`,
         }}
       />
 
@@ -104,8 +102,7 @@ export default function LoadingScreen() {
           width: 120,
           height: 120,
           position: "absolute",
-          border: (theme) =>
-            `solid 8px ${alpha("#02D3D7", 0.24)}`,
+          border: (theme) => `solid 8px ${alpha("#02D3D7", 0.24)}`,
         }}
       />
     </StyledRoot>

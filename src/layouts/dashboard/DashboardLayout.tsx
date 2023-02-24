@@ -8,19 +8,21 @@ import AuthGuard from "../../auth/AuthGuard";
 // components
 import { useSettingsContext } from "../../components/settings";
 //
-import Main from "./Main";
 import Header from "./header";
+import Main from "./Main";
+import NavHorizontal from "./nav/NavHorizontal";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";
-import NavHorizontal from "./nav/NavHorizontal";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children?: React.ReactNode;
-};
+}
 
-export default function DashboardLayout({ children }: Props) {
+export default function DashboardLayout({
+  children,
+}: Props): React.ReactElement | null {
   const { themeLayout } = useSettingsContext();
 
   const isDesktop = useResponsive("up", "lg");
@@ -31,11 +33,11 @@ export default function DashboardLayout({ children }: Props) {
 
   const isNavMini = themeLayout === "mini";
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -43,7 +45,7 @@ export default function DashboardLayout({ children }: Props) {
     <NavVertical openNav={open} onCloseNav={handleClose} />
   );
 
-  const renderContent = () => {
+  const renderContent = (): React.ReactElement => {
     if (isNavHorizontal) {
       return (
         <>

@@ -3,7 +3,7 @@ import { Box, Skeleton } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonPostDetails() {
+export default function SkeletonPostDetails(): React.ReactElement {
   return (
     <>
       <Skeleton

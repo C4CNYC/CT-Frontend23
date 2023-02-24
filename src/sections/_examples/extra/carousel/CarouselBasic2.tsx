@@ -1,23 +1,25 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 // @mui
+import { Card, CardContent, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Card, Typography, CardContent, Stack } from "@mui/material";
 // components
-import Image from "@components/image";
 import Carousel, { CarouselArrowIndex } from "@components/carousel";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     title: string;
     image: string;
     description: string;
-  }[];
-};
+  }>;
+}
 
-export default function CarouselBasic2({ data }: Props) {
+export default function CarouselBasic2({
+  data,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -33,14 +35,16 @@ export default function CarouselBasic2({ data }: Props) {
     initialSlide: currentIndex,
     fade: Boolean(theme.direction !== "rtl"),
     rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => setCurrentIndex(next),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 

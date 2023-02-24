@@ -1,6 +1,6 @@
 // @mui
+import { ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-import { ListItemIcon, ListSubheader, ListItemButton } from "@mui/material";
 // config
 import { ICON, NAV } from "../../../config-global";
 //
@@ -91,9 +91,9 @@ export const StyledIcon = styled(ListItemIcon)({
 
 // ----------------------------------------------------------------------
 
-type StyledDotIconProps = {
+interface StyledDotIconProps {
   active?: boolean;
-};
+}
 
 export const StyledDotIcon = styled("span", {
   shouldForwardProp: (prop) => prop !== "active",

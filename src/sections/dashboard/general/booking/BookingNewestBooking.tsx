@@ -1,26 +1,26 @@
 import { useRef } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
-  Box,
-  Stack,
-  Paper,
   Avatar,
+  Box,
   BoxProps,
-  Typography,
   CardHeader,
+  Paper,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // utils
 import { fDateTime } from "../../../../utils/formatTime";
 // components
-import Label from "@components/label";
-import Image from "@components/image";
-import Iconify from "@components/iconify";
 import Carousel, { CarouselArrows } from "@components/carousel";
+import Iconify from "@components/iconify";
+import Image from "@components/image";
+import Label from "@components/label";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   name: string;
   avatar: string;
@@ -29,7 +29,7 @@ type ItemProps = {
   person: string;
   roomType: string;
   cover: string;
-};
+}
 
 interface Props extends BoxProps {
   title?: string;
@@ -43,7 +43,7 @@ export default function BookingNewestBooking({
   list,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -76,11 +76,11 @@ export default function BookingNewestBooking({
     ],
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -108,11 +108,11 @@ export default function BookingNewestBooking({
 
 // ----------------------------------------------------------------------
 
-type BookingItemProps = {
+interface BookingItemProps {
   item: ItemProps;
-};
+}
 
-function BookingItem({ item }: BookingItemProps) {
+function BookingItem({ item }: BookingItemProps): React.ReactElement | null {
   const { avatar, name, roomNumber, bookdAt, person, cover, roomType } = item;
 
   return (

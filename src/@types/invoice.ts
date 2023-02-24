@@ -1,15 +1,15 @@
 // ----------------------------------------------------------------------
 
-export type IInvoiceAddress = {
+export interface IInvoiceAddress {
   id: string;
   name: string;
   address: string;
   company: string;
   email: string;
   phone: string;
-};
+}
 
-export type IInvoiceItem = {
+export interface IInvoiceItem {
   id: string;
   title: string;
   description: string;
@@ -17,9 +17,9 @@ export type IInvoiceItem = {
   price: number;
   total: number;
   service: string;
-};
+}
 
-export type IInvoice = {
+export interface IInvoice {
   id: string;
   sent: number;
   status: string;
@@ -33,4 +33,4 @@ export type IInvoice = {
   createDate: Date | number;
   dueDate: Date | number;
   items: IInvoiceItem[];
-};
+}

@@ -1,14 +1,14 @@
 import { m } from "framer-motion";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
 import { Container, InputAdornment, Stack, TextField } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // components
-import Iconify from "../../components/iconify";
 import {
   MotionContainer,
   TextAnimate,
   varFade,
 } from "../../components/animate";
+import Iconify from "../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ const StyledContent = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function FaqsHero() {
+export default function FaqsHero(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionContainer}>

@@ -5,15 +5,17 @@ import useOffSetTop from "../../hooks/useOffSetTop";
 // config
 import { HEADER } from "../../config-global";
 //
-const Header = dynamic(() => import("./Header"), { ssr: false });
+const Header = dynamic(async () => await import("./Header"), { ssr: false });
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children?: React.ReactNode;
-};
+}
 
-export default function SimpleLayout({ children }: Props) {
+export default function SimpleLayout({
+  children,
+}: Props): React.ReactElement | null {
   const isOffset = useOffSetTop(HEADER.H_MAIN_DESKTOP);
 
   return (

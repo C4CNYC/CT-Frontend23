@@ -20,18 +20,18 @@ const IMG = [
   _mock.image.cover(8),
 ];
 
-type ContainerViewProps = {
+interface ContainerViewProps {
   isText: boolean;
   isMulti: boolean;
   selectVariant: string;
-};
+}
 
 export default function ContainerView({
   isText,
   isMulti,
   selectVariant,
   ...other
-}: ContainerViewProps) {
+}: ContainerViewProps): React.ReactElement | null {
   const items = isMulti ? IMG : IMG.slice(0, 1);
 
   return (
@@ -47,7 +47,8 @@ export default function ContainerView({
       }}
       {...other}
     >
-      {isText ? (
+      {isText
+? (
         <MotionContainer
           component={m.h1}
           sx={{ typography: "h1", display: "flex", overflow: "hidden" }}
@@ -58,7 +59,8 @@ export default function ContainerView({
             </m.span>
           ))}
         </MotionContainer>
-      ) : (
+      )
+: (
         <MotionContainer>
           {items.map((row, index) => (
             <Box

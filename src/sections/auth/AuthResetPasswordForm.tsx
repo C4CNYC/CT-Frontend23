@@ -13,11 +13,11 @@ import FormProvider, { RHFTextField } from "../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   email: string;
-};
+}
 
-export default function AuthResetPasswordForm() {
+export default function AuthResetPasswordForm(): React.ReactElement {
   const { push } = useRouter();
 
   const ResetPasswordSchema = Yup.object().shape({
@@ -36,7 +36,7 @@ export default function AuthResetPasswordForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       sessionStorage.setItem("email-recovery", data.email);

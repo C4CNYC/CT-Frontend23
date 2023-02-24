@@ -7,7 +7,11 @@ import { ScrollbarProps } from "./types";
 
 // ----------------------------------------------------------------------
 
-function Scrollbar({ children, sx, ...other }: ScrollbarProps) {
+function Scrollbar({
+  children,
+  sx,
+  ...other
+}: ScrollbarProps): React.ReactElement | null {
   const userAgent =
     typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
 

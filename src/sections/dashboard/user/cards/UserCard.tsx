@@ -1,24 +1,23 @@
 // @mui
-import { alpha, styled } from "@mui/material/styles";
 import {
+  Avatar,
   Box,
   Card,
-  Avatar,
   Divider,
-  Typography,
-  Stack,
   IconButton,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
-// @types
-import { IUserCard } from "../../../../@types/user";
 // _mock
 import { _socials } from "../../../../_mock/arrays";
 // components
-import Image from "@components/image";
 import Iconify from "@components/iconify";
+import Image from "@components/image";
 import SvgColor from "@components/svg-color";
+import { IUserCard } from "src/@types/courses";
 
 // ----------------------------------------------------------------------
 
@@ -34,11 +33,11 @@ const StyledOverlay = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   user: IUserCard;
-};
+}
 
-export default function UserCard({ user }: Props) {
+export default function UserCard({ user }: Props): React.ReactElement | null {
   const { name, cover, role, follower, totalPosts, avatarUrl, following } =
     user;
 

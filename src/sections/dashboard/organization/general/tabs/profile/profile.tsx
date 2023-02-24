@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 // auth
-import OrganizationForm from "src/sections/dashboard/organization/general/tabs/profile/OrganizationForm";
 import { useGetOrganizationQuery } from "src/redux/services/admin";
+import OrganizationForm from "src/sections/dashboard/organization/general/tabs/profile/OrganizationForm";
 
-export default function UserProfileTab() {
+export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrganizationQuery();
 
   return (

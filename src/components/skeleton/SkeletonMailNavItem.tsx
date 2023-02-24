@@ -1,9 +1,12 @@
 // @mui
-import { Stack, Skeleton, StackProps } from "@mui/material";
+import { Skeleton, Stack, StackProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonMailNavItem({ sx, ...other }: StackProps) {
+export default function SkeletonMailNavItem({
+  sx,
+  ...other
+}: StackProps): React.ReactElement | null {
   return (
     <Stack
       spacing={1}

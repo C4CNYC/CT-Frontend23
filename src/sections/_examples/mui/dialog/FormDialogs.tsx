@@ -3,23 +3,23 @@ import { useState } from "react";
 import {
   Button,
   Dialog,
-  TextField,
-  DialogTitle,
-  DialogContent,
   DialogActions,
+  DialogContent,
   DialogContentText,
+  DialogTitle,
+  TextField,
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function FormDialogs() {
+export default function FormDialogs(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

@@ -1,15 +1,15 @@
 import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme, styled } from "@mui/material/styles";
 import {
   Box,
   Card,
-  Stack,
-  Divider,
   CardHeader,
-  Typography,
   CardProps,
+  Divider,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../../../hooks/useResponsive";
 // components
@@ -39,10 +39,10 @@ interface Props extends CardProps {
   subheader?: string;
   chart: {
     colors?: string[];
-    series: {
+    series: Array<{
       label: string;
       value: number;
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
@@ -52,7 +52,7 @@ export default function BankingExpensesCategories({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const isDesktop = useResponsive("up", "sm");

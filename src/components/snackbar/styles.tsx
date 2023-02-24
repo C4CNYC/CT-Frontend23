@@ -1,10 +1,10 @@
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { GlobalStyles } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function StyledNotistack() {
+export default function StyledNotistack(): React.ReactElement {
   const theme = useTheme();
 
   const isLight = theme.palette.mode === "light";

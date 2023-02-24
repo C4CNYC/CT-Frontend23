@@ -1,18 +1,14 @@
-import { useState } from "react";
-// @mui
-import { Box, Card, Button, Avatar, Typography, Stack } from "@mui/material";
-// @types
-import { IUserProfileFollower } from "../../../../@types/user";
-// components
-import Iconify from "@components/iconify";
 
-// ----------------------------------------------------------------------
+import { Box, Typography } from "@mui/material";
+import { IUserProfileFollower } from "src/@types/courses";
 
-type Props = {
+interface Props {
   followers: IUserProfileFollower[];
-};
+}
 
-export default function Contacts({ followers }: Props) {
+export default function Contacts({
+  followers,
+}: Props): React.ReactElement | null {
   return (
     <>
       <Typography variant="h4" sx={{ my: 5 }}>

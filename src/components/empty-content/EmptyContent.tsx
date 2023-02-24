@@ -1,5 +1,5 @@
 // @mui
-import { Typography, Stack, StackProps } from "@mui/material";
+import { Stack, StackProps, Typography } from "@mui/material";
 //
 import Image from "../image";
 
@@ -17,7 +17,7 @@ export default function EmptyContent({
   img,
   sx,
   ...other
-}: EmptyContentProps) {
+}: EmptyContentProps): React.ReactElement | null {
   return (
     <Stack
       alignItems="center"
@@ -33,7 +33,7 @@ export default function EmptyContent({
       <Image
         disabledEffect
         alt="empty content"
-        src={img || "/assets/illustrations/illustration_empty_content.svg"}
+        src={img ?? "/assets/illustrations/illustration_empty_content.svg"}
         sx={{ height: 240, mb: 3 }}
       />
 

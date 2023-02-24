@@ -2,15 +2,15 @@ import Iconify, { IconifyProps } from "../iconify";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   icon?: IconifyProps; // Right icon
   isRTL?: boolean;
-};
+}
 
 export function LeftIcon({
   icon = "eva:arrow-ios-forward-fill",
   isRTL,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Iconify
       icon={icon}
@@ -29,7 +29,7 @@ export function LeftIcon({
 export function RightIcon({
   icon = "eva:arrow-ios-forward-fill",
   isRTL,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Iconify
       icon={icon}

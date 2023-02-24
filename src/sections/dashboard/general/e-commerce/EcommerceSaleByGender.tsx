@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 // @mui
-import { styled, useTheme } from "@mui/material/styles";
 import { Card, CardHeader, CardProps } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // utils
 import { fNumber } from "../../../../utils/formatNumber";
 // components
@@ -39,10 +39,10 @@ interface Props extends CardProps {
   total: number;
   chart: {
     colors?: string[][];
-    series: {
+    series: Array<{
       label: string;
       value: number;
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
@@ -53,14 +53,14 @@ export default function EcommerceSaleByGender({
   total,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
 
   const chartSeries = series.map((i) => i.value);
 
-  const chartColors = colors || [
+  const chartColors = colors ?? [
     [theme.palette.primary.light, theme.palette.primary.main],
     [theme.palette.warning.light, theme.palette.warning.main],
   ];

@@ -1,12 +1,14 @@
-import { Link, Card, CardHeader, Stack } from "@mui/material";
+import { Card, CardHeader, Link, Stack } from "@mui/material";
 import { SOCIAL_ICONS } from "../../../../../assets/data";
 
-type Props = {
+interface Props {
   socialLinks?: [];
   SOCIAL_ICONS?: [];
-};
+}
 
-export default function ProfileSocialInfo({ socialLinks }: Props) {
+export default function ProfileSocialInfo({
+  socialLinks,
+}: Props): React.ReactElement | null {
   return (
     <Card>
       <CardHeader title="Social" />

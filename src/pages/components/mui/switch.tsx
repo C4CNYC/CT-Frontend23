@@ -1,15 +1,15 @@
 // next
 import Head from "next/head";
 // @mui
+import { Masonry } from "@mui/lab";
 import {
   Box,
-  Switch,
   Container,
-  FormGroup,
   FormControl,
   FormControlLabel,
+  FormGroup,
+  Switch,
 } from "@mui/material";
-import { Masonry } from "@mui/lab";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -49,7 +49,7 @@ MUISwitchPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUISwitchPage() {
+export default function MUISwitchPage(): React.ReactElement {
   return (
     <>
       <Head>

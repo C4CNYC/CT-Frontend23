@@ -1,26 +1,26 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
-  Card,
-  Chip,
-  Stack,
   Avatar,
-  Rating,
   Button,
-  CardProps,
+  Card,
   CardHeader,
+  CardProps,
+  Chip,
+  Rating,
+  Stack,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // utils
 import { fDateTime } from "../../../../utils/formatTime";
 // components
-import Iconify from "@components/iconify";
 import Carousel, { CarouselArrows } from "@components/carousel";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   name: string;
   description: string;
@@ -28,7 +28,7 @@ type ItemProps = {
   rating: number;
   postedAt: Date | string | number;
   tags: string[];
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -41,7 +41,7 @@ export default function BookingCustomerReviews({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -57,14 +57,16 @@ export default function BookingCustomerReviews({
     slidesToScroll: 1,
     adaptiveHeight: true,
     rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => setSelectCustomer(next),
+    beforeChange: (current: number, next: number) => {
+      setSelectCustomer(next);
+    },
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -98,7 +100,9 @@ export default function BookingCustomerReviews({
           color="success"
           variant="contained"
           startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          onClick={() => console.log("ACCEPT", customerInfo?.id)}
+          onClick={() => {
+            console.log("ACCEPT", customerInfo?.id);
+          }}
         >
           Accept
         </Button>
@@ -108,7 +112,9 @@ export default function BookingCustomerReviews({
           color="error"
           variant="contained"
           startIcon={<Iconify icon="eva:close-circle-fill" />}
-          onClick={() => console.log("REJECT", customerInfo?.id)}
+          onClick={() => {
+            console.log("REJECT", customerInfo?.id);
+          }}
         >
           Reject
         </Button>
@@ -119,11 +125,11 @@ export default function BookingCustomerReviews({
 
 // ----------------------------------------------------------------------
 
-type ReviewItemProps = {
+interface ReviewItemProps {
   item: ItemProps;
-};
+}
 
-function ReviewItem({ item }: ReviewItemProps) {
+function ReviewItem({ item }: ReviewItemProps): React.ReactElement | null {
   const { avatar, name, description, rating, postedAt, tags } = item;
 
   return (

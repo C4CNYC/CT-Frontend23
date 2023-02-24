@@ -2,14 +2,14 @@
 import Head from "next/head";
 // @mui
 import Masonry from "@mui/lab/Masonry";
-import { Box, Card, CardHeader, Container, CardContent } from "@mui/material";
+import { Box, Card, CardContent, CardHeader, Container } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import TextMaxLine from "@components/text-max-line";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import TextMaxLine from "@components/text-max-line";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ DemoTextMaxLinePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoTextMaxLinePage() {
+export default function DemoTextMaxLinePage(): React.ReactElement {
   return (
     <>
       <Head>

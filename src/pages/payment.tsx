@@ -1,16 +1,16 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Grid, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 // hooks
 import useResponsive from "../hooks/useResponsive";
 // layouts
 import SimpleLayout from "../layouts/simple";
 // sections
 import {
-  PaymentSummary,
-  PaymentMethods,
   PaymentBillingAddress,
+  PaymentMethods,
+  PaymentSummary,
 } from "../sections/payment";
 
 // ----------------------------------------------------------------------
@@ -21,7 +21,7 @@ PaymentPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function PaymentPage() {
+export default function PaymentPage(): React.ReactElement {
   const isDesktop = useResponsive("up", "md");
 
   return (

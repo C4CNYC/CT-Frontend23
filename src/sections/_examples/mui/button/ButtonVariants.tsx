@@ -30,11 +30,11 @@ const SIZES = ["small", "medium", "large"] as const;
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   variant?: "text" | "contained" | "outlined" | "soft";
 };
 
-export default function ButtonVariant({ variant = "text" }: Props) {
+export default function ButtonVariant({ variant = "text" }: Props): React.ReactElement | null {
   return (
     <Masonry columns={2} spacing={3}>
       <Block title="Base" sx={style}>

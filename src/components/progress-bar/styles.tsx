@@ -1,10 +1,10 @@
 // @mui
-import { useTheme } from "@mui/material/styles";
 import GlobalStyles from "@mui/material/GlobalStyles";
+import { useTheme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function StyledProgressBar() {
+export default function StyledProgressBar(): React.ReactElement {
   const theme = useTheme();
 
   const inputGlobalStyles = (

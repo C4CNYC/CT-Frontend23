@@ -1,40 +1,36 @@
-import * as React from "react";
-import { useState } from "react";
-import { Button } from "@mui/material";
+import FormProvider, { RHFSelect, RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import AddIcon from "@mui/icons-material/Add";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-} from "@components/hook-form";
-import { Box, Card, Grid } from "@mui/material";
-import { countries } from "../../../../assets/data";
-import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
-import * as Yup from "yup";
+import * as React from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import AddIcon from "@mui/icons-material/Add";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
+import * as Yup from "yup";
+import { countries } from "../../../../assets/data";
 import { useLocales } from "../../../../locales";
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
   country: string;
   city: string;
-};
+}
 
-export default function AddSchoolDialog() {
+export default function AddSchoolDialog(): React.ReactElement {
   const { translate } = useLocales();
 
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
   const { enqueueSnackbar } = useSnackbar();
@@ -56,7 +52,7 @@ export default function AddSchoolDialog() {
     defaultValues,
   });
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await createSchool({
         ...data,

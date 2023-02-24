@@ -1,5 +1,5 @@
+import { getYear, isBefore, isSameDay, isSameMonth } from "date-fns";
 import { useState } from "react";
-import { isSameDay, isSameMonth, getYear, isBefore } from "date-fns";
 // utils
 import { fDate } from "../../utils/formatTime";
 //
@@ -22,7 +22,7 @@ export default function useDateRangePicker(
   const isError =
     (startDate &&
       endDate &&
-      isBefore(new Date(endDate), new Date(startDate))) ||
+      isBefore(new Date(endDate), new Date(startDate))) ??
     false;
 
   const currentYear = new Date().getFullYear();
@@ -46,7 +46,7 @@ export default function useDateRangePicker(
 
   const standardLabel = `${fDate(startDate)} - ${fDate(endDate)}`;
 
-  const getShortLabel = () => {
+  const getShortLabel = (): string => {
     if (isCurrentYear) {
       if (isSameMonths) {
         if (isSameDays) {
@@ -59,18 +59,18 @@ export default function useDateRangePicker(
     return `${fDate(startDate, "dd MMM yy")} - ${fDate(endDate, "dd MMM yy")}`;
   };
 
-  const onChangeStartDate = (newValue: Date | null) => {
+  const onChangeStartDate = (newValue: Date | null): void => {
     setStartDate(newValue);
   };
 
-  const onChangeEndDate = (newValue: Date | null) => {
+  const onChangeEndDate = (newValue: Date | null): void => {
     if (isError) {
       setEndDate(null);
     }
     setEndDate(newValue);
   };
 
-  const onReset = () => {
+  const onReset = (): void => {
     setStartDate(null);
     setEndDate(null);
   };
@@ -82,8 +82,12 @@ export default function useDateRangePicker(
     onChangeEndDate,
     //
     open,
-    onOpen: () => setOpen(true),
-    onClose: () => setOpen(false),
+    onOpen: () => {
+      setOpen(true);
+    },
+    onClose: () => {
+      setOpen(false);
+    },
     onReset,
     //
     isSelected: !!startDate && !!endDate,

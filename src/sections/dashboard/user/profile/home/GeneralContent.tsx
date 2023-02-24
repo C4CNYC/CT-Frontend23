@@ -1,11 +1,11 @@
-import * as Yup from "yup";
 import { useCallback } from "react";
+import * as Yup from "yup";
 // form
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
-import { Box, Grid, Card, Stack, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 // auth
 import { useAuthContext } from "../../../../../auth/useAuthContext";
 // utils
@@ -13,18 +13,17 @@ import { fData } from "../../../../../utils/formatNumber";
 // assets
 import { countries } from "../../../../../assets/data";
 // components
-import { CustomFile } from "@components/upload";
-import { useSnackbar } from "@components/snackbar";
 import FormProvider, {
-  RHFSwitch,
   RHFSelect,
   RHFTextField,
   RHFUploadAvatar,
 } from "@components/hook-form";
+import { useSnackbar } from "@components/snackbar";
+import { CustomFile } from "@components/upload";
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   organizationName: string;
   email: string;
   photoURL: CustomFile | string | null;
@@ -35,9 +34,9 @@ type FormValuesProps = {
   site: string | null;
   brandName: string | null;
   domain: string | null;
-};
+}
 
-export default function AccountGeneral() {
+export default function AccountGeneral(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const { user } = useAuthContext();
@@ -58,16 +57,16 @@ export default function AccountGeneral() {
   });
 
   const defaultValues = {
-    organizationName: user?.organizationName || "",
-    email: user?.email || "",
-    photoURL: user?.photoURL || null,
-    phoneNumber: user?.phoneNumber || "",
-    country: user?.country || "",
-    address: user?.address || "",
-    city: user?.city || "",
-    site: user?.site || "",
-    brandName: user?.brandName || "",
-    domain: user?.domain || "",
+    organizationName: user?.organizationName ?? "",
+    email: user?.email ?? "",
+    photoURL: user?.photoURL ?? null,
+    phoneNumber: user?.phoneNumber ?? "",
+    country: user?.country ?? "",
+    address: user?.address ?? "",
+    city: user?.city ?? "",
+    site: user?.site ?? "",
+    brandName: user?.brandName ?? "",
+    domain: user?.domain ?? "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -81,7 +80,7 @@ export default function AccountGeneral() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Update success!");

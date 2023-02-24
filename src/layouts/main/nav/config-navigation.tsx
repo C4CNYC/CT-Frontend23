@@ -1,8 +1,4 @@
-// routes
-import { PATH_AUTH, PATH_DOCS, PATH_PAGE } from "@routes/paths";
-// config
-import { PATH_AFTER_LOGIN } from "../../../config-global";
-// components
+import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------

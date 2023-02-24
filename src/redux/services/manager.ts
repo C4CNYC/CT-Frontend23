@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
   BaseListResponseInterface,
@@ -7,16 +8,27 @@ import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import {
   IAssignment,
-  IAssignmentUpdate,
   IAssignmentCreate,
+  IAssignmentUpdate,
 } from "./interfaces/assignment.interface";
 import { ClassSearchParams, IClass } from "./interfaces/class.interface";
 import {
-  SchoolResponce,
-  SchoolProfile,
+  ICourse,
+  ICourseCreate,
+  ICourseDelete,
+  ILesson,
+  ILessonCreate,
+  ILessonDelete,
+  IModule,
+  IModuleCreate,
+  IModuleDelete,
+} from "./interfaces/courseUnits.interface";
+import {
   SchoolContacts,
-  SchoolSocials,
+  SchoolProfile,
+  SchoolResponce,
   SchoolSettings,
+  SchoolSocials,
 } from "./interfaces/school.interface";
 import { IStudent, StudentSearchParams } from "./interfaces/user.interface";
 
@@ -33,6 +45,9 @@ export const managerApi = createApi({
     "SchoolContacts",
     "Assignments",
     "Assignment",
+    "Modules",
+    "Lessons",
+    "Courses",
   ],
   endpoints: (builder) => ({
     getAssignment: builder.query<
@@ -46,7 +61,7 @@ export const managerApi = createApi({
       providesTags: ["Assignment"],
     }),
     getAssignmentList: builder.query<
-      (IAssignment & BaseResponseInterface)[],
+      Array<IAssignment & BaseResponseInterface>,
       { school_id: string }
     >({
       query: ({ school_id }) => ({
@@ -97,7 +112,7 @@ export const managerApi = createApi({
       void
     >({
       query: () => ({
-        url: `/school`,
+        url: "/school",
         method: "GET",
       }),
       providesTags: ["School"],
@@ -316,6 +331,128 @@ export const managerApi = createApi({
       }),
       invalidatesTags: [{ type: "School" }],
     }),
+    // --------------------- courses --------------------------
+    getCourse: builder.query<IModule, void>({
+      query: () => ({
+        url: "/course",
+        method: "GET",
+      }),
+      providesTags: ["Courses"],
+    }),
+    updateCourse: builder.mutation<
+      ICourse & BaseResponseInterface,
+      { id: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/course/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
+    createCourse: builder.mutation<
+      ICourseCreate & BaseResponseInterface,
+      ICourseCreate
+    >({
+      query: ({ ...body }) => ({
+        url: "/course",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
+    deleteCourse: builder.mutation<
+      ICourseDelete & BaseResponseInterface,
+      ICourseDelete
+    >({
+      query: ({ id }) => ({
+        url: `/course/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
+
+    // --------------------- modules --------------------------
+    getModules: builder.query<IModule, void>({
+      query: () => ({
+        url: "/module",
+        method: "GET",
+      }),
+      providesTags: ["Modules"],
+    }),
+    updateModule: builder.mutation<
+      IModule & BaseResponseInterface,
+      { id: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/module/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Modules" }],
+    }),
+    createModule: builder.mutation<
+      IModuleCreate & BaseResponseInterface,
+      IModuleCreate
+    >({
+      query: ({ ...body }) => ({
+        url: "/module",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Modules" }],
+    }),
+    deleteModule: builder.mutation<
+      IModuleDelete & BaseResponseInterface,
+      IModuleDelete
+    >({
+      query: ({ id }) => ({
+        url: `/module/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Modules" }],
+    }),
+
+    // --------------------- lessons --------------------------
+    getLessons: builder.query<BaseListResponseInterface<ILesson>, void>({
+      query: () => ({
+        url: "/lesson",
+        method: "GET",
+      }),
+      providesTags: ["Lessons"],
+    }),
+    updateLesson: builder.mutation<
+      ILesson & BaseResponseInterface,
+      { id: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/lesson/${id}`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Lessons" }],
+    }),
+    createLesson: builder.mutation<
+      ILessonCreate & BaseResponseInterface,
+      ILessonCreate
+    >({
+      query: ({ ...body }) => ({
+        url: "/lesson",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Lessons" }],
+    }),
+    deleteLesson: builder.mutation<
+      ILessonDelete & BaseResponseInterface,
+      ILessonDelete
+    >({
+      query: ({ id }) => ({
+        url: `/lesson/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Lessons" }],
+    }),
   }),
 });
 
@@ -323,38 +460,57 @@ export const {
   useGetMySchoolsQuery,
   useGetStudentsQuery,
   useGetStudentQuery,
-  //---classes----
+  // ---classes----
   useGetClassesQuery,
   useGetSchoolProfileQuery,
   useGetSchoolSettingsQuery,
   useGetSchoolContactsQuery,
   useStudentJoinClassMutation,
   useStudentLeftClassMutation,
-  //---social links----
-
-  //----assignment ---------
+  // ----assignment ---------
   useGetAssignmentQuery,
   useGetAssignmentListQuery,
+  // ---------------- modules --------------
+  useGetModulesQuery,
+  // ---------------- lessons --------------
+  useGetLessonsQuery,
+  // ---------------- courses --------------
+  useGetCourseQuery,
 
-  //---------------- mutations --------------
+  // ---------------- mutations --------------
   useUpdateStudentMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,
-  //---classes----
+  // ---classes----
   useUpdateClassesMutation,
   useCreateClassesMutation,
   useDeleteClassesMutation,
-  //---school settings----
+  // ---school settings----
   useUpdateSchoolProfileMutation,
   useUpdateSchoolSettingsMutation,
   useUpdateSchoolContactsMutation,
-  //---social links----
+  // ---social links----
   useCreateSchoolSocialMutation,
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 
-  //----assignment ---------
+  // ----assignment ---------
   useUdpateAssignmentMutation,
   useCreateAssignmentMutation,
   useDeleteAssignmentMutation,
+
+  // ---------------- modules --------------
+  useUpdateModuleMutation,
+  useCreateModuleMutation,
+  useDeleteModuleMutation,
+
+  // ---------------- lessons --------------
+  useUpdateLessonMutation,
+  useCreateLessonMutation,
+  useDeleteLessonMutation,
+
+  // ---------------- courses --------------
+  useCreateCourseMutation,
+  useUpdateCourseMutation,
+  useDeleteCourseMutation,
 } = managerApi;

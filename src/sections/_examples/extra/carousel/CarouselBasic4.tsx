@@ -1,13 +1,13 @@
 import { useRef } from "react";
 // @mui
-import { alpha, useTheme, styled } from "@mui/material/styles";
-import { Box, Card, Typography, IconButton } from "@mui/material";
+import { Box, Card, IconButton, Typography } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../../../utils/cssStyles";
 // components
-import Image from "@components/image";
-import Iconify from "@components/iconify";
 import Carousel, { CarouselArrows } from "@components/carousel";
+import Iconify from "@components/iconify";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
@@ -28,16 +28,18 @@ const StyledContentItem = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     title: string;
     image: string;
     description: string;
-  }[];
-};
+  }>;
+}
 
-export default function CarouselBasic4({ data }: Props) {
+export default function CarouselBasic4({
+  data,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -52,11 +54,11 @@ export default function CarouselBasic4({ data }: Props) {
     rtl: Boolean(theme.direction === "rtl"),
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -80,13 +82,17 @@ export default function CarouselBasic4({ data }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   title: string;
   description: string;
   image: string;
-};
+}
 
-function CarouselItem({ item }: { item: CarouselItemProps }) {
+function CarouselItem({
+  item,
+}: {
+  item: CarouselItemProps;
+}): React.ReactElement | null {
   const { image, title } = item;
 
   return (

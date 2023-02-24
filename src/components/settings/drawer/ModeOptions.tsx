@@ -3,13 +3,13 @@ import { RadioGroup } from "@mui/material";
 //
 import SvgColor from "../../svg-color";
 import { useSettingsContext } from "../SettingsContext";
-import { StyledCard, StyledWrap, MaskControl } from "../styles";
+import { MaskControl, StyledCard, StyledWrap } from "../styles";
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = ["light", "dark"] as const;
 
-export default function ModeOptions() {
+export default function ModeOptions(): React.ReactElement {
   const { themeMode, onChangeMode } = useSettingsContext();
 
   return (

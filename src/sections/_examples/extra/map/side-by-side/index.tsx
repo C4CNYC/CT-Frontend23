@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, memo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import Map, { ViewStateChangeEvent } from "react-map-gl";
 // components
 import { MapBoxProps } from "@components/map";
@@ -22,7 +22,7 @@ const RightMapStyle: React.CSSProperties = {
 
 // ----------------------------------------------------------------------
 
-function MapSideBySide({ ...other }: MapBoxProps) {
+function MapSideBySide({ ...other }: MapBoxProps): React.ReactElement {
   const [viewState, setViewState] = useState({
     longitude: -122.43,
     latitude: 37.78,
@@ -34,12 +34,12 @@ function MapSideBySide({ ...other }: MapBoxProps) {
 
   const [activeMap, setActiveMap] = useState<"left" | "right">("left");
 
-  const onLeftMoveStart = useCallback(() => setActiveMap("left"), []);
+  const onLeftMoveStart = useCallback(() => { setActiveMap("left"); }, []);
 
-  const onRightMoveStart = useCallback(() => setActiveMap("right"), []);
+  const onRightMoveStart = useCallback(() => { setActiveMap("right"); }, []);
 
   const onMove = useCallback(
-    (event: ViewStateChangeEvent) => setViewState(event.viewState),
+    (event: ViewStateChangeEvent) => { setViewState(event.viewState); },
     []
   );
 

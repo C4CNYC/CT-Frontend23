@@ -1,5 +1,5 @@
-import { alpha, Theme } from "@mui/material/styles";
-import { PaginationProps } from "@mui/material";
+import { type PaginationProps } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -26,10 +26,10 @@ declare module "@mui/material/Pagination" {
   }
 }
 
-export default function Pagination(theme: Theme) {
+export default function Pagination(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
-  const rootStyle = (ownerState: PaginationProps) => {
+  const rootStyle = (ownerState: PaginationProps): unknown => {
     const outlinedVariant = ownerState.variant === "outlined";
 
     const softVariant = ownerState.variant === "soft";

@@ -1,11 +1,11 @@
 // next
-import Head from "next/head";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
+import DashboardLayout from "@layouts/dashboard";
 import { Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
-import DashboardLayout from "@layouts/dashboard";
-import { useSettingsContext } from "@components/settings";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
+import Head from "next/head";
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ UserCreatePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function UserCreatePage() {
+export default function UserCreatePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   return (

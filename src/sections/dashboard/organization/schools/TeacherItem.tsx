@@ -1,33 +1,36 @@
-import { useState } from "react";
+import Iconify from "@components/iconify";
+import MenuPopover from "@components/menu-popover";
 import {
   Avatar,
   Button,
-  Tooltip,
   ListItem,
-  MenuItem,
-  ListItemText,
   ListItemAvatar,
+  ListItemText,
+  MenuItem,
+  Tooltip,
 } from "@mui/material";
-import Iconify from "@components/iconify";
-import MenuPopover from "@components/menu-popover";
+import { useState } from "react";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   person: IUser & BaseResponseInterface;
   handleDeleteTeacher: () => void;
-};
+}
 
-export default function TeacherItem({ person, handleDeleteTeacher }: Props) {
+export default function TeacherItem({
+  person,
+  handleDeleteTeacher,
+}: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
@@ -39,7 +42,7 @@ export default function TeacherItem({ person, handleDeleteTeacher }: Props) {
         </ListItemAvatar>
 
         <ListItemText
-          primary={`${person.first_name || ""} ${person.last_name || ""}`}
+          primary={`${person.first_name ?? ""} ${person.last_name ?? ""}`}
           secondary={
             <Tooltip title={person.email}>
               <span>{person.email}</span>

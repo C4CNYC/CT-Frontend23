@@ -2,22 +2,22 @@ import { useDropzone } from "react-dropzone";
 // @mui
 import {
   Box,
-  Stack,
   Button,
   IconButton,
-  Typography,
+  Stack,
   StackProps,
+  Typography,
 } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 // assets
 import { UploadIllustration } from "../../assets/illustrations";
 //
 import Iconify from "../iconify";
 //
-import { UploadProps } from "./types";
 import RejectionFiles from "./errors/RejectionFiles";
 import MultiFilePreview from "./preview/MultiFilePreview";
 import SingleFilePreview from "./preview/SingleFilePreview";
+import { UploadProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ export default function Upload({
   onRemoveAll,
   sx,
   ...other
-}: UploadProps) {
+}: UploadProps): React.ReactElement | null {
   const {
     getRootProps,
     getInputProps,
@@ -168,7 +168,7 @@ export default function Upload({
 
 // ----------------------------------------------------------------------
 
-function Placeholder({ sx, ...other }: StackProps) {
+function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
   return (
     <Stack
       spacing={5}

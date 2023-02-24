@@ -1,48 +1,48 @@
-import { useState } from "react";
-import Head from "next/head";
-import {
-  Tab,
-  Tabs,
-  Card,
-  Table,
-  Button,
-  Tooltip,
-  Divider,
-  TableBody,
-  Container,
-  IconButton,
-  TableContainer,
-} from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import Iconify from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
 import ConfirmDialog from "@components/confirm-dialog";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import Scrollbar from "@components/scrollbar";
 import { useSettingsContext } from "@components/settings";
 import {
-  useTable,
   emptyRows,
-  TableNoData,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
+  TableNoData,
   TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
 } from "@components/table";
+import {
+  Button,
+  Card,
+  Container,
+  Divider,
+  IconButton,
+  Tab,
+  Table,
+  TableBody,
+  TableContainer,
+  Tabs,
+  Tooltip,
+} from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
+import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
+import Head from "next/head";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useFilters } from "src/hooks/useFilters";
+import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
 import {
   useCreateClassesMutation,
   useDeleteClassesMutation,
   useGetClassesQuery,
+  useUpdateClassesMutation,
 } from "src/redux/services/manager";
-import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import { useSnackbar } from "notistack";
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import { ClassesTableRow } from "src/sections/dashboard/classes/list";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
-import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
-import { useUpdateClassesMutation } from "src/redux/services/manager";
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ UserListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function UserListPage() {
+export default function UserListPage(): React.ReactElement {
   const {
     dense,
     page,
@@ -99,7 +99,7 @@ export default function UserListPage() {
     { skip: !school_id }
   );
 
-  const handleDeleteMember = async (class_id: string) => {
+  const handleDeleteMember = async (class_id: string): Promise<void> => {
     try {
       await deleteCasses({ class_id, school_id }).unwrap();
     } catch (e) {
@@ -109,29 +109,29 @@ export default function UserListPage() {
     }
   };
 
-  const handleDeleteRow = (user_id: string) => {
+  const handleDeleteRow = (user_id: string): void => {
     handleDeleteMember(user_id);
     enqueueSnackbar("Member deleted");
   };
 
-  const handleDeleteRows = (selected: string[]) => {
+  const handleDeleteRows = (selected: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i]);
     }
     enqueueSnackbar("Members deleted");
   };
 
-  const handleEditRow = async (id: string, name: string) => {
+  const handleEditRow = async (id: string, name: string): Promise<void> => {
     try {
       await updateClassByManager({ school_id, class_id: id, name }).unwrap();
-      enqueueSnackbar(`Class updated successfuly!`);
+      enqueueSnackbar("Class updated successfuly!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
       console.error(error);
     }
   };
 
-  const createClass = async (name: string) => {
+  const createClass = async (name: string): Promise<void> => {
     try {
       await createClassByManager({ school_id, name }).unwrap();
       enqueueSnackbar(`School ${name} created successfuly!`);
@@ -184,7 +184,7 @@ export default function UserListPage() {
           <Divider />
 
           <UserTableToolbar
-            filterName={filters.name as string}
+            filterName={filters.name}
             onFilterName={(e) => {
               setFilter("name", e.target.value);
             }}
@@ -195,18 +195,20 @@ export default function UserListPage() {
               <TableSelectedAction
                 dense={dense}
                 numSelected={selected.length}
-                rowCount={data?.data.length || 0}
-                onSelectAllRows={(checked) =>
+                rowCount={data?.data.length ?? 0}
+                onSelectAllRows={(checked) => {
                   onSelectAllRows(
                     checked,
                     data?.data.map((row) => row.id) as string[]
-                  )
-                }
+                  );
+                }}
                 action={
                   <Tooltip title="Delete">
                     <IconButton
                       color="primary"
-                      onClick={() => setOpenConfirm(true)}
+                      onClick={() => {
+                        setOpenConfirm(true);
+                      }}
                     >
                       <Iconify icon="eva:trash-2-outline" />
                     </IconButton>
@@ -223,12 +225,12 @@ export default function UserListPage() {
                     rowCount={data?.data.length}
                     numSelected={selected.length}
                     onSort={onSort}
-                    onSelectAllRows={(checked) =>
+                    onSelectAllRows={(checked) => {
                       onSelectAllRows(
                         checked,
                         data?.data.map((row) => row.id) as string[]
-                      )
-                    }
+                      );
+                    }}
                   />
 
                   <TableBody>
@@ -237,8 +239,12 @@ export default function UserListPage() {
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
-                        onSelectRow={() => onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
+                        onSelectRow={() => {
+                          onSelectRow(row.id);
+                        }}
+                        onDeleteRow={() => {
+                          handleDeleteRow(row.id);
+                        }}
                         onEditRow={handleEditRow}
                       />
                     ))}
@@ -248,7 +254,7 @@ export default function UserListPage() {
                       emptyRows={emptyRows(
                         page,
                         rowsPerPage,
-                        data?.data.length || 0
+                        data?.data.length ?? 0
                       )}
                     />
 
@@ -262,11 +268,11 @@ export default function UserListPage() {
             <TablePaginationCustom
               count={data?.meta.itemCount ? data?.meta.itemCount : 0}
               page={data?.meta.page ? data?.meta.page - 1 : 0}
-              rowsPerPage={data?.meta.take || 0}
-              onPageChange={(e, page) => {
+              rowsPerPage={data?.meta.take ?? 0}
+              onPageChange={(e: any, page: number) => {
                 setFilter("page", page + 1);
               }}
-              onRowsPerPageChange={(e) => {
+              onRowsPerPageChange={(e: any) => {
                 setFilter("take", e.target.value);
               }}
               dense={dense}
@@ -278,7 +284,9 @@ export default function UserListPage() {
 
       <ConfirmDialog
         open={openConfirm}
-        onClose={() => setOpenConfirm(false)}
+        onClose={() => {
+          setOpenConfirm(false);
+        }}
         title="Delete"
         content={
           <>

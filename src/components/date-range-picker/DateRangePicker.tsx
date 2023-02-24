@@ -1,16 +1,16 @@
 // @mui
 import {
-  Paper,
-  Stack,
-  Dialog,
   Button,
-  TextField,
-  DialogTitle,
+  Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   FormHelperText,
+  Paper,
+  Stack,
+  TextField,
 } from "@mui/material";
-import { DatePicker, CalendarPicker } from "@mui/x-date-pickers";
+import { CalendarPicker, DatePicker } from "@mui/x-date-pickers";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 //
@@ -32,7 +32,7 @@ export default function DateRangePicker({
   onClose,
   //
   isError,
-}: DateRangePickerProps) {
+}: DateRangePickerProps): React.ReactElement | null {
   const isDesktop = useResponsive("up", "md");
 
   const isCalendarView = variant === "calendar";
@@ -74,7 +74,8 @@ export default function DateRangePicker({
             },
           }}
         >
-          {isCalendarView ? (
+          {isCalendarView
+? (
             <>
               <Paper
                 variant="outlined"
@@ -98,7 +99,8 @@ export default function DateRangePicker({
                 <CalendarPicker date={endDate} onChange={onChangeEndDate} />
               </Paper>
             </>
-          ) : (
+          )
+: (
             <>
               <DatePicker
                 label="Start date"

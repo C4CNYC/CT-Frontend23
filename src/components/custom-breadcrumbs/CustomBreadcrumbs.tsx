@@ -1,8 +1,8 @@
 // @mui
-import { Box, Link, Stack, Typography, Breadcrumbs } from "@mui/material";
+import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
 //
-import { CustomBreadcrumbsProps } from "./types";
 import LinkItem from "./LinkItem";
+import { CustomBreadcrumbsProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ export default function CustomBreadcrumbs({
   activeLast,
   sx,
   ...other
-}: CustomBreadcrumbsProps) {
+}: CustomBreadcrumbsProps): React.ReactElement | null {
   const lastLink = links[links.length - 1].name;
 
   return (
@@ -33,7 +33,7 @@ export default function CustomBreadcrumbs({
             <Breadcrumbs separator={<Separator />} {...other}>
               {links.map((link) => (
                 <LinkItem
-                  key={link.name || ""}
+                  key={link.name ?? ""}
                   link={link}
                   activeLast={activeLast}
                   disabled={link.name === lastLink}
@@ -70,7 +70,7 @@ export default function CustomBreadcrumbs({
 
 // ----------------------------------------------------------------------
 
-function Separator() {
+function Separator(): React.ReactElement {
   return (
     <Box
       component="span"

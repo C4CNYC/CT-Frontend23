@@ -1,15 +1,17 @@
 // @mui
 import {
-  TableRow,
-  TableCell,
   Skeleton,
   Stack,
+  TableCell,
+  TableRow,
   TableRowProps,
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function TableSkeleton({ ...other }: TableRowProps) {
+export default function TableSkeleton({
+  ...other
+}: TableRowProps): React.ReactElement | null {
   return (
     <TableRow {...other}>
       <TableCell colSpan={12}>

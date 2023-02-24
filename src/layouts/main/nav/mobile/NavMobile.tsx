@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
-import { List, Drawer, IconButton } from "@mui/material";
+import { Drawer, IconButton, List } from "@mui/material";
 // config
 import { NAV } from "../../../../config-global";
 // components
-import Logo from "@components/logo";
 import Iconify from "@components/iconify";
+import Logo from "@components/logo";
 import Scrollbar from "@components/scrollbar";
 //
 import { NavProps } from "../types";
@@ -15,7 +15,10 @@ import NavList from "./NavList";
 
 // ----------------------------------------------------------------------
 
-export default function NavMobile({ isOffset, data }: NavProps) {
+export default function NavMobile({
+  isOffset,
+  data,
+}: NavProps): React.ReactElement | null {
   const { pathname } = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -24,14 +27,13 @@ export default function NavMobile({ isOffset, data }: NavProps) {
     if (open) {
       handleClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

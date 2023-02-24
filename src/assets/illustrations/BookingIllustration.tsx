@@ -1,11 +1,11 @@
 import { memo } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Box, BoxProps } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-function BookingIllustration({ ...other }: BoxProps) {
+function BookingIllustration({ ...other }: BoxProps): React.ReactElement {
   const theme = useTheme();
 
   const PRIMARY_LIGHTER = theme.palette.primary.lighter;

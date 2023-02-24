@@ -1,58 +1,16 @@
-import { useState } from "react";
-import Head from "next/head";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { Container } from "@mui/system";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
-import {
-  Button,
-  Card,
-  Divider,
-  IconButton,
-  Tab,
-  Table,
-  TableBody,
-  TableContainer,
-  Tabs,
-  Tooltip
-} from "@mui/material";
-import { UserTableToolbar } from "@sections/dashboard/user/list";
-import { useFilters } from "@hooks/useFilters";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
-import { useSettingsContext } from "@components/settings";
-import TableSelectedAction from "@components/table/TableSelectedAction";
-import {
-  emptyRows,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  useTable
-} from "@components/table";
-import {
-  useCreateClassesMutation,
-  useDeleteClassesMutation,
-  useGetClassesQuery,
-  useUpdateClassesMutation
-} from "src/redux/services/manager";
 import Iconify from "@components/iconify";
-import { RootState } from "src/redux/store";
-import { useSelector } from "react-redux";
-import { useSnackbar } from "@components/snackbar";
-import Scrollbar from "@components/scrollbar/Scrollbar";
-import { ClassesTableRow } from "@sections/dashboard/classes/list";
-import ConfirmDialog from "@components/confirm-dialog";
+import { useSettingsContext } from "@components/settings";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { Box, Button } from "@mui/material";
+import { Container } from "@mui/system";
+import FilterCourses from "@pages/dashboard/courses/filter";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { CourseCard } from "@sections/dashboard/courses/cards";
+import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import Head from "next/head";
+import { useGetCourseQuery } from "../../../redux/services/manager";
 
-const STATUS_OPTIONS = ["all"];
-const TABLE_HEAD = [
-  { id: "", label: "icon" },
-  { id: "name", label: "name", align: "left" },
-  { id: "total_students", label: "Total (Students)" },
-  { id: "started_id", label: "Start Date", align: "left" },
-  { id: "status", label: "Status", align: "left" },
-  { id: "" }
-];
 // ----------------------------------------------------------------------
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
@@ -61,78 +19,11 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function CoursesListPage() {
-  const {
-    dense,
-    page,
-    order,
-    orderBy,
-    rowsPerPage,
-    selected,
-    onSelectRow,
-    onSelectAllRows,
-    onSort,
-    onChangeDense
-  } = useTable();
-
-  const [openConfirm, setOpenConfirm] = useState(false);
-
-  const { enqueueSnackbar } = useSnackbar();
+export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
-    name: ""
-  });
+  const { data, isLoading } = useGetCourseQuery();
 
-  const [updateClassByManager] = useUpdateClassesMutation();
-  const [createClassByManager] = useCreateClassesMutation();
-  const [deleteCasses] = useDeleteClassesMutation();
-  const { data, isLoading } = useGetClassesQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
-  );
-
-  const handleDeleteMember = async (class_id: string) => {
-    try {
-      await deleteCasses({ class_id, school_id }).unwrap();
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
-        variant: "error"
-      });
-    }
-  };
-
-  const handleDeleteRow = (user_id: string) => {
-    handleDeleteMember(user_id);
-    enqueueSnackbar("Member deleted");
-  };
-
-  const handleDeleteRows = (selected: string[]) => {
-    for (let i = 0; i < selected.length; i++) {
-      handleDeleteMember(selected[i]);
-    }
-    enqueueSnackbar("Members deleted");
-  };
-
-  const handleEditRow = async (id: string, name: string) => {
-    try {
-      await updateClassByManager({ school_id, class_id: id, name }).unwrap();
-      enqueueSnackbar(`Class updated successfuly!`);
-    } catch (error) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
-    }
-  };
-
-  const createClass = async (name: string) => {
-    try {
-      await createClassByManager({ school_id, name }).unwrap();
-      enqueueSnackbar(`School ${name} created successfuly!`);
-    } catch (error) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
-    }
-  };
+  if (isLoading) return "Loading";
 
   return (
     <>
@@ -144,147 +35,34 @@ export default function CoursesListPage() {
           heading="Courses"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "Courses", href: PATH_DASHBOARD.courses.root }
+            { name: "Courses", href: PATH_DASHBOARD.courses.root },
           ]}
           action={
-            <AddClassDialog createClass={createClass}>
+            <CreateCourseDialog>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                Add Courses
+                Add Course
               </Button>
-            </AddClassDialog>
+            </CreateCourseDialog>
           }
         />
-        <Card>
-          <Tabs
-            value={"all"}
-            onChange={() => ""}
-            sx={{
-              px: 2,
-              bgcolor: "background.neutral"
-            }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab key={tab} label={tab} value={tab} />
-            ))}
-          </Tabs>
-
-          <Divider />
-          <UserTableToolbar
-            filterName={filters.name as string}
-            onFilterName={(e) => {
-              setFilter("name", e.target.value);
-            }}
-            onResetFilter={resetFilters}
-          />
-          <>
-            <TableContainer>
-              <TableSelectedAction
-                dense={dense}
-                numSelected={selected.length}
-                rowCount={data?.data.length || 0}
-                onSelectAllRows={(checked) =>
-                  onSelectAllRows(
-                    checked,
-                    data?.data.map((row) => row.id) as string[]
-                  )
-                }
-                action={
-                  <Tooltip title="Delete">
-                    <IconButton
-                      color="primary"
-                      onClick={() => setOpenConfirm(true)}
-                    >
-                      <Iconify icon="eva:trash-2-outline" />
-                    </IconButton>
-                  </Tooltip>
-                }
-              />
-              <Scrollbar>
-                <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
-                  <TableHeadCustom
-                    headLabel={TABLE_HEAD}
-                    order={order}
-                    orderBy={orderBy}
-                    rowCount={data?.data.length}
-                    numSelected={selected.length}
-                    onSort={onSort}
-                    onSelectAllRows={(checked) =>
-                      onSelectAllRows(
-                        checked,
-                        data?.data.map((row) => row.id) as string[]
-                      )
-                    }
-                  />
-                  <TableBody>
-                    {data?.data.map((row) => (
-                      <ClassesTableRow
-                        key={row.id}
-                        row={row}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={handleEditRow}
-                      />
-                    ))}
-
-                    <TableEmptyRows
-                      height={dense ? 52 : 72}
-                      emptyRows={emptyRows(
-                        page,
-                        rowsPerPage,
-                        data?.data.length || 0
-                      )}
-                    />
-
-                    <TableNoData
-                      isNotFound={!data?.data.length && !isLoading}
-                    />
-                  </TableBody>
-                </Table>
-              </Scrollbar>
-            </TableContainer>
-            <TablePaginationCustom
-              count={data?.meta.itemCount ? data?.meta.itemCount : 0}
-              page={data?.meta.page ? data?.meta.page - 1 : 0}
-              rowsPerPage={data?.meta.take || 0}
-              onPageChange={(e, page) => {
-                setFilter("page", page + 1);
-              }}
-              onRowsPerPageChange={(e) => {
-                setFilter("take", e.target.value);
-              }}
-              dense={dense}
-              onChangeDense={onChangeDense}
-            ></TablePaginationCustom>
-          </>
-        </Card>
+        <FilterCourses />
+        <Box
+          gap={3}
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+          }}
+        >
+          {data?.data.map((course, index) => (
+            <CourseCard key={index} course={course} />
+          ))}
+        </Box>
       </Container>
-      <ConfirmDialog
-        open={openConfirm}
-        title="Delete"
-        onClose={() => setOpenConfirm(false)}
-        content={
-          <>
-            Are you sure want to delete <strong>{selected.length}</strong>
-            {""} items?
-          </>
-        }
-        action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handleDeleteRows(selected);
-              setOpenConfirm(false);
-            }}
-          >
-            Delete
-          </Button>
-        }
-      />
     </>
   );
 }

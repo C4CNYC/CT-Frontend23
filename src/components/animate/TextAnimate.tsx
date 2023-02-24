@@ -17,7 +17,7 @@ export default function TextAnimate({
   variants,
   sx,
   ...other
-}: TextAnimateProps) {
+}: TextAnimateProps): React.ReactElement {
   return (
     <Box
       component={m.div}
@@ -31,7 +31,7 @@ export default function TextAnimate({
       {...other}
     >
       {text.split("").map((letter, index) => (
-        <m.span key={index} variants={variants || varFade().inUp}>
+        <m.span key={index} variants={variants ?? varFade().inUp}>
           {letter}
         </m.span>
       ))}

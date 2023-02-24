@@ -2,14 +2,14 @@ import { useRef } from "react";
 // next
 import NextLink from "next/link";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Box, Link } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // @types
 import { MenuCarouselProps } from "./types";
 //
+import Carousel, { CarouselArrows, CarouselDots } from "../carousel";
 import Image from "../image";
 import TextMaxLine from "../text-max-line";
-import Carousel, { CarouselDots, CarouselArrows } from "../carousel";
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ export default function MenuCarousel({
   products,
   numberShow,
   sx,
-}: MenuCarouselProps) {
+}: MenuCarouselProps): React.ReactElement | null {
   const theme = useTheme();
   const carouselRef = useRef<Carousel | null>(null);
 
@@ -30,11 +30,11 @@ export default function MenuCarousel({
     ...CarouselDots(),
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 

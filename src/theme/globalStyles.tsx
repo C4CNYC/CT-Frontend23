@@ -3,7 +3,7 @@ import { GlobalStyles as MUIGlobalStyles } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function GlobalStyles() {
+export default function GlobalStyles(): React.ReactElement {
   const inputGlobalStyles = (
     <MUIGlobalStyles
       styles={{

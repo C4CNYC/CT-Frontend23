@@ -21,7 +21,7 @@ const series = [
   },
 ];
 
-export default function ChartMixed() {
+export default function ChartMixed(): React.ReactElement {
   const chartOptions = useChart({
     stroke: {
       width: [0, 2, 3],

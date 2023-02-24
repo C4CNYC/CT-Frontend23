@@ -2,10 +2,10 @@
 import {
   Box,
   Card,
-  Typography,
   CardProps,
   LinearProgress,
   Stack,
+  Typography,
 } from "@mui/material";
 // utils
 import { fData } from "../../../../utils/formatNumber";
@@ -26,7 +26,7 @@ export default function FileGeneralWidget({
   icon,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card sx={{ p: 3, ...sx }} {...other}>
       <Box component="img" src={icon} sx={{ width: 48, height: 48 }} />

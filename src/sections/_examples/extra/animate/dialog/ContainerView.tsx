@@ -1,11 +1,11 @@
 // @mui
 import {
-  Paper,
   Button,
-  DialogTitle,
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogTitle,
+  Paper,
 } from "@mui/material";
 // components
 import { DialogAnimate } from "@components/animate";
@@ -14,12 +14,12 @@ import getVariant from "../getVariant";
 
 // ----------------------------------------------------------------------
 
-type ContainerViewProps = {
+interface ContainerViewProps {
   isOpen: boolean;
   onOpen: VoidFunction;
   onClose: VoidFunction;
   selectVariant: string;
-};
+}
 
 export default function ContainerView({
   isOpen,
@@ -27,7 +27,7 @@ export default function ContainerView({
   onClose,
   selectVariant,
   ...other
-}: ContainerViewProps) {
+}: ContainerViewProps): React.ReactElement | null {
   return (
     <Paper
       sx={{
@@ -47,7 +47,9 @@ export default function ContainerView({
         onClose={onClose}
         variants={getVariant(selectVariant)}
       >
-        <DialogTitle id="alert-dialog-title">{`Use Google's location service?`}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Let Google help apps determine location. This means sending

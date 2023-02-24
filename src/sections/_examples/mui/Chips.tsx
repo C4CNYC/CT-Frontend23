@@ -20,12 +20,12 @@ const style = {
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   variant?: "filled" | "outlined" | "soft";
 };
 
-export default function Chips({ variant = "filled" }: Props) {
-  const handleDelete = () => {
+export default function Chips({ variant = "filled" }: Props): React.ReactElement | null {
+  const handleDelete = (): void => {
     console.info("You clicked the delete icon.");
   };
 

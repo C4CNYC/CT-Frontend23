@@ -2,7 +2,7 @@ import { Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function LoadingButton(theme: Theme) {
+export default function LoadingButton(theme: Theme): unknown {
   return {
     MuiLoadingButton: {
       variants: [

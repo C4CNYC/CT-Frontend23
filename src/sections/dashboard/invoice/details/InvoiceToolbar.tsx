@@ -1,17 +1,17 @@
-import { useState } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import { useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
 import {
   Box,
-  Stack,
   Button,
-  Dialog,
-  Tooltip,
-  IconButton,
-  DialogActions,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  IconButton,
+  Stack,
+  Tooltip,
 } from "@mui/material";
 // routes
 import { PATH_DASHBOARD } from "@routes/paths";
@@ -24,24 +24,26 @@ import InvoicePDF from "./InvoicePDF";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   invoice: IInvoice;
-};
+}
 
-export default function InvoiceToolbar({ invoice }: Props) {
+export default function InvoiceToolbar({
+  invoice,
+}: Props): React.ReactElement | null {
   const { push } = useRouter();
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     push(PATH_DASHBOARD.invoice.edit(invoice.id));
   };
 
@@ -75,9 +77,11 @@ export default function InvoiceToolbar({ invoice }: Props) {
             {({ loading }) => (
               <Tooltip title="Download">
                 <IconButton>
-                  {loading ? (
+                  {loading
+? (
                     <CircularProgress size={24} color="inherit" />
-                  ) : (
+                  )
+: (
                     <Iconify icon="eva:download-fill" />
                   )}
                 </IconButton>

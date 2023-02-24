@@ -8,7 +8,7 @@ const series = [
   { name: "series2", data: [11, 32, 45, 32, 34, 52, 41] },
 ];
 
-export default function ChartArea() {
+export default function ChartArea(): React.ReactElement {
   const chartOptions = useChart({
     xaxis: {
       type: "datetime",

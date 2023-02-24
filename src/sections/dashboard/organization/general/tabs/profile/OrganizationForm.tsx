@@ -1,17 +1,20 @@
-import * as Yup from "yup";
-import { LoadingButton } from "@mui/lab";
-import { Grid, Card, Typography, Stack, Box } from "@mui/material";
-import { fData } from "src/utils/formatNumber";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import { useSnackbar } from "notistack";
 import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "@components/hook-form";
-import { useUpdateOrganizationMutation } from "src/redux/services/admin";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useCallback } from "react";
+import { useForm } from "react-hook-form";
+import {
+  useUpdateOrganizationMutation,
+  useUpdateOrgAvatarMutation,
+} from "src/redux/services/admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
+import { fData } from "src/utils/formatNumber";
+import * as Yup from "yup";
 import { useLocales } from "../../../../../../locales";
 
 const UpdateUserSchema = Yup.object().shape({
@@ -22,29 +25,32 @@ const UpdateUserSchema = Yup.object().shape({
     .required("Company / Organization Website is required"),
 });
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
   email: string;
   address: string;
   url: string;
-};
+  photoURL: File | null;
+}
 
-type OrganizationFormProps = {
+interface OrganizationFormProps {
   organization?: OrganizationResponce;
-};
+}
 
 export default function OrganizationForm({
   organization,
-}: OrganizationFormProps) {
+}: OrganizationFormProps): React.ReactElement | null {
   const { translate } = useLocales();
   const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
+  const [updateOrgAvatar] = useUpdateOrgAvatarMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    name: organization?.title || "",
-    email: organization?.email || "",
-    address: organization?.address || "",
-    url: organization?.url || "",
+    name: organization?.title ?? "",
+    email: organization?.email ?? "",
+    address: organization?.address ?? "",
+    url: organization?.url ?? "",
+    photoURL: null,
   };
 
   const methods = useForm<FormValuesProps>({
@@ -54,18 +60,24 @@ export default function OrganizationForm({
 
   const { setValue, handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateOrg({
         body: {
           title: data.name,
-          email: data.email || null,
+          email: data.email ?? null,
           url: data.url,
           address: data.address,
         },
-      });
+      }).unwrap();
+      if (data.photoURL) {
+        const file = new FormData();
+        file.append("file", data.photoURL);
+        updateOrgAvatar({
+          file,
+        }).unwrap();
+      }
       enqueueSnackbar("Update success!");
-      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
@@ -80,7 +92,7 @@ export default function OrganizationForm({
       });
 
       if (file) {
-        // setValue("photoURL", newFile, { shouldValidate: true });
+        setValue("photoURL", newFile, { shouldValidate: true });
       }
     },
     [setValue]

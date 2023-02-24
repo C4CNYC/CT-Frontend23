@@ -5,11 +5,13 @@ import { CustomFile } from "../types";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   file: CustomFile | string | null;
-};
+}
 
-export default function SingleFilePreview({ file }: Props) {
+export default function SingleFilePreview({
+  file,
+}: Props): React.ReactElement | null {
   if (!file) {
     return null;
   }

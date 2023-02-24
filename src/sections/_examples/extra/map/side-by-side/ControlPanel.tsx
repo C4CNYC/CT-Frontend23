@@ -8,15 +8,15 @@ import { StyledControlPanel } from "@components/map";
 
 export type ModeProps = "side-by-side" | "split-screen";
 
-type Props = {
+interface Props {
   mode: ModeProps;
   onModeChange: (
     event: React.MouseEvent<HTMLElement>,
     newMode: ModeProps | null
   ) => void;
-};
+}
 
-function ControlPanel({ mode, onModeChange }: Props) {
+function ControlPanel({ mode, onModeChange }: Props): React.ReactElement | null {
   return (
     <StyledControlPanel>
       <ToggleButtonGroup

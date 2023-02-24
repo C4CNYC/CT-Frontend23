@@ -1,19 +1,19 @@
-import { useState, useCallback, useMemo, memo } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import Map, {
-  Layer,
-  Source,
   FillLayer,
+  Layer,
   MapLayerMouseEvent,
+  Source,
 } from "react-map-gl";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // components
-import { MapPopup, MapControl, MapBoxProps } from "@components/map";
+import { MapBoxProps, MapControl, MapPopup } from "@components/map";
 
 // ----------------------------------------------------------------------
 
-function MapHighlightByFilter({ ...other }: MapBoxProps) {
+function MapHighlightByFilter({ ...other }: MapBoxProps): React.ReactElement {
   const theme = useTheme();
 
   const countiesLayer: FillLayer = {
@@ -46,16 +46,16 @@ function MapHighlightByFilter({ ...other }: MapBoxProps) {
   } | null>(null);
 
   const onHover = useCallback((event: MapLayerMouseEvent) => {
-    const county = event.features && event.features[0];
+    const county = event.features?.[0];
 
     setHoverInfo({
       longitude: event.lngLat.lng,
       latitude: event.lngLat.lat,
-      countyName: county && county.properties?.COUNTY,
+      countyName: county?.properties?.COUNTY,
     });
   }, []);
 
-  const selectedCounty = (hoverInfo && hoverInfo.countyName) || "";
+  const selectedCounty = (hoverInfo?.countyName) ?? "";
 
   const filter = useMemo(
     () => ["in", "COUNTY", selectedCounty],

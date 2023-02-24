@@ -1,5 +1,5 @@
 // @mui
-import { Checkbox, Typography, Stack, StackProps } from "@mui/material";
+import { Checkbox, Stack, StackProps, Typography } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ export default function TableSelectedAction({
   onSelectAllRows,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   if (!numSelected) {
     return null;
   }
@@ -48,9 +48,9 @@ export default function TableSelectedAction({
       <Checkbox
         indeterminate={numSelected > 0 && numSelected < rowCount}
         checked={rowCount > 0 && numSelected === rowCount}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          onSelectAllRows(event.target.checked)
-        }
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          onSelectAllRows(event.target.checked);
+        }}
       />
 
       <Typography

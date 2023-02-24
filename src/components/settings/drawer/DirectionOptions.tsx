@@ -3,13 +3,13 @@ import { RadioGroup } from "@mui/material";
 //
 import SvgColor from "../../svg-color";
 import { useSettingsContext } from "../SettingsContext";
-import { StyledCard, StyledWrap, MaskControl } from "../styles";
+import { MaskControl, StyledCard, StyledWrap } from "../styles";
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = ["ltr", "rtl"] as const;
 
-export default function DirectionOptions() {
+export default function DirectionOptions(): React.ReactElement {
   const { themeDirection, onChangeDirection } = useSettingsContext();
 
   return (

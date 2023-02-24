@@ -1,7 +1,7 @@
 // next
 import NextLink from "next/link";
 // @mui
-import { Link, Typography, Box } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 // @types
 import { MenuHotProductsProps } from "./types";
 
@@ -10,7 +10,7 @@ import { MenuHotProductsProps } from "./types";
 export default function MenuHotProducts({
   tags,
   ...other
-}: MenuHotProductsProps) {
+}: MenuHotProductsProps): React.ReactElement | null {
   return (
     <Box {...other}>
       <Typography variant="caption" fontWeight="fontWeightBold">

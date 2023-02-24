@@ -1,12 +1,12 @@
 import { ApexOptions } from "apexcharts";
 // @mui
+import { Box, Card, CardProps, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Box, Card, Typography, Stack, CardProps } from "@mui/material";
 // utils
 import { fNumber, fPercent } from "../../../../utils/formatNumber";
 // components
-import Iconify from "@components/iconify";
 import Chart, { useChart } from "@components/chart";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ export default function EcommerceWidgetSummary({
   chart,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { colors, series, options } = chart;
 
   const chartOptions = useChart({
@@ -91,11 +91,13 @@ export default function EcommerceWidgetSummary({
 
 // ----------------------------------------------------------------------
 
-type TrendingInfoProps = {
+interface TrendingInfoProps {
   percent: number;
-};
+}
 
-function TrendingInfo({ percent }: TrendingInfoProps) {
+function TrendingInfo({
+  percent,
+}: TrendingInfoProps): React.ReactElement | null {
   return (
     <Stack direction="row" alignItems="center" sx={{ mt: 2, mb: 1 }}>
       <Iconify

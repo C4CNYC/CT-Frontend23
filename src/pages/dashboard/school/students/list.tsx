@@ -1,47 +1,47 @@
-import { useState } from "react";
+import ConfirmDialog from "@components/confirm-dialog";
+import CustomAutocomplete from "@components/custom-autocomplete";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
+import Scrollbar from "@components/scrollbar";
+import { useSettingsContext } from "@components/settings";
+import {
+  emptyRows,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableLoader,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
+} from "@components/table";
+import { useFilters } from "@hooks/useFilters";
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import {
+  Button,
+  Card,
+  Container,
+  Divider,
+  IconButton,
+  Tab,
+  Table,
+  TableBody,
+  TableContainer,
+  Tabs,
+  Tooltip,
+} from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { UserTableRow } from "@sections/dashboard/user/list";
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import {
-  Tab,
-  Tabs,
-  Card,
-  Table,
-  Button,
-  Tooltip,
-  Divider,
-  TableBody,
-  Container,
-  IconButton,
-  TableContainer,
-} from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import Iconify from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
-import ConfirmDialog from "@components/confirm-dialog";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import { useSettingsContext } from "@components/settings";
-import {
-  useTable,
-  emptyRows,
-  TableNoData,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableSelectedAction,
-  TablePaginationCustom,
-  TableLoader,
-} from "@components/table";
-import { UserTableRow } from "@sections/dashboard/user/list";
-import { useFilters } from "@hooks/useFilters";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
 } from "src/redux/services/manager";
-import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import { useSnackbar } from "notistack";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import CustomAutocomplete from "@components/custom-autocomplete";
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ UserListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function UserListPage() {
+export default function UserListPage(): React.ReactElement {
   const {
     dense,
     page,
@@ -96,7 +96,7 @@ export default function UserListPage() {
     { skip: !school_id }
   );
 
-  const handleDeleteMember = async (student_id: string) => {
+  const handleDeleteMember = async (student_id: string): Promise<void> => {
     try {
       await deleteStudent({ student_id, school_id }).unwrap();
     } catch (e) {
@@ -106,19 +106,19 @@ export default function UserListPage() {
     }
   };
 
-  const handleDeleteRow = (user_id: string) => {
+  const handleDeleteRow = (user_id: string): void => {
     handleDeleteMember(user_id);
     enqueueSnackbar("Member deleted");
   };
 
-  const handleDeleteRows = (selected: string[]) => {
+  const handleDeleteRows = (selected: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i]);
     }
     enqueueSnackbar("Members deleted");
   };
 
-  const handleEditRow = (id: string) => {
+  const handleEditRow = (id: string): void => {
     push(PATH_DASHBOARD.school.edit(id));
   };
 
@@ -165,7 +165,7 @@ export default function UserListPage() {
           <Divider />
 
           <CustomAutocomplete
-            filterName={filters.name as string}
+            filterName={filters.name}
             onFilterName={(name: string) => {
               setFilter("name", name);
             }}
@@ -180,18 +180,20 @@ export default function UserListPage() {
               <TableSelectedAction
                 dense={dense}
                 numSelected={selected.length}
-                rowCount={data?.data.length || 0}
-                onSelectAllRows={(checked) =>
+                rowCount={data?.data.length ?? 0}
+                onSelectAllRows={(checked) => {
                   onSelectAllRows(
                     checked,
                     data?.data.map((row) => row.id) as string[]
-                  )
-                }
+                  );
+                }}
                 action={
                   <Tooltip title="Delete">
                     <IconButton
                       color="primary"
-                      onClick={() => setOpenConfirm(true)}
+                      onClick={() => {
+                        setOpenConfirm(true);
+                      }}
                     >
                       <Iconify icon="eva:trash-2-outline" />
                     </IconButton>
@@ -208,12 +210,12 @@ export default function UserListPage() {
                     rowCount={data?.data.length}
                     numSelected={selected.length}
                     onSort={onSort}
-                    onSelectAllRows={(checked) =>
+                    onSelectAllRows={(checked: any) => {
                       onSelectAllRows(
                         checked,
                         data?.data.map((row) => row.id) as string[]
-                      )
-                    }
+                      );
+                    }}
                   />
                   <TableBody sx={{ minHeight: 12 }}>
                     {data?.data.map((row) => (
@@ -221,9 +223,15 @@ export default function UserListPage() {
                         key={row.id}
                         row={row}
                         selected={selected.includes(row.id)}
-                        onSelectRow={() => onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
+                        onSelectRow={() => {
+                          onSelectRow(row.id);
+                        }}
+                        onDeleteRow={() => {
+                          handleDeleteRow(row.id);
+                        }}
+                        onEditRow={() => {
+                          handleEditRow(row.id);
+                        }}
                       />
                     ))}
                     <TableLoader isLoading={isLoading} />
@@ -236,8 +244,8 @@ export default function UserListPage() {
                       height={dense ? 52 : 72}
                       emptyRows={emptyRows(
                         page,
-                        filters?.take || 10,
-                        data?.data.length || 0
+                        filters?.take ?? 10,
+                        data?.data.length ?? 0
                       )}
                     />
                   </TableBody>
@@ -247,11 +255,11 @@ export default function UserListPage() {
             <TablePaginationCustom
               count={data?.meta.itemCount ? data?.meta.itemCount : 0}
               page={data?.meta.page ? data?.meta.page - 1 : 0}
-              rowsPerPage={data?.meta.take || 0}
+              rowsPerPage={data?.meta.take ?? 0}
               onPageChange={(e, page) => {
                 setFilter("page", page + 1);
               }}
-              onRowsPerPageChange={(e) => {
+              onRowsPerPageChange={e => {
                 setFilter("take", e.target.value);
               }}
               dense={dense}
@@ -263,7 +271,9 @@ export default function UserListPage() {
 
       <ConfirmDialog
         open={openConfirm}
-        onClose={() => setOpenConfirm(false)}
+        onClose={() => {
+          setOpenConfirm(false);
+        }}
         title="Delete"
         content={
           <>

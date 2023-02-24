@@ -1,35 +1,28 @@
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 // next
-import NextLink from "next/link";
 // form
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
-import { Link, Stack, Alert, IconButton, InputAdornment } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { IconButton, InputAdornment, Stack } from "@mui/material";
 // routes
 import { PATH_AUTH } from "../../routes/paths";
-// auth
-import { useAuthContext } from "../../auth/useAuthContext";
 // components
-import Iconify from "../../components/iconify";
-import FormProvider, { RHFTextField } from "../../components/hook-form";
-import router from "next/router";
-import { PATH_AFTER_LOGIN } from "src/config-global";
-import { useDispatch } from "react-redux";
-import { useInviteSubmitMutation } from "../../redux/services/admin";
 import { useRouter } from "next/router";
+import FormProvider, { RHFTextField } from "../../components/hook-form";
+import Iconify from "../../components/iconify";
+import { useInviteSubmitMutation } from "../../redux/services/admin";
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   password: string;
   inviteId: string;
-};
+}
 
-export default function InviteForm() {
-  const { login } = useAuthContext();
+export default function InviteForm(): React.ReactElement {
   const router = useRouter();
   const { id } = router.query;
   const { tenant_name } = router.query;
@@ -56,20 +49,19 @@ export default function InviteForm() {
 
   const {
     reset,
-    setError,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await submitInvite({
         password: data.password,
-        inviteId: inviteId,
+        inviteId,
       }).unwrap();
       router.replace({
         pathname: PATH_AUTH.login,
-        query: { tenant_name: tenant_name },
+        query: { tenant_name },
       });
     } catch (error) {
       console.error(error);
@@ -80,7 +72,6 @@ export default function InviteForm() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-
         <RHFTextField
           name="password"
           label="Password"
@@ -89,7 +80,9 @@ export default function InviteForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify
@@ -108,7 +101,9 @@ export default function InviteForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify

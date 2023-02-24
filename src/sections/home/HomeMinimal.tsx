@@ -1,10 +1,10 @@
 import { m } from "framer-motion";
 // @mui
+import { Box, Card, Container, Stack, Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-import { Box, Card, Container, Typography, Stack } from "@mui/material";
 // components
-import Image from "../../components/image";
 import { MotionViewport, varFade } from "../../components/animate";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeMinimal() {
+export default function HomeMinimal(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionViewport}>

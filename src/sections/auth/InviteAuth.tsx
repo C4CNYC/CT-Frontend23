@@ -1,19 +1,12 @@
-// next
-import NextLink from "next/link";
 // @mui
-import { Alert, Tooltip, Stack, Typography, Link, Box } from "@mui/material";
-// auth
-import { useAuthContext } from "../../auth/useAuthContext";
+import { Stack, Typography } from "@mui/material";
 // layouts
 import LoginLayout from "../../layouts/login";
-import AuthLoginForm from "./AuthLoginForm";
 import InviteForm from "./InviteForm";
 
 // ----------------------------------------------------------------------
 
-export default function InviteAuth() {
-  const { method } = useAuthContext();
-
+export default function InviteAuth(): React.ReactElement {
   return (
     <LoginLayout>
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>

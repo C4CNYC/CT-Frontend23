@@ -1,13 +1,13 @@
 // @mui
-import { Card, Button, Typography, Box, Stack, CardProps } from "@mui/material";
+import { Box, Button, Card, CardProps, Stack, Typography } from "@mui/material";
 // components
-import Label from "../../components/label";
 import Iconify from "../../components/iconify";
+import Label from "../../components/label";
 // assets
 import {
   PlanFreeIcon,
-  PlanStarterIcon,
   PlanPremiumIcon,
+  PlanStarterIcon,
 } from "../../assets/icons";
 
 // ----------------------------------------------------------------------
@@ -18,15 +18,20 @@ interface Props extends CardProps {
     price: number;
     caption: string;
     labelAction: string;
-    lists: {
+    lists: Array<{
       text: string;
       isAvailable: boolean;
-    }[];
+    }>;
   };
   index: number;
 }
 
-export default function PricingPlanCard({ card, index, sx, ...other }: Props) {
+export default function PricingPlanCard({
+  card,
+  index,
+  sx,
+  ...other
+}: Props): React.ReactElement | null {
   const { subscription, price, caption, lists, labelAction } = card;
 
   return (

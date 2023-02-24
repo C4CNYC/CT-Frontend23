@@ -1,13 +1,13 @@
 import { Popup } from "react-map-gl";
 // @mui
-import { useTheme, styled } from "@mui/material/styles";
 import { GlobalStyles } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../utils/cssStyles";
 
 // ----------------------------------------------------------------------
 
-export function StyledMapControls() {
+export function StyledMapControls(): React.ReactElement | null {
   const theme = useTheme();
 
   const inputGlobalStyles = (
@@ -37,7 +37,7 @@ export function StyledMapControls() {
           borderRadius: "4px",
           color: theme.palette.common.white,
           fontWeight: theme.typography.fontWeightBold,
-          backgroundImage: `linear-gradient(to right, #8a2387, #e94057, #f27121)`,
+          backgroundImage: "linear-gradient(to right, #8a2387, #e94057, #f27121)",
         },
       }}
     />

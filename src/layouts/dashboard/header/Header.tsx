@@ -1,6 +1,6 @@
 // @mui
+import { AppBar, IconButton, Stack, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Stack, AppBar, Toolbar, IconButton } from "@mui/material";
 // utils
 import { bgBlur } from "../../../utils/cssStyles";
 // hooks
@@ -9,23 +9,25 @@ import useResponsive from "../../../hooks/useResponsive";
 // config
 import { HEADER, NAV } from "../../../config-global";
 // components
-import Logo from "@components/logo";
 import Iconify from "@components/iconify";
+import Logo from "@components/logo";
 import { useSettingsContext } from "@components/settings";
 //
+import { useRouter } from "next/router";
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
 import NotificationsPopover from "./NotificationsPopover";
 import NavAccount from "./SchoolAccount";
-import { useRouter } from "next/router";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   onOpenNav?: VoidFunction;
-};
+}
 
-export default function Header({ onOpenNav }: Props) {
+export default function Header({
+  onOpenNav,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
   const router = useRouter();
 

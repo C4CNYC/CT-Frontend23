@@ -8,6 +8,7 @@ import { ImageProps } from "./types";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const Image = forwardRef<HTMLSpanElement, ImageProps>(
   ({ ratio, disabledEffect = false, effect = "blur", sx, ...other }, ref) => {
     const content = (

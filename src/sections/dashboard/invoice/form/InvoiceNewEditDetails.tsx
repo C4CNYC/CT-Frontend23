@@ -1,24 +1,24 @@
 import sum from "lodash/sum";
 import { useCallback, useEffect } from "react";
 // form
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 // @mui
 import {
   Box,
-  Stack,
   Button,
   Divider,
-  Typography,
   InputAdornment,
   MenuItem,
+  Stack,
+  Typography,
 } from "@mui/material";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 // @types
 import { IInvoiceItem } from "../../../../@types/invoice";
 // components
-import Iconify from "@components/iconify";
 import { RHFSelect, RHFTextField } from "@components/hook-form";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ const SERVICE_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceNewEditDetails() {
+export default function InvoiceNewEditDetails(): React.ReactElement {
   const { control, setValue, watch, resetField } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -46,13 +46,14 @@ export default function InvoiceNewEditDetails() {
     (item: IInvoiceItem) => item.quantity * item.price
   );
 
-  const totalPrice = sum(totalOnRow) - values.discount + values.taxes;
+  const totalPrice =
+    Number(sum(totalOnRow)) - Number(values.discount) + Number(values.taxes);
 
   useEffect(() => {
     setValue("totalPrice", totalPrice);
   }, [setValue, totalPrice]);
 
-  const handleAdd = () => {
+  const handleAdd = (): void => {
     append({
       title: "",
       description: "",
@@ -63,7 +64,7 @@ export default function InvoiceNewEditDetails() {
     });
   };
 
-  const handleRemove = (index: number) => {
+  const handleRemove = (index: number): void => {
     remove(index);
   };
 
@@ -164,7 +165,9 @@ export default function InvoiceNewEditDetails() {
               >
                 <MenuItem
                   value=""
-                  onClick={() => handleClearService(index)}
+                  onClick={() => {
+                    handleClearService(index);
+                  }}
                   sx={{ fontStyle: "italic", color: "text.secondary" }}
                 >
                   None
@@ -176,7 +179,9 @@ export default function InvoiceNewEditDetails() {
                   <MenuItem
                     key={service.id}
                     value={service.name}
-                    onClick={() => handleSelectService(index, service.name)}
+                    onClick={() => {
+                      handleSelectService(index, service.name);
+                    }}
                   >
                     {service.name}
                   </MenuItem>
@@ -189,7 +194,9 @@ export default function InvoiceNewEditDetails() {
                 name={`items[${index}].quantity`}
                 label="Quantity"
                 placeholder="0"
-                onChange={(event) => handleChangeQuantity(event, index)}
+                onChange={(event) => {
+                  handleChangeQuantity(event, index);
+                }}
                 InputLabelProps={{ shrink: true }}
                 sx={{ maxWidth: { md: 96 } }}
               />
@@ -200,7 +207,9 @@ export default function InvoiceNewEditDetails() {
                 name={`items[${index}].price`}
                 label="Price"
                 placeholder="0"
-                onChange={(event) => handleChangePrice(event, index)}
+                onChange={(event) => {
+                  handleChangePrice(event, index);
+                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">$</InputAdornment>
@@ -229,7 +238,9 @@ export default function InvoiceNewEditDetails() {
               size="small"
               color="error"
               startIcon={<Iconify icon="eva:trash-2-outline" />}
-              onClick={() => handleRemove(index)}
+              onClick={() => {
+                handleRemove(index);
+              }}
             >
               Remove
             </Button>
@@ -263,9 +274,9 @@ export default function InvoiceNewEditDetails() {
             size="small"
             label="Discount"
             name="discount"
-            onChange={(event) =>
-              setValue("discount", Number(event.target.value))
-            }
+            onChange={(event) => {
+              setValue("discount", Number(event.target.value));
+            }}
             sx={{ maxWidth: { md: 200 } }}
           />
 
@@ -273,7 +284,9 @@ export default function InvoiceNewEditDetails() {
             size="small"
             label="Taxes"
             name="taxes"
-            onChange={(event) => setValue("taxes", Number(event.target.value))}
+            onChange={(event) => {
+              setValue("taxes", Number(event.target.value));
+            }}
             sx={{ maxWidth: { md: 200 } }}
           />
         </Stack>

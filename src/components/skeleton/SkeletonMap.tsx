@@ -1,9 +1,11 @@
 // @mui
-import { Stack, Skeleton, StackProps } from "@mui/material";
+import { Skeleton, Stack, StackProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonMap({ ...other }: StackProps) {
+export default function SkeletonMap({
+  ...other
+}: StackProps): React.ReactElement | null {
   return (
     <Stack spacing={8} {...other}>
       {[...Array(5)].map((_, index) => (

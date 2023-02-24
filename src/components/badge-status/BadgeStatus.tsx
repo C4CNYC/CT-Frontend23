@@ -10,7 +10,7 @@ export default function BadgeStatus({
   size = "medium",
   status = "offline",
   sx,
-}: BadgeStatusProps) {
+}: BadgeStatusProps): React.ReactElement | null {
   const theme = useTheme();
 
   return (

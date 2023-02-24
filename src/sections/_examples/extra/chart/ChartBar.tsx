@@ -7,7 +7,7 @@ const series = [
   { data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380] },
 ];
 
-export default function ChartBar() {
+export default function ChartBar(): React.ReactElement {
   const chartOptions = useChart({
     stroke: { show: false },
     plotOptions: {

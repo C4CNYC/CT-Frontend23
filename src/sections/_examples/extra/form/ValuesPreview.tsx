@@ -1,8 +1,8 @@
 // form
-import { useFormContext, FieldValues } from "react-hook-form";
+import { FieldValues, useFormContext } from "react-hook-form";
 // @mui
+import { Divider, Portal, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Stack, Typography, Portal, Divider } from "@mui/material";
 // utils
 import { bgBlur } from "../../../../utils/cssStyles";
 // hooks
@@ -12,7 +12,7 @@ import { fileData } from "@components/file-thumbnail";
 
 // ----------------------------------------------------------------------
 
-export default function ValuesPreview() {
+export default function ValuesPreview(): React.ReactElement {
   const theme = useTheme();
 
   const isDesktop = useResponsive("up", "md");

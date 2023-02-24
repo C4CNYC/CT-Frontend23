@@ -10,8 +10,8 @@ import MainLayout from "../../../layouts/main";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import { Block } from "@sections/_examples/Block";
-import SimpleTransferList from "@sections/_examples/mui/transfer-list/SimpleTransferList";
 import EnhancedTransferList from "@sections/_examples/mui/transfer-list/EnhancedTransferList";
+import SimpleTransferList from "@sections/_examples/mui/transfer-list/SimpleTransferList";
 
 // ----------------------------------------------------------------------
 
@@ -30,7 +30,7 @@ MUITransferListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITransferListPage() {
+export default function MUITransferListPage(): React.ReactElement {
   return (
     <>
       <Head>

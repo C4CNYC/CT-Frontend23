@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 // @mui
+import { Avatar, Card, CardProps, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Card, Typography, CardProps, Stack, Avatar } from "@mui/material";
 // utils
 import { fData } from "../../../../utils/formatNumber";
 // components
@@ -11,12 +11,12 @@ import Chart, { useChart } from "@components/chart";
 
 interface Props extends CardProps {
   total: number;
-  data: {
+  data: Array<{
     name: string;
     usedStorage: number;
     filesCount: number;
     icon: React.ReactNode;
-  }[];
+  }>;
   chart: {
     colors?: string[];
     series: number;
@@ -29,12 +29,12 @@ export default function FileGeneralStorageOverview({
   total,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { colors, series, options } = chart;
 
-  const chartColors = colors || [
+  const chartColors = colors ?? [
     theme.palette.primary.light,
     theme.palette.primary.main,
   ];

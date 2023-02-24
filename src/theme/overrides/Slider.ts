@@ -1,8 +1,8 @@
-import { Theme } from "@mui/material/styles";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Slider(theme: Theme) {
+export default function Slider(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
   return {

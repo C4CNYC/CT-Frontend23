@@ -1,9 +1,9 @@
-import { Theme } from "@mui/material/styles";
-import { TabProps } from "@mui/material";
+import { type TabProps } from "@mui/material";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Tabs(theme: Theme) {
+export default function Tabs(theme: Theme): unknown {
   return {
     MuiTabs: {
       defaultProps: {

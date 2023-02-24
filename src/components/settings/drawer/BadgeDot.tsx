@@ -3,7 +3,10 @@ import { Box, BoxProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function BadgeDot({ sx, ...other }: BoxProps) {
+export default function BadgeDot({
+  sx,
+  ...other
+}: BoxProps): React.ReactElement {
   return (
     <Box
       sx={{

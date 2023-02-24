@@ -1,38 +1,38 @@
 import { useState } from "react";
 // @mui
+import { Box, Card, IconButton, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Box, Card, IconButton, Typography, Stack } from "@mui/material";
 // utils
-import { fDate } from "../../../../utils/formatTime";
 import { bgBlur } from "../../../../utils/cssStyles";
+import { fDate } from "../../../../utils/formatTime";
 // @types
-import { IUserProfileGallery } from "../../../../@types/user";
 // components
-import Image from "@components/image";
 import Iconify from "@components/iconify";
+import Image from "@components/image";
 import Lightbox from "@components/lightbox";
+import { IUserProfileGallery } from "src/@types/courses";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   gallery: IUserProfileGallery[];
-};
+}
 
-export default function Billing({ gallery }: Props) {
+export default function Billing({ gallery }: Props): React.ReactElement | null {
   const [selectedImage, setSelectedImage] = useState<number>(-1);
 
   const imagesLightbox = gallery.map((img) => ({
     src: img.imageUrl,
   }));
 
-  const handleOpenLightbox = (imageUrl: string) => {
+  const handleOpenLightbox = (imageUrl: string): void => {
     const imageIndex = imagesLightbox.findIndex(
       (image) => image.src === imageUrl
     );
     setSelectedImage(imageIndex);
   };
 
-  const handleCloseLightbox = () => {
+  const handleCloseLightbox = (): void => {
     setSelectedImage(-1);
   };
 
@@ -55,7 +55,9 @@ export default function Billing({ gallery }: Props) {
           <GalleryItem
             key={image.id}
             image={image}
-            onOpenLightbox={() => handleOpenLightbox(image.imageUrl)}
+            onOpenLightbox={() => {
+              handleOpenLightbox(image.imageUrl);
+            }}
           />
         ))}
       </Box>
@@ -72,12 +74,15 @@ export default function Billing({ gallery }: Props) {
 
 // ----------------------------------------------------------------------
 
-type GalleryItemProps = {
+interface GalleryItemProps {
   image: IUserProfileGallery;
   onOpenLightbox: (value: string) => void;
-};
+}
 
-function GalleryItem({ image, onOpenLightbox }: GalleryItemProps) {
+function GalleryItem({
+  image,
+  onOpenLightbox,
+}: GalleryItemProps): React.ReactElement | null {
   const theme = useTheme();
 
   const { imageUrl, title, postAt } = image;
@@ -88,7 +93,9 @@ function GalleryItem({ image, onOpenLightbox }: GalleryItemProps) {
         alt="gallery"
         ratio="1/1"
         src={imageUrl}
-        onClick={() => onOpenLightbox(imageUrl)}
+        onClick={() => {
+          onOpenLightbox(imageUrl);
+        }}
       />
 
       <Stack

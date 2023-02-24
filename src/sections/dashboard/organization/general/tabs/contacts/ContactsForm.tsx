@@ -1,15 +1,13 @@
-import * as Yup from "yup";
-import { LoadingButton } from "@mui/lab";
-import { Grid, Card, Stack, Box } from "@mui/material";
-import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
+import FormProvider, { RHFTextField } from "@components/hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack } from "@mui/material";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
-import FormProvider, {
-  RHFTextField,
-} from "@components/hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useUpdateOrgContactsMutation } from "src/redux/services/admin";
 import { ContactsResponce } from "src/redux/services/interfaces/organization.interface";
+import * as Yup from "yup";
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email("Email must be a valid email address"),
@@ -18,26 +16,28 @@ const UpdateUserSchema = Yup.object().shape({
   phone: Yup.string().required("Phone is required"),
 });
 
-type FormValuesProps = {
+interface FormValuesProps {
   email: string;
   title: string;
   name: string;
   phone: string;
-};
+}
 
-type ContactsFormProps = {
+interface ContactsFormProps {
   contacts?: ContactsResponce;
-};
+}
 
-export default function ContactsForm({ contacts }: ContactsFormProps) {
+export default function ContactsForm({
+  contacts,
+}: ContactsFormProps): React.ReactElement | null {
   const [updateContacts, { isLoading }] = useUpdateOrgContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    email: contacts?.email || "",
-    title: contacts?.title || "",
-    name: contacts?.name || "",
-    phone: contacts?.phone || "",
+    email: contacts?.email ?? "",
+    title: contacts?.title ?? "",
+    name: contacts?.name ?? "",
+    phone: contacts?.phone ?? "",
   };
 
   const methods = useForm<FormValuesProps>({
@@ -46,7 +46,7 @@ export default function ContactsForm({ contacts }: ContactsFormProps) {
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateContacts({
         email: data.email,

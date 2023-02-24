@@ -1,13 +1,13 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
+import Stepper from "@mui/material/Stepper";
+import { useState } from "react";
 
-import AssignmentSettings from "./AssignmentSettings";
-import AssignmentAssigning from "./AssignmentAssigning";
-import AssignmentAbout from "./AssignmentAbout";
 import { useGetAssignmentQuery } from "src/redux/services/manager";
+import AssignmentAbout from "./AssignmentAbout";
+import AssignmentAssigning from "./AssignmentAssigning";
+import AssignmentSettings from "./AssignmentSettings";
 
 const steps = [
   "Assignment Content",
@@ -15,15 +15,15 @@ const steps = [
   "Assignment Assigning",
 ];
 
-type Props = {
+interface Props {
   school_id: string;
   closeStepper: () => void;
-};
+}
 
 export default function HorizontalNonLinearStepper({
   school_id,
   closeStepper,
-}: Props) {
+}: Props): React.ReactElement | null {
   const [activeStep, setActiveStep] = useState(0);
   const [assignmentId, setAssignmentId] = useState("");
 
@@ -32,21 +32,19 @@ export default function HorizontalNonLinearStepper({
     { skip: !school_id || !assignmentId }
   );
 
-  const [completed, setCompleted] = useState<{
-    [k: number]: boolean;
-  }>({});
+  const [completed] = useState<Record<number, boolean>>({});
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     if (activeStep === steps.length) return;
     if (activeStep === 2) closeStepper();
     setActiveStep(activeStep + 1);
   };
 
-  const handleAssignmentId = (id: string) => {
+  const handleAssignmentId = (id: string): void => {
     setAssignmentId(id);
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     if (activeStep === 0) return;
     setActiveStep(activeStep - 1);
   };

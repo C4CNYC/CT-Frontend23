@@ -6,8 +6,13 @@ interface Props extends PaperProps {
   query?: string;
 }
 
-export default function SearchNotFound({ query, sx, ...other }: Props) {
-  return query ? (
+export default function SearchNotFound({
+  query,
+  sx,
+  ...other
+}: Props): React.ReactElement | null {
+  return query
+? (
     <Paper
       sx={{
         textAlign: "center",
@@ -25,7 +30,8 @@ export default function SearchNotFound({ query, sx, ...other }: Props) {
         <br /> Try checking for typos or using complete words.
       </Typography>
     </Paper>
-  ) : (
+  )
+: (
     <Typography variant="body2" sx={sx}>
       Please enter keywords
     </Typography>

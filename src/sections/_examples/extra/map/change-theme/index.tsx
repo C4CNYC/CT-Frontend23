@@ -1,25 +1,25 @@
-import { useState, useCallback, memo } from "react";
+import { memo, useCallback, useState } from "react";
 import Map from "react-map-gl";
 // components
-import { MapControl, MapBoxProps } from "@components/map";
+import { MapBoxProps, MapControl } from "@components/map";
 //
 import ControlPanel from "./ControlPanel";
 
 // ----------------------------------------------------------------------
 
 interface Props extends MapBoxProps {
-  themes: {
-    [key: string]: string;
-  };
+  themes: Record<string, string>;
 }
 
-function MapChangeTheme({ themes, ...other }: Props) {
+function MapChangeTheme({
+  themes,
+  ...other
+}: Props): React.ReactElement | null {
   const [selectTheme, setSelectTheme] = useState("outdoors");
 
-  const handleChangeTheme = useCallback(
-    (value: string) => setSelectTheme(value),
-    []
-  );
+  const handleChangeTheme = useCallback((value: string) => {
+    setSelectTheme(value);
+  }, []);
 
   return (
     <>

@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Stack, Button, Tooltip, IconButton, Typography } from "@mui/material";
-import useResponsive from "@hooks/useResponsive";
-import Iconify from "@components/iconify";
 import ConfirmDialog from "@components/confirm-dialog";
+import Iconify from "@components/iconify";
+import useResponsive from "@hooks/useResponsive";
+import { Button, IconButton, Stack, Tooltip, Typography } from "@mui/material";
+import { useState } from "react";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   fileInputRef: React.RefObject<HTMLInputElement>;
   taskName: string;
   onAttach: VoidFunction;
   onDelete: () => void;
   onCloseDetails: VoidFunction;
-};
+}
 
 export default function AssignmentsDetailsToolbar({
   fileInputRef,
@@ -20,16 +20,16 @@ export default function AssignmentsDetailsToolbar({
   onAttach,
   onDelete,
   onCloseDetails,
-}: Props) {
+}: Props): React.ReactElement | null {
   const isDesktop = useResponsive("up", "sm");
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
@@ -52,7 +52,6 @@ export default function AssignmentsDetailsToolbar({
           justifyContent="flex-end"
           flexGrow={1}
         >
-
           <Tooltip title="Attachment">
             <IconButton size="small" onClick={onAttach} disabled>
               <Iconify icon="eva:attach-2-fill" />
@@ -83,11 +82,7 @@ export default function AssignmentsDetailsToolbar({
           </>
         }
         action={
-          <Button
-            variant="contained"
-            color="error"
-            onClick={onDelete}
-          >
+          <Button variant="contained" color="error" onClick={onDelete}>
             Delete
           </Button>
         }

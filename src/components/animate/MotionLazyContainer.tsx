@@ -3,13 +3,16 @@ import { LazyMotion, m } from "framer-motion";
 // ----------------------------------------------------------------------
 
 // eslint-disable-next-line import/extensions
-const loadFeatures = () => import("./features.js").then((res) => res.default);
+const loadFeatures = async () =>
+  await import("./features.js").then((res) => res.default);
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-export default function MotionLazyContainer({ children }: Props) {
+export default function MotionLazyContainer({
+  children,
+}: Props): React.ReactElement | null {
   return (
     <LazyMotion strict features={loadFeatures}>
       <m.div style={{ height: "100%" }}> {children} </m.div>

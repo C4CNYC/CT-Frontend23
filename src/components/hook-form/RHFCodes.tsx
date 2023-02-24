@@ -1,6 +1,6 @@
 import { useRef } from "react";
 // form
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import { Stack, TextField, TextFieldProps } from "@mui/material";
 // hooks
@@ -17,17 +17,19 @@ export default function RHFCodes({
   keyName = "",
   inputs = [],
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const codesRef = useRef<HTMLDivElement>(null);
 
   const { control, setValue } = useFormContext();
 
-  const handlePaste = (event: any) => {
+  const handlePaste = (event: any): void => {
     let data = event.clipboardData.getData("text");
 
     data = data.split("");
 
-    inputs.map((input, index) => setValue(input, data[index]));
+    inputs.forEach((input, index) => {
+      setValue(input, data[index]);
+    });
 
     event.preventDefault();
   };
@@ -35,7 +37,7 @@ export default function RHFCodes({
   const handleChangeWithNextField = (
     event: React.ChangeEvent<HTMLInputElement>,
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  ) => {
+  ): void => {
     const { maxLength, value, name } = event.target;
 
     const fieldIndex = name.replace(keyName, "");
@@ -51,7 +53,7 @@ export default function RHFCodes({
     }
 
     if (value.length >= maxLength && fieldIntIndex < 6 && nextfield !== null) {
-      (nextfield as HTMLElement).focus();
+      nextfield.focus();
     }
 
     handleChange(event);
@@ -75,7 +77,9 @@ export default function RHFCodes({
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangeWithNextField(event, field.onChange);
               }}
-              onFocus={(event) => event.currentTarget.select()}
+              onFocus={(event) => {
+                event.currentTarget.select();
+              }}
               InputProps={{
                 sx: {
                   width: { xs: 36, sm: 56 },

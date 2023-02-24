@@ -1,9 +1,9 @@
 // @mui
-import { IconButton } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { IconButton } from "@mui/material";
 // components
-import Iconify from "@components/iconify";
 import { IconButtonAnimate } from "@components/animate";
+import Iconify from "@components/iconify";
 //
 import { Block } from "../../Block";
 
@@ -30,7 +30,7 @@ const style = {
   "& > *": { mx: "8px !important" },
 } as const;
 
-export default function IconButtons() {
+export default function IconButtons(): React.ReactElement {
   return (
     <Masonry columns={2} spacing={3}>
       <Block title="Base" sx={style}>

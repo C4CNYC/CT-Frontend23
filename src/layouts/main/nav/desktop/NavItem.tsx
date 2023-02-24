@@ -3,16 +3,17 @@ import { forwardRef } from "react";
 // next
 import NextLink from "next/link";
 // @mui
-import { Link, LinkProps, CardActionArea } from "@mui/material";
+import { CardActionArea, Link, LinkProps } from "@mui/material";
 // components
-import Image from "@components/image";
 import Iconify from "@components/iconify";
+import Image from "@components/image";
 //
 import { NavItemDesktopProps, NavItemProps } from "../types";
 import { ListItem } from "./styles";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 export const NavItem = forwardRef<HTMLDivElement, NavItemDesktopProps>(
   (
     { item, open, isOffset, active, subItem, isExternalLink, ...other },
@@ -75,7 +76,7 @@ export function NavItemDashboard({
   item,
   sx,
   ...other
-}: NavItemDashboardProps) {
+}: NavItemDashboardProps): React.ReactElement | null {
   return (
     <Link
       component={NextLink}

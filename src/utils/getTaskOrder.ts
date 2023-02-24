@@ -1,5 +1,8 @@
-import { DropResult } from "@hello-pangea/dnd";
-import { IAssignmentsColumn, IAssignmentsCard } from "src/@types/assignments";
+import { type DropResult } from "@hello-pangea/dnd";
+import {
+  type IAssignmentsCard,
+  type IAssignmentsColumn,
+} from "src/@types/assignments";
 
 // solution for count order depend of new position
 
@@ -8,7 +11,7 @@ export function getOrder(
   destColumn: IAssignmentsColumn,
   cards: Record<string, IAssignmentsCard>,
   isSameColumn: boolean
-) {
+): number {
   const { cardIds } = destColumn;
   const { destination, draggableId } = result;
 

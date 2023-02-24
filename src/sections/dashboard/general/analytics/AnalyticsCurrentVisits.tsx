@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 // @mui
-import { useTheme, styled } from "@mui/material/styles";
 import { Card, CardHeader, CardProps } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // utils
 import { fNumber } from "../../../../utils/formatNumber";
 // components
@@ -38,10 +38,10 @@ interface Props extends CardProps {
   subheader?: string;
   chart: {
     colors?: string[];
-    series: {
+    series: Array<{
       label: string;
       value: number;
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
@@ -51,7 +51,7 @@ export default function AnalyticsCurrentVisits({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { colors, series, options } = chart;

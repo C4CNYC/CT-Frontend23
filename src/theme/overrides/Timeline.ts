@@ -1,8 +1,8 @@
-import { Theme } from "@mui/material/styles";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Timeline(theme: Theme) {
+export default function Timeline(theme: Theme): unknown {
   return {
     MuiTimelineDot: {
       styleOverrides: {

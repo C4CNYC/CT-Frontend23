@@ -3,24 +3,21 @@ import { useRef } from "react";
 // @mui
 import { Box, Paper, Typography } from "@mui/material";
 // components
+import { MotionViewport, varContainer } from "@components/animate";
 import Scrollbar from "@components/scrollbar";
-import {
-  MotionViewport,
-  varContainer,
-} from "@components/animate";
 //
 import getVariant from "../getVariant";
 
 // ----------------------------------------------------------------------
 
-type ContainerViewProps = {
+interface ContainerViewProps {
   selectVariant: string;
-};
+}
 
 export default function ContainerView({
   selectVariant,
   ...other
-}: ContainerViewProps) {
+}: ContainerViewProps): React.ReactElement | null {
   const scrollRef = useRef(null);
 
   return (

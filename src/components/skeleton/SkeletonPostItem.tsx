@@ -1,9 +1,11 @@
 // @mui
-import { Box, Skeleton, Grid, GridProps } from "@mui/material";
+import { Box, Grid, GridProps, Skeleton } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonPostItem({ ...other }: GridProps) {
+export default function SkeletonPostItem({
+  ...other
+}: GridProps): React.ReactElement | null {
   return (
     <Grid item xs={12} sm={6} md={3} {...other}>
       <Skeleton

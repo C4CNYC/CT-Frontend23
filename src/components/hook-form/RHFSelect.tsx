@@ -1,19 +1,19 @@
 // form
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import {
   Box,
-  Chip,
-  Select,
   Checkbox,
-  MenuItem,
-  TextField,
-  InputLabel,
-  SelectProps,
+  Chip,
   FormControl,
-  OutlinedInput,
-  TextFieldProps,
   FormHelperText,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  SelectProps,
+  TextField,
+  TextFieldProps,
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
@@ -32,7 +32,7 @@ export function RHFSelect({
   helperText,
   children,
   ...other
-}: RHFSelectProps) {
+}: RHFSelectProps): React.ReactElement | null {
   const { control } = useFormContext();
 
   return (
@@ -85,10 +85,10 @@ interface RHFMultiSelectProps extends SelectProps {
   checkbox?: boolean;
   placeholder?: string;
   helperText?: React.ReactNode;
-  options: {
+  options: Array<{
     label: string;
     value: string;
-  }[];
+  }>;
 }
 
 export function RHFMultiSelect({
@@ -101,10 +101,10 @@ export function RHFMultiSelect({
   helperText,
   sx,
   ...other
-}: RHFMultiSelectProps) {
+}: RHFMultiSelectProps): React.ReactElement | null {
   const { control } = useFormContext();
 
-  const renderValues = (selectedIds: string[]) => {
+  const renderValues = (selectedIds: string[]): React.ReactElement => {
     const selectedItems = options.filter((item) =>
       selectedIds.includes(item.value)
     );

@@ -8,7 +8,7 @@ const series = [
   { name: "Revenue", data: [76, 85, 101, 98, 87, 105, 91, 114, 94] },
 ];
 
-export default function ChartColumnMultiple() {
+export default function ChartColumnMultiple(): React.ReactElement {
   const chartOptions = useChart({
     stroke: {
       show: true,

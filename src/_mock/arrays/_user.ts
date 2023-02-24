@@ -1,5 +1,5 @@
+import { randomInArray, randomNumberRange } from "../utils";
 import _mock from "../_mock";
-import { randomNumberRange, randomInArray } from "../utils";
 
 // ----------------------------------------------------------------------
 
@@ -16,10 +16,10 @@ export const _userAbout = {
   company: _mock.company(1),
   school: _mock.company(2),
   socialLinks: {
-    facebookLink: `https://www.facebook.com/caitlyn.kerluke`,
-    instagramLink: `https://www.instagram.com/caitlyn.kerluke`,
-    linkedinLink: `https://www.linkedin.com/in/caitlyn.kerluke`,
-    twitterLink: `https://www.twitter.com/caitlyn.kerluke`,
+    facebookLink: "https://www.facebook.com/caitlyn.kerluke",
+    instagramLink: "https://www.instagram.com/caitlyn.kerluke",
+    linkedinLink: "https://www.linkedin.com/in/caitlyn.kerluke",
+    twitterLink: "https://www.twitter.com/caitlyn.kerluke",
   },
 };
 

@@ -1,8 +1,8 @@
 // next
 import NextLink from "next/link";
 // @mui
+import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { AppBar, Toolbar, Box, BoxProps, Link } from "@mui/material";
 // config
 import { HEADER } from "../../config-global";
 // utils
@@ -14,11 +14,11 @@ import Logo from "../../components/logo";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   isOffset: boolean;
-};
+}
 
-export default function Header({ isOffset }: Props) {
+export default function Header({ isOffset }: Props): React.ReactElement | null {
   const theme = useTheme();
 
   return (
@@ -61,7 +61,7 @@ export default function Header({ isOffset }: Props) {
 
 // ----------------------------------------------------------------------
 
-function Shadow({ sx, ...other }: BoxProps) {
+function Shadow({ sx, ...other }: BoxProps): React.ReactElement {
   return (
     <Box
       sx={{
@@ -73,7 +73,7 @@ function Shadow({ sx, ...other }: BoxProps) {
         m: "auto",
         borderRadius: "50%",
         position: "absolute",
-        width: `calc(100% - 48px)`,
+        width: "calc(100% - 48px)",
         boxShadow: (theme) => theme.customShadows.z8,
         ...sx,
       }}

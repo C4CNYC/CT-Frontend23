@@ -1,5 +1,5 @@
 // @mui
-import { alpha, Shadows } from "@mui/material/styles";
+import { alpha, type Shadows } from "@mui/material/styles";
 //
 import palette from "./palette";
 
@@ -44,7 +44,7 @@ function createShadow(color: string): Shadows {
   ];
 }
 
-export default function shadows(themeMode: "light" | "dark") {
+export default function shadows(themeMode: "light" | "dark"): Shadows {
   return themeMode === "light"
     ? createShadow(LIGHT_MODE)
     : createShadow(DARK_MODE);

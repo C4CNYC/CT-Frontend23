@@ -1,12 +1,12 @@
 // @mui
 import { alpha, styled } from "@mui/material/styles";
-import { TextField, TextFieldProps } from "@mui/material";
+import { TextField } from "@mui/material";
+import { MuiTextFieldProps } from "@mui/x-date-pickers/internals";
 
 // ----------------------------------------------------------------------
 
-const CustomSmallSelect = styled((props: TextFieldProps) => (
-  <TextField select SelectProps={{ native: true }} {...props} />
-))(({ theme }) => ({
+const CustomSmallSelect = styled((props: MuiTextFieldProps): React.ReactElement => <TextField select SelectProps={{ native: true }} {...props} />
+  )(({ theme }) => ({
   "& fieldset": {
     display: "none",
   },

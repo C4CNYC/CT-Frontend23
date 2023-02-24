@@ -1,29 +1,27 @@
 // @mui
-import { Box, Grid, Card, Button, Typography, Stack } from "@mui/material";
-// @types
+import { Box, Button, Card, Grid, Stack, Typography } from "@mui/material";
 import {
-  IUserAccountBillingCreditCard,
   IUserAccountBillingAddress,
+  IUserAccountBillingCreditCard,
   IUserAccountBillingInvoice,
-} from "../../../../../@types/user";
-//
+} from "src/@types/courses";
 import AccountBillingAddressBook from "./AccountBillingAddressBook";
-import AccountBillingPaymentMethod from "./AccountBillingPaymentMethod";
 import AccountBillingInvoiceHistory from "./AccountBillingInvoiceHistory";
+import AccountBillingPaymentMethod from "./AccountBillingPaymentMethod";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   cards: IUserAccountBillingCreditCard[];
   invoices: IUserAccountBillingInvoice[];
   addressBook: IUserAccountBillingAddress[];
-};
+}
 
 export default function AccountBilling({
   cards,
   addressBook,
   invoices,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} md={8}>

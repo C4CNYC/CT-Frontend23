@@ -8,7 +8,7 @@ import { StyledControlPanel } from "@components/map";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   startTime: number;
   endTime: number;
   allDays: boolean;
@@ -23,15 +23,16 @@ function ControlPanel({
   allDays,
   selectedTime,
   onChangeTime,
-  onChangeAllDays,
-}: Props) {
+  onChangeAllDays
+}:
+Props): React.ReactElement | null {
   const day = 24 * 60 * 60 * 1000;
 
   const days = Math.round((endTime - startTime) / day);
 
   const selectedDay = Math.round((selectedTime - startTime) / day);
 
-  const handleChangeDays = (value: number) => {
+  const handleChangeDays = (value: number): void => {
     const daysToAdd = value;
 
     const newTime = startTime + daysToAdd * day;
@@ -56,7 +57,7 @@ function ControlPanel({
         <Switch
           size="small"
           checked={allDays}
-          onChange={(event) => onChangeAllDays(event.target.checked)}
+          onChange={(event) => { onChangeAllDays(event.target.checked); }}
         />
       </Box>
 

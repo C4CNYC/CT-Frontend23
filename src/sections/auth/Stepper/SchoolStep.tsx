@@ -1,31 +1,28 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
 import { Box, Button, Select, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { useForm } from "react-hook-form";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
+import * as React from "react";
+import { useForm } from "react-hook-form";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
 import { countries } from "../../../assets/data";
-import { RHFSelect } from "@components/hook-form";
 
-type SchoolStepProps = {
+interface SchoolStepProps {
   next: () => void;
-};
+}
 
-export default function SchoolStep({ next }: SchoolStepProps) {
+export default function SchoolStep({
+  next,
+}: SchoolStepProps): React.ReactElement | null {
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const theme = useTheme();
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const { orgId } = router.query;
   // #TODO when ortId doesn't exist pls back user to prev step
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any): Promise<void> => {
     try {
       const school = await createSchool({
         ...data,

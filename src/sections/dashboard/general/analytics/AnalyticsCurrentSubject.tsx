@@ -1,7 +1,7 @@
 import { ApexOptions } from "apexcharts";
 // @mui
-import { styled, useTheme } from "@mui/material/styles";
 import { Card, CardHeader, CardProps } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // components
 import Chart, { useChart } from "@components/chart";
 
@@ -37,10 +37,10 @@ interface Props extends CardProps {
   chart: {
     categories: string[];
     colors?: string[];
-    series: {
+    series: Array<{
       name: string;
       data: number[];
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
@@ -50,7 +50,7 @@ export default function AnalyticsCurrentSubject({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { series, colors, categories, options } = chart;

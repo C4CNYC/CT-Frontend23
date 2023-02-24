@@ -1,6 +1,6 @@
 // @mui
-import { alpha, Theme, styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { alpha, styled, Theme } from "@mui/material/styles";
 //
 import { LabelColor, LabelVariant } from "./types";
 

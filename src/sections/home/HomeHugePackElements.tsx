@@ -1,36 +1,36 @@
-import { useState, useEffect } from "react";
 import { m } from "framer-motion";
+import { useEffect, useState } from "react";
 // @mui
-import { alpha, styled } from "@mui/material/styles";
 import {
-  Fab,
-  Tab,
-  Box,
-  Grid,
-  Tabs,
-  Chip,
   Alert,
-  Stack,
-  Radio,
-  Paper,
+  AlertTitle,
+  Box,
   Button,
+  CardHeader,
+  Checkbox,
+  Chip,
+  CircularProgress,
+  Container,
+  Fab,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  MenuItem,
+  Pagination,
+  Paper,
+  Radio,
   Rating,
   Slider,
+  Stack,
   Switch,
-  MenuItem,
-  Checkbox,
-  Container,
+  Tab,
+  Tabs,
   TextField,
-  Typography,
-  AlertTitle,
-  Pagination,
-  CardHeader,
-  IconButton,
   ToggleButton,
-  CircularProgress,
-  FormControlLabel,
   ToggleButtonGroup,
+  Typography,
 } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // utils
@@ -40,17 +40,17 @@ import { PATH_PAGE } from "../../routes/paths";
 // _mock
 import _mock from "../../_mock";
 // components
-import Label from "../../components/label";
-import Image from "../../components/image";
-import Iconify from "../../components/iconify";
-import Scrollbar from "../../components/scrollbar";
-import MenuPopover from "../../components/menu-popover";
+import { MotionViewport, varFade } from "../../components/animate";
 import BadgeStatus from "../../components/badge-status";
 import {
   CustomAvatar,
   CustomAvatarGroup,
 } from "../../components/custom-avatar";
-import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
+import Image from "../../components/image";
+import Label from "../../components/label";
+import MenuPopover from "../../components/menu-popover";
+import Scrollbar from "../../components/scrollbar";
 
 // ----------------------------------------------------------------------
 
@@ -107,7 +107,7 @@ const StyledRow = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeHugePackElements() {
+export default function HomeHugePackElements(): React.ReactElement {
   const isDesktop = useResponsive("up", "md");
 
   return (
@@ -139,7 +139,7 @@ export default function HomeHugePackElements() {
 
 // ----------------------------------------------------------------------
 
-function Description() {
+function Description(): React.ReactElement | null {
   const isDesktop = useResponsive("up", "md");
 
   return (
@@ -180,7 +180,7 @@ function Description() {
 
 // ----------------------------------------------------------------------
 
-function Content() {
+function Content(): React.ReactElement | null {
   const isMd = useResponsive("up", "md");
 
   const isLg = useResponsive("up", "lg");
@@ -199,13 +199,15 @@ function Content() {
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
@@ -247,7 +249,9 @@ function Content() {
         <m.div variants={varFade().in}>
           <Tabs
             value={currentTab}
-            onChange={(event, newValue) => setCurrentTab(newValue)}
+            onChange={(event, newValue) => {
+              setCurrentTab(newValue);
+            }}
             sx={{
               borderBottom: (theme) => `solid 1px ${theme.palette.divider}`,
             }}

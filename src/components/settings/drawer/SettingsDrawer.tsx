@@ -1,15 +1,15 @@
 import { useState } from "react";
 // @mui
-import { alpha, useTheme } from "@mui/material/styles";
 import {
   Box,
   Divider,
   Drawer,
-  Stack,
-  Typography,
-  Tooltip,
   IconButton,
+  Stack,
+  Tooltip,
+  Typography,
 } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../../utils/cssStyles";
 // config
@@ -20,22 +20,22 @@ import Scrollbar from "../../scrollbar";
 //
 import { defaultSettings } from "../config-setting";
 import { useSettingsContext } from "../SettingsContext";
-import Block from "./Block";
 import BadgeDot from "./BadgeDot";
-import ToggleButton from "./ToggleButton";
-import ModeOptions from "./ModeOptions";
-import LayoutOptions from "./LayoutOptions";
-import StretchOptions from "./StretchOptions";
+import Block from "./Block";
+import ColorPresetsOptions from "./ColorPresetsOptions";
 import ContrastOptions from "./ContrastOptions";
 import DirectionOptions from "./DirectionOptions";
 import FullScreenOptions from "./FullScreenOptions";
-import ColorPresetsOptions from "./ColorPresetsOptions";
+import LayoutOptions from "./LayoutOptions";
+import ModeOptions from "./ModeOptions";
+import StretchOptions from "./StretchOptions";
+import ToggleButton from "./ToggleButton";
 
 // ----------------------------------------------------------------------
 
 const SPACING = 2.5;
 
-export default function SettingsDrawer() {
+export default function SettingsDrawer(): React.ReactElement {
   const {
     themeMode,
     themeLayout,
@@ -50,11 +50,11 @@ export default function SettingsDrawer() {
 
   const [open, setOpen] = useState(false);
 
-  const handleToggle = () => {
+  const handleToggle = (): void => {
     setOpen(!open);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

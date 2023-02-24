@@ -3,12 +3,12 @@ import Head from "next/head";
 // @mui
 import {
   Box,
-  Container,
-  Stack,
   Card,
   CardHeader,
-  Typography,
+  Container,
   Link,
+  Stack,
+  Typography,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -46,7 +46,7 @@ MUIDataGridPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIDataGridPage() {
+export default function MUIDataGridPage(): React.ReactElement {
   return (
     <>
       <Head>

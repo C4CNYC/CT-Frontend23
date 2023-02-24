@@ -1,6 +1,6 @@
 // @mui
-import { ButtonGroup, Button } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Button, ButtonGroup } from "@mui/material";
 //
 import { Block } from "../../Block";
 
@@ -30,7 +30,7 @@ const VARIANTS = ["contained", "outlined", "text", "soft"] as const;
 
 // ----------------------------------------------------------------------
 
-export default function ButtonGroups() {
+export default function ButtonGroups(): React.ReactElement {
   return (
     <Masonry columns={2} spacing={3}>
       <Block title="Contained" sx={style}>

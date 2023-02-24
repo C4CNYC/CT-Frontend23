@@ -2,15 +2,15 @@ import { useState } from "react";
 // next
 import Head from "next/head";
 // @mui
+import { Masonry } from "@mui/lab";
 import {
   Box,
-  Radio,
   Container,
-  RadioGroup,
   FormControl,
   FormControlLabel,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
-import { Masonry } from "@mui/lab";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -50,10 +50,10 @@ MUIRadioButtonsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIRadioButtonsPage() {
+export default function MUIRadioButtonsPage(): React.ReactElement {
   const [value, setValue] = useState("a1");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setValue((event.target as HTMLInputElement).value);
   };
 

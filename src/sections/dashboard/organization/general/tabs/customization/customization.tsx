@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { useGetOrgCustomizationQuery } from "src/redux/services/admin";
 import CustomizationForm from "./CustomizationForm";
 
-export default function UserProfileTab() {
+export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgCustomizationQuery();
 
   return (

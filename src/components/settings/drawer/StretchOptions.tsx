@@ -1,14 +1,14 @@
 // @mui
-import { Stack, Box } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 //
 import Iconify from "../../iconify";
 //
-import { StyledCard } from "../styles";
 import { useSettingsContext } from "../SettingsContext";
+import { StyledCard } from "../styles";
 
 // ----------------------------------------------------------------------
 
-export default function StretchOptions() {
+export default function StretchOptions(): React.ReactElement {
   const { themeStretch, onToggleStretch } = useSettingsContext();
 
   return (
@@ -37,7 +37,7 @@ export default function StretchOptions() {
           }
         />
 
-        <Box sx={{ flexGrow: 1, borderBottom: `dashed 1.5px currentcolor` }} />
+        <Box sx={{ flexGrow: 1, borderBottom: "dashed 1.5px currentcolor" }} />
 
         <Iconify
           icon={

@@ -3,20 +3,20 @@ import Head from "next/head";
 // @mui
 import {
   Box,
-  Link,
-  Stack,
+  Breadcrumbs,
   Button,
   Container,
+  Link,
+  Stack,
   Typography,
-  Breadcrumbs,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -28,7 +28,7 @@ MUIBreadcrumbsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIBreadcrumbsPage() {
+export default function MUIBreadcrumbsPage(): React.ReactElement {
   return (
     <>
       <Head>

@@ -1,7 +1,7 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Paper, Container, Stack } from "@mui/material";
+import { Box, Container, Paper, Stack } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -11,9 +11,9 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import { Block } from "@sections/_examples/Block";
 import CustomizedStepper from "@sections/_examples/mui/stepper/CustomizedStepper";
-import VerticalLinearStepper from "@sections/_examples/mui/stepper/VerticalLinearStepper";
-import LinearAlternativeLabel from "@sections/_examples/mui/stepper/LinearAlternativeLabel";
 import HorizontalLinearStepper from "@sections/_examples/mui/stepper/HorizontalLinearStepper";
+import LinearAlternativeLabel from "@sections/_examples/mui/stepper/LinearAlternativeLabel";
+import VerticalLinearStepper from "@sections/_examples/mui/stepper/VerticalLinearStepper";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ MUIStepperPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIStepperPage() {
+export default function MUIStepperPage(): React.ReactElement {
   return (
     <>
       <Head>

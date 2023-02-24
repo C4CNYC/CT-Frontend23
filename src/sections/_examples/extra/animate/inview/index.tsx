@@ -2,13 +2,13 @@ import { useState } from "react";
 // @mui
 import { Card, Grid } from "@mui/material";
 //
-import Toolbar from "./Toolbar";
 import ControlPanel from "../ControlPanel";
 import ContainerView from "./ContainerView";
+import Toolbar from "./Toolbar";
 
 // ----------------------------------------------------------------------
 
-export default function Inview() {
+export default function Inview(): React.ReactElement {
   const [count, setCount] = useState(0);
 
   const [multi, setMulti] = useState(false);
@@ -17,7 +17,7 @@ export default function Inview() {
 
   const [selectVariant, setSelectVariant] = useState("slideInUp");
 
-  const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCount(count + 1);
     setSelectVariant((event.target as HTMLInputElement).value);
   };
@@ -29,9 +29,15 @@ export default function Inview() {
           <Toolbar
             isText={text}
             isMulti={multi}
-            onChangeText={(event) => setText(event.target.checked)}
-            onChangeMulti={(event) => setMulti(event.target.checked)}
-            onRefresh={() => setCount(count + 1)}
+            onChangeText={(event) => {
+              setText(event.target.checked);
+            }}
+            onChangeMulti={(event) => {
+              setMulti(event.target.checked);
+            }}
+            onRefresh={() => {
+              setCount(count + 1);
+            }}
           />
         </Grid>
       </Grid>

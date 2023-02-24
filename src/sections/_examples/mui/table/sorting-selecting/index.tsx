@@ -1,39 +1,39 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // @mui
 import {
-  Table,
-  Tooltip,
   Checkbox,
-  TableRow,
+  IconButton,
+  Table,
   TableBody,
   TableCell,
-  IconButton,
   TableContainer,
+  TableRow,
+  Tooltip,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 import Scrollbar from "@components/scrollbar";
 import {
-  useTable,
   emptyRows,
   getComparator,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
   TablePaginationCustom,
+  TableSelectedAction,
+  useTable,
 } from "@components/table";
 //
 import SortingSelectingToolbar from "./SortingSelectingToolbar";
 
 // ----------------------------------------------------------------------
 
-type RowDataType = {
+interface RowDataType {
   name: string;
   calories: number;
   fat: number;
   carbs: number;
   protein: number;
-};
+}
 
 function createData(
   name: string,
@@ -41,11 +41,11 @@ function createData(
   fat: number,
   carbs: number,
   protein: number
-) {
+): RowDataType {
   return { name, calories, fat, carbs, protein };
 }
 
-const TABLE_DATA = [
+const TABLE_DATA: RowDataType[] = [
   createData("Cupcake", 305, 3.7, 67, 4.3),
   createData("Donut", 452, 25.0, 51, 4.9),
   createData("Eclair", 262, 16.0, 24, 6.0),
@@ -70,7 +70,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function SortingSelecting() {
+export default function SortingSelecting(): React.ReactElement {
   const {
     dense,
     page,
@@ -94,7 +94,9 @@ export default function SortingSelecting() {
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setTableData(TABLE_DATA);
@@ -116,12 +118,12 @@ export default function SortingSelecting() {
           dense={dense}
           numSelected={selected.length}
           rowCount={tableData.length}
-          onSelectAllRows={(checked) =>
+          onSelectAllRows={(checked) => {
             onSelectAllRows(
               checked,
               tableData.map((row) => row.name)
-            )
-          }
+            );
+          }}
           action={
             <Tooltip title="Delete">
               <IconButton color="primary">
@@ -140,12 +142,12 @@ export default function SortingSelecting() {
               rowCount={tableData.length}
               numSelected={selected.length}
               onSort={onSort}
-              onSelectAllRows={(checked) =>
+              onSelectAllRows={(checked) => {
                 onSelectAllRows(
                   checked,
                   tableData.map((row) => row.name)
-                )
-              }
+                );
+              }}
             />
 
             <TableBody>
@@ -155,7 +157,9 @@ export default function SortingSelecting() {
                   <TableRow
                     hover
                     key={row.name}
-                    onClick={() => onSelectRow(row.name)}
+                    onClick={() => {
+                      onSelectRow(row.name);
+                    }}
                     selected={selected.includes(row.name)}
                   >
                     <TableCell padding="checkbox">

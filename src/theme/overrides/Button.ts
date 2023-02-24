@@ -1,5 +1,5 @@
-import { alpha, Theme } from "@mui/material/styles";
 import { ButtonProps } from "@mui/material";
+import { alpha, Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -19,10 +19,10 @@ declare module "@mui/material/Button" {
   }
 }
 
-export default function Button(theme: Theme) {
+export default function Button(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
-  const rootStyle = (ownerState: ButtonProps) => {
+  const rootStyle = (ownerState: ButtonProps): unknown => {
     const inheritColor = ownerState.color === "inherit";
 
     const containedVariant = ownerState.variant === "contained";

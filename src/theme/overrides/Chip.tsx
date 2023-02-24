@@ -1,5 +1,5 @@
-import { alpha, Theme } from "@mui/material/styles";
 import { ChipProps } from "@mui/material";
+import { alpha, Theme } from "@mui/material/styles";
 //
 import { CloseIcon } from "./CustomIcons";
 
@@ -21,10 +21,10 @@ declare module "@mui/material/Chip" {
   }
 }
 
-export default function Chip(theme: Theme) {
+export default function Chip(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
-  const rootStyle = (ownerState: ChipProps) => {
+  const rootStyle = (ownerState: ChipProps): unknown => {
     const defaultColor = ownerState.color === "default";
 
     const filledVariant = ownerState.variant === "filled";

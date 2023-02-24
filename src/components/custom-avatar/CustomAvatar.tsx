@@ -1,14 +1,14 @@
-import { forwardRef } from "react";
+import { Avatar, Badge } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Badge, Avatar } from "@mui/material";
+import { forwardRef } from "react";
 //
 import { CustomAvatarProps } from "./types";
 
 // ----------------------------------------------------------------------
 
-const getCharAtName = (name: string) => name && name.charAt(0).toUpperCase();
+const getCharAtName = (name: string): string => name?.charAt(0).toUpperCase();
 
-const getColorByName = (name: string) => {
+const getColorByName = (name: string): string => {
   if (["A", "N", "H", "L", "Q"].includes(getCharAtName(name))) return "primary";
   if (["F", "G", "T", "I", "J"].includes(getCharAtName(name))) return "info";
   if (["K", "D", "Y", "B", "O"].includes(getCharAtName(name))) return "success";
@@ -19,6 +19,7 @@ const getColorByName = (name: string) => {
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
   ({ color, name = "", BadgeProps, children, sx, ...other }, ref) => {
     const theme = useTheme();
@@ -27,15 +28,17 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
 
     const colorByName = getColorByName(name);
 
-    const colr = color || colorByName;
+    const colr = color ?? colorByName;
 
     const renderContent =
-      colr === "default" ? (
+      colr === "default"
+? (
         <Avatar ref={ref} sx={sx} {...other}>
           {name && charAtName}
           {children}
         </Avatar>
-      ) : (
+      )
+: (
         <Avatar
           ref={ref}
           sx={{
@@ -51,7 +54,8 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
         </Avatar>
       );
 
-    return BadgeProps ? (
+    return BadgeProps
+? (
       <Badge
         overlap="circular"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -59,7 +63,8 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
       >
         {renderContent}
       </Badge>
-    ) : (
+    )
+: (
       renderContent
     );
   }

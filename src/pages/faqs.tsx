@@ -5,7 +5,7 @@ import { Box, Container, Typography } from "@mui/material";
 // layouts
 import MainLayout from "../layouts/main";
 // sections
-import { FaqsHero, FaqsCategory, FaqsList, FaqsForm } from "../sections/faqs";
+import { FaqsCategory, FaqsForm, FaqsHero, FaqsList } from "../sections/faqs";
 
 // ----------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ FaqsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function FaqsPage() {
+export default function FaqsPage(): React.ReactElement {
   return (
     <>
       <Head>

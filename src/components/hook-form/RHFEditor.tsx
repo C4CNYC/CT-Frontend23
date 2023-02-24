@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 // form
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import { FormHelperText } from "@mui/material";
 //
@@ -12,7 +12,11 @@ interface Props extends EditorProps {
   name: string;
 }
 
-export default function RHFEditor({ name, helperText, ...other }: Props) {
+export default function RHFEditor({
+  name,
+  helperText,
+  ...other
+}: Props): React.ReactElement | null {
   const {
     control,
     watch,

@@ -11,11 +11,11 @@ import MainLayout from "../../../layouts/main";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import {
+  BackgroundView,
+  DialogView,
   Inview,
   OtherView,
   ScrollView,
-  DialogView,
-  BackgroundView,
 } from "@sections/_examples/extra/animate";
 
 // ----------------------------------------------------------------------
@@ -36,7 +36,7 @@ DemoAnimatePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoAnimatePage() {
+export default function DemoAnimatePage(): React.ReactElement {
   const [currentTab, setCurrentTab] = useState("inview");
 
   return (
@@ -71,7 +71,9 @@ export default function DemoAnimatePage() {
       <Container sx={{ my: 10 }}>
         <Tabs
           value={currentTab}
-          onChange={(event, newValue) => setCurrentTab(newValue)}
+          onChange={(event, newValue) => {
+            setCurrentTab(newValue);
+          }}
         >
           {TABS.map((tab) => (
             <Tab key={tab.value} value={tab.value} label={tab.label} />

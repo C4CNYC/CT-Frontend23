@@ -1,5 +1,5 @@
 // @mui
-import { useTheme, Breakpoint } from "@mui/material/styles";
+import { Breakpoint, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // ----------------------------------------------------------------------
@@ -46,17 +46,16 @@ export default function useResponsive(
 
 type BreakpointOrNull = Breakpoint | null;
 
-export function useWidth() {
+export function useWidth(): string {
   const theme = useTheme();
 
   const keys = [...theme.breakpoints.keys].reverse();
 
   return (
     keys.reduce((output: BreakpointOrNull, key: Breakpoint) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const matches = useMediaQuery(theme.breakpoints.up(key));
 
       return !output && matches ? key : output;
-    }, null) || "xs"
+    }, null) ?? "xs"
   );
 }

@@ -1,18 +1,18 @@
 // @mui
-import { alpha, useTheme, styled } from "@mui/material/styles";
 import {
   Box,
-  Card,
   Button,
+  Card,
   CardContent,
-  Typography,
   CardProps,
+  Typography,
 } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from "@components/image";
 import Carousel, { CarouselDots } from "@components/carousel";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
@@ -31,17 +31,20 @@ const StyledOverlay = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   image: string;
   name: string;
-};
+}
 
 interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function EcommerceNewProducts({ list, ...other }: Props) {
+export default function EcommerceNewProducts({
+  list,
+  ...other
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselSettings = {
@@ -74,11 +77,11 @@ export default function EcommerceNewProducts({ list, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   item: ItemProps;
-};
+}
 
-function CarouselItem({ item }: CarouselItemProps) {
+function CarouselItem({ item }: CarouselItemProps): React.ReactElement | null {
   const { image, name } = item;
 
   return (

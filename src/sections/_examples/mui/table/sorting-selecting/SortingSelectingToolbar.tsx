@@ -1,10 +1,10 @@
-import { Tooltip, Typography, IconButton, Stack } from "@mui/material";
+import { IconButton, Stack, Tooltip, Typography } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
-export default function SortingSelectingToolbar() {
+export default function SortingSelectingToolbar(): React.ReactElement {
   return (
     <Stack
       direction="row"

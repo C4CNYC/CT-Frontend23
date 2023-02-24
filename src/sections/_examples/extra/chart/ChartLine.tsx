@@ -10,7 +10,7 @@ const series = [
   },
 ];
 
-export default function ChartLine() {
+export default function ChartLine(): React.ReactElement {
   const chartOptions = useChart({
     xaxis: {
       categories: [

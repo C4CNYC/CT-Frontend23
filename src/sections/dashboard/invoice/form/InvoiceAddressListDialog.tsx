@@ -1,13 +1,13 @@
 import { useState } from "react";
 // @mui
 import {
-  Stack,
-  Dialog,
   Button,
+  Dialog,
+  InputAdornment,
+  ListItemButton,
+  Stack,
   TextField,
   Typography,
-  ListItemButton,
-  InputAdornment,
 } from "@mui/material";
 // @types
 import { IInvoiceAddress } from "../../../../@types/invoice";
@@ -18,13 +18,13 @@ import SearchNotFound from "@components/search-not-found";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   open: boolean;
   selected: (selectedId: string) => boolean;
   onClose: VoidFunction;
   onSelect: (address: IInvoiceAddress | null) => void;
   addressOptions: IInvoiceAddress[];
-};
+}
 
 export default function InvoiceAddressListDialog({
   open,
@@ -32,18 +32,20 @@ export default function InvoiceAddressListDialog({
   onClose,
   onSelect,
   addressOptions,
-}: Props) {
+}: Props): React.ReactElement | null {
   const [searchAddress, setSearchAddress] = useState("");
 
   const dataFiltered = applyFilter(addressOptions, searchAddress);
 
   const isNotFound = !dataFiltered.length && !!searchAddress;
 
-  const handleSearchAddress = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchAddress = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setSearchAddress(event.target.value);
   };
 
-  const handleSelectAddress = (address: IInvoiceAddress | null) => {
+  const handleSelectAddress = (address: IInvoiceAddress | null): void => {
     onSelect(address);
     setSearchAddress("");
     onClose();
@@ -86,15 +88,19 @@ export default function InvoiceAddressListDialog({
         />
       </Stack>
 
-      {isNotFound ? (
+      {isNotFound
+? (
         <SearchNotFound query={searchAddress} sx={{ px: 3, pt: 5, pb: 10 }} />
-      ) : (
+      )
+: (
         <Scrollbar sx={{ p: 1.5, pt: 0, maxHeight: 80 * 8 }}>
           {dataFiltered.map((address) => (
             <ListItemButton
               key={address.id}
               selected={selected(address.id)}
-              onClick={() => handleSelectAddress(address)}
+              onClick={() => {
+                handleSelectAddress(address);
+              }}
               sx={{
                 p: 1.5,
                 borderRadius: 1,
@@ -135,13 +141,16 @@ export default function InvoiceAddressListDialog({
 
 // ----------------------------------------------------------------------
 
-function applyFilter(array: IInvoiceAddress[], query: string) {
+function applyFilter(
+  array: IInvoiceAddress[],
+  query: string
+): IInvoiceAddress[] {
   if (query) {
     return array.filter(
       (address) =>
-        address.name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        address.company.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        address.address.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        address.name.toLowerCase().includes(query.toLowerCase()) ||
+        address.company.toLowerCase().includes(query.toLowerCase()) ||
+        address.address.toLowerCase().includes(query.toLowerCase())
     );
   }
 

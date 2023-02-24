@@ -1,23 +1,27 @@
 import {
   Avatar,
   Button,
-  Tooltip,
   ListItem,
-  ListItemText,
   ListItemAvatar,
+  ListItemText,
+  Tooltip,
 } from "@mui/material";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   invited: boolean;
   addHandler: () => void;
   person: IUser & BaseResponseInterface;
-};
+}
 
-export default function UserItem({ person, addHandler, invited }: Props) {
+export default function UserItem({
+  person,
+  addHandler,
+  invited,
+}: Props): React.ReactElement | null {
   return (
     <>
       <ListItem disableGutters>
@@ -26,7 +30,7 @@ export default function UserItem({ person, addHandler, invited }: Props) {
         </ListItemAvatar>
 
         <ListItemText
-          primary={`${person.first_name} ${person.last_name}`}
+          primary={`${person?.first_name} ${person?.last_name}`}
           secondary={
             <Tooltip title={person.email}>
               <span>{person.email}</span>

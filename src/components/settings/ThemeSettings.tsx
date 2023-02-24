@@ -1,15 +1,17 @@
+import SettingsDrawer from "./drawer";
+import ThemeColorPresets from "./ThemeColorPresets";
 import ThemeContrast from "./ThemeContrast";
 import ThemeRtlLayout from "./ThemeRtlLayout";
-import ThemeColorPresets from "./ThemeColorPresets";
-import SettingsDrawer from "./drawer";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-export default function ThemeSettings({ children }: Props) {
+export default function ThemeSettings({
+  children,
+}: Props): React.ReactElement | null {
   return (
     <ThemeColorPresets>
       <ThemeContrast>

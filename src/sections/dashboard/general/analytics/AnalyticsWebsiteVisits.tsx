@@ -1,6 +1,6 @@
 import { ApexOptions } from "apexcharts";
 // @mui
-import { Card, CardHeader, Box, CardProps } from "@mui/material";
+import { Box, Card, CardHeader, CardProps } from "@mui/material";
 // components
 import Chart, { useChart } from "@components/chart";
 
@@ -12,12 +12,12 @@ interface Props extends CardProps {
   chart: {
     labels: string[];
     colors?: string[];
-    series: {
+    series: Array<{
       name: string;
       type: string;
       fill?: string;
       data: number[];
-    }[];
+    }>;
     options?: ApexOptions;
   };
 }
@@ -27,7 +27,7 @@ export default function AnalyticsWebsiteVisits({
   subheader,
   chart,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { labels, colors, series, options } = chart;
 
   const chartOptions = useChart({

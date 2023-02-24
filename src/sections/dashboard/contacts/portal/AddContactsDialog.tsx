@@ -1,40 +1,30 @@
+import FormProvider, { RHFTextField } from "@components/hook-form";
+import { useSnackbar } from "@components/snackbar";
+import { yupResolver } from "@hookform/resolvers/yup";
+import AddIcon from "@mui/icons-material/Add";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, Card, Grid } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
 import { useState } from "react";
-import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-  RHFUploadAvatar,
-} from "@components/hook-form";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import { countries } from "../../../../assets/data";
-import { LoadingButton } from "@mui/lab";
-import { useSnackbar } from "@components/snackbar";
-import * as Yup from "yup";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useCallback } from "react";
-import AddIcon from "@mui/icons-material/Add";
+import * as Yup from "yup";
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
   phoneNumber: string | null;
   email: string | null;
-};
+}
 
-export default function AddContactsDialog() {
+export default function AddContactsDialog(): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
   const { enqueueSnackbar } = useSnackbar();
@@ -63,7 +53,7 @@ export default function AddContactsDialog() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Update success!");

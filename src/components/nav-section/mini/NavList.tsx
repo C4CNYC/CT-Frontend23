@@ -1,22 +1,26 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 // next
 import { useRouter } from "next/router";
 // hooks
 import useActiveLink from "../../../hooks/useActiveLink";
 //
 import { NavListProps } from "../types";
-import { StyledPopover } from "./styles";
 import NavItem from "./NavItem";
+import { StyledPopover } from "./styles";
 
 // ----------------------------------------------------------------------
 
-type NavListRootProps = {
+interface NavListRootProps {
   data: NavListProps;
   depth: number;
   hasChild: boolean;
-};
+}
 
-export default function NavList({ data, depth, hasChild }: NavListRootProps) {
+export default function NavList({
+  data,
+  depth,
+  hasChild,
+}: NavListRootProps): React.ReactElement | null {
   const navRef = useRef(null);
 
   const { pathname } = useRouter();
@@ -29,16 +33,13 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
     if (open) {
       handleClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   useEffect(() => {
-    const appBarEl = Array.from(
-      document.querySelectorAll(".MuiAppBar-root")
-    ) as Array<HTMLElement>;
+    const appBarEl = Array.from(document.querySelectorAll(".MuiAppBar-root"));
 
     // Reset styles when hover
-    const styles = () => {
+    const styles = (): void => {
       document.body.style.overflow = "";
       document.body.style.padding = "";
       // Apply for Window
@@ -54,11 +55,11 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
     }
   }, [open]);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -95,12 +96,15 @@ export default function NavList({ data, depth, hasChild }: NavListRootProps) {
 
 // ----------------------------------------------------------------------
 
-type NavListSubProps = {
+interface NavListSubProps {
   data: NavListProps[];
   depth: number;
-};
+}
 
-function NavSubList({ data, depth }: NavListSubProps) {
+function NavSubList({
+  data,
+  depth,
+}: NavListSubProps): React.ReactElement | null {
   return (
     <>
       {data.map((list) => (

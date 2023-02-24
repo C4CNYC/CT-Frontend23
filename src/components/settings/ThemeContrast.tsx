@@ -1,18 +1,20 @@
 import merge from "lodash/merge";
 import { useMemo } from "react";
 // @mui
-import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 //
 import { useSettingsContext } from "./SettingsContext";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-export default function ThemeContrast({ children }: Props) {
+export default function ThemeContrast({
+  children,
+}: Props): React.ReactElement | null {
   const outerTheme = useTheme();
 
   const { themeContrast, themeMode } = useSettingsContext();
@@ -44,8 +46,6 @@ export default function ThemeContrast({ children }: Props) {
         },
       },
     }),
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isLight, themeContrast]
   );
 

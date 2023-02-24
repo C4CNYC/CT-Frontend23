@@ -1,42 +1,44 @@
-import { useState } from "react";
-import {
-  Box,
-  Avatar,
-  Dialog,
-  Button,
-  ListItem,
-  TextField,
-  Typography,
-  ListItemText,
-  ListItemAvatar,
-  InputAdornment,
-  DialogTitle,
-  DialogContent,
-} from "@mui/material";
-import { _contacts } from "../../../_mock/arrays";
 import Iconify from "@components/iconify";
 import Scrollbar from "@components/scrollbar";
 import SearchNotFound from "@components/search-not-found";
-import { IAssignments, IAssignmentsAssignee } from "../../../@types/assignments";
+import {
+  Avatar,
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  InputAdornment,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { IAssignmentsAssignee } from "../../../@types/assignments";
+import { _contacts } from "../../../_mock/arrays";
 
 // ----------------------------------------------------------------------
 
 const ITEM_HEIGHT = 64;
 
-type Props = {
+interface Props {
   assignee?: IAssignmentsAssignee[];
   open: boolean;
   onClose: VoidFunction;
-};
+}
 
 export default function AssignmentsContactsDialog({
   assignee = [],
   open,
   onClose,
-}: Props) {
+}: Props): React.ReactElement | null {
   const [searchContacts, setSearchContacts] = useState("");
 
-  const handleSearchContacts = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchContacts = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setSearchContacts(event.target.value);
   };
 
@@ -73,16 +75,18 @@ export default function AssignmentsContactsDialog({
       </Box>
 
       <DialogContent sx={{ p: 0 }}>
-        {isNotFound ? (
+        {isNotFound
+? (
           <SearchNotFound query={searchContacts} sx={{ mt: 3, mb: 10 }} />
-        ) : (
+        )
+: (
           <Scrollbar
             sx={{
               px: 2.5,
               height: ITEM_HEIGHT * 6,
             }}
           >
-            {dataFiltered.map((contact) => {
+            {dataFiltered.map((contact: any) => {
               const checked = assignee
                 .map((person) => person.name)
                 .includes(contact.name);
@@ -139,12 +143,12 @@ function applyFilter({
 }: {
   inputData: IAssignmentsAssignee[];
   query: string;
-}) {
+}): any {
   if (query) {
     inputData = inputData.filter(
       (contact) =>
-        contact.name.toLowerCase().indexOf(query.toLowerCase()) !== -1 ||
-        contact.email.toLowerCase().indexOf(query.toLowerCase()) !== -1
+        contact.name.toLowerCase().includes(query.toLowerCase()) ||
+        contact.email.toLowerCase().includes(query.toLowerCase())
     );
   }
 

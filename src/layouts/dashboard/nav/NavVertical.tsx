@@ -1,31 +1,34 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { Box, Stack, Drawer } from "@mui/material";
-import useResponsive from "../../../hooks/useResponsive";
-import { NAV } from "../../../config-global";
 import Logo from "@components/logo";
-import Scrollbar from "@components/scrollbar";
 import { NavSectionVertical } from "@components/nav-section";
-import { admin, managment, content } from "./config-navigation";
-import NavToggleButton from "./NavToggleButton";
-import { Role } from "src/redux/services/enums/role.enum";
+import Scrollbar from "@components/scrollbar";
+import { Box, Drawer, Stack } from "@mui/material";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 import UserSection from "src/components/user-section";
+import { Role } from "src/redux/services/enums/role.enum";
+import { RootState } from "src/redux/store";
+import { NAV } from "../../../config-global";
+import useResponsive from "../../../hooks/useResponsive";
+import { admin, content, managment } from "./config-navigation";
+import NavToggleButton from "./NavToggleButton";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   openNav: boolean;
   onCloseNav: VoidFunction;
-};
+}
 
-export default function NavVertical({ openNav, onCloseNav }: Props) {
+export default function NavVertical({
+  openNav,
+  onCloseNav,
+}: Props): React.ReactElement | null {
   const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = [Role.Owner, Role.Admin].includes(user?.role || Role.Manager)
+  const menu = [Role.Owner, Role.Admin].includes(user?.role ?? Role.Manager)
     ? [admin, managment, content]
     : [managment, content];
 
@@ -33,7 +36,6 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     if (openNav) {
       onCloseNav();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (
@@ -84,7 +86,8 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     >
       <NavToggleButton />
 
-      {isDesktop ? (
+      {isDesktop
+? (
         <Drawer
           open
           variant="permanent"
@@ -99,7 +102,8 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
         >
           {renderContent}
         </Drawer>
-      ) : (
+      )
+: (
         <Drawer
           open={openNav}
           onClose={onCloseNav}

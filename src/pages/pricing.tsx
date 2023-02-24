@@ -1,7 +1,7 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Switch, Container, Typography, Stack } from "@mui/material";
+import { Box, Container, Stack, Switch, Typography } from "@mui/material";
 // _mock_
 import { _pricingPlans } from "../_mock/arrays";
 // layouts
@@ -17,7 +17,7 @@ PricingPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function PricingPage() {
+export default function PricingPage(): React.ReactElement {
   return (
     <>
       <Head>

@@ -1,17 +1,18 @@
 // @mui
-import { Box, Card, Button, Typography, Stack, Divider } from "@mui/material";
-// @types
-import { IUserAccountBillingAddress } from "../../../../../@types/user";
+import { Box, Button, Card, Divider, Stack, Typography } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
+import { IUserAccountBillingAddress } from "src/@types/courses";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   addressBook: IUserAccountBillingAddress[];
-};
+}
 
-export default function AccountBillingAddressBook({ addressBook }: Props) {
+export default function AccountBillingAddressBook({
+  addressBook,
+}: Props): React.ReactElement | null {
   return (
     <Card sx={{ p: 3 }}>
       <Stack
