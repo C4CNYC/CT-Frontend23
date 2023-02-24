@@ -22,16 +22,17 @@ export default function CardModule({ type, id }: Props) {
       <Container maxWidth={false}>
         <Card
           sx={{
-            maxWidth: "328px",
+            minWidth: "328px",
             height: "292px",
             padding: "24px",
             borderRadius: "16px",
             border: "1px solid rgba(145, 158, 171, 0.24) ",
+            boxShadow: "none",
           }}
         >
           <Stack display="flex" flexDirection="row">
             <Stack>
-              <Typography fontSize="22px" mb="16px">
+              <Typography fontSize="22px" mb="16px" fontWeight="600">
                 {_.capitalize(type)}
               </Typography>
               <Stack

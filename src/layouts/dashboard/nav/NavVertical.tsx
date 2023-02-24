@@ -58,14 +58,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
           }}
         >
           <Logo />
+          <Stack sx={{ mt: "30px" }}></Stack>
           <UserSection />
         </Stack>
-
-        <Stack
-          sx={{
-            p: "14px 15px 0 16px",
-          }}
-        ></Stack>
 
         <NavSectionVertical data={menu} />
       </>
