@@ -14,12 +14,12 @@ import { SOCIAL_ICONS } from "../../../../assets/data";
 
 interface FormValuesProps {
   social_id: string;
-  school_id: string;
+  schoolId: string;
   link: string;
 }
 
 interface Props {
-  school_id: string;
+  schoolId: string;
   socialItem: {
     type: string;
     id: string;
@@ -38,7 +38,7 @@ const UpdateLinkSchema = Yup.object().shape({
 });
 
 export default function SocialItem({
-  school_id,
+  schoolId,
   socialItem,
 }: Props): React.ReactElement | null {
   const [edit, setEdit] = useState(true);
@@ -62,7 +62,7 @@ export default function SocialItem({
   const handleEditSocial = async (data: FormValuesProps): Promise<void> => {
     try {
       await editSocial({
-        school_id,
+        schoolId,
         social_id: socialItem.id,
         link: data?.link,
       }).unwrap();
@@ -77,7 +77,7 @@ export default function SocialItem({
   const handleDeleteSocial = async (social_id: string): Promise<void> => {
     try {
       await deleteSocial({
-        school_id,
+        schoolId,
         social_id,
       }).unwrap();
       enqueueSnackbar("Social link deleted");

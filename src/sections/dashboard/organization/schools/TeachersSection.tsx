@@ -18,11 +18,11 @@ import {
 import TeacherItem from "./TeacherItem";
 
 interface TeacherSectionProps {
-  school_id: string;
+  schoolId: string;
 }
 
 export default function TeacherSection({
-  school_id,
+  schoolId,
 }: TeacherSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -31,9 +31,9 @@ export default function TeacherSection({
   const [openShare, setOpenShare] = useState(false);
   const { data: teachers, isLoading } = useGetTeacherListQuery(
     {
-      school_id,
+      schoolId,
     },
-    { skip: !school_id }
+    { skip: !schoolId }
   );
 
   const teachersIds = teachers ? teachers.data.map((t) => t.id) : null;
@@ -42,7 +42,7 @@ export default function TeacherSection({
     try {
       await deleteTeacher({
         user_id,
-        school_id,
+        schoolId,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
     } catch (e) {
@@ -135,7 +135,7 @@ export default function TeacherSection({
       </Collapse>
       <InviteTeacherDialog
         teachersIds={teachersIds ?? []}
-        schoolId={school_id}
+        schoolId={schoolId}
         open={openShare}
         inviteEmail="email@codetribe.io"
         onClose={() => {

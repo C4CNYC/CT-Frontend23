@@ -127,16 +127,16 @@ export const adminApi = createApi({
       providesTags: ["School"],
     }),
     deleteTeacher: builder.mutation<void, AddTeacherRequest>({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/teacher`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/teacher`,
         method: "DELETE",
         body,
       }),
       invalidatesTags: [{ type: "Teachers" }],
     }),
     addTeacher: builder.mutation<void, AddTeacherRequest>({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/teacher`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/teacher`,
         method: "POST",
         body,
       }),
@@ -144,17 +144,17 @@ export const adminApi = createApi({
     }),
     getTeacherList: builder.query<
       BaseListResponseInterface<IUser & BaseResponseInterface>,
-      { school_id: string }
+      { schoolId: string }
     >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/teacher`,
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/teacher`,
         method: "GET",
       }),
       providesTags: ["Teachers"],
     }),
-    getClassList: builder.query<ClassListReponce[], { school_id: string }>({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/class`,
+    getClassList: builder.query<ClassListReponce[], { schoolId: string }>({
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/class`,
         method: "GET",
       }),
       providesTags: ["Classes"],

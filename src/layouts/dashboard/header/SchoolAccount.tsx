@@ -17,7 +17,7 @@ import { RootState } from "src/redux/store";
 
 export default function SchoolAccount(): React.ReactElement | null {
   const dispatch = useDispatch();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { data: schools } = useGetMySchoolsQuery();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function SchoolAccount(): React.ReactElement | null {
       <FormControl fullWidth>
         <InputLabel sx={{ top: -8 }}>School</InputLabel>
         <Select
-          value={school_id}
+          value={schoolId}
           label="School"
           onChange={onChange}
           sx={{

@@ -45,7 +45,7 @@ export default function StudentNewEditForm({
   currentUser,
 }: Props): React.ReactElement | null {
   const { push } = useRouter();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [createStudent] = useCreateStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
 
@@ -104,14 +104,14 @@ export default function StudentNewEditForm({
     try {
       if (!isEdit) {
         await createStudent({
-          school_id,
+          schoolId,
           ...data,
         }).unwrap();
       } else {
         const { email, ...body } = data;
         await updateStudent({
-          student_id: currentUser?.id as string,
-          school_id,
+          studentId: currentUser?.id as string,
+          schoolId,
           ...body,
         });
       }

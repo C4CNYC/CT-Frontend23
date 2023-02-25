@@ -84,7 +84,7 @@ export default function UserListPage(): React.ReactElement {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
     class_id: "",
@@ -92,13 +92,13 @@ export default function UserListPage(): React.ReactElement {
   const [deleteStudent] = useDeleteStudentMutation();
 
   const { data, isLoading } = useGetStudentsQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
+    { schoolId, ...filters },
+    { skip: !schoolId }
   );
 
-  const handleDeleteMember = async (student_id: string): Promise<void> => {
+  const handleDeleteMember = async (studentId: string): Promise<void> => {
     try {
-      await deleteStudent({ student_id, school_id }).unwrap();
+      await deleteStudent({ studentId, schoolId }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",

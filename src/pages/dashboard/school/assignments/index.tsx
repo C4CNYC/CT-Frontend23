@@ -25,10 +25,10 @@ Index.getLayout = (page: React.ReactElement) => (
 
 export default function Index(): React.ReactElement {
   const dispatch = useDispatch();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { data } = useGetAssignmentListQuery(
-    { school_id },
-    { skip: !school_id }
+    { schoolId },
+    { skip: !schoolId }
   );
   const [updateAssignment] = useUdpateAssignmentMutation();
 
@@ -74,8 +74,8 @@ export default function Index(): React.ReactElement {
       );
 
       updateAssignment({
-        assignment_id: draggableId,
-        school_id,
+        assignmentId: draggableId,
+        schoolId,
         meta: {
           order: getOrder(result, finish, board.cards, start.id === finish.id),
         },
@@ -109,8 +109,8 @@ export default function Index(): React.ReactElement {
       })
     );
     updateAssignment({
-      assignment_id: draggableId,
-      school_id,
+      assignmentId: draggableId,
+      schoolId,
       status: destination.droppableId as AssignmentStatuses,
       meta: {
         order: getOrder(result, finish, board.cards, start.id === finish.id),
@@ -161,7 +161,7 @@ export default function Index(): React.ReactElement {
 : (
                   Object.values(AssignmentStatuses).map((columnId, index) => (
                     <AssignmentColumn
-                      school_id={school_id}
+                      schoolId={schoolId}
                       index={index}
                       key={columnId}
                       column={board.columns[columnId]}

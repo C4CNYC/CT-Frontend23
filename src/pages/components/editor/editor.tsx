@@ -42,10 +42,6 @@ declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 export default function MyEditor() {
   const { uploadToS3 } = useS3Upload();
 
-    // invariant(files.length > 0, {
-    //  code: ErrorConstant.EXTENSION,
-    //  message: 'The upload handler was applied for the image extension without any valid files',
-    // });
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
     let completed = 0;
     const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
@@ -65,18 +61,6 @@ export default function MyEditor() {
 
     return promises;
   }
-
-  // const uploadHandler = async (files: FileWithProgress[]): DelayedImage[] => {
-  //   const images = [];
-  //   for (let i = 0; i < files.length; i++) {
-  //     const { url } = await uploadToS3(files[i].file);
-  //     images.push(async () => ({ src: url }))
-  //   }
-
-  //   console.log(images);
-
-  //   return images;
-  // }
 
   const extensions = () => [
     new HeadingExtension(),

@@ -19,7 +19,7 @@ const UpdateUserSchema = Yup.object().shape({
 });
 
 interface FormValuesProps {
-  school_id: string;
+  schoolId: string;
   social_id: string;
   link: string;
   name: string;
@@ -29,18 +29,18 @@ interface FormValuesProps {
 }
 
 interface SocialFormProps {
-  school_id: string;
+  schoolId: string;
   socialLinks?: [] | null;
 }
 
 export default function SocialsForm({
-  school_id,
+  schoolId,
 }: SocialFormProps): React.ReactElement {
   const [createSocial, { isLoading }] = useCreateSchoolSocialMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id,
+    schoolId,
     link: "",
     name: "",
     type: "youtube",
@@ -55,7 +55,7 @@ export default function SocialsForm({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await createSocial({
-        school_id,
+        schoolId,
         social_id: data?.id,
         link: data?.link,
         name: data?.name,

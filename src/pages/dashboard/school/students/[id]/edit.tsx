@@ -24,14 +24,14 @@ export default function UserEditPage(): React.ReactElement {
     query: { id },
   } = useRouter();
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
   const { data } = useGetStudentQuery(
     {
-      student_id: id as string,
-      school_id,
+      studentId: id as string,
+      schoolId,
     },
-    { skip: !school_id || !id }
+    { skip: !schoolId || !id }
   );
 
   return (

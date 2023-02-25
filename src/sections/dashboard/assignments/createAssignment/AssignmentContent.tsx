@@ -8,7 +8,7 @@ import { useUdpateAssignmentMutation } from "src/redux/services/manager";
 interface AssignmentStepProps {
   next: () => void;
   back: () => void;
-  school_id: string;
+  schoolId: string;
   assignmentId: string;
 }
 
@@ -20,7 +20,7 @@ interface FormValuesProps {
 export default function AssignmentContent({
   next,
   back,
-  school_id,
+  schoolId,
   assignmentId,
 }: AssignmentStepProps): React.ReactElement | null {
   const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
@@ -39,8 +39,8 @@ export default function AssignmentContent({
   const onSubmit = async (data: any): Promise<void> => {
     try {
       updateAssignment({
-        school_id,
-        assignment_id: assignmentId,
+        schoolId,
+        assignmentId,
         name: data.name,
       });
       next();

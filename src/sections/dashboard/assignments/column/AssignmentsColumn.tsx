@@ -15,24 +15,24 @@ interface Props {
   column: IAssignmentsColumn;
   cards: Record<string, IAssignmentsCard>;
   index: number;
-  school_id: string;
+  schoolId: string;
 };
 
 export default function AssignmentsColumn({
   column,
   index,
   cards,
-  school_id
+  schoolId
 }:
 Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAssignment] = useDeleteAssignmentMutation();
 
-  const handleDeleteTask = async (assignment_id: string): Promise<void> => {
+  const handleDeleteTask = async (assignmentId: string): Promise<void> => {
     try {
       await deleteAssignment({
-        school_id,
-        assignment_id,
+        schoolId,
+        assignmentId,
       }).unwrap();
       enqueueSnackbar("Assignment deleted");
     } catch (e) {
@@ -61,7 +61,7 @@ Props): React.ReactElement | null {
         >
           <Stack spacing={3} {...provided.dragHandleProps}>
             <AssignmentsColumnToolBar
-              school_id={school_id}
+              schoolId={schoolId}
               columnName={column.name}
               onDelete={() => {}}
               onUpdate={() => {}}
@@ -77,7 +77,7 @@ Props): React.ReactElement | null {
                 >
                   {column.cardIds.map((cardId, cardIndex) => (
                     <AssignmentsTaskCard
-                      school_id={school_id}
+                      schoolId={schoolId}
                       key={cardId}
                       index={cardIndex}
                       onDeleteTask={handleDeleteTask}

@@ -19,7 +19,7 @@ const UpdateSchoolSchema = Yup.object().shape({
 });
 
 interface FormValuesProps {
-  school_id: string;
+  schoolId: string;
   name: string;
   country: string;
   address: string;
@@ -31,19 +31,19 @@ interface FormValuesProps {
 
 interface SchoolProfileFormProps {
   schoolProfile?: SchoolProfile;
-  school_id: string;
+  schoolId: string;
 }
 
 export default function SchoolProfileForm({
   schoolProfile,
-  school_id,
+  schoolId,
 }: SchoolProfileFormProps): React.ReactElement | null {
   const { translate } = useLocales();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id,
+    schoolId,
     name: schoolProfile?.name ?? "",
     country: schoolProfile?.country ?? "",
     address: schoolProfile?.address ?? "",
@@ -63,7 +63,7 @@ export default function SchoolProfileForm({
   const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await updateSchoolProfile({
-        school_id,
+        schoolId,
         name: data.name,
         country: data.country,
         address: data.address,

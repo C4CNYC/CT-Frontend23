@@ -36,7 +36,7 @@ export default function CustomAutocomplete({
 }:
 Props): React.ReactElement | null {
   const [value, setValue] = useState<ClassType | null>(null);
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const {
     filters,
     setFilter,
@@ -44,8 +44,8 @@ Props): React.ReactElement | null {
   } = useFilters<ClassSearchParams>({ name: "" });
 
   const { data: clases } = useGetClassesQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
+    { schoolId, ...filters },
+    { skip: !schoolId }
   );
 
   const onChange = (

@@ -52,20 +52,20 @@ export const managerApi = createApi({
   endpoints: (builder) => ({
     getAssignment: builder.query<
       IAssignment & BaseResponseInterface,
-      { school_id: string; assignment_id: string }
+      { schoolId: string; assignmentId: string }
     >({
-      query: ({ school_id, assignment_id }) => ({
-        url: `/school/${school_id}/assignment/${assignment_id}`,
+      query: ({ schoolId, assignmentId }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}`,
         method: "GET",
       }),
       providesTags: ["Assignment"],
     }),
     getAssignmentList: builder.query<
       Array<IAssignment & BaseResponseInterface>,
-      { school_id: string }
+      { schoolId: string }
     >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/assignment`,
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/assignment`,
         method: "GET",
       }),
       providesTags: ["Assignments"],
@@ -73,11 +73,11 @@ export const managerApi = createApi({
     createAssignment: builder.mutation<
       IAssignment & BaseResponseInterface,
       {
-        school_id: string;
+        schoolId: string;
       } & IAssignmentCreate
     >({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/assignment/`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/`,
         method: "POST",
         body,
       }),
@@ -86,12 +86,12 @@ export const managerApi = createApi({
     udpateAssignment: builder.mutation<
       void,
       {
-        assignment_id: string;
-        school_id: string;
+        assignmentId: string;
+        schoolId: string;
       } & IAssignmentUpdate
     >({
-      query: ({ school_id, assignment_id, ...body }) => ({
-        url: `/school/${school_id}/assignment/${assignment_id}`,
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}`,
         method: "PATCH",
         body,
       }),
@@ -99,10 +99,10 @@ export const managerApi = createApi({
     }),
     deleteAssignment: builder.mutation<
       void,
-      { school_id: string; assignment_id: string }
+      { schoolId: string; assignmentId: string }
     >({
-      query: ({ school_id, assignment_id }) => ({
-        url: `/school/${school_id}/assignment/${assignment_id}`,
+      query: ({ schoolId, assignmentId }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Assignments"],
@@ -119,28 +119,28 @@ export const managerApi = createApi({
     }),
     getStudent: builder.query<
       IStudent & BaseResponseInterface,
-      { school_id: string; student_id: string }
+      { schoolId: string; studentId: string }
     >({
-      query: ({ school_id, student_id }) => ({
-        url: `/school/${school_id}/student/${student_id}`,
+      query: ({ schoolId, studentId }) => ({
+        url: `/school/${schoolId}/student/${studentId}`,
         method: "GET",
       }),
       providesTags: ["Students"],
     }),
     getStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
-      { school_id: string } & StudentSearchParams
+      { schoolId: string } & StudentSearchParams
     >({
-      query: ({ school_id, ...params }) => ({
-        url: `/school/${school_id}/student`,
+      query: ({ schoolId, ...params }) => ({
+        url: `/school/${schoolId}/student`,
         method: "GET",
         params,
       }),
       providesTags: ["Students"],
     }),
-    createStudent: builder.mutation<void, { school_id: string } & IStudent>({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/student`,
+    createStudent: builder.mutation<void, { schoolId: string } & IStudent>({
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/student`,
         method: "POST",
         body,
       }),
@@ -148,10 +148,10 @@ export const managerApi = createApi({
     }),
     updateStudent: builder.mutation<
       void,
-      { school_id: string; student_id: string } & Omit<IStudent, "email">
+      { schoolId: string; studentId: string } & Omit<IStudent, "email">
     >({
-      query: ({ school_id, student_id, ...body }) => ({
-        url: `/school/${school_id}/student/${student_id}`,
+      query: ({ schoolId, studentId, ...body }) => ({
+        url: `/school/${schoolId}/student/${studentId}`,
         method: "PATCH",
         body,
       }),
@@ -159,10 +159,10 @@ export const managerApi = createApi({
     }),
     studentJoinClass: builder.mutation<
       void,
-      { school_id: string; class_id: string; student_id: string }
+      { schoolId: string; class_id: string; studentId: string }
     >({
-      query: ({ school_id, class_id, ...body }) => ({
-        url: `/school/${school_id}/class/${class_id}/student`,
+      query: ({ schoolId, class_id, ...body }) => ({
+        url: `/school/${schoolId}/class/${class_id}/student`,
         method: "POST",
         body,
       }),
@@ -170,10 +170,10 @@ export const managerApi = createApi({
     }),
     studentLeftClass: builder.mutation<
       void,
-      { school_id: string; class_id: string; student_id: string }
+      { schoolId: string; class_id: string; studentId: string }
     >({
-      query: ({ school_id, class_id, ...body }) => ({
-        url: `/school/${school_id}/class/${class_id}/student`,
+      query: ({ schoolId, class_id, ...body }) => ({
+        url: `/school/${schoolId}/class/${class_id}/student`,
         method: "DELETE",
         body,
       }),
@@ -181,10 +181,10 @@ export const managerApi = createApi({
     }),
     deleteStudent: builder.mutation<
       void,
-      { school_id: string; student_id: string }
+      { schoolId: string; studentId: string }
     >({
-      query: ({ school_id, student_id }) => ({
-        url: `/school/${school_id}/student/${student_id}`,
+      query: ({ schoolId, studentId }) => ({
+        url: `/school/${schoolId}/student/${studentId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Students"],
@@ -192,18 +192,18 @@ export const managerApi = createApi({
     // --------------------- classes --------------------------
     getClasses: builder.query<
       BaseListResponseInterface<IClass & BaseResponseInterface>,
-      { school_id: string } & ClassSearchParams
+      { schoolId: string } & ClassSearchParams
     >({
-      query: ({ school_id, ...params }) => ({
-        url: `/school/${school_id}/class`,
+      query: ({ schoolId, ...params }) => ({
+        url: `/school/${schoolId}/class`,
         method: "GET",
         params,
       }),
       providesTags: ["Classes"],
     }),
-    createClasses: builder.mutation<void, { school_id: string; name: string }>({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/class`,
+    createClasses: builder.mutation<void, { schoolId: string; name: string }>({
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/class`,
         method: "POST",
         body,
       }),
@@ -211,10 +211,10 @@ export const managerApi = createApi({
     }),
     updateClasses: builder.mutation<
       void,
-      { school_id: string; class_id: string; name: string }
+      { schoolId: string; class_id: string; name: string }
     >({
-      query: ({ school_id, class_id, ...body }) => ({
-        url: `/school/${school_id}/class/${class_id}`,
+      query: ({ schoolId, class_id, ...body }) => ({
+        url: `/school/${schoolId}/class/${class_id}`,
         method: "PATCH",
         body,
       }),
@@ -222,10 +222,10 @@ export const managerApi = createApi({
     }),
     deleteClasses: builder.mutation<
       void,
-      { school_id: string; class_id: string }
+      { schoolId: string; class_id: string }
     >({
-      query: ({ school_id, class_id }) => ({
-        url: `/school/${school_id}/class/${class_id}`,
+      query: ({ schoolId, class_id }) => ({
+        url: `/school/${schoolId}/class/${class_id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Classes"],
@@ -234,8 +234,8 @@ export const managerApi = createApi({
       SchoolProfile & BaseResponseInterface,
       SchoolProfile
     >({
-      query: ({ school_id, ...body }) => ({
-        url: `school/${school_id}`,
+      query: ({ schoolId, ...body }) => ({
+        url: `school/${schoolId}`,
         method: "PATCH",
         body,
       }),
@@ -243,10 +243,10 @@ export const managerApi = createApi({
     }),
     getSchoolProfile: builder.query<
       SchoolProfile & BaseResponseInterface,
-      { school_id: string }
+      { schoolId: string }
     >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}`,
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}`,
         method: "GET",
       }),
       providesTags: ["School"],
@@ -255,8 +255,8 @@ export const managerApi = createApi({
       SchoolSettings & BaseResponseInterface,
       SchoolSettings
     >({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/setting/`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/setting/`,
         method: "PATCH",
         body,
       }),
@@ -264,10 +264,10 @@ export const managerApi = createApi({
     }),
     getSchoolSettings: builder.query<
       SchoolSettings & BaseResponseInterface,
-      { school_id: string }
+      { schoolId: string }
     >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/setting/`,
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/setting/`,
         method: "GET",
       }),
       providesTags: ["SchoolSettings"],
@@ -276,8 +276,8 @@ export const managerApi = createApi({
       SchoolContacts & BaseResponseInterface,
       SchoolContacts
     >({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/contact/`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/contact/`,
         method: "PATCH",
         body,
       }),
@@ -285,10 +285,10 @@ export const managerApi = createApi({
     }),
     getSchoolContacts: builder.query<
       SchoolContacts & BaseResponseInterface,
-      { school_id: string }
+      { schoolId: string }
     >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/contact/`,
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/contact/`,
         method: "GET",
       }),
       providesTags: ["SchoolContacts"],
@@ -296,15 +296,15 @@ export const managerApi = createApi({
     createSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
       {
-        school_id: string;
+        schoolId: string;
         type?: string;
         name?: string;
         link?: string;
         social_id: string;
       }
     >({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/social`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/social`,
         method: "POST",
         body,
       }),
@@ -312,20 +312,20 @@ export const managerApi = createApi({
     }),
     deleteSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
-      { school_id: string; social_id: string }
+      { schoolId: string; social_id: string }
     >({
-      query: ({ school_id, social_id }) => ({
-        url: `/school/${school_id}/social/${social_id}`,
+      query: ({ schoolId, social_id }) => ({
+        url: `/school/${schoolId}/social/${social_id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "School" }],
     }),
     updateSchoolSocial: builder.mutation<
       SchoolSocials & BaseResponseInterface,
-      { school_id: string; social_id: string; link?: string; type?: string }
+      { schoolId: string; social_id: string; link?: string; type?: string }
     >({
-      query: ({ school_id, social_id, ...body }) => ({
-        url: `/school/${school_id}/social/${social_id}`,
+      query: ({ schoolId, social_id, ...body }) => ({
+        url: `/school/${schoolId}/social/${social_id}`,
         method: "PATCH",
         body,
       }),
