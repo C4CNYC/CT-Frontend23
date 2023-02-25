@@ -1,9 +1,9 @@
 import "remirror/styles/all.css";
 import { useS3Upload } from "next-s3-upload";
-import { useEffect, useState } from "react";
 import {
   BoldExtension,
-  HeadingExtension, ImageExtension,
+  HeadingExtension,
+  ImageExtension,
   ItalicExtension,
   UnderlineExtension,
   BlockquoteExtension,
@@ -15,7 +15,6 @@ import {
   ImageAttributes,
   HorizontalRuleExtension,
   NodeFormattingExtension, TextColorExtension
-
 } from "remirror/extensions";
 import {
   BasicFormattingButtonGroup,
@@ -37,9 +36,10 @@ import { TableComponents, TableExtension } from "@remirror/extension-react-table
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 
 interface FileWithProgress {
-    file: File;
-    progress: SetProgress;
+  file: File;
+  progress: SetProgress;
 }
+
 /**
  * Set the progress.
  *
@@ -52,27 +52,6 @@ declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
 export default function MyEditor() {
   const { uploadToS3 } = useS3Upload();
-
-  const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
-    let completed = 0;
-    const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
-
-    for (const { file, progress } of files) {
-      promises.push(
-        async () =>
-          await new Promise<ImageAttributes>((resolve, reject) => {
-            completed += 1;
-            uploadToS3(file).then(({ url, key }) => {
-                progress(completed / files.length);
-                resolve({ src: url, fileName: key })
-            })
-          }),
-      );
-    };
-
-    return promises;
-  }
-
   const extensions = () => [
     new HeadingExtension(),
     new BoldExtension({}),
@@ -86,19 +65,36 @@ export default function MyEditor() {
     new IframeExtension(),
     new FontFamilyExtension(),
     new HorizontalRuleExtension(),
-  new NodeFormattingExtension(),
-  new TextColorExtension(),
-  new ReactComponentExtension(),
-  new TableExtension()
-];
+    new NodeFormattingExtension(),
+    new TextColorExtension(),
+    new ReactComponentExtension(),
+    new TableExtension()
+  ];
 
-export default function MyEditor(): JSX.Element {
+  const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
+    let completed = 0;
+    const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
+
+    for (const { file, progress } of files) {
+      promises.push(
+        async () =>
+          await new Promise<ImageAttributes>((resolve, reject) => {
+            completed += 1;
+            uploadToS3(file).then(({ url, key }) => {
+              progress(completed / files.length);
+              resolve({ src: url, fileName: key });
+            });
+          })
+      );
+    }
+
+    return promises;
+  };
+
   const { manager, state, setState } = useRemirror({
     extensions,
     stringHandler: "html"
   });
-
-  console.log(state.doc);
 
   return (
     <ThemeProvider>
