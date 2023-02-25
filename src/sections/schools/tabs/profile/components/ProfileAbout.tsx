@@ -25,11 +25,9 @@ export default function ProfileAbout({
     <Card>
       <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
-        {data?.about
-? (
+        {data?.about ? (
           <Typography variant="body2">{data?.about}</Typography>
-        )
-: (
+        ) : (
           ""
         )}
         <Stack direction="row">

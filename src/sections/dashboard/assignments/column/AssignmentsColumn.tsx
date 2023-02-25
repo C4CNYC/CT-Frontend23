@@ -1,6 +1,6 @@
-import { Droppable, Draggable } from "@hello-pangea/dnd";
-import { Paper, Stack } from "@mui/material";
 import { useSnackbar } from "@components/snackbar";
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { Paper, Stack } from "@mui/material";
 import AssignmentsTaskCard from "../AssignmentsTaskCard";
 
 // ----------------------------------------------------------------------
@@ -8,23 +8,22 @@ import {
   IAssignmentsCard,
   IAssignmentsColumn,
 } from "../../../../@types/assignments";
-import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
 import { useDeleteAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
+import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
 
 interface Props {
   column: IAssignmentsColumn;
   cards: Record<string, IAssignmentsCard>;
   index: number;
   schoolId: string;
-};
+}
 
 export default function AssignmentsColumn({
   column,
   index,
   cards,
-  schoolId
-}:
-Props): React.ReactElement | null {
+  schoolId,
+}: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAssignment] = useDeleteAssignmentMutation();
 

@@ -48,7 +48,9 @@ MUIListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-function ListItemLink(props: ListItemButtonProps<"a", { button?: true }>): React.ReactElement | null {
+function ListItemLink(
+  props: ListItemButtonProps<"a", { button?: true }>
+): React.ReactElement | null {
   return <ListItemButton component="a" {...props} />;
 }
 
@@ -185,11 +187,9 @@ export default function MUIListPage(): React.ReactElement {
                     <Iconify icon="ic:baseline-inbox" width={24} />
                   </ListItemIcon>
                   <ListItemText primary="Inbox" />
-                  {open
-? (
+                  {open ? (
                     <Iconify icon="ic:round-expand-less" width={24} />
-                  )
-: (
+                  ) : (
                     <Iconify icon="ic:round-expand-more" width={24} />
                   )}
                 </ListItemButton>

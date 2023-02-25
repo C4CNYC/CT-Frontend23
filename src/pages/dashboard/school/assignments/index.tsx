@@ -26,10 +26,7 @@ Index.getLayout = (page: React.ReactElement) => (
 export default function Index(): React.ReactElement {
   const dispatch = useDispatch();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const { data } = useGetAssignmentListQuery(
-    { schoolId },
-    { skip: !schoolId }
-  );
+  const { data } = useGetAssignmentListQuery({ schoolId }, { skip: !schoolId });
   const [updateAssignment] = useUdpateAssignmentMutation();
 
   const { board } = useSelector((state) => state.assignments);
@@ -154,11 +151,9 @@ export default function Index(): React.ReactElement {
                   ...hideScrollbarX,
                 }}
               >
-                {!Object.keys(board.columns).length
-? (
+                {!Object.keys(board.columns).length ? (
                   <SkeletonKanbanColumn />
-                )
-: (
+                ) : (
                   Object.values(AssignmentStatuses).map((columnId, index) => (
                     <AssignmentColumn
                       schoolId={schoolId}

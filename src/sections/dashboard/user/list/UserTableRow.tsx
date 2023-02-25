@@ -82,13 +82,11 @@ export default function UserTableRow({
             last_name?.charAt(0).toUpperCase() + last_name?.slice(1)}
         </TableCell>
 
-        {role
-? (
+        {role ? (
           <TableCell align="left" sx={{ textTransform: "capitalize" }}>
             <RoleSelector user_id={id} role={role} email={email} />
           </TableCell>
-        )
-: null}
+        ) : null}
 
         <TableCell align="center">
           <Iconify

@@ -96,16 +96,15 @@ export default function TeacherSection({
       <Collapse in={open}>
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
           {teachers?.data.map((person) => (
-              <TeacherItem
-                handleDeleteTeacher={async () => {
-                  await handleDeleteTeacher(person.id);
-                }}
-                key={person.id}
-                person={person}
-              />
-            ))}
-          {!isLoading && !teachers?.data.length
-? (
+            <TeacherItem
+              handleDeleteTeacher={async () => {
+                await handleDeleteTeacher(person.id);
+              }}
+              key={person.id}
+              person={person}
+            />
+          ))}
+          {!isLoading && !teachers?.data.length ? (
             <ListItem
               sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
               disableGutters
@@ -129,8 +128,7 @@ export default function TeacherSection({
                 src="/assets/images/arrow.png"
               />
             </ListItem>
-          )
-: null}
+          ) : null}
         </List>
       </Collapse>
       <InviteTeacherDialog

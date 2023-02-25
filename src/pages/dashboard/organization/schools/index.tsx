@@ -31,7 +31,9 @@ export default function Index(): React.ReactElement {
     name: filterName,
   });
 
-  const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFilterName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     table.setPage(0);
     setFilterName(event.target.value);
   };
@@ -67,9 +69,7 @@ export default function Index(): React.ReactElement {
             onFilterName={handleFilterName}
           />
         </Stack>
-        {isLoading ?? !data?.data
-? null
-: (
+        {isLoading ?? !data?.data ? null : (
           <SchoolGridView
             table={table}
             data={data?.data}

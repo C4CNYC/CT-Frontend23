@@ -259,7 +259,7 @@ export default function UserListPage(): React.ReactElement {
               onPageChange={(e, page) => {
                 setFilter("page", page + 1);
               }}
-              onRowsPerPageChange={e => {
+              onRowsPerPageChange={(e) => {
                 setFilter("take", e.target.value);
               }}
               dense={dense}

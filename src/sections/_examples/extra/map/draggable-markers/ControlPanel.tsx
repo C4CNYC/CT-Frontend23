@@ -17,7 +17,7 @@ function round5(value: number): number {
 
 interface Props {
   events: Record<string, LngLat>;
-};
+}
 
 function ControlPanel({ events = {} }: Props): React.ReactElement | null {
   return (
@@ -31,13 +31,11 @@ function ControlPanel({ events = {} }: Props): React.ReactElement | null {
               {event}:
             </Typography>
 
-            {lngLat
-? (
+            {lngLat ? (
               <Typography variant="subtitle2" sx={{ color: "primary.main" }}>
                 {`${round5(lngLat.lng)}, ${round5(lngLat.lat)}`}
               </Typography>
-            )
-: (
+            ) : (
               <Typography
                 variant="body2"
                 component="em"

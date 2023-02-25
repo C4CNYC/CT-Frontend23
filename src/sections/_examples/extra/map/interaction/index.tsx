@@ -27,11 +27,11 @@ function MapInteraction({ ...other }: MapBoxProps): React.ReactElement {
 
   const updateSettings = useCallback(
     (name: string, value: boolean | number) => {
- setSettings((prevSettings) => ({
+      setSettings((prevSettings) => ({
         ...prevSettings,
         [name]: value,
       }));
-},
+    },
     []
   );
 

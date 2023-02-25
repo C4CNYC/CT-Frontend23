@@ -1,12 +1,15 @@
-import React, { ChangeEventHandler, MouseEventHandler, useCallback, useState } from "react";
-import {
-  useCommands
-} from "@remirror/react";
-import { IconButton, Stack, Button } from "@mui/material";
-import { AiOutlineTable, AiFillCheckCircle } from "react-icons/ai";
-import { MdDeleteForever } from "react-icons/md";
+import { Button, IconButton, Stack } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
+import { useCommands } from "@remirror/react";
+import React, {
+  ChangeEventHandler,
+  MouseEventHandler,
+  useCallback,
+  useState,
+} from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
+import { AiFillCheckCircle, AiOutlineTable } from "react-icons/ai";
+import { MdDeleteForever } from "react-icons/md";
 
 export default function TablePicker(): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);
@@ -18,15 +21,21 @@ export default function TablePicker(): JSX.Element {
 
   const { createTable, ...commands } = useCommands();
 
-  const handleChangeCells: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    e.preventDefault();
-    setCells(e.target.value);
-  }, [createTable, cells]);
+  const handleChangeCells: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      setCells(e.target.value);
+    },
+    [createTable, cells]
+  );
 
-  const handleChangeRows: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    e.preventDefault();
-    setRows(e.target.value);
-  }, [createTable, rows]);
+  const handleChangeRows: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      setRows(e.target.value);
+    },
+    [createTable, rows]
+  );
 
   const closeMenu = () => {
     setEdit(false);
@@ -34,9 +43,12 @@ export default function TablePicker(): JSX.Element {
 
   const ref = useDetectClickOutside({ onTriggered: closeMenu });
 
-  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback((e) => {
-    e.preventDefault();
-  }, []);
+  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+    },
+    []
+  );
 
   const handleSubmit: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.preventDefault();
@@ -44,22 +56,30 @@ export default function TablePicker(): JSX.Element {
   };
 
   return (
-    <Stack direction="row" style={{ position: "relative", marginLeft: "10px" }} ref={ref}>
-      {edit &&
-        <div style={{
-          position: "absolute",
-          top: "29px",
-          width: "200px",
-          display: "flex",
-          alignItems: "flex-end",
-          backgroundColor: "white",
-          border: "1px solid rgba(0, 0, 0, 0.12)",
-          borderRadius: "4px",
-          padding: "10px",
-          zIndex: 2
-        }}>
+    <Stack
+      direction="row"
+      style={{ position: "relative", marginLeft: "10px" }}
+      ref={ref}
+    >
+      {edit && (
+        <div
+          style={{
+            position: "absolute",
+            top: "29px",
+            width: "200px",
+            display: "flex",
+            alignItems: "flex-end",
+            backgroundColor: "white",
+            border: "1px solid rgba(0, 0, 0, 0.12)",
+            borderRadius: "4px",
+            padding: "10px",
+            zIndex: 2,
+          }}
+        >
           <Stack style={{ width: "120px" }}>
-            <label htmlFor="cells" style={{ fontSize: "12px" }}>Columns:</label>
+            <label htmlFor="cells" style={{ fontSize: "12px" }}>
+              Columns:
+            </label>
             <input
               type="number"
               name="cells"
@@ -70,7 +90,9 @@ export default function TablePicker(): JSX.Element {
             />
           </Stack>
           <Stack style={{ width: "80px" }}>
-            <label htmlFor="rows" style={{ fontSize: "12px" }}>Rows:</label>
+            <label htmlFor="rows" style={{ fontSize: "12px" }}>
+              Rows:
+            </label>
             <input
               type="number"
               name="rows"
@@ -91,13 +113,11 @@ export default function TablePicker(): JSX.Element {
           >
             Insert
           </Button>
-
         </div>
-      }
+      )}
       <ToggleButton
         value="left"
         key="left"
-
         onMouseDown={handleMouseDown}
         onClick={() => {
           setEdit(!edit);
@@ -107,4 +127,4 @@ export default function TablePicker(): JSX.Element {
       </ToggleButton>
     </Stack>
   );
-};
+}

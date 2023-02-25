@@ -12,7 +12,10 @@ import {
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getLessons: builder.query<BaseListResponseInterface<ILesson>, void>({
+    getLessons: builder.query<
+      BaseListResponseInterface<ILesson & BaseResponseInterface>,
+      void
+    >({
       query: () => ({
         url: "/lesson",
         method: "GET",

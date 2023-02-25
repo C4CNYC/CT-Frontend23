@@ -23,7 +23,7 @@ export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetCourseQuery();
 
-  if (isLoading) return <CircularProgress/>;
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>

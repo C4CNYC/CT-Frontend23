@@ -12,7 +12,9 @@ export default function DialogView(): React.ReactElement {
 
   const [selectVariant, setSelectVariant] = useState("slideInUp");
 
-  const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeVariant = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setSelectVariant(event.target.value);
   };
 

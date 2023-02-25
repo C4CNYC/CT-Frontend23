@@ -1,19 +1,21 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import MyEditor from "@pages/components/editor/editor";
 import * as React from "react";
 import { useState } from "react";
-import MyEditor from "@pages/components/editor/editor";
-import { CloseIcon } from "yet-another-react-lightbox/core";
 
 interface Prop {
   children: React.ReactElement;
+  lessonName: string;
+  lessonId: string;
 }
 
 export default function CreateContentDialog({
-                                              children,
-                                            }: Prop): React.ReactElement {
+  children,
+  lessonId,
+  lessonName
+}: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = (): void => {
@@ -26,28 +28,22 @@ export default function CreateContentDialog({
 
   return (
     <>
-      <Box
+      <Stack
         onClick={() => {
           handleClickOpen();
         }}
       >
         {children}
-      </Box>
-      <Dialog open={open} onClose={handleClose} maxWidth="lg" fullScreen>
-         <AppBar color="inherit" sx={{ position: "relative", padding: 0 }}>
+      </Stack>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xl">
+        <AppBar color="inherit" sx={{ position: "relative", padding: 0 }}>
           <Toolbar sx={{ paddingLeft: 0, ml: 0 }} variant="dense">
             <Typography sx={{ ml: 0, flex: 1 }} variant="h6" component="div">
-              Create Lesson Content
+              {lessonName}
             </Typography>
-            <Button variant="contained" autoFocus onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button sx={{ ml: 3 }} variant="contained" autoFocus onClick={handleClose}>
-              Publish
-            </Button>
           </Toolbar>
         </AppBar>
-        <DialogContent sx={{ p: 0 }}>
+        <DialogContent sx={{ p: 0, scrollbarWidth: "none" }}>
           <MyEditor />
         </DialogContent>
       </Dialog>

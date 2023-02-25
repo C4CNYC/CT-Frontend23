@@ -1,5 +1,3 @@
-import React from "react";
-import { FontFamilyExtension } from "remirror/extensions";
 import {
   CommandButtonGroup,
   CommandMenuItem,
@@ -7,12 +5,14 @@ import {
   useActive,
   useCommands,
 } from "@remirror/react";
+import React from "react";
+import { FontFamilyExtension } from "remirror/extensions";
 
 const FONT_FAMILIES: Array<[React.CSSProperties["fontFamily"], string]> = [
   ["serif", "Serif"],
   ["sans-serif", "San serif"],
   ["cursive", "Cursive"],
-  ["fantasy", "Fantasy"]
+  ["fantasy", "Fantasy"],
 ];
 
 export default function FontFamilyButtons() {
@@ -25,7 +25,9 @@ export default function FontFamilyButtons() {
           <CommandMenuItem
             key={fontFamily}
             commandName="setFontFamily"
-            onSelect={() => { setFontFamily(fontFamily as string); }}
+            onSelect={() => {
+              setFontFamily(fontFamily as string);
+            }}
             enabled={setFontFamily.enabled(fontFamily as string)}
             active={active.fontFamily({ fontFamily })}
             label={<span style={{ fontFamily }}>{label}</span>}
@@ -34,4 +36,4 @@ export default function FontFamilyButtons() {
       </DropdownButton>
     </CommandButtonGroup>
   );
-};
+}

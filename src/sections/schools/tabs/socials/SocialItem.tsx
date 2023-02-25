@@ -5,7 +5,10 @@ import { Box, FormGroup, Stack } from "@mui/material";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDeleteSchoolSocialMutation, useUpdateSchoolSocialMutation } from "src/redux/services/manager/schools-manager";
+import {
+  useDeleteSchoolSocialMutation,
+  useUpdateSchoolSocialMutation,
+} from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { SOCIAL_ICONS } from "../../../../assets/data";
 

@@ -1,58 +1,84 @@
-import "remirror/styles/all.css";
+import { Divider } from "@mui/material";
+import { Stack } from "@mui/system";
+import { ReactComponentExtension } from "@remirror/extension-react-component";
+import {
+  TableComponents,
+  TableExtension,
+} from "@remirror/extension-react-tables";
+import {
+  BasicFormattingButtonGroup,
+  FloatingToolbar,
+  HeadingLevelButtonGroup,
+  HistoryButtonGroup,
+  IndentationButtonGroup,
+  InsertHorizontalRuleButton,
+  Remirror,
+  TextAlignmentButtonGroup,
+  ThemeProvider,
+  ToggleBlockquoteButton,
+  ToggleCodeBlockButton,
+  ToggleColumnsButton,
+  Toolbar,
+  useRemirror,
+} from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
 import {
-  BoldExtension,
-  HeadingExtension,
-  ImageExtension,
-  ItalicExtension,
-  UnderlineExtension,
   BlockquoteExtension,
+  BoldExtension,
   CodeBlockExtension,
   CodeExtension,
   ColumnsExtension,
-  IframeExtension,
   FontFamilyExtension,
-  ImageAttributes,
+  HeadingExtension,
   HorizontalRuleExtension,
-  NodeFormattingExtension, TextColorExtension
+  IframeExtension,
+  ImageAttributes,
+  ImageExtension,
+  ItalicExtension,
+  NodeFormattingExtension,
+  TextColorExtension,
+  UnderlineExtension,
 } from "remirror/extensions";
-import {
-  BasicFormattingButtonGroup,
-  HeadingLevelButtonGroup,
-  HistoryButtonGroup,
-  useRemirror,
-  Remirror,
-  Toolbar, ToggleBlockquoteButton, ToggleCodeBlockButton,
-  ThemeProvider, ToggleColumnsButton,
-  InsertHorizontalRuleButton,
-  TextAlignmentButtonGroup, IndentationButtonGroup, EditorComponent
-} from "@remirror/react";
+import "remirror/styles/all.css";
 import AddIframeButton from "./AddIframeButton";
 import AddYoutubeButton from "./AddYoutubeButton";
 import FontFamilyButtons from "./FontFamilyButtons";
-import TextColorPicker from "./TextColorPicker";
 import TablePicker from "./TablePicker";
-import { TableComponents, TableExtension } from "@remirror/extension-react-tables";
-import { ReactComponentExtension } from "@remirror/extension-react-component";
+import TextColorPicker from "./TextColorPicker";
 
 interface FileWithProgress {
   file: File;
   progress: SetProgress;
 }
 
-/**
- * Set the progress.
- *
- * @param progress - a value between `0` and `1`.
- */
 declare type SetProgress = (progress: number) => void;
 
-export declare type DelayedPromiseCreator<Value> = (props: unknown) => Promise<Value>;
+export declare type DelayedPromiseCreator<Value> = (
+  props: unknown
+) => Promise<Value>;
 declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
-export default function MyEditor() {
+type Extentions = HeadingExtension |
+BoldExtension |
+ItalicExtension |
+ItalicExtension |
+BlockquoteExtension |
+UnderlineExtension |
+ImageExtension |
+CodeBlockExtension |
+CodeExtension |
+ColumnsExtension |
+IframeExtension |
+FontFamilyExtension |
+HorizontalRuleExtension |
+NodeFormattingExtension |
+TextColorExtension |
+ReactComponentExtension |
+TableExtension;
+
+export default function MyEditor(): React.ReactElement {
   const { uploadToS3 } = useS3Upload();
-  const extensions = () => [
+  const extensions = (): Extentions[] => [
     new HeadingExtension(),
     new BoldExtension({}),
     new ItalicExtension(),
@@ -68,7 +94,7 @@ export default function MyEditor() {
     new NodeFormattingExtension(),
     new TextColorExtension(),
     new ReactComponentExtension(),
-    new TableExtension()
+    new TableExtension(),
   ];
 
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -93,7 +119,7 @@ export default function MyEditor() {
 
   const { manager, state, setState } = useRemirror({
     extensions,
-    stringHandler: "html"
+    stringHandler: "html",
   });
 
   return (
@@ -101,11 +127,12 @@ export default function MyEditor() {
       <style>
         {`
           .remirror-theme .ProseMirror:active, .remirror-theme .ProseMirror:focus {
+            scrollbar-width: none;
             box-shadow: none;
           }
           .remirror-editor-wrapper { padding: 0; height: 80vh }
           .remirror-theme .ProseMirror {
-            height: 90vh;
+            scrollbar-width: none;
             box-shadow: none;
           }
           .remirror-menu{
@@ -117,21 +144,27 @@ export default function MyEditor() {
         placeholder="Start type here ..."
         manager={manager}
         initialContent={state}
-        autoFocus autoRender="end"
+        autoFocus
+        autoRender="end"
         onChange={(parameter) => {
           setState(parameter.state.doc);
-        }}>
-        <Toolbar style={{
-          padding: "15px",
-          background: "#f4f5f7",
-          overflowX: "visible"
-        }}>
+        }}
+      >
+        <Toolbar
+          style={{
+            padding: "15px",
+            background: "#f4f5f7",
+            overflowX: "scroll",
+            overflowY: "visible",
+            scrollbarWidth: "none",
+            position: "sticky",
+            zIndex: 99,
+            top: 0
+          }}
+        >
           <HistoryButtonGroup />
-          <BasicFormattingButtonGroup />
           <HeadingLevelButtonGroup showAll />
-          <TextAlignmentButtonGroup />
           <IndentationButtonGroup />
-          <FontFamilyButtons />
 
           <div style={{ height: "30px", display: "flex" }}>
             <ToggleBlockquoteButton />
@@ -140,14 +173,39 @@ export default function MyEditor() {
             <ToggleColumnsButton />
             <AddIframeButton />
             <AddYoutubeButton />
-            <TextColorPicker />
             <TablePicker />
             <TableComponents />
           </div>
-
         </Toolbar>
+        <FloatingToolbar
+          sx={{
+            "&>div": {
+              borderRadius: "5px",
+              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)"
+            }
+          }}
+          style={{
+              zIndex: 9999999,
+              padding: 10,
+          }}>
+            <Stack
+              borderRadius="5px"
+              display="flex"
+              flexDirection="row"
+              p="5px 10px"
+              alignItems="center"
+              alignContent="center"
+            >
+              <TextColorPicker />
+              <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+              <BasicFormattingButtonGroup />
+              <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+              <TextAlignmentButtonGroup />
+              <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+              <FontFamilyButtons />
+            </Stack>
+        </FloatingToolbar>
       </Remirror>
     </ThemeProvider>
-
   );
 }

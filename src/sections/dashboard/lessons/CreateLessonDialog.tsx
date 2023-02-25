@@ -1,8 +1,4 @@
-import FormProvider, {
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-} from "@components/hook-form";
+import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
 import { useSnackbar } from "@components/snackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
@@ -23,7 +19,6 @@ interface FormValuesProps {
   name: string;
   description: string;
   active: boolean;
-  type: string;
 }
 
 interface Prop {
@@ -55,7 +50,6 @@ export default function CreateLessonDialog({
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("Description is required"),
-    type: Yup.string().required("Type is required"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -82,18 +76,12 @@ export default function CreateLessonDialog({
       });
       console.error(error, "test");
     }
-    handleClose();
+    handleClose(eval);
   };
 
   return (
     <>
-      <Box
-        onClick={() => {
-          handleClickOpen();
-        }}
-      >
-        {children}
-      </Box>
+      <Box onClick={handleClickOpen}>{children}</Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEdit ? "Edit" : "Create"} Lesson</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
@@ -119,13 +107,6 @@ export default function CreateLessonDialog({
                       multiline
                       rows={3}
                     />
-
-                    <RHFSelect name="type" required native label="Lesson type">
-                      <option key="empty" value="empty"></option>
-                      <option key="multy_media" value="multy_media">
-                        MultyMedia
-                      </option>
-                    </RHFSelect>
 
                     <RHFSwitch name="active" label="Module active" />
                   </Box>

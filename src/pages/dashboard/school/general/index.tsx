@@ -25,10 +25,7 @@ export default function UserProfilePage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-  const { data } = useGetSchoolProfileQuery(
-    { schoolId },
-    { skip: !schoolId }
-  );
+  const { data } = useGetSchoolProfileQuery({ schoolId }, { skip: !schoolId });
 
   const TABS = [
     {

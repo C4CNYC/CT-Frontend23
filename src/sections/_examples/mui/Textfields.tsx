@@ -47,7 +47,9 @@ export default function Textfields({
     showPassword: false,
   });
 
-  const handleChangeCurrency = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeCurrency = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setCurrency(event.target.value);
   };
 
@@ -167,11 +169,9 @@ export default function Textfields({
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {values.showPassword
-? (
+                  {values.showPassword ? (
                     <Iconify icon="eva:eye-fill" width={24} />
-                  )
-: (
+                  ) : (
                     <Iconify icon="eva:eye-off-fill" width={24} />
                   )}
                 </IconButton>

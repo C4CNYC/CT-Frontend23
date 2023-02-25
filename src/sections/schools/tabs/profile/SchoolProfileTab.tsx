@@ -41,9 +41,7 @@ export default function SchoolProfileTab({
           </Stack>
         </Grid>
         <Grid item xs={12} md={8}>
-          {isLoading
-? null
-: (
+          {isLoading ? null : (
             <SchoolProfileForm schoolProfile={data} schoolId={schoolId} />
           )}
         </Grid>

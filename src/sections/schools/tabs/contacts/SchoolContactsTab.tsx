@@ -30,9 +30,7 @@ export default function SchoolContactsTab({
           position: "relative",
         }}
       >
-        {isLoading
-? null
-: (
+        {isLoading ? null : (
           <ContactsForm contacts={data} schoolId={schoolId} />
         )}
       </Box>

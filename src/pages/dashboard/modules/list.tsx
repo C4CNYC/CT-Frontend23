@@ -22,7 +22,7 @@ export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetModulesQuery();
 
-  if (isLoading) return <CircularProgress/>;
+  if (isLoading) return <CircularProgress />;
   if (data?.data?.length === 0) return "no data";
 
   return (

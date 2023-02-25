@@ -30,9 +30,7 @@ export default function SchoolSettingTab({
           position: "relative",
         }}
       >
-        {isLoading
-? null
-: (
+        {isLoading ? null : (
           <SettingsForm settings={data} schoolId={schoolId} />
         )}
       </Box>

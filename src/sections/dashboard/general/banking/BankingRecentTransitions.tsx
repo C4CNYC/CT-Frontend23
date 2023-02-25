@@ -284,8 +284,7 @@ function renderAvatar(
   if (category === "Beauty & Health") {
     return <AvatarIcon icon="eva:heart-fill" />;
   }
-  return avatar
-? (
+  return avatar ? (
     <Avatar
       alt={category}
       src={avatar}
@@ -295,6 +294,5 @@ function renderAvatar(
         boxShadow: (theme) => theme.customShadows.z8,
       }}
     />
-  )
-: null;
+  ) : null;
 }

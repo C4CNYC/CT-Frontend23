@@ -249,11 +249,9 @@ function PlanCard({
         </Box>
       </Stack>
 
-      {standard
-? (
+      {standard ? (
         <SvgColor src={icons[2]} sx={{ width: 24, height: 24 }} />
-      )
-: (
+      ) : (
         <Stack direction="row" spacing={2}>
           {icons.map((icon) => (
             <SvgColor key={icon} src={icon} sx={{ width: 24, height: 24 }} />

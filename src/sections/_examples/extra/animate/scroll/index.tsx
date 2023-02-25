@@ -12,7 +12,9 @@ export default function ScrollView(): React.ReactElement {
   const [count, setCount] = useState(0);
   const [selectVariant, setSelectVariant] = useState("slideInUp");
 
-  const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeVariant = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setCount(count + 1);
     setSelectVariant(event.target.value);
   };

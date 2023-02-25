@@ -26,7 +26,10 @@ export default function RHFAutocomplete<
   label,
   helperText,
   ...other
-}: Omit<Props<T, Multiple, DisableClearable, FreeSolo>, "renderInput">): React.ReactElement {
+}: Omit<
+  Props<T, Multiple, DisableClearable, FreeSolo>,
+  "renderInput"
+>): React.ReactElement {
   const { control, setValue } = useFormContext();
 
   return (
@@ -36,8 +39,9 @@ export default function RHFAutocomplete<
       render={({ field, fieldState: { error } }) => (
         <Autocomplete
           {...field}
-          onChange={(event, newValue) => { setValue(name, newValue, { shouldValidate: true }); }
-          }
+          onChange={(event, newValue) => {
+            setValue(name, newValue, { shouldValidate: true });
+          }}
           renderInput={(params) => (
             <TextField
               label={label}

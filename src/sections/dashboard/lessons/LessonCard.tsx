@@ -14,19 +14,15 @@ import {
 } from "@mui/material";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import { useState } from "react";
+import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
+import CreateContentDialog from "./CreateContentDialog";
 
 // ----------------------------------------------------------------------
 
 interface Props {
-  lesson: {
-    name: string;
-    description: string;
-    id?: string;
-    type: string;
-    active: boolean;
-    key: any;
-  };
+  lesson: ILesson & BaseResponseInterface;
 }
 
 export default function LessonCard({
@@ -59,7 +55,9 @@ export default function LessonCard({
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
+  const handleOpenPopover = async (
+    event: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
     setOpenPopover(event.currentTarget);
   };
 
@@ -97,32 +95,36 @@ export default function LessonCard({
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
-        <Box
-          component="img"
-          src="/assets/icons/files/ic_file.svg"
-          sx={{ width: 40, height: 40 }}
-        />
+        <CreateContentDialog lessonId={lesson.id} lessonName={lesson.name}>
+          <>
+            <Box
+              component="img"
+              src="/assets/icons/files/ic_file.svg"
+              sx={{ width: 40, height: 40 }}
+            />
 
-        <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
-          {lesson.name}
-        </TextMaxLine>
+            <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+              {lesson.name}
+            </TextMaxLine>
 
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={0.75}
-          sx={{ typography: "caption", color: "text.disabled" }}
-        >
-          <Box>{lesson.description}</Box>
-          <Box
-            sx={{
-              width: 2,
-              height: 2,
-              borderRadius: "50%",
-              bgcolor: "currentColor",
-            }}
-          />
-        </Stack>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={0.75}
+              sx={{ typography: "caption", color: "text.disabled" }}
+            >
+              <Box>{lesson.description}</Box>
+              <Box
+                sx={{
+                  width: 2,
+                  height: 2,
+                  borderRadius: "50%",
+                  bgcolor: "currentColor",
+                }}
+              />
+          </Stack>
+          </>
+        </CreateContentDialog>
       </Card>
 
       <MenuPopover
@@ -138,7 +140,6 @@ export default function LessonCard({
             name: lesson.name,
             description: lesson.description,
             active: lesson.active,
-            type: lesson.type,
           }}
         >
           <MenuItem>

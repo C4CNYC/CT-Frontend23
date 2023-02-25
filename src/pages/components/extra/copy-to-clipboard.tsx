@@ -62,7 +62,9 @@ export default function DemoCopyToClipboardPage(): React.ReactElement {
     },
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
     setValue(event.target.value);
   };
 

@@ -59,9 +59,7 @@ export default function RoleSelector({
         sx={{ padding: "0 !important" }}
       >
         {Object.keys(Role).map((r) =>
-          r === "Owner" || role === Role[r as keyof typeof Role]
-? null
-: (
+          r === "Owner" || role === Role[r as keyof typeof Role] ? null : (
             <MenuItem
               onClick={async () => {
                 await handleClose(Role[r as keyof typeof Role]);

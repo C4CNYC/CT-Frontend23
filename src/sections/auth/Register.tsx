@@ -62,15 +62,13 @@ export default function Register(): React.ReactElement {
         </IconButton>
       </Stack>
 
-      {!stepperVisible
-? (
+      {!stepperVisible ? (
         <AuthRegisterForm
           next={() => {
             setStepperVisible(true);
           }}
         />
-      )
-: (
+      ) : (
         <Stack
           direction="row"
           spacing={0.5}

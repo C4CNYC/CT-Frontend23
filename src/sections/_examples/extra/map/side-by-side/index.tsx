@@ -34,14 +34,17 @@ function MapSideBySide({ ...other }: MapBoxProps): React.ReactElement {
 
   const [activeMap, setActiveMap] = useState<"left" | "right">("left");
 
-  const onLeftMoveStart = useCallback(() => { setActiveMap("left"); }, []);
+  const onLeftMoveStart = useCallback(() => {
+    setActiveMap("left");
+  }, []);
 
-  const onRightMoveStart = useCallback(() => { setActiveMap("right"); }, []);
+  const onRightMoveStart = useCallback(() => {
+    setActiveMap("right");
+  }, []);
 
-  const onMove = useCallback(
-    (event: ViewStateChangeEvent) => { setViewState(event.viewState); },
-    []
-  );
+  const onMove = useCallback((event: ViewStateChangeEvent) => {
+    setViewState(event.viewState);
+  }, []);
 
   const width = typeof window === "undefined" ? 100 : window.innerWidth;
 

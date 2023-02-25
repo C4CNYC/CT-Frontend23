@@ -16,7 +16,10 @@ interface Props {
   ) => void;
 }
 
-function ControlPanel({ mode, onModeChange }: Props): React.ReactElement | null {
+function ControlPanel({
+  mode,
+  onModeChange,
+}: Props): React.ReactElement | null {
   return (
     <StyledControlPanel>
       <ToggleButtonGroup

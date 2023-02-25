@@ -112,8 +112,7 @@ export default function ClassesSection({
               Props={undefined}
             />
           ))}
-          {!isLoading && !classes?.length
-? (
+          {!isLoading && !classes?.length ? (
             <ListItem
               sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
               disableGutters
@@ -137,8 +136,7 @@ export default function ClassesSection({
                 src="/assets/images/arrow.png"
               />
             </ListItem>
-          )
-: null}
+          ) : null}
         </List>
       </Collapse>
     </>

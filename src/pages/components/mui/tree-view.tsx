@@ -1,16 +1,16 @@
 // next
 import Head from "next/head";
 // @mui
-import { alpha, styled } from "@mui/material/styles";
+import { TreeItem, treeItemClasses, TreeItemProps, TreeView } from "@mui/lab";
 import { Box, Container } from "@mui/material";
-import { TreeView, TreeItem, TreeItemProps, treeItemClasses } from "@mui/lab";
+import { alpha, styled } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 

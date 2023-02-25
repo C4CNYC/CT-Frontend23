@@ -35,7 +35,9 @@ export default function MaxWidthDialog(): React.ReactElement {
     setOpen(false);
   };
 
-  const handleMaxWidthChange = (event: SelectChangeEvent<typeof maxWidth>): void => {
+  const handleMaxWidthChange = (
+    event: SelectChangeEvent<typeof maxWidth>
+  ): void => {
     setMaxWidth(
       // @ts-expect-error autofill of arbitrary value is not handled.
       event.target.value

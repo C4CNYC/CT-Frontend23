@@ -35,9 +35,7 @@ export default function SchoolSocialsTab({
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Card sx={{ p: 3 }}>
-              {isLoading
-? null
-: (
+              {isLoading ? null : (
                 <SocialsForm socialLinks={data.socials} schoolId={schoolId} />
               )}
               <Typography variant="h6" sx={{ mb: 2 }}>

@@ -3,14 +3,14 @@ import Iconify from "@components/iconify";
 import SearchNotFound from "@components/search-not-found/SearchNotFound";
 import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Box, Button, CircularProgress, Container, Stack } from "@mui/material";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
+import CreateContentDialog from "@sections/dashboard/lessons/CreateContentDialog";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import Head from "next/head";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
-import CreateContentDialog from "@sections/dashboard/lessons/CreateContentDialog";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +25,6 @@ export default function LessonsListPage(): React.ReactElement {
   const { data, isLoading } = useGetLessonsQuery();
 
   if (isLoading) return <CircularProgress />;
-  if (data?.data.length === 0) return <SearchNotFound />;
 
   return (
     <>
@@ -39,10 +38,9 @@ export default function LessonsListPage(): React.ReactElement {
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Lessons", href: PATH_DASHBOARD.lessons.root },
-            { name: "List" }
+            { name: "List" },
           ]}
           action={
-          <Stack direction="row">
             <CreateLessonDialog>
               <Button
                 variant="contained"
@@ -52,15 +50,6 @@ export default function LessonsListPage(): React.ReactElement {
                 Create Lesson
               </Button>
             </CreateLessonDialog>
-            <CreateContentDialog>
-              <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-              >
-                Create Content
-              </Button>
-            </CreateContentDialog>
-          </Stack>
           }
         />
 
@@ -71,11 +60,11 @@ export default function LessonsListPage(): React.ReactElement {
           display="grid"
           gridTemplateColumns={{
             xs: "repeat(1, 1fr)",
-            md: "repeat(3, 1fr)"
+            md: "repeat(3, 1fr)",
           }}
         >
           {data?.data.map((lesson) => (
-            <LessonCard key={lesson?.id} lesson={lesson} active={false} name={""} description={""} />
+            <LessonCard key={lesson.id} lesson={lesson} />
           ))}
         </Box>
       </Container>
