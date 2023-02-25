@@ -35,8 +35,8 @@ export default function CreateContentDialog({
       </Box>
       <Dialog open={open} onClose={handleClose} maxWidth="lg" fullScreen>
          <AppBar color="inherit" sx={{ position: "relative", padding: 0 }}>
-          <Toolbar sx={{ padding: 0, m: 0 }} variant="dense">
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+          <Toolbar sx={{ paddingLeft: 0, ml: 0 }} variant="dense">
+            <Typography sx={{ ml: 0, flex: 1 }} variant="h6" component="div">
               Create Lesson Content
             </Typography>
             <Button variant="contained" autoFocus onClick={handleClose}>

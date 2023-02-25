@@ -11,7 +11,7 @@ import {
   ClassSearchParams,
   IClass,
 } from "src/redux/services/interfaces/class.interface";
-import { useGetClassesQuery } from "src/redux/services/manager";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { useSelector, RootState } from "src/redux/store";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -23,7 +23,7 @@ interface Props {
   filterName: string;
   onResetFilter: VoidFunction;
   onFilterName: (name: string) => void;
-  onFilterClass: (class_id: string) => void;
+  onFilterClass: (classId: string) => void;
 };
 
 type ClassType = IClass & BaseResponseInterface;
@@ -36,7 +36,7 @@ export default function CustomAutocomplete({
 }:
 Props): React.ReactElement | null {
   const [value, setValue] = useState<ClassType | null>(null);
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const {
     filters,
     setFilter,
@@ -44,8 +44,8 @@ Props): React.ReactElement | null {
   } = useFilters<ClassSearchParams>({ name: "" });
 
   const { data: clases } = useGetClassesQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
+    { schoolId, ...filters },
+    { skip: !schoolId }
   );
 
   const onChange = (

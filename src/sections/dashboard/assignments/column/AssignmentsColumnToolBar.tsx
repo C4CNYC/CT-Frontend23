@@ -12,7 +12,7 @@ import Stepper from "./../createAssignment/Stepper";
 
 interface Props {
   columnName: string;
-  school_id: string;
+  schoolId: string;
   onDelete: VoidFunction;
   onUpdate: (name: string) => void;
 }
@@ -21,7 +21,7 @@ export default function AssignmentsColumnToolBar({
   columnName,
   onDelete,
   onUpdate,
-  school_id,
+  schoolId,
 }: Props): React.ReactElement | null {
   const renameRef = useRef<HTMLInputElement>(null);
 
@@ -89,7 +89,7 @@ export default function AssignmentsColumnToolBar({
             <Typography variant="h4">Create new assignment</Typography>
           </DialogTitle>
           <DialogContent sx={{ padding: "30px" }}>
-            <Stepper school_id={school_id} closeStepper={handleCloseStepper} />
+            <Stepper schoolId={schoolId} closeStepper={handleCloseStepper} />
           </DialogContent>
         </Dialog>
       )}

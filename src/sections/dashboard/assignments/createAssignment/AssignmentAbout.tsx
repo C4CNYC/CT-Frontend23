@@ -10,7 +10,7 @@ import { AssignmentComplexity } from "src/redux/services/enums/assignment-comple
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import * as Yup from "yup";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 const TECH_OPTIONS = ["css", "html", "js"];
 
@@ -21,7 +21,7 @@ interface AssignmentStepProps {
   back: () => void;
   assignmentId: string;
   assignment?: IAssignment & BaseResponseInterface;
-  school_id: string;
+  schoolId: string;
 }
 
 interface FormValuesProps {
@@ -33,7 +33,7 @@ export default function AssignmentAbout({
   next,
   back,
   assignment,
-  school_id,
+  schoolId,
   assignmentId,
 }: AssignmentStepProps): React.ReactElement | null {
   const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
@@ -58,8 +58,8 @@ export default function AssignmentAbout({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateAssignment({
-        school_id,
-        assignment_id: assignmentId,
+        schoolId,
+        assignmentId,
         duration: data.duration,
         complexity: data.complexity,
       }).unwrap();

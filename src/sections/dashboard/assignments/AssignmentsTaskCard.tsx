@@ -17,7 +17,7 @@ interface Props {
   index: number;
   card: IAssignmentsCard;
   onDeleteTask: (id: string) => void;
-  school_id: string;
+  schoolId: string;
 };
 
 const ImageCardType: Record<string, string> = {
@@ -40,7 +40,7 @@ export default function AssignmentsTaskCard({
   card,
   onDeleteTask,
   index,
-  school_id
+  schoolId
 }:
 Props): React.ReactElement | null {
   const { name, type, duration, complexity } = card;
@@ -169,7 +169,7 @@ Props): React.ReactElement | null {
       </Draggable>
 
       <AssignmentsDetails
-        school_id={school_id}
+        schoolId={schoolId}
         assignment={card}
         task={card}
         openDetails={openDetails}

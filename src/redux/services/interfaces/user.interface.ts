@@ -18,7 +18,7 @@ export interface UserListResponse<Data>
   extends BaseListResponseInterface<Data> {}
 
 export interface UserSearchParams extends BaseSearchInterface {
-  school_id?: string;
+  schoolId?: string;
   name?: string;
   role?: string;
 }
@@ -35,9 +35,9 @@ export interface IUser {
 }
 
 export interface StudentSearchParams extends BaseSearchInterface {
-  school_id?: string;
+  schoolId?: string;
   name?: string;
-  class_id?: string;
+  classId?: string;
 }
 
 export interface IStudent {

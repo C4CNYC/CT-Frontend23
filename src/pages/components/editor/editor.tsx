@@ -1,4 +1,5 @@
 import "remirror/styles/all.css";
+import { useS3Upload } from "next-s3-upload";
 import { useEffect, useState } from "react";
 import {
   BoldExtension,
@@ -11,6 +12,7 @@ import {
   ColumnsExtension,
   IframeExtension,
   FontFamilyExtension,
+  ImageAttributes,
   HorizontalRuleExtension,
   NodeFormattingExtension, TextColorExtension
 
@@ -34,19 +36,56 @@ import TablePicker from "./TablePicker";
 import { TableComponents, TableExtension } from "@remirror/extension-react-tables";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 
-const extensions = () => [
-  new HeadingExtension(),
-  new BoldExtension({}),
-  new ItalicExtension(),
-  new UnderlineExtension(),
-  new ImageExtension({ enableResizing: true }),
-  new BlockquoteExtension(),
-  new CodeBlockExtension(),
-  new CodeExtension(),
-  new ColumnsExtension(),
-  new IframeExtension(),
-  new FontFamilyExtension(),
-  new HorizontalRuleExtension(),
+interface FileWithProgress {
+    file: File;
+    progress: SetProgress;
+}
+/**
+ * Set the progress.
+ *
+ * @param progress - a value between `0` and `1`.
+ */
+declare type SetProgress = (progress: number) => void;
+
+export declare type DelayedPromiseCreator<Value> = (props: unknown) => Promise<Value>;
+declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
+
+export default function MyEditor() {
+  const { uploadToS3 } = useS3Upload();
+
+  const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
+    let completed = 0;
+    const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
+
+    for (const { file, progress } of files) {
+      promises.push(
+        async () =>
+          await new Promise<ImageAttributes>((resolve, reject) => {
+            completed += 1;
+            uploadToS3(file).then(({ url, key }) => {
+                progress(completed / files.length);
+                resolve({ src: url, fileName: key })
+            })
+          }),
+      );
+    };
+
+    return promises;
+  }
+
+  const extensions = () => [
+    new HeadingExtension(),
+    new BoldExtension({}),
+    new ItalicExtension(),
+    new UnderlineExtension(),
+    new ImageExtension({ enableResizing: true, uploadHandler }),
+    new BlockquoteExtension(),
+    new CodeBlockExtension(),
+    new CodeExtension(),
+    new ColumnsExtension(),
+    new IframeExtension(),
+    new FontFamilyExtension(),
+    new HorizontalRuleExtension(),
   new NodeFormattingExtension(),
   new TextColorExtension(),
   new ReactComponentExtension(),

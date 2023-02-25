@@ -17,7 +17,7 @@ import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
 import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
 import * as React from "react";
 import { useSnackbar } from "notistack";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import AssignmentInput from "../AssignmentInput";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
@@ -43,7 +43,7 @@ interface Props {
   openDetails: boolean;
   onCloseDetails: VoidFunction;
   onDeleteTask: () => void;
-  school_id: string;
+  schoolId: string;
 };
 
 export default function AssignmentsDetails({
@@ -52,7 +52,7 @@ export default function AssignmentsDetails({
   onCloseDetails,
   onDeleteTask,
   assignment,
-  school_id
+  schoolId
 }:
 Props): React.ReactElement | null {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -67,8 +67,8 @@ Props): React.ReactElement | null {
       if (assignment[fieldName] === value) return;
 
       await updateAssignment({
-        assignment_id: assignment.id,
-        school_id,
+        assignmentId: assignment.id,
+        schoolId,
         [fieldName]: value,
       }).unwrap();
       enqueueSnackbar(`${fieldName} updated`);

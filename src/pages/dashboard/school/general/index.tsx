@@ -14,7 +14,7 @@ import { useState } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import { RootState } from "../../../../redux/store";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
@@ -22,12 +22,12 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 );
 
 export default function UserProfilePage(): React.ReactElement {
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data } = useGetSchoolProfileQuery(
-    { school_id },
-    { skip: !school_id }
+    { schoolId },
+    { skip: !schoolId }
   );
 
   const TABS = [
@@ -35,25 +35,25 @@ export default function UserProfilePage(): React.ReactElement {
       value: "profile",
       label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <SchoolProfileTab school_id={school_id} />,
+      component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: "settings",
       label: "Settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
-      component: <SchoolSettingsTab school_id={school_id} />,
+      component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: "contacts",
       label: "Contacts",
       icon: <MdContacts />,
-      component: <SchoolContactsTab school_id={school_id} />,
+      component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: "socials",
       label: "Social Networks",
       icon: <BsPeopleFill />,
-      component: <SchoolSocialsTab school_id={school_id} />,
+      component: <SchoolSocialsTab schoolId={schoolId} />,
     },
   ];
 

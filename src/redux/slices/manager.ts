@@ -2,11 +2,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface CounterState {
-  school_id: string;
+  schoolId: string;
 }
 
 const initialState: CounterState = {
-  school_id: "",
+  schoolId: "",
 };
 
 export const managerSlice = createSlice({
@@ -14,7 +14,7 @@ export const managerSlice = createSlice({
   initialState,
   reducers: {
     setSchool: (state, action: PayloadAction<string>) => {
-      state.school_id = action.payload;
+      state.schoolId = action.payload;
     },
   },
 });

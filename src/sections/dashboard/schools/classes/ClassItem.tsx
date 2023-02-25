@@ -46,7 +46,7 @@ Props): React.ReactElement | null {
     try {
       const data = await updateClass({
         schoolId,
-        class_id: classes.id,
+        classId: classes.id,
         name,
       }).unwrap();
       enqueueSnackbar(`School ${data.name} created successfuly!`);

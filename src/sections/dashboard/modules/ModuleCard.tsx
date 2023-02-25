@@ -16,7 +16,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import { useState } from "react";
 import { IModule } from "../../../redux/services/interfaces/class.interface";
-import { useDeleteModuleMutation } from "../../../redux/services/manager";
+import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
 // ----------------------------------------------------------------------
 

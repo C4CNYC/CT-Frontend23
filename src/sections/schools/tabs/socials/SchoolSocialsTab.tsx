@@ -1,20 +1,20 @@
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import SocialItem from "./SocialItem";
 import SocialsForm from "./SocialsForm";
 
 interface Props {
-  school_id: string;
+  schoolId: string;
 }
 
 export default function SchoolSocialsTab({
-  school_id,
+  schoolId,
 }: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolProfileQuery(
-    { school_id },
-    { skip: !school_id }
+    { schoolId },
+    { skip: !schoolId }
   );
   const socialLinks = data?.socials;
 
@@ -38,7 +38,7 @@ export default function SchoolSocialsTab({
               {isLoading
 ? null
 : (
-                <SocialsForm socialLinks={data.socials} school_id={school_id} />
+                <SocialsForm socialLinks={data.socials} schoolId={schoolId} />
               )}
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Your networks
@@ -49,7 +49,7 @@ export default function SchoolSocialsTab({
                   sx={{ wordBreak: "break-all" }}
                   key={item.id}
                 >
-                  <SocialItem socialItem={item} school_id={school_id} />
+                  <SocialItem socialItem={item} schoolId={schoolId} />
                 </Stack>
               ))}
             </Card>

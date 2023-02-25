@@ -6,7 +6,7 @@ import { useSettingsContext } from "@components/settings";
 import { Container } from "@mui/material";
 import { useSelector } from "react-redux";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
-import { useGetStudentQuery } from "src/redux/services/manager";
+import { useGetStudentQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
@@ -24,14 +24,14 @@ export default function UserEditPage(): React.ReactElement {
     query: { id },
   } = useRouter();
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
   const { data } = useGetStudentQuery(
     {
-      student_id: id as string,
-      school_id,
+      studentId: id as string,
+      schoolId,
     },
-    { skip: !school_id || !id }
+    { skip: !schoolId || !id }
   );
 
   return (
