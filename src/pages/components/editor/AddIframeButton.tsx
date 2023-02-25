@@ -8,14 +8,26 @@ import React, {
   useState
 } from "react";
 import { useCommands } from "@remirror/react";
+import ToggleButton from "@mui/material/ToggleButton";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { RxCrossCircled } from "react-icons/rx";
+import { GoBrowser } from "react-icons/go";
+import { IconButton, TextField, Stack } from "@mui/material";
+import { useDetectClickOutside } from "react-detect-click-outside";
 
-export default function AddIframeButton() {
+export default function AddIframeButton(): JSX.Element {
   const { addIframe } = useCommands();
-  const [href, setHref] = useState<string>("https://remirror.io");
+  const [href, setHref] = useState<string>("");
+  const [edit, setEdit] = useState<boolean>(false);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setHref(e.target.value);
   }, []);
+
+  const closeMenu = () => {
+    setEdit(false);
+  }
+  const ref = useDetectClickOutside({ onTriggered: closeMenu });
 
   const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback((e) => {
     e.preventDefault();
@@ -26,16 +38,60 @@ export default function AddIframeButton() {
       e.preventDefault();
       addIframe({ src: href, height: 250, width: 500 });
       setHref("");
+      setEdit(!edit);
     },
     [addIframe, href]
   );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="url" placeholder="Enter link..." value={href} onChange={handleChange} required />
-      <button type="submit" onMouseDown={handleMouseDown}>
-        Add iframe
-      </button>
-    </form>
+    <Stack direction="row" style={{ position: "relative", marginLeft: "10px" }} ref={ref}>
+      {edit &&
+        <div style={{
+          position: "absolute",
+          top: "29px",
+          width: "280px",
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "white",
+          border: "1px solid rgba(0, 0, 0, 0.12)",
+          borderRadius: "4px",
+          padding: "5px",
+          zIndex: 2
+        }}>
+          <TextField
+            variant="outlined"
+            size="small"
+            type="url"
+            placeholder="Enter link..."
+            value={href}
+            onChange={handleChange}
+            required />
+          <IconButton
+            sx={{ p: "10px" }}
+            onClick={handleSubmit}
+            disabled={!href}
+          >
+            <AiFillCheckCircle size={22} color="green" />
+          </IconButton>
+
+          <IconButton
+            sx={{ p: "10px" }}
+            onClick={() => {
+              setEdit(!edit);
+            }}
+          >
+            <RxCrossCircled size={22} color="red" />
+          </IconButton>
+        </div>
+      }
+      <ToggleButton value="left" key="left"
+                    onMouseDown={handleMouseDown}
+                    onClick={() => {
+                      setEdit(!edit);
+                    }}
+      >
+        <GoBrowser size={22} />
+      </ToggleButton>
+    </Stack>
   );
 }

@@ -1,5 +1,5 @@
 import "remirror/styles/all.css";
-
+import { useEffect, useState } from "react";
 import {
   BoldExtension,
   HeadingExtension, ImageExtension,
@@ -10,7 +10,10 @@ import {
   CodeExtension,
   ColumnsExtension,
   IframeExtension,
-  FontFamilyExtension
+  FontFamilyExtension,
+  HorizontalRuleExtension,
+  NodeFormattingExtension, TextColorExtension
+
 } from "remirror/extensions";
 import {
   BasicFormattingButtonGroup,
@@ -19,11 +22,17 @@ import {
   useRemirror,
   Remirror,
   Toolbar, ToggleBlockquoteButton, ToggleCodeBlockButton,
-  ThemeProvider, ToggleColumnsButton
+  ThemeProvider, ToggleColumnsButton,
+  InsertHorizontalRuleButton,
+  TextAlignmentButtonGroup, IndentationButtonGroup, EditorComponent
 } from "@remirror/react";
 import AddIframeButton from "./AddIframeButton";
 import AddYoutubeButton from "./AddYoutubeButton";
 import FontFamilyButtons from "./FontFamilyButtons";
+import TextColorPicker from "./TextColorPicker";
+import TablePicker from "./TablePicker";
+import { TableComponents, TableExtension } from "@remirror/extension-react-tables";
+import { ReactComponentExtension } from "@remirror/extension-react-component";
 
 const extensions = () => [
   new HeadingExtension(),
@@ -37,17 +46,21 @@ const extensions = () => [
   new ColumnsExtension(),
   new IframeExtension(),
   new FontFamilyExtension(),
-  // new EmojiExtension(), need fix
-
+  new HorizontalRuleExtension(),
+  new NodeFormattingExtension(),
+  new TextColorExtension(),
+  new ReactComponentExtension(),
+  new TableExtension()
 ];
 
-export default function MyEditor() {
+export default function MyEditor(): JSX.Element {
   const { manager, state, setState } = useRemirror({
     extensions,
     stringHandler: "html"
   });
 
-  console.log(state);
+  console.log(state.doc);
+
   return (
     <ThemeProvider>
       <style>
@@ -59,6 +72,9 @@ export default function MyEditor() {
           .remirror-theme .ProseMirror {
             height: 90vh;
             box-shadow: none;
+          }
+          .remirror-menu{
+            right: 0;
           }
         `}
       </style>
@@ -72,17 +88,28 @@ export default function MyEditor() {
         }}>
         <Toolbar style={{
           padding: "15px",
-          background: "#f4f5f7"
+          background: "#f4f5f7",
+          overflowX: "visible"
         }}>
           <HistoryButtonGroup />
           <BasicFormattingButtonGroup />
           <HeadingLevelButtonGroup showAll />
-          <ToggleBlockquoteButton />
-          <ToggleCodeBlockButton lang="html" />
-          <ToggleColumnsButton />
-          <AddIframeButton />
-          <AddYoutubeButton />
+          <TextAlignmentButtonGroup />
+          <IndentationButtonGroup />
           <FontFamilyButtons />
+
+          <div style={{ height: "30px", display: "flex" }}>
+            <ToggleBlockquoteButton />
+            <InsertHorizontalRuleButton />
+            <ToggleCodeBlockButton lang="html" />
+            <ToggleColumnsButton />
+            <AddIframeButton />
+            <AddYoutubeButton />
+            <TextColorPicker />
+            <TablePicker />
+            <TableComponents />
+          </div>
+
         </Toolbar>
       </Remirror>
     </ThemeProvider>
