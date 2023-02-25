@@ -58,7 +58,7 @@ export default function TablePicker(): JSX.Element {
           padding: "10px",
           zIndex: 2
         }}>
-          <Stack style={{ width: "60px" }}>
+          <Stack style={{ width: "120px" }}>
             <label htmlFor="cells" style={{ fontSize: "12px" }}>Columns:</label>
             <input
               type="number"
@@ -69,7 +69,7 @@ export default function TablePicker(): JSX.Element {
               style={{ width: "40px", padding: "5px" }}
             />
           </Stack>
-          <Stack style={{ width: "60px" }}>
+          <Stack style={{ width: "80px" }}>
             <label htmlFor="rows" style={{ fontSize: "12px" }}>Rows:</label>
             <input
               type="number"
