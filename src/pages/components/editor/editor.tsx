@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material";
+import { CircularProgress, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {
@@ -40,9 +40,13 @@ import {
   UnderlineExtension,
 } from "remirror/extensions";
 import "remirror/styles/all.css";
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddIframeButton from "./AddIframeButton";
 import AddYoutubeButton from "./AddYoutubeButton";
 import FontFamilyButtons from "./FontFamilyButtons";
+import SaveButton from "./SaveButton";
 import TablePicker from "./TablePicker";
 import TextColorPicker from "./TextColorPicker";
 
@@ -76,7 +80,13 @@ TextColorExtension |
 ReactComponentExtension |
 TableExtension;
 
-export default function MyEditor(): React.ReactElement {
+interface Props {
+  lessonId: string;
+  data?: ILessonContent & BaseResponseInterface
+}
+
+export default function MyEditor({ lessonId, data }: Props): React.ReactElement {
+  const [updateLessonContent] = useUpdateLessonContentMutation();
   const { uploadToS3 } = useS3Upload();
   const extensions = (): Extentions[] => [
     new HeadingExtension(),
@@ -119,8 +129,16 @@ export default function MyEditor(): React.ReactElement {
 
   const { manager, state, setState } = useRemirror({
     extensions,
+    content: data?.body ? JSON.parse(data?.body) : "",
     stringHandler: "html",
   });
+
+  const saveContent = async (): Promise<void> => {
+    updateLessonContent({
+      lessonId,
+      body: JSON.stringify(state)
+    })
+  }
 
   return (
     <ThemeProvider>
@@ -176,6 +194,7 @@ export default function MyEditor(): React.ReactElement {
             <TablePicker />
             <TableComponents />
           </div>
+          <SaveButton onClick={saveContent}/>
         </Toolbar>
         <FloatingToolbar
           sx={{

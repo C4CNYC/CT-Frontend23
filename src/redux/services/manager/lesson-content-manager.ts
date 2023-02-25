@@ -7,17 +7,20 @@ const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getLessonContent: builder.query<
       ILessonContent & BaseResponseInterface,
-      { id: string }
+      { lessonId: string }
     >({
-      query: ({ id }) => ({
-        url: `/lesson/${id}/content`,
+      query: ({ lessonId }) => ({
+        url: `/lesson/${lessonId}/content`,
         method: "GET",
       }),
       providesTags: ["Lessons"],
     }),
-    updateLessonContent: builder.mutation<ILessonContent, { id: string }>({
-      query: ({ id, ...body }) => ({
-        url: `/lesson/${id}/content`,
+    updateLessonContent: builder.mutation<
+      ILessonContent,
+      { lessonId: string; body: string }
+    >({
+      query: ({ lessonId, ...body }) => ({
+        url: `/lesson/${lessonId}/content`,
         method: "PATCH",
         body,
       }),

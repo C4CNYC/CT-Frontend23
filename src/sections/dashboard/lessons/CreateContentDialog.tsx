@@ -1,9 +1,10 @@
-import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, CircularProgress, Stack, Toolbar, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import MyEditor from "@pages/components/editor/editor";
 import * as React from "react";
 import { useState } from "react";
+import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
 
 interface Prop {
   children: React.ReactElement;
@@ -17,6 +18,7 @@ export default function CreateContentDialog({
   lessonName
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
+  const { data, isLoading } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId || !open });
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -44,7 +46,8 @@ export default function CreateContentDialog({
           </Toolbar>
         </AppBar>
         <DialogContent sx={{ p: 0, scrollbarWidth: "none" }}>
-          <MyEditor />
+          { isLoading && data ? (<CircularProgress/>) : null}
+          <MyEditor data={data} lessonId={lessonId} />
         </DialogContent>
       </Dialog>
     </>

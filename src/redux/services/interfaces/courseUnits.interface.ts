@@ -24,7 +24,7 @@ export interface ICourse {
 }
 
 export interface ILessonContent {
-  body: Record<string, any>;
+  body: string;
   type: LessonContentType;
 }
 
