@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import { useState } from "react";
-import { useDeleteLessonMutation } from "../../../redux/services/manager";
+import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
 
 // ----------------------------------------------------------------------
 

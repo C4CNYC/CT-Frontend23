@@ -18,7 +18,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { useState } from "react";
 import { ICourse } from "../../../../@types/courses";
-import { useDeleteCourseMutation } from "../../../../redux/services/manager";
+import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
 
 interface Props {
   course: ICourse;

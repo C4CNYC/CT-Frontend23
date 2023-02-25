@@ -9,7 +9,7 @@ import {
   IAssignmentsColumn,
 } from "../../../../@types/assignments";
 import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
-import { useDeleteAssignmentMutation } from "../../../../redux/services/manager";
+import { useDeleteAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 interface Props {
   column: IAssignmentsColumn;

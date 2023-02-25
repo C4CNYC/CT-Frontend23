@@ -17,7 +17,7 @@ import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
 import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
 import * as React from "react";
 import { useSnackbar } from "notistack";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import AssignmentInput from "../AssignmentInput";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";

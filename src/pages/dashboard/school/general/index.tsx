@@ -14,7 +14,7 @@ import { useState } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import { RootState } from "../../../../redux/store";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (

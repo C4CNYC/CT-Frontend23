@@ -7,7 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import * as Yup from "yup";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;

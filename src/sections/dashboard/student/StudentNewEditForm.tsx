@@ -27,7 +27,7 @@ import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useCreateStudentMutation,
   useUpdateStudentMutation,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 

@@ -3,7 +3,7 @@ import { Box, Button, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { useUdpateAssignmentMutation } from "src/redux/services/manager";
+import { useUdpateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;

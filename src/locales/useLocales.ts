@@ -16,7 +16,7 @@ export interface Lang {
 
 interface IUseLocals {
   onChangeLang: (value: string) => Promise<void>;
-  translate: (text: any, options?: any) => string;
+  translate: (text: any, options?: any) => unknown;
   currentLang: Lang;
   allLangs: Lang[];
 }
@@ -48,8 +48,7 @@ export default function useLocales(): IUseLocals {
 
   return {
     onChangeLang: handleChangeLanguage,
-    translate: (text: any, options?: any) =>
-      JSON.stringify(translate(text, options)),
+    translate: (text: any, options?: any) => translate(text, options),
     currentLang,
     allLangs,
   };

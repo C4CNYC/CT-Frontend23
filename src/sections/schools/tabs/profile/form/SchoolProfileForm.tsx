@@ -5,7 +5,7 @@ import { Box, Card, Grid, Stack } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
+import { useUpdateSchoolProfileMutation } from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { countries } from "../../../../../assets/data";
 import { useLocales } from "../../../../../locales";

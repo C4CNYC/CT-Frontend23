@@ -25,7 +25,7 @@ import {
   useGetStudentsQuery,
   useStudentJoinClassMutation,
   useStudentLeftClassMutation,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
@@ -34,7 +34,7 @@ type StudentType = IStudent & BaseResponseInterface;
 export default function ClassMembersAutocomplete(): React.ReactElement {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const class_id = router.query.id as string;
+  const classId = router.query.id as string;
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
   const { filters, setFilter } = useFilters({ email: "", take: 50 });
@@ -42,12 +42,12 @@ export default function ClassMembersAutocomplete(): React.ReactElement {
   const [joinClass] = useStudentJoinClassMutation();
   const [leftClass] = useStudentLeftClassMutation();
   const { data: classMembers } = useGetStudentsQuery(
-    { schoolId, class_id, take: 50 },
-    { skip: !schoolId || !class_id }
+    { schoolId, classId, take: 50 },
+    { skip: !schoolId || !classId }
   );
   const { data: students } = useGetStudentsQuery(
     { schoolId, ...filters },
-    { skip: !schoolId || !class_id }
+    { skip: !schoolId || !classId }
   );
 
   if (!students?.data || !classMembers?.data) {
@@ -63,7 +63,7 @@ export default function ClassMembersAutocomplete(): React.ReactElement {
     try {
       const payload = {
         schoolId,
-        class_id,
+        classId,
         studentId: details?.option.id ?? "",
       };
       switch (reason) {

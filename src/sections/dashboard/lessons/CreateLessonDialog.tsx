@@ -17,7 +17,7 @@ import * as Yup from "yup";
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
-} from "../../../redux/services/manager";
+} from "../../../redux/services/manager/lessons-manager";
 
 interface FormValuesProps {
   name: string;

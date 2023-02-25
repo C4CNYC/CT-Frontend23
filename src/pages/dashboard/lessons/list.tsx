@@ -9,7 +9,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import Head from "next/head";
-import { useGetLessonsQuery } from "src/redux/services/manager";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import CreateContentDialog from "@sections/dashboard/lessons/CreateContentDialog";
 
 // ----------------------------------------------------------------------

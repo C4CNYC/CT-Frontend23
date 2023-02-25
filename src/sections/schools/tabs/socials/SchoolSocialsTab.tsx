@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import SocialItem from "./SocialItem";
 import SocialsForm from "./SocialsForm";
 

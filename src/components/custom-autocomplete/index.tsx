@@ -11,7 +11,7 @@ import {
   ClassSearchParams,
   IClass,
 } from "src/redux/services/interfaces/class.interface";
-import { useGetClassesQuery } from "src/redux/services/manager";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { useSelector, RootState } from "src/redux/store";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -23,7 +23,7 @@ interface Props {
   filterName: string;
   onResetFilter: VoidFunction;
   onFilterName: (name: string) => void;
-  onFilterClass: (class_id: string) => void;
+  onFilterClass: (classId: string) => void;
 };
 
 type ClassType = IClass & BaseResponseInterface;

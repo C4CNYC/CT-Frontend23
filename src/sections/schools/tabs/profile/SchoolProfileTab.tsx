@@ -1,6 +1,6 @@
 import { Grid, Stack } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import ProfileAbout from "./components/ProfileAbout";
 import ProfileSocialInfo from "./components/ProfileSocialInfo";
 import ProfileUsersInfo from "./components/ProfileUsersInfo";

@@ -4,7 +4,7 @@ import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
 import { useState } from "react";
 
-import { useGetAssignmentQuery } from "src/redux/services/manager";
+import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
 import AssignmentAbout from "./AssignmentAbout";
 import AssignmentAssigning from "./AssignmentAssigning";
 import AssignmentSettings from "./AssignmentSettings";

@@ -10,7 +10,7 @@ import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.e
 import {
   useGetAssignmentListQuery,
   useUdpateAssignmentMutation,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/assignments-manager";
 import { getOrder } from "src/utils/getTaskOrder";
 import { getBoard, persistCard } from "../../../../redux/slices/assignments";
 import { RootState, useDispatch, useSelector } from "../../../../redux/store";

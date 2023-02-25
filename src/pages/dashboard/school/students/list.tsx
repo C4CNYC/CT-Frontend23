@@ -40,7 +40,7 @@ import { useSelector } from "react-redux";
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
@@ -87,7 +87,7 @@ export default function UserListPage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
-    class_id: "",
+    classId: "",
   });
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -169,8 +169,8 @@ export default function UserListPage(): React.ReactElement {
             onFilterName={(name: string) => {
               setFilter("name", name);
             }}
-            onFilterClass={(class_id: string) => {
-              setFilter("class_id", class_id);
+            onFilterClass={(classId: string) => {
+              setFilter("classId", classId);
             }}
             onResetFilter={resetFilters}
           />

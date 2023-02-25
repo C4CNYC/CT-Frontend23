@@ -5,9 +5,9 @@ import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
+import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
-import { useUpdateSchoolContactsMutation } from "../../../../redux/services/manager";
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email("Email must be a valid email address"),

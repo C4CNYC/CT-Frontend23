@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import {
   useCreateAssignmentMutation,
   useUdpateAssignmentMutation,
-} from "../../../../redux/services/manager";
+} from "../../../../redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;

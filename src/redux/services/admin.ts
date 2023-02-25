@@ -109,10 +109,10 @@ export const adminApi = createApi({
     }),
     updateClass: builder.mutation<
       ClassResponce,
-      { schoolId: string; class_id: string; name: string }
+      { schoolId: string; classId: string; name: string }
     >({
-      query: ({ schoolId, class_id, ...body }) => ({
-        url: `/school/${schoolId}/class/${class_id}`,
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}`,
         method: "PATCH",
         body,
       }),

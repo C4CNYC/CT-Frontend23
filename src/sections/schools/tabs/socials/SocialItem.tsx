@@ -5,15 +5,12 @@ import { Box, FormGroup, Stack } from "@mui/material";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  useDeleteSchoolSocialMutation,
-  useUpdateSchoolSocialMutation,
-} from "src/redux/services/manager";
+import { useDeleteSchoolSocialMutation, useUpdateSchoolSocialMutation } from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { SOCIAL_ICONS } from "../../../../assets/data";
 
 interface FormValuesProps {
-  social_id: string;
+  socialID: string;
   schoolId: string;
   link: string;
 }
@@ -23,7 +20,7 @@ interface Props {
   socialItem: {
     type: string;
     id: string;
-    social_id: string;
+    socialID: string;
     link: string;
   };
   defaultValues?: FormValuesProps;
@@ -63,7 +60,7 @@ export default function SocialItem({
     try {
       await editSocial({
         schoolId,
-        social_id: socialItem.id,
+        socialID: socialItem.id,
         link: data?.link,
       }).unwrap();
       enqueueSnackbar("Social link edited");
@@ -74,11 +71,11 @@ export default function SocialItem({
       });
     }
   };
-  const handleDeleteSocial = async (social_id: string): Promise<void> => {
+  const handleDeleteSocial = async (socialID: string): Promise<void> => {
     try {
       await deleteSocial({
         schoolId,
-        social_id,
+        socialID,
       }).unwrap();
       enqueueSnackbar("Social link deleted");
     } catch (e) {

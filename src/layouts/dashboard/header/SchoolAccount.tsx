@@ -11,7 +11,6 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
-import { useGetMySchoolsQuery } from "src/redux/services/manager";
 import { setSchool } from "src/redux/slices/manager";
 import { RootState } from "src/redux/store";
 
