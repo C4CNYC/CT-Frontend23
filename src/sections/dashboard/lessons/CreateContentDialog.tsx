@@ -46,8 +46,11 @@ export default function CreateContentDialog({
           </Toolbar>
         </AppBar>
         <DialogContent sx={{ p: 0, scrollbarWidth: "none" }}>
-          { isLoading && data ? (<CircularProgress/>) : null}
-          <MyEditor data={data} lessonId={lessonId} />
+          {
+            isLoading || !data
+            ? (<Stack display="flex" justifyContent="center" alignItems="center" minHeight="450px"><CircularProgress/></Stack>)
+            : (<MyEditor data={data} lessonId={lessonId} />)
+          }
         </DialogContent>
       </Dialog>
     </>
