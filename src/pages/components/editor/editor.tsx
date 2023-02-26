@@ -22,6 +22,7 @@ import {
   useRemirror,
 } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
+import { useSnackbar } from "notistack";
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -87,6 +88,7 @@ interface Props {
 
 export default function MyEditor({ lessonId, data }: Props): React.ReactElement {
   const [updateLessonContent] = useUpdateLessonContentMutation();
+  const { enqueueSnackbar } = useSnackbar();
   const { uploadToS3 } = useS3Upload();
   const extensions = (): Extentions[] => [
     new HeadingExtension(),
@@ -134,10 +136,16 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
   });
 
   const saveContent = async (): Promise<void> => {
-    updateLessonContent({
-      lessonId,
-      body: JSON.stringify(state)
-    })
+    try {
+      await updateLessonContent({
+        lessonId,
+        body: JSON.stringify(state)
+      }).unwrap();
+
+      enqueueSnackbar("lesson updated");
+    } catch (e) {
+      enqueueSnackbar(e.message, { variant: "error" });
+    }
   }
 
   return (
@@ -150,6 +158,7 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
           }
           .remirror-editor-wrapper { padding: 0; height: 80vh }
           .remirror-theme .ProseMirror {
+            height: 100%;
             scrollbar-width: none;
             box-shadow: none;
           }
