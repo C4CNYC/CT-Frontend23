@@ -58,14 +58,14 @@ export default function TablePicker(): JSX.Element {
   return (
     <Stack
       direction="row"
-      style={{ marginLeft: "10px" }}
+      style={{ marginLeft: "10px", marginRight: "10px" }}
       ref={ref}
     >
       {edit && (
         <div
           style={{
             position: "absolute",
-            top: "29px",
+            top: "44px",
             width: "200px",
             display: "flex",
             alignItems: "flex-end",

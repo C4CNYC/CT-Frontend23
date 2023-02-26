@@ -1,12 +1,13 @@
-import { CircularProgress, Divider } from "@mui/material";
+import { Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {
   TableComponents,
-  TableExtension,
+  TableExtension
 } from "@remirror/extension-react-tables";
 import {
   BasicFormattingButtonGroup,
+  CalloutTypeButtonGroup,
   FloatingToolbar,
   HeadingLevelButtonGroup,
   HistoryButtonGroup,
@@ -20,6 +21,15 @@ import {
   ToggleColumnsButton,
   Toolbar,
   useRemirror,
+  CommandButtonGroup,
+  DecreaseFontSizeButton,
+  IncreaseFontSizeButton,
+  ToggleStrikeButton,
+  ToggleWhitespaceButton,
+  ToggleSubscriptButton,
+  ToggleSuperscriptButton,
+  ToggleBulletListButton,
+  ToggleOrderedListButton, ToggleTaskListButton
 } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
 import {
@@ -38,6 +48,16 @@ import {
   NodeFormattingExtension,
   TextColorExtension,
   UnderlineExtension,
+  CalloutExtension,
+  LinkExtension,
+  FontSizeExtension,
+  StrikeExtension,
+  WhitespaceExtension,
+  TextHighlightExtension,
+  TextCaseExtension, SupExtension, SubExtension, ShortcutsExtension,
+  BulletListExtension,
+  OrderedListExtension,
+  TaskListExtension, EmojiExtension
 } from "remirror/extensions";
 import "remirror/styles/all.css";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
@@ -49,6 +69,11 @@ import FontFamilyButtons from "./FontFamilyButtons";
 import SaveButton from "./SaveButton";
 import TablePicker from "./TablePicker";
 import TextColorPicker from "./TextColorPicker";
+import TextBgColorPicker from "./TextBgColorPicker";
+import { FileExtension } from "@remirror/extension-file";
+import React from "react";
+import FontSizeButtons from "./FontSizeButtons";
+import TextCaseSelect from "./TextCaseSelect";
 
 interface FileWithProgress {
   file: File;
@@ -63,26 +88,28 @@ export declare type DelayedPromiseCreator<Value> = (
 declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
 type Extentions = HeadingExtension |
-BoldExtension |
-ItalicExtension |
-ItalicExtension |
-BlockquoteExtension |
-UnderlineExtension |
-ImageExtension |
-CodeBlockExtension |
-CodeExtension |
-ColumnsExtension |
-IframeExtension |
-FontFamilyExtension |
-HorizontalRuleExtension |
-NodeFormattingExtension |
-TextColorExtension |
-ReactComponentExtension |
-TableExtension;
+  BoldExtension |
+  ItalicExtension |
+  BlockquoteExtension |
+  UnderlineExtension |
+  ImageExtension |
+  CodeBlockExtension |
+  CodeExtension |
+  ColumnsExtension |
+  IframeExtension |
+  FontFamilyExtension |
+  HorizontalRuleExtension |
+  NodeFormattingExtension |
+  TextColorExtension |
+  ReactComponentExtension |
+  TableExtension | FileExtension | CalloutExtension |
+  LinkExtension | FontSizeExtension | StrikeExtension | WhitespaceExtension |
+  TextHighlightExtension | TextCaseExtension | SupExtension | SubExtension | ShortcutsExtension |
+  BulletListExtension | OrderedListExtension | TaskListExtension | EmojiExtension;
 
 interface Props {
   lessonId: string;
-  data?: ILessonContent & BaseResponseInterface
+  data?: ILessonContent & BaseResponseInterface;
 }
 
 export default function MyEditor({ lessonId, data }: Props): React.ReactElement {
@@ -105,6 +132,21 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
     new TextColorExtension(),
     new ReactComponentExtension(),
     new TableExtension(),
+    new FileExtension(),
+    new CalloutExtension(),
+    new LinkExtension({ autoLink: true }),
+    new FontSizeExtension({ defaultSize: "16", unit: "px" }),
+    new StrikeExtension(),
+    // new WhitespaceExtension(),
+    new TextHighlightExtension(),
+    new TextCaseExtension(),
+    new SupExtension(),
+    new SubExtension(),
+    new ShortcutsExtension(),
+    new BulletListExtension(),
+    new OrderedListExtension(),
+    new TaskListExtension(),
+    // new EmojiExtension({ supportedLanguages: ["typescript", "jsx"] })
   ];
 
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -130,15 +172,15 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
   const { manager, state, setState } = useRemirror({
     extensions,
     content: data?.body ? JSON.parse(data?.body) : "",
-    stringHandler: "html",
+    stringHandler: "html"
   });
 
   const saveContent = async (): Promise<void> => {
     updateLessonContent({
       lessonId,
       body: JSON.stringify(state)
-    })
-  }
+    });
+  };
 
   return (
     <ThemeProvider>
@@ -155,6 +197,20 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
           }
           .remirror-menu{
             right: 0;
+          }
+          .css-19j3oe6-MuiStack-root {
+            overflow-x: visible !important;
+          }
+          .remirror-theme ul {
+            margin-left: 20px;
+          }
+          
+          .remirror-theme ol {
+            padding-left: 20px;
+          }
+          
+          .remirror-theme [data-task-list] {
+            margin-left: 30px;
           }
         `}
       </style>
@@ -183,18 +239,41 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
           <HistoryButtonGroup />
           <HeadingLevelButtonGroup showAll />
           <IndentationButtonGroup />
+          <TextCaseSelect />
+          <Toolbar>
+            <ToggleSuperscriptButton />
+            <ToggleSubscriptButton />
+          </Toolbar>
+
+          <CommandButtonGroup>
+            <DecreaseFontSizeButton />
+            <FontSizeButtons />
+            <IncreaseFontSizeButton />
+          </CommandButtonGroup>
+
+          <CommandButtonGroup>
+            <ToggleBulletListButton />
+            <ToggleOrderedListButton />
+            <ToggleTaskListButton />
+          </CommandButtonGroup>
+
+          <TextColorPicker />
+          <TextBgColorPicker />
 
           <div style={{ height: "30px", display: "flex" }}>
             <ToggleBlockquoteButton />
             <InsertHorizontalRuleButton />
             <ToggleCodeBlockButton lang="html" />
             <ToggleColumnsButton />
+            {/* <ToggleWhitespaceButton /> */}
+
             <AddIframeButton />
             <AddYoutubeButton />
             <TablePicker />
             <TableComponents />
+            <CalloutTypeButtonGroup />
           </div>
-          <SaveButton onClick={saveContent}/>
+          <SaveButton onClick={saveContent} />
         </Toolbar>
         <FloatingToolbar
           sx={{
@@ -204,25 +283,25 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
             }
           }}
           style={{
-              zIndex: 9999999,
-              padding: 10,
+            zIndex: 9999999,
+            padding: 10
           }}>
-            <Stack
-              borderRadius="5px"
-              display="flex"
-              flexDirection="row"
-              p="5px 10px"
-              alignItems="center"
-              alignContent="center"
-            >
-              <TextColorPicker />
-              <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
-              <BasicFormattingButtonGroup />
-              <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
-              <TextAlignmentButtonGroup />
-              <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
-              <FontFamilyButtons />
-            </Stack>
+          <Stack
+            borderRadius="5px"
+            display="flex"
+            flexDirection="row"
+            p="5px 10px"
+            alignItems="center"
+            alignContent="center"
+          >
+            <BasicFormattingButtonGroup />
+            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <ToggleStrikeButton />
+            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <TextAlignmentButtonGroup />
+            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <FontFamilyButtons />
+          </Stack>
         </FloatingToolbar>
       </Remirror>
     </ThemeProvider>
