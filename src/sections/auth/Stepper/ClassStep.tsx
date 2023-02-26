@@ -1,4 +1,4 @@
-import InputInfo from "@components/inputInfo/InputInfo";
+import InputInfo from "@components/input-info/InputInfo";
 import { Box, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
