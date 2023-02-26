@@ -1,7 +1,7 @@
 import { AppBar, CircularProgress, Stack, Toolbar, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import MyEditor from "@pages/components/editor/editor";
+import MyEditor from "@pages/components/editor/MyEditor";
 import * as React from "react";
 import { useState } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";

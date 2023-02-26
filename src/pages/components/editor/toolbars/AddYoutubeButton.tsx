@@ -5,7 +5,6 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { useCommands } from "@remirror/react";
 import React, {
   ChangeEventHandler,
-  FormEventHandler,
   MouseEventHandler,
   useCallback,
   useState,
@@ -33,7 +32,7 @@ export default function AddIframeButton(): JSX.Element {
     []
   );
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+  const handleSubmit: MouseEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
       addYouTubeVideo({ video: href, showControls: true });

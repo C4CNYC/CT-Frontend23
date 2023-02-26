@@ -1,3 +1,4 @@
+import React from "react";
 import { Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
@@ -25,7 +26,6 @@ import {
   DecreaseFontSizeButton,
   IncreaseFontSizeButton,
   ToggleStrikeButton,
-  ToggleWhitespaceButton,
   ToggleSubscriptButton,
   ToggleSuperscriptButton,
   ToggleBulletListButton,
@@ -63,17 +63,18 @@ import "remirror/styles/all.css";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import AddIframeButton from "./AddIframeButton";
-import AddYoutubeButton from "./AddYoutubeButton";
-import FontFamilyButtons from "./FontFamilyButtons";
+import {
+  AddIframeButton,
+  AddYoutubeButton,
+  FontFamilyButtons,
+  TablePicker,
+  TextColorPicker,
+  TextBgColorPicker,
+  FontSizeButtons,
+  TextCaseSelect
+} from "./toolbars";
 import SaveButton from "./SaveButton";
-import TablePicker from "./TablePicker";
-import TextColorPicker from "./TextColorPicker";
-import TextBgColorPicker from "./TextBgColorPicker";
 import { FileExtension } from "@remirror/extension-file";
-import React from "react";
-import FontSizeButtons from "./FontSizeButtons";
-import TextCaseSelect from "./TextCaseSelect";
 
 interface FileWithProgress {
   file: File;
@@ -87,7 +88,7 @@ export declare type DelayedPromiseCreator<Value> = (
 ) => Promise<Value>;
 declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
-type Extentions = HeadingExtension |
+type Extensions = HeadingExtension |
   BoldExtension |
   ItalicExtension |
   BlockquoteExtension |
@@ -102,10 +103,22 @@ type Extentions = HeadingExtension |
   NodeFormattingExtension |
   TextColorExtension |
   ReactComponentExtension |
-  TableExtension | FileExtension | CalloutExtension |
-  LinkExtension | FontSizeExtension | StrikeExtension | WhitespaceExtension |
-  TextHighlightExtension | TextCaseExtension | SupExtension | SubExtension | ShortcutsExtension |
-  BulletListExtension | OrderedListExtension | TaskListExtension | EmojiExtension;
+  TableExtension |
+  FileExtension |
+  CalloutExtension |
+  LinkExtension |
+  FontSizeExtension |
+  StrikeExtension |
+  WhitespaceExtension |
+  TextHighlightExtension |
+  TextCaseExtension |
+  SupExtension |
+  SubExtension |
+  ShortcutsExtension |
+  BulletListExtension |
+  OrderedListExtension |
+  TaskListExtension |
+  EmojiExtension;
 
 interface Props {
   lessonId: string;
@@ -115,7 +128,7 @@ interface Props {
 export default function MyEditor({ lessonId, data }: Props): React.ReactElement {
   const [updateLessonContent] = useUpdateLessonContentMutation();
   const { uploadToS3 } = useS3Upload();
-  const extensions = (): Extentions[] => [
+  const extensions = (): Extensions[] => [
     new HeadingExtension(),
     new BoldExtension({}),
     new ItalicExtension(),
@@ -137,7 +150,6 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
     new LinkExtension({ autoLink: true }),
     new FontSizeExtension({ defaultSize: "16", unit: "px" }),
     new StrikeExtension(),
-    // new WhitespaceExtension(),
     new TextHighlightExtension(),
     new TextCaseExtension(),
     new SupExtension(),
@@ -145,8 +157,7 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
     new ShortcutsExtension(),
     new BulletListExtension(),
     new OrderedListExtension(),
-    new TaskListExtension(),
-    // new EmojiExtension({ supportedLanguages: ["typescript", "jsx"] })
+    new TaskListExtension()
   ];
 
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -239,17 +250,7 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
           <HistoryButtonGroup />
           <HeadingLevelButtonGroup showAll />
           <IndentationButtonGroup />
-          <TextCaseSelect />
-          <Toolbar>
-            <ToggleSuperscriptButton />
-            <ToggleSubscriptButton />
-          </Toolbar>
-
-          <CommandButtonGroup>
-            <DecreaseFontSizeButton />
-            <FontSizeButtons />
-            <IncreaseFontSizeButton />
-          </CommandButtonGroup>
+          <CalloutTypeButtonGroup />
 
           <CommandButtonGroup>
             <ToggleBulletListButton />
@@ -265,13 +266,11 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
             <InsertHorizontalRuleButton />
             <ToggleCodeBlockButton lang="html" />
             <ToggleColumnsButton />
-            {/* <ToggleWhitespaceButton /> */}
 
             <AddIframeButton />
             <AddYoutubeButton />
             <TablePicker />
             <TableComponents />
-            <CalloutTypeButtonGroup />
           </div>
           <SaveButton onClick={saveContent} />
         </Toolbar>
@@ -295,6 +294,19 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
             alignContent="center"
           >
             <BasicFormattingButtonGroup />
+            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <CommandButtonGroup>
+              <DecreaseFontSizeButton />
+              <FontSizeButtons />
+              <IncreaseFontSizeButton />
+            </CommandButtonGroup>
+            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <Toolbar>
+              <ToggleSuperscriptButton />
+              <ToggleSubscriptButton />
+              <TextCaseSelect />
+
+            </Toolbar>
             <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
             <ToggleStrikeButton />
             <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
