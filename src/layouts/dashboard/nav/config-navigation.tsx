@@ -1,6 +1,6 @@
 import { PATH_DASHBOARD } from "@routes/paths";
 import { AiOutlineSolution } from "react-icons/ai";
-import { FaSchool, FaUsers, FaUserShield } from "react-icons/fa";
+import { FaSchool, FaTasks, FaUsers, FaUserShield } from "react-icons/fa";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
 import { GrOrganization } from "react-icons/gr";
@@ -74,6 +74,11 @@ export const content = {
       title: "lessons",
       path: PATH_DASHBOARD.lessons.root,
       icon: <MdPlayLesson />,
+    },
+    {
+      title: 'tasks',
+      path: PATH_DASHBOARD.tasks.root,
+      icon: <FaTasks />
     },
     {
       title: "assignments",
