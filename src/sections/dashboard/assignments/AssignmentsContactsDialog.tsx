@@ -13,11 +13,9 @@ import {
   ListItemAvatar,
   ListItemText,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { IAssignmentsAssignee } from "../../../@types/assignments";
-import { _contacts } from "../../../_mock/arrays";
 
 // ----------------------------------------------------------------------
 
@@ -43,7 +41,7 @@ export default function AssignmentsContactsDialog({
   };
 
   const dataFiltered = applyFilter({
-    inputData: _contacts,
+    inputData: [],
     query: searchContacts,
   });
 
@@ -52,7 +50,6 @@ export default function AssignmentsContactsDialog({
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose}>
       <DialogTitle sx={{ pb: 0 }}>
-        Contacts <Typography component="span">({_contacts.length})</Typography>
       </DialogTitle>
 
       <Box sx={{ px: 3, py: 2.5 }}>
