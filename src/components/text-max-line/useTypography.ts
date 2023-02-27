@@ -1,5 +1,5 @@
 // @mui
-import { Breakpoint, Breakpoints, useTheme } from "@mui/material/styles";
+import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Variant } from "@mui/material/styles/createTypography";
 // hooks
 import { useWidth } from "../../hooks/useResponsive";

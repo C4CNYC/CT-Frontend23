@@ -24,7 +24,6 @@ import {
   DeleteMemberRequest,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
-  SchoolListResponce,
   SchoolRequest,
   SchoolResponce,
 } from "./interfaces/school.interface";
