@@ -8,18 +8,21 @@ import {
   ILesson,
   ILessonCreate,
   ILessonDelete,
+  ILessonSearchParams,
 } from "../interfaces/courseUnits.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getLessons: builder.query<
       BaseListResponseInterface<ILesson & BaseResponseInterface>,
-      void
+      ILessonSearchParams
     >({
-      query: () => ({
+      query: (params) => ({
         url: "/lesson",
         method: "GET",
+        params,
       }),
+      keepUnusedDataFor: 0,
       providesTags: ["Lessons"],
     }),
     updateLesson: builder.mutation<

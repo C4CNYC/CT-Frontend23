@@ -1,18 +1,28 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import {
+  BaseListResponseInterface,
+  BaseResponseInterface,
+} from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
 import { IModule } from "../interfaces/class.interface";
 import {
+  IAddLessonToModule,
   IModuleCreate,
   IModuleDelete,
+  IModulesSearchParams,
+  IRemoveLessonFromModule,
 } from "../interfaces/courseUnits.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getModules: builder.query<IModule, void>({
-      query: () => ({
+    getModules: builder.query<
+      BaseListResponseInterface<IModule & BaseResponseInterface>,
+      IModulesSearchParams
+    >({
+      query: (params) => ({
         url: "/module",
         method: "GET",
+        params,
       }),
       providesTags: ["Modules"],
     }),
@@ -48,6 +58,22 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Modules" }],
     }),
+    addLessonToModule: builder.mutation<void, IAddLessonToModule>({
+      query: ({ id, ...body }) => ({
+        url: `/module/${id}/lesson`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Lessons" }],
+    }),
+    removeLessonFromModule: builder.mutation<void, IRemoveLessonFromModule>({
+      query: ({ id, ...body }) => ({
+        url: `/module/${id}/lesson`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Lessons" }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -55,6 +81,8 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useGetModulesQuery,
   // -------------mutation-----------
+  useAddLessonToModuleMutation,
+  useRemoveLessonFromModuleMutation,
   useCreateModuleMutation,
   useDeleteModuleMutation,
   useUpdateModuleMutation,

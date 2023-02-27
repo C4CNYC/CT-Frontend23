@@ -1,30 +1,19 @@
-import "remirror/styles/all.css";
-
-import { IconButton, Stack, TextField } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import { useCommands } from "@remirror/react";
 import React, {
   ChangeEventHandler,
-  FormEventHandler,
   MouseEventHandler,
   useCallback,
   useState,
 } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiFillCheckCircle, AiFillYoutube } from "react-icons/ai";
-import { RxCrossCircled } from "react-icons/rx";
+import { AiOutlineClear, AiOutlineHighlight } from "react-icons/ai";
 
-export default function AddIframeButton(): JSX.Element {
-  const { addYouTubeVideo } = useCommands();
-  const [href, setHref] = useState<string>("");
+export default function TextColorPicker(): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);
-
-  const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setHref(e.target.value);
-    },
-    []
-  );
+  const [color, setColor] = useState<string>("#000");
+  const commands = useCommands();
 
   const handleMouseDown: MouseEventHandler<HTMLButtonElement> = useCallback(
     (e) => {
@@ -33,33 +22,28 @@ export default function AddIframeButton(): JSX.Element {
     []
   );
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+  const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       e.preventDefault();
-      addYouTubeVideo({ video: href, showControls: true });
-      setHref("");
-      setEdit(!edit);
+      setColor(e.target.value);
+      commands.setTextHighlight(color);
     },
-    [addYouTubeVideo, href]
+    [commands.setTextHighlight, color]
   );
 
-  const closeMenu = () => {
+  const closeMenu = (): void => {
     setEdit(false);
   };
   const ref = useDetectClickOutside({ onTriggered: closeMenu });
 
   return (
-    <Stack
-      direction="row"
-      style={{ marginLeft: "10px" }}
-      ref={ref}
-    >
+    <Stack direction="row" ref={ref}>
       {edit && (
         <div
           style={{
             position: "absolute",
             top: "29px",
-            width: "280px",
+            width: "100px",
             display: "flex",
             alignItems: "center",
             backgroundColor: "white",
@@ -69,42 +53,34 @@ export default function AddIframeButton(): JSX.Element {
             zIndex: 2,
           }}
         >
-          <TextField
-            variant="outlined"
-            size="small"
-            type="url"
-            placeholder="Enter youtube link..."
-            value={href}
+          <input
+            type="color"
+            id="favcolor"
+            name="favcolor"
+            value={color}
             onChange={handleChange}
-            required
           />
           <IconButton
             sx={{ p: "10px" }}
-            onClick={handleSubmit}
-            disabled={!href}
-          >
-            <AiFillCheckCircle size={22} color="green" />
-          </IconButton>
-
-          <IconButton
-            sx={{ p: "10px" }}
             onClick={() => {
+              commands.removeTextColor();
               setEdit(!edit);
             }}
           >
-            <RxCrossCircled size={22} color="red" />
+            <AiOutlineClear size={20} />
           </IconButton>
         </div>
       )}
       <ToggleButton
         value="left"
         key="left"
+        size="small"
         onMouseDown={handleMouseDown}
         onClick={() => {
           setEdit(!edit);
         }}
       >
-        <AiFillYoutube size={22} />
+        <AiOutlineHighlight size={13} />
       </ToggleButton>
     </Stack>
   );

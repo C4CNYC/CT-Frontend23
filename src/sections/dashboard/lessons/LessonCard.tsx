@@ -122,7 +122,7 @@ export default function LessonCard({
                   bgcolor: "currentColor",
                 }}
               />
-          </Stack>
+            </Stack>
           </>
         </CreateContentDialog>
       </Card>

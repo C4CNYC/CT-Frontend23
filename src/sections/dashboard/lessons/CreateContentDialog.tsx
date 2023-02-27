@@ -1,7 +1,13 @@
-import { AppBar, CircularProgress, Stack, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  CircularProgress,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import MyEditor from "@pages/components/editor/editor";
+import MyEditor from "@pages/components/editor/MyEditor";
 import * as React from "react";
 import { useState } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
@@ -15,10 +21,13 @@ interface Prop {
 export default function CreateContentDialog({
   children,
   lessonId,
-  lessonName
+  lessonName,
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const { data, isLoading } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId || !open });
+  const { data, isLoading } = useGetLessonContentQuery(
+    { lessonId },
+    { skip: !lessonId || !open }
+  );
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -46,11 +55,18 @@ export default function CreateContentDialog({
           </Toolbar>
         </AppBar>
         <DialogContent sx={{ p: 0, scrollbarWidth: "none" }}>
-          {
-            isLoading || !data
-            ? (<Stack display="flex" justifyContent="center" alignItems="center" minHeight="450px"><CircularProgress/></Stack>)
-            : (<MyEditor data={data} lessonId={lessonId} />)
-          }
+          {isLoading || !data ? (
+            <Stack
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="450px"
+            >
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <MyEditor data={data} lessonId={lessonId} />
+          )}
         </DialogContent>
       </Dialog>
     </>

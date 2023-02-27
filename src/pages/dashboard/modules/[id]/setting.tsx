@@ -1,5 +1,5 @@
-import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { ModuleLessonsAutocomplete } from "@components/module-lessons-autocomplete";
 import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, Card, Container, Typography } from "@mui/material";
@@ -20,7 +20,7 @@ export default function ClassSettingPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Class Setting: CodeTribe UI</title>
+        <title> Module Setting: CodeTribe UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
@@ -28,8 +28,8 @@ export default function ClassSettingPage(): React.ReactElement {
           heading="Class Setting"
           links={[
             {
-              name: "Class",
-              href: PATH_DASHBOARD.school.classes,
+              name: "Module",
+              href: PATH_DASHBOARD.school.modules,
             },
             { name: "Setting" },
           ]}
@@ -42,13 +42,9 @@ export default function ClassSettingPage(): React.ReactElement {
         >
           <Card sx={{ p: 3 }}>
             <Typography variant="h4" sx={{ mb: 4 }}>
-              Class mates
+              Lessons
             </Typography>
-            <ClassMembersAutocomplete />
-            <Typography variant="h4" sx={{ mb: 4, mt: 8 }}>
-              Class courses
-            </Typography>
-            <ClassMembersAutocomplete />
+            <ModuleLessonsAutocomplete />
           </Card>
         </Box>
       </Container>

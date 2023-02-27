@@ -43,6 +43,7 @@
     "@next/font": "^13.0.5",
     "@react-pdf/renderer": "^3.0.1",
     "@reduxjs/toolkit": "^1.9.0",
+    "@remirror/extension-file": "^1.0.15",
     "@remirror/pm": "^2.0.3",
     "@remirror/react": "^2.0.25",
     "@remirror/types": "^1.0.0",
