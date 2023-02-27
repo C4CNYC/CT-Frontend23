@@ -4,10 +4,10 @@ import Head from "next/head";
 import {
   Box,
   Card,
-  Grid,
-  Container,
-  CardHeader,
   CardContent,
+  CardHeader,
+  Container,
+  Grid,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -17,18 +17,18 @@ import MainLayout from "../../../layouts/main";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import {
-  ChartPie,
-  ChartBar,
-  ChartLine,
   ChartArea,
-  ChartMixed,
-  ChartDonut,
-  ChartsRadarBar,
-  ChartRadialBar,
+  ChartBar,
+  ChartColumnMultiple,
+  ChartColumnNegative,
   ChartColumnSingle,
   ChartColumnStacked,
-  ChartColumnNegative,
-  ChartColumnMultiple,
+  ChartDonut,
+  ChartLine,
+  ChartMixed,
+  ChartPie,
+  ChartRadialBar,
+  ChartsRadarBar,
 } from "@sections/_examples/extra/chart";
 
 // ----------------------------------------------------------------------
@@ -39,7 +39,7 @@ DemoChartsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoChartsPage() {
+export default function DemoChartsPage(): React.ReactElement {
   return (
     <>
       <Head>

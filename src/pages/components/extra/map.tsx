@@ -1,16 +1,16 @@
 // next
-import Head from "next/head";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 // @mui
-import { styled } from "@mui/material/styles";
 import {
   Box,
   Card,
-  Stack,
-  Container,
-  CardHeader,
   CardContent,
+  CardHeader,
+  Container,
+  Stack,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // config
@@ -23,35 +23,44 @@ import MainLayout from "../../../layouts/main";
 // components
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-const MapHeatmap = dynamic(
-  () => import("@sections/_examples/extra/map/heatmap")
+const MapHeatmap = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/heatmap")
 );
-const MapClusters = dynamic(
-  () => import("@sections/_examples/extra/map/clusters")
+const MapClusters = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/clusters")
 );
-const MapInteraction = dynamic(
-  () => import("@sections/_examples/extra/map/interaction")
+const MapInteraction = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/interaction")
 );
-const MapChangeTheme = dynamic(
-  () => import("@sections/_examples/extra/map/change-theme")
+const MapChangeTheme = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/change-theme")
 );
-const MapMarkersPopups = dynamic(
-  () => import("@sections/_examples/extra/map/MapMarkersPopups")
+const MapMarkersPopups = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/MapMarkersPopups")
 );
-const MapDraggableMarkers = dynamic(
-  () => import("@sections/_examples/extra/map/draggable-markers")
+const MapDraggableMarkers = dynamic<any>(
+  async () => await import("@sections/_examples/extra/map/draggable-markers")
 );
-const MapGeoJSONAnimation = dynamic(
-  () => import("@sections/_examples/extra/map/MapGeoJSONAnimation")
+const MapGeoJSONAnimation = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/MapGeoJSONAnimation")
 );
-const MapViewportAnimation = dynamic(
-  () => import("@sections/_examples/extra/map/viewport-animation")
+const MapViewportAnimation = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/viewport-animation")
 );
-const MapHighlightByFilter = dynamic(
-  () => import("@sections/_examples/extra/map/MapHighlightByFilter")
+const MapHighlightByFilter = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/MapHighlightByFilter")
 );
-const MapSideBySide = dynamic(
-  () => import("@sections/_examples/extra/map/side-by-side")
+const MapSideBySide = dynamic<any>(
+  async (): Promise<any> =>
+    await import("@sections/_examples/extra/map/side-by-side")
 );
 
 // ----------------------------------------------------------------------
@@ -89,7 +98,7 @@ DemoMapPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoMapPage() {
+export default function DemoMapPage(): React.ReactElement {
   return (
     <>
       <Head>

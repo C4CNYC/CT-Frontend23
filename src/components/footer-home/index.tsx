@@ -1,15 +1,12 @@
 import Editor from "@components/editor/Editor";
 import { Card, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { m } from "framer-motion";
-// @mui
 import { styled } from "@mui/material/styles";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   position: "relative",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  
   padding: theme.spacing(10, 0),
   [theme.breakpoints.up("md")]: {
     height: 560,

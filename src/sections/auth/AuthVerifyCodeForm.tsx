@@ -2,29 +2,29 @@ import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
 // form
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
-import { Stack, FormHelperText } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { FormHelperText, Stack } from "@mui/material";
 // routes
 import { PATH_DASHBOARD } from "../../routes/paths";
 // components
-import { useSnackbar } from "../../components/snackbar";
 import FormProvider, { RHFCodes } from "../../components/hook-form";
+import { useSnackbar } from "../../components/snackbar";
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   code1: string;
   code2: string;
   code3: string;
   code4: string;
   code5: string;
   code6: string;
-};
+}
 
-export default function AuthVerifyCodeForm() {
+export default function AuthVerifyCodeForm(): React.ReactElement {
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -58,7 +58,7 @@ export default function AuthVerifyCodeForm() {
     formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log("DATA", Object.values(data).join(""));

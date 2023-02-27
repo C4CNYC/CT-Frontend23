@@ -1,11 +1,11 @@
 import { m } from "framer-motion";
 // @mui
+import { Container, Grid, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Stack, Container, Typography, Grid } from "@mui/material";
 //
 import {
-  TextAnimate,
   MotionContainer,
+  TextAnimate,
   varFade,
 } from "../../components/animate";
 
@@ -58,7 +58,7 @@ const StyledContent = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function ContactHero() {
+export default function ContactHero(): React.ReactElement {
   return (
     <StyledRoot>
       <Container component={MotionContainer}>

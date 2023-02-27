@@ -5,7 +5,7 @@ import axios from "../utils/axios";
 
 // ----------------------------------------------------------------------
 
-function jwtDecode(token: string) {
+function jwtDecode(token: string): Record<string, string> {
   const base64Url = token.split(".")[1];
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   const jsonPayload = decodeURIComponent(
@@ -21,7 +21,7 @@ function jwtDecode(token: string) {
 
 // ----------------------------------------------------------------------
 
-export const isValidToken = (accessToken: string) => {
+export const isValidToken = (accessToken: string): boolean => {
   if (!accessToken) {
     return false;
   }
@@ -29,12 +29,12 @@ export const isValidToken = (accessToken: string) => {
 
   const currentTime = Date.now() / 1000;
 
-  return decoded.exp > currentTime;
+  return Number(decoded.exp) > currentTime;
 };
 
 // ----------------------------------------------------------------------
 
-export const tokenExpired = (exp: number) => {
+export const tokenExpired = (exp: number): void => {
   // eslint-disable-next-line prefer-const
   let expiredTimer;
 
@@ -60,7 +60,7 @@ export const tokenExpired = (exp: number) => {
 export const setSession = (
   accessToken: string | null,
   tenantName: string | null
-) => {
+): void => {
   if (accessToken) {
     localStorage.setItem("accessToken", accessToken);
 
@@ -69,7 +69,7 @@ export const setSession = (
 
     // This function below will handle when token is expired
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
-    tokenExpired(exp);
+    tokenExpired(Number(exp));
   } else {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("tenantName");

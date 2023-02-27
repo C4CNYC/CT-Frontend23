@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo, memo } from "react";
-import Map, { Source, Layer } from "react-map-gl";
+import { memo, useEffect, useMemo, useState } from "react";
+import Map, { Layer, Source } from "react-map-gl";
 // components
 import { MapBoxProps } from "@components/map";
 //
@@ -8,7 +8,7 @@ import { heatmapLayer } from "./map-style";
 
 // ----------------------------------------------------------------------
 
-function MapHeatmap({ ...other }: MapBoxProps) {
+function MapHeatmap({ ...other }: MapBoxProps): React.ReactElement {
   const [allDays, useAllDays] = useState(true);
 
   const [timeRange, setTimeRange] = useState([0, 0]);
@@ -19,7 +19,7 @@ function MapHeatmap({ ...other }: MapBoxProps) {
 
   useEffect(() => {
     fetch("https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson")
-      .then((resp) => resp.json())
+      .then(async (resp) => await resp.json())
       .then((json) => {
         const { features } = json;
 
@@ -33,7 +33,7 @@ function MapHeatmap({ ...other }: MapBoxProps) {
 
         selectTime(endTime);
       })
-      .catch((err) => console.error("Could not load data", err));
+      .catch((err) => { console.error("Could not load data", err); });
   }, []);
 
   const data: any = useMemo(

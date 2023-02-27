@@ -11,7 +11,11 @@ import { useSettingsContext } from "../../components/settings";
 
 const SPACING = 8;
 
-export default function Main({ children, sx, ...other }: BoxProps) {
+export default function Main({
+  children,
+  sx,
+  ...other
+}: BoxProps): React.ReactElement {
   const { themeLayout } = useSettingsContext();
 
   const isNavHorizontal = themeLayout === "horizontal";

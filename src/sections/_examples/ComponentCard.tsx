@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 // @mui
+import { CardActionArea, Link, Paper, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Link, Paper, Typography, CardActionArea } from "@mui/material";
 // components
 import Image from "../../components/image";
 
@@ -9,15 +9,17 @@ import { varHover, varTranHover } from "../../components/animate";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   item: {
     name: string;
     icon: string;
     href: string;
   };
-};
+}
 
-export default function ComponentCard({ item }: Props) {
+export default function ComponentCard({
+  item,
+}: Props): React.ReactElement | null {
   const { name, icon, href } = item;
 
   return (

@@ -5,7 +5,7 @@ import Chart, { useChart } from "@components/chart";
 
 const series = [44, 55, 13, 43];
 
-export default function ChartPie() {
+export default function ChartPie(): React.ReactElement {
   const chartOptions = useChart({
     labels: ["Team A", "Team B", "Team C", "Team D"],
     legend: {

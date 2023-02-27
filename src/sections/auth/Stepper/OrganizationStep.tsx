@@ -1,28 +1,29 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
+import InputInfo from "@components/input-info/InputInfo";
 import { Box, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import InputInfo from "@components/inputInfo/InputInfo";
+import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
+import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateOrganizationMutation } from "src/redux/services/admin";
-import { useRouter } from "next/router";
 
-type OrganizationStepProps = {
+interface OrganizationStepProps {
   next: () => void;
-};
+}
 
-export default function OrganizationStep({ next }: OrganizationStepProps) {
+export default function OrganizationStep({
+  next,
+}: OrganizationStepProps): React.ReactElement | null {
   const router = useRouter();
   const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
   const theme = useTheme();
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any): Promise<void> => {
     try {
       const org = await updateOrg({ body: data }).unwrap();
       router.push(

@@ -14,7 +14,7 @@ export default function MenuPopover({
   disabledArrow,
   sx,
   ...other
-}: MenuPopoverProps) {
+}: MenuPopoverProps): React.ReactElement | null {
   const { style, anchorOrigin, transformOrigin } = getPosition(arrow);
 
   return (

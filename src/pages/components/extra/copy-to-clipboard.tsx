@@ -5,13 +5,13 @@ import Head from "next/head";
 import {
   Box,
   Card,
-  Stack,
-  Tooltip,
   Container,
-  TextField,
   IconButton,
-  Typography,
   InputAdornment,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 // hooks
 import useCopyToClipboard from "../../../hooks/useCopyToClipboard";
@@ -22,9 +22,9 @@ import MainLayout from "../../../layouts/main";
 // hooks
 import useDoubleClick from "../../../hooks/useDoubleClick";
 // components
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSnackbar } from "@components/snackbar";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ DemoCopyToClipboardPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoCopyToClipboardPage() {
+export default function DemoCopyToClipboardPage(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const { copy } = useCopyToClipboard();
@@ -49,7 +49,7 @@ export default function DemoCopyToClipboardPage() {
   ligula non mi varius sagittis. Pellentesque posuere. Praesent adipiscing. Sed
   libero. Duis leo. Nulla porta dolor.`;
 
-  const onCopy = (text: string) => {
+  const onCopy = (text: string): void => {
     if (text) {
       enqueueSnackbar("Copied!");
       copy(text);
@@ -57,10 +57,12 @@ export default function DemoCopyToClipboardPage() {
   };
 
   const handleClick = useDoubleClick({
-    doubleClick: () => onCopy(textOnClick),
+    doubleClick: () => {
+      onCopy(textOnClick);
+    },
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     setValue(event.target.value);
   };
 
@@ -109,7 +111,11 @@ export default function DemoCopyToClipboardPage() {
                   endAdornment: (
                     <InputAdornment position="end">
                       <Tooltip title="Copy">
-                        <IconButton onClick={() => onCopy(value)}>
+                        <IconButton
+                          onClick={() => {
+                            onCopy(value);
+                          }}
+                        >
                           <Iconify icon="eva:copy-fill" width={24} />
                         </IconButton>
                       </Tooltip>

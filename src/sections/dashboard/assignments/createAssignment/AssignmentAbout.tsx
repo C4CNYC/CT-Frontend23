@@ -1,33 +1,33 @@
-import * as React from "react";
-import { Box, Button, Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
 import FormProvider, {
   RHFAutocomplete,
   RHFSelect,
 } from "@components/hook-form";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Button, Stack } from "@mui/material";
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
 import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
 
 const TECH_OPTIONS = ["css", "html", "js"];
 
 const DRILLDOWN_OPTIONS = ["theme", "files", "grid"];
 
-type AssignmentStepProps = {
+interface AssignmentStepProps {
   next: () => void;
   back: () => void;
   assignmentId: string;
   assignment?: IAssignment & BaseResponseInterface;
   school_id: string;
-};
+}
 
-type FormValuesProps = {
+interface FormValuesProps {
   complexity: AssignmentComplexity;
   duration: string;
-};
+}
 
 export default function AssignmentAbout({
   next,
@@ -35,7 +35,7 @@ export default function AssignmentAbout({
   assignment,
   school_id,
   assignmentId,
-}: AssignmentStepProps) {
+}: AssignmentStepProps): React.ReactElement | null {
   const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
 
   const defaultValues = {
@@ -55,7 +55,7 @@ export default function AssignmentAbout({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateAssignment({
         school_id,

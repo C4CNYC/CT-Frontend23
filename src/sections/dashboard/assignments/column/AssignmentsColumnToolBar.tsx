@@ -1,45 +1,35 @@
-import { useRef, useState, useEffect } from "react";
-import {
-  Stack,
-  IconButton,
-  Button,
-  Box,
-  Typography,
-} from "@mui/material";
-import Iconify from "@components/iconify";
 import ConfirmDialog from "@components/confirm-dialog";
-import Stepper from "./../createAssignment/Stepper";
-import { useDispatch } from "../../../../redux/store";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
+import Iconify from "@components/iconify";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import { IAssignmentsCard } from "../../../../@types/assignments";
+import { useEffect, useRef, useState } from "react";
+import Stepper from "./../createAssignment/Stepper";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   columnName: string;
   school_id: string;
   onDelete: VoidFunction;
   onUpdate: (name: string) => void;
-};
+}
 
 export default function AssignmentsColumnToolBar({
   columnName,
   onDelete,
   onUpdate,
   school_id,
-}: Props) {
-  const dispatch = useDispatch();
-
+}: Props): React.ReactElement | null {
   const renameRef = useRef<HTMLInputElement>(null);
 
-  const [value, setValue] = useState(columnName);
+  const [value] = useState(columnName);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openPopover] = useState<HTMLElement | null>(null);
 
   const [openAddTask, setOpenAddTask] = useState(false);
 
@@ -53,53 +43,15 @@ export default function AssignmentsColumnToolBar({
     }
   }, [openPopover]);
 
-  const handleOpenConfirm = () => {
-    setOpenConfirm(true);
-  };
-
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
-    setOpenPopover(event.currentTarget);
-  };
-
-  const handleClosePopover = () => {
-    setOpenPopover(null);
-  };
-
-  const handleClickRename = () => {
-    handleClosePopover();
-  };
-
-  const handleChangeColumnName = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setValue(event.target.value);
-  };
-
-  const handleUpdateColumn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && renameRef.current) {
-      renameRef.current.blur();
-      onUpdate(value);
-    }
-  };
-
-  const handleToggleAddTask = () => {
+  const handleToggleAddTask = (): void => {
     setOpenAddTask(!openAddTask);
   };
 
-  const handleCloseAddTask = () => {
-    setOpenAddTask(false);
-  };
-
-  const handleAddTask = (task: IAssignmentsCard) => {
-    handleCloseAddTask();
-    console.log("qwe");
-  };
-
-  const handleCloseStepper = () => {
+  const handleCloseStepper = (): void => {
     setOpenAddTask(false);
   };
 
@@ -127,7 +79,9 @@ export default function AssignmentsColumnToolBar({
       {openAddTask && (
         <Dialog
           open={openAddTask}
-          onClose={() => setOpenAddTask(false)}
+          onClose={() => {
+            setOpenAddTask(false);
+          }}
           PaperProps={{ sx: { padding: "20px" } }}
           fullWidth
         >

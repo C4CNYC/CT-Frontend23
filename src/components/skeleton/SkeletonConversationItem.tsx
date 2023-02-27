@@ -1,9 +1,12 @@
 // @mui
-import { Stack, Skeleton, StackProps } from "@mui/material";
+import { Skeleton, Stack, StackProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonConversationItem({ sx, ...other }: StackProps) {
+export default function SkeletonConversationItem({
+  sx,
+  ...other
+}: StackProps): React.ReactElement | null {
   return (
     <Stack
       spacing={1}

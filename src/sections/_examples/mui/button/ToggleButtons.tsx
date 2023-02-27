@@ -1,7 +1,7 @@
 import { useState } from "react";
 // @mui
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 //
@@ -32,7 +32,7 @@ const style = {
 
 // ----------------------------------------------------------------------
 
-export default function ToggleButtons() {
+export default function ToggleButtons(): React.ReactElement {
   const [alignment, setAlignment] = useState<string | null>("left");
 
   const [formats, setFormats] = useState(() => ["bold", "italic"]);

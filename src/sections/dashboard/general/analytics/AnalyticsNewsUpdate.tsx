@@ -1,31 +1,31 @@
 // @mui
 import {
   Box,
-  Stack,
-  Link,
-  Card,
   Button,
-  Divider,
-  Typography,
+  Card,
   CardHeader,
   CardProps,
+  Divider,
+  Link,
+  Stack,
+  Typography,
 } from "@mui/material";
 // utils
 import { fToNow } from "../../../../utils/formatTime";
 // components
-import Image from "@components/image";
 import Iconify from "@components/iconify";
+import Image from "@components/image";
 import Scrollbar from "@components/scrollbar";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   title: string;
   description: string;
   postedAt: number | Date;
   image: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -38,7 +38,7 @@ export default function AnalyticsNewsUpdate({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -68,11 +68,11 @@ export default function AnalyticsNewsUpdate({
 
 // ----------------------------------------------------------------------
 
-type NewsItemProps = {
+interface NewsItemProps {
   news: ItemProps;
-};
+}
 
-function NewsItem({ news }: NewsItemProps) {
+function NewsItem({ news }: NewsItemProps): React.ReactElement | null {
   const { image, title, description, postedAt } = news;
 
   return (

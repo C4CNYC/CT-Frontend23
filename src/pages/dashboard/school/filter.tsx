@@ -1,42 +1,42 @@
-//Icons
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
+// Icons
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-//Mui
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+// Mui
 import {
+  Avatar,
+  Box,
   Button,
   Divider,
   ListItemIcon,
   Menu,
   MenuItem,
   Typography,
-  Box,
-  Avatar,
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/system/Container";
 import Stack from "@mui/system/Stack";
-//Hooks
+// Hooks
 import { useState } from "react";
-//commponents
+// commponents
 import IconButtonAnimate from "src/components/animate/IconButtonAnimate";
 import MenuPopover from "src/components/menu-popover/MenuPopover";
 
-export default function FilterAssignments() {
+export default function FilterAssignments(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
   return (

@@ -1,9 +1,11 @@
 // @mui
-import { Grid, Skeleton, GridProps } from "@mui/material";
+import { Grid, GridProps, Skeleton } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonProductDetails({ ...other }: GridProps) {
+export default function SkeletonProductDetails({
+  ...other
+}: GridProps): React.ReactElement | null {
   return (
     <Grid container spacing={3} {...other}>
       <Grid item xs={12} md={6} lg={7}>

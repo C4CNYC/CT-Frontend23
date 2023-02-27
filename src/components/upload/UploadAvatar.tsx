@@ -1,14 +1,14 @@
 import { useDropzone } from "react-dropzone";
 // @mui
 import { Typography } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 //
 import Iconify from "../iconify";
 //
-import { UploadProps } from "./types";
+import { useLocales } from "../../locales";
 import RejectionFiles from "./errors/RejectionFiles";
 import AvatarPreview from "./preview/AvatarPreview";
-import { useLocales } from "../../locales";
+import { UploadProps } from "./types";
 
 // ----------------------------------------------------------------------
 
@@ -34,8 +34,8 @@ const StyledPlaceholder = styled("div")(({ theme }) => ({
   alignItems: "center",
   flexDirection: "column",
   justifyContent: "center",
-  width: `calc(100% - 16px)`,
-  height: `calc(100% - 16px)`,
+  width: "calc(100% - 16px)",
+  height: "calc(100% - 16px)",
   color: theme.palette.text.disabled,
   backgroundColor: theme.palette.background.neutral,
   transition: theme.transitions.create("opacity", {
@@ -53,7 +53,7 @@ export default function UploadAvatar({
   helperText,
   sx,
   ...other
-}: UploadProps) {
+}: UploadProps): React.ReactElement | null {
   const {
     getRootProps,
     getInputProps,

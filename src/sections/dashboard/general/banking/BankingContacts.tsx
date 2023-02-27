@@ -1,15 +1,15 @@
 // @mui
 import {
-  Box,
-  Card,
-  Stack,
-  Button,
   Avatar,
-  Tooltip,
-  CardProps,
-  Typography,
+  Box,
+  Button,
+  Card,
   CardHeader,
+  CardProps,
   IconButton,
+  Stack,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
@@ -19,12 +19,12 @@ import Iconify from "@components/iconify";
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  list: {
+  list: Array<{
     id: string;
     name: string;
     email: string;
     avatar: string;
-  }[];
+  }>;
 }
 
 export default function BankingContacts({
@@ -32,7 +32,7 @@ export default function BankingContacts({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader

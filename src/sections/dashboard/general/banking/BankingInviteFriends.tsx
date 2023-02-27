@@ -1,13 +1,13 @@
 // @mui
-import { alpha, useTheme } from "@mui/material/styles";
 import {
   Box,
+  BoxProps,
+  Button,
+  InputBase,
   Stack,
   Typography,
-  Button,
-  BoxProps,
-  InputBase,
 } from "@mui/material";
+import { alpha, useTheme } from "@mui/material/styles";
 // components
 import Image from "@components/image";
 // utils
@@ -29,7 +29,7 @@ export default function BankingInviteFriends({
   description,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   return (

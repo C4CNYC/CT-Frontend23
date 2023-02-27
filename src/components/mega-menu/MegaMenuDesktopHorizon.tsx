@@ -3,25 +3,28 @@ import { useState } from "react";
 import NextLink from "next/link";
 // @mui
 import { Masonry } from "@mui/lab";
-import { Link, Paper, Typography, Divider, Stack } from "@mui/material";
+import { Divider, Link, Paper, Stack, Typography } from "@mui/material";
 // @types
-import { ParentItemProps, MegaMenuItemProps } from "./types";
+import { MegaMenuItemProps, ParentItemProps } from "./types";
 // components
 import Iconify from "../iconify";
 //
-import MenuHotProducts from "./MenuHotProducts";
 import MegaMenuCarousel from "./MenuCarousel";
+import MenuHotProducts from "./MenuHotProducts";
 
 // ----------------------------------------------------------------------
 
 const ITEM_SPACING = 4;
 const PARENT_ITEM_HEIGHT = 64;
 
-type Props = {
+interface Props {
   data: MegaMenuItemProps[];
-};
+}
 
-export default function MegaMenuDesktopHorizon({ data, ...other }: Props) {
+export default function MegaMenuDesktopHorizon({
+  data,
+  ...other
+}: Props): React.ReactElement | null {
   return (
     <Stack direction="row" spacing={ITEM_SPACING} {...other}>
       {data.map((parent) => (
@@ -38,11 +41,11 @@ function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -146,7 +149,7 @@ function ParentItem({
   open,
   hasSub,
   ...other
-}: ParentItemProps) {
+}: ParentItemProps): React.ReactElement | null {
   const activeStyle = {
     color: "primary.main",
   };

@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { Container, Stack } from "@mui/material";
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { RootState, useDispatch, useSelector } from "../../../../redux/store";
-import { getBoard, persistCard } from "../../../../redux/slices/assignments";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { hideScrollbarX } from "../../../../utils/cssStyles";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { SkeletonKanbanColumn } from "@components/skeleton";
-import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { getOrder } from "src/utils/getTaskOrder";
+import { Container, Stack } from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
+import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
+import { useEffect } from "react";
 import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
 import {
   useGetAssignmentListQuery,
   useUdpateAssignmentMutation,
 } from "src/redux/services/manager";
+import { getOrder } from "src/utils/getTaskOrder";
+import { getBoard, persistCard } from "../../../../redux/slices/assignments";
+import { RootState, useDispatch, useSelector } from "../../../../redux/store";
+import { hideScrollbarX } from "../../../../utils/cssStyles";
 import FilterAssignments from "./filter";
 
 // ----------------------------------------------------------------------
@@ -23,7 +23,7 @@ Index.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-export default function Index() {
+export default function Index(): React.ReactElement {
   const dispatch = useDispatch();
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const { data } = useGetAssignmentListQuery(
@@ -39,7 +39,7 @@ export default function Index() {
     dispatch(getBoard(data));
   }, [data]);
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result: DropResult): void => {
     const { destination, source, draggableId, type } = result;
 
     if (!destination || type !== "task") return;
@@ -47,8 +47,9 @@ export default function Index() {
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
-    )
+    ) {
       return;
+    }
 
     const start = board.columns[source.droppableId];
     const finish = board.columns[destination.droppableId];
@@ -153,9 +154,11 @@ export default function Index() {
                   ...hideScrollbarX,
                 }}
               >
-                {!Object.keys(board.columns).length ? (
+                {!Object.keys(board.columns).length
+? (
                   <SkeletonKanbanColumn />
-                ) : (
+                )
+: (
                   Object.values(AssignmentStatuses).map((columnId, index) => (
                     <AssignmentColumn
                       school_id={school_id}

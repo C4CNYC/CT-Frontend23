@@ -1,5 +1,5 @@
 // @mui
-import { Stack, Tooltip, Typography, StackProps } from "@mui/material";
+import { Stack, StackProps, Tooltip, Typography } from "@mui/material";
 //
 import Iconify from "../../iconify";
 
@@ -18,7 +18,7 @@ export default function Block({
   children,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Stack spacing={1.5} sx={{ mb: SPACING, ...sx }} {...other}>
       <Stack

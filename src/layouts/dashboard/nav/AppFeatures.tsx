@@ -100,7 +100,7 @@ type CarouselItemProps = {
 };
 
 function CarouselItem({ item, isActive }: CarouselItemProps) {
-  const { image, title, description } = item;
+  const { image, title} = item;
 
   return (
     <MotionContainer action animate={isActive} sx={{ position: "relative" }}>

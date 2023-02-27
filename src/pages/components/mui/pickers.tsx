@@ -11,9 +11,9 @@ import MainLayout from "../../../layouts/main";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import PickerDate from "@sections/_examples/mui/pickers/PickerDate";
-import PickerTime from "@sections/_examples/mui/pickers/PickerTime";
-import PickerDateTime from "@sections/_examples/mui/pickers/PickerDateTime";
 import PickerDateRange from "@sections/_examples/mui/pickers/PickerDateRange";
+import PickerDateTime from "@sections/_examples/mui/pickers/PickerDateTime";
+import PickerTime from "@sections/_examples/mui/pickers/PickerTime";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ MUIPickersPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIPickersPage() {
+export default function MUIPickersPage(): React.ReactElement {
   const [currentTab, setCurrentTab] = useState("date");
 
   return (
@@ -67,7 +67,9 @@ export default function MUIPickersPage() {
       <Container sx={{ my: 10 }}>
         <Tabs
           value={currentTab}
-          onChange={(event, newValue) => setCurrentTab(newValue)}
+          onChange={(event, newValue) => {
+            setCurrentTab(newValue);
+          }}
         >
           {TABS.map((tab) => (
             <Tab key={tab.value} value={tab.value} label={tab.label} />

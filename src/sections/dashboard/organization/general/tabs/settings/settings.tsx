@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 // auth
-import SettingsForm from "src/sections/dashboard/organization/general/tabs/settings/SettingsForm";
 import { useGetOrgSettingsQuery } from "src/redux/services/admin";
+import SettingsForm from "src/sections/dashboard/organization/general/tabs/settings/SettingsForm";
 
-export default function UserProfileTab() {
+export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgSettingsQuery();
 
   return (

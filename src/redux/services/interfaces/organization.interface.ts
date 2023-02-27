@@ -3,9 +3,11 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 export interface OrganizationResponce extends BaseResponseInterface {
   title: string;
   name: string;
-  email: string;
+  email?: string;
   url: string;
   address: string;
+  cover?: string;
+  avatar?: string;
 }
 
 export interface ContactsResponce extends BaseResponseInterface {
@@ -30,9 +32,7 @@ export interface CustomizationResponce extends BaseResponseInterface {
   description: string;
   welcome_message: string;
   custom_group_name: string;
-  theme: {
-    [key: string]: number | string;
-  };
+  theme: Record<string, number | string>;
 }
 
 export interface IContacts {
@@ -76,7 +76,7 @@ export interface ISendInvite {
 
 export interface OrganizationListResponce {
   data: OrganizationResponce[];
-  meta: {};
+  meta: Record<string, unknown>;
 }
 
 export interface OrganizationRequest {

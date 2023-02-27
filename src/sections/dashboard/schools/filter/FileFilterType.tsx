@@ -1,37 +1,37 @@
 import { useState } from "react";
 // @mui
+import { Box, Button, CardActionArea, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Box, Stack, Button, Typography, CardActionArea } from "@mui/material";
 // components
-import Label from "@components/label";
-import Iconify from "@components/iconify";
-import MenuPopover from "@components/menu-popover";
 import FileThumbnail from "@components/file-thumbnail";
+import Iconify from "@components/iconify";
+import Label from "@components/label";
+import MenuPopover from "@components/menu-popover";
 //
 import FileFilterButton from "./FileFilterButton";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   filterType: string[];
   optionsType: string[];
   onReset: VoidFunction;
   onFilterType: (type: string) => void;
-};
+}
 
 export default function FileFilterType({
   optionsType,
   filterType,
   onFilterType,
   onReset,
-}: Props) {
+}: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
@@ -77,7 +77,9 @@ export default function FileFilterType({
               return (
                 <CardActionArea
                   key={type}
-                  onClick={() => onFilterType(type)}
+                  onClick={() => {
+                    onFilterType(type);
+                  }}
                   sx={{
                     p: 1,
                     borderRadius: 1,

@@ -1,30 +1,30 @@
 // @mui
 import {
   Box,
-  Link,
   Card,
   CardHeader,
-  Typography,
-  Stack,
   CardProps,
+  Link,
+  Stack,
+  Typography,
 } from "@mui/material";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 //
+import { ColorPreview } from "@components/color-utils";
 import Image from "@components/image";
 import Scrollbar from "@components/scrollbar";
-import { ColorPreview } from "@components/color-utils";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   name: string;
   image: string;
   price: number;
   priceSale: number;
   colors: string[];
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -37,7 +37,7 @@ export default function EcommerceLatestProducts({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -55,11 +55,11 @@ export default function EcommerceLatestProducts({
 
 // ----------------------------------------------------------------------
 
-type ProductItemProps = {
+interface ProductItemProps {
   product: ItemProps;
-};
+}
 
-function ProductItem({ product }: ProductItemProps) {
+function ProductItem({ product }: ProductItemProps): React.ReactElement | null {
   const { name, image, price, priceSale } = product;
 
   const hasSale = priceSale > 0;

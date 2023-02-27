@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-type ColorVariants = {
+interface ColorVariants {
   name: string;
   lighter: string;
   light: string;
@@ -8,7 +8,7 @@ type ColorVariants = {
   dark: string;
   darker: string;
   contrastText: string;
-};
+}
 
 export type ThemeModeValue = "light" | "dark";
 export type ThemeDirectionValue = "rtl" | "ltr";
@@ -23,21 +23,21 @@ export type ThemeColorPresetsValue =
   | "red";
 export type ThemeStretchValue = boolean;
 
-export type SettingsValueProps = {
+export interface SettingsValueProps {
   themeMode: ThemeModeValue;
   themeLayout: ThemeLayoutValue;
   themeStretch: ThemeStretchValue;
   themeContrast: ThemeContrastValue;
   themeDirection: ThemeDirectionValue;
   themeColorPresets: ThemeColorPresetsValue;
-};
+}
 
 export type SettingsContextProps = SettingsValueProps & {
   presetsColor: ColorVariants;
-  presetsOption: {
+  presetsOption: Array<{
     name: string;
     value: string;
-  }[];
+  }>;
 
   // Mode
   onToggleMode: VoidFunction;

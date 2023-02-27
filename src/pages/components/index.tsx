@@ -3,22 +3,22 @@ import orderBy from "lodash/orderBy";
 import Head from "next/head";
 // @mui
 import {
-  Container,
-  Typography,
-  Stack,
-  Link,
   Box,
   BoxProps,
+  Container,
   Divider,
+  Link,
+  Stack,
+  Typography,
 } from "@mui/material";
 // layouts
 import MainLayout from "../../layouts/main";
 // sections
-import { ComponentHero, ComponentCard } from "../../sections/_examples";
+import { ComponentCard, ComponentHero } from "../../sections/_examples";
 import {
+  extra,
   foundation,
   mui,
-  extra,
 } from "../../sections/_examples/config-navigation";
 
 // ----------------------------------------------------------------------
@@ -29,7 +29,7 @@ ComponentsOverviewPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ComponentsOverviewPage() {
+export default function ComponentsOverviewPage(): React.ReactElement {
   return (
     <>
       <Head>
@@ -122,7 +122,7 @@ export default function ComponentsOverviewPage() {
 
 // ----------------------------------------------------------------------
 
-function Grid({ children }: BoxProps) {
+function Grid({ children }: BoxProps): React.ReactElement {
   return (
     <Box
       display="grid"

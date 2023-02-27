@@ -45,7 +45,7 @@ MUITreesViewPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITreesViewPage() {
+export default function MUITreesViewPage(): React.ReactElement {
   return (
     <>
       <Head>

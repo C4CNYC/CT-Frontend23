@@ -5,21 +5,21 @@ import Head from "next/head";
 import {
   Box,
   Card,
+  CardContent,
+  CardHeader,
+  Container,
   Grid,
   Stack,
-  Container,
-  CardHeader,
   Typography,
-  CardContent,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Editor from "@components/editor";
 import Markdown from "@components/markdown";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ DemoEditorPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoEditorPage() {
+export default function DemoEditorPage(): React.ReactElement {
   const [quillSimple, setQuillSimple] = useState("");
 
   const [quillFull, setQuillFull] = useState("");
@@ -73,7 +73,9 @@ export default function DemoEditorPage() {
                   simple
                   id="simple-editor"
                   value={quillSimple}
-                  onChange={(value) => setQuillSimple(value)}
+                  onChange={(value) => {
+                    setQuillSimple(value);
+                  }}
                 />
               </CardContent>
             </Card>
@@ -86,7 +88,7 @@ export default function DemoEditorPage() {
               >
                 <CardHeader title="Preview Plain Text" />
                 <Box sx={{ p: 3 }}>
-                  <Markdown children={quillSimple} />
+                  <Markdown>{quillSimple}</Markdown>
                 </Box>
               </Card>
               <Card
@@ -107,7 +109,9 @@ export default function DemoEditorPage() {
                 <Editor
                   id="full-editor"
                   value={quillFull}
-                  onChange={(value) => setQuillFull(value)}
+                  onChange={(value) => {
+                    setQuillFull(value);
+                  }}
                 />
               </CardContent>
             </Card>

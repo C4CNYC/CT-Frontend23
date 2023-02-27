@@ -3,29 +3,29 @@ import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
 // form
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 // @mui
+import { LoadingButton } from "@mui/lab";
 import {
-  Stack,
+  FormHelperText,
   IconButton,
   InputAdornment,
-  FormHelperText,
+  Stack,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 // routes
 import { PATH_DASHBOARD } from "../../routes/paths";
 // components
+import FormProvider, {
+  RHFCodes,
+  RHFTextField,
+} from "../../components/hook-form";
 import Iconify from "../../components/iconify";
 import { useSnackbar } from "../../components/snackbar";
-import FormProvider, {
-  RHFTextField,
-  RHFCodes,
-} from "../../components/hook-form";
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   code1: string;
   code2: string;
   code3: string;
@@ -35,9 +35,9 @@ type FormValuesProps = {
   email: string;
   password: string;
   confirmPassword: string;
-};
+}
 
-export default function AuthNewPasswordForm() {
+export default function AuthNewPasswordForm(): React.ReactElement {
   const { push } = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -74,7 +74,7 @@ export default function AuthNewPasswordForm() {
     code4: "",
     code5: "",
     code6: "",
-    email: emailRecovery || "",
+    email: emailRecovery ?? "",
     password: "",
     confirmPassword: "",
   };
@@ -90,7 +90,7 @@ export default function AuthNewPasswordForm() {
     formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log("DATA:", {
@@ -143,7 +143,9 @@ export default function AuthNewPasswordForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify
@@ -163,7 +165,9 @@ export default function AuthNewPasswordForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify

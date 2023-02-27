@@ -7,3 +7,11 @@ export interface IClass {
 export interface ClassSearchParams {
   name: string;
 }
+
+export interface IModule {
+  active?: boolean;
+  key: any;
+  name: string;
+  type: string;
+  description?: string;
+}

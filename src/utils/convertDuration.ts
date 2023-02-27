@@ -1,14 +1,17 @@
-export function convertDuration(duration?: { hours: string; minutes: string }) {
-  let duration_string = "";
+export function convertDuration(duration?: {
+  hours: string;
+  minutes: string;
+}): string | null {
+  let durationString = "";
   if (!duration) return null;
   if (duration.hours) {
-    duration_string = duration.hours + " H";
+    durationString = duration.hours + " H";
   }
   if (duration.minutes) {
-    duration_string = `${duration_string ? duration_string + " " : ""}${
+    durationString = `${durationString ? durationString + " " : ""}${
       duration.minutes
     } M`;
   }
 
-  return duration_string;
+  return durationString;
 }

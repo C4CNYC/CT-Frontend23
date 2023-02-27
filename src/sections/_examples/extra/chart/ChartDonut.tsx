@@ -5,7 +5,7 @@ import Chart, { useChart } from "@components/chart";
 
 const series = [44, 55, 13, 43];
 
-export default function ChartDonut() {
+export default function ChartDonut(): React.ReactElement {
   const chartOptions = useChart({
     labels: ["Apple", "Mango", "Orange", "Watermelon"],
     stroke: {

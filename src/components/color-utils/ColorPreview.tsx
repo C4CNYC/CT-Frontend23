@@ -1,6 +1,6 @@
 // @mui
+import { Box, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Box, Typography, Stack } from "@mui/material";
 //
 import { ColorPreviewProps } from "./types";
 
@@ -10,7 +10,7 @@ export default function ColorPreview({
   colors,
   limit = 3,
   sx,
-}: ColorPreviewProps) {
+}: ColorPreviewProps): React.ReactElement | null {
   const showColor = colors.slice(0, limit);
 
   const moreColor = colors.length - limit;
@@ -25,7 +25,7 @@ export default function ColorPreview({
     >
       {showColor.map((color, index) => (
         <Box
-          key={color + index}
+          key={`${color}${index}`}
           sx={{
             ml: -0.75,
             width: 16,

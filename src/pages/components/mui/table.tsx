@@ -1,7 +1,7 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Card, Container, CardHeader, Stack } from "@mui/material";
+import { Box, Card, CardHeader, Container, Stack } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -11,8 +11,8 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import BasicTable from "@sections/_examples/mui/table/BasicTable";
 import CollapsibleTable from "@sections/_examples/mui/table/collapsible-table";
-import SortingSelecting from "@sections/_examples/mui/table/sorting-selecting";
 import GroupingFixedHeader from "@sections/_examples/mui/table/GroupingFixedHeader";
+import SortingSelecting from "@sections/_examples/mui/table/sorting-selecting";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ MUITablePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITablePage() {
+export default function MUITablePage(): React.ReactElement {
   return (
     <>
       <Head>

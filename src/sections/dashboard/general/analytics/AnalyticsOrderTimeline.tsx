@@ -1,30 +1,30 @@
 // @mui
 import {
-  Card,
-  Typography,
-  CardHeader,
-  CardContent,
-  CardProps,
-} from "@mui/material";
-import {
   Timeline,
+  TimelineConnector,
+  TimelineContent,
   TimelineDot,
   TimelineItem,
-  TimelineContent,
   TimelineSeparator,
-  TimelineConnector,
 } from "@mui/lab";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardProps,
+  Typography,
+} from "@mui/material";
 // utils
 import { fDateTime } from "../../../../utils/formatTime";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   title: string;
   time: Date | string | number;
   type: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -37,7 +37,7 @@ export default function AnalyticsOrderTimeline({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
@@ -65,12 +65,15 @@ export default function AnalyticsOrderTimeline({
 
 // ----------------------------------------------------------------------
 
-type OrderItemProps = {
+interface OrderItemProps {
   item: ItemProps;
   isLast: boolean;
-};
+}
 
-function OrderItem({ item, isLast }: OrderItemProps) {
+function OrderItem({
+  item,
+  isLast,
+}: OrderItemProps): React.ReactElement | null {
   const { type, title, time } = item;
   return (
     <TimelineItem>

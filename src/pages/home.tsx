@@ -9,7 +9,7 @@ import WelcomeSection from "@sections/home/welcome-section";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import Stack from "@mui/material/Stack";
 
-export default function Home() {
+export default function Home(): React.ReactElement {
   return (
     <>
       <DashboardLayout>
@@ -34,7 +34,6 @@ export default function Home() {
           <RecentAssignments />
         </Stack>
         <FooterHome />
-      
       </DashboardLayout>
     </>
   );

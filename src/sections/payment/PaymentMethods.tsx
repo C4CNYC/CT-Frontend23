@@ -2,14 +2,14 @@ import { useState } from "react";
 // @mui
 import {
   Box,
-  Stack,
+  Button,
+  FormControlLabel,
   Paper,
   Radio,
-  Button,
+  RadioGroup,
+  Stack,
   TextField,
   Typography,
-  RadioGroup,
-  FormControlLabel,
 } from "@mui/material";
 // components
 import Iconify from "../../components/iconify";
@@ -50,20 +50,22 @@ const CARD_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function PaymentMethods() {
+export default function PaymentMethods(): React.ReactElement {
   const [method, setMethod] = useState("paypal");
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const handleChangeMethod = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeMethod = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setMethod((event.target as HTMLInputElement).value);
   };
 
@@ -97,7 +99,7 @@ export default function PaymentMethods() {
 
 // ----------------------------------------------------------------------
 
-type PaymentOptionProps = {
+interface PaymentOptionProps {
   option: {
     value: string;
     title: string;
@@ -107,7 +109,7 @@ type PaymentOptionProps = {
   isSelected: boolean;
   isCreditMethod: boolean;
   onOpen: VoidFunction;
-};
+}
 
 function PaymentOption({
   option,
@@ -115,7 +117,7 @@ function PaymentOption({
   isSelected,
   isCreditMethod,
   onOpen,
-}: PaymentOptionProps) {
+}: PaymentOptionProps): React.ReactElement | null {
   const { value, title, icons } = option;
 
   return (

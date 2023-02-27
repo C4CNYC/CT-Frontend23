@@ -1,22 +1,27 @@
-import { useState } from "react";
-import Head from "next/head";
-import { Card, Container, Box, Tabs, Tab } from "@mui/material";
-import { useSettingsContext } from "@components/settings";
-import { ProfileCover } from "@sections/dashboard/user/profile";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
 import Iconify from "@components/iconify";
+import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../redux/store";
-import { SchoolSettingsTab, SchoolProfileTab, SchoolSocialsTab, SchoolContactsTab } from "@sections/schools/tabs";
+import { Box, Card, Container, Tab, Tabs } from "@mui/material";
+import { ProfileCover } from "@sections/dashboard/user/profile";
+import {
+  SchoolContactsTab,
+  SchoolProfileTab,
+  SchoolSettingsTab,
+  SchoolSocialsTab,
+} from "@sections/schools/tabs";
+import Head from "next/head";
+import { useState } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { RootState } from "../../../../redux/store";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-export default function UserProfilePage() {
+export default function UserProfilePage(): React.ReactElement {
   const school_id = useSelector((state: RootState) => state.manager.school_id);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
@@ -30,26 +35,26 @@ export default function UserProfilePage() {
       value: "profile",
       label: "General",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <SchoolProfileTab school_id={school_id} />
+      component: <SchoolProfileTab school_id={school_id} />,
     },
     {
       value: "settings",
       label: "Settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
-      component: <SchoolSettingsTab school_id={school_id} />
+      component: <SchoolSettingsTab school_id={school_id} />,
     },
     {
       value: "contacts",
       label: "Contacts",
       icon: <MdContacts />,
-      component: <SchoolContactsTab school_id={school_id} />
+      component: <SchoolContactsTab school_id={school_id} />,
     },
     {
       value: "socials",
       label: "Social Networks",
       icon: <BsPeopleFill />,
-      component: <SchoolSocialsTab school_id={school_id} />
-    }
+      component: <SchoolSocialsTab school_id={school_id} />,
+    },
   ];
 
   return (
@@ -62,17 +67,19 @@ export default function UserProfilePage() {
           sx={{
             mb: 3,
             height: 280,
-            position: "relative"
+            position: "relative",
           }}
         >
           <ProfileCover
-            name={data?.name || ""}
-            role={data?.phone || ""}
+            name={data?.name ?? ""}
+            role={data?.phone ?? ""}
             cover={"/assets/icons/shool/organization.svg"}
           />
           <Tabs
             value={currentTab}
-            onChange={(event, newValue) => setCurrentTab(newValue)}
+            onChange={(event, newValue) => {
+              setCurrentTab(newValue);
+            }}
             sx={{
               width: 1,
               bottom: 0,
@@ -83,9 +90,9 @@ export default function UserProfilePage() {
                 pr: { md: 3 },
                 justifyContent: {
                   sm: "center",
-                  md: "flex-end"
-                }
-              }
+                  md: "flex-end",
+                },
+              },
             }}
           >
             {TABS.map((tab) => (

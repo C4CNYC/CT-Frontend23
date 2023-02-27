@@ -1,16 +1,20 @@
-import { useRef } from "react";
-import { Box } from "@mui/material";
 import { TableProps } from "@components/table";
-import SchoolCard from "../item/SchoolCard";
+import { Box } from "@mui/material";
+import { useRef } from "react";
 import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import SchoolCard from "../item/SchoolCard";
 
-type Props = {
+interface Props {
   table: TableProps;
   data: SchoolResponce[];
   onDeleteItem: (id: string) => void;
-};
+}
 
-export default function SchoolGridView({ table, data, onDeleteItem }: Props) {
+export default function SchoolGridView({
+  table,
+  data,
+  onDeleteItem,
+}: Props): React.ReactElement | null {
   const { selected, onSelectRow: onSelectItem } = table;
   const containerRef = useRef(null);
 
@@ -32,8 +36,12 @@ export default function SchoolGridView({ table, data, onDeleteItem }: Props) {
               key={school.id}
               school={school}
               selected={selected.includes(school.id)}
-              onSelect={() => onSelectItem(school.id)}
-              onDelete={() => onDeleteItem(school.id)}
+              onSelect={() => {
+                onSelectItem(school.id);
+              }}
+              onDelete={() => {
+                onDeleteItem(school.id);
+              }}
               sx={{ maxWidth: "auto", cursor: "pointer" }}
             />
           ))}

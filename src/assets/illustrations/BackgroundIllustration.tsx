@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-function BackgroundIllustration() {
+function BackgroundIllustration(): React.ReactElement {
   const theme = useTheme();
 
   const PRIMARY_MAIN = theme.palette.primary.main;

@@ -2,27 +2,27 @@
 import Head from "next/head";
 // @mui
 import {
+  AppBar,
   Box,
   Container,
   Stack,
-  AppBar,
   Toolbar,
   Typography,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // config
-import { NAV, HEADER } from "../../../config-global";
+import { HEADER, NAV } from "../../../config-global";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import {
+  NavSectionHorizontal,
   NavSectionMini,
   NavSectionVertical,
-  NavSectionHorizontal,
 } from "@components/nav-section";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ DemoNavigationBarPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoNavigationBarPage() {
+export default function DemoNavigationBarPage(): React.ReactElement {
   return (
     <>
       <Head>

@@ -17,7 +17,7 @@ export const PATH_AUTH = {
   registerUnprotected: path(ROOTS_AUTH, "/register-unprotected"),
   verify: path(ROOTS_AUTH, "/verify"),
   resetPassword: path(ROOTS_AUTH, "/reset-password"),
-  newPassword: path(ROOTS_AUTH, "/new-password")
+  newPassword: path(ROOTS_AUTH, "/new-password"),
 };
 
 export const PATH_PAGE = {
@@ -31,7 +31,7 @@ export const PATH_PAGE = {
   page403: "/403",
   page404: "/404",
   page500: "/500",
-  components: "/components"
+  components: "/components",
 };
 
 export const PATH_DASHBOARD = {
@@ -40,10 +40,16 @@ export const PATH_DASHBOARD = {
   blank: path(ROOTS_DASHBOARD, "/blank"),
   general: {
     app: path(ROOTS_DASHBOARD, "/app"),
-    analytics: path(ROOTS_DASHBOARD, "/analytics")
+    analytics: path(ROOTS_DASHBOARD, "/analytics"),
   },
   courses: {
-    root: path(ROOTS_DASHBOARD, "/courses")
+    root: path(ROOTS_DASHBOARD, "/courses"),
+  },
+  modules: {
+    root: path(ROOTS_DASHBOARD, "/modules/list"),
+  },
+  lessons: {
+    root: path(ROOTS_DASHBOARD, "/lessons/list"),
   },
   organization: {
     root: path(ROOTS_DASHBOARD, "/organization"),
@@ -55,7 +61,7 @@ export const PATH_DASHBOARD = {
       path(ROOTS_DASHBOARD, `/organization/members/${name}/edit`),
     schools: path(ROOTS_DASHBOARD, "/organization/schools"),
     contacts: path(ROOTS_DASHBOARD, "/organization/contacts"),
-    billing: path(ROOTS_DASHBOARD, "/organization/billing")
+    billing: path(ROOTS_DASHBOARD, "/organization/billing"),
   },
   school: {
     root: path(ROOTS_DASHBOARD, "/school"),
@@ -71,7 +77,7 @@ export const PATH_DASHBOARD = {
     setting: (id: string) =>
       path(ROOTS_DASHBOARD, `/school/classes/${id}/setting`),
     edit: (name: string) =>
-      path(ROOTS_DASHBOARD, `/school/students/${name}/edit`)
+      path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
   },
   invoice: {
     root: path(ROOTS_DASHBOARD, "/invoice"),
@@ -86,13 +92,13 @@ export const PATH_DASHBOARD = {
     demoView: path(
       ROOTS_DASHBOARD,
       "/invoice/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5"
-    )
-  }
+    ),
+  },
 };
 
 export const PATH_DOCS = {
   root: "https://docs.minimals.cc",
-  changelog: "https://docs.minimals.cc/changelog"
+  changelog: "https://docs.minimals.cc/changelog",
 };
 
 export const PATH_ZONE_ON_STORE =

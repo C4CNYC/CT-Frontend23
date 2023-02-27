@@ -3,8 +3,8 @@ import { useMemo } from "react";
 // @mui
 import {
   alpha,
-  ThemeProvider,
   createTheme,
+  ThemeProvider,
   useTheme,
 } from "@mui/material/styles";
 //
@@ -12,11 +12,13 @@ import { useSettingsContext } from "./SettingsContext";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-export default function ThemeColorPresets({ children }: Props) {
+export default function ThemeColorPresets({
+  children,
+}: Props): React.ReactElement | null {
   const outerTheme = useTheme();
 
   const { presetsColor } = useSettingsContext();

@@ -1,15 +1,14 @@
 // @mui
-import { styled } from "@mui/material/styles";
 import { Box, Typography } from "@mui/material";
-// @types
-import { IUserProfileCover } from "../../../../@types/user";
+import { styled } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../../../utils/cssStyles";
 // auth
 import { useAuthContext } from "../../../../auth/useAuthContext";
 // components
-import Image from "@components/image";
 import { CustomAvatar } from "@components/custom-avatar";
+import Image from "@components/image";
+import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 
 // ----------------------------------------------------------------------
 
@@ -44,14 +43,22 @@ const StyledInfo = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function ProfileCover({ name, role, cover }: IUserProfileCover) {
+export default function ProfileCover({
+  name,
+  cover,
+  avatar,
+  email,
+}: Pick<
+  OrganizationResponce,
+  "email" | "name" | "cover" | "avatar"
+>): React.ReactElement | null {
   const { user } = useAuthContext();
 
   return (
     <StyledRoot>
       <StyledInfo>
         <CustomAvatar
-          src="/assets/icons/shool/organization.svg"
+          src={avatar}
           alt={user?.displayName}
           name={user?.displayName}
           sx={{
@@ -75,7 +82,7 @@ export default function ProfileCover({ name, role, cover }: IUserProfileCover) {
         >
           <Typography variant="h4">{name}</Typography>
 
-          <Typography sx={{ opacity: 0.72 }}>{role}</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{email}</Typography>
         </Box>
       </StyledInfo>
 

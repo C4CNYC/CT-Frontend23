@@ -1,11 +1,14 @@
 // @mui
-import { Typography, StackProps, Stack, Button } from "@mui/material";
+import { Button, Stack, StackProps, Typography } from "@mui/material";
 // assets
 import { UpgradeStorageIllustration } from "../../../../assets/illustrations";
 
 // ----------------------------------------------------------------------
 
-export default function FileGeneralUpgrade({ sx, ...other }: StackProps) {
+export default function FileGeneralUpgrade({
+  sx,
+  ...other
+}: StackProps): React.ReactElement | null {
   return (
     <Stack
       alignItems="center"

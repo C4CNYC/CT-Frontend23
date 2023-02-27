@@ -1,10 +1,10 @@
-import createCache from "@emotion/cache";
+import createCache, { type EmotionCache } from "@emotion/cache";
 
 // ----------------------------------------------------------------------
 
 const isBrowser = typeof document !== "undefined";
 
-export default function createEmotionCache() {
+export default function createEmotionCache(): EmotionCache {
   let insertionPoint;
 
   if (isBrowser) {

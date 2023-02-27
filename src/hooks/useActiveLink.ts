@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 
 // ----------------------------------------------------------------------
 
-type ReturnType = {
+interface ReturnType {
   active: boolean;
   isExternalLink: boolean;
-};
+}
 
 export default function useActiveLink(path: string, deep = true): ReturnType {
   const { pathname, asPath } = useRouter();

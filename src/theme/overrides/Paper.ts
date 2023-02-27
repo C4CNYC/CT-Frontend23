@@ -1,8 +1,8 @@
-import { Theme } from "@mui/material/styles";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Paper(theme: Theme) {
+export default function Paper(theme: Theme): unknown {
   return {
     MuiPaper: {
       defaultProps: {

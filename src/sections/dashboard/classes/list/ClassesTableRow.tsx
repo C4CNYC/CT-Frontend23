@@ -23,7 +23,7 @@ import { PATH_DASHBOARD } from "src/routes/paths";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   row: IClass & BaseResponseInterface;
   selected: boolean;
   onEditRow: (id: string, name: string) => void;
@@ -36,27 +36,28 @@ export default function ClassesTableRow({
   selected,
   onEditRow,
   onSelectRow,
-  onDeleteRow,
-}: Props) {
+  onDeleteRow
+}:
+Props): React.ReactElement | null {
   const { name, active, total_students, createdAt } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
   return (
@@ -67,7 +68,7 @@ export default function ClassesTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} children={<FcFolder />} />
+            <Avatar alt={name} ><FcFolder /></Avatar>
           </Stack>
         </TableCell>
 

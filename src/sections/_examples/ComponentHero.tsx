@@ -1,14 +1,14 @@
 import { m } from "framer-motion";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
-import { Container, Typography, Stack } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // utils
 import { bgGradient } from "../../utils/cssStyles";
 // components
-import Image from "../../components/image";
 import { MotionContainer, varFade } from "../../components/animate";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ const StyledBg = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function ComponentHero() {
+export default function ComponentHero(): React.ReactElement {
   const isDesktop = useResponsive("up", "sm");
 
   return (

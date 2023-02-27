@@ -1,18 +1,19 @@
 import { forwardRef, useState } from "react";
 // @mui
 import {
-  Slide,
-  Dialog,
   Button,
-  DialogTitle,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
+  DialogTitle,
+  Slide,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const Transition = forwardRef(
   (
     props: TransitionProps & {
@@ -22,14 +23,14 @@ const Transition = forwardRef(
   ) => <Slide direction="up" ref={ref} {...props} />
 );
 
-export default function TransitionsDialogs() {
+export default function TransitionsDialogs(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
@@ -47,7 +48,9 @@ export default function TransitionsDialogs() {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{`Use Google's location service?`}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
 
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">

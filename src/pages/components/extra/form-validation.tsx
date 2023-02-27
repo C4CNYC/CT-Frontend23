@@ -4,12 +4,12 @@ import Head from "next/head";
 // @mui
 import {
   Box,
+  Container,
+  Divider,
+  FormControlLabel,
   Stack,
   Switch,
-  Divider,
-  Container,
   Typography,
-  FormControlLabel,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -28,10 +28,12 @@ DemoFormValidationPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoFormValidationPage() {
+export default function DemoFormValidationPage(): React.ReactElement {
   const [debug, setDebug] = useState(true);
 
-  const handleChangeDebug = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDebug = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setDebug(event.target.checked);
   };
 

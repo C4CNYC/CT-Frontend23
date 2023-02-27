@@ -1,10 +1,10 @@
 import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
   useMemo,
   useState,
-  useEffect,
-  useContext,
-  useCallback,
-  createContext,
 } from "react";
 // utils
 import localStorageAvailable from "../../utils/localStorageAvailable";
@@ -12,13 +12,13 @@ import localStorageAvailable from "../../utils/localStorageAvailable";
 import { defaultSettings } from "./config-setting";
 import { defaultPreset, getPresets, presetsOption } from "./presets";
 import {
-  ThemeModeValue,
-  ThemeLayoutValue,
-  ThemeStretchValue,
-  ThemeContrastValue,
-  ThemeDirectionValue,
   SettingsContextProps,
   ThemeColorPresetsValue,
+  ThemeContrastValue,
+  ThemeDirectionValue,
+  ThemeLayoutValue,
+  ThemeModeValue,
+  ThemeStretchValue,
 } from "./types";
 
 // ----------------------------------------------------------------------
@@ -52,22 +52,25 @@ const initialState: SettingsContextProps = {
 
 export const SettingsContext = createContext(initialState);
 
-export const useSettingsContext = () => {
+export const useSettingsContext = (): SettingsContextProps => {
   const context = useContext(SettingsContext);
 
-  if (!context)
+  if (!context) {
     throw new Error("useSettingsContext must be use inside SettingsProvider");
+  }
 
   return context;
 };
 
 // ----------------------------------------------------------------------
 
-type SettingsProviderProps = {
+interface SettingsProviderProps {
   children: React.ReactNode;
-};
+}
 
-export function SettingsProvider({ children }: SettingsProviderProps) {
+export function SettingsProvider({
+  children,
+}: SettingsProviderProps): React.ReactElement | null {
   const [themeMode, setThemeMode] = useState(defaultSettings.themeMode);
   const [themeLayout, setThemeLayout] = useState(defaultSettings.themeLayout);
   const [themeStretch, setThemeStretch] = useState(
@@ -95,20 +98,19 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
     if (isArabic) {
       onChangeDirectionByLang("ar");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isArabic]);
 
   useEffect(() => {
     if (storageAvailable) {
-      const mode = getCookie("themeMode") || defaultSettings.themeMode;
-      const layout = getCookie("themeLayout") || defaultSettings.themeLayout;
-      const stretch = getCookie("themeStretch") || defaultSettings.themeStretch;
+      const mode = getCookie("themeMode") ?? defaultSettings.themeMode;
+      const layout = getCookie("themeLayout") ?? defaultSettings.themeLayout;
+      const stretch = getCookie("themeStretch") ?? defaultSettings.themeStretch;
       const contrast =
-        getCookie("themeContrast") || defaultSettings.themeContrast;
+        getCookie("themeContrast") ?? defaultSettings.themeContrast;
       const direction =
-        getCookie("themeDirection") || defaultSettings.themeDirection;
+        getCookie("themeDirection") ?? defaultSettings.themeDirection;
       const colorPresets =
-        getCookie("themeColorPresets") || defaultSettings.themeColorPresets;
+        getCookie("themeColorPresets") ?? defaultSettings.themeColorPresets;
 
       setThemeMode(mode as ThemeModeValue);
       setThemeLayout(layout as ThemeLayoutValue);
@@ -290,7 +292,7 @@ export function SettingsProvider({ children }: SettingsProviderProps) {
 
 // ----------------------------------------------------------------------
 
-function getCookie(name: string) {
+function getCookie(name: string): undefined | string {
   if (typeof document === "undefined") {
     throw new Error(
       "getCookie() is not supported on the server. Fallback to a different value when rendering on the server."
@@ -308,13 +310,13 @@ function getCookie(name: string) {
   return undefined;
 }
 
-function setCookie(name: string, value: string, exdays = 3) {
+function setCookie(name: string, value: string, exdays = 3): void {
   const date = new Date();
   date.setTime(date.getTime() + exdays * 24 * 60 * 60 * 1000);
   const expires = `expires=${date.toUTCString()}`;
   document.cookie = `${name}=${value};${expires};path=/`;
 }
 
-function removeCookie(name: string) {
+function removeCookie(name: string): void {
   document.cookie = `${name}=;path=/;max-age=0`;
 }

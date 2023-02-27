@@ -2,51 +2,49 @@ import { noCase } from "change-case";
 import { useState } from "react";
 // @mui
 import {
-  Box,
-  Stack,
-  List,
-  Badge,
-  Button,
   Avatar,
-  Tooltip,
+  Badge,
+  Box,
+  Button,
   Divider,
   IconButton,
-  Typography,
-  ListItemText,
-  ListSubheader,
+  List,
   ListItemAvatar,
   ListItemButton,
+  ListItemText,
+  ListSubheader,
+  Stack,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 // utils
 import { fToNow } from "../../../utils/formatTime";
 // _mock_
 import { _notifications } from "../../../_mock/arrays";
 // components
-import Iconify from "@components/iconify";
-import Scrollbar from "@components/scrollbar";
-import MenuPopover from "@components/menu-popover";
 import { IconButtonAnimate } from "@components/animate";
+import Iconify from "@components/iconify";
+import MenuPopover from "@components/menu-popover";
+import Scrollbar from "@components/scrollbar";
 
 // ----------------------------------------------------------------------
 
-export default function NotificationsPopover() {
+export default function NotificationsPopover(): React.ReactElement {
   const [notifications, setNotifications] = useState(_notifications);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const totalUnRead = notifications.filter(
-    (item) => item.isUnRead === true
-  ).length;
+  const totalUnRead = notifications.filter((item) => item.isUnRead).length;
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleMarkAllAsRead = () => {
+  const handleMarkAllAsRead = (): void => {
     setNotifications(
       notifications.map((notification) => ({
         ...notification,
@@ -146,7 +144,7 @@ export default function NotificationsPopover() {
 
 // ----------------------------------------------------------------------
 
-type NotificationItemProps = {
+interface NotificationItemProps {
   id: string;
   title: string;
   description: string;
@@ -154,13 +152,13 @@ type NotificationItemProps = {
   type: string;
   createdAt: Date;
   isUnRead: boolean;
-};
+}
 
 function NotificationItem({
   notification,
 }: {
   notification: NotificationItemProps;
-}) {
+}): React.ReactElement | null {
   const { avatar, title } = renderContent(notification);
 
   return (
@@ -199,7 +197,10 @@ function NotificationItem({
 
 // ----------------------------------------------------------------------
 
-function renderContent(notification: NotificationItemProps) {
+function renderContent(notification: NotificationItemProps): {
+  avatar: React.ReactElement | null;
+  title: React.ReactElement;
+} {
   const title = (
     <Typography variant="subtitle2">
       {notification.title}
@@ -258,9 +259,11 @@ function renderContent(notification: NotificationItemProps) {
     };
   }
   return {
-    avatar: notification.avatar ? (
+    avatar: notification.avatar
+? (
       <img alt={notification.title} src={notification.avatar} />
-    ) : null,
+    )
+: null,
     title,
   };
 }

@@ -1,11 +1,11 @@
-import * as Yup from "yup";
-import { LoadingButton } from "@mui/lab";
-import { Grid, Card, Stack, Box, Typography } from "@mui/material";
-import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
-import { useSnackbar } from "notistack";
 import FormProvider, { RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
 import { useUpdateSchoolContactsMutation } from "../../../../redux/services/manager";
 
@@ -23,7 +23,7 @@ const UpdateUserSchema = Yup.object().shape({
   billing_phone: Yup.string().required("Billing phone is required"),
 });
 
-type FormValuesProps = {
+interface FormValuesProps {
   school_id: string;
   email: string;
   name: string;
@@ -34,22 +34,22 @@ type FormValuesProps = {
   billing_email: string;
   billing_name: string;
   billing_phone: string;
-};
+}
 
-type ContactsFormProps = {
+interface ContactsFormProps {
   contacts?: SchoolContacts;
   school_id: string;
-};
+}
 
 export default function ContactsForm({
   contacts,
   school_id,
-}: ContactsFormProps) {
+}: ContactsFormProps): React.ReactElement | null {
   const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id: school_id,
+    school_id,
     email: contacts?.email,
     name: contacts?.name,
     phone: contacts?.phone,
@@ -67,7 +67,7 @@ export default function ContactsForm({
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     try {
       await updateContacts({
         school_id: data.school_id,

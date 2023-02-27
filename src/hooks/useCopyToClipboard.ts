@@ -6,15 +6,15 @@ type CopiedValue = string | null;
 
 type CopyFn = (text: string) => Promise<boolean>;
 
-type ReturnType = {
+interface ReturnType {
   copy: CopyFn;
   copiedText: CopiedValue;
-};
+}
 
 function useCopyToClipboard(): ReturnType {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null);
 
-  const copy: CopyFn = async (text) => {
+  const copy: CopyFn = async (text): Promise<void> => {
     if (!navigator?.clipboard) {
       console.warn("Clipboard not supported");
       return false;

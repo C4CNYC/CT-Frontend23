@@ -1,12 +1,12 @@
-import { Theme, alpha } from "@mui/material/styles";
-import { SwitchProps } from "@mui/material";
+import { type SwitchProps } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Switch(theme: Theme) {
+export default function Switch(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
-  const rootStyle = (ownerState: SwitchProps) => ({
+  const rootStyle = (ownerState: SwitchProps): unknown => ({
     padding: "9px 13px 9px 12px",
     width: 58,
     height: 38,

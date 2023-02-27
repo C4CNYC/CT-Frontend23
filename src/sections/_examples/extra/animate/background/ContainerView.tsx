@@ -8,14 +8,14 @@ import getVariant from "../getVariant";
 
 // ----------------------------------------------------------------------
 
-type ContainerViewProps = {
+interface ContainerViewProps {
   selectVariant: string;
-};
+}
 
 export default function ContainerView({
   selectVariant,
   ...other
-}: ContainerViewProps) {
+}: ContainerViewProps): React.ReactElement | null {
   const isKenburns = selectVariant.includes("kenburns");
 
   return (
@@ -28,14 +28,16 @@ export default function ContainerView({
       }}
       {...other}
     >
-      {isKenburns ? (
+      {isKenburns
+? (
         <Box
           component={m.img}
           src={_mock.image.cover(7)}
           {...getVariant(selectVariant)}
           sx={{ width: 1, height: 1, objectFit: "cover" }}
         />
-      ) : (
+      )
+: (
         <Box
           component={m.div}
           {...getVariant(selectVariant)}

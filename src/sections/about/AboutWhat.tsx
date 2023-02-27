@@ -1,14 +1,14 @@
 import { m } from "framer-motion";
 // @mui
-import { alpha, useTheme, styled } from "@mui/material/styles";
 import {
   Box,
-  Grid,
   Button,
   Container,
-  Typography,
+  Grid,
   LinearProgress,
+  Typography,
 } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // utils
@@ -16,9 +16,9 @@ import { fPercent } from "../../utils/formatNumber";
 // _mock_
 import { _skills } from "../../_mock/arrays";
 // components
-import Image from "../../components/image";
-import Iconify from "../../components/iconify";
 import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
+import Image from "../../components/image";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AboutWhat() {
+export default function AboutWhat(): React.ReactElement {
   const theme = useTheme();
 
   const isDesktop = useResponsive("up", "md");
@@ -131,14 +131,16 @@ export default function AboutWhat() {
 
 // ----------------------------------------------------------------------
 
-type ProgressItemProps = {
+interface ProgressItemProps {
   progress: {
     label: string;
     value: number;
   };
-};
+}
 
-function ProgressItem({ progress }: ProgressItemProps) {
+function ProgressItem({
+  progress,
+}: ProgressItemProps): React.ReactElement | null {
   const { label, value } = progress;
   return (
     <Box sx={{ mt: 3 }}>

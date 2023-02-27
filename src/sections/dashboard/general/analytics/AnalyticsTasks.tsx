@@ -2,15 +2,15 @@ import { useState } from "react";
 // @mui
 import {
   Card,
-  Stack,
-  Divider,
-  Checkbox,
-  MenuItem,
-  CardProps,
   CardHeader,
-  IconButton,
+  CardProps,
+  Checkbox,
   CheckboxProps,
+  Divider,
   FormControlLabel,
+  IconButton,
+  MenuItem,
+  Stack,
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
@@ -18,10 +18,10 @@ import MenuPopover from "@components/menu-popover";
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   label: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -34,10 +34,10 @@ export default function AnalyticsTasks({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const [selected, setSelected] = useState(["2"]);
 
-  const handleClickComplete = (taskId: string) => {
+  const handleClickComplete = (taskId: string): void => {
     const tasksCompleted = selected.includes(taskId)
       ? selected.filter((value) => value !== taskId)
       : [...selected, taskId];
@@ -54,7 +54,9 @@ export default function AnalyticsTasks({
           key={task.id}
           task={task}
           checked={selected.includes(task.id)}
-          onChange={() => handleClickComplete(task.id)}
+          onChange={() => {
+            handleClickComplete(task.id);
+          }}
         />
       ))}
     </Card>
@@ -67,33 +69,37 @@ interface TaskItemProps extends CheckboxProps {
   task: ItemProps;
 }
 
-function TaskItem({ task, checked, onChange }: TaskItemProps) {
+function TaskItem({
+  task,
+  checked,
+  onChange,
+}: TaskItemProps): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleMarkComplete = () => {
+  const handleMarkComplete = (): void => {
     handleClosePopover();
     console.log("MARK COMPLETE", task.id);
   };
 
-  const handleShare = () => {
+  const handleShare = (): void => {
     handleClosePopover();
     console.log("SHARE", task.id);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     handleClosePopover();
     console.log("EDIT", task.id);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     handleClosePopover();
     console.log("DELETE", task.id);
   };

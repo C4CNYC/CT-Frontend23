@@ -4,7 +4,7 @@ import {
   useDispatch as useAppDispatch,
   useSelector as useAppSelector,
 } from "react-redux";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";

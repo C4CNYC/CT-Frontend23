@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
 import { AvatarGroup } from "@mui/material";
+import { forwardRef } from "react";
 //
 import { CustomAvatarGroupProps } from "./types";
 
@@ -12,6 +12,7 @@ const SIZES = {
   large: 56,
 };
 
+// eslint-disable-next-line react/display-name
 const CustomAvatarGroup = forwardRef<HTMLDivElement, CustomAvatarGroupProps>(
   ({ size = "small", compact, max, children, sx, ...other }, ref) => {
     const isTiny = size === "tiny";

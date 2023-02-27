@@ -1,45 +1,33 @@
 import { useState } from "react";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
+  Avatar,
   Box,
   Card,
-  Link,
-  Stack,
-  Avatar,
-  MenuItem,
-  IconButton,
-  Typography,
-  InputAdornment,
   Dialog,
   DialogActions,
+  IconButton,
+  Link,
+  MenuItem,
+  Stack,
+  Typography,
 } from "@mui/material";
 // @types
-import { IUserProfileSchool } from "../../../../../@types/user";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 // components
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
-import { CustomTextField } from "@components/custom-input";
-import SearchNotFound from "@components/search-not-found";
-import * as React from "react";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import * as React from "react";
+import { IUserProfileSchool } from "src/@types/courses";
 
-type Props = {
+interface Props {
   school: IUserProfileSchool;
-};
+}
 
-const school = {
-  name: "Name",
-  url: "Url",
-};
-
-export default function Schools({ school }: Props) {
-  const [isNotFound, setIsNotFound] = useState(false);
-
+export default function Schools({ school }: Props): React.ReactElement | null {
   return (
     <>
       <Stack
@@ -49,63 +37,59 @@ export default function Schools({ school }: Props) {
         sx={{ my: 5 }}
       >
         <Typography variant="h4">Schools</Typography>
-        {/*<AddSchool />*/}
+        {/* <AddSchool /> */}
       </Stack>
 
-      {isNotFound ? (
-        <Typography variant="body2">not found</Typography>
-      ) : (
-        <Box
-          gap={3}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-          }}
-        >
-          <SchoolCard school={school} />
-        </Box>
-      )}
+      <Box
+        gap={3}
+        display="grid"
+        gridTemplateColumns={{
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+        }}
+      >
+        <SchoolCard school={school} />
+      </Box>
     </>
   );
 }
 
 // ----------------------------------------------------------------------
 
-type SchoolCardProps = {
+interface SchoolCardProps {
   school: IUserProfileSchool;
-};
+}
 
-function SchoolCard({ school }: SchoolCardProps) {
+function SchoolCard({ school }: SchoolCardProps): React.ReactElement | null {
   const { name, avatarUrl } = school;
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openDialog, setOpenDialog] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpenDialog(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpenDialog(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleArchive = () => {
+  const handleArchive = (): void => {
     handleClickOpen();
     handleClosePopover();
     console.log("ARCHIVE", name);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     handleClosePopover();
     console.log("EDIT", name);
   };

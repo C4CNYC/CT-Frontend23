@@ -1,5 +1,5 @@
 // @mui
-import { Alert, Tooltip, Stack, Typography, Box, Button } from "@mui/material";
+import { Alert, Box, Button, Stack, Tooltip, Typography } from "@mui/material";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // layouts
@@ -7,13 +7,13 @@ import LoginLayout from "../../layouts/login";
 
 // ----------------------------------------------------------------------
 
-export default function LoginAuth0() {
+export default function LoginAuth0(): React.ReactElement {
   const { method } = useAuthContext();
 
   // NOTE: Turn off comments below to enable Auth0.
   // const { login } = useAuthContext();
 
-  const handleLoginAuth0 = async () => {
+  const handleLoginAuth0 = (): void => {
     try {
       // NOTE: Turn off comments below to enable Auth0.
       // await login();

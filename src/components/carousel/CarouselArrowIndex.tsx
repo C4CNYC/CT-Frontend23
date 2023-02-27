@@ -1,6 +1,6 @@
 // @mui
-import { useTheme, styled, Theme } from "@mui/material/styles";
-import { Typography, Box, IconButton, SxProps } from "@mui/material";
+import { Box, IconButton, SxProps, Typography } from "@mui/material";
+import { styled, Theme, useTheme } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../utils/cssStyles";
 //
@@ -36,14 +36,14 @@ const StyledIconButton = styled(IconButton)({
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   index: number;
   total: number;
   icon?: IconifyProps; // Right icon
   onNext?: VoidFunction;
   onPrevious?: VoidFunction;
   sx?: SxProps<Theme>;
-};
+}
 
 export default function CarouselArrowIndex({
   index,
@@ -53,7 +53,7 @@ export default function CarouselArrowIndex({
   icon,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const isRTL = theme.direction === "rtl";

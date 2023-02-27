@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // @mui
 import {
   Table,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
   TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 // components
 import Scrollbar from "@components/scrollbar";
-import { useTable, TablePaginationCustom } from "@components/table";
+import { TablePaginationCustom, useTable } from "@components/table";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ function createData(
   code: string,
   population: number,
   size: number
-) {
+): Record<string, string | number> {
   const density = population / size;
   return { name, code, population, size, density };
 }
@@ -78,7 +78,7 @@ const COLUMNS: Column[] = [
 
 // ----------------------------------------------------------------------
 
-export default function GroupingFixedHeader() {
+export default function GroupingFixedHeader(): React.ReactElement {
   const {
     page,
     rowsPerPage,
@@ -89,7 +89,9 @@ export default function GroupingFixedHeader() {
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>

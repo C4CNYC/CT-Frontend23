@@ -5,7 +5,7 @@ import { varTranEnter, varTranExit } from "./transition";
 
 // ----------------------------------------------------------------------
 
-export const varRotate = (props?: VariantsType) => {
+export const varRotate = (props?: VariantsType): Record<string, any> => {
   const durationIn = props?.durationIn;
   const durationOut = props?.durationOut;
   const easeIn = props?.easeIn;

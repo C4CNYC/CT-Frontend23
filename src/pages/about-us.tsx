@@ -7,10 +7,10 @@ import MainLayout from "../layouts/main";
 // sections
 import {
   AboutHero,
-  AboutWhat,
   AboutTeam,
-  AboutVision,
   AboutTestimonials,
+  AboutVision,
+  AboutWhat,
 } from "../sections/about";
 
 // ----------------------------------------------------------------------
@@ -21,7 +21,7 @@ AboutPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function AboutPage() {
+export default function AboutPage(): React.ReactElement {
   return (
     <>
       <Head>

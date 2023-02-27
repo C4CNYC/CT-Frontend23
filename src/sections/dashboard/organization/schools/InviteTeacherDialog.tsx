@@ -1,25 +1,25 @@
-import React from "react";
+import Scrollbar from "@components/scrollbar";
+import { useFilters } from "@hooks/useFilters";
 import {
-  List,
-  Stack,
-  Dialog,
   Button,
-  TextField,
-  DialogTitle,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogProps,
+  DialogTitle,
+  List,
+  Stack,
+  TextField,
 } from "@mui/material";
-import { useFilters } from "@hooks/useFilters";
+import { useSnackbar } from "notistack";
+import React from "react";
 import {
   useAddTeacherMutation,
   useCreateOrgMemberMutation,
   useGetOrgMembersQuery,
 } from "src/redux/services/admin";
-import Scrollbar from "@components/scrollbar";
-import UserItem from "./UserItem";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useSnackbar } from "notistack";
+import UserItem from "./UserItem";
 
 // ----------------------------------------------------------------------
 
@@ -37,9 +37,9 @@ export default function InviteTeacherDialog({
   open,
   onClose,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const [addTeacher] = useAddTeacherMutation();
-  const [createUser, { isLoading }] = useCreateOrgMemberMutation();
+  const [createUser] = useCreateOrgMemberMutation();
   const { enqueueSnackbar } = useSnackbar();
   const { filters, setFilter } = useFilters({ email: "" });
   const { data: members } = useGetOrgMembersQuery(
@@ -47,7 +47,10 @@ export default function InviteTeacherDialog({
     { skip: !filters.email }
   );
 
-  const addUserToSchool = async (user_id: string, school_id: string) => {
+  const addUserToSchool = async (
+    user_id: string,
+    school_id: string
+  ): Promise<void> => {
     try {
       await addTeacher({ user_id, school_id }).unwrap();
       enqueueSnackbar("teacher added");
@@ -56,10 +59,10 @@ export default function InviteTeacherDialog({
     }
   };
 
-  const onSendInvite = async () => {
+  const onSendInvite = async (): Promise<void> => {
     try {
       const user = await createUser({
-        email: filters.email as string,
+        email: filters.email,
         role: Role.Manager,
       }).unwrap();
       console.log(user);
@@ -90,7 +93,7 @@ export default function InviteTeacherDialog({
             <Button
               sx={{ width: "150px" }}
               variant="contained"
-              disabled={(!!members?.data.length || !filters.email) as boolean}
+              disabled={!!members?.data.length || !filters.email}
               onClick={onSendInvite}
             >
               Send Invite
@@ -102,7 +105,9 @@ export default function InviteTeacherDialog({
               <List disablePadding>
                 {members.data.map((person) => (
                   <UserItem
-                    addHandler={() => addUserToSchool(person.id, schoolId)}
+                    addHandler={async () => {
+                      await addUserToSchool(person.id, schoolId);
+                    }}
                     invited={teachersIds.includes(person.id)}
                     key={person.id}
                     person={person}

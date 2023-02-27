@@ -1,24 +1,24 @@
-import { useRef, memo } from "react";
+import { memo, useRef } from "react";
 import Map, {
-  Layer,
-  Source,
-  MapRef,
-  LngLatLike,
   GeoJSONSource,
+  Layer,
+  LngLatLike,
   MapLayerMouseEvent,
+  MapRef,
+  Source,
 } from "react-map-gl";
 // components
 import { MapBoxProps } from "@components/map";
 //
 import {
-  clusterLayer,
   clusterCountLayer,
+  clusterLayer,
   unclusteredPointLayer,
 } from "./layers";
 
 // ----------------------------------------------------------------------
 
-function MapClusters({ ...other }: MapBoxProps) {
+function MapClusters({ ...other }: MapBoxProps): React.ReactElement {
   const mapRef = useRef<MapRef>(null);
 
   const onClick = (event: MapLayerMouseEvent) => {
@@ -52,7 +52,7 @@ function MapClusters({ ...other }: MapBoxProps) {
         longitude: -103.59,
         zoom: 3,
       }}
-      interactiveLayerIds={[clusterLayer.id || ""]}
+      interactiveLayerIds={[clusterLayer.id ?? ""]}
       onClick={onClick}
       ref={mapRef}
       {...other}

@@ -43,7 +43,7 @@ const LIGHT_MODE = themeColor.grey[500];
 
 const DARK_MODE = themeColor.common.black;
 
-function createShadow(color: string) {
+function createShadow(color: string): CustomShadowOptions {
   const transparent = alpha(color, 0.16);
   return {
     z1: `0 1px 2px 0 ${transparent}`,
@@ -73,7 +73,9 @@ function createShadow(color: string) {
   };
 }
 
-export default function customShadows(themeMode: "light" | "dark") {
+export default function customShadows(
+  themeMode: "light" | "dark"
+): CustomShadowOptions {
   return themeMode === "light"
     ? createShadow(LIGHT_MODE)
     : createShadow(DARK_MODE);

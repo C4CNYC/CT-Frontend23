@@ -1,23 +1,23 @@
 import { useState } from "react";
 // @mui
-import { styled, useTheme, Theme } from "@mui/material/styles";
 import {
-  Box,
-  Typography,
-  Stack,
-  MenuItem,
-  IconButton,
-  SxProps,
   alpha,
+  Box,
+  IconButton,
+  MenuItem,
+  Stack,
+  SxProps,
+  Typography,
 } from "@mui/material";
+import { styled, Theme, useTheme } from "@mui/material/styles";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Image from "@components/image";
-import Iconify from "@components/iconify";
-import MenuPopover from "@components/menu-popover";
 import Carousel, { CarouselDots } from "@components/carousel";
+import Iconify from "@components/iconify";
+import Image from "@components/image";
+import MenuPopover from "@components/menu-popover";
 
 // ----------------------------------------------------------------------
 
@@ -62,21 +62,24 @@ const shadowStyle = {
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   cardType: string;
   balance: number;
   cardHolder: string;
   cardNumber: string;
   cardValid: string;
-};
+}
 
-type Props = {
+interface Props {
   list: ItemProps[];
   sx?: SxProps<Theme>;
-};
+}
 
-export default function BankingCurrentBalance({ list, sx }: Props) {
+export default function BankingCurrentBalance({
+  list,
+  sx,
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselSettings = {
@@ -121,35 +124,35 @@ export default function BankingCurrentBalance({ list, sx }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CardItemProps = {
+interface CardItemProps {
   card: ItemProps;
-};
+}
 
-function CardItem({ card }: CardItemProps) {
+function CardItem({ card }: CardItemProps): React.ReactElement | null {
   const { id, cardType, balance, cardHolder, cardNumber, cardValid } = card;
 
   const [showCurrency, setShowCurrency] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleShowCurrency = () => {
+  const handleShowCurrency = (): void => {
     setShowCurrency(!showCurrency);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     handleClosePopover();
     console.log("DELETE", id);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     handleClosePopover();
     console.log("EDIT", id);
   };

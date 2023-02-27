@@ -20,7 +20,7 @@ const iconUrl = (icon: string) => `/assets/icons/files/${icon}.svg`;
 
 // ----------------------------------------------------------------------
 
-export function fileFormat(fileUrl: string | undefined) {
+export function fileFormat(fileUrl: string | undefined): string {
   let format;
 
   switch (fileUrl?.includes(fileTypeByUrl(fileUrl))) {
@@ -66,7 +66,7 @@ export function fileFormat(fileUrl: string | undefined) {
 
 // ----------------------------------------------------------------------
 
-export function fileThumb(fileUrl: string) {
+export function fileThumb(fileUrl: string): string {
   let thumb;
 
   switch (fileFormat(fileUrl)) {
@@ -114,19 +114,21 @@ export function fileThumb(fileUrl: string) {
 
 // ----------------------------------------------------------------------
 
-export function fileTypeByUrl(fileUrl = "") {
-  return (fileUrl && fileUrl.split(".").pop()) || "";
+export function fileTypeByUrl(fileUrl = ""): string {
+  return fileUrl?.split(".").pop() ?? "";
 }
 
 // ----------------------------------------------------------------------
 
-export function fileNameByUrl(fileUrl: string) {
+export function fileNameByUrl(fileUrl: string): string | undefined {
   return fileUrl.split("/").pop();
 }
 
 // ----------------------------------------------------------------------
 
-export function fileData(file: ExtendFile | string) {
+export function fileData(
+  file: ExtendFile | string
+): Record<string, string | undefined | number> {
   // Url
   if (typeof file === "string") {
     return {

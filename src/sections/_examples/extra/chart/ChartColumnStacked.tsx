@@ -10,7 +10,7 @@ const series = [
   { name: "Product D", data: [21, 7, 25, 13, 22, 8] },
 ];
 
-export default function ChartColumnStacked() {
+export default function ChartColumnStacked(): React.ReactElement {
   const chartOptions = useChart({
     chart: {
       stacked: true,

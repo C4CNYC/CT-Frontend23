@@ -1,7 +1,7 @@
 import { memo } from "react";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
-import { Switch, InputBase, Typography } from "@mui/material";
+import { InputBase, Switch, Typography } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // components
 import {
   MapSettingKeys,
@@ -26,17 +26,23 @@ const StyledRow = styled("div")(({ theme }) => ({
 
 const camelPattern = /(^|[A-Z])[a-z]*/g;
 
-function formatSettingName(name: string) {
+function formatSettingName(name: string): string | undefined {
   return name.match(camelPattern)?.join(" ");
 }
 
-type Props = {
+interface Props {
   settings: MapSettings;
   onChange: (name: MapSettingKeys, value: boolean | number) => void;
-};
+}
 
-function ControlPanel({ settings, onChange }: Props) {
-  const renderSetting = (name: MapSettingKeys, value: boolean | number) => {
+function ControlPanel({
+  settings,
+  onChange,
+}: Props): React.ReactElement | null {
+  const renderSetting = (
+    name: MapSettingKeys,
+    value: boolean | number
+  ): React.ReactElement | null => {
     switch (typeof value) {
       case "boolean":
         return (
@@ -45,7 +51,9 @@ function ControlPanel({ settings, onChange }: Props) {
             <Switch
               size="small"
               checked={value}
-              onChange={(event) => onChange(name, event.target.checked)}
+              onChange={(event) => {
+                onChange(name, event.target.checked);
+              }}
             />
           </StyledRow>
         );
@@ -55,7 +63,9 @@ function ControlPanel({ settings, onChange }: Props) {
             <Typography variant="body2">{formatSettingName(name)}</Typography>
             <InputBase
               value={value}
-              onChange={(event) => onChange(name, Number(event.target.value))}
+              onChange={(event) => {
+                onChange(name, Number(event.target.value));
+              }}
               inputProps={{ type: "number" }}
               sx={{
                 "& input": {

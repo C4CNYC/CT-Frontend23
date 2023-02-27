@@ -2,11 +2,11 @@
 import {
   Box,
   Card,
+  CardContent,
+  CardHeader,
+  CardProps,
   Paper,
   Typography,
-  CardHeader,
-  CardContent,
-  CardProps,
 } from "@mui/material";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
@@ -18,11 +18,11 @@ import Iconify from "@components/iconify";
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  list: {
+  list: Array<{
     value: string;
     label: string;
     total: number;
-  }[];
+  }>;
 }
 
 export default function AnalyticsTrafficBySite({
@@ -30,7 +30,7 @@ export default function AnalyticsTrafficBySite({
   subheader,
   list,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />

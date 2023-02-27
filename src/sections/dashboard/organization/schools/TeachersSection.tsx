@@ -1,27 +1,29 @@
+import Iconify from "@components/iconify";
 import {
-  Stack,
-  Typography,
-  IconButton,
   Collapse,
+  IconButton,
   List,
   ListItem,
+  Stack,
+  Typography,
 } from "@mui/material";
+import InviteTeacherDialog from "@sections/dashboard/organization/schools/InviteTeacherDialog";
+import Image from "next/image";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import Iconify from "@components/iconify";
 import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
 } from "src/redux/services/admin";
-import InviteTeacherDialog from "@sections/dashboard/organization/schools/InviteTeacherDialog";
-import Image from "next/image";
 import TeacherItem from "./TeacherItem";
 
-type TeacherSectionProps = {
+interface TeacherSectionProps {
   school_id: string;
-};
+}
 
-export default function TeacherSection({ school_id }: TeacherSectionProps) {
+export default function TeacherSection({
+  school_id,
+}: TeacherSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
   const [deleteTeacher] = useDeleteTeacherMutation();
@@ -29,18 +31,18 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
   const [openShare, setOpenShare] = useState(false);
   const { data: teachers, isLoading } = useGetTeacherListQuery(
     {
-      school_id: school_id,
+      school_id,
     },
     { skip: !school_id }
   );
 
   const teachersIds = teachers ? teachers.data.map((t) => t.id) : null;
 
-  const handleDeleteTeacher = async (user_id: string) => {
+  const handleDeleteTeacher = async (user_id: string): Promise<void> => {
     try {
       await deleteTeacher({
         user_id,
-        school_id: school_id,
+        school_id,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
     } catch (e) {
@@ -59,7 +61,9 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
         sx={{ p: 2.5, pb: 0 }}
       >
         <Typography
-          onClick={() => setOpen(!open)}
+          onClick={() => {
+            setOpen(!open);
+          }}
           sx={{ alignItems: "center", display: "flex", cursor: "pointer" }}
           variant="subtitle2"
         >
@@ -72,7 +76,9 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
         <IconButton
           size="small"
           color="success"
-          onClick={() => setOpenShare(true)}
+          onClick={() => {
+            setOpenShare(true);
+          }}
           sx={{
             p: 0,
             width: 24,
@@ -89,15 +95,17 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
       </Stack>
       <Collapse in={open}>
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
-          {teachers &&
-            teachers.data.map((person) => (
+          {teachers?.data.map((person) => (
               <TeacherItem
-                handleDeleteTeacher={() => handleDeleteTeacher(person.id)}
+                handleDeleteTeacher={async () => {
+                  await handleDeleteTeacher(person.id);
+                }}
                 key={person.id}
                 person={person}
               />
             ))}
-          {!isLoading && !teachers?.data.length ? (
+          {!isLoading && !teachers?.data.length
+? (
             <ListItem
               sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
               disableGutters
@@ -121,11 +129,12 @@ export default function TeacherSection({ school_id }: TeacherSectionProps) {
                 src="/assets/images/arrow.png"
               />
             </ListItem>
-          ) : null}
+          )
+: null}
         </List>
       </Collapse>
       <InviteTeacherDialog
-        teachersIds={teachersIds || []}
+        teachersIds={teachersIds ?? []}
         schoolId={school_id}
         open={openShare}
         inviteEmail="email@codetribe.io"

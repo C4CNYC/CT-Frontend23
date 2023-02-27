@@ -1,18 +1,20 @@
-import { Typography, Button } from "@mui/material";
+import { MotionContainer, varBounce } from "@components/animate";
+import { Button, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
-import { MotionContainer, varBounce } from "@components/animate";
 import { useGetMySchoolsQuery } from "src/redux/services/manager";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
 
-type Props = {
+interface Props {
   children: React.ReactElement;
-};
-export default function SchoolDashboardLayout({ children }: Props) {
+}
+export default function SchoolDashboardLayout({
+  children,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetMySchoolsQuery();
 
   if (!data?.data.length && !isLoading) {

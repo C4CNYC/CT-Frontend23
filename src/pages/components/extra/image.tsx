@@ -1,7 +1,7 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Card, Container, Typography, CardHeader } from "@mui/material";
+import { Box, Card, CardHeader, Container, Typography } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // _mock
@@ -9,8 +9,8 @@ import _mock from "../../../_mock";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Image from "@components/image";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Image from "@components/image";
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ const IMAGES = RATIO.map((value, index) => ({
   url: _mock.image.cover(index + 1),
 }));
 
-export default function DemoImagePage() {
+export default function DemoImagePage(): React.ReactElement {
   return (
     <>
       <Head>

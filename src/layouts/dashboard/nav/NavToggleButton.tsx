@@ -10,7 +10,10 @@ import { useSettingsContext } from "@components/settings";
 
 // ----------------------------------------------------------------------
 
-export default function NavToggleButton({ sx, ...other }: IconButtonProps) {
+export default function NavToggleButton({
+  sx,
+  ...other
+}: IconButtonProps): React.ReactElement | null {
   const { themeLayout, onToggleLayout } = useSettingsContext();
 
   const isDesktop = useResponsive("up", "lg");

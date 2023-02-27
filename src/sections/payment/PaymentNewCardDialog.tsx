@@ -1,16 +1,16 @@
 import { useState } from "react";
 // @mui
 import {
-  Stack,
   Button,
   Dialog,
-  TextField,
-  IconButton,
-  DialogTitle,
-  DialogProps,
   DialogActions,
   DialogContent,
+  DialogProps,
+  DialogTitle,
+  IconButton,
   InputAdornment,
+  Stack,
+  TextField,
 } from "@mui/material";
 // components
 import Iconify from "../../components/iconify";
@@ -22,14 +22,17 @@ interface Props extends DialogProps {
   onClose: VoidFunction;
 }
 
-export default function PaymentNewCardDialog({ onClose, ...other }: Props) {
+export default function PaymentNewCardDialog({
+  onClose,
+  ...other
+}: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 

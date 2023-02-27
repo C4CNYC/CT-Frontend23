@@ -1,17 +1,17 @@
 import { forwardRef, useState } from "react";
 // @mui
 import {
-  List,
-  Slide,
+  AppBar,
   Button,
   Dialog,
-  AppBar,
-  Toolbar,
   Divider,
   IconButton,
-  Typography,
-  ListItemText,
+  List,
   ListItemButton,
+  ListItemText,
+  Slide,
+  Toolbar,
+  Typography,
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 // components
@@ -19,6 +19,7 @@ import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const Transition = forwardRef(
   (
     props: TransitionProps & {
@@ -28,14 +29,14 @@ const Transition = forwardRef(
   ) => <Slide direction="up" ref={ref} {...props} />
 );
 
-export default function FullScreenDialogs() {
+export default function FullScreenDialogs(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

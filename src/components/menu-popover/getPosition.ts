@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-export default function getPosition(arrow: string) {
+export default function getPosition(arrow: string): any {
   let props;
 
   switch (arrow) {

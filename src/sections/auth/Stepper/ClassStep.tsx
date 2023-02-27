@@ -1,24 +1,24 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
+import InputInfo from "@components/input-info/InputInfo";
 import { Box, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import InputInfo from "@components/inputInfo/InputInfo";
-import { useForm } from "react-hook-form";
+import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
-import { PATH_AFTER_LOGIN } from "src/config-global";
+import * as React from "react";
+import { useForm } from "react-hook-form";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { PATH_AFTER_LOGIN } from "src/config-global";
 import { useCreateClassMutation } from "src/redux/services/admin";
 
-export default function ClassStep() {
+export default function ClassStep(): React.ReactElement {
   const { authenticate } = useAuthContext();
 
   const theme = useTheme();
   const router = useRouter();
   const [createClass, { isLoading }] = useCreateClassMutation();
   const { register, handleSubmit } = useForm();
-  const { schoolId, orgId } = router.query;
-  const onSubmit = async (data: any) => {
+  const { schoolId } = router.query;
+  const onSubmit = async (data: any): Promise<void> => {
     try {
       await createClass({
         schoolId,

@@ -1,13 +1,13 @@
-import { m, AnimatePresence } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 // @mui
-import { alpha } from "@mui/material/styles";
 import { IconButton, Stack, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // utils
 import { fData } from "../../../utils/formatNumber";
 //
-import Iconify from "../../iconify";
 import { varFade } from "../../animate";
 import FileThumbnail, { fileData } from "../../file-thumbnail";
+import Iconify from "../../iconify";
 //
 import { UploadProps } from "../types";
 
@@ -18,7 +18,7 @@ export default function MultiFilePreview({
   files,
   onRemove,
   sx,
-}: UploadProps) {
+}: UploadProps): React.ReactElement | null {
   if (!files?.length) {
     return null;
   }
@@ -61,7 +61,9 @@ export default function MultiFilePreview({
               {onRemove && (
                 <IconButton
                   size="small"
-                  onClick={() => onRemove(file)}
+                  onClick={() => {
+                    onRemove(file);
+                  }}
                   sx={{
                     top: 4,
                     right: 4,
@@ -114,7 +116,9 @@ export default function MultiFilePreview({
               <IconButton
                 edge="end"
                 size="small"
-                onClick={() => onRemove(file)}
+                onClick={() => {
+                  onRemove(file);
+                }}
               >
                 <Iconify icon="eva:close-fill" />
               </IconButton>

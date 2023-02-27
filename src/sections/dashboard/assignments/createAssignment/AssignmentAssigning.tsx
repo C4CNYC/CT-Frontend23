@@ -1,30 +1,30 @@
-import * as React from "react";
-import { Box, Button, Stack, TextField } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
 import FormProvider, { RHFTextField } from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import * as React from "react";
+import { Controller, useForm } from "react-hook-form";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
 
-type AssignmentStepProps = {
+interface AssignmentStepProps {
   next: () => void;
   back: () => void;
   assignment?: IAssignment & BaseResponseInterface;
   assignmentId: string;
   school_id: string;
-};
+}
 
-type FormValuesProps = {
+interface FormValuesProps {
   class: string;
   end_date: string;
   start_date: string;
   notes: string;
   graded: boolean;
   points: string;
-};
+}
 
 export default function AssignmentAssigning({
   back,
@@ -32,13 +32,13 @@ export default function AssignmentAssigning({
   assignment,
   school_id,
   next,
-}: AssignmentStepProps) {
+}: AssignmentStepProps): React.ReactElement | null {
   const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
 
   const defaultValues = {
     class: "",
-    end_date: assignment?.end_date || new Date().toISOString(),
-    start_date: assignment?.start_date || new Date().toISOString(),
+    end_date: assignment?.end_date ?? new Date().toISOString(),
+    start_date: assignment?.start_date ?? new Date().toISOString(),
     notes: "",
     graded: false,
     points: "",
@@ -56,7 +56,7 @@ export default function AssignmentAssigning({
 
   const { handleSubmit, control } = methods;
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       updateAssignment({
         school_id,

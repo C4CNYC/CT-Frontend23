@@ -1,12 +1,16 @@
-import { memo } from "react";
 import { Box, Stack } from "@mui/material";
+import { memo } from "react";
 //
-import { NavSectionProps, NavListProps } from "../types";
+import { NavListProps, NavSectionProps } from "../types";
 import NavList from "./NavList";
 
 // ----------------------------------------------------------------------
 
-function NavSectionMini({ data, sx, ...other }: NavSectionProps) {
+function NavSectionMini({
+  data,
+  sx,
+  ...other
+}: NavSectionProps): React.ReactElement | null {
   return (
     <Stack
       spacing={0.5}
@@ -32,12 +36,12 @@ export default memo(NavSectionMini);
 
 // ----------------------------------------------------------------------
 
-type ItemsProps = {
+interface ItemsProps {
   items: NavListProps[];
   isLastGroup: boolean;
-};
+}
 
-function Items({ items, isLastGroup }: ItemsProps) {
+function Items({ items, isLastGroup }: ItemsProps): React.ReactElement | null {
   return (
     <>
       {items.map((list) => (

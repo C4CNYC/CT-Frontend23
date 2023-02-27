@@ -1,27 +1,24 @@
 import { useState } from "react";
 // @mui
 import {
-  Box,
-  Card,
-  Stack,
   Button,
-  Divider,
-  MenuItem,
+  Card,
   CardProps,
+  Divider,
   IconButton,
+  MenuItem,
+  Stack,
   Typography,
 } from "@mui/material";
 // hooks
+import ConfirmDialog from "@components/confirm-dialog";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
 import TextMaxLine from "@components/text-max-line";
-import { useSnackbar } from "@components/snackbar";
-import ConfirmDialog from "@components/confirm-dialog";
 //
 // import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
-import SchoolIcon from "@mui/icons-material/School";
 import Image from "next/image";
-import { IUserProfileSchool } from "src/@types/user";
+import { IUserProfileSchool } from "src/@types/courses";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
@@ -37,40 +34,30 @@ export default function ContactsCard({
   onDelete,
   sx,
   ...other
-}: Props) {
-  const { enqueueSnackbar } = useSnackbar();
-
-  const [showCheckbox, setShowCheckbox] = useState(false);
+}: Props): React.ReactElement | null {
+  const [showCheckbox] = useState(false);
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleShowCheckbox = () => {
-    setShowCheckbox(true);
-  };
-
-  const handleHideCheckbox = () => {
-    setShowCheckbox(false);
-  };
-
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  let contact = {
+  const contact = {
     name: "name",
     phone: "+1 000 000 000",
     email: "test@codetribe.com",

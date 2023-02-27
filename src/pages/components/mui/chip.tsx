@@ -1,7 +1,7 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Card, Container, CardHeader, CardContent } from "@mui/material";
+import { Box, Card, CardContent, CardHeader, Container } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -19,7 +19,7 @@ MUIChipPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIChipPage() {
+export default function MUIChipPage(): React.ReactElement {
   return (
     <>
       <Head>

@@ -1,31 +1,28 @@
-import * as React from "react";
+import FormProvider, { RHFTextField } from "@components/hook-form";
+import { Box, Button, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { Box, Button, Select, Stack } from "@mui/material";
+import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useUdpateAssignmentMutation } from "src/redux/services/manager";
-import FormProvider, {
-  RHFSelect,
-  RHFTextField,
-} from "@components/hook-form";
 
-type AssignmentStepProps = {
+interface AssignmentStepProps {
   next: () => void;
   back: () => void;
   school_id: string;
   assignmentId: string;
-};
+}
 
-type FormValuesProps = {
+interface FormValuesProps {
   name: string;
   description: string;
-};
+}
 
 export default function AssignmentContent({
   next,
   back,
   school_id,
   assignmentId,
-}: AssignmentStepProps) {
+}: AssignmentStepProps): React.ReactElement | null {
   const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
 
   const defaultValues = {
@@ -39,7 +36,7 @@ export default function AssignmentContent({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any): Promise<void> => {
     try {
       updateAssignment({
         school_id,

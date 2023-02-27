@@ -49,9 +49,9 @@ const StyledSearchbar = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledPopper = styled((props: PopperProps) => <Popper {...props} />)(
+const StyledPopper = styled((props: PopperProps): React.ReactElement => <Popper {...props} />)(
   ({ theme }) => ({
-    left: `8px !important`,
+    left: "8px !important",
     top: `${APPBAR_MOBILE + 8}px !important`,
     width: "calc(100% - 16px) !important",
     transform: "none !important",
@@ -76,7 +76,7 @@ const StyledPopper = styled((props: PopperProps) => <Popper {...props} />)(
         padding: theme.spacing(0.5, 2),
         margin: 0,
         display: "block",
-        border: `dashed 1px transparent`,
+        border: "dashed 1px transparent",
         borderBottomColor: theme.palette.divider,
         "&:last-of-type": {
           borderBottomColor: "transparent",
@@ -126,18 +126,17 @@ function Searchbar() {
     if (open) {
       handleClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const handleClick = (path: string) => {
+  const handleClick = (path: string): void => {
     if (path.includes("http")) {
       window.open(path);
     } else {
@@ -146,7 +145,7 @@ function Searchbar() {
     handleClose();
   };
 
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === "Enter") {
       handleClick(searchQuery);
     }
@@ -170,7 +169,7 @@ function Searchbar() {
               disableClearable
               popupIcon={null}
               PopperComponent={StyledPopper}
-              onInputChange={(event, value) => setSearchQuery(value)}
+              onInputChange={(event, value) => { setSearchQuery(value); }}
               noOptionsText={
                 <SearchNotFound query={searchQuery} sx={{ py: 10 }} />
               }
@@ -209,7 +208,7 @@ function Searchbar() {
                   <Box
                     component="li"
                     {...props}
-                    onClick={() => handleClick(path)}
+                    onClick={() => { handleClick(path); }}
                   >
                     <div>
                       {partsTitle.map((part, index) => (
@@ -260,10 +259,10 @@ export default memo(Searchbar);
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   path: string[];
   currItem: NavListProps;
-};
+}
 
 function splitPath(array: NavListProps[], key: string) {
   let stack = array.map((item) => ({
@@ -292,9 +291,9 @@ function splitPath(array: NavListProps[], key: string) {
 
 // ----------------------------------------------------------------------
 
-function handleLoop(array: any, subheader?: string) {
+function handleLoop(array: any, subheader?: string): string[] {
   return array?.map((list: any) => ({
-    subheader: subheader || "",
+    subheader: subheader ?? "",
     ...list,
     ...(list.children && {
       children: handleLoop(list.children, subheader),

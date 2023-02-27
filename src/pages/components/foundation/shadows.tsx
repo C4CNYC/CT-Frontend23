@@ -1,15 +1,15 @@
 // next
 import Head from "next/head";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
-  Stack,
   Box,
-  Paper,
   Container,
-  Typography,
+  Paper,
   PaperProps,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -37,7 +37,7 @@ FoundationShadowsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function FoundationShadowsPage() {
+export default function FoundationShadowsPage(): React.ReactElement {
   const theme = useTheme();
 
   const systemShadows = theme.shadows.slice(1, theme.shadows.length);
@@ -134,7 +134,7 @@ export default function FoundationShadowsPage() {
 
 // ----------------------------------------------------------------------
 
-function ShadowCard({ sx, title }: PaperProps) {
+function ShadowCard({ sx, title }: PaperProps): React.ReactElement | null {
   return (
     <Paper
       sx={{

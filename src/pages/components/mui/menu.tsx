@@ -4,22 +4,22 @@ import Head from "next/head";
 // @mui
 import {
   Box,
-  List,
-  Menu,
   Button,
-  MenuItem,
   Container,
   IconButton,
-  ListItemText,
+  List,
   ListItemButton,
+  ListItemText,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -63,7 +63,7 @@ MUIMenuPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIMenuPage() {
+export default function MUIMenuPage(): React.ReactElement {
   const [selectedIndex, setSelectedIndex] = useState(1);
 
   const [isOpen, setOpen] = useState<null | HTMLElement>(null);
@@ -74,31 +74,31 @@ export default function MUIMenuPage() {
     null
   );
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setOpenMaxHeight(event.currentTarget);
   };
 
-  const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClickListItem = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenList(event.currentTarget);
   };
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLElement>,
     index: number
-  ) => {
+  ): void => {
     setSelectedIndex(index);
     setOpenList(null);
   };
 
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setOpen(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(null);
   };
 
-  const handleMaxHeightClose = () => {
+  const handleMaxHeightClose = (): void => {
     setOpenMaxHeight(null);
   };
 
@@ -186,7 +186,9 @@ export default function MUIMenuPage() {
                   key={option}
                   disabled={index === 0}
                   selected={index === selectedIndex}
-                  onClick={(event) => handleMenuItemClick(event, index)}
+                  onClick={(event) => {
+                    handleMenuItemClick(event, index);
+                  }}
                 >
                   {option}
                 </MenuItem>

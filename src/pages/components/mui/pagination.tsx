@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import { Box, Container, Pagination, TablePagination } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Box, Container, Pagination, TablePagination } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -43,25 +43,27 @@ MUIPaginationPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIPaginationPage() {
+export default function MUIPaginationPage(): React.ReactElement | null {
   const [page, setPage] = useState(2);
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
-  ) => {
+  ): void => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };

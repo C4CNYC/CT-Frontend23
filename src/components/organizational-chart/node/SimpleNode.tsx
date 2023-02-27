@@ -1,17 +1,20 @@
 // @mui
+import { Card, SxProps, Typography } from "@mui/material";
 import { alpha, Theme } from "@mui/material/styles";
-import { SxProps, Typography, Card } from "@mui/material";
 //
 import { ItemProps } from "../types";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   node: ItemProps;
   sx?: SxProps<Theme>;
-};
+}
 
-export default function SimpleNode({ node, sx }: Props) {
+export default function SimpleNode({
+  node,
+  sx,
+}: Props): React.ReactElement | null {
   return (
     <Card
       sx={{

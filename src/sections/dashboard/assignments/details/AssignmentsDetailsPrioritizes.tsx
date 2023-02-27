@@ -1,6 +1,6 @@
-import { alpha } from "@mui/material/styles";
-import { Box, Stack, Radio, RadioGroup, FormControlLabel } from "@mui/material";
 import Iconify from "@components/iconify";
+import { Box, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
 
 // ----------------------------------------------------------------------
@@ -11,20 +11,22 @@ const PRIORITIZES_OPTIONS = [
   { value: AssignmentComplexity.High, label: "High", color: "error" },
 ] as const;
 
-type Props = {
+interface Props {
   prioritize: string;
   onChangePrioritize: (value: string) => void;
-};
+}
 
 export default function AssignmentsDetailsPrioritizes({
   prioritize,
   onChangePrioritize,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <RadioGroup
       row
       value={prioritize}
-      onChange={(e) => onChangePrioritize(e.target.value)}
+      onChange={(e) => {
+        onChangePrioritize(e.target.value);
+      }}
     >
       {PRIORITIZES_OPTIONS.map((option) => {
         const selected = option.value === prioritize;
@@ -58,9 +60,11 @@ export default function AssignmentsDetailsPrioritizes({
                 justifyContent="center"
                 sx={{ width: 16, height: 16, mr: 0.5 }}
               >
-                {selected ? (
+                {selected
+? (
                   <Iconify icon="eva:checkmark-fill" width={16} />
-                ) : (
+                )
+: (
                   <Box
                     sx={{
                       width: 8,

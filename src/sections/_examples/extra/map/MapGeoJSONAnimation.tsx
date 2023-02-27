@@ -1,13 +1,13 @@
-import { useState, useEffect, memo } from "react";
+import { memo, useEffect, useState } from "react";
 import Map, { Layer, LayerProps, Source } from "react-map-gl";
 // @mui
 import { useTheme } from "@mui/material/styles";
 // components
-import { MapControl, MapBoxProps } from "@components/map";
+import { MapBoxProps, MapControl } from "@components/map";
 
 // ----------------------------------------------------------------------
 
-function MapGeoJSONAnimation({ ...other }: MapBoxProps) {
+function MapGeoJSONAnimation({ ...other }: MapBoxProps): React.ReactElement {
   const theme = useTheme();
 
   const pointLayer: LayerProps = {
@@ -28,17 +28,18 @@ function MapGeoJSONAnimation({ ...other }: MapBoxProps) {
   >(null);
 
   useEffect(() => {
-    const animation = window.requestAnimationFrame(() =>
-      setPointData(
+    const animation = window.requestAnimationFrame(() => {
+ setPointData(
         pointOnCircle({
           center: [-100, 0],
           angle: Date.now() / 1000,
           radius: 20,
         })
-      )
+      );
+}
     );
 
-    return () => window.cancelAnimationFrame(animation);
+    return () => { window.cancelAnimationFrame(animation); };
   });
 
   return (

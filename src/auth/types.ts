@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-export type ActionMapType<M extends { [index: string]: any }> = {
+export type ActionMapType<M extends Record<string, any>> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
         type: Key;
@@ -13,15 +13,15 @@ export type ActionMapType<M extends { [index: string]: any }> = {
 
 export type AuthUserType = null | Record<string, any>;
 
-export type AuthStateType = {
+export interface AuthStateType {
   isAuthenticated: boolean;
   isInitialized: boolean;
   user: AuthUserType;
-};
+}
 
 // ----------------------------------------------------------------------
 
-export type JWTContextType = {
+export interface JWTContextType {
   method: string;
   isAuthenticated: boolean;
   isInitialized: boolean;
@@ -39,9 +39,9 @@ export type JWTContextType = {
   loginWithGoogle?: () => void;
   loginWithGithub?: () => void;
   loginWithTwitter?: () => void;
-};
+}
 
-export type FirebaseContextType = {
+export interface FirebaseContextType {
   method: string;
   isAuthenticated: boolean;
   isInitialized: boolean;
@@ -57,9 +57,9 @@ export type FirebaseContextType = {
   loginWithGoogle?: () => void;
   loginWithGithub?: () => void;
   loginWithTwitter?: () => void;
-};
+}
 
-export type AWSCognitoContextType = {
+export interface AWSCognitoContextType {
   method: string;
   isAuthenticated: boolean;
   isInitialized: boolean;
@@ -75,9 +75,9 @@ export type AWSCognitoContextType = {
   loginWithGoogle?: () => void;
   loginWithGithub?: () => void;
   loginWithTwitter?: () => void;
-};
+}
 
-export type Auth0ContextType = {
+export interface Auth0ContextType {
   method: string;
   isAuthenticated: boolean;
   isInitialized: boolean;
@@ -96,4 +96,4 @@ export type Auth0ContextType = {
   loginWithGoogle?: () => void;
   loginWithGithub?: () => void;
   loginWithTwitter?: () => void;
-};
+}

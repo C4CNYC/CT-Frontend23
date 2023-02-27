@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
@@ -10,9 +10,9 @@ import MainLayout from "../../../layouts/main";
 // components
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import ProgressLinear from "@sections/_examples/mui/progress/ProgressLinear";
-import ProgressCircular from "@sections/_examples/mui/progress/ProgressCircular";
 import { Block } from "@sections/_examples/Block";
+import ProgressCircular from "@sections/_examples/mui/progress/ProgressCircular";
+import ProgressLinear from "@sections/_examples/mui/progress/ProgressLinear";
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ MUIProgressPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIProgressPage() {
+export default function MUIProgressPage(): React.ReactElement {
   const [progress, setProgress] = useState(0);
 
   const [buffer, setBuffer] = useState(10);

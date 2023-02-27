@@ -12,7 +12,7 @@ export default function FileFilterButton({
   children,
   isSelected,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Button
       variant="soft"

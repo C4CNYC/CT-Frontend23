@@ -2,22 +2,22 @@ import { useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import {
-  Box,
-  Stack,
-  Slider,
-  Container,
-  Typography,
-  alpha,
-} from "@mui/material";
 import { Masonry } from "@mui/lab";
+import {
+  alpha,
+  Box,
+  Container,
+  Slider,
+  Stack,
+  Typography,
+} from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -48,19 +48,19 @@ const style = {
 
 // ----------------------------------------------------------------------
 
-function valuePrice(value: number) {
+function valuePrice(value: number): string {
   return value > 0 ? `$${value}0` : `${value}`;
 }
 
-function valueLabelFormatPrice(value: number) {
+function valueLabelFormatPrice(value: number): string | number {
   return value > 0 ? `$${value}` : value;
 }
 
-function valuetext(value: number) {
+function valuetext(value: number): string {
   return `$${value}°C`;
 }
 
-function valueLabelFormat(value: number) {
+function valueLabelFormat(value: number): number {
   return marks.findIndex((mark) => mark.value === value) + 1;
 }
 
@@ -72,16 +72,19 @@ MUISliderPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUISliderPage() {
+export default function MUISliderPage(): React.ReactElement {
   const [value, setValue] = useState<number>(30);
 
   const [price, setPrice] = useState<number[]>([20, 37]);
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (event: Event, newValue: number | number[]): void => {
     setValue(newValue as number);
   };
 
-  const handleChangePrice = (event: Event, newValue: number | number[]) => {
+  const handleChangePrice = (
+    event: Event,
+    newValue: number | number[]
+  ): void => {
     setPrice(newValue as number[]);
   };
 

@@ -1,29 +1,29 @@
 // @mui
 import {
+  Avatar,
   Box,
   Card,
-  Table,
+  CardHeader,
+  CardProps,
   Stack,
-  Avatar,
-  TableRow,
+  Table,
   TableBody,
   TableCell,
-  CardProps,
-  CardHeader,
-  Typography,
   TableContainer,
+  TableRow,
+  Typography,
 } from "@mui/material";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 // components
-import Label from "@components/label";
 import Image from "@components/image";
+import Label from "@components/label";
 import Scrollbar from "@components/scrollbar";
 import { TableHeadCustom } from "@components/table";
 
 // ----------------------------------------------------------------------
 
-type RowProps = {
+interface RowProps {
   id: string;
   name: string;
   email: string;
@@ -32,7 +32,7 @@ type RowProps = {
   flag: string;
   total: number;
   rank: string;
-};
+}
 
 interface Props extends CardProps {
   title?: string;
@@ -47,7 +47,7 @@ export default function EcommerceBestSalesman({
   tableData,
   tableLabels,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
@@ -71,11 +71,13 @@ export default function EcommerceBestSalesman({
 
 // ----------------------------------------------------------------------
 
-type EcommerceBestSalesmanRowProps = {
+interface EcommerceBestSalesmanRowProps {
   row: RowProps;
-};
+}
 
-function EcommerceBestSalesmanRow({ row }: EcommerceBestSalesmanRowProps) {
+function EcommerceBestSalesmanRow({
+  row,
+}: EcommerceBestSalesmanRowProps): React.ReactElement | null {
   return (
     <TableRow>
       <TableCell>

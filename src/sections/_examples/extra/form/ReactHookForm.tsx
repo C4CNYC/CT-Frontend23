@@ -1,38 +1,38 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 // @mui
+import { LoadingButton } from "@mui/lab";
 import {
-  Grid,
-  Stack,
-  Divider,
-  MenuItem,
   Backdrop,
+  CircularProgress,
+  Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  StackProps,
   TextField,
   Typography,
-  IconButton,
-  StackProps,
-  InputAdornment,
-  CircularProgress,
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 import { DatePicker } from "@mui/x-date-pickers";
 // components
-import Iconify from "@components/iconify";
 import FormProvider, {
-  RHFEditor,
-  RHFSelect,
-  RHFUpload,
-  RHFSwitch,
-  RHFSlider,
-  RHFCheckbox,
-  RHFTextField,
-  RHFRadioGroup,
-  RHFMultiSelect,
   RHFAutocomplete,
+  RHFCheckbox,
+  RHFEditor,
   RHFMultiCheckbox,
+  RHFMultiSelect,
+  RHFRadioGroup,
+  RHFSelect,
+  RHFSlider,
+  RHFSwitch,
+  RHFTextField,
+  RHFUpload,
 } from "@components/hook-form";
+import Iconify from "@components/iconify";
 //
 import { FormSchema } from "./schema";
 import ValuesPreview from "./ValuesPreview";
@@ -50,12 +50,12 @@ const OPTIONS = [
   { value: "option 8", label: "Option 8" },
 ];
 
-type OptionType = {
+interface OptionType {
   value: string;
   label: string;
-};
+}
 
-type FormValuesProps = {
+interface FormValuesProps {
   age: number;
   email: string;
   editor: string;
@@ -75,7 +75,7 @@ type FormValuesProps = {
   confirmPassword: string;
   multiCheckbox: string[];
   singleUpload: File | null;
-};
+}
 
 export const defaultValues = {
   age: 0,
@@ -106,11 +106,13 @@ export const defaultValues = {
   sliderRange: [15, 80],
 };
 
-type Props = {
+interface Props {
   debug: boolean;
-};
+}
 
-export default function ReactHookForm({ debug }: Props) {
+export default function ReactHookForm({
+  debug,
+}: Props): React.ReactElement | null {
   const [showPassword, setShowPassword] = useState(false);
 
   const methods = useForm<FormValuesProps>({
@@ -129,7 +131,7 @@ export default function ReactHookForm({ debug }: Props) {
 
   const values = watch();
 
-  const onSubmit = async (data: FormValuesProps) => {
+  const onSubmit = async (data: FormValuesProps): unknown => {
     await new Promise((resolve) => setTimeout(resolve, 3000));
     console.log("DATA", data);
     reset();
@@ -152,7 +154,7 @@ export default function ReactHookForm({ debug }: Props) {
 
   const handleDropMultiFile = useCallback(
     (acceptedFiles: File[]) => {
-      const files = values.multiUpload || [];
+      const files = values.multiUpload ?? [];
 
       const newFiles = acceptedFiles.map((file) =>
         Object.assign(file, {
@@ -191,11 +193,11 @@ export default function ReactHookForm({ debug }: Props) {
                 <RHFTextField
                   name="age"
                   label="Age"
-                  onChange={(event) =>
+                  onChange={(event) => {
                     setValue("age", Number(event.target.value), {
                       shouldValidate: true,
-                    })
-                  }
+                    });
+                  }}
                   InputProps={{
                     type: "number",
                   }}
@@ -254,7 +256,9 @@ export default function ReactHookForm({ debug }: Props) {
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() => {
+                              setShowPassword(!showPassword);
+                            }}
                             edge="end"
                           >
                             <Iconify
@@ -280,7 +284,9 @@ export default function ReactHookForm({ debug }: Props) {
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() => {
+                              setShowPassword(!showPassword);
+                            }}
                             edge="end"
                           >
                             <Iconify
@@ -347,9 +353,9 @@ export default function ReactHookForm({ debug }: Props) {
                   name="singleUpload"
                   maxSize={3145728}
                   onDrop={handleDropSingleFile}
-                  onDelete={() =>
-                    setValue("singleUpload", null, { shouldValidate: true })
-                  }
+                  onDelete={() => {
+                    setValue("singleUpload", null, { shouldValidate: true });
+                  }}
                 />
               </Block>
 
@@ -360,20 +366,21 @@ export default function ReactHookForm({ debug }: Props) {
                   name="multiUpload"
                   maxSize={3145728}
                   onDrop={handleDropMultiFile}
-                  onRemove={(inputFile) =>
+                  onRemove={(inputFile) => {
                     setValue(
                       "multiUpload",
-                      values.multiUpload &&
-                        values.multiUpload?.filter(
+                      values.multiUpload?.filter(
                           (file) => file !== inputFile
                         ),
                       { shouldValidate: true }
-                    )
-                  }
-                  onRemoveAll={() =>
-                    setValue("multiUpload", [], { shouldValidate: true })
-                  }
-                  onUpload={() => console.log("ON UPLOAD")}
+                    );
+                  }}
+                  onRemoveAll={() => {
+                    setValue("multiUpload", [], { shouldValidate: true });
+                  }}
+                  onUpload={() => {
+                    console.log("ON UPLOAD");
+                  }}
                 />
               </Block>
 
@@ -440,7 +447,11 @@ interface BlockProps extends StackProps {
   children: React.ReactNode;
 }
 
-function Block({ label = "RHFTextField", sx, children }: BlockProps) {
+function Block({
+  label = "RHFTextField",
+  sx,
+  children,
+}: BlockProps): React.ReactElement | null {
   return (
     <Stack spacing={1} sx={{ width: 1, ...sx }}>
       <Typography

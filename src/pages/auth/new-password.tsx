@@ -1,12 +1,12 @@
 // next
+import { SentIcon } from "@assets/icons";
+import Iconify from "@components/iconify";
+import { Link, Typography } from "@mui/material";
+import { PATH_AUTH } from "@routes/paths";
+import AuthNewPasswordForm from "@sections/auth/AuthNewPasswordForm";
 import Head from "next/head";
 import NextLink from "next/link";
-import { Link, Typography } from "@mui/material";
 import CompactLayout from "../../layouts/compact";
-import { PATH_AUTH } from "@routes/paths";
-import Iconify from "@components/iconify";
-import AuthNewPasswordForm from "@sections/auth/AuthNewPasswordForm";
-import { SentIcon } from "@assets/icons";
 
 // ----------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ NewPasswordPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function NewPasswordPage() {
+export default function NewPasswordPage(): React.ReactElement {
   return (
     <>
       <Head>

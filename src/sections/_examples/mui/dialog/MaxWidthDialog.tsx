@@ -4,38 +4,38 @@ import {
   Box,
   Button,
   Dialog,
-  Select,
-  Switch,
-  MenuItem,
-  InputLabel,
-  DialogTitle,
-  FormControl,
-  DialogProps,
   DialogActions,
   DialogContent,
-  FormControlLabel,
-  SelectChangeEvent,
   DialogContentText,
+  DialogProps,
+  DialogTitle,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Switch,
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function MaxWidthDialog() {
+export default function MaxWidthDialog(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const [fullWidth, setFullWidth] = useState(true);
 
   const [maxWidth, setMaxWidth] = useState<DialogProps["maxWidth"]>("sm");
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 
-  const handleMaxWidthChange = (event: SelectChangeEvent<typeof maxWidth>) => {
+  const handleMaxWidthChange = (event: SelectChangeEvent<typeof maxWidth>): void => {
     setMaxWidth(
       // @ts-expect-error autofill of arbitrary value is not handled.
       event.target.value

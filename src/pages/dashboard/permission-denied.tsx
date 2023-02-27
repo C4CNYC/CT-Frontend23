@@ -1,18 +1,18 @@
-import { useState } from "react";
-import Head from "next/head";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import { useSettingsContext } from "@components/settings";
+import DashboardLayout from "@layouts/dashboard";
 import {
   Box,
   Card,
-  Container,
-  Typography,
   CardHeader,
+  Container,
   ToggleButton,
   ToggleButtonGroup,
+  Typography,
 } from "@mui/material";
-import DashboardLayout from "@layouts/dashboard";
 import { PATH_DASHBOARD } from "@routes/paths";
-import { useSettingsContext } from "@components/settings";
-import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Head from "next/head";
+import { useState } from "react";
 import RoleBasedGuard from "../../auth/RoleBasedGuard";
 
 // ----------------------------------------------------------------------
@@ -23,7 +23,7 @@ PermissionDeniedPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function PermissionDeniedPage() {
+export default function PermissionDeniedPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   const [role, setRole] = useState("admin");

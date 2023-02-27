@@ -2,20 +2,20 @@ import { useState } from "react";
 // next
 import Head from "next/head";
 // @mui
-import { useTheme, styled } from "@mui/material/styles";
 import {
   Box,
+  Container,
+  FormControlLabel,
   Grid,
+  GridSize,
+  GridSpacing,
   Paper,
   Radio,
-  Stack,
-  GridSize,
-  Container,
-  Typography,
   RadioGroup,
-  GridSpacing,
-  FormControlLabel,
+  Stack,
+  Typography,
 } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -45,18 +45,22 @@ FoundationGridPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function FoundationGridPage() {
+export default function FoundationGridPage(): React.ReactElement {
   const theme = useTheme();
 
   const [spacing, setSpacing] = useState<GridSpacing>(2);
 
   const [column, setColumn] = useState<GridSize>(3);
 
-  const handleChangeSpacing = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeSpacing = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setSpacing(Number((event.target as HTMLInputElement).value) as GridSpacing);
   };
 
-  const handleChangeColumn = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeColumn = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setColumn(Number((event.target as HTMLInputElement).value) as GridSize);
   };
 

@@ -9,7 +9,7 @@ import Chart, { useChart } from "@components/chart";
 
 const series = [44, 55];
 
-export default function ChartRadialBar() {
+export default function ChartRadialBar(): React.ReactElement {
   const theme = useTheme();
 
   const chartOptions = useChart({

@@ -1,7 +1,7 @@
 import { useState } from "react";
 // @mui
-import { MenuItem, TextField, IconButton, InputAdornment } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { IconButton, InputAdornment, MenuItem, TextField } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 //
@@ -30,11 +30,13 @@ interface State {
   showPassword: boolean;
 }
 
-type Props = {
+interface Props {
   variant?: "filled" | "outlined" | "standard";
-};
+}
 
-export default function Textfields({ variant }: Props) {
+export default function Textfields({
+  variant,
+}: Props): React.ReactElement | null {
   const [currency, setCurrency] = useState("EUR");
 
   const [values, setValues] = useState<State>({
@@ -45,7 +47,7 @@ export default function Textfields({ variant }: Props) {
     showPassword: false,
   });
 
-  const handleChangeCurrency = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeCurrency = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrency(event.target.value);
   };
 
@@ -54,7 +56,7 @@ export default function Textfields({ variant }: Props) {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const handleClickShowPassword = () => {
+  const handleClickShowPassword = (): void => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
 
@@ -165,9 +167,11 @@ export default function Textfields({ variant }: Props) {
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {values.showPassword ? (
+                  {values.showPassword
+? (
                     <Iconify icon="eva:eye-fill" width={24} />
-                  ) : (
+                  )
+: (
                     <Iconify icon="eva:eye-off-fill" width={24} />
                   )}
                 </IconButton>

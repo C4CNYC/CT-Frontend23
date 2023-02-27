@@ -1,27 +1,27 @@
 import {
-  NavigationControl,
   FullscreenControl,
-  ScaleControl,
   GeolocateControl,
+  NavigationControl,
+  ScaleControl,
 } from "react-map-gl";
 //
 import { StyledMapControls } from "./styles";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   hideScaleControl?: boolean;
   hideGeolocateControl?: boolean;
   hideFullscreenControl?: boolean;
   hideNavigationnControl?: boolean;
-};
+}
 
 export default function MapControl({
   hideScaleControl,
   hideGeolocateControl,
   hideFullscreenControl,
   hideNavigationnControl,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <>
       <StyledMapControls />

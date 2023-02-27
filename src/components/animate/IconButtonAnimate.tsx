@@ -5,6 +5,7 @@ import { Box, IconButton, IconButtonProps } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
   ({ children, size = "medium", ...other }, ref) => (
     <AnimateWrap size={size}>
@@ -19,10 +20,10 @@ export default IconButtonAnimate;
 
 // ----------------------------------------------------------------------
 
-type AnimateWrapProp = {
+interface AnimateWrapProp {
   children: React.ReactNode;
   size: "small" | "medium" | "large";
-};
+}
 
 const varSmall = {
   hover: { scale: 1.1 },
@@ -39,7 +40,7 @@ const varLarge = {
   tap: { scale: 0.99 },
 };
 
-function AnimateWrap({ size, children }: AnimateWrapProp) {
+function AnimateWrap({ size, children }: AnimateWrapProp): React.ReactElement {
   const isSmall = size === "small";
   const isLarge = size === "large";
 

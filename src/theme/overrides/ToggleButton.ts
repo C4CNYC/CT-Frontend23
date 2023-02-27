@@ -1,5 +1,5 @@
-import { Theme, alpha } from "@mui/material/styles";
-import { ToggleButtonProps } from "@mui/material";
+import { type ToggleButtonProps } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -12,8 +12,8 @@ const COLORS = [
   "error",
 ] as const;
 
-export default function ToggleButton(theme: Theme) {
-  const rootStyle = (ownerState: ToggleButtonProps) => {
+export default function ToggleButton(theme: Theme): unknown {
+  const rootStyle = (ownerState: ToggleButtonProps): unknown => {
     const standardColor = ownerState.color === "standard";
 
     const defaultStyle = {

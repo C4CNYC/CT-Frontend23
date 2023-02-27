@@ -1,20 +1,22 @@
 import { memo } from "react";
 // @mui
-import { Radio, Typography, RadioGroup, FormControlLabel } from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 // components
 import { StyledControlPanel } from "@components/map";
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  themes: {
-    [key: string]: string;
-  };
+interface Props {
+  themes: Record<string, string>;
   selectTheme: string;
   onChangeTheme: (theme: string) => void;
-};
+}
 
-function ControlPanel({ themes, selectTheme, onChangeTheme }: Props) {
+function ControlPanel({
+  themes,
+  selectTheme,
+  onChangeTheme,
+}: Props): React.ReactElement | null {
   return (
     <StyledControlPanel>
       <Typography
@@ -27,7 +29,9 @@ function ControlPanel({ themes, selectTheme, onChangeTheme }: Props) {
 
       <RadioGroup
         value={selectTheme}
-        onChange={(event, value) => onChangeTheme(value)}
+        onChange={(event, value) => {
+          onChangeTheme(value);
+        }}
       >
         {Object.keys(themes).map((item) => (
           <FormControlLabel

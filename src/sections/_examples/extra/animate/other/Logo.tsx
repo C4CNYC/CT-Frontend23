@@ -1,13 +1,13 @@
 import { m } from "framer-motion";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // components
 import { varPath } from "@components/animate";
 
 // ----------------------------------------------------------------------
 
-export default function Logo() {
+export default function Logo(): React.ReactElement {
   const theme = useTheme();
   const PRIMARY_LIGHT = theme.palette.primary.light;
   const PRIMARY_MAIN = theme.palette.primary.main;

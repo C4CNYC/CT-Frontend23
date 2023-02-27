@@ -1,13 +1,13 @@
-import "../../utils/highlight";
 import ReactMarkdown from "react-markdown";
+import "../../utils/highlight";
 // markdown plugins
+import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
 // next
 import NextLink from "next/link";
 // @mui
-import { Link, Typography, Divider } from "@mui/material";
+import { Divider, Link, Typography } from "@mui/material";
 //
 import Image from "../image";
 //
@@ -16,7 +16,10 @@ import { MarkdownProps } from "./types";
 
 // ----------------------------------------------------------------------
 
-export default function Markdown({ sx, ...other }: MarkdownProps) {
+export default function Markdown({
+  sx,
+  ...other
+}: MarkdownProps): React.ReactElement | null {
   return (
     <StyledMarkdown sx={sx}>
       <ReactMarkdown
@@ -54,9 +57,11 @@ const components = {
   a: ({ ...props }) => {
     const isHttp = props.href.includes("http");
 
-    return isHttp ? (
+    return isHttp
+? (
       <Link target="_blank" rel="noopener" {...props} />
-    ) : (
+    )
+: (
       <Link component={NextLink} href={props.href} {...props}>
         {props.children}
       </Link>

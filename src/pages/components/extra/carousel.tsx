@@ -1,15 +1,15 @@
 // next
 import Head from "next/head";
 // @mui
+import { Masonry } from "@mui/lab";
 import {
   Box,
-  Stack,
   Card,
-  Container,
-  CardHeader,
   CardContent,
+  CardHeader,
+  Container,
+  Stack,
 } from "@mui/material";
-import { Masonry } from "@mui/lab";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // _mock
@@ -20,13 +20,13 @@ import MainLayout from "../../../layouts/main";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
 import {
+  CarouselAnimation,
   CarouselBasic1,
   CarouselBasic2,
   CarouselBasic3,
   CarouselBasic4,
-  CarouselAnimation,
-  CarouselThumbnail,
   CarouselCenterMode,
+  CarouselThumbnail,
 } from "@sections/_examples/extra/carousel";
 
 // ----------------------------------------------------------------------
@@ -46,7 +46,7 @@ DemoCarouselsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoCarouselsPage() {
+export default function DemoCarouselsPage(): React.ReactElement {
   return (
     <>
       <Head>

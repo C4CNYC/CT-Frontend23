@@ -1,8 +1,8 @@
-import { Theme } from "@mui/material/styles";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Card(theme: Theme) {
+export default function Card(theme: Theme): unknown {
   return {
     MuiCard: {
       styleOverrides: {

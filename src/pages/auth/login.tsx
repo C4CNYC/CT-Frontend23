@@ -1,9 +1,8 @@
+import Login from "@sections/auth/Login";
 import Head from "next/head";
 import GuestGuard from "../../auth/GuestGuard";
-import Login from "@sections/auth/Login";
 
-
-export default function LoginPage() {
+export default function LoginPage(): React.ReactElement {
   return (
     <>
       <Head>
@@ -13,7 +12,6 @@ export default function LoginPage() {
       <GuestGuard>
         <Login />
       </GuestGuard>
-
     </>
   );
 }

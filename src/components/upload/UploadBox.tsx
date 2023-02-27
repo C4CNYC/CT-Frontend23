@@ -1,6 +1,6 @@
 import { useDropzone } from "react-dropzone";
 // @mui
-import { styled, alpha } from "@mui/material/styles";
+import { alpha, styled } from "@mui/material/styles";
 //
 import Iconify from "../iconify";
 //
@@ -35,7 +35,7 @@ export default function UploadBox({
   disabled,
   sx,
   ...other
-}: UploadProps) {
+}: UploadProps): React.ReactElement | null {
   const { getRootProps, getInputProps, isDragActive, isDragReject } =
     useDropzone({
       disabled,
@@ -65,7 +65,7 @@ export default function UploadBox({
     >
       <input {...getInputProps()} />
 
-      {placeholder || <Iconify icon="eva:cloud-upload-fill" width={28} />}
+      {placeholder ?? <Iconify icon="eva:cloud-upload-fill" width={28} />}
     </StyledDropZone>
   );
 }

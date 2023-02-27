@@ -1,5 +1,5 @@
-import { alpha, Theme } from "@mui/material/styles";
 import { FabProps } from "@mui/material";
+import { alpha, Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -22,10 +22,10 @@ declare module "@mui/material/Fab" {
   }
 }
 
-export default function Fab(theme: Theme) {
+export default function Fab(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
-  const rootStyle = (ownerState: FabProps) => {
+  const rootStyle = (ownerState: FabProps): unknown => {
     const defaultColor = ownerState.color === "default";
 
     const inheritColor = ownerState.color === "inherit";

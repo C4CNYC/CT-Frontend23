@@ -1,9 +1,11 @@
 // @mui
-import { Stack, Skeleton, Box, Paper, BoxProps } from "@mui/material";
+import { Box, BoxProps, Paper, Skeleton, Stack } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonKanbanColumn({ ...other }: BoxProps) {
+export default function SkeletonKanbanColumn({
+  ...other
+}: BoxProps): React.ReactElement {
   return (
     <Box gap={3} display="grid" gridTemplateColumns="repeat(4, 1fr)" {...other}>
       {[...Array(3)].map((_, index) => (

@@ -1,16 +1,16 @@
 import { useState } from "react";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
   Box,
-  Step,
-  Paper,
   Button,
-  Stepper,
-  StepLabel,
-  Typography,
+  Paper,
+  Step,
   StepContent,
+  StepLabel,
+  Stepper,
+  Typography,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -35,18 +35,18 @@ const steps = [
   },
 ];
 
-export default function VerticalLinearStepper() {
+export default function VerticalLinearStepper(): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setActiveStep(0);
   };
 
@@ -57,9 +57,11 @@ export default function VerticalLinearStepper() {
           <Step key={step.label}>
             <StepLabel
               optional={
-                index === 2 ? (
+                index === 2
+? (
                   <Typography variant="caption">Last step</Typography>
-                ) : null
+                )
+: null
               }
             >
               {step.label}

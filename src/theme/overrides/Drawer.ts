@@ -1,9 +1,9 @@
-import { alpha, Theme } from "@mui/material/styles";
-import { DrawerProps } from "@mui/material";
+import { type DrawerProps } from "@mui/material";
+import { alpha, type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function Drawer(theme: Theme) {
+export default function Drawer(theme: Theme): unknown {
   const isLight = theme.palette.mode === "light";
 
   return {

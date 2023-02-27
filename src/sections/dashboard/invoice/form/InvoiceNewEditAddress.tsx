@@ -2,7 +2,7 @@ import { useState } from "react";
 // form
 import { useFormContext } from "react-hook-form";
 // @mui
-import { Stack, Divider, Typography, Button } from "@mui/material";
+import { Button, Divider, Stack, Typography } from "@mui/material";
 // hooks
 import useResponsive from "../../../../hooks/useResponsive";
 // _mock
@@ -17,7 +17,7 @@ import InvoiceAddressListDialog from "./InvoiceAddressListDialog";
 
 // ----------------------------------------------------------------------
 
-export default function InvoiceNewEditAddress() {
+export default function InvoiceNewEditAddress(): React.ReactElement {
   const {
     watch,
     setValue,
@@ -34,19 +34,19 @@ export default function InvoiceNewEditAddress() {
 
   const [openTo, setOpenTo] = useState(false);
 
-  const handleOpenFrom = () => {
+  const handleOpenFrom = (): void => {
     setOpenFrom(true);
   };
 
-  const handleCloseFrom = () => {
+  const handleCloseFrom = (): void => {
     setOpenFrom(false);
   };
 
-  const handleOpenTo = () => {
+  const handleOpenTo = (): void => {
     setOpenTo(true);
   };
 
-  const handleCloseTo = () => {
+  const handleCloseTo = (): void => {
     setOpenTo(false);
   };
 
@@ -86,7 +86,9 @@ export default function InvoiceNewEditAddress() {
             open={openFrom}
             onClose={handleCloseFrom}
             selected={(selectedId: string) => invoiceFrom?.id === selectedId}
-            onSelect={(address) => setValue("invoiceFrom", address)}
+            onSelect={(address) => {
+              setValue("invoiceFrom", address);
+            }}
             addressOptions={_invoiceAddressFrom}
           />
         </Stack>
@@ -123,18 +125,22 @@ export default function InvoiceNewEditAddress() {
             open={openTo}
             onClose={handleCloseTo}
             selected={(selectedId: string) => invoiceTo?.id === selectedId}
-            onSelect={(address) => setValue("invoiceTo", address)}
+            onSelect={(address) => {
+              setValue("invoiceTo", address);
+            }}
             addressOptions={_invoiceAddressTo}
           />
         </Stack>
 
-        {invoiceTo ? (
+        {invoiceTo
+? (
           <AddressInfo
             name={invoiceTo.name}
             address={invoiceTo.address}
             phone={invoiceTo.phone}
           />
-        ) : (
+        )
+: (
           <Typography typography="caption" sx={{ color: "error.main" }}>
             {(errors.invoiceTo as any)?.message}
           </Typography>
@@ -146,13 +152,17 @@ export default function InvoiceNewEditAddress() {
 
 // ----------------------------------------------------------------------
 
-type AddressInfoProps = {
+interface AddressInfoProps {
   name: string;
   address: string;
   phone: string;
-};
+}
 
-function AddressInfo({ name, address, phone }: AddressInfoProps) {
+function AddressInfo({
+  name,
+  address,
+  phone,
+}: AddressInfoProps): React.ReactElement | null {
   return (
     <>
       <Typography variant="subtitle2">{name}</Typography>

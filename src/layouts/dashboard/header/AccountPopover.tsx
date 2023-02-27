@@ -2,21 +2,21 @@ import { useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
+import { Box, Divider, MenuItem, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Box, Divider, Typography, Stack, MenuItem } from "@mui/material";
 // routes
-import { PATH_DASHBOARD, PATH_AUTH } from "@routes/paths";
+import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
 // auth
 import { useAuthContext } from "../../../auth/useAuthContext";
 // components
-import { CustomAvatar } from "@components/custom-avatar";
-import { useSnackbar } from "@components/snackbar";
-import MenuPopover from "@components/menu-popover";
 import { IconButtonAnimate } from "@components/animate";
+import { CustomAvatar } from "@components/custom-avatar";
+import MenuPopover from "@components/menu-popover";
+import { useSnackbar } from "@components/snackbar";
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
 
   const { user, logout } = useAuthContext();
@@ -32,15 +32,15 @@ export default function AccountPopover() {
     },
   ];
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
-  const handleLogout = async () => {
+  const handleLogout = (): void => {
     try {
       logout();
       replace(PATH_AUTH.login);
@@ -51,7 +51,7 @@ export default function AccountPopover() {
     }
   };
 
-  const handleClickItem = (path: string) => {
+  const handleClickItem = (path: string): void => {
     handleClosePopover();
     push(path);
   };
@@ -76,7 +76,7 @@ export default function AccountPopover() {
         }}
       >
         <CustomAvatar
-          src={user?.photoURL}
+          src={user?.avatar}
           alt={user?.displayName}
           name={user?.displayName}
         />
@@ -103,7 +103,9 @@ export default function AccountPopover() {
           {OPTIONS.map((option) => (
             <MenuItem
               key={option.label}
-              onClick={() => handleClickItem(option.linkTo)}
+              onClick={() => {
+                handleClickItem(option.linkTo);
+              }}
             >
               {option.label}
             </MenuItem>

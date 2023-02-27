@@ -5,7 +5,14 @@ const defaultFilter: BaseSearchInterface = {
   page: 1,
   take: 5,
 };
-export const useFilters = <T>(filters: T) => {
+
+interface IUseFilter<T> {
+  filters: BaseSearchInterface & T;
+  resetFilters: () => void;
+  setFilter: (name: string, value: string | number) => void;
+}
+
+export const useFilters = <T>(filters: T): IUseFilter<T> => {
   const [filter, setFilter] = useState<BaseSearchInterface & T>({
     ...defaultFilter,
     ...filters,

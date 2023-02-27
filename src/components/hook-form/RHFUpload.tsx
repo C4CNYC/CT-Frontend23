@@ -1,9 +1,9 @@
 // form
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import { FormHelperText } from "@mui/material";
 //
-import { UploadAvatar, Upload, UploadBox, UploadProps } from "../upload";
+import { Upload, UploadAvatar, UploadBox, UploadProps } from "../upload";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +14,10 @@ interface Props extends Omit<UploadProps, "file"> {
 
 // ----------------------------------------------------------------------
 
-export function RHFUploadAvatar({ name, ...other }: Props) {
+export function RHFUploadAvatar({
+  name,
+  ...other
+}: Props): React.ReactElement | null {
   const { control } = useFormContext();
 
   return (
@@ -45,7 +48,10 @@ export function RHFUploadAvatar({ name, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-export function RHFUploadBox({ name, ...other }: Props) {
+export function RHFUploadBox({
+  name,
+  ...other
+}: Props): React.ReactElement | null {
   const { control } = useFormContext();
 
   return (
@@ -61,7 +67,12 @@ export function RHFUploadBox({ name, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-export function RHFUpload({ name, multiple, helperText, ...other }: Props) {
+export function RHFUpload({
+  name,
+  multiple,
+  helperText,
+  ...other
+}: Props): React.ReactElement | null {
   const { control } = useFormContext();
 
   return (
@@ -69,7 +80,8 @@ export function RHFUpload({ name, multiple, helperText, ...other }: Props) {
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) =>
-        multiple ? (
+        multiple
+? (
           <Upload
             multiple
             accept={{ "image/*": [] }}
@@ -84,7 +96,8 @@ export function RHFUpload({ name, multiple, helperText, ...other }: Props) {
             }
             {...other}
           />
-        ) : (
+        )
+: (
           <Upload
             accept={{ "image/*": [] }}
             file={field.value}

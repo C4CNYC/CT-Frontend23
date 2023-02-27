@@ -1,21 +1,21 @@
 // form
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 // @mui
 import {
-  Radio,
-  FormLabel,
-  RadioGroup,
   FormControl,
-  FormHelperText,
-  RadioGroupProps,
   FormControlLabel,
+  FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  RadioGroupProps,
 } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
 type Props = RadioGroupProps & {
   name: string;
-  options: { label: string; value: any }[];
+  options: Array<{ label: string; value: any }>;
   label?: string;
   spacing?: number;
   helperText?: React.ReactNode;
@@ -29,7 +29,7 @@ export default function RHFRadioGroup({
   spacing,
   helperText,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const { control } = useFormContext();
 
   const labelledby = label ? `${name}-${label}` : "";
@@ -64,12 +64,12 @@ export default function RHFRadioGroup({
                 label={option.label}
                 sx={{
                   "&:not(:last-of-type)": {
-                    mb: spacing || 0,
+                    mb: spacing ?? 0,
                   },
                   ...(row && {
                     mr: 0,
                     "&:not(:last-of-type)": {
-                      mr: spacing || 2,
+                      mr: spacing ?? 2,
                     },
                   }),
                 }}
@@ -77,7 +77,7 @@ export default function RHFRadioGroup({
             ))}
           </RadioGroup>
 
-          {(!!error || helperText) && (
+          {(!!error ?? helperText) && (
             <FormHelperText error={!!error} sx={{ mx: 0 }}>
               {error ? error?.message : helperText}
             </FormHelperText>

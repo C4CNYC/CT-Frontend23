@@ -1,8 +1,8 @@
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 // next
 import NextLink from "next/link";
 // @mui
-import { Tooltip, Link, ListItemText } from "@mui/material";
+import { Link, ListItemText, Tooltip } from "@mui/material";
 // locales
 import { useLocales } from "../../../locales";
 // auth
@@ -10,10 +10,11 @@ import RoleBasedGuard from "../../../auth/RoleBasedGuard";
 //
 import Iconify from "../../iconify";
 import { NavItemProps } from "../types";
-import { StyledItem, StyledIcon } from "./styles";
+import { StyledIcon, StyledItem } from "./styles";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   ({ item, depth, open, active, isExternalLink, ...other }, ref) => {
     const { translate } = useLocales();
@@ -82,14 +83,15 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
       </StyledItem>
     );
 
-    const renderItem = () => {
+    const renderItem = (): React.ReactElement => {
       // ExternalLink
-      if (isExternalLink)
-        return (
+      if (isExternalLink) {
+return (
           <Link href={path} target="_blank" rel="noopener" underline="none">
             {renderContent}
           </Link>
         );
+}
 
       // Default
       return (

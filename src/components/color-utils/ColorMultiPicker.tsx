@@ -12,7 +12,7 @@ export default function ColorMultiPicker({
   onChangeColor,
   sx,
   ...other
-}: ColorMultiPickerProps) {
+}: ColorMultiPickerProps): React.ReactElement | null {
   return (
     <Box sx={sx}>
       {colors.map((color) => {
@@ -25,7 +25,9 @@ export default function ColorMultiPicker({
             value={color}
             color="default"
             checked={selected.includes(color)}
-            onChange={() => onChangeColor(color)}
+            onChange={() => {
+              onChangeColor(color);
+            }}
             icon={<Icon whiteColor={whiteColor} />}
             checkedIcon={<Icon checked whiteColor={whiteColor} />}
             sx={{

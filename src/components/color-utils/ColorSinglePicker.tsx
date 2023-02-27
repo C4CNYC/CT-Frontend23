@@ -7,6 +7,7 @@ import { ColorSinglePickerProps } from "./types";
 
 // ----------------------------------------------------------------------
 
+// eslint-disable-next-line react/display-name
 const ColorSinglePicker = forwardRef<HTMLDivElement, ColorSinglePickerProps>(
   ({ colors, ...other }, ref) => (
     <RadioGroup row ref={ref} {...other}>

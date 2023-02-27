@@ -4,21 +4,21 @@ import { useRouter } from "next/router";
 // @mui
 import {
   Box,
+  Container,
+  Divider,
   Grid,
+  IconButton,
   Link,
   Stack,
-  Divider,
-  Container,
   Typography,
-  IconButton,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "../../routes/paths";
 // _mock
 import { _socials } from "../../_mock/arrays";
 // components
-import Logo from "../../components/logo";
 import Iconify from "../../components/iconify";
+import Logo from "../../components/logo";
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ const LINKS = [
 
 // ----------------------------------------------------------------------
 
-export default function Footer() {
+export default function Footer(): React.ReactElement {
   const { pathname } = useRouter();
 
   const isHome = pathname === "/";

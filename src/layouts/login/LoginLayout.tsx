@@ -1,31 +1,31 @@
 // @mui
-import { Typography, Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 // components
-import Logo from "../../components/logo";
 import Image from "../../components/image";
+import Logo from "../../components/logo";
 //
 import {
-  StyledRoot,
-  StyledSectionBg,
-  StyledSection,
   StyledContent,
+  StyledRoot,
+  StyledSection,
+  StyledSectionBg,
 } from "./styles";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   subtitle?: string;
   title?: string;
   illustration?: string;
   children: React.ReactNode;
-};
+}
 
 export default function LoginLayout({
   children,
   illustration,
   title,
   subtitle,
-}: Props) {
+}: Props): React.ReactElement | null {
   return (
     <StyledRoot>
       <StyledSection>
@@ -42,7 +42,7 @@ export default function LoginLayout({
           }}
         />
         <Typography variant="h3" sx={{ maxWidth: 480, textAlign: "left" }}>
-          {title || "Hi!"}
+          {title ?? "Hi!"}
         </Typography>
 
         <Typography
@@ -54,14 +54,14 @@ export default function LoginLayout({
             color: "text.secondary",
           }}
         >
-          {subtitle || "Welcome back"}
+          {subtitle ?? "Welcome back"}
         </Typography>
 
         <Image
           disabledEffect
           visibleByDefault
           alt="auth"
-          src={illustration || "/assets/illustrations/auth-cat.png"}
+          src={illustration ?? "/assets/illustrations/auth-cat.png"}
           sx={{ maxWidth: 720 }}
         />
 

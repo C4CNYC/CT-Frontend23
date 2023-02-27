@@ -25,7 +25,7 @@ const visuallyHidden = {
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   order?: "asc" | "desc";
   orderBy?: string;
   headLabel: any[];
@@ -44,8 +44,9 @@ export default function TableHeadCustom({
   numSelected = 0,
   onSort,
   onSelectAllRows,
-  sx,
-}: Props) {
+  sx
+}:
+Props): React.ReactElement | null {
   return (
     <TableHead sx={sx}>
       <TableRow>
@@ -54,8 +55,7 @@ export default function TableHeadCustom({
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                onSelectAllRows(event.target.checked)
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onSelectAllRows(event.target.checked); }
               }
             />
           </TableCell>
@@ -68,25 +68,29 @@ export default function TableHeadCustom({
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
-            {onSort ? (
+            {onSort
+? (
               <TableSortLabel
                 hideSortIcon
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
-                onClick={() => onSort(headCell.id)}
+                onClick={() => { onSort(headCell.id); }}
                 sx={{ textTransform: "capitalize" }}
               >
                 {headCell.label}
 
-                {orderBy === headCell.id ? (
+                {orderBy === headCell.id
+? (
                   <Box sx={{ ...visuallyHidden }}>
                     {order === "desc"
                       ? "sorted descending"
                       : "sorted ascending"}
                   </Box>
-                ) : null}
+                )
+: null}
               </TableSortLabel>
-            ) : (
+            )
+: (
               headCell.label
             )}
           </TableCell>

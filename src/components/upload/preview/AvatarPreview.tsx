@@ -5,11 +5,13 @@ import { CustomFile } from "../types";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   file: CustomFile | string | null;
-};
+}
 
-export default function AvatarPreview({ file }: Props) {
+export default function AvatarPreview({
+  file,
+}: Props): React.ReactElement | null {
   if (!file) {
     return null;
   }
@@ -25,8 +27,8 @@ export default function AvatarPreview({ file }: Props) {
         overflow: "hidden",
         borderRadius: "50%",
         position: "absolute",
-        width: `calc(100% - 16px)`,
-        height: `calc(100% - 16px)`,
+        width: "calc(100% - 16px)",
+        height: "calc(100% - 16px)",
       }}
     />
   );

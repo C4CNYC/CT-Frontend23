@@ -1,6 +1,6 @@
 // @mui
-import { alpha } from "@mui/material/styles";
 import { Box } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 //
 import Iconify from "../iconify";
 //
@@ -13,7 +13,7 @@ export default function Icon({
   whiteColor,
   sx,
   ...other
-}: ColorIconProps) {
+}: ColorIconProps): React.ReactElement | null {
   const shadow = (
     <Box
       sx={{

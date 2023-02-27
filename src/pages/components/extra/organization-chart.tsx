@@ -1,8 +1,8 @@
 // next
 import Head from "next/head";
 // @mui
+import { Box, Container, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Box, Stack, Container } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -23,7 +23,7 @@ DemoOrganizationalChartPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoOrganizationalChartPage() {
+export default function DemoOrganizationalChartPage(): React.ReactElement {
   const theme = useTheme();
 
   return (
@@ -91,7 +91,7 @@ const createData = (
   group: string,
   role: string | null,
   avatar: string | null
-) => ({
+): any => ({
   name,
   group,
   role,

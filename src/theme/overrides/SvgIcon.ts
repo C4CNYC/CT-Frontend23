@@ -1,8 +1,8 @@
-import { Theme } from "@mui/material/styles";
+import { type Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-export default function SvgIcon(theme: Theme) {
+export default function SvgIcon(theme: Theme): unknown {
   return {
     MuiSvgIcon: {
       styleOverrides: {

@@ -1,14 +1,13 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { PATH_DASHBOARD } from "@routes/paths";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function Index() {
+export default function Index(): React.ReactElement {
   const { pathname, push } = useRouter();
   useEffect(() => {
     if (pathname === PATH_DASHBOARD.school.root) {
       push(PATH_DASHBOARD.school.general);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return null;

@@ -1,23 +1,23 @@
 import { m } from "framer-motion";
 // @mui
-import { alpha, styled, useTheme } from "@mui/material/styles";
 import {
   Box,
+  Container,
   Grid,
   Link,
   Paper,
   Rating,
-  Container,
   Typography,
 } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // hooks
 import useResponsive from "../../hooks/useResponsive";
 // utils
 import { bgBlur, bgGradient } from "../../utils/cssStyles";
 import { fDate } from "../../utils/formatTime";
 // components
-import Iconify from "../../components/iconify";
 import { MotionViewport, varFade } from "../../components/animate";
+import Iconify from "../../components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -26,37 +26,42 @@ const TESTIMONIALS = [
     name: "Jenny Wilson",
     rating: 5,
     dateCreate: new Date(),
-    content: `Excellent Work! Thanks a lot!`,
+    content: "Excellent Work! Thanks a lot!",
   },
   {
     name: "Cody Fisher",
     rating: 5,
     dateCreate: new Date(),
-    content: `It's a very good dashboard and we are really liking the product . We've done some things, like migrate to TS and implementing a react useContext api, to fit our job methodology but the product is one of the best in terms of design and application architecture. The team did a really good job.`,
+    content:
+      "It's a very good dashboard and we are really liking the product . We've done some things, like migrate to TS and implementing a react useContext api, to fit our job methodology but the product is one of the best in terms of design and application architecture. The team did a really good job.",
   },
   {
     name: "Marvin McKinney",
     rating: 5,
     dateCreate: new Date(),
-    content: `Customer support is realy fast and helpful the desgin of this theme is looks amazing also the code is very clean and readble realy good job !`,
+    content:
+      "Customer support is realy fast and helpful the desgin of this theme is looks amazing also the code is very clean and readble realy good job !",
   },
   {
     name: "Darrell Steward",
     rating: 5,
     dateCreate: new Date(),
-    content: `Amazing, really good code quality and gives you a lot of examples for implementations.`,
+    content:
+      "Amazing, really good code quality and gives you a lot of examples for implementations.",
   },
   {
     name: "Jacob Jones",
     rating: 5,
     dateCreate: new Date(),
-    content: `Got a few questions after purchasing the product. The owner responded very fast and very helpfull. Overall the code is excellent and works very good. 5/5 stars!`,
+    content:
+      "Got a few questions after purchasing the product. The owner responded very fast and very helpfull. Overall the code is excellent and works very good. 5/5 stars!",
   },
   {
     name: "Bessie Cooper",
     rating: 5,
     dateCreate: new Date(),
-    content: `CEO of Codealy.io here. We’ve built a developer assessment platform that makes sense - tasks are based on git repositories and run in virtual machines. We automate the pain points - storing candidates code, running it and sharing test results with the whole team, remotely. Bought this template as we need to provide an awesome dashboard for our early customers. I am super happy with purchase. The code is just as good as the design. Thanks!`,
+    content:
+      "CEO of Codealy.io here. We’ve built a developer assessment platform that makes sense - tasks are based on git repositories and run in virtual machines. We automate the pain points - storing candidates code, running it and sharing test results with the whole team, remotely. Bought this template as we need to provide an awesome dashboard for our early customers. I am super happy with purchase. The code is just as good as the design. Thanks!",
   },
 ];
 
@@ -77,7 +82,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function AboutTestimonials() {
+export default function AboutTestimonials(): React.ReactElement {
   const isDesktop = useResponsive("up", "md");
 
   return (
@@ -175,16 +180,18 @@ export default function AboutTestimonials() {
 
 // ----------------------------------------------------------------------
 
-type TestimonialCardProps = {
+interface TestimonialCardProps {
   testimonial: {
     name: string;
     rating: number;
     content: string;
     dateCreate: Date;
   };
-};
+}
 
-function TestimonialCard({ testimonial }: TestimonialCardProps) {
+function TestimonialCard({
+  testimonial,
+}: TestimonialCardProps): React.ReactElement | null {
   const theme = useTheme();
 
   const { name, rating, dateCreate, content } = testimonial;
@@ -225,7 +232,7 @@ function TestimonialCard({ testimonial }: TestimonialCardProps) {
 
 // ----------------------------------------------------------------------
 
-function TestimonialLink() {
+function TestimonialLink(): React.ReactElement {
   return (
     <Link
       href="#"

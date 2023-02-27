@@ -2,17 +2,17 @@ import { useState } from "react";
 // @mui
 import { Card, Grid } from "@mui/material";
 //
-import Toolbar from "./Toolbar";
 import ControlPanel from "../ControlPanel";
 import ContainerView from "./ContainerView";
+import Toolbar from "./Toolbar";
 
 // ----------------------------------------------------------------------
 
-export default function ScrollView() {
+export default function ScrollView(): React.ReactElement {
   const [count, setCount] = useState(0);
   const [selectVariant, setSelectVariant] = useState("slideInUp");
 
-  const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeVariant = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCount(count + 1);
     setSelectVariant(event.target.value);
   };
@@ -21,7 +21,11 @@ export default function ScrollView() {
     <Card sx={{ p: 3 }}>
       <Grid container sx={{ mb: 3 }}>
         <Grid item xs={9}>
-          <Toolbar onRefresh={() => setCount(count + 1)} />
+          <Toolbar
+            onRefresh={() => {
+              setCount(count + 1);
+            }}
+          />
         </Grid>
       </Grid>
 

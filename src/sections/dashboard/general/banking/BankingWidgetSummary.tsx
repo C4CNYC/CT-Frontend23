@@ -1,14 +1,14 @@
 import { ApexOptions } from "apexcharts";
 // @mui
+import { Box, Card, CardProps, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Card, Typography, Stack, CardProps, Box } from "@mui/material";
 // utils
 import { fCurrency, fPercent } from "../../../../utils/formatNumber";
 // theme
 import { ColorSchema } from "../../../../theme/palette";
 // components
-import Iconify from "@components/iconify";
 import Chart, { useChart } from "@components/chart";
+import Iconify from "@components/iconify";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +33,7 @@ export default function BankingWidgetSummary({
   chart,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { series, options } = chart;
@@ -124,11 +124,13 @@ export default function BankingWidgetSummary({
 
 // ----------------------------------------------------------------------
 
-type TrendingInfoProps = {
+interface TrendingInfoProps {
   percent: number;
-};
+}
 
-function TrendingInfo({ percent }: TrendingInfoProps) {
+function TrendingInfo({
+  percent,
+}: TrendingInfoProps): React.ReactElement | null {
   return (
     <Stack direction="row" alignItems="center" flexWrap="wrap" spacing={0.5}>
       <Iconify

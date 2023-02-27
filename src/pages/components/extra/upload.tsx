@@ -1,17 +1,17 @@
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
 import {
   Box,
   Card,
+  CardContent,
+  CardHeader,
+  Container,
+  FormControlLabel,
   Stack,
   Switch,
-  Container,
-  CardHeader,
   Typography,
-  CardContent,
-  FormControlLabel,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
@@ -20,9 +20,9 @@ import { fData } from "../../../utils/formatNumber";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import { UploadAvatar, Upload, UploadBox } from "@components/upload";
+import Iconify from "@components/iconify";
+import { Upload, UploadAvatar, UploadBox } from "@components/upload";
 
 // ----------------------------------------------------------------------
 
@@ -32,10 +32,10 @@ DemoUploadPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function DemoUploadPage() {
+export default function DemoUploadPage(): React.ReactElement {
   const [preview, setPreview] = useState(false);
 
-  const [files, setFiles] = useState<(File | string)[]>([]);
+  const [files, setFiles] = useState<Array<File | string>>([]);
 
   const [file, setFile] = useState<File | string | null>(null);
 
@@ -77,14 +77,14 @@ export default function DemoUploadPage() {
     [files]
   );
 
-  const handleRemoveFile = (inputFile: File | string) => {
+  const handleRemoveFile = (inputFile: File | string): void => {
     const filesFiltered = files.filter(
       (fileFiltered) => fileFiltered !== inputFile
     );
     setFiles(filesFiltered);
   };
 
-  const handleRemoveAllFiles = () => {
+  const handleRemoveAllFiles = (): void => {
     setFiles([]);
   };
 
@@ -127,7 +127,9 @@ export default function DemoUploadPage() {
                   control={
                     <Switch
                       checked={preview}
-                      onChange={(event) => setPreview(event.target.checked)}
+                      onChange={(event) => {
+                        setPreview(event.target.checked);
+                      }}
                     />
                   }
                   label="Show Thumbnail"
@@ -142,7 +144,9 @@ export default function DemoUploadPage() {
                 onDrop={handleDropMultiFile}
                 onRemove={handleRemoveFile}
                 onRemoveAll={handleRemoveAllFiles}
-                onUpload={() => console.log("ON UPLOAD")}
+                onUpload={() => {
+                  console.log("ON UPLOAD");
+                }}
               />
             </CardContent>
           </Card>
@@ -153,7 +157,9 @@ export default function DemoUploadPage() {
               <Upload
                 file={file}
                 onDrop={handleDropSingleFile}
-                onDelete={() => setFile(null)}
+                onDelete={() => {
+                  setFile(null);
+                }}
               />
             </CardContent>
           </Card>

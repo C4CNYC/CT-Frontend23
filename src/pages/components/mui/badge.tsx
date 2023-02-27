@@ -1,15 +1,15 @@
 // next
 import Head from "next/head";
 // @mui
-import { Box, Container, Typography, Badge } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Badge, Box, Container, Typography } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
@@ -21,7 +21,7 @@ MUIBadgePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIBadgePage() {
+export default function MUIBadgePage(): React.ReactElement {
   return (
     <>
       <Head>
@@ -103,17 +103,20 @@ export default function MUIBadgePage() {
             <Badge
               badgeContent={99}
               color="error"
+              // eslint-disable-next-line react/no-children-prop
               children={<Iconify icon="eva:email-fill" width={24} />}
             />
             <Badge
               badgeContent={100}
               color="error"
+              // eslint-disable-next-line react/no-children-prop
               children={<Iconify icon="eva:email-fill" width={24} />}
             />
             <Badge
               badgeContent={1000}
               max={999}
               color="error"
+              // eslint-disable-next-line react/no-children-prop
               children={<Iconify icon="eva:email-fill" width={24} />}
             />
           </Block>

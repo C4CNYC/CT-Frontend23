@@ -1,9 +1,9 @@
 // @mui
 import {
   Accordion,
-  Typography,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  Typography,
 } from "@mui/material";
 // _mock_
 import { _faqs } from "../../_mock/arrays";
@@ -12,7 +12,7 @@ import Iconify from "../../components/iconify";
 
 // ----------------------------------------------------------------------
 
-export default function FaqsList() {
+export default function FaqsList(): React.ReactElement {
   return (
     <div>
       {_faqs.map((accordion) => (

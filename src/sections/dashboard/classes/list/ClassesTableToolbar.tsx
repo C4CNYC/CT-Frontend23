@@ -1,23 +1,23 @@
-import {
-  Stack,
-  InputAdornment,
-  TextField,
-  MenuItem,
-  Button,
-} from "@mui/material";
 import Iconify from "@components/iconify";
+import {
+  Button,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { useLocales } from "../../../../locales";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   filterName: string;
   filterRole?: string;
   optionsRole?: string[];
   onResetFilter: VoidFunction;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterRole?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 export default function ClassesTableToolbar({
   filterName,
@@ -26,7 +26,7 @@ export default function ClassesTableToolbar({
   onFilterName,
   onFilterRole,
   onResetFilter,
-}: Props) {
+}: Props): React.ReactElement | null {
   const { translate } = useLocales();
 
   return (
@@ -39,7 +39,8 @@ export default function ClassesTableToolbar({
       }}
       sx={{ px: 2.5, py: 3 }}
     >
-      {optionsRole ? (
+      {optionsRole
+? (
         <TextField
           fullWidth
           select
@@ -75,7 +76,8 @@ export default function ClassesTableToolbar({
             </MenuItem>
           ))}
         </TextField>
-      ) : null}
+      )
+: null}
 
       <TextField
         fullWidth

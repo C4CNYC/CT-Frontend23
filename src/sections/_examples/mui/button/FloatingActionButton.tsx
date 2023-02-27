@@ -1,9 +1,9 @@
 // @mui
-import { Fab } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { Fab } from "@mui/material";
 // components
-import Iconify from "@components/iconify";
 import { FabButtonAnimate } from "@components/animate";
+import Iconify from "@components/iconify";
 //
 import { Block } from "../../Block";
 
@@ -32,7 +32,7 @@ const SIZES = ["small", "medium", "large"] as const;
 
 // ----------------------------------------------------------------------
 
-export default function FloatingActionButton() {
+export default function FloatingActionButton(): React.ReactElement {
   return (
     <Masonry columns={2} spacing={3}>
       <Block title="Default" sx={style}>

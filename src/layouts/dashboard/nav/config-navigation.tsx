@@ -1,32 +1,12 @@
-// routes
 import { PATH_DASHBOARD } from "@routes/paths";
-// components
-import SvgColor from "@components/svg-color";
-import { RiOrganizationChart } from "react-icons/ri";
-import { GrOrganization } from "react-icons/gr";
-import { FaUserShield } from "react-icons/fa";
-import { FaSchool } from "react-icons/fa";
-import { MdPlayLesson } from "react-icons/md";
-import { VscSymbolClass } from "react-icons/vsc";
-import { GiProgression } from "react-icons/gi";
 import { AiOutlineSolution } from "react-icons/ai";
-import { FaUsers } from "react-icons/fa";
-
-// ----------------------------------------------------------------------
-
-const icon = (name: string) => (
-  <SvgColor
-    src={`/assets/icons/navbar/${name}.svg`}
-    sx={{ width: 1, height: 1 }}
-  />
-);
-
-const ICONS = {
-  user: icon("ic_user"),
-  invoice: icon("ic_invoice"),
-  analytics: icon("ic_analytics"),
-  dashboard: icon("ic_dashboard"),
-};
+import { FaSchool, FaUsers, FaUserShield } from "react-icons/fa";
+import { GiProgression } from "react-icons/gi";
+import { GoFileSubmodule } from "react-icons/go";
+import { GrOrganization } from "react-icons/gr";
+import { IoMdSchool } from "react-icons/io";
+import { MdPlayLesson } from "react-icons/md";
+import { RiOrganizationChart } from "react-icons/ri";
 
 export const admin = {
   subheader: "administration",
@@ -67,7 +47,7 @@ export const managment = {
     {
       title: "classes",
       path: PATH_DASHBOARD.school.classes,
-      icon: <VscSymbolClass />,
+      icon: <IoMdSchool />,
     },
     {
       title: "progress",
@@ -83,6 +63,16 @@ export const content = {
     {
       title: "courses",
       path: PATH_DASHBOARD.courses.root,
+      icon: <MdPlayLesson />,
+    },
+    {
+      title: "modules",
+      path: PATH_DASHBOARD.modules.root,
+      icon: <GoFileSubmodule />,
+    },
+    {
+      title: "lessons",
+      path: PATH_DASHBOARD.lessons.root,
       icon: <MdPlayLesson />,
     },
     {

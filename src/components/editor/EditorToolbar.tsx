@@ -37,16 +37,16 @@ export const formats = [
   "video",
 ];
 
-type EditorToolbarProps = {
+interface EditorToolbarProps {
   id: string;
   isSimple?: boolean;
-};
+}
 
 export default function EditorToolbar({
   id,
   isSimple,
   ...other
-}: EditorToolbarProps) {
+}: EditorToolbarProps): React.ReactElement | null {
   return (
     <StyledEditorToolbar {...other}>
       <div id={id}>

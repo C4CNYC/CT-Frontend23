@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { OrganizationResponce } from "../services/interfaces/organization.interface";
 import { IUser } from "../services/interfaces/user.interface";
 

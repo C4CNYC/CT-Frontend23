@@ -1,18 +1,18 @@
 // @mui
-import { TableRow, TableCell } from "@mui/material";
+import { TableCell, TableRow } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 //
-import EmptyContent from "../empty-content";
-import { useLocales } from "../../locales";
 import { Box } from "@mui/system";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   isLoading: boolean;
-};
+}
 
-export default function TableLoader({ isLoading }: Props) {
+export default function TableLoader({
+  isLoading,
+}: Props): React.ReactElement | null {
   if (!isLoading) return null;
 
   return (

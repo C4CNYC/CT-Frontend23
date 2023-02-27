@@ -1,27 +1,29 @@
 import { useRef } from "react";
 // @mui
+import { Box, CardContent, Link, Paper } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-import { Box, Paper, Link, CardContent } from "@mui/material";
 // utils
 import { bgGradient } from "../../../../utils/cssStyles";
 // components
-import Image from "@components/image";
-import Iconify from "@components/iconify";
-import TextMaxLine from "@components/text-max-line";
 import Carousel, { CarouselArrows } from "@components/carousel";
+import Iconify from "@components/iconify";
+import Image from "@components/image";
+import TextMaxLine from "@components/text-max-line";
 
 // ----------------------------------------------------------------------
 
-type Props = {
-  data: {
+interface Props {
+  data: Array<{
     id: string;
     title: string;
     image: string;
     description: string;
-  }[];
-};
+  }>;
+}
 
-export default function CarouselCenterMode({ data }: Props) {
+export default function CarouselCenterMode({
+  data,
+}: Props): React.ReactElement | null {
   const carouselRef = useRef<Carousel | null>(null);
 
   const theme = useTheme();
@@ -47,11 +49,11 @@ export default function CarouselCenterMode({ data }: Props) {
     ],
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -82,11 +84,11 @@ export default function CarouselCenterMode({ data }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   title: string;
   description: string;
   image: string;
-};
+}
 
 function CarouselItem({ item }: { item: CarouselItemProps }) {
   const theme = useTheme();

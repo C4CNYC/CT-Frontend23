@@ -10,11 +10,11 @@ import MainLayout from "../../../layouts/main";
 // components
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 // sections
-import IconButtons from "@sections/_examples/mui/button/IconButtons";
 import ButtonGroups from "@sections/_examples/mui/button/ButtonGroups";
-import ToggleButtons from "@sections/_examples/mui/button/ToggleButtons";
 import ButtonVariants from "@sections/_examples/mui/button/ButtonVariants";
 import FloatingActionButton from "@sections/_examples/mui/button/FloatingActionButton";
+import IconButtons from "@sections/_examples/mui/button/IconButtons";
+import ToggleButtons from "@sections/_examples/mui/button/ToggleButtons";
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +53,7 @@ MUIButtonsPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUIButtonsPage() {
+export default function MUIButtonsPage(): React.ReactElement {
   const [currentTab, setCurrentTab] = useState("contained");
 
   return (
@@ -93,7 +93,9 @@ export default function MUIButtonsPage() {
       <Container sx={{ my: 10 }}>
         <Tabs
           value={currentTab}
-          onChange={(event, newValue) => setCurrentTab(newValue)}
+          onChange={(event, newValue) => {
+            setCurrentTab(newValue);
+          }}
         >
           {TABS.map((tab) => (
             <Tab key={tab.value} value={tab.value} label={tab.label} />

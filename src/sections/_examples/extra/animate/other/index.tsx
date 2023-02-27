@@ -1,24 +1,24 @@
 import { useState } from "react";
 // @mui
-import { alpha } from "@mui/material/styles";
 import {
   Box,
-  Grid,
   Card,
   CardContent,
+  CardHeader,
+  Grid,
   IconButton,
   Paper,
-  CardHeader,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // components
 import Iconify from "@components/iconify";
 //
-import Logo from "./Logo";
 import Button from "./Button";
+import Logo from "./Logo";
 
 // ----------------------------------------------------------------------
 
-export default function Other() {
+export default function Other(): React.ReactElement {
   const [count, setCount] = useState(0);
 
   return (
@@ -52,7 +52,9 @@ export default function Other() {
               <CardHeader title="Path" />
               <Box sx={{ p: 5, minHeight: 180, "& > *": { mx: 1 } }}>
                 <IconButton
-                  onClick={() => setCount(count + 1)}
+                  onClick={() => {
+                    setCount(count + 1);
+                  }}
                   sx={{ position: "absolute", right: 16, top: 16 }}
                 >
                   <Iconify icon="eva:refresh-fill" />

@@ -1,27 +1,27 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 // @mui
-import { useTheme } from "@mui/material/styles";
 import {
-  Box,
-  Card,
-  Link,
-  Stack,
-  Input,
-  Button,
   Avatar,
-  Dialog,
-  Slider,
-  Tooltip,
-  TextField,
-  CardProps,
-  Typography,
-  CardHeader,
-  InputProps,
-  DialogTitle,
-  DialogProps,
+  Box,
+  Button,
+  Card,
   CardContent,
+  CardHeader,
+  CardProps,
+  Dialog,
   DialogActions,
+  DialogProps,
+  DialogTitle,
+  Input,
+  InputProps,
+  Link,
+  Slider,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 // components
@@ -42,12 +42,12 @@ const MAX_AMOUNT = 1000;
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  list: {
+  list: Array<{
     id: string;
     name: string;
     email: string;
     avatar: string;
-  }[];
+  }>;
 }
 
 export default function BankingQuickTransfer({
@@ -56,7 +56,7 @@ export default function BankingQuickTransfer({
   list,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel | null>(null);
@@ -80,7 +80,9 @@ export default function BankingQuickTransfer({
     centerPadding: "0px",
     slidesToShow: list.length > 7 ? 7 : list.length,
     rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => setSelectContact(next),
+    beforeChange: (current: number, next: number) => {
+      setSelectContact(next);
+    },
     responsive: [
       {
         // Down xl
@@ -96,31 +98,35 @@ export default function BankingQuickTransfer({
     if (amount) {
       handleAutoWidth();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount]);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleAutoWidth = () => {
+  const handleAutoWidth = (): void => {
     const getNumberLength = amount.toString().length;
     setAutoWidth(getNumberLength * 22);
   };
 
-  const handleChangeSlider = (event: Event, newValue: number | number[]) => {
+  const handleChangeSlider = (
+    event: Event,
+    newValue: number | number[]
+  ): void => {
     setAmount(newValue);
   };
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setAmount(event.target.value === "" ? "" : Number(event.target.value));
   };
 
-  const handleBlur = () => {
+  const handleBlur = (): void => {
     if (amount < 0) {
       setAmount(0);
     } else if (amount > MAX_AMOUNT) {
@@ -128,11 +134,11 @@ export default function BankingQuickTransfer({
     }
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -295,7 +301,7 @@ function InputAmount({
   onChange,
   sx,
   ...other
-}: InputAmountProps) {
+}: InputAmountProps): React.ReactElement | null {
   return (
     <Stack direction="row" justifyContent="center" spacing={1} sx={sx}>
       <Typography variant="h5">$</Typography>
@@ -348,7 +354,7 @@ function ConfirmTransferDialog({
   onClose,
   onBlur,
   onChange,
-}: ConfirmTransferDialogProps) {
+}: ConfirmTransferDialogProps): React.ReactElement | null {
   return (
     <Dialog open={open} fullWidth maxWidth="xs" onClose={onClose}>
       <DialogTitle>Transfer to</DialogTitle>

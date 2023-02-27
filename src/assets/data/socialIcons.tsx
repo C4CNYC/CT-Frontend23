@@ -1,24 +1,22 @@
+import React from "react";
 import {
-  AiFillYoutube,
-  AiFillTwitterSquare,
-  AiFillLinkedin,
-  AiFillFacebook,
-  AiOutlineWhatsApp,
-  AiFillInstagram,
   AiFillDribbbleCircle,
+  AiFillFacebook,
+  AiFillInstagram,
+  AiFillLinkedin,
+  AiFillTwitterSquare,
+  AiFillYoutube,
+  AiOutlineWhatsApp,
 } from "react-icons/ai";
 import { BsTelegram } from "react-icons/bs";
 import { SiViber } from "react-icons/si";
-import React from "react";
 
-type SocialTypes = {
+interface SocialTypes {
   name: string;
   icon: React.ReactElement;
-};
+}
 
-type Props = {
-  [key: string]: React.ReactElement;
-};
+type Props = Record<string, React.ReactElement>;
 
 export const SOCIAL_ICONS: Props = {
   youtube: <AiFillYoutube size={32} />,

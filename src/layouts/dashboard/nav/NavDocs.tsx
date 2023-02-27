@@ -1,5 +1,5 @@
 // @mui
-import { Stack, Button, Typography, Box } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 // auth
 import { useAuthContext } from "../../../auth/useAuthContext";
 // locales
@@ -9,7 +9,7 @@ import { PATH_DOCS } from "@routes/paths";
 
 // ----------------------------------------------------------------------
 
-export default function NavDocs() {
+export default function NavDocs(): React.ReactElement {
   const { user } = useAuthContext();
 
   const { translate } = useLocales();
@@ -30,7 +30,7 @@ export default function NavDocs() {
 
       <div>
         <Typography gutterBottom variant="subtitle1">
-          {`${translate("docs.hi")}, ${user?.displayName}`}
+          {`${translate("docs.hi")}, ${user?.displayName as string}`}
         </Typography>
 
         <Typography

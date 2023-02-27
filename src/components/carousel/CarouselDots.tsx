@@ -1,12 +1,12 @@
 // @mui
-import { styled, Theme } from "@mui/material/styles";
 import { Box, BoxProps, Stack, SxProps } from "@mui/material";
+import { styled, Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
-type StyledRootProps = {
+interface StyledRootProps {
   rounded: boolean;
-};
+}
 
 const StyledRoot = styled(Box, {
   shouldForwardProp: (prop) => prop !== "rounded",
@@ -53,13 +53,13 @@ export interface Props extends BoxProps {
   sx?: SxProps<Theme>;
 }
 
-export default function CarouselDots(props?: Props) {
-  const rounded = props?.rounded || false;
+export default function CarouselDots(props?: Props): React.ReactElement | null {
+  const rounded = props?.rounded ?? false;
 
   const sx = props?.sx;
 
   return {
-    appendDots: (dots: React.ReactNode) => (
+    appendDots: (dots: React.ReactNode): React.ReactElement => (
       <StyledRoot component="ul" rounded={rounded} sx={sx} {...props}>
         {dots}
       </StyledRoot>

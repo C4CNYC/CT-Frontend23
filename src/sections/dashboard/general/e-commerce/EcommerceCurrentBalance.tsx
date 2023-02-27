@@ -1,5 +1,5 @@
 // @mui
-import { Button, Card, Typography, Stack, CardProps } from "@mui/material";
+import { Button, Card, CardProps, Stack, Typography } from "@mui/material";
 // utils
 import { fCurrency } from "../../../../utils/formatNumber";
 
@@ -17,7 +17,7 @@ export default function EcommerceCurrentBalance({
   currentBalance,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const totalAmount = currentBalance - sentAmount;
 
   return (

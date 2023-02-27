@@ -8,7 +8,9 @@ import { remToPx } from "../../theme/typography";
 
 // ----------------------------------------------------------------------
 
-export default function useTypography(variant: Variant) {
+export default function useTypography(
+  variant: Variant
+): Record<string, string | number | undefined> {
   const theme = useTheme();
 
   const breakpoints = useWidth();

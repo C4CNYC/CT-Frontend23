@@ -1,3 +1,2 @@
-export * from "./types";
-
 export { default } from "./CustomBreadcrumbs";
+export * from "./types";

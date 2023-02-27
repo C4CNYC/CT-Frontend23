@@ -1,22 +1,23 @@
+/* eslint-disable react/no-children-prop */
 // next
 import Head from "next/head";
 // @mui
 import {
   Box,
   Card,
+  CardContent,
   CardHeader,
   Container,
-  Stack,
-  CardContent,
   Divider,
+  Stack,
 } from "@mui/material";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Markdown from "@components/markdown";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Markdown from "@components/markdown";
 
 // ----------------------------------------------------------------------
 
@@ -135,7 +136,7 @@ ReactDOM.render(
 > A block quote with ~~strikethrough~~ and a URL: [https://reactjs.org](https://reactjs.org).
 `;
 
-export default function DemoMarkdownPage() {
+export default function DemoMarkdownPage(): React.ReactElement {
   return (
     <>
       <Head>

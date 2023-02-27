@@ -1,20 +1,20 @@
-import { useState } from "react";
 import isWeekend from "date-fns/isWeekend";
+import { useState } from "react";
 // @mui
-import { TextField } from "@mui/material";
 import { Masonry } from "@mui/lab";
+import { TextField } from "@mui/material";
 import {
   DatePicker,
-  StaticDatePicker,
-  MobileDatePicker,
   DesktopDatePicker,
+  MobileDatePicker,
+  StaticDatePicker,
 } from "@mui/x-date-pickers";
 //
 import { Block } from "../../Block";
 
 // ----------------------------------------------------------------------
 
-export default function PickerDate() {
+export default function PickerDate(): React.ReactElement {
   const [value, setValue] = useState<Date | null>(new Date());
 
   return (

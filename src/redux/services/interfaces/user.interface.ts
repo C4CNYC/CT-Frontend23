@@ -30,6 +30,8 @@ export interface IUser {
   verified?: boolean;
   active?: boolean;
   role?: Role;
+  avatar?: string;
+  cover?: string;
 }
 
 export interface StudentSearchParams extends BaseSearchInterface {

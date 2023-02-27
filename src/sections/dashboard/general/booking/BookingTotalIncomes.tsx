@@ -1,12 +1,12 @@
 import { ApexOptions } from "apexcharts";
 // @mui
+import { Card, CardProps, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Card, Typography, Stack, CardProps } from "@mui/material";
 // utils
 import { fCurrency, fPercent } from "../../../../utils/formatNumber";
 // components
-import Iconify from "@components/iconify";
 import Chart, { useChart } from "@components/chart";
+import Iconify from "@components/iconify";
 //
 import { ColorSchema } from "../../../../theme/palette";
 
@@ -29,7 +29,7 @@ export default function BookingTotalIncomes({
   chart,
   sx,
   ...other
-}: Props) {
+}: Props): React.ReactElement | null {
   const theme = useTheme();
 
   const { series, options } = chart;

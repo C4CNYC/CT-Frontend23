@@ -4,11 +4,14 @@ import { useSnackbar } from "@components/snackbar";
 import AssignmentsTaskCard from "../AssignmentsTaskCard";
 
 // ----------------------------------------------------------------------
-import { IAssignmentsCard, IAssignmentsColumn } from "../../../../@types/assignments";
+import {
+  IAssignmentsCard,
+  IAssignmentsColumn,
+} from "../../../../@types/assignments";
 import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
 import { useDeleteAssignmentMutation } from "../../../../redux/services/manager";
 
-type Props = {
+interface Props {
   column: IAssignmentsColumn;
   cards: Record<string, IAssignmentsCard>;
   index: number;
@@ -19,12 +22,13 @@ export default function AssignmentsColumn({
   column,
   index,
   cards,
-  school_id,
-}: Props) {
+  school_id
+}:
+Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAssignment] = useDeleteAssignmentMutation();
 
-  const handleDeleteTask = async (assignment_id: string) => {
+  const handleDeleteTask = async (assignment_id: string): Promise<void> => {
     try {
       await deleteAssignment({
         school_id,

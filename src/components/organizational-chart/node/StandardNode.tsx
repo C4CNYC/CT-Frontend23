@@ -1,14 +1,14 @@
 import { useState } from "react";
 // @mui
-import { Theme } from "@mui/material/styles";
 import {
-  SxProps,
-  Typography,
+  Avatar,
+  Card,
   IconButton,
   MenuItem,
-  Card,
-  Avatar,
+  SxProps,
+  Typography,
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 //
 import Iconify from "../../iconify";
 import MenuPopover from "../../menu-popover";
@@ -17,21 +17,26 @@ import { ItemProps } from "../types";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   node: ItemProps;
   onEdit?: VoidFunction;
   onDelete?: VoidFunction;
   sx?: SxProps<Theme>;
-};
+}
 
-export default function StandardNode({ node, onEdit, onDelete, sx }: Props) {
+export default function StandardNode({
+  node,
+  onEdit,
+  onDelete,
+  sx,
+}: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
 
@@ -60,7 +65,7 @@ export default function StandardNode({ node, onEdit, onDelete, sx }: Props) {
 
         <Avatar
           alt={node.name}
-          src={node.avatar || ""}
+          src={node.avatar ?? ""}
           sx={{ mr: 2, mb: 1, width: 48, height: 48 }}
         />
 

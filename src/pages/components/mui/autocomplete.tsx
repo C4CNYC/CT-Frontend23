@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // next
 import Head from "next/head";
 // @mui
+import { Masonry } from "@mui/lab";
 import {
+  Autocomplete,
   Box,
   Checkbox,
   Container,
   TextField,
   Typography,
-  Autocomplete,
 } from "@mui/material";
-import { Masonry } from "@mui/lab";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
@@ -32,7 +32,7 @@ MUIAutocompletePage.getLayout = (page: React.ReactElement) => (
 
 const options = ["Option 1", "Option 2"];
 
-function countryToFlag(isoCode: string) {
+function countryToFlag(isoCode: string): string {
   return typeof String.fromCodePoint !== "undefined"
     ? isoCode
         .toUpperCase()
@@ -42,14 +42,16 @@ function countryToFlag(isoCode: string) {
     : isoCode;
 }
 
-export default function MUIAutocompletePage() {
+export default function MUIAutocompletePage(): React.ReactElement {
   const [value, setValue] = useState<string | null>(options[0]);
 
   const [inputValue, setInputValue] = useState("");
 
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return null;

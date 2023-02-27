@@ -16,7 +16,7 @@ const series = [
   },
 ];
 
-export default function ChartColumnNegative() {
+export default function ChartColumnNegative(): React.ReactElement {
   const theme = useTheme();
 
   const chartOptions = useChart({

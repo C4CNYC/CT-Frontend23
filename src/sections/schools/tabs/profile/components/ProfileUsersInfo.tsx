@@ -1,15 +1,16 @@
 import { Card, Stack, Typography, Divider } from "@mui/material";
 import { fNumber } from "../../../../../utils/formatNumber";
 
-type Props = {
+interface Props {
   student_count?: number | null;
   teacher_count?: number | null;
 };
 
 export default function ProfileUsersInfo({
   student_count = 0,
-  teacher_count = 0,
-}: Props) {
+  teacher_count = 0
+}:
+Props): React.ReactElement | null {
   return (
     <Card sx={{ py: 3 }}>
       <Stack

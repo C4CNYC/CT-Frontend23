@@ -1,21 +1,23 @@
+import { SnackbarKey, SnackbarProvider as NotistackProvider } from "notistack";
 import { useRef } from "react";
-import { SnackbarProvider as NotistackProvider, SnackbarKey } from "notistack";
 // @mui
-import { alpha } from "@mui/material/styles";
 import { Box, Collapse, IconButton } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 //
-import { useSettingsContext } from "../settings";
 import Iconify, { IconifyProps } from "../iconify";
+import { useSettingsContext } from "../settings";
 //
 import StyledNotistack from "./styles";
 
 // ----------------------------------------------------------------------
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-export default function SnackbarProvider({ children }: Props) {
+export default function SnackbarProvider({
+  children,
+}: Props): React.ReactElement | null {
   const { themeDirection } = useSettingsContext();
 
   const isRTL = themeDirection === "rtl";
@@ -64,12 +66,15 @@ export default function SnackbarProvider({ children }: Props) {
 
 // ----------------------------------------------------------------------
 
-type SnackbarIconProps = {
+interface SnackbarIconProps {
   icon: IconifyProps;
   color: "info" | "success" | "warning" | "error";
-};
+}
 
-function SnackbarIcon({ icon, color }: SnackbarIconProps) {
+function SnackbarIcon({
+  icon,
+  color,
+}: SnackbarIconProps): React.ReactElement | null {
   return (
     <Box
       component="span"

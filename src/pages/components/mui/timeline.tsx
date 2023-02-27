@@ -1,31 +1,31 @@
 // next
 import Head from "next/head";
 // @mui
-import { alpha } from "@mui/material/styles";
-import { Box, Paper, Container, Typography } from "@mui/material";
 import {
   Masonry,
   Timeline,
+  TimelineConnector,
+  TimelineContent,
   TimelineDot,
   TimelineItem,
-  TimelineContent,
-  TimelineSeparator,
-  TimelineConnector,
   TimelineOppositeContent,
+  TimelineSeparator,
 } from "@mui/lab";
+import { Box, Container, Paper, Typography } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 // routes
 import { PATH_PAGE } from "@routes/paths";
 // layouts
 import MainLayout from "../../../layouts/main";
 // components
-import Iconify from "@components/iconify";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
+import Iconify from "@components/iconify";
 // sections
 import { Block } from "@sections/_examples/Block";
 
 // ----------------------------------------------------------------------
 
-type TimelineType = {
+interface TimelineType {
   key: number;
   title: string;
   des: string;
@@ -40,7 +40,7 @@ type TimelineType = {
     | "grey"
     | "secondary";
   icon: React.ReactElement;
-};
+}
 
 const TIMELINES: TimelineType[] = [
   {
@@ -108,7 +108,7 @@ MUITimelinePage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function MUITimelinePage() {
+export default function MUITimelinePage(): React.ReactElement {
   const lastItem = TIMELINES[TIMELINES.length - 1].key;
 
   const reduceTimeLine = TIMELINES.slice(TIMELINES.length - 3);

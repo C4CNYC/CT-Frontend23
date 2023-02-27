@@ -20,7 +20,7 @@ const series = [
   },
 ];
 
-export default function ChartRadarBar() {
+export default function ChartRadarBar(): React.ReactElement {
   const theme = useTheme();
 
   const chartOptions = useChart({

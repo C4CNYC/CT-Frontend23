@@ -1,24 +1,20 @@
 // next
 import NextLink from "next/link";
 // @mui
-import { Alert, Tooltip, Stack, Typography, Link, Box } from "@mui/material";
-// auth
-import { useAuthContext } from "../../auth/useAuthContext";
+import { Link, Stack, Typography } from "@mui/material";
 // layouts
 import LoginLayout from "../../layouts/login";
 // routes
 import { PATH_AUTH } from "../../routes/paths";
 //
-import AuthLoginForm from "./AuthLoginForm";
-import AuthWithSocial from "./AuthWithSocial";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import IconButton from "@mui/material/IconButton";
+import AuthLoginForm from "./AuthLoginForm";
+import AuthWithSocial from "./AuthWithSocial";
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
-  const { method } = useAuthContext();
-
+export default function Login(): React.ReactElement {
   return (
     <LoginLayout>
       <Stack spacing={2} sx={{ mb: 5, position: "relative" }}>
