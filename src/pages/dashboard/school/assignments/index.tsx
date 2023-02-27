@@ -1,5 +1,5 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import { SkeletonKanbanColumn } from "@components/skeleton";
+import { SkeletonKanbanColumn } from "@components/skeleton/SkeletonKanbanColumn";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container, Stack } from "@mui/material";
