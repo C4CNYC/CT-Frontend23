@@ -49,25 +49,14 @@ export default function TasksListPage(): React.ReactElement {
             { name: "List" }
           ]}
           action={
-            <>
-              <CodeDialog isEdit={false}>
-                <Button
-                  variant="contained"
-                  startIcon={<Iconify icon="eva:plus-fill" />}
-                >
-                  Code
-                </Button>
-              </CodeDialog>
-              <CreateTaskDialog isEdit={false}>
-                <Button
-                  variant="contained"
-                  startIcon={<Iconify icon="eva:plus-fill" />}
-                >
-                  Create Task
-                </Button>
-              </CreateTaskDialog>
-            </>
-
+            <CreateTaskDialog isEdit={false}>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+              >
+                Create Task
+              </Button>
+            </CreateTaskDialog>
           }
         />
         <FilterTasks />

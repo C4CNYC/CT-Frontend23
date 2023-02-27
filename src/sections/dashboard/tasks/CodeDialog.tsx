@@ -1,10 +1,9 @@
-import { AppBar, SelectChangeEvent, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import CodeMirror from "@uiw/react-codemirror";
 import * as React from "react";
 import { useState } from "react";
-import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
 import { loadLanguage, langs } from "@uiw/codemirror-extensions-langs";
