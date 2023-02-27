@@ -2,7 +2,7 @@ import Head from "next/head";
 import TaskCard from "@sections/dashboard/tasks/TaskCard";
 import CreateTaskDialog from "@sections/dashboard/tasks/CreateTaskDialog";
 import SearchNotFound from "@components/search-not-found/SearchNotFound";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import DashboardLayout from "src/layouts/dashboard";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
@@ -14,7 +14,7 @@ import Iconify from "@components/iconify";
 // ----------------------------------------------------------------------
 
 TasksListPage.getLayout = (page: React.ReactElement) => (
-    <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+    <DashboardLayout>{page}</DashboardLayout>
   );
 
   // ----------------------------------------------------------------------
