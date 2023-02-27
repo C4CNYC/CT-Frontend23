@@ -152,7 +152,7 @@ export default function Index(): React.ReactElement {
               >
                 {!Object.keys(board.columns).length
 ? (
-                  <SkeletonKanbanColumn />
+                 null
                 )
 : (
                   Object.values(AssignmentStatuses).map((columnId, index) => (
