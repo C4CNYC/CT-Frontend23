@@ -74,7 +74,8 @@ export default function DateRangePicker({
             },
           }}
         >
-          {isCalendarView ? (
+          {isCalendarView
+? (
             <>
               <Paper
                 variant="outlined"
@@ -98,7 +99,8 @@ export default function DateRangePicker({
                 <CalendarPicker date={endDate} onChange={onChangeEndDate} />
               </Paper>
             </>
-          ) : (
+          )
+: (
             <>
               <DatePicker
                 label="Start date"

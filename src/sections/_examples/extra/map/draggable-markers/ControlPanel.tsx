@@ -31,11 +31,13 @@ function ControlPanel({ events = {} }: Props): React.ReactElement | null {
               {event}:
             </Typography>
 
-            {lngLat ? (
+            {lngLat
+? (
               <Typography variant="subtitle2" sx={{ color: "primary.main" }}>
                 {`${round5(lngLat.lng)}, ${round5(lngLat.lat)}`}
               </Typography>
-            ) : (
+            )
+: (
               <Typography
                 variant="body2"
                 component="em"

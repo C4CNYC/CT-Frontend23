@@ -77,9 +77,11 @@ export default function InvoiceToolbar({
             {({ loading }) => (
               <Tooltip title="Download">
                 <IconButton>
-                  {loading ? (
+                  {loading
+? (
                     <CircularProgress size={24} color="inherit" />
-                  ) : (
+                  )
+: (
                     <Iconify icon="eva:download-fill" />
                   )}
                 </IconButton>

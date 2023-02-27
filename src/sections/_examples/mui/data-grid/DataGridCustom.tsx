@@ -114,12 +114,14 @@ const columns: GridColDef[] = [
     width: 120,
 
     renderCell: (params) =>
-      params.row.isAdmin ? (
+      params.row.isAdmin
+? (
         <Iconify
           icon="eva:checkmark-circle-2-fill"
           sx={{ color: "primary.main" }}
         />
-      ) : (
+      )
+: (
         "-"
       ),
   },

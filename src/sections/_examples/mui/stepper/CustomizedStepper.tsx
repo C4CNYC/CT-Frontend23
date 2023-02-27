@@ -77,14 +77,16 @@ function QontoStepIcon(props: StepIconProps): React.ReactElement | null {
 
   return (
     <QontoStepIconRoot ownerState={{ active }} className={className}>
-      {completed ? (
+      {completed
+? (
         <Iconify
           icon="eva:checkmark-fill"
           className="QontoStepIcon-completedIcon"
           width={24}
           height={24}
         />
-      ) : (
+      )
+: (
         <div className="QontoStepIcon-circle" />
       )}
     </QontoStepIconRoot>
@@ -226,7 +228,8 @@ export default function CustomizedSteppers(): React.ReactElement {
         ))}
       </Stepper>
 
-      {activeStep === STEPS.length ? (
+      {activeStep === STEPS.length
+? (
         <>
           <Paper
             sx={{
@@ -245,7 +248,8 @@ export default function CustomizedSteppers(): React.ReactElement {
             Reset
           </Button>
         </>
-      ) : (
+      )
+: (
         <>
           <Paper
             sx={{

@@ -57,9 +57,11 @@ const components = {
   a: ({ ...props }) => {
     const isHttp = props.href.includes("http");
 
-    return isHttp ? (
+    return isHttp
+? (
       <Link target="_blank" rel="noopener" {...props} />
-    ) : (
+    )
+: (
       <Link component={NextLink} href={props.href} {...props}>
         {props.children}
       </Link>

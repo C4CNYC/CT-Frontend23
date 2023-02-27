@@ -151,9 +151,11 @@ export default function Index(): React.ReactElement {
                   ...hideScrollbarX,
                 }}
               >
-                {!Object.keys(board.columns).length ? (
+                {!Object.keys(board.columns).length
+? (
                   <SkeletonKanbanColumn />
-                ) : (
+                )
+: (
                   Object.values(AssignmentStatuses).map((columnId, index) => (
                     <AssignmentColumn
                       schoolId={schoolId}

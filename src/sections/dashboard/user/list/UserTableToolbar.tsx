@@ -4,7 +4,7 @@ import {
   InputAdornment,
   MenuItem,
   Stack,
-  TextField,
+  TextField
 } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
@@ -22,13 +22,13 @@ interface Props {
 }
 
 export default function UserTableToolbar({
-  filterName,
-  filterRole,
-  optionsRole,
-  onFilterName,
-  onFilterRole,
-  onResetFilter,
-}: Props): React.ReactElement | null {
+                                           filterName,
+                                           filterRole,
+                                           optionsRole,
+                                           onFilterName,
+                                           onFilterRole,
+                                           onResetFilter
+                                         }: Props): React.ReactElement | null {
   const { translate } = useLocales();
 
   return (
@@ -37,47 +37,49 @@ export default function UserTableToolbar({
       alignItems="center"
       direction={{
         xs: "column",
-        sm: "row",
+        sm: "row"
       }}
       sx={{ px: 2.5, py: 3 }}
     >
-      {optionsRole ? (
-        <TextField
-          fullWidth
-          select
-          label={`${translate("organizations.members_page.role_label")}`}
-          value={filterRole}
-          onChange={onFilterRole}
-          SelectProps={{
-            MenuProps: {
-              PaperProps: {
-                sx: {
-                  maxHeight: 260,
-                },
-              },
-            },
-          }}
-          sx={{
-            maxWidth: { sm: 240 },
-            textTransform: "capitalize",
-          }}
-        >
-          {optionsRole?.map((option) => (
-            <MenuItem
-              key={option}
-              value={option}
-              sx={{
-                mx: 1,
-                borderRadius: 0.75,
-                typography: "body2",
-                textTransform: "capitalize",
-              }}
-            >
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-      ) : null}
+      {optionsRole
+        ? (
+          <TextField
+            fullWidth
+            select
+            label={`${translate("organizations.members_page.role_label")}`}
+            value={filterRole}
+            onChange={onFilterRole}
+            SelectProps={{
+              MenuProps: {
+                PaperProps: {
+                  sx: {
+                    maxHeight: 260
+                  }
+                }
+              }
+            }}
+            sx={{
+              maxWidth: { sm: 240 },
+              textTransform: "capitalize"
+            }}
+          >
+            {optionsRole?.map((option) => (
+              <MenuItem
+                key={option}
+                value={option}
+                sx={{
+                  mx: 1,
+                  borderRadius: 0.75,
+                  typography: "body2",
+                  textTransform: "capitalize"
+                }}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+        )
+: null}
 
       <TextField
         fullWidth
@@ -89,7 +91,7 @@ export default function UserTableToolbar({
             <InputAdornment position="start">
               <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
             </InputAdornment>
-          ),
+          )
         }}
       />
       <Button

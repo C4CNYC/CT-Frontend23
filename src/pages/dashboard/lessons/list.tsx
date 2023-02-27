@@ -1,12 +1,10 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
-import SearchNotFound from "@components/search-not-found/SearchNotFound";
 import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
-import CreateContentDialog from "@sections/dashboard/lessons/CreateContentDialog";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import Head from "next/head";

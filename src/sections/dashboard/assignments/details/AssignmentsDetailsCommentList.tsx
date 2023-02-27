@@ -54,7 +54,8 @@ export default function AssignmentsDetailsCommentList({
                 </Typography>
               </Stack>
 
-              {comment.messageType === "image" ? (
+              {comment.messageType === "image"
+? (
                 <Image
                   alt={comment.message}
                   src={comment.message}
@@ -66,7 +67,8 @@ export default function AssignmentsDetailsCommentList({
                     borderRadius: 1,
                   }}
                 />
-              ) : (
+              )
+: (
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   {comment.message}
                 </Typography>

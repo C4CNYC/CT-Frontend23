@@ -10,7 +10,7 @@ import {
   StackProps,
   Tab,
   Tabs,
-  Typography,
+  Typography
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 // hooks
@@ -30,8 +30,8 @@ const StyledRoot = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.neutral,
   padding: theme.spacing(10, 0),
   [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(15, 0),
-  },
+    padding: theme.spacing(15, 0)
+  }
 }));
 
 // ----------------------------------------------------------------------
@@ -90,7 +90,7 @@ function Content(): React.ReactElement | null {
       gridTemplateColumns="repeat(3, 1fr)"
       sx={{
         borderRadius: 2,
-        border: (theme) => `dashed 1px ${theme.palette.divider}`,
+        border: (theme) => `dashed 1px ${theme.palette.divider}`
       }}
     >
       {_homePlans.map((plan) => (
@@ -119,7 +119,7 @@ function Content(): React.ReactElement | null {
       <Box
         sx={{
           borderRadius: 2,
-          border: (theme) => `dashed 1px ${theme.palette.divider}`,
+          border: (theme) => `dashed 1px ${theme.palette.divider}`
         }}
       >
         {_homePlans.map(
@@ -129,7 +129,7 @@ function Content(): React.ReactElement | null {
                 key={tab.license}
                 plan={tab}
                 sx={{
-                  borderLeft: (theme) => `dashed 1px ${theme.palette.divider}`,
+                  borderLeft: (theme) => `dashed 1px ${theme.palette.divider}`
                 }}
               />
             )
@@ -148,8 +148,8 @@ function Content(): React.ReactElement | null {
             textAlign: "center",
             mt: {
               xs: 5,
-              md: 10,
-            },
+              md: 10
+            }
           }}
         >
           <m.div variants={varFade().inDown}>
@@ -173,8 +173,8 @@ function Content(): React.ReactElement | null {
                 color: (theme) =>
                   theme.palette.mode === "light" ? "common.white" : "grey.800",
                 "&:hover": {
-                  bgcolor: "text.primary",
-                },
+                  bgcolor: "text.primary"
+                }
               }}
             >
               Contact us
@@ -198,10 +198,10 @@ interface PlanCardProps extends StackProps {
 }
 
 function PlanCard({
-  plan,
-  sx,
-  ...other
-}: PlanCardProps): React.ReactElement | null {
+                    plan,
+                    sx,
+                    ...other
+                  }: PlanCardProps): React.ReactElement | null {
   const { license, commons, options, icons } = plan;
 
   const standard = license === "Standard";
@@ -217,8 +217,8 @@ function PlanCard({
         ...(plus && {
           borderLeft: (theme) => `dashed 1px ${theme.palette.divider}`,
           borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
-          ...sx,
-        }),
+          ...sx
+        })
       }}
       {...other}
     >
@@ -243,21 +243,23 @@ function PlanCard({
               bgcolor: "error.main",
               position: "absolute",
               ...(standard && { bgcolor: "primary.main" }),
-              ...(plus && { bgcolor: "warning.main" }),
+              ...(plus && { bgcolor: "warning.main" })
             }}
           />
         </Box>
       </Stack>
 
-      {standard ? (
-        <SvgColor src={icons[2]} sx={{ width: 24, height: 24 }} />
-      ) : (
-        <Stack direction="row" spacing={2}>
-          {icons.map((icon) => (
-            <SvgColor key={icon} src={icon} sx={{ width: 24, height: 24 }} />
-          ))}
-        </Stack>
-      )}
+      {standard
+        ? (
+          <SvgColor src={icons[2]} sx={{ width: 24, height: 24 }} />
+        )
+: (
+          <Stack direction="row" spacing={2}>
+            {icons.map((icon) => (
+              <SvgColor key={icon} src={icon} sx={{ width: 24, height: 24 }} />
+            ))}
+          </Stack>
+        )}
 
       <Stack spacing={2.5}>
         {commons.map((option) => (
@@ -282,7 +284,7 @@ function PlanCard({
               direction="row"
               alignItems="center"
               sx={{
-                ...(disabled && { color: "text.disabled" }),
+                ...(disabled && { color: "text.disabled" })
               }}
               key={option}
             >

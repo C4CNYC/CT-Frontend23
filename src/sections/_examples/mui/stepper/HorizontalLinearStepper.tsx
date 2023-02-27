@@ -84,7 +84,8 @@ export default function HorizontalLinearStepper(): React.ReactElement {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
+      {activeStep === steps.length
+? (
         <>
           <Paper
             sx={{
@@ -104,7 +105,8 @@ export default function HorizontalLinearStepper(): React.ReactElement {
             <Button onClick={handleReset}>Reset</Button>
           </Box>
         </>
-      ) : (
+      )
+: (
         <>
           <Paper
             sx={{

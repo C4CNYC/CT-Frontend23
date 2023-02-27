@@ -39,7 +39,8 @@ export default function ClassesTableToolbar({
       }}
       sx={{ px: 2.5, py: 3 }}
     >
-      {optionsRole ? (
+      {optionsRole
+? (
         <TextField
           fullWidth
           select
@@ -75,7 +76,8 @@ export default function ClassesTableToolbar({
             </MenuItem>
           ))}
         </TextField>
-      ) : null}
+      )
+: null}
 
       <TextField
         fullWidth

@@ -9,8 +9,8 @@ interface Props {
 }
 
 export default function SchoolSettingTab({
-  schoolId,
-}: Props): React.ReactElement | null {
+                                           schoolId
+                                         }: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolSettingsQuery(
     { schoolId },
     { skip: !schoolId }
@@ -27,12 +27,14 @@ export default function SchoolSettingTab({
           backgroundColor: "transparent !important",
           mb: 3,
           height: 420,
-          position: "relative",
+          position: "relative"
         }}
       >
-        {isLoading ? null : (
-          <SettingsForm settings={data} schoolId={schoolId} />
-        )}
+        {isLoading
+          ? null
+          : (
+            <SettingsForm settings={data} schoolId={schoolId} />
+          )}
       </Box>
     </>
   );
