@@ -29,7 +29,7 @@ export default function CreateTaskDialog({
     isEdit,
     children,
     defaultValues,
-}: Props): React.ReactElement{
+}: Props): React.ReactElement {
     const [open, setOpen] = useState(false);
 
     const handleOpen = (): void => {
@@ -41,7 +41,7 @@ export default function CreateTaskDialog({
 
     const methods = useForm<FormValuesProps>({
       });
-    return(
+    return (
         <>
             <Box onClick={handleOpen}>
                 {children}
@@ -54,7 +54,7 @@ export default function CreateTaskDialog({
                     <FormProvider methods={methods}>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={12}>
-                                <Card sx={{ p:3 }}>
+                                <Card sx={{ p: 3 }}>
                                     <Box rowGap={3} display="grid">
                                     <RHFTextField
                                         style={{ width: "350px" }}

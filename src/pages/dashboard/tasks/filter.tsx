@@ -15,7 +15,7 @@ import Stack from "@mui/system/Stack";
 import { useState } from "react";
 import MenuPopover from "src/components/menu-popover/MenuPopover";
 
-export default function FilterTasks(): React.ReactElement{
+export default function FilterTasks(): React.ReactElement {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -29,7 +29,7 @@ export default function FilterTasks(): React.ReactElement{
       const handleClosePopover = (): void => {
         setOpenPopover(null);
       };
-    return(
+    return (
         <>
             <Stack
                 spacing={2}

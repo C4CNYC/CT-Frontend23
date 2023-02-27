@@ -52,7 +52,7 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, "/lessons/list"),
   },
   tasks: {
-    root: path(ROOTS_DASHBOARD, '/tasks/list'),
+    root: path(ROOTS_DASHBOARD, "/tasks/list"),
   },
   organization: {
     root: path(ROOTS_DASHBOARD, "/organization"),

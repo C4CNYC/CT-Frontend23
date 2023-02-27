@@ -14,7 +14,6 @@ import {
 import Iconify from "@components/iconify";
 import CreateTaskDialog from "./CreateTaskDialog";
 
-
 interface Props {
     task: {
         name: string;
@@ -44,11 +43,11 @@ export default function TaskCard({
     const handleOpenConfirm = (): void => {
         setOpenConfirm(true);
       };
-    
+
       const handleCloseConfirm = (): void => {
         setOpenConfirm(false);
       };
-    return(
+    return (
         <>
             <Card
                 component="a"
@@ -62,8 +61,8 @@ export default function TaskCard({
                     border: (theme) => `solid 1px ${theme.palette.divider}`,
                     "&:hover": {
                         bgcolor: "grey.100",
-                    }, 
-                }}  
+                    },
+                }}
             >
                 <Stack
                     direction="row"
@@ -75,9 +74,9 @@ export default function TaskCard({
                         onClick={handleOpenPopover}
                     >
                         <Iconify icon="eva:more-vertical-fill" />
-                    </IconButton> 
+                    </IconButton>
                 </Stack>
-                <Box 
+                <Box
                     component="img"
                     src="/assets/icons/files/ic_document.svg"
                     sx={{ width: 40, height: 40 }}
@@ -89,7 +88,7 @@ export default function TaskCard({
                     direction="row"
                     alignItems="center"
                     spacing={0.75}
-                    sx={{ typography: "caption", color: "text.disabled" }}    
+                    sx={{ typography: "caption", color: "text.disabled" }}
                 >
                     <Box>
                         {task.description}
@@ -126,7 +125,7 @@ export default function TaskCard({
                 </CreateTaskDialog>
 
                 <Divider sx={{ borderStyle: "dashed" }} />
-                
+
                 <MenuItem
                     onClick={() => {
                         handleOpenConfirm();

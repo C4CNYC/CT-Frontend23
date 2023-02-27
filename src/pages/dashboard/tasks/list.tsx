@@ -7,26 +7,24 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { useSettingsContext } from "@components/settings";
-import { useGetLessonsQuery } from "src/redux/services/manager";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import FilterTasks from "./filter";
 import Iconify from "@components/iconify";
-
 
 // ----------------------------------------------------------------------
 
 TasksListPage.getLayout = (page: React.ReactElement) => (
     <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
   );
-  
+
   // ----------------------------------------------------------------------
 
-export default function TasksListPage(): React.ReactElement{
-
+export default function TasksListPage(): React.ReactElement {
     const taskInfo = {
-        name: 'Name',
-        description: 'Some Descr',
-        id: '121341',
-        type: 'type',
+        name: "Name",
+        description: "Some Descr",
+        id: "121341",
+        type: "type",
         active: false,
         key: 14124214,
     }
@@ -36,7 +34,7 @@ export default function TasksListPage(): React.ReactElement{
 
     if (isLoading) return <CircularProgress/>;
     if (data?.data.length === 0) return <SearchNotFound/>;
-    return(
+    return (
         <>
             <Head>
                 <title>Tasks | CodeTribe</title>
@@ -70,7 +68,7 @@ export default function TasksListPage(): React.ReactElement{
                     }}
                 >
                     <TaskCard
-                        task={taskInfo} 
+                        task={taskInfo}
                     />
                 </Box>
             </Container>
