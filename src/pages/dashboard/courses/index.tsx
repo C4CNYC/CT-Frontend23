@@ -59,6 +59,8 @@ export default function CoursesListPage(): React.ReactElement {
           }}
         >
           {data?.data.map((course, index) => (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             <CourseCard key={index} course={course} />
           ))}
         </Box>

@@ -10,25 +10,24 @@ import { useSettingsContext } from "@components/settings";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import FilterTasks from "./filter";
 import Iconify from "@components/iconify";
-import CodeDialog from "@sections/dashboard/tasks/CodeDialog";
 
 // ----------------------------------------------------------------------
 
 TasksListPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
-);
+    <DashboardLayout>{page}</DashboardLayout>
+  );
 
-// ----------------------------------------------------------------------
+  // ----------------------------------------------------------------------
 
 export default function TasksListPage(): React.ReactElement {
-  const taskInfo = {
-    name: "Name",
-    description: "Some Descr",
-    id: "121341",
-    type: "type",
-    active: false,
-    key: 14124214
-  };
+    const taskInfo = {
+        name: "Name",
+        description: "Some Descr",
+        id: "121341",
+        type: "type",
+        active: false,
+        key: 14124214,
+    }
 
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetLessonsQuery();

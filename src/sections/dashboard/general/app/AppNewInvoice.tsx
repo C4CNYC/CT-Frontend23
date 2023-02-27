@@ -57,12 +57,6 @@ export default function AppNewInvoice({
           <Table sx={{ minWidth: 720 }}>
             <TableHeadCustom
               headLabel={tableLabels}
-              order={undefined}
-              orderBy={undefined}
-              onSort={undefined}
-              onSelectAllRows={undefined}
-              sx={undefined}
-              Props={undefined}
             />
 
             <TableBody>

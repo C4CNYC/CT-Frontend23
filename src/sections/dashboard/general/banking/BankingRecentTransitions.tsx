@@ -66,12 +66,6 @@ export default function BankingRecentTransitions({
           <Table>
             <TableHeadCustom
               headLabel={tableLabels}
-              order={undefined}
-              orderBy={undefined}
-              onSort={undefined}
-              onSelectAllRows={undefined}
-              sx={undefined}
-              Props={undefined}
             />
 
             <TableBody>
@@ -284,8 +278,7 @@ function renderAvatar(
   if (category === "Beauty & Health") {
     return <AvatarIcon icon="eva:heart-fill" />;
   }
-  return avatar
-? (
+  return avatar ? (
     <Avatar
       alt={category}
       src={avatar}
@@ -295,6 +288,5 @@ function renderAvatar(
         boxShadow: (theme) => theme.customShadows.z8,
       }}
     />
-  )
-: null;
+  ) : null;
 }

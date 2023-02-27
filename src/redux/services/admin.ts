@@ -24,8 +24,8 @@ import {
   DeleteMemberRequest,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
-  SchoolListResponce,
   SchoolRequest,
+  SchoolResponce,
 } from "./interfaces/school.interface";
 import {
   CreateUserRequest,
@@ -118,7 +118,10 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "Classes" }],
     }),
-    getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
+    getSchoolList: builder.query<
+      BaseListResponseInterface<SchoolResponce>,
+      SchoolRequest
+    >({
       query: ({ ...params }) => ({
         url: "/school",
         method: "GET",

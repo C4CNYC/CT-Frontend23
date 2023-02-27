@@ -109,7 +109,7 @@ export default function AssignmentsDetails({
           <AssignmentInput
             placeholder="Task name"
             defaultValue={assignment.name}
-            onBlur={async (e) => {
+            onBlur={async (e: any) => {
               await updateField("name", e.target.value);
             }}
           />
@@ -148,7 +148,7 @@ export default function AssignmentsDetails({
             <StyledLabel>Type:</StyledLabel>
             <CustomSmallSelect
               value={assignment.type}
-              onChange={async (e) => {
+              onChange={async (e: any) => {
                 updateField("type", e.target.value);
               }}
             >
@@ -185,7 +185,7 @@ export default function AssignmentsDetails({
                   margin="normal"
                   fullWidth
                   size="small"
-                  onKeyDown={(e) => {
+                  onKeyDown={(e: any) => {
                     e.preventDefault();
                   }}
                   sx={{
@@ -214,7 +214,7 @@ export default function AssignmentsDetails({
                   size="small"
                   margin="normal"
                   fullWidth
-                  onKeyDown={(e) => {
+                  onKeyDown={(e: any) => {
                     e.preventDefault();
                   }}
                   sx={{
@@ -238,7 +238,7 @@ export default function AssignmentsDetails({
                   ? convertDuration(assignment.duration)
                   : null
               }
-              onChange={async (e) => {
+              onChange={async (e: any) => {
                 await updateField("duration", e.target.value || null);
               }}
             >
@@ -341,7 +341,7 @@ export default function AssignmentsDetails({
               rows={4}
               fullWidth
               defaultValue={assignment.description}
-              onBlur={async (e) => {
+              onBlur={async (e: any) => {
                 await updateField("description", e.target.value);
               }}
               sx={{

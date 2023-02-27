@@ -1,5 +1,4 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import SkeletonKanbanColumn from "@components/skeleton/SkeletonKanbanColumn";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container, Stack } from "@mui/material";
@@ -152,20 +151,16 @@ export default function Index(): React.ReactElement {
                 }}
               >
                 {!Object.keys(board.columns).length
-? (
-                  <SkeletonKanbanColumn />
-                )
-: (
-                  Object.values(AssignmentStatuses).map((columnId, index) => (
-                    <AssignmentColumn
-                      schoolId={schoolId}
-                      index={index}
-                      key={columnId}
-                      column={board.columns[columnId]}
-                      cards={board.cards}
-                    />
-                  ))
-                )}
+                  ? null
+                  : Object.values(AssignmentStatuses).map((columnId, index) => (
+                      <AssignmentColumn
+                        schoolId={schoolId}
+                        index={index}
+                        key={columnId}
+                        column={board.columns[columnId]}
+                        cards={board.cards}
+                      />
+                    ))}
               </Stack>
             )}
           </Droppable>

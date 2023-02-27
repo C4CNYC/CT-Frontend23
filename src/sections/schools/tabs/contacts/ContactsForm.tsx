@@ -67,7 +67,7 @@ export default function ContactsForm({
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateContacts({
         schoolId: data.schoolId,

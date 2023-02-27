@@ -69,7 +69,6 @@ export default function UserProfilePage(): React.ReactElement {
         >
           <ProfileCover
             name={data?.name ?? ""}
-            role={data?.phone ?? ""}
             cover={"/assets/icons/shool/organization.svg"}
           />
           <Tabs

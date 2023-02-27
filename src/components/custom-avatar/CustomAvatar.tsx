@@ -31,19 +31,21 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
     const colr = color ?? colorByName;
 
     const renderContent =
-      colr === "default"
-? (
+      colr === "default" ? (
         <Avatar ref={ref} sx={sx} {...other}>
           {name && charAtName}
           {children}
         </Avatar>
-      )
-: (
+      ) : (
         <Avatar
           ref={ref}
           sx={{
-            color: theme.palette[colr]?.contrastText,
-            backgroundColor: theme.palette[colr]?.main,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            color: theme?.palette[colr]?.contrastText,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            backgroundColor: theme?.palette[colr]?.main,
             fontWeight: theme.typography.fontWeightMedium,
             ...sx,
           }}
@@ -54,8 +56,7 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
         </Avatar>
       );
 
-    return BadgeProps
-? (
+    return BadgeProps ? (
       <Badge
         overlap="circular"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -63,8 +64,7 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
       >
         {renderContent}
       </Badge>
-    )
-: (
+    ) : (
       renderContent
     );
   }

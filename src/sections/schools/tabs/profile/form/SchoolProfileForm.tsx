@@ -60,7 +60,7 @@ export default function SchoolProfileForm({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateSchoolProfile({
         schoolId,

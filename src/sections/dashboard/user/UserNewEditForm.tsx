@@ -17,14 +17,14 @@ import FormProvider, {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
-  RHFUploadAvatar
+  RHFUploadAvatar,
 } from "@components/hook-form";
 import Label from "@components/label";
 import { useSnackbar } from "@components/snackbar";
 import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
-  useUpdateOrgMemberMutation
+  useUpdateOrgMemberMutation,
 } from "src/redux/services/admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
@@ -42,9 +42,9 @@ interface Props {
 }
 
 export default function UserNewEditForm({
-                                          isEdit = false,
-                                          currentUser
-                                        }: Props): React.ReactElement | null {
+  isEdit = false,
+  currentUser,
+}: Props): React.ReactElement | null {
   const { push } = useRouter();
   const [createUser] = useCreateOrgMemberMutation();
   const [updateUser] = useUpdateOrgMemberMutation();
@@ -58,7 +58,7 @@ export default function UserNewEditForm({
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    role: Yup.string().required("Role is required")
+    role: Yup.string().required("Role is required"),
   });
 
   const defaultValues = useMemo(
@@ -67,25 +67,25 @@ export default function UserNewEditForm({
       last_name: currentUser?.last_name ?? "",
       email: currentUser?.email ?? "",
       role: (currentUser?.role as Role) ?? Role.Manager,
-      verified: currentUser?.verified
+      verified: currentUser?.verified,
     }),
     [currentUser]
   );
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(NewUserSchema),
-    defaultValues
+    defaultValues,
   });
 
   const {
     reset,
     setValue,
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting },
   } = methods;
 
   const values = {
-    status: "active"
+    status: "active",
   };
 
   useEffect(() => {
@@ -108,25 +108,25 @@ export default function UserNewEditForm({
 
     return await updateMemberAvatar({
       user_id: id,
-      file
+      file,
     }).unwrap();
   };
 
   const onSubmit = async ({
-                            photoURL,
-                            ...data
-                          }: FormValuesProps): Promise<void> => {
+    photoURL,
+    ...data
+  }: FormValuesProps): Promise<void> => {
     try {
       if (isEdit && currentUser?.id) {
         const { email, ...body } = data;
         await updateUser({
           user_id: currentUser?.id,
-          ...body
+          ...body,
         }).unwrap();
         await updateAvatar(currentUser?.id, photoURL);
       } else {
         const user = await createUser({
-          ...data
+          ...data,
         }).unwrap();
         await updateAvatar(user.id, photoURL);
       }
@@ -134,7 +134,7 @@ export default function UserNewEditForm({
       push(PATH_DASHBOARD.organization.members);
     } catch (error) {
       enqueueSnackbar(error.data.message, {
-        variant: "error"
+        variant: "error",
       });
       console.error(error, "test");
     }
@@ -145,7 +145,7 @@ export default function UserNewEditForm({
       const file = acceptedFiles[0];
 
       const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file)
+        preview: URL.createObjectURL(file),
       });
 
       if (file) {
@@ -167,7 +167,7 @@ export default function UserNewEditForm({
                   textTransform: "uppercase",
                   position: "absolute",
                   top: 24,
-                  right: 24
+                  right: 24,
                 }}
               >
                 {values.status}
@@ -187,7 +187,7 @@ export default function UserNewEditForm({
                       mx: "auto",
                       display: "block",
                       textAlign: "center",
-                      color: "text.secondary"
+                      color: "text.secondary",
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -224,7 +224,7 @@ export default function UserNewEditForm({
               display="grid"
               gridTemplateColumns={{
                 xs: "repeat(1, 1fr)",
-                sm: "repeat(2, 1fr)"
+                sm: "repeat(2, 1fr)",
               }}
             >
               <RHFTextField name="first_name" label="First Name" />
@@ -237,13 +237,11 @@ export default function UserNewEditForm({
 
               <RHFSelect native name="role" label="Role" placeholder="Role">
                 {(Object.keys(Role) as Array<keyof typeof Role>).map((role) =>
-                  role === "Owner"
-                    ? null
-: (
-                      <option key={Role[role]} value={Role[role]}>
-                        {role}
-                      </option>
-                    )
+                  role === "Owner" ? null : (
+                    <option key={Role[role]} value={Role[role]}>
+                      {role}
+                    </option>
+                  )
                 )}
               </RHFSelect>
             </Box>

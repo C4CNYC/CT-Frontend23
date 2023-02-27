@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 // ----------------------------------------------------------------------
 
-export default function Index(): React.ReactElement {
+export default function Index(): React.ReactElement | null {
   const { pathname, push } = useRouter();
 
   useEffect(() => {

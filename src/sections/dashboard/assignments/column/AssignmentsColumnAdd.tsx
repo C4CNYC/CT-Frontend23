@@ -46,8 +46,7 @@ export default function AssignmentsColumnAdd(): React.ReactElement {
 
   return (
     <Paper sx={{ minWidth: 280, width: 280 }}>
-      {open
-? (
+      {open ? (
         <ClickAwayListener onClickAway={handleCreateColumn}>
           <TextField
             autoFocus
@@ -61,8 +60,7 @@ export default function AssignmentsColumnAdd(): React.ReactElement {
             }}
           />
         </ClickAwayListener>
-      )
-: (
+      ) : (
         <Button
           fullWidth
           size="large"

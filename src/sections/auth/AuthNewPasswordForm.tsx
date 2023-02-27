@@ -90,7 +90,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
     formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log("DATA:", {

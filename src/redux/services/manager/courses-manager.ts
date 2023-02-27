@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import {
+  BaseListResponseInterface,
+  BaseResponseInterface,
+} from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import { IModule } from "../interfaces/class.interface";
 import {
   ICourse,
   ICourseCreate,
@@ -10,7 +12,10 @@ import {
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getCourse: builder.query<IModule, void>({
+    getCourse: builder.query<
+      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      void
+    >({
       query: () => ({
         url: "/course",
         method: "GET",

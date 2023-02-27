@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import {
+  BaseListResponseInterface,
+  BaseResponseInterface,
+} from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
 import {
   SchoolContacts,
   SchoolProfile,
+  SchoolResponce,
   SchoolSettings,
   SchoolSocials,
 } from "../interfaces/school.interface";

@@ -48,7 +48,7 @@ export default function CustomizationForm({
   const { handleSubmit, formState, reset, control } = methods;
   const isFormEdited = formState.isDirty;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateCustomization({
         description: data.description,

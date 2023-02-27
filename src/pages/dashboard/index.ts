@@ -5,7 +5,7 @@ import { PATH_AFTER_LOGIN } from "../../config-global";
 
 // ----------------------------------------------------------------------
 
-export default function Index(): React.ReactElement {
+export default function Index(): React.ReactElement | null {
   const { pathname, replace, prefetch } = useRouter();
 
   useEffect(() => {
