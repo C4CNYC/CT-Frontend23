@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 
-const Chart = dynamic(async () => await import("react-apexcharts"), { ssr: false });
+const Chart = dynamic(async () => await import("react-apexcharts"), {
+  ssr: false,
+});
 
 // ----------------------------------------------------------------------
 

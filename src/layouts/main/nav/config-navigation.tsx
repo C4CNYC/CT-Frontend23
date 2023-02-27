@@ -1,5 +1,5 @@
-import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 import Iconify from "@components/iconify";
+import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 
 // ----------------------------------------------------------------------
 

@@ -77,7 +77,10 @@ export default function EnhancedTransferList(): React.ReactElement {
     setChecked(not(checked, rightChecked));
   };
 
-  const customList = (title: React.ReactNode, items: number[]): React.ReactElement => (
+  const customList = (
+    title: React.ReactNode,
+    items: number[]
+  ): React.ReactElement => (
     <Card sx={{ borderRadius: 1.5 }}>
       <CardHeader
         avatar={

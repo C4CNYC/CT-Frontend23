@@ -48,7 +48,9 @@ MUIListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-function ListItemLink(props: ListItemButtonProps<"a", { button?: true }>): React.ReactElement | null {
+function ListItemLink(
+  props: ListItemButtonProps<"a", { button?: true }>
+): React.ReactElement | null {
   return <ListItemButton component="a" {...props} />;
 }
 

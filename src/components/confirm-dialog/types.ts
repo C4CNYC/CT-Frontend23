@@ -8,5 +8,5 @@ export interface ConfirmDialogProps extends Omit<DialogProps, "title"> {
   content?: React.ReactNode;
   action: React.ReactNode;
   open: boolean;
-  onClose: VoidFunction;
+  onClose: (event: React.MouseEvent<HTMLElement>) => void;
 }

@@ -369,9 +369,7 @@ export default function ReactHookForm({
                   onRemove={(inputFile) => {
                     setValue(
                       "multiUpload",
-                      values.multiUpload?.filter(
-                          (file) => file !== inputFile
-                        ),
+                      values.multiUpload?.filter((file) => file !== inputFile),
                       { shouldValidate: true }
                     );
                   }}

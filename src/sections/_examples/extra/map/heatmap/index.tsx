@@ -33,7 +33,9 @@ function MapHeatmap({ ...other }: MapBoxProps): React.ReactElement {
 
         selectTime(endTime);
       })
-      .catch((err) => { console.error("Could not load data", err); });
+      .catch((err) => {
+        console.error("Could not load data", err);
+      });
   }, []);
 
   const data: any = useMemo(

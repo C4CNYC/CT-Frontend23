@@ -2,13 +2,13 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Box, Button, Container } from "@mui/material";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterModules from "@pages/dashboard/modules/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import Head from "next/head";
-import { useGetModulesQuery } from "src/redux/services/manager";
+import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 
 // ----------------------------------------------------------------------
 
@@ -18,12 +18,12 @@ ModulesListPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ModulesListPage(): React.ReactElement {
+export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetModulesQuery();
 
-  if (isLoading) return "loading";
-  if (data.data.length === 0) return "no data";
+  if (isLoading) return <CircularProgress />;
+  if (data?.data?.length === 0) return "no data";
 
   return (
     <>

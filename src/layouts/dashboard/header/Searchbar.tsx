@@ -1,27 +1,27 @@
-import { useState, memo, useEffect } from "react";
-import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { memo, useEffect, useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
-import { alpha, styled } from "@mui/material/styles";
 import {
-  Box,
-  Slide,
-  Popper,
-  InputBase,
-  PopperProps,
   Autocomplete,
-  InputAdornment,
+  Box,
   ClickAwayListener,
+  InputAdornment,
+  InputBase,
+  Popper,
+  PopperProps,
+  Slide,
 } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
 // utils
 import { bgBlur } from "../../../utils/cssStyles";
 import flattenArray from "../../../utils/flattenArray";
 // components
+import { IconButtonAnimate } from "@components/animate";
 import Iconify from "@components/iconify";
 import { NavListProps } from "@components/nav-section";
-import { IconButtonAnimate } from "@components/animate";
 import SearchNotFound from "@components/search-not-found";
 //
 import NavConfig from "../nav/config-navigation";
@@ -49,49 +49,49 @@ const StyledSearchbar = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledPopper = styled((props: PopperProps): React.ReactElement => <Popper {...props} />)(
-  ({ theme }) => ({
-    left: "8px !important",
-    top: `${APPBAR_MOBILE + 8}px !important`,
-    width: "calc(100% - 16px) !important",
-    transform: "none !important",
-    [theme.breakpoints.up("md")]: {
-      top: `${APPBAR_DESKTOP + 8}px !important`,
+const StyledPopper = styled(
+  (props: PopperProps): React.ReactElement => <Popper {...props} />
+)(({ theme }) => ({
+  left: "8px !important",
+  top: `${APPBAR_MOBILE + 8}px !important`,
+  width: "calc(100% - 16px) !important",
+  transform: "none !important",
+  [theme.breakpoints.up("md")]: {
+    top: `${APPBAR_DESKTOP + 8}px !important`,
+  },
+  "& .MuiAutocomplete-paper": {
+    padding: theme.spacing(1, 0),
+  },
+  "& .MuiListSubheader-root": {
+    "&.MuiAutocomplete-groupLabel": {
+      ...bgBlur({ color: theme.palette.background.neutral }),
+      ...theme.typography.overline,
+      top: 0,
+      margin: 0,
+      lineHeight: "48px",
+      borderRadius: theme.shape.borderRadius,
     },
-    "& .MuiAutocomplete-paper": {
-      padding: theme.spacing(1, 0),
-    },
-    "& .MuiListSubheader-root": {
-      "&.MuiAutocomplete-groupLabel": {
-        ...bgBlur({ color: theme.palette.background.neutral }),
-        ...theme.typography.overline,
-        top: 0,
-        margin: 0,
-        lineHeight: "48px",
-        borderRadius: theme.shape.borderRadius,
+  },
+  "& .MuiAutocomplete-listbox": {
+    "& .MuiAutocomplete-option": {
+      padding: theme.spacing(0.5, 2),
+      margin: 0,
+      display: "block",
+      border: "dashed 1px transparent",
+      borderBottomColor: theme.palette.divider,
+      "&:last-of-type": {
+        borderBottomColor: "transparent",
+      },
+      "&:hover": {
+        borderColor: theme.palette.primary.main,
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.hoverOpacity
+        ),
       },
     },
-    "& .MuiAutocomplete-listbox": {
-      "& .MuiAutocomplete-option": {
-        padding: theme.spacing(0.5, 2),
-        margin: 0,
-        display: "block",
-        border: "dashed 1px transparent",
-        borderBottomColor: theme.palette.divider,
-        "&:last-of-type": {
-          borderBottomColor: "transparent",
-        },
-        "&:hover": {
-          borderColor: theme.palette.primary.main,
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            theme.palette.action.hoverOpacity
-          ),
-        },
-      },
-    },
-  })
-);
+  },
+}));
 
 // ----------------------------------------------------------------------
 
@@ -169,7 +169,9 @@ function Searchbar() {
               disableClearable
               popupIcon={null}
               PopperComponent={StyledPopper}
-              onInputChange={(event, value) => { setSearchQuery(value); }}
+              onInputChange={(event, value) => {
+                setSearchQuery(value);
+              }}
               noOptionsText={
                 <SearchNotFound query={searchQuery} sx={{ py: 10 }} />
               }
@@ -208,7 +210,9 @@ function Searchbar() {
                   <Box
                     component="li"
                     {...props}
-                    onClick={() => { handleClick(path); }}
+                    onClick={() => {
+                      handleClick(path);
+                    }}
                   >
                     <div>
                       {partsTitle.map((part, index) => (

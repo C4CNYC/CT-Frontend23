@@ -1,19 +1,19 @@
-import { useState } from "react";
+import Iconify from "@components/iconify";
+import MenuPopover from "@components/menu-popover";
 import {
   Avatar,
   Button,
   ListItem,
-  MenuItem,
-  ListItemText,
   ListItemAvatar,
+  ListItemText,
+  MenuItem,
 } from "@mui/material";
-import Iconify from "@components/iconify";
-import MenuPopover from "@components/menu-popover";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
+import { useUpdateClassMutation } from "src/redux/services/admin";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddClassDialog from "./CreateClassDialog";
-import { useSnackbar } from "notistack";
-import { useUpdateClassMutation } from "src/redux/services/admin";
 
 // ----------------------------------------------------------------------
 
@@ -22,14 +22,13 @@ interface Props {
   schoolId: string;
   handleEditClass?: (id: string) => void;
   handleDeleteClass: () => void;
-};
+}
 
 export default function ClassItem({
   classes,
   handleDeleteClass,
-  schoolId
-}:
-Props): React.ReactElement | null {
+  schoolId,
+}: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [updateClass] = useUpdateClassMutation();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -46,7 +45,7 @@ Props): React.ReactElement | null {
     try {
       const data = await updateClass({
         schoolId,
-        class_id: classes.id,
+        classId: classes.id,
         name,
       }).unwrap();
       enqueueSnackbar(`School ${data.name} created successfuly!`);

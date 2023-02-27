@@ -1,3 +1,5 @@
+import { LessonContentType } from "../enums/lesson-content-type.enum";
+
 export interface IModule {
   active: boolean;
   name: string;
@@ -19,6 +21,11 @@ export interface ICourse {
   description: string;
   active: boolean;
   draft?: boolean;
+}
+
+export interface ILessonContent {
+  body: string;
+  type: LessonContentType;
 }
 
 export interface IModuleCreate {

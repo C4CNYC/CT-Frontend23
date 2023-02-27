@@ -5,7 +5,7 @@ import {
   List,
   ListItem,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
@@ -13,46 +13,46 @@ import { useState } from "react";
 import {
   useCreateClassMutation,
   useDeleteTeacherMutation,
-  useGetClassListQuery,
+  useGetClassListQuery
 } from "src/redux/services/admin";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 
 interface ClassesSectionProps {
-  school_id: string;
+  schoolId: string;
 }
 
 export default function ClassesSection({
-  school_id,
-}: ClassesSectionProps): React.ReactElement | null {
+                                         schoolId
+                                       }: ClassesSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [createClass] = useCreateClassMutation();
   const [deleteTeacher] = useDeleteTeacherMutation();
   const [open, setOpen] = useState(false);
   const { data: classes, isLoading } = useGetClassListQuery(
     {
-      school_id,
+      schoolId
     },
-    { skip: !school_id }
+    { skip: !schoolId }
   );
 
   const handleDeleteClass = async (user_id: string): Promise<void> => {
     try {
       await deleteTeacher({
         user_id,
-        school_id,
+        schoolId
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error",
+        variant: "error"
       });
     }
   };
 
   const createClassByAdmin = async (name: string): Promise<void> => {
     try {
-      const data = await createClass({ schoolId: school_id, name }).unwrap();
+      const data = await createClass({ schoolId, name }).unwrap();
       enqueueSnackbar(`School ${data.name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -90,8 +90,8 @@ export default function ClassesSection({
               color: "common.white",
               bgcolor: "success.main",
               "&:hover": {
-                bgcolor: "success.main",
-              },
+                bgcolor: "success.main"
+              }
             }}
           >
             {" "}
@@ -103,7 +103,7 @@ export default function ClassesSection({
         <List disablePadding sx={{ pl: 2.5, pr: 1, pt: 1 }}>
           {classes?.map((classes: any) => (
             <ClassItem
-              schoolId={school_id}
+              schoolId={schoolId}
               handleDeleteClass={async () => {
                 await handleDeleteClass(classes.id);
               }}
@@ -113,31 +113,31 @@ export default function ClassesSection({
             />
           ))}
           {!isLoading && !classes?.length
-? (
-            <ListItem
-              sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
-              disableGutters
-            >
-              <Image
-                alt="smile"
-                height="40"
-                width="40"
-                src="/assets/images/happy.png"
-              />
-              <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
-                LET'S CREATE
-              </Typography>
-              <Image
-                style={{
-                  transform: "rotate(-13deg)",
-                }}
-                alt="smile"
-                height="25"
-                width="25"
-                src="/assets/images/arrow.png"
-              />
-            </ListItem>
-          )
+            ? (
+              <ListItem
+                sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
+                disableGutters
+              >
+                <Image
+                  alt="smile"
+                  height="40"
+                  width="40"
+                  src="/assets/images/happy.png"
+                />
+                <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
+                  LET'S CREATE
+                </Typography>
+                <Image
+                  style={{
+                    transform: "rotate(-13deg)"
+                  }}
+                  alt="smile"
+                  height="25"
+                  width="25"
+                  src="/assets/images/arrow.png"
+                />
+              </ListItem>
+            )
 : null}
         </List>
       </Collapse>

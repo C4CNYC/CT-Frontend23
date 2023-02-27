@@ -55,7 +55,7 @@ function MapHighlightByFilter({ ...other }: MapBoxProps): React.ReactElement {
     });
   }, []);
 
-  const selectedCounty = (hoverInfo?.countyName) ?? "";
+  const selectedCounty = hoverInfo?.countyName ?? "";
 
   const filter = useMemo(
     () => ["in", "COUNTY", selectedCounty],

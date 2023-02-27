@@ -14,11 +14,11 @@ import * as Yup from "yup";
 import {
   useCreateAssignmentMutation,
   useUdpateAssignmentMutation,
-} from "../../../../redux/services/manager";
+} from "../../../../redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;
-  school_id: string;
+  schoolId: string;
   assignment?: IAssignment & BaseResponseInterface;
   getAssignmentId: (param: string) => void;
 }
@@ -35,7 +35,7 @@ export default function AssignmentSettings({
   assignment,
   next,
   getAssignmentId,
-  school_id,
+  schoolId,
 }: AssignmentStepProps): React.ReactElement | null {
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
   const [updateAssignment] = useUdpateAssignmentMutation();
@@ -70,15 +70,15 @@ export default function AssignmentSettings({
     try {
       if (assignment) {
         await updateAssignment({
-          assignment_id: assignment.id,
-          school_id,
+          assignmentId: assignment.id,
+          schoolId,
           type: data.type,
           name: data.name,
           description: data.description,
         });
       } else {
         const assignment = await createAssignment({
-          school_id,
+          schoolId,
           type: data.type,
           name: data.name,
           description: data.description,
