@@ -151,16 +151,20 @@ export default function Index(): React.ReactElement {
                 }}
               >
                 {!Object.keys(board.columns).length
-                  ? null
-                  : Object.values(AssignmentStatuses).map((columnId, index) => (
-                      <AssignmentColumn
-                        schoolId={schoolId}
-                        index={index}
-                        key={columnId}
-                        column={board.columns[columnId]}
-                        cards={board.cards}
-                      />
-                    ))}
+? (
+                  <SkeletonKanbanColumn />
+                )
+: (
+                  Object.values(AssignmentStatuses).map((columnId, index) => (
+                    <AssignmentColumn
+                      schoolId={schoolId}
+                      index={index}
+                      key={columnId}
+                      column={board.columns[columnId]}
+                      cards={board.cards}
+                    />
+                  ))
+                )}
               </Stack>
             )}
           </Droppable>

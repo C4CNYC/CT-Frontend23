@@ -259,9 +259,11 @@ function renderContent(notification: NotificationItemProps): {
     };
   }
   return {
-    avatar: notification.avatar ? (
+    avatar: notification.avatar
+? (
       <img alt={notification.title} src={notification.avatar} />
-    ) : null,
+    )
+: null,
     title,
   };
 }

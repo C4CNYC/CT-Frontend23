@@ -6,7 +6,6 @@ import {
   useCommands,
 } from "@remirror/react";
 import React from "react";
-import { FontFamilyExtension } from "remirror/extensions";
 
 const FONT_FAMILIES: Array<[React.CSSProperties["fontFamily"], string]> = [
   ["serif", "Serif"],

@@ -5,7 +5,7 @@ import {
   List,
   ListItem,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Image from "next/image";
 import { useSnackbar } from "notistack";
@@ -13,7 +13,7 @@ import { useState } from "react";
 import {
   useCreateClassMutation,
   useDeleteTeacherMutation,
-  useGetClassListQuery,
+  useGetClassListQuery
 } from "src/redux/services/admin";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
@@ -23,15 +23,15 @@ interface ClassesSectionProps {
 }
 
 export default function ClassesSection({
-  schoolId,
-}: ClassesSectionProps): React.ReactElement | null {
+                                         schoolId
+                                       }: ClassesSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [createClass] = useCreateClassMutation();
   const [deleteTeacher] = useDeleteTeacherMutation();
   const [open, setOpen] = useState(false);
   const { data: classes, isLoading } = useGetClassListQuery(
     {
-      schoolId,
+      schoolId
     },
     { skip: !schoolId }
   );
@@ -40,12 +40,12 @@ export default function ClassesSection({
     try {
       await deleteTeacher({
         user_id,
-        schoolId,
+        schoolId
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error",
+        variant: "error"
       });
     }
   };
@@ -90,8 +90,8 @@ export default function ClassesSection({
               color: "common.white",
               bgcolor: "success.main",
               "&:hover": {
-                bgcolor: "success.main",
-              },
+                bgcolor: "success.main"
+              }
             }}
           >
             {" "}
@@ -112,31 +112,33 @@ export default function ClassesSection({
               Props={undefined}
             />
           ))}
-          {!isLoading && !classes?.length ? (
-            <ListItem
-              sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
-              disableGutters
-            >
-              <Image
-                alt="smile"
-                height="40"
-                width="40"
-                src="/assets/images/happy.png"
-              />
-              <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
-                LET'S CREATE
-              </Typography>
-              <Image
-                style={{
-                  transform: "rotate(-13deg)",
-                }}
-                alt="smile"
-                height="25"
-                width="25"
-                src="/assets/images/arrow.png"
-              />
-            </ListItem>
-          ) : null}
+          {!isLoading && !classes?.length
+            ? (
+              <ListItem
+                sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
+                disableGutters
+              >
+                <Image
+                  alt="smile"
+                  height="40"
+                  width="40"
+                  src="/assets/images/happy.png"
+                />
+                <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
+                  LET'S CREATE
+                </Typography>
+                <Image
+                  style={{
+                    transform: "rotate(-13deg)"
+                  }}
+                  alt="smile"
+                  height="25"
+                  width="25"
+                  src="/assets/images/arrow.png"
+                />
+              </ListItem>
+            )
+: null}
         </List>
       </Collapse>
     </>

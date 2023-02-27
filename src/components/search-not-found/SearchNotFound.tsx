@@ -11,7 +11,8 @@ export default function SearchNotFound({
   sx,
   ...other
 }: Props): React.ReactElement | null {
-  return query ? (
+  return query
+? (
     <Paper
       sx={{
         textAlign: "center",
@@ -29,7 +30,8 @@ export default function SearchNotFound({
         <br /> Try checking for typos or using complete words.
       </Typography>
     </Paper>
-  ) : (
+  )
+: (
     <Typography variant="body2" sx={sx}>
       Please enter keywords
     </Typography>

@@ -11,8 +11,8 @@ interface Props {
 }
 
 export default function SchoolProfileTab({
-  schoolId,
-}: Props): React.ReactElement | null {
+                                           schoolId
+                                         }: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
@@ -41,9 +41,11 @@ export default function SchoolProfileTab({
           </Stack>
         </Grid>
         <Grid item xs={12} md={8}>
-          {isLoading ? null : (
-            <SchoolProfileForm schoolProfile={data} schoolId={schoolId} />
-          )}
+          {isLoading
+            ? null
+: (
+              <SchoolProfileForm schoolProfile={data} schoolId={schoolId} />
+            )}
         </Grid>
       </Grid>
     </>

@@ -28,7 +28,8 @@ export default function RoleBasedGuard({
   const currentRole = user?.role; // admin;
 
   if (typeof roles !== "undefined" && !roles.includes(currentRole)) {
-    return hasContent ? (
+    return hasContent
+? (
       <Container component={MotionContainer} sx={{ textAlign: "center" }}>
         <m.div variants={varBounce().in}>
           <Typography variant="h3" paragraph>
@@ -46,7 +47,8 @@ export default function RoleBasedGuard({
           <ForbiddenIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
         </m.div>
       </Container>
-    ) : null;
+    )
+: null;
   }
 
   return <> {children} </>;

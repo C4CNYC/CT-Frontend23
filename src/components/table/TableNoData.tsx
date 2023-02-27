@@ -17,7 +17,8 @@ export default function TableNoData({
 
   return (
     <TableRow>
-      {isNotFound ? (
+      {isNotFound
+? (
         <TableCell colSpan={12}>
           <EmptyContent
             title={`${translate("messages_no_data")}`}
@@ -26,7 +27,8 @@ export default function TableNoData({
             }}
           />
         </TableCell>
-      ) : (
+      )
+: (
         <TableCell colSpan={12} sx={{ p: 0 }} />
       )}
     </TableRow>

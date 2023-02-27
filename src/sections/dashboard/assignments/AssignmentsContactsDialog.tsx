@@ -75,9 +75,11 @@ export default function AssignmentsContactsDialog({
       </Box>
 
       <DialogContent sx={{ p: 0 }}>
-        {isNotFound ? (
+        {isNotFound
+? (
           <SearchNotFound query={searchContacts} sx={{ mt: 3, mb: 10 }} />
-        ) : (
+        )
+: (
           <Scrollbar
             sx={{
               px: 2.5,

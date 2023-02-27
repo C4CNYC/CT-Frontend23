@@ -76,6 +76,7 @@ export default function CreateLessonDialog({
       });
       console.error(error, "test");
     }
+    // eslint-disable-next-line no-eval
     handleClose(eval);
   };
 

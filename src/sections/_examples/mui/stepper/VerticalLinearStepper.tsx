@@ -57,9 +57,11 @@ export default function VerticalLinearStepper(): React.ReactElement {
           <Step key={step.label}>
             <StepLabel
               optional={
-                index === 2 ? (
+                index === 2
+? (
                   <Typography variant="caption">Last step</Typography>
-                ) : null
+                )
+: null
               }
             >
               {step.label}

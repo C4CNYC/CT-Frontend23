@@ -25,9 +25,9 @@ interface SettingsFormProps {
 }
 
 export default function SettingsForm({
-  settings,
-  schoolId,
-}: SettingsFormProps): React.ReactElement {
+                                       settings,
+                                       schoolId
+                                     }: SettingsFormProps): React.ReactElement {
   const [updateSettings, { isLoading }] = useUpdateSchoolSettingsMutation();
   const { translate } = useLocales();
 
@@ -42,12 +42,12 @@ export default function SettingsForm({
     invite_only: settings?.invite_only ?? false,
     chat_allowed: settings?.chat_allowed ?? false,
     gallery_allowed: settings?.gallery_allowed ?? false,
-    global_gallery_allowed: settings?.global_gallery_allowed ?? false,
+    global_gallery_allowed: settings?.global_gallery_allowed ?? false
   };
 
   const methods = useForm<FormValuesProps>({
     // resolver: yupResolver(UpdateUserSchema),
-    defaultValues,
+    defaultValues
   });
   const { handleSubmit, formState, reset } = methods;
   const isFormEdited = formState.isDirty;
@@ -63,7 +63,7 @@ export default function SettingsForm({
         invite_only: data.invite_only,
         chat_allowed: data.chat_allowed,
         gallery_allowed: data.gallery_allowed,
-        global_gallery_allowed: data.global_gallery_allowed,
+        global_gallery_allowed: data.global_gallery_allowed
       }).unwrap();
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
@@ -83,7 +83,7 @@ export default function SettingsForm({
           {`${
             translate(
               "organizations.general_page.tabs.content.settings.content_settings"
-            ) ?? ""
+            )
           }`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>

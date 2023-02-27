@@ -28,7 +28,8 @@ export default function FileThumbnail({
   const format = fileFormat(path || preview);
 
   const renderContent =
-    format === "image" && imageView ? (
+    format === "image" && imageView
+? (
       <Box
         component="img"
         src={preview}
@@ -40,7 +41,8 @@ export default function FileThumbnail({
           ...imgSx,
         }}
       />
-    ) : (
+    )
+: (
       <Box
         component="img"
         src={fileThumb(format)}

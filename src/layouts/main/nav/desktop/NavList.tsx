@@ -109,9 +109,11 @@ function NavSubList({
       <StyledSubheader disableSticky>{subheader}</StyledSubheader>
 
       {items.map((item) =>
-        isDashboard ? (
+        isDashboard
+? (
           <NavItemDashboard key={item.title} item={item} onClick={onClose} />
-        ) : (
+        )
+: (
           <NavItem
             subItem
             key={item.title}

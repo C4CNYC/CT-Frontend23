@@ -124,7 +124,8 @@ export default function AssignmentsTaskCard({
                 top="0"
                 bottom="0"
               >
-                {duration?.hours ?? duration?.minutes ? (
+                {duration?.hours ?? duration?.minutes
+? (
                   <Tooltip
                     title={`Duration ( ${convertDuration(duration)} )`}
                     placement="right"
@@ -137,7 +138,8 @@ export default function AssignmentsTaskCard({
                       style={{ marginBottom: "7px" }}
                     />
                   </Tooltip>
-                ) : null}
+                )
+: null}
                 <Tooltip title="Linked to content" placement="right">
                   <NextImage
                     width="20"
