@@ -25,13 +25,13 @@ export default function FileThumbnail({
 }: FileIconProps): React.ReactElement | null {
   const { name = "", path = "", preview = "" } = fileData(file);
 
-  const format = fileFormat(path || preview);
+  const format = fileFormat((path || preview) as string);
 
   const renderContent =
     format === "image" && imageView ? (
       <Box
         component="img"
-        src={preview}
+        src={preview as string}
         sx={{
           width: 1,
           height: 1,

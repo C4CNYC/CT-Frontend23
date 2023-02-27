@@ -20,7 +20,7 @@ const iconUrl = (icon: string) => `/assets/icons/files/${icon}.svg`;
 
 // ----------------------------------------------------------------------
 
-export function fileFormat(fileUrl: string | undefined): string {
+export function fileFormat(fileUrl?: string): string {
   let format;
 
   switch (fileUrl?.includes(fileTypeByUrl(fileUrl))) {

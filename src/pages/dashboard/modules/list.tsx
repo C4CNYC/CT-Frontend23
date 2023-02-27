@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
@@ -60,6 +61,7 @@ export default function ModulesListPage(): React.ReactElement | string {
           }}
         >
           {data?.data.map((module, index) => (
+            // @ts-expect-error
             <ModuleCard key={index} module={module} />
           ))}
         </Box>

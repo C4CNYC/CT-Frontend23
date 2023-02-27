@@ -43,7 +43,7 @@ export default function NavList({
       document.body.style.overflow = "";
       document.body.style.padding = "";
       // Apply for Window
-      appBarEl.forEach((elem) => {
+      appBarEl.forEach((elem: any) => {
         elem.style.padding = "";
       });
     };

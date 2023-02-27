@@ -284,6 +284,8 @@ export function SettingsProvider({
   );
 
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     <SettingsContext.Provider value={memoizedValue}>
       {children}
     </SettingsContext.Provider>

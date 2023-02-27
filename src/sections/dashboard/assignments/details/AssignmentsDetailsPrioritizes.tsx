@@ -24,7 +24,7 @@ export default function AssignmentsDetailsPrioritizes({
     <RadioGroup
       row
       value={prioritize}
-      onChange={(e) => {
+      onChange={(e: any) => {
         onChangePrioritize(e.target.value);
       }}
     >

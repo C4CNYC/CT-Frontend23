@@ -40,8 +40,12 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
         <Avatar
           ref={ref}
           sx={{
-            color: theme.palette[colr]?.contrastText,
-            backgroundColor: theme.palette[colr]?.main,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            color: theme?.palette[colr]?.contrastText,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            backgroundColor: theme?.palette[colr]?.main,
             fontWeight: theme.typography.fontWeightMedium,
             ...sx,
           }}

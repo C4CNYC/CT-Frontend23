@@ -68,7 +68,7 @@ export default class MyDocument extends Document {
 
 // ----------------------------------------------------------------------
 
-MyDocument.getInitialProps = async (ctx): Promise<void> => {
+MyDocument.getInitialProps = async (ctx): Promise<any> => {
   const originalRenderPage = ctx.renderPage;
 
   const cache = createEmotionCache();

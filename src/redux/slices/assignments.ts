@@ -133,7 +133,7 @@ export function getBoard(data: Array<IAssignment & BaseResponseInterface>) {
 
 // ----------------------------------------------------------------------
 
-export function persistCard(columns: Record<string, IKanbanColumn>) {
+export function persistCard(columns: Record<string, any>) {
   return (dispatch: Dispatch) => {
     dispatch(slice.actions.persistCard(columns));
   };

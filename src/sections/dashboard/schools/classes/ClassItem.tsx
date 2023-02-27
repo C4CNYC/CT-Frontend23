@@ -100,7 +100,7 @@ export default function ClassItem({
             isEdit
             defaultValues={{ name: classes.name }}
             updateClass={() => {
-              updateClassByAdmin();
+              updateClassByAdmin(classes.name);
               handleClosePopover();
             }}
           >

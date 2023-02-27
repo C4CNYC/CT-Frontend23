@@ -54,7 +54,7 @@ export default function AuthLoginForm(): React.ReactElement {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await login(data.email, data.password, data.tenantName);
       router.replace(PATH_AFTER_LOGIN);

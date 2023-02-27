@@ -109,7 +109,6 @@ export default function ClassesSection({
               }}
               key={classes.id}
               classes={classes}
-              Props={undefined}
             />
           ))}
           {!isLoading && !classes?.length ? (

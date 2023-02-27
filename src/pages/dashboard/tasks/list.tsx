@@ -30,7 +30,7 @@ export default function TasksListPage(): React.ReactElement {
     }
 
     const { themeStretch } = useSettingsContext();
-    const { data, isLoading } = useGetLessonsQuery();
+    const { data, isLoading } = useGetLessonsQuery({});
 
     if (isLoading) return <CircularProgress/>;
     if (data?.data.length === 0) return <SearchNotFound/>;

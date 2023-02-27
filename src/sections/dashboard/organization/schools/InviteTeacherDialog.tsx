@@ -86,7 +86,7 @@ export default function InviteTeacherDialog({
               size="small"
               value={filters.email}
               placeholder="Email"
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setFilter("email", e.target.value);
               }}
             />

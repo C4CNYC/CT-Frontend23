@@ -66,12 +66,6 @@ export default function BankingRecentTransitions({
           <Table>
             <TableHeadCustom
               headLabel={tableLabels}
-              order={undefined}
-              orderBy={undefined}
-              onSort={undefined}
-              onSelectAllRows={undefined}
-              sx={undefined}
-              Props={undefined}
             />
 
             <TableBody>

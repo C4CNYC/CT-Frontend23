@@ -95,7 +95,7 @@ export default function CustomAutocomplete({
         fullWidth
         placeholder="Search"
         value={filterName}
-        onChange={(e) => {
+        onChange={(e: any) => {
           onFilterName(e.target.value);
         }}
         InputProps={{

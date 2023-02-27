@@ -22,6 +22,8 @@ export default function useDoubleClick({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   return useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
       clearClickTimeout();
