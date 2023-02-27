@@ -9,8 +9,8 @@ interface Props {
 }
 
 export default function SchoolContactsTab({
-                                            schoolId
-                                          }: Props): React.ReactElement | null {
+  schoolId,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolContactsQuery(
     { schoolId },
     { skip: !schoolId }
@@ -27,14 +27,12 @@ export default function SchoolContactsTab({
           backgroundColor: "transparent !important",
           mb: 3,
           height: 420,
-          position: "relative"
+          position: "relative",
         }}
       >
-        {isLoading
-          ? null
-: (
-            <ContactsForm contacts={data} schoolId={schoolId} />
-          )}
+        {isLoading ? null : (
+          <ContactsForm contacts={data} schoolId={schoolId} />
+        )}
       </Box>
     </>
   );

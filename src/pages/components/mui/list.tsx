@@ -187,11 +187,9 @@ export default function MUIListPage(): React.ReactElement {
                     <Iconify icon="ic:baseline-inbox" width={24} />
                   </ListItemIcon>
                   <ListItemText primary="Inbox" />
-                  {open
-? (
+                  {open ? (
                     <Iconify icon="ic:round-expand-less" width={24} />
-                  )
-: (
+                  ) : (
                     <Iconify icon="ic:round-expand-more" width={24} />
                   )}
                 </ListItemButton>

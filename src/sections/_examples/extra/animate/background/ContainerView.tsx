@@ -28,16 +28,14 @@ export default function ContainerView({
       }}
       {...other}
     >
-      {isKenburns
-? (
+      {isKenburns ? (
         <Box
           component={m.img}
           src={_mock.image.cover(7)}
           {...getVariant(selectVariant)}
           sx={{ width: 1, height: 1, objectFit: "cover" }}
         />
-      )
-: (
+      ) : (
         <Box
           component={m.div}
           {...getVariant(selectVariant)}

@@ -64,11 +64,9 @@ export default function LessonsListPage(): React.ReactElement {
 
         <FilterLessons filters={filters} setFilter={setFilter} />
 
-        {isFetching
-? (
+        {isFetching ? (
           <CircularProgress />
-        )
-: (
+        ) : (
           <Box
             gap={2}
             display="grid"

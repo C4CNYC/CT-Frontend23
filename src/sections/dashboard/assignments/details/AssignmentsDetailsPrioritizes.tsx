@@ -60,11 +60,9 @@ export default function AssignmentsDetailsPrioritizes({
                 justifyContent="center"
                 sx={{ width: 16, height: 16, mr: 0.5 }}
               >
-                {selected
-? (
+                {selected ? (
                   <Iconify icon="eva:checkmark-fill" width={16} />
-                )
-: (
+                ) : (
                   <Box
                     sx={{
                       width: 8,

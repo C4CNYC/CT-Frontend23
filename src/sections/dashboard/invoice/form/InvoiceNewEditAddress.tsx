@@ -132,15 +132,13 @@ export default function InvoiceNewEditAddress(): React.ReactElement {
           />
         </Stack>
 
-        {invoiceTo
-? (
+        {invoiceTo ? (
           <AddressInfo
             name={invoiceTo.name}
             address={invoiceTo.address}
             phone={invoiceTo.phone}
           />
-        )
-: (
+        ) : (
           <Typography typography="caption" sx={{ color: "error.main" }}>
             {(errors.invoiceTo as any)?.message}
           </Typography>

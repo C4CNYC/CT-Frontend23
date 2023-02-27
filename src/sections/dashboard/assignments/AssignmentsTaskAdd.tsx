@@ -107,8 +107,7 @@ export default function AssignmentsTaskAdd({
                 </IconButton>
               </Tooltip>
 
-              {isSelectedValuePicker
-? (
+              {isSelectedValuePicker ? (
                 <Box
                   onClick={onOpenPicker}
                   sx={{
@@ -119,8 +118,7 @@ export default function AssignmentsTaskAdd({
                 >
                   {shortLabel}
                 </Box>
-              )
-: (
+              ) : (
                 <Tooltip title="Due date">
                   <IconButton size="small" onClick={onOpenPicker}>
                     <Iconify icon="eva:calendar-fill" />

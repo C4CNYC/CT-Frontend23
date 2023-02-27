@@ -18,7 +18,6 @@ import parse from "autosuggest-highlight/parse";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import * as React from "react";
-import { FcFolder } from "react-icons/fc";
 import { useFilters } from "src/hooks/useFilters";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";

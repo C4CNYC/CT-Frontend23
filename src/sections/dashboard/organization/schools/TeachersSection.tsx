@@ -5,7 +5,7 @@ import {
   List,
   ListItem,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import InviteTeacherDialog from "@sections/dashboard/organization/schools/InviteTeacherDialog";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import {
   useDeleteTeacherMutation,
-  useGetTeacherListQuery
+  useGetTeacherListQuery,
 } from "src/redux/services/admin";
 import TeacherItem from "./TeacherItem";
 
@@ -22,8 +22,8 @@ interface TeacherSectionProps {
 }
 
 export default function TeacherSection({
-                                         schoolId
-                                       }: TeacherSectionProps): React.ReactElement | null {
+  schoolId,
+}: TeacherSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
   const [deleteTeacher] = useDeleteTeacherMutation();
@@ -31,7 +31,7 @@ export default function TeacherSection({
   const [openShare, setOpenShare] = useState(false);
   const { data: teachers, isLoading } = useGetTeacherListQuery(
     {
-      schoolId
+      schoolId,
     },
     { skip: !schoolId }
   );
@@ -42,12 +42,12 @@ export default function TeacherSection({
     try {
       await deleteTeacher({
         user_id,
-        schoolId
+        schoolId,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
-        variant: "error"
+        variant: "error",
       });
     }
   };
@@ -86,8 +86,8 @@ export default function TeacherSection({
             color: "common.white",
             bgcolor: "success.main",
             "&:hover": {
-              bgcolor: "success.main"
-            }
+              bgcolor: "success.main",
+            },
           }}
         >
           <Iconify icon="eva:plus-fill" />
@@ -104,33 +104,31 @@ export default function TeacherSection({
               person={person}
             />
           ))}
-          {!isLoading && !teachers?.data.length
-            ? (
-              <ListItem
-                sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
-                disableGutters
-              >
-                <Image
-                  alt="smile"
-                  height="40"
-                  width="40"
-                  src="/assets/images/happy.png"
-                />
-                <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
-                  LET'S INVITE
-                </Typography>
-                <Image
-                  style={{
-                    transform: "rotate(-13deg)"
-                  }}
-                  alt="smile"
-                  height="25"
-                  width="25"
-                  src="/assets/images/arrow.png"
-                />
-              </ListItem>
-            )
-: null}
+          {!isLoading && !teachers?.data.length ? (
+            <ListItem
+              sx={{ justifyContent: "center", pr: 1.5, pt: 2 }}
+              disableGutters
+            >
+              <Image
+                alt="smile"
+                height="40"
+                width="40"
+                src="/assets/images/happy.png"
+              />
+              <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
+                LET'S INVITE
+              </Typography>
+              <Image
+                style={{
+                  transform: "rotate(-13deg)",
+                }}
+                alt="smile"
+                height="25"
+                width="25"
+                src="/assets/images/arrow.png"
+              />
+            </ListItem>
+          ) : null}
         </List>
       </Collapse>
       <InviteTeacherDialog
