@@ -1,8 +1,9 @@
+import FooterHome from "@components/footer-home";
 import InfoSectionHome from "@components/info-section-home";
 import MainSectionHome from "@components/main-section-home";
 import RecentAssignments from "@components/recent-assignments ";
 import RecentLessons from "@components/recent-lessons";
-import Slider from "@components/slider";
+import SliderDemoMui from "@components/slider/SliderDemoMui";
 import WeeklyActivities from "@components/weekly-activities";
 import WelcomeSection from "@components/welcome-section";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
@@ -14,7 +15,7 @@ export default function Home() {
       <DashboardLayout>
         <Stack display="flex" flexDirection="row">
           <WelcomeSection />
-          <Slider />
+          <SliderDemoMui />
         </Stack>
 
         <MainSectionHome />
@@ -32,6 +33,8 @@ export default function Home() {
           <RecentLessons />
           <RecentAssignments />
         </Stack>
+        <FooterHome />
+      
       </DashboardLayout>
     </>
   );

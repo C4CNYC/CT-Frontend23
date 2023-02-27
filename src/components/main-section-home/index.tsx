@@ -78,7 +78,9 @@ export default function MainSectionHome() {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <MenuItem onClick={handleClose} disableRipple>2</MenuItem>
+              <MenuItem onClick={handleClose} disableRipple>
+                2
+              </MenuItem>
             </Menu>
           </Stack>
         </Stack>

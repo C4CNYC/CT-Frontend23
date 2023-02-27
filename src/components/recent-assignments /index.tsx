@@ -13,7 +13,7 @@ export default function RecentAssignments() {
         }}
       >
         <Stack display="flex" direction="row" alignItems="center">
-          <Typography variant="h6" fontWeight="600" fontSize="18px">
+          <Typography variant="h6" fontWeight="600" fontSize="18px" mr="8px">
             Recent Assignments
           </Typography>
           <Typography
@@ -21,16 +21,22 @@ export default function RecentAssignments() {
             fontWeight="400"
             fontSize="16px"
             color="#637381"
-            mr="58px"
+            mr="50px"
           >
             (40)
           </Typography>
           <AiFillInfoCircle size={30} fill="rgba(145, 158, 171, 0.16)" />
         </Stack>
-        <Stack>
+        <Stack display="flex" direction="row" alignItems="center" mt="24px">
           <Avatar />
-          <Typography variant="subtitle2">Husna Navarro</Typography>
-          <Typography>avery43@hotmail.com</Typography>
+          <Stack ml="16px" mr="87px">
+            <Typography variant="subtitle2" fontWeight="600" fontSize="14px">
+              Husna Navarro
+            </Typography>
+            <Typography variant="body2" fontWeight="400" fontSize="14px">
+              avery43@hotmail.com
+            </Typography>
+          </Stack>
           <CircleIcon sx={{ fontSize: "8px", color: "#54D62C" }} />
         </Stack>
       </Card>

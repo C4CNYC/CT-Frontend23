@@ -86,7 +86,7 @@ export default function CardInfo() {
           </Stack>
         </Stack>
       </Card>
-      
+
       {/* card2 */}
 
       <Card
