@@ -1,19 +1,19 @@
 import "remirror/styles/all.css";
 
-import React from "react";
 import {
   CommandButtonGroup,
   CommandMenuItem,
   DropdownButton,
   useActive,
-  useCommands
+  useCommands,
 } from "@remirror/react";
+import React from "react";
 
 const TEXT_CASES: Array<[React.CSSProperties["textTransform"], string]> = [
   ["none", "None"],
   ["uppercase", "Upper"],
   ["lowercase", "Lower"],
-  ["capitalize", "Capitalize"]
+  ["capitalize", "Capitalize"],
 ];
 
 export default function TextCaseSelect() {
@@ -26,7 +26,9 @@ export default function TextCaseSelect() {
           <CommandMenuItem
             key={casing}
             commandName="setTextCase"
-            onSelect={() => { setTextCase(casing as string); }}
+            onSelect={() => {
+              setTextCase(casing as string);
+            }}
             enabled={setTextCase.enabled(casing as string)}
             active={textCase({ casing })}
             label={<span style={{ textTransform: casing }}>{label}</span>}
@@ -34,7 +36,9 @@ export default function TextCaseSelect() {
         ))}
         <CommandMenuItem
           commandName="setTextCase"
-          onSelect={() => { setTextCase("small-caps"); }}
+          onSelect={() => {
+            setTextCase("small-caps");
+          }}
           enabled={setTextCase.enabled("small-caps")}
           active={textCase({ casing: "small-caps" })}
           label={<span style={{ fontVariant: "small-caps" }}>Small caps</span>}
@@ -42,4 +46,4 @@ export default function TextCaseSelect() {
       </DropdownButton>
     </CommandButtonGroup>
   );
-};
+}

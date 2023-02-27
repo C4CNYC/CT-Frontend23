@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import { TfiSave } from "react-icons/tfi";
 
 interface Props {
-  onClick: VoidFunction
+  onClick: VoidFunction;
 }
 
 export default function SaveButton({ onClick }: Props): JSX.Element {
@@ -17,7 +17,7 @@ export default function SaveButton({ onClick }: Props): JSX.Element {
         sx={{ ml: "auto!important", width: 60 }}
         size="small"
       >
-        <TfiSave/>
+        <TfiSave />
       </Button>
     </Tooltip>
   );

@@ -80,8 +80,7 @@ export function RHFUpload({
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) =>
-        multiple
-? (
+        multiple ? (
           <Upload
             multiple
             accept={{ "image/*": [] }}
@@ -96,8 +95,7 @@ export function RHFUpload({
             }
             {...other}
           />
-        )
-: (
+        ) : (
           <Upload
             accept={{ "image/*": [] }}
             file={field.value}

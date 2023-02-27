@@ -11,7 +11,7 @@ import {
   MenuItem,
   Stack,
   TableCell,
-  TableRow
+  TableRow,
 } from "@mui/material";
 import { useState } from "react";
 import { IUser } from "src/redux/services/interfaces/user.interface";
@@ -28,12 +28,12 @@ interface Props {
 }
 
 export default function UserTableRow({
-                                       row,
-                                       selected,
-                                       onEditRow,
-                                       onSelectRow,
-                                       onDeleteRow
-                                     }: Props): React.ReactElement | null {
+  row,
+  selected,
+  onEditRow,
+  onSelectRow,
+  onDeleteRow,
+}: Props): React.ReactElement | null {
   const { first_name, last_name, email, verified, active, avatar, role, id } =
     row;
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -82,13 +82,11 @@ export default function UserTableRow({
             last_name?.charAt(0).toUpperCase() + last_name?.slice(1)}
         </TableCell>
 
-        {role
-          ? (
-            <TableCell align="left" sx={{ textTransform: "capitalize" }}>
-              <RoleSelector user_id={id} role={role} email={email} />
-            </TableCell>
-          )
-          : null}
+        {role ? (
+          <TableCell align="left" sx={{ textTransform: "capitalize" }}>
+            <RoleSelector user_id={id} role={role} email={email} />
+          </TableCell>
+        ) : null}
 
         <TableCell align="center">
           <Iconify
@@ -96,7 +94,7 @@ export default function UserTableRow({
             sx={{
               width: 20,
               height: 20,
-              color: !verified ? "warning.main" : "success.main"
+              color: !verified ? "warning.main" : "success.main",
             }}
           />
         </TableCell>

@@ -31,14 +31,12 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
     const colr = color ?? colorByName;
 
     const renderContent =
-      colr === "default"
-? (
+      colr === "default" ? (
         <Avatar ref={ref} sx={sx} {...other}>
           {name && charAtName}
           {children}
         </Avatar>
-      )
-: (
+      ) : (
         <Avatar
           ref={ref}
           sx={{
@@ -54,8 +52,7 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
         </Avatar>
       );
 
-    return BadgeProps
-? (
+    return BadgeProps ? (
       <Badge
         overlap="circular"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -63,8 +60,7 @@ const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
       >
         {renderContent}
       </Badge>
-    )
-: (
+    ) : (
       renderContent
     );
   }

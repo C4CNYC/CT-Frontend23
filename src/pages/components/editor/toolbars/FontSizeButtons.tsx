@@ -1,12 +1,12 @@
 import "remirror/styles/all.css";
 
-import React from "react";
 import {
   CommandMenuItem,
   DropdownButton,
   useActive,
-  useCommands
+  useCommands,
 } from "@remirror/react";
+import React from "react";
 
 const FONT_SIZES = ["8", "10", "12", "14", "16", "18", "24", "30"];
 
@@ -31,4 +31,4 @@ export default function FontSizeButtons() {
       ))}
     </DropdownButton>
   );
-};
+}

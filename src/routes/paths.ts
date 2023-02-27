@@ -47,6 +47,7 @@ export const PATH_DASHBOARD = {
   },
   modules: {
     root: path(ROOTS_DASHBOARD, "/modules/list"),
+    setting: (id: string) => path(ROOTS_DASHBOARD, `/modules/${id}/setting`),
   },
   lessons: {
     root: path(ROOTS_DASHBOARD, "/lessons/list"),

@@ -88,11 +88,9 @@ export default function InvoiceAddressListDialog({
         />
       </Stack>
 
-      {isNotFound
-? (
+      {isNotFound ? (
         <SearchNotFound query={searchAddress} sx={{ px: 3, pt: 5, pb: 10 }} />
-      )
-: (
+      ) : (
         <Scrollbar sx={{ p: 1.5, pt: 0, maxHeight: 80 * 8 }}>
           {dataFiltered.map((address) => (
             <ListItemButton

@@ -50,11 +50,7 @@ export default function AddIframeButton(): JSX.Element {
   );
 
   return (
-    <Stack
-      direction="row"
-      style={{ marginLeft: "10px" }}
-      ref={ref}
-    >
+    <Stack direction="row" style={{ marginLeft: "10px" }} ref={ref}>
       {edit && (
         <div
           style={{

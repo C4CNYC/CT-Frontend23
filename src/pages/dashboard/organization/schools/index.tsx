@@ -69,9 +69,7 @@ export default function Index(): React.ReactElement {
             onFilterName={handleFilterName}
           />
         </Stack>
-        {isLoading ?? !data?.data
-? null
-: (
+        {isLoading ?? !data?.data ? null : (
           <SchoolGridView
             table={table}
             data={data?.data}

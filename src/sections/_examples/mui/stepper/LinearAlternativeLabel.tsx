@@ -80,8 +80,7 @@ export default function LinearAlternativeLabel(): React.ReactElement {
           );
         })}
       </Stepper>
-      {activeStep === steps.length
-? (
+      {activeStep === steps.length ? (
         <>
           <Paper
             sx={{
@@ -101,8 +100,7 @@ export default function LinearAlternativeLabel(): React.ReactElement {
             <Button onClick={handleReset}>Reset</Button>
           </Box>
         </>
-      )
-: (
+      ) : (
         <>
           <Paper
             sx={{

@@ -1,80 +1,88 @@
-import React from "react";
 import { Divider } from "@mui/material";
 import { Stack } from "@mui/system";
+import { FileExtension } from "@remirror/extension-file";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {
   TableComponents,
-  TableExtension
+  TableExtension,
 } from "@remirror/extension-react-tables";
 import {
   BasicFormattingButtonGroup,
   CalloutTypeButtonGroup,
+  CommandButtonGroup,
+  DecreaseFontSizeButton,
   FloatingToolbar,
   HeadingLevelButtonGroup,
   HistoryButtonGroup,
+  IncreaseFontSizeButton,
   IndentationButtonGroup,
   InsertHorizontalRuleButton,
   Remirror,
   TextAlignmentButtonGroup,
   ThemeProvider,
   ToggleBlockquoteButton,
+  ToggleBulletListButton,
   ToggleCodeBlockButton,
   ToggleColumnsButton,
-  Toolbar,
-  useRemirror,
-  CommandButtonGroup,
-  DecreaseFontSizeButton,
-  IncreaseFontSizeButton,
+  ToggleOrderedListButton,
   ToggleStrikeButton,
   ToggleSubscriptButton,
   ToggleSuperscriptButton,
-  ToggleBulletListButton,
-  ToggleOrderedListButton, ToggleTaskListButton
+  ToggleTaskListButton,
+  Toolbar,
+  useRemirror,
 } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
+import React from "react";
 import {
   BlockquoteExtension,
   BoldExtension,
+  BulletListExtension,
+  CalloutExtension,
   CodeBlockExtension,
   CodeExtension,
   ColumnsExtension,
+  EmojiExtension,
   FontFamilyExtension,
+  FontSizeExtension,
   HeadingExtension,
   HorizontalRuleExtension,
   IframeExtension,
   ImageAttributes,
   ImageExtension,
   ItalicExtension,
-  NodeFormattingExtension,
-  TextColorExtension,
-  UnderlineExtension,
-  CalloutExtension,
   LinkExtension,
-  FontSizeExtension,
-  StrikeExtension,
-  WhitespaceExtension,
-  TextHighlightExtension,
-  TextCaseExtension, SupExtension, SubExtension, ShortcutsExtension,
-  BulletListExtension,
+  NodeFormattingExtension,
   OrderedListExtension,
-  TaskListExtension, EmojiExtension
+  ShortcutsExtension,
+  StrikeExtension,
+  SubExtension,
+  SupExtension,
+  TaskListExtension,
+  TextCaseExtension,
+  TextColorExtension,
+  TextHighlightExtension,
+  UnderlineExtension,
+  WhitespaceExtension,
 } from "remirror/extensions";
 import "remirror/styles/all.css";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import SaveButton from "./SaveButton";
 import {
   AddIframeButton,
   AddYoutubeButton,
   FontFamilyButtons,
-  TablePicker,
-  TextColorPicker,
-  TextBgColorPicker,
   FontSizeButtons,
-  TextCaseSelect
+  TablePicker,
+  TextBgColorPicker,
+  TextCaseSelect,
+  TextColorPicker,
 } from "./toolbars";
-import SaveButton from "./SaveButton";
-import { FileExtension } from "@remirror/extension-file";
+
+import jsx from "refractor/lang/jsx.js";
+import typescript from "refractor/lang/typescript.js";
 
 interface FileWithProgress {
   file: File;
@@ -88,44 +96,48 @@ export declare type DelayedPromiseCreator<Value> = (
 ) => Promise<Value>;
 declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
 
-type Extensions = HeadingExtension |
-  BoldExtension |
-  ItalicExtension |
-  BlockquoteExtension |
-  UnderlineExtension |
-  ImageExtension |
-  CodeBlockExtension |
-  CodeExtension |
-  ColumnsExtension |
-  IframeExtension |
-  FontFamilyExtension |
-  HorizontalRuleExtension |
-  NodeFormattingExtension |
-  TextColorExtension |
-  ReactComponentExtension |
-  TableExtension |
-  FileExtension |
-  CalloutExtension |
-  LinkExtension |
-  FontSizeExtension |
-  StrikeExtension |
-  WhitespaceExtension |
-  TextHighlightExtension |
-  TextCaseExtension |
-  SupExtension |
-  SubExtension |
-  ShortcutsExtension |
-  BulletListExtension |
-  OrderedListExtension |
-  TaskListExtension |
-  EmojiExtension;
+type Extensions =
+  | HeadingExtension
+  | BoldExtension
+  | ItalicExtension
+  | BlockquoteExtension
+  | UnderlineExtension
+  | ImageExtension
+  | CodeBlockExtension
+  | CodeExtension
+  | ColumnsExtension
+  | IframeExtension
+  | FontFamilyExtension
+  | HorizontalRuleExtension
+  | NodeFormattingExtension
+  | TextColorExtension
+  | ReactComponentExtension
+  | TableExtension
+  | FileExtension
+  | CalloutExtension
+  | LinkExtension
+  | FontSizeExtension
+  | StrikeExtension
+  | WhitespaceExtension
+  | TextHighlightExtension
+  | TextCaseExtension
+  | SupExtension
+  | SubExtension
+  | ShortcutsExtension
+  | BulletListExtension
+  | OrderedListExtension
+  | TaskListExtension
+  | EmojiExtension;
 
 interface Props {
   lessonId: string;
   data?: ILessonContent & BaseResponseInterface;
 }
 
-export default function MyEditor({ lessonId, data }: Props): React.ReactElement {
+export default function MyEditor({
+  lessonId,
+  data,
+}: Props): React.ReactElement {
   const [updateLessonContent] = useUpdateLessonContentMutation();
   const { uploadToS3 } = useS3Upload();
   const extensions = (): Extensions[] => [
@@ -135,7 +147,10 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
     new UnderlineExtension(),
     new ImageExtension({ enableResizing: true, uploadHandler }),
     new BlockquoteExtension(),
-    new CodeBlockExtension(),
+    new CodeBlockExtension({
+      defaultLanguage: "js",
+      supportedLanguages: [typescript, jsx],
+    }),
     new CodeExtension(),
     new ColumnsExtension(),
     new IframeExtension(),
@@ -157,7 +172,7 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
     new ShortcutsExtension(),
     new BulletListExtension(),
     new OrderedListExtension(),
-    new TaskListExtension()
+    new TaskListExtension(),
   ];
 
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -183,13 +198,13 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
   const { manager, state, setState } = useRemirror({
     extensions,
     content: data?.body ? JSON.parse(data?.body) : "",
-    stringHandler: "html"
+    stringHandler: "html",
   });
 
   const saveContent = async (): Promise<void> => {
     updateLessonContent({
       lessonId,
-      body: JSON.stringify(state)
+      body: JSON.stringify(state),
     });
   };
 
@@ -244,7 +259,7 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
             scrollbarWidth: "none",
             position: "sticky",
             zIndex: 99,
-            top: 0
+            top: 0,
           }}
         >
           <HistoryButtonGroup />
@@ -278,13 +293,14 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
           sx={{
             "&>div": {
               borderRadius: "5px",
-              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)"
-            }
+              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)",
+            },
           }}
           style={{
             zIndex: 9999999,
-            padding: 10
-          }}>
+            padding: 10,
+          }}
+        >
           <Stack
             borderRadius="5px"
             display="flex"
@@ -294,24 +310,43 @@ export default function MyEditor({ lessonId, data }: Props): React.ReactElement 
             alignContent="center"
           >
             <BasicFormattingButtonGroup />
-            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <Divider
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+              orientation="vertical"
+              flexItem
+            />
             <CommandButtonGroup>
               <DecreaseFontSizeButton />
               <FontSizeButtons />
               <IncreaseFontSizeButton />
             </CommandButtonGroup>
-            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <Divider
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+              orientation="vertical"
+              flexItem
+            />
             <Toolbar>
               <ToggleSuperscriptButton />
               <ToggleSubscriptButton />
               <TextCaseSelect />
-
             </Toolbar>
-            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <Divider
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+              orientation="vertical"
+              flexItem
+            />
             <ToggleStrikeButton />
-            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <Divider
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+              orientation="vertical"
+              flexItem
+            />
             <TextAlignmentButtonGroup />
-            <Divider sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }} orientation="vertical" flexItem />
+            <Divider
+              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+              orientation="vertical"
+              flexItem
+            />
             <FontFamilyButtons />
           </Stack>
         </FloatingToolbar>

@@ -17,11 +17,12 @@ import {
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { useState } from "react";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { ICourse } from "../../../../@types/courses";
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
 
 interface Props {
-  course: ICourse;
+  course: ICourse & BaseResponseInterface;
 }
 
 export default function CourseCard({
@@ -42,6 +43,8 @@ export default function CourseCard({
   };
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation();
+    event.preventDefault();
     setOpenPopover(event.currentTarget);
   };
 
@@ -76,7 +79,7 @@ export default function CourseCard({
           },
         }}
         component="a"
-        href={`${PATH_DASHBOARD.modules.root}?id=${course.id as string}`}
+        href={`${PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
         <Stack
           direction="row"

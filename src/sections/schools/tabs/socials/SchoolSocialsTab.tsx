@@ -10,8 +10,8 @@ interface Props {
 }
 
 export default function SchoolSocialsTab({
-                                           schoolId
-                                         }: Props): React.ReactElement | null {
+  schoolId,
+}: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
@@ -29,17 +29,15 @@ export default function SchoolSocialsTab({
           backgroundColor: "transparent !important",
           mb: 3,
           height: 420,
-          position: "relative"
+          position: "relative",
         }}
       >
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Card sx={{ p: 3 }}>
-              {isLoading
-                ? null
-                : (
-                  <SocialsForm socialLinks={data.socials} schoolId={schoolId} />
-                )}
+              {isLoading ? null : (
+                <SocialsForm socialLinks={data.socials} schoolId={schoolId} />
+              )}
               <Typography variant="h6" sx={{ mb: 2 }}>
                 Your networks
               </Typography>

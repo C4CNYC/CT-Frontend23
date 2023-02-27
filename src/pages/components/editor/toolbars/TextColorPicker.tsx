@@ -38,10 +38,7 @@ export default function TextColorPicker(): JSX.Element {
   const ref = useDetectClickOutside({ onTriggered: closeMenu });
 
   return (
-    <Stack
-      direction="row"
-      ref={ref}
-    >
+    <Stack direction="row" ref={ref}>
       {edit && (
         <div
           style={{
