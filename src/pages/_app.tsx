@@ -12,9 +12,6 @@ import "yet-another-react-lightbox/styles.css";
 // map
 import "mapbox-gl/dist/mapbox-gl.css";
 
-// editor
-// import "react-quill/dist/quill.snow.css";
-
 // slick-carousel
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -49,15 +46,7 @@ import ProgressBar from "../components/progress-bar";
 import { SettingsProvider, ThemeSettings } from "../components/settings";
 import SnackbarProvider from "../components/snackbar";
 
-// Check our docs
-// https://docs.minimals.cc/authentication/ts-version
-
 import { AuthProvider } from "../auth/JwtContext";
-// import { AuthProvider } from '../auth/Auth0Context';
-// import { AuthProvider } from '../auth/FirebaseContext';
-// import { AuthProvider } from '../auth/AwsCognitoContext';
-
-// ----------------------------------------------------------------------
 
 const clientSideEmotionCache = createEmotionCache();
 

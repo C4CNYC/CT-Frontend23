@@ -1,95 +1,31 @@
-import { m, useScroll, useSpring } from "framer-motion";
-// next
+
+import { PATH_DASHBOARD, PATH_AUTH } from "@routes/paths";
 import Head from "next/head";
-// @mui
-import { Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// layouts
-import MainLayout from "../layouts/main";
-// sections
-import {
-  HomeAdvertisement,
-  HomeCleanInterfaces,
-  HomeColorPresets,
-  HomeDarkMode,
-  HomeForDesigner,
-  HomeHero,
-  HomeHugePackElements,
-  HomeLookingFor,
-  HomeMinimal,
-  HomePricingPlans,
-} from "../sections/home";
-
-// ----------------------------------------------------------------------
-
-HomePage.getLayout = (page: React.ReactElement) => (
-  <MainLayout> {page} </MainLayout>
-);
-
-// ----------------------------------------------------------------------
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
 
 export default function HomePage(): React.ReactElement {
-  const theme = useTheme();
+  const { isAuthenticated, user } = useAuthContext();
 
-  const { scrollYProgress } = useScroll();
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  const progress = (
-    <m.div
-      style={{
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 3,
-        zIndex: 1999,
-        position: "fixed",
-        transformOrigin: "0%",
-        backgroundColor: theme.palette.primary.main,
-        scaleX,
-      }}
-    />
-  );
+  const { push } = useRouter();
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      push([Role.Owner, Role.Admin].includes(user?.role)
+        ? PATH_DASHBOARD.organization.general
+        : PATH_DASHBOARD.school.general
+      );
+    } else {
+      push(PATH_AUTH.login)
+    }
+  }, [isAuthenticated]);
 
   return (
     <>
       <Head>
-        <title> The starting point for your next project | Minimal UI</title>
+        <title>CodeTribe</title>
       </Head>
-
-      {progress}
-
-      <HomeHero />
-
-      <Box
-        sx={{
-          overflow: "hidden",
-          position: "relative",
-          bgcolor: "background.default",
-        }}
-      >
-        <HomeMinimal />
-
-        <HomeHugePackElements />
-
-        <HomeForDesigner />
-
-        <HomeDarkMode />
-
-        <HomeColorPresets />
-
-        <HomeCleanInterfaces />
-
-        <HomePricingPlans />
-
-        <HomeLookingFor />
-
-        <HomeAdvertisement />
-      </Box>
     </>
   );
 }
