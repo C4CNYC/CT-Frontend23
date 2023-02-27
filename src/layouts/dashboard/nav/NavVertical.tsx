@@ -11,7 +11,7 @@ import NavToggleButton from "./NavToggleButton";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import UserSection from "src/components/user-section";
+import UserSection from "@sections/home/user-section";
 
 // ----------------------------------------------------------------------
 

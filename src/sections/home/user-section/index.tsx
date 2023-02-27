@@ -1,7 +1,7 @@
+import CustomAvatar from "@components/custom-avatar/CustomAvatar";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/system/Stack";
 import { useAuthContext } from "src/auth/useAuthContext";
-import CustomAvatar from "../custom-avatar/CustomAvatar";
 
 export default function UserSection() {
   const { user } = useAuthContext();

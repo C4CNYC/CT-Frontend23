@@ -91,13 +91,13 @@ export default function MainSectionHome() {
           p="24px"
         >
           <Stack ml="24px">
-            <CardModule type="lesson" id="some" />
+            <CardModule type="lesson" id="some" image="/assets/images/card-image.png"/>
           </Stack>
           <Stack mr="-17px" ml="-17px">
-            <CardModule type="course" id="some" />
+            <CardModule type="course" id="some" image="/assets/images/card-image.png"/>
           </Stack>
           <Stack mr="24px">
-            <CardModule type="module" id="some" />
+            <CardModule type="module" id="some" image="/assets/images/card-image.png"/>
           </Stack>
         </Stack>
       </Stack>

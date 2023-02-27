@@ -14,9 +14,10 @@ import _ from "lodash";
 type Props = {
   type: "lesson" | "course" | "module";
   id: string;
+  image: string;
 };
 
-export default function CardModule({ type, id }: Props) {
+export default function CardModule({ type, id, image }: Props) {
   return (
     <>
       <Container maxWidth={false}>
@@ -101,7 +102,7 @@ export default function CardModule({ type, id }: Props) {
             </Stack>
             <Stack mt="68px" ml="34px">
               <Image
-                src="/assets/images/card-image.png"
+                src={image}
                 alt={""}
                 width="104"
                 height="105"

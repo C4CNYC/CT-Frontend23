@@ -1,11 +1,11 @@
 import FooterHome from "@components/footer-home";
-import InfoSectionHome from "@components/info-section-home";
-import MainSectionHome from "@components/main-section-home";
-import RecentAssignments from "@components/recent-assignments ";
-import RecentLessons from "@components/recent-lessons";
+import InfoSectionHome from "@sections/home/info-section-home";
+import MainSectionHome from "@sections/home/main-section-home";
+import RecentAssignments from "@sections/home/recent-assignments ";
+import RecentLessons from "@sections/home/recent-lessons";
 import SliderDemoMui from "@components/slider/SliderDemoMui";
-import WeeklyActivities from "@components/weekly-activities";
-import WelcomeSection from "@components/welcome-section";
+import WeeklyActivities from "@sections/home/weekly-activities";
+import WelcomeSection from "@sections/home/welcome-section";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import Stack from "@mui/material/Stack";
 
