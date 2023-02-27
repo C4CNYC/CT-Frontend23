@@ -18,10 +18,7 @@ export default function OrganizationStep({
   const router = useRouter();
   const [updateOrg, { isLoading }] = useUpdateOrganizationMutation();
   const theme = useTheme();
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data: any): Promise<void> => {
     try {

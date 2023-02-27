@@ -24,7 +24,7 @@ export interface OrganizationSchoolRequest {
 export interface SchoolProfile {
   email?: string;
   name?: string;
-  school_id: string;
+  schoolId: string;
   country?: string;
   address?: string;
   city?: string;
@@ -44,7 +44,7 @@ export interface SchoolSocials {
 }
 
 export interface SchoolSettings {
-  school_id: string;
+  schoolId: string;
   language?: string;
   marketplace_content_allowed: boolean;
   github_login_allowed: boolean;
@@ -56,7 +56,7 @@ export interface SchoolSettings {
 }
 
 export interface SchoolContacts {
-  school_id: string;
+  schoolId: string;
   email: string;
   name: string;
   phone: string;
@@ -75,7 +75,7 @@ export interface OrganizationSchoolResponse extends BaseResponseInterface {
 }
 
 export interface AddTeacherRequest {
-  school_id: string;
+  schoolId: string;
   user_id: string;
 }
 

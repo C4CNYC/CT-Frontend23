@@ -15,7 +15,7 @@ interface Props {
   selectedTime: number;
   onChangeTime: (value: number) => void;
   onChangeAllDays: (value: boolean) => void;
-};
+}
 
 function ControlPanel({
   startTime,
@@ -23,9 +23,8 @@ function ControlPanel({
   allDays,
   selectedTime,
   onChangeTime,
-  onChangeAllDays
-}:
-Props): React.ReactElement | null {
+  onChangeAllDays,
+}: Props): React.ReactElement | null {
   const day = 24 * 60 * 60 * 1000;
 
   const days = Math.round((endTime - startTime) / day);
@@ -57,7 +56,9 @@ Props): React.ReactElement | null {
         <Switch
           size="small"
           checked={allDays}
-          onChange={(event) => { onChangeAllDays(event.target.checked); }}
+          onChange={(event) => {
+            onChangeAllDays(event.target.checked);
+          }}
         />
       </Box>
 

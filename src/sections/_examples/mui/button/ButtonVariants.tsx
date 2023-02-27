@@ -1,6 +1,6 @@
 // @mui
-import { Button } from "@mui/material";
 import { LoadingButton, Masonry } from "@mui/lab";
+import { Button } from "@mui/material";
 // components
 import Iconify from "@components/iconify";
 //
@@ -32,9 +32,11 @@ const SIZES = ["small", "medium", "large"] as const;
 
 interface Props {
   variant?: "text" | "contained" | "outlined" | "soft";
-};
+}
 
-export default function ButtonVariant({ variant = "text" }: Props): React.ReactElement | null {
+export default function ButtonVariant({
+  variant = "text",
+}: Props): React.ReactElement | null {
   return (
     <Masonry columns={2} spacing={3}>
       <Block title="Base" sx={style}>

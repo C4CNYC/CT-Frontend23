@@ -29,17 +29,18 @@ function MapGeoJSONAnimation({ ...other }: MapBoxProps): React.ReactElement {
 
   useEffect(() => {
     const animation = window.requestAnimationFrame(() => {
- setPointData(
+      setPointData(
         pointOnCircle({
           center: [-100, 0],
           angle: Date.now() / 1000,
           radius: 20,
         })
       );
-}
-    );
+    });
 
-    return () => { window.cancelAnimationFrame(animation); };
+    return () => {
+      window.cancelAnimationFrame(animation);
+    };
   });
 
   return (

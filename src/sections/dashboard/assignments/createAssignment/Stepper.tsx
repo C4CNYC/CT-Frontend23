@@ -4,7 +4,7 @@ import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
 import { useState } from "react";
 
-import { useGetAssignmentQuery } from "src/redux/services/manager";
+import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
 import AssignmentAbout from "./AssignmentAbout";
 import AssignmentAssigning from "./AssignmentAssigning";
 import AssignmentSettings from "./AssignmentSettings";
@@ -16,20 +16,20 @@ const steps = [
 ];
 
 interface Props {
-  school_id: string;
+  schoolId: string;
   closeStepper: () => void;
 }
 
 export default function HorizontalNonLinearStepper({
-  school_id,
+  schoolId,
   closeStepper,
 }: Props): React.ReactElement | null {
   const [activeStep, setActiveStep] = useState(0);
   const [assignmentId, setAssignmentId] = useState("");
 
   const { data: assignment } = useGetAssignmentQuery(
-    { school_id, assignment_id: assignmentId },
-    { skip: !school_id || !assignmentId }
+    { schoolId, assignmentId },
+    { skip: !schoolId || !assignmentId }
   );
 
   const [completed] = useState<Record<number, boolean>>({});
@@ -70,7 +70,7 @@ export default function HorizontalNonLinearStepper({
               assignment={assignment}
               getAssignmentId={handleAssignmentId}
               next={handleNext}
-              school_id={school_id}
+              schoolId={schoolId}
             />
           )}
           {activeStep === 1 && (
@@ -79,7 +79,7 @@ export default function HorizontalNonLinearStepper({
               assignmentId={assignmentId}
               next={handleNext}
               back={handleBack}
-              school_id={school_id}
+              schoolId={schoolId}
             />
           )}
           {activeStep === 2 && (
@@ -88,7 +88,7 @@ export default function HorizontalNonLinearStepper({
               assignmentId={assignmentId}
               next={handleNext}
               back={handleBack}
-              school_id={school_id}
+              schoolId={schoolId}
             />
           )}
         </>

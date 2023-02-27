@@ -3,6 +3,7 @@ import Autocomplete, {
   AutocompleteChangeReason,
 } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -11,20 +12,19 @@ import {
   ClassSearchParams,
   IClass,
 } from "src/redux/services/interfaces/class.interface";
-import { useGetClassesQuery } from "src/redux/services/manager";
-import { useSelector, RootState } from "src/redux/store";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
+import { RootState, useSelector } from "src/redux/store";
 
-import Iconify from "../iconify/Iconify";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useState } from "react";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import Iconify from "../iconify/Iconify";
 
 interface Props {
   filterName: string;
   onResetFilter: VoidFunction;
   onFilterName: (name: string) => void;
-  onFilterClass: (class_id: string) => void;
-};
+  onFilterClass: (classId: string) => void;
+}
 
 type ClassType = IClass & BaseResponseInterface;
 
@@ -32,11 +32,10 @@ export default function CustomAutocomplete({
   filterName,
   onFilterName,
   onFilterClass,
-  onResetFilter
-}:
-Props): React.ReactElement | null {
+  onResetFilter,
+}: Props): React.ReactElement | null {
   const [value, setValue] = useState<ClassType | null>(null);
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const {
     filters,
     setFilter,
@@ -44,8 +43,8 @@ Props): React.ReactElement | null {
   } = useFilters<ClassSearchParams>({ name: "" });
 
   const { data: clases } = useGetClassesQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
+    { schoolId, ...filters },
+    { skip: !schoolId }
   );
 
   const onChange = (
@@ -83,7 +82,9 @@ Props): React.ReactElement | null {
       <Autocomplete<ClassType>
         options={clases.data || []}
         renderInput={(params) => <TextField {...params} label="Class" />}
-        onInputChange={(e, value) => { setFilter("name", value); }}
+        onInputChange={(e, value) => {
+          setFilter("name", value);
+        }}
         onChange={onChange}
         value={value}
         getOptionLabel={(option) => option.name}
@@ -94,7 +95,9 @@ Props): React.ReactElement | null {
         fullWidth
         placeholder="Search"
         value={filterName}
-        onChange={(e) => { onFilterName(e.target.value); }}
+        onChange={(e) => {
+          onFilterName(e.target.value);
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

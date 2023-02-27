@@ -21,9 +21,7 @@ export default function AddClassForm(): React.ReactElement {
     defaultValues,
   });
 
-  const {
-    handleSubmit,
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {

@@ -40,7 +40,7 @@ import { useSelector } from "react-redux";
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
@@ -84,21 +84,21 @@ export default function UserListPage(): React.ReactElement {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
-    class_id: "",
+    classId: "",
   });
   const [deleteStudent] = useDeleteStudentMutation();
 
   const { data, isLoading } = useGetStudentsQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
+    { schoolId, ...filters },
+    { skip: !schoolId }
   );
 
-  const handleDeleteMember = async (student_id: string): Promise<void> => {
+  const handleDeleteMember = async (studentId: string): Promise<void> => {
     try {
-      await deleteStudent({ student_id, school_id }).unwrap();
+      await deleteStudent({ studentId, schoolId }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -169,8 +169,8 @@ export default function UserListPage(): React.ReactElement {
             onFilterName={(name: string) => {
               setFilter("name", name);
             }}
-            onFilterClass={(class_id: string) => {
-              setFilter("class_id", class_id);
+            onFilterClass={(classId: string) => {
+              setFilter("classId", classId);
             }}
             onResetFilter={resetFilters}
           />
@@ -259,7 +259,7 @@ export default function UserListPage(): React.ReactElement {
               onPageChange={(e, page) => {
                 setFilter("page", page + 1);
               }}
-              onRowsPerPageChange={e => {
+              onRowsPerPageChange={(e) => {
                 setFilter("take", e.target.value);
               }}
               dense={dense}

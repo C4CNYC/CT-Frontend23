@@ -1,7 +1,7 @@
 import Iconify from "@components/iconify";
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useGetMySchoolsQuery } from "src/redux/services/manager";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
@@ -9,7 +9,7 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
   height: 20,
   marginTop: 1,
   flexShrink: 0,
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(2)
 }));
 
 interface Props {
@@ -17,8 +17,8 @@ interface Props {
 }
 
 export default function ProfileAbout({
-  data,
-}: Props): React.ReactElement | null {
+                                       data
+                                     }: Props): React.ReactElement | null {
   useGetMySchoolsQuery();
 
   return (
@@ -26,12 +26,12 @@ export default function ProfileAbout({
       <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
         {data?.about
-? (
-          <Typography variant="body2">{data?.about}</Typography>
-        )
-: (
-          ""
-        )}
+          ? (
+            <Typography variant="body2">{data?.about}</Typography>
+          )
+          : (
+            ""
+          )}
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
           <Typography variant="body2">

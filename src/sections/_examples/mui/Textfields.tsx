@@ -47,7 +47,9 @@ export default function Textfields({
     showPassword: false,
   });
 
-  const handleChangeCurrency = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeCurrency = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setCurrency(event.target.value);
   };
 

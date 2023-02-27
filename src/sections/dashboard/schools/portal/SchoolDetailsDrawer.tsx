@@ -79,9 +79,9 @@ export default function SchoolDetailsDrawer({
             </Typography>
           </Stack>
           <Divider sx={{ borderStyle: "dashed" }} />
-          <TeacherSection school_id={item.id} />
+          <TeacherSection schoolId={item.id} />
           <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
-          <ClassSection school_id={item.id} />
+          <ClassSection schoolId={item.id} />
           <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
         </Scrollbar>
       </Drawer>

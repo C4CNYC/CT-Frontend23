@@ -86,12 +86,12 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
     const renderItem = (): React.ReactElement => {
       // ExternalLink
       if (isExternalLink) {
-return (
+        return (
           <Link href={path} target="_blank" rel="noopener" underline="none">
             {renderContent}
           </Link>
         );
-}
+      }
 
       // Default
       return (

@@ -1,6 +1,5 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
-import SearchNotFound from "@components/search-not-found/SearchNotFound";
 import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
@@ -9,7 +8,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import Head from "next/head";
-import { useGetLessonsQuery } from "src/redux/services/manager";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 
 // ----------------------------------------------------------------------
 
@@ -23,8 +22,7 @@ export default function LessonsListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetLessonsQuery();
 
-  if (isLoading) return <CircularProgress/>;
-  if (data?.data.length === 0) return <SearchNotFound/>;
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>
@@ -45,6 +43,7 @@ export default function LessonsListPage(): React.ReactElement {
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
+                sx={{ mr: 2 }}
               >
                 Create Lesson
               </Button>
@@ -63,7 +62,7 @@ export default function LessonsListPage(): React.ReactElement {
           }}
         >
           {data?.data.map((lesson) => (
-            <LessonCard key={lesson?.id} lesson={lesson} active={false} name={""} description={""} />
+            <LessonCard key={lesson.id} lesson={lesson} />
           ))}
         </Box>
       </Container>

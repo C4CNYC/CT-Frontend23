@@ -1,5 +1,5 @@
 // @mui
-import { Avatar, Chip, Stack, Paper } from "@mui/material";
+import { Avatar, Chip, Paper, Stack } from "@mui/material";
 // _mock
 import _mock from "../../../_mock";
 // components
@@ -22,9 +22,11 @@ const style = {
 
 interface Props {
   variant?: "filled" | "outlined" | "soft";
-};
+}
 
-export default function Chips({ variant = "filled" }: Props): React.ReactElement | null {
+export default function Chips({
+  variant = "filled",
+}: Props): React.ReactElement | null {
   const handleDelete = (): void => {
     console.info("You clicked the delete icon.");
   };

@@ -17,7 +17,7 @@ function round5(value: number): number {
 
 interface Props {
   events: Record<string, LngLat>;
-};
+}
 
 function ControlPanel({ events = {} }: Props): React.ReactElement | null {
   return (

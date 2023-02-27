@@ -1,21 +1,21 @@
 import { Grid, Stack } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import ProfileAbout from "./components/ProfileAbout";
 import ProfileSocialInfo from "./components/ProfileSocialInfo";
 import ProfileUsersInfo from "./components/ProfileUsersInfo";
 import SchoolProfileForm from "./form/SchoolProfileForm";
 
 interface Props {
-  school_id: string;
+  schoolId: string;
 }
 
 export default function SchoolProfileTab({
-  school_id,
-}: Props): React.ReactElement | null {
+                                           schoolId
+                                         }: Props): React.ReactElement | null {
   const { data, isLoading } = useGetSchoolProfileQuery(
-    { school_id },
-    { skip: !school_id }
+    { schoolId },
+    { skip: !schoolId }
   );
 
   if (isLoading) return <CircularProgress />;
@@ -42,10 +42,10 @@ export default function SchoolProfileTab({
         </Grid>
         <Grid item xs={12} md={8}>
           {isLoading
-? null
+            ? null
 : (
-            <SchoolProfileForm schoolProfile={data} school_id={school_id} />
-          )}
+              <SchoolProfileForm schoolProfile={data} schoolId={schoolId} />
+            )}
         </Grid>
       </Grid>
     </>

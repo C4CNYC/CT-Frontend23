@@ -5,7 +5,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
-import { useGetMySchoolsQuery } from "src/redux/services/manager";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
 
