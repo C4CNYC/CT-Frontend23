@@ -2,7 +2,7 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import { useTable } from "@components/table";
 import DashboardLayout from "@layouts/dashboard";
-import { Container, Stack } from "@mui/material";
+import { CircularProgress, Container, Stack } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { FileFilterName, SchoolGridView } from "@sections/dashboard/schools";
 import Head from "next/head";
@@ -31,12 +31,16 @@ export default function Index(): React.ReactElement {
     name: filterName,
   });
 
-  const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleFilterName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     table.setPage(0);
     setFilterName(event.target.value);
   };
 
   const handleDeleteItem = (id: string): void => {};
+
+  if (isLoading) return <CircularProgress/>
 
   return (
     <>
@@ -67,15 +71,11 @@ export default function Index(): React.ReactElement {
             onFilterName={handleFilterName}
           />
         </Stack>
-        {isLoading ?? !data?.data
-? null
-: (
           <SchoolGridView
             table={table}
-            data={data?.data}
+            data={data?.data ?? []}
             onDeleteItem={handleDeleteItem}
           />
-        )}
       </Container>
     </>
   );

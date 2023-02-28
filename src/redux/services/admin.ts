@@ -24,8 +24,8 @@ import {
   DeleteMemberRequest,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
-  SchoolListResponce,
   SchoolRequest,
+  SchoolResponce,
 } from "./interfaces/school.interface";
 import {
   CreateUserRequest,
@@ -109,16 +109,19 @@ export const adminApi = createApi({
     }),
     updateClass: builder.mutation<
       ClassResponce,
-      { schoolId: string; class_id: string; name: string }
+      { schoolId: string; classId: string; name: string }
     >({
-      query: ({ schoolId, class_id, ...body }) => ({
-        url: `/school/${schoolId}/class/${class_id}`,
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}`,
         method: "PATCH",
         body,
       }),
       invalidatesTags: [{ type: "Classes" }],
     }),
-    getSchoolList: builder.query<SchoolListResponce, SchoolRequest>({
+    getSchoolList: builder.query<
+      BaseListResponseInterface<SchoolResponce>,
+      SchoolRequest
+    >({
       query: ({ ...params }) => ({
         url: "/school",
         method: "GET",
@@ -127,16 +130,16 @@ export const adminApi = createApi({
       providesTags: ["School"],
     }),
     deleteTeacher: builder.mutation<void, AddTeacherRequest>({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/teacher`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/teacher`,
         method: "DELETE",
         body,
       }),
       invalidatesTags: [{ type: "Teachers" }],
     }),
     addTeacher: builder.mutation<void, AddTeacherRequest>({
-      query: ({ school_id, ...body }) => ({
-        url: `/school/${school_id}/teacher`,
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/teacher`,
         method: "POST",
         body,
       }),
@@ -144,17 +147,17 @@ export const adminApi = createApi({
     }),
     getTeacherList: builder.query<
       BaseListResponseInterface<IUser & BaseResponseInterface>,
-      { school_id: string }
+      { schoolId: string }
     >({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/teacher`,
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/teacher`,
         method: "GET",
       }),
       providesTags: ["Teachers"],
     }),
-    getClassList: builder.query<ClassListReponce[], { school_id: string }>({
-      query: ({ school_id }) => ({
-        url: `/school/${school_id}/class`,
+    getClassList: builder.query<ClassListReponce[], { schoolId: string }>({
+      query: ({ schoolId }) => ({
+        url: `/school/${schoolId}/class`,
         method: "GET",
       }),
       providesTags: ["Classes"],

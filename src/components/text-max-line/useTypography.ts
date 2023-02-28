@@ -1,5 +1,5 @@
 // @mui
-import { useTheme } from "@mui/material/styles";
+import { Breakpoint, useTheme } from "@mui/material/styles";
 import { Variant } from "@mui/material/styles/createTypography";
 // hooks
 import { useWidth } from "../../hooks/useResponsive";
@@ -15,7 +15,9 @@ export default function useTypography(
 
   const breakpoints = useWidth();
 
-  const key = theme.breakpoints.up(breakpoints === "xl" ? "lg" : breakpoints);
+  const key = theme.breakpoints.up(
+    (breakpoints === "xl" ? "lg" : breakpoints) as number | Breakpoint
+  );
 
   const hasResponsive =
     variant === "h1" ||

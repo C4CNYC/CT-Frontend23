@@ -25,12 +25,21 @@ interface Props {
 }
 
 export default function CreateTaskDialog({
+<<<<<<< HEAD
   id,
   isEdit,
   children,
   defaultValues,
 }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
+=======
+    id,
+    isEdit,
+    children,
+    defaultValues,
+}: Props): React.ReactElement {
+    const [open, setOpen] = useState(false);
+>>>>>>> main
 
   const handleOpen = (): void => {
     setOpen(true);
@@ -39,6 +48,7 @@ export default function CreateTaskDialog({
     setOpen(false);
   };
 
+<<<<<<< HEAD
   const methods = useForm<FormValuesProps>({});
   return (
     <>
@@ -57,6 +67,31 @@ export default function CreateTaskDialog({
                       label="Task name"
                       required
                     />
+=======
+    const methods = useForm<FormValuesProps>({
+      });
+    return (
+        <>
+            <Box onClick={handleOpen}>
+                {children}
+            </Box>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>
+                    {isEdit ? "Edit" : "Create"} Task
+                </DialogTitle>
+                <DialogContent sx={{ p: 0 }}>
+                    <FormProvider methods={methods}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} md={12}>
+                                <Card sx={{ p: 3 }}>
+                                    <Box rowGap={3} display="grid">
+                                    <RHFTextField
+                                        style={{ width: "350px" }}
+                                        name="name"
+                                        label="Task name"
+                                        required
+                                    />
+>>>>>>> main
 
                     <RHFTextField
                       name="description"
@@ -73,6 +108,7 @@ export default function CreateTaskDialog({
                       </option>
                     </RHFSelect>
 
+<<<<<<< HEAD
                     <RHFSwitch name="active" label="Task active" />
                   </Box>
                   <Box
@@ -96,4 +132,29 @@ export default function CreateTaskDialog({
       </Dialog>
     </>
   );
+=======
+                                    <RHFSwitch name="active" label="Task active" />
+                                    </Box>
+                                    <Box
+                                        sx={{
+                                        display: "flex",
+                                        justifyContent: "flex-end",
+                                        gap: 2,
+                                        mt: 7,
+                                        }}
+                                    >
+                                        <Button onClick={handleClose}>Close</Button>
+                                        <LoadingButton type="submit" variant="contained">
+                                        Save
+                                        </LoadingButton>
+                                    </Box>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </FormProvider>
+                </DialogContent>
+            </Dialog>
+        </>
+    )
+>>>>>>> main
 }

@@ -18,10 +18,16 @@ export default function UserSection(): React.ReactElement {
         <Stack display="flex">
           <Stack display="flex" direction="row" spacing={1}>
             <Typography fontSize="14px" color="#212B36" fontWeight="400px">
-              {user?.first_name && `${user?.first_name?.charAt(0).toUpperCase()}${user?.first_name?.slice(1)}`}
+              {user?.first_name &&
+                `${user?.first_name
+                  ?.charAt(0)
+                  .toUpperCase()}${user?.first_name?.slice(1)}`}
             </Typography>
             <Typography fontSize="14px" color="#212B36">
-               {user?.last_name && `${user?.last_name?.charAt(0).toUpperCase()}${user?.last_name?.slice(1)}`}
+              {user?.last_name &&
+                `${user?.last_name
+                  ?.charAt(0)
+                  .toUpperCase()}${user?.last_name?.slice(1)}`}
             </Typography>
           </Stack>
           <Typography color="#637381">{user?.role}</Typography>

@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { Draggable } from "@hello-pangea/dnd";
+import { Box, Paper, Stack, Tooltip, Typography } from "@mui/material";
 import * as _ from "lodash";
-import { Paper, Typography, Box, Stack, Tooltip } from "@mui/material";
+import { useState } from "react";
 
-import NextImage from "next/image";
 import Image from "@components/image";
-import AssignmentsDetails from "./details/AssignmentsDetails";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import NextImage from "next/image";
 import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 import { convertDuration } from "src/utils/convertDuration";
 import { IAssignmentsCard } from "../../../@types/assignments";
+import AssignmentsDetails from "./details/AssignmentsDetails";
 
 // ----------------------------------------------------------------------
 
@@ -17,8 +17,8 @@ interface Props {
   index: number;
   card: IAssignmentsCard;
   onDeleteTask: (id: string) => void;
-  school_id: string;
-};
+  schoolId: string;
+}
 
 const ImageCardType: Record<string, string> = {
   [AssignmentTypes.REVIEW]: "/assets/assignment/code-review.svg",
@@ -40,9 +40,8 @@ export default function AssignmentsTaskCard({
   card,
   onDeleteTask,
   index,
-  school_id
-}:
-Props): React.ReactElement | null {
+  schoolId,
+}: Props): React.ReactElement | null {
   const { name, type, duration, complexity } = card;
 
   const [completed] = useState(false);
@@ -125,8 +124,7 @@ Props): React.ReactElement | null {
                 top="0"
                 bottom="0"
               >
-                {duration?.hours ?? duration?.minutes
-? (
+                {duration?.hours ?? duration?.minutes ? (
                   <Tooltip
                     title={`Duration ( ${convertDuration(duration)} )`}
                     placement="right"
@@ -139,8 +137,7 @@ Props): React.ReactElement | null {
                       style={{ marginBottom: "7px" }}
                     />
                   </Tooltip>
-                )
-: null}
+                ) : null}
                 <Tooltip title="Linked to content" placement="right">
                   <NextImage
                     width="20"
@@ -169,12 +166,14 @@ Props): React.ReactElement | null {
       </Draggable>
 
       <AssignmentsDetails
-        school_id={school_id}
+        schoolId={schoolId}
         assignment={card}
         task={card}
         openDetails={openDetails}
         onCloseDetails={handleCloseDetails}
-        onDeleteTask={() => { onDeleteTask(card.id); }}
+        onDeleteTask={() => {
+          onDeleteTask(card.id);
+        }}
       />
     </>
   );

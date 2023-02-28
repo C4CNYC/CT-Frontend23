@@ -1,4 +1,16 @@
 import ConfirmDialog from "@components/confirm-dialog";
+<<<<<<< HEAD
+=======
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack
+} from "@mui/material";
+>>>>>>> main
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover/MenuPopover";
 import TextMaxLine from "@components/text-max-line";
@@ -13,6 +25,10 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CreateTaskDialog from "./CreateTaskDialog";
+<<<<<<< HEAD
+=======
+import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
+>>>>>>> main
 
 interface Props {
   task: {
@@ -25,6 +41,7 @@ interface Props {
   };
 }
 
+<<<<<<< HEAD
 export default function TaskCard({ task }: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -34,6 +51,18 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
   const handleOpenPopover = async (
     event: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
+=======
+export default function TaskCard({
+                                   task
+                                 }: Props): React.ReactElement | null {
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+  const onDelete = async (): Promise<void> => {
+  };
+
+  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
+>>>>>>> main
     setOpenPopover(event.currentTarget);
   };
   const handleClosePopover = (): void => {
@@ -60,8 +89,13 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
           maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
+<<<<<<< HEAD
             bgcolor: "grey.100",
           },
+=======
+            bgcolor: "grey.100"
+          }
+>>>>>>> main
         }}
       >
         <Stack
@@ -76,6 +110,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
+<<<<<<< HEAD
         <Box
           component="img"
           src="/assets/icons/files/ic_document.svg"
@@ -100,6 +135,41 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
             }}
           />
         </Stack>
+=======
+        <CreateCodeDialog lessonId="id" lessonName="lesson.name">
+          <>
+            <Box
+              component="img"
+              src="/assets/icons/files/ic_document.svg"
+              sx={{ width: 40, height: 40 }}
+            />
+            <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+              {task.name}
+            </TextMaxLine>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={0.75}
+              sx={{ typography: "caption", color: "text.disabled" }}
+            >
+              <Box>
+                {task.description}
+              </Box>
+              <Box
+                sx={{
+                  width: 2,
+                  height: 2,
+                  borderRadius: "50%",
+                  bgColor: "currentColor"
+                }}
+              />
+            </Stack>
+          </>
+
+        </CreateCodeDialog>
+
+>>>>>>> main
       </Card>
       <MenuPopover
         open={openPopover}
@@ -113,7 +183,11 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
             name: task.name,
             description: task?.description,
             active: task?.active,
+<<<<<<< HEAD
             type: task?.type,
+=======
+            type: task?.type
+>>>>>>> main
           }}
         >
           <MenuItem>

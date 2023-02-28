@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { Box } from "@mui/material";
 //
 const Header = dynamic(async () => await import("./Header"), { ssr: false });
-const Footer = dynamic(async () => await import("./Footer"), { ssr: false });
 
 // ----------------------------------------------------------------------
 
@@ -35,8 +34,6 @@ export default function MainLayout({
       >
         {children}
       </Box>
-
-      <Footer />
     </Box>
   );
 }

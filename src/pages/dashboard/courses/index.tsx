@@ -2,14 +2,14 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import { Container } from "@mui/system";
 import FilterCourses from "@pages/dashboard/courses/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { CourseCard } from "@sections/dashboard/courses/cards";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import Head from "next/head";
-import { useGetCourseQuery } from "../../../redux/services/manager";
+import { useGetCourseQuery } from "../../../redux/services/manager/courses-manager";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetCourseQuery();
 
-  if (isLoading) return "Loading";
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>
@@ -59,6 +59,8 @@ export default function CoursesListPage(): React.ReactElement {
           }}
         >
           {data?.data.map((course, index) => (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             <CourseCard key={index} course={course} />
           ))}
         </Box>

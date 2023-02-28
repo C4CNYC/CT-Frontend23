@@ -5,7 +5,7 @@ import { Box, Card, Grid, Stack } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdateSchoolProfileMutation } from "src/redux/services/manager";
+import { useUpdateSchoolProfileMutation } from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { countries } from "../../../../../assets/data";
 import { useLocales } from "../../../../../locales";
@@ -19,7 +19,7 @@ const UpdateSchoolSchema = Yup.object().shape({
 });
 
 interface FormValuesProps {
-  school_id: string;
+  schoolId: string;
   name: string;
   country: string;
   address: string;
@@ -31,19 +31,19 @@ interface FormValuesProps {
 
 interface SchoolProfileFormProps {
   schoolProfile?: SchoolProfile;
-  school_id: string;
+  schoolId: string;
 }
 
 export default function SchoolProfileForm({
   schoolProfile,
-  school_id,
+  schoolId,
 }: SchoolProfileFormProps): React.ReactElement | null {
   const { translate } = useLocales();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id,
+    schoolId,
     name: schoolProfile?.name ?? "",
     country: schoolProfile?.country ?? "",
     address: schoolProfile?.address ?? "",
@@ -60,10 +60,10 @@ export default function SchoolProfileForm({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateSchoolProfile({
-        school_id,
+        schoolId,
         name: data.name,
         country: data.country,
         address: data.address,

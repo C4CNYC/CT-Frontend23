@@ -20,7 +20,7 @@ export default function ClassSettingPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Class Setting: CodeTribe UI</title>
+        <title> Module Setting: CodeTribe UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

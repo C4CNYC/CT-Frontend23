@@ -101,10 +101,10 @@ export function RHFMultiSelect({
   helperText,
   sx,
   ...other
-}: RHFMultiSelectProps): React.ReactElement | null {
+}: RHFMultiSelectProps): React.ReactElement | null | string {
   const { control } = useFormContext();
 
-  const renderValues = (selectedIds: string[]): React.ReactElement => {
+  const renderValues = (selectedIds: string[]): React.ReactElement | string => {
     const selectedItems = options.filter((item) =>
       selectedIds.includes(item.value)
     );

@@ -1,20 +1,11 @@
 import { useState } from "react";
 // @mui
 import {
-  ListItemAvatar,
-  ListItemText,
-  MenuItem,
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-// utils
-import { fToNow } from "../../../utils/formatTime";
-// _mock_
-import { _contacts } from "../../../_mock/arrays";
 // components
 import { IconButtonAnimate } from "@components/animate";
-import BadgeStatus from "@components/badge-status";
-import { CustomAvatar } from "@components/custom-avatar";
 import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
 import Scrollbar from "@components/scrollbar";
@@ -61,36 +52,10 @@ export default function ContactsPopover(): React.ReactElement {
       >
         <Typography variant="h6" sx={{ p: 1.5 }}>
           Contacts{" "}
-          <Typography component="span">({_contacts.length})</Typography>
+          <Typography component="span"></Typography>
         </Typography>
 
         <Scrollbar sx={{ height: ITEM_HEIGHT * 6 }}>
-          {_contacts.map((contact) => (
-            <MenuItem key={contact.id} sx={{ height: ITEM_HEIGHT }}>
-              <ListItemAvatar>
-                <CustomAvatar
-                  src={contact.avatar}
-                  BadgeProps={{
-                    badgeContent: <BadgeStatus status={contact.status} />,
-                  }}
-                />
-              </ListItemAvatar>
-
-              <ListItemText
-                primary={contact.name}
-                secondary={
-                  contact.status === "offline"
-                    ? fToNow(contact.lastActivity)
-                    : ""
-                }
-                primaryTypographyProps={{
-                  typography: "subtitle2",
-                  sx: { mb: 0.25 },
-                }}
-                secondaryTypographyProps={{ typography: "caption" }}
-              />
-            </MenuItem>
-          ))}
         </Scrollbar>
       </MenuPopover>
     </>

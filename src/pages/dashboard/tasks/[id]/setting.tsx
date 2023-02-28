@@ -1,20 +1,20 @@
 import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import DashboardLayout from "src/layouts/dashboard";
 import { Box, Card, Container, Typography } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Head from "next/head";
 
 // ----------------------------------------------------------------------
 
-ClassSettingPage.getLayout = (page: React.ReactElement) => (
-  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+TasksSettingPage.getLayout = (page: React.ReactElement) => (
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
 
-export default function ClassSettingPage(): React.ReactElement {
+export default function TasksSettingPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   return (
@@ -25,11 +25,11 @@ export default function ClassSettingPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Class Setting"
+          heading="Tasks Setting"
           links={[
             {
-              name: "Class",
-              href: PATH_DASHBOARD.school.classes,
+              name: "Task",
+              href: PATH_DASHBOARD.tasks.root,
             },
             { name: "Setting" },
           ]}
@@ -42,11 +42,11 @@ export default function ClassSettingPage(): React.ReactElement {
         >
           <Card sx={{ p: 3 }}>
             <Typography variant="h4" sx={{ mb: 4 }}>
-              Class mates
+              Tasks mates
             </Typography>
             <ClassMembersAutocomplete />
             <Typography variant="h4" sx={{ mb: 4, mt: 8 }}>
-              Class courses
+              Tasks courses
             </Typography>
             <ClassMembersAutocomplete />
           </Card>

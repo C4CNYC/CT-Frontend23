@@ -76,7 +76,7 @@ export const content = {
       icon: <MdPlayLesson />,
     },
     {
-      title: 'tasks',
+      title: "tasks",
       path: PATH_DASHBOARD.tasks.root,
       icon: <FaTasks />
     },

@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { format } from "date-fns";
+import ConfirmDialog from "@components/confirm-dialog";
+import Iconify from "@components/iconify";
+import Label from "@components/label";
+import MenuPopover from "@components/menu-popover";
 import {
-  Stack,
   Avatar,
   Button,
   Checkbox,
-  TableRow,
-  MenuItem,
-  TableCell,
   IconButton,
+  MenuItem,
+  Stack,
+  TableCell,
+  TableRow,
 } from "@mui/material";
-import Label from "@components/label";
-import Iconify from "@components/iconify";
-import MenuPopover from "@components/menu-popover";
-import ConfirmDialog from "@components/confirm-dialog";
+import { format } from "date-fns";
+import Link from "next/link";
+import { useState } from "react";
 import { FcFolder } from "react-icons/fc";
 import { IClass } from "src/redux/services/interfaces/class.interface";
+import { PATH_DASHBOARD } from "src/routes/paths";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddClassDialog from "../../schools/classes/CreateClassDialog";
-import Link from "next/link";
-import { PATH_DASHBOARD } from "src/routes/paths";
 
 // ----------------------------------------------------------------------
 
@@ -29,16 +29,15 @@ interface Props {
   onEditRow: (id: string, name: string) => void;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
-};
+}
 
 export default function ClassesTableRow({
   row,
   selected,
   onEditRow,
   onSelectRow,
-  onDeleteRow
-}:
-Props): React.ReactElement | null {
+  onDeleteRow,
+}: Props): React.ReactElement | null {
   const { name, active, total_students, createdAt } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -68,7 +67,9 @@ Props): React.ReactElement | null {
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} ><FcFolder /></Avatar>
+            <Avatar alt={name}>
+              <FcFolder />
+            </Avatar>
           </Stack>
         </TableCell>
 

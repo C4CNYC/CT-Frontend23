@@ -1,5 +1,5 @@
 // @mui
-import { Breakpoint, useTheme } from "@mui/material/styles";
+import { Breakpoint, Breakpoints, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // ----------------------------------------------------------------------
@@ -46,7 +46,7 @@ export default function useResponsive(
 
 type BreakpointOrNull = Breakpoint | null;
 
-export function useWidth(): string {
+export function useWidth(): number | Breakpoints | string {
   const theme = useTheme();
 
   const keys = [...theme.breakpoints.keys].reverse();

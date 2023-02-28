@@ -3,13 +3,13 @@ import { LoadingButton } from "@mui/lab";
 import { Card, Link, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager";
+import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager/schools-manager";
 import { useLocales } from "../../../../locales";
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
 
 interface FormValuesProps {
   language: string;
-  school_id: string;
+  schoolId: string;
   marketplace_content_allowed: boolean;
   github_login_allowed: boolean;
   google_login_allowed: boolean;
@@ -21,12 +21,12 @@ interface FormValuesProps {
 
 interface SettingsFormProps {
   settings?: SchoolSettings;
-  school_id: string;
+  schoolId: string;
 }
 
 export default function SettingsForm({
   settings,
-  school_id,
+  schoolId,
 }: SettingsFormProps): React.ReactElement {
   const [updateSettings, { isLoading }] = useUpdateSchoolSettingsMutation();
   const { translate } = useLocales();
@@ -34,7 +34,7 @@ export default function SettingsForm({
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id,
+    schoolId,
     language: settings?.language ?? "en",
     marketplace_content_allowed: settings?.marketplace_content_allowed ?? false,
     github_login_allowed: settings?.github_login_allowed ?? false,
@@ -55,7 +55,7 @@ export default function SettingsForm({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateSettings({
-        school_id,
+        schoolId,
         language: data.language,
         marketplace_content_allowed: data.marketplace_content_allowed,
         github_login_allowed: data.github_login_allowed,
@@ -80,11 +80,9 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${
-            translate(
-              "organizations.general_page.tabs.content.settings.content_settings"
-            ) ?? ""
-          }`}
+          {`${translate(
+            "organizations.general_page.tabs.content.settings.content_settings"
+          )}`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
           <RHFSwitch

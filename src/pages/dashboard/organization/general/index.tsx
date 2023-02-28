@@ -109,7 +109,7 @@ export default function UserProfilePage(): React.ReactElement {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label}
+                label={tab.label as string}
               />
             ))}
           </Tabs>

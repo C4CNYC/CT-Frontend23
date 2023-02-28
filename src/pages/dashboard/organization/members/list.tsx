@@ -205,10 +205,10 @@ export default function UserListPage(): React.ReactElement {
             filterName={filters.name}
             filterRole={filters.role}
             optionsRole={Object.values(Role)}
-            onFilterName={(e) => {
+            onFilterName={(e: any) => {
               setFilter("name", e.target.value);
             }}
-            onFilterRole={(e) => {
+            onFilterRole={(e: any) => {
               setFilter("role", e.target.value);
             }}
             onResetFilter={resetFilters}
@@ -292,7 +292,7 @@ export default function UserListPage(): React.ReactElement {
               onPageChange={(e, page) => {
                 setFilter("page", page + 1);
               }}
-              onRowsPerPageChange={(e) => {
+              onRowsPerPageChange={(e: any) => {
                 setFilter("take", e.target.value);
               }}
               dense={dense}

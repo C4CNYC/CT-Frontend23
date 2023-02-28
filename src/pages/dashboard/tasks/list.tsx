@@ -1,20 +1,18 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
-import SearchNotFound from "@components/search-not-found/SearchNotFound";
 import { useSettingsContext } from "@components/settings";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Box, Button, CircularProgress, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateTaskDialog from "@sections/dashboard/tasks/CreateTaskDialog";
 import TaskCard from "@sections/dashboard/tasks/TaskCard";
 import Head from "next/head";
-import { useGetLessonsQuery } from "src/redux/services/manager";
+import DashboardLayout from "src/layouts/dashboard";
 import FilterTasks from "./filter";
 
 // ----------------------------------------------------------------------
 
 TasksListPage.getLayout = (page: React.ReactElement) => (
-  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
@@ -30,10 +28,10 @@ export default function TasksListPage(): React.ReactElement {
   };
 
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetLessonsQuery();
+  // const { data, isLoading } = useGetLessonsQuery();
 
-  if (isLoading) return <CircularProgress />;
-  if (data?.data.length === 0) return <SearchNotFound />;
+  // if (isLoading) return <CircularProgress />;
+  // if (data?.data.length === 0) return <SearchNotFound />;
   return (
     <>
       <Head>

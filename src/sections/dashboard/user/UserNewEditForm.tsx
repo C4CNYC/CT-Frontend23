@@ -29,6 +29,7 @@ import {
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+
 // ----------------------------------------------------------------------
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
@@ -236,9 +237,7 @@ export default function UserNewEditForm({
 
               <RHFSelect native name="role" label="Role" placeholder="Role">
                 {(Object.keys(Role) as Array<keyof typeof Role>).map((role) =>
-                  role === "Owner"
-? null
-: (
+                  role === "Owner" ? null : (
                     <option key={Role[role]} value={Role[role]}>
                       {role}
                     </option>

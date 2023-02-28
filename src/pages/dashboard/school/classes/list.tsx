@@ -40,7 +40,7 @@ import {
   useDeleteClassesMutation,
   useGetClassesQuery,
   useUpdateClassesMutation,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
 import { ClassesTableRow } from "src/sections/dashboard/classes/list";
 
@@ -86,7 +86,7 @@ export default function UserListPage(): React.ReactElement {
 
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
     name: "",
   });
@@ -95,13 +95,13 @@ export default function UserListPage(): React.ReactElement {
   const [createClassByManager] = useCreateClassesMutation();
   const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
-    { school_id, ...filters },
-    { skip: !school_id }
+    { schoolId, ...filters },
+    { skip: !schoolId }
   );
 
-  const handleDeleteMember = async (class_id: string): Promise<void> => {
+  const handleDeleteMember = async (classId: string): Promise<void> => {
     try {
-      await deleteCasses({ class_id, school_id }).unwrap();
+      await deleteCasses({ classId, schoolId }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -123,7 +123,7 @@ export default function UserListPage(): React.ReactElement {
 
   const handleEditRow = async (id: string, name: string): Promise<void> => {
     try {
-      await updateClassByManager({ school_id, class_id: id, name }).unwrap();
+      await updateClassByManager({ schoolId, classId: id, name }).unwrap();
       enqueueSnackbar("Class updated successfuly!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -133,7 +133,7 @@ export default function UserListPage(): React.ReactElement {
 
   const createClass = async (name: string): Promise<void> => {
     try {
-      await createClassByManager({ school_id, name }).unwrap();
+      await createClassByManager({ schoolId, name }).unwrap();
       enqueueSnackbar(`School ${name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
@@ -185,7 +185,7 @@ export default function UserListPage(): React.ReactElement {
 
           <UserTableToolbar
             filterName={filters.name}
-            onFilterName={(e) => {
+            onFilterName={(e: any) => {
               setFilter("name", e.target.value);
             }}
             onResetFilter={resetFilters}
