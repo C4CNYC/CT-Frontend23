@@ -14,7 +14,7 @@ export default function SaveButton({ onClick }: Props): JSX.Element {
         variant="outlined"
         key="left"
         onClick={onClick}
-        sx={{ ml: "auto!important", width: 60 }}
+        sx={{ ml: "auto!important", width: 60, maxHeight: "30px" }}
         size="small"
       >
         <TfiSave />
