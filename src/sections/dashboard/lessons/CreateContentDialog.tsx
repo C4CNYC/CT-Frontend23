@@ -1,4 +1,5 @@
 import MyEditor from "@components/editor/MyEditor";
+import { useSnackbar } from "@components/snackbar";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   AppBar,
@@ -12,20 +13,28 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import * as React from "react";
 import { useState } from "react";
+import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
+import { useUpdateLessonMutation } from "../../../redux/services/manager/lessons-manager";
+import LessonInput from "./LessonInput";
 
 interface Prop {
   children: React.ReactElement;
   lessonName: string;
   lessonId: string;
+  lessonDescription: string;
 }
 
 export default function CreateContentDialog({
   children,
   lessonId,
   lessonName,
+  lessonDescription,
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
+  const [updatedName, setUpdatedName] = useState(lessonName);
+  const [updateLesson] = useUpdateLessonMutation();
+  const { enqueueSnackbar } = useSnackbar();
   const { data, isLoading } = useGetLessonContentQuery(
     { lessonId },
     { skip: !lessonId || !open }
@@ -37,8 +46,20 @@ export default function CreateContentDialog({
 
   const handleClose = (): void => {
     setOpen(false);
+    if (lessonName === updatedName) return;
+    updateName(updatedName);
   };
 
+  const updateName = async (value: string | number | null): Promise<void> => {
+    try {
+      await updateLesson({
+        id: lessonId,
+        ...{ name: value, description: lessonDescription },
+      }).unwrap();
+    } catch (e) {
+      enqueueSnackbar(e.data.message, { variant: "error" });
+    }
+  };
   return (
     <>
       <Stack
@@ -51,9 +72,11 @@ export default function CreateContentDialog({
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xl">
         <AppBar color="inherit" sx={{ position: "relative", padding: 0 }}>
           <Toolbar sx={{ paddingLeft: 0, ml: 0 }} variant="dense">
-            <Typography sx={{ ml: 0, flex: 1 }} variant="h6" component="div">
-              {lessonName}
-            </Typography>
+            <LessonInput
+              placeholder="Lesson name"
+              defaultValue={lessonName}
+              onBlur={(e: any) => setUpdatedName(e.target.value)}
+            />
             <IconButton edge="end" onClick={handleClose}>
               <CloseIcon />
             </IconButton>
