@@ -1,15 +1,14 @@
+import { useState } from "react";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
-  RHFTextField,
+  RHFTextField
 } from "@components/hook-form";
-import { LoadingButton } from "@mui/lab";
 import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
 
 interface FormValuesProps {
   name: string;
@@ -17,6 +16,7 @@ interface FormValuesProps {
   active: boolean;
   type: string;
 }
+
 interface Props {
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
@@ -25,21 +25,12 @@ interface Props {
 }
 
 export default function CreateTaskDialog({
-<<<<<<< HEAD
-  id,
-  isEdit,
-  children,
-  defaultValues,
-}: Props): React.ReactElement {
+                                           id,
+                                           isEdit,
+                                           children,
+                                           defaultValues
+                                         }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
-=======
-    id,
-    isEdit,
-    children,
-    defaultValues,
-}: Props): React.ReactElement {
-    const [open, setOpen] = useState(false);
->>>>>>> main
 
   const handleOpen = (): void => {
     setOpen(true);
@@ -48,113 +39,62 @@ export default function CreateTaskDialog({
     setOpen(false);
   };
 
-<<<<<<< HEAD
-  const methods = useForm<FormValuesProps>({});
   return (
     <>
-      <Box onClick={handleOpen}>{children}</Box>
+      <Box onClick={handleOpen}>
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isEdit ? "Edit" : "Create"} Task</DialogTitle>
+        <DialogTitle>
+          {isEdit ? "Edit" : "Create"} Task
+        </DialogTitle>
         <DialogContent sx={{ p: 0 }}>
-          <FormProvider methods={methods}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ p: 3 }}>
-                  <Box rowGap={3} display="grid">
-                    <RHFTextField
-                      style={{ width: "350px" }}
-                      name="name"
-                      label="Task name"
-                      required
-                    />
-=======
-    const methods = useForm<FormValuesProps>({
-      });
-    return (
-        <>
-            <Box onClick={handleOpen}>
-                {children}
-            </Box>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>
-                    {isEdit ? "Edit" : "Create"} Task
-                </DialogTitle>
-                <DialogContent sx={{ p: 0 }}>
-                    <FormProvider methods={methods}>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={12}>
-                                <Card sx={{ p: 3 }}>
-                                    <Box rowGap={3} display="grid">
-                                    <RHFTextField
-                                        style={{ width: "350px" }}
-                                        name="name"
-                                        label="Task name"
-                                        required
-                                    />
->>>>>>> main
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={12}>
+              <Card sx={{ p: 3 }}>
+                <Box rowGap={3} display="grid">
+                  <RHFTextField
+                    style={{ width: "350px" }}
+                    name="name"
+                    label="Task name"
+                    required
+                  />
 
-                    <RHFTextField
-                      name="description"
-                      label="Task description"
-                      required
-                      multiline
-                      rows={3}
-                    />
+                  <RHFTextField
+                    name="description"
+                    label="Task description"
+                    required
+                    multiline
+                    rows={3}
+                  />
 
-                    <RHFSelect name="type" required native label="Task type">
-                      <option key="empty" value="empty"></option>
-                      <option key="multy_media" value="multy_media">
-                        MultyMedia
-                      </option>
-                    </RHFSelect>
+                  <RHFSelect name="type" required native label="Task type">
+                    <option key="empty" value="empty"></option>
+                    <option key="multy_media" value="multy_media">
+                      MultyMedia
+                    </option>
+                  </RHFSelect>
 
-<<<<<<< HEAD
-                    <RHFSwitch name="active" label="Task active" />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      gap: 2,
-                      mt: 7,
-                    }}
-                  >
-                    <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton type="submit" variant="contained">
-                      Save
-                    </LoadingButton>
-                  </Box>
-                </Card>
-              </Grid>
+                  <RHFSwitch name="active" label="Task active" />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 2,
+                    mt: 7
+                  }}
+                >
+                  <Button onClick={handleClose}>Close</Button>
+                  <LoadingButton type="submit" variant="contained">
+                    Save
+                  </LoadingButton>
+                </Box>
+              </Card>
             </Grid>
-          </FormProvider>
+          </Grid>
         </DialogContent>
       </Dialog>
     </>
   );
-=======
-                                    <RHFSwitch name="active" label="Task active" />
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                        display: "flex",
-                                        justifyContent: "flex-end",
-                                        gap: 2,
-                                        mt: 7,
-                                        }}
-                                    >
-                                        <Button onClick={handleClose}>Close</Button>
-                                        <LoadingButton type="submit" variant="contained">
-                                        Save
-                                        </LoadingButton>
-                                    </Box>
-                                </Card>
-                            </Grid>
-                        </Grid>
-                    </FormProvider>
-                </DialogContent>
-            </Dialog>
-        </>
-    )
->>>>>>> main
 }
