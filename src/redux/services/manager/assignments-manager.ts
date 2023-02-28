@@ -57,6 +57,66 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Assignments", "Assignment"],
     }),
+    udpateLessonAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        lesson_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/lesson`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    udpateTaskAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        task_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/task`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    udpateClassAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        class_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/class`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    removeClassAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        class_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/class`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
     deleteAssignment: builder.mutation<
       void,
       { schoolId: string; assignmentId: string }
@@ -75,6 +135,10 @@ export const {
   useGetAssignmentListQuery,
   useGetAssignmentQuery,
   // -------------mutation-----------
+  useRemoveClassAssignmentMutation,
+  useUdpateClassAssignmentMutation,
+  useUdpateLessonAssignmentMutation,
+  useUdpateTaskAssignmentMutation,
   useCreateAssignmentMutation,
   useDeleteAssignmentMutation,
   useUdpateAssignmentMutation,

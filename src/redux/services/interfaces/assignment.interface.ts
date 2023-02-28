@@ -2,6 +2,7 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { AssignmentComplexity } from "../enums/assignment-complexity.enum";
 import { AssignmentStatuses } from "../enums/assignment-status.enum";
 import { IClass } from "./class.interface";
+import { ILesson } from "./courseUnits.interface";
 
 export interface IAssignment {
   createdAt: string;
@@ -16,6 +17,8 @@ export interface IAssignment {
   complexity: AssignmentComplexity;
   duration?: { hours: string; minutes: string };
   assignee_classes: Array<IClass & BaseResponseInterface>;
+  lesson: ILesson & BaseResponseInterface;
+  code_assignment: any;
   meta: Record<string, number | string>;
 }
 

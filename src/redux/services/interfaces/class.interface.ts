@@ -1,5 +1,5 @@
 export interface IClass {
-  total_students: number;
+  total_students?: number;
   name: string;
   active: boolean;
 }

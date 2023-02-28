@@ -24,6 +24,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "GET",
         params,
       }),
+      keepUnusedDataFor: 0,
       providesTags: ["Modules"],
     }),
     updateModule: builder.mutation<

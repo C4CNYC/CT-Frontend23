@@ -5,20 +5,24 @@ import {
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
 import {
+  IAddModuleToCourse,
   ICourse,
   ICourseCreate,
   ICourseDelete,
+  ICourseSearchParams,
+  IRemoveModuleFromCourse,
 } from "../interfaces/courseUnits.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getCourse: builder.query<
       BaseListResponseInterface<ICourse & BaseResponseInterface>,
-      void
+      ICourseSearchParams
     >({
-      query: () => ({
+      query: (params) => ({
         url: "/course",
         method: "GET",
+        params,
       }),
       providesTags: ["Courses"],
     }),
@@ -54,6 +58,22 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Courses" }],
     }),
+    addModuleToCourse: builder.mutation<void, IAddModuleToCourse>({
+      query: ({ id, ...body }) => ({
+        url: `/course/${id}/unit`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Modules" }],
+    }),
+    removeModuleFromCourse: builder.mutation<void, IRemoveModuleFromCourse>({
+      query: ({ id, ...body }) => ({
+        url: `/course/${id}/unit`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Modules" }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -61,6 +81,8 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useGetCourseQuery,
   // -------------mutation-----------
+  useAddModuleToCourseMutation,
+  useRemoveModuleFromCourseMutation,
   useCreateCourseMutation,
   useDeleteCourseMutation,
   useUpdateCourseMutation,

@@ -1,17 +1,13 @@
+import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-export interface SchoolResponce extends BaseResponseInterface {
+export interface ISchool extends BaseResponseInterface {
   name: string;
   city: string;
   country: string;
 }
 
-export interface SchoolListResponce {
-  data: SchoolResponce[];
-  meta: Record<string, unknown>;
-}
-
-export interface SchoolRequest {
+export interface ISchoolSearchParams extends BaseSearchInterface {
   name?: string;
 }
 

@@ -1,6 +1,7 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
+import { FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Button, CircularProgress } from "@mui/material";
 import { Container } from "@mui/system";
@@ -9,6 +10,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import { CourseCard } from "@sections/dashboard/courses/cards";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import Head from "next/head";
+import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "../../../redux/services/manager/courses-manager";
 
 // ----------------------------------------------------------------------
@@ -21,7 +23,11 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetCourseQuery();
+  const { filters, setFilter } = useFilters<ICourseSearchParams>({
+    name: "",
+    school_id: ""
+  }, FilterMode.global)
+  const { data, isLoading } = useGetCourseQuery(filters);
 
   if (isLoading) return <CircularProgress />;
 
@@ -48,7 +54,7 @@ export default function CoursesListPage(): React.ReactElement {
             </CreateCourseDialog>
           }
         />
-        <FilterCourses />
+        <FilterCourses filters={filters} setFilter={setFilter} />
         <Box
           gap={3}
           display="grid"
@@ -59,8 +65,6 @@ export default function CoursesListPage(): React.ReactElement {
           }}
         >
           {data?.data.map((course, index) => (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
             <CourseCard key={index} course={course} />
           ))}
         </Box>

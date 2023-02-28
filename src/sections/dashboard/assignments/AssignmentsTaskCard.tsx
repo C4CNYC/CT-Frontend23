@@ -167,7 +167,7 @@ export default function AssignmentsTaskCard({
 
       <AssignmentsDetails
         schoolId={schoolId}
-        assignment={card}
+        assignmentId={card.id}
         task={card}
         openDetails={openDetails}
         onCloseDetails={handleCloseDetails}

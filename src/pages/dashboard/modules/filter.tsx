@@ -1,35 +1,33 @@
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import {
-  Box,
-  Button,
-  Divider,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Typography,
+  Autocomplete,
+  CircularProgress,
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
-import { useState } from "react";
-import MenuPopover from "src/components/menu-popover/MenuPopover";
+import { ICourse, ICourseSearchParams, IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-export default function FilterModules(): React.ReactElement {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+interface Props {
+  filters: IModulesSearchParams;
+  setFilter: SetFilterType;
+}
 
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = (): void => {
-    setAnchorEl(null);
-  };
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
-  return (
+export default function FilterModules({ filters, setFilter }: Props): React.ReactElement {
+  const { filters: courseFilters, setFilter: setCourseFilters } =
+    useFilters<ICourseSearchParams>({
+      take: 50,
+      name: "",
+    });
+
+    const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
+
+    if (isLoading) return <CircularProgress />;
+
+    return (
     <>
       <Stack
         spacing={2}
@@ -44,6 +42,10 @@ export default function FilterModules(): React.ReactElement {
           sx={{
             width: "260px",
           }}
+          placeholder="Name"
+          onChange={(event) => {
+            setFilter("name", event.target.value);
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" sx={{ cursor: "pointer" }}>
@@ -52,44 +54,22 @@ export default function FilterModules(): React.ReactElement {
             ),
           }}
         ></TextField>
-        <MenuPopover
-          open={openPopover}
-          onClose={handleClosePopover}
-          sx={{ width: 200, p: 0 }}
-        >
-          <Box sx={{ my: 1.5, px: 2.5 }}>
-            <Typography variant="subtitle2" noWrap>
-              Profile
-            </Typography>
-          </Box>
-          <Divider sx={{ borderStyle: "dashed" }} />
-        </MenuPopover>
-        <Button
-          aria-controls={open ? "basic-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          color="inherit"
-          sx={{ padding: "10px", height: "60px" }}
-        >
-          Course
-          <ListItemIcon>
-            <KeyboardArrowDownIcon fontSize="small" />
-          </ListItemIcon>
-        </Button>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
+        <Autocomplete<ICourse & BaseResponseInterface>
+          options={courses?.data ?? []}
+          renderInput={(params) => <TextField {...params} label="Course" />}
+          onInputChange={(e, value) => {
+            setCourseFilters("name", value);
           }}
-        >
-          <MenuItem onClick={handleClose}>Low priority</MenuItem>
-          <MenuItem onClick={handleClose}>Medium priority</MenuItem>
-          <MenuItem onClick={handleClose}>Hight priority</MenuItem>
-        </Menu>
+          defaultValue={
+            courses?.data.filter((m) => m.id === filters.course_id)[0]
+          }
+          onChange={(event, value, reason, details) => {
+            console.log({ value });
+            setFilter("course_id", details?.option.id ?? "");
+          }}
+          getOptionLabel={(option) => option.name}
+          sx={{ width: 200, marginRight: 2 }}
+        />
       </Stack>
     </>
   );

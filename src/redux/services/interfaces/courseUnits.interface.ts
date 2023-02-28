@@ -21,6 +21,7 @@ export interface ICourse {
   price: string;
   description: string;
   active: boolean;
+  cover: string;
   draft?: boolean;
 }
 
@@ -37,6 +38,16 @@ export interface IAddLessonToModule {
 export interface IRemoveLessonFromModule {
   id: string;
   lesson_id: string;
+}
+
+export interface IAddModuleToCourse {
+  id: string;
+  unit_id: string;
+}
+
+export interface IRemoveModuleFromCourse {
+  id: string;
+  unit_id: string;
 }
 
 export interface IModuleCreate {
@@ -59,6 +70,12 @@ export interface IModulesSearchParams extends BaseSearchInterface {
 export interface ILessonSearchParams extends BaseSearchInterface {
   name?: string;
   module_id?: string;
+  assignment_id?: string;
+}
+
+export interface ICourseSearchParams extends BaseSearchInterface {
+  school_id?: string;
+  name?: string;
 }
 
 export interface ICourseCreate {

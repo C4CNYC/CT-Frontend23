@@ -5,9 +5,10 @@ import {
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
 import {
+  ISchool,
+  ISchoolSearchParams,
   SchoolContacts,
   SchoolProfile,
-  SchoolResponce,
   SchoolSettings,
   SchoolSocials,
 } from "../interfaces/school.interface";
@@ -15,12 +16,13 @@ import {
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getMySchools: builder.query<
-      BaseListResponseInterface<SchoolResponce>,
-      void
+      BaseListResponseInterface<ISchool>,
+      ISchoolSearchParams
     >({
-      query: () => ({
+      query: (params) => ({
         url: "/school",
         method: "GET",
+        params,
       }),
       providesTags: ["School"],
     }),

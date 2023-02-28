@@ -39,6 +39,7 @@ export const PATH_DASHBOARD = {
   permissionDenied: path(ROOTS_DASHBOARD, "/permission-denied"),
   courses: {
     root: path(ROOTS_DASHBOARD, "/courses"),
+    setting: (id: string) => path(ROOTS_DASHBOARD, `/courses/${id}/setting`),
   },
   modules: {
     root: path(ROOTS_DASHBOARD, "/modules/list"),

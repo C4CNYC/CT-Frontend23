@@ -22,10 +22,10 @@ import {
   ClassRequest,
   ClassResponce,
   DeleteMemberRequest,
+  ISchool,
+  ISchoolSearchParams,
   OrganizationSchoolRequest,
   OrganizationSchoolResponse,
-  SchoolRequest,
-  SchoolResponce,
 } from "./interfaces/school.interface";
 import {
   CreateUserRequest,
@@ -119,8 +119,8 @@ export const adminApi = createApi({
       invalidatesTags: [{ type: "Classes" }],
     }),
     getSchoolList: builder.query<
-      BaseListResponseInterface<SchoolResponce>,
-      SchoolRequest
+      BaseListResponseInterface<ISchool>,
+      ISchoolSearchParams
     >({
       query: ({ ...params }) => ({
         url: "/school",

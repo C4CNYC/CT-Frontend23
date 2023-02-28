@@ -16,9 +16,10 @@ import {
 } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import Link from "next/link";
 import { useState } from "react";
+import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { ICourse } from "../../../../@types/courses";
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
 
 interface Props {
@@ -78,7 +79,7 @@ export default function CourseCard({
             borderStyle: "solid",
           },
         }}
-        component="a"
+        component={Link}
         href={`${PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
         <Stack
@@ -153,13 +154,6 @@ export default function CourseCard({
             </Typography>
             <Typography variant="subtitle1">{price}</Typography>
           </div>
-
-          {/*  <div> */}
-          {/*    <Typography variant="caption" component="div" sx={{ mb: 0.75, color: "text.disabled" }}> */}
-          {/*      Total Hours */}
-          {/*    </Typography> */}
-          {/*    <Typography variant="subtitle1">10H</Typography> */}
-          {/*  </div> */}
         </Box>
       </Card>
       <MenuPopover
@@ -177,7 +171,7 @@ export default function CourseCard({
             price: course.price.substring(1),
             description: course.description,
             active: course.active,
-            draft: course.draft,
+            draft: course.draft as boolean,
           }}
         >
           <MenuItem>
@@ -185,6 +179,14 @@ export default function CourseCard({
             Edit
           </MenuItem>
         </CreateCourseDialog>
+
+        <MenuItem
+          component={Link}
+          href={PATH_DASHBOARD.courses.setting(course.id)}
+        >
+          <Iconify icon="ant-design:setting-outlined" />
+          Settings
+        </MenuItem>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

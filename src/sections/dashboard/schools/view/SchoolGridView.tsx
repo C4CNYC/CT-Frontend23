@@ -1,12 +1,12 @@
 import { TableProps } from "@components/table";
 import { Box } from "@mui/material";
 import { useRef } from "react";
-import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import { ISchool } from "src/redux/services/interfaces/school.interface";
 import SchoolCard from "../item/SchoolCard";
 
 interface Props {
   table: TableProps;
-  data: SchoolResponce[];
+  data: ISchool[];
   onDeleteItem: (id: string) => void;
 }
 
