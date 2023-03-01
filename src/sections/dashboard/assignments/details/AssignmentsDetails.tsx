@@ -257,7 +257,7 @@ export default function AssignmentsDetails({
           </Stack>
           <Stack direction="row" alignItems="center">
             <StyledLabel>Task:</StyledLabel>
-            <TaskController assignmentId={assignmentId} lesson={assignment.task}/>
+            <TaskController assignmentId={assignmentId} lesson={assignment.code_assignment}/>
           </Stack>
           <Stack direction="row" alignItems="center">
             <StyledLabel>Lesson:</StyledLabel>
