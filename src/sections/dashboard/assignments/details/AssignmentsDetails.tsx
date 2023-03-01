@@ -22,6 +22,7 @@ import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
 import AssignmentsDetailsToolbar from "./AssignmentsDetailsToolbar";
 import ClassesCountroller from "./controllers/ClassesController";
 import LessonController from "./controllers/LessonController";
+import TaskController from "./controllers/TaskController";
 
 // ----------------------------------------------------------------------
 
@@ -253,6 +254,10 @@ export default function AssignmentsDetails({
                 Grade 2
               </option>
             </CustomSmallSelect>
+          </Stack>
+          <Stack direction="row" alignItems="center">
+            <StyledLabel>Task:</StyledLabel>
+            <TaskController assignmentId={assignmentId} lesson={assignment.task}/>
           </Stack>
           <Stack direction="row" alignItems="center">
             <StyledLabel>Lesson:</StyledLabel>
