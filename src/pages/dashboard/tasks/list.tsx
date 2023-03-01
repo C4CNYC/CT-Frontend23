@@ -1,37 +1,38 @@
-import Head from "next/head";
-import TaskCard from "@sections/dashboard/tasks/TaskCard";
-import CreateTaskDialog from "@sections/dashboard/tasks/CreateTaskDialog";
-import DashboardLayout from "src/layouts/dashboard";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import { Box, Button, Container } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { useSettingsContext } from "@components/settings";
-import FilterTasks from "./filter";
 import Iconify from "@components/iconify";
+import { useSettingsContext } from "@components/settings";
+import { FilterMode, useFilters } from "@hooks/useFilters";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
+import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
+import TaskCard from "@sections/dashboard/tasks/TaskCard";
+import Head from "next/head";
+import DashboardLayout from "src/layouts/dashboard";
+import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
+import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
+import FilterTasks from "./filter";
 
 // ----------------------------------------------------------------------
 
 TasksListPage.getLayout = (page: React.ReactElement) => (
-    <DashboardLayout>{page}</DashboardLayout>
-  );
+  <DashboardLayout>{page}</DashboardLayout>
+);
 
-  // ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
 
 export default function TasksListPage(): React.ReactElement {
-    const taskInfo = {
-        name: "Name",
-        description: "Some Descr",
-        id: "121341",
-        type: "type",
-        active: false,
-        key: 14124214,
-    }
-
   const { themeStretch } = useSettingsContext();
-  // const { data, isLoading } = useGetLessonsQuery();
+  const { filters, setFilter } = useFilters<ITaskSearchParams>(
+    {
+      name: "",
+    },
+    FilterMode.global
+  );
 
-  // if (isLoading) return <CircularProgress />;
-  // if (data?.data.length === 0) return <SearchNotFound />;
+  const { data, isLoading, isFetching } = useGetTasksQuery(filters);
+
+  if (isLoading) return <CircularProgress />;
+
   return (
     <>
       <Head>
@@ -43,32 +44,36 @@ export default function TasksListPage(): React.ReactElement {
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Tasks", href: PATH_DASHBOARD.lessons.root },
-            { name: "List" }
+            { name: "List" },
           ]}
           action={
-            <CreateTaskDialog isEdit={false}>
+            <CreateCodeDialog>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
                 Create Task
               </Button>
-            </CreateTaskDialog>
+            </CreateCodeDialog>
           }
         />
-        <FilterTasks />
-        <Box
-          gap={2}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            md: "repeat(3, 1fr)"
-          }}
-        >
-          <TaskCard
-            task={taskInfo}
-          />
-        </Box>
+        <FilterTasks filters={filters} setFilter={setFilter} />
+        {isFetching ? (
+          <CircularProgress />
+        ) : (
+          <Box
+            gap={2}
+            display="grid"
+            gridTemplateColumns={{
+              xs: "repeat(1, 1fr)",
+              md: "repeat(3, 1fr)",
+            }}
+          >
+            {data?.data.map((task) => (
+              <TaskCard key={task.id} task={task} />
+            ))}
+          </Box>
+        )}
       </Container>
     </>
   );

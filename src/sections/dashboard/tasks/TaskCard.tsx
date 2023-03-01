@@ -1,41 +1,47 @@
-import { useState } from "react";
-import TextMaxLine from "@components/text-max-line";
-import MenuPopover from "@components/menu-popover/MenuPopover";
 import ConfirmDialog from "@components/confirm-dialog";
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack
-} from "@mui/material";
 import Iconify from "@components/iconify";
-import CreateTaskDialog from "./CreateTaskDialog";
+import MenuPopover from "@components/menu-popover/MenuPopover";
+import { useSnackbar } from "@components/snackbar";
+import TextMaxLine from "@components/text-max-line";
+import { Box, Button, Card, IconButton, MenuItem, Stack } from "@mui/material";
+import { JsonObject } from "@remirror/types";
 import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
+import { useState } from "react";
+import { useDeleteTaskMutation } from "src/redux/services/manager/tasks-manager";
 
 interface Props {
   task: {
     name: string;
-    description: string;
     id?: string;
-    type: string;
-    active: boolean;
-    key: any;
+    body: string;
   };
 }
 
-export default function TaskCard({
-                                   task
-                                 }: Props): React.ReactElement | null {
+export default function TaskCard({ task }: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
 
+  const [deleteTask] = useDeleteTaskMutation();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const codeBody = JSON.parse(task.body);
+
   const onDelete = async (): Promise<void> => {
+    if (task.id) {
+      try {
+        await deleteTask({ id: task.id }).unwrap();
+        enqueueSnackbar("Deleted succesfuly!");
+      } catch (error) {
+        enqueueSnackbar(error.data.message, {
+          variant: "error",
+        });
+      }
+    }
   };
 
-  const handleOpenPopover = async (event: React.MouseEvent<HTMLElement>): Promise<void> => {
+  const handleOpenPopover = async (
+    event: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
     setOpenPopover(event.currentTarget);
   };
   const handleClosePopover = (): void => {
@@ -62,8 +68,8 @@ export default function TaskCard({
           maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
-            bgcolor: "grey.100"
-          }
+            bgcolor: "grey.100",
+          },
         }}
       >
         <Stack
@@ -78,7 +84,13 @@ export default function TaskCard({
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
-        <CreateCodeDialog lessonId="id" lessonName="lesson.name">
+        <CreateCodeDialog
+          taskId={task.id}
+          taskName={task.name}
+          isEdit
+          code={codeBody.body.code}
+          languige={codeBody.body.languige}
+        >
           <>
             <Box
               component="img"
@@ -95,46 +107,23 @@ export default function TaskCard({
               spacing={0.75}
               sx={{ typography: "caption", color: "text.disabled" }}
             >
-              <Box>
-                {task.description}
-              </Box>
               <Box
                 sx={{
                   width: 2,
                   height: 2,
                   borderRadius: "50%",
-                  bgColor: "currentColor"
+                  bgColor: "currentColor",
                 }}
               />
             </Stack>
           </>
-
         </CreateCodeDialog>
-
       </Card>
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
         sx={{ width: 160 }}
       >
-        <CreateTaskDialog
-          isEdit
-          id={task.id}
-          defaultValues={{
-            name: task.name,
-            description: task?.description,
-            active: task?.active,
-            type: task?.type
-          }}
-        >
-          <MenuItem>
-            <Iconify icon="eva:edit-fill" />
-            Edit
-          </MenuItem>
-        </CreateTaskDialog>
-
-        <Divider sx={{ borderStyle: "dashed" }} />
-
         <MenuItem
           onClick={() => {
             handleOpenConfirm();

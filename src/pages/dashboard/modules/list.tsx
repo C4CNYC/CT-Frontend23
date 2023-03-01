@@ -23,10 +23,13 @@ ModulesListPage.getLayout = (page: React.ReactElement) => (
 
 export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext();
-  const { filters, setFilter } = useFilters<IModulesSearchParams>({
-    name: "",
-    course_id: ""
-  }, FilterMode.global)
+  const { filters, setFilter } = useFilters<IModulesSearchParams>(
+    {
+      name: "",
+      course_id: "",
+    },
+    FilterMode.global
+  );
   const { data, isLoading, isFetching } = useGetModulesQuery(filters);
 
   if (isLoading) return <CircularProgress />;
@@ -56,26 +59,24 @@ export default function ModulesListPage(): React.ReactElement | string {
             </CreateModuleDialog>
           }
         />
-        <FilterModules filters={filters} setFilter={setFilter}/>
-        {
-          isFetching
-          ? (<CircularProgress/>)
-          : (
-            <Box
-                gap={2}
-                display="grid"
-                gridTemplateColumns={{
-                  xs: "repeat(1, 1fr)",
-                  md: "repeat(3, 1fr)",
-                }}
-              >
-                {data?.data.map((module, index) => (
-                  // @ts-expect-error
-                  <ModuleCard key={index} module={module} />
-                ))}
-              </Box>
-          )
-        }
+        <FilterModules filters={filters} setFilter={setFilter} />
+        {isFetching ? (
+          <CircularProgress />
+        ) : (
+          <Box
+            gap={2}
+            display="grid"
+            gridTemplateColumns={{
+              xs: "repeat(1, 1fr)",
+              md: "repeat(3, 1fr)",
+            }}
+          >
+            {data?.data.map((module, index) => (
+              // @ts-expect-error
+              <ModuleCard key={index} module={module} />
+            ))}
+          </Box>
+        )}
       </Container>
     </>
   );
