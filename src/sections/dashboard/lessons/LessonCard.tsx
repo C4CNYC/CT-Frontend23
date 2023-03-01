@@ -95,7 +95,11 @@ export default function LessonCard({
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
-        <CreateContentDialog lessonId={lesson.id} lessonName={lesson.name}>
+        <CreateContentDialog
+          lessonId={lesson.id}
+          lessonName={lesson.name}
+          lessonDescr={lesson.description}
+        >
           <>
             <Box
               component="img"
