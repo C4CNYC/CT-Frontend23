@@ -1,13 +1,15 @@
+import MyEditor from "@components/editor/MyEditor";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   AppBar,
   CircularProgress,
+  IconButton,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
-import MyEditor from "@components/editor/MyEditor";
 import * as React from "react";
 import { useState } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
@@ -52,6 +54,9 @@ export default function CreateContentDialog({
             <Typography sx={{ ml: 0, flex: 1 }} variant="h6" component="div">
               {lessonName}
             </Typography>
+            <IconButton edge="end" onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
           </Toolbar>
         </AppBar>
         <DialogContent sx={{ p: 0, scrollbarWidth: "none" }}>
