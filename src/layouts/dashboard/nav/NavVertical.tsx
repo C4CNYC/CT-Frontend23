@@ -5,14 +5,13 @@ import { Box, Drawer, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import UserSection from "src/components/user-section";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 import { NAV } from "../../../config-global";
 import useResponsive from "../../../hooks/useResponsive";
 import { admin, content, managment } from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
-
+import UserSection from "@sections/home/user-section";
 // ----------------------------------------------------------------------
 
 interface Props {
@@ -60,14 +59,9 @@ export default function NavVertical({
           }}
         >
           <Logo />
+          <Stack sx={{ mt: "30px" }}></Stack>
           <UserSection />
         </Stack>
-
-        <Stack
-          sx={{
-            p: "14px 15px 0 16px",
-          }}
-        ></Stack>
 
         <NavSectionVertical data={menu} />
       </>

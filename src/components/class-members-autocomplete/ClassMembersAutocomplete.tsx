@@ -42,7 +42,7 @@ export default function ClassMembersAutocomplete(): React.ReactElement {
   const [joinClass] = useStudentJoinClassMutation();
   const [leftClass] = useStudentLeftClassMutation();
   const { data: classMembers } = useGetStudentsQuery(
-    { schoolId, classId, take: 50 },
+    { schoolId, class_id: classId, take: 50 },
     { skip: !schoolId || !classId }
   );
   const { data: students } = useGetStudentsQuery(
@@ -64,7 +64,7 @@ export default function ClassMembersAutocomplete(): React.ReactElement {
       const payload = {
         schoolId,
         classId,
-        studentId: details?.option.id ?? "",
+        student_id: details?.option.id ?? "",
       };
       switch (reason) {
         case "selectOption": {

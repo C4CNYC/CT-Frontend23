@@ -1,0 +1,30 @@
+<svg width="44" height="45" viewBox="0 0 44 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/ic_sketch_small">
+<g id="Group">
+<g id="Base">
+<path id="Polygon" fill-rule="evenodd" clip-rule="evenodd" d="M22 41.6807L0 16.1179L9.53036 3.20293L22 1.8669L34.4696 3.20293L44 16.1179L22 41.6807Z" fill="#FFAE00"/>
+</g>
+<g id="Bottom Back">
+<path id="Polygon_2" fill-rule="evenodd" clip-rule="evenodd" d="M22 41.6807L0 16.1179L44 16.1179L22 41.6807Z" fill="#EC6C00"/>
+</g>
+<g id="Bottom Mid">
+<path id="Polygon_3" fill-rule="evenodd" clip-rule="evenodd" d="M22.0006 41.6807L8.90752 16.1179L35.0938 16.1179L22.0006 41.6807Z" fill="#FFAE00"/>
+</g>
+<g id="Top Mid">
+<path id="Polygon_4" fill-rule="evenodd" clip-rule="evenodd" d="M22.0006 1.86666L8.90752 16.1177L35.0937 16.1177L22.0006 1.86666Z" fill="#FFEFB4"/>
+</g>
+<g id="Top Side Left">
+<path id="Polygon_5" fill-rule="evenodd" clip-rule="evenodd" d="M9.53125 3.2027L4.63246 9.70472L0.000885963 16.1177L8.99684 16.1177L9.53125 3.2027Z" fill="#FFAE00"/>
+</g>
+<g id="Top Side Right">
+<path id="Polygon_6" fill-rule="evenodd" clip-rule="evenodd" d="M34.4688 3.2027L39.3675 9.70472L43.9991 16.1177L35.0032 16.1177L34.4688 3.2027Z" fill="#FFAE00"/>
+</g>
+<g id="Top Left">
+<path id="Polygon_7" fill-rule="evenodd" clip-rule="evenodd" d="M9.53036 3.2027L8.90688 16.1177L22 1.86666L9.53036 3.2027Z" fill="#FED305"/>
+</g>
+<g id="Top Right">
+<path id="Polygon_8" fill-rule="evenodd" clip-rule="evenodd" d="M34.4696 3.2027L35.0931 16.1177L22 1.86666L34.4696 3.2027Z" fill="#FED305"/>
+</g>
+</g>
+</g>
+</svg>

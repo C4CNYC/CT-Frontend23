@@ -22,7 +22,7 @@ export interface ICourse {
   description: string;
   active: boolean;
   cover: string;
-  draft?: boolean;
+  draft: boolean;
 }
 
 export interface ILessonContent {
@@ -74,6 +74,7 @@ export interface ILessonSearchParams extends BaseSearchInterface {
 }
 
 export interface ICourseSearchParams extends BaseSearchInterface {
+  class_id?: string;
   school_id?: string;
   name?: string;
 }

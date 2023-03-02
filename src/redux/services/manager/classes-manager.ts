@@ -4,7 +4,12 @@ import {
   BaseResponseInterface,
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import { ClassSearchParams, IClass } from "../interfaces/class.interface";
+import {
+  ClassSearchParams,
+  IAddCourseToClass,
+  IClass,
+  IRemoveCourseFromClass,
+} from "../interfaces/class.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -48,6 +53,22 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Classes"],
     }),
+    addCourseToClass: builder.mutation<void, IAddCourseToClass>({
+      query: ({ schoolId, id, ...body }) => ({
+        url: `/school/${schoolId}/class/${id}/course`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
+    removeCourseFromClass: builder.mutation<void, IRemoveCourseFromClass>({
+      query: ({ schoolId, id, ...body }) => ({
+        url: `/school/${schoolId}/class/${id}/course`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -55,6 +76,8 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useGetClassesQuery,
   // -------------mutation-----------
+  useAddCourseToClassMutation,
+  useRemoveCourseFromClassMutation,
   useDeleteClassesMutation,
   useUpdateClassesMutation,
   useCreateClassesMutation,
