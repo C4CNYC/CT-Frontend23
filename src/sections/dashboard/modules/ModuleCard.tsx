@@ -14,9 +14,11 @@ import {
 } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import Link from "next/link";
 import { useState } from "react";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { IModule } from "../../../redux/services/interfaces/class.interface";
-import { useDeleteModuleMutation } from "../../../redux/services/manager";
+import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
 // ----------------------------------------------------------------------
 
@@ -25,12 +27,7 @@ interface Props extends IModule {
   selected?: boolean;
   onSelect?: VoidFunction;
   key: number;
-  module: {
-    name: string;
-    description: string;
-    id: string;
-    active: boolean;
-  };
+  module: IModule & BaseResponseInterface;
 }
 
 export default function ModuleCard({
@@ -63,6 +60,8 @@ export default function ModuleCard({
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
+    event.stopPropagation();
+    event.preventDefault();
   };
 
   const handleClosePopover = (): void => {
@@ -72,8 +71,8 @@ export default function ModuleCard({
   return (
     <>
       <Card
-        component="a"
-        href={`${PATH_DASHBOARD.lessons.root}?id=${module.id}`}
+        component={Link}
+        href={`${PATH_DASHBOARD.lessons.root}?module_id=${module.id}`}
         sx={{
           textDecoration: "none",
           p: 2.5,
@@ -138,8 +137,8 @@ export default function ModuleCard({
           id={module.id}
           defaultValues={{
             name: module.name,
-            description: module.description,
-            active: module.active,
+            description: module.description as string,
+            active: module.active as boolean,
           }}
         >
           <MenuItem
@@ -151,6 +150,14 @@ export default function ModuleCard({
             Edit
           </MenuItem>
         </CreateModuleDialog>
+
+        <MenuItem
+          component={Link}
+          href={PATH_DASHBOARD.modules.setting(module.id)}
+        >
+          <Iconify icon="ant-design:setting-outlined" />
+          Settings
+        </MenuItem>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

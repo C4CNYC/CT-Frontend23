@@ -1,26 +1,8 @@
-// hook
-import { useState } from "react";
-// mui
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-// icoon
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-// component
 import CardModule from "@components/card-module";
-import Menu from "@mui/material/Menu";
 
-export default function MainSectionHome() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+export default function MainSectionHome(): React.ReactElement {
   return (
     <>
       <Stack
@@ -38,50 +20,9 @@ export default function MainSectionHome() {
           justifyContent="space-between"
         >
           <Stack pl="24px" mt="24px">
-            <Typography fontWeight="700" fontSize="32px">
+            <Typography fontWeight="700" variant="h4">
               What are you gonna create today?
             </Typography>
-            <Typography variant="body2" color="#637381" fontSize="14px">
-              12 Tribes
-            </Typography>
-          </Stack>
-          <Stack mr="24px">
-            <Button
-              id="demo-customized-button"
-              aria-controls={open ? "demo-customized-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              disableElevation
-              onClick={handleClick}
-              sx={{
-                color: "#212B36",
-                width: "90px",
-                height: "30px",
-                fontSize: "14px",
-                pr: "11px",
-                display: "flex",
-                alignItems: "center",
-                backgroundColor: "#F4F6F8",
-              }}
-              endIcon={<KeyboardArrowDownIcon fontSize="inherit" />}
-            >
-              <Typography variant="body2" pt="4px" pb="4px" ml="4px">
-                Weekly
-              </Typography>
-            </Button>
-            <Menu
-              id="basic-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem onClick={handleClose} disableRipple>
-                2
-              </MenuItem>
-            </Menu>
           </Stack>
         </Stack>
         <Stack

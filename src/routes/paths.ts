@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------
 
-function path(root: string, sublink: string) {
+function path(root: string, sublink: string): string {
   return `${root}${sublink}`;
 }
 
@@ -36,20 +36,21 @@ export const PATH_PAGE = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
+  home: path(ROOTS_DASHBOARD, "/home"),
   permissionDenied: path(ROOTS_DASHBOARD, "/permission-denied"),
-  blank: path(ROOTS_DASHBOARD, "/blank"),
-  general: {
-    app: path(ROOTS_DASHBOARD, "/app"),
-    analytics: path(ROOTS_DASHBOARD, "/analytics"),
-  },
   courses: {
     root: path(ROOTS_DASHBOARD, "/courses"),
+    setting: (id: string) => path(ROOTS_DASHBOARD, `/courses/${id}/setting`),
   },
   modules: {
     root: path(ROOTS_DASHBOARD, "/modules/list"),
+    setting: (id: string) => path(ROOTS_DASHBOARD, `/modules/${id}/setting`),
   },
   lessons: {
     root: path(ROOTS_DASHBOARD, "/lessons/list"),
+  },
+  tasks: {
+    root: path(ROOTS_DASHBOARD, "/tasks/list"),
   },
   organization: {
     root: path(ROOTS_DASHBOARD, "/organization"),
@@ -78,21 +79,6 @@ export const PATH_DASHBOARD = {
       path(ROOTS_DASHBOARD, `/school/classes/${id}/setting`),
     edit: (name: string) =>
       path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
-  },
-  invoice: {
-    root: path(ROOTS_DASHBOARD, "/invoice"),
-    list: path(ROOTS_DASHBOARD, "/invoice/list"),
-    new: path(ROOTS_DASHBOARD, "/invoice/new"),
-    view: (id: string) => path(ROOTS_DASHBOARD, `/invoice/${id}`),
-    edit: (id: string) => path(ROOTS_DASHBOARD, `/invoice/${id}/edit`),
-    demoEdit: path(
-      ROOTS_DASHBOARD,
-      "/invoice/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b1/edit"
-    ),
-    demoView: path(
-      ROOTS_DASHBOARD,
-      "/invoice/e99f09a7-dd88-49d5-b1c8-1daf80c2d7b5"
-    ),
   },
 };
 

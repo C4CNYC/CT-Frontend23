@@ -1,7 +1,7 @@
 import Iconify from "@components/iconify";
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useGetMySchoolsQuery } from "src/redux/services/manager";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
@@ -25,11 +25,9 @@ export default function ProfileAbout({
     <Card>
       <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
-        {data?.about
-? (
+        {data?.about ? (
           <Typography variant="body2">{data?.about}</Typography>
-        )
-: (
+        ) : (
           ""
         )}
         <Stack direction="row">

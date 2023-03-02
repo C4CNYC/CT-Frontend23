@@ -2,7 +2,7 @@ import Scrollbar from "@components/scrollbar";
 import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import * as React from "react";
-import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import { ISchool } from "src/redux/services/interfaces/school.interface";
 import { countries } from "../../../../assets/data";
 import TeacherSection from "../../organization/schools/TeachersSection";
 import ClassSection from "../classes/ClassSection";
@@ -10,7 +10,7 @@ import ClassSection from "../classes/ClassSection";
 // ----------------------------------------------------------------------
 
 interface Props extends DrawerProps {
-  item: SchoolResponce;
+  item: ISchool;
   onClose: VoidFunction;
   onDelete: VoidFunction;
 }
@@ -79,9 +79,9 @@ export default function SchoolDetailsDrawer({
             </Typography>
           </Stack>
           <Divider sx={{ borderStyle: "dashed" }} />
-          <TeacherSection school_id={item.id} />
+          <TeacherSection schoolId={item.id} />
           <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
-          <ClassSection school_id={item.id} />
+          <ClassSection schoolId={item.id} />
           <Divider sx={{ borderStyle: "dashed", pt: 2.5 }} />
         </Scrollbar>
       </Drawer>

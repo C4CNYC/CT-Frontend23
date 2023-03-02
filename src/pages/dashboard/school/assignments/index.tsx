@@ -1,5 +1,4 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
-import { SkeletonKanbanColumn } from "@components/skeleton";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container, Stack } from "@mui/material";
@@ -10,7 +9,7 @@ import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.e
 import {
   useGetAssignmentListQuery,
   useUdpateAssignmentMutation,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/assignments-manager";
 import { getOrder } from "src/utils/getTaskOrder";
 import { getBoard, persistCard } from "../../../../redux/slices/assignments";
 import { RootState, useDispatch, useSelector } from "../../../../redux/store";
@@ -25,11 +24,8 @@ Index.getLayout = (page: React.ReactElement) => (
 
 export default function Index(): React.ReactElement {
   const dispatch = useDispatch();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
-  const { data } = useGetAssignmentListQuery(
-    { school_id },
-    { skip: !school_id }
-  );
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const { data } = useGetAssignmentListQuery({ schoolId }, { skip: !schoolId });
   const [updateAssignment] = useUdpateAssignmentMutation();
 
   const { board } = useSelector((state) => state.assignments);
@@ -74,8 +70,8 @@ export default function Index(): React.ReactElement {
       );
 
       updateAssignment({
-        assignment_id: draggableId,
-        school_id,
+        assignmentId: draggableId,
+        schoolId,
         meta: {
           order: getOrder(result, finish, board.cards, start.id === finish.id),
         },
@@ -109,8 +105,8 @@ export default function Index(): React.ReactElement {
       })
     );
     updateAssignment({
-      assignment_id: draggableId,
-      school_id,
+      assignmentId: draggableId,
+      schoolId,
       status: destination.droppableId as AssignmentStatuses,
       meta: {
         order: getOrder(result, finish, board.cards, start.id === finish.id),
@@ -155,20 +151,16 @@ export default function Index(): React.ReactElement {
                 }}
               >
                 {!Object.keys(board.columns).length
-? (
-                  <SkeletonKanbanColumn />
-                )
-: (
-                  Object.values(AssignmentStatuses).map((columnId, index) => (
-                    <AssignmentColumn
-                      school_id={school_id}
-                      index={index}
-                      key={columnId}
-                      column={board.columns[columnId]}
-                      cards={board.cards}
-                    />
-                  ))
-                )}
+                  ? null
+                  : Object.values(AssignmentStatuses).map((columnId, index) => (
+                      <AssignmentColumn
+                        schoolId={schoolId}
+                        index={index}
+                        key={columnId}
+                        column={board.columns[columnId]}
+                        cards={board.cards}
+                      />
+                    ))}
               </Stack>
             )}
           </Droppable>

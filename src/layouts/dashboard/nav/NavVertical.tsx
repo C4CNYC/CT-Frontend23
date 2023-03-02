@@ -80,8 +80,7 @@ export default function NavVertical({
     >
       <NavToggleButton />
 
-      {isDesktop
-? (
+      {isDesktop ? (
         <Drawer
           open
           variant="permanent"
@@ -96,8 +95,7 @@ export default function NavVertical({
         >
           {renderContent}
         </Drawer>
-      )
-: (
+      ) : (
         <Drawer
           open={openNav}
           onClose={onCloseNav}

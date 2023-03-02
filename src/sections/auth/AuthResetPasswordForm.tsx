@@ -36,7 +36,7 @@ export default function AuthResetPasswordForm(): React.ReactElement {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       sessionStorage.setItem("email-recovery", data.email);

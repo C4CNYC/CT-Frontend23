@@ -1,13 +1,13 @@
-import { Theme } from "@mui/material/styles";
 import {
   Box,
-  SxProps,
   Checkbox,
-  TableRow,
+  SxProps,
   TableCell,
   TableHead,
+  TableRow,
   TableSortLabel,
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ interface Props {
   onSort?: (id: string) => void;
   onSelectAllRows?: (checked: boolean) => void;
   sx?: SxProps<Theme>;
-};
+}
 
 export default function TableHeadCustom({
   order,
@@ -44,9 +44,8 @@ export default function TableHeadCustom({
   numSelected = 0,
   onSort,
   onSelectAllRows,
-  sx
-}:
-Props): React.ReactElement | null {
+  sx,
+}: Props): React.ReactElement | null {
   return (
     <TableHead sx={sx}>
       <TableRow>
@@ -55,8 +54,9 @@ Props): React.ReactElement | null {
             <Checkbox
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onSelectAllRows(event.target.checked); }
-              }
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                onSelectAllRows(event.target.checked);
+              }}
             />
           </TableCell>
         )}
@@ -68,29 +68,27 @@ Props): React.ReactElement | null {
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{ width: headCell.width, minWidth: headCell.minWidth }}
           >
-            {onSort
-? (
+            {onSort ? (
               <TableSortLabel
                 hideSortIcon
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : "asc"}
-                onClick={() => { onSort(headCell.id); }}
+                onClick={() => {
+                  onSort(headCell.id);
+                }}
                 sx={{ textTransform: "capitalize" }}
               >
                 {headCell.label}
 
-                {orderBy === headCell.id
-? (
+                {orderBy === headCell.id ? (
                   <Box sx={{ ...visuallyHidden }}>
                     {order === "desc"
                       ? "sorted descending"
                       : "sorted ascending"}
                   </Box>
-                )
-: null}
+                ) : null}
               </TableSortLabel>
-            )
-: (
+            ) : (
               headCell.label
             )}
           </TableCell>

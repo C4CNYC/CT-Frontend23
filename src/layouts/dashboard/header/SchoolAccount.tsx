@@ -10,14 +10,14 @@ import {
 // components
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
-import { useGetMySchoolsQuery } from "src/redux/services/manager";
+import { ISchool } from "src/redux/services/interfaces/school.interface";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { setSchool } from "src/redux/slices/manager";
 import { RootState } from "src/redux/store";
 
 export default function SchoolAccount(): React.ReactElement | null {
   const dispatch = useDispatch();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { data: schools } = useGetMySchoolsQuery();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function SchoolAccount(): React.ReactElement | null {
       <FormControl fullWidth>
         <InputLabel sx={{ top: -8 }}>School</InputLabel>
         <Select
-          value={school_id}
+          value={schoolId}
           label="School"
           onChange={onChange}
           sx={{
@@ -45,7 +45,7 @@ export default function SchoolAccount(): React.ReactElement | null {
             width: "250px",
           }}
         >
-          {schools?.data?.map((school: SchoolResponce) => (
+          {schools?.data?.map((school: ISchool) => (
             <MenuItem key={school.id} value={school.id}>
               {school.name}
             </MenuItem>

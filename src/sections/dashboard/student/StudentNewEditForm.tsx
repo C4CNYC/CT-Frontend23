@@ -27,9 +27,11 @@ import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useCreateStudentMutation,
   useUpdateStudentMutation,
-} from "src/redux/services/manager";
+} from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import generator from "generate-password";
+import { nullFormat } from "numeral";
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +47,7 @@ export default function StudentNewEditForm({
   currentUser,
 }: Props): React.ReactElement | null {
   const { push } = useRouter();
-  const school_id = useSelector((state: RootState) => state.manager.school_id);
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [createStudent] = useCreateStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
 
@@ -62,6 +64,7 @@ export default function StudentNewEditForm({
     cityp: Yup.string(),
     post_code: Yup.string(),
     about: Yup.string(),
+    password: !isEdit ? Yup.string().required("Password is required") : Yup.string(),
     // avatarUrl: Yup.string().required("Avatar is required").nullable(true),
   });
 
@@ -75,6 +78,13 @@ export default function StudentNewEditForm({
       city: currentUser?.city ?? "",
       post_code: currentUser?.post_code ?? "",
       about: currentUser?.about ?? "",
+      password: generator.generate({
+                    length: 10,
+                    uppercase: true,
+                    lowercase: true,
+                    symbols: true,
+                    numbers: true,
+                  }),
     }),
     [currentUser]
   );
@@ -104,14 +114,14 @@ export default function StudentNewEditForm({
     try {
       if (!isEdit) {
         await createStudent({
-          school_id,
+          schoolId,
           ...data,
         }).unwrap();
       } else {
-        const { email, ...body } = data;
+        const { email, password, ...body } = data;
         await updateStudent({
-          student_id: currentUser?.id as string,
-          school_id,
+          studentId: currentUser?.id as string,
+          schoolId,
           ...body,
         });
       }
@@ -209,6 +219,17 @@ export default function StudentNewEditForm({
               name="email"
               label="Email Address"
             />
+            {
+              !isEdit ? (
+                <RHFTextField
+                  contentEditable={false}
+                  sx={{ mb: 3 }}
+                  disabled={isEdit}
+                  name="password"
+                  label="Generated password"
+                />
+              ) : null
+            }
             <Box
               rowGap={3}
               columnGap={2}

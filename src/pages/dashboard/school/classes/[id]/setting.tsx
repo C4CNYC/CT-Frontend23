@@ -1,4 +1,5 @@
 import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
+import { ClassCoursesAutocomplete } from "@components/ClassCoursesAutocomplete";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
@@ -48,7 +49,7 @@ export default function ClassSettingPage(): React.ReactElement {
             <Typography variant="h4" sx={{ mb: 4, mt: 8 }}>
               Class courses
             </Typography>
-            <ClassMembersAutocomplete />
+            <ClassCoursesAutocomplete />
           </Card>
         </Box>
       </Container>

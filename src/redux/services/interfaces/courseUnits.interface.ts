@@ -1,3 +1,6 @@
+import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
+import { LessonContentType } from "../enums/lesson-content-type.enum";
+
 export interface IModule {
   active: boolean;
   name: string;
@@ -18,7 +21,33 @@ export interface ICourse {
   price: string;
   description: string;
   active: boolean;
-  draft?: boolean;
+  cover: string;
+  draft: boolean;
+}
+
+export interface ILessonContent {
+  body: string;
+  type: LessonContentType;
+}
+
+export interface IAddLessonToModule {
+  id: string;
+  lesson_id: string;
+}
+
+export interface IRemoveLessonFromModule {
+  id: string;
+  lesson_id: string;
+}
+
+export interface IAddModuleToCourse {
+  id: string;
+  unit_id: string;
+}
+
+export interface IRemoveModuleFromCourse {
+  id: string;
+  unit_id: string;
 }
 
 export interface IModuleCreate {
@@ -31,6 +60,23 @@ export interface ILessonCreate {
   active: boolean;
   name: string;
   description: string;
+}
+
+export interface IModulesSearchParams extends BaseSearchInterface {
+  name?: string;
+  course_id?: string;
+}
+
+export interface ILessonSearchParams extends BaseSearchInterface {
+  name?: string;
+  module_id?: string;
+  assignment_id?: string;
+}
+
+export interface ICourseSearchParams extends BaseSearchInterface {
+  class_id?: string;
+  school_id?: string;
+  name?: string;
 }
 
 export interface ICourseCreate {

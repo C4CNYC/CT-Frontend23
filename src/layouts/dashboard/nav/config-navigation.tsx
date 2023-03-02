@@ -1,6 +1,6 @@
 import { PATH_DASHBOARD } from "@routes/paths";
 import { AiOutlineSolution } from "react-icons/ai";
-import { FaSchool, FaUsers, FaUserShield } from "react-icons/fa";
+import { FaSchool, FaTasks, FaUsers, FaUserShield } from "react-icons/fa";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
 import { GrOrganization } from "react-icons/gr";
@@ -50,6 +50,11 @@ export const managment = {
       icon: <IoMdSchool />,
     },
     {
+      title: "assignments",
+      path: PATH_DASHBOARD.school.assignments,
+      icon: <AiOutlineSolution />,
+    },
+    {
       title: "progress",
       path: PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
@@ -76,9 +81,9 @@ export const content = {
       icon: <MdPlayLesson />,
     },
     {
-      title: "assignments",
-      path: PATH_DASHBOARD.school.assignments,
-      icon: <AiOutlineSolution />,
+      title: "tasks",
+      path: PATH_DASHBOARD.tasks.root,
+      icon: <FaTasks />
     },
   ],
 };

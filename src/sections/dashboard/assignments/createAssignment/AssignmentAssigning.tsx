@@ -7,14 +7,14 @@ import { Controller, useForm } from "react-hook-form";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import * as Yup from "yup";
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager";
+import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;
   back: () => void;
   assignment?: IAssignment & BaseResponseInterface;
   assignmentId: string;
-  school_id: string;
+  schoolId: string;
 }
 
 interface FormValuesProps {
@@ -30,7 +30,7 @@ export default function AssignmentAssigning({
   back,
   assignmentId,
   assignment,
-  school_id,
+  schoolId,
   next,
 }: AssignmentStepProps): React.ReactElement | null {
   const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
@@ -59,8 +59,8 @@ export default function AssignmentAssigning({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       updateAssignment({
-        school_id,
-        assignment_id: assignmentId,
+        schoolId,
+        assignmentId,
         start_date: data.start_date,
         end_date: data.end_date,
       });

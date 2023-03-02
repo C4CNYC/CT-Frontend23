@@ -14,7 +14,7 @@ interface ReturnType {
 function useCopyToClipboard(): ReturnType {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null);
 
-  const copy: CopyFn = async (text): Promise<void> => {
+  const copy: CopyFn = async (text): Promise<boolean> => {
     if (!navigator?.clipboard) {
       console.warn("Clipboard not supported");
       return false;

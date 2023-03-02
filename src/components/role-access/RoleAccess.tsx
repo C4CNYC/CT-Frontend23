@@ -8,7 +8,10 @@ interface Props {
   roles: Role[];
 }
 
-export default function RoleAccess({ children, roles }: Props): null | React.ReactElement {
+export default function RoleAccess({
+  children,
+  roles,
+}: Props): null | React.ReactElement {
   const user = useSelector((state: RootState) => state.global.user);
 
   if (user?.role && roles.includes(user?.role)) return children;

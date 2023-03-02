@@ -152,7 +152,7 @@ export function AuthProvider({
   }, [storageAvailable]);
 
   useEffect(() => {
-    initialize().catch((e) => {
+    initialize().catch((e: any) => {
       console.log("INIT FAIL");
     });
   }, [initialize]);

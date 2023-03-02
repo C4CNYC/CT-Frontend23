@@ -14,12 +14,12 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
-import { SchoolResponce } from "src/redux/services/interfaces/school.interface";
+import { ISchool } from "src/redux/services/interfaces/school.interface";
 import { useLocales } from "../../../../locales";
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 
 interface Props extends CardProps {
-  school: SchoolResponce;
+  school: ISchool;
   selected?: boolean;
   onSelect?: VoidFunction;
   onDelete: VoidFunction;

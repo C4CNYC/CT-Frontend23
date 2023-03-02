@@ -35,6 +35,7 @@ module.exports = {
     "@typescript-eslint/no-floating-promises": 0,
     "@typescript-eslint/quotes": [2, "double", { avoidEscape: true }],
     "@typescript-eslint/restrict-template-expressions": 0,
+    "multiline-ternary": 0,
     "@typescript-eslint/explicit-function-return-type": 1,
     "@typescript-eslint/restrict-plus-operands": 1,
     quotes: [2, "double", { avoidEscape: true }],

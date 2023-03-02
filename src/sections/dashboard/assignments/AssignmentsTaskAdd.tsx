@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { IAssignmentsCard } from "../../../@types/assignments";
-import AssignmentsContactsDialog from "./AssignmentsContactsDialog";
 
 interface Props {
   onAddTask: (task: IAssignmentsCard) => void;
@@ -25,8 +24,6 @@ export default function AssignmentsTaskAdd({
   onCloseAddTask,
 }: Props): React.ReactElement | null {
   const [name, setName] = useState("");
-
-  const [openContacts, setOpenContacts] = useState(false);
 
   const {
     startDate,
@@ -41,46 +38,8 @@ export default function AssignmentsTaskAdd({
     shortLabel,
   } = useDateRangePicker(new Date(), new Date());
 
-  const handleOpenContacts = (): void => {
-    setOpenContacts(true);
-  };
-
-  const handleCloseContacts = (): void => {
-    setOpenContacts(false);
-  };
-
-  const handleKeyUpAddTask = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ): any => {
-    // if (event.key === "Enter") {
-    //   if (name.trim() !== "") {
-    //     onAddTask({
-    //       ...defaultTask,
-    //       id: uuidv4(),
-    //       name,
-    //       // due: [startDate, endDate],
-    //       // completed,
-    //     });
-    //   }
-    // }
-  };
-
-  const handleClickAddTask = (): void => {
-    // if (name) {
-    //   onAddTask({
-    //     ...defaultTask,
-    //     id: uuidv4(),
-    //     name,
-    //     // due: [startDate, endDate],
-    //     // completed,
-    //   });
-    // } else {
-    //   onCloseAddTask();
-    // }
-  };
-
   return (
-    <ClickAwayListener onClickAway={handleClickAddTask}>
+    <ClickAwayListener onClickAway={() => {}}>
       <div>
         <Paper variant="outlined">
           <InputBase
@@ -91,7 +50,7 @@ export default function AssignmentsTaskAdd({
             onChange={(event) => {
               setName(event.target.value);
             }}
-            onKeyUp={handleKeyUpAddTask}
+            onKeyUp={() => {}}
             sx={{ px: 2, pt: 2 }}
           />
 
@@ -101,14 +60,13 @@ export default function AssignmentsTaskAdd({
             sx={{ pl: 1, pr: 1.5, pb: 2 }}
           >
             <Stack direction="row" spacing={1.5} alignItems="center">
-              <Tooltip title="Assign" onClick={handleOpenContacts}>
+              <Tooltip title="Assign" onClick={() => {}}>
                 <IconButton size="small">
                   <Iconify icon="eva:people-fill" />
                 </IconButton>
               </Tooltip>
 
-              {isSelectedValuePicker
-? (
+              {isSelectedValuePicker ? (
                 <Box
                   onClick={onOpenPicker}
                   sx={{
@@ -119,8 +77,7 @@ export default function AssignmentsTaskAdd({
                 >
                   {shortLabel}
                 </Box>
-              )
-: (
+              ) : (
                 <Tooltip title="Due date">
                   <IconButton size="small" onClick={onOpenPicker}>
                     <Iconify icon="eva:calendar-fill" />
@@ -130,12 +87,6 @@ export default function AssignmentsTaskAdd({
             </Stack>
           </Stack>
         </Paper>
-
-        <AssignmentsContactsDialog
-          open={openContacts}
-          onClose={handleCloseContacts}
-        />
-
         <DateRangePicker
           variant="calendar"
           title="Choose due date"

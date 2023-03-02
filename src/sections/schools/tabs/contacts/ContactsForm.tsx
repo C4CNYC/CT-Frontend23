@@ -5,9 +5,9 @@ import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
+import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
-import { useUpdateSchoolContactsMutation } from "../../../../redux/services/manager";
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email("Email must be a valid email address"),
@@ -24,7 +24,7 @@ const UpdateUserSchema = Yup.object().shape({
 });
 
 interface FormValuesProps {
-  school_id: string;
+  schoolId: string;
   email: string;
   name: string;
   phone: string;
@@ -38,18 +38,18 @@ interface FormValuesProps {
 
 interface ContactsFormProps {
   contacts?: SchoolContacts;
-  school_id: string;
+  schoolId: string;
 }
 
 export default function ContactsForm({
   contacts,
-  school_id,
+  schoolId,
 }: ContactsFormProps): React.ReactElement | null {
   const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
-    school_id,
+    schoolId,
     email: contacts?.email,
     name: contacts?.name,
     phone: contacts?.phone,
@@ -67,10 +67,10 @@ export default function ContactsForm({
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps): unknown => {
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await updateContacts({
-        school_id: data.school_id,
+        schoolId: data.schoolId,
         email: data.email,
         name: data.name,
         phone: data.phone,

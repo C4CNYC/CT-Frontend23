@@ -13,7 +13,7 @@ import * as Yup from "yup";
 import {
   useCreateModuleMutation,
   useUpdateModuleMutation,
-} from "../../../redux/services/manager";
+} from "../../../redux/services/manager/modules-manager";
 
 interface FormValuesProps {
   name: string;
