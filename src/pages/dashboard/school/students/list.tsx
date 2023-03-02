@@ -87,7 +87,7 @@ export default function UserListPage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
-    classId: "",
+    class_id: "",
   });
   const [deleteStudent] = useDeleteStudentMutation();
 
@@ -106,8 +106,8 @@ export default function UserListPage(): React.ReactElement {
     }
   };
 
-  const handleDeleteRow = (user_id: string): void => {
-    handleDeleteMember(user_id);
+  const handleDeleteRow = (userId: string): void => {
+    handleDeleteMember(userId);
     enqueueSnackbar("Member deleted");
   };
 

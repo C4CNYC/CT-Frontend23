@@ -9,32 +9,32 @@ import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useFilters } from "src/hooks/useFilters";
-import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+import { ITask } from "src/redux/services/interfaces/task.interface";
 import { useUdpateTaskAssignmentMutation } from "src/redux/services/manager/assignments-manager";
-import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
 import { RootState } from "src/redux/store";
 
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-type LessonType = ILesson & BaseResponseInterface;
+type TaskType = ITask & BaseResponseInterface;
 
 interface Props {
   assignmentId: string;
-  lesson: LessonType
+  lesson: TaskType
 }
 
-export default function LessonController({ assignmentId, lesson }: Props): React.ReactElement {
+export default function TaskController({ assignmentId, lesson }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
   const [updateTask] = useUdpateTaskAssignmentMutation();
-  const { data: lessons } = useGetLessonsQuery(
+  const { data: tasks } = useGetTasksQuery(
     { ...filters },
   );
 
-  if (!lessons?.data) {
+  if (!tasks?.data) {
     return <CircularProgress />;
   }
 
@@ -42,7 +42,7 @@ export default function LessonController({ assignmentId, lesson }: Props): React
     _event: React.SyntheticEvent<any>,
     _newValue: unknown,
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<LessonType>
+    details?: AutocompleteChangeDetails<TaskType>
   ): Promise<void> => {
     try {
       const payload = {
@@ -63,15 +63,15 @@ export default function LessonController({ assignmentId, lesson }: Props): React
   };
 
   return (
-        <Autocomplete<LessonType>
-          options={lessons?.data}
+        <Autocomplete<TaskType>
+          options={tasks?.data}
           size="small"
           renderInput={(params) => <TextField {...params} />}
           onInputChange={(e, value) => { setFilter("name", value) }}
           defaultValue={lesson}
           onChange={onChange}
           getOptionLabel={(option) => option.name}
-          sx={{ width: 200, marginRight: 2 }}
+          sx={{ width: "100%" }}
         />
   );
 }

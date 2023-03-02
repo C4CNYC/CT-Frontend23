@@ -52,6 +52,7 @@ export interface IStudent {
   about: string;
   verified: boolean;
   active: boolean;
+  password?: string;
 }
 
 export interface CreateUserRequest extends IUser {}

@@ -50,6 +50,11 @@ export const managment = {
       icon: <IoMdSchool />,
     },
     {
+      title: "assignments",
+      path: PATH_DASHBOARD.school.assignments,
+      icon: <AiOutlineSolution />,
+    },
+    {
       title: "progress",
       path: PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
@@ -79,11 +84,6 @@ export const content = {
       title: "tasks",
       path: PATH_DASHBOARD.tasks.root,
       icon: <FaTasks />
-    },
-    {
-      title: "assignments",
-      path: PATH_DASHBOARD.school.assignments,
-      icon: <AiOutlineSolution />,
     },
   ],
 };
