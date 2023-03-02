@@ -10,21 +10,21 @@ import { FcInfo } from "react-icons/fc";
 import { CgMenuMotion } from "react-icons/cg";
 import Image from "next/image";
 import _ from "lodash";
+import Link from "next/link";
 
-type Props = {
+interface Props {
   type: "lesson" | "course" | "module";
-  id: string;
   image: string;
-};
+}
 
-export default function CardModule({ type, id, image }: Props) {
+export default function CardModule({ type, image }: Props): React.ReactElement {
   return (
     <>
       <Container maxWidth={false}>
         <Card
           sx={{
             minWidth: "328px",
-            height: "292px",
+            height: "250px",
             padding: "24px",
             borderRadius: "16px",
             border: "1px solid rgba(145, 158, 171, 0.24) ",
@@ -42,6 +42,8 @@ export default function CardModule({ type, id, image }: Props) {
                 gap="8px"
                 alignItems="center"
                 mb="9px"
+                component={Link}
+                href="/"
               >
                 <MdAddCircleOutline />
                 <Typography color="#637381" fontSize="14px">
@@ -60,9 +62,6 @@ export default function CardModule({ type, id, image }: Props) {
                   Edit Existing
                 </Typography>
               </Stack>
-              <Typography variant="h6" mb="9px" fontSize="20px">
-                56 so far
-              </Typography>
               <Stack
                 display="flex"
                 direction="row"
