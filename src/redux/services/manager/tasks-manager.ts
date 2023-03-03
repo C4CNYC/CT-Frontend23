@@ -24,7 +24,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     updateTask: builder.mutation<
       ITask & BaseResponseInterface,
-      { id: string; body: string; name: string }
+      { id: string; body: string; name: string; language: string }
     >({
       query: ({ id, ...body }) => ({
         url: `/task/${id}`,

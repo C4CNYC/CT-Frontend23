@@ -4,6 +4,7 @@ export interface ITask {
   name: string;
   body: string;
   id: string;
+  language: string;
 }
 
 export interface ITaskSearchParams extends BaseSearchInterface {
@@ -11,6 +12,7 @@ export interface ITaskSearchParams extends BaseSearchInterface {
 }
 
 export interface ITaskCreate {
+  language: string;
   name: string;
   body: string;
 }

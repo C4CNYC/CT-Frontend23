@@ -23,7 +23,7 @@ interface Prop {
   taskName?: string;
   isEdit?: boolean;
   code?: string;
-  languige?: string;
+  language?: string;
 }
 
 export default function CreateCodeDialog({
@@ -32,8 +32,9 @@ export default function CreateCodeDialog({
   taskName,
   isEdit,
   code,
-  languige,
+  language,
 }: Prop): React.ReactElement {
+  console.log(taskName);
   const [open, setOpen] = useState<boolean>(false);
   const [codeValue, setCodeValue] = useState<string>("");
   const [lang, setLang] = useState<string>("html");
@@ -52,12 +53,8 @@ export default function CreateCodeDialog({
     setOpen(false);
   };
   useEffect(() => {
-    if (code) {
-      setCodeValue(code);
-    }
-    if (languige) {
-      setLang(languige);
-    }
+    if (code) { setCodeValue(code); }
+    if (language) { setLang(language); }
   }, []);
   const onChange = React.useCallback((value: any) => {
     setCodeValue(value);
@@ -79,23 +76,24 @@ export default function CreateCodeDialog({
     }
   };
   const onSubmit = async (): Promise<void> => {
-    let data = JSON.stringify({
+    const data = JSON.stringify({
       body: {
         code: codeValue,
-        languige: lang,
       },
     });
     try {
       if (isEdit && taskId) {
         await updateTask({
           id: taskId,
-          name: updatedName,
-          body: data,
+          name: (updatedName || taskName) || "No name",
+          language: lang,
+          body: data
         }).unwrap();
       } else {
         await createTask({
           name: updatedName,
-          body: data,
+          language: lang,
+          body: data
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -123,9 +121,11 @@ export default function CreateCodeDialog({
             <TasksInput
               placeholder="Task name"
               defaultValue={taskName}
-              onChange={(e: any) => setUpdatedName(e.target.value)}
+              onChange={(e: any) => { setUpdatedName(e.target.value); }}
               onBlur={() => {
-                !updatedName ? setUpdatedName("Task Name") : null;
+                if (!updatedName) {
+                  setUpdatedName("Task Name")
+                }
               }}
             />
             <IconButton>
@@ -233,7 +233,7 @@ export default function CreateCodeDialog({
               value={codeValue}
               height="80vh"
               extensions={[loadLanguage(lang)]}
-              onChange={(value) => onChange(value)}
+              onChange={(value) => { onChange(value); }}
             />
           </div>
         </DialogContent>

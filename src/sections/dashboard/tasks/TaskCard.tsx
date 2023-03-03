@@ -4,17 +4,13 @@ import MenuPopover from "@components/menu-popover/MenuPopover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
 import { Box, Button, Card, IconButton, MenuItem, Stack } from "@mui/material";
-import { JsonObject } from "@remirror/types";
 import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
 import { useState } from "react";
+import { ITask } from "src/redux/services/interfaces/task.interface";
 import { useDeleteTaskMutation } from "src/redux/services/manager/tasks-manager";
 
 interface Props {
-  task: {
-    name: string;
-    id?: string;
-    body: string;
-  };
+  task: ITask;
 }
 
 export default function TaskCard({ task }: Props): React.ReactElement | null {
@@ -62,7 +58,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
         sx={{
           textDecoration: "none",
           p: 2.5,
-          width: 1,
+          width: 0.7,
           boxShadow: 0,
           bgcolor: "background.default",
           maxWidth: "auto",
@@ -89,7 +85,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
           taskName={task.name}
           isEdit
           code={codeBody.body.code}
-          languige={codeBody.body.languige}
+          language={task.language}
         >
           <>
             <Box
