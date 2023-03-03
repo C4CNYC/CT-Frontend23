@@ -23,6 +23,7 @@ export interface ICourse {
   active: boolean;
   cover: string;
   draft: boolean;
+  skills: [];
 }
 
 export interface ILessonContent {
