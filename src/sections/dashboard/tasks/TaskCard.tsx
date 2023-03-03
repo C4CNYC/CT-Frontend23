@@ -58,7 +58,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
         sx={{
           textDecoration: "none",
           p: 2.5,
-          width: 0.7,
+          width: 1,
           boxShadow: 0,
           bgcolor: "background.default",
           maxWidth: "auto",
