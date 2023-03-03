@@ -19,7 +19,10 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { useFilters } from "src/hooks/useFilters";
 import { IClass } from "src/redux/services/interfaces/class.interface";
-import { useRemoveClassAssignmentMutation, useUdpateClassAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+import {
+  useRemoveClassAssignmentMutation,
+  useUdpateClassAssignmentMutation,
+} from "src/redux/services/manager/assignments-manager";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
 
@@ -28,11 +31,14 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 type ClassType = IClass & BaseResponseInterface;
 
 interface Props {
-  addedClasses: ClassType[],
-  assignmentId: string
+  addedClasses: ClassType[];
+  assignmentId: string;
 }
 
-export default function ClassesCountroller({ addedClasses, assignmentId }: Props): React.ReactElement {
+export default function ClassesCountroller({
+  addedClasses,
+  assignmentId,
+}: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 

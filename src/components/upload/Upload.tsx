@@ -26,7 +26,7 @@ const StyledDropZone = styled("div")(({ theme }) => ({
   cursor: "pointer",
   overflow: "hidden",
   position: "relative",
-  padding: theme.spacing(5),
+  padding: theme.spacing(1),
   borderRadius: theme.shape.borderRadius,
   transition: theme.transitions.create("padding"),
   backgroundColor: theme.palette.background.neutral,
@@ -171,7 +171,7 @@ export default function Upload({
 function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
   return (
     <Stack
-      spacing={5}
+      spacing={2}
       alignItems="center"
       justifyContent="center"
       direction={{
@@ -180,6 +180,7 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
       }}
       sx={{
         width: 1,
+        padding: 0,
         textAlign: {
           xs: "center",
           md: "left",
@@ -188,27 +189,15 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
       }}
       {...other}
     >
-      <UploadIllustration sx={{ width: 220 }} />
+      <UploadIllustration sx={{ width: 120 }} />
 
       <div>
         <Typography gutterBottom variant="h5">
-          Drop or Select file
+          Course image
         </Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          Drop files here or click
-          <Typography
-            variant="body2"
-            component="span"
-            sx={{
-              mx: 0.5,
-              color: "primary.main",
-              textDecoration: "underline",
-            }}
-          >
-            browse
-          </Typography>
-          thorough your machine
+          Drop files or click here
         </Typography>
       </div>
     </Stack>

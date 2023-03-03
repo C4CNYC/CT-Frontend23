@@ -38,6 +38,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Courses" }],
     }),
+    updateCourseCover: builder.mutation<
+      ICourse & BaseResponseInterface,
+      { id: string; file: FormData }
+    >({
+      query: ({ id, file }) => ({
+        url: `/course/${id}/cover`,
+        method: "PATCH",
+        body: file,
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
     createCourse: builder.mutation<
       ICourseCreate & BaseResponseInterface,
       ICourseCreate
@@ -87,4 +98,5 @@ export const {
   useCreateCourseMutation,
   useDeleteCourseMutation,
   useUpdateCourseMutation,
+  useUpdateCourseCoverMutation,
 } = extendedApi;

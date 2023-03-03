@@ -4,7 +4,7 @@ import { FileExtension } from "@remirror/extension-file";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {
   TableComponents,
-  TableExtension
+  TableExtension,
 } from "@remirror/extension-react-tables";
 import {
   BasicFormattingButtonGroup,
@@ -30,7 +30,7 @@ import {
   ToggleSuperscriptButton,
   ToggleTaskListButton,
   Toolbar,
-  useRemirror
+  useRemirror,
 } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
 import React from "react";
@@ -63,7 +63,7 @@ import {
   TextColorExtension,
   TextHighlightExtension,
   UnderlineExtension,
-  WhitespaceExtension
+  WhitespaceExtension,
 } from "remirror/extensions";
 import "remirror/styles/all.css";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
@@ -78,7 +78,7 @@ import {
   TablePicker,
   TextBgColorPicker,
   TextCaseSelect,
-  TextColorPicker
+  TextColorPicker,
 } from "./toolbars";
 
 import jsx from "refractor/lang/jsx.js";
@@ -135,9 +135,9 @@ interface Props {
 }
 
 export default function MyEditor({
-                                   lessonId,
-                                   data
-                                 }: Props): React.ReactElement {
+  lessonId,
+  data,
+}: Props): React.ReactElement {
   const [updateLessonContent] = useUpdateLessonContentMutation();
   const { uploadToS3 } = useS3Upload();
   const extensions = (): Extensions[] => [
@@ -149,7 +149,7 @@ export default function MyEditor({
     new BlockquoteExtension(),
     new CodeBlockExtension({
       defaultLanguage: "js",
-      supportedLanguages: [typescript, jsx]
+      supportedLanguages: [typescript, jsx],
     }),
     new CodeExtension(),
     new ColumnsExtension(),
@@ -172,7 +172,7 @@ export default function MyEditor({
     new ShortcutsExtension(),
     new BulletListExtension(),
     new OrderedListExtension(),
-    new TaskListExtension()
+    new TaskListExtension(),
   ];
 
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -198,13 +198,13 @@ export default function MyEditor({
   const { manager, state, setState } = useRemirror({
     extensions,
     content: data?.body ? JSON.parse(data?.body) : "",
-    stringHandler: "html"
+    stringHandler: "html",
   });
 
   const saveContent = async (): Promise<void> => {
     updateLessonContent({
       lessonId,
-      body: JSON.stringify(state)
+      body: JSON.stringify(state),
     });
   };
 
@@ -216,10 +216,13 @@ export default function MyEditor({
             scrollbar-width: none;
             box-shadow: none;
           }
-          .remirror-editor-wrapper { padding: 0; height: 80vh }
+          .remirror-editor-wrapper { padding: 0;  min-height: 80vh}
           .remirror-theme .ProseMirror {
             scrollbar-width: none;
             box-shadow: none;
+          }
+          .remirror-editor.ProseMirror{
+            overflow-y: auto;
           }
           .remirror-menu{
             right: 0;
@@ -238,6 +241,7 @@ export default function MyEditor({
           .remirror-theme [data-task-list] {
             margin-left: 30px;
           }
+          
         `}
       </style>
       <Remirror
@@ -264,8 +268,7 @@ export default function MyEditor({
             top: 0,
           }}
         >
-          <Stack flexDirection="row" sx={{ flexWrap: "wrap", gap: "10px" }} >
-
+          <Stack flexDirection="row" sx={{ flexWrap: "wrap", gap: "10px" }}>
             <HistoryButtonGroup />
             <HeadingLevelButtonGroup showAll />
             <IndentationButtonGroup />
@@ -299,12 +302,12 @@ export default function MyEditor({
           sx={{
             "&>div": {
               borderRadius: "5px",
-              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)"
-            }
+              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)",
+            },
           }}
           style={{
             zIndex: 9999999,
-            padding: 10
+            padding: 10,
           }}
         >
           <Stack
