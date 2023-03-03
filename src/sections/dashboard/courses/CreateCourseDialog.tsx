@@ -30,6 +30,7 @@ import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";
 import {
   useCreateCourseMutation,
+  useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
 
@@ -56,9 +57,11 @@ export default function CreateCourseDialog({
   defaultValues,
 }: Prop): React.ReactElement | null {
   const [open, setOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
   const { enqueueSnackbar } = useSnackbar();
   const [editCourse] = useUpdateCourseMutation();
   const [createCourse] = useCreateCourseMutation();
+  const [updateCover] = useUpdateCourseCoverMutation();
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -79,19 +82,28 @@ export default function CreateCourseDialog({
   const handleClose = (): void => {
     setOpen(false);
   };
-  const handleDrop = () => {};
+  const handleDrop = (files: File[]) => {
+    setUploadedFile(files[0]);
+  };
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
+      const file = new FormData();
       if (isEdit && id) {
         await editCourse({
           id,
           ...data,
         }).unwrap();
+        if (!uploadedFile) return;
+        file.append("file", uploadedFile);
+        await updateCover({ id, file });
       } else {
-        await createCourse({
+        const course = await createCourse({
           ...data,
         }).unwrap();
+        if (!uploadedFile) return;
+        file.append("file", uploadedFile);
+        await updateCover({ id: course.id, file });
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {
@@ -149,8 +161,7 @@ export default function CreateCourseDialog({
                             color: "text.secondary",
                           }}
                         >
-                          Allowed *.jpeg, *.jpg, *.png, *.gif max size of{" "}
-                          {fData(3145728)}
+                          {uploadedFile?.name}
                         </Typography>
                       }
                     />
