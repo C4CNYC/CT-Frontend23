@@ -2,20 +2,35 @@ import FormProvider, {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
+  RHFUpload,
+  RHFUploadBox,
 } from "@components/hook-form";
 import { useSnackbar } from "@components/snackbar";
+import { Upload } from "@components/upload";
 import { yupResolver } from "@hookform/resolvers/yup";
+import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, FormGroup, Grid, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  FormGroup,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";
 import {
   useCreateCourseMutation,
+  useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
 
@@ -42,9 +57,11 @@ export default function CreateCourseDialog({
   defaultValues,
 }: Prop): React.ReactElement | null {
   const [open, setOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
   const { enqueueSnackbar } = useSnackbar();
   const [editCourse] = useUpdateCourseMutation();
   const [createCourse] = useCreateCourseMutation();
+  const [updateCover] = useUpdateCourseCoverMutation();
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -65,18 +82,28 @@ export default function CreateCourseDialog({
   const handleClose = (): void => {
     setOpen(false);
   };
+  const handleDrop = (files: File[]) => {
+    setUploadedFile(files[0]);
+  };
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
+      const file = new FormData();
       if (isEdit && id) {
         await editCourse({
           id,
           ...data,
         }).unwrap();
+        if (!uploadedFile) return;
+        file.append("file", uploadedFile);
+        await updateCover({ id, file });
       } else {
-        await createCourse({
+        const course = await createCourse({
           ...data,
         }).unwrap();
+        if (!uploadedFile) return;
+        file.append("file", uploadedFile);
+        await updateCover({ id: course.id, file });
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {
@@ -98,16 +125,46 @@ export default function CreateCourseDialog({
         {children}
       </Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create Course</DialogTitle>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="flex-end"
+        >
+          <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
+            Create Course
+          </DialogTitle>
+          <IconButton sx={{ mb: "5px", mr: "14px" }}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Grid container spacing={3}>
+            <Grid container>
               <Grid item xs={12} md={12}>
-                <Card sx={{ p: 3 }}>
+                <Card sx={{ p: 3, pt: 2 }}>
                   <Box rowGap={3} display="grid">
+                    <RHFUpload
+                      name="course_img"
+                      onDrop={handleDrop}
+                      helperText={
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            mt: 1,
+                            mb: -1,
+                            mx: "auto",
+                            display: "block",
+                            textAlign: "center",
+                            color: "text.secondary",
+                          }}
+                        >
+                          {uploadedFile?.name}
+                        </Typography>
+                      }
+                    />
                     <RHFTextField
                       style={{ width: "350px" }}
                       name="name"
@@ -162,7 +219,6 @@ export default function CreateCourseDialog({
                       multiline
                       rows={3}
                     />
-
                     <Stack direction="row" justifyContent="space-between">
                       <RHFSwitch name="active" label="Course active" />
                       <RHFSwitch name="draft" label="Draft" />
