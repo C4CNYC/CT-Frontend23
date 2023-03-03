@@ -37,7 +37,7 @@ export interface IUser {
 export interface StudentSearchParams extends BaseSearchInterface {
   schoolId?: string;
   name?: string;
-  classId?: string;
+  class_id?: string;
 }
 
 export interface IStudent {
