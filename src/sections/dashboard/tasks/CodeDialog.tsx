@@ -85,7 +85,7 @@ export default function CreateCodeDialog({
       if (isEdit && taskId) {
         await updateTask({
           id: taskId,
-          name: (updatedName || taskName) || "No name",
+          name: (updatedName || taskName) ?? "No name",
           language: lang,
           body: data
         }).unwrap();
