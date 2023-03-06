@@ -5,9 +5,9 @@ import { NAV } from "../../../config-global";
 // utils
 import { hideScrollbarX } from "../../../utils/cssStyles";
 // components
-import Logo from "@components/logo";
 import { NavSectionMini } from "@components/nav-section";
 //
+import LogoMin from "@components/logo/LogoMin";
 import navConfig from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
 
@@ -39,7 +39,12 @@ export default function NavMini(): React.ReactElement {
           ...hideScrollbarX,
         }}
       >
-        <Logo sx={{ mx: "auto", my: 2 }} />
+        <LogoMin
+          sx={{
+            my: 2,
+            ml: 2.2,
+          }}
+        />
 
         <NavSectionMini data={navConfig} />
       </Stack>

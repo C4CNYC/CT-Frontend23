@@ -21,7 +21,14 @@ export default function HomePage(): React.ReactElement | null {
   return (
     <>
       <Container maxWidth={themeStretch ? false : "lg"}>
-        <Stack display="flex" flexDirection="row">
+        <Stack
+          display="flex"
+          flexDirection="row"
+          sx={{
+            flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
+            justifyContent: { xs: "center", sm: "center", md: "auto" },
+          }}
+        >
           <WelcomeSection />
           <SliderDemoMui />
         </Stack>
@@ -35,7 +42,15 @@ export default function HomePage(): React.ReactElement | null {
           display="flex"
           direction="row"
           mr="24px"
-          spacing="37px"
+          sx={{
+            width: { xs: "auto", sm: "auto", md: "auto", lg: "1100px" },
+            ml: { xs: "0", sm: "0", md: "0", lg: "40px" },
+            mt: { xs: "0", sm: "0", md: "0", lg: "24px" },
+            mr: { xs: "0", sm: "0", md: "0", lg: "40px" },
+            gap: { xs: 3, sm: 3, md: 3, lg: "37px" },
+            flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
+            pt: { xs: 3, ms: 3, md: 3, lg: 0 },
+          }}
         >
           <WeeklyActivities />
           <RecentLessons />

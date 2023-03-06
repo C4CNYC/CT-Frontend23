@@ -1,15 +1,19 @@
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 // mui
 import { Stack } from "@mui/system";
 
 export default function Slider() {
   return (
     <>
-      <Stack sx={{ ml: "24px" }}>
+      <Stack
+        sx={{
+          ml: { xs: 0, sm: 0, md: "24px" },
+        }}
+      >
         <Stack
           sx={{
             backgroundImage: "url(/BG.png)",

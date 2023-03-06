@@ -172,6 +172,7 @@ export default function CourseCard({
             description: course.description,
             active: course.active,
             draft: course.draft,
+            skills: course.skills,
           }}
         >
           <MenuItem>
