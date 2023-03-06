@@ -6,9 +6,11 @@ import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
 import * as Yup from "yup";
 import {
   useCreateLessonMutation,
@@ -34,10 +36,12 @@ export default function CreateLessonDialog({
   children,
   defaultValues,
 }: Prop): React.ReactElement {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editLesson] = useUpdateLessonMutation();
   const [createLesson] = useCreateLessonMutation();
+  const [addLessonToModule] = useAddLessonToModuleMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -65,9 +69,12 @@ export default function CreateLessonDialog({
           ...data,
         }).unwrap();
       } else {
-        await createLesson({
+        const lesson = await createLesson({
           ...data,
         }).unwrap();
+        if (router.query.module_id) {
+          addLessonToModule({ id: router.query.module_id as string, lesson_id: lesson.id })
+        }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
     } catch (error) {

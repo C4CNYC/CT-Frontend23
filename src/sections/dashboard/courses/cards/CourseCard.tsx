@@ -127,7 +127,7 @@ export default function CourseCard({
             {name}
           </Typography>
 
-          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          <Typography noWrap textAlign="center" variant="body2" sx={{ color: "text.secondary", px: 3 }}>
             {description}
           </Typography>
         </Box>
@@ -171,7 +171,7 @@ export default function CourseCard({
             price: course.price.substring(1),
             description: course.description,
             active: course.active,
-            draft: course.draft as boolean,
+            draft: course.draft,
             skills: course.skills,
           }}
         >

@@ -232,6 +232,8 @@ export default function CreateCodeDialog({
               theme={theme === "dracula" ? dracula : xcodeLight}
               value={codeValue}
               height="80vh"
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-expect-error
               extensions={[loadLanguage(lang)]}
               onChange={(value) => { onChange(value); }}
             />
