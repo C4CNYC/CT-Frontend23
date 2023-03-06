@@ -50,7 +50,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     studentJoinClass: builder.mutation<
       void,
-      { schoolId: string; classId: string; studentId: string }
+      { schoolId: string; classId: string; student_id: string }
     >({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/school/${schoolId}/class/${classId}/student`,

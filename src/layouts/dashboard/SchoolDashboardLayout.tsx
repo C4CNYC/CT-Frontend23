@@ -15,7 +15,7 @@ interface Props {
 export default function SchoolDashboardLayout({
   children,
 }: Props): React.ReactElement | null {
-  const { data, isLoading } = useGetMySchoolsQuery();
+  const { data, isLoading } = useGetMySchoolsQuery({});
 
   if (!data?.data.length && !isLoading) {
     return (

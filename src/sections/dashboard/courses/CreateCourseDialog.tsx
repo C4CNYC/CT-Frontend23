@@ -152,6 +152,8 @@ export default function CreateCourseDialog({
                       helperText={
                         <Typography
                           variant="caption"
+                          noWrap
+                          width="90px"
                           sx={{
                             mt: 1,
                             mb: -1,

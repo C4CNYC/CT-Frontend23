@@ -19,7 +19,7 @@ interface Props {
 export default function ProfileAbout({
   data,
 }: Props): React.ReactElement | null {
-  useGetMySchoolsQuery();
+  useGetMySchoolsQuery({});
 
   return (
     <Card>

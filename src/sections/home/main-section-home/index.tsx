@@ -32,13 +32,13 @@ export default function MainSectionHome(): React.ReactElement {
           p="24px"
         >
           <Stack ml="24px">
-            <CardModule type="lesson" id="some" image="/assets/images/card-image.png"/>
+            <CardModule type="lesson" image="/assets/images/card-image.png"/>
           </Stack>
           <Stack mr="-17px" ml="-17px">
-            <CardModule type="course" id="some" image="/assets/images/card-image.png"/>
+            <CardModule type="course" image="/assets/images/card-image.png"/>
           </Stack>
           <Stack mr="24px">
-            <CardModule type="module" id="some" image="/assets/images/card-image.png"/>
+            <CardModule type="module" image="/assets/images/card-image.png"/>
           </Stack>
         </Stack>
       </Stack>

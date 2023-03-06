@@ -18,7 +18,7 @@ import { RootState } from "src/redux/store";
 export default function SchoolAccount(): React.ReactElement | null {
   const dispatch = useDispatch();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const { data: schools } = useGetMySchoolsQuery();
+  const { data: schools } = useGetMySchoolsQuery({});
 
   useEffect(() => {
     if (!schools?.data) return;
