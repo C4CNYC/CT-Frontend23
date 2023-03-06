@@ -91,6 +91,7 @@ export default function ContactsForm({
                     {...field}
                     helperText={fieldState.invalid ? "Phone is invalid" : ""}
                     error={fieldState.invalid}
+                    placeholder="Mobile number"
                   />
                 )}
               />

@@ -34,7 +34,7 @@ export default function SchoolAccount(): React.ReactElement | null {
   return (
     <Box>
       <FormControl fullWidth>
-        <InputLabel sx={{ top: -8 }}>School</InputLabel>
+        <InputLabel>School</InputLabel>
         <Select
           value={schoolId}
           label="School"

@@ -77,7 +77,7 @@ export default function SocialsForm({
             <RHFSelect
               name="type"
               sx={{
-                width: "80px",
+                width: "80px !important",
                 height: "40px !important",
                 borderRight: "none",
                 borderTopRightRadius: 0,
@@ -115,7 +115,7 @@ export default function SocialsForm({
               label="Link"
               size="small"
               sx={{
-                maxWidth: "350px",
+                maxWidth: { xs: "150px", sm: "350px", md: "350px" },
                 height: "86px",
                 borderLeft: "none",
                 "& fieldset": {
