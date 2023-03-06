@@ -19,6 +19,7 @@ export const managerApi = createApi({
     "Lessons",
     "Courses",
     "Tasks",
+    "Skills",
   ],
   endpoints: () => ({}),
 });

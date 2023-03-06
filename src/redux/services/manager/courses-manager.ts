@@ -86,6 +86,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Modules" }],
     }),
+    getCouseSkills: builder.query<
+      BaseListResponseInterface<{ name: string } & BaseResponseInterface>,
+      void
+    >({
+      query: () => ({
+        url: "/course/skills",
+        method: "GET",
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ["Skills"],
+    }),
   }),
   overrideExisting: false,
 });

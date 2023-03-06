@@ -24,15 +24,15 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";
 import {
   useCreateCourseMutation,
   useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
+import CoursesController from "./CoursesController";
 
 interface FormValuesProps {
   name: string;
@@ -41,6 +41,7 @@ interface FormValuesProps {
   description: string;
   active: boolean;
   draft: boolean;
+  skills: [];
 }
 
 interface Prop {
@@ -68,6 +69,7 @@ export default function CreateCourseDialog({
     level: Yup.string().required("Level is required"),
     price: Yup.string().required("Price is required"),
     description: Yup.string().required("Description is required"),
+    skills: Yup.array(),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -114,7 +116,6 @@ export default function CreateCourseDialog({
     }
     handleClose();
   };
-
   return (
     <>
       <Box
@@ -133,7 +134,7 @@ export default function CreateCourseDialog({
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
             Create Course
           </DialogTitle>
-          <IconButton sx={{ mb: "5px", mr: "14px" }}>
+          <IconButton onClick={handleClose} sx={{ mb: "5px", mr: "14px" }}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -212,7 +213,9 @@ export default function CreateCourseDialog({
                         type="number"
                       />
                     </FormGroup>
-
+                    <Box sx={{ maxWidth: "350px" }}>
+                      <CoursesController skills={defaultValues?.skills} />
+                    </Box>
                     <RHFTextField
                       name="description"
                       label="Course description"

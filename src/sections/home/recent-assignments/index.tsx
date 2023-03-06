@@ -1,6 +1,6 @@
-import { Card, Typography, Stack, Avatar } from "@mui/material";
-import { AiFillInfoCircle } from "react-icons/ai";
 import CircleIcon from "@mui/icons-material/Circle";
+import { Avatar, Card, Stack, Typography } from "@mui/material";
+import { AiFillInfoCircle } from "react-icons/ai";
 
 export default function RecentAssignments() {
   return (
@@ -29,7 +29,7 @@ export default function RecentAssignments() {
         </Stack>
         <Stack display="flex" direction="row" alignItems="center" mt="24px">
           <Avatar />
-          <Stack ml="16px" mr="87px">
+          <Stack ml="16px" mr="87px" sx={{ mr: { xs: 7, sm: "87px" } }}>
             <Typography variant="subtitle2" fontWeight="600" fontSize="14px">
               Husna Navarro
             </Typography>
