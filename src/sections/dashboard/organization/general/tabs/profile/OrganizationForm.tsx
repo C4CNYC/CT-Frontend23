@@ -75,11 +75,19 @@ export default function OrganizationForm({
         file.append("file", data.photoURL);
         updateOrgAvatar({
           file,
-        }).unwrap();
+        })
+          .unwrap()
+          .catch((error) => {
+            enqueueSnackbar(error.data.message, {
+              variant: "error",
+            });
+          });
       }
       enqueueSnackbar("Update success!");
     } catch (error) {
-      console.error(error);
+      enqueueSnackbar(error.data.message, {
+        variant: "error",
+      });
     }
   };
 
