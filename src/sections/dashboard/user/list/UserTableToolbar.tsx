@@ -1,5 +1,6 @@
 // @mui
 import {
+  Box,
   Button,
   InputAdornment,
   MenuItem,
@@ -35,7 +36,10 @@ export default function UserTableToolbar({
     <Stack
       spacing={2}
       alignItems="center"
-      direction="row"
+      direction={{
+        xs: "column",
+        sm: "row",
+      }}
       sx={{ px: 2.5, py: 3 }}
     >
       {optionsRole ? (
@@ -75,28 +79,32 @@ export default function UserTableToolbar({
           ))}
         </TextField>
       ) : null}
-
-      <TextField
-        fullWidth
-        value={filterName}
-        onChange={onFilterName}
-        placeholder={`${translate("actions_search")}`}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
-            </InputAdornment>
-          ),
-        }}
-      />
-      <Button
-        color="error"
-        sx={{ flexShrink: 0 }}
-        onClick={onResetFilter}
-        startIcon={<Iconify icon="eva:trash-2-outline" />}
-      >
-        {`${translate("actions_clear")}`}
-      </Button>
+      <Box display="flex" flexDirection="row" width="100%" gap="25px">
+        <TextField
+          fullWidth
+          value={filterName}
+          onChange={onFilterName}
+          placeholder={`${translate("actions_search")}`}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify
+                  icon="eva:search-fill"
+                  sx={{ color: "text.disabled" }}
+                />
+              </InputAdornment>
+            ),
+          }}
+        />
+        <Button
+          color="error"
+          sx={{ flexShrink: 0 }}
+          onClick={onResetFilter}
+          startIcon={<Iconify icon="eva:trash-2-outline" />}
+        >
+          {`${translate("actions_clear")}`}
+        </Button>
+      </Box>
     </Stack>
   );
 }
