@@ -35,10 +35,7 @@ export default function UserTableToolbar({
     <Stack
       spacing={2}
       alignItems="center"
-      direction={{
-        xs: "column",
-        sm: "row",
-      }}
+      direction="row"
       sx={{ px: 2.5, py: 3 }}
     >
       {optionsRole ? (

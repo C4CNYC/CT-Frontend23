@@ -1,14 +1,14 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import {
-  Autocomplete,
-  CircularProgress,
-} from "@mui/material";
+import { Autocomplete, CircularProgress } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { ISchool, ISchoolSearchParams } from "src/redux/services/interfaces/school.interface";
+import {
+  ISchool,
+  ISchoolSearchParams,
+} from "src/redux/services/interfaces/school.interface";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
@@ -17,12 +17,15 @@ interface Props {
   setFilter: SetFilterType;
 }
 
-export default function FilterCourses({ filters, setFilter }: Props): React.ReactElement {
+export default function FilterCourses({
+  filters,
+  setFilter,
+}: Props): React.ReactElement {
   const { filters: schoolFilters, setFilter: setSchoolFilters } =
-  useFilters<ISchoolSearchParams>({
-    take: 50,
-    name: "",
-  });
+    useFilters<ISchoolSearchParams>({
+      take: 50,
+      name: "",
+    });
 
   const { data: schools, isLoading } = useGetMySchoolsQuery(schoolFilters);
 
@@ -41,7 +44,7 @@ export default function FilterCourses({ filters, setFilter }: Props): React.Reac
       >
         <TextField
           sx={{
-            width: "260px",
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
           onChange={(event) => {
             setFilter("name", event.target.value);
@@ -69,7 +72,10 @@ export default function FilterCourses({ filters, setFilter }: Props): React.Reac
             setFilter("school_id", details?.option.id ?? "");
           }}
           getOptionLabel={(option) => option.name}
-          sx={{ width: 200, marginRight: 2 }}
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+            marginRight: 2,
+          }}
         />
       </Stack>
     </>
