@@ -44,7 +44,7 @@ export default function FilterLessons({
       >
         <TextField
           sx={{
-            width: "260px",
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
           placeholder="Name"
           value={filters.name}
@@ -73,7 +73,10 @@ export default function FilterLessons({
             setFilter("module_id", details?.option.id ?? "");
           }}
           getOptionLabel={(option) => option.name}
-          sx={{ width: 200, marginRight: 2 }}
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+            marginRight: 2,
+          }}
         />
       </Stack>
     </>

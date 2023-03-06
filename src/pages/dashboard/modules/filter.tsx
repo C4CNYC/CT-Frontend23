@@ -1,13 +1,14 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import {
-  Autocomplete,
-  CircularProgress,
-} from "@mui/material";
+import { Autocomplete, CircularProgress } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
-import { ICourse, ICourseSearchParams, IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
+import {
+  ICourse,
+  ICourseSearchParams,
+  IModulesSearchParams,
+} from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
@@ -16,18 +17,21 @@ interface Props {
   setFilter: SetFilterType;
 }
 
-export default function FilterModules({ filters, setFilter }: Props): React.ReactElement {
+export default function FilterModules({
+  filters,
+  setFilter,
+}: Props): React.ReactElement {
   const { filters: courseFilters, setFilter: setCourseFilters } =
     useFilters<ICourseSearchParams>({
       take: 50,
       name: "",
     });
 
-    const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
+  const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
 
-    if (isLoading) return <CircularProgress />;
+  if (isLoading) return <CircularProgress />;
 
-    return (
+  return (
     <>
       <Stack
         spacing={2}
@@ -40,7 +44,7 @@ export default function FilterModules({ filters, setFilter }: Props): React.Reac
       >
         <TextField
           sx={{
-            width: "260px",
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
           placeholder="Name"
           onChange={(event) => {
@@ -68,7 +72,10 @@ export default function FilterModules({ filters, setFilter }: Props): React.Reac
             setFilter("course_id", details?.option.id ?? "");
           }}
           getOptionLabel={(option) => option.name}
-          sx={{ width: 200, marginRight: 2 }}
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+            marginRight: 2,
+          }}
         />
       </Stack>
     </>

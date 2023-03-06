@@ -91,8 +91,10 @@ export default function SocialItem({
   return (
     <>
       <Stack
-        direction="row"
-        sx={{ wordBreak: "break-all" }}
+        direction={{ xs: "column", sm: "column", md: "row" }}
+        sx={{
+          wordBreak: "break-all",
+        }}
         key={socialItem.type}
       >
         <FormProvider
@@ -121,7 +123,7 @@ export default function SocialItem({
             <RHFTextField
               size="small"
               sx={{
-                width: "350px",
+                width: { xs: "150px", sm: "350px" },
                 "& fieldset": {
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
@@ -149,25 +151,27 @@ export default function SocialItem({
             >
               Save
             </LoadingButton>
-            <LoadingButton
-              variant="outlined"
-              onClick={() => {
-                setEdit(!edit);
-              }}
-              sx={{ ml: 2, height: "40px" }}
-            >
-              {edit ? "Edit" : "Cancel"}
-            </LoadingButton>
-            <LoadingButton
-              sx={{ ml: 2, mr: 2, height: "40px" }}
-              variant="outlined"
-              color="error"
-              onClick={async () => {
-                await handleDeleteSocial(socialItem.id);
-              }}
-            >
-              Delete
-            </LoadingButton>
+            <Box sx={{ mt: { xs: 2, sm: 2, md: 0 } }}>
+              <LoadingButton
+                variant="outlined"
+                onClick={() => {
+                  setEdit(!edit);
+                }}
+                sx={{ ml: { xs: 0, sm: 0, md: 2 }, height: "40px" }}
+              >
+                {edit ? "Edit" : "Cancel"}
+              </LoadingButton>
+              <LoadingButton
+                sx={{ ml: 2, mr: 2, height: "40px" }}
+                variant="outlined"
+                color="error"
+                onClick={async () => {
+                  await handleDeleteSocial(socialItem.id);
+                }}
+              >
+                Delete
+              </LoadingButton>
+            </Box>
           </FormGroup>
         </FormProvider>
       </Stack>

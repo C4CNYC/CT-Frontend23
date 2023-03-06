@@ -72,8 +72,11 @@ export default function CustomizationForm({
       <Box
         gap={2.5}
         display="grid"
+        justifyItems={{ xs: "center", sm: "start" }}
         gridTemplateColumns={{
-          xs: "repeat(3, 1fr)",
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(1, 1fr)",
+          md: "repeat(3, 1fr)",
         }}
       >
         <Box>

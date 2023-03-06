@@ -39,7 +39,7 @@ export default function FilterTasks({
       >
         <TextField
           sx={{
-            width: "260px",
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
           placeholder="Name"
           onChange={(event) => {
