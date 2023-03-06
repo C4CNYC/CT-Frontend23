@@ -1,6 +1,6 @@
+import CardModule from "@components/card-module";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import CardModule from "@components/card-module";
 
 export default function MainSectionHome(): React.ReactElement {
   return (
@@ -12,6 +12,13 @@ export default function MainSectionHome(): React.ReactElement {
         mr="40px"
         borderRadius="24px"
         boxShadow="0px 0px 2px rgba(145, 158, 171, 0.2), 0px 12px 24px -4px rgba(145, 158, 171, 0.12)"
+        sx={{
+          width: { xs: "auto", sm: "auto", md: "auto", lg: "1100px" },
+          ml: { xs: "0", sm: "0", md: "0", lg: "40px" },
+          mt: { xs: "0", sm: "0", md: "0", lg: "24px" },
+          mr: { xs: "0", sm: "0", md: "0", lg: "40px" },
+          p: 3,
+        }}
       >
         <Stack
           display="flex"
@@ -19,7 +26,7 @@ export default function MainSectionHome(): React.ReactElement {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Stack pl="24px" mt="24px">
+          <Stack>
             <Typography fontWeight="700" variant="h4">
               What are you gonna create today?
             </Typography>
@@ -28,18 +35,33 @@ export default function MainSectionHome(): React.ReactElement {
         <Stack
           display="flex"
           direction="row"
-          justifyContent="space-around"
-          p="24px"
+          sx={{
+            pt: 3,
+            flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
+            justifyContent: {
+              xs: "center",
+              sm: "center",
+              md: "center",
+              lg: "space-between",
+            },
+            gap: { xs: 3, sm: 3, md: 3, lg: 0 },
+          }}
         >
-          <Stack ml="24px">
-            <CardModule type="lesson" id="some" image="/assets/images/card-image.png"/>
-          </Stack>
-          <Stack mr="-17px" ml="-17px">
-            <CardModule type="course" id="some" image="/assets/images/card-image.png"/>
-          </Stack>
-          <Stack mr="24px">
-            <CardModule type="module" id="some" image="/assets/images/card-image.png"/>
-          </Stack>
+          <CardModule
+            type="lesson"
+            id="some"
+            image="/assets/images/card-image.png"
+          />
+          <CardModule
+            type="course"
+            id="some"
+            image="/assets/images/card-image.png"
+          />
+          <CardModule
+            type="module"
+            id="some"
+            image="/assets/images/card-image.png"
+          />
         </Stack>
       </Stack>
     </>

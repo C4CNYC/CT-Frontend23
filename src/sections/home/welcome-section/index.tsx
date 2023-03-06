@@ -12,9 +12,17 @@ export default function WelcomeSection() {
         height="260px"
         display="flex"
         flexDirection="row"
-        ml="40px"
+        sx={{
+          ml: { xs: 0, sm: 0, md: "40px" },
+          mb: { xs: 3, sm: 3, md: 0 },
+          maxWidth: { xs: "344px", sm: "344px", md: "none" },
+        }}
       >
-        <Stack ml="40px" mt="38px">
+        <Stack
+          ml="40px"
+          mt="38px"
+          sx={{ maxWidth: { xs: "120px", sm: "120px", md: "none" } }}
+        >
           <Typography
             fontSize="24"
             color="#212B36"

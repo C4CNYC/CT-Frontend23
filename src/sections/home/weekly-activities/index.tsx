@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button, Card, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Button, Card, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import Image from "next/image";
+import { useState } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
 
 export default function WeeklyActivities() {
@@ -34,15 +34,15 @@ export default function WeeklyActivities() {
           </Typography>
           <Stack mr="24px">
             <Button
-              id="demo-customized-button"
-              aria-controle={open ? "demo-customized-menu" : undefined}
+              id="customized-button"
+              aria-controle={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               disableElevation
               onClick={handleClick}
               sx={{
                 color: "#212B36",
-                width: "90px",
+                minWidth: "90px",
                 height: "30px",
                 fontSize: "14px",
                 pr: "11px",
@@ -69,11 +69,14 @@ export default function WeeklyActivities() {
               open={open}
               onClose={handleClose}
               MenuListProps={{
-                "aria-labelledby": "basic-button",
+                "aria-labelledby": "customized-button",
+              }}
+              sx={{
+                "& .MuiPaper-root": { minWidth: "90px" },
               }}
             >
               <MenuItem onClick={handleClose} disableRipple>
-                1
+                Tribe
               </MenuItem>
             </Menu>
           </Stack>
@@ -86,8 +89,8 @@ export default function WeeklyActivities() {
             height: "92px",
             padding: "18px 20px",
             gap: "16px",
-            margin: "24px",
             boxShadow: "none",
+            m: { xs: 2, sm: 3 },
           }}
         >
           <Stack
@@ -126,7 +129,7 @@ export default function WeeklyActivities() {
             height: "92px",
             padding: "18px 20px",
             gap: "16px",
-            margin: "24px",
+            m: { xs: 2, sm: 3 },
             boxShadow: "none",
           }}
         >
@@ -166,7 +169,7 @@ export default function WeeklyActivities() {
             height: "92px",
             padding: "18px 20px",
             gap: "16px",
-            margin: "24px",
+            m: { xs: 2, sm: 3 },
             boxShadow: "none",
           }}
         >
