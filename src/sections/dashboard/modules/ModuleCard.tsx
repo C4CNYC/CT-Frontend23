@@ -23,7 +23,6 @@ import { useDeleteModuleMutation } from "../../../redux/services/manager/modules
 // ----------------------------------------------------------------------
 
 interface Props extends IModule {
-  // folder: IFolderManager;
   selected?: boolean;
   onSelect?: VoidFunction;
   key: number;
@@ -58,7 +57,9 @@ export default function ModuleCard({
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleOpenPopover = async (
+    event: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
     setOpenPopover(event.currentTarget);
     event.stopPropagation();
     event.preventDefault();
@@ -141,11 +142,7 @@ export default function ModuleCard({
             active: module.active as boolean,
           }}
         >
-          <MenuItem
-            onClick={() => {
-              handleClosePopover();
-            }}
-          >
+          <MenuItem>
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>
