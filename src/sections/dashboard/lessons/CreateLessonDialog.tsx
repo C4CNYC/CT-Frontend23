@@ -73,10 +73,14 @@ export default function CreateLessonDialog({
           ...data,
         }).unwrap();
         if (router.query.module_id) {
-          addLessonToModule({ id: router.query.module_id as string, lesson_id: lesson.id })
+          addLessonToModule({
+            id: router.query.module_id as string,
+            lesson_id: lesson.id,
+          });
         }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      methods.reset();
     } catch (error) {
       enqueueSnackbar(error.data.message, {
         variant: "error",
