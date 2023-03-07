@@ -3,6 +3,7 @@ import RoleSelector from "@components/drop-down-menu";
 import Iconify from "@components/iconify";
 import Label from "@components/label";
 import MenuPopover from "@components/menu-popover";
+import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
   Button,
@@ -22,6 +23,7 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 interface Props {
   row: IUser & BaseResponseInterface;
   selected: boolean;
+  loading: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
@@ -30,6 +32,7 @@ interface Props {
 export default function UserTableRow({
   row,
   selected,
+  loading,
   onEditRow,
   onSelectRow,
   onDeleteRow,
@@ -153,9 +156,14 @@ export default function UserTableRow({
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDeleteRow}>
+          <LoadingButton
+            variant="contained"
+            color="error"
+            onClick={onDeleteRow}
+            loading={loading}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

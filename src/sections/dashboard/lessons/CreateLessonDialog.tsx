@@ -38,6 +38,7 @@ export default function CreateLessonDialog({
 }: Prop): React.ReactElement {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editLesson] = useUpdateLessonMutation();
   const [createLesson] = useCreateLessonMutation();
@@ -62,6 +63,7 @@ export default function CreateLessonDialog({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    setLoading(true);
     try {
       if (isEdit && id) {
         await editLesson({
@@ -87,6 +89,7 @@ export default function CreateLessonDialog({
       });
       console.error(error, "test");
     }
+    setLoading(false);
     // eslint-disable-next-line no-eval
     handleClose();
   };
@@ -131,7 +134,11 @@ export default function CreateLessonDialog({
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton type="submit" variant="contained">
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      loading={loading}
+                    >
                       Save
                     </LoadingButton>
                   </Box>

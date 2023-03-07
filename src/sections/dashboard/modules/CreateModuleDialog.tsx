@@ -72,15 +72,14 @@ export default function CreateModuleDialog({
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      setLoading(false);
       methods.reset();
     } catch (error) {
       enqueueSnackbar(error.data.message, {
         variant: "error",
       });
-      setLoading(false);
       console.error(error, "test");
     }
+    setLoading(false);
     handleClose();
   };
 

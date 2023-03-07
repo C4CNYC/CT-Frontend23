@@ -4,6 +4,7 @@ import Image from "@components/image";
 import Label from "@components/label";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -32,6 +33,7 @@ export default function CourseCard({
   const { name, level, price, description, active, cover } = course;
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [deleteCourse] = useDeleteCourseMutation();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -54,8 +56,10 @@ export default function CourseCard({
   };
 
   const onDelete = async (): Promise<void> => {
+    setLoading(true);
     try {
       await deleteCourse({ id: course.id }).unwrap();
+      setLoading(false);
       setOpenConfirm(false);
       enqueueSnackbar("Course deleted!");
     } catch (e) {
@@ -127,7 +131,12 @@ export default function CourseCard({
             {name}
           </Typography>
 
-          <Typography noWrap textAlign="center" variant="body2" sx={{ color: "text.secondary", px: 3 }}>
+          <Typography
+            noWrap
+            textAlign="center"
+            variant="body2"
+            sx={{ color: "text.secondary", px: 3 }}
+          >
             {description}
           </Typography>
         </Box>
@@ -208,9 +217,14 @@ export default function CourseCard({
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <LoadingButton
+            variant="contained"
+            color="error"
+            onClick={onDelete}
+            loading={loading}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

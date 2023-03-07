@@ -3,7 +3,8 @@ import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover/MenuPopover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
-import { Box, Button, Card, IconButton, MenuItem, Stack } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, IconButton, MenuItem, Stack } from "@mui/material";
 import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
 import { useState } from "react";
 import { ITask } from "src/redux/services/interfaces/task.interface";
@@ -16,13 +17,14 @@ interface Props {
 export default function TaskCard({ task }: Props): React.ReactElement | null {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [deleteTask] = useDeleteTaskMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const codeBody = JSON.parse(task.body);
 
   const onDelete = async (): Promise<void> => {
+    setIsLoading(true);
     if (task.id) {
       try {
         await deleteTask({ id: task.id }).unwrap();
@@ -33,6 +35,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
         });
       }
     }
+    setIsLoading(false);
   };
 
   const handleOpenPopover = async (
@@ -137,9 +140,14 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <LoadingButton
+            variant="contained"
+            color="error"
+            onClick={onDelete}
+            loading={isLoading}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

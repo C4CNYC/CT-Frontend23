@@ -58,6 +58,7 @@ export default function CreateCourseDialog({
   defaultValues,
 }: Prop): React.ReactElement | null {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<null | File>(null);
   const { enqueueSnackbar } = useSnackbar();
   const [editCourse] = useUpdateCourseMutation();
@@ -89,6 +90,7 @@ export default function CreateCourseDialog({
   };
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    setLoading(true);
     try {
       const file = new FormData();
       if (isEdit && id) {
@@ -107,6 +109,7 @@ export default function CreateCourseDialog({
         file.append("file", uploadedFile);
         await updateCover({ id: course.id, file });
       }
+
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset(data);
     } catch (error) {
@@ -115,6 +118,7 @@ export default function CreateCourseDialog({
       });
       console.error(error, "test");
     }
+    setLoading(false);
     handleClose();
   };
   return (
@@ -239,7 +243,11 @@ export default function CreateCourseDialog({
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton type="submit" variant="contained">
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      loading={loading}
+                    >
                       Save
                     </LoadingButton>
                   </Box>
