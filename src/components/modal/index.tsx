@@ -1,13 +1,14 @@
-import FormProvider, { RHFTextField } from "@components/hook-form";
+import FormProvider, {
+  RHFUploadAvatar,
+} from "@components/hook-form";
 import { useSnackbar } from "@components/snackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { LoadingButton } from "@mui/lab";
-import { Card } from "@mui/material";
+import { Card, IconButton, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/system";
-import OrganizationForm from "@sections/dashboard/organization/general/tabs/profile/OrganizationForm";
 import * as React from "react";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
@@ -17,6 +18,7 @@ import {
   useUpdateOrgAvatarMutation,
 } from "src/redux/services/admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
+import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";
 
 const UpdateUserSchema = Yup.object().shape({
@@ -48,14 +50,14 @@ export default function ModalEdit({
 
   const style = {
     position: "absolute" as "absolute",
-    top: "40%",
+    top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 800,
-    height: 450,
+    width: 600,
+    height: 230,
     bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
+    boxShadow: 20,
+    p: 1,
     borderRadius: "16px",
   };
 
@@ -119,14 +121,9 @@ export default function ModalEdit({
 
   return (
     <>
-      <Button
-        onClick={handleOpen}
-        variant="contained"
-        size="medium"
-        sx={{ height: "35px" }}
-      >
-        Edit
-      </Button>
+      <IconButton onClick={handleOpen}>
+        <EditOutlinedIcon style={{ color: "rgb(161, 167, 172)" }} />
+      </IconButton>
       <Modal
         open={open}
         onClose={handleClose}
@@ -134,59 +131,45 @@ export default function ModalEdit({
         aria-describedby="modal-modal-description"
       >
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-          <Box sx={style} pt="30px">
-            <Card sx={{ p: 3 }}>
-              <Box
-                rowGap={3}
-                columnGap={2}
-                display="grid"
-                gridTemplateColumns={{
-                  xs: "repeat(1, 1fr)",
-                  sm: "repeat(2, 1fr)",
-                }}
-                gridTemplateRows={{
-                  xs: "repeat(3, 1fr)",
-                }}
+          <Box sx={style}>
+            <Card>
+              <RHFUploadAvatar
+                name="photoURL"
+                maxSize={30000}
+                onDrop={handleDrop}
+                helperText={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      mt: 2,
+                      mx: "auto",
+                      display: "block",
+                      textAlign: "center",
+                      color: "text.secondary",
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {`${translate(
+                      "organizations.general_page.tabs.content.profile.upload_image",
+                      {
+                        formats: "png",
+                        size: fData(30000),
+                      }
+                    )}`}
+                  </Typography>
+                }
+              ></RHFUploadAvatar>
+               <Stack spacing={3} alignItems="flex-end" sx={{ mb: 2 }}>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isLoading}
               >
-                <RHFTextField
-                  name="name"
-                  label={`${translate(
-                    "organizations.general_page.tabs.content.profile.name_input"
-                  )}`}
-                />
-
-                <RHFTextField
-                  name="email"
-                  label={`${translate(
-                    "organizations.general_page.tabs.content.profile.email_input"
-                  )}`}
-                />
-
-                <RHFTextField
-                  name="url"
-                  label={`${translate(
-                    "organizations.general_page.tabs.content.profile.url_input"
-                  )}`}
-                />
-
-                <RHFTextField
-                  name="address"
-                  label={`${translate(
-                    "organizations.general_page.tabs.content.profile.address_input"
-                  )}`}
-                />
-              </Box>
-
-              <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={isLoading}
-                >
-                  {`${translate("actions_save_changes")}`}
-                </LoadingButton>
-              </Stack>
+                {`${translate("actions_save_changes")}`}
+              </LoadingButton>
+            </Stack>
             </Card>
+           
           </Box>
         </FormProvider>
       </Modal>

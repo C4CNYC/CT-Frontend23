@@ -2,7 +2,6 @@ import FormProvider, {
   RHFTextField,
   RHFUploadAvatar,
 } from "@components/hook-form";
-import ModalEdit from "@components/modal";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
@@ -187,7 +186,6 @@ export default function OrganizationForm({
             </Stack>
           </Card>
         </Grid>
-        <ModalEdit />
       </Grid>
     </FormProvider>
   );
