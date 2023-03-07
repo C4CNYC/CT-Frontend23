@@ -69,7 +69,8 @@ export default function UserProfilePage(): React.ReactElement {
         >
           <ProfileCover
             name={data?.name ?? ""}
-            cover={"/assets/icons/shool/organization.svg"}
+            avatar={data?.avatar}
+            cover={data?.cover ?? "/assets/icons/shool/organization.svg"}
           />
           <Tabs
             value={currentTab}

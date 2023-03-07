@@ -4,6 +4,8 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 export interface ISchool extends BaseResponseInterface {
   name: string;
   city: string;
+  avatar: string;
+  cover: string;
   country: string;
 }
 
@@ -23,6 +25,8 @@ export interface SchoolProfile {
   schoolId: string;
   country?: string;
   address?: string;
+  cover?: string;
+  avatar?: string;
   city?: string;
   active?: boolean;
   phone?: string;
