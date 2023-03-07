@@ -59,6 +59,7 @@ export default function UserNewEditForm({
       .required("Email is required")
       .email("Email must be a valid email address"),
     role: Yup.string().required("Role is required"),
+    verifired: Yup.boolean(),
   });
 
   const defaultValues = useMemo(

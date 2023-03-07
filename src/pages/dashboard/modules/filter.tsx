@@ -47,6 +47,7 @@ export default function FilterModules({
             width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
           placeholder="Name"
+          type="text"
           onChange={(event) => {
             setFilter("name", event.target.value);
           }}
@@ -68,7 +69,6 @@ export default function FilterModules({
             courses?.data.filter((m) => m.id === filters.course_id)[0]
           }
           onChange={(event, value, reason, details) => {
-            console.log({ value });
             setFilter("course_id", details?.option.id ?? "");
           }}
           getOptionLabel={(option) => option.name}
