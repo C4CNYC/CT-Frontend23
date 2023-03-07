@@ -3,6 +3,7 @@ import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -30,11 +31,12 @@ export default function LessonCard({
 }: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteLesson] = useDeleteLessonMutation();
 
   const onDelete = async (): Promise<void> => {
+    setLoading(true);
     if (lesson.id) {
       try {
         await deleteLesson({ id: lesson.id }).unwrap();
@@ -44,6 +46,7 @@ export default function LessonCard({
           variant: "error",
         });
       }
+      setLoading(false);
     }
   };
 
@@ -172,9 +175,14 @@ export default function LessonCard({
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <LoadingButton
+            variant="contained"
+            color="error"
+            onClick={onDelete}
+            loading={loading}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

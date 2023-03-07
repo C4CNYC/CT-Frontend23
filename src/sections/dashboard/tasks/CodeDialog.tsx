@@ -1,6 +1,7 @@
 import { CustomSmallSelect } from "@components/custom-input";
 import { useSnackbar } from "@components/snackbar";
 import SaveIcon from "@mui/icons-material/Save";
+import { LoadingButton } from "@mui/lab";
 import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -34,13 +35,12 @@ export default function CreateCodeDialog({
   code,
   language,
 }: Prop): React.ReactElement {
-  console.log(taskName);
   const [open, setOpen] = useState<boolean>(false);
   const [codeValue, setCodeValue] = useState<string>("");
   const [lang, setLang] = useState<string>("html");
   const [updatedName, setUpdatedName] = useState<string>("");
   const [theme, setTheme] = useState<string>("dracula");
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [updateTask] = useUpdateTaskMutation();
   const [createTask] = useCreateTaskMutation();
   const { enqueueSnackbar } = useSnackbar();
@@ -53,8 +53,12 @@ export default function CreateCodeDialog({
     setOpen(false);
   };
   useEffect(() => {
-    if (code) { setCodeValue(code); }
-    if (language) { setLang(language); }
+    if (code) {
+      setCodeValue(code);
+    }
+    if (language) {
+      setLang(language);
+    }
   }, []);
   const onChange = React.useCallback((value: any) => {
     setCodeValue(value);
@@ -76,6 +80,7 @@ export default function CreateCodeDialog({
     }
   };
   const onSubmit = async (): Promise<void> => {
+    setLoading(true);
     const data = JSON.stringify({
       body: {
         code: codeValue,
@@ -87,13 +92,13 @@ export default function CreateCodeDialog({
           id: taskId,
           name: (updatedName || taskName) ?? "No name",
           language: lang,
-          body: data
+          body: data,
         }).unwrap();
       } else {
         await createTask({
           name: updatedName,
           language: lang,
-          body: data
+          body: data,
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -103,6 +108,7 @@ export default function CreateCodeDialog({
         variant: "error",
       });
     }
+    setLoading(false);
     // eslint-disable-next-line no-eval
     handleClose();
   };
@@ -121,16 +127,18 @@ export default function CreateCodeDialog({
             <TasksInput
               placeholder="Task name"
               defaultValue={taskName}
-              onChange={(e: any) => { setUpdatedName(e.target.value); }}
+              onChange={(e: any) => {
+                setUpdatedName(e.target.value);
+              }}
               onBlur={() => {
                 if (!updatedName) {
-                  setUpdatedName("Task Name")
+                  setUpdatedName("Task Name");
                 }
               }}
             />
-            <IconButton>
-              <SaveIcon onClick={onSubmit} />
-            </IconButton>
+            <LoadingButton loading={loading} onClick={onSubmit}>
+              <SaveIcon />
+            </LoadingButton>
           </Toolbar>
         </AppBar>
         <DialogContent sx={{ p: 0, scrollbarWidth: "none" }}>
@@ -235,7 +243,9 @@ export default function CreateCodeDialog({
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-expect-error
               extensions={[loadLanguage(lang)]}
-              onChange={(value) => { onChange(value); }}
+              onChange={(value) => {
+                onChange(value);
+              }}
             />
           </div>
         </DialogContent>

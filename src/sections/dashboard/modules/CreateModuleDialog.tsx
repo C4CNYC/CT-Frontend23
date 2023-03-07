@@ -32,9 +32,10 @@ export default function CreateModuleDialog({
   id,
   isEdit,
   children,
-  defaultValues = { name: "", description: "", active: false },
+  defaultValues,
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editModule] = useUpdateModuleMutation();
   const [createModule] = useCreateModuleMutation();
@@ -58,6 +59,7 @@ export default function CreateModuleDialog({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    setLoading(true);
     try {
       if (isEdit && id) {
         await editModule({
@@ -77,6 +79,7 @@ export default function CreateModuleDialog({
       });
       console.error(error, "test");
     }
+    setLoading(false);
     handleClose();
   };
 
@@ -126,7 +129,11 @@ export default function CreateModuleDialog({
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton type="submit" variant="contained">
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      loading={loading}
+                    >
                       Save
                     </LoadingButton>
                   </Box>

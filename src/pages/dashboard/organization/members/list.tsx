@@ -62,6 +62,7 @@ export default function UserListPage(): React.ReactElement {
     rowsPerPage,
     //
     selected,
+    setSelected,
     onSelectRow,
     onSelectAllRows,
     //
@@ -70,7 +71,7 @@ export default function UserListPage(): React.ReactElement {
   } = useTable();
   const { translate } = useLocales();
   const { enqueueSnackbar } = useSnackbar();
-  const [deleteMember] = useDeleteOrgMemberMutation();
+  const [deleteMember, { isLoading: loading }] = useDeleteOrgMemberMutation();
 
   const useDeleteMember = async (user_id: string): Promise<void> => {
     try {
@@ -87,6 +88,7 @@ export default function UserListPage(): React.ReactElement {
   const handleDeleteRow = (user_id: string): void => {
     useDeleteMember(user_id);
     enqueueSnackbar("Member deleted");
+    setSelected([]);
   };
 
   const TABLE_HEAD = [
@@ -147,6 +149,8 @@ export default function UserListPage(): React.ReactElement {
       useDeleteMember(selected[i]);
     }
     enqueueSnackbar("Members deleted");
+
+    setSelected([]);
   };
 
   const handleEditRow = (id: string): void => {
@@ -256,6 +260,7 @@ export default function UserListPage(): React.ReactElement {
                       <UserTableRow
                         key={row.id}
                         row={row}
+                        loading={loading}
                         selected={selected.includes(row.id)}
                         onSelectRow={() => {
                           onSelectRow(row.id);

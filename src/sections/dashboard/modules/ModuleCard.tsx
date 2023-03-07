@@ -3,15 +3,8 @@ import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Divider, IconButton, MenuItem, Stack } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import Link from "next/link";
@@ -23,7 +16,6 @@ import { useDeleteModuleMutation } from "../../../redux/services/manager/modules
 // ----------------------------------------------------------------------
 
 interface Props extends IModule {
-  // folder: IFolderManager;
   selected?: boolean;
   onSelect?: VoidFunction;
   key: number;
@@ -35,19 +27,23 @@ export default function ModuleCard({
 }: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteModule] = useDeleteModuleMutation();
 
   const onDelete = async (): Promise<void> => {
+    setLoading(true);
     try {
       await deleteModule({ id: module.id }).unwrap();
+
       enqueueSnackbar("Module deleted!");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
     }
+    setLoading(false);
   };
 
   const handleOpenConfirm = (): void => {
@@ -58,7 +54,9 @@ export default function ModuleCard({
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleOpenPopover = async (
+    event: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
     setOpenPopover(event.currentTarget);
     event.stopPropagation();
     event.preventDefault();
@@ -141,11 +139,7 @@ export default function ModuleCard({
             active: module.active as boolean,
           }}
         >
-          <MenuItem
-            onClick={() => {
-              handleClosePopover();
-            }}
-          >
+          <MenuItem>
             <Iconify icon="eva:edit-fill" />
             Edit
           </MenuItem>
@@ -179,9 +173,14 @@ export default function ModuleCard({
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDelete}>
+          <LoadingButton
+            variant="contained"
+            color="error"
+            onClick={onDelete}
+            loading={loading}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>
