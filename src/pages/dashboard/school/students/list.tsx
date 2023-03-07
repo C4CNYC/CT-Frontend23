@@ -72,6 +72,7 @@ export default function UserListPage(): React.ReactElement {
     order,
     orderBy,
     selected,
+    setSelected,
     onSelectRow,
     onSelectAllRows,
     //
@@ -109,6 +110,7 @@ export default function UserListPage(): React.ReactElement {
   const handleDeleteRow = (userId: string): void => {
     handleDeleteMember(userId);
     enqueueSnackbar("Member deleted");
+    setSelected([]);
   };
 
   const handleDeleteRows = (selected: string[]): void => {
@@ -116,6 +118,7 @@ export default function UserListPage(): React.ReactElement {
       handleDeleteMember(selected[i]);
     }
     enqueueSnackbar("Members deleted");
+    setSelected([]);
   };
 
   const handleEditRow = (id: string): void => {

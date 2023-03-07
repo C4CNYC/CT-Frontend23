@@ -62,6 +62,7 @@ export default function UserListPage(): React.ReactElement {
     rowsPerPage,
     //
     selected,
+    setSelected,
     onSelectRow,
     onSelectAllRows,
     //
@@ -87,6 +88,7 @@ export default function UserListPage(): React.ReactElement {
   const handleDeleteRow = (user_id: string): void => {
     useDeleteMember(user_id);
     enqueueSnackbar("Member deleted");
+    setSelected([]);
   };
 
   const TABLE_HEAD = [
@@ -147,6 +149,7 @@ export default function UserListPage(): React.ReactElement {
       useDeleteMember(selected[i]);
     }
     enqueueSnackbar("Members deleted");
+    setSelected([]);
   };
 
   const handleEditRow = (id: string): void => {
