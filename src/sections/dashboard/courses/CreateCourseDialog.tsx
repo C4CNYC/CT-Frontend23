@@ -108,6 +108,7 @@ export default function CreateCourseDialog({
         await updateCover({ id: course.id, file });
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      methods.reset(data);
     } catch (error) {
       enqueueSnackbar(error.data.message, {
         variant: "error",

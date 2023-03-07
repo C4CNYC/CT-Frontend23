@@ -32,7 +32,7 @@ export default function CreateModuleDialog({
   id,
   isEdit,
   children,
-  defaultValues,
+  defaultValues = { name: "", description: "", active: false },
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -70,6 +70,7 @@ export default function CreateModuleDialog({
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      methods.reset();
     } catch (error) {
       enqueueSnackbar(error.data.message, {
         variant: "error",
