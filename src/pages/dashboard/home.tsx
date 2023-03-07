@@ -1,13 +1,14 @@
 import { useSettingsContext } from "@components/settings";
-import SliderDemoMui from "@components/slider/SliderDemoMui";
 import DashboardLayout from "@layouts/dashboard";
 import { Container, Stack } from "@mui/system";
+import AppFeatured from "@sections/dashboard/general/app/AppFeatured";
 import InfoSectionHome from "@sections/home/info-section-home";
 import MainSectionHome from "@sections/home/main-section-home";
 import RecentAssignments from "@sections/home/recent-assignments";
 import RecentLessons from "@sections/home/recent-lessons";
 import WeeklyActivities from "@sections/home/weekly-activities";
 import WelcomeSection from "@sections/home/welcome-section";
+import { _appFeatured } from "src/_mock/arrays/_app";
 
 // ----------------------------------------------------------------------
 
@@ -22,10 +23,13 @@ export default function HomePage(): React.ReactElement | null {
     <>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Stack display="flex" flexDirection="row">
-          <WelcomeSection />
-          <SliderDemoMui />
+          <Stack mr="24px">
+            <WelcomeSection />
+          </Stack>
+          <Stack width="344px" height="260px">
+            <AppFeatured list={_appFeatured} />
+          </Stack>
         </Stack>
-
         <MainSectionHome />
 
         <InfoSectionHome />

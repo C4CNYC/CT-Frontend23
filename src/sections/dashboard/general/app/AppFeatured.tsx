@@ -58,8 +58,8 @@ export default function AppFeatured({
     },
     ...CarouselDots({
       sx: {
-        top: 20,
-        left: 20,
+        top: 170,
+        left: 110,
         position: "absolute",
       },
     }),
@@ -84,11 +84,10 @@ export default function AppFeatured({
           />
         ))}
       </Carousel>
-
       <CarouselArrows
         onNext={handleNext}
         onPrevious={handlePrev}
-        sx={{ top: 8, right: 8, position: "absolute", color: "common.white" }}
+        sx={{ top: 10, right: 8, position: "absolute", color: "common.white" }}
       />
     </Card>
   );
@@ -114,7 +113,7 @@ function CarouselItem({
         sx={{
           p: 3,
           width: 1,
-          bottom: 0,
+          bottom: 1,
           zIndex: 9,
           textAlign: "left",
           position: "absolute",
@@ -122,35 +121,27 @@ function CarouselItem({
         }}
       >
         <m.div variants={varFade().inRight}>
-          <Typography variant="overline" component="div" sx={{ opacity: 0.48 }}>
-            Featured App
-          </Typography>
-        </m.div>
-
-        <m.div variants={varFade().inRight}>
           <Link color="inherit" underline="none">
-            <Typography variant="h5" noWrap>
+            <Typography variant="h6" fontWeight="700" fontSize="20px" noWrap>
               {title}
             </Typography>
           </Link>
         </m.div>
 
         <m.div variants={varFade().inRight}>
-          <Typography variant="body2" noWrap>
+          <Typography
+            variant="body2"
+            fontWeight="400"
+            fontSize="14px"
+            width="193px"
+          >
             {description}
           </Typography>
         </m.div>
       </Stack>
-
       <StyledOverlay />
 
-      <Image
-        alt={title}
-        src={image}
-        sx={{
-          height: { xs: 280, xl: 320 },
-        }}
-      />
+      <Image alt={title} src={image} />
     </MotionContainer>
   );
 }

@@ -1,5 +1,5 @@
 // @mui
-import { Box, BoxProps, SxProps } from "@mui/material";
+import { Box, BoxProps, Stack, SxProps } from "@mui/material";
 import { styled, Theme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
@@ -17,7 +17,7 @@ const StyledRoot = styled(Box, {
   justifyContent: "center",
   color: theme.palette.primary.main,
   "& li": {
-    width: 18,
+    width: 12,
     height: 18,
     opacity: 0.32,
     display: "flex",
@@ -36,6 +36,16 @@ const StyledRoot = styled(Box, {
   },
 }));
 
+const StyledDot = styled("span")(({ theme }) => ({
+  width: 8,
+  height: 8,
+  borderRadius: "50%",
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.short,
+  }),
+}));
+
 // ----------------------------------------------------------------------
 
 export interface Props extends BoxProps {
@@ -43,14 +53,30 @@ export interface Props extends BoxProps {
   sx?: SxProps<Theme>;
 }
 
-export default function CarouselDots(props?: Props): React.ReactElement {
+export default function CarouselDots(props?: Props) {
   const rounded = props?.rounded ?? false;
 
   const sx = props?.sx;
 
-  return (
+  return {
+    appendDots: (dots: React.ReactNode) => (
       <StyledRoot component="ul" rounded={rounded} sx={sx} {...props}>
-        {/* {dots} */}
+        {dots}
       </StyledRoot>
-  )
+    ),
+    customPaging: () => (
+      <Stack
+        component="div"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ width: 1, height: 1 }}
+      >
+        <StyledDot
+          sx={{
+            bgcolor: "#02D3D7",
+          }}
+        />
+      </Stack>
+    ),
+  };
 }
