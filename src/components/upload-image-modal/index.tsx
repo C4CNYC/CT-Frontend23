@@ -27,8 +27,8 @@ export default function UploadImageModal({
   id,
 }: UploadImageProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => { setOpen(true); };
+  const handleClose = () => { setOpen(false); };
 
   const style = {
     position: "absolute" as "absolute",
@@ -90,7 +90,7 @@ export default function UploadImageModal({
               justifyContent="space-between"
               direction="row"
             >
-              <Typography variant="body2" color="GrayText" fontWeight="700">
+              <Typography variant="h6" fontWeight="700">
                 Upload Cover Image
               </Typography>
               <IconButton onClick={handleClose} sx={{ width: "10px" }}>
@@ -99,7 +99,7 @@ export default function UploadImageModal({
             </Stack>
             <RHFUploadAvatar
               name="cover"
-              maxSize={30000}
+              maxSize={1000000}
               onDrop={handleDrop}
               helperText={
                 <Typography
@@ -117,7 +117,7 @@ export default function UploadImageModal({
                     "organizations.general_page.tabs.content.profile.upload_image",
                     {
                       formats: "png",
-                      size: fData(30000),
+                      size: fData(300000),
                     }
                   )}`}
                 </Typography>
