@@ -98,6 +98,19 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "Organization" }],
     }),
+    updateOrgCover: builder.mutation<
+    void,
+      {
+        file: FormData;
+      }
+    >({
+      query: ({ file }) => ({
+        url: "/org/cover",
+        method: "PATCH",
+        body: file,
+      }),
+      invalidatesTags: [{ type: "Organization" }],
+    }),
     // ------------ school ------------------
     createClass: builder.mutation<ClassResponce, ClassRequest>({
       query: ({ schoolId, ...body }) => ({
@@ -170,6 +183,19 @@ export const adminApi = createApi({
         url: "/school",
         method: "POST",
         body,
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
+    updateSchoolCover: builder.mutation<
+    void,
+      {
+        file: FormData;
+      }
+    >({
+      query: ({ file }) => ({
+        url: "/school/cover",
+        method: "PATCH",
+        body: file,
       }),
       invalidatesTags: [{ type: "School" }],
     }),
@@ -329,6 +355,8 @@ export const {
   // ---------------- mutations ---------
   useUdpateMemberAvatarMutation,
   useUpdateOrgAvatarMutation,
+  useUpdateOrgCoverMutation,
+  useUpdateSchoolCoverMutation,
   useUpdateClassMutation,
   useCreateClassMutation,
   useDeleteTeacherMutation,
