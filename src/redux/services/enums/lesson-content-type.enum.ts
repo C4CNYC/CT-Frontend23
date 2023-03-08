@@ -1,4 +1,5 @@
 export enum LessonContentType {
   Editable = "editable",
-  Slides = "slides",
+  //Slides = "slides",
+  Html = "html",
 }

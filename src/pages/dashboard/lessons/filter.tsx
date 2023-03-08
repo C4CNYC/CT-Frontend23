@@ -47,6 +47,7 @@ export default function FilterLessons({
             width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
           placeholder="Name"
+          type="text"
           value={filters.name}
           onChange={(event) => {
             setFilter("name", event.target.value);
@@ -69,7 +70,6 @@ export default function FilterLessons({
             modules?.data.filter((m) => m.id === filters.module_id)[0]
           }
           onChange={(event, value, reason, details) => {
-            console.log({ value });
             setFilter("module_id", details?.option.id ?? "");
           }}
           getOptionLabel={(option) => option.name}

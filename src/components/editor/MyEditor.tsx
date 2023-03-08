@@ -33,7 +33,7 @@ import {
   useRemirror,
 } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -83,6 +83,7 @@ import {
 
 import jsx from "refractor/lang/jsx.js";
 import typescript from "refractor/lang/typescript.js";
+import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 
 interface FileWithProgress {
   file: File;
@@ -204,6 +205,7 @@ export default function MyEditor({
   const saveContent = async (): Promise<void> => {
     updateLessonContent({
       lessonId,
+      type: LessonContentType.Editable,
       body: JSON.stringify(state),
     });
   };
