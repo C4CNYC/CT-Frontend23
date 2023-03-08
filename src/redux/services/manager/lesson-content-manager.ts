@@ -17,7 +17,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     updateLessonContent: builder.mutation<
       ILessonContent,
-      { lessonId: string; body: string }
+      { lessonId: string; type: string; body: string }
     >({
       query: ({ lessonId, ...body }) => ({
         url: `/lesson/${lessonId}/content`,

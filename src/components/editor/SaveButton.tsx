@@ -4,9 +4,10 @@ import { TfiSave } from "react-icons/tfi";
 
 interface Props {
   onClick: VoidFunction;
+  sx?: {};
 }
 
-export default function SaveButton({ onClick }: Props): JSX.Element {
+export default function SaveButton({ onClick, sx }: Props): JSX.Element {
   return (
     <Tooltip title="Save">
       <Button
@@ -14,7 +15,7 @@ export default function SaveButton({ onClick }: Props): JSX.Element {
         variant="outlined"
         key="left"
         onClick={onClick}
-        sx={{ ml: "auto!important", width: 60, maxHeight: "30px" }}
+        sx={{ ml: "auto!important", width: 60, maxHeight: "30px", ...sx }}
         size="small"
       >
         <TfiSave />
