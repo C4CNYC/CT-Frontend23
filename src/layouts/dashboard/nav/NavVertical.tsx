@@ -1,7 +1,7 @@
 import Logo from "@components/logo";
 import { NavSectionVertical } from "@components/nav-section";
 import Scrollbar from "@components/scrollbar";
-import { Box, Drawer, Stack } from "@mui/material";
+import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -19,6 +19,13 @@ interface Props {
   onCloseNav: VoidFunction;
 }
 
+const menuConfig = {
+  [Role.Owner]: [admin, managment, content],
+  [Role.Admin]: [admin, managment, content],
+  [Role.Manager]: [managment, content],
+  [Role.Editor]: [content],
+}
+
 export default function NavVertical({
   openNav,
   onCloseNav,
@@ -27,9 +34,7 @@ export default function NavVertical({
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = [Role.Owner, Role.Admin].includes(user?.role ?? Role.Manager)
-    ? [admin, managment, content]
-    : [managment, content];
+  const menu = menuConfig[user?.role as Role];
 
   useEffect(() => {
     if (openNav) {
@@ -69,6 +74,8 @@ export default function NavVertical({
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );
+
+  if (!user?.role) return <CircularProgress/>
 
   return (
     <Box
