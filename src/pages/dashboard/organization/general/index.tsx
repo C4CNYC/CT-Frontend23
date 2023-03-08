@@ -5,6 +5,7 @@ import {
   Card,
   CircularProgress,
   Container,
+  Stack,
   Tab,
   Tabs,
 } from "@mui/material";
@@ -13,11 +14,16 @@ import Head from "next/head";
 import { useState } from "react";
 // auth
 import Iconify from "@components/iconify";
+import UploadImageModal from "@components/upload-image-modal";
 import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
 import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
 import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
 import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
-import { useGetOrganizationQuery } from "src/redux/services/admin";
+import { useSnackbar } from "notistack";
+import {
+  useGetOrganizationQuery,
+  useUpdateOrgCoverMutation,
+} from "src/redux/services/admin";
 import { useLocales } from "../../../../locales";
 
 // components
@@ -59,10 +65,24 @@ export default function UserProfilePage(): React.ReactElement {
       component: <ContactsTab />,
     },
   ];
+  const { enqueueSnackbar } = useSnackbar();
+
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
+
+  const [uploadCoverImage] = useUpdateOrgCoverMutation();
   const { data, isLoading } = useGetOrganizationQuery();
 
+  const onUpload = async (data: File): Promise<void> => {
+    try {
+      const file = new FormData();
+      file.append("file", data);
+      await uploadCoverImage({ file }).unwrap();
+      enqueueSnackbar("Image updated");
+    } catch (error) {
+      enqueueSnackbar("Image not updated", { variant: "error" });
+    }
+  };
   if (isLoading) return <CircularProgress />;
 
   return (
@@ -78,6 +98,11 @@ export default function UserProfilePage(): React.ReactElement {
             position: "relative",
           }}
         >
+          <Stack
+            sx={{ position: "absolute", zIndex: 10, mt: "10px", ml: "93%" }}
+          >
+            <UploadImageModal onUpload={onUpload} id="" />
+          </Stack>
           <ProfileCover
             name={data?.title ?? ""}
             cover={data?.cover}

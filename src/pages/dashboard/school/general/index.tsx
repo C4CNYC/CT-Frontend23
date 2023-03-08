@@ -1,7 +1,8 @@
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
+import UploadImageModal from "@components/upload-image-modal";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Box, Card, Container, Tab, Tabs } from "@mui/material";
+import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
 import { ProfileCover } from "@sections/dashboard/user/profile";
 import {
   SchoolContactsTab,
@@ -10,10 +11,12 @@ import {
   SchoolSocialsTab,
 } from "@sections/schools/tabs";
 import Head from "next/head";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { useUpdateSchoolCoverMutation } from "src/redux/services/admin";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import { RootState } from "../../../../redux/store";
 
@@ -54,6 +57,21 @@ export default function UserProfilePage(): React.ReactElement {
     },
   ];
 
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [updateSchoolCoverImage] = useUpdateSchoolCoverMutation();
+
+  const onUpload = async (data: File): Promise<void> => {
+    try {
+      const file = new FormData();
+      file.append("file", data);
+      await updateSchoolCoverImage({ file }).unwrap();
+      enqueueSnackbar("Image updated");
+    } catch (error) {
+      enqueueSnackbar("Image not updated", { variant: "error" });
+    } 
+  };
+
   return (
     <>
       <Head>
@@ -67,6 +85,11 @@ export default function UserProfilePage(): React.ReactElement {
             position: "relative",
           }}
         >
+          <Stack
+            sx={{ position: "absolute", zIndex: 10, mt: "10px", ml: "93%" }}
+          >
+            <UploadImageModal onUpload={onUpload} id={schoolId} />
+          </Stack>
           <ProfileCover
             name={data?.name ?? ""}
             avatar={data?.avatar}
