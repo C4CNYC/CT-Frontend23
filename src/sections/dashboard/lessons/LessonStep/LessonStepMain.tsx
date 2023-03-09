@@ -111,6 +111,25 @@ export default function LessonStepMain({
             </IconButton>
           </Toolbar>
         </AppBar> */}
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleClose}
+          aria-label="close"
+          sx={{
+            position: "absolute",
+            zIndex: "10000",
+            right: 0,
+            top: 0,
+            width: "40px",
+            height: "40px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Box
           sx={{
             position: "relative",
@@ -119,8 +138,8 @@ export default function LessonStepMain({
         >
           <SplitPane
             split="vertical"
-            minSize={250}
-            maxSize={350}
+            minSize={300}
+            maxSize={750}
             defaultSize={"20%"}
           >
             <LessonStepList />
