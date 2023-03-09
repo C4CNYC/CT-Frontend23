@@ -1,10 +1,7 @@
-import { Box } from "@mui/material";
-import parse from "html-react-parser";
-
-type Props = {
+interface Props {
   code?: string;
-};
+}
 
 export default function CodeBrowser({ code = "" }: Props): React.ReactElement {
-  return <Box sx={{ height: "80vh" }}>{parse(code)}</Box>;
+  return <iframe width="100%" height="100%" src={"data:text/html," + encodeURIComponent(code)} />;
 }
