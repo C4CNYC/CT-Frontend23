@@ -71,7 +71,13 @@ export default function CreateContentDialog({
       >
         {children}
       </Stack>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xl">
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        maxWidth="xl"
+        sx={{ "& .MuiDialog-paper": { minHeight: "93vh" } }}
+      >
         <AppBar color="inherit" sx={{ position: "relative", padding: 0 }}>
           <Toolbar sx={{ paddingLeft: 0, ml: 0 }} variant="dense">
             <LessonInput

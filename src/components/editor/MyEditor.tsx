@@ -218,7 +218,7 @@ export default function MyEditor({
             scrollbar-width: none;
             box-shadow: none;
           }
-          .remirror-editor-wrapper { padding: 0;  min-height: 80vh}
+          .remirror-editor-wrapper { padding: 0;  min-height: 50vh}
           .remirror-theme .ProseMirror {
             scrollbar-width: none;
             box-shadow: none;
