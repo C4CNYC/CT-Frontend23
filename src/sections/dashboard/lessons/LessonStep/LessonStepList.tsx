@@ -1,23 +1,19 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { CircularProgress, Stack, Typography } from "@mui/material";
+import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
 import LessonListItem from "./LesonListItem";
 
-const list = [
-  { name: "Task name", desc: "Some description of the task", id: "12asd" },
-  { name: "Task name", desc: "Some description of the task", id: "13fdsa" },
-  { name: "Task name", desc: "Some description of the task", id: "14asd" },
-  { name: "Task name", desc: "Some description of the task", id: "15dfdsf" },
-];
+interface Props {
+  lessonId: string
+}
 
-export default function LessonStepList(): React.ReactElement {
-  const [data, setData] = useState(list);
+export default function LessonStepList({ lessonId }: Props): React.ReactElement {
+  const { data, isLoading } = useGetLessonContentQuery({ lessonId }, { skip: !lessonId })
 
   const onDragEnd = (result: DropResult): void => {
     const { destination, source, draggableId } = result;
-    console.log(typeof draggableId);
 
-    if (!destination) return;
+    if (!destination || !data) return;
 
     if (
       destination.droppableId === source.droppableId &&
@@ -29,9 +25,9 @@ export default function LessonStepList(): React.ReactElement {
     const newTaskIds = [...data];
     newTaskIds.splice(source.index, 1);
     newTaskIds.splice(destination.index, 0, draggableId);
-
-    setData(newTaskIds);
   };
+  if (isLoading) return <CircularProgress/>
+
   return (
     <>
       <Typography variant="subtitle1" gutterBottom sx={{ pt: 2, pl: 3 }}>
@@ -47,7 +43,7 @@ export default function LessonStepList(): React.ReactElement {
               spacing={3}
               sx={{ p: 2 }}
             >
-              {data.map((el, i) => (
+              {data?.map((el, i) => (
                 <LessonListItem key={el.id} step={el} index={i} />
               ))}
               {provided.placeholder}

@@ -7,16 +7,12 @@ import LessonStepList from "./LessonStepList";
 
 interface Props {
   children: React.ReactElement;
-  lessonName: string;
   lessonId: string;
-  lessonDescr: string;
 }
 
 export default function LessonStepMain({
   children,
   lessonId,
-  lessonName,
-  lessonDescr,
 }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
 
@@ -99,18 +95,6 @@ export default function LessonStepMain({
         {children}
       </Stack>
       <Dialog open={open} onClose={handleClose} fullScreen>
-        {/* <AppBar sx={{ position: "relative" }}>
-          <Toolbar variant="dense">
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar> */}
         <IconButton
           edge="start"
           color="inherit"
@@ -142,7 +126,7 @@ export default function LessonStepMain({
             maxSize={750}
             defaultSize={"20%"}
           >
-            <LessonStepList />
+            <LessonStepList lessonId={lessonId}/>
             <LessonStepContent />
           </SplitPane>
         </Box>
