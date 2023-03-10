@@ -7,16 +7,12 @@ import LessonStepList from "./LessonStepList";
 
 interface Props {
   children: React.ReactElement;
-  lessonName: string;
   lessonId: string;
-  lessonDescr: string;
 }
 
 export default function LessonStepMain({
   children,
   lessonId,
-  lessonName,
-  lessonDescr,
 }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
 
@@ -130,7 +126,7 @@ export default function LessonStepMain({
             maxSize={750}
             defaultSize={"20%"}
           >
-            <LessonStepList />
+            <LessonStepList lessonId={lessonId}/>
             <LessonStepContent />
           </SplitPane>
         </Box>

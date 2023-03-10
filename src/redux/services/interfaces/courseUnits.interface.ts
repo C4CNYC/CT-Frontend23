@@ -1,4 +1,5 @@
 import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
+import { LessonContentComplexity } from "../enums/lesson-content-complexity.enum";
 import { LessonContentType } from "../enums/lesson-content-type.enum";
 
 export interface IModule {
@@ -29,6 +30,13 @@ export interface ICourse {
 export interface ILessonContent {
   body: string;
   type: LessonContentType;
+  slug: string;
+  title: string;
+  description: string;
+  active: boolean;
+  draft: boolean;
+  tags: string[];
+  complexity: LessonContentComplexity;
 }
 
 export interface IAddLessonToModule {

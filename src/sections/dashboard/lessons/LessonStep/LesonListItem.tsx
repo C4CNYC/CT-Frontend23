@@ -3,11 +3,13 @@ import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { BsFillMenuButtonFill } from "react-icons/bs";
 import { CgBrowser } from "react-icons/cg";
 import { IoMdCopy } from "react-icons/io";
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-type Props = {
-  step: { name: string; desc: string; id: string };
+interface Props {
+  step: ILessonContent & BaseResponseInterface;
   index: number;
-};
+}
 
 export default function LessonListItem({
   step,
@@ -35,8 +37,8 @@ export default function LessonListItem({
               </IconButton>
             </Box>
             <Box>
-              <Typography variant="h6">{step.name}</Typography>
-              <Typography variant="body2">{step.desc}</Typography>
+              <Typography variant="h6">{step.title}</Typography>
+              <Typography variant="body2">{step.description}</Typography>
             </Box>
           </Box>
 
