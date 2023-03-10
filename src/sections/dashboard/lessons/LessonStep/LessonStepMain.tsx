@@ -99,18 +99,6 @@ export default function LessonStepMain({
         {children}
       </Stack>
       <Dialog open={open} onClose={handleClose} fullScreen>
-        {/* <AppBar sx={{ position: "relative" }}>
-          <Toolbar variant="dense">
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar> */}
         <IconButton
           edge="start"
           color="inherit"

@@ -1,5 +1,13 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { Stack, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import {
+  Box,
+  Button,
+  IconButton,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import LessonListItem from "./LesonListItem";
 
@@ -33,8 +41,8 @@ export default function LessonStepList(): React.ReactElement {
     setData(newTaskIds);
   };
   return (
-    <>
-      <Typography variant="subtitle1" gutterBottom sx={{ pt: 2, pl: 3 }}>
+    <Box sx={{ p: 2 }}>
+      <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
         Lesson Name
       </Typography>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -45,7 +53,7 @@ export default function LessonStepList(): React.ReactElement {
               ref={provided.innerRef}
               direction="column"
               spacing={3}
-              sx={{ p: 2 }}
+              sx={{ py: 2 }}
             >
               {data.map((el, i) => (
                 <LessonListItem key={el.id} step={el} index={i} />
@@ -55,7 +63,31 @@ export default function LessonStepList(): React.ReactElement {
           )}
         </Droppable>
       </DragDropContext>
+      <Paper
+        elevation={8}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alighItems: "center",
+          padding: 3,
+          margin: "0px auto",
+          maxWidth: "350px",
+        }}
+      >
+        <Button
+          variant="outlined"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alighItems: "center",
+          }}
+        >
+          <AddIcon />
+          <Typography variant="subtitle1">ADD STEP</Typography>
+        </Button>
+      </Paper>
       <Stack direction="column" spacing={3} sx={{ p: 2 }}></Stack>
-    </>
+    </Box>
   );
 }
