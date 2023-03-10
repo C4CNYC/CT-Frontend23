@@ -133,11 +133,15 @@ type Extensions =
 interface Props {
   lessonId: string;
   data?: ILessonContent & BaseResponseInterface;
+  multimediaValue?: string;
+  setMultimediaValue: Function;
 }
 
 export default function MyEditor({
   lessonId,
   data,
+  multimediaValue,
+  setMultimediaValue,
 }: Props): React.ReactElement {
   const [updateLessonContent] = useUpdateLessonContentMutation();
   const { uploadToS3 } = useS3Upload();
@@ -198,7 +202,11 @@ export default function MyEditor({
 
   const { manager, state, setState } = useRemirror({
     extensions,
-    content: data?.body ? JSON.parse(data?.body) : "",
+    content: data?.body
+      ? JSON.parse(data?.body)
+      : multimediaValue
+      ? multimediaValue
+      : "",
     stringHandler: "html",
   });
 
@@ -256,6 +264,7 @@ export default function MyEditor({
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
           setState(parameter.state.doc);
+          setMultimediaValue(parameter.state.doc);
         }}
       >
         <Toolbar

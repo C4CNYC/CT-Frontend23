@@ -1,5 +1,13 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
 import LessonListItem from "./LesonListItem";
 

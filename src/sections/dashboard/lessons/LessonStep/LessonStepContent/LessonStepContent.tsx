@@ -1,11 +1,14 @@
-import { Box } from "@mui/material";
 import { useState } from "react";
 import SplitPane from "react-split-pane";
 import LessonContentBrowser from "./LessonContentBrowser";
+import LessonContentMultimedia from "./LessonContentMultimedia";
 import StepContentEditor from "./StepContentEditor/StepContentEditor";
 
 export default function LessonStepContent(): React.ReactElement {
   const [userCode, setUserCode] = useState("");
+  const [contentValue, setContentValue] = useState("multimedia");
+  const [multimediaValue, setMultimediaValue] = useState("");
+  console.log(multimediaValue, "in the LessonStepContent");
   return (
     <>
       <style>
@@ -68,8 +71,19 @@ export default function LessonStepContent(): React.ReactElement {
         maxSize={-100}
         defaultSize={"50%"}
       >
-        <StepContentEditor code={userCode} setUserCode={setUserCode} />
-        <LessonContentBrowser code={userCode} />
+        <StepContentEditor
+          code={userCode}
+          setUserCode={setUserCode}
+          contentValue={contentValue}
+          setContentValue={setContentValue}
+          multimediaValue={multimediaValue}
+          setMultimediaValue={setMultimediaValue}
+        />
+        {contentValue === "multimedia" ? (
+          <LessonContentMultimedia multimediaValue={multimediaValue} />
+        ) : (
+          <LessonContentBrowser code={userCode} />
+        )}
       </SplitPane>
     </>
   );

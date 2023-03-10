@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { AppBar, Box, Dialog, IconButton, Stack, Toolbar } from "@mui/material";
+import { Box, Dialog, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import SplitPane from "react-split-pane";
 import LessonStepContent from "./LessonStepContent/LessonStepContent";
@@ -126,7 +126,7 @@ export default function LessonStepMain({
             maxSize={750}
             defaultSize={"20%"}
           >
-            <LessonStepList lessonId={lessonId}/>
+            <LessonStepList lessonId={lessonId} />
             <LessonStepContent />
           </SplitPane>
         </Box>

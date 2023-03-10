@@ -8,20 +8,33 @@ import StepMultimedia from "./StepMultimedia";
 
 type Props = {
   code: string;
+  contentValue: string;
+  multimediaValue: string;
   setUserCode: Function;
+  setContentValue: Function;
+  setMultimediaValue: Function;
 };
 
 export default function StepContentEditor({
   code,
   setUserCode,
+  contentValue,
+  setContentValue,
+  multimediaValue,
+  setMultimediaValue,
 }: Props): React.ReactElement {
-  const [currentTab, setCurrentTab] = useState("code");
+  // const [currentTab, setCurrentTab] = useState("code");
   const TABS = [
     {
       value: "multimedia",
       label: "multimedia",
       icon: <MdOutlinePermMedia size="20px" />,
-      component: <StepMultimedia />,
+      component: (
+        <StepMultimedia
+          multimediaValue={multimediaValue}
+          setMultimediaValue={setMultimediaValue}
+        />
+      ),
     },
     {
       value: "code",
@@ -42,9 +55,9 @@ export default function StepContentEditor({
         }}
       >
         <Tabs
-          value={currentTab}
+          value={contentValue}
           onChange={(event, newValue) => {
-            setCurrentTab(newValue);
+            setContentValue(newValue);
           }}
         >
           {TABS.map((tab) => (
@@ -56,7 +69,7 @@ export default function StepContentEditor({
             />
           ))}
         </Tabs>
-        {currentTab === "code" ? (
+        {contentValue === "code" ? (
           <SaveButton
             onClick={() => {}}
             sx={{
@@ -74,7 +87,7 @@ export default function StepContentEditor({
 
       {TABS.map(
         (tab) =>
-          tab.value === currentTab && (
+          tab.value === contentValue && (
             <Box sx={{ overflowY: "auto" }} key={tab.value}>
               {" "}
               {tab.component}{" "}
