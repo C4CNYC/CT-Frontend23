@@ -8,7 +8,7 @@ export default function LessonStepContent(): React.ReactElement {
   const [userCode, setUserCode] = useState("");
   const [contentValue, setContentValue] = useState("multimedia");
   const [multimediaValue, setMultimediaValue] = useState("");
-  console.log(multimediaValue, "in the LessonStepContent");
+
   return (
     <>
       <style>

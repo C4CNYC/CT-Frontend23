@@ -19,7 +19,6 @@ export default function LessonContentMultimedia({
         manager={manager}
         editable={false}
         initialContent={multimediaValue}
-        // state={multimediaValue}
       ></Remirror>
     </Box>
   );
