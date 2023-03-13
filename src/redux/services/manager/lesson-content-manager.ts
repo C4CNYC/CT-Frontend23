@@ -6,7 +6,7 @@ import { ILessonContent } from "../interfaces/courseUnits.interface";
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getLessonContent: builder.query<
-      ILessonContent & BaseResponseInterface,
+      Array<ILessonContent & BaseResponseInterface>,
       { lessonId: string }
     >({
       query: ({ lessonId }) => ({

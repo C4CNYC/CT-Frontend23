@@ -4,21 +4,14 @@ import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-} from "@mui/material";
+import { Box, Card, Divider, IconButton, MenuItem, Stack } from "@mui/material";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import { useState } from "react";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
 import CreateContentDialog from "./CreateContentDialog";
+import LessonStepMain from "./LessonStep/LessonStepMain";
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +27,9 @@ export default function LessonCard({
   const [loading, setLoading] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteLesson] = useDeleteLessonMutation();
+
+  // filtration is active
+  const isFiltraton = true;
 
   const onDelete = async (): Promise<void> => {
     setLoading(true);
@@ -98,40 +94,77 @@ export default function LessonCard({
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
-        <CreateContentDialog
-          lessonId={lesson.id}
-          lessonName={lesson.name}
-          lessonDescr={lesson.description}
-        >
-          <>
-            <Box
-              component="img"
-              src="/assets/icons/files/ic_file.svg"
-              sx={{ width: 40, height: 40 }}
-            />
-
-            <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
-              {lesson.name}
-            </TextMaxLine>
-
-            <Stack
-              direction="row"
-              alignItems="center"
-              spacing={0.75}
-              sx={{ typography: "caption", color: "text.disabled" }}
-            >
-              <Box>{lesson.description}</Box>
+        {isFiltraton ? (
+          <LessonStepMain
+            lessonId={lesson.id}
+            lessonName={lesson.name}
+            lessonDescr={lesson.description}
+          >
+            <>
               <Box
-                sx={{
-                  width: 2,
-                  height: 2,
-                  borderRadius: "50%",
-                  bgcolor: "currentColor",
-                }}
+                component="img"
+                src="/assets/icons/files/ic_file.svg"
+                sx={{ width: 40, height: 40 }}
               />
-            </Stack>
-          </>
-        </CreateContentDialog>
+
+              <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+                {lesson.name}
+              </TextMaxLine>
+
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={0.75}
+                sx={{ typography: "caption", color: "text.disabled" }}
+              >
+                <Box>{lesson.description}</Box>
+                <Box
+                  sx={{
+                    width: 2,
+                    height: 2,
+                    borderRadius: "50%",
+                    bgcolor: "currentColor",
+                  }}
+                />
+              </Stack>
+            </>
+          </LessonStepMain>
+        ) : (
+          <CreateContentDialog
+            lessonId={lesson.id}
+            lessonName={lesson.name}
+            lessonDescr={lesson.description}
+          >
+            <>
+              <Box
+                component="img"
+                src="/assets/icons/files/ic_file.svg"
+                sx={{ width: 40, height: 40 }}
+              />
+
+              <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+                {lesson.name}
+              </TextMaxLine>
+
+              <Stack
+                direction="row"
+                alignItems="center"
+                spacing={0.75}
+                sx={{ typography: "caption", color: "text.disabled" }}
+              >
+                <Box>{lesson.description}</Box>
+                <Box
+                  sx={{
+                    width: 2,
+                    height: 2,
+                    borderRadius: "50%",
+                    bgcolor: "currentColor",
+                  }}
+                />
+              </Stack>
+            </>
+          </CreateContentDialog>
+        )}
       </Card>
 
       <MenuPopover

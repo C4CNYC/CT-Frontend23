@@ -1,6 +1,6 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Autocomplete, CircularProgress } from "@mui/material";
+import { Autocomplete, Skeleton } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
@@ -29,7 +29,19 @@ export default function FilterLessons({
 
   const { data: modules, isLoading } = useGetModulesQuery(moduleFilters);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading)
+    return (
+      <Stack direction="row">
+        <Skeleton
+          animation="wave"
+          sx={{ mb: 5, mr: 5, width: "300px", height: "60px" }}
+        />
+        <Skeleton
+          animation="wave"
+          sx={{ mb: 5, width: "300px", height: "60px" }}
+        />
+      </Stack>
+    );
 
   return (
     <>
