@@ -1,5 +1,7 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Dialog, IconButton, Stack } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import { useState } from "react";
 import SplitPane from "react-split-pane";
 import LessonStepContent from "./LessonStepContent/LessonStepContent";
@@ -15,6 +17,8 @@ export default function LessonStepMain({
   lessonId,
 }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
+
+  const [isStepSelected, setIsStepSelected] = useState<boolean>(true);
 
   const handleClose = (): void => {
     setOpen(false);
@@ -127,7 +131,30 @@ export default function LessonStepMain({
             defaultSize={"20%"}
           >
             <LessonStepList lessonId={lessonId} />
-            <LessonStepContent />
+            {isStepSelected ? (
+              <LessonStepContent />
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                  flexWrap: "wrap",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography variant="h3">PLS SELECT STEP</Typography>
+                <Box pl="50px">
+                  <Image
+                    src="/assets/illustrations/illustration_docs.svg"
+                    alt="docs"
+                    width="400"
+                    height="400"
+                  />
+                </Box>
+              </Box>
+            )}
           </SplitPane>
         </Box>
       </Dialog>
