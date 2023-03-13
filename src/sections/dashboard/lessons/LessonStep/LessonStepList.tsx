@@ -8,7 +8,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
+import CreateDemonContent from "./CreateDemonContent";
 import LessonListItem from "./LesonListItem";
 
 interface Props {
@@ -18,6 +20,15 @@ interface Props {
 export default function LessonStepList({
   lessonId,
 }: Props): React.ReactElement {
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const { data, isLoading } = useGetLessonContentQuery(
     { lessonId },
     { skip: !lessonId }
@@ -76,6 +87,7 @@ export default function LessonStepList({
         }}
       >
         <Button
+          onClick={handleOpenDialog}
           variant="outlined"
           sx={{
             display: "flex",
@@ -87,6 +99,7 @@ export default function LessonStepList({
           <AddIcon />
           <Typography variant="subtitle1">ADD STEP</Typography>
         </Button>
+        <CreateDemonContent open={openDialog} onClose={handleCloseDialog} />
       </Paper>
       <Stack direction="column" spacing={3} sx={{ p: 2 }}></Stack>
     </Box>

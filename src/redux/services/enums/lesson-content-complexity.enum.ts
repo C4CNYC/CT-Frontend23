@@ -1,6 +1,6 @@
 export enum LessonContentComplexity {
   Beginner = "beginner",
-  Intermediate = "iontermediate",
+  Intermediate = "intermediate",
   Advanced = "advanced",
   Expert = "expert",
 }
