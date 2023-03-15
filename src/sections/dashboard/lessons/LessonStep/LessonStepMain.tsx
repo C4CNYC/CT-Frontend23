@@ -2,7 +2,7 @@ import { ResizerUi } from "@components/resizer/Resizer";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
 import { useRouter } from "next/router";
-import StepContentEditor from "./LessonStepContent/StepContentEditor/StepContentEditor";
+import StepContentEditor from "./LessonStepContent/StepContentEditor";
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
 

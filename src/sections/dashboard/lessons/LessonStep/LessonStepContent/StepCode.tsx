@@ -5,7 +5,6 @@ import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
-import LessonContentBrowser from "../LessonContentBrowser";
 
 interface Props {
   content: string;
@@ -53,7 +52,16 @@ export default function StepCode({
           }}
         />
       </Box>
-      <LessonContentBrowser content={value as string} />
+      <Box position="absolute" top="0" left={0} right={0} height="100%">
+          <iframe
+            style={{
+              border: 0,
+              width: "100%",
+              height: "100%",
+            }}
+            src={"data:text/html," + encodeURIComponent(content)}
+          />
+      </Box>
     </ResizerUi>
   );
 }

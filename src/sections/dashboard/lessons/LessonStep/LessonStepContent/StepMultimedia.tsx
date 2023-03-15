@@ -1,6 +1,5 @@
 import MyEditor from "@components/editor/MyEditor";
 import { ResizerUi } from "@components/resizer/Resizer";
-import { Box } from "@mui/material";
 import { useState } from "react";
 
 interface Props {
