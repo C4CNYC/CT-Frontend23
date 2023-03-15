@@ -1,10 +1,10 @@
 import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
-import DashboardLayout from "src/layouts/dashboard";
 import { Box, Card, Container, Typography } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Head from "next/head";
+import DashboardLayout from "src/layouts/dashboard";
 
 // ----------------------------------------------------------------------
 

@@ -3,11 +3,7 @@ import "remirror/styles/all.css";
 import { IconButton, Stack, TextField } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import { useCommands } from "@remirror/react";
-import React, {
-  MouseEventHandler,
-  useCallback,
-  useState,
-} from "react";
+import React, { MouseEventHandler, useCallback, useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { GoBrowser } from "react-icons/go";
@@ -18,12 +14,9 @@ export default function AddIframeButton(): JSX.Element {
   const [href, setHref] = useState<string>("");
   const [edit, setEdit] = useState<boolean>(false);
 
-  const handleChange = useCallback(
-    (e: any) => {
-      setHref(e.target.value);
-    },
-    []
-  );
+  const handleChange = useCallback((e: any) => {
+    setHref(e.target.value);
+  }, []);
 
   const closeMenu = () => {
     setEdit(false);
@@ -31,15 +24,15 @@ export default function AddIframeButton(): JSX.Element {
   const ref = useDetectClickOutside({ onTriggered: closeMenu });
 
   const handleMouseDown: MouseEventHandler<HTMLButtonElement> = (e: any) => {
-      e.preventDefault();
-    };
+    e.preventDefault();
+  };
 
   const handleSubmit = (e: any) => {
-      e.preventDefault();
-      addIframe({ src: href, height: 250, width: 500 });
-      setHref("");
-      setEdit(!edit);
-    };
+    e.preventDefault();
+    addIframe({ src: href, height: 250, width: 500 });
+    setHref("");
+    setEdit(!edit);
+  };
 
   return (
     <Stack direction="row" style={{ marginLeft: "10px" }} ref={ref}>
@@ -67,10 +60,7 @@ export default function AddIframeButton(): JSX.Element {
             onChange={handleChange}
             required
           />
-          <IconButton
-            sx={{ p: "10px" }}
-            onClick={handleSubmit}
-          >
+          <IconButton sx={{ p: "10px" }} onClick={handleSubmit}>
             <AiFillCheckCircle size={22} color="green" />
           </IconButton>
 

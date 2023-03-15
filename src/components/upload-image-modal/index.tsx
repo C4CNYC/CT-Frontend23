@@ -27,8 +27,12 @@ export default function UploadImageModal({
   id,
 }: UploadImageProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => { setOpen(true); };
-  const handleClose = () => { setOpen(false); };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const style = {
     position: "absolute" as "absolute",
@@ -51,8 +55,8 @@ export default function UploadImageModal({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
       enqueueSnackbar("No image selected", { variant: "error" });
-      return
-    };
+      return;
+    }
     await onUpload(data.cover);
   };
 

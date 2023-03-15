@@ -1,22 +1,34 @@
 import MyEditor from "@components/editor/MyEditor";
+import { ResizerUi } from "@components/resizer/Resizer";
 import { Box } from "@mui/material";
+import { useState } from "react";
 
-type Props = {
-  multimediaValue: string;
-  setMultimediaValue: Function;
-};
+interface Props {
+  content: string;
+  onSubmit: (value: string) => void;
+}
 
 export default function StepMultimedia({
-  multimediaValue,
-  setMultimediaValue,
+  onSubmit,
+  content,
 }: Props): React.ReactElement {
+  const [value, setValue] = useState<string>("");
+
   return (
-    <Box sx={{ height: "calc(100vh - 48px)" }}>
+    <ResizerUi
+      split="vertical"
+      maxSize={-100}
+      primary="second"
+      defaultSize={500}
+    >
       <MyEditor
-        multimediaValue={multimediaValue}
-        setMultimediaValue={setMultimediaValue}
-        lessonId="sdf"
+        onSubmit={() => {
+          onSubmit(JSON.stringify(value));
+        }}
+        multimediaValue={content}
+        setMultimediaValue={setValue}
       />
-    </Box>
+      <MyEditor editable={false} multimediaValue={value} />
+    </ResizerUi>
   );
 }

@@ -6,6 +6,7 @@ import TextMaxLine from "@components/text-max-line";
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Divider, IconButton, MenuItem, Stack } from "@mui/material";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -22,14 +23,12 @@ interface Props {
 export default function LessonCard({
   lesson,
 }: Props): React.ReactElement | null {
+  const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteLesson] = useDeleteLessonMutation();
-
-  // filtration is active
-  const isFiltraton = true;
 
   const onDelete = async (): Promise<void> => {
     setLoading(true);
@@ -64,9 +63,22 @@ export default function LessonCard({
     setOpenPopover(null);
   };
 
+  const openContentCreationTool = (): void => {
+    router.push(
+      `${router.pathname}?${new URLSearchParams({ lessonId: lesson.id })}`,
+      undefined,
+      { shallow: true }
+    );
+  };
+
+  const closeContentCreationTool = (): void => {
+    router.push(router.pathname, undefined, { shallow: true });
+  };
+
   return (
     <>
       <Card
+        onClick={openContentCreationTool}
         component="a"
         href="#"
         sx={{
@@ -94,79 +106,37 @@ export default function LessonCard({
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
-        {isFiltraton ? (
-          <LessonStepMain
-            lessonId={lesson.id}
-            lessonName={lesson.name}
-            lessonDescr={lesson.description}
-          >
-            <>
-              <Box
-                component="img"
-                src="/assets/icons/files/ic_file.svg"
-                sx={{ width: 40, height: 40 }}
-              />
+        <Box
+          component="img"
+          src="/assets/icons/files/ic_file.svg"
+          sx={{ width: 40, height: 40 }}
+        />
 
-              <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
-                {lesson.name}
-              </TextMaxLine>
+        <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
+          {lesson.name}
+        </TextMaxLine>
 
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={0.75}
-                sx={{ typography: "caption", color: "text.disabled" }}
-              >
-                <Box>{lesson.description}</Box>
-                <Box
-                  sx={{
-                    width: 2,
-                    height: 2,
-                    borderRadius: "50%",
-                    bgcolor: "currentColor",
-                  }}
-                />
-              </Stack>
-            </>
-          </LessonStepMain>
-        ) : (
-          <CreateContentDialog
-            lessonId={lesson.id}
-            lessonName={lesson.name}
-            lessonDescr={lesson.description}
-          >
-            <>
-              <Box
-                component="img"
-                src="/assets/icons/files/ic_file.svg"
-                sx={{ width: 40, height: 40 }}
-              />
-
-              <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>
-                {lesson.name}
-              </TextMaxLine>
-
-              <Stack
-                direction="row"
-                alignItems="center"
-                spacing={0.75}
-                sx={{ typography: "caption", color: "text.disabled" }}
-              >
-                <Box>{lesson.description}</Box>
-                <Box
-                  sx={{
-                    width: 2,
-                    height: 2,
-                    borderRadius: "50%",
-                    bgcolor: "currentColor",
-                  }}
-                />
-              </Stack>
-            </>
-          </CreateContentDialog>
-        )}
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={0.75}
+          sx={{ typography: "caption", color: "text.disabled" }}
+        >
+          <Box>{lesson.description}</Box>
+          <Box
+            sx={{
+              width: 2,
+              height: 2,
+              borderRadius: "50%",
+              bgcolor: "currentColor",
+            }}
+          />
+        </Stack>
       </Card>
-
+      <LessonStepMain
+        onClose={closeContentCreationTool}
+        lessonName={lesson.name}
+      />
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}

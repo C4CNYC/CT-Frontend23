@@ -17,13 +17,14 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
-import CoursesController from "@sections/dashboard/courses/CoursesController";
+import { useSnackbar } from "notistack";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
+import { useCreateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
 import * as Yup from "yup";
 
 interface FormValuesProps {
-  type: string;
   slug: string;
   title: string;
   description: string;
@@ -33,57 +34,86 @@ interface FormValuesProps {
   complexity: LessonContentComplexity;
 }
 
-type Props = {
+const CreateLessonDemonSchema = Yup.object().shape({
+  slug: Yup.string().required("Slug is required"),
+  title: Yup.string().required("Title is required"),
+  description: Yup.string().required("Description is required"),
+  skills: Yup.array(),
+});
+
+interface Props {
   children?: React.ReactElement;
-  open: boolean;
-  onClose: (event: React.MouseEvent<HTMLElement>) => void;
+  lessonId: string;
+  order: number;
   defaultValues?: FormValuesProps;
-};
+}
 
 export default function CreateDemonContent({
   children,
-  onClose,
-  open,
+  lessonId,
+  order,
   defaultValues = {
-    type: "hello type",
-    slug: "helo slug",
-    title: "hello title",
-    description: "hellog desc",
-    active: true,
-    draft: true,
-    tags: ["Html"],
+    active: false,
+    draft: false,
     complexity: LessonContentComplexity.Beginner,
+    slug: "",
+    title: "",
+    description: "",
+    tags: [],
   },
 }: Props): React.ReactElement {
-  const CreateLessonDemonSchema = Yup.object().shape({
-    type: Yup.string(),
-    slug: Yup.string().required("Slug is required"),
-    title: Yup.string().required("Title is required"),
-    description: Yup.string().required("Description is required"),
-    skills: Yup.array(),
-  });
+  const [open, setOpenDialog] = useState<boolean>(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+  const [createLessonContent, { isLoading }] = useCreateLessonContentMutation();
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateLessonDemonSchema),
     defaultValues,
   });
 
-  const onSubmit = async (data: FormValuesProps) => {
-    console.log(data);
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    try {
+      await createLessonContent({
+        lessonId,
+        ...data,
+        meta: { order },
+      }).unwrap();
+      enqueueSnackbar("Your step is created successfully");
+      setOpenDialog(false);
+    } catch (e) {
+      enqueueSnackbar("sorry something went wrong", { variant: "error" });
+    }
   };
 
   return (
     <>
-      <Box>{children}</Box>
-      <Dialog open={open} onClose={onClose}>
+      <Box
+        onClick={() => {
+          setOpenDialog(true);
+        }}
+      >
+        {children}
+      </Box>
+      <Dialog
+        open={open}
+        onClose={() => {
+          setOpenDialog(false);
+        }}
+      >
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Demon Content
+            Lesson Content
           </DialogTitle>
-          <IconButton onClick={onClose} sx={{ mb: "5px", mr: "14px" }}>
+          <IconButton
+            onClick={() => {
+              setOpenDialog(false);
+            }}
+            sx={{ mb: "5px", mr: "14px" }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -112,39 +142,29 @@ export default function CreateDemonContent({
                       label="Description"
                     />
 
-                    <RHFSelect native name="level" label="Course level">
-                      <option key="empty" value="empty">
-                        Select Level
-                      </option>
-                      <option
-                        key="beginner"
-                        value={LessonContentComplexity.Beginner}
-                      >
-                        Beginner
-                      </option>
-                      <option
-                        key="intermediate"
-                        value={LessonContentComplexity.Intermediate}
-                      >
-                        Intermediate
-                      </option>
-                      <option
-                        key="advanced"
-                        value={LessonContentComplexity.Advanced}
-                      >
-                        Advanced
-                      </option>
-                      <option
-                        key="expert"
-                        value={LessonContentComplexity.Expert}
-                      >
-                        Expert
-                      </option>
+                    <RHFSelect
+                      native
+                      name="complexity"
+                      label="Lesson step complexity"
+                    >
+                      {Object.keys(LessonContentComplexity).map((c) => (
+                        <option
+                          key={
+                            LessonContentComplexity[
+                              c as keyof typeof LessonContentComplexity
+                            ]
+                          }
+                          value={
+                            LessonContentComplexity[
+                              c as keyof typeof LessonContentComplexity
+                            ]
+                          }
+                        >
+                          {c}
+                        </option>
+                      ))}
                     </RHFSelect>
 
-                    <Box sx={{ maxWidth: "350px" }}>
-                      <CoursesController skills={[]} />
-                    </Box>
                     <Stack direction="row" justifyContent="space-between">
                       <RHFSwitch name="active" label="Course active" />
                       <RHFSwitch name="draft" label="Draft" />
@@ -158,11 +178,17 @@ export default function CreateDemonContent({
                       mt: 7,
                     }}
                   >
-                    <Button onClick={onClose}>Close</Button>
+                    <Button
+                      onClick={() => {
+                        setOpenDialog(false);
+                      }}
+                    >
+                      Close
+                    </Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
-                      //   loading={loading}
+                      loading={isLoading}
                     >
                       Save
                     </LoadingButton>

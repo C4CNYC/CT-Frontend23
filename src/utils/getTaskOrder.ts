@@ -1,15 +1,21 @@
 import { type DropResult } from "@hello-pangea/dnd";
-import {
-  type IAssignmentsCard,
-  type IAssignmentsColumn,
-} from "src/@types/assignments";
+import { type IAssignmentsCard } from "src/@types/assignments";
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import { BaseResponseInterface } from "./baseResponce.interface";
 
 // solution for count order depend of new position
 
 export function getOrder(
   result: DropResult,
-  destColumn: IAssignmentsColumn,
-  cards: Record<string, IAssignmentsCard>,
+  destColumn: {
+    id?: string;
+    name?: string;
+    cardIds: string[];
+  },
+  cards: Record<
+    string,
+    IAssignmentsCard | (ILessonContent & BaseResponseInterface)
+  >,
   isSameColumn: boolean
 ): number {
   const { cardIds } = destColumn;

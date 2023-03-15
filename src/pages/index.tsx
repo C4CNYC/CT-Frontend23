@@ -1,5 +1,4 @@
-
-import { PATH_DASHBOARD, PATH_AUTH } from "@routes/paths";
+import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -13,7 +12,7 @@ export default function HomePage(): React.ReactElement {
     if (isAuthenticated) {
       push(PATH_DASHBOARD.root);
     } else {
-      push(PATH_AUTH.login)
+      push(PATH_AUTH.login);
     }
   }, [isAuthenticated]);
 

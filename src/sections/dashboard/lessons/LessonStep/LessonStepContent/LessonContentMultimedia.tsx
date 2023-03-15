@@ -1,15 +1,15 @@
 import { Box } from "@mui/material";
 import { Remirror, useRemirror } from "@remirror/react";
 
-type Props = {
-  multimediaValue: string;
-};
+interface Props {
+  content: string;
+}
 
 export default function LessonContentMultimedia({
-  multimediaValue,
+  content,
 }: Props): React.ReactElement {
-  const { manager, state } = useRemirror({
-    content: multimediaValue,
+  const { manager } = useRemirror({
+    content,
     stringHandler: "html",
   });
 
@@ -18,7 +18,7 @@ export default function LessonContentMultimedia({
       <Remirror
         manager={manager}
         editable={false}
-        initialContent={multimediaValue}
+        initialContent={content}
       ></Remirror>
     </Box>
   );

@@ -40,7 +40,7 @@ export default function Index(): React.ReactElement {
 
   const handleDeleteItem = (id: string): void => {};
 
-  if (isLoading) return <CircularProgress/>
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>
@@ -71,11 +71,11 @@ export default function Index(): React.ReactElement {
             onFilterName={handleFilterName}
           />
         </Stack>
-          <SchoolGridView
-            table={table}
-            data={data?.data ?? []}
-            onDeleteItem={handleDeleteItem}
-          />
+        <SchoolGridView
+          table={table}
+          data={data?.data ?? []}
+          onDeleteItem={handleDeleteItem}
+        />
       </Container>
     </>
   );

@@ -1,87 +1,140 @@
+import Iconify from "@components/iconify";
 import MenuPopover from "@components/menu-popover/MenuPopover";
 import { Draggable } from "@hello-pangea/dnd";
 import {
   Box,
+  Checkbox,
   Divider,
   IconButton,
   MenuItem,
   Paper,
   Typography,
 } from "@mui/material";
+import _ from "lodash";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { BsFillMenuButtonFill, BsThreeDotsVertical } from "react-icons/bs";
-import { CgMenuRight } from "react-icons/cg";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import Preferences from "./Modals/Preferences";
 
 interface Props {
+  lessonId: string;
   step: ILessonContent & BaseResponseInterface;
   index: number;
+  onRemove: (id: string) => void;
+  onDublicate: (step: ILessonContent & BaseResponseInterface) => void;
 }
 
 export default function LessonListItem({
+  onRemove,
+  onDublicate,
+  lessonId,
   step,
   index,
 }: Props): React.ReactElement {
+  const router = useRouter();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = async (
     event: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
+    event.preventDefault();
+    event.stopPropagation();
     setOpenPopover(event.currentTarget);
   };
 
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
+
+  const selectStep = (): void => {
+    router.push(
+      `${router.pathname}?${new URLSearchParams({
+        ...router.query,
+        stepId: step.id,
+      })}`,
+      undefined,
+      { shallow: true }
+    );
+  };
+
   return (
     <Draggable draggableId={step.id} index={index}>
       {(provided) => (
         <Paper
+          // onClick={selectStep}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           elevation={8}
           sx={{
+            cursor: "pointer!important",
+            minWidth: 350,
             display: "flex",
-            p: 1,
+            p: "15px 10px 15px 5px",
             justifyContent: "space-between",
             alignItems: "flex-start",
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <Box sx={{ mr: 2 }}>
-              <IconButton>
-                <BsFillMenuButtonFill size="20px" />
-              </IconButton>
-            </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Checkbox
+              sx={{ mr: "5px" }}
+              onClick={selectStep}
+              size="small"
+              checked={step.id === router.query.stepId}
+            />
             <Box>
-              <Typography variant="h6" gutterBottom>
-                step.title title tile title title tile title
+              <Typography noWrap width="250px" variant="subtitle2" gutterBottom>
+                {_.toUpper(step.title)}
               </Typography>
-              <Typography variant="body2">step.description</Typography>
+              <Typography width="250px" noWrap variant="body2">
+                {step.description}
+              </Typography>
             </Box>
           </Box>
-
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <IconButton edge="end">
-              <BsThreeDotsVertical size="20px" />
-            </IconButton>
-            <IconButton onClick={handleOpenPopover}>
-              <CgMenuRight size="20px" />
-            </IconButton>
-          </Box>
+          <IconButton
+            sx={{ mr: "2px", mt: "6px" }}
+            edge="end"
+            onClick={handleOpenPopover}
+          >
+            <BsThreeDotsVertical size="20px" />
+          </IconButton>
           <MenuPopover
             open={openPopover}
             onClose={handleClosePopover}
-            arrow="right-top"
+            arrow="left-top"
             sx={{ width: 160 }}
           >
-            <MenuItem>Dublicate</MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClosePopover();
+                onDublicate(step);
+              }}
+            >
+              <Iconify icon="material-symbols:content-copy-outline" />
+              Dublicate
+            </MenuItem>
+            <Preferences
+              defaultValues={{ ...step }}
+              contentId={step.id}
+              lessonId={lessonId}
+            >
+              <MenuItem>
+                <Iconify icon="ep:setting" />
+                Preferences
+              </MenuItem>
+            </Preferences>
             <Divider sx={{ borderStyle: "dashed" }} />
-            <MenuItem>Preferences</MenuItem>
-            <Divider sx={{ borderStyle: "dashed" }} />
-            <MenuItem>Delete</MenuItem>
+            <MenuItem
+              onClick={() => {
+                onRemove(step.id);
+                handleClosePopover();
+              }}
+            >
+              <Iconify icon="eva:trash-2-outline" />
+              Remove
+            </MenuItem>
           </MenuPopover>
         </Paper>
       )}

@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
-import { Stack } from "@mui/system";
+import { height, Stack } from "@mui/system";
 import { FileExtension } from "@remirror/extension-file";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {
@@ -33,7 +33,7 @@ import {
   useRemirror,
 } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -66,9 +66,6 @@ import {
   WhitespaceExtension,
 } from "remirror/extensions";
 import "remirror/styles/all.css";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import SaveButton from "./SaveButton";
 import {
   AddIframeButton,
@@ -83,7 +80,7 @@ import {
 
 import jsx from "refractor/lang/jsx.js";
 import typescript from "refractor/lang/typescript.js";
-import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
+import { isJson } from "src/utils/isJson";
 
 interface FileWithProgress {
   file: File;
@@ -131,19 +128,18 @@ type Extensions =
   | EmojiExtension;
 
 interface Props {
-  lessonId: string;
-  data?: ILessonContent & BaseResponseInterface;
-  multimediaValue?: string;
-  setMultimediaValue: Function;
+  editable?: boolean;
+  multimediaValue: string;
+  setMultimediaValue?: (value: string) => void;
+  onSubmit?: () => void;
 }
 
 export default function MyEditor({
-  lessonId,
-  data,
+  editable = true,
+  onSubmit,
   multimediaValue,
   setMultimediaValue,
 }: Props): React.ReactElement {
-  const [updateLessonContent] = useUpdateLessonContentMutation();
   const { uploadToS3 } = useS3Upload();
   const extensions = (): Extensions[] => [
     new HeadingExtension(),
@@ -202,37 +198,38 @@ export default function MyEditor({
 
   const { manager, state, setState } = useRemirror({
     extensions,
-    content: data?.body
-      ? JSON.parse(data?.body)
-      : multimediaValue
-      ? multimediaValue
-      : "",
+    content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
     stringHandler: "html",
   });
 
+  useEffect(() => {
+    if (!editable) {
+setState(
+        isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue
+      );
+}
+  }, [multimediaValue]);
+
   const saveContent = async (): Promise<void> => {
-    updateLessonContent({
-      lessonId,
-      type: LessonContentType.Editable,
-      body: JSON.stringify(state),
-    });
+    if (onSubmit) onSubmit();
   };
+
+  console.log({ height })
 
   return (
     <ThemeProvider>
       <style>
         {`
           .remirror-theme .ProseMirror:active, .remirror-theme .ProseMirror:focus {
-            scrollbar-width: none;
             box-shadow: none;
           }
-          .remirror-editor-wrapper { padding: 0;  min-height: 50vh}
+          .remirror-editor-wrapper { padding: 0 }
           .remirror-theme .ProseMirror {
             scrollbar-width: none;
             box-shadow: none;
           }
           .remirror-editor.ProseMirror{
-            overflow-y: auto;
+            overflow-y: scroll;
           }
           .remirror-menu{
             right: 0;
@@ -255,121 +252,128 @@ export default function MyEditor({
         `}
       </style>
       <Remirror
+        editable={editable}
         placeholder="Start type here ..."
         manager={manager}
-        initialContent={state}
+        state={state}
+        // initialContent={state}
         autoFocus
         autoRender="end"
         onChange={(parameter) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          setState(parameter.state);
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
-          setState(parameter.state.doc);
-          setMultimediaValue(parameter.state.doc);
+          if (setMultimediaValue) setMultimediaValue(parameter.state);
         }}
       >
-        <Toolbar
-          style={{
-            padding: "15px",
-            background: "#f4f5f7",
-            overflowX: "scroll",
-            overflowY: "visible",
-            scrollbarWidth: "none",
-            position: "sticky",
-            zIndex: 99,
-            top: 0,
-          }}
-        >
-          <Stack flexDirection="row" sx={{ flexWrap: "wrap", gap: "10px" }}>
-            <HistoryButtonGroup />
-            <HeadingLevelButtonGroup showAll />
-            <IndentationButtonGroup />
-            <CalloutTypeButtonGroup />
+        {editable ? (
+          <>
+            <Toolbar
+              style={{
+                position: "sticky",
+                zIndex: 999,
+                top: 0,
+                padding: "15px",
+                overflowX: "scroll",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+                borderBottom: "1px solid #cbcbcb",
+              }}
+            >
+              <Stack flexDirection="row" sx={{ flexWrap: "wrap", gap: "10px" }}>
+                <HistoryButtonGroup />
+                <HeadingLevelButtonGroup showAll />
+                <IndentationButtonGroup />
+                <CalloutTypeButtonGroup />
 
-            <CommandButtonGroup>
-              <ToggleBulletListButton />
-              <ToggleOrderedListButton />
-              <ToggleTaskListButton />
-            </CommandButtonGroup>
+                <CommandButtonGroup>
+                  <ToggleBulletListButton />
+                  <ToggleOrderedListButton />
+                  <ToggleTaskListButton />
+                </CommandButtonGroup>
 
-            <TextColorPicker />
-            <TextBgColorPicker />
+                <TextColorPicker />
+                <TextBgColorPicker />
 
-            <div style={{ height: "30px", display: "flex" }}>
-              <ToggleBlockquoteButton />
-              <InsertHorizontalRuleButton />
-              <ToggleCodeBlockButton lang="html" />
-              <ToggleColumnsButton />
+                <div style={{ height: "30px", display: "flex" }}>
+                  <ToggleBlockquoteButton />
+                  <InsertHorizontalRuleButton />
+                  <ToggleCodeBlockButton lang="html" />
+                  <ToggleColumnsButton />
 
-              <AddIframeButton />
-              <AddYoutubeButton />
-              <TablePicker />
-              <TableComponents />
-            </div>
-          </Stack>
+                  <AddIframeButton />
+                  <AddYoutubeButton />
+                  <TablePicker />
+                  <TableComponents />
+                </div>
+              </Stack>
 
-          <SaveButton onClick={saveContent} />
-        </Toolbar>
-        <FloatingToolbar
-          sx={{
-            "&>div": {
-              borderRadius: "5px",
-              boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)",
-            },
-          }}
-          style={{
-            zIndex: 9999999,
-            padding: 10,
-          }}
-        >
-          <Stack
-            borderRadius="5px"
-            display="flex"
-            flexDirection="row"
-            p="5px 10px"
-            alignItems="center"
-            alignContent="center"
-          >
-            <BasicFormattingButtonGroup />
-            <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
-              flexItem
-            />
-            <CommandButtonGroup>
-              <DecreaseFontSizeButton />
-              <FontSizeButtons />
-              <IncreaseFontSizeButton />
-            </CommandButtonGroup>
-            <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
-              flexItem
-            />
-            <Toolbar>
-              <ToggleSuperscriptButton />
-              <ToggleSubscriptButton />
-              <TextCaseSelect />
+              <SaveButton onClick={saveContent} />
             </Toolbar>
-            <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
-              flexItem
-            />
-            <ToggleStrikeButton />
-            <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
-              flexItem
-            />
-            <TextAlignmentButtonGroup />
-            <Divider
-              sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-              orientation="vertical"
-              flexItem
-            />
-            <FontFamilyButtons />
-          </Stack>
-        </FloatingToolbar>
+            <FloatingToolbar
+              sx={{
+                "&>div": {
+                  borderRadius: "5px",
+                  boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)",
+                },
+              }}
+              style={{
+                zIndex: 9999999,
+                padding: 10,
+              }}
+            >
+              <Stack
+                borderRadius="5px"
+                display="flex"
+                flexDirection="row"
+                p="5px 10px"
+                alignItems="center"
+                alignContent="center"
+              >
+                <BasicFormattingButtonGroup />
+                <Divider
+                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+                  orientation="vertical"
+                  flexItem
+                />
+                <CommandButtonGroup>
+                  <DecreaseFontSizeButton />
+                  <FontSizeButtons />
+                  <IncreaseFontSizeButton />
+                </CommandButtonGroup>
+                <Divider
+                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+                  orientation="vertical"
+                  flexItem
+                />
+                <Toolbar>
+                  <ToggleSuperscriptButton />
+                  <ToggleSubscriptButton />
+                  <TextCaseSelect />
+                </Toolbar>
+                <Divider
+                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+                  orientation="vertical"
+                  flexItem
+                />
+                <ToggleStrikeButton />
+                <Divider
+                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+                  orientation="vertical"
+                  flexItem
+                />
+                <TextAlignmentButtonGroup />
+                <Divider
+                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
+                  orientation="vertical"
+                  flexItem
+                />
+                <FontFamilyButtons />
+              </Stack>
+            </FloatingToolbar>
+          </>
+        ) : null}
       </Remirror>
     </ThemeProvider>
   );

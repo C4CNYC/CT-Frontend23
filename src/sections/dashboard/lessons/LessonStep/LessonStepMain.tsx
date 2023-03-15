@@ -1,112 +1,37 @@
+import { ResizerUi } from "@components/resizer/Resizer";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Dialog, IconButton, Stack } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Image from "next/image";
-import { useState } from "react";
-import SplitPane from "react-split-pane";
-import LessonStepContent from "./LessonStepContent/LessonStepContent";
+import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
+import { useRouter } from "next/router";
+import StepContentEditor from "./LessonStepContent/StepContentEditor/StepContentEditor";
 import LessonStepList from "./LessonStepList";
+import { NoSelectedStep } from "./NoSelectedStep";
 
 interface Props {
-  children: React.ReactElement;
-  lessonId: string;
+  lessonName: string;
+  onClose: () => void;
 }
 
 export default function LessonStepMain({
-  children,
-  lessonId,
+  onClose,
+  lessonName,
 }: Props): React.ReactElement {
-  const [open, setOpen] = useState(false);
+  const { stepId, lessonId } = useRouter().query;
 
-  const [isStepSelected, setIsStepSelected] = useState<boolean>(true);
-
-  const handleClose = (): void => {
-    setOpen(false);
-  };
-  const handleClickOpen = (): void => {
-    setOpen(true);
-  };
   return (
     <>
-      <style>
-        {`
-          .Resizer {
-            background: #000;
-            opacity: 0.2;
-            z-index: 1;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-            -moz-background-clip: padding;
-            -webkit-background-clip: padding;
-            background-clip: padding-box;
-          }
-          
-          .Resizer:hover {
-            -webkit-transition: all 2s ease;
-            transition: all 2s ease;
-          }
-          
-          .Resizer.horizontal {
-            height: 11px;
-            margin: -5px 0;
-            border-top: 5px solid rgba(255, 255, 255, 0);
-            border-bottom: 5px solid rgba(255, 255, 255, 0);
-            cursor: row-resize;
-            width: 100%;
-          }
-          
-          .Resizer.horizontal:hover {
-            border-top: 5px solid rgba(0, 0, 0, 0.5);
-            border-bottom: 5px solid rgba(0, 0, 0, 0.5);
-          }
-          
-          .Resizer.vertical {
-            width: 11px;
-            margin: 0 -5px;
-            border-left: 5px solid rgba(255, 255, 255, 0);
-            border-right: 5px solid rgba(255, 255, 255, 0);
-            cursor: col-resize;
-            position: initial;
-          }
-          
-          .Resizer.vertical:hover {
-            border-left: 5px solid rgba(0, 0, 0, 0.5);
-            border-right: 5px solid rgba(0, 0, 0, 0.5);
-          }
-          .Resizer.disabled {
-            cursor: not-allowed;
-          }
-          .Resizer.disabled:hover {
-            border-color: transparent;
-          }
-          .Pane{
-            overflow-y: auto;
-          } 
-          .Pane2 .Pane1{
-            overflow-y: hidden;
-          } 
-          .Pane2 .Pane2{
-            overflow-y: hidden;
-          }
-        `}
-      </style>
-      <Stack
-        onClick={() => {
-          handleClickOpen();
-        }}
-      >
-        {children}
-      </Stack>
-      <Dialog open={open} onClose={handleClose} fullScreen>
-        <IconButton
+      <Dialog open={Boolean(lessonId)} onClose={onClose} fullScreen>
+        <DialogContent>
+          <IconButton
           edge="start"
+          size="small"
           color="inherit"
-          onClick={handleClose}
+          onClick={onClose}
           aria-label="close"
           sx={{
             position: "absolute",
             zIndex: "10000",
+            mt: "2px",
+            mr: 1,
             right: 0,
             top: 0,
             width: "40px",
@@ -118,45 +43,21 @@ export default function LessonStepMain({
         >
           <CloseIcon />
         </IconButton>
-        <Box
-          sx={{
-            position: "relative",
-            height: "100%",
-          }}
-        >
-          <SplitPane
+        <Box>
+          <ResizerUi
             split="vertical"
             minSize={300}
             maxSize={750}
-            defaultSize={"20%"}
+            defaultSize={"400px"}
           >
-            <LessonStepList lessonId={lessonId} />
-            {isStepSelected ? (
-              <LessonStepContent />
-            ) : (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: "100%",
-                  flexWrap: "wrap",
-                  flexDirection: "column",
-                }}
-              >
-                <Typography variant="h3">PLS SELECT STEP</Typography>
-                <Box pl="50px">
-                  <Image
-                    src="/assets/illustrations/illustration_docs.svg"
-                    alt="docs"
-                    width="400"
-                    height="400"
-                  />
-                </Box>
-              </Box>
-            )}
-          </SplitPane>
+            <LessonStepList
+              lessonTitle={lessonName}
+              lessonId={lessonId as string}
+            />
+            {stepId ? <StepContentEditor /> : <NoSelectedStep />}
+          </ResizerUi>
         </Box>
+        </DialogContent>
       </Dialog>
     </>
   );

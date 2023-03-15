@@ -4,40 +4,58 @@ import {
   Box,
   Button,
   CircularProgress,
-  Paper,
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
-import CreateDemonContent from "./CreateDemonContent";
+import _ from "lodash";
+import { useSnackbar } from "notistack";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import {
+  useCreateLessonContentMutation,
+  useGetLessonContentQuery,
+  useRemoveLessonContentMutation,
+  useUpdateLessonContentMutation,
+} from "src/redux/services/manager/lesson-content-manager";
+import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
+import { RootState, useDispatch } from "src/redux/store";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { getOrder } from "src/utils/getTaskOrder";
 import LessonListItem from "./LesonListItem";
+import CreateDemonContent from "./Modals/CreateLessonContent";
 
 interface Props {
   lessonId: string;
+  lessonTitle: string;
 }
 
 export default function LessonStepList({
   lessonId,
+  lessonTitle,
 }: Props): React.ReactElement {
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
-  };
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
+  const [updateLessonContent] = useUpdateLessonContentMutation();
+  const [createLessonContent] = useCreateLessonContentMutation();
+  const [removeLessonContent] = useRemoveLessonContentMutation();
   const { data, isLoading } = useGetLessonContentQuery(
     { lessonId },
     { skip: !lessonId }
   );
 
+  const { board } = useSelector((state: RootState) => state.lessonSteps);
+
+  useEffect(() => {
+    if (!data) return;
+    dispatch(getBoard(data));
+  }, [data]);
+
   const onDragEnd = (result: DropResult): void => {
     const { destination, source, draggableId } = result;
 
-    if (!destination || !data) return;
+    if (!destination) return;
 
     if (
       destination.droppableId === source.droppableId &&
@@ -46,19 +64,100 @@ export default function LessonStepList({
       return;
     }
 
-    const newTaskIds = [...data];
-    newTaskIds.splice(source.index, 1);
-    newTaskIds.splice(destination.index, 0, draggableId);
+    const start = board.columns.contents;
+    const finish = board.columns.contents;
+    const updatedCardIds = [...start.cardIds];
+
+    updatedCardIds.splice(source.index, 1);
+
+    updatedCardIds.splice(destination.index, 0, draggableId);
+
+    const updatedColumn = {
+      ...start,
+      cardIds: updatedCardIds,
+    };
+
+    dispatch(
+      persistCard({
+        ...board.columns,
+        [updatedColumn.id]: updatedColumn,
+      })
+    );
+
+    updateLessonContent({
+      lessonId,
+      id: draggableId,
+      meta: {
+        order: getOrder(result, finish, board.cards, true),
+      },
+    });
   };
+
+  const cardIds = board?.columns.contents?.cardIds;
+  const idCardWithMaxOrder = cardIds?.length
+    ? cardIds[cardIds.length - 1]
+    : null;
+  const newContentOrder = idCardWithMaxOrder
+    ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
+    : 1;
+
+  const onDublicate = async (
+    data: ILessonContent & BaseResponseInterface
+  ): Promise<void> => {
+    try {
+      await createLessonContent({
+        lessonId,
+        ..._.omit(data, ["id", "meta", "createdAt", "updatedAt", "cover"]),
+        meta: { order: newContentOrder },
+      }).unwrap();
+      enqueueSnackbar(`Step ${data.title} dublicated`);
+    } catch (e) {
+      enqueueSnackbar("Sorry we can't dublicate at this moment", {
+        variant: "error",
+      });
+    }
+  };
+
+  const onRemove = async (id: string): Promise<void> => {
+    try {
+      await removeLessonContent({
+        lessonId,
+        id,
+      }).unwrap();
+      enqueueSnackbar("Step removed");
+    } catch (e) {
+      enqueueSnackbar("Sorry we can't remove at this moment", {
+        variant: "error",
+      });
+    }
+  };
+
   if (isLoading) return <CircularProgress />;
 
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
-        Lesson Name
+        {lessonTitle}
       </Typography>
+      <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
+        <Button
+          variant="outlined"
+          fullWidth
+          sx={{
+            mt: 2,
+            mb: 1,
+            p: 2,
+            display: "flex",
+            justifyContent: "center",
+            alighItems: "center",
+          }}
+        >
+          <AddIcon />
+          <Typography variant="subtitle1">ADD STEP</Typography>
+        </Button>
+      </CreateDemonContent>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="stepList">
+        <Droppable droppableId="contents">
           {(provided) => (
             <Stack
               {...provided.droppableProps}
@@ -67,40 +166,21 @@ export default function LessonStepList({
               spacing={3}
               sx={{ py: 2 }}
             >
-              {data?.map((el, i) => (
-                <LessonListItem key={el.id} step={el} index={i} />
+              {board.columns.contents?.cardIds.map((el, i) => (
+                <LessonListItem
+                  onRemove={onRemove}
+                  onDublicate={onDublicate}
+                  lessonId={lessonId}
+                  key={board.cards[el]?.meta?.order}
+                  step={board.cards[el]}
+                  index={i}
+                />
               ))}
               {provided.placeholder}
             </Stack>
           )}
         </Droppable>
       </DragDropContext>
-      <Paper
-        elevation={8}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alighItems: "center",
-          padding: 3,
-          margin: "0px auto",
-          maxWidth: "350px",
-        }}
-      >
-        <Button
-          onClick={handleOpenDialog}
-          variant="outlined"
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alighItems: "center",
-          }}
-        >
-          <AddIcon />
-          <Typography variant="subtitle1">ADD STEP</Typography>
-        </Button>
-        <CreateDemonContent open={openDialog} onClose={handleCloseDialog} />
-      </Paper>
       <Stack direction="column" spacing={3} sx={{ p: 2 }}></Stack>
     </Box>
   );

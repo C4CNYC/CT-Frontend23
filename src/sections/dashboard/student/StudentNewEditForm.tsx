@@ -21,6 +21,8 @@ import FormProvider, {
 } from "@components/hook-form";
 import Label from "@components/label";
 import { useSnackbar } from "@components/snackbar";
+import generator from "generate-password";
+import { nullFormat } from "numeral";
 import { useSelector } from "react-redux";
 import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
@@ -30,8 +32,6 @@ import {
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import generator from "generate-password";
-import { nullFormat } from "numeral";
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +64,9 @@ export default function StudentNewEditForm({
     cityp: Yup.string(),
     post_code: Yup.string(),
     about: Yup.string(),
-    password: !isEdit ? Yup.string().required("Password is required") : Yup.string(),
+    password: !isEdit
+      ? Yup.string().required("Password is required")
+      : Yup.string(),
     // avatarUrl: Yup.string().required("Avatar is required").nullable(true),
   });
 
@@ -79,12 +81,12 @@ export default function StudentNewEditForm({
       post_code: currentUser?.post_code ?? "",
       about: currentUser?.about ?? "",
       password: generator.generate({
-                    length: 10,
-                    uppercase: true,
-                    lowercase: true,
-                    symbols: true,
-                    numbers: true,
-                  }),
+        length: 10,
+        uppercase: true,
+        lowercase: true,
+        symbols: true,
+        numbers: true,
+      }),
     }),
     [currentUser]
   );
@@ -219,17 +221,15 @@ export default function StudentNewEditForm({
               name="email"
               label="Email Address"
             />
-            {
-              !isEdit ? (
-                <RHFTextField
-                  contentEditable={false}
-                  sx={{ mb: 3 }}
-                  disabled={isEdit}
-                  name="password"
-                  label="Generated password"
-                />
-              ) : null
-            }
+            {!isEdit ? (
+              <RHFTextField
+                contentEditable={false}
+                sx={{ mb: 3 }}
+                disabled={isEdit}
+                name="password"
+                label="Generated password"
+              />
+            ) : null}
             <Box
               rowGap={3}
               columnGap={2}

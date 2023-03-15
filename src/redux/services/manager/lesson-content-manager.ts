@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import { ILessonContent } from "../interfaces/courseUnits.interface";
+import {
+  ILessonContent,
+  ILessonContentUpdate,
+} from "../interfaces/courseUnits.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,18 +16,52 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/lesson/${lessonId}/content`,
         method: "GET",
       }),
-      providesTags: ["Lessons"],
+      providesTags: ["LessonsContent"],
     }),
-    updateLessonContent: builder.mutation<
+    getLessonContentById: builder.query<
+      ILessonContent & BaseResponseInterface,
+      { lessonId: string; id: string }
+    >({
+      query: ({ lessonId, id }) => ({
+        url: `/lesson/${lessonId}/content/${id}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    createLessonContent: builder.mutation<
       ILessonContent,
-      { lessonId: string; type: string; body: string }
+      { lessonId: string } & Omit<
+        ILessonContentUpdate,
+        "body" | "type" | "cover"
+      >
     >({
       query: ({ lessonId, ...body }) => ({
         url: `/lesson/${lessonId}/content`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "LessonsContent" }],
+    }),
+    updateLessonContent: builder.mutation<
+      ILessonContent,
+      { lessonId: string; id: string } & ILessonContentUpdate
+    >({
+      query: ({ lessonId, id, ...body }) => ({
+        url: `/lesson/${lessonId}/content/${id}`,
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "Lessons" }],
+      invalidatesTags: [{ type: "LessonsContent" }],
+    }),
+    removeLessonContent: builder.mutation<
+      ILessonContent,
+      { lessonId: string; id: string }
+    >({
+      query: ({ lessonId, id }) => ({
+        url: `/lesson/${lessonId}/content/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "LessonsContent" }],
     }),
   }),
   overrideExisting: false,
@@ -32,6 +69,9 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetLessonContentQuery,
+  useGetLessonContentByIdQuery,
   // -------------mutation-----------
   useUpdateLessonContentMutation,
+  useCreateLessonContentMutation,
+  useRemoveLessonContentMutation,
 } = extendedApi;

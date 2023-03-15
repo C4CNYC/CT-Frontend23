@@ -23,10 +23,13 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { filters, setFilter } = useFilters<ICourseSearchParams>({
-    name: "",
-    school_id: ""
-  }, FilterMode.global)
+  const { filters, setFilter } = useFilters<ICourseSearchParams>(
+    {
+      name: "",
+      school_id: "",
+    },
+    FilterMode.global
+  );
   const { data, isLoading } = useGetCourseQuery(filters);
 
   if (isLoading) return <CircularProgress />;

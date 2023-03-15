@@ -49,8 +49,7 @@ export default function AssignmentsContactsDialog({
 
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose}>
-      <DialogTitle sx={{ pb: 0 }}>
-      </DialogTitle>
+      <DialogTitle sx={{ pb: 0 }}></DialogTitle>
 
       <Box sx={{ px: 3, py: 2.5 }}>
         <TextField

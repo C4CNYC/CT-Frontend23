@@ -1,4 +1,4 @@
-import { Card, Typography, Stack, Avatar } from "@mui/material";
+import { Avatar, Card, Stack, Typography } from "@mui/material";
 import { AiFillInfoCircle } from "react-icons/ai";
 
 export default function RecentLessons() {
