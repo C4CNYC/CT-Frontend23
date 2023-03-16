@@ -46,7 +46,7 @@ export default function LessonStepMain({
           <Box>
             <ResizerUi
               split="vertical"
-              minSize={380}
+              minSize={300}
               maxSize={750}
               defaultSize={"400px"}
             >

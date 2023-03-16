@@ -1,10 +1,10 @@
 import { Grid, Stack } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import ProfileAbout from "./components/ProfileAbout";
 import ProfileSocialInfo from "./components/ProfileSocialInfo";
 import ProfileUsersInfo from "./components/ProfileUsersInfo";
 import SchoolProfileForm from "./form/SchoolProfileForm";
+import SkeletonProfileTab from "./SkeletomProfileTab";
 
 interface Props {
   schoolId: string;
@@ -18,7 +18,7 @@ export default function SchoolProfileTab({
     { skip: !schoolId }
   );
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonProfileTab />;
 
   if (!data) return <>No Data</>;
 

@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
 import SettingsForm from "./SettingsForm";
+import SkeletonSettingsTab from "./SkeletonSettingsTab";
 
 interface Props {
   schoolId: string;
@@ -16,7 +17,7 @@ export default function SchoolSettingTab({
     { skip: !schoolId }
   );
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonSettingsTab />;
 
   if (!data) return <>No Data</>;
 
