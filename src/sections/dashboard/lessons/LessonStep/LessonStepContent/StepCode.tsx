@@ -15,7 +15,7 @@ export default function StepCode({
   content,
   onSubmit,
 }: Props): React.ReactElement {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>("");
 
   useState(() => {
     if (content) setValue(JSON.parse(content).content);
@@ -59,7 +59,7 @@ export default function StepCode({
             width: "100%",
             height: "100%",
           }}
-          src={"data:text/html," + encodeURIComponent(content)}
+          src={"data:text/html," + encodeURIComponent(value)}
         />
       </Box>
     </ResizerUi>

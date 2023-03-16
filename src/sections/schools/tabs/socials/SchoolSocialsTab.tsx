@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
+import SkeletonSocialsTab from "./SkeletonSocialsTab";
 import SocialItem from "./SocialItem";
 import SocialsForm from "./SocialsForm";
 
@@ -18,7 +18,7 @@ export default function SchoolSocialsTab({
   );
   const socialLinks = data?.socials;
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonSocialsTab />;
 
   if (!data) return <>No Data</>;
 

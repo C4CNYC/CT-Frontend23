@@ -1,12 +1,6 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
 import { useEffect } from "react";
@@ -24,6 +18,7 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { getOrder } from "src/utils/getTaskOrder";
 import LessonListItem from "./LesonListItem";
 import CreateDemonContent from "./Modals/CreateLessonContent";
+import SkeletonList from "./Modals/SkeletonList";
 
 interface Props {
   lessonId: string;
@@ -140,7 +135,7 @@ export default function LessonStepList({
     }
   };
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList />;
 
   return (
     <Box sx={{ p: 2 }}>

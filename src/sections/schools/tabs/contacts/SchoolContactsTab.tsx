@@ -3,6 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { useGetSchoolContactsQuery } from "src/redux/services/manager/schools-manager";
 import ContactsForm from "./ContactsForm";
+import SkeletonContactsTab from "./SkeletonContactsTab";
 
 interface Props {
   schoolId: string;
@@ -16,7 +17,7 @@ export default function SchoolContactsTab({
     { skip: !schoolId }
   );
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonContactsTab />;
 
   if (!data) return <>No Data</>;
 
