@@ -53,14 +53,14 @@ export default function StepCode({
         />
       </Box>
       <Box position="absolute" top="0" left={0} right={0} height="100%">
-          <iframe
-            style={{
-              border: 0,
-              width: "100%",
-              height: "100%",
-            }}
-            src={"data:text/html," + encodeURIComponent(content)}
-          />
+        <iframe
+          style={{
+            border: 0,
+            width: "100%",
+            height: "100%",
+          }}
+          src={"data:text/html," + encodeURIComponent(content)}
+        />
       </Box>
     </ResizerUi>
   );

@@ -97,7 +97,9 @@ export default function StepContentEditor(): React.ReactElement {
       >
         {bodyType === LessonContentType.Editable ? (
           <StepMultimedia
-            content={data?.type === LessonContentType.Editable ? data?.body : ""}
+            content={
+              data?.type === LessonContentType.Editable ? data?.body : ""
+            }
             onSubmit={onSubmit}
           />
         ) : null}

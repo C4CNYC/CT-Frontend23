@@ -107,7 +107,15 @@ export default function LessonStepList({
     try {
       await createLessonContent({
         lessonId,
-        ..._.omit(data, ["id", "meta", "createdAt", "updatedAt", "cover"]),
+        ..._.omit(data, [
+          "id",
+          "meta",
+          "createdAt",
+          "updatedAt",
+          "cover",
+          "title",
+        ]),
+        title: `${data.title} (Copy)`,
         meta: { order: newContentOrder },
       }).unwrap();
       enqueueSnackbar(`Step ${data.title} dublicated`);
