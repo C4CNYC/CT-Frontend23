@@ -43,12 +43,15 @@ export const ResizerUi = ({ children, height, ...props }: Props & SplitPaneProps
             border-color: transparent;
           }
           .Pane {
+            scrollbar-width: none;
             overflow-Y: scroll;
           } 
           .Pane2 .Pane1{
+            scrollbar-width: none;
             overflow-y: scroll;
           } 
           .Pane2 .Pane2{
+            scrollbar-width: none;
             overflow-y: scroll;
           }
         `}
