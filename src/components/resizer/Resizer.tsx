@@ -1,13 +1,17 @@
 import SplitPane, { SplitPaneProps } from "react-split-pane";
 
 interface Props {
-  children: React.ReactElement,
-  height: string | number
+  children: React.ReactElement;
+  height: string | number;
 }
 
-export const ResizerUi = ({ children, height, ...props }: Props & SplitPaneProps): React.ReactElement => {
+export const ResizerUi = ({
+  children,
+  height,
+  ...props
+}: Props & SplitPaneProps): React.ReactElement => {
   return (
-      <>
+    <>
       <style>
         {`
           .Resizer {
@@ -20,6 +24,7 @@ export const ResizerUi = ({ children, height, ...props }: Props & SplitPaneProps
             -moz-background-clip: padding;
             -webkit-background-clip: padding;
             background-clip: padding-box;
+            owerflow-y: none;
           }
         
           
@@ -42,20 +47,18 @@ export const ResizerUi = ({ children, height, ...props }: Props & SplitPaneProps
           .Resizer.disabled:hover {
             border-color: transparent;
           }
-          .Pane {
-            overflow-Y: scroll;
-          } 
-          .Pane2 .Pane1{
-            overflow-y: scroll;
-          } 
-          .Pane2 .Pane2{
-            overflow-y: scroll;
-          }
+          // .Pane {
+          //   overflow-y: scroll;
+          // } 
+          // .Pane2 .Pane1{
+          //   overflow-y: scroll;
+          // } 
+          // .Pane2 .Pane2{
+          //   overflow-y: scroll;
+          // }
         `}
       </style>
-      <SplitPane {...props}>
-        {children}
-      </SplitPane>
-      </>
+      <SplitPane {...props}>{children}</SplitPane>
+    </>
   );
-}
+};

@@ -22,41 +22,41 @@ export default function LessonStepMain({
       <Dialog open={Boolean(lessonId)} onClose={onClose} fullScreen>
         <DialogContent>
           <IconButton
-          edge="start"
-          size="small"
-          color="inherit"
-          onClick={onClose}
-          aria-label="close"
-          sx={{
-            position: "absolute",
-            zIndex: "10000",
-            mt: "2px",
-            mr: 1,
-            right: 0,
-            top: 0,
-            width: "40px",
-            height: "40px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <Box>
-          <ResizerUi
-            split="vertical"
-            minSize={300}
-            maxSize={750}
-            defaultSize={"400px"}
+            edge="start"
+            size="small"
+            color="inherit"
+            onClick={onClose}
+            aria-label="close"
+            sx={{
+              position: "absolute",
+              zIndex: "10000",
+              mt: "2px",
+              mr: 1,
+              right: 0,
+              top: 0,
+              width: "40px",
+              height: "40px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <LessonStepList
-              lessonTitle={lessonName}
-              lessonId={lessonId as string}
-            />
-            {stepId ? <StepContentEditor /> : <NoSelectedStep />}
-          </ResizerUi>
-        </Box>
+            <CloseIcon />
+          </IconButton>
+          <Box>
+            <ResizerUi
+              split="vertical"
+              minSize={380}
+              maxSize={750}
+              defaultSize={"400px"}
+            >
+              <LessonStepList
+                lessonTitle={lessonName}
+                lessonId={lessonId as string}
+              />
+              {stepId ? <StepContentEditor /> : <NoSelectedStep />}
+            </ResizerUi>
+          </Box>
         </DialogContent>
       </Dialog>
     </>

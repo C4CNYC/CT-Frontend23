@@ -9,6 +9,8 @@ import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
+import SkeletonContentCode from "./SkeletonContentCode";
+import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
 import StepMultimedia from "./StepMultimedia";
 
@@ -49,14 +51,17 @@ export default function StepContentEditor(): React.ReactElement {
     if (data?.type) setBodyType(data.type);
   }, [data]);
 
-  if (isFetching || isLoading) return <CircularProgress />;
+  if (isFetching || isLoading) return <SkeletonContentCode />;
 
   return (
     <Box
-      height="100vh"
-      overflow="hidden"
-      position="relative"
-      boxSizing="border-box"
+      sx={{
+        height: "100vh",
+        overflow: "hidden",
+        position: "relative",
+        boxSizing: "border-box",
+        backgroundColor: "#FFF",
+      }}
     >
       <Box
         sx={{
@@ -92,12 +97,14 @@ export default function StepContentEditor(): React.ReactElement {
         sx={{
           position: "relative",
           height: "calc(100vh - 48px)",
-          overflow: "scroll",
+          overflowY: "scroll",
         }}
       >
         {bodyType === LessonContentType.Editable ? (
           <StepMultimedia
-            content={data?.type === LessonContentType.Editable ? data?.body : ""}
+            content={
+              data?.type === LessonContentType.Editable ? data?.body : ""
+            }
             onSubmit={onSubmit}
           />
         ) : null}
