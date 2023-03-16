@@ -204,17 +204,17 @@ export default function MyEditor({
 
   useEffect(() => {
     if (!editable) {
-setState(
+      setState(
         isJson(multimediaValue) ? JSON.parse(multimediaValue) : multimediaValue
       );
-}
+    }
   }, [multimediaValue]);
 
   const saveContent = async (): Promise<void> => {
     if (onSubmit) onSubmit();
   };
 
-  console.log({ height })
+  console.log({ height });
 
   return (
     <ThemeProvider>

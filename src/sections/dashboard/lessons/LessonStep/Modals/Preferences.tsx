@@ -31,6 +31,7 @@ interface FormValuesProps {
   active: boolean;
   draft: boolean;
   tags: string[];
+  validation: string;
   complexity: LessonContentComplexity;
 }
 
@@ -46,7 +47,6 @@ interface Props {
   children?: React.ReactElement;
   lessonId: string;
   contentId: string;
-  validation: string;
   defaultValues?: FormValuesProps;
 }
 
@@ -58,6 +58,7 @@ export default function Preferences({
     active: false,
     draft: false,
     complexity: LessonContentComplexity.Beginner,
+    validation: "",
     slug: "",
     title: "",
     description: "",

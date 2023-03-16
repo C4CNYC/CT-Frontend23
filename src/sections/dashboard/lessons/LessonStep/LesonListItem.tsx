@@ -84,7 +84,12 @@ export default function LessonListItem({
               checked={step.id === router.query.stepId}
             />
             <Box>
-              <Typography noWrap maxWidth="250px" variant="subtitle2" gutterBottom>
+              <Typography
+                noWrap
+                maxWidth="250px"
+                variant="subtitle2"
+                gutterBottom
+              >
                 {_.toUpper(step.title)}
               </Typography>
               <Typography maxWidth="250px" noWrap variant="body2">
