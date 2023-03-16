@@ -51,7 +51,12 @@ export default function StepContentEditor(): React.ReactElement {
     if (data?.type) setBodyType(data.type);
   }, [data]);
 
-  if (isFetching || isLoading) return <SkeletonContentCode />;
+  if (isFetching || isLoading)
+    return bodyType === LessonContentType.Editable ? (
+      <SkeletonContentMulti />
+    ) : (
+      <SkeletonContentCode />
+    );
 
   return (
     <Box
