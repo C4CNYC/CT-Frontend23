@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 // auth
 import { useGetOrgCustomizationQuery } from "src/redux/services/admin";
 import CustomizationForm from "./CustomizationForm";
+import SkeletonCustomizationOrg from "./SkeletonCustomizationOrg";
 
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgCustomizationQuery();
@@ -16,7 +17,11 @@ export default function UserProfileTab(): React.ReactElement {
           position: "relative",
         }}
       >
-        {isLoading ? null : <CustomizationForm customization={data} />}
+        {isLoading ? (
+          <SkeletonCustomizationOrg />
+        ) : (
+          <CustomizationForm customization={data} />
+        )}
       </Box>
     </>
   );

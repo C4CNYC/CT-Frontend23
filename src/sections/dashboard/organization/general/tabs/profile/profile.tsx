@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 // auth
 import { useGetOrganizationQuery } from "src/redux/services/admin";
 import OrganizationForm from "src/sections/dashboard/organization/general/tabs/profile/OrganizationForm";
+import SkeletonProfileOrg from "./SkeletonProfileOrg";
 
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrganizationQuery();
@@ -16,7 +17,11 @@ export default function UserProfileTab(): React.ReactElement {
           position: "relative",
         }}
       >
-        {isLoading ? null : <OrganizationForm organization={data} />}
+        {isLoading ? (
+          <SkeletonProfileOrg />
+        ) : (
+          <OrganizationForm organization={data} />
+        )}
       </Box>
     </>
   );

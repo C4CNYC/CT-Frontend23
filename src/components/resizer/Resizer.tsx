@@ -22,9 +22,8 @@ export const ResizerUi = ({
             -moz-background-clip: padding;
             -webkit-background-clip: padding;
             background-clip: padding-box;
+            owerflow-y: none;
           }
-        
-          
           .Resizer.vertical {
             width: 11px;
             margin: 0 -5px;
@@ -53,8 +52,8 @@ export const ResizerUi = ({
             overflow-y: scroll;
           } 
           .Pane2 .Pane2{
-            scrollbar-width: none;
-            overflow-y: scroll;
+             scrollbar-width: none;
+             overflow-y: scroll;
           }
         `}
       </style>
