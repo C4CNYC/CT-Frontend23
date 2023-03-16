@@ -47,15 +47,18 @@ export const ResizerUi = ({
           .Resizer.disabled:hover {
             border-color: transparent;
           }
-          // .Pane {
-          //   overflow-y: scroll;
-          // } 
-          // .Pane2 .Pane1{
-          //   overflow-y: scroll;
-          // } 
-          // .Pane2 .Pane2{
-          //   overflow-y: scroll;
-          // }
+          .Pane {
+            scrollbar-width: none;
+            overflow-Y: scroll;
+          } 
+          .Pane2 .Pane1{
+            scrollbar-width: none;
+            overflow-y: scroll;
+          } 
+          .Pane2 .Pane2{
+            scrollbar-width: none;
+            overflow-y: scroll;
+          }
         `}
       </style>
       <SplitPane {...props}>{children}</SplitPane>

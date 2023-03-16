@@ -70,7 +70,6 @@ export default function LessonListItem({
           elevation={8}
           sx={{
             cursor: "pointer!important",
-            minWidth: 350,
             display: "flex",
             p: "15px 10px 15px 5px",
             justifyContent: "space-between",
@@ -85,10 +84,10 @@ export default function LessonListItem({
               checked={step.id === router.query.stepId}
             />
             <Box>
-              <Typography noWrap width="250px" variant="subtitle2" gutterBottom>
+              <Typography noWrap maxWidth="250px" variant="subtitle2" gutterBottom>
                 {_.toUpper(step.title)}
               </Typography>
-              <Typography width="250px" noWrap variant="body2">
+              <Typography maxWidth="250px" noWrap variant="body2">
                 {step.description}
               </Typography>
             </Box>

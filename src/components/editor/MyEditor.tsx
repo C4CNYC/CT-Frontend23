@@ -229,6 +229,7 @@ setState(
             box-shadow: none;
           }
           .remirror-editor.ProseMirror{
+            scrollbar-width: none;
             overflow-y: scroll;
           }
           .remirror-menu{
