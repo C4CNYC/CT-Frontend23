@@ -3,7 +3,7 @@ import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Box, Button, CircularProgress, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
@@ -11,6 +11,8 @@ import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import Head from "next/head";
 import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+import SkeletonList from "../../../sections/dashboard/skeleton/skeletonList";
+import SkeletonLesson from "./skeletonLesson";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +35,7 @@ export default function LessonsListPage(): React.ReactElement {
     skip: !filters,
   });
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList filter={2} />;
 
   return (
     <>
@@ -65,7 +67,7 @@ export default function LessonsListPage(): React.ReactElement {
         <FilterLessons filters={filters} setFilter={setFilter} />
 
         {isFetching ? (
-          <CircularProgress />
+          <SkeletonLesson />
         ) : (
           <Box
             gap={2}

@@ -12,6 +12,7 @@ import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import Head from "next/head";
 import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
+import SkeletonList from "../../../sections/dashboard/skeleton/skeletonList";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +33,7 @@ export default function ModulesListPage(): React.ReactElement | string {
   );
   const { data, isLoading, isFetching } = useGetModulesQuery(filters);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList filter={2} />;
 
   return (
     <>

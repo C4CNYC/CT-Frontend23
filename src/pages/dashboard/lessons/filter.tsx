@@ -1,6 +1,6 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Autocomplete, Skeleton } from "@mui/material";
+import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
@@ -11,6 +11,7 @@ import {
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import SkeletonFilter from "../../../sections/dashboard/skeleton/skeletonFilter";
 
 interface Props {
   filters: ILessonSearchParams;
@@ -31,16 +32,10 @@ export default function FilterLessons({
 
   if (isLoading)
     return (
-      <Stack direction="row">
-        <Skeleton
-          animation="wave"
-          sx={{ mb: 5, mr: 5, width: "300px", height: "60px" }}
-        />
-        <Skeleton
-          animation="wave"
-          sx={{ mb: 5, width: "300px", height: "60px" }}
-        />
-      </Stack>
+      <Box sx={{ display: "flex" }}>
+        <SkeletonFilter />
+        <SkeletonFilter />
+      </Box>
     );
 
   return (

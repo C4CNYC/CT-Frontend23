@@ -25,6 +25,7 @@ import {
   Tabs,
   Tooltip,
 } from "@mui/material";
+import SkeletonMembers from "@pages/dashboard/organization/members/SkeletonMembers";
 import { PATH_DASHBOARD } from "@routes/paths";
 import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
@@ -234,20 +235,24 @@ export default function UserListPage(): React.ReactElement {
                   />
 
                   <TableBody>
-                    {data?.data.map((row) => (
-                      <ClassesTableRow
-                        key={row.id}
-                        row={row}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => {
-                          onSelectRow(row.id);
-                        }}
-                        onDeleteRow={() => {
-                          handleDeleteRow(row.id);
-                        }}
-                        onEditRow={handleEditRow}
-                      />
-                    ))}
+                    {isLoading
+                      ? [...Array(5)].map((item, i) => (
+                          <SkeletonMembers key={i} />
+                        ))
+                      : data?.data.map((row) => (
+                          <ClassesTableRow
+                            key={row.id}
+                            row={row}
+                            selected={selected.includes(row.id)}
+                            onSelectRow={() => {
+                              onSelectRow(row.id);
+                            }}
+                            onDeleteRow={() => {
+                              handleDeleteRow(row.id);
+                            }}
+                            onEditRow={handleEditRow}
+                          />
+                        ))}
 
                     <TableEmptyRows
                       height={dense ? 52 : 72}
