@@ -47,21 +47,9 @@ export default function MainSectionHome(): React.ReactElement {
             gap: { xs: 3, sm: 3, md: 3, lg: 0 },
           }}
         >
-          <CardModule
-            type="lesson"
-            id="some"
-            image="/assets/images/card-image.png"
-          />
-          <CardModule
-            type="course"
-            id="some"
-            image="/assets/images/card-image.png"
-          />
-          <CardModule
-            type="module"
-            id="some"
-            image="/assets/images/card-image.png"
-          />
+          <CardModule type="lesson" image="/assets/images/card-image.png" />
+          <CardModule type="course" image="/assets/images/card-image.png" />
+          <CardModule type="module" image="/assets/images/card-image.png" />
         </Stack>
       </Stack>
     </>
