@@ -29,8 +29,8 @@ export default function FilterModules({
 
   const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
 
-  if (isLoading)
-    return (
+  if (isLoading) {
+      return (
       <Stack direction="row">
         <Skeleton
           animation="wave"
@@ -42,6 +42,7 @@ export default function FilterModules({
         />
       </Stack>
     );
+  }
 
   return (
     <>

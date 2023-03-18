@@ -2,7 +2,7 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
@@ -15,7 +15,7 @@ import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 // ----------------------------------------------------------------------
 
 LessonsListPage.getLayout = (page: React.ReactElement) => (
-  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
