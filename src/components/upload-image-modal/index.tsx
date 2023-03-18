@@ -103,7 +103,7 @@ export default function UploadImageModal({
             </Stack>
             <RHFUploadAvatar
               name="cover"
-              maxSize={1000000}
+              maxSize={20000000}
               onDrop={handleDrop}
               helperText={
                 <Typography
@@ -121,7 +121,7 @@ export default function UploadImageModal({
                     "organizations.general_page.tabs.content.profile.upload_image",
                     {
                       formats: "png",
-                      size: fData(300000),
+                      size: fData(2000000),
                     }
                   )}`}
                 </Typography>
