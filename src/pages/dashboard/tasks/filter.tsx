@@ -16,13 +16,12 @@ export default function FilterTasks({
   filters,
   setFilter,
 }: Props): React.ReactElement {
-  const { filters: taskFilters, setFilter: setCourseFilters } =
-    useFilters<ITaskSearchParams>({
-      take: 50,
-      name: "",
-    });
+  const { filters: taskFilters } = useFilters<ITaskSearchParams>({
+    take: 50,
+    name: "",
+  });
 
-  const { data: tasks, isLoading } = useGetTasksQuery(taskFilters);
+  const { isLoading } = useGetTasksQuery(taskFilters);
 
   if (isLoading) return <SkeletonTaskFilter />;
 

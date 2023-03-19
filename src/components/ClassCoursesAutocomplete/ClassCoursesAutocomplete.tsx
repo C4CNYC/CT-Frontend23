@@ -6,7 +6,6 @@ import {
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
-  Avatar,
   Box,
   Chip,
   TextField,

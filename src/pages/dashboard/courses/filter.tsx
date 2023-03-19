@@ -30,13 +30,14 @@ export default function FilterCourses({
 
   const { data: schools, isLoading } = useGetMySchoolsQuery(schoolFilters);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
         <SkeletonFilter />
         <SkeletonFilter />
       </Box>
     );
+  }
 
   return (
     <>

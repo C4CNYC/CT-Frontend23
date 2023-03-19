@@ -4,8 +4,6 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/system/Stack";
 // icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Box } from "@mui/material";
-import Container from "@mui/system/Container";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";

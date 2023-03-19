@@ -30,13 +30,14 @@ export default function FilterLessons({
 
   const { data: modules, isLoading } = useGetModulesQuery(moduleFilters);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
         <SkeletonFilter />
         <SkeletonFilter />
       </Box>
     );
+  }
 
   return (
     <>

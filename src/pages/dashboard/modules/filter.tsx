@@ -1,6 +1,6 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Autocomplete, Box, Skeleton } from "@mui/material";
+import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
@@ -30,7 +30,7 @@ export default function FilterModules({
 
   const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Box sx={{ display: "flex" }}>
         <SkeletonFilter />

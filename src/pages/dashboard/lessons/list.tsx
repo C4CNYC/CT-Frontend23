@@ -3,7 +3,7 @@ import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard";
-import { Box, Button, CircularProgress, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";

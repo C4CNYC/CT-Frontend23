@@ -75,8 +75,8 @@ MyDocument.getInitialProps = async (ctx): Promise<any> => {
 
   const { extractCriticalToChunks } = createEmotionServer(cache);
 
-  ctx.renderPage = () =>
-    originalRenderPage({
+  ctx.renderPage = async () =>
+    await originalRenderPage({
       enhanceApp: (App: any) =>
         function EnhanceApp(props): React.ReactElement | null {
           return <App emotionCache={cache} {...props} />;

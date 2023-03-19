@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
 import SettingsForm from "./SettingsForm";

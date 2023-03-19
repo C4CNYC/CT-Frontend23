@@ -67,7 +67,7 @@ export default function SkeletonList({
       </Box>
       <Stack direction="row">
         {[...Array(filter)].map((item, i) => (
-          <SkeletonFilter />
+          <SkeletonFilter key={i} />
         ))}
       </Stack>
       {item}

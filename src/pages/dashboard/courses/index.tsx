@@ -3,7 +3,7 @@ import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
 import FilterCourses from "@pages/dashboard/courses/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
