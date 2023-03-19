@@ -1,5 +1,4 @@
 import FormProvider, { RHFTextField } from "@components/hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Box, Stack, Typography } from "@mui/material";
 import { MuiColorInput } from "mui-color-input";

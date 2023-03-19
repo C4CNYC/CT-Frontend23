@@ -1,11 +1,11 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Skeleton } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
 import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
 import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
+import SkeletonTaskFilter from "./skeletonTaskFilter";
 
 interface Props {
   filters: ITaskSearchParams;
@@ -16,27 +16,14 @@ export default function FilterTasks({
   filters,
   setFilter,
 }: Props): React.ReactElement {
-  const { filters: taskFilters, setFilter: setCourseFilters } =
-    useFilters<ITaskSearchParams>({
-      take: 50,
-      name: "",
-    });
+  const { filters: taskFilters } = useFilters<ITaskSearchParams>({
+    take: 50,
+    name: "",
+  });
 
-  const { data: tasks, isLoading } = useGetTasksQuery(taskFilters);
+  const { isLoading } = useGetTasksQuery(taskFilters);
 
-  if (isLoading)
-    return (
-      <Stack direction="row">
-        <Skeleton
-          animation="wave"
-          sx={{ mb: 5, mr: 5, width: "300px", height: "60px" }}
-        />
-        <Skeleton
-          animation="wave"
-          sx={{ mb: 5, width: "300px", height: "60px" }}
-        />
-      </Stack>
-    );
+  if (isLoading) return <SkeletonTaskFilter />;
 
   return (
     <>

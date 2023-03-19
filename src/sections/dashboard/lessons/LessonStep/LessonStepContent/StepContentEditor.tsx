@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -51,12 +51,13 @@ export default function StepContentEditor(): React.ReactElement {
     if (data?.type) setBodyType(data.type);
   }, [data]);
 
-  if (isFetching || isLoading)
+  if (isFetching || isLoading) {
     return bodyType === LessonContentType.Editable ? (
       <SkeletonContentMulti />
     ) : (
       <SkeletonContentCode />
     );
+  }
 
   return (
     <Box

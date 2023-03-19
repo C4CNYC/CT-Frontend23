@@ -4,21 +4,27 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/system/Stack";
 // icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { Box } from "@mui/material";
-import Container from "@mui/system/Container";
+import { PATH_DASHBOARD } from "@routes/paths";
 import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
 import { CgMenuMotion } from "react-icons/cg";
 import { FcInfo } from "react-icons/fc";
 import { MdAddCircleOutline, MdEdit } from "react-icons/md";
+import { CardTypes } from "src/redux/services/enums/card-types";
 
 interface Props {
-  type: "lesson" | "course" | "module";
+  type: CardTypes.lesson | CardTypes.course | CardTypes.module;
   image: string;
 }
 
 export default function CardModule({ type, image }: Props): React.ReactElement {
+  const link =
+    type === CardTypes.lesson
+      ? PATH_DASHBOARD.lessons.root
+      : type === CardTypes.course
+      ? PATH_DASHBOARD.courses.root
+      : PATH_DASHBOARD.modules.root;
   return (
     <>
       <Card
@@ -43,7 +49,7 @@ export default function CardModule({ type, image }: Props): React.ReactElement {
               alignItems="center"
               mb="9px"
               component={Link}
-              href="/"
+              href={link}
             >
               <MdAddCircleOutline />
               <Typography color="#637381" fontSize="14px">

@@ -10,6 +10,7 @@ import Head from "next/head";
 import DashboardLayout from "src/layouts/dashboard";
 import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
 import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
+import SkeletonList from "../../../sections/dashboard/skeleton/skeletonList";
 import FilterTasks from "./filter";
 
 // ----------------------------------------------------------------------
@@ -31,7 +32,7 @@ export default function TasksListPage(): React.ReactElement {
 
   const { data, isLoading, isFetching } = useGetTasksQuery(filters);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList />;
 
   return (
     <>

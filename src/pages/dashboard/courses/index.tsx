@@ -3,15 +3,17 @@ import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { Box, Button, CircularProgress } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
 import FilterCourses from "@pages/dashboard/courses/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { CourseCard } from "@sections/dashboard/courses/cards";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import Head from "next/head";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "../../../redux/services/manager/courses-manager";
+import SkeletonCourses from "./skeletonCourses";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +34,7 @@ export default function CoursesListPage(): React.ReactElement {
   );
   const { data, isLoading } = useGetCourseQuery(filters);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} />;
 
   return (
     <>

@@ -22,7 +22,6 @@ import FormProvider, {
 import Label from "@components/label";
 import { useSnackbar } from "@components/snackbar";
 import generator from "generate-password";
-import { nullFormat } from "numeral";
 import { useSelector } from "react-redux";
 import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";

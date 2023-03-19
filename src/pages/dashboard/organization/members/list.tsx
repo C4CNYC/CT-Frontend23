@@ -40,6 +40,7 @@ import {
 } from "src/redux/services/admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useLocales } from "../../../../locales";
+import SkeletonMembers from "./SkeletonMembers";
 
 // ----------------------------------------------------------------------
 
@@ -256,23 +257,27 @@ export default function UserListPage(): React.ReactElement {
                   />
 
                   <TableBody>
-                    {data?.data.map((row) => (
-                      <UserTableRow
-                        key={row.id}
-                        row={row}
-                        loading={loading}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => {
-                          onSelectRow(row.id);
-                        }}
-                        onDeleteRow={() => {
-                          handleDeleteRow(row.id);
-                        }}
-                        onEditRow={() => {
-                          handleEditRow(row.id);
-                        }}
-                      />
-                    ))}
+                    {isLoading
+                      ? [...Array(5)].map((item, i) => (
+                          <SkeletonMembers key={i} />
+                        ))
+                      : data?.data.map((row) => (
+                          <UserTableRow
+                            key={row.id}
+                            row={row}
+                            loading={loading}
+                            selected={selected.includes(row.id)}
+                            onSelectRow={() => {
+                              onSelectRow(row.id);
+                            }}
+                            onDeleteRow={() => {
+                              handleDeleteRow(row.id);
+                            }}
+                            onEditRow={() => {
+                              handleEditRow(row.id);
+                            }}
+                          />
+                        ))}
 
                     <TableEmptyRows
                       height={dense ? 52 : 72}

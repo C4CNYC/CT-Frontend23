@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import React from "react";
 import { useGetSchoolContactsQuery } from "src/redux/services/manager/schools-manager";
 import ContactsForm from "./ContactsForm";
