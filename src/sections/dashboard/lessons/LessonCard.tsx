@@ -56,6 +56,8 @@ export default function LessonCard({
     event: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
     setOpenPopover(event.currentTarget);
+    event.stopPropagation();
+    event.preventDefault();
   };
 
   const handleClosePopover = (): void => {
