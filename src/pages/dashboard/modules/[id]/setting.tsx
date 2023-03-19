@@ -1,7 +1,7 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { ModuleLessonsAutocomplete } from "@components/module-lessons-autocomplete";
 import { useSettingsContext } from "@components/settings";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import DashboardLayout from "@layouts/dashboard";
 import { Box, Card, Container, Typography } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Head from "next/head";
@@ -9,7 +9,7 @@ import Head from "next/head";
 // ----------------------------------------------------------------------
 
 ClassSettingPage.getLayout = (page: React.ReactElement) => (
-  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------

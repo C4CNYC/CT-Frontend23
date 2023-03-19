@@ -2,8 +2,8 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Box, Button, Container } from "@mui/material";
+import DashboardLayout from "@layouts/dashboard";
+import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
@@ -17,7 +17,7 @@ import SkeletonLesson from "./skeletonLesson";
 // ----------------------------------------------------------------------
 
 LessonsListPage.getLayout = (page: React.ReactElement) => (
-  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------

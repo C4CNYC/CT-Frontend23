@@ -14,7 +14,7 @@ module.exports = withTM({
   trailingSlash: true,
   env: {
     // HOST
-    HOST_API_KEY: 'http://localhost:8000',
+    HOST_API_KEY: 'https://api.codetribe.codes',
     // MAPBOX
     MAPBOX_API: '',
     // FIREBASE
