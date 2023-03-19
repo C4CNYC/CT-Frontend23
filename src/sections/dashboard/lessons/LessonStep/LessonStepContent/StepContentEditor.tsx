@@ -62,7 +62,7 @@ export default function StepContentEditor(): React.ReactElement {
   return (
     <Box
       sx={{
-        height: "100vh",
+        minHeight: "100vh",
         overflow: "hidden",
         position: "relative",
         boxSizing: "border-box",
@@ -103,7 +103,6 @@ export default function StepContentEditor(): React.ReactElement {
         sx={{
           position: "relative",
           height: "calc(100vh - 48px)",
-          overflowY: "scroll",
         }}
       >
         {bodyType === LessonContentType.Editable ? (
