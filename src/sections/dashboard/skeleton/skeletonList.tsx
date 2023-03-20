@@ -49,7 +49,7 @@ export default function SkeletonList({
             animation="wave"
             sx={{
               mr: "16px",
-              width: "260px",
+              width: "180px",
               height: "26px",
               borderRadius: "8px",
             }}

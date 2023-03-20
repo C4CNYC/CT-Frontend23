@@ -2,9 +2,14 @@ import { Box } from "@mui/material";
 // auth
 import { useGetOrgContactsQuery } from "src/redux/services/admin";
 import ContactsForm from "src/sections/dashboard/organization/general/tabs/contacts/ContactsForm";
+import SkeletonContactsForm from "./SkeletonContactsForm";
 
 export default function ContactsTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgContactsQuery();
+
+  if (isLoading) {
+    return <SkeletonContactsForm />;
+  }
 
   return (
     <>
@@ -16,7 +21,7 @@ export default function ContactsTab(): React.ReactElement {
           position: "relative",
         }}
       >
-        {isLoading ? null : <ContactsForm contacts={data} />}
+        <ContactsForm contacts={data} />
       </Box>
     </>
   );

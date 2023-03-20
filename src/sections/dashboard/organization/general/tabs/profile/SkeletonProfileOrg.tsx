@@ -9,7 +9,12 @@ export default function SkeletonProfileOrg(): React.ReactElement {
             variant="rectangular"
             width="100%"
             height="356px"
-            sx={{ borderRadius: "8px", ml: "auto", mt: 2, mb: 4 }}
+            sx={{
+              borderRadius: "8px",
+              ml: "auto",
+              mt: { xs: 0, md: 2 },
+              mb: { xs: 0, md: 4 },
+            }}
             animation="wave"
           />
         </Grid>
@@ -18,7 +23,12 @@ export default function SkeletonProfileOrg(): React.ReactElement {
             variant="rectangular"
             width="100%"
             height="356px"
-            sx={{ borderRadius: "8px", ml: "auto", mt: 2, mb: 4 }}
+            sx={{
+              borderRadius: "8px",
+              ml: "auto",
+              mt: { xs: 0, md: 2 },
+              mb: { xs: 0, md: 4 },
+            }}
             animation="wave"
           />
         </Grid>

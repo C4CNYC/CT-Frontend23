@@ -15,7 +15,6 @@ export default function FileFilterName({
 
   return (
     <TextField
-      size="small"
       value={filterName}
       onChange={onFilterName}
       placeholder={`${translate("actions_search")}`}
