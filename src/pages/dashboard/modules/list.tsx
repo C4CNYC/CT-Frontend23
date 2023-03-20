@@ -41,8 +41,9 @@ export default function ModulesListPage(): React.ReactElement | string {
   );
   const { data, isLoading, isFetching } = useGetModulesQuery(filters);
 
-  if (isLoading)
+  if (isLoading) {
     return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
+  }
 
   return (
     <>
