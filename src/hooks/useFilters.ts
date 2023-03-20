@@ -3,9 +3,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 
+export const DEFAULT_TAKE_PER_PAGE = 10;
+
 const defaultFilter: BaseSearchInterface = {
   page: 1,
-  take: 7,
+  take: DEFAULT_TAKE_PER_PAGE,
 };
 
 export enum FilterMode {
@@ -24,7 +26,8 @@ interface IUseFilter<T> {
 
 export const useFilters = <T>(
   filters: T,
-  mode: FilterMode = FilterMode.local
+  mode: FilterMode = FilterMode.local,
+  isInfilityLoading: boolean = false
 ): IUseFilter<T> => {
   const router = useRouter();
   const query = router.query;

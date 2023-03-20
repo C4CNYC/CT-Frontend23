@@ -15,7 +15,7 @@ function SimpleInfiniteList({
   hasNextPage,
   children,
   loading,
-}: Props) {
+}: Props): React.ReactElement {
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage,

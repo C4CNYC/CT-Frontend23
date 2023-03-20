@@ -2,7 +2,7 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import SimpleInfiniteList from "@components/infinity-pagination/SimpleInfiniteList";
 import { useSettingsContext } from "@components/settings";
-import { FilterMode, useFilters } from "@hooks/useFilters";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
@@ -31,11 +31,14 @@ export default function CoursesListPage(): React.ReactElement {
       name: "",
       school_id: "",
     },
-    FilterMode.global
+    FilterMode.global,
+    true
   );
   const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
   if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} />;
+
+  console.log(data?.meta);
 
   return (
     <>
@@ -64,7 +67,8 @@ export default function CoursesListPage(): React.ReactElement {
         <SimpleInfiniteList
           hasNextPage={data?.meta.hasNextPage ?? false}
           onLoadMore={() => {
-            setFilter("page", Number(filters.page) + 1);
+            if (data?.meta.take !== filters?.take) return;
+            setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
           }}
           loading={isLoading ?? isFetching}
         >
