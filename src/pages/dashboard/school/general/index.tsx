@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { useUpdateSchoolCoverMutation } from "src/redux/services/admin";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import { RootState } from "../../../../redux/store";
+import SkeletonSchool from "./skeleton-school";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
@@ -28,7 +29,10 @@ export default function UserProfilePage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-  const { data } = useGetSchoolProfileQuery({ schoolId }, { skip: !schoolId });
+  const { data, isLoading } = useGetSchoolProfileQuery(
+    { schoolId },
+    { skip: !schoolId }
+  );
 
   const TABS = [
     {
@@ -71,6 +75,9 @@ export default function UserProfilePage(): React.ReactElement {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };
+  if (isLoading) {
+    return <SkeletonSchool />;
+  }
 
   return (
     <>
