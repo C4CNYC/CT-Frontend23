@@ -6,16 +6,12 @@ import StepContentEditor from "./LessonStepContent/StepContentEditor";
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
 
-interface Props {
-  lessonName: string;
-  onClose: () => void;
-}
-
-export default function LessonStepMain({
-  onClose,
-  lessonName,
-}: Props): React.ReactElement {
-  const { stepId, lessonId } = useRouter().query;
+export default function LessonStepMain(): React.ReactElement {
+  const router = useRouter();
+  const { stepId, lessonId } = router.query;
+  const onClose = (): void => {
+    router.push(router.pathname, undefined, { shallow: true })
+  }
 
   return (
     <>
@@ -51,7 +47,6 @@ export default function LessonStepMain({
               defaultSize={"400px"}
             >
               <LessonStepList
-                lessonTitle={lessonName}
                 lessonId={lessonId as string}
               />
               {stepId ? <StepContentEditor /> : <NoSelectedStep />}

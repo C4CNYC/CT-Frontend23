@@ -72,10 +72,6 @@ export default function LessonCard({
     );
   };
 
-  const closeContentCreationTool = (): void => {
-    router.push(router.pathname, undefined, { shallow: true });
-  };
-
   return (
     <>
       <Card
@@ -134,10 +130,6 @@ export default function LessonCard({
           />
         </Stack>
       </Card>
-      <LessonStepMain
-        onClose={closeContentCreationTool}
-        lessonName={lesson.name}
-      />
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}

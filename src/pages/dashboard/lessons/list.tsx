@@ -8,6 +8,7 @@ import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
+import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
 import Head from "next/head";
 import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
@@ -82,6 +83,7 @@ export default function LessonsListPage(): React.ReactElement {
             ))}
           </Box>
         )}
+        <LessonStepMain/>
       </Container>
     </>
   );

@@ -12,6 +12,7 @@ import {
   useRemoveLessonContentMutation,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
+import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
 import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
 import { RootState, useDispatch } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -22,12 +23,10 @@ import SkeletonList from "./Modals/SkeletonList";
 
 interface Props {
   lessonId: string;
-  lessonTitle: string;
 }
 
 export default function LessonStepList({
   lessonId,
-  lessonTitle,
 }: Props): React.ReactElement {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -35,6 +34,10 @@ export default function LessonStepList({
   const [updateLessonContent] = useUpdateLessonContentMutation();
   const [createLessonContent] = useCreateLessonContentMutation();
   const [removeLessonContent] = useRemoveLessonContentMutation();
+  const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
+    { id: lessonId },
+    { skip: !lessonId }
+  )
   const { data, isLoading } = useGetLessonContentQuery(
     { lessonId },
     { skip: !lessonId }
@@ -135,12 +138,12 @@ export default function LessonStepList({
     }
   };
 
-  if (isLoading) return <SkeletonList />;
+  if (isLoading || isLessonLoading) return <SkeletonList />;
 
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
-        {lessonTitle}
+        {lesson.name}
       </Typography>
       <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
         <Button
