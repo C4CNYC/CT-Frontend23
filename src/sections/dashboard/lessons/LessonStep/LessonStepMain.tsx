@@ -10,8 +10,8 @@ export default function LessonStepMain(): React.ReactElement {
   const router = useRouter();
   const { stepId, lessonId } = router.query;
   const onClose = (): void => {
-    router.push(router.pathname, undefined, { shallow: true })
-  }
+    router.push(router.pathname, undefined, { shallow: true });
+  };
 
   return (
     <>
@@ -46,9 +46,7 @@ export default function LessonStepMain(): React.ReactElement {
               maxSize={750}
               defaultSize={"400px"}
             >
-              <LessonStepList
-                lessonId={lessonId as string}
-              />
+              <LessonStepList lessonId={lessonId as string} />
               {stepId ? <StepContentEditor /> : <NoSelectedStep />}
             </ResizerUi>
           </Box>

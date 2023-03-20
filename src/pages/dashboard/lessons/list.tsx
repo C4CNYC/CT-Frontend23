@@ -83,7 +83,7 @@ export default function LessonsListPage(): React.ReactElement {
             ))}
           </Box>
         )}
-        <LessonStepMain/>
+        <LessonStepMain />
       </Container>
     </>
   );

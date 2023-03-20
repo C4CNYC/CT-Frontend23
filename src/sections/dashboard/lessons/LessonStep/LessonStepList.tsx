@@ -37,7 +37,7 @@ export default function LessonStepList({
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
     { skip: !lessonId }
-  )
+  );
   const { data, isLoading } = useGetLessonContentQuery(
     { lessonId },
     { skip: !lessonId }

@@ -1,5 +1,6 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
+import SimpleInfiniteList from "@components/infinity-pagination/SimpleInfiniteList";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
@@ -32,7 +33,7 @@ export default function CoursesListPage(): React.ReactElement {
     },
     FilterMode.global
   );
-  const { data, isLoading } = useGetCourseQuery(filters);
+  const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
   if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} />;
 
@@ -60,19 +61,27 @@ export default function CoursesListPage(): React.ReactElement {
           }
         />
         <FilterCourses filters={filters} setFilter={setFilter} />
-        <Box
-          gap={3}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
+        <SimpleInfiniteList
+          hasNextPage={data?.meta.hasNextPage ?? false}
+          onLoadMore={() => {
+            setFilter("page", Number(filters.page) + 1);
           }}
+          loading={isLoading ?? isFetching}
         >
-          {data?.data.map((course, index) => (
-            <CourseCard key={index} course={course} />
-          ))}
-        </Box>
+          <Box
+            gap={3}
+            display="grid"
+            gridTemplateColumns={{
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+            }}
+          >
+            {data?.data.map((course, index) => (
+              <CourseCard key={index} course={course} />
+            ))}
+          </Box>
+        </SimpleInfiniteList>
       </Container>
     </>
   );

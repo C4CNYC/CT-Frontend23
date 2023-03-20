@@ -5,7 +5,7 @@ import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 
 const defaultFilter: BaseSearchInterface = {
   page: 1,
-  take: 5,
+  take: 7,
 };
 
 export enum FilterMode {

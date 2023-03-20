@@ -70,24 +70,24 @@ export default function FilterCourses({
         ></TextField>
         <RoleAccess roles={[Role.Admin, Role.Owner, Role.Manager]}>
           <Autocomplete<ISchool & BaseResponseInterface>
-          options={schools?.data ?? []}
-          renderInput={(params) => <TextField {...params} label="School" />}
-          onInputChange={(e, value) => {
-            setSchoolFilters("name", value);
-          }}
-          defaultValue={
-            schools?.data.filter((m) => m.id === filters.school_id)[0]
-          }
-          onChange={(event, value, reason, details) => {
-            console.log({ value });
-            setFilter("school_id", details?.option.id ?? "");
-          }}
-          getOptionLabel={(option) => option.name}
-          sx={{
-            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
-            marginRight: 2,
-          }}
-        />
+            options={schools?.data ?? []}
+            renderInput={(params) => <TextField {...params} label="School" />}
+            onInputChange={(e, value) => {
+              setSchoolFilters("name", value);
+            }}
+            defaultValue={
+              schools?.data.filter((m) => m.id === filters.school_id)[0]
+            }
+            onChange={(event, value, reason, details) => {
+              console.log({ value });
+              setFilter("school_id", details?.option.id ?? "");
+            }}
+            getOptionLabel={(option) => option.name}
+            sx={{
+              width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+              marginRight: 2,
+            }}
+          />
         </RoleAccess>
       </Stack>
     </>
