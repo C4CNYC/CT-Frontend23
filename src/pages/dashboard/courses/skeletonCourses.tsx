@@ -7,7 +7,8 @@ export default function SkeletonCourses(): React.ReactElement {
         variant="rectangular"
         animation="wave"
         sx={{
-          width: "368px",
+          width: "100%",
+          maxWidth: "368px",
           height: "395px",
           borderRadius: "16px",
         }}
