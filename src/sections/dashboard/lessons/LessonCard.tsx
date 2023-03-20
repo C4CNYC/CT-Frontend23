@@ -11,7 +11,6 @@ import { useState } from "react";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
-import LessonStepMain from "./LessonStep/LessonStepMain";
 
 // ----------------------------------------------------------------------
 

@@ -143,7 +143,7 @@ export default function LessonStepList({
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
-        {lesson.name}
+        {lesson?.name}
       </Typography>
       <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
         <Button
