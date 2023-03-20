@@ -77,7 +77,7 @@ export default function UserProfilePage(): React.ReactElement {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };
-  if (isLoading)
+  if (isLoading) {
     return (
       <>
         <SkeletonSchool />
@@ -86,7 +86,7 @@ export default function UserProfilePage(): React.ReactElement {
         </Container>
       </>
     );
-
+  }
   return (
     <>
       <Head>

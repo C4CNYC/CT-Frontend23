@@ -2,7 +2,7 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import { useTable } from "@components/table";
 import DashboardLayout from "@layouts/dashboard";
-import { CircularProgress, Container, Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { FileFilterName, SchoolGridView } from "@sections/dashboard/schools";
 import Head from "next/head";

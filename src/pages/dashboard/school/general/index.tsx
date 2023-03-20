@@ -3,7 +3,6 @@ import { useSettingsContext } from "@components/settings";
 import UploadImageModal from "@components/upload-image-modal";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
-import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
 import { ProfileCover } from "@sections/dashboard/user/profile";
 import {
   SchoolContactsTab,
