@@ -96,9 +96,10 @@ export default function CreateCourseDialog({
           id,
           ...data,
         }).unwrap();
-        if (!uploadedFile) return;
-        file.append("file", uploadedFile);
-        await updateCover({ id, file });
+        if (uploadedFile) {
+          file.append("file", uploadedFile);
+          await updateCover({ id, file });
+        }
       } else {
         const course = await createCourse({
           ...data,
@@ -109,7 +110,7 @@ export default function CreateCourseDialog({
       }
 
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      methods.reset(data);
+      methods.reset();
     } catch (error) {
       enqueueSnackbar(error.data.message, {
         variant: "error",

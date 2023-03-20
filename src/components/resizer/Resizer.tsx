@@ -22,7 +22,7 @@ export const ResizerUi = ({
             -moz-background-clip: padding;
             -webkit-background-clip: padding;
             background-clip: padding-box;
-            owerflow-y: none;
+            owerflow-y: scroll;
           }
           .Resizer.vertical {
             width: 11px;
@@ -43,17 +43,14 @@ export const ResizerUi = ({
           .Resizer.disabled:hover {
             border-color: transparent;
           }
-          .Pane {
-            scrollbar-width: none;
-            overflow-Y: scroll;
-          } 
+          .Pane1{
+            overflow-y: auto;
+          }
           .Pane2 .Pane1{
-            scrollbar-width: none;
-            overflow-y: scroll;
+            overflow-y: auto;
           } 
           .Pane2 .Pane2{
-             scrollbar-width: none;
-             overflow-y: scroll;
+             overflow-y: auto;
           }
         `}
       </style>

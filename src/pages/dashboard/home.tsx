@@ -47,7 +47,7 @@ export default function HomePage(): React.ReactElement | null {
             ml: { xs: "0", sm: "0", md: "0", lg: "40px" },
             mt: { xs: "0", sm: "0", md: "0", lg: "24px" },
             mr: { xs: "0", sm: "0", md: "0", lg: "40px" },
-            gap: { xs: 3, sm: 3, md: 3, lg: "37px" },
+            gap: { xs: 3, sm: 3, md: 3, lg: "35px" },
             flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
             pt: { xs: 3, ms: 3, md: 3, lg: 0 },
           }}
