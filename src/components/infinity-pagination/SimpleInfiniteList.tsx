@@ -27,7 +27,7 @@ function SimpleInfiniteList({
       {children}
       {hasNextPage && (
         <Box ref={sentryRef}>
-          <CircularProgress />
+          {/* <CircularProgress /> */}
         </Box>
       )}
     </Box>

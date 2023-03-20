@@ -13,6 +13,7 @@ import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import Head from "next/head";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
+import { getCountTakingElment } from "src/utils/countTakingElments";
 import { useGetCourseQuery } from "../../../redux/services/manager/courses-manager";
 import SkeletonCourses from "./skeletonCourses";
 
@@ -36,9 +37,7 @@ export default function CoursesListPage(): React.ReactElement {
   );
   const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
-  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} />;
-
-  console.log(data?.meta);
+  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} count={filters.take} />;
 
   return (
     <>
@@ -84,6 +83,12 @@ export default function CoursesListPage(): React.ReactElement {
             {data?.data.map((course, index) => (
               <CourseCard key={index} course={course} />
             ))}
+            { isFetching
+              ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
+                  .fill(null)
+                  .map((v, i) => <SkeletonCourses key={i} />)
+              : null
+            }
           </Box>
         </SimpleInfiniteList>
       </Container>

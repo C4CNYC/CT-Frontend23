@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
 
 export const DEFAULT_TAKE_PER_PAGE = 10;
@@ -36,7 +36,7 @@ export const useFilters = <T>(
     ...filters,
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!query || mode !== FilterMode.global) return;
     setFilter((prev) => ({
       ...filter,

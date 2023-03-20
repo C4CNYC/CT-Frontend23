@@ -1,10 +1,11 @@
 import { useSettingsContext } from "@components/settings";
 import { Box, Container, Skeleton, Stack } from "@mui/material";
 import SkeletonFilter from "./skeletonFilter";
-type Props = {
-  item?: React.ReactElement;
+interface Props {
+  item?: React.ReactNode;
+  count?: number;
   filter?: number;
-};
+}
 const defaultItem = (
   <Skeleton
     variant="rectangular"
@@ -19,6 +20,7 @@ const defaultItem = (
 export default function SkeletonList({
   item = defaultItem,
   filter = 1,
+  count = 1
 }: Props): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   return (
@@ -66,11 +68,21 @@ export default function SkeletonList({
         </Box>
       </Box>
       <Stack direction="row">
-        {[...Array(filter)].map((item, i) => (
+        {Array(filter).fill(null).map((item, i) => (
           <SkeletonFilter key={i} />
         ))}
       </Stack>
-      {item}
+      <Box
+        gap={3}
+        display="grid"
+        gridTemplateColumns={{
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+        }}
+      >
+        {Array(count).fill(null).map((e, i) => item)}
+      </Box>
     </Container>
   );
 }
