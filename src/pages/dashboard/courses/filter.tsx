@@ -1,9 +1,11 @@
+import RoleAccess from "@components/role-access/RoleAccess";
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
+import { Role } from "src/redux/services/enums/role.enum";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import {
   ISchool,
@@ -66,7 +68,8 @@ export default function FilterCourses({
             ),
           }}
         ></TextField>
-        <Autocomplete<ISchool & BaseResponseInterface>
+        <RoleAccess roles={[Role.Admin, Role.Owner, Role.Manager]}>
+          <Autocomplete<ISchool & BaseResponseInterface>
           options={schools?.data ?? []}
           renderInput={(params) => <TextField {...params} label="School" />}
           onInputChange={(e, value) => {
@@ -85,6 +88,7 @@ export default function FilterCourses({
             marginRight: 2,
           }}
         />
+        </RoleAccess>
       </Stack>
     </>
   );
