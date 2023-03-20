@@ -37,7 +37,9 @@ export default function CoursesListPage(): React.ReactElement {
   );
   const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
-  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} count={filters.take} />;
+  console.log(filters?.take);
+
+  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
 
   return (
     <>
