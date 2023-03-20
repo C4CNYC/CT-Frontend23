@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
+import SimpleInfiniteList from "@components/infinity-pagination/SimpleInfiniteList";
 import { useSettingsContext } from "@components/settings";
-import { FilterMode, useFilters } from "@hooks/useFilters";
+import {
+  DEFAULT_TAKE_PER_PAGE,
+  FilterMode,
+  useFilters,
+} from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterModules from "@pages/dashboard/modules/filter";
@@ -64,19 +69,28 @@ export default function ModulesListPage(): React.ReactElement | string {
         {isFetching ? (
           <CircularProgress />
         ) : (
-          <Box
-            gap={2}
-            display="grid"
-            gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              md: "repeat(3, 1fr)",
+          <SimpleInfiniteList
+            hasNextPage={data?.meta.hasNextPage ?? false}
+            onLoadMore={() => {
+              if (data?.meta.take !== filters?.take) return;
+              setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
             }}
+            loading={isLoading ?? isFetching}
           >
-            {data?.data.map((module, index) => (
-              // @ts-expect-error
-              <ModuleCard key={index} module={module} />
-            ))}
-          </Box>
+            <Box
+              gap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: "repeat(1, 1fr)",
+                md: "repeat(3, 1fr)",
+              }}
+            >
+              {data?.data.map((module, index) => (
+                // @ts-expect-error
+                <ModuleCard key={index} module={module} />
+              ))}
+            </Box>
+          </SimpleInfiniteList>
         )}
       </Container>
     </>

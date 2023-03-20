@@ -1,7 +1,8 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
+import SimpleInfiniteList from "@components/infinity-pagination/SimpleInfiniteList";
 import { useSettingsContext } from "@components/settings";
-import { FilterMode, useFilters } from "@hooks/useFilters";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
@@ -70,18 +71,27 @@ export default function LessonsListPage(): React.ReactElement {
         {isFetching ? (
           <SkeletonLesson />
         ) : (
-          <Box
-            gap={2}
-            display="grid"
-            gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              md: "repeat(3, 1fr)",
+          <SimpleInfiniteList
+            hasNextPage={data?.meta.hasNextPage ?? false}
+            onLoadMore={() => {
+              if (data?.meta.take !== filters?.take) return;
+              setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
             }}
+            loading={isLoading ?? isFetching}
           >
-            {data?.data.map((lesson) => (
-              <LessonCard key={lesson.id} lesson={lesson} />
-            ))}
-          </Box>
+            <Box
+              gap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: "repeat(1, 1fr)",
+                md: "repeat(3, 1fr)",
+              }}
+            >
+              {data?.data.map((lesson) => (
+                <LessonCard key={lesson.id} lesson={lesson} />
+              ))}
+            </Box>
+          </SimpleInfiniteList>
         )}
         <LessonStepMain />
       </Container>
