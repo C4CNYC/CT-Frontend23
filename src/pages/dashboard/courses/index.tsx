@@ -49,6 +49,8 @@ export default function CoursesListPage(): React.ReactElement {
       />
     );
 
+  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
+
   return (
     <>
       <Head>
