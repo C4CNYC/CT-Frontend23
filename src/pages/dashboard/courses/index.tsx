@@ -2,7 +2,11 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import SimpleInfiniteList from "@components/infinity-pagination/SimpleInfiniteList";
 import { useSettingsContext } from "@components/settings";
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks/useFilters";
+import {
+  DEFAULT_TAKE_PER_PAGE,
+  FilterMode,
+  useFilters,
+} from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
@@ -32,12 +36,18 @@ export default function CoursesListPage(): React.ReactElement {
       name: "",
       school_id: "",
     },
-    FilterMode.global,
-    true
+    FilterMode.global
   );
   const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
-  if (isLoading) return <SkeletonList item={<SkeletonCourses />} filter={2} count={filters.take} />;
+  if (isLoading)
+    return (
+      <SkeletonList
+        item={<SkeletonCourses />}
+        filter={2}
+        count={filters.take}
+      />
+    );
 
   return (
     <>
@@ -83,12 +93,16 @@ export default function CoursesListPage(): React.ReactElement {
             {data?.data.map((course, index) => (
               <CourseCard key={index} course={course} />
             ))}
-            { isFetching
-              ? Array(getCountTakingElment(Number(data.meta.itemCount), Number(filters.take)))
+            {isFetching
+              ? Array(
+                  getCountTakingElment(
+                    Number(data.meta.itemCount),
+                    Number(filters.take)
+                  )
+                )
                   .fill(null)
                   .map((v, i) => <SkeletonCourses key={i} />)
-              : null
-            }
+              : null}
           </Box>
         </SimpleInfiniteList>
       </Container>
