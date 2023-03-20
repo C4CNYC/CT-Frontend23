@@ -1,5 +1,6 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
+import SimpleInfiniteList from "@components/infinity-pagination/SimpleInfiniteList";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
@@ -23,11 +24,14 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { filters, setFilter } = useFilters<ICourseSearchParams>({
-    name: "",
-    school_id: ""
-  }, FilterMode.global)
-  const { data, isLoading } = useGetCourseQuery(filters);
+  const { filters, setFilter } = useFilters<ICourseSearchParams>(
+    {
+      name: "",
+      school_id: "",
+    },
+    FilterMode.global
+  );
+  const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
   if (isLoading) return <CircularProgress />;
 
@@ -55,19 +59,25 @@ export default function CoursesListPage(): React.ReactElement {
           }
         />
         <FilterCourses filters={filters} setFilter={setFilter} />
-        <Box
-          gap={3}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-          }}
+        <SimpleInfiniteList
+          hasNextPage={data?.meta.hasNextPage || false}
+          onLoadMore={() => setFilter("page", Number(filters.page) + 1)}
+          loading={isLoading || isFetching}
         >
-          {data?.data.map((course, index) => (
-            <CourseCard key={index} course={course} />
-          ))}
-        </Box>
+          <Box
+            gap={3}
+            display="grid"
+            gridTemplateColumns={{
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+            }}
+          >
+            {data?.data.map((course, index) => (
+              <CourseCard key={index} course={course} />
+            ))}
+          </Box>
+        </SimpleInfiniteList>
       </Container>
     </>
   );
