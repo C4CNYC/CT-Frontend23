@@ -6,7 +6,7 @@ interface Props {
   count?: number;
   filter?: number;
 }
-const defaultItem = (
+export const DefaultSkeletonItem = (): React.ReactElement => (
   <Skeleton
     variant="rectangular"
     animation="wave"
@@ -18,9 +18,9 @@ const defaultItem = (
   />
 );
 export default function SkeletonList({
-  item = defaultItem,
+  item = <DefaultSkeletonItem />,
   filter = 1,
-  count = 1
+  count = 1,
 }: Props): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   return (
@@ -68,9 +68,11 @@ export default function SkeletonList({
         </Box>
       </Box>
       <Stack direction="row">
-        {Array(filter).fill(null).map((item, i) => (
-          <SkeletonFilter key={i} />
-        ))}
+        {Array(filter)
+          .fill(null)
+          .map((item, i) => (
+            <SkeletonFilter key={i} />
+          ))}
       </Stack>
       <Box
         gap={3}
@@ -81,7 +83,9 @@ export default function SkeletonList({
           md: "repeat(3, 1fr)",
         }}
       >
-        {Array(count).fill(null).map((e, i) => item)}
+        {Array(count)
+          .fill(null)
+          .map((e, i) => item)}
       </Box>
     </Container>
   );
