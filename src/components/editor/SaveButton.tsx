@@ -4,7 +4,7 @@ import { TfiSave } from "react-icons/tfi";
 
 interface Props {
   onClick: VoidFunction;
-  sx?: {};
+  sx?: Record<string, unknown>;
 }
 
 export default function SaveButton({ onClick, sx }: Props): JSX.Element {

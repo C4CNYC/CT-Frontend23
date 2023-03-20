@@ -1,6 +1,6 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Autocomplete, CircularProgress } from "@mui/material";
+import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
@@ -11,6 +11,7 @@ import {
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import SkeletonFilter from "../../../sections/dashboard/skeleton/skeletonFilter";
 
 interface Props {
   filters: ILessonSearchParams;
@@ -29,7 +30,14 @@ export default function FilterLessons({
 
   const { data: modules, isLoading } = useGetModulesQuery(moduleFilters);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <SkeletonFilter />
+        <SkeletonFilter />
+      </Box>
+    );
+  }
 
   return (
     <>

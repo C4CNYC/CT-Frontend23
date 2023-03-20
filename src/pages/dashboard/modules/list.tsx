@@ -3,7 +3,7 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import Iconify from "@components/iconify";
 import { useSettingsContext } from "@components/settings";
 import { FilterMode, useFilters } from "@hooks/useFilters";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, CircularProgress, Container } from "@mui/material";
 import FilterModules from "@pages/dashboard/modules/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
@@ -12,11 +12,12 @@ import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import Head from "next/head";
 import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
+import SkeletonList from "../../../sections/dashboard/skeleton/skeletonList";
 
 // ----------------------------------------------------------------------
 
 ModulesListPage.getLayout = (page: React.ReactElement) => (
-  <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
@@ -32,7 +33,7 @@ export default function ModulesListPage(): React.ReactElement | string {
   );
   const { data, isLoading, isFetching } = useGetModulesQuery(filters);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList filter={2} />;
 
   return (
     <>

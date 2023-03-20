@@ -83,7 +83,7 @@ export const content = {
     {
       title: "tasks",
       path: PATH_DASHBOARD.tasks.root,
-      icon: <FaTasks />
+      icon: <FaTasks />,
     },
   ],
 };

@@ -3,7 +3,6 @@ import SearchNotFound from "@components/search-not-found";
 import {
   alpha,
   Autocomplete,
-  Avatar,
   Box,
   Chip,
   TextField,
@@ -11,16 +10,19 @@ import {
 } from "@mui/material";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useState } from "react";
-type Props = {
+import { SyntheticEvent, useState } from "react";
+interface Props {
   skills: [] | undefined;
-};
+}
 export default function CoursesController({
   skills = [],
 }: Props): React.ReactElement {
   const [addedSkills, setAddedSkills] = useState([{ name: "CSS", id: 4 }]);
 
-  const handleChange = (e, details: []) => {
+  const handleChange = (
+    e: SyntheticEvent<Element, Event>,
+    details: Array<{ id: number; name: string }>
+  ): void => {
     setAddedSkills(details);
   };
   return (
@@ -68,12 +70,6 @@ export default function CoursesController({
                   position: "relative",
                 }}
               >
-                <Avatar
-                  sx={{ maxWidth: "100%", maxHeight: "100%" }}
-                  alt={recipient}
-                  src="/assets/icons/files/ic_file.svg"
-                />
-
                 <Box
                   sx={{
                     top: 0,

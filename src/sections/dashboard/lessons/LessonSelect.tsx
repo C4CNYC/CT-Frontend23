@@ -5,7 +5,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 
 type Props = {
-  setOptions: Function;
+  setOptions: (event: string) => void;
   contentType: string;
 };
 

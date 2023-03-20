@@ -64,9 +64,7 @@ export default function BankingRecentTransitions({
       <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar sx={{ minWidth: 720 }}>
           <Table>
-            <TableHeadCustom
-              headLabel={tableLabels}
-            />
+            <TableHeadCustom headLabel={tableLabels} />
 
             <TableBody>
               {tableData.map((row) => (

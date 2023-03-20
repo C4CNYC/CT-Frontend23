@@ -2,6 +2,7 @@ import Logo from "@components/logo";
 import { NavSectionVertical } from "@components/nav-section";
 import Scrollbar from "@components/scrollbar";
 import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
+import UserSection from "@sections/home/user-section";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -11,7 +12,6 @@ import { NAV } from "../../../config-global";
 import useResponsive from "../../../hooks/useResponsive";
 import { admin, content, managment } from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
-import UserSection from "@sections/home/user-section";
 // ----------------------------------------------------------------------
 
 interface Props {
@@ -24,7 +24,7 @@ const menuConfig = {
   [Role.Admin]: [admin, managment, content],
   [Role.Manager]: [managment, content],
   [Role.Editor]: [content],
-}
+};
 
 export default function NavVertical({
   openNav,
@@ -75,7 +75,7 @@ export default function NavVertical({
     </Scrollbar>
   );
 
-  if (!user?.role) return <CircularProgress/>
+  if (!user?.role) return <CircularProgress />;
 
   return (
     <Box

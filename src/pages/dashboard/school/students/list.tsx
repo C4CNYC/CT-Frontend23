@@ -29,6 +29,7 @@ import {
   Tabs,
   Tooltip,
 } from "@mui/material";
+import SkeletonMembers from "@pages/dashboard/organization/members/SkeletonMembers";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { UserTableRow } from "@sections/dashboard/user/list";
 import Head from "next/head";
@@ -221,22 +222,27 @@ export default function UserListPage(): React.ReactElement {
                     }}
                   />
                   <TableBody sx={{ minHeight: 12 }}>
-                    {data?.data.map((row) => (
-                      <UserTableRow
-                        key={row.id}
-                        row={row}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => {
-                          onSelectRow(row.id);
-                        }}
-                        onDeleteRow={() => {
-                          handleDeleteRow(row.id);
-                        }}
-                        onEditRow={() => {
-                          handleEditRow(row.id);
-                        }}
-                      />
-                    ))}
+                    {isLoading
+                      ? [...Array(5)].map((item, i) => (
+                          <SkeletonMembers key={i} />
+                        ))
+                      : data?.data.map((row) => (
+                          <UserTableRow
+                            loading={isLoading}
+                            key={row.id}
+                            row={row}
+                            selected={selected.includes(row.id)}
+                            onSelectRow={() => {
+                              onSelectRow(row.id);
+                            }}
+                            onDeleteRow={() => {
+                              handleDeleteRow(row.id);
+                            }}
+                            onEditRow={() => {
+                              handleEditRow(row.id);
+                            }}
+                          />
+                        ))}
                     <TableLoader isLoading={isLoading} />
 
                     <TableNoData

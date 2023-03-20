@@ -55,9 +55,7 @@ export default function AppNewInvoice({
       <TableContainer sx={{ overflow: "unset" }}>
         <Scrollbar>
           <Table sx={{ minWidth: 720 }}>
-            <TableHeadCustom
-              headLabel={tableLabels}
-            />
+            <TableHeadCustom headLabel={tableLabels} />
 
             <TableBody>
               {tableData.map((row) => (

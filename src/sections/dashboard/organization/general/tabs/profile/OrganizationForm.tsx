@@ -113,7 +113,7 @@ export default function OrganizationForm({
           <Card sx={{ py: 10, px: 3, textAlign: "center" }}>
             <RHFUploadAvatar
               name="photoURL"
-              maxSize={30000}
+              maxSize={200000}
               onDrop={handleDrop}
               helperText={
                 <Typography
@@ -131,7 +131,7 @@ export default function OrganizationForm({
                     "organizations.general_page.tabs.content.profile.upload_image",
                     {
                       formats: "png",
-                      size: fData(30000),
+                      size: fData(200000),
                     }
                   )}`}
                 </Typography>

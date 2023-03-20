@@ -20,7 +20,10 @@ import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "src/hooks/useFilters";
 import { IModule } from "src/redux/services/interfaces/class.interface";
-import { useAddModuleToCourseMutation, useRemoveModuleFromCourseMutation } from "src/redux/services/manager/courses-manager";
+import {
+  useAddModuleToCourseMutation,
+  useRemoveModuleFromCourseMutation,
+} from "src/redux/services/manager/courses-manager";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";

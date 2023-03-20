@@ -23,7 +23,6 @@ interface Props {
 const ImageCardType: Record<string, string> = {
   [AssignmentTypes.REVIEW]: "/assets/assignment/code-review.svg",
   [AssignmentTypes.CODING_IDEA]: "/assets/assignment/code-idea.svg",
-  [AssignmentTypes.CODING_PROJECT]: "/assets/assignment/project.svg",
   [AssignmentTypes.CODING_SNIPETS]: "/assets/assignment/snipets.svg",
   [AssignmentTypes.GROUP_CODING_PROJECT]: "/assets/assignment/group-share.svg",
   [AssignmentTypes.PEER_PREVIEW]: "/assets/assignment/review.svg",

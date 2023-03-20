@@ -99,7 +99,7 @@ export const adminApi = createApi({
       invalidatesTags: [{ type: "Organization" }],
     }),
     updateOrgCover: builder.mutation<
-    void,
+      void,
       {
         file: FormData;
       }
@@ -187,7 +187,7 @@ export const adminApi = createApi({
       invalidatesTags: [{ type: "School" }],
     }),
     updateSchoolCover: builder.mutation<
-    void,
+      void,
       {
         file: FormData;
       }

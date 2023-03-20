@@ -1,20 +1,7 @@
-import { CircularProgress} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Children } from "react";
+import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
-
-const ARRAY_SIZE = 10;
-const RESPONSE_TIME_IN_MS = 1000;
-
-export interface Item {
-  key: number;
-  value: string;
-}
-
-interface Response {
-  hasNextPage: boolean;
-  data: Item[];
-}
 
 interface Props {
   onLoadMore: () => void;
@@ -35,7 +22,6 @@ function SimpleInfiniteList({
     onLoadMore,
     rootMargin: "0px 0px 400px 0px",
   });
-
   return (
     <Box>
       {children}

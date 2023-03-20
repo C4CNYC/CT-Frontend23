@@ -1,6 +1,7 @@
 import CardModule from "@components/card-module";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { CardTypes } from "src/redux/services/enums/card-types";
 
 export default function MainSectionHome(): React.ReactElement {
   return (
@@ -48,18 +49,15 @@ export default function MainSectionHome(): React.ReactElement {
           }}
         >
           <CardModule
-            type="lesson"
-            id="some"
+            type={CardTypes.lesson}
             image="/assets/images/card-image.png"
           />
           <CardModule
-            type="course"
-            id="some"
+            type={CardTypes.course}
             image="/assets/images/card-image.png"
           />
           <CardModule
-            type="module"
-            id="some"
+            type={CardTypes.module}
             image="/assets/images/card-image.png"
           />
         </Stack>

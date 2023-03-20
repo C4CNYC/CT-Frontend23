@@ -1,11 +1,7 @@
 import { Button, Stack } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import { useCommands } from "@remirror/react";
-import React, {
-  MouseEventHandler,
-  useCallback,
-  useState,
-} from "react";
+import React, { MouseEventHandler, useCallback, useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { AiOutlineTable } from "react-icons/ai";
 
@@ -13,9 +9,6 @@ export default function TablePicker(): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);
   const [cells, setCells] = useState<number>(1);
   const [rows, setRows] = useState<number>(1);
-
-  console.log(cells);
-  console.log(rows);
 
   const { createTable } = useCommands();
 

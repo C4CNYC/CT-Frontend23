@@ -1,11 +1,6 @@
 import { CustomSmallSelect } from "@components/custom-input";
 import Scrollbar from "@components/scrollbar";
-import {
-  Divider,
-  Drawer,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Divider, Drawer, Stack, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import _ from "lodash";
@@ -16,7 +11,10 @@ import { IAssignment } from "src/redux/services/interfaces/assignment.interface"
 import { convertDuration } from "src/utils/convertDuration";
 import { IAssignmentsCard } from "../../../../@types/assignments";
 import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
-import { useGetAssignmentQuery, useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
+import {
+  useGetAssignmentQuery,
+  useUdpateAssignmentMutation,
+} from "../../../../redux/services/manager/assignments-manager";
 import AssignmentInput from "../AssignmentInput";
 import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
 import AssignmentsDetailsToolbar from "./AssignmentsDetailsToolbar";
@@ -55,10 +53,13 @@ export default function AssignmentsDetails({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { enqueueSnackbar } = useSnackbar();
   const [updateAssignment] = useUdpateAssignmentMutation();
-  const { data: assignment } = useGetAssignmentQuery({
-    schoolId,
-    assignmentId
-  }, { skip: !assignmentId || !openDetails })
+  const { data: assignment } = useGetAssignmentQuery(
+    {
+      schoolId,
+      assignmentId,
+    },
+    { skip: !assignmentId || !openDetails }
+  );
 
   const updateField = async (
     fieldName: keyof IAssignment,
@@ -257,11 +258,17 @@ export default function AssignmentsDetails({
           </Stack>
           <Stack direction="row" alignItems="center">
             <StyledLabel>Task:</StyledLabel>
-            <TaskController assignmentId={assignmentId} lesson={assignment.code_assignment}/>
+            <TaskController
+              assignmentId={assignmentId}
+              lesson={assignment.code_assignment}
+            />
           </Stack>
           <Stack direction="row" alignItems="center">
             <StyledLabel>Lesson:</StyledLabel>
-            <LessonController assignmentId={assignmentId} lesson={assignment.lesson}/>
+            <LessonController
+              assignmentId={assignmentId}
+              lesson={assignment.lesson}
+            />
           </Stack>
           <Stack direction="row">
             <StyledLabel sx={{ height: 40, lineHeight: "40px", my: 0.5 }}>
@@ -269,7 +276,10 @@ export default function AssignmentsDetails({
             </StyledLabel>
 
             <Stack direction="row" flexWrap="wrap" alignItems="center">
-              <ClassesCountroller assignmentId={assignmentId} addedClasses={assignment.assignee_classes}/>
+              <ClassesCountroller
+                assignmentId={assignmentId}
+                addedClasses={assignment.assignee_classes}
+              />
             </Stack>
           </Stack>
           <Stack alignItems="start">

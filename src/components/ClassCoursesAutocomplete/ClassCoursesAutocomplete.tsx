@@ -6,7 +6,6 @@ import {
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
-  Avatar,
   Box,
   Chip,
   TextField,
@@ -21,7 +20,10 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { ICourse } from "src/@types/courses";
 import { useFilters } from "src/hooks/useFilters";
-import { useAddCourseToClassMutation, useRemoveCourseFromClassMutation } from "src/redux/services/manager/classes-manager";
+import {
+  useAddCourseToClassMutation,
+  useRemoveCourseFromClassMutation,
+} from "src/redux/services/manager/classes-manager";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -101,12 +103,7 @@ export default function ClassCoursesAutocomplete(): React.ReactElement {
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
         tagValue.map((option, index) => (
           <Chip
-            avatar={
-              <CustomAvatar
-                alt={option.name}
-                src={option.cover}
-              />
-            }
+            avatar={<CustomAvatar alt={option.name} src={option.cover} />}
             label={option.name}
             {...getTagProps({ index })}
             key={option.name}

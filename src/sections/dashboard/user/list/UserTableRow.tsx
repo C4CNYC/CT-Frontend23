@@ -6,7 +6,6 @@ import MenuPopover from "@components/menu-popover";
 import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
-  Button,
   Checkbox,
   IconButton,
   MenuItem,
@@ -23,7 +22,7 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 interface Props {
   row: IUser & BaseResponseInterface;
   selected: boolean;
-  loading: boolean;
+  loading?: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;

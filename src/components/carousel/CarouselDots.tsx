@@ -49,8 +49,8 @@ export default function CarouselDots(props?: Props): React.ReactElement {
   const sx = props?.sx;
 
   return (
-      <StyledRoot component="ul" rounded={rounded} sx={sx} {...props}>
-        {/* {dots} */}
-      </StyledRoot>
-  )
+    <StyledRoot component="ul" rounded={rounded} sx={sx} {...props}>
+      {/* {dots} */}
+    </StyledRoot>
+  );
 }

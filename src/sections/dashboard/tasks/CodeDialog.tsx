@@ -2,7 +2,7 @@ import { CustomSmallSelect } from "@components/custom-input";
 import { useSnackbar } from "@components/snackbar";
 import SaveIcon from "@mui/icons-material/Save";
 import { LoadingButton } from "@mui/lab";
-import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { Box } from "@mui/system";

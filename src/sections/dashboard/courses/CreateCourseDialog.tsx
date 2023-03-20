@@ -3,10 +3,8 @@ import FormProvider, {
   RHFSwitch,
   RHFTextField,
   RHFUpload,
-  RHFUploadBox,
 } from "@components/hook-form";
 import { useSnackbar } from "@components/snackbar";
-import { Upload } from "@components/upload";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";

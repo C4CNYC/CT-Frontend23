@@ -1,15 +1,15 @@
 import { m } from "framer-motion";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 // @mui
-import { alpha, useTheme, styled } from "@mui/material/styles";
-import { Stack, Card, Typography, Link, CardProps } from "@mui/material";
+import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 // components
-import Image from "../../../components/image";
 import { MotionContainer, varFade } from "../../../components/animate";
 import Carousel, {
-  CarouselDots,
   CarouselArrows,
+  CarouselDots,
 } from "../../../components/carousel";
+import Image from "../../../components/image";
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +53,9 @@ export default function AppFeatured({ list, ...other }: Props) {
     slidesToShow: 1,
     slidesToScroll: 1,
     rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => setCurrentIndex(next),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
     ...CarouselDots({
       sx: {
         top: 20,
@@ -100,7 +102,7 @@ type CarouselItemProps = {
 };
 
 function CarouselItem({ item, isActive }: CarouselItemProps) {
-  const { image, title} = item;
+  const { image, title } = item;
 
   return (
     <MotionContainer action animate={isActive} sx={{ position: "relative" }}>

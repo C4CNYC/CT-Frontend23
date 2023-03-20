@@ -69,7 +69,7 @@ export default function UserProfilePage(): React.ReactElement {
       enqueueSnackbar("Image updated");
     } catch (error) {
       enqueueSnackbar("Image not updated", { variant: "error" });
-    } 
+    }
   };
 
   return (

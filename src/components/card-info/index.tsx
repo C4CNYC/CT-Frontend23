@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Card, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 // icons
-import { ImTwitter } from "react-icons/im";
 import CircleIcon from "@mui/icons-material/Circle";
+import { ImTwitter } from "react-icons/im";
 
 export default function CardInfo() {
   return (

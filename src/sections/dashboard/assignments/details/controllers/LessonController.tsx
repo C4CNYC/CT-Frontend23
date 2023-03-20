@@ -20,19 +20,20 @@ type LessonType = ILesson & BaseResponseInterface;
 
 interface Props {
   assignmentId: string;
-  lesson: LessonType
+  lesson: LessonType;
 }
 
-export default function LessonController({ assignmentId, lesson }: Props): React.ReactElement {
+export default function LessonController({
+  assignmentId,
+  lesson,
+}: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
   const [updateLesson] = useUdpateLessonAssignmentMutation();
-  const { data: lessons } = useGetLessonsQuery(
-    { ...filters },
-  );
+  const { data: lessons } = useGetLessonsQuery({ ...filters });
 
   if (!lessons?.data) {
     return <CircularProgress />;
@@ -63,15 +64,17 @@ export default function LessonController({ assignmentId, lesson }: Props): React
   };
 
   return (
-        <Autocomplete<LessonType>
-          options={lessons?.data}
-          size="small"
-          renderInput={(params) => <TextField {...params} />}
-          onInputChange={(e, value) => { setFilter("name", value) }}
-          defaultValue={lesson}
-          onChange={onChange}
-          getOptionLabel={(option) => option.name}
-          sx={{ width: "100%" }}
-        />
+    <Autocomplete<LessonType>
+      options={lessons?.data}
+      size="small"
+      renderInput={(params) => <TextField {...params} />}
+      onInputChange={(e, value) => {
+        setFilter("name", value);
+      }}
+      defaultValue={lesson}
+      onChange={onChange}
+      getOptionLabel={(option) => option.name}
+      sx={{ width: "100%" }}
+    />
   );
 }

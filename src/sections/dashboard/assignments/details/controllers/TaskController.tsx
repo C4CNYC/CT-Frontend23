@@ -20,19 +20,20 @@ type TaskType = ITask & BaseResponseInterface;
 
 interface Props {
   assignmentId: string;
-  lesson: TaskType
+  lesson: TaskType;
 }
 
-export default function TaskController({ assignmentId, lesson }: Props): React.ReactElement {
+export default function TaskController({
+  assignmentId,
+  lesson,
+}: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
   const [updateTask] = useUdpateTaskAssignmentMutation();
-  const { data: tasks } = useGetTasksQuery(
-    { ...filters },
-  );
+  const { data: tasks } = useGetTasksQuery({ ...filters });
 
   if (!tasks?.data) {
     return <CircularProgress />;
@@ -63,15 +64,17 @@ export default function TaskController({ assignmentId, lesson }: Props): React.R
   };
 
   return (
-        <Autocomplete<TaskType>
-          options={tasks?.data}
-          size="small"
-          renderInput={(params) => <TextField {...params} />}
-          onInputChange={(e, value) => { setFilter("name", value) }}
-          defaultValue={lesson}
-          onChange={onChange}
-          getOptionLabel={(option) => option.name}
-          sx={{ width: "100%" }}
-        />
+    <Autocomplete<TaskType>
+      options={tasks?.data}
+      size="small"
+      renderInput={(params) => <TextField {...params} />}
+      onInputChange={(e, value) => {
+        setFilter("name", value);
+      }}
+      defaultValue={lesson}
+      onChange={onChange}
+      getOptionLabel={(option) => option.name}
+      sx={{ width: "100%" }}
+    />
   );
 }

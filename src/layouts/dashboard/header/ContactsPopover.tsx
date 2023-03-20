@@ -1,8 +1,6 @@
 import { useState } from "react";
 // @mui
-import {
-  Typography,
-} from "@mui/material";
+import { Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 // components
 import { IconButtonAnimate } from "@components/animate";
@@ -51,12 +49,10 @@ export default function ContactsPopover(): React.ReactElement {
         sx={{ width: 320 }}
       >
         <Typography variant="h6" sx={{ p: 1.5 }}>
-          Contacts{" "}
-          <Typography component="span"></Typography>
+          Contacts <Typography component="span"></Typography>
         </Typography>
 
-        <Scrollbar sx={{ height: ITEM_HEIGHT * 6 }}>
-        </Scrollbar>
+        <Scrollbar sx={{ height: ITEM_HEIGHT * 6 }}></Scrollbar>
       </MenuPopover>
     </>
   );

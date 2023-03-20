@@ -5,6 +5,7 @@ import { adminApi } from "./services/admin";
 import { managerApi } from "./services/manager";
 import assignmentsReducer from "./slices/assignments";
 import globalRducer from "./slices/global";
+import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
 
 // ----------------------------------------------------------------------
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
   global: globalRducer,
   manager: managerReducer,
   assignments: assignmentsReducer,
+  lessonSteps: lessonStepsReducer,
 });
 
 export default rootReducer;
