@@ -2,15 +2,17 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import { useTable } from "@components/table";
 import DashboardLayout from "@layouts/dashboard";
-import { CircularProgress, Container, Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { FileFilterName, SchoolGridView } from "@sections/dashboard/schools";
 import Head from "next/head";
 import { useState } from "react";
 
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
+import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import { useGetSchoolListQuery } from "src/redux/services/admin";
 import { useLocales } from "../../../../locales";
+import SkeletonSchoolItem from "./skeleton-school-item";
 
 Index.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -40,7 +42,7 @@ export default function Index(): React.ReactElement {
 
   const handleDeleteItem = (id: string): void => {};
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonList item={<SkeletonSchoolItem />} />;
 
   return (
     <>
@@ -62,7 +64,7 @@ export default function Index(): React.ReactElement {
         <Stack
           spacing={2.5}
           direction={{ xs: "column", md: "row" }}
-          alignItems={{ xs: "flex-end", md: "center" }}
+          alignItems={{ xs: "flex-start", md: "center" }}
           justifyContent="space-between"
           sx={{ mb: 5 }}
         >

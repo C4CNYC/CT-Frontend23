@@ -11,7 +11,7 @@ export const DefaultSkeletonItem = (): React.ReactElement => (
     variant="rectangular"
     animation="wave"
     sx={{
-      width: "373px",
+      width: { xs: "100%", sm: "100%", md: "100%", xl: "373px" },
       height: "124px",
       borderRadius: "16px",
     }}
@@ -49,7 +49,7 @@ export default function SkeletonList({
             animation="wave"
             sx={{
               mr: "16px",
-              width: "260px",
+              width: "180px",
               height: "26px",
               borderRadius: "8px",
             }}
@@ -67,7 +67,12 @@ export default function SkeletonList({
           />
         </Box>
       </Box>
-      <Stack direction="row">
+      <Stack
+        direction={{
+          xs: "column",
+          sm: "row",
+        }}
+      >
         {Array(filter)
           .fill(null)
           .map((item, i) => (

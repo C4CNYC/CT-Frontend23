@@ -34,10 +34,16 @@ export default function FilterCourses({
 
   if (isLoading) {
     return (
-      <Box sx={{ display: "flex" }}>
+      <Stack
+        direction={{
+          xs: "column",
+          sm: "row",
+        }}
+        sx={{ display: "flex" }}
+      >
         <SkeletonFilter />
         <SkeletonFilter />
-      </Box>
+      </Stack>
     );
   }
 

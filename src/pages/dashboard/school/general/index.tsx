@@ -10,6 +10,7 @@ import {
   SchoolSettingsTab,
   SchoolSocialsTab,
 } from "@sections/schools/tabs";
+import SkeletonProfileTab from "@sections/schools/tabs/profile/SkeletomProfileTab";
 import Head from "next/head";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
@@ -76,7 +77,14 @@ export default function UserProfilePage(): React.ReactElement {
     }
   };
   if (isLoading) {
-    return <SkeletonSchool />;
+    return (
+      <>
+        <SkeletonSchool />
+        <Container maxWidth={themeStretch ? false : "lg"}>
+          <SkeletonProfileTab />
+        </Container>
+      </>
+    );
   }
 
   return (
