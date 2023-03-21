@@ -40,7 +40,7 @@ export default function CoursesListPage(): React.ReactElement {
   );
   const { data, isLoading, isFetching } = useGetCourseQuery(filters);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <SkeletonList
         item={<SkeletonCourses />}
@@ -48,7 +48,7 @@ export default function CoursesListPage(): React.ReactElement {
         count={DEFAULT_TAKE_PER_PAGE}
       />
     );
-
+  }
   return (
     <>
       <Head>
