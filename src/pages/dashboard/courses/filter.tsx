@@ -1,7 +1,7 @@
 import RoleAccess from "@components/role-access/RoleAccess";
 import { SetFilterType, useFilters } from "@hooks/useFilters";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import { Autocomplete, Box } from "@mui/material";
+import { Autocomplete } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
