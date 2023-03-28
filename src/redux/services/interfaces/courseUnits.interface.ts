@@ -34,7 +34,6 @@ export interface ILessonContent {
   slug: string;
   title: string;
   description: string;
-  validation: string;
   active: boolean;
   draft: boolean;
   tags: string[];

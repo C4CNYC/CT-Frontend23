@@ -17,6 +17,7 @@ import {
   IconButton,
   Stack,
 } from "@mui/material";
+import _ from "lodash";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -31,7 +32,6 @@ interface FormValuesProps {
   active: boolean;
   draft: boolean;
   tags: string[];
-  validation: string;
   complexity: LessonContentComplexity;
 }
 
@@ -39,7 +39,6 @@ const CreateLessonDemonSchema = Yup.object().shape({
   slug: Yup.string().required("Slug is required"),
   title: Yup.string().required("Title is required"),
   description: Yup.string().required("Description is required"),
-  validation: Yup.string(),
   skills: Yup.array(),
 });
 
@@ -58,7 +57,6 @@ export default function Preferences({
     active: false,
     draft: false,
     complexity: LessonContentComplexity.Beginner,
-    validation: "",
     slug: "",
     title: "",
     description: "",
@@ -78,10 +76,10 @@ export default function Preferences({
     try {
       await updateLessonContent({
         lessonId,
-        ...data,
+        ..._.omit(data, ["createdAt", "updatedAt", "cover"]),
         id: contentId,
       }).unwrap();
-      enqueueSnackbar("Your step is created successfully");
+      enqueueSnackbar("Your step is udpated successfully");
       setOpenDialog(false);
     } catch (e) {
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
@@ -109,7 +107,7 @@ export default function Preferences({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Lesson Preferences
+            Lesson Step Preferences
           </DialogTitle>
           <IconButton
             onClick={() => {
@@ -158,11 +156,6 @@ export default function Preferences({
                     ))}
                   </RHFSelect>
                 </Box>
-                <RHFTextField
-                  sx={{ mb: 3 }}
-                  name="validation"
-                  label="Validation REGEX"
-                />
 
                 <RHFTextField
                   multiline
