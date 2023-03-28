@@ -7,10 +7,10 @@ export default function SkeletonFilter(): React.ReactElement {
       animation="wave"
       sx={{
         mr: "16px",
-        width: "260px",
+        width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
         height: "56px",
         borderRadius: "16px",
-        mb: "32px",
+        mb: { xs: "16px", sm: "16px", md: "32px" },
       }}
     />
   );

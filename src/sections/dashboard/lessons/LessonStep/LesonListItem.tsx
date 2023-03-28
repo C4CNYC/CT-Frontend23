@@ -17,6 +17,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import Preferences from "./Modals/Preferences";
+import Validation from "./Modals/Validation";
 
 interface Props {
   lessonId: string;
@@ -129,6 +130,12 @@ export default function LessonListItem({
                 Preferences
               </MenuItem>
             </Preferences>
+            <Validation stepId={step.id} stepTitle={step.title}>
+              <MenuItem>
+                <Iconify icon="file-icons:test-generic" />
+                Validations
+              </MenuItem>
+            </Validation>
             <Divider sx={{ borderStyle: "dashed" }} />
             <MenuItem
               onClick={() => {

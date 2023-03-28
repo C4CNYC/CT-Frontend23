@@ -1,23 +1,17 @@
 import { useSettingsContext } from "@components/settings";
 import DashboardLayout from "@layouts/dashboard";
-import {
-  Box,
-  Card,
-  CircularProgress,
-  Container,
-  Stack,
-  Tab,
-  Tabs,
-} from "@mui/material";
+import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
 import { ProfileCover } from "@sections/dashboard/user/profile";
 import Head from "next/head";
 import { useState } from "react";
 // auth
 import Iconify from "@components/iconify";
 import UploadImageModal from "@components/upload-image-modal";
+import SkeletonSchool from "@pages/dashboard/school/general/skeleton-school";
 import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
 import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
 import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
+import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
 import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
 import { useSnackbar } from "notistack";
 import {
@@ -83,8 +77,16 @@ export default function UserProfilePage(): React.ReactElement {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };
-  if (isLoading) return <CircularProgress />;
-
+  if (isLoading) {
+    return (
+      <>
+        <SkeletonSchool />
+        <Container maxWidth={themeStretch ? false : "lg"}>
+          <SkeletonProfileOrg />
+        </Container>
+      </>
+    );
+  }
   return (
     <>
       <Head>

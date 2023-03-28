@@ -7,6 +7,10 @@ import SkeletonCustomizationOrg from "./SkeletonCustomizationOrg";
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgCustomizationQuery();
 
+  if (isLoading) {
+    return <SkeletonCustomizationOrg />;
+  }
+
   return (
     <>
       <Box
@@ -17,11 +21,7 @@ export default function UserProfileTab(): React.ReactElement {
           position: "relative",
         }}
       >
-        {isLoading ? (
-          <SkeletonCustomizationOrg />
-        ) : (
-          <CustomizationForm customization={data} />
-        )}
+        <CustomizationForm customization={data} />
       </Box>
     </>
   );

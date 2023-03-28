@@ -7,6 +7,10 @@ import SkeletonProfileOrg from "./SkeletonProfileOrg";
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrganizationQuery();
 
+  if (isLoading) {
+    return <SkeletonProfileOrg />;
+  }
+
   return (
     <>
       <Box
@@ -17,11 +21,7 @@ export default function UserProfileTab(): React.ReactElement {
           position: "relative",
         }}
       >
-        {isLoading ? (
-          <SkeletonProfileOrg />
-        ) : (
-          <OrganizationForm organization={data} />
-        )}
+        <OrganizationForm organization={data} />
       </Box>
     </>
   );
