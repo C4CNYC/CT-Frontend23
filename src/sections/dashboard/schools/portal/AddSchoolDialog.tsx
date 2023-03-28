@@ -10,7 +10,7 @@ import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
+import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin/school-amdin";
 import * as Yup from "yup";
 import { countries } from "../../../../assets/data";
 import { useLocales } from "../../../../locales";

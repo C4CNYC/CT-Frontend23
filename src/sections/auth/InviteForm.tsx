@@ -13,7 +13,7 @@ import { PATH_AUTH } from "../../routes/paths";
 import { useRouter } from "next/router";
 import FormProvider, { RHFTextField } from "../../components/hook-form";
 import Iconify from "../../components/iconify";
-import { useInviteSubmitMutation } from "../../redux/services/admin";
+import { useInviteSubmitMutation } from "src/redux/services/admin/invite-admin";
 
 // ----------------------------------------------------------------------
 

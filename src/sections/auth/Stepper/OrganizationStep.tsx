@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { useUpdateOrganizationMutation } from "src/redux/services/admin";
+import { useUpdateOrganizationMutation } from "src/redux/services/admin/organization-admin";
 
 interface OrganizationStepProps {
   next: () => void;

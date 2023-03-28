@@ -3,7 +3,7 @@ import { LoadingButton } from "@mui/lab";
 import { Card, Link, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { useUpdateOrgSettingsMutation } from "src/redux/services/admin";
+import { useUpdateOrgSettingsMutation } from "src/redux/services/admin/organization-settings";
 import { SettingsResponce } from "src/redux/services/interfaces/organization.interface";
 import { useLocales } from "../../../../../../locales";
 

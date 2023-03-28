@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
+import { useGetOrgContactsQuery } from "src/redux/services/admin/organization-contacts";
 // auth
-import { useGetOrgContactsQuery } from "src/redux/services/admin";
 import ContactsForm from "src/sections/dashboard/organization/general/tabs/contacts/ContactsForm";
 import SkeletonContactsForm from "./SkeletonContactsForm";
 

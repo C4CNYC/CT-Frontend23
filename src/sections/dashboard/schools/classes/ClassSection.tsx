@@ -10,11 +10,7 @@ import {
 import Image from "next/image";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import {
-  useCreateClassMutation,
-  useDeleteTeacherMutation,
-  useGetClassListQuery,
-} from "src/redux/services/admin";
+import { useCreateClassMutation, useDeleteTeacherMutation, useGetClassListQuery } from "src/redux/services/admin/school-amdin";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 

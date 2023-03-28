@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
+import { useGetOrgSettingsQuery } from "src/redux/services/admin/organization-settings";
 // auth
-import { useGetOrgSettingsQuery } from "src/redux/services/admin";
 import SettingsForm from "src/sections/dashboard/organization/general/tabs/settings/SettingsForm";
 import SkeletonSettingsOrg from "./SkeletonSettingsOrg";
 

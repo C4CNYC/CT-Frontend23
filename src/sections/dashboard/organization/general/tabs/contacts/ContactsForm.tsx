@@ -5,7 +5,7 @@ import { Box, Card, Grid, Stack } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdateOrgContactsMutation } from "src/redux/services/admin";
+import { useUpdateOrgContactsMutation } from "src/redux/services/admin/organization-contacts";
 import { ContactsResponce } from "src/redux/services/interfaces/organization.interface";
 import * as Yup from "yup";
 

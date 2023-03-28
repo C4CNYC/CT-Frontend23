@@ -13,11 +13,8 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import React from "react";
-import {
-  useAddTeacherMutation,
-  useCreateOrgMemberMutation,
-  useGetOrgMembersQuery,
-} from "src/redux/services/admin";
+import { useCreateOrgMemberMutation, useGetOrgMembersQuery } from "src/redux/services/admin/members-admin";
+import { useAddTeacherMutation } from "src/redux/services/admin/school-amdin";
 import { Role } from "src/redux/services/enums/role.enum";
 import UserItem from "./UserItem";
 

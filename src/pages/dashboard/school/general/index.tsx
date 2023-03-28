@@ -17,7 +17,7 @@ import { useState } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useUpdateSchoolCoverMutation } from "src/redux/services/admin";
+import { useUpdateSchoolCoverMutation } from "src/redux/services/admin/school-amdin";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import { RootState } from "../../../../redux/store";
 import SkeletonSchool from "./skeleton-school";

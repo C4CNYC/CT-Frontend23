@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin";
+import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin/school-amdin";
 import { countries } from "../../../assets/data";
 
 interface SchoolStepProps {
