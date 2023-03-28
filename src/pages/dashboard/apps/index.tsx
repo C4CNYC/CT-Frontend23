@@ -100,7 +100,7 @@ export default function AppsPage(): React.ReactElement {
             { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Apps", href: PATH_DASHBOARD.apps.root },
           ]}
-          action={<ModalIntegration />}
+          action={<ModalIntegration value={""} />}
         />
         <Card>
           <Tabs
