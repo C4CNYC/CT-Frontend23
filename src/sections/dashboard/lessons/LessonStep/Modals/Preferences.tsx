@@ -4,24 +4,22 @@ import FormProvider, {
   RHFSwitch,
   RHFTextField,
 } from "@components/hook-form";
+import { RHFCode } from "@components/hook-form/RHFCode";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
-  Card,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
-  IconButton,
   Stack,
   Tab,
   Tabs,
   Typography,
 } from "@mui/material";
-import CodeMirror from "@uiw/react-codemirror";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
@@ -38,6 +36,8 @@ interface FormValuesProps {
   draft: boolean;
   tags: string[];
   complexity: LessonContentComplexity;
+  preload_body: string,
+  solution_body: string,
 }
 
 const CreateLessonDemonSchema = Yup.object().shape({
@@ -60,7 +60,7 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+function TabPanel(props: TabPanelProps): React.ReactElement {
   const { children, value, index, ...other } = props;
   return (
     <div
@@ -79,7 +79,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
+function a11yProps(index: number): Record<string, string> {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -97,15 +97,19 @@ export default function Preferences({
     slug: "",
     title: "",
     description: "",
+    preload_body: "",
+    solution_body: "",
     tags: [],
   },
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false);
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
     setValue(newValue);
   };
+
+  console.log(defaultValues);
 
   const { enqueueSnackbar } = useSnackbar();
   const [updateLessonContent, { isLoading }] = useUpdateLessonContentMutation();
@@ -127,9 +131,7 @@ export default function Preferences({
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
     }
   };
-  const onChange = React.useCallback((value: any, viewUpdate: any) => {
-    console.log("value:", value);
-  }, []);
+
   return (
     <>
       <Box
@@ -140,29 +142,21 @@ export default function Preferences({
         {children}
       </Box>
       <Dialog
+        fullWidth
         open={open}
         onClose={() => {
           setOpenDialog(false);
         }}
       >
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="flex-end"
-        >
-          <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Lesson Step Preferences
-          </DialogTitle>
-          <IconButton
-            onClick={() => {
-              setOpenDialog(false);
-            }}
-            sx={{ mb: "5px", mr: "14px" }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
+        <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
+          Lesson Step Preferences
+        </DialogTitle>
+         <FormProvider
+                methods={methods}
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
         <Box sx={{ width: "100%" }}>
+           <DialogContent sx={{ p: 0, height: "450px" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
             <Tabs
               value={value}
@@ -170,40 +164,26 @@ export default function Preferences({
               aria-label="basic tabs example"
             >
               <Tab
-                sx={{
-                  p: 2,
-                  mr: 0,
-                  "&.Mui-selected": {
-                    backgroundColor: "ThreeDFace",
-                    borderRadius: "8px",
-                  },
-                }}
                 label="Main"
                 {...a11yProps(0)}
               />
               <Tab
-                sx={{
-                  "&.Mui-selected": {
-                    backgroundColor: "ThreeDFace",
-                    borderRadius: "8px",
-                  },
-
-                  p: 2,
-                  ml: "-30px",
-                }}
-                label="Preload"
+                label="Solution"
                 {...a11yProps(1)}
+              />
+              <Tab
+                label="Preload"
+                {...a11yProps(2)}
+              />
+              <Tab
+                label="Integrations"
+                {...a11yProps(3)}
               />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <DialogContent sx={{ p: 0 }}>
-              <FormProvider
-                methods={methods}
-                onSubmit={methods.handleSubmit(onSubmit)}
-              >
                 <Grid item xs={12} md={8}>
-                  <Card sx={{ p: 1 }}>
+                  <Stack>
                     <RHFTextField sx={{ mb: 3 }} name="title" label="Title" />
                     <Box
                       rowGap={3}
@@ -247,62 +227,27 @@ export default function Preferences({
                       <RHFSwitch name="active" label="Active" />
                       <RHFSwitch name="draft" label="Draft" />
                     </Stack>
-
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        gap: 2,
-                        mt: 7,
-                      }}
-                    >
-                      <Button
-                        onClick={() => {
-                          setOpenDialog(false);
-                        }}
-                      >
-                        Close
-                      </Button>
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        loading={isLoading}
-                      >
-                        Save
-                      </LoadingButton>
-                    </Box>
-                  </Card>
+                  </Stack>
                 </Grid>
-              </FormProvider>
-            </DialogContent>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <DialogContent sx={{ width: "100%" }}>
-              <Typography variant="h5" mb="10px">
-                Solution
-              </Typography>
-              <Box mb="15px">
-                <CodeMirror
-                  value="console.log('hello world!');"
-                  height="200px"
-                  width="500px"
-                  extensions={[javascript({ jsx: true })]}
-                  onChange={onChange}
-                />
-              </Box>
-              <Typography variant="h5" mb="10px">
-                Preload Code
-              </Typography>
-              <Box>
-                <CodeMirror
-                  value="console.log('hello world!');"
-                  height="200px"
-                  width="500px"
-                  extensions={[javascript({ jsx: true })]}
-                  onChange={onChange}
-                />
-              </Box>
-            </DialogContent>
+              <RHFCode
+                placeholder="This code would be hint for step"
+                name="solution_body"
+                height="350px"
+                extensions={[javascript({ jsx: true })]}
+              />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+              <RHFCode
+                placeholder="This code will preload to work space"
+                name="preload_body"
+                height="350px"
+                extensions={[javascript({ jsx: true })]}
+              />
+          </TabPanel>
+          </DialogContent>
+          <DialogActions>
             <Box
               sx={{
                 display: "flex",
@@ -326,8 +271,9 @@ export default function Preferences({
                 Save
               </LoadingButton>
             </Box>
-          </TabPanel>
+          </DialogActions>
         </Box>
+        </FormProvider>
       </Dialog>
     </>
   );

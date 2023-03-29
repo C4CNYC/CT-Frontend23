@@ -37,6 +37,8 @@ export interface ILessonContent {
   active: boolean;
   draft: boolean;
   tags: string[];
+  preload_body: string;
+  solution_body: string;
   meta: Record<string, any>;
   complexity: LessonContentComplexity;
 }

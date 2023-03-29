@@ -14,7 +14,7 @@ import { useState } from "react";
 import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
-} from "src/redux/services/admin";
+} from "src/redux/services/admin/school-amdin";
 import TeacherItem from "./TeacherItem";
 
 interface TeacherSectionProps {

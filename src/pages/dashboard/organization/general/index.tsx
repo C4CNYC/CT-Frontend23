@@ -17,7 +17,7 @@ import { useSnackbar } from "notistack";
 import {
   useGetOrganizationQuery,
   useUpdateOrgCoverMutation,
-} from "src/redux/services/admin";
+} from "src/redux/services/admin/organization-admin";
 import { useLocales } from "../../../../locales";
 
 // components

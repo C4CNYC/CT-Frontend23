@@ -14,7 +14,7 @@ import {
   useCreateClassMutation,
   useDeleteTeacherMutation,
   useGetClassListQuery,
-} from "src/redux/services/admin";
+} from "src/redux/services/admin/school-amdin";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 

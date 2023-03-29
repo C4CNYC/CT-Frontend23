@@ -1,7 +1,7 @@
 import { PATH_DASHBOARD } from "@routes/paths";
 import { AiOutlineSolution } from "react-icons/ai";
-import { FiSettings } from "react-icons/fi";
 import { FaSchool, FaTasks, FaUsers, FaUserShield } from "react-icons/fa";
+import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
 import { GrOrganization } from "react-icons/gr";
