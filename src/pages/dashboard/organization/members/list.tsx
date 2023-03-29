@@ -34,10 +34,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useFilters } from "src/hooks/useFilters";
-import {
-  useDeleteOrgMemberMutation,
-  useGetOrgMembersQuery,
-} from "src/redux/services/admin";
+import { useDeleteOrgMemberMutation, useGetOrgMembersQuery } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useLocales } from "../../../../locales";
 import SkeletonMembers from "./SkeletonMembers";

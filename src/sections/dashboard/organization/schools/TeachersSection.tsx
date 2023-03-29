@@ -11,10 +11,7 @@ import InviteTeacherDialog from "@sections/dashboard/organization/schools/Invite
 import Image from "next/image";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import {
-  useDeleteTeacherMutation,
-  useGetTeacherListQuery,
-} from "src/redux/services/admin";
+import { useDeleteTeacherMutation, useGetTeacherListQuery } from "src/redux/services/admin/school-amdin";
 import TeacherItem from "./TeacherItem";
 
 interface TeacherSectionProps {

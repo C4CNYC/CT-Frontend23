@@ -6,9 +6,9 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import { Container } from "@mui/material";
 import DashboardLayout from "src/layouts/dashboard";
-import { useGetOrgMemberQuery } from "src/redux/services/admin";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import UserNewEditForm from "src/sections/dashboard/user/UserNewEditForm";
+import { useGetOrgMemberQuery } from "src/redux/services/admin/members-admin";
 
 // ----------------------------------------------------------------------
 

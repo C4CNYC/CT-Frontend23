@@ -14,11 +14,8 @@ import UserProfileTab from "@sections/dashboard/organization/general/tabs/profil
 import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
 import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
 import { useSnackbar } from "notistack";
-import {
-  useGetOrganizationQuery,
-  useUpdateOrgCoverMutation,
-} from "src/redux/services/admin";
 import { useLocales } from "../../../../locales";
+import { useUpdateOrgCoverMutation, useGetOrganizationQuery } from "src/redux/services/admin/organization-admin";
 
 // components
 // ----------------------------------------------------------------------
