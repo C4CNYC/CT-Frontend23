@@ -23,7 +23,11 @@ export function RHFCode({
       control={control}
       render={({ field, fieldState: { error } }) => (
         <div style={{ width: "100%" }}>
-          <CodeMirror {...field} {...other} />
+          <CodeMirror
+            {...field}
+            {...other}
+            value={field.value || ""}
+          />
 
           {(!!error || helperText) && (
             <FormHelperText error={!!error}>
