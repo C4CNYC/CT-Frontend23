@@ -18,7 +18,7 @@ const extendedApi = adminApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "OrganizationCustomization" }],
     }),
-    getOrgCustomization: builder.query<CustomizationResponce, void>({
+    getOrgCustomization: builder.query<CustomizationResponce, ICustomization>({
       query: () => ({
         url: "/org/custom/",
         method: "GET",

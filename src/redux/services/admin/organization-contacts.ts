@@ -29,6 +29,5 @@ const extendedApi = adminApi.injectEndpoints({
     }),
   }),
 });
-
-export const { useGetOrgContactsQuery,  useUpdateOrgContactsMutation,
-} = extendedApi;
+export const { useGetOrgContactsQuery, useUpdateOrgContactsMutation } =
+  extendedApi;

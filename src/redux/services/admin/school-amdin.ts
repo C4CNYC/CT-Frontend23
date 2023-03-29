@@ -112,7 +112,6 @@ export const {
   useGetClassListQuery,
   useGetSchoolListQuery,
   useGetTeacherListQuery,
-  //--------mutations---------
   useUpdateSchoolCoverMutation,
   useUpdateClassMutation,
   useCreateClassMutation,

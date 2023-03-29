@@ -70,9 +70,7 @@ const extendedApi = adminApi.injectEndpoints({
 });
 
 export const {
-  //----------query------------
   useGetOrganizationQuery,
-  //--------mutations-------------
   useCreateOrganizationMutation,
   useUpdateOrganizationMutation,
   useUpdateOrgAvatarMutation,
