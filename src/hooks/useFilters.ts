@@ -26,8 +26,7 @@ interface IUseFilter<T> {
 
 export const useFilters = <T>(
   filters: T,
-  mode: FilterMode = FilterMode.local,
-  isInfilityLoading: boolean = false
+  mode: FilterMode = FilterMode.local
 ): IUseFilter<T> => {
   const router = useRouter();
   const query = router.query;

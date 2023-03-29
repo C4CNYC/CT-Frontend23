@@ -6,21 +6,21 @@ interface Props {
   count?: number;
   filter?: number;
 }
-const defaultItem = (
+export const DefaultSkeletonItem = (): React.ReactElement => (
   <Skeleton
     variant="rectangular"
     animation="wave"
     sx={{
-      width: "373px",
+      width: { xs: "100%", sm: "100%", md: "100%", xl: "373px" },
       height: "124px",
       borderRadius: "16px",
     }}
   />
 );
 export default function SkeletonList({
-  item = defaultItem,
+  item = <DefaultSkeletonItem />,
   filter = 1,
-  count = 1
+  count = 1,
 }: Props): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   return (
@@ -49,7 +49,7 @@ export default function SkeletonList({
             animation="wave"
             sx={{
               mr: "16px",
-              width: "260px",
+              width: "180px",
               height: "26px",
               borderRadius: "8px",
             }}
@@ -67,10 +67,17 @@ export default function SkeletonList({
           />
         </Box>
       </Box>
-      <Stack direction="row">
-        {Array(filter).fill(null).map((item, i) => (
-          <SkeletonFilter key={i} />
-        ))}
+      <Stack
+        direction={{
+          xs: "column",
+          sm: "row",
+        }}
+      >
+        {Array(filter)
+          .fill(null)
+          .map((item, i) => (
+            <SkeletonFilter key={i} />
+          ))}
       </Stack>
       <Box
         gap={3}
@@ -81,7 +88,9 @@ export default function SkeletonList({
           md: "repeat(3, 1fr)",
         }}
       >
-        {Array(count).fill(null).map((e, i) => item)}
+        {Array(count)
+          .fill(null)
+          .map((e, i) => item)}
       </Box>
     </Container>
   );

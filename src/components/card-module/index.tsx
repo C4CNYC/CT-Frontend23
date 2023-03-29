@@ -11,7 +11,7 @@ import Link from "next/link";
 import { CgMenuMotion } from "react-icons/cg";
 import { FcInfo } from "react-icons/fc";
 import { MdAddCircleOutline, MdEdit } from "react-icons/md";
-import { CardTypes } from "src/redux/services/enums/card-types";
+import { CardTypes } from "src/redux/services/enums/card-types.enum";
 
 interface Props {
   type: CardTypes.lesson | CardTypes.course | CardTypes.module;

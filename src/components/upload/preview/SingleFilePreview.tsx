@@ -23,13 +23,13 @@ export default function SingleFilePreview({
       alt="file preview"
       src={imgUrl}
       sx={{
-        top: 8,
-        left: 8,
+        top: 0,
+        left: 0,
         zIndex: 8,
         borderRadius: 1,
         position: "absolute",
-        width: "calc(100% - 16px)",
-        height: "calc(100% - 16px)",
+        width: "100%",
+        height: "87%",
       }}
     />
   );

@@ -1,5 +1,6 @@
 import { PATH_DASHBOARD } from "@routes/paths";
 import { AiOutlineSolution } from "react-icons/ai";
+import { FiSettings } from "react-icons/fi";
 import { FaSchool, FaTasks, FaUsers, FaUserShield } from "react-icons/fa";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
@@ -84,6 +85,11 @@ export const content = {
       title: "tasks",
       path: PATH_DASHBOARD.tasks.root,
       icon: <FaTasks />,
+    },
+    {
+      title: "apps",
+      path: PATH_DASHBOARD.apps.root,
+      icon: <FiSettings />,
     },
   ],
 };
