@@ -8,7 +8,10 @@ import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useUpdateOrganizationMutation, useUpdateOrgAvatarMutation } from "src/redux/services/admin/organization-admin";
+import {
+  useUpdateOrganizationMutation,
+  useUpdateOrgAvatarMutation,
+} from "src/redux/services/admin/organization-admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";

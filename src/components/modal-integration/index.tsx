@@ -1,70 +1,133 @@
 import { javascript } from "@codemirror/lang-javascript";
-import Iconify from "@components/iconify";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import CodeMirror from "@uiw/react-codemirror";
+import FormProvider, { RHFTextField } from "@components/hook-form";
+import { RHFCode } from "@components/hook-form/RHFCode";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import {
+  useCreateIntegrationMutation,
+  useUpdateIntegrationMutation,
+} from "src/redux/services/manager/integration-manager";
+import * as Yup from "yup";
 
-interface Prop {
-  value: string;
+const IntegrationSchema = Yup.object().shape({
+  name: Yup.string().required("Tenant name is required"),
+});
+
+interface IntegrationForm {
+  name: string;
+  head: string;
+  scripts: string;
 }
 
-export default function ModalIntegration({ value }: Prop) {
+interface Prop {
+  id?: string;
+  defaultValues?: IntegrationForm;
+  children: React.ReactElement;
+}
+// RHFCode
+export default function ModalIntegration({
+  children,
+  id,
+  defaultValues = {
+    name: "",
+    scripts: "",
+    head: "",
+  },
+}: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const onChange = React.useCallback((value: any, viewUpdate: any) => {
-    console.log("value:", value);
-  }, []);
+  const { enqueueSnackbar } = useSnackbar();
+  const handleOpen = (): void => {
+    setOpen(true);
+  };
+  const handleClose = (): void => {
+    setOpen(false);
+  };
+  const [createIntegration, { isLoading: creatLoading }] =
+    useCreateIntegrationMutation();
+  const [updateIntegration, { isLoading: updateLoading }] =
+    useUpdateIntegrationMutation();
+
+  const methods = useForm<IntegrationForm>({
+    resolver: yupResolver(IntegrationSchema),
+    defaultValues,
+  });
+
+  const { handleSubmit } = methods;
+
+  const onSubmit = async (data: IntegrationForm): Promise<void> => {
+    try {
+      enqueueSnackbar(`integration ${id ? "updated" : "created"} successfuly`);
+    } catch (e) {
+      enqueueSnackbar("something went wrong", { variant: "error" });
+    }
+    if (id) {
+      await updateIntegration({
+        id,
+        ...data,
+      }).unwrap();
+    } else {
+      await createIntegration(data).unwrap();
+    }
+    methods.reset();
+    handleClose();
+  };
+
   return (
     <>
-      <Button
-        onClick={handleOpen}
-        variant="contained"
-        startIcon={<Iconify icon="eva:plus-fill" />}
-      >
-        Add Integration
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute" as "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
-            boxShadow: 2,
-            borderRadius: "16px",
-            p: 4,
-            height: "600px",
-            width: "50%",
-          }}
-        >
-          <TextField variant="outlined" label="Name" sx={{ width: "100%" }} />
-          <Typography variant="h4" sx={{ margin: "10px 0" }}>
-            Links
-          </Typography>
-          <CodeMirror
-            value={value}
-            height="180px"
-            extensions={[javascript({ jsx: true })]}
-            onChange={onChange}
-          />
-          <Typography variant="h4" sx={{ margin: "10px 0" }}>
-            Scripts
-          </Typography>
-          <CodeMirror
-            value={value}
-            height="180px"
-            extensions={[javascript({ jsx: true })]}
-            onChange={onChange}
-          />{" "}
-        </Box>
-      </Modal>
+      <div onClick={handleOpen}>{children}</div>
+      <Dialog open={open} onClose={handleClose} fullWidth>
+        <DialogTitle sx={{ pb: 2 }}>Create Integration</DialogTitle>
+        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            <Stack gap={3}>
+              <Box>
+                <RHFTextField placeholder="Name" name="name" />
+              </Box>
+              <Box>
+                <RHFCode
+                  placeholder="Head links or scripts"
+                  name="head"
+                  height="180px"
+                  extensions={[javascript({ jsx: true })]}
+                />
+              </Box>
+              <Box>
+                <RHFCode
+                  placeholder="Body links or scripts"
+                  name="scripts"
+                  height="180px"
+                  extensions={[javascript({ jsx: true })]}
+                />
+              </Box>
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" color="inherit" onClick={handleClose}>
+              Cancel
+            </Button>
+            <LoadingButton
+              loading={creatLoading || updateLoading}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Save
+            </LoadingButton>
+          </DialogActions>
+        </FormProvider>
+      </Dialog>
     </>
   );
 }

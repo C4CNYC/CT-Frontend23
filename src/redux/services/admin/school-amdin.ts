@@ -117,5 +117,5 @@ export const {
   useCreateClassMutation,
   useDeleteTeacherMutation,
   useAddTeacherMutation,
-  useCreateOrganizationSchoolMutation
+  useCreateOrganizationSchoolMutation,
 } = extendedApi;
