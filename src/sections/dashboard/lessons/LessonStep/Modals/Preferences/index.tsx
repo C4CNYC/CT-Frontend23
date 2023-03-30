@@ -27,6 +27,8 @@ import { useForm } from "react-hook-form";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
 import * as Yup from "yup";
+import { GeneralTab } from "./GeneralTab";
+import { IntegrationsTab } from "./IntegrationsTab";
 
 interface FormValuesProps {
   slug: string;
@@ -164,7 +166,7 @@ export default function Preferences({
               aria-label="basic tabs example"
             >
               <Tab
-                label="Main"
+                label="General"
                 {...a11yProps(0)}
               />
               <Tab
@@ -182,53 +184,7 @@ export default function Preferences({
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-                <Grid item xs={12} md={8}>
-                  <Stack>
-                    <RHFTextField sx={{ mb: 3 }} name="title" label="Title" />
-                    <Box
-                      rowGap={3}
-                      columnGap={2}
-                      display="grid"
-                      sx={{ mb: 3 }}
-                      gridTemplateColumns={{
-                        xs: "repeat(1, 1fr)",
-                        sm: "repeat(2, 1fr)",
-                      }}
-                    >
-                      <RHFTextField name="slug" label="Slug" />
-                      <RHFSelect native name="complexity" label="Complexity">
-                        {Object.keys(LessonContentComplexity).map((c) => (
-                          <option
-                            key={
-                              LessonContentComplexity[
-                                c as keyof typeof LessonContentComplexity
-                              ]
-                            }
-                            value={
-                              LessonContentComplexity[
-                                c as keyof typeof LessonContentComplexity
-                              ]
-                            }
-                          >
-                            {c}
-                          </option>
-                        ))}
-                      </RHFSelect>
-                    </Box>
-
-                    <RHFTextField
-                      multiline
-                      rows={3}
-                      name="description"
-                      label="Description"
-                    />
-
-                    <Stack mt={2} direction="row" justifyContent="end">
-                      <RHFSwitch name="active" label="Active" />
-                      <RHFSwitch name="draft" label="Draft" />
-                    </Stack>
-                  </Stack>
-                </Grid>
+            <GeneralTab/>
           </TabPanel>
           <TabPanel value={value} index={1}>
               <RHFCode
@@ -245,6 +201,9 @@ export default function Preferences({
                 height="350px"
                 extensions={[javascript({ jsx: true })]}
               />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <IntegrationsTab contentId={contentId}/>
           </TabPanel>
           </DialogContent>
           <DialogActions>

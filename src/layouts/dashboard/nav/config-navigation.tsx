@@ -87,7 +87,7 @@ export const content = {
       icon: <FaTasks />,
     },
     {
-      title: "apps",
+      title: "integrations",
       path: PATH_DASHBOARD.apps.root,
       icon: <FiSettings />,
     },

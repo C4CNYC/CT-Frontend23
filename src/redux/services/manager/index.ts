@@ -23,6 +23,7 @@ export const managerApi = createApi({
     "Skills",
     "LessonsContentValidation",
     "Integrations",
+    "ContentIntegration",
   ],
   endpoints: () => ({}),
 });

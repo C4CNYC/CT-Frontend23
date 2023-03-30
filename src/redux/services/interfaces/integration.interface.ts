@@ -3,3 +3,7 @@ export interface IIntegration {
   head: string;
   scripts: string;
 }
+
+export interface IIntegrationSearch {
+  name?: string;
+}

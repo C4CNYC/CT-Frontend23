@@ -4,17 +4,21 @@ import {
   BaseResponseInterface,
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import { IIntegration } from "../interfaces/integration.interface";
+import {
+  IIntegration,
+  IIntegrationSearch,
+} from "../interfaces/integration.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getIntegrations: builder.query<
       BaseListResponseInterface<IIntegration & BaseResponseInterface>,
-      void
+      IIntegrationSearch
     >({
-      query: () => ({
+      query: (params) => ({
         url: "/integration",
         method: "GET",
+        params,
       }),
       providesTags: ["Integrations"],
     }),
@@ -37,10 +41,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Integrations" }],
     }),
-    removeIntegration: builder.mutation<
-      IIntegration,
-      { lessonId: string; id: string }
-    >({
+    removeIntegration: builder.mutation<IIntegration, { id: string }>({
       query: ({ id }) => ({
         url: `/integration/${id}`,
         method: "DELETE",

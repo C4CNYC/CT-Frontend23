@@ -18,12 +18,13 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Container } from "@mui/system";
+import { Container, Stack } from "@mui/system";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { format } from "date-fns";
 import _ from "lodash";
 import Head from "next/head";
-import { useGetIntegrationsQuery } from "src/redux/services/manager/integration-manager";
+import { useSnackbar } from "notistack";
+import { useGetIntegrationsQuery, useRemoveIntegrationMutation } from "src/redux/services/manager/integration-manager";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -31,8 +32,19 @@ AppsPage.getLayout = (page: React.ReactElement) => (
 
 export default function AppsPage(): React.ReactElement {
   const { dense } = useTable();
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetIntegrationsQuery();
+  const { data, isLoading } = useGetIntegrationsQuery({});
+  const [removeIntegration] = useRemoveIntegrationMutation();
+
+  const onDelete = async(id: string): Promise<void> => {
+    try {
+      await removeIntegration({ id }).unwrap()
+      enqueueSnackbar("integration removed");
+    } catch (e) {
+      enqueueSnackbar("somethinkg went wrong", { variant: "error" });
+    }
+  }
 
   if (isLoading) return <CircularProgress />;
 
@@ -43,10 +55,10 @@ export default function AppsPage(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Apps"
+          heading="Integrations"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "Apps", href: PATH_DASHBOARD.apps.root },
+            { name: "Integrations", href: PATH_DASHBOARD.apps.root },
           ]}
           action={
             <ModalIntegration>
@@ -68,7 +80,7 @@ export default function AppsPage(): React.ReactElement {
                     <TableCell align="left">Title</TableCell>
                     <TableCell align="left">Create</TableCell>
                     <TableCell align="left">Update</TableCell>
-                     <TableCell align="left"></TableCell>
+                    <TableCell align="left"></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -82,14 +94,19 @@ export default function AppsPage(): React.ReactElement {
                         {format(new Date(row.updatedAt), "MM/dd/yyyy")}
                       </TableCell>
                       <TableCell align="left">
-                        <ModalIntegration
+                        <Stack direction="row" gap={2}>
+                          <ModalIntegration
                           id={row.id}
                           defaultValues={_.omit(row, ["updatedAt", "createdAt", "id"])}
                         >
                           <IconButton>
                           <Iconify icon="material-symbols:edit" />
-                        </IconButton>
+                          </IconButton>
                         </ModalIntegration>
+                        <IconButton onClick={async () => { await onDelete(row.id); }}>
+                          <Iconify color="red" icon="material-symbols:delete" />
+                        </IconButton>
+                        </Stack>
                       </TableCell>
                     </TableRow>
                   ))}
