@@ -77,23 +77,48 @@ export default function LessonListItem({
             alignItems: "flex-start",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
             <Checkbox
               sx={{ mr: "5px" }}
               onClick={selectStep}
               size="small"
               checked={step.id === router.query.stepId}
             />
-            <Box>
+            <Box
+              sx={{
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+              }}
+            >
               <Typography
-                noWrap
-                maxWidth="250px"
                 variant="subtitle2"
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
                 gutterBottom
               >
                 {_.toUpper(step.title)}
               </Typography>
-              <Typography maxWidth="250px" noWrap variant="body2">
+              <Typography
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+                noWrap
+                variant="body2"
+              >
                 {step.description}
               </Typography>
             </Box>
