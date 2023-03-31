@@ -50,7 +50,7 @@ export default function UploadImageModal({
 
   const methods = useForm<FormValuesProps>();
 
-  const { setValue, handleSubmit } = methods;
+  const { setValue, handleSubmit, reset } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
@@ -58,6 +58,7 @@ export default function UploadImageModal({
       return;
     }
     await onUpload(data.cover, id);
+    reset();
     handleClose();
   };
 

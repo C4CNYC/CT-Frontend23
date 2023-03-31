@@ -3,10 +3,8 @@ import { useFilters } from "@hooks/useFilters";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Autocomplete, Box, TextField } from "@mui/material";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
-import { RootState } from "src/redux/store";
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
@@ -119,7 +117,6 @@ const options = ["Option 1", "Option 2"];
 export default function Progress(): React.ReactElement {
   const [value, setValue] = useState<string | null>(options[0]);
   const [inputValue, setInputValue] = useState("");
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
     class_id: "",

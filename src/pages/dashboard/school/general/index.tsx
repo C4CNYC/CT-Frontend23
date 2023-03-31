@@ -17,7 +17,6 @@ import { useState } from "react";
 import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 import { useSelector } from "react-redux";
-import { useUpdateSchoolCoverMutation } from "src/redux/services/admin/school-amdin";
 import {
   useGetSchoolProfileQuery,
   useUpdateSchoolCoverImgMutation,
@@ -77,6 +76,7 @@ export default function UserProfilePage(): React.ReactElement {
       const file = new FormData();
       file.append("file", data);
       if (!id) {
+        return;
       } else {
         await updateSchoolCoverImage({ id, file }).unwrap();
       }
@@ -99,7 +99,7 @@ export default function UserProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Organizations: Codetribe</title>
+        <title>Organizations: Codetribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card
