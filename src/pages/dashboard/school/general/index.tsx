@@ -18,7 +18,10 @@ import { BsPeopleFill } from "react-icons/bs";
 import { MdContacts } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useUpdateSchoolCoverMutation } from "src/redux/services/admin/school-amdin";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
+import {
+  useGetSchoolProfileQuery,
+  useUpdateSchoolCoverImgMutation,
+} from "src/redux/services/manager/schools-manager";
 import { RootState } from "../../../../redux/store";
 import SkeletonSchool from "./skeleton-school";
 
@@ -64,13 +67,19 @@ export default function UserProfilePage(): React.ReactElement {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const [updateSchoolCoverImage] = useUpdateSchoolCoverMutation();
+  const [updateSchoolCoverImage] = useUpdateSchoolCoverImgMutation();
 
-  const onUpload = async (data: File): Promise<void> => {
+  const onUpload = async (
+    data: File,
+    id: string | undefined
+  ): Promise<void> => {
     try {
       const file = new FormData();
       file.append("file", data);
-      await updateSchoolCoverImage({ file }).unwrap();
+      if (!id) {
+      } else {
+        await updateSchoolCoverImage({ id, file }).unwrap();
+      }
       enqueueSnackbar("Image updated");
     } catch (error) {
       enqueueSnackbar("Image not updated", { variant: "error" });
@@ -108,7 +117,7 @@ export default function UserProfilePage(): React.ReactElement {
           <ProfileCover
             name={data?.name ?? ""}
             avatar={data?.avatar}
-            cover={data?.cover ?? "/assets/icons/shool/organization.svg"}
+            cover={data?.cover}
           />
           <Tabs
             value={currentTab}
