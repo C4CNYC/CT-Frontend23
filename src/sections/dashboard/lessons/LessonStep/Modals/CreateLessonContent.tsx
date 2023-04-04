@@ -80,6 +80,7 @@ export default function CreateDemonContent({
       }).unwrap();
       enqueueSnackbar("Your step is created successfully");
       setOpenDialog(false);
+      methods.reset();
     } catch (e) {
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
     }

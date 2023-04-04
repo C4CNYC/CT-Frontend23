@@ -7,6 +7,10 @@ import SkeletonSettingsOrg from "./SkeletonSettingsOrg";
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgSettingsQuery();
 
+  if (isLoading) {
+    return <SkeletonSettingsOrg />;
+  }
+
   return (
     <>
       <Box
@@ -17,7 +21,7 @@ export default function UserProfileTab(): React.ReactElement {
           position: "relative",
         }}
       >
-        {isLoading ? <SkeletonSettingsOrg /> : <SettingsForm settings={data} />}
+        <SettingsForm settings={data} />
       </Box>
     </>
   );

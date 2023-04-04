@@ -37,8 +37,7 @@ export default function SkeletonProfileTab(): React.ReactElement {
         <Skeleton
           variant="rectangular"
           width="100%"
-          height="640px"
-          sx={{ borderRadius: "16px" }}
+          sx={{ borderRadius: "16px", height: { xs: "503px", md: "640px" } }}
           animation="wave"
         />
       </Grid>

@@ -232,11 +232,15 @@ export default function MyEditor({
             scrollbar-width: none;
             overflow-y: scroll;
           }
+          .ProseMirror.remirror-editor.remirror-a11y-dark{
+            overflow: hidden;
+          }
           .remirror-menu{
             right: 0;
           }
           .css-19j3oe6-MuiStack-root {
             overflow-x: visible !important;
+            overflow-y: visible !important;
           }
           .remirror-theme ul {
             margin-left: 20px;

@@ -1,7 +1,7 @@
 import CardModule from "@components/card-module";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { CardTypes } from "src/redux/services/enums/card-types";
+import { CardTypes } from "src/redux/services/enums/card-types.enum";
 
 export default function MainSectionHome(): React.ReactElement {
   return (

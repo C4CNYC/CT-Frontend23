@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
@@ -23,14 +22,10 @@ function SimpleInfiniteList({
     rootMargin: "0px 0px 400px 0px",
   });
   return (
-    <Box>
+    <>
       {children}
-      {hasNextPage && (
-        <Box ref={sentryRef}>
-          {/* <CircularProgress /> */}
-        </Box>
-      )}
-    </Box>
+      {hasNextPage && <Box height="50px" ref={sentryRef} />}
+    </>
   );
 }
 export default SimpleInfiniteList;

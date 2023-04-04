@@ -5,6 +5,7 @@ import FormProvider, {
   RHFUpload,
 } from "@components/hook-form";
 import { useSnackbar } from "@components/snackbar";
+import { SingleFilePreview } from "@components/upload";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
@@ -24,6 +25,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { IoMdClose } from "react-icons/io";
 import * as Yup from "yup";
 import {
   useCreateCourseMutation,
@@ -96,9 +98,10 @@ export default function CreateCourseDialog({
           id,
           ...data,
         }).unwrap();
-        if (!uploadedFile) return;
-        file.append("file", uploadedFile);
-        await updateCover({ id, file });
+        if (uploadedFile) {
+          file.append("file", uploadedFile);
+          await updateCover({ id, file });
+        }
       } else {
         const course = await createCourse({
           ...data,
@@ -109,7 +112,7 @@ export default function CreateCourseDialog({
       }
 
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      methods.reset(data);
+      methods.reset();
     } catch (error) {
       enqueueSnackbar(error.data.message, {
         variant: "error",
@@ -119,6 +122,10 @@ export default function CreateCourseDialog({
     setLoading(false);
     handleClose();
   };
+  const clearFileHandler = () => {
+    setUploadedFile(null);
+  };
+
   return (
     <>
       <Box
@@ -150,27 +157,52 @@ export default function CreateCourseDialog({
               <Grid item xs={12} md={12}>
                 <Card sx={{ p: 3, pt: 2 }}>
                   <Box rowGap={3} display="grid">
-                    <RHFUpload
-                      name="course_img"
-                      onDrop={handleDrop}
-                      helperText={
-                        <Typography
-                          variant="caption"
-                          noWrap
-                          width="90px"
+                    <Box sx={{ position: "relative" }}>
+                      {uploadedFile ? (
+                        <IconButton
                           sx={{
-                            mt: 1,
-                            mb: -1,
-                            mx: "auto",
-                            display: "block",
-                            textAlign: "center",
-                            color: "text.secondary",
+                            position: "absolute",
+                            right: "5px",
+                            top: "5px",
+                            zIndex: 10,
+                            width: "20px",
+                            height: "20px",
+                            p: 0,
                           }}
+                          onClick={clearFileHandler}
                         >
-                          {uploadedFile?.name}
-                        </Typography>
-                      }
-                    />
+                          <IoMdClose size="20px" />
+                        </IconButton>
+                      ) : null}
+                      <RHFUpload
+                        name="course_img"
+                        onDrop={handleDrop}
+                        helperText={
+                          <Typography
+                            variant="caption"
+                            noWrap
+                            width="90px"
+                            sx={{
+                              mt: 1,
+                              mb: -1,
+                              mx: "auto",
+                              display: "block",
+                              textAlign: "center",
+                              color: "text.secondary",
+                            }}
+                          >
+                            {uploadedFile?.name}
+                          </Typography>
+                        }
+                      />
+                      <SingleFilePreview
+                        file={
+                          uploadedFile
+                            ? URL.createObjectURL(uploadedFile)
+                            : null
+                        }
+                      />
+                    </Box>
                     <RHFTextField
                       style={{ width: "350px" }}
                       name="name"
