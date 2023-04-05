@@ -20,20 +20,32 @@ import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "src/hooks/useFilters";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
-import { useGetIntegrationsQuery, useRemoveIntegrationMutation } from "src/redux/services/manager/integration-manager";
-import { useAddIntegrationMutation, useGetContentIntegrationsQuery } from "src/redux/services/manager/lesson-content-manager";
+import {
+  useGetIntegrationsQuery,
+  useRemoveIntegrationMutation,
+} from "src/redux/services/manager/integration-manager";
+import {
+  useAddIntegrationMutation,
+  useGetContentIntegrationsQuery,
+} from "src/redux/services/manager/lesson-content-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type IntegrationType = IIntegration & BaseResponseInterface;
 
-export function IntegrationsTab({ contentId }: { contentId: string }): React.ReactElement {
+export function IntegrationsTab({
+  contentId,
+}: {
+  contentId: string;
+}): React.ReactElement {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
-  const [addIntegration, { isLoading: addLoading }] = useAddIntegrationMutation();
-  const [removeIntegration, { isLoading: removeLoading }] = useRemoveIntegrationMutation();
+  const [addIntegration, { isLoading: addLoading }] =
+    useAddIntegrationMutation();
+  const [removeIntegration, { isLoading: removeLoading }] =
+    useRemoveIntegrationMutation();
   const { data: usedIntegration, isFetching } = useGetContentIntegrationsQuery({
     lessonId: router.query.lessonId as string,
     id: contentId,
@@ -77,9 +89,12 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
     return (
       <Box>
         <Typography>You don't have any integrations.</Typography>
-        <Typography>Lest's create integration <Link href={PATH_DASHBOARD.apps.root}>here</Link></Typography>
+        <Typography>
+          Lest's create integration{" "}
+          <Link href={PATH_DASHBOARD.apps.root}>here</Link>
+        </Typography>
       </Box>
-    )
+    );
   }
 
   return (
@@ -110,7 +125,9 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => <TextField {...params} placeholder="Integrations" />}
+      renderInput={(params) => (
+        <TextField {...params} placeholder="Integrations" />
+      )}
       renderOption={(props, recipient, { inputValue }) => {
         const { name } = recipient;
         const matches = match(name, inputValue);
@@ -152,12 +169,18 @@ export function IntegrationsTab({ contentId }: { contentId: string }): React.Rea
                       easing: theme.transitions.easing.easeInOut,
                       duration: theme.transitions.duration.shorter,
                     }),
-                  ...({
+                  ...{
                     color: "primary.main",
-                  }),
+                  },
                 }}
               >
-                <Iconify icon={selected ? "material-symbols:check-box-outline-rounded" : "material-symbols:check-box-outline-blank"} />
+                <Iconify
+                  icon={
+                    selected
+                      ? "material-symbols:check-box-outline-rounded"
+                      : "material-symbols:check-box-outline-blank"
+                  }
+                />
               </Box>
             </Box>
 

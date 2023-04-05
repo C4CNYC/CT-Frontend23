@@ -24,7 +24,10 @@ import { format } from "date-fns";
 import _ from "lodash";
 import Head from "next/head";
 import { useSnackbar } from "notistack";
-import { useGetIntegrationsQuery, useRemoveIntegrationMutation } from "src/redux/services/manager/integration-manager";
+import {
+  useGetIntegrationsQuery,
+  useRemoveIntegrationMutation,
+} from "src/redux/services/manager/integration-manager";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -37,14 +40,14 @@ export default function AppsPage(): React.ReactElement {
   const { data, isLoading } = useGetIntegrationsQuery({});
   const [removeIntegration] = useRemoveIntegrationMutation();
 
-  const onDelete = async(id: string): Promise<void> => {
+  const onDelete = async (id: string): Promise<void> => {
     try {
-      await removeIntegration({ id }).unwrap()
+      await removeIntegration({ id }).unwrap();
       enqueueSnackbar("integration removed");
     } catch (e) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });
     }
-  }
+  };
 
   if (isLoading) return <CircularProgress />;
 
@@ -96,16 +99,27 @@ export default function AppsPage(): React.ReactElement {
                       <TableCell align="left">
                         <Stack direction="row" gap={2}>
                           <ModalIntegration
-                          id={row.id}
-                          defaultValues={_.omit(row, ["updatedAt", "createdAt", "id"])}
-                        >
-                          <IconButton>
-                          <Iconify icon="material-symbols:edit" />
+                            id={row.id}
+                            defaultValues={_.omit(row, [
+                              "updatedAt",
+                              "createdAt",
+                              "id",
+                            ])}
+                          >
+                            <IconButton>
+                              <Iconify icon="material-symbols:edit" />
+                            </IconButton>
+                          </ModalIntegration>
+                          <IconButton
+                            onClick={async () => {
+                              await onDelete(row.id);
+                            }}
+                          >
+                            <Iconify
+                              color="red"
+                              icon="material-symbols:delete"
+                            />
                           </IconButton>
-                        </ModalIntegration>
-                        <IconButton onClick={async () => { await onDelete(row.id); }}>
-                          <Iconify color="red" icon="material-symbols:delete" />
-                        </IconButton>
                         </Stack>
                       </TableCell>
                     </TableRow>

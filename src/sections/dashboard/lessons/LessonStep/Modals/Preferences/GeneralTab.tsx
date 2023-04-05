@@ -1,4 +1,4 @@
-import { RHFTextField, RHFSelect, RHFSwitch } from "@components/hook-form";
+import { RHFSelect, RHFSwitch, RHFTextField } from "@components/hook-form";
 import { Grid } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
@@ -53,4 +53,4 @@ export const GeneralTab = (): React.ReactElement => {
       </Stack>
     </Grid>
   );
-}
+};
