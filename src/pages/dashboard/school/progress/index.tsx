@@ -1,16 +1,9 @@
-import ClassCoursesAutocomplete from "@components/ClassCoursesAutocomplete/ClassCoursesAutocomplete";
-import CustomAutocomplete from "@components/custom-autocomplete";
-import ModuleLessonAutocomplete from "@components/module-lessons-autocomplete/ModuleLessonAutocomplete";
-import { useFilters } from "@hooks/useFilters";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, Container, Stack } from "@mui/material";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
-import FilterLessons from "@pages/dashboard/lessons/filter";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
-import FilterCourses from "./filters/filterCourses";
-import FilterLessonsAutocomplete from "./filters/filterLessons";
-import FilterStudentsAutocomplete from "./filters/filterStudents";
+import FilterCoursesAutocomplete from "../../../../sections/@dashboard/progress/filters/filterCourses";
+import FilterLessonsAutocomplete from "../../../../sections/@dashboard/progress/filters/filterLessons";
+import FilterStudentsAutocomplete from "../../../../sections/@dashboard/progress/filters/filterStudents";
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
@@ -75,8 +68,8 @@ export default function Progress(): React.ReactElement {
     <>
       <Container sx={{ ml: 0 }}>
         <Stack display="flex" direction="row" spacing={2}>
-          <FilterCourses />
-          {/* <FilterLessonsAutocomplete /> */}
+          <FilterCoursesAutocomplete />
+          <FilterLessonsAutocomplete />
           <FilterStudentsAutocomplete />
         </Stack>
 

@@ -14,29 +14,29 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type LessonType = ILesson & BaseResponseInterface;
 
-interface Props {
-  lessonId: string;
-}
 
-export default function FilterLessonsAutocomplete({
-  lessonId,
-}: Props): React.ReactElement {
-  const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
-    { id: lessonId },
-    { skip: !lessonId }
-  );
-  const { data, isLoading } = useGetLessonContentQuery(
-    { lessonId },
-    { skip: !lessonId }
-  );
+export default function FilterLessonsAutocomplete(): React.ReactElement {
 
+  const { filters: lessonsFilters, setFilter: setLessonsFilters } =
+    useFilters<LessonType>({
+      data: [],
+      active: false,
+      name: "",
+      description: "",
+      meta: "",
+      id: "",
+      createdAt: "",
+      updatedAt: "",
+    });
+  const { data: lesson, isLoading: isLessonLoading } =
+    useGetLessonQuery(lessonsFilters);
   return (
     <>
       <Autocomplete<IModule & BaseResponseInterface>
-        options={data?.data ?? []}
+        options={lesson?.data ?? []}
         renderInput={(params) => <TextField {...params} label="Module" />}
         onInputChange={(e, value) => {
-          setModuleFilters("name", value);
+          setLessonsFilters("name", value);
         }}
         getOptionLabel={(option) => option.name}
         sx={{

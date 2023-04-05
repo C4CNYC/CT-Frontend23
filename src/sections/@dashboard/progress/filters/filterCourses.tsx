@@ -16,7 +16,7 @@ interface Props {
   setFilter: SetFilterType;
 }
 
-export default function FilterCourses(): React.ReactElement {
+export default function FilterCoursesAutocomplete(): React.ReactElement {
   const { filters: courseFilters, setFilter: setCourseFilters } =
     useFilters<ICourseSearchParams>({
       take: 50,
