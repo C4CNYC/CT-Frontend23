@@ -1,6 +1,6 @@
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, CircularProgress, Container, Stack } from "@mui/material";
-import { ResponsiveHeatMap } from "@nivo/heatmap";
+import { HeatMapSerie, ResponsiveHeatMap } from "@nivo/heatmap";
 import { IProgress } from "src/redux/services/interfaces/progress.interface";
 import { useGetProgressQuery } from "src/redux/services/manager/progress-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -68,10 +68,9 @@ export default function Progress(): React.ReactElement {
   );
 }
 
-function parseDataTable(data?: Array<IProgress & BaseResponseInterface>): any {
-  console.log({ data })
-  if (!data) return;
-  return data.reduce<Array<IProgress & BaseResponseInterface>>((acc, curr) => ([
+function parseDataTable(data?: Array<IProgress & BaseResponseInterface>): Array<HeatMapSerie<any, any>> {
+  if (!data) return [];
+  return data.reduce<Array<HeatMapSerie<any, any>>>((acc, curr) => ([
     ...acc,
     {
       id: curr.students[0].email,
