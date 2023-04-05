@@ -38,8 +38,8 @@ interface FormValuesProps {
   draft: boolean;
   tags: string[];
   complexity: LessonContentComplexity;
-  preload_body: string,
-  solution_body: string,
+  preload_body: string;
+  solution_body: string;
 }
 
 const CreateLessonDemonSchema = Yup.object().shape({
@@ -107,7 +107,10 @@ export default function Preferences({
   const [open, setOpenDialog] = useState<boolean>(false);
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number): void => {
+  const handleChange = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ): void => {
     setValue(newValue);
   };
 
@@ -153,85 +156,73 @@ export default function Preferences({
         <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
           Lesson Step Preferences
         </DialogTitle>
-         <FormProvider
-                methods={methods}
-                onSubmit={methods.handleSubmit(onSubmit)}
-              >
-        <Box sx={{ width: "100%" }}>
-           <DialogContent sx={{ p: 0, height: "450px" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
-              <Tab
-                label="General"
-                {...a11yProps(0)}
-              />
-              <Tab
-                label="Solution"
-                {...a11yProps(1)}
-              />
-              <Tab
-                label="Preload"
-                {...a11yProps(2)}
-              />
-              <Tab
-                label="Integrations"
-                {...a11yProps(3)}
-              />
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <GeneralTab/>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-              <RHFCode
-                placeholder="This code would be hint for step"
-                name="solution_body"
-                height="350px"
-                extensions={[javascript({ jsx: true })]}
-              />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-              <RHFCode
-                placeholder="This code will preload to work space"
-                name="preload_body"
-                height="350px"
-                extensions={[javascript({ jsx: true })]}
-              />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <IntegrationsTab contentId={contentId}/>
-          </TabPanel>
-          </DialogContent>
-          <DialogActions>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: 2,
-                mt: 7,
-              }}
-            >
-              <Button
-                onClick={() => {
-                  setOpenDialog(false);
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          <Box sx={{ width: "100%" }}>
+            <DialogContent sx={{ p: 0, height: "450px" }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="General" {...a11yProps(0)} />
+                  <Tab label="Solution" {...a11yProps(1)} />
+                  <Tab label="Preload" {...a11yProps(2)} />
+                  <Tab label="Integrations" {...a11yProps(3)} />
+                </Tabs>
+              </Box>
+              <TabPanel value={value} index={0}>
+                <GeneralTab />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <RHFCode
+                  placeholder="This code would be hint for step"
+                  name="solution_body"
+                  height="350px"
+                  extensions={[javascript({ jsx: true })]}
+                />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <RHFCode
+                  placeholder="This code will preload to work space"
+                  name="preload_body"
+                  height="350px"
+                  extensions={[javascript({ jsx: true })]}
+                />
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <IntegrationsTab contentId={contentId} />
+              </TabPanel>
+            </DialogContent>
+            <DialogActions>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 2,
+                  mt: 7,
                 }}
               >
-                Close
-              </Button>
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isLoading}
-              >
-                Save
-              </LoadingButton>
-            </Box>
-          </DialogActions>
-        </Box>
+                <Button
+                  onClick={() => {
+                    setOpenDialog(false);
+                  }}
+                >
+                  Close
+                </Button>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={isLoading}
+                >
+                  Save
+                </LoadingButton>
+              </Box>
+            </DialogActions>
+          </Box>
         </FormProvider>
       </Dialog>
     </>
