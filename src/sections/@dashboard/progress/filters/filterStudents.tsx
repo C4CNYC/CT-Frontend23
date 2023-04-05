@@ -10,8 +10,6 @@ import { useGetStudentsQuery } from "src/redux/services/manager/students-manager
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-type StudentType = IStudent & BaseResponseInterface;
-
 export default function FilterStudentsAutocomplete() {
   const router = useRouter();
   const classId = router.query.id as string;
@@ -21,7 +19,7 @@ export default function FilterStudentsAutocomplete() {
     { schoolId, class_id: classId, take: 50 },
     { skip: !schoolId || !classId }
   );
-  const { filters, setFilter } = useFilters<StudentSearchParams>({
+  const { setFilter } = useFilters<StudentSearchParams>({
     name: "",
     take: 50,
   });
@@ -30,7 +28,7 @@ export default function FilterStudentsAutocomplete() {
     <>
       <Autocomplete<IStudent & BaseResponseInterface, true>
         value={classMembers?.data}
-        options={students?.data || []}
+        options={students?.data ?? []}
         getOptionLabel={(option) => option.email}
         renderInput={(params) => (
           <TextField {...params} label="Students" />

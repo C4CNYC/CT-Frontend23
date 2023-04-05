@@ -2,21 +2,12 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs/CustomBreadcrumbs"
 import ModalIntegration from "@components/modal-integration";
 import Scrollbar from "@components/scrollbar";
 import { useSettingsContext } from "@components/settings";
-import {
-  emptyRows,
-  TableEmptyRows,
-  TablePaginationCustom,
-  TableSelectedAction,
-} from "@components/table";
-import TableHeadCustom from "@components/table/TableHeadCustom";
 import TableNoData from "@components/table/TableNoData";
 import useTable from "@components/table/useTable";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import {
-  Button,
   Card,
   Divider,
-  IconButton,
   Tab,
   Table,
   TableBody,
@@ -25,14 +16,11 @@ import {
   TableHead,
   TableRow,
   Tabs,
-  Tooltip,
 } from "@mui/material";
 import { Container } from "@mui/system";
 import { PATH_DASHBOARD } from "@routes/paths";
-import { UserTableRow, UserTableToolbar } from "@sections/dashboard/user/list";
 import { format } from "date-fns";
 import Head from "next/head";
-import { useState } from "react";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -41,29 +29,9 @@ AppsPage.getLayout = (page: React.ReactElement) => (
 const STATUS_OPTIONS = ["all"];
 
 export default function AppsPage(): React.ReactElement {
-  const {
-    dense,
-    page,
-    order,
-    orderBy,
-    rowsPerPage,
-    //
-    selected,
-    setSelected,
-    onSelectRow,
-    onSelectAllRows,
-    //
-    onSort,
-    onChangeDense,
-  } = useTable();
+  const { dense } = useTable();
   const { themeStretch } = useSettingsContext();
-  const TABLE_HEAD = [
-    { id: "" },
-    { id: "title", aling: "left" },
-    { id: "createdAt", aling: "left" },
-    { id: "updatedAt", aling: "left" },
-    { id: "" },
-  ];
+
   const data = [
     {
       title: "Boostrap",
@@ -78,15 +46,6 @@ export default function AppsPage(): React.ReactElement {
       updatedAt: "2023-03-20T06:53:46.052Z",
     },
   ];
-
-  const [openConfirm, setOpenConfirm] = useState(false);
-
-  const handleOpenConfirm = (): void => {
-    setOpenConfirm(true);
-  };
-  const handleCloseConfirm = (): void => {
-    setOpenConfirm(false);
-  };
 
   return (
     <>
@@ -143,7 +102,7 @@ export default function AppsPage(): React.ReactElement {
                         <TableCell align="left">{row.id}</TableCell>
                       </TableRow>
                     ))}
-                    <TableNoData isNotFound={!data.length }/>
+                    <TableNoData isNotFound={!data.length} />
                   </TableBody>
                 </Table>
               </Scrollbar>

@@ -1,22 +1,15 @@
 import { useFilters } from "@hooks/useFilters";
 import { Autocomplete, TextField } from "@mui/material";
-import { useRouter } from "next/router";
 import {
   ILesson,
   IModule,
 } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
-import {
-  useGetLessonQuery,
-  useGetLessonsQuery,
-} from "src/redux/services/manager/lessons-manager";
+import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type LessonType = ILesson & BaseResponseInterface;
 
-
 export default function FilterLessonsAutocomplete(): React.ReactElement {
-
   const { filters: lessonsFilters, setFilter: setLessonsFilters } =
     useFilters<LessonType>({
       data: [],
@@ -28,8 +21,7 @@ export default function FilterLessonsAutocomplete(): React.ReactElement {
       createdAt: "",
       updatedAt: "",
     });
-  const { data: lesson, isLoading: isLessonLoading } =
-    useGetLessonQuery(lessonsFilters);
+  const { data: lesson } = useGetLessonQuery(lessonsFilters);
   return (
     <>
       <Autocomplete<IModule & BaseResponseInterface>

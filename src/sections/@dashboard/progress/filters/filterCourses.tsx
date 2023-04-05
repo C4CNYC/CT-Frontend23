@@ -1,20 +1,12 @@
-import { SetFilterType, useFilters } from "@hooks/useFilters";
+import { useFilters } from "@hooks/useFilters";
 import { Autocomplete, TextField } from "@mui/material";
 import { Stack } from "@mui/system";
 import {
   ICourse,
   ICourseSearchParams,
-  IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-
-type CourseType = ICourse & BaseResponseInterface;
-
-interface Props {
-  filters: IModulesSearchParams;
-  setFilter: SetFilterType;
-}
 
 export default function FilterCoursesAutocomplete(): React.ReactElement {
   const { filters: courseFilters, setFilter: setCourseFilters } =
@@ -22,7 +14,7 @@ export default function FilterCoursesAutocomplete(): React.ReactElement {
       take: 50,
       name: "",
     });
-  const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
+  const { data: courses } = useGetCourseQuery(courseFilters);
 
   return (
     <>
