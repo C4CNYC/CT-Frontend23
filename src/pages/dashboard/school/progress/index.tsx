@@ -1,191 +1,109 @@
-import CustomAutocomplete from "@components/custom-autocomplete";
-import { useFilters } from "@hooks/useFilters";
+import CustomBreadcrumbs from "@components/custom-breadcrumbs/CustomBreadcrumbs";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Autocomplete, Box, TextField } from "@mui/material";
-import { ResponsiveHeatMap } from "@nivo/heatmap";
-
-import { useState } from "react";
+import { Box, CircularProgress, Container } from "@mui/material";
+import { HeatMapSerie, ResponsiveHeatMap } from "@nivo/heatmap";
+import { PATH_DASHBOARD } from "@routes/paths";
+import DrawerFilters from "@sections/@dashboard/progress/filters/drawer";
+import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+import { IProgress } from "src/redux/services/interfaces/progress.interface";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+import { useGetProgressQuery } from "src/redux/services/manager/progress-manager";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-const data = [
-  {
-    id: "Japan",
-    data: [
-      {
-        x: "Train",
-        y: -61769,
-      },
-      {
-        x: "Subway",
-        y: 13321,
-      },
-      {
-        x: "Bus",
-        y: 61639,
-      },
-      {
-        x: "Car",
-        y: -19888,
-      },
-      {
-        x: "Boat",
-        y: -62718,
-      },
-      {
-        x: "Moto",
-        y: 87359,
-      },
-      {
-        x: "Moped",
-        y: -19566,
-      },
-    ],
-  },
-  {
-    id: "France",
-    data: [
-      {
-        x: "Train",
-        y: 94432,
-      },
-      {
-        x: "Subway",
-        y: -62488,
-      },
-      {
-        x: "Bus",
-        y: 82319,
-      },
-      {
-        x: "Car",
-        y: 14698,
-      },
-      {
-        x: "Boat",
-        y: -21145,
-      },
-      {
-        x: "Moto",
-        y: -2162,
-      },
-      {
-        x: "Moped",
-        y: -72908,
-      },
-    ],
-  },
-  {
-    id: "US",
-    data: [
-      {
-        x: "Train",
-        y: 83852,
-      },
-      {
-        x: "Subway",
-        y: 2658,
-      },
-      {
-        x: "Bus",
-        y: -71996,
-      },
-      {
-        x: "Car",
-        y: 44862,
-      },
-      {
-        x: "Boat",
-        y: 99258,
-      },
-      {
-        x: "Moto",
-        y: -69953,
-      },
-      {
-        x: "Moped",
-        y: -77423,
-      },
-    ],
-  },
-];
-
-const options = ["Option 1", "Option 2"];
-
 export default function Progress(): React.ReactElement {
-  const [value, setValue] = useState<string | null>(options[0]);
-  const [inputValue, setInputValue] = useState("");
-  const { filters, setFilter, resetFilters } = useFilters({
-    name: "",
-    class_id: "",
+  const { data, isLoading, isFetching } = useGetProgressQuery({});
+  const { data: lessons, isLoading: isLessonsLoading } = useGetLessonsQuery({
+    take: 10,
   });
 
+  if (isLoading || isFetching || isLessonsLoading) return <CircularProgress />;
   return (
     <>
-      <Autocomplete
-        value={value}
-        onChange={(event: any, newValue: string | null) => {
-          setValue(newValue);
-        }}
-        inputValue={inputValue}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-        }}
-        options={options}
-        renderInput={(params) => <TextField {...params} label="Text" />}
-        sx={{ width: 250, ml: "24px" }}
-      />
-      <Box width="850px">
-        <CustomAutocomplete
-          filterName={filters.name}
-          onFilterName={(name: string) => {
-            setFilter("name", name);
-          }}
-          onFilterClass={() => {}}
-          onResetFilter={resetFilters}
+      <Container sx={{ ml: 0 }}>
+        <CustomBreadcrumbs
+          heading="Progress"
+          links={[
+            {
+              name: "Dashboard",
+              href: PATH_DASHBOARD.root,
+            },
+            { name: "Progress", href: PATH_DASHBOARD.school.progress },
+          ]}
+          action={<DrawerFilters />}
         />
-      </Box>
-
-      <Box height="300px" width="800px">
-        <ResponsiveHeatMap
-          data={data}
-          margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
-          xOuterPadding={0.3}
-          xInnerPadding={0.2}
-          yOuterPadding={1}
-          yInnerPadding={0.3}
-          axisTop={{
-            tickSize: 5,
-            tickPadding: 1,
-            tickRotation: 0,
-            legend: "",
-            legendOffset: -28,
-          }}
-          axisLeft={{
-            tickSize: 5,
-            tickPadding: 5,
-            tickRotation: 0,
-            legend: "",
-            legendPosition: "middle",
-            legendOffset: -72,
-          }}
-          colors={{
-            type: "diverging",
-            scheme: "red_yellow_green",
-            minValue: -100000,
-            maxValue: 100000,
-            divergeAt: 1,
-          }}
-          emptyColor="#555555"
-          borderColor={{
-            from: "color",
-            modifiers: [["darker", 0.7]],
-          }}
-          legends={[]}
-        />
-      </Box>
+        <Box height="400px" width="800px">
+          <ResponsiveHeatMap
+            data={parseDataTable(lessons?.data, data?.data)}
+            forceSquare
+            enableLabels={false}
+            enableGridX={true}
+            enableGridY={true}
+            margin={{ top: 50, right: 90, bottom: 60, left: 130 }}
+            xOuterPadding={0}
+            xInnerPadding={0}
+            yOuterPadding={0}
+            yInnerPadding={0}
+            sizeVariation={{
+              sizes: [0.4, 0.4],
+            }}
+            axisTop={{
+              tickRotation: 0,
+              tickSize: 1,
+              tickPadding: -10,
+              legend: "",
+              legendOffset: -72,
+            }}
+            axisLeft={{
+              tickSize: 1,
+              tickPadding: -10,
+              tickRotation: 0,
+              legend: "",
+              legendPosition: "middle",
+              legendOffset: -72,
+            }}
+            colors={{
+              type: "diverging",
+              scheme: "red_yellow_green",
+              minValue: -100000,
+              maxValue: 100000,
+              divergeAt: 0.5,
+            }}
+            emptyColor="#33d17a"
+            borderColor={{
+              from: "color",
+              modifiers: [["darker", 0.7]],
+            }}
+          />
+        </Box>
+      </Container>
     </>
+  );
+}
+
+function parseDataTable(
+  lessons?: Array<ILesson & BaseResponseInterface>,
+  data?: Array<IProgress & BaseResponseInterface>
+): Array<HeatMapSerie<any, any>> {
+  if (!data || !lessons) return [];
+  return data.reduce<Array<HeatMapSerie<any, any>>>(
+    (acc, curr) => [
+      ...acc,
+      {
+        id: curr.students[0].email,
+        data: [
+          ...lessons?.map((l, i) => ({
+            x: `L${i + 1}`,
+            y: curr.completed_lessons.find((lc) => lc.id === l.id)
+              ? 70000
+              : -80000,
+          })),
+        ],
+      },
+    ],
+    []
   );
 }

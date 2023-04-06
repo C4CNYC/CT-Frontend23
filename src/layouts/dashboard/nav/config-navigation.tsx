@@ -1,3 +1,4 @@
+import Iconify from "@components/iconify/Iconify";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { AiOutlineSolution } from "react-icons/ai";
 import { FaSchool, FaTasks, FaUsers, FaUserShield } from "react-icons/fa";
@@ -90,6 +91,11 @@ export const content = {
       title: "integrations",
       path: PATH_DASHBOARD.apps.root,
       icon: <FiSettings />,
+    },
+    {
+      title: "skills",
+      path: PATH_DASHBOARD.skills.root,
+      icon: <Iconify icon="ion:bulb" />,
     },
   ],
 };
