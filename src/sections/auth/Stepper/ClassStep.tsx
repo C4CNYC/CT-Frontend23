@@ -8,7 +8,7 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { PATH_AFTER_LOGIN } from "src/config-global";
-import { useCreateClassMutation } from "src/redux/services/admin";
+import { useCreateClassMutation } from "src/redux/services/admin/school-amdin";
 
 export default function ClassStep(): React.ReactElement {
   const { authenticate } = useAuthContext();

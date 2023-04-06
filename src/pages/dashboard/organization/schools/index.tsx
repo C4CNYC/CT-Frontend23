@@ -10,7 +10,7 @@ import { useState } from "react";
 
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
 import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
-import { useGetSchoolListQuery } from "src/redux/services/admin";
+import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
 import { useLocales } from "../../../../locales";
 import SkeletonSchoolItem from "./skeleton-school-item";
 

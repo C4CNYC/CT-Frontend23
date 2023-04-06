@@ -37,7 +37,7 @@ import { useFilters } from "src/hooks/useFilters";
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
-} from "src/redux/services/admin";
+} from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useLocales } from "../../../../locales";
 import SkeletonMembers from "./SkeletonMembers";

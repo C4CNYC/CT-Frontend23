@@ -4,7 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { MuiColorInput } from "mui-color-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin";
+import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin/organization-customization";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useLocales } from "../../../../../../locales";

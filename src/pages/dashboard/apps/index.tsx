@@ -1,4 +1,5 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs/CustomBreadcrumbs";
+import Iconify from "@components/iconify";
 import ModalIntegration from "@components/modal-integration";
 import Scrollbar from "@components/scrollbar";
 import { useSettingsContext } from "@components/settings";
@@ -6,46 +7,49 @@ import TableNoData from "@components/table/TableNoData";
 import useTable from "@components/table/useTable";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import {
+  Button,
   Card,
-  Divider,
-  Tab,
+  CircularProgress,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Tabs,
 } from "@mui/material";
-import { Container } from "@mui/system";
+import { Container, Stack } from "@mui/system";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { format } from "date-fns";
+import _ from "lodash";
 import Head from "next/head";
+import { useSnackbar } from "notistack";
+import {
+  useGetIntegrationsQuery,
+  useRemoveIntegrationMutation,
+} from "src/redux/services/manager/integration-manager";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
-const STATUS_OPTIONS = ["all"];
-
 export default function AppsPage(): React.ReactElement {
   const { dense } = useTable();
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
+  const { data, isLoading } = useGetIntegrationsQuery({});
+  const [removeIntegration] = useRemoveIntegrationMutation();
 
-  const data = [
-    {
-      title: "Boostrap",
-      id: "fasdf23r-fsadf2-23sfgdf",
-      createdAt: "2023-03-19T20:32:25.508Z",
-      updatedAt: "2023-03-20T06:53:46.052Z",
-    },
-    {
-      title: "Reveal",
-      id: "fasdf23r-fsadf2-23sfgdf",
-      createdAt: "2023-03-19T20:32:25.508Z",
-      updatedAt: "2023-03-20T06:53:46.052Z",
-    },
-  ];
+  const onDelete = async (id: string): Promise<void> => {
+    try {
+      await removeIntegration({ id }).unwrap();
+      enqueueSnackbar("integration removed");
+    } catch (e) {
+      enqueueSnackbar("somethinkg went wrong", { variant: "error" });
+    }
+  };
+
+  if (isLoading) return <CircularProgress />;
 
   return (
     <>
@@ -54,60 +58,77 @@ export default function AppsPage(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Apps"
+          heading="Integrations"
           links={[
             { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "Apps", href: PATH_DASHBOARD.apps.root },
+            { name: "Integrations", href: PATH_DASHBOARD.apps.root },
           ]}
-          action={<ModalIntegration value={""} />}
+          action={
+            <ModalIntegration>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+              >
+                Add Integration
+              </Button>
+            </ModalIntegration>
+          }
         />
         <Card>
-          <Tabs
-            value={"all"}
-            onChange={() => ""}
-            sx={{
-              px: 2,
-              bgcolor: "background.neutral",
-            }}
-          >
-            {STATUS_OPTIONS.map((tab) => (
-              <Tab key={tab} label={tab} value={tab} />
-            ))}
-          </Tabs>
-
-          <Divider />
-
-          <>
-            <TableContainer sx={{ position: "relative", overflow: "unset" }}>
-              <Scrollbar>
-                <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell align="left">Title</TableCell>
-                      <TableCell align="left">Create</TableCell>
-                      <TableCell align="left">Update</TableCell>
-                      <TableCell align="left">Id</TableCell>
+          <TableContainer sx={{ position: "relative", overflow: "unset" }}>
+            <Scrollbar>
+              <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">Title</TableCell>
+                    <TableCell align="left">Create</TableCell>
+                    <TableCell align="left">Update</TableCell>
+                    <TableCell align="left"></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data?.data.map((row) => (
+                    <TableRow key={row.name}>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">
+                        {format(new Date(row.createdAt), "MM/dd/yyyy")}
+                      </TableCell>
+                      <TableCell align="left">
+                        {format(new Date(row.updatedAt), "MM/dd/yyyy")}
+                      </TableCell>
+                      <TableCell align="left">
+                        <Stack direction="row" gap={2}>
+                          <ModalIntegration
+                            id={row.id}
+                            defaultValues={_.omit(row, [
+                              "updatedAt",
+                              "createdAt",
+                              "id",
+                            ])}
+                          >
+                            <IconButton>
+                              <Iconify icon="material-symbols:edit" />
+                            </IconButton>
+                          </ModalIntegration>
+                          <IconButton
+                            onClick={async () => {
+                              await onDelete(row.id);
+                            }}
+                          >
+                            <Iconify
+                              color="red"
+                              icon="material-symbols:delete"
+                            />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {data.map((row) => (
-                      <TableRow key={row.title}>
-                        <TableCell align="left">{row.title}</TableCell>
-                        <TableCell align="left">
-                          {format(new Date(row.createdAt), "MM/dd/yyyy")}
-                        </TableCell>
-                        <TableCell align="left">
-                          {format(new Date(row.updatedAt), "MM/dd/yyyy")}
-                        </TableCell>
-                        <TableCell align="left">{row.id}</TableCell>
-                      </TableRow>
-                    ))}
-                    <TableNoData isNotFound={!data.length} />
-                  </TableBody>
-                </Table>
-              </Scrollbar>
-            </TableContainer>
-          </>
+                  ))}
+                  <TableNoData isNotFound={!data?.data.length} />
+                </TableBody>
+              </Table>
+            </Scrollbar>
+          </TableContainer>
         </Card>
       </Container>
     </>

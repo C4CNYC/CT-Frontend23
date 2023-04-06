@@ -22,9 +22,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Stack } from "@mui/system";
 import { format } from "date-fns";
-import { useGetLessonContentValidationsQuery, useRemoveLessonContentValiationMutation } from "src/redux/services/manager/lesson-content-validation-manager";
-import CreateEditValidation from "./CreateEditValidation";
 import { useSnackbar } from "notistack";
+import {
+  useGetLessonContentValidationsQuery,
+  useRemoveLessonContentValiationMutation,
+} from "src/redux/services/manager/lesson-content-validation-manager";
+import CreateEditValidation from "./CreateEditValidation";
 
 const RECOMENDED_COUNT_VALIDATION = 3;
 
@@ -50,12 +53,12 @@ export default function Validation({
 
   const onDeleteRule = async (id: string): Promise<void> => {
     try {
-      await removeRule({ contentId: stepId, id }).unwrap()
+      await removeRule({ contentId: stepId, id }).unwrap();
       enqueueSnackbar("validation rule removed");
     } catch (e) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
-  }
+  };
 
   return (
     <>
@@ -92,14 +95,14 @@ export default function Validation({
           </IconButton>
         </Box>
         <DialogContent sx={{ p: 3 }}>
-          {
-            data?.length && data?.length >= RECOMENDED_COUNT_VALIDATION ? (
-              <Alert sx={{ mb: "30px" }} severity="warning">
-                We are not recommend put more then {RECOMENDED_COUNT_VALIDATION} rules for 1 step. <br/>
-                It can make your step a very complicated and can affect <br/> comfort content consumers from phone
-              </Alert>
-            ) : null
-          }
+          {data?.length && data?.length >= RECOMENDED_COUNT_VALIDATION ? (
+            <Alert sx={{ mb: "30px" }} severity="warning">
+              We are not recommend put more then {RECOMENDED_COUNT_VALIDATION}{" "}
+              rules for 1 step. <br />
+              It can make your step a very complicated and can affect <br />{" "}
+              comfort content consumers from phone
+            </Alert>
+          ) : null}
           <TableContainer component={Paper} sx={{ borderRadius: 0 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
@@ -163,7 +166,9 @@ export default function Validation({
                           <IconButton sx={{ ml: 1 }}>
                             <Iconify
                               color="red"
-                              onClick={async () => { await onDeleteRule(row.id); }}
+                              onClick={async () => {
+                                await onDeleteRule(row.id);
+                              }}
                               icon="material-symbols:delete-outline"
                             />
                           </IconButton>

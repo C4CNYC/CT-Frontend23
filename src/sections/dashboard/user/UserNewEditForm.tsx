@@ -25,7 +25,7 @@ import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
   useUpdateOrgMemberMutation,
-} from "src/redux/services/admin";
+} from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";

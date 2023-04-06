@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
-import { useUpdateClassMutation } from "src/redux/services/admin";
+import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddClassDialog from "./CreateClassDialog";

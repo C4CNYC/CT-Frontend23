@@ -1,7 +1,8 @@
 import FormProvider, { RHFTextField } from "@components/hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, Grid } from "@mui/material";
+import { Box, Button, Card, Grid, IconButton } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -12,6 +13,7 @@ import * as Yup from "yup";
 
 interface FormValuesProps {
   name: string;
+  description: string;
 }
 
 interface Prop {
@@ -40,6 +42,7 @@ export default function AddClassDialog({
 
   const UpdateUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Name is required"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -66,7 +69,12 @@ export default function AddClassDialog({
         {children}
       </Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Class</DialogTitle>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <DialogTitle>Add Class</DialogTitle>
+          <IconButton onClick={handleClose} sx={{ mr: "14px" }}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
@@ -81,6 +89,14 @@ export default function AddClassDialog({
                       name="name"
                       label="Class name"
                       required
+                    />
+                    <RHFTextField
+                      sx={{ width: "350px" }}
+                      name="description"
+                      label="Class description"
+                      required
+                      multiline
+                      rows={3}
                     />
                   </Box>
                   <Box

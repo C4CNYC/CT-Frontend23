@@ -22,6 +22,8 @@ export const managerApi = createApi({
     "Tasks",
     "Skills",
     "LessonsContentValidation",
+    "Integrations",
+    "ContentIntegration",
   ],
   endpoints: () => ({}),
 });

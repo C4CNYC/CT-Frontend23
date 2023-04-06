@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import {
   useUpdateOrganizationMutation,
   useUpdateOrgAvatarMutation,
-} from "src/redux/services/admin";
+} from "src/redux/services/admin/organization-admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";

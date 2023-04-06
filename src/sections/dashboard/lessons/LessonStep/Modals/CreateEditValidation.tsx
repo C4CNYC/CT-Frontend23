@@ -15,7 +15,10 @@ import {
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useCreateLessonContentValidationMutation, useUpdateLessonContentValidationMutation } from "src/redux/services/manager/lesson-content-validation-manager";
+import {
+  useCreateLessonContentValidationMutation,
+  useUpdateLessonContentValidationMutation,
+} from "src/redux/services/manager/lesson-content-validation-manager";
 import * as Yup from "yup";
 
 interface FormValuesProps {
@@ -48,29 +51,33 @@ export default function CreateEditValidation({
   const isEdit = Boolean(id);
 
   const { enqueueSnackbar } = useSnackbar();
-  const [updateRule, { isLoading: updageLoading }] = useUpdateLessonContentValidationMutation();
-  const [createRule, { isLoading: createLoading }] = useCreateLessonContentValidationMutation()
+  const [updateRule, { isLoading: updageLoading }] =
+    useUpdateLessonContentValidationMutation();
+  const [createRule, { isLoading: createLoading }] =
+    useCreateLessonContentValidationMutation();
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateLessonDemonSchema),
     defaultValues,
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    console.log("work")
+    console.log("work");
     try {
       if (isEdit) {
         await updateRule({
           contentId: stepId,
           id: id as string,
-          ...data
-        }).unwrap()
+          ...data,
+        }).unwrap();
       } else {
         await createRule({
           id: stepId,
-          ...data
-        }).unwrap()
+          ...data,
+        }).unwrap();
       }
-      enqueueSnackbar(`Your validation rule is ${id ? "update" : "created"} successfully`);
+      enqueueSnackbar(
+        `Your validation rule is ${id ? "update" : "created"} successfully`
+      );
       setOpenDialog(false);
     } catch (e) {
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
