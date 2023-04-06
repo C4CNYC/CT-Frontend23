@@ -108,8 +108,6 @@ export default function Preferences({
     setValue(newValue);
   };
 
-  console.log(defaultValues);
-
   const { enqueueSnackbar } = useSnackbar();
   const [updateLessonContent, { isLoading }] = useUpdateLessonContentMutation();
   const methods = useForm<FormValuesProps>({
