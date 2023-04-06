@@ -214,8 +214,6 @@ export default function MyEditor({
     if (onSubmit) onSubmit();
   };
 
-  console.log({ height });
-
   return (
     <ThemeProvider>
       <style>

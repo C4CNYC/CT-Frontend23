@@ -27,6 +27,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/lesson/${lessonId}/content/${id}`,
         method: "GET",
       }),
+      providesTags: ["LessonContentItem"],
       keepUnusedDataFor: 0,
     }),
     getContentIntegrations: builder.query<
@@ -74,7 +75,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "ContentIntegration" }],
+      invalidatesTags: ["ContentIntegration"],
     }),
     removeIntegration: builder.mutation<
       ILessonContent,
@@ -85,7 +86,7 @@ const extendedApi = managerApi.injectEndpoints({
         body,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "ContentIntegration" }],
+      invalidatesTags: ["ContentIntegration"],
     }),
     removeLessonContent: builder.mutation<
       ILessonContent,
