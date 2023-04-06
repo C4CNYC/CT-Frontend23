@@ -101,6 +101,7 @@ export default function Skills(): React.ReactElement {
                           <UpdateModalSkills
                             id={row.id}
                             defaultValues={_.omit(row, [
+                              "active",
                               "updatedAt",
                               "createdAt",
                               "id",
