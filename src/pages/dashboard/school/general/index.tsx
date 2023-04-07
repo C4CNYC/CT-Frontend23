@@ -94,7 +94,7 @@ export default function UserProfilePage(): React.ReactElement {
       </>
     );
   }
-  console.log(data);
+
   return (
     <>
       <Head>
