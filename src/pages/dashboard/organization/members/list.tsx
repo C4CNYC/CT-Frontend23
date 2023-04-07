@@ -209,7 +209,7 @@ export default function UserListPage(): React.ReactElement {
           <UserTableToolbar
             filterName={filters.name}
             filterRole={filters.role}
-            optionsRole={Object.values(Role)}
+            optionsRole={Object.values(Role).filter(r => r !== Role.Owner)}
             onFilterName={(e: any) => {
               setFilter("name", e.target.value);
             }}
