@@ -63,15 +63,14 @@ export default function UserProfilePage(): React.ReactElement {
 
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-
-  const [uploadCoverImage] = useUpdateOrgCoverMutation();
+  const [uploadCoverOrgImage] = useUpdateOrgCoverMutation();
   const { data, isLoading } = useGetOrganizationQuery();
 
   const onUpload = async (data: File): Promise<void> => {
     try {
       const file = new FormData();
       file.append("file", data);
-      await uploadCoverImage({ file }).unwrap();
+      await uploadCoverOrgImage({ file }).unwrap();
       enqueueSnackbar("Image updated");
     } catch (error) {
       enqueueSnackbar("Image not updated", { variant: "error" });
@@ -103,7 +102,7 @@ export default function UserProfilePage(): React.ReactElement {
           <Stack
             sx={{ position: "absolute", zIndex: 10, mt: "10px", ml: "93%" }}
           >
-            <UploadImageModal onUpload={onUpload} id="" />
+            <UploadImageModal onUpload={onUpload} />
           </Stack>
           <ProfileCover
             name={data?.title ?? ""}

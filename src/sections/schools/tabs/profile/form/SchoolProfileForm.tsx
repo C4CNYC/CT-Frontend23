@@ -4,6 +4,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useUpdateSchoolProfileMutation } from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
@@ -41,7 +42,20 @@ export default function SchoolProfileForm({
   const { translate } = useLocales();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
-
+  useEffect(() => {
+    if (schoolProfile) {
+      reset({
+        schoolId,
+        name: schoolProfile?.name ?? "",
+        country: schoolProfile?.country ?? "",
+        address: schoolProfile?.address ?? "",
+        city: schoolProfile?.city ?? "",
+        active: schoolProfile?.active ?? false,
+        about: schoolProfile?.about ?? "",
+        phone: schoolProfile?.phone ?? "",
+      });
+    }
+  }, [schoolProfile]);
   const defaultValues = {
     schoolId,
     name: schoolProfile?.name ?? "",
@@ -58,7 +72,7 @@ export default function SchoolProfileForm({
     defaultValues,
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {

@@ -127,6 +127,20 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "School" }],
     }),
+    updateSchoolCoverImg: builder.mutation<
+      void,
+      {
+        id: string;
+        file: FormData;
+      }
+    >({
+      query: ({ id, file }) => ({
+        url: `/school/${id}/cover`,
+        method: "PATCH",
+        body: file,
+      }),
+      invalidatesTags: [{ type: "School" }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -137,6 +151,7 @@ export const {
   useGetSchoolSettingsQuery,
   useGetMySchoolsQuery,
   // -------------mutation-----------
+  useUpdateSchoolCoverImgMutation,
   useCreateSchoolSocialMutation,
   useDeleteSchoolSocialMutation,
   useUpdateSchoolContactsMutation,

@@ -18,8 +18,8 @@ interface FormValuesProps {
 }
 
 interface UploadImageProps {
-  onUpload: (file: File) => Promise<void>;
-  id: string;
+  onUpload: (file: File, id: string | undefined) => Promise<void>;
+  id?: string;
 }
 
 export default function UploadImageModal({
@@ -50,14 +50,16 @@ export default function UploadImageModal({
 
   const methods = useForm<FormValuesProps>();
 
-  const { setValue, handleSubmit } = methods;
+  const { setValue, handleSubmit, reset } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
       enqueueSnackbar("No image selected", { variant: "error" });
       return;
     }
-    await onUpload(data.cover);
+    await onUpload(data.cover, id);
+    reset();
+    handleClose();
   };
 
   const handleDrop = useCallback(
@@ -93,11 +95,16 @@ export default function UploadImageModal({
               alignItems="center"
               justifyContent="space-between"
               direction="row"
+              mb={3}
             >
               <Typography variant="h6" fontWeight="700">
                 Upload Cover Image
               </Typography>
-              <IconButton onClick={handleClose} sx={{ width: "10px" }}>
+              <IconButton
+                onClick={handleClose}
+                sx={{ width: "35px" }}
+                edge="end"
+              >
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Stack>

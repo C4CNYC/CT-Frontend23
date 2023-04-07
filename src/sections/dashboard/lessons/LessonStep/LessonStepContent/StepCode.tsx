@@ -5,17 +5,31 @@ import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
+import { IIntegration } from "src/redux/services/interfaces/integration.interface";
 
 interface Props {
   content: string;
+  integrations: IIntegration[];
   onSubmit: (value: string) => void;
 }
 
 export default function StepCode({
   content,
+  integrations,
   onSubmit,
 }: Props): React.ReactElement {
   const [value, setValue] = useState<string>("");
+
+  const pageSkeleton = (userContent: string) => {
+    if (integrations) {
+      return `<head>${integrations.reduce(
+        (ac, cur) => ac + cur.head,
+        ""
+      )}</head><main>${userContent}${integrations.reduce((ac, cur) => {
+        return ac + cur.scripts;
+      }, "")}</main>`;
+    }
+  };
 
   useState(() => {
     if (content) setValue(JSON.parse(content).content);
@@ -59,7 +73,7 @@ export default function StepCode({
             width: "100%",
             height: "90%",
           }}
-          src={"data:text/html," + encodeURIComponent(value)}
+          src={"data:text/html," + encodeURIComponent(pageSkeleton(value))}
         />
       </Box>
     </ResizerUi>

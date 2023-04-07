@@ -16,7 +16,9 @@ Progress.getLayout = (page: React.ReactElement) => (
 
 export default function Progress(): React.ReactElement {
   const { data, isLoading, isFetching } = useGetProgressQuery({});
-  const { data: lessons, isLoading: isLessonsLoading } = useGetLessonsQuery({ take: 10 })
+  const { data: lessons, isLoading: isLessonsLoading } = useGetLessonsQuery({
+    take: 10,
+  });
 
   if (isLoading || isFetching || isLessonsLoading) return <CircularProgress />;
   return (
@@ -68,7 +70,7 @@ export default function Progress(): React.ReactElement {
               scheme: "red_yellow_green",
               minValue: -100000,
               maxValue: 100000,
-              divergeAt: 0.5
+              divergeAt: 0.5,
             }}
             emptyColor="#33d17a"
             borderColor={{
@@ -95,7 +97,9 @@ function parseDataTable(
         data: [
           ...lessons?.map((l, i) => ({
             x: `L${i + 1}`,
-            y: curr.completed_lessons.find(lc => lc.id === l.id) ? 70000 : -80000
+            y: curr.completed_lessons.find((lc) => lc.id === l.id)
+              ? 70000
+              : -80000,
           })),
         ],
       },
