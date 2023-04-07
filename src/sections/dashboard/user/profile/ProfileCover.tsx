@@ -88,7 +88,7 @@ export default function ProfileCover({
 
       <Image
         alt="cover"
-        src={cover}
+        src={avatar}
         sx={{
           top: 0,
           left: 0,

@@ -32,7 +32,7 @@ export default function UserProfilePage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetSchoolProfileQuery(
+  const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
   );
@@ -84,7 +84,7 @@ export default function UserProfilePage(): React.ReactElement {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <>
         <SkeletonSchool />
