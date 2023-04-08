@@ -13,26 +13,23 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "src/hooks/useFilters";
-import { IAddLessonToModule } from "src/redux/services/interfaces/courseUnits.interface";
+import { ISkill } from "src/redux/services/interfaces/skill.interface";
 import {
   useGetLessonSkillQuery,
   useRemoveLessonSkillMutation,
   useUpdateLessonSkillMutation,
 } from "src/redux/services/manager/lesson-skill-manager";
+import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-
-type SkillType = IAddLessonToModule & BaseResponseInterface;
 
 export default function SkillsTab({
   lessonId,
 }: {
   lessonId: string;
 }): React.ReactElement {
-  const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
@@ -41,34 +38,36 @@ export default function SkillsTab({
     useUpdateLessonSkillMutation();
   const [removeIntegration, { isLoading: removeLoading }] =
     useRemoveLessonSkillMutation();
+  const { data: skills } = useGetSkillQuery(filters);
+  const { data: lessonSkill } = useGetLessonSkillQuery(
+    { id: lessonId },
+    { skip: !lessonId }
+  );
 
-  const { data: lessonSkill } = useGetLessonSkillQuery({id: lessonId }, {skip: !lessonId});
-
-  if (!lessonSkill?.data) {
+  if (!lessonSkill || !skills) {
     return <CircularProgress />;
   }
 
   const onChange = async (
     _event: React.SyntheticEvent<any>,
-    _newValue: SkillType[],
+    _newValue: Array<ISkill & BaseResponseInterface>,
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<SkillType>
+    details?: AutocompleteChangeDetails<ISkill & BaseResponseInterface>
   ): Promise<void> => {
     try {
       const payload = {
-        lessonId: router.query.lessonId as string,
-        id: contentId,
+        id: lessonId,
         skill_id: details?.option.id ?? "",
       };
       switch (reason) {
         case "selectOption": {
           await updateLessonSkill(payload).unwrap();
-          enqueueSnackbar(`${details?.option.id ?? ""} added`);
+          enqueueSnackbar(`${details?.option.name ?? ""} added`);
           return;
         }
         case "removeOption": {
           await removeIntegration(payload).unwrap();
-          enqueueSnackbar(`${details?.option.id ?? ""} removed`);
+          enqueueSnackbar(`${details?.option.name ?? ""} removed`);
           return;
         }
       }
@@ -78,11 +77,12 @@ export default function SkillsTab({
   };
 
   return (
-    <Autocomplete<BaseResponseInterface, true>
+    <Autocomplete<ISkill & BaseResponseInterface, true>
       multiple
       loading={addLoading || removeLoading}
+      value={lessonSkill}
       onChange={onChange}
-      options={lessonSkill?.id}
+      options={skills?.data}
       popupIcon={null}
       onLoadStart={() => {
         console.log("work");

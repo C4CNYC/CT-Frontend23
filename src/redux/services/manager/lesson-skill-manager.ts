@@ -1,35 +1,39 @@
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
+import { ISkill } from "../interfaces/skill.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getLessonSkill: builder.query<BaseResponseInterface, {id: string}>(
+    getLessonSkill: builder.query<
+      Array<ISkill & BaseResponseInterface>,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/lesson/${id}/skill`,
+        method: "GET",
+      }),
+      providesTags: ["LessonSkill"],
+    }),
+    updateLessonSkill: builder.mutation<void, { id: string; skill_id: string }>(
       {
-        query: ({ id}) => ({
-          url: `/lesson/${id}/skill`,
-          method: "GET",
+        query: ({ id, ...body }) => ({
+          url: `lesson/${id}/skill`,
+          method: "PATCH",
+          body,
         }),
-        providesTags: ["LessonSkill"],
+        invalidatesTags: [{ type: "LessonSkill" }],
       }
     ),
-    updateLessonSkill: builder.mutation<
-      BaseResponseInterface,
-      { id: string } & BaseResponseInterface
-    >({
-      query: ({ id, ...body }) => ({
-        url: `lesson/${id}/skill`,
-        method: "PATCH",
-        body,
-      }),
-      invalidatesTags: [{ type: "LessonSkill" }],
-    }),
-    removeLessonSkill: builder.mutation<BaseResponseInterface, { id: string }>({
-      query: ({ id }) => ({
-        url: `lesson/${id}/skill`,
-        method: "DELETE",
-      }),
-      invalidatesTags: [{ type: "LessonSkill" }],
-    }),
+    removeLessonSkill: builder.mutation<void, { id: string; skill_id: string }>(
+      {
+        query: ({ id, ...body }) => ({
+          url: `lesson/${id}/skill`,
+          method: "DELETE",
+          body,
+        }),
+        invalidatesTags: [{ type: "LessonSkill" }],
+      }
+    ),
   }),
 });
 

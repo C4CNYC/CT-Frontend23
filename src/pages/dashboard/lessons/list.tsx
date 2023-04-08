@@ -11,7 +11,7 @@ import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
+import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
 import Head from "next/head";
@@ -22,6 +22,7 @@ import SkeletonList, {
   DefaultSkeletonItem,
 } from "../../../sections/dashboard/skeleton/skeletonList";
 import SkeletonLesson from "./skeletonLesson";
+import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +62,7 @@ export default function LessonsListPage(): React.ReactElement {
             { name: "List" },
           ]}
           action={
-            <CreateLessonDialog>
+            <CreateLesson>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
@@ -69,7 +70,7 @@ export default function LessonsListPage(): React.ReactElement {
               >
                 Create Lesson
               </Button>
-            </CreateLessonDialog>
+            </CreateLesson>
           }
         />
 

@@ -1,9 +1,10 @@
+import Iconify from "@components/iconify";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {
@@ -17,6 +18,7 @@ import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
 import { RootState, useDispatch } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { getOrder } from "src/utils/getTaskOrder";
+import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
 import LessonListItem from "./LesonListItem";
 import CreateDemonContent from "./Modals/CreateLessonContent";
 import SkeletonList from "./Modals/SkeletonList";
@@ -98,6 +100,7 @@ export default function LessonStepList({
   const newContentOrder = idCardWithMaxOrder
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1;
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const onDublicate = async (
     data: ILessonContent & BaseResponseInterface
@@ -137,14 +140,32 @@ export default function LessonStepList({
       });
     }
   };
+  const handleOpenPopover = async (
+    event: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
+    setOpenPopover(event.currentTarget);
+    event.stopPropagation();
+    event.preventDefault();
+  };
+
+  const handleClosePopover = (): void => {
+    setOpenPopover(null);
+  };
 
   if (isLoading || isLessonLoading) return <SkeletonList />;
 
   return (
     <Box sx={{ p: 2 }}>
-      <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
-        {lesson?.name}
-      </Typography>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
+          {lesson?.name}
+        </Typography>
+        <IconButton onClick={handleOpenPopover}>
+          <CreateLessonDialog id={lessonId}>
+            <Iconify icon="eva:more-vertical-fill" />
+          </CreateLessonDialog>
+        </IconButton>
+      </Box>
       <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
         <Button
           variant="outlined"
