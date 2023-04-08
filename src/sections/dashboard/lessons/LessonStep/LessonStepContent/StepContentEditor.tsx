@@ -6,6 +6,7 @@ import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
+  useGetContentIntegrationsQuery,
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
@@ -14,13 +15,19 @@ import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
 import StepMultimedia from "./StepMultimedia";
 
-// interface Props {}
-
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;
   const { enqueueSnackbar } = useSnackbar();
 
   const [updateContent] = useUpdateLessonContentMutation();
+  const { data: integrations, isLoading: isIntegrationLoading } =
+    useGetContentIntegrationsQuery(
+      {
+        lessonId: lessonId as string,
+        id: stepId as string,
+      },
+      { skip: !lessonId || !stepId }
+    );
   const { data, isFetching, isLoading } = useGetLessonContentByIdQuery(
     {
       lessonId: lessonId as string,
@@ -51,7 +58,7 @@ export default function StepContentEditor(): React.ReactElement {
     if (data?.type) setBodyType(data.type);
   }, [data]);
 
-  if (isFetching || isLoading) {
+  if (isFetching || isLoading || isIntegrationLoading) {
     return bodyType === LessonContentType.Editable ? (
       <SkeletonContentMulti />
     ) : (
@@ -116,6 +123,7 @@ export default function StepContentEditor(): React.ReactElement {
         {bodyType === LessonContentType.Code ? (
           <StepCode
             content={data?.type === LessonContentType.Code ? data?.body : ""}
+            integrations={integrations ?? []}
             onSubmit={onSubmit}
           />
         ) : null}

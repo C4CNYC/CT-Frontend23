@@ -1,9 +1,5 @@
 import { javascript } from "@codemirror/lang-javascript";
-import FormProvider, {
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-} from "@components/hook-form";
+import FormProvider from "@components/hook-form";
 import { RHFCode } from "@components/hook-form/RHFCode";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
@@ -14,8 +10,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Grid,
-  Stack,
   Tab,
   Tabs,
   Typography,
@@ -113,8 +107,6 @@ export default function Preferences({
   ): void => {
     setValue(newValue);
   };
-
-  console.log(defaultValues);
 
   const { enqueueSnackbar } = useSnackbar();
   const [updateLessonContent, { isLoading }] = useUpdateLessonContentMutation();

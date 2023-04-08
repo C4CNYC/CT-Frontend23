@@ -17,7 +17,10 @@ import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMai
 import Head from "next/head";
 import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
-import SkeletonList from "../../../sections/dashboard/skeleton/skeletonList";
+import { getCountTakingElment } from "src/utils/countTakingElments";
+import SkeletonList, {
+  DefaultSkeletonItem,
+} from "../../../sections/dashboard/skeleton/skeletonList";
 import SkeletonLesson from "./skeletonLesson";
 
 // ----------------------------------------------------------------------
@@ -29,6 +32,7 @@ LessonsListPage.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function LessonsListPage(): React.ReactElement {
+  const { themeStretch } = useSettingsContext();
   const { filters, setFilter } = useFilters<ILessonSearchParams>(
     {
       module_id: "",
@@ -36,12 +40,11 @@ export default function LessonsListPage(): React.ReactElement {
     },
     FilterMode.global
   );
-  const { themeStretch } = useSettingsContext();
-  const { data, isLoading, isFetching } = useGetLessonsQuery(filters, {
-    skip: !filters,
-  });
 
-  if (isLoading) return <SkeletonList filter={2} />;
+  const { data, isLoading, isFetching } = useGetLessonsQuery(filters);
+
+  if (isLoading)
+    return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
 
   return (
     <>
@@ -88,13 +91,23 @@ export default function LessonsListPage(): React.ReactElement {
               hasNextPage={data?.meta.hasNextPage ?? false}
               onLoadMore={() => {
                 if (data?.meta.take !== filters?.take) return;
-                setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
+                // setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
               }}
               loading={isLoading ?? isFetching}
             >
               {data?.data.map((lesson) => (
                 <LessonCard key={lesson.id} lesson={lesson} />
               ))}
+              {isFetching
+                ? Array(
+                    getCountTakingElment(
+                      Number(data.meta.itemCount),
+                      Number(filters.take)
+                    )
+                  )
+                    .fill(null)
+                    .map((v, i) => <DefaultSkeletonItem key={i} />)
+                : null}
             </SimpleInfiniteList>
           </Box>
         )}

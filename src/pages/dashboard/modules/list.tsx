@@ -83,7 +83,6 @@ export default function ModulesListPage(): React.ReactElement | string {
           <SimpleInfiniteList
             hasNextPage={data?.meta.hasNextPage ?? false}
             onLoadMore={() => {
-              console.log(data?.meta.take, filters?.take);
               if (data?.meta.take !== filters?.take) return;
               setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
             }}
