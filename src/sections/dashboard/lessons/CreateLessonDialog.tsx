@@ -2,7 +2,7 @@ import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
 import { useSnackbar } from "@components/snackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, Grid } from "@mui/material";
+import { Box, Button, Card, Grid, Tab, Tabs, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -16,6 +16,7 @@ import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from "../../../redux/services/manager/lessons-manager";
+import SkillsTab from "./LessonStep/Modals/SkillsTab";
 
 interface FormValuesProps {
   name: string;
@@ -28,6 +29,39 @@ interface Prop {
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }
 
 export default function CreateLessonDialog({
@@ -94,6 +128,12 @@ export default function CreateLessonDialog({
     handleClose();
   };
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
@@ -104,47 +144,81 @@ export default function CreateLessonDialog({
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ p: 3 }}>
-                  <Box rowGap={3} display="grid">
-                    <RHFTextField
-                      style={{ width: "350px" }}
-                      name="name"
-                      label="Lesson name"
-                      required
-                    />
+            <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Main" {...a11yProps(0)} />
+                <Tab label="Skills" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+                <Grid item xs={12} md={12}>
+                  <Card sx={{ p: 3 }}>
+                    <Box rowGap={3} display="grid">
+                      <RHFTextField
+                        style={{ width: "350px" }}
+                        name="name"
+                        label="Lesson name"
+                        required
+                      />
 
-                    <RHFTextField
-                      name="description"
-                      label="Lesson description"
-                      required
-                      multiline
-                      rows={3}
-                    />
+                      <RHFTextField
+                        name="description"
+                        label="Lesson description"
+                        required
+                        multiline
+                        rows={3}
+                      />
 
-                    <RHFSwitch name="active" label="Module active" />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      gap: 2,
-                      mt: 7,
-                    }}
-                  >
-                    <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      loading={loading}
+                      <RHFSwitch name="active" label="Module active" />
+                    </Box>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        gap: 2,
+                        mt: 7,
+                      }}
                     >
-                      Save
-                    </LoadingButton>
-                  </Box>
-                </Card>
-              </Grid>
-            </Grid>
+                      <Button onClick={handleClose}>Close</Button>
+                      <LoadingButton
+                        type="submit"
+                        variant="contained"
+                        loading={loading}
+                      >
+                        Save
+                      </LoadingButton>
+                    </Box>
+                  </Card>
+                </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Box width="400px" height="290px">
+
+              <SkillsTab lessonId={id} />
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 2,
+                  mt: 7,
+                }}
+              >
+                <Button onClick={handleClose}>Close</Button>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={loading}
+                >
+                  Save
+                </LoadingButton>
+              </Box>
+            </TabPanel>
           </FormProvider>
         </DialogContent>
       </Dialog>

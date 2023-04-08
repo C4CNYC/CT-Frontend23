@@ -21,6 +21,7 @@ export const managerApi = createApi({
     "Courses",
     "Tasks",
     "Skills",
+    "LessonSkill",
     "LessonsContentValidation",
     "Integrations",
     "ContentIntegration",

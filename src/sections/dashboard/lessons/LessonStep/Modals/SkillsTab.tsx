@@ -1,0 +1,180 @@
+import Iconify from "@components/iconify";
+import SearchNotFound from "@components/search-not-found";
+import {
+  alpha,
+  Autocomplete,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
+  Box,
+  Chip,
+  TextField,
+  Typography,
+} from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import * as React from "react";
+import { useFilters } from "src/hooks/useFilters";
+import { IAddLessonToModule } from "src/redux/services/interfaces/courseUnits.interface";
+import {
+  useGetLessonSkillQuery,
+  useRemoveLessonSkillMutation,
+  useUpdateLessonSkillMutation,
+} from "src/redux/services/manager/lesson-skill-manager";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+
+type SkillType = IAddLessonToModule & BaseResponseInterface;
+
+export default function SkillsTab({
+  lessonId,
+}: {
+  lessonId: string;
+}): React.ReactElement {
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { filters, setFilter } = useFilters({ name: "", take: 50 });
+
+  const [updateLessonSkill, { isLoading: addLoading }] =
+    useUpdateLessonSkillMutation();
+  const [removeIntegration, { isLoading: removeLoading }] =
+    useRemoveLessonSkillMutation();
+
+  const { data: lessonSkill } = useGetLessonSkillQuery({id: lessonId }, {skip: !lessonId});
+
+  if (!lessonSkill?.data) {
+    return <CircularProgress />;
+  }
+
+  const onChange = async (
+    _event: React.SyntheticEvent<any>,
+    _newValue: SkillType[],
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<SkillType>
+  ): Promise<void> => {
+    try {
+      const payload = {
+        lessonId: router.query.lessonId as string,
+        id: contentId,
+        skill_id: details?.option.id ?? "",
+      };
+      switch (reason) {
+        case "selectOption": {
+          await updateLessonSkill(payload).unwrap();
+          enqueueSnackbar(`${details?.option.id ?? ""} added`);
+          return;
+        }
+        case "removeOption": {
+          await removeIntegration(payload).unwrap();
+          enqueueSnackbar(`${details?.option.id ?? ""} removed`);
+          return;
+        }
+      }
+    } catch {
+      enqueueSnackbar("something went wrong", { variant: "error" });
+    }
+  };
+
+  return (
+    <Autocomplete<BaseResponseInterface, true>
+      multiple
+      loading={addLoading || removeLoading}
+      onChange={onChange}
+      options={lessonSkill?.id}
+      popupIcon={null}
+      onLoadStart={() => {
+        console.log("work");
+      }}
+      noOptionsText={
+        <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
+      }
+      onInputChange={(event, value) => {
+        setFilter("name", value);
+      }}
+      getOptionLabel={(option) => option.name}
+      renderTags={(tagValue, getTagProps): React.ReactElement[] =>
+        tagValue.map((option, index) => (
+          <Chip
+            label={option.name}
+            {...getTagProps({ index })}
+            key={option.name}
+          />
+        ))
+      }
+      style={{ width: "100%" }}
+      renderInput={(params) => (
+        <TextField {...params} placeholder="Integrations" />
+      )}
+      renderOption={(props, recipient, { inputValue }) => {
+        const { name } = recipient;
+        const matches = match(name, inputValue);
+        const parts = parse(name, matches);
+
+        const selected = lessonSkill.find((c) => c.name === name);
+
+        return (
+          <Box
+            component="li"
+            sx={{
+              p: "12px !important",
+              pointerEvents: selected ? "none" : "auto",
+            }}
+            {...props}
+          >
+            <Box
+              sx={{
+                mr: 1.5,
+                width: 32,
+                height: 32,
+                overflow: "hidden",
+                borderRadius: "50%",
+                position: "relative",
+              }}
+            >
+              <Box
+                sx={{
+                  top: 0,
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  position: "absolute",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+                  transition: (theme) =>
+                    theme.transitions.create("opacity", {
+                      easing: theme.transitions.easing.easeInOut,
+                      duration: theme.transitions.duration.shorter,
+                    }),
+                  ...{
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <Iconify
+                  icon={
+                    selected
+                      ? "material-symbols:check-box-outline-rounded"
+                      : "material-symbols:check-box-outline-blank"
+                  }
+                />
+              </Box>
+            </Box>
+
+            {parts.map((part, index) => (
+              <Typography
+                key={index}
+                variant="subtitle2"
+                color={part.highlight ? "primary" : "textPrimary"}
+              >
+                {part.text}
+              </Typography>
+            ))}
+          </Box>
+        );
+      }}
+    />
+  );
+}
