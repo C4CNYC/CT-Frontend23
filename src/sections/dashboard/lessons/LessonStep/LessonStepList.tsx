@@ -160,8 +160,15 @@ export default function LessonStepList({
         <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
           {lesson?.name}
         </Typography>
-        <IconButton onClick={handleOpenPopover}>
-          <CreateLessonDialog id={lessonId}>
+        <IconButton onClick={handleOpenPopover} size="small" sx={{ p: "7px" }}>
+          <CreateLessonDialog
+            id={lesson?.id}
+            defaultValues={{
+              name: lesson?.name as string,
+              description: lesson?.description as string,
+              active: lesson?.active,
+            }}
+          >
             <Iconify icon="eva:more-vertical-fill" />
           </CreateLessonDialog>
         </IconButton>

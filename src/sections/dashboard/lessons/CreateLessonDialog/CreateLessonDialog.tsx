@@ -155,8 +155,7 @@ export default function CreateLessonDialog({
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ p: 3 }}>
+              <Grid item xs={12} md={12} p={2}>
                   <Box rowGap={3} display="grid">
                     <RHFTextField
                       style={{ width: "350px" }}
@@ -192,7 +191,6 @@ export default function CreateLessonDialog({
                       Save
                     </LoadingButton>
                   </Box>
-                </Card>
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
