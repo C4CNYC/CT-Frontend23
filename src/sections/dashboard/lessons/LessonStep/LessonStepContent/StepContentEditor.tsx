@@ -6,10 +6,10 @@ import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
-  useGetContentIntegrationsQuery,
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
+import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
 import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
@@ -21,10 +21,9 @@ export default function StepContentEditor(): React.ReactElement {
 
   const [updateContent] = useUpdateLessonContentMutation();
   const { data: integrations, isLoading: isIntegrationLoading } =
-    useGetContentIntegrationsQuery(
+    useGetLessonIntegrationsQuery(
       {
         lessonId: lessonId as string,
-        id: stepId as string,
       },
       { skip: !lessonId || !stepId }
     );

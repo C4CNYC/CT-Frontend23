@@ -26,8 +26,8 @@ import {
 } from "src/redux/services/manager/integration-manager";
 import {
   useAddIntegrationMutation,
-  useGetContentIntegrationsQuery,
-} from "src/redux/services/manager/lesson-content-manager";
+  useGetLessonIntegrationsQuery,
+} from "src/redux/services/manager/lessons-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type IntegrationType = IIntegration & BaseResponseInterface;
@@ -46,9 +46,9 @@ export function IntegrationsTab({
     useAddIntegrationMutation();
   const [removeIntegration, { isLoading: removeLoading }] =
     useRemoveIntegrationMutation();
-  const { data: usedIntegration, isFetching } = useGetContentIntegrationsQuery({
+
+  const { data: usedIntegration, isFetching } = useGetLessonIntegrationsQuery({
     lessonId: router.query.lessonId as string,
-    id: contentId,
   });
   const { data: integrations } = useGetIntegrationsQuery(filters);
 
@@ -65,7 +65,6 @@ export function IntegrationsTab({
     try {
       const payload = {
         lessonId: router.query.lessonId as string,
-        id: contentId,
         integration_id: details?.option.id ?? "",
       };
       switch (reason) {
