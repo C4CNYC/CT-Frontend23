@@ -36,7 +36,6 @@ export default function UserProfilePage(): React.ReactElement {
     { schoolId },
     { skip: !schoolId }
   );
-
   const TABS = [
     {
       value: "profile",

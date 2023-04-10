@@ -53,7 +53,7 @@ export default function ProfileCover({
   "email" | "name" | "cover" | "avatar"
 >): React.ReactElement | null {
   const { user } = useAuthContext();
-  console.log({ cover, avatar });
+
   return (
     <StyledRoot>
       <StyledInfo>

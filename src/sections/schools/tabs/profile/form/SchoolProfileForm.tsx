@@ -6,7 +6,10 @@ import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdateSchoolProfileMutation } from "src/redux/services/manager/schools-manager";
+import {
+  useUpdateSchoolAvatarImgMutation,
+  useUpdateSchoolProfileMutation,
+} from "src/redux/services/manager/schools-manager";
 import * as Yup from "yup";
 import { countries } from "../../../../../assets/data";
 import { useLocales } from "../../../../../locales";
@@ -33,13 +36,18 @@ interface FormValuesProps {
 interface SchoolProfileFormProps {
   schoolProfile?: SchoolProfile;
   schoolId: string;
+  file: File;
+  setImgValue: Function;
 }
 
 export default function SchoolProfileForm({
   schoolProfile,
   schoolId,
+  file,
+  setImgValue,
 }: SchoolProfileFormProps): React.ReactElement | null {
   const { translate } = useLocales();
+  const [updateSchoolAvatar] = useUpdateSchoolAvatarImgMutation();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
@@ -86,8 +94,16 @@ export default function SchoolProfileForm({
         about: data.about ?? "",
         phone: data.phone,
       }).unwrap();
+      if (file) {
+        let formData = new FormData();
+        formData.append("file", file);
+        await updateSchoolAvatar({
+          id: schoolId,
+          file: formData,
+        }).unwrap();
+        setImgValue([]);
+      }
       enqueueSnackbar("Update success!");
-      console.log("DATA", data);
     } catch (error) {
       console.error(error);
     }
