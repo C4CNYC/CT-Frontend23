@@ -68,7 +68,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     getLessonIntegrations: builder.query<
       Array<IIntegration & BaseResponseInterface>,
-      { lessonId: string; id: string }
+      { id: string }
     >({
       query: ({ id }) => ({
         url: `/lesson/${id}/integration`,
@@ -78,7 +78,7 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
     }),
     addIntegration: builder.mutation<
-    void,
+      void,
       { lessonId: string; id: string; integration_id: string }
     >({
       query: ({ lessonId, id, ...body }) => ({
