@@ -1,21 +1,25 @@
 import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
-import { useSnackbar } from "@components/snackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, Grid } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+  Box,
+  Button,
+  Card,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
 import { useRouter } from "next/router";
-import * as React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
+import { useSnackbar } from "notistack";
+import React, { useState } from "react";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
-} from "../../../redux/services/manager/lessons-manager";
+} from "src/redux/services/manager/lessons-manager";
+import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
 
 interface FormValuesProps {
   name: string;
@@ -30,7 +34,7 @@ interface Prop {
   id?: string;
 }
 
-export default function CreateLessonDialog({
+export default function CreateLesson({
   id,
   isEdit,
   children,
@@ -104,46 +108,44 @@ export default function CreateLessonDialog({
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ p: 3 }}>
-                  <Box rowGap={3} display="grid">
-                    <RHFTextField
-                      style={{ width: "350px" }}
-                      name="name"
-                      label="Lesson name"
-                      required
-                    />
+            <Grid item xs={12} md={12}>
+              <Card sx={{ p: 3 }}>
+                <Box rowGap={3} display="grid">
+                  <RHFTextField
+                    style={{ width: "350px" }}
+                    name="name"
+                    label="Lesson name"
+                    required
+                  />
 
-                    <RHFTextField
-                      name="description"
-                      label="Lesson description"
-                      required
-                      multiline
-                      rows={3}
-                    />
+                  <RHFTextField
+                    name="description"
+                    label="Lesson description"
+                    required
+                    multiline
+                    rows={3}
+                  />
 
-                    <RHFSwitch name="active" label="Module active" />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      gap: 2,
-                      mt: 7,
-                    }}
+                  <RHFSwitch name="active" label="Module active" />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 2,
+                    mt: 7,
+                  }}
+                >
+                  <Button onClick={handleClose}>Close</Button>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={loading}
                   >
-                    <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      loading={loading}
-                    >
-                      Save
-                    </LoadingButton>
-                  </Box>
-                </Card>
-              </Grid>
+                    Save
+                  </LoadingButton>
+                </Box>
+              </Card>
             </Grid>
           </FormProvider>
         </DialogContent>

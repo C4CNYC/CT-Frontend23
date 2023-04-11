@@ -10,6 +10,7 @@ import {
   ILessonDelete,
   ILessonSearchParams,
 } from "../interfaces/courseUnits.interface";
+import { IIntegration } from "../interfaces/integration.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -65,6 +66,39 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Lessons" }],
     }),
+    getLessonIntegrations: builder.query<
+      Array<IIntegration & BaseResponseInterface>,
+      { lessonId: string; id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/lesson/${id}/integration`,
+        method: "GET",
+      }),
+      providesTags: ["ContentIntegration"],
+      keepUnusedDataFor: 0,
+    }),
+    addIntegration: builder.mutation<
+    void,
+      { lessonId: string; id: string; integration_id: string }
+    >({
+      query: ({ lessonId, id, ...body }) => ({
+        url: `/lesson/${id}/integration`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["ContentIntegration"],
+    }),
+    removeIntegration: builder.mutation<
+      void,
+      { lessonId: string; id: string; integration_id: string }
+    >({
+      query: ({ lessonId, id, ...body }) => ({
+        url: `/lesson/${id}/integration`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["ContentIntegration"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -72,8 +106,11 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useGetLessonsQuery,
   useGetLessonQuery,
+  useGetLessonIntegrationsQuery,
   // -------------mutation-----------
   useCreateLessonMutation,
-  useDeleteLessonMutation,
   useUpdateLessonMutation,
+  useDeleteLessonMutation,
+  useAddIntegrationMutation,
+  useRemoveIntegrationMutation,
 } = extendedApi;
