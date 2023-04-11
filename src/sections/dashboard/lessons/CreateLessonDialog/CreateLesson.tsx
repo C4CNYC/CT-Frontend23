@@ -98,11 +98,6 @@ export default function CreateLesson({
     handleClose();
   };
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
   return (
     <>
       <Box onClick={handleClickOpen}>{children}</Box>

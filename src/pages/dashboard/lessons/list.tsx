@@ -11,7 +11,7 @@ import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, Container } from "@mui/material";
 import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
+import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
 import Head from "next/head";
@@ -22,7 +22,6 @@ import SkeletonList, {
   DefaultSkeletonItem,
 } from "../../../sections/dashboard/skeleton/skeletonList";
 import SkeletonLesson from "./skeletonLesson";
-import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +45,6 @@ export default function LessonsListPage(): React.ReactElement {
 
   if (isLoading)
     return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
-
   return (
     <>
       <Head>

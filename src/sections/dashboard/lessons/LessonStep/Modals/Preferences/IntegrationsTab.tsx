@@ -20,17 +20,14 @@ import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "src/hooks/useFilters";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
-import {
-  useGetIntegrationsQuery,
-  useRemoveIntegrationMutation,
-} from "src/redux/services/manager/integration-manager";
+import { useGetIntegrationsQuery } from "src/redux/services/manager/integration-manager";
 import {
   useAddIntegrationMutation,
-  useGetContentIntegrationsQuery,
-} from "src/redux/services/manager/lesson-content-manager";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+  useGetLessonIntegrationsQuery,
+  useRemoveIntegrationMutation,
+} from "src/redux/services/manager/lessons-manager";
 
-type IntegrationType = IIntegration & BaseResponseInterface;
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 export function IntegrationsTab({
   contentId,
@@ -46,7 +43,7 @@ export function IntegrationsTab({
     useAddIntegrationMutation();
   const [removeIntegration, { isLoading: removeLoading }] =
     useRemoveIntegrationMutation();
-  const { data: usedIntegration, isFetching } = useGetContentIntegrationsQuery({
+  const { data: usedIntegration, isFetching } = useGetLessonIntegrationsQuery({
     lessonId: router.query.lessonId as string,
     id: contentId,
   });
@@ -58,9 +55,9 @@ export function IntegrationsTab({
 
   const onChange = async (
     _event: React.SyntheticEvent<any>,
-    _newValue: IntegrationType[],
+    _newValue: Array<IIntegration & BaseResponseInterface>,
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<IntegrationType>
+    details?: AutocompleteChangeDetails<IIntegration & BaseResponseInterface>
   ): Promise<void> => {
     try {
       const payload = {
@@ -103,7 +100,7 @@ export function IntegrationsTab({
       loading={isFetching || addLoading || removeLoading}
       value={usedIntegration}
       onChange={onChange}
-      options={integrations.data}
+      options={integrations?.data}
       popupIcon={null}
       onLoadStart={() => {
         console.log("work");

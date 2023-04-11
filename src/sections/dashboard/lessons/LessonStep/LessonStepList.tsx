@@ -1,10 +1,10 @@
-import Iconify from "@components/iconify";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {
@@ -147,20 +147,24 @@ export default function LessonStepList({
     event.stopPropagation();
     event.preventDefault();
   };
-
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
-
   if (isLoading || isLessonLoading) return <SkeletonList />;
-
   return (
     <Box sx={{ p: 2 }}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Typography variant="subtitle1" gutterBottom sx={{ pl: 1 }}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        pb="15px"
+      >
+        <Typography variant="subtitle1" sx={{ pl: 1 }}>
           {lesson?.name}
         </Typography>
-        <IconButton onClick={handleOpenPopover} size="small" sx={{ p: "7px" }}>
+        <IconButton
+          color={openPopover ? "inherit" : "default"}
+          onClick={handleOpenPopover}
+          sx={{ mr: "2px", pt: "5px", pb: "5px" }}
+          edge="end"
+        >
           <CreateLessonDialog
             id={lesson?.id}
             defaultValues={{
@@ -169,7 +173,7 @@ export default function LessonStepList({
               active: lesson?.active,
             }}
           >
-            <Iconify icon="eva:more-vertical-fill" />
+            <BsThreeDotsVertical size="20px" />
           </CreateLessonDialog>
         </IconButton>
       </Box>

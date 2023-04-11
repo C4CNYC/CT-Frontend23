@@ -5,7 +5,6 @@ import {
   ILessonContent,
   ILessonContentUpdate,
 } from "../interfaces/courseUnits.interface";
-import { IIntegration } from "../interfaces/integration.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -30,17 +29,7 @@ const extendedApi = managerApi.injectEndpoints({
       providesTags: ["LessonContentItem"],
       keepUnusedDataFor: 0,
     }),
-    getContentIntegrations: builder.query<
-      Array<IIntegration & BaseResponseInterface>,
-      { lessonId: string; id: string }
-    >({
-      query: ({ lessonId, id }) => ({
-        url: `/lesson/${lessonId}/content/${id}/integration`,
-        method: "GET",
-      }),
-      providesTags: ["ContentIntegration"],
-      keepUnusedDataFor: 0,
-    }),
+
     createLessonContent: builder.mutation<
       ILessonContent,
       { lessonId: string } & Omit<
@@ -66,28 +55,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "LessonsContent" }],
     }),
-    addIntegration: builder.mutation<
-      ILessonContent,
-      { lessonId: string; id: string; integration_id: string }
-    >({
-      query: ({ lessonId, id, ...body }) => ({
-        url: `/lesson/${lessonId}/content/${id}/integration`,
-        method: "PATCH",
-        body,
-      }),
-      invalidatesTags: ["ContentIntegration"],
-    }),
-    removeIntegration: builder.mutation<
-      ILessonContent,
-      { lessonId: string; id: string; integration_id: string }
-    >({
-      query: ({ lessonId, id, ...body }) => ({
-        url: `/lesson/${lessonId}/content/${id}/integration`,
-        body,
-        method: "DELETE",
-      }),
-      invalidatesTags: ["ContentIntegration"],
-    }),
+
     removeLessonContent: builder.mutation<
       ILessonContent,
       { lessonId: string; id: string }
@@ -103,13 +71,10 @@ const extendedApi = managerApi.injectEndpoints({
 });
 
 export const {
-  useGetContentIntegrationsQuery,
   useGetLessonContentQuery,
   useGetLessonContentByIdQuery,
   // -------------mutation-----------
   useUpdateLessonContentMutation,
   useCreateLessonContentMutation,
   useRemoveLessonContentMutation,
-  useAddIntegrationMutation,
-  useRemoveIntegrationMutation,
 } = extendedApi;
