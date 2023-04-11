@@ -29,6 +29,7 @@ const extendedApi = managerApi.injectEndpoints({
       providesTags: ["LessonContentItem"],
       keepUnusedDataFor: 0,
     }),
+
     createLessonContent: builder.mutation<
       ILessonContent,
       { lessonId: string } & Omit<
@@ -54,6 +55,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "LessonsContent" }],
     }),
+
     removeLessonContent: builder.mutation<
       ILessonContent,
       { lessonId: string; id: string }

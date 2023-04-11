@@ -9,7 +9,10 @@ import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
-import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
+import {
+  useGetLessonIntegrationsQuery,
+  useGetLessonIntegrationsQuery,
+} from "src/redux/services/manager/lessons-manager";
 import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
@@ -23,7 +26,7 @@ export default function StepContentEditor(): React.ReactElement {
   const { data: integrations, isLoading: isIntegrationLoading } =
     useGetLessonIntegrationsQuery(
       {
-        lessonId: lessonId as string,
+        id: lessonId as string,
       },
       { skip: !lessonId || !stepId }
     );

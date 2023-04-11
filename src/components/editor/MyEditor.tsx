@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
-import { height, Stack } from "@mui/system";
+import { Stack } from "@mui/system";
 import { FileExtension } from "@remirror/extension-file";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {

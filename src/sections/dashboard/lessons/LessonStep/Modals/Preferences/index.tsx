@@ -22,7 +22,6 @@ import { LessonContentComplexity } from "src/redux/services/enums/lesson-content
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
 import * as Yup from "yup";
 import { GeneralTab } from "./GeneralTab";
-import { IntegrationsTab } from "./IntegrationsTab";
 
 interface FormValuesProps {
   slug: string;
@@ -163,7 +162,6 @@ export default function Preferences({
                   <Tab label="General" {...a11yProps(0)} />
                   <Tab label="Solution" {...a11yProps(1)} />
                   <Tab label="Preload" {...a11yProps(2)} />
-                  <Tab label="Integrations" {...a11yProps(3)} />
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
@@ -185,9 +183,7 @@ export default function Preferences({
                   extensions={[javascript({ jsx: true })]}
                 />
               </TabPanel>
-              <TabPanel value={value} index={3}>
-                <IntegrationsTab contentId={contentId} />
-              </TabPanel>
+
             </DialogContent>
             <DialogActions>
               <Box

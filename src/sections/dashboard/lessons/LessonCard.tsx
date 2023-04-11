@@ -5,7 +5,7 @@ import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Divider, IconButton, MenuItem, Stack } from "@mui/material";
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog";
+import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
