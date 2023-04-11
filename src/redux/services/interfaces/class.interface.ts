@@ -6,7 +6,7 @@ export interface IClass {
 }
 
 export interface ClassSearchParams {
-  name: string;
+  name?: string;
 }
 
 export interface IModule {

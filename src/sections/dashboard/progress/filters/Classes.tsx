@@ -1,0 +1,72 @@
+import { useFilters } from "@hooks/useFilters";
+import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, Skeleton, TextField } from "@mui/material";
+import { Stack } from "@mui/system";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { IClass } from "src/redux/services/interfaces/class.interface";
+import {
+  ICourseSearchParams,
+} from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
+import { RootState } from "src/redux/store";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+
+interface IFilterCoursesAutocomplete {
+  classId: string;
+  setClass: (classId: string) => void
+}
+
+export default function FilterClassesAutocomplete({ classId, setClass }: IFilterCoursesAutocomplete): React.ReactElement {
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const { filters: classesFilters, setFilter: setCourseFilters } =
+    useFilters<ICourseSearchParams>({
+      take: 50,
+      name: "",
+    });
+  const { data: classes, isLoading } = useGetClassesQuery({
+    schoolId,
+    ...classesFilters
+  });
+
+  const onChangeCourse = (
+    event: React.SyntheticEvent<any>,
+    newValue: IClass & BaseResponseInterface | null,
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<IClass & BaseResponseInterface>
+  ): void => {
+    if (details?.option.id === classId) return;
+    setClass(details?.option.id as string);
+  };
+
+  useEffect(() => {
+    if (!classes || classId) return;
+    setClass(classes.data[0] ? classes.data[0].id : "");
+  }, [classes])
+
+  if (isLoading) return <Skeleton width="260px" height="56px" />
+
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const current = (classId && classes?.data.find(c => c.id === classId)) || classes?.data[0]
+
+  return (
+    <>
+      <Stack>
+        <Autocomplete<IClass & BaseResponseInterface>
+          value={current}
+          options={classes?.data ?? []}
+          onChange={onChangeCourse}
+          renderInput={(params) => <TextField {...params} label="Class" />}
+          onInputChange={(e, value) => {
+            if (classes?.data.find(c => c.id === classId)?.name === value) return;
+            setCourseFilters("name", value);
+          }}
+          getOptionLabel={(option) => option.name}
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+            marginRight: 2,
+          }}
+        />
+      </Stack>
+    </>
+  );
+}

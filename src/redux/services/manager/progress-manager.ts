@@ -4,18 +4,32 @@ import {
   BaseResponseInterface,
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import { IProgress, IProgressSearch } from "../interfaces/progress.interface";
+import {
+  IProgress,
+  IProgressContent,
+  IProgressSearch,
+} from "../interfaces/progress.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getProgress: builder.query<
       BaseListResponseInterface<IProgress & BaseResponseInterface>,
-      IProgressSearch
+      IProgressSearch & { id: string }
     >({
-      query: (params) => ({
-        url: "/progress",
+      query: ({ id, ...params }) => ({
+        url: `course/${id}/progres`,
         method: "GET",
         params,
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    getProgressContent: builder.query<
+      IProgressContent & BaseResponseInterface,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `course/${id}/progress/content`,
+        method: "GET",
       }),
       keepUnusedDataFor: 0,
     }),
@@ -25,5 +39,6 @@ const extendedApi = managerApi.injectEndpoints({
 
 export const {
   useGetProgressQuery,
+  useGetProgressContentQuery,
   // -------------mutation-----------
 } = extendedApi;
