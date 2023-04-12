@@ -2,7 +2,6 @@ import CustomBreadcrumbs from "@components/custom-breadcrumbs/CustomBreadcrumbs"
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
-import { ProgressSection } from "@sections/dashboard/progress";
 import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
 
 Progress.getLayout = (page: React.ReactElement) => (
@@ -24,7 +23,6 @@ export default function Progress(): React.ReactElement {
           ]}
         />
         <ProgressTable />
-        {/* <ProgressSection /> */}
       </Container>
     </>
   );
