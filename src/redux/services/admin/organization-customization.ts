@@ -18,7 +18,8 @@ const extendedApi = adminApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "OrganizationCustomization" }],
     }),
-    getOrgCustomization: builder.query<CustomizationResponce, ICustomization>({
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    getOrgCustomization: builder.query<CustomizationResponce, void>({
       query: () => ({
         url: "/org/custom/",
         method: "GET",

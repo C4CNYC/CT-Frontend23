@@ -37,7 +37,7 @@ interface SchoolProfileFormProps {
   schoolProfile?: SchoolProfile;
   schoolId: string;
   file: File;
-  setImgValue: Function;
+  setImgValue: (images: File[]) => void;
 }
 
 export default function SchoolProfileForm({
@@ -95,7 +95,7 @@ export default function SchoolProfileForm({
         phone: data.phone,
       }).unwrap();
       if (file) {
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append("file", file);
         await updateSchoolAvatar({
           id: schoolId,

@@ -170,7 +170,7 @@ export default function LessonStepList({
             defaultValues={{
               name: lesson?.name as string,
               description: lesson?.description as string,
-              active: lesson?.active,
+              active: lesson?.active as boolean,
             }}
           >
             <BsThreeDotsVertical size="20px" />

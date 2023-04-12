@@ -185,7 +185,7 @@ export default function UserListPage(): React.ReactElement {
           <Divider />
 
           <UserTableToolbar
-            filterName={filters.name}
+            filterName={filters.name ?? ""}
             onFilterName={(e: any) => {
               setFilter("name", e.target.value);
             }}

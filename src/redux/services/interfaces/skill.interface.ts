@@ -5,5 +5,5 @@ export interface ISkill {
 }
 
 export interface ISkillSearch {
-  name: string;
+  name?: string;
 }

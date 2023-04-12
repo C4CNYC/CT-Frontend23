@@ -44,7 +44,6 @@ export function IntegrationsTab({
   const [removeIntegration, { isLoading: removeLoading }] =
     useRemoveIntegrationMutation();
   const { data: usedIntegration, isFetching } = useGetLessonIntegrationsQuery({
-    lessonId: router.query.lessonId as string,
     id: contentId,
   });
   const { data: integrations } = useGetIntegrationsQuery(filters);

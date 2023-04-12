@@ -6,15 +6,14 @@ import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
-  useGetContentIntegrationsQuery,
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
+import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
 import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
 import StepMultimedia from "./StepMultimedia";
-import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
 
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;
@@ -24,7 +23,7 @@ export default function StepContentEditor(): React.ReactElement {
   const { data: integrations, isLoading: isIntegrationLoading } =
     useGetLessonIntegrationsQuery(
       {
-        id: lessonId as string
+        id: lessonId as string,
       },
       { skip: !lessonId || !stepId }
     );
