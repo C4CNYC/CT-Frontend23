@@ -17,9 +17,8 @@ const extendedApi = managerApi.injectEndpoints({
       IProgressSearch & { id: string }
     >({
       query: ({ id, ...params }) => ({
-        url: `course/${id}/progres`,
+        url: `course/${id}/progress`,
         method: "GET",
-        params,
       }),
       keepUnusedDataFor: 0,
     }),
