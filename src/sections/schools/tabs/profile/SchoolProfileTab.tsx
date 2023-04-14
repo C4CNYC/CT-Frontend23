@@ -1,12 +1,8 @@
 import { UploadAvatar } from "@components/upload";
 import { Card, Grid, Stack, Typography } from "@mui/material";
-import { useSnackbar } from "notistack";
 import { useCallback, useState } from "react";
 import { useLocales } from "src/locales";
-import {
-  useGetSchoolProfileQuery,
-  useUpdateSchoolAvatarImgMutation,
-} from "src/redux/services/manager/schools-manager";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 import { fData } from "src/utils/formatNumber";
 import ProfileAbout from "./components/ProfileAbout";
 import ProfileSocialInfo from "./components/ProfileSocialInfo";

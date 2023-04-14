@@ -14,6 +14,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["LessonSkill"],
     }),
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     updateLessonSkill: builder.mutation<void, { id: string; skill_id: string }>(
       {
         query: ({ id, ...body }) => ({
@@ -24,6 +25,7 @@ const extendedApi = managerApi.injectEndpoints({
         invalidatesTags: [{ type: "LessonSkill" }],
       }
     ),
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     removeLessonSkill: builder.mutation<void, { id: string; skill_id: string }>(
       {
         query: ({ id, ...body }) => ({

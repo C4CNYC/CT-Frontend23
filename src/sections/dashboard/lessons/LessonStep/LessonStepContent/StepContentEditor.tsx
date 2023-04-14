@@ -9,10 +9,8 @@ import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
-import {
-  useGetLessonIntegrationsQuery,
-  useGetLessonIntegrationsQuery,
-} from "src/redux/services/manager/lessons-manager";
+
+import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
 import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";

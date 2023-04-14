@@ -4,7 +4,15 @@ import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
 import { LoadingButton } from "@mui/lab";
-import { Box, Card, Divider, IconButton, MenuItem, Stack } from "@mui/material";
+import {
+  Box,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -118,7 +126,9 @@ export default function LessonCard({
           spacing={0.75}
           sx={{ typography: "caption", color: "text.disabled" }}
         >
-          <Box>{lesson.description}</Box>
+          <Typography variant="caption" noWrap>
+            {lesson.description}
+          </Typography>
           <Box
             sx={{
               width: 2,

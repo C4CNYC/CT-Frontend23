@@ -14,7 +14,7 @@ export interface ILesson {
   active: boolean;
   name: string;
   description: string;
-  meta: Record<string, string>;
+  meta: Record<string, Record<string, any>>;
 }
 
 export interface ICourse {

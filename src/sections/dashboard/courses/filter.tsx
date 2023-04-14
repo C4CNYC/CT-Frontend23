@@ -26,7 +26,7 @@ export default function FilterCourses({
         }}
       >
         <TextField
-          defaultValue={filters.name}
+          defaultValue={filters?.name ?? ""}
           sx={{
             width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}

@@ -43,8 +43,10 @@ export default function LessonsListPage(): React.ReactElement {
 
   const { data, isLoading, isFetching } = useGetLessonsQuery(filters);
 
-  if (isLoading)
+  if (isLoading) {
     return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
+  }
+
   return (
     <>
       <Head>
@@ -89,7 +91,7 @@ export default function LessonsListPage(): React.ReactElement {
             <SimpleInfiniteList
               hasNextPage={data?.meta.hasNextPage ?? false}
               onLoadMore={() => {
-                if (data?.meta.take !== filters?.take) return;
+                // if (data?.meta.take !== filters?.take) return;
                 // setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
               }}
               loading={isLoading ?? isFetching}
@@ -100,7 +102,9 @@ export default function LessonsListPage(): React.ReactElement {
               {isFetching
                 ? Array(
                     getCountTakingElment(
-                      Number(data.meta.itemCount),
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-expect-error
+                      Number(data?.meta?.itemCount),
                       Number(filters.take)
                     )
                   )
