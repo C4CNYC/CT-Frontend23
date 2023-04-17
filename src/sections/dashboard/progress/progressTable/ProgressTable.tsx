@@ -39,6 +39,7 @@ export default function ProgressTable({
             <TableRow>
               <TableCell
                 size="small"
+                width="20%"
                 sx={{
                   position: "sticky",
                   left: 0,
@@ -121,7 +122,7 @@ export default function ProgressTable({
                         <LinearProgress
                           variant="determinate"
                           value={x.progress}
-                          sx={{ height: "18px" }}
+                          sx={{ height: "28px", m: "0 auto", width: "40%" }}
                         />
                       ) : (
                         <Checkbox checked={!!x.progress} />
