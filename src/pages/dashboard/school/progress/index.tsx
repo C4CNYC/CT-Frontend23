@@ -71,10 +71,6 @@ export default function Progress(): React.ReactElement {
     id: query.courseId as string,
   });
 
-  const backLink = useMemo<string>(() => {
-    if (filters.lessonId && filters.moduleId) return "";
-  }, [filters.lessonId, filters.moduleId]);
-
   return (
     <>
       <Container sx={{ ml: 0 }}>

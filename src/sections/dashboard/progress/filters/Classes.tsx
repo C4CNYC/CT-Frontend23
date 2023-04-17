@@ -54,7 +54,7 @@ export default function FilterClassesAutocomplete({
 
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   const current =
-    (classId && classes?.data.find((c) => c.id === classId)) ||
+    (classId && classes?.data.find((c) => c.id === classId)) ??
     classes?.data[0];
 
   return (

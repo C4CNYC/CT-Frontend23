@@ -183,7 +183,6 @@ export default function Preferences({
                   extensions={[javascript({ jsx: true })]}
                 />
               </TabPanel>
-
             </DialogContent>
             <DialogActions>
               <Box
