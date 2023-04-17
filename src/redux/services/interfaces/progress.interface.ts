@@ -5,8 +5,9 @@ import { ILessonContentValidation } from "./lessonContentValidation.interface";
 import { IStudent } from "./user.interface";
 
 export interface IProgress {
-  students: Array<IStudent & BaseResponseInterface>;
-  completed_lessons: Array<ILesson & BaseResponseInterface>;
+  unit: IModule & BaseResponseInterface;
+  student: IStudent & BaseResponseInterface;
+  completed_chalanges: Array<ILessonContent & BaseResponseInterface>;
 }
 
 export interface IProgressSearch {
@@ -15,12 +16,34 @@ export interface IProgressSearch {
 
 export interface IProgressContent {
   units: Array<
-    IModule & {
-      lessons: ILesson & {
-        contents: ILessonContent & {
-          validations: ILessonContentValidation;
-        };
-      };
-    }
+    IModule &
+      BaseResponseInterface & {
+        lessons: Array<
+          ILesson &
+            BaseResponseInterface & {
+              contents: Array<
+                ILessonContent &
+                  BaseResponseInterface & {
+                    validations: Array<
+                      ILessonContentValidation & BaseResponseInterface
+                    >;
+                  }
+              >;
+            }
+        >;
+      }
   >;
 }
+
+export type IProgressChalanges = Array<{
+  id: string;
+  name: string;
+  type: string;
+  chalanges: Array<ILessonContent & BaseResponseInterface>;
+  lessons: Array<{
+    id: string;
+    name: string;
+    type: string;
+    chalanges: Array<ILessonContent & BaseResponseInterface>;
+  }>;
+}>;

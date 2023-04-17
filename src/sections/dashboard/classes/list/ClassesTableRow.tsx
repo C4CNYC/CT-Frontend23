@@ -127,7 +127,7 @@ export default function ClassesTableRow({
       >
         <AddClassDialog
           isEdit
-          defaultValues={{ name: row.name }}
+          defaultValues={{ name: row.name, description: "" }}
           updateClass={(name) => {
             onEditRow(row.id, name);
             handleClosePopover();

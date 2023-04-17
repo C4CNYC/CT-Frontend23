@@ -14,7 +14,7 @@ export interface ILesson {
   active: boolean;
   name: string;
   description: string;
-  meta: Record<string, string>;
+  meta: Record<string, Record<string, any>>;
 }
 
 export interface ICourse {
@@ -30,6 +30,7 @@ export interface ICourse {
 
 export interface ILessonContent {
   body: string;
+  name: string;
   type: LessonContentType;
   slug: string;
   title: string;

@@ -58,11 +58,11 @@ export default function CreateCourseDialog({
   defaultValues,
 }: Prop): React.ReactElement | null {
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<null | File>(null);
   const { enqueueSnackbar } = useSnackbar();
-  const [editCourse] = useUpdateCourseMutation();
-  const [createCourse] = useCreateCourseMutation();
+  const [editCourse, { isLoading: isEditLoading }] = useUpdateCourseMutation();
+  const [createCourse, { isLoading: isCreateLoading }] =
+    useCreateCourseMutation();
   const [updateCover] = useUpdateCourseCoverMutation();
 
   const CreateCourseSchema = Yup.object().shape({
@@ -90,7 +90,6 @@ export default function CreateCourseDialog({
   };
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    setLoading(true);
     try {
       const file = new FormData();
       if (isEdit && id) {
@@ -119,7 +118,6 @@ export default function CreateCourseDialog({
       });
       console.error(error, "test");
     }
-    setLoading(false);
     handleClose();
   };
   const clearFileHandler = () => {
@@ -276,7 +274,7 @@ export default function CreateCourseDialog({
                     <LoadingButton
                       type="submit"
                       variant="contained"
-                      loading={loading}
+                      loading={isEditLoading || isCreateLoading}
                     >
                       Save
                     </LoadingButton>

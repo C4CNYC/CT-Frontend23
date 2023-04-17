@@ -167,7 +167,7 @@ export default function CreateDemonContent({
                     </RHFSelect>
 
                     <Stack direction="row" justifyContent="space-between">
-                      <RHFSwitch name="active" label="Course active" />
+                      <RHFSwitch name="active" label="Content active" />
                       <RHFSwitch name="draft" label="Draft" />
                     </Stack>
                   </Box>

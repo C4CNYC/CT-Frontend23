@@ -4,7 +4,15 @@ import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
 import TextMaxLine from "@components/text-max-line";
 import { LoadingButton } from "@mui/lab";
-import { Box, Card, Divider, IconButton, MenuItem, Stack } from "@mui/material";
+import {
+  Box,
+  Card,
+  Divider,
+  IconButton,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import Link from "next/link";
@@ -112,7 +120,9 @@ export default function ModuleCard({
           spacing={0.75}
           sx={{ typography: "caption", color: "text.disabled" }}
         >
-          <Box>{module.description}</Box>
+          <Typography variant="caption" noWrap>
+            {module.description}
+          </Typography>
           <Box
             sx={{
               width: 2,

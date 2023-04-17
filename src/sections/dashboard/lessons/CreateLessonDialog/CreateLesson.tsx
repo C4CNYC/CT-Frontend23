@@ -13,13 +13,13 @@ import {
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from "src/redux/services/manager/lessons-manager";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
+import * as Yup from "yup";
 
 interface FormValuesProps {
   name: string;
@@ -126,7 +126,7 @@ export default function CreateLesson({
                     rows={3}
                   />
 
-                  <RHFSwitch name="active" label="Module active" />
+                  <RHFSwitch name="active" label="Lesson active" />
                 </Box>
                 <Box
                   sx={{

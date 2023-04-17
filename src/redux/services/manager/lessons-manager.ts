@@ -79,10 +79,10 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     addIntegration: builder.mutation<
       void,
-      { lessonId: string; id: string; integration_id: string }
+      { lessonId: string; integration_id: string }
     >({
-      query: ({ lessonId, id, ...body }) => ({
-        url: `/lesson/${id}/integration`,
+      query: ({ lessonId, ...body }) => ({
+        url: `/lesson/${lessonId}/integration`,
         method: "PATCH",
         body,
       }),
@@ -90,10 +90,10 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     removeIntegration: builder.mutation<
       void,
-      { lessonId: string; id: string; integration_id: string }
+      { lessonId: string; integration_id: string }
     >({
-      query: ({ lessonId, id, ...body }) => ({
-        url: `/lesson/${id}/integration`,
+      query: ({ lessonId, ...body }) => ({
+        url: `/lesson/${lessonId}/integration`,
         method: "DELETE",
         body,
       }),
