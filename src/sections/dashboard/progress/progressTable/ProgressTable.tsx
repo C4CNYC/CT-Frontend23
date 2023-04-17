@@ -1,7 +1,5 @@
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {
-  Button,
   IconButton,
   LinearProgress,
   Paper,
@@ -11,70 +9,31 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
+  Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-const users = [
-  { name: "Annika	Schulte", userName: "annika.schulte@example.com" },
-  { name: "Valtteri	Mikkola", userName: "valtteri.mikkola@example.com" },
-  { name: "Stephanie	Lawson", userName: "stephanie.lawson@example.com" },
-  { name: "Arlo	Jackson", userName: "arlo.jackson@example.com" },
-  { name: "	Donald	Riley", userName: "donald.riley@example.com" },
-  { name: "Stefan	Siebert", userName: "stefan.siebert@example.com" },
-];
-const modules = [
-  {
-    name: "Main tag",
-    progress: 1,
-    lessons: [{ name: "HTML skeleton", progress: 66 }],
-  },
-  {
-    name: "CSS",
-    progress: 15,
-    lessons: [
-      { name: "HTML body", progress: 89 },
-      { name: "how to use tags?", progress: 20 },
-    ],
-  },
-  {
-    name: "CSS",
-    progress: 81,
-    lessons: [
-      { name: "HTML body", progress: 44 },
-      { name: "how to use tags?", progress: 55 },
-    ],
-  },
-  {
-    name: "CSS",
-    progress: 38,
-    lessons: [
-      { name: "HTML body", progress: 60 },
-      { name: "how to use tags?", progress: 35 },
-    ],
-  },
-];
+import { Stack } from "@mui/system";
+import { IProgressTableData } from "@pages/dashboard/school/progress";
+import _ from "lodash";
+interface IProgressTable {
+  hasBackLink: boolean;
+  hasNextLink: boolean;
+  data: IProgressTableData[];
+  goBack: () => void;
+  onSelectGroup: (groupId: string) => void;
+}
 
-export default function ProgressTable(): React.ReactElement {
-  const [isName, setIsName] = useState<boolean>(true);
-  const [displayType, setDisplayType] = useState<string>("modules");
-  const [index, setIndex] = useState<number>(0);
-  const [data, setData] = useState<Array<any>>(modules);
-
-  const changeTypeHandler = () => {
-    if (displayType === "modules") {
-      setDisplayType("lessons");
-      setData(modules[index]?.lessons);
-    } else {
-      setDisplayType("modules");
-      setData(modules);
-    }
-  };
-  useEffect(() => {
-    changeTypeHandler();
-  }, [index]);
+export default function ProgressTable({
+  data,
+  goBack,
+  hasBackLink,
+  hasNextLink,
+  onSelectGroup,
+}: IProgressTable): React.ReactElement {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 600 }} aria-label="simple table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell
@@ -84,52 +43,46 @@ export default function ProgressTable(): React.ReactElement {
                   left: 0,
                   zIndex: "1000",
                   padding: "10px 10px",
-                  width: { xs: "100px", sm: "auto" },
                 }}
               >
-                <Button onClick={() => setIsName(!isName)}>
-                  {isName ? "Name" : "User name"}
-                </Button>
+                Name
               </TableCell>
-              {data.map((el, i) => (
+              {data[0]?.x?.map((el, i) => (
                 <TableCell
+                  sx={{ cursor: "pointer" }}
                   size="small"
-                  key={el.name + i}
-                  onClick={() => {}}
+                  key={el.id}
                   align="center"
                 >
-                  {displayType !== "modules" ? (
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        setIndex(innerWidth);
-                      }}
-                    >
-                      <ArrowBackIosNewIcon
-                        sx={{ width: "12px", height: "12px" }}
-                      />
-                    </IconButton>
-                  ) : null}
-
-                  {el.name}
-                  {displayType !== "lessons" ? (
-                    <IconButton
-                      onClick={() => {
-                        setIndex(i);
-                      }}
-                      size="small"
-                    >
-                      <ArrowForwardIosIcon
-                        sx={{ width: "12px", height: "12px" }}
-                      />
-                    </IconButton>
-                  ) : null}
+                  <Stack direction="row" spacing={2} justifyContent="center">
+                    {hasBackLink ? (
+                      <IconButton size="small" onClick={goBack}>
+                        <ArrowBackIosNewIcon
+                          sx={{ width: "12px", height: "12px" }}
+                        />
+                      </IconButton>
+                    ) : null}
+                    <Tooltip placement="top" title={el.name}>
+                      <Typography
+                        sx={{
+                          textDecoration: hasNextLink ? "underline" : "none",
+                        }}
+                        onClick={() => {
+                          onSelectGroup(el.id);
+                        }}
+                        align="center"
+                        noWrap
+                      >
+                        {el.name}
+                      </Typography>
+                    </Tooltip>
+                  </Stack>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((el, i) => (
+            {data.map((el, i) => (
               <TableRow key={i}>
                 <TableCell
                   size="small"
@@ -139,18 +92,28 @@ export default function ProgressTable(): React.ReactElement {
                     zIndex: "1000",
                     background: "#fff",
                     padding: "10px 10px",
-                    width: { xs: "100px", sm: "auto" },
                   }}
                 >
-                  {isName ? el.name : el.userName}
+                  {el.y}
                 </TableCell>
-                {data.map((el, i) => (
-                  <TableCell align="center" size="small">
-                    <LinearProgress
-                      variant="determinate"
-                      value={el.progress}
-                      sx={{ height: "8px", width: "80%", margin: "0 auto" }}
-                    />
+                {el.x.map((x, i) => (
+                  <TableCell key={i} align="left" size="small">
+                    <Tooltip
+                      placement="top"
+                      title={
+                        <div>
+                          Student: {el.y} <br /> {_.capitalize(x.type)}:{" "}
+                          {x.name} <br />
+                          Progress: {Math.floor(x.progress)}%
+                        </div>
+                      }
+                    >
+                      <LinearProgress
+                        variant="determinate"
+                        value={x.progress}
+                        sx={{ height: "18px" }}
+                      />
+                    </Tooltip>
                   </TableCell>
                 ))}
               </TableRow>
