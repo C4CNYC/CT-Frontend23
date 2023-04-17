@@ -1,5 +1,6 @@
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import {
+  Checkbox,
   IconButton,
   LinearProgress,
   Paper,
@@ -97,7 +98,7 @@ export default function ProgressTable({
                   {el.y}
                 </TableCell>
                 {el.x.map((x, i) => (
-                  <TableCell key={i} align="left" size="small">
+                  <TableCell key={i} align="center" size="small">
                     <Tooltip
                       placement="top"
                       title={
@@ -108,11 +109,15 @@ export default function ProgressTable({
                         </div>
                       }
                     >
-                      <LinearProgress
-                        variant="determinate"
-                        value={x.progress}
-                        sx={{ height: "18px" }}
-                      />
+                      {hasNextLink ? (
+                        <LinearProgress
+                          variant="determinate"
+                          value={x.progress}
+                          sx={{ height: "18px" }}
+                        />
+                      ) : (
+                        <Checkbox checked={!!x.progress} />
+                      )}
                     </Tooltip>
                   </TableCell>
                 ))}
