@@ -1,7 +1,9 @@
-import { Stack } from "@mui/system"
+import { Stack } from "@mui/system";
 
 export const TopBar = (): React.ReactElement => {
   return (
-    <Stack>Top Bar</Stack>
-  )
-}
+    <Stack height="50px" p="5px" borderBottom="1px #cbcccb solid">
+      Top Bar
+    </Stack>
+  );
+};

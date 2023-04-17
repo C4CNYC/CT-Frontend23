@@ -11,9 +11,11 @@ import DashboardLayout from "./DashboardLayout";
 
 interface Props {
   children: React.ReactElement;
+  isFullScreen?: boolean;
 }
 export default function SchoolDashboardLayout({
   children,
+  isFullScreen,
 }: Props): React.ReactElement | null {
   const { data, isLoading } = useGetMySchoolsQuery({});
 
@@ -50,6 +52,8 @@ export default function SchoolDashboardLayout({
       </CompactLayout>
     );
   }
+
+  if (isFullScreen) return isLoading ? <CircularProgress /> : children;
 
   return (
     <DashboardLayout>
