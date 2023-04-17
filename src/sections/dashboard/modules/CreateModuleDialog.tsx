@@ -6,9 +6,11 @@ import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
 import * as Yup from "yup";
 import {
   useCreateModuleMutation,
@@ -34,11 +36,14 @@ export default function CreateModuleDialog({
   children,
   defaultValues,
 }: Prop): React.ReactElement {
+  const { query } = useRouter();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [editModule] = useUpdateModuleMutation();
-  const [createModule] = useCreateModuleMutation();
+  const [addToCourse, { isLoading: isAddToCourseLoading }] =
+    useAddModuleToCourseMutation();
+  const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation();
+  const [createModule, { isLoading: isCreateLoading }] =
+    useCreateModuleMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -59,7 +64,6 @@ export default function CreateModuleDialog({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    setLoading(true);
     try {
       if (isEdit && id) {
         await editModule({
@@ -67,8 +71,13 @@ export default function CreateModuleDialog({
           ...data,
         });
       } else {
-        await createModule({
+        const module = await createModule({
           ...data,
+        }).unwrap();
+        if (!query.course_id) return;
+        await addToCourse({
+          id: query.course_id as string,
+          unit_id: module.id,
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -79,7 +88,6 @@ export default function CreateModuleDialog({
       });
       console.error(error, "test");
     }
-    setLoading(false);
     handleClose();
   };
 
@@ -132,7 +140,9 @@ export default function CreateModuleDialog({
                     <LoadingButton
                       type="submit"
                       variant="contained"
-                      loading={loading}
+                      loading={
+                        isEditLoading || isCreateLoading || isAddToCourseLoading
+                      }
                     >
                       Save
                     </LoadingButton>

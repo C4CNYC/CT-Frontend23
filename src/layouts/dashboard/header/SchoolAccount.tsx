@@ -51,7 +51,7 @@ export default function SchoolAccount(): React.ReactElement | null {
           sx={{
             outline: "none",
             height: 40,
-            width: "250px",
+            width: { xs: "150px", sm: "250px" },
           }}
         >
           {schools?.data?.map((school: ISchool) => (

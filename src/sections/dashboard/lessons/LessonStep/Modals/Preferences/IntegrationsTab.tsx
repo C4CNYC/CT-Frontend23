@@ -44,7 +44,7 @@ export function IntegrationsTab({
   const [removeIntegration, { isLoading: removeLoading }] =
     useRemoveIntegrationMutation();
   const { data: usedIntegration, isFetching } = useGetLessonIntegrationsQuery({
-    id: contentId,
+    id: router.query.lessonId as string,
   });
   const { data: integrations } = useGetIntegrationsQuery(filters);
 
@@ -61,7 +61,6 @@ export function IntegrationsTab({
     try {
       const payload = {
         lessonId: router.query.lessonId as string,
-        id: contentId,
         integration_id: details?.option.id ?? "",
       };
       switch (reason) {

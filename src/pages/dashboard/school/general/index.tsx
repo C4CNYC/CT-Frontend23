@@ -109,7 +109,13 @@ export default function UserProfilePage(): React.ReactElement {
           }}
         >
           <Stack
-            sx={{ position: "absolute", zIndex: 10, mt: "10px", ml: "93%" }}
+            sx={{
+              position: "absolute",
+              right: 0,
+              zIndex: 10,
+              mt: "10px",
+              mr: "10px",
+            }}
           >
             <UploadImageModal onUpload={onUpload} id={schoolId} />
           </Stack>

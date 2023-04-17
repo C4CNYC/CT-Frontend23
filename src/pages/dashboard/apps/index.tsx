@@ -42,7 +42,7 @@ export default function AppsPage(): React.ReactElement {
 
   const onDelete = async (id: string): Promise<void> => {
     try {
-      await removeIntegration({ id }).unwrap();
+      await removeIntegration({ integration_id: id }).unwrap();
       enqueueSnackbar("integration removed");
     } catch (e) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });

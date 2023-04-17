@@ -4,8 +4,10 @@ import {
   BaseResponseInterface,
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
+import { ILessonContent } from "../interfaces/courseUnits.interface";
 import {
   IProgress,
+  IProgressChalanges,
   IProgressContent,
   IProgressSearch,
 } from "../interfaces/progress.interface";
@@ -17,20 +19,51 @@ const extendedApi = managerApi.injectEndpoints({
       IProgressSearch & { id: string }
     >({
       query: ({ id, ...params }) => ({
-        url: `course/${id}/progres`,
+        url: `course/${id}/progress`,
         method: "GET",
-        params,
       }),
       keepUnusedDataFor: 0,
     }),
-    getProgressContent: builder.query<
-      IProgressContent & BaseResponseInterface,
-      { id: string }
-    >({
+    getProgressContent: builder.query<IProgressChalanges, { id: string }>({
       query: ({ id }) => ({
         url: `course/${id}/progress/content`,
         method: "GET",
       }),
+      transformResponse: (
+        response: IProgressContent & BaseResponseInterface
+      ): IProgressChalanges => {
+        const data = response.units.reduce<IProgressChalanges>(
+          (acc, curr) => [
+            ...acc,
+            {
+              id: curr.id,
+              name: curr.name,
+              type: "module",
+              chalanges: [],
+              lessons: curr.lessons
+                .map((lesson) => ({
+                  id: lesson.id,
+                  name: lesson.name,
+                  type: "lesson",
+                  chalanges:
+                    lesson.contents.filter(
+                      (content) => content.validations.length
+                    ) || [],
+                }))
+                .filter((d) => d.chalanges.length),
+            },
+          ],
+          []
+        );
+        return data
+          .map((unit) => ({
+            ...unit,
+            chalanges: unit.lessons.reduce<
+              Array<ILessonContent & BaseResponseInterface>
+            >((acc, curr) => [...acc, ...curr.chalanges], []),
+          }))
+          .filter((d) => d.chalanges.length);
+      },
       keepUnusedDataFor: 0,
     }),
   }),
