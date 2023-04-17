@@ -55,7 +55,12 @@ export default function ProgressTable({
                   key={el.id}
                   align="center"
                 >
-                  <Stack direction="row" spacing={2} justifyContent="center">
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    justifyContent="center"
+                    pr={hasBackLink ? "38px" : 0}
+                  >
                     {hasBackLink ? (
                       <IconButton size="small" onClick={goBack}>
                         <ArrowBackIosNewIcon
@@ -71,7 +76,7 @@ export default function ProgressTable({
                         onClick={() => {
                           onSelectGroup(el.id);
                         }}
-                        align="center"
+                        width="50px"
                         noWrap
                       >
                         {el.name}
@@ -105,7 +110,10 @@ export default function ProgressTable({
                         <div>
                           Student: {el.y} <br /> {_.capitalize(x.type)}:{" "}
                           {x.name} <br />
-                          Progress: {Math.floor(x.progress)}%
+                          Progress:{" "}
+                          {hasNextLink
+                            ? `${Math.floor(x.progress)}%`
+                            : `${x.progress ? "done" : "not done"}`}
                         </div>
                       }
                     >
