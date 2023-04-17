@@ -9,7 +9,6 @@ import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Cour
 import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
 import _ from "lodash";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {

@@ -52,16 +52,15 @@ export default function FilterClassesAutocomplete({
 
   if (isLoading) return <Skeleton width="260px" height="56px" />;
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  const current =
-    (classId && classes?.data.find((c) => c.id === classId)) ??
-    classes?.data[0];
-
   return (
     <>
       <Stack>
         <Autocomplete<IClass & BaseResponseInterface>
-          value={current}
+          value={
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            (classId && classes?.data.find((c) => c.id === classId)) ||
+            classes?.data[0]
+          }
           options={classes?.data ?? []}
           onChange={onChangeCourse}
           renderInput={(params) => <TextField {...params} label="Class" />}
