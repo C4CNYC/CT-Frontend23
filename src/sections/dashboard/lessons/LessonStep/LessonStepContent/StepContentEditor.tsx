@@ -6,7 +6,6 @@ import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
-  useGetContentIntegrationsQuery,
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
