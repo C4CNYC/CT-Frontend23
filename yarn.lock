@@ -7877,6 +7877,11 @@ isomorphic.js@^0.2.4:
   resolved "https://registry.npmjs.org/isomorphic.js/-/isomorphic.js-0.2.5.tgz"
   integrity sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==
 
+jotai@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.0.4.tgz#084accf703e3da768e0dbbeeec740545adca67ca"
+  integrity sha512-XkR1Jtm4a2iKV/7fdB3rNHjJz8FkkDMVczqiAok7lt8W4F69l/ZQkPGWSEV+hJOJXRn27k6XYKOoKEQIwBuAMA==
+
 js-cookie@^2.2.1:
   version "2.2.1"
   resolved "https://registry.npmjs.org/js-cookie/-/js-cookie-2.2.1.tgz"
@@ -9462,6 +9467,11 @@ react-color@^2.19.3:
     prop-types "^15.5.10"
     reactcss "^1.2.0"
     tinycolor2 "^1.4.1"
+
+react-countdown-circle-timer@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-countdown-circle-timer/-/react-countdown-circle-timer-3.2.1.tgz#5d3a3560e1b5b501356e733e76d269506611a0ab"
+  integrity sha512-yBAy/9ILXOiFbLBM+3jS72TW5LeRcH8wkRC9NNqMpUkCXkGjSnaeRbJMsR9lsYF0oVXjSDbJaRbCuVMT+9HnKA==
 
 react-detect-click-outside@^1.1.7:
   version "1.1.7"
