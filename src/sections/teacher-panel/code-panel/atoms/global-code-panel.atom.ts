@@ -1,6 +1,6 @@
 import { atomWithStorage } from "jotai/utils";
 
-interface IGlobalCodePanelAtom {
+export interface IGlobalCodePanelAtom {
   slideIndex: number;
   solutionCode: string;
   nextStepAble: boolean;
