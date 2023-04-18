@@ -1,0 +1,20 @@
+import { atomWithStorage } from "jotai/utils";
+
+interface IGlobalCodePanelAtom {
+  slideIndex: number;
+  solutionCode: string;
+  nextStepAble: boolean;
+  isFullScreenView: boolean;
+  isAllColumnsVisible: boolean;
+}
+
+export const globalCodePanelAtom = atomWithStorage<IGlobalCodePanelAtom>(
+  "GLOBAL_CODE_PANEL_ATOM",
+  {
+    slideIndex: 0,
+    solutionCode: "",
+    nextStepAble: true,
+    isAllColumnsVisible: true,
+    isFullScreenView: false,
+  }
+);
