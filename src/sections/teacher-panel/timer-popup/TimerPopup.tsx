@@ -63,7 +63,7 @@ const TimerPopup = (): React.ReactElement => {
         open={openPopover}
         onClose={handleClosePopover}
         sx={{
-          width: 200,
+          width: 300,
           py: 2,
         }}
       >
