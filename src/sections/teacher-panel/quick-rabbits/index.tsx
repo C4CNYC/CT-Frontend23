@@ -6,7 +6,7 @@ import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
 export const QuickRabbits = (): React.ReactElement => {
   return (
     <Stack direction="row">
-      <Grid container spacing={2} p={1}>
+      <Grid container spacing={2} p={1} pr={9}>
         <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
@@ -26,7 +26,7 @@ export const QuickRabbits = (): React.ReactElement => {
           <QuickRabbitsItem />
         </Grid>
       </Grid>
-      <Box width="88px" position="relative">
+      <Box width="0px" position="relative">
         <QuickRabbitsSideList />
       </Box>
     </Stack>
