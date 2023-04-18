@@ -7,28 +7,22 @@ export const QuickRabbits = (): React.ReactElement => {
   return (
     <Stack direction="row">
       <Grid container spacing={2} p={1}>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
-        <Grid item xs={3}>
-          <QuickRabbitsItem />
-        </Grid>
-        <Grid item xs={3}>
-          <QuickRabbitsItem />
-        </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <QuickRabbitsItem />
         </Grid>
       </Grid>
