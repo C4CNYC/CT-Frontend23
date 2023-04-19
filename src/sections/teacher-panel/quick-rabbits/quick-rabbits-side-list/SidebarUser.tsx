@@ -8,7 +8,9 @@ import {
   Skeleton,
   Typography,
 } from "@mui/material";
+import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
+import { useAtom } from "jotai";
 
 const AvatarSkeleton = () => {
   return (
@@ -32,7 +34,13 @@ export const SidebarUser = ({
   student,
   isLoading,
 }: Props): React.ReactElement => {
-  const { first_name, email, active } = student;
+  const [, setQuickRabbit] = useAtom(quickRabbitAtom);
+  const { first_name, email, active, id } = student;
+
+  const onConnectStudent = (): void => {
+    setQuickRabbit((prev) => ({ ...prev, [id]: { id, email } }));
+  };
+
   return (
     <ListItem sx={{ pl: 0 }}>
       <Badge
@@ -87,7 +95,7 @@ export const SidebarUser = ({
           {email}
         </Typography>
       </Box>
-      <IconButton>
+      <IconButton onClick={onConnectStudent}>
         <AddIcon />
       </IconButton>
     </ListItem>

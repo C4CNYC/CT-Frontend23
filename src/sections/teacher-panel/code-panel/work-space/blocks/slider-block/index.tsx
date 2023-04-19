@@ -31,8 +31,7 @@ const SliderBlock = ({
   data,
   integrations,
 }: ISliderBlock): React.ReactElement => {
-  const [{ slideIndex }, updateGlobalAtom] =
-    useAtom(globalCodePanelAtom);
+  const [{ slideIndex }, updateGlobalAtom] = useAtom(globalCodePanelAtom);
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
 

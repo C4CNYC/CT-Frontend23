@@ -5,15 +5,15 @@ import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/gl
 
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import CheckersMenu from "./CheckersMenu";
 import { IValidationMap } from "src/utils/validationMaping";
+import CheckersMenu from "./CheckersMenu";
 
 interface ICheckers {
-  checkers: IValidationMap[]
+  checkers: IValidationMap[];
 }
 
 const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
-  const [{ nextStepAble }, setGlobalAtom] = useAtom(globalCodePanelAtom)
+  const [{ nextStepAble }, setGlobalAtom] = useAtom(globalCodePanelAtom);
   const [visible, setVisible] = useState(true);
 
   const handleCollaps = (): void => {
@@ -25,9 +25,9 @@ const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
     if (allPased === nextStepAble) return;
     setGlobalAtom((prev) => ({
       ...prev,
-      nextStepAble: allPased
-    }))
-  }, [checkers])
+      nextStepAble: allPased,
+    }));
+  }, [checkers]);
 
   return (
     <Stack zIndex={999} position="absolute" bottom="17px" right="17px">
@@ -55,15 +55,15 @@ const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
             },
           }}
         >
-            <Iconify
-              sx={{ "& path": { fill: "#648afc" } }}
-              icon={visible ? "ic:baseline-remove-red-eye" : "mdi:eye-off"}
-              width="20px"
-              px="8"
-              marginRight="9px"
-              marginTop="4px"
-              onClick={handleCollaps}
-            />
+          <Iconify
+            sx={{ "& path": { fill: "#648afc" } }}
+            icon={visible ? "ic:baseline-remove-red-eye" : "mdi:eye-off"}
+            width="20px"
+            px="8"
+            marginRight="9px"
+            marginTop="4px"
+            onClick={handleCollaps}
+          />
         </Box>
       </Box>
     </Stack>

@@ -77,28 +77,28 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
   const [onlineUsers, setOnlineUsers] = useState<number>(0);
 
   const { data, isLoading, isFetching } = useGetStudentsQuery(
-    { schoolId: schoolId as string },
+    { schoolId },
     { skip: !schoolId }
   );
-  console.log(data, isFetching, isLoading);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   return (
     <Drawer variant="permanent" anchor="right" open={open}>
       <Stack direction="row">
         <Box>
           {!open ? (
-            <IconButton onClick={handleDrawerOpen}>
+            <IconButton
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
               <KeyboardArrowLeftIcon />
             </IconButton>
           ) : (
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
               <KeyboardArrowRightIcon />
             </IconButton>
           )}
@@ -163,7 +163,7 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
           },
         })}
       >
-        {isLoading
+        {isLoading || isFetching
           ? [...Array(3)].map((el, i) => <SkeletonSidebarUser key={i + 5} />)
           : data?.data.map((student, i) => {
               if (student.active) {
