@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material/styles";
 import { useAtom } from "jotai";
 import SwipeableViews from "react-swipeable-views";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -34,7 +33,7 @@ const WorkSpace = ({
       />
       <CodeEditorBlock
         preloadedCode={data[slideIndex]?.preload_body}
-        validations={data[slideIndex]?.validations}
+        validations={data[slideIndex]?.validations ?? []}
       />
       <ViewBlock {...code} />
     </SwipeableViews>

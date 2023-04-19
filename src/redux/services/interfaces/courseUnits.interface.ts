@@ -1,4 +1,5 @@
 import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { LessonContentComplexity } from "../enums/lesson-content-complexity.enum";
 import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { ILessonContentValidation } from "./lessonContentValidation.interface";
@@ -43,7 +44,7 @@ export interface ILessonContent {
   solution_body: string;
   meta: Record<string, any>;
   complexity: LessonContentComplexity;
-  validations: ILessonContentValidation[];
+  validations: Array<ILessonContentValidation & BaseResponseInterface>;
 }
 
 export interface ILessonContentUpdate {
