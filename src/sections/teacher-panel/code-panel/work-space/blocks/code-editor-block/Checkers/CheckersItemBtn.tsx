@@ -23,29 +23,31 @@ export default function CheckersItemBtn({
         position: "relative",
         justifyContent: "space-between",
         alignItems: "center",
-        p: 0
+        p: 0,
       }}
     >
-       <ListItem
-          sx={{ pr: "21px" }}
-          secondaryAction={
-        <IconButton
-          sx={{ padding: "4px", position: "relative" }}
-          onClick={() => { setOpen(!open); }}
-          edge="end"
-        >
-          {active ? (
-            <Iconify
-              sx={{ "& path": { fill: "#648afc" } }}
-              icon="file-icons:test-generic"
-            />
-          ) : (
-            <Iconify
-              sx={{ "& path": { fill: "#75CF6D" } }}
-              icon="icon-park-solid:success"
-            />
-          )}
-        </IconButton>
+      <ListItem
+        sx={{ pr: "21px" }}
+        secondaryAction={
+          <IconButton
+            sx={{ padding: "4px", position: "relative" }}
+            onClick={() => {
+              setOpen(!open);
+            }}
+            edge="end"
+          >
+            {active ? (
+              <Iconify
+                sx={{ "& path": { fill: "#648afc" } }}
+                icon="file-icons:test-generic"
+              />
+            ) : (
+              <Iconify
+                sx={{ "& path": { fill: "#75CF6D" } }}
+                icon="icon-park-solid:success"
+              />
+            )}
+          </IconButton>
         }
       >
         <CheckersItemText text={name} open={open} />
