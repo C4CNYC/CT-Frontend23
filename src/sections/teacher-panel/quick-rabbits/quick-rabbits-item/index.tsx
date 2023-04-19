@@ -1,11 +1,16 @@
 import Iconify from "@components/iconify";
+
 import { IconButton, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { createTheme } from "@uiw/codemirror-themes";
 import CodeMirror from "@uiw/react-codemirror";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 interface IQuickRabbitsItem {
@@ -17,7 +22,9 @@ export default function QuickRabbitsItem({
   rabit,
   onClose,
 }: IQuickRabbitsItem): React.ReactElement | null {
-  const [valueCode, setValueCode] = useState<string>("");
+  const { query } = useRouter();
+  const { data } = useRealTimeConnection(rabit.id);
+
   const [value, setValue] = useState(0);
 
   const handleChange = (
@@ -69,9 +76,16 @@ export default function QuickRabbitsItem({
           alignContent="center"
           alignItems="center"
         >
-          <IconButton>
-            <Iconify icon="majesticons:door-enter-line" color="#EAEAEB" />
-          </IconButton>
+          <Link
+            href={
+              PATH_DASHBOARD.school.controller(query.id as string) +
+              `?studentId=${rabit.id}`
+            }
+          >
+            <IconButton>
+              <Iconify icon="majesticons:door-enter-line" color="#EAEAEB" />
+            </IconButton>
+          </Link>
           <Tooltip title={rabit.email} placement="top">
             <Typography noWrap width="110px" color="#EAEAEB" ml="5px">
               {rabit.email}
@@ -103,18 +117,16 @@ export default function QuickRabbitsItem({
         <Messages />
       </TabPanel>
       <Box height="317px" ml="-20px">
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1}>
           <CodeMirror
-            value={valueCode}
+            editable={false}
+            value={data?.code}
             theme={myTheme}
             height="calc(100vh - 48px)"
-            placeholder="<CSS for boxes appear...>"
+            placeholder="<Code for boxes appear...>"
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
-            extensions={[loadLanguage("html")]}
-            onChange={(value) => {
-              setValueCode(value);
-            }}
+            extensions={[loadLanguage(data?.language ?? "html")]}
           />
         </TabPanel>
       </Box>

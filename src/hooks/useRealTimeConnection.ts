@@ -1,15 +1,8 @@
-import {
-  codeAtom,
-  ICodeContent,
-} from "@sections/teacher-panel/code-panel/atoms/code.atom";
-import {
-  globalCodePanelAtom,
-  IGlobalCodePanelAtom,
-} from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
+import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
+import { IGlobalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 import { initializeApp } from "firebase/app";
 import { getDatabase, onValue, ref, set } from "firebase/database";
-import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -32,25 +25,19 @@ const udpateWorkSpaceState = (
   set(ref(db, "streams/" + userId), body);
 };
 
-export const useRealTimeConnection = (userId: string): void => {
-  const [global, setGlobal] = useAtom(globalCodePanelAtom);
-  const [code, setCode] = useAtom(codeAtom);
+export const useRealTimeConnection = (
+  userId: string
+): { data?: RealTimeConnectionBody } => {
+  const [data, setData] = useState<RealTimeConnectionBody>();
 
   const getWorkSpaceState = (userId: string): void => {
     const starCountRef = ref(db, "streams/" + userId);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
 
-      setCode((prev) => ({
-        code: data.code ?? prev.code,
-        language: data.language ?? prev.language,
-      }));
+      console.log({ data });
 
-      setGlobal((prev) => ({
-        ...prev,
-        lessonId: data.lessonId,
-        slideIndex: data.slideIndex,
-      }));
+      setData(data);
     });
   };
 
@@ -59,8 +46,10 @@ export const useRealTimeConnection = (userId: string): void => {
     getWorkSpaceState(userId);
   }, [userId]);
 
-  useEffect(() => {
-    // console.log("work");
-    // udpateWorkSpaceState(userId, { ...global, ...code });
-  }, [global, code]);
+  // useEffect(() => {
+  // console.log("work");
+  // udpateWorkSpaceState(userId, { ...global, ...code });
+  // }, [global, code]);
+
+  return { data };
 };
