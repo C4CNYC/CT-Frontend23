@@ -1,6 +1,7 @@
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { Box } from "@mui/system";
 import { useAtom } from "jotai";
+
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";

@@ -1,7 +1,8 @@
 import Iconify from "@components/iconify";
-import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
+
 import { IconButton, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
@@ -23,6 +24,7 @@ export default function QuickRabbitsItem({
 }: IQuickRabbitsItem): React.ReactElement | null {
   const { query } = useRouter();
   const { data } = useRealTimeConnection(rabit.id);
+
   const [value, setValue] = useState(0);
 
   const handleChange = (
