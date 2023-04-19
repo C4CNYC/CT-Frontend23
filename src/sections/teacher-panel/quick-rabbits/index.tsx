@@ -40,6 +40,7 @@ export const QuickRabbits = (): React.ReactElement => {
         }}
       >
         {Object.values(quickRabits).map((rabit) => (
+          // Change if it will be necessary
           // <Grid item xs={4} key={rabit.id}>
           <QuickRabbitsItem rabit={rabit} key={rabit.id} onClose={onClose} />
           // </Grid>
