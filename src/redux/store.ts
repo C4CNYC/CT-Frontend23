@@ -9,6 +9,7 @@ import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
+import { studentApi } from "./services/student";
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +26,8 @@ const store = configureStore({
     })
       .concat(authApi.middleware)
       .concat(adminApi.middleware)
-      .concat(managerApi.middleware),
+      .concat(managerApi.middleware)
+      .concat(studentApi.middleware),
 });
 
 const persistor = persistStore(store);
