@@ -17,7 +17,7 @@ export const TopBar = (): React.ReactElement => {
         px="24px"
       >
         <Logo />
-        <Box>
+        <Box sx={{ ml: { xs: 0, sm: 0, md: "-60px" } }}>
           <Link href={"/"}>
             <IconButton>
               <MicIcon />
