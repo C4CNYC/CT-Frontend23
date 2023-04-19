@@ -23,7 +23,7 @@ export default function QuickRabbitsItem({
 }: IQuickRabbitsItem): React.ReactElement | null {
   const { query } = useRouter();
   const { data } = useRealTimeConnection(rabit.id);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const handleChange = (
     event: React.SyntheticEvent,
