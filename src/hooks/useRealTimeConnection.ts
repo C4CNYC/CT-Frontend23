@@ -48,6 +48,7 @@ export const useRealTimeConnection = (userId: string): void => {
 
       setGlobal((prev) => ({
         ...prev,
+        lessonId: data.lessonId,
         slideIndex: data.slideIndex,
       }));
     });
@@ -57,7 +58,9 @@ export const useRealTimeConnection = (userId: string): void => {
     if (!userId) return;
     getWorkSpaceState(userId);
   }, [userId]);
+
   useEffect(() => {
-    udpateWorkSpaceState(userId, { ...global, ...code });
+    // console.log("work");
+    // udpateWorkSpaceState(userId, { ...global, ...code });
   }, [global, code]);
 };

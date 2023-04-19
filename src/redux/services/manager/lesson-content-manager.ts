@@ -17,6 +17,8 @@ const extendedApi = managerApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["LessonsContent"],
+      transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
+        res.sort((a, b) => a.meta.order - b.meta.order),
     }),
     getLessonContentById: builder.query<
       ILessonContent & BaseResponseInterface,
