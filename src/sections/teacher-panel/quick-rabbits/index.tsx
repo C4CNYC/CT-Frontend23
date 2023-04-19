@@ -1,6 +1,6 @@
 import { Grid, Stack } from "@mui/material";
 import { Box } from "@mui/system";
-import { QuickRabbitsItem } from "./quick-rabbits-item";
+import  QuickRabbitsItem  from "./quick-rabbits-item";
 import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
 
 export const QuickRabbits = (): React.ReactElement => {
