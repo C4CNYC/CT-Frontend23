@@ -13,11 +13,10 @@ export const Messages = (): React.ReactElement => {
       <div
         style={{
           position: "relative",
-          height: "329px",
-          width: "392px",
-          right: "9px",
+          height: "338px",
+          width: "102%",
           zIndex: 999,
-          bottom: 0,
+          right: "2px"
         }}
       >
         <MainContainer
@@ -41,7 +40,7 @@ export const Messages = (): React.ReactElement => {
             </MessageList>
             <MessageInput
               placeholder="Type message here"
-              style={{ padding: "12px", borderTop: "none" }}
+              style={{ paddingBottom: "12px", paddingTop: "8px", borderTop: "none" }}
             />
           </ChatContainer>
         </MainContainer>

@@ -25,7 +25,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 0 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -81,7 +81,7 @@ export default function QuickRabbitsItem(): React.ReactElement {
         p="5px 6px 4px 10px"
       >
         <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <Typography color="#EAEAEB" pt="10px" mr="175px">
+          <Typography color="#EAEAEB" pt="10px" mr="0 auto" ml="0 auto">
             Header
           </Typography>
           <Tabs value={value} onChange={handleChange} indicatorColor="#364954">
@@ -109,10 +109,10 @@ export default function QuickRabbitsItem(): React.ReactElement {
           color="#EAEAEB"
         />
       </Box>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={0}>
         <Messages />
       </TabPanel>
-      <Box width="450px" height="317px" ml="-20px">
+      <Box height="317px" ml="-20px">
         <TabPanel value={value} index={2}>
           <CodeMirror
             value={valueCode}
