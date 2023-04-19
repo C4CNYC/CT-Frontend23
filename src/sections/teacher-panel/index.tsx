@@ -8,7 +8,7 @@ export const TeacherPanel = (): React.ReactElement => {
   return (
     <Stack>
       <TopBar />
-      <Stack>
+      <Stack sx={{ position: "relative", height: "calc(100vh - 50px)" }}>
         <ResizerUi split="vertical" maxSize={-100} defaultSize={400}>
           <CodePanel />
           <QuickRabbits />

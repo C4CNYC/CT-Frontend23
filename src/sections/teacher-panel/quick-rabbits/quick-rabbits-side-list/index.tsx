@@ -62,7 +62,7 @@ const Drawer = styled(MuiDrawer, {
   }),
   "& .MuiPaper-root": {
     top: "60px",
-    height: "calc(100vh - 170px)",
+    height: "500px",
     boxShadow: "-2px 4px 4px 0px #00000040",
     borderRadius: "25px 0 0 25px",
     background: "#DFEEF7",
