@@ -37,18 +37,18 @@ export const SidebarUser = ({
   student,
   isLoading,
 }: Props): React.ReactElement => {
-  const { user } = useAuthContext();
+  const senderId = "SUPPORT";
   const [lastMessage, setLastMessage] = useState<IChatMessage>()
   const { getMessages } = useFirebaseChat();
   const [, setQuickRabbit] = useAtom(quickRabbitAtom);
-  const { first_name, email, active, id } = student;
+  const { first_name, last_name, email, active, id } = student;
 
   useEffect(() => {
-    getMessages(user?.id, id, (data) => {
+    getMessages(senderId, id, (data) => {
       if (!data.length) return;
       setLastMessage(data[0]);
     }, 1)
-  }, [user])
+  }, [])
 
   const onConnectStudent = (): void => {
     setQuickRabbit((prev) => ({ ...prev, [id]: { id, email } }));
@@ -56,7 +56,7 @@ export const SidebarUser = ({
 
   const getSubText = (): string => {
     if (!lastMessage) return ""
-    const sender = lastMessage?.sender_id === user?.id ? "Me" : first_name;
+    const sender = lastMessage?.sender_id === senderId ? "Me" : first_name;
     return `${sender}: ${lastMessage.text}`;
   }
 
@@ -95,13 +95,14 @@ export const SidebarUser = ({
       >
         <Typography
           variant="subtitle2"
+          noWrap
           sx={{
             textOverflow: "ellipsis",
             overflow: "hidden",
             whiteSpace: "nowrap",
           }}
         >
-          {first_name}
+          {first_name} {last_name}
         </Typography>
         <Typography
           variant="caption"

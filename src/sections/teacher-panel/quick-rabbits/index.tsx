@@ -5,14 +5,21 @@ import _ from "lodash";
 import { quickRabbitAtom } from "../atoms/quick-rabbit.atom";
 import QuickRabbitsItem from "./quick-rabbits-item";
 import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
+import { useRouter } from "next/router";
+import { PATH_DASHBOARD } from "@routes/paths";
 
 export const QuickRabbits = (): React.ReactElement => {
   const theme = useTheme();
+  const { query, push } = useRouter();
   const [quickRabits, setQuckRabit] = useAtom(quickRabbitAtom);
 
   const onClose = (userId: string): void => {
     setQuckRabit((prev) => _.omit(prev, [userId]));
+    if (userId === query.studentId) {
+      push(PATH_DASHBOARD.school.controller(query.id as string))
+    }
   };
+
   return (
     <Stack direction="row">
       <Grid

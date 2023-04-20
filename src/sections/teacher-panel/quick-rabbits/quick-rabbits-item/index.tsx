@@ -62,7 +62,7 @@ export default function QuickRabbitsItem({
       bgcolor="#364954"
     >
       <Box
-        bgcolor="rgba(121, 56, 56, 0.8)"
+        bgcolor="rgba(120, 56, 121, 0.7)"
         height="35px"
         display="flex"
         alignItems="center"

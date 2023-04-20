@@ -14,7 +14,7 @@ export const TopBar = (): React.ReactElement => {
         justifyContent="space-between"
         alignItems="center"
         height="50px"
-        px="24px"
+        px="14px"
       >
         <Logo />
         <Box sx={{ ml: { xs: 0, sm: 0, md: "-60px" } }}>

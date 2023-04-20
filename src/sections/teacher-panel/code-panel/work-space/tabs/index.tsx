@@ -49,13 +49,6 @@ const SmallScreenTabs = ({
           sx={index === 2 ? styles.activeTab : styles.Tab}
           label={index === 2 ? <div style={styles.slides}>Browser</div> : ""}
         />
-        <Tab
-          {...a11yProps(0)}
-          aria-label="Preview"
-          icon={<Iconify icon="material-symbols:chat" />}
-          sx={index === 3 ? styles.activeTab : styles.Tab}
-          label={index === 3 ? <div style={styles.slides}>Chat</div> : ""}
-        />
       </Tabs>
     </Box>
   );

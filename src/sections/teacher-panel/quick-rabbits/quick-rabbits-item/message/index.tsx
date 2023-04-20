@@ -12,20 +12,19 @@ import {
   useFirebaseChat,
 } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "src/auth/useAuthContext";
 
 interface IMessages {
   reciverId: string;
 }
 
 export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
-  const { user } = useAuthContext();
+  const senderId = "SUPPORT";
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const { getMessages, sendMessage } = useFirebaseChat();
 
   useEffect(() => {
     console.log("started test");
-    getMessages(user?.id, reciverId, (data) => {
+    getMessages(senderId, reciverId, (data) => {
       setMessages(data);
     });
   }, []);
@@ -69,7 +68,7 @@ export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
                   {reciverId === message.sender_id &&
                   messages[i - 1]?.sender_id !== message.sender_id ? (
                     <Avatar
-                      src="https://tilomitra.com/wp-content/uploads/2014/08/avatar-cartoon.png"
+                      src="https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
                       name="Zoe"
                     />
                   ) : null}
@@ -78,12 +77,11 @@ export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
             </MessageList>
             <MessageInput
               onSend={(innerHtml, textContent) => {
-                sendMessage(textContent, reciverId, user?.id);
+                sendMessage(textContent, reciverId, senderId);
               }}
               placeholder="Type message here"
               style={{
-                paddingBottom: "12px",
-                paddingTop: "8px",
+                padding: "15px 8px 22px 8px",
                 borderTop: "none",
               }}
             />
