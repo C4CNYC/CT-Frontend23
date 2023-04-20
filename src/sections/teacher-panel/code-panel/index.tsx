@@ -10,6 +10,7 @@ import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
 import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
 import WorkSpace from "./work-space";
 import SmallScreenTabs from "./work-space/tabs";
+import { Typography } from "@mui/material";
 
 export const CodePanel = (): React.ReactElement => {
   const { query } = useRouter();
@@ -40,7 +41,20 @@ export const CodePanel = (): React.ReactElement => {
     }));
   }, [realTimeData]);
 
-  if (!query?.studentId) return <Box>PLS CHOSE STUDENT</Box>;
+  if (!query?.studentId)
+    return (
+      <Box>
+        <Typography
+          mt="40px"
+          textAlign="center"
+          textTransform="uppercase"
+          color="#c4c4c4"
+          variant="h6"
+        >
+          PLS CHOSE STUDENT
+        </Typography>
+      </Box>
+    );
 
   return (
     <Box>
