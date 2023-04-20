@@ -113,7 +113,7 @@ export default function QuickRabbitsItem({
         </Box>
       </Box>
       <TabPanel value={value} index={0}>
-        <Messages />
+        <Messages reciverId={rabit.id} />
       </TabPanel>
       <Box height="317px" ml="-20px">
         <TabPanel value={value} index={1}>
