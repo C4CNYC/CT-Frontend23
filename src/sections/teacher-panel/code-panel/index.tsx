@@ -2,6 +2,7 @@ import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { Box } from "@mui/system";
 import { useAtom } from "jotai";
 
+import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
@@ -10,7 +11,6 @@ import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
 import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
 import WorkSpace from "./work-space";
 import SmallScreenTabs from "./work-space/tabs";
-import { Typography } from "@mui/material";
 
 export const CodePanel = (): React.ReactElement => {
   const { query } = useRouter();
@@ -41,7 +41,7 @@ export const CodePanel = (): React.ReactElement => {
     }));
   }, [realTimeData]);
 
-  if (!query?.studentId)
+  if (!query?.studentId) {
     return (
       <Box>
         <Typography
@@ -55,6 +55,7 @@ export const CodePanel = (): React.ReactElement => {
         </Typography>
       </Box>
     );
+  }
 
   return (
     <Box>
