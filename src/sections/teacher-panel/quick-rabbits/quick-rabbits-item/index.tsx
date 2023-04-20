@@ -49,6 +49,8 @@ export default function QuickRabbitsItem({
     },
   });
 
+  const isRabbitActive = rabit.id === query.studentId;
+
   if (!rabit) return null;
 
   return (
@@ -78,11 +80,11 @@ export default function QuickRabbitsItem({
           <Link
             href={
               PATH_DASHBOARD.school.controller(query.id as string) +
-              `?studentId=${rabit.id}`
+              (!isRabbitActive ? `?studentId=${rabit.id}` : "")
             }
           >
             <IconButton>
-              <Iconify icon="majesticons:door-enter-line" color="#EAEAEB" />
+              <Iconify icon={isRabbitActive ? "majesticons:door-exit-line" : "majesticons:door-enter-line"} color={isRabbitActive ? "red" : "#EAEAEB"} />
             </IconButton>
           </Link>
           <Tooltip title={rabit.email} placement="top">

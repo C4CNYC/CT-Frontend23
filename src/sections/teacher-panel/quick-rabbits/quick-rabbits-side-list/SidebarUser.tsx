@@ -9,10 +9,13 @@ import {
   Typography,
 } from "@mui/material";
 import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
+import { IChatMessage, useFirebaseChat } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
 import { useAtom } from "jotai";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "src/auth/useAuthContext";
 
-const AvatarSkeleton = () => {
+const AvatarSkeleton = (): React.ReactElement => {
   return (
     <Skeleton
       variant="circular"
@@ -34,12 +37,28 @@ export const SidebarUser = ({
   student,
   isLoading,
 }: Props): React.ReactElement => {
+  const { user } = useAuthContext();
+  const [lastMessage, setLastMessage] = useState<IChatMessage>()
+  const { getMessages } = useFirebaseChat();
   const [, setQuickRabbit] = useAtom(quickRabbitAtom);
   const { first_name, email, active, id } = student;
+
+  useEffect(() => {
+    getMessages(user?.id, id, (data) => {
+      if (!data.length) return;
+      setLastMessage(data[0]);
+    }, 1)
+  }, [user])
 
   const onConnectStudent = (): void => {
     setQuickRabbit((prev) => ({ ...prev, [id]: { id, email } }));
   };
+
+  const getSubText = (): string => {
+    if (!lastMessage) return ""
+    const sender = lastMessage?.sender_id === user?.id ? "Me" : first_name;
+    return `${sender}: ${lastMessage.text}`;
+  }
 
   return (
     <ListItem sx={{ pl: 0 }}>
@@ -92,7 +111,7 @@ export const SidebarUser = ({
             whiteSpace: "nowrap",
           }}
         >
-          {email}
+          {getSubText()}
         </Typography>
       </Box>
       <IconButton onClick={onConnectStudent}>
