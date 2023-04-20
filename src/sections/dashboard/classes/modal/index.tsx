@@ -1,0 +1,176 @@
+import { ClassMembersAutocomplete } from "@components/class-members-autocomplete";
+import { ClassMentorsAutocomplete } from "@components/class-mentors-autocomplete";
+import { ClassCoursesAutocomplete } from "@components/ClassCoursesAutocomplete";
+import FormProvider from "@components/hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+import AddClassTab from "./AddClassTab";
+
+interface FormValuesProps {
+  name: string;
+  description: string;
+}
+
+interface Props {
+  children?: React.ReactElement;
+  updateClass: (name: string) => void;
+  defaultValues: { name: string; description: string };
+  rowId: string;
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+const UpdateUserSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  description: Yup.string().required("Name is required"),
+});
+
+function TabPanel(props: TabPanelProps): React.ReactElement {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number): Record<string, string> {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+export default function ClassPreferences({
+  children,
+  updateClass,
+  defaultValues,
+  rowId,
+}: Props): React.ReactElement {
+  const [open, setOpenDialog] = useState<boolean>(false);
+  const [value, setValue] = useState(0);
+
+  const handleChange = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ): void => {
+    setValue(newValue);
+  };
+
+  const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(UpdateUserSchema),
+    defaultValues,
+  });
+
+  const onSubmit = (data: FormValuesProps): void => {
+    updateClass?.(data.name);
+  };
+
+  return (
+    <>
+      <Box
+        onClick={() => {
+          setOpenDialog(true);
+        }}
+      >
+        {children}
+      </Box>
+      <Dialog
+        fullWidth
+        open={open}
+        onClose={() => {
+          setOpenDialog(false);
+        }}
+      >
+        <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
+          Class Preferences
+        </DialogTitle>
+        <Box sx={{ width: "100%" }}>
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <DialogContent sx={{ p: 0, height: "430px" }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="General" {...a11yProps(0)} />
+                  <Tab label="Mates" {...a11yProps(1)} />
+                  <Tab label="Courses" {...a11yProps(2)} />
+                  <Tab label="Members" {...a11yProps(3)} />
+                </Tabs>
+              </Box>
+              <TabPanel value={value} index={0}>
+                <AddClassTab />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <ClassMembersAutocomplete classId={rowId} />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <ClassCoursesAutocomplete classId={rowId} />
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <ClassMentorsAutocomplete classId={rowId} />
+              </TabPanel>
+            </DialogContent>
+            <DialogActions>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 2,
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setOpenDialog(false);
+                  }}
+                >
+                  Close
+                </Button>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={false}
+                >
+                  Save
+                </LoadingButton>
+              </Box>
+            </DialogActions>
+          </FormProvider>
+        </Box>
+      </Dialog>
+    </>
+  );
+}
