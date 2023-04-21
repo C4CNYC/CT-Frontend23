@@ -2,6 +2,7 @@ import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { Box } from "@mui/system";
 import { useAtom } from "jotai";
 
+import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
@@ -40,7 +41,21 @@ export const CodePanel = (): React.ReactElement => {
     }));
   }, [realTimeData]);
 
-  if (!query?.studentId) return <Box>PLS CHOSE STUDENT</Box>;
+  if (!query?.studentId) {
+    return (
+      <Box>
+        <Typography
+          mt="40px"
+          textAlign="center"
+          textTransform="uppercase"
+          color="#c4c4c4"
+          variant="h6"
+        >
+          PLS CHOSE STUDENT
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box>
