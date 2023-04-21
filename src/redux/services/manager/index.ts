@@ -26,7 +26,7 @@ export const managerApi = createApi({
     "Integrations",
     "ContentIntegration",
     "LessonContentItem",
-    "Mentor",
+    "Mentors",
   ],
   endpoints: () => ({}),
 });

@@ -18,7 +18,10 @@ import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
-import { IMentor } from "src/redux/services/interfaces/user.interface";
+import {
+  IMentor,
+  IStudent,
+} from "src/redux/services/interfaces/user.interface";
 import {
   useDeleteMentorMutation,
   useGetMentorsQuery,
@@ -29,6 +32,8 @@ import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type MentorType = IMentor & BaseResponseInterface;
+
+type StudentType = IStudent & BaseResponseInterface;
 
 interface Props {
   classId: string;
@@ -43,43 +48,39 @@ export default function ClassMentorsAutocomplete({
 
   const [joinMentor] = useUpdateMentorMutation();
   const [leftMentor] = useDeleteMentorMutation();
-  const { data: classMembers } = useGetStudentsQuery(
-    { schoolId, class_id: classId, take: 50 },
-    { skip: !schoolId || !classId }
-  );
+
   const { data: students } = useGetStudentsQuery(
     { schoolId, ...filters },
     { skip: !schoolId || !classId }
   );
   const { data: mentors } = useGetMentorsQuery(
-    { school_id: schoolId, class_id: classId, ...filters },
+    { school_id: schoolId, class_id: classId },
     { skip: !schoolId || !classId }
   );
-  if (!students?.data || !classMembers?.data) {
+  if (!students?.data || !mentors?.data) {
     return <CircularProgress />;
   }
-  console.log(classMembers, students, mentors);
+  console.log(students, mentors);
+  console.log(classId, schoolId);
   const onChange = async (
     _event: React.SyntheticEvent<any>,
-    _newValue: MentorType[],
+    _newValue: StudentType[],
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<MentorType>
+    details?: AutocompleteChangeDetails<StudentType>
   ): Promise<void> => {
     try {
       const payload = {
         school_id: schoolId,
         class_id: classId,
-        student_id: details?.option.id ?? "",
+        user_id: details?.option.id ?? "",
       };
       switch (reason) {
         case "selectOption": {
-          console.log(payload);
           await joinMentor(payload).unwrap();
           enqueueSnackbar(`${details?.option.email ?? ""} joined to class`);
           return;
         }
         case "removeOption": {
-          console.log(payload);
           await leftMentor(payload).unwrap();
           enqueueSnackbar(`${details?.option.email ?? ""} left class`);
           return;
@@ -90,12 +91,12 @@ export default function ClassMentorsAutocomplete({
     }
   };
   return (
-    <Autocomplete<IMentor & BaseResponseInterface, true>
+    <Autocomplete<IStudent & BaseResponseInterface, true>
       multiple
       id="add-user-input"
-      value={classMembers.data}
+      value={mentors.data}
       onChange={onChange}
-      options={mentors ? mentors : []}
+      options={students.data}
       popupIcon={null}
       onLoadStart={() => {
         console.log("work");
@@ -129,7 +130,7 @@ export default function ClassMentorsAutocomplete({
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
 
-        const selected = classMembers.data.find((c) => c.email === email);
+        const selected = mentors.data.find((c) => c.email === email);
 
         return (
           <Box

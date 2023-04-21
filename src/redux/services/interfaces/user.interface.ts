@@ -57,9 +57,9 @@ export interface IStudent {
 
 export interface IMentor {
   schoolId?: string;
-  name?: string;
+  name: string;
   class_id?: string;
-  email?: string;
+  email: string;
 }
 
 export interface MentorSearchParams extends BaseSearchInterface {
