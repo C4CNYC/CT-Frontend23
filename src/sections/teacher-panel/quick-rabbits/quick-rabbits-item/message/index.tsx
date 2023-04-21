@@ -34,7 +34,7 @@ export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
       <div
         style={{
           position: "relative",
-          height: "338px",
+          height: "438px",
           width: "102%",
           zIndex: 999,
           right: "2px",

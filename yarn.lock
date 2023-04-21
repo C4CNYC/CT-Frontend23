@@ -9769,6 +9769,13 @@ react-universal-interface@^0.6.2:
   resolved "https://registry.npmjs.org/react-universal-interface/-/react-universal-interface-0.6.2.tgz"
   integrity sha512-dg8yXdcQmvgR13RIlZbTRQOoUrDciFVoSBZILwjE2LFISxZZ8loVJKAkuzswl5js8BHda79bIb2b84ehU8IjXw==
 
+react-use-activity@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-use-activity/-/react-use-activity-0.1.0.tgz#527b33d3a9230bb4bd901734c075d2a7783b1aa9"
+  integrity sha512-EpF8qfjgPEKwAIWWxSBOMCosoA2PTDwrC5JUEM3W2kahSrRgV7F/NooVVIIAxfBnJywTWSd6sZfW4BfuiH6Gqw==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+
 react-use-iframe-content-height@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/react-use-iframe-content-height/-/react-use-iframe-content-height-1.0.2.tgz"

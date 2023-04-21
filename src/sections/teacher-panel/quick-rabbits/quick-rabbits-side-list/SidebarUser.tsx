@@ -1,3 +1,4 @@
+import { useOnlineConnection } from "@hooks/useOnlineConnection";
 import AddIcon from "@mui/icons-material/Add";
 import {
   Avatar,
@@ -6,14 +7,15 @@ import {
   IconButton,
   ListItem,
   Skeleton,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { IChatMessage, useFirebaseChat } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
 import { useAtom } from "jotai";
+import { isNull } from "lodash";
 import { useEffect, useState } from "react";
-import { useAuthContext } from "src/auth/useAuthContext";
 
 const AvatarSkeleton = (): React.ReactElement => {
   return (
@@ -41,7 +43,8 @@ export const SidebarUser = ({
   const [lastMessage, setLastMessage] = useState<IChatMessage>()
   const { getMessages } = useFirebaseChat();
   const [, setQuickRabbit] = useAtom(quickRabbitAtom);
-  const { first_name, last_name, email, active, id } = student;
+  const { lastTimeActivity, isOnline } = useOnlineConnection(student.id);
+  const { first_name, last_name, email, active, id, avatar } = student;
 
   useEffect(() => {
     getMessages(senderId, id, (data) => {
@@ -71,14 +74,17 @@ export const SidebarUser = ({
         <LoaderDelay
           skeleton={<AvatarSkeleton />}
           component={
-            <Avatar
+            <Tooltip placement="left" title={getTooltipAvatarMessage(lastTimeActivity, isOnline)} >
+<Avatar
               alt={first_name}
-              src="/static/images/avatar/1.jpg"
+              src={avatar ?? "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"}
               sx={{
                 width: { xs: 40, sm: 40, md: 50 },
                 height: { xs: 40, sm: 40, md: 50 },
+                border: `5px solid ${getAvatarColor(lastTimeActivity)}`
               }}
             />
+            </Tooltip>
           }
           isLoading={isLoading}
           deley={1000}
@@ -121,3 +127,18 @@ export const SidebarUser = ({
     </ListItem>
   );
 };
+
+function getAvatarColor(time: number | null): string {
+  if (isNull(time)) return "#C4C4C4";
+  if (time >= 0 && time <= 5) return "#0198ED";
+  if (time < 10 && time > 5) return "#E27510";
+  return "#C4C4C4";
+}
+
+function getTooltipAvatarMessage (time: number | null, isOnline: boolean): string {
+  if (!isOnline) return "student offline"
+  if (isNull(time)) return "was active long time ago";
+  if (time === 0 || time <= 5) return "active"
+  if (time < 50 && time > 5) return `was active ${time} minutes ago`
+  return "was active long time ago"
+}

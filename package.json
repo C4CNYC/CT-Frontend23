@@ -106,6 +106,7 @@
     "react-slick": "^0.29.0",
     "react-split-pane": "^0.1.92",
     "react-swipeable-views": "^0.14.0",
+    "react-use-activity": "^0.1.0",
     "react-use-iframe-content-height": "^1.0.2",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",

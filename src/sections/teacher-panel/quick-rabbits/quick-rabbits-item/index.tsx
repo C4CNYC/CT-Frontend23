@@ -55,7 +55,7 @@ export default function QuickRabbitsItem({
 
   return (
     <Box
-      height="369px"
+      height="469px"
       border="1px solid #cbcccb"
       borderRadius="15px"
       overflow="hidden"
