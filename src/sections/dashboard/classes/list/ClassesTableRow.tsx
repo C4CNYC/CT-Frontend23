@@ -125,6 +125,13 @@ export default function ClassesTableRow({
         arrow="right-top"
         sx={{ width: 140 }}
       >
+        <MenuItem
+          component={Link}
+          href={PATH_DASHBOARD.school.controller(row.id)}
+        >
+          <Iconify icon="material-symbols:connect-without-contact" />
+          Connect
+        </MenuItem>
         <AddClassDialog
           isEdit
           defaultValues={{ name: row.name, description: "" }}

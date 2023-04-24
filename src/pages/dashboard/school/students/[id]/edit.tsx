@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
 import { Container } from "@mui/material";
+import SkeletonEditUserForm from "@sections/dashboard/user/skeleton/SkeletonEditUserForm";
 import { useSelector } from "react-redux";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import { useGetStudentQuery } from "src/redux/services/manager/students-manager";
@@ -26,7 +27,7 @@ export default function UserEditPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
-  const { data } = useGetStudentQuery(
+  const { data, isLoading } = useGetStudentQuery(
     {
       studentId: id as string,
       schoolId,
@@ -51,8 +52,11 @@ export default function UserEditPage(): React.ReactElement {
             { name: data?.email },
           ]}
         />
-
-        <StudentNewEditForm isEdit currentUser={data} />
+        {isLoading ? (
+          <SkeletonEditUserForm />
+        ) : (
+          <StudentNewEditForm isEdit currentUser={data} />
+        )}
       </Container>
     </>
   );

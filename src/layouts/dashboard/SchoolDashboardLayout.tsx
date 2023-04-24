@@ -1,21 +1,36 @@
 import { MotionContainer, varBounce } from "@components/animate";
 import { Button, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import schools from "@pages/dashboard/organization/schools";
 import { m } from "framer-motion";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
+import { setSchool } from "src/redux/slices/manager";
+import { dispatch, RootState, useSelector } from "src/redux/store";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
 
 interface Props {
   children: React.ReactElement;
+  isFullScreen?: boolean;
 }
 export default function SchoolDashboardLayout({
   children,
+  isFullScreen,
 }: Props): React.ReactElement | null {
   const { data, isLoading } = useGetMySchoolsQuery({});
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+
+  useEffect(() => {
+    if (!data?.data) return;
+    dispatch(
+      setSchool(
+        !(schoolId === "") ? schoolId : data.data[0] ? data.data[0].id : ""
+      )
+    );
+  }, [data]);
 
   if (!data?.data.length && !isLoading) {
     return (
@@ -50,6 +65,8 @@ export default function SchoolDashboardLayout({
       </CompactLayout>
     );
   }
+
+  if (isFullScreen) return isLoading ? <CircularProgress /> : children;
 
   return (
     <DashboardLayout>

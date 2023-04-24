@@ -83,6 +83,8 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, "/school/students/new"),
     setting: (id: string) =>
       path(ROOTS_DASHBOARD, `/school/classes/${id}/setting`),
+    controller: (id: string) =>
+      path(ROOTS_DASHBOARD, `/school/classes/${id}/controller`),
     edit: (name: string) =>
       path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
   },
