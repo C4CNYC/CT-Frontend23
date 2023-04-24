@@ -1,4 +1,5 @@
 import Carousel from "@components/carousel";
+import LoaderDeleyContent from "@components/loader-deley/LoaderDeleyContent";
 import { Box } from "@mui/system";
 import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 import { useAtom } from "jotai";
@@ -76,21 +77,6 @@ const SliderBlock = ({
 
   return (
     <BaseBlock>
-      {/* <LoadingScreen
-        sx={{
-          position: "absolute",
-          animation: "1s ease-in 1.5s hide forwards",
-          "@keyframes hide": {
-            "0%": {
-              opacity: 1,
-            },
-            "100%": {
-              opacity: 0,
-              zIndex: -1,
-            },
-          },
-        }}
-      /> */}
       <Box
         height="100%"
         sx={{
@@ -108,6 +94,7 @@ const SliderBlock = ({
           },
         }}
       >
+        <LoaderDeleyContent deley={3000} isFetching={true} />
         <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
           {data.map((step) => (
             <View
