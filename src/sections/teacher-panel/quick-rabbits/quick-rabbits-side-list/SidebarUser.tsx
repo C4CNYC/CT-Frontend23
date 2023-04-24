@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { IChatMessage, useFirebaseChat } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
@@ -42,6 +43,7 @@ export const SidebarUser = ({
   const senderId = "SUPPORT";
   const [lastMessage, setLastMessage] = useState<IChatMessage>()
   const { getMessages } = useFirebaseChat();
+  const [,setUserOnline] = useAtom(onlineStudentsAtom);
   const [, setQuickRabbit] = useAtom(quickRabbitAtom);
   const { lastTimeActivity, isOnline } = useOnlineConnection(student.id);
   const { first_name, last_name, email, active, id, avatar } = student;
@@ -52,6 +54,13 @@ export const SidebarUser = ({
       setLastMessage(data[0]);
     }, 1)
   }, [])
+
+  useEffect(() => {
+    setUserOnline(prev => ({
+      ...prev,
+      [student.id]: isOnline
+    }))
+  }, [isOnline])
 
   const onConnectStudent = (): void => {
     setQuickRabbit((prev) => ({ ...prev, [id]: { id, email } }));
@@ -121,9 +130,14 @@ export const SidebarUser = ({
           {getSubText()}
         </Typography>
       </Box>
-      <IconButton onClick={onConnectStudent}>
+      <Tooltip placement="left" title={isOnline ? "connect" : "user is not available"}>
+        <Box>
+<IconButton disabled={!isOnline} onClick={onConnectStudent}>
         <AddIcon />
       </IconButton>
+        </Box>
+
+      </Tooltip>
     </ListItem>
   );
 };
@@ -131,7 +145,7 @@ export const SidebarUser = ({
 function getAvatarColor(time: number | null): string {
   if (isNull(time)) return "#C4C4C4";
   if (time >= 0 && time <= 5) return "#0198ED";
-  if (time < 10 && time > 5) return "#E27510";
+  if (time < 50 && time > 5) return "#E27510";
   return "#C4C4C4";
 }
 

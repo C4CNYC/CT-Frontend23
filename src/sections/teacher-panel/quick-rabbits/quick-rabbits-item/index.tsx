@@ -4,14 +4,16 @@ import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { IconButton, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { PATH_DASHBOARD } from "@routes/paths";
+import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { createTheme } from "@uiw/codemirror-themes";
 import CodeMirror from "@uiw/react-codemirror";
+import { useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;
@@ -25,6 +27,12 @@ export default function QuickRabbitsItem({
   const { query } = useRouter();
   const { data } = useRealTimeConnection(rabit.id);
   const [value, setValue] = useState(1);
+  const [onlineStudents] = useAtom(onlineStudentsAtom);
+
+  useEffect(() => {
+    if (!onlineStudents) return;
+    if (!onlineStudents[rabit.id]) onClose(rabit.id);
+  }, [onlineStudents])
 
   const handleChange = (
     event: React.SyntheticEvent,
@@ -34,6 +42,8 @@ export default function QuickRabbitsItem({
   };
 
   const myTheme = createTheme({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     dark: "dark",
     settings: {
       background: "#364954",

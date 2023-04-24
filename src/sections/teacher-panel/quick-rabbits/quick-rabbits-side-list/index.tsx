@@ -22,6 +22,8 @@ import { useState } from "react";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
+import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
+import { useAtom } from "jotai";
 
 const drawerWidth = 250;
 
@@ -74,7 +76,7 @@ const Drawer = styled(MuiDrawer, {
 export const QuickRabbitsSideList = (): React.ReactElement => {
   const [open, setOpen] = useState(false);
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const [onlineUsers, setOnlineUsers] = useState<number>(0);
+  const [onlineStudents] = useAtom(onlineStudentsAtom);
 
   const { data, isLoading, isFetching } = useGetStudentsQuery(
     { schoolId },
@@ -116,7 +118,7 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
                   mr: "5px",
                 }}
               />
-              <Typography variant="caption">{onlineUsers} Live</Typography>
+              <Typography variant="caption">{Object.keys(onlineStudents).filter(id => onlineStudents[id]).length} Live</Typography>
             </Box>
             <Box display="flex" alignItems="center" ml={3}>
               <Box
