@@ -19,7 +19,7 @@ import { FcFolder } from "react-icons/fc";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import AddClassDialog from "../../schools/classes/CreateClassDialog";
+import ClassPreferences from "../modal";
 
 // ----------------------------------------------------------------------
 
@@ -132,23 +132,16 @@ export default function ClassesTableRow({
           <Iconify icon="material-symbols:connect-without-contact" />
           Connect
         </MenuItem>
-        <AddClassDialog
-          isEdit
+        <ClassPreferences
+          updateClass={(name: string) => onEditRow(row.id, name)}
           defaultValues={{ name: row.name, description: "" }}
-          updateClass={(name) => {
-            onEditRow(row.id, name);
-            handleClosePopover();
-          }}
+          rowId={row.id}
         >
           <MenuItem>
-            <Iconify icon="eva:edit-fill" />
-            Edit
+            <Iconify icon="ant-design:setting-outlined" />
+            Settings
           </MenuItem>
-        </AddClassDialog>
-        <MenuItem component={Link} href={PATH_DASHBOARD.school.setting(row.id)}>
-          <Iconify icon="ant-design:setting-outlined" />
-          Settings
-        </MenuItem>
+        </ClassPreferences>
         <MenuItem
           onClick={() => {
             handleOpenConfirm();
