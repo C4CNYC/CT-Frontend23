@@ -18,22 +18,18 @@ import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
-import {
-  IMentor,
-  IStudent,
-} from "src/redux/services/interfaces/user.interface";
+import { useGetOrgMembersQuery } from "src/redux/services/admin/members-admin";
+import { Role } from "src/redux/services/enums/role.enum";
+import { IUser } from "src/redux/services/interfaces/user.interface";
 import {
   useDeleteMentorMutation,
   useGetMentorsQuery,
   useUpdateMentorMutation,
 } from "src/redux/services/manager/class-mentor-manager";
-import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
-type MentorType = IMentor & BaseResponseInterface;
-
-type StudentType = IStudent & BaseResponseInterface;
+type UserType = IUser & BaseResponseInterface;
 
 interface Props {
   classId: string;
@@ -44,29 +40,29 @@ export default function ClassMentorsAutocomplete({
 }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const { filters, setFilter } = useFilters({ email: "", take: 50 });
 
   const [joinMentor] = useUpdateMentorMutation();
   const [leftMentor] = useDeleteMentorMutation();
 
-  const { data: students } = useGetStudentsQuery(
-    { schoolId, ...filters },
-    { skip: !schoolId || !classId }
-  );
+  const { filters, setFilter } = useFilters({
+    role: Role.Manager,
+    email: "",
+    take: 50,
+  });
+  const { data: managers } = useGetOrgMembersQuery({ ...filters });
+
   const { data: mentors } = useGetMentorsQuery(
     { school_id: schoolId, class_id: classId },
     { skip: !schoolId || !classId }
   );
-  if (!students?.data || !mentors?.data) {
+  if (!managers?.data || !mentors) {
     return <CircularProgress />;
   }
-  console.log(students, mentors);
-  console.log(classId, schoolId);
   const onChange = async (
     _event: React.SyntheticEvent<any>,
-    _newValue: StudentType[],
+    _newValue: UserType[],
     reason: AutocompleteChangeReason,
-    details?: AutocompleteChangeDetails<StudentType>
+    details?: AutocompleteChangeDetails<UserType>
   ): Promise<void> => {
     try {
       const payload = {
@@ -77,12 +73,12 @@ export default function ClassMentorsAutocomplete({
       switch (reason) {
         case "selectOption": {
           await joinMentor(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email ?? ""} joined to class`);
+          enqueueSnackbar(`${details?.option.email ?? ""} now a mentor`);
           return;
         }
         case "removeOption": {
           await leftMentor(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email ?? ""} left class`);
+          enqueueSnackbar(`${details?.option.email ?? ""} is not a mentor`);
           return;
         }
       }
@@ -91,12 +87,12 @@ export default function ClassMentorsAutocomplete({
     }
   };
   return (
-    <Autocomplete<IStudent & BaseResponseInterface, true>
+    <Autocomplete<IUser & BaseResponseInterface, true>
       multiple
       id="add-user-input"
       value={mentors.data}
       onChange={onChange}
-      options={students.data}
+      options={managers.data}
       popupIcon={null}
       onLoadStart={() => {
         console.log("work");
@@ -130,7 +126,7 @@ export default function ClassMentorsAutocomplete({
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
 
-        const selected = mentors.data.find((c) => c.email === email);
+        const selected = mentors.data?.find((c) => c.email === email);
 
         return (
           <Box
