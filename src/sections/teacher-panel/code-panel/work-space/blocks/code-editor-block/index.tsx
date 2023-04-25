@@ -28,7 +28,7 @@ const CodeEditorBlock = ({
   const [EditorRef, setEditorRef] = useState(null);
   const [code, setCode] = useState("");
 
-  const handleEditorDidMount = (editor): void => {
+  const handleEditorDidMount = (editor: any): void => {
     setEditorRef(editor);
   };
 

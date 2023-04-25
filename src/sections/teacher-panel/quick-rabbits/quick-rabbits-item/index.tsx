@@ -104,7 +104,7 @@ export default function QuickRabbitsItem({
           </Tooltip>
         </Box>
         <Box display="flex" alignItems="center">
-          <Tabs value={value} onChange={handleChange} indicatorColor="#364954">
+          <Tabs value={value} onChange={handleChange} indicatorColor="primary">
             <Tab
               icon={<Iconify icon="material-symbols:chat" color="#EAEAEB" />}
               {...a11yProps(0)}

@@ -168,9 +168,6 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
         {isLoading || isFetching
           ? [...Array(3)].map((el, i) => <SkeletonSidebarUser key={i + 5} />)
           : data?.data.map((student, i) => {
-              if (student.active) {
-                setOnlineUsers(onlineUsers + 1);
-              }
               return (
                 <SidebarUser
                   student={student}

@@ -1,7 +1,6 @@
 import { MotionContainer, varBounce } from "@components/animate";
 import { Button, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import schools from "@pages/dashboard/organization/schools";
 import { m } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect } from "react";

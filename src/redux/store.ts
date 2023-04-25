@@ -9,7 +9,6 @@ import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
-import { studentApi } from "./services/student";
 
 // ----------------------------------------------------------------------
 

@@ -13,10 +13,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "src/hooks/useFilters";

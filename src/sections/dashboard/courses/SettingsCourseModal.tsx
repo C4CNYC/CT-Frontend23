@@ -4,7 +4,6 @@ import {
   Box,
   Dialog,
   DialogContent,
-  DialogTitle,
   IconButton,
   Typography,
 } from "@mui/material";
@@ -53,7 +52,7 @@ export default function SettingsCourseModal({
           }}
         >
           <Typography variant="h5">Course Preferences</Typography>
-          <IconButton onClick={() => setOpenDialog(false)}>
+          <IconButton onClick={() => { setOpenDialog(false); }}>
             <CloseIcon />
           </IconButton>
         </Box>
