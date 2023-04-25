@@ -5,9 +5,11 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
 import { useWorkSpaceManager } from "../hooks/useWorkSpaceManager.hook";
-import { CodeEditorBlock } from "./blocks/code-editor-block";
 import SliderBlock from "./blocks/slider-block";
 import ViewBlock from "./blocks/view-block";
+import dynamic from "next/dynamic";
+
+const CodeEditorBlock = dynamic(async () => await import("./blocks/code-editor-block"), { ssr: false })
 
 interface IWorkSpace {
   data: Array<ILessonContent & BaseResponseInterface>;
