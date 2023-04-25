@@ -11,6 +11,7 @@ import { setSchool } from "src/redux/slices/manager";
 import { dispatch, RootState, useSelector } from "src/redux/store";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
+import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
 
 interface Props {
   children: React.ReactElement;
@@ -66,7 +67,7 @@ export default function SchoolDashboardLayout({
     );
   }
 
-  if (isFullScreen) return isLoading ? <CircularProgress /> : children;
+  if (isFullScreen) return isLoading ? <TeacherSkeletonPanel /> : children;
 
   return (
     <DashboardLayout>
