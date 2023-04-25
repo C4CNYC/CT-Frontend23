@@ -9,6 +9,7 @@ import {
   Avatar,
   Box,
   Chip,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
@@ -30,26 +31,33 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type ModuleType = IModule & BaseResponseInterface;
 
-export default function CourseModuleAutocomplete(): React.ReactElement {
-  const router = useRouter();
+interface Props {
+  id: string;
+}
+
+export default function CourseModuleAutocomplete({
+  id,
+}: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const courseId = router.query.id as string;
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
   const [addModule] = useAddModuleToCourseMutation();
   const [removeModule] = useRemoveModuleFromCourseMutation();
   const { data: addedLessons } = useGetModulesQuery(
-    { course_id: courseId, take: 50 },
-    { skip: !courseId }
+    { course_id: id, take: 50 },
+    { skip: !id }
   );
-  const { data: lessons } = useGetModulesQuery(
-    { ...filters },
-    { skip: !courseId }
-  );
+  const { data: lessons } = useGetModulesQuery({ ...filters }, { skip: !id });
 
   if (!lessons?.data || !addedLessons?.data) {
-    return <CircularProgress />;
+    return (
+      <Skeleton
+        animation="wave"
+        variant="rounded"
+        sx={{ width: "100%", height: "56px" }}
+      />
+    );
   }
 
   const onChange = async (
@@ -60,7 +68,7 @@ export default function CourseModuleAutocomplete(): React.ReactElement {
   ): Promise<void> => {
     try {
       const payload = {
-        id: courseId,
+        id,
         unit_id: details?.option.id as string,
       };
       switch (reason) {

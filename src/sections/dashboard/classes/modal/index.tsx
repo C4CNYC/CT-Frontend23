@@ -17,6 +17,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { Role } from "src/redux/services/enums/role.enum";
+import { RootState } from "src/redux/store";
 import * as Yup from "yup";
 import AddClassTab from "./AddClassTab";
 
@@ -78,6 +81,8 @@ export default function ClassPreferences({
   const [open, setOpenDialog] = useState<boolean>(false);
   const [value, setValue] = useState(0);
 
+  const userRole = useSelector((state: RootState) => state.global?.user?.role);
+
   const handleChange = (
     event: React.SyntheticEvent,
     newValue: number
@@ -128,7 +133,10 @@ export default function ClassPreferences({
                   <Tab label="General" {...a11yProps(0)} />
                   <Tab label="Mates" {...a11yProps(1)} />
                   <Tab label="Courses" {...a11yProps(2)} />
-                  <Tab label="Members" {...a11yProps(3)} />
+
+                  {userRole !== Role.Manager ? (
+                    <Tab label="Mentors" {...a11yProps(3)} />
+                  ) : null}
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
@@ -140,9 +148,11 @@ export default function ClassPreferences({
               <TabPanel value={value} index={2}>
                 <ClassCoursesAutocomplete classId={rowId} />
               </TabPanel>
-              <TabPanel value={value} index={3}>
-                <ClassMentorsAutocomplete classId={rowId} />
-              </TabPanel>
+              {userRole !== Role.Manager ? (
+                <TabPanel value={value} index={3}>
+                  <ClassMentorsAutocomplete classId={rowId} />
+                </TabPanel>
+              ) : null}
             </DialogContent>
             <DialogActions>
               <Box
