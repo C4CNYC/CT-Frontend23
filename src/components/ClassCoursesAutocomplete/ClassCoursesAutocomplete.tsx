@@ -14,7 +14,6 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useSelector } from "react-redux";
@@ -30,10 +29,14 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type CourseType = ICourse & BaseResponseInterface;
 
-export default function ClassCoursesAutocomplete(): React.ReactElement {
-  const router = useRouter();
+interface Props {
+  classId: string;
+}
+
+export default function ClassCoursesAutocomplete({
+  classId,
+}: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const classId = router.query.id as string;
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });

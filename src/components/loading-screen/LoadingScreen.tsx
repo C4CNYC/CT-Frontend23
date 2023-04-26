@@ -21,7 +21,13 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function LoadingScreen(): React.ReactElement | null {
+interface Props {
+  sx?: Record<string, any>;
+}
+
+export default function LoadingScreen({
+  sx,
+}: Props): React.ReactElement | null {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
