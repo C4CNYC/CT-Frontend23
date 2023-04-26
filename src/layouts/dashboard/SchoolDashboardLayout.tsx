@@ -1,7 +1,6 @@
 import { MotionContainer, varBounce } from "@components/animate";
 import { Button, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import schools from "@pages/dashboard/organization/schools";
 import { m } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect } from "react";
@@ -11,6 +10,7 @@ import { setSchool } from "src/redux/slices/manager";
 import { dispatch, RootState, useSelector } from "src/redux/store";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
+import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
 
 interface Props {
   children: React.ReactElement;
@@ -66,7 +66,7 @@ export default function SchoolDashboardLayout({
     );
   }
 
-  if (isFullScreen) return isLoading ? <CircularProgress /> : children;
+  if (isFullScreen) return isLoading ? <TeacherSkeletonPanel /> : children;
 
   return (
     <DashboardLayout>

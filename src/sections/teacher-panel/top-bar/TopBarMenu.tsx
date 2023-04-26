@@ -3,7 +3,7 @@ import { Box, Divider, Link, List, ListItem, Typography } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import Hamburger from "hamburger-react";
 import { SetStateAction, useState } from "react";
-import { FaCampground, FaUsers } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import { IoMdSchool } from "react-icons/io";
 
 export const TopBarMenu = (): React.ReactElement => {

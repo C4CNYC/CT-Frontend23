@@ -1,7 +1,7 @@
 import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
 import { IGlobalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 import { initializeApp } from "firebase/app";
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { getDatabase, onValue, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 
 const app = initializeApp({
@@ -17,13 +17,6 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 type RealTimeConnectionBody = ICodeContent & IGlobalCodePanelAtom;
-
-const udpateWorkSpaceState = (
-  userId: string,
-  body: RealTimeConnectionBody
-): void => {
-  set(ref(db, "streams/" + userId), body);
-};
 
 export const useRealTimeConnection = (
   userId: string

@@ -1,13 +1,10 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import {
   BaseListResponseInterface,
   BaseResponseInterface,
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import {
-  IMentor,
-  IStudent,
-  MentorSearchParams,
-} from "../interfaces/user.interface";
+import { IStudent } from "../interfaces/user.interface";
 
 const extendetApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({

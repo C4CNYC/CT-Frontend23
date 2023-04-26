@@ -133,7 +133,7 @@ export default function ClassesTableRow({
           Connect
         </MenuItem>
         <ClassPreferences
-          updateClass={(name: string) => onEditRow(row.id, name)}
+          updateClass={(name: string) => { onEditRow(row.id, name); }}
           defaultValues={{ name: row.name, description: "" }}
           rowId={row.id}
         >
