@@ -1,16 +1,16 @@
 /* eslint-disable no-new */
-import { CodemirrorBinding } from "y-codemirror";
-import { UnControlled as CodeMirrorEditor } from "react-codemirror2";
-import * as Y from "yjs";
-import "./EditorAddons";
-import { WebrtcProvider } from "y-webrtc";
 import RandomColor from "randomcolor";
 import { useEffect, useState } from "react";
+import { UnControlled as CodeMirrorEditor } from "react-codemirror2";
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { mapValidations } from "src/utils/validationMaping";
+import { CodemirrorBinding } from "y-codemirror";
+import { WebrtcProvider } from "y-webrtc";
+import * as Y from "yjs";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./Checkers";
+import "./EditorAddons";
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
@@ -38,15 +38,19 @@ const CodeEditorBlock = ({
 
       let provider: WebrtcProvider | null = null;
       try {
-        provider = new WebrtcProvider("324b1163-2569-4193-b3b6-f353ccc6c076", ydoc, {
-          // Remember the other tab or
-         // other user should be in same room for seeing real-time changes
-          signaling: [
-            "wss://signaling.yjs.dev",
-            "wss://y-webrtc-signaling-eu.herokuapp.com",
-            "wss://y-webrtc-signaling-us.herokuapp.com"
-          ],
-        });
+        provider = new WebrtcProvider(
+          "324b1163-2569-4193-b3b6-f353ccc6c076",
+          ydoc,
+          {
+            // Remember the other tab or
+            // other user should be in same room for seeing real-time changes
+            signaling: [
+              "wss://signaling.yjs.dev",
+              "wss://y-webrtc-signaling-eu.herokuapp.com",
+              "wss://y-webrtc-signaling-us.herokuapp.com",
+            ],
+          }
+        );
 
         const yText = ydoc.getText("codemirror");
 
@@ -108,8 +112,10 @@ const CodeEditorBlock = ({
           border-radius: 20%;
         }`}
       </style>
-      {validations?.length ? <Checkers checkers={mapValidations(code, validations)}/> : null}
-       <CodeMirrorEditor
+      {validations?.length ? (
+        <Checkers checkers={mapValidations(code, validations)} />
+      ) : null}
+      <CodeMirrorEditor
         onChange={(editor: any, data: any, value: any) => {
           setCode(value);
         }}

@@ -30,7 +30,7 @@ interface FormValuesProps {
 export default function AuthLoginForm(): React.ReactElement {
   const { login } = useAuthContext();
   const router = useRouter();
-  const { tenant_name } = router.query;
+  // const { tenant_name } = router.query;
 
   const [showPassword, setShowPassword] = useState(false);
 
