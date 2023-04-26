@@ -73,7 +73,7 @@ export default function ClassMentorsAutocomplete({
       switch (reason) {
         case "selectOption": {
           await joinMentor(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email ?? ""} now a mentor`);
+          enqueueSnackbar(`${details?.option.email ?? ""} became mentor`);
           return;
         }
         case "removeOption": {
