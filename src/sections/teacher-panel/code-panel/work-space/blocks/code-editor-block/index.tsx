@@ -71,7 +71,10 @@ const CodeEditorBlock = ({
         const test = new CodemirrorBinding(yText, EditorRef, awareness, {
           yUndoManager,
         });
-        console.log({ test, provider });
+
+        setInterval(() => {
+          console.log({ test, provider });
+        }, 120000);
       } catch (err) {
         alert("error in collaborating try refreshing or come back later !");
       }
