@@ -39,7 +39,7 @@ const CodeEditorBlock = ({
       let provider: WebrtcProvider | null = null;
       try {
         provider = new WebrtcProvider(
-          "324b1163-2569-4193-b3b6-f353ccc6c076",
+          "324b1163-2569-4193-b3b6-f353ccc6c",
           ydoc,
           {
             // Remember the other tab or
@@ -65,9 +65,10 @@ const CodeEditorBlock = ({
           color,
         });
 
-        new CodemirrorBinding(yText, EditorRef, awareness, {
+        const test = new CodemirrorBinding(yText, EditorRef, awareness, {
           yUndoManager,
         });
+        console.log(test);
       } catch (err) {
         alert("error in collaborating try refreshing or come back later !");
       }
@@ -85,31 +86,31 @@ const CodeEditorBlock = ({
       <style>
         {`
         .react-codemirror2 {
-          height: 100%;
+          height: 100%!important;
         }
         .remote-caret {
-          //import this css to your editor , it provides your editor a nice looking caret for each user
-          position: absolute;
-          border-left: black;
-          border-left-style: solid;
-          border-left-width: 2px;
+          top: 0;
+          position: absolute!important;
+          border-left: black!important;
+          border-left-style: solid!important;
+          border-left-width: 2px!important;
         }
 
         .remote-caret>div {
-          position: relative;
-          top: -0.4em;
-          font-size: 13px;
-          background-color: rgb(250, 129, 0);
-          font-family: serif;
-          font-style: normal;
-          font-weight: normal;
-          line-height: normal;
-          user-select: none;
-          color: white;
-          padding-left: 2px;
-          padding-right: 2px;
-          z-index: 3;
-          border-radius: 20%;
+          position: relative!important;
+          top: -0.4em!important;
+          font-size: 13px!important;
+          background-color: rgb(250, 129, 0)!important;
+          font-family: serif!important;
+          font-style: normal!important;
+          font-weight: normal!important;
+          line-height: normal!important;
+          user-select: none!important;
+          color: white!important;
+          padding-left: 2px!important;
+          padding-right: 2px!important;
+          z-index: 3!important;
+          border-radius: 20%!important;
         }`}
       </style>
       {validations?.length ? (
