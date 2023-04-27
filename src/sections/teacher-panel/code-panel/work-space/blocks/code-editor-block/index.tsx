@@ -11,6 +11,7 @@ import * as Y from "yjs";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./Checkers";
 import "./EditorAddons";
+import { useRouter } from "next/router";
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
@@ -23,6 +24,7 @@ const CodeEditorBlock = ({
   validations,
   preloadedCode,
 }: ICodeEditorBlock): React.ReactElement => {
+  const { query } = useRouter();
   // const { code, onChangeCode } = useWorkSpaceManager();
 
   const [EditorRef, setEditorRef] = useState(null);
@@ -33,13 +35,14 @@ const CodeEditorBlock = ({
   };
 
   useEffect(() => {
+    console.log("roomId", query.studentId)
     if (EditorRef) {
       const ydoc = new Y.Doc(); // create a ydoc
 
       let provider: WebrtcProvider | null = null;
       try {
         provider = new WebrtcProvider(
-          "324b1163-2569-4193-b3b6-f353ccc6c",
+          query.studentId as string,
           ydoc,
           {
             // Remember the other tab or
@@ -68,11 +71,12 @@ const CodeEditorBlock = ({
         const test = new CodemirrorBinding(yText, EditorRef, awareness, {
           yUndoManager,
         });
-        console.log(test);
+        console.log({ test, provider });
       } catch (err) {
         alert("error in collaborating try refreshing or come back later !");
       }
       return () => {
+        console.log("start disconection");
         if (provider) {
           provider.disconnect(); // We destroy doc we created and disconnect
           ydoc.destroy(); // the provider to stop propagting changes if user leaves editor
