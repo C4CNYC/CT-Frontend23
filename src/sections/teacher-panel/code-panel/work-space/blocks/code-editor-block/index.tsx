@@ -50,7 +50,7 @@ const CodeEditorBlock = ({
             signaling: [
               "wss://signaling.yjs.dev",
               "wss://y-webrtc-signaling-eu.herokuapp.com",
-              "wss://y-webrtc-signaling-us.herokuapp.com",
+              "wss://y-webrtc-signaling-us.herokuapp.com"
             ],
           }
         );
@@ -71,7 +71,22 @@ const CodeEditorBlock = ({
         const test = new CodemirrorBinding(yText, EditorRef, awareness, {
           yUndoManager,
         });
-        console.log({ test, provider });
+
+      provider.on("synced", (synced: any) => {
+          // NOTE: This is only called when a different browser connects to this client
+          // Windows of the same browser communicate directly with each other
+          // Although this behavior might be subject to change.
+          // It is better not to expect a synced event when using y-webrtc
+          console.log("synced!", synced)
+        })
+
+        ydoc.getArray().observeDeep(() => {
+          console.log("yarray updated: ", ydoc.getArray().toJSON())
+        })
+
+        setInterval(() => {
+          console.log({ test, provider });
+        }, 120000);
       } catch (err) {
         alert("error in collaborating try refreshing or come back later !");
       }
