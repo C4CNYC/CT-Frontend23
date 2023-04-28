@@ -53,7 +53,6 @@ export default function ProfileCover({
   "email" | "name" | "cover" | "avatar"
 >): React.ReactElement | null {
   const { user } = useAuthContext();
-
   return (
     <StyledRoot>
       <StyledInfo>
@@ -81,14 +80,12 @@ export default function ProfileCover({
           }}
         >
           <Typography variant="h4">{name}</Typography>
-
           <Typography sx={{ opacity: 0.72 }}>{email}</Typography>
         </Box>
       </StyledInfo>
-
       <Image
         alt="cover"
-        src={avatar}
+        src={cover}
         sx={{
           top: 0,
           left: 0,
