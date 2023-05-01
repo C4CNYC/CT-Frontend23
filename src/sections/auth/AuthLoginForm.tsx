@@ -99,7 +99,7 @@ export default function AuthLoginForm(): React.ReactElement {
         />
       </Stack>
 
-      <Stack alignItems="flex-end" sx={{ my: 2 }}>
+      <Stack alignItems="flex-end" sx={{ my: 2, mr: 1 }}>
         <Link
           component={NextLink}
           href={PATH_AUTH.resetPassword}
@@ -107,7 +107,7 @@ export default function AuthLoginForm(): React.ReactElement {
           color="inherit"
           underline="always"
         >
-          {/* Forgot password? */}
+          Forgot password?
         </Link>
       </Stack>
 
