@@ -113,7 +113,7 @@ export function AuthProvider({
         ? localStorage.getItem("accessToken")
         : "";
 
-      const tenantName = localStorage.getItem("tenantName");
+      const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
@@ -178,7 +178,7 @@ export function AuthProvider({
       const { access_token, user } = data;
       reduxDispatch(setUser(user));
 
-      setSession(access_token, localStorage.getItem("tenantName"));
+      setSession(access_token, localStorage.getItem("tenantName") ?? "codetribe");
 
       dispatch({
         type: Types.LOGIN,
