@@ -62,7 +62,7 @@ export default function CoursesListPage(): React.ReactElement {
             { name: "Courses", href: PATH_DASHBOARD.courses.root },
           ]}
           action={
-            <CreateCourseDialog>
+            <CreateCourseDialog >
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
