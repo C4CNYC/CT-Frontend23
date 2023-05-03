@@ -29,12 +29,8 @@ export default function OrganizationalChart({
           <StandardNode
             sx={sx}
             node={data}
-            onEdit={() => {
-              console.log("EDIT", data.name);
-            }}
-            onDelete={() => {
-              console.log("DELETE", data.name);
-            }}
+            onEdit={() => {}}
+            onDelete={() => {}}
           />
         )) ||
         (variant === "group" && <GroupNode sx={sx} node={data} />)
@@ -66,12 +62,8 @@ export function List({
           <StandardNode
             sx={sx}
             node={data}
-            onEdit={() => {
-              console.log("EDIT", data.name);
-            }}
-            onDelete={() => {
-              console.log("DELETE", data.name);
-            }}
+            onEdit={() => {}}
+            onDelete={() => {}}
           />
         )) ||
         (variant === "group" && (

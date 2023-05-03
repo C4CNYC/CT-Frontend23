@@ -65,7 +65,6 @@ export default function InviteTeacherDialog({
         email: filters.email,
         role: Role.Manager,
       }).unwrap();
-      console.log(user);
       enqueueSnackbar("Invite sent");
       await addUserToSchool(user.id, schoolId);
       setFilter("email", "");

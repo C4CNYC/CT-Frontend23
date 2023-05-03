@@ -149,12 +149,10 @@ function CardItem({ card }: CardItemProps): React.ReactElement | null {
 
   const handleDelete = (): void => {
     handleClosePopover();
-    console.log("DELETE", id);
   };
 
   const handleEdit = (): void => {
     handleClosePopover();
-    console.log("EDIT", id);
   };
 
   return (

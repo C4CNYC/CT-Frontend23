@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable no-new */
-import RandomColor from "randomcolor";
 import { useEffect, useState } from "react";
-import { UnControlled as CodeMirrorEditor } from "react-codemirror2";
+import { io } from "socket.io-client";
+import CodeMirror from "@uiw/react-codemirror";
+import { langs } from "@uiw/codemirror-extensions-langs";
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
+import { indentUnit } from "@codemirror/language"
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { mapValidations } from "src/utils/validationMaping";
-import { CodemirrorBinding } from "y-codemirror";
-import { WebrtcProvider } from "y-webrtc";
-import * as Y from "yjs";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./Checkers";
-import "./EditorAddons";
-import { useRouter } from "next/router";
+
+import { cursorExtension } from "./extentions/cursors";
+import { getDocument, peerExtension } from "./extentions/collab";
+
+const socket = io("http://localhost:9000", { path: "/api" });
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
@@ -19,149 +23,86 @@ interface ICodeEditorBlock {
   preloadedCode: string;
 }
 
+interface State {
+  connected: boolean,
+  version?: number,
+  doc?: string
+}
+
 const CodeEditorBlock = ({
   columns = 1,
   validations,
   preloadedCode,
 }: ICodeEditorBlock): React.ReactElement => {
-  const { query } = useRouter();
-  // const { code, onChangeCode } = useWorkSpaceManager();
-
-  const [EditorRef, setEditorRef] = useState(null);
-  const [code, setCode] = useState("");
-
-  const handleEditorDidMount = (editor: any): void => {
-    setEditorRef(editor);
-  };
+  const [state, setState] = useState<State>({
+    connected: false,
+    version: undefined,
+    doc: undefined
+  })
 
   useEffect(() => {
-    console.log("roomId", query.studentId)
-    if (EditorRef) {
-      const ydoc = new Y.Doc(); // create a ydoc
+    getDocument(socket).then(({ version, doc }) => {
+      setState((prev) => ({
+        ...prev,
+        version,
+        doc: doc.toString()
+      }));
+    });
 
-      let provider: WebrtcProvider | null = null;
-      try {
-        provider = new WebrtcProvider(
-          query.studentId as string,
-          ydoc,
-          {
-            // Remember the other tab or
-            // other user should be in same room for seeing real-time changes
-            signaling: [
-              "wss://signaling.yjs.dev",
-              "wss://y-webrtc-signaling-eu.herokuapp.com",
-              "wss://y-webrtc-signaling-us.herokuapp.com"
-            ],
-          }
-        );
+    socket.on("connect", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: true
+      }));
+    });
 
-        const yText = ydoc.getText("codemirror");
-
-        const yUndoManager = new Y.UndoManager(yText);
-
-        const awareness = provider.awareness; // awareness is what makes other user aware about your actions
-
-        const color = RandomColor(); // Provied any random color to be used for each user
-
-        awareness.setLocalStateField("user", {
-          name: "PASHA",
-          color,
-        });
-
-        const test = new CodemirrorBinding(yText, EditorRef, awareness, {
-          yUndoManager,
-        });
-
-      provider.on("synced", (synced: any) => {
-          // NOTE: This is only called when a different browser connects to this client
-          // Windows of the same browser communicate directly with each other
-          // Although this behavior might be subject to change.
-          // It is better not to expect a synced event when using y-webrtc
-          console.log("synced!", synced)
-        })
-
-        ydoc.getArray().observeDeep(() => {
-          console.log("yarray updated: ", ydoc.getArray().toJSON())
-        })
-
-        setInterval(() => {
-          console.log({ test, provider });
-        }, 120000);
-      } catch (err) {
-        alert("error in collaborating try refreshing or come back later !");
-      }
-      return () => {
-        console.log("start disconection");
-        if (provider) {
-          provider.disconnect(); // We destroy doc we created and disconnect
-          ydoc.destroy(); // the provider to stop propagting changes if user leaves editor
-        }
-      };
+    socket.on("disconnect", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: false
+      }));
+    });
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pullUpdateResponse");
+      socket.off("pushUpdateResponse");
+      socket.off("getDocumentResponse");
     }
-  }, [EditorRef]);
+  }, [])
 
   return (
     <BaseBlock columns={columns}>
       <style>
         {`
-        .react-codemirror2 {
-          height: 100%!important;
-        }
-        .remote-caret {
-          top: 0;
-          position: absolute!important;
-          border-left: black!important;
-          border-left-style: solid!important;
-          border-left-width: 2px!important;
-        }
-
-        .remote-caret>div {
-          position: relative!important;
-          top: -0.4em!important;
-          font-size: 13px!important;
-          background-color: rgb(250, 129, 0)!important;
-          font-family: serif!important;
-          font-style: normal!important;
-          font-weight: normal!important;
-          line-height: normal!important;
-          user-select: none!important;
-          color: white!important;
-          padding-left: 2px!important;
-          padding-right: 2px!important;
-          z-index: 3!important;
-          border-radius: 20%!important;
-        }`}
+          #codeEditor {
+            height: 100%
+          }
+        `}
       </style>
       {validations?.length ? (
-        <Checkers checkers={mapValidations(code, validations)} />
+        <Checkers checkers={mapValidations(state.doc ?? "", validations)} />
       ) : null}
-      <CodeMirrorEditor
-        onChange={(editor: any, data: any, value: any) => {
-          setCode(value);
-        }}
-        autoScroll
-        options={{
-          mode: "text/javascript",
-          theme: "monokai",
-          lineWrapping: true,
-          smartIndent: true,
-          lineNumbers: true,
-          foldGutter: true,
-          tabSize: 2,
-          gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-          autoCloseTags: true,
-          // matchBrackets: true,
-          autoCloseBrackets: true,
-          extraKeys: {
-            "Ctrl-Space": "autocomplete",
-          },
-        }}
-        editorDidMount={(editor) => {
-          console.log(editor);
-          handleEditorDidMount(editor);
-          editor.setSize("100vw", "100%");
-        }}
+      {
+         state?.version !== undefined && state?.doc !== undefined ? (
+           <CodeMirror
+          className="flex-1 overflow-scroll"
+          height="100%"
+          basicSetup={false}
+          id="codeEditor"
+          extensions={[
+            indentUnit.of("\t"),
+            basicSetup(),
+            langs.c(),
+            peerExtension(socket, state.version ?? 0, "Pasha_1"),
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            cursorExtension("Pasha_1")
+          ]}
+          value={state.doc}
       />
+        ) : null
+      }
     </BaseBlock>
   );
 };

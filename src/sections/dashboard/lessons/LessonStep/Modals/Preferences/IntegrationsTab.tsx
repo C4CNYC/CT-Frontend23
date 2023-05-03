@@ -100,9 +100,7 @@ export function IntegrationsTab({
       onChange={onChange}
       options={integrations?.data}
       popupIcon={null}
-      onLoadStart={() => {
-        console.log("work");
-      }}
+      onLoadStart={() => {}}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

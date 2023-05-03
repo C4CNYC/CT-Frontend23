@@ -27,9 +27,7 @@ const SmallScreenTabs = ({
       >
         <Tab
           {...a11yProps(0)}
-          onClick={() => {
-            console.log("rest");
-          }}
+          onClick={() => {}}
           aria-label="Lesson"
           icon={<Iconify icon="material-symbols:play-lesson-outline" />}
           sx={index === 0 ? styles.activeTab : styles.Tab}

@@ -93,9 +93,6 @@ export default function ClassCoursesAutocomplete({
       onChange={onChange}
       options={courses.data}
       popupIcon={null}
-      onLoadStart={() => {
-        console.log("work");
-      }}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

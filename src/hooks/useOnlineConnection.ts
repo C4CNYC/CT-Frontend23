@@ -31,7 +31,6 @@ export const useOnlineConnection = (
     const starCountRef = ref(db, "active/" + userId);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       setData(data);
     });
   }, []);

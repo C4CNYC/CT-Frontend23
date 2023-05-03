@@ -61,7 +61,6 @@ export default function CreateEditValidation({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    console.log("work");
     try {
       if (isEdit) {
         await updateRule({

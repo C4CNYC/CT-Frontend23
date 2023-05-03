@@ -61,7 +61,6 @@ export default function AuthVerifyCodeForm(): React.ReactElement {
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      console.log("DATA", Object.values(data).join(""));
       enqueueSnackbar("Verify success!");
       push(PATH_DASHBOARD.root);
     } catch (error) {

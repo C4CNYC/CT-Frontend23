@@ -100,9 +100,7 @@ export default function BookingCustomerReviews({
           color="success"
           variant="contained"
           startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          onClick={() => {
-            console.log("ACCEPT", customerInfo?.id);
-          }}
+          onClick={() => {}}
         >
           Accept
         </Button>
@@ -112,9 +110,7 @@ export default function BookingCustomerReviews({
           color="error"
           variant="contained"
           startIcon={<Iconify icon="eva:close-circle-fill" />}
-          onClick={() => {
-            console.log("REJECT", customerInfo?.id);
-          }}
+          onClick={() => {}}
         >
           Reject
         </Button>

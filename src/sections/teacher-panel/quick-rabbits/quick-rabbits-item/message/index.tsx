@@ -23,7 +23,6 @@ export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
   const { getMessages, sendMessage } = useFirebaseChat();
 
   useEffect(() => {
-    console.log("started test");
     getMessages(senderId, reciverId, (data) => {
       setMessages(data);
     });

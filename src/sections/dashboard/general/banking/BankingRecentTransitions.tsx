@@ -115,22 +115,18 @@ function BankingRecentTransitionsRow({
 
   const handleDownload = (): void => {
     handleClosePopover();
-    console.log("DOWNLOAD", row.id);
   };
 
   const handlePrint = (): void => {
     handleClosePopover();
-    console.log("PRINT", row.id);
   };
 
   const handleShare = (): void => {
     handleClosePopover();
-    console.log("SHARE", row.id);
   };
 
   const handleDelete = (): void => {
     handleClosePopover();
-    console.log("DELETE", row.id);
   };
 
   return (

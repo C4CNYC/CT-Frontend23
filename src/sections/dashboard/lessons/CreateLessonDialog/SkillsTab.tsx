@@ -84,9 +84,7 @@ export default function SkillsTab({
       onChange={onChange}
       options={skills?.data}
       popupIcon={null}
-      onLoadStart={() => {
-        console.log("work");
-      }}
+      onLoadStart={() => {}}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

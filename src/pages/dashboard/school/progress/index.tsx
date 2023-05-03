@@ -187,7 +187,6 @@ function getProgress(
   progres?: IProgress & BaseResponseInterface,
   chalanges?: Array<ILessonContent & BaseResponseInterface>
 ): number {
-  console.log(chalanges, progres);
   if (!progres || !chalanges) return 0;
   const notReadyChalanges = _.difference(
     chalanges.map((c) => c.id),
