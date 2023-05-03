@@ -5,7 +5,8 @@ import {
   sendableUpdates,
   Update,
 } from "@codemirror/collab";
-import { ChangeSet, StateEffect, Text } from "@codemirror/state";
+
+import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
 import { addCursor, cursor, removeCursor } from "./cursors";
@@ -22,10 +23,13 @@ async function pushUpdates(
     effects: u.effects,
   }));
 
+  console.log("PUSH DATA", { updates, version });
+
   return await new Promise(function (resolve) {
     socket.emit("pushUpdates", version, JSON.stringify(updates));
 
     socket.once("pushUpdateResponse", function (status: boolean) {
+      console.log("PUSH DATA STATU:", status);
       resolve(status);
     });
   });
@@ -39,6 +43,7 @@ async function pullUpdates(
     socket.emit("pullUpdates", version);
 
     socket.once("pullUpdateResponse", function (updates: any) {
+      console.log("PULL UPDATED RESPONCE", { updates, version });
       resolve(JSON.parse(updates));
     });
   }).then((updates: any) =>
@@ -96,47 +101,62 @@ export const peerExtension = (
   socket: Socket,
   startVersion: number,
   id: string
-) => {
-  const self = this;
-
+): Extension[] => {
   const plugin = ViewPlugin.fromClass(
     class {
       private pushing = false;
       private done = false;
+      private lastUpdates: number | null = null;
+      private lastPush: string | null = null;
 
       constructor(private readonly view: EditorView) {
         this.pull();
       }
 
-      update(update: ViewUpdate) {
+      update(update: ViewUpdate): void {
+        console.log(
+          "UPDATE FUNCTION:",
+          update,
+          getSyncedVersion(this.view.state)
+        );
         if (update.docChanged || update.transactions.length) this.push();
       }
 
-      async push() {
-        const updates = sendableUpdates(this.view.state);
-        if (this.pushing || !updates.length) return;
-        this.pushing = true;
-        const version = getSyncedVersion(this.view.state);
-        const success = await pushUpdates(socket, version, updates);
-        this.pushing = false;
-        // Regardless of whether the push failed or new updates came in
-        // while it was running, try again if there's updates remaining
-        if (sendableUpdates(this.view.state).length) {
-          setTimeout(async () => {
-            await this.push();
-          }, 100);
+      async push(): Promise<void> {
+        try {
+          const updates = sendableUpdates(this.view.state);
+          if (!updates.length) {
+            return;
+          }
+          this.lastPush = JSON.stringify(updates);
+          this.pushing = true;
+          const version = getSyncedVersion(this.view.state);
+          await pushUpdates(socket, version, updates);
+          this.pushing = false;
+
+          // if (sendableUpdates(this.view.state).length) {
+          //   setTimeout(async () => {
+          //     await this.push();
+          //   }, 100);
+          // }
+        } catch (e) {
+          console.log(e);
         }
       }
 
-      async pull() {
+      async pull(): Promise<void> {
         while (!this.done) {
           const version = getSyncedVersion(this.view.state);
-          const updates = await pullUpdates(socket, version);
-          this.view.dispatch(receiveUpdates(this.view.state, updates));
+          if (this.lastUpdates === version) {
+            return;
+          }
+          const udpates = await pullUpdates(socket, version);
+          this.lastUpdates = version;
+          this.view.dispatch(receiveUpdates(this.view.state, udpates));
         }
       }
 
-      destroy() {
+      destroy(): void {
         this.done = true;
       }
     }
@@ -147,6 +167,7 @@ export const peerExtension = (
       startVersion,
       clientID: id,
       sharedEffects: (tr) => {
+        console.log(tr.effects, "effects");
         const effects = tr.effects.filter((e) => {
           return e.is(addCursor) || e.is(removeCursor);
         });

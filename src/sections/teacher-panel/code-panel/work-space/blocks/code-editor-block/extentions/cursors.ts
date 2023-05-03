@@ -1,4 +1,4 @@
-import { StateEffect, StateField } from "@codemirror/state";
+import { Extension, StateEffect, StateField } from "@codemirror/state";
 import {
   Decoration,
   DecorationSet,
@@ -204,7 +204,7 @@ const cursorBaseTheme = EditorView.baseTheme({
   },
 });
 
-export function cursorExtension(id: string = ""): unknown[] {
+export function cursorExtension(id: string = ""): Extension[] {
   return [
     cursorField,
     cursorBaseTheme,

@@ -14,6 +14,7 @@ import Checkers from "./Checkers";
 
 import { cursorExtension } from "./extentions/cursors";
 import { getDocument, peerExtension } from "./extentions/collab";
+import { useAuthContext } from "src/auth/useAuthContext";
 
 const socket = io("http://localhost:9000", { path: "/api" });
 
@@ -34,6 +35,7 @@ const CodeEditorBlock = ({
   validations,
   preloadedCode,
 }: ICodeEditorBlock): React.ReactElement => {
+  const { user } = useAuthContext();
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,
@@ -41,7 +43,9 @@ const CodeEditorBlock = ({
   })
 
   useEffect(() => {
+    console.log("[CODE_PANEL]: RENDERED")
     getDocument(socket).then(({ version, doc }) => {
+      console.log("[CODE_PANEL]: GET DOCUMENT", { version, doc })
       setState((prev) => ({
         ...prev,
         version,
@@ -50,17 +54,11 @@ const CodeEditorBlock = ({
     });
 
     socket.on("connect", () => {
-      setState((prev) => ({
-        ...prev,
-        connected: true
-      }));
+      console.log("[CODE_PANEL]: CONNECTED TO CHANEL")
     });
 
     socket.on("disconnect", () => {
-      setState((prev) => ({
-        ...prev,
-        connected: false
-      }));
+      console.log("[CODE_PANEL]: DISCONNECTED FROM CHANEL")
     });
     return () => {
       socket.off("connect");
@@ -85,22 +83,20 @@ const CodeEditorBlock = ({
       ) : null}
       {
          state?.version !== undefined && state?.doc !== undefined ? (
-           <CodeMirror
-          className="flex-1 overflow-scroll"
-          height="100%"
-          basicSetup={false}
-          id="codeEditor"
-          extensions={[
-            indentUnit.of("\t"),
-            basicSetup(),
-            langs.c(),
-            peerExtension(socket, state.version ?? 0, "Pasha_1"),
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            cursorExtension("Pasha_1")
-          ]}
-          value={state.doc}
-      />
+            <CodeMirror
+            className="flex-1 overflow-scroll"
+            height="100%"
+            basicSetup={false}
+            id="codeEditor"
+            extensions={[
+              indentUnit.of("\t"),
+              basicSetup(),
+              langs.c(),
+              peerExtension(socket, state.version, user?.email),
+              cursorExtension(user?.email)
+            ]}
+            value={state.doc}
+          />
         ) : null
       }
     </BaseBlock>
