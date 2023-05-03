@@ -1,3 +1,4 @@
+import CourseModuleAutocomplete from "@components/course-module-autocomplete/CourseModuleAutocomplete";
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
@@ -12,9 +13,7 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
-  Card,
   FormGroup,
-  Grid,
   IconButton,
   Stack,
   Tab,
@@ -28,6 +27,8 @@ import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
+import { ICourse } from "src/@types/courses";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import * as Yup from "yup";
 import {
   useCreateCourseMutation,
@@ -35,6 +36,8 @@ import {
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
 import CoursesController from "./CoursesController";
+import SettingsCourseModal from "./SettingsCourseModal";
+import { IModule } from "src/redux/services/interfaces/class.interface";
 
 interface FormValuesProps {
   name: string;
@@ -51,6 +54,7 @@ interface Prop {
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
+  moduleId: string;
 }
 
 export default function CreateCourseDialog({
@@ -58,7 +62,8 @@ export default function CreateCourseDialog({
   isEdit = false,
   children,
   defaultValues,
-}: Prop): React.ReactElement | null {
+  moduleId,
+}: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<null | File>(null);
   const { enqueueSnackbar } = useSnackbar();
@@ -159,6 +164,7 @@ export default function CreateCourseDialog({
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
+              sx={{ ml: 3 }}
             >
               <Tab label="General" {...a11yProps(0)} />
               <Tab label="Modules" {...a11yProps(1)} />
@@ -169,144 +175,143 @@ export default function CreateCourseDialog({
               methods={methods}
               onSubmit={methods.handleSubmit(onSubmit)}
             >
-              <Grid container>
-                <Grid item xs={12} md={12}>
-                  <Card sx={{ p: 3, pt: 2 }}>
-                    <Box rowGap={3} display="grid">
-                      <Box sx={{ position: "relative" }}>
-                        {uploadedFile ? (
-                          <IconButton
-                            sx={{
-                              position: "absolute",
-                              right: "5px",
-                              top: "5px",
-                              zIndex: 10,
-                              width: "20px",
-                              height: "20px",
-                              p: 0,
-                            }}
-                            onClick={clearFileHandler}
-                          >
-                            <IoMdClose size="20px" />
-                          </IconButton>
-                        ) : null}
-                        <RHFUpload
-                          name="course_img"
-                          onDrop={handleDrop}
-                          helperText={
-                            <Typography
-                              variant="caption"
-                              noWrap
-                              width="90px"
-                              sx={{
-                                mt: 1,
-                                mb: -1,
-                                mx: "auto",
-                                display: "block",
-                                textAlign: "center",
-                                color: "text.secondary",
-                              }}
-                            >
-                              {uploadedFile?.name}
-                            </Typography>
-                          }
-                        />
-                        <SingleFilePreview
-                          file={
-                            uploadedFile
-                              ? URL.createObjectURL(uploadedFile)
-                              : null
-                          }
-                        />
-                      </Box>
-                      <RHFTextField
-                        style={{ width: "350px" }}
-                        name="name"
-                        label="Course name"
-                      />
-
-                      <RHFSelect native name="level" label="Course level">
-                        <option key="empty" value="empty">
-                          Select Level
-                        </option>
-                        <option key="beginner" value="beginner">
-                          Beginner
-                        </option>
-                        <option key="intermediate" value="intermediate">
-                          Intermediate
-                        </option>
-                        <option key="advanced" value="advanced">
-                          Advanced
-                        </option>
-                      </RHFSelect>
-
-                      <FormGroup row style={{ flexWrap: "nowrap" }}>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            bgcolor: "grey.400",
-                            color: "grey.800",
-                            borderTopRightRadius: 0,
-                            borderBottomRightRadius: 0,
-                          }}
-                          disableElevation
-                        >
-                          $
-                        </Button>
-                        <RHFTextField
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderTopLeftRadius: 0,
-                              borderBottomLeftRadius: 0,
-                              borderLeftColor: "transparent",
-                            },
-                          }}
-                          name="price"
-                          label="Course price"
-                          type="number"
-                        />
-                      </FormGroup>
-                      <Box sx={{ maxWidth: "350px" }}>
-                        <CoursesController skills={defaultValues?.skills} />
-                      </Box>
-                      <RHFTextField
-                        name="description"
-                        label="Course description"
-                        multiline
-                        rows={3}
-                      />
-                      <Stack direction="row" justifyContent="space-between">
-                        <RHFSwitch name="active" label="Course active" />
-                        <RHFSwitch name="draft" label="Draft" />
-                        <RHFSwitch name="publick" label="Publick" />
-                      </Stack>
-                    </Box>
-                    <Box
+              <Box rowGap={3} display="grid">
+                <Box sx={{ position: "relative" }}>
+                  {uploadedFile ? (
+                    <IconButton
                       sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        gap: 2,
-                        mt: 7,
+                        position: "absolute",
+                        right: "5px",
+                        top: "5px",
+                        zIndex: 10,
+                        width: "20px",
+                        height: "20px",
+                        p: 0,
                       }}
+                      onClick={clearFileHandler}
                     >
-                      <Button onClick={handleClose}>Close</Button>
-                      <LoadingButton
-                        type="submit"
-                        variant="contained"
-                        loading={isEditLoading || isCreateLoading}
+                      <IoMdClose size="20px" />
+                    </IconButton>
+                  ) : null}
+                  <RHFUpload
+                    name="course_img"
+                    onDrop={handleDrop}
+                    helperText={
+                      <Typography
+                        variant="caption"
+                        noWrap
+                        width="90px"
+                        sx={{
+                          mt: 1,
+                          mb: -1,
+                          mx: "auto",
+                          display: "block",
+                          textAlign: "center",
+                          color: "text.secondary",
+                        }}
                       >
-                        Save
-                      </LoadingButton>
-                    </Box>
-                  </Card>
-                </Grid>
-              </Grid>
+                        {uploadedFile?.name}
+                      </Typography>
+                    }
+                  />
+                  <SingleFilePreview
+                    file={
+                      uploadedFile ? URL.createObjectURL(uploadedFile) : null
+                    }
+                  />
+                </Box>
+                <RHFTextField
+                  style={{ width: "350px" }}
+                  name="name"
+                  label="Course name"
+                />
+
+                <RHFSelect native name="level" label="Course level">
+                  <option key="empty" value="empty">
+                    Select Level
+                  </option>
+                  <option key="beginner" value="beginner">
+                    Beginner
+                  </option>
+                  <option key="intermediate" value="intermediate">
+                    Intermediate
+                  </option>
+                  <option key="advanced" value="advanced">
+                    Advanced
+                  </option>
+                </RHFSelect>
+
+                <FormGroup row style={{ flexWrap: "nowrap" }}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "grey.400",
+                      color: "grey.800",
+                      borderTopRightRadius: 0,
+                      borderBottomRightRadius: 0,
+                    }}
+                    disableElevation
+                  >
+                    $
+                  </Button>
+                  <RHFTextField
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                        borderLeftColor: "transparent",
+                      },
+                    }}
+                    name="price"
+                    label="Course price"
+                    type="number"
+                  />
+                </FormGroup>
+                <Box sx={{ maxWidth: "350px" }}>
+                  <CoursesController skills={defaultValues?.skills} />
+                </Box>
+                <RHFTextField
+                  name="description"
+                  label="Course description"
+                  multiline
+                  rows={3}
+                />
+                <Stack direction="row" justifyContent="space-between">
+                  <RHFSwitch name="active" label="Course active" />
+                  <RHFSwitch name="draft" label="Draft" />
+                  <RHFSwitch name="publick" label="Publick" />
+                </Stack>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 2,
+                  mt: 7,
+                }}
+              >
+                <Button onClick={handleClose}>Close</Button>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={isEditLoading || isCreateLoading}
+                >
+                  Save
+                </LoadingButton>
+              </Box>
             </FormProvider>
           </TabPanel>
           <TabPanel value={value} index={1}>
+            <Box
+              sx={{
+                width: { xs: "100%", sm: "100%", md: "500px", lg: "500px" },
+              }}
+              p={3}
+            >
+              <CourseModuleAutocomplete id={moduleId} />
+            </Box>
           </TabPanel>
         </Box>
-        <DialogContent sx={{ p: 0 }}></DialogContent>
       </Dialog>
     </>
   );
