@@ -15,7 +15,9 @@
     "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "clear-all": "rm -rf .next .swc _static node_modules",
     "re-start": "rm -rf .next .swc _static node_modules && yarn install && yarn dev",
-    "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build"
+    "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build",
+    "prepare": "husky install",
+    "pre-commit": "yarn lint && yarn build"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^2.0.0",
@@ -159,6 +161,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
     "prettier": "2.8.4",
     "prettier-plugin-organize-imports": "^3.2.2",
     "tslint-config-prettier": "^1.18.0",
