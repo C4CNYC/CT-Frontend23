@@ -2,7 +2,6 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import { Link, Stack, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import { useTheme } from "@mui/material/styles";
 import NextLink from "next/link";
 import { useState } from "react";
 import LoginLayout from "../../layouts/login";
@@ -12,7 +11,6 @@ import AuthWithSocial from "./AuthWithSocial";
 import Stepper from "./Stepper/Stepper";
 
 export default function Register(): React.ReactElement {
-  const theme = useTheme();
   const [stepperVisible, setStepperVisible] = useState(false);
 
   return (
@@ -33,17 +31,7 @@ export default function Register(): React.ReactElement {
           go to login <ArrowRightAltIcon sx={{ ml: 1 }} />
         </Link>
         <Typography variant="h4" sx={{ textAlign: "center" }}>
-          Sign up as a Teacher
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            color: theme.palette.grey[600],
-            fontWeight: 400,
-            textAlign: "center",
-          }}
-        >
-          & sign-up your school.
+          Create organisation
         </Typography>
         <IconButton
           aria-label="info"
