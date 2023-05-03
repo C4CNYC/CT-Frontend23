@@ -13,6 +13,7 @@ export const PATH_AUTH = {
   root: ROOTS_AUTH,
   login: path(ROOTS_AUTH, "/login"),
   register: path(ROOTS_AUTH, "/register"),
+  registerOrganization: path(ROOTS_AUTH, "/register-organization"),
   loginUnprotected: path(ROOTS_AUTH, "/login-unprotected"),
   registerUnprotected: path(ROOTS_AUTH, "/register-unprotected"),
   verify: path(ROOTS_AUTH, "/verify"),

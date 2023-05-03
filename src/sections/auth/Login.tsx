@@ -21,9 +21,14 @@ export default function Login(): React.ReactElement {
         <Typography variant="h4" sx={{ textAlign: "center" }}>
           Sign in as a Teacher
         </Typography>
-
-        <Stack direction="row" spacing={0.5} sx={{ justifyContent: "center" }}>
-          <Typography variant="body2">New user?</Typography>
+        <Typography variant="body2" sx={{ m: "5px auto!important" }}>
+          New user?
+        </Typography>
+        <Stack
+          direction="row"
+          spacing={0.5}
+          sx={{ justifyContent: "center", m: "0 auto!important" }}
+        >
           <IconButton
             aria-label="info"
             sx={{
@@ -47,6 +52,15 @@ export default function Login(): React.ReactElement {
             sx={{ color: "#02D3D7" }}
           >
             Create an account
+          </Link>
+          <Typography variant="body2">or</Typography>
+          <Link
+            component={NextLink}
+            href={PATH_AUTH.registerOrganization}
+            variant="subtitle2"
+            sx={{ color: "#02D3D7" }}
+          >
+            Join to organization
           </Link>
         </Stack>
       </Stack>
