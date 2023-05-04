@@ -21,14 +21,11 @@ import {
   Typography,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
-import { ICourse } from "src/@types/courses";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import * as Yup from "yup";
 import {
   useCreateCourseMutation,
@@ -36,8 +33,6 @@ import {
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
 import CoursesController from "./CoursesController";
-import SettingsCourseModal from "./SettingsCourseModal";
-import { IModule } from "src/redux/services/interfaces/class.interface";
 
 interface FormValuesProps {
   name: string;
@@ -46,6 +41,7 @@ interface FormValuesProps {
   description: string;
   active: boolean;
   draft: boolean;
+  public: boolean;
   skills: [];
 }
 
@@ -53,8 +49,7 @@ interface Prop {
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
   isEdit?: boolean;
-  id?: string;
-  moduleId: string;
+  id: string;
 }
 
 export default function CreateCourseDialog({
@@ -62,7 +57,6 @@ export default function CreateCourseDialog({
   isEdit = false,
   children,
   defaultValues,
-  moduleId,
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<null | File>(null);
@@ -152,7 +146,7 @@ export default function CreateCourseDialog({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Create Course
+            {isEdit ? "Edit" : "Create"} Course
           </DialogTitle>
           <IconButton onClick={handleClose} sx={{ mb: "5px", mr: "14px" }}>
             <CloseIcon />
@@ -160,15 +154,18 @@ export default function CreateCourseDialog({
         </Box>
         <Box sx={{ width: "100%" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-              sx={{ ml: 3 }}
-            >
-              <Tab label="General" {...a11yProps(0)} />
-              <Tab label="Modules" {...a11yProps(1)} />
-            </Tabs>
+            {isEdit ? (
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+                sx={{ ml: 3 }}
+              >
+                <Tab label="General" {...a11yProps(0)} />
+
+                <Tab label="Modules" {...a11yProps(1)} />
+              </Tabs>
+            ) : null}
           </Box>
           <TabPanel value={value} index={0}>
             <FormProvider
@@ -279,7 +276,7 @@ export default function CreateCourseDialog({
                 <Stack direction="row" justifyContent="space-between">
                   <RHFSwitch name="active" label="Course active" />
                   <RHFSwitch name="draft" label="Draft" />
-                  <RHFSwitch name="publick" label="Publick" />
+                  <RHFSwitch name="public" label="Public" />
                 </Stack>
               </Box>
               <Box
@@ -308,7 +305,7 @@ export default function CreateCourseDialog({
               }}
               p={3}
             >
-              <CourseModuleAutocomplete id={moduleId} />
+              <CourseModuleAutocomplete id={id} />
             </Box>
           </TabPanel>
         </Box>
