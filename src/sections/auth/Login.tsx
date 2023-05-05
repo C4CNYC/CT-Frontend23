@@ -21,7 +21,7 @@ export default function Login(): React.ReactElement {
         <Typography variant="h4" sx={{ textAlign: "center" }}>
           Sign in as a Teacher
         </Typography>
-        <Typography variant="body2" sx={{ m: "5px auto!important" }}>
+        <Typography variant="body2" sx={{ m: "16px auto 0px!important" }}>
           New user?
           <Link
             component={NextLink}
