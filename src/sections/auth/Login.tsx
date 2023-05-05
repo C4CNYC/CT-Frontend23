@@ -23,7 +23,16 @@ export default function Login(): React.ReactElement {
         </Typography>
         <Typography variant="body2" sx={{ m: "5px auto!important" }}>
           New user?
+          <Link
+            component={NextLink}
+            href={PATH_AUTH.registerOrganization}
+            variant="subtitle2"
+            sx={{ color: "#02D3D7", ml: 1 }}
+          >
+            Join to organization
+          </Link>
         </Typography>
+
         <Stack
           direction="row"
           spacing={0.5}
@@ -45,23 +54,6 @@ export default function Login(): React.ReactElement {
           >
             <EmojiObjectsIcon sx={{ color: "#000" }} />
           </IconButton>
-          <Link
-            component={NextLink}
-            href={PATH_AUTH.register}
-            variant="subtitle2"
-            sx={{ color: "#02D3D7" }}
-          >
-            Create an account
-          </Link>
-          <Typography variant="body2">or</Typography>
-          <Link
-            component={NextLink}
-            href={PATH_AUTH.registerOrganization}
-            variant="subtitle2"
-            sx={{ color: "#02D3D7" }}
-          >
-            Join to organization
-          </Link>
         </Stack>
       </Stack>
       <AuthLoginForm />
