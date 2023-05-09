@@ -1,4 +1,4 @@
-import { Extension, StateEffect, StateField } from "@codemirror/state";
+import { StateEffect, StateField } from "@codemirror/state";
 import {
   Decoration,
   DecorationSet,
@@ -26,23 +26,23 @@ class TooltipWidget extends WidgetType {
     this.name = name;
   }
 
-  toDOM(): HTMLElement {
+  toDOM() {
     const dom = document.createElement("div");
     dom.className = "cm-tooltip-none";
 
-    const cursorTooltip = document.createElement("div");
-    cursorTooltip.className = `cm-tooltip-cursor cm-tooltip cm-tooltip-above cm-tooltip-${this.suffix}`;
-    cursorTooltip.textContent = this.name;
+    const cursor_tooltip = document.createElement("div");
+    cursor_tooltip.className = `cm-tooltip-cursor cm-tooltip cm-tooltip-above cm-tooltip-${this.suffix}`;
+    cursor_tooltip.textContent = this.name;
 
-    const cursorTooltipArrow = document.createElement("div");
-    cursorTooltipArrow.className = "cm-tooltip-arrow";
+    const cursor_tooltip_arrow = document.createElement("div");
+    cursor_tooltip_arrow.className = "cm-tooltip-arrow";
 
-    cursorTooltip.appendChild(cursorTooltipArrow);
-    dom.appendChild(cursorTooltip);
+    cursor_tooltip.appendChild(cursor_tooltip_arrow);
+    dom.appendChild(cursor_tooltip);
     return dom;
   }
 
-  ignoreEvent(): boolean {
+  ignoreEvent() {
     return false;
   }
 }
@@ -91,15 +91,6 @@ const cursorField = StateField.define<DecorationSet>({
           add: addUpdates,
           filter: (from, to, value) => {
             if (value?.spec?.id === e.value.id) return false;
-            return true;
-          },
-        });
-      } else if (e.is(removeCursor)) {
-        cursorTransacions = cursorTransacions.update({
-          filter: (from, to, value) => {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            if (value?.spec?.id === e?.value?.id) return false;
             return true;
           },
         });
@@ -204,7 +195,7 @@ const cursorBaseTheme = EditorView.baseTheme({
   },
 });
 
-export function cursorExtension(id: string = ""): Extension[] {
+export function cursorExtension(id: string = "") {
   return [
     cursorField,
     cursorBaseTheme,
