@@ -9,18 +9,17 @@ import { ChangeSet, Extension, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
 
-import { addCursor, removeCursor } from "./cursors";
-
 async function pushUpdates(
   socket: Socket,
   version: number,
   fullUpdates: readonly Update[]
 ): Promise<boolean> {
   // Strip off transaction data
+  console.log("PUSH UDPATE");
   const updates = fullUpdates.map((u) => ({
     clientID: u.clientID,
     changes: u.changes.toJSON(),
-    effects: u.effects,
+    // effects: u.effects,
   }));
 
   return await new Promise(function (resolve) {
@@ -83,7 +82,7 @@ export const peerExtension = (
       }
 
       update(update: ViewUpdate): void {
-        if (update.docChanged || update.transactions.length) this.push();
+        if (update.docChanged) this.push();
       }
 
       async push(): Promise<void> {
@@ -91,27 +90,23 @@ export const peerExtension = (
         if (this.pushing || !updates.length) return;
         this.pushing = true;
         const version = getSyncedVersion(this.view.state);
-        const success = await pushUpdates(socket, version, updates);
+        await pushUpdates(socket, version, updates);
         this.pushing = false;
-
-        if (!success) {
-          await this.push();
-        }
         // Regardless of whether the push failed or new updates came in
         // while it was running, try again if there's updates remaining
         // if (sendableUpdates(this.view.state).length) {
         //   setTimeout(async () => {
+        //     console.log("SENDABLE PUSH");
         //     await this.push();
-        //   }, 100);
+        //   }, 1000);
         // }
       }
 
       async pull(): Promise<void> {
         while (!this.done) {
           const version = getSyncedVersion(this.view.state);
-          console.log("PULL UPDATE STATE");
-          console.table({ version });
           const updates = await pullUpdates(socket, version);
+          console.log("PULL UPDATE STATE");
           this.view.dispatch(receiveUpdates(this.view.state, updates));
         }
       }
@@ -125,14 +120,14 @@ export const peerExtension = (
   return [
     collab({
       startVersion,
-      clientID: id,
-      sharedEffects: (tr) => {
-        const effects = tr.effects.filter((e) => {
-          return e.is(addCursor) || e.is(removeCursor);
-        });
+      // clientID: id,
+      // sharedEffects: (tr) => {
+      //   const effects = tr.effects.filter((e) => {
+      //     return e.is(addCursor) || e.is(removeCursor);
+      //   });
 
-        return effects;
-      },
+      //   return effects;
+      // },
     }),
     plugin,
   ];

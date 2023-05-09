@@ -16,6 +16,7 @@ import { cursorExtension } from "./extentions/cursors";
 import { getDocument, peerExtension } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
+import { CircularProgress } from "@mui/material";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
@@ -95,6 +96,14 @@ const CodeEditorBlock = ({
     // socket.emit("leaveRoom");
   }, [query.studentId])
 
+  if (
+    state?.version === undefined &&
+    state?.doc === undefined &&
+    !state.connected
+  ) {
+    return <CircularProgress/>
+  }
+
   return (
     <BaseBlock columns={columns}>
       <style>
@@ -107,24 +116,21 @@ const CodeEditorBlock = ({
       {validations?.length ? (
         <Checkers checkers={mapValidations(state.doc ?? "", validations)} />
       ) : null}
-      {
-         state?.version !== undefined && state?.doc !== undefined && state.connected ? (
-            <CodeMirror
-            className="flex-1 overflow-scroll"
-            height="100%"
-            basicSetup={false}
-            id="codeEditor"
-            extensions={[
-              indentUnit.of("\t"),
-              basicSetup(),
-              langs.c(),
-              // cursorExtension(user?.email),
-              peerExtension(socket, state.version, user?.email),
-            ]}
-            value={state.doc}
-          />
-        ) : null
-      }
+
+      <CodeMirror
+      className="flex-1 overflow-scroll"
+      height="100%"
+      basicSetup={false}
+      id="codeEditor"
+      extensions={[
+        indentUnit.of("\t"),
+        basicSetup(),
+        langs.c(),
+        // cursorExtension(user?.email),
+        peerExtension(socket, state.version ?? 0, user?.email),
+      ]}
+      value={state.doc}
+    />
     </BaseBlock>
   );
 };
