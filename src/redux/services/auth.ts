@@ -45,6 +45,7 @@ export const authApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/auth`)
   ),
+  tagTypes: ["ProfileUser"],
   endpoints: (builder) => ({
     createTenant: builder.mutation<TenantResponce, TenantRequest>({
       query: (body) => ({
@@ -69,7 +70,14 @@ export const authApi = createApi({
     }),
     profile: builder.query<User, void>({
       query: () => ({
-        url: "auth/profile",
+        url: "/profile",
+        method: "GET",
+      }),
+      providesTags: ["ProfileUser"],
+    }),
+    profileAvatar: builder.query<void, void>({
+      query: () => ({
+        url: "/profile/avatar",
         method: "GET",
       }),
     }),
@@ -86,4 +94,5 @@ export const {
   useProtectedMutation,
   useProfileQuery,
   usePrefetch,
+  useProfileAvatarQuery,
 } = authApi;

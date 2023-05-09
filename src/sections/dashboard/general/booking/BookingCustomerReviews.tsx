@@ -46,9 +46,7 @@ export default function BookingCustomerReviews({
 
   const carouselRef = useRef<Carousel | null>(null);
 
-  const [selectCustomer, setSelectCustomer] = useState(0);
-
-  const customerInfo = list.find((_, index) => index === selectCustomer);
+  const [,setSelectCustomer] = useState(0);
 
   const carouselSettings = {
     dots: false,
