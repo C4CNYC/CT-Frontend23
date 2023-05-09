@@ -15,8 +15,9 @@ import Checkers from "./Checkers";
 import { cursorExtension } from "./extentions/cursors";
 import { getDocument, peerExtension } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { useRouter } from "next/router";
 
-const socket = io("http://localhost:9000", { path: "/api" });
+const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
@@ -36,6 +37,7 @@ const CodeEditorBlock = ({
   preloadedCode,
 }: ICodeEditorBlock): React.ReactElement => {
   const { user } = useAuthContext();
+  const { query } = useRouter();
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,
@@ -43,21 +45,34 @@ const CodeEditorBlock = ({
   })
 
   useEffect(() => {
-    console.log("[CODE_PANEL]: RENDERED")
-    getDocument(socket).then(({ version, doc }) => {
-      console.log("[CODE_PANEL]: GET DOCUMENT", { version, doc })
+    if (!query.studentId) return;
+
+    socket.on("connect", () => {
+      // socket.emit("create", query.studentId);
       setState((prev) => ({
         ...prev,
+        connected: true,
+      }));
+      console.log("[CODE_PANEL]: CONNECTED TO CHANEL");
+    });
+
+    getDocument(socket).then(({ version, doc }) => {
+      setState((prev) => ({
+        ...prev,
+        connected: true,
         version,
-        doc: doc.toString()
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        doc: doc.toString(),
       }));
     });
 
-    socket.on("connect", () => {
-      console.log("[CODE_PANEL]: CONNECTED TO CHANEL")
-    });
+    console.log("[CODE_PANEL]: RENDERED")
 
     socket.on("disconnect", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: false,
+      }));
       console.log("[CODE_PANEL]: DISCONNECTED FROM CHANEL")
     });
     return () => {
@@ -66,8 +81,13 @@ const CodeEditorBlock = ({
       socket.off("pullUpdateResponse");
       socket.off("pushUpdateResponse");
       socket.off("getDocumentResponse");
-    }
-  }, [])
+    };
+  }, [query]);
+
+  console.log({
+    state,
+    condition: state?.version !== undefined && state?.doc !== undefined && state.connected
+  })
 
   return (
     <BaseBlock columns={columns}>
@@ -82,7 +102,7 @@ const CodeEditorBlock = ({
         <Checkers checkers={mapValidations(state.doc ?? "", validations)} />
       ) : null}
       {
-         state?.version !== undefined && state?.doc !== undefined ? (
+         state?.version !== undefined && state?.doc !== undefined && state.connected ? (
             <CodeMirror
             className="flex-1 overflow-scroll"
             height="100%"
@@ -92,8 +112,8 @@ const CodeEditorBlock = ({
               indentUnit.of("\t"),
               basicSetup(),
               langs.c(),
+              // cursorExtension(user?.email),
               peerExtension(socket, state.version, user?.email),
-              cursorExtension(user?.email)
             ]}
             value={state.doc}
           />
