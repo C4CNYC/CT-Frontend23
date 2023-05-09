@@ -5,11 +5,11 @@ import {
   sendableUpdates,
   Update,
 } from "@codemirror/collab";
-import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
+import { ChangeSet, Extension, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
 
-import { addCursor, cursor, removeCursor } from "./cursors";
+import { addCursor, removeCursor } from "./cursors";
 
 async function pushUpdates(
   socket: Socket,
@@ -59,6 +59,7 @@ export async function getDocument(
     socket.emit("getDocument");
 
     socket.once("getDocumentResponse", function (version: number, doc: string) {
+      if (version === undefined || !doc) return;
       resolve({
         version,
         doc: Text.of(doc.split("\n")),
@@ -95,15 +96,14 @@ export const peerExtension = (
 
         if (!success) {
           await this.push();
-          return;
         }
         // Regardless of whether the push failed or new updates came in
         // while it was running, try again if there's updates remaining
-        if (sendableUpdates(this.view.state).length) {
-          setTimeout(async () => {
-            await this.push();
-          }, 100);
-        }
+        // if (sendableUpdates(this.view.state).length) {
+        //   setTimeout(async () => {
+        //     await this.push();
+        //   }, 100);
+        // }
       }
 
       async pull(): Promise<void> {

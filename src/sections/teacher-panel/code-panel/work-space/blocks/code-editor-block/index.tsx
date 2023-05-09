@@ -47,26 +47,13 @@ const CodeEditorBlock = ({
   useEffect(() => {
     if (!query.studentId) return;
 
-    socket.on("connect", () => {
-      // socket.emit("create", query.studentId);
+    socket.on("connection", () => {
       setState((prev) => ({
         ...prev,
         connected: true,
       }));
       console.log("[CODE_PANEL]: CONNECTED TO CHANEL");
     });
-
-    getDocument(socket).then(({ version, doc }) => {
-      setState((prev) => ({
-        ...prev,
-        connected: true,
-        version,
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        doc: doc.toString(),
-      }));
-    });
-
-    console.log("[CODE_PANEL]: RENDERED")
 
     socket.on("disconnect", () => {
       setState((prev) => ({
@@ -76,18 +63,37 @@ const CodeEditorBlock = ({
       console.log("[CODE_PANEL]: DISCONNECTED FROM CHANEL")
     });
     return () => {
+      socket.emit("deleteRoom")
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pullUpdateResponse");
       socket.off("pushUpdateResponse");
       socket.off("getDocumentResponse");
     };
-  }, [query]);
+  }, []);
 
-  console.log({
-    state,
-    condition: state?.version !== undefined && state?.doc !== undefined && state.connected
-  })
+  useEffect(() => {
+    socket.emit("joinRoom", query.studentId);
+    getDocument(socket).then(({ version, doc }) => {
+      console.log("[CODE_PANEL]: GET DOCUMENT", { version, doc })
+       setState((prev) => ({
+        ...prev,
+        version,
+        connected: true,
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        doc: doc ? doc?.toString() : undefined,
+      }));
+    });
+    return () => {
+      socket.emit("leaveRoom", query.studentId);
+      setState((prev) => ({
+        ...prev,
+        version: undefined,
+        doc: undefined,
+      }));
+    }
+    // socket.emit("leaveRoom");
+  }, [query.studentId])
 
   return (
     <BaseBlock columns={columns}>
