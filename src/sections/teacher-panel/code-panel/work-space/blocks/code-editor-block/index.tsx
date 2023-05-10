@@ -38,6 +38,7 @@ const CodeEditorBlock = ({
 }: ICodeEditorBlock): React.ReactElement => {
   const { user } = useAuthContext();
   const { query } = useRouter();
+  const [loading, setLoading] = useState(true);
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,
@@ -45,14 +46,11 @@ const CodeEditorBlock = ({
   })
 
   useEffect(() => {
-    if (!query.studentId) return;
-
     socket.on("connection", () => {
       setState((prev) => ({
         ...prev,
         connected: true,
       }));
-      console.log("[CODE_PANEL]: CONNECTED TO CHANEL");
     });
 
     socket.on("disconnect", () => {
@@ -60,7 +58,6 @@ const CodeEditorBlock = ({
         ...prev,
         connected: false,
       }));
-      console.log("[CODE_PANEL]: DISCONNECTED FROM CHANEL")
     });
     return () => {
       socket.off("connect");
@@ -72,9 +69,9 @@ const CodeEditorBlock = ({
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     socket.emit("joinRoom", query.studentId);
     getDocument(socket).then(({ version, doc }) => {
-      console.log("[CODE_PANEL]: GET DOCUMENT", { version, doc })
        setState((prev) => ({
         ...prev,
         version,
@@ -82,8 +79,10 @@ const CodeEditorBlock = ({
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         doc: doc?.toString(),
       }));
+      setLoading(false);
     });
     return () => {
+      setLoading(true);
       socket.emit("leaveRoom", query.studentId);
       setState((prev) => ({
         ...prev,
@@ -91,14 +90,13 @@ const CodeEditorBlock = ({
         doc: undefined,
       }));
     }
-  }, [query.studentId])
-
-  console.log(state?.version, state?.doc, state.connected)
+  }, [query])
 
   if (
-    state?.version === undefined &&
-    state?.doc === undefined &&
-    !state.connected
+    state?.version === undefined ||
+    state?.doc === undefined ||
+    !state.connected ||
+    loading
   ) {
     return <CircularProgress/>
   }

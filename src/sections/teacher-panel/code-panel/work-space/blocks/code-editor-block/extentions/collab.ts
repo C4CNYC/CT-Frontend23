@@ -8,6 +8,7 @@ import {
 import { ChangeSet, Extension, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
+import { addCursor, removeCursor } from "./cursors";
 
 async function pushUpdates(
   socket: Socket,
@@ -15,7 +16,6 @@ async function pushUpdates(
   fullUpdates: readonly Update[]
 ): Promise<boolean> {
   // Strip off transaction data
-  console.log("PUSH UDPATE");
   const updates = fullUpdates.map((u) => ({
     clientID: u.clientID,
     changes: u.changes.toJSON(),
@@ -86,7 +86,7 @@ export const peerExtension = (
 
       async push(): Promise<void> {
         const updates = sendableUpdates(this.view.state);
-        if (this.pushing || !updates.length) return;
+        if (!updates.length || this.pushing) return;
         this.pushing = true;
         const version = getSyncedVersion(this.view.state);
         await pushUpdates(socket, version, updates);
@@ -96,7 +96,6 @@ export const peerExtension = (
         if (sendableUpdates(this.view.state).length) {
           setTimeout(async () => {
             if (!sendableUpdates(this.view.state).length) return;
-            console.log("SENDABLE PUSH");
             await this.push();
           }, 1000);
         }
@@ -106,8 +105,12 @@ export const peerExtension = (
         while (!this.done) {
           const version = getSyncedVersion(this.view.state);
           const updates = await pullUpdates(socket, version);
-          console.log("PULL UPDATE STATE");
-          this.view.dispatch(receiveUpdates(this.view.state, updates));
+          try {
+            this.view.dispatch(receiveUpdates(this.view.state, updates));
+          } catch (e) {
+            this.view.destroy();
+            this.pull();
+          }
         }
       }
 
@@ -121,13 +124,13 @@ export const peerExtension = (
     collab({
       startVersion,
       clientID: id,
-      // sharedEffects: (tr) => {
-      //   const effects = tr.effects.filter((e) => {
-      //     return e.is(addCursor) || e.is(removeCursor);
-      //   });
+      sharedEffects: (tr) => {
+        const effects = tr.effects.filter((e) => {
+          return e.is(addCursor) || e.is(removeCursor);
+        });
 
-      //   return effects;
-      // },
+        return effects;
+      },
     }),
     plugin,
   ];
