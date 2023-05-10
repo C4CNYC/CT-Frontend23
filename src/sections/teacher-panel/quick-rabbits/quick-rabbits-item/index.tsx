@@ -70,6 +70,7 @@ export default function QuickRabbitsItem({
       borderRadius="15px"
       overflow="hidden"
       bgcolor="#364954"
+      minWidth="300px"
     >
       <Box
         bgcolor="rgba(120, 56, 121, 0.7)"
@@ -103,7 +104,7 @@ export default function QuickRabbitsItem({
             </Typography>
           </Tooltip>
         </Box>
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" >
           <Tabs value={value} onChange={handleChange} indicatorColor="primary">
             <Tab
               icon={<Iconify icon="material-symbols:chat" color="#EAEAEB" />}

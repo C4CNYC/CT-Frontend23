@@ -129,7 +129,7 @@ interface CardItemProps {
 }
 
 function CardItem({ card }: CardItemProps): React.ReactElement | null {
-  const { id, cardType, balance, cardHolder, cardNumber, cardValid } = card;
+  const { cardType, balance, cardHolder, cardNumber, cardValid } = card;
 
   const [showCurrency, setShowCurrency] = useState(false);
 

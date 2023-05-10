@@ -12,7 +12,6 @@ import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./Checkers";
 
-import { cursorExtension } from "./extentions/cursors";
 import { getDocument, peerExtension } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
