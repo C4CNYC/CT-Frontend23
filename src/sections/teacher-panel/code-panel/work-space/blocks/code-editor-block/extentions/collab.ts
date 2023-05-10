@@ -58,7 +58,6 @@ export async function getDocument(
     socket.emit("getDocument");
 
     socket.once("getDocumentResponse", function (version: number, doc: string) {
-      if (version === undefined || !doc) return;
       resolve({
         version,
         doc: Text.of(doc.split("\n")),
@@ -94,12 +93,13 @@ export const peerExtension = (
         this.pushing = false;
         // Regardless of whether the push failed or new updates came in
         // while it was running, try again if there's updates remaining
-        // if (sendableUpdates(this.view.state).length) {
-        //   setTimeout(async () => {
-        //     console.log("SENDABLE PUSH");
-        //     await this.push();
-        //   }, 1000);
-        // }
+        if (sendableUpdates(this.view.state).length) {
+          setTimeout(async () => {
+            if (!sendableUpdates(this.view.state).length) return;
+            console.log("SENDABLE PUSH");
+            await this.push();
+          }, 1000);
+        }
       }
 
       async pull(): Promise<void> {
@@ -120,7 +120,7 @@ export const peerExtension = (
   return [
     collab({
       startVersion,
-      // clientID: id,
+      clientID: id,
       // sharedEffects: (tr) => {
       //   const effects = tr.effects.filter((e) => {
       //     return e.is(addCursor) || e.is(removeCursor);

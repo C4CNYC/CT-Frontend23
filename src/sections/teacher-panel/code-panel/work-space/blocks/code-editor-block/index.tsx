@@ -12,7 +12,6 @@ import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./Checkers";
 
-import { cursorExtension } from "./extentions/cursors";
 import { getDocument, peerExtension } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
@@ -64,7 +63,6 @@ const CodeEditorBlock = ({
       console.log("[CODE_PANEL]: DISCONNECTED FROM CHANEL")
     });
     return () => {
-      socket.emit("deleteRoom")
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pullUpdateResponse");
@@ -82,7 +80,7 @@ const CodeEditorBlock = ({
         version,
         connected: true,
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        doc: doc ? doc?.toString() : undefined,
+        doc: doc?.toString(),
       }));
     });
     return () => {
@@ -93,8 +91,9 @@ const CodeEditorBlock = ({
         doc: undefined,
       }));
     }
-    // socket.emit("leaveRoom");
   }, [query.studentId])
+
+  console.log(state?.version, state?.doc, state.connected)
 
   if (
     state?.version === undefined &&
