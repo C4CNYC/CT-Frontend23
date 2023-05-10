@@ -1,17 +1,23 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable no-new */
-import RandomColor from "randomcolor";
 import { useEffect, useState } from "react";
-import { UnControlled as CodeMirrorEditor } from "react-codemirror2";
+import { io } from "socket.io-client";
+import CodeMirror from "@uiw/react-codemirror";
+import { langs } from "@uiw/codemirror-extensions-langs";
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
+import { indentUnit } from "@codemirror/language"
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { mapValidations } from "src/utils/validationMaping";
-import { CodemirrorBinding } from "y-codemirror";
-import { WebrtcProvider } from "y-webrtc";
-import * as Y from "yjs";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./Checkers";
-import "./EditorAddons";
+
+import { getDocument, peerExtension } from "./extentions/collab";
+import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
+import { CircularProgress } from "@mui/material";
+
+const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
@@ -19,149 +25,109 @@ interface ICodeEditorBlock {
   preloadedCode: string;
 }
 
+interface State {
+  connected: boolean,
+  version?: number,
+  doc?: string
+}
+
 const CodeEditorBlock = ({
   columns = 1,
   validations,
   preloadedCode,
 }: ICodeEditorBlock): React.ReactElement => {
+  const { user } = useAuthContext();
   const { query } = useRouter();
-  // const { code, onChangeCode } = useWorkSpaceManager();
-
-  const [EditorRef, setEditorRef] = useState(null);
-  const [code, setCode] = useState("");
-
-  const handleEditorDidMount = (editor: any): void => {
-    setEditorRef(editor);
-  };
+  const [loading, setLoading] = useState(true);
+  const [state, setState] = useState<State>({
+    connected: false,
+    version: undefined,
+    doc: undefined
+  })
 
   useEffect(() => {
-    console.log("roomId", query.studentId)
-    if (EditorRef) {
-      const ydoc = new Y.Doc(); // create a ydoc
+    socket.on("connection", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: true,
+      }));
+    });
 
-      let provider: WebrtcProvider | null = null;
-      try {
-        provider = new WebrtcProvider(
-          query.studentId as string,
-          ydoc,
-          {
-            // Remember the other tab or
-            // other user should be in same room for seeing real-time changes
-            signaling: [
-              "wss://signaling.yjs.dev",
-              "wss://y-webrtc-signaling-eu.herokuapp.com",
-              "wss://y-webrtc-signaling-us.herokuapp.com"
-            ],
-          }
-        );
+    socket.on("disconnect", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: false,
+      }));
+    });
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pullUpdateResponse");
+      socket.off("pushUpdateResponse");
+      socket.off("getDocumentResponse");
+    };
+  }, []);
 
-        const yText = ydoc.getText("codemirror");
-
-        const yUndoManager = new Y.UndoManager(yText);
-
-        const awareness = provider.awareness; // awareness is what makes other user aware about your actions
-
-        const color = RandomColor(); // Provied any random color to be used for each user
-
-        awareness.setLocalStateField("user", {
-          name: "PASHA",
-          color,
-        });
-
-        const test = new CodemirrorBinding(yText, EditorRef, awareness, {
-          yUndoManager,
-        });
-
-      provider.on("synced", (synced: any) => {
-          // NOTE: This is only called when a different browser connects to this client
-          // Windows of the same browser communicate directly with each other
-          // Although this behavior might be subject to change.
-          // It is better not to expect a synced event when using y-webrtc
-          console.log("synced!", synced)
-        })
-
-        ydoc.getArray().observeDeep(() => {
-          console.log("yarray updated: ", ydoc.getArray().toJSON())
-        })
-
-        setInterval(() => {
-          console.log({ test, provider });
-        }, 120000);
-      } catch (err) {
-        alert("error in collaborating try refreshing or come back later !");
-      }
-      return () => {
-        console.log("start disconection");
-        if (provider) {
-          provider.disconnect(); // We destroy doc we created and disconnect
-          ydoc.destroy(); // the provider to stop propagting changes if user leaves editor
-        }
-      };
+  useEffect(() => {
+    setLoading(true);
+    socket.emit("joinRoom", query.studentId);
+    getDocument(socket).then(({ version, doc }) => {
+       setState((prev) => ({
+        ...prev,
+        version,
+        connected: true,
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        doc: doc?.toString(),
+      }));
+      setLoading(false);
+    });
+    return () => {
+      setLoading(true);
+      socket.emit("leaveRoom", query.studentId);
+      setState((prev) => ({
+        ...prev,
+        version: undefined,
+        doc: undefined,
+      }));
     }
-  }, [EditorRef]);
+  }, [query])
+
+  if (
+    state?.version === undefined ||
+    state?.doc === undefined ||
+    !state.connected ||
+    loading
+  ) {
+    return <CircularProgress/>
+  }
 
   return (
     <BaseBlock columns={columns}>
       <style>
         {`
-        .react-codemirror2 {
-          height: 100%!important;
-        }
-        .remote-caret {
-          top: 0;
-          position: absolute!important;
-          border-left: black!important;
-          border-left-style: solid!important;
-          border-left-width: 2px!important;
-        }
-
-        .remote-caret>div {
-          position: relative!important;
-          top: -0.4em!important;
-          font-size: 13px!important;
-          background-color: rgb(250, 129, 0)!important;
-          font-family: serif!important;
-          font-style: normal!important;
-          font-weight: normal!important;
-          line-height: normal!important;
-          user-select: none!important;
-          color: white!important;
-          padding-left: 2px!important;
-          padding-right: 2px!important;
-          z-index: 3!important;
-          border-radius: 20%!important;
-        }`}
+          #codeEditor {
+            height: 100%
+          }
+        `}
       </style>
       {validations?.length ? (
-        <Checkers checkers={mapValidations(code, validations)} />
+        <Checkers checkers={mapValidations(state.doc ?? "", validations)} />
       ) : null}
-      <CodeMirrorEditor
-        onChange={(editor: any, data: any, value: any) => {
-          setCode(value);
-        }}
-        autoScroll
-        options={{
-          mode: "text/javascript",
-          theme: "monokai",
-          lineWrapping: true,
-          smartIndent: true,
-          lineNumbers: true,
-          foldGutter: true,
-          tabSize: 2,
-          gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-          autoCloseTags: true,
-          // matchBrackets: true,
-          autoCloseBrackets: true,
-          extraKeys: {
-            "Ctrl-Space": "autocomplete",
-          },
-        }}
-        editorDidMount={(editor) => {
-          console.log(editor);
-          handleEditorDidMount(editor);
-          editor.setSize("100vw", "100%");
-        }}
-      />
+
+      <CodeMirror
+      className="flex-1 overflow-scroll"
+      height="100%"
+      basicSetup={false}
+      id="codeEditor"
+      extensions={[
+        indentUnit.of("\t"),
+        basicSetup(),
+        langs.c(),
+        // cursorExtension(user?.email),
+        peerExtension(socket, state.version ?? 0, user?.email),
+      ]}
+      value={state.doc}
+    />
     </BaseBlock>
   );
 };

@@ -46,9 +46,9 @@ export default function BookingCustomerReviews({
 
   const carouselRef = useRef<Carousel | null>(null);
 
-  const [selectCustomer, setSelectCustomer] = useState(0);
+  const [, setSelectCustomer] = useState(0);
 
-  const customerInfo = list.find((_, index) => index === selectCustomer);
+  // const customerInfo = list.find((_, index) => index === selectCustomer);
 
   const carouselSettings = {
     dots: false,
@@ -100,9 +100,7 @@ export default function BookingCustomerReviews({
           color="success"
           variant="contained"
           startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          onClick={() => {
-            console.log("ACCEPT", customerInfo?.id);
-          }}
+          onClick={() => {}}
         >
           Accept
         </Button>
@@ -112,9 +110,7 @@ export default function BookingCustomerReviews({
           color="error"
           variant="contained"
           startIcon={<Iconify icon="eva:close-circle-fill" />}
-          onClick={() => {
-            console.log("REJECT", customerInfo?.id);
-          }}
+          onClick={() => {}}
         >
           Reject
         </Button>

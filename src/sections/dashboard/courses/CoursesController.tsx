@@ -50,7 +50,6 @@ export default function CoursesController({
           const matches = match(name, inputValue);
           const parts = parse(name, matches);
           const selected = addedSkills.find((c) => c.id === id);
-          console.log(recipient);
           return (
             <Box
               component="li"

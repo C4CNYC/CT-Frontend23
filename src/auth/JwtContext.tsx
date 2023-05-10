@@ -25,6 +25,7 @@ enum Types {
   INITIAL = "INITIAL",
   LOGIN = "LOGIN",
   REGISTER = "REGISTER",
+  REGISTER_TO_ORGANIZATION = "REGISTER_TO_ORGANIZATION",
   LOGOUT = "LOGOUT",
   AUTHENTICATE = "AUTHENTICATE",
 }
@@ -38,6 +39,9 @@ interface Payload {
     user: AuthUserType;
   };
   [Types.REGISTER]: {
+    user: AuthUserType;
+  };
+  [Types.REGISTER_TO_ORGANIZATION]: {
     user: AuthUserType;
   };
   [Types.AUTHENTICATE]: Record<string, unknown>;
@@ -69,6 +73,11 @@ const reducer = (state: AuthStateType, action: ActionsType): AuthStateType => {
         user: action.payload.user,
       };
     case Types.REGISTER:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
+    case Types.REGISTER_TO_ORGANIZATION:
       return {
         ...state,
         user: action.payload.user,
@@ -178,7 +187,10 @@ export function AuthProvider({
       const { access_token, user } = data;
       reduxDispatch(setUser(user));
 
-      setSession(access_token, localStorage.getItem("tenantName") ?? "codetribe");
+      setSession(
+        access_token,
+        localStorage.getItem("tenantName") ?? "codetribe"
+      );
 
       dispatch({
         type: Types.LOGIN,
@@ -226,6 +238,34 @@ export function AuthProvider({
     []
   );
 
+  const registerToOrganization = useCallback(
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string
+    ) => {
+      const { data } = await axios.post("/auth/signup", {
+        email,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      });
+      const { access_token, user } = data;
+      reduxDispatch(setUser(user));
+
+      localStorage.setItem("accessToken", access_token);
+
+      dispatch({
+        type: Types.REGISTER_TO_ORGANIZATION,
+        payload: {
+          user,
+        },
+      });
+    },
+    []
+  );
+
   // LOGOUT
   const logout = useCallback(() => {
     setSession(null, null);
@@ -247,6 +287,7 @@ export function AuthProvider({
       loginWithGithub: () => {},
       loginWithTwitter: () => {},
       register,
+      registerToOrganization,
       logout,
     }),
     [

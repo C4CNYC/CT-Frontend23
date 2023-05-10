@@ -37,10 +37,5 @@ export const useRealTimeConnection = (
     getWorkSpaceState(userId);
   }, [userId]);
 
-  // useEffect(() => {
-  // console.log("work");
-  // udpateWorkSpaceState(userId, { ...global, ...code });
-  // }, [global, code]);
-
   return { data };
 };

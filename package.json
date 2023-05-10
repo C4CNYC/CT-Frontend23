@@ -15,12 +15,15 @@
     "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "clear-all": "rm -rf .next .swc _static node_modules",
     "re-start": "rm -rf .next .swc _static node_modules && yarn install && yarn dev",
-    "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build"
+    "re-build": "rm -rf .next .swc _static node_modules && yarn install && yarn build",
+    "prepare": "husky install",
+    "pre-commit": "yarn lint && yarn build"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^2.0.0",
     "@chatscope/chat-ui-kit-react": "^1.10.1",
     "@chatscope/chat-ui-kit-styles": "^1.4.0",
+    "@codemirror/collab": "^6.0.0",
     "@codemirror/lang-html": "^6.4.2",
     "@codemirror/lang-javascript": "^6.1.4",
     "@emotion/cache": "^11.10.5",
@@ -120,6 +123,7 @@
     "simplebar": "^5.3.9",
     "simplebar-react": "^2.4.3",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.6.1",
     "stylis": "^4.1.2",
     "stylis-plugin-rtl": "^2.1.1",
     "y-codemirror": "^3.0.1",
@@ -159,6 +163,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
     "prettier": "2.8.4",
     "prettier-plugin-organize-imports": "^3.2.2",
     "tslint-config-prettier": "^1.18.0",

@@ -94,9 +94,6 @@ export default function ClassMentorsAutocomplete({
       onChange={onChange}
       options={managers.data}
       popupIcon={null}
-      onLoadStart={() => {
-        console.log("work");
-      }}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.email} />
       }
