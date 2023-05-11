@@ -8,7 +8,6 @@ import {
 import { ChangeSet, Extension, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
-import { addCursor, removeCursor } from "./cursors";
 
 async function pushUpdates(
   socket: Socket,
@@ -39,16 +38,15 @@ async function pullUpdates(
     socket.emit("pullUpdates", version);
 
     socket.once("pullUpdateResponse", function (updates: any) {
-      resolve(JSON.parse(updates));
+      const data = JSON.parse(updates).map((u: any) => {
+        return {
+          changes: ChangeSet.fromJSON(u.changes),
+          clientID: u.clientID,
+        };
+      });
+      resolve(data);
     });
-  }).then((updates: any) =>
-    updates.map((u: any) => {
-      return {
-        changes: ChangeSet.fromJSON(u.changes),
-        clientID: u.clientID,
-      };
-    })
-  );
+  });
 }
 
 export async function getDocument(
@@ -73,7 +71,7 @@ export const peerExtension = (
 ): Extension[] => {
   const plugin = ViewPlugin.fromClass(
     class {
-      private pushing = false;
+      private readonly pushing = false;
       private done = false;
 
       constructor(private readonly view: EditorView) {
@@ -86,31 +84,28 @@ export const peerExtension = (
 
       async push(): Promise<void> {
         const updates = sendableUpdates(this.view.state);
-        if (!updates.length || this.pushing) return;
-        this.pushing = true;
+        if (this.pushing || !updates.length) return;
+        // this.pushing = true;
         const version = getSyncedVersion(this.view.state);
         await pushUpdates(socket, version, updates);
-        this.pushing = false;
+        // this.pushing = false;
         // Regardless of whether the push failed or new updates came in
         // while it was running, try again if there's updates remaining
         if (sendableUpdates(this.view.state).length) {
           setTimeout(async () => {
-            if (!sendableUpdates(this.view.state).length) return;
             await this.push();
-          }, 1000);
+          }, 100);
         }
+
+        // Regardless of whether the push failed or new updates came in
+        // while it was running, try again if there's updates remaining
       }
 
       async pull(): Promise<void> {
         while (!this.done) {
           const version = getSyncedVersion(this.view.state);
           const updates = await pullUpdates(socket, version);
-          try {
-            this.view.dispatch(receiveUpdates(this.view.state, updates));
-          } catch (e) {
-            this.view.destroy();
-            this.pull();
-          }
+          this.view.dispatch(receiveUpdates(this.view.state, updates));
         }
       }
 
@@ -124,13 +119,13 @@ export const peerExtension = (
     collab({
       startVersion,
       clientID: id,
-      sharedEffects: (tr) => {
-        const effects = tr.effects.filter((e) => {
-          return e.is(addCursor) || e.is(removeCursor);
-        });
+      // sharedEffects: (tr) => {
+      //   const effects = tr.effects.filter((e) => {
+      //     return e.is(addCursor) || e.is(removeCursor);
+      //   });
 
-        return effects;
-      },
+      //   return effects;
+      // },
     }),
     plugin,
   ];
