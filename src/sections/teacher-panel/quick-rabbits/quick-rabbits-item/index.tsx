@@ -24,7 +24,7 @@ export default function QuickRabbitsItem({
   const [onlineStudents] = useAtom(onlineStudentsAtom);
 
   useEffect(() => {
-    if (!onlineStudents) return;
+    if (!onlineStudents || rabit.id === query.id) return;
     if (!onlineStudents[rabit.id]) onClose(rabit.id);
   }, [onlineStudents])
 

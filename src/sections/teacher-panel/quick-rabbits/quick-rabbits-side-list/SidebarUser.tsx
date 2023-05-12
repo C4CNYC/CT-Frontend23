@@ -84,15 +84,15 @@ export const SidebarUser = ({
           skeleton={<AvatarSkeleton />}
           component={
             <Tooltip placement="left" title={getTooltipAvatarMessage(lastTimeActivity, isOnline)} >
-<Avatar
-              alt={first_name}
-              src={avatar ?? "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"}
-              sx={{
-                width: { xs: 40, sm: 40, md: 50 },
-                height: { xs: 40, sm: 40, md: 50 },
-                border: `5px solid ${getAvatarColor(lastTimeActivity)}`
-              }}
-            />
+              <Avatar
+                alt={first_name}
+                src={avatar ?? "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"}
+                sx={{
+                  width: { xs: 40, sm: 40, md: 50 },
+                  height: { xs: 40, sm: 40, md: 50 },
+                  border: `5px solid ${getAvatarColor(lastTimeActivity)}`
+                }}
+              />
             </Tooltip>
           }
           isLoading={isLoading}
@@ -132,9 +132,9 @@ export const SidebarUser = ({
       </Box>
       <Tooltip placement="left" title={isOnline ? "connect" : "user is not available"}>
         <Box>
-<IconButton disabled={!isOnline} onClick={onConnectStudent}>
-        <AddIcon />
-      </IconButton>
+          <IconButton disabled={!isOnline} onClick={onConnectStudent}>
+           <AddIcon />
+          </IconButton>
         </Box>
 
       </Tooltip>
