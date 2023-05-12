@@ -7,6 +7,7 @@ import assignmentsReducer from "./slices/assignments";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
+import { authApi } from "./services/auth";
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +38,7 @@ export const rootPersistConfig = {
 const rootReducer = combineReducers({
   [adminApi.reducerPath]: adminApi.reducer,
   [managerApi.reducerPath]: managerApi.reducer,
+  [authApi.reducerPath]: authApi.reducer,
   global: globalRducer,
   manager: managerReducer,
   assignments: assignmentsReducer,
