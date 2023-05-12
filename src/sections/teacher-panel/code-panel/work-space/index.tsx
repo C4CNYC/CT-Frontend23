@@ -4,10 +4,11 @@ import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interf
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
-import { useWorkSpaceManager } from "../hooks/useWorkSpaceManager.hook";
 import SliderBlock from "./blocks/slider-block";
 import ViewBlock from "./blocks/view-block";
 import dynamic from "next/dynamic";
+import { SupportedLang, WorkSpaceContext } from "../context/WorkSpace.context";
+import { useState } from "react";
 
 const CodeEditorBlock = dynamic(async () => await import("./blocks/code-editor-block"), { ssr: false })
 
@@ -16,11 +17,18 @@ interface IWorkSpace {
 }
 
 const WorkSpace = ({ data }: IWorkSpace): React.ReactElement => {
-  const { code } = useWorkSpaceManager();
+  const [code, onChangeCode] = useState("")
+  const [language, onChangeLanguage] = useState<SupportedLang>("html")
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
   const [{ slideIndex }] = useAtom(globalCodePanelAtom);
 
   return (
+    <WorkSpaceContext.Provider value={{
+      code,
+      language,
+      onChangeCode,
+      onChangeLanguage
+    }}>
     <SwipeableViews
       index={activeTab}
       onChangeIndex={(index: number) => {
@@ -29,11 +37,13 @@ const WorkSpace = ({ data }: IWorkSpace): React.ReactElement => {
     >
       <SliderBlock data={data} integrations={[]} />
       <CodeEditorBlock
+        onChangeCode={onChangeCode}
         // preloadedCode={data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations ?? []}
       />
-      <ViewBlock {...code} />
+      <ViewBlock {...{ code, language }} />
     </SwipeableViews>
+    </WorkSpaceContext.Provider>
   );
 };
 

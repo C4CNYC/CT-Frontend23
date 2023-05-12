@@ -2,8 +2,6 @@ import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import {
   Divider,
   IconButton,
@@ -184,24 +182,6 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
       <List sx={{ py: 0 }}>
         <ListItem sx={{ py: 0.5 }}>
           <MarkUnreadChatAltIcon />
-          <Box sx={{ pl: 2, pr: 3 }}>
-            <Typography variant="h6">Group Chat</Typography>
-          </Box>
-          <IconButton>
-            <AddIcon />
-          </IconButton>
-        </ListItem>
-        <ListItem sx={{ py: 0.5 }}>
-          <NoteAltIcon />
-          <Box sx={{ pl: 2, pr: 3 }}>
-            <Typography variant="h6">Group Chat</Typography>
-          </Box>
-          <IconButton>
-            <AddIcon />
-          </IconButton>
-        </ListItem>
-        <ListItem sx={{ py: 0.5 }}>
-          <NewspaperIcon />
           <Box sx={{ pl: 2, pr: 3 }}>
             <Typography variant="h6">Group Chat</Typography>
           </Box>

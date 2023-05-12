@@ -1,63 +1,27 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
-/* eslint-disable no-new */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { langs } from "@uiw/codemirror-extensions-langs";
-import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
-import { indentUnit } from "@codemirror/language"
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
-import Checkers from "./Checkers";
+import Checkers from "./checkers";
 
-import { getDocument, peerExtension } from "./extentions/collab";
+import { getDocument } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
 
-import { EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
-import { defaultKeymap } from "@codemirror/commands";
+import { Editor } from "./editor";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
-
-export const Editor = ({ state, user }: any) => {
-  const editor = useRef();
-
-  useEffect(() => {
-    setTimeout(() => {}, 500)
-    const startState = EditorState.create({
-      doc: state.doc,
-      extensions: [keymap.of(defaultKeymap), indentUnit.of("\t"),
-        basicSetup(),
-        langs.html(),
-        // cursorExtension(user?.email),
-        peerExtension(socket, state.version ?? 0, user?.email)],
-    });
-
-    let view: any;
-
-    setTimeout(() => {
-      view = new EditorView({ state: startState, parent: editor.current });
-    }, 500)
-
-    return () => {
-      view?.destroy();
-    };
-  }, []);
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  return <div ref={editor}></div>;
-};
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
   validations: Array<ILessonContentValidation & BaseResponseInterface>;
+  onChangeCode: (code: string) => void
   // preloadedCode: string;
 }
 
-interface State {
+export interface State {
   connected: boolean,
   version?: number,
   doc?: string
@@ -66,6 +30,7 @@ interface State {
 const CodeEditorBlock = ({
   columns = 1,
   validations,
+  onChangeCode,
   // preloadedCode,
 }: ICodeEditorBlock): React.ReactElement | null => {
   const { user } = useAuthContext();
@@ -149,7 +114,12 @@ const CodeEditorBlock = ({
       {validations?.length ? (
         <Checkers checkers={mapValidations(state.doc ?? "", validations)} />
       ) : null}
-      <Editor state={state} user={user}/>
+      <Editor
+        onChangeCode={onChangeCode}
+        state={state}
+        user={user}
+        socket={socket}
+      />
     </BaseBlock>
   );
 };
