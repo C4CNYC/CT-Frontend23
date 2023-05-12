@@ -2,7 +2,13 @@ import { useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
-import { Box, Divider, MenuItem, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  MenuItem,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { alpha } from "@mui/material/styles";
 // routes
 import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
@@ -13,22 +19,24 @@ import { IconButtonAnimate } from "@components/animate";
 import { CustomAvatar } from "@components/custom-avatar";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
+import {
+  useProfileQuery,
+} from "src/redux/services/auth";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
 
-  const { user, logout } = useAuthContext();
-
+  const { logout } = useAuthContext();
+  const { data: user } = useProfileQuery();
   const { enqueueSnackbar } = useSnackbar();
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const OPTIONS = [
     {
       label: "Profile",
-      linkTo: PATH_DASHBOARD.organization.edit(user?.id),
+      linkTo: PATH_DASHBOARD.organization.edit(user?.id as string),
     },
   ];
 
@@ -76,9 +84,9 @@ export default function AccountPopover(): React.ReactElement {
         }}
       >
         <CustomAvatar
-          src={user?.avatar}
-          alt={user?.displayName}
-          name={user?.displayName}
+          src={user?.name}
+          alt={user?.name}
+          name={user?.name}
         />
       </IconButtonAnimate>
 
@@ -89,7 +97,7 @@ export default function AccountPopover(): React.ReactElement {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+            {user?.name}
           </Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
