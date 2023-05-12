@@ -29,7 +29,7 @@ const WorkSpace = ({ data }: IWorkSpace): React.ReactElement => {
     >
       <SliderBlock data={data} integrations={[]} />
       <CodeEditorBlock
-        preloadedCode={data[slideIndex]?.preload_body}
+        // preloadedCode={data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations ?? []}
       />
       <ViewBlock {...code} />

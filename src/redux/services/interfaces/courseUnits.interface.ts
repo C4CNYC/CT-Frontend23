@@ -26,6 +26,7 @@ export interface ICourse {
   description: string;
   active: boolean;
   cover: string;
+  public: boolean;
   draft: boolean;
   skills: [];
 }
