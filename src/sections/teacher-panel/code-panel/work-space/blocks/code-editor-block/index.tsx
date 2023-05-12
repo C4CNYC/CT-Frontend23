@@ -78,7 +78,6 @@ const CodeEditorBlock = ({
   })
 
   useEffect(() => {
-    console.log("open connection")
     socket.open();
     socket.emit("joinRoom", query.studentId);
     getDocument(socket).then(({ version, doc }) => {
@@ -98,7 +97,6 @@ const CodeEditorBlock = ({
     });
 
     socket.on("disconnect", () => {
-      console.log("disconnect event")
       setState((prev) => ({
         ...prev,
         connected: false,
@@ -106,7 +104,6 @@ const CodeEditorBlock = ({
     });
 
     window.addEventListener("beforeunload", () => {
-      console.log("destroy everything onload");
       socket.emit("leaveRoom", query?.studentId);
       socket.off("connect");
       socket.off("disconnect");
@@ -117,7 +114,6 @@ const CodeEditorBlock = ({
     });
 
     return () => {
-      console.log("destroy everything");
       setState((prev) => ({
         ...prev,
         version: undefined,
@@ -133,8 +129,6 @@ const CodeEditorBlock = ({
       socket.disconnect();
     };
   }, []);
-
-  console.log(state?.version, state?.doc, state.connected)
 
   if (
     state?.version === undefined ||
