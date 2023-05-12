@@ -142,8 +142,8 @@ const CodeEditorBlock = ({
     <BaseBlock columns={columns}>
       <style>
         {`
-          #codeEditor {
-            height: 100%
+          .cm-editor {
+            height: 100vh;
           }
         `}
       </style>
