@@ -9,6 +9,7 @@ import Checkers from "./checkers";
 import { getDocument } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
+
 import { Editor } from "./editor";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
