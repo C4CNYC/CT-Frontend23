@@ -88,6 +88,8 @@ export default function QuickRabbitsItem({
           alignItems="center"
         >
           <Link
+            replace
+            shallow
             href={
               PATH_DASHBOARD.school.controller(query.id as string) +
               (!isRabbitActive ? `?studentId=${rabit.id}` : "")

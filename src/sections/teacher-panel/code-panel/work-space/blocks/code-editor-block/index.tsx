@@ -14,7 +14,7 @@ import Checkers from "./Checkers";
 import { getDocument, peerExtension } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 
 import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
@@ -26,6 +26,7 @@ export const Editor = ({ state, user }: any) => {
   const editor = useRef();
 
   useEffect(() => {
+    setTimeout(() => {}, 500)
     const startState = EditorState.create({
       doc: state.doc,
       extensions: [keymap.of(defaultKeymap), indentUnit.of("\t"),
@@ -35,10 +36,14 @@ export const Editor = ({ state, user }: any) => {
         peerExtension(socket, state.version ?? 0, user?.email)],
     });
 
-    const view = new EditorView({ state: startState, parent: editor.current });
+    let view: any;
+
+    setTimeout(() => {
+      view = new EditorView({ state: startState, parent: editor.current });
+    }, 500)
 
     return () => {
-      view.destroy();
+      view?.destroy();
     };
   }, []);
 
@@ -63,7 +68,7 @@ const CodeEditorBlock = ({
   columns = 1,
   validations,
   // preloadedCode,
-}: ICodeEditorBlock): React.ReactElement => {
+}: ICodeEditorBlock): React.ReactElement | null => {
   const { user } = useAuthContext();
   const { query } = useRouter();
   const [state, setState] = useState<State>({
@@ -73,43 +78,8 @@ const CodeEditorBlock = ({
   })
 
   useEffect(() => {
+    console.log("open connection")
     socket.open();
-    socket.on("connection", () => {
-      setState((prev) => ({
-        ...prev,
-        connected: true,
-      }));
-    });
-
-    socket.on("disconnect", () => {
-      setState((prev) => ({
-        ...prev,
-        connected: false,
-      }));
-    });
-
-    window.addEventListener("beforeunload", () => {
-      socket.emit("leaveRoom", query?.studentId);
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pullUpdateResponse");
-      socket.off("pushUpdateResponse");
-      socket.off("getDocumentResponse");
-      socket.close();
-    });
-
-    return () => {
-      socket.emit("leaveRoom");
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pullUpdateResponse");
-      socket.off("pushUpdateResponse");
-      socket.off("getDocumentResponse");
-      socket.close();
-    };
-  }, []);
-
-  useEffect(() => {
     socket.emit("joinRoom", query.studentId);
     getDocument(socket).then(({ version, doc }) => {
        setState((prev) => ({
@@ -120,25 +90,58 @@ const CodeEditorBlock = ({
         doc: doc?.toString(),
       }));
     });
+    socket.on("connection", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: true,
+      }));
+    });
+
+    socket.on("disconnect", () => {
+      console.log("disconnect event")
+      setState((prev) => ({
+        ...prev,
+        connected: false,
+      }));
+    });
+
+    window.addEventListener("beforeunload", () => {
+      console.log("destroy everything onload");
+      socket.emit("leaveRoom", query?.studentId);
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pullUpdateResponse");
+      socket.off("pushUpdateResponse");
+      socket.off("getDocumentResponse");
+      socket.close();
+    });
+
     return () => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      document.getElementById("codeEditor")?.clearHistory()
-      socket.emit("leaveRoom", query.studentId);
+      console.log("destroy everything");
       setState((prev) => ({
         ...prev,
         version: undefined,
         doc: undefined,
       }));
-    }
-  }, [])
+      socket.emit("leaveRoom", query.studentId);
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("pullUpdateResponse");
+      socket.off("pushUpdateResponse");
+      socket.off("getDocumentResponse");
+      socket.close();
+      socket.disconnect();
+    };
+  }, []);
+
+  console.log(state?.version, state?.doc, state.connected)
 
   if (
     state?.version === undefined ||
     state?.doc === undefined ||
     !state.connected
   ) {
-    return <CircularProgress/>
+    return null
   }
 
   return (
