@@ -14,7 +14,6 @@ import Checkers from "./Checkers";
 import { getDocument, peerExtension } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
-import { CircularProgress, Typography } from "@mui/material";
 
 import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";

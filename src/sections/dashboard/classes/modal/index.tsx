@@ -154,30 +154,50 @@ export default function ClassPreferences({
                 </TabPanel>
               ) : null}
             </DialogContent>
-            <DialogActions>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: 2,
-                }}
-              >
-                <Button
-                  onClick={() => {
-                    setOpenDialog(false);
+            {value === 0 ? (
+              <DialogActions>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 2,
                   }}
                 >
-                  Close
-                </Button>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={false}
+                  <Button
+                    onClick={() => {
+                      setOpenDialog(false);
+                    }}
+                  >
+                    Close
+                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={false}
+                  >
+                    Save
+                  </LoadingButton>
+                </Box>
+              </DialogActions>
+            ) : (
+              <DialogActions>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 2,
+                  }}
                 >
-                  Save
-                </LoadingButton>
-              </Box>
-            </DialogActions>
+                  <Button
+                    onClick={() => {
+                      setOpenDialog(false);
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Box>
+              </DialogActions>
+            )}
           </FormProvider>
         </Box>
       </Dialog>
