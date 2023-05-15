@@ -5,9 +5,10 @@ import {
   sendableUpdates,
   Update,
 } from "@codemirror/collab";
-import { ChangeSet, Extension, Text } from "@codemirror/state";
+import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
+import { addCursor, removeCursor } from "./cursors";
 
 async function pushUpdates(
   socket: Socket,
@@ -18,7 +19,7 @@ async function pushUpdates(
   const updates = fullUpdates.map((u) => ({
     clientID: u.clientID,
     changes: u.changes.toJSON(),
-    // effects: u.effects,
+    effects: u.effects,
   }));
 
   return await new Promise(function (resolve) {
@@ -38,15 +39,42 @@ async function pullUpdates(
     socket.emit("pullUpdates", version);
 
     socket.once("pullUpdateResponse", function (updates: any) {
-      const data = JSON.parse(updates).map((u: any) => {
+      resolve(JSON.parse(updates));
+    });
+  }).then((updates: any) =>
+    updates.map((u: any) => {
+      if (u.effects?.[0]) {
+        const effects: Array<StateEffect<any>> = [];
+
+        u.effects.forEach((effect: StateEffect<any>) => {
+          if (effect.value?.id && effect.value?.from) {
+            const cursor = {
+              id: effect.value.id,
+              from: effect.value.from,
+              to: effect.value.to,
+            };
+
+            effects.push(addCursor.of(cursor));
+          } else if (effect.value?.id) {
+            const cursorId = effect.value.id;
+
+            effects.push(removeCursor.of(cursorId));
+          }
+        });
+
         return {
           changes: ChangeSet.fromJSON(u.changes),
           clientID: u.clientID,
+          effects,
         };
-      });
-      resolve(data);
-    });
-  });
+      }
+
+      return {
+        changes: ChangeSet.fromJSON(u.changes),
+        clientID: u.clientID,
+      };
+    })
+  );
 }
 
 export async function getDocument(
@@ -79,7 +107,7 @@ export const peerExtension = (
       }
 
       update(update: ViewUpdate): void {
-        if (update.docChanged) this.push();
+        if (update.docChanged || update.transactions.length) this.push();
       }
 
       async push(): Promise<void> {
@@ -119,13 +147,13 @@ export const peerExtension = (
     collab({
       startVersion,
       clientID: id,
-      // sharedEffects: (tr) => {
-      //   const effects = tr.effects.filter((e) => {
-      //     return e.is(addCursor) || e.is(removeCursor);
-      //   });
+      sharedEffects: (tr) => {
+        const effects = tr.effects.filter((e) => {
+          return e.is(addCursor) || e.is(removeCursor);
+        });
 
-      //   return effects;
-      // },
+        return effects;
+      },
     }),
     plugin,
   ];
