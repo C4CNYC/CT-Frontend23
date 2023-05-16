@@ -86,7 +86,6 @@ export default function CreateModuleDialog({
       enqueueSnackbar(error.data.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
     handleClose();
   };

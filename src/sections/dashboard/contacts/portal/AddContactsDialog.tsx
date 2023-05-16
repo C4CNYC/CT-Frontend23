@@ -58,7 +58,6 @@ export default function AddContactsDialog(): React.ReactElement {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Update success!");
     } catch (error) {
-      console.error(error);
     }
   };
 

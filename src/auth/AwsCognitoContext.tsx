@@ -104,7 +104,6 @@ export function AuthProvider({
         currentUser.getUserAttributes((error, attributes) => {
           if (error) {
             reject(error);
-            console.error(error);
           } else {
             const results: UserAttributeType = {};
 
@@ -129,7 +128,6 @@ export function AuthProvider({
             async (error: Error | null, session: CognitoUserSession | null) => {
               if (error) {
                 reject(error);
-                console.error(error);
               }
               const attributes = await getUserAttributes(cognitoUser);
 
@@ -251,7 +249,6 @@ export function AuthProvider({
           async (error): Promise<void> => {
             if (error) {
               reject(error);
-              console.error(error);
               return;
             }
 

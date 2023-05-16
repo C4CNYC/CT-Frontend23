@@ -64,7 +64,6 @@ export default function AuthVerifyCodeForm(): React.ReactElement {
       enqueueSnackbar("Verify success!");
       push(PATH_DASHBOARD.root);
     } catch (error) {
-      console.error(error);
     }
   };
 

@@ -56,7 +56,6 @@ export default function ContactsForm({
       });
       enqueueSnackbar("Update success!");
     } catch (error) {
-      console.error(error);
     }
   };
 

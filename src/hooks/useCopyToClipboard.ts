@@ -16,7 +16,6 @@ function useCopyToClipboard(): ReturnType {
 
   const copy: CopyFn = async (text): Promise<boolean> => {
     if (!navigator?.clipboard) {
-      console.warn("Clipboard not supported");
       return false;
     }
 
@@ -26,7 +25,6 @@ function useCopyToClipboard(): ReturnType {
       setCopiedText(text);
       return true;
     } catch (error) {
-      console.warn("Copy failed", error);
       setCopiedText(null);
       return false;
     }

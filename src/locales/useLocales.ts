@@ -42,7 +42,6 @@ export default function useLocales(): IUseLocals {
       await i18n.changeLanguage(newlang);
       onChangeDirectionByLang(newlang);
     } catch (e) {
-      console.log("i18n something went wrong");
     }
   };
 

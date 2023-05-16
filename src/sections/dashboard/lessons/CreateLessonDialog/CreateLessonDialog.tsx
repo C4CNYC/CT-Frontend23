@@ -124,7 +124,6 @@ export default function CreateLessonDialog({
       enqueueSnackbar(error.data.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
     setLoading(false);
     // eslint-disable-next-line no-eval

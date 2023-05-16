@@ -65,7 +65,6 @@ export default function SocialsForm({
       methods.reset();
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 

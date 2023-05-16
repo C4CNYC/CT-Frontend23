@@ -34,7 +34,6 @@ export default function AssignmentsColumnAdd(): React.ReactElement {
       }
       handleClose();
     } catch (error) {
-      console.error(error);
     }
   };
 
