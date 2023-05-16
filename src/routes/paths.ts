@@ -22,6 +22,7 @@ export const PATH_AUTH = {
 };
 
 export const PATH_PAGE = {
+  onBoarding: "/on-boarding",
   comingSoon: "/coming-soon",
   maintenance: "/maintenance",
   pricing: "/pricing",
