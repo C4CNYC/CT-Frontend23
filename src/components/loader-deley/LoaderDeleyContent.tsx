@@ -12,12 +12,8 @@ export default function LoaderDeleyContent({
 }: Props): React.ReactElement {
   const [isExist, setIsExist] = useState<boolean>(true);
   useEffect(() => {
-    if (isFetching) {
-      setTimeout(() => { setIsExist(false); }, deley);
-    }
-    if (!isFetching) {
-      setIsExist(true);
-    }
+    if (isFetching) setIsExist(true)
+    setTimeout(() => { setIsExist(false); }, deley);
   }, [isFetching]);
   return (
     <>
