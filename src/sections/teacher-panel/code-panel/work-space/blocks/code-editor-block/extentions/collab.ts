@@ -5,9 +5,10 @@ import {
   sendableUpdates,
   Update,
 } from "@codemirror/collab";
-import { ChangeSet, Extension, Text } from "@codemirror/state";
+import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
+import { addCursor, removeCursor } from "./cursors";
 
 async function pushUpdates(
   socket: Socket,
@@ -15,11 +16,10 @@ async function pushUpdates(
   fullUpdates: readonly Update[]
 ): Promise<boolean> {
   // Strip off transaction data
-  console.log("PUSH UDPATE");
   const updates = fullUpdates.map((u) => ({
     clientID: u.clientID,
     changes: u.changes.toJSON(),
-    // effects: u.effects,
+    effects: u.effects,
   }));
 
   return await new Promise(function (resolve) {
@@ -43,6 +43,32 @@ async function pullUpdates(
     });
   }).then((updates: any) =>
     updates.map((u: any) => {
+      if (u.effects?.[0]) {
+        const effects: Array<StateEffect<any>> = [];
+
+        u.effects.forEach((effect: StateEffect<any>) => {
+          if (effect.value?.id && effect.value?.from) {
+            const cursor = {
+              id: effect.value.id,
+              from: effect.value.from,
+              to: effect.value.to,
+            };
+
+            effects.push(addCursor.of(cursor));
+          } else if (effect.value?.id) {
+            const cursorId = effect.value.id;
+
+            effects.push(removeCursor.of(cursorId));
+          }
+        });
+
+        return {
+          changes: ChangeSet.fromJSON(u.changes),
+          clientID: u.clientID,
+          effects,
+        };
+      }
+
       return {
         changes: ChangeSet.fromJSON(u.changes),
         clientID: u.clientID,
@@ -58,7 +84,6 @@ export async function getDocument(
     socket.emit("getDocument");
 
     socket.once("getDocumentResponse", function (version: number, doc: string) {
-      if (version === undefined || !doc) return;
       resolve({
         version,
         doc: Text.of(doc.split("\n")),
@@ -74,7 +99,7 @@ export const peerExtension = (
 ): Extension[] => {
   const plugin = ViewPlugin.fromClass(
     class {
-      private pushing = false;
+      private readonly pushing = false;
       private done = false;
 
       constructor(private readonly view: EditorView) {
@@ -82,31 +107,32 @@ export const peerExtension = (
       }
 
       update(update: ViewUpdate): void {
-        if (update.docChanged) this.push();
+        if (update.docChanged || update.transactions.length) this.push();
       }
 
       async push(): Promise<void> {
         const updates = sendableUpdates(this.view.state);
         if (this.pushing || !updates.length) return;
-        this.pushing = true;
+        // this.pushing = true;
         const version = getSyncedVersion(this.view.state);
         await pushUpdates(socket, version, updates);
-        this.pushing = false;
+        // this.pushing = false;
         // Regardless of whether the push failed or new updates came in
         // while it was running, try again if there's updates remaining
-        // if (sendableUpdates(this.view.state).length) {
-        //   setTimeout(async () => {
-        //     console.log("SENDABLE PUSH");
-        //     await this.push();
-        //   }, 1000);
-        // }
+        if (sendableUpdates(this.view.state).length) {
+          setTimeout(async () => {
+            await this.push();
+          }, 100);
+        }
+
+        // Regardless of whether the push failed or new updates came in
+        // while it was running, try again if there's updates remaining
       }
 
       async pull(): Promise<void> {
         while (!this.done) {
           const version = getSyncedVersion(this.view.state);
           const updates = await pullUpdates(socket, version);
-          console.log("PULL UPDATE STATE");
           this.view.dispatch(receiveUpdates(this.view.state, updates));
         }
       }
@@ -120,14 +146,14 @@ export const peerExtension = (
   return [
     collab({
       startVersion,
-      // clientID: id,
-      // sharedEffects: (tr) => {
-      //   const effects = tr.effects.filter((e) => {
-      //     return e.is(addCursor) || e.is(removeCursor);
-      //   });
+      clientID: id,
+      sharedEffects: (tr) => {
+        const effects = tr.effects.filter((e) => {
+          return e.is(addCursor) || e.is(removeCursor);
+        });
 
-      //   return effects;
-      // },
+        return effects;
+      },
     }),
     plugin,
   ];

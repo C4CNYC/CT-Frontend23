@@ -21,7 +21,6 @@ import { useState } from "react";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
-import SettingsCourseModal from "../SettingsCourseModal";
 
 interface Props {
   course: ICourse & BaseResponseInterface;
@@ -30,7 +29,7 @@ interface Props {
 export default function CourseCard({
   course,
 }: Props): React.ReactElement | null {
-  const { name, level, price, description, active, cover, id } = course;
+  const { name, level, price, description, active, cover } = course;
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -181,6 +180,7 @@ export default function CourseCard({
             description: course.description,
             active: course.active,
             draft: course.draft,
+            public: course.public,
             skills: course.skills,
           }}
         >
@@ -189,14 +189,6 @@ export default function CourseCard({
             Edit
           </MenuItem>
         </CreateCourseDialog>
-
-        <SettingsCourseModal id={id}>
-          <MenuItem>
-            <Iconify icon="ant-design:setting-outlined" />
-            Settings
-          </MenuItem>
-        </SettingsCourseModal>
-
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem

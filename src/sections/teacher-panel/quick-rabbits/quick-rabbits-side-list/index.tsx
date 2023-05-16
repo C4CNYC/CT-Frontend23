@@ -2,8 +2,6 @@ import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
 import {
   Divider,
   IconButton,
@@ -24,6 +22,8 @@ import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { useAtom } from "jotai";
+import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
+import { useRouter } from "next/router";
 
 const drawerWidth = 250;
 
@@ -74,10 +74,13 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export const QuickRabbitsSideList = (): React.ReactElement => {
+  const { query } = useRouter();
   const [open, setOpen] = useState(false);
+  const [, setQuickRabbit] = useAtom(quickRabbitAtom);
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [onlineStudents] = useAtom(onlineStudentsAtom);
 
+  const classId: string = query.id as string;
   const { data, isLoading, isFetching } = useGetStudentsQuery(
     { schoolId },
     { skip: !schoolId }
@@ -188,25 +191,9 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
             <Typography variant="h6">Group Chat</Typography>
           </Box>
           <IconButton>
-            <AddIcon />
-          </IconButton>
-        </ListItem>
-        <ListItem sx={{ py: 0.5 }}>
-          <NoteAltIcon />
-          <Box sx={{ pl: 2, pr: 3 }}>
-            <Typography variant="h6">Group Chat</Typography>
-          </Box>
-          <IconButton>
-            <AddIcon />
-          </IconButton>
-        </ListItem>
-        <ListItem sx={{ py: 0.5 }}>
-          <NewspaperIcon />
-          <Box sx={{ pl: 2, pr: 3 }}>
-            <Typography variant="h6">Group Chat</Typography>
-          </Box>
-          <IconButton>
-            <AddIcon />
+            <AddIcon onClick={() => {
+               setQuickRabbit((prev) => ({ ...prev, [classId]: { id: classId, email: "group chat" } }))
+            }}/>
           </IconButton>
         </ListItem>
       </List>
