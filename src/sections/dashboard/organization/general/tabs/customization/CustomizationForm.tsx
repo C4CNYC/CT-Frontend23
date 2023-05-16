@@ -63,7 +63,6 @@ export default function CustomizationForm({
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
     } catch (error) {
-      console.error(error);
     }
   };
 

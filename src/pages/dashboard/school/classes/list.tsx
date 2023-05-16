@@ -128,7 +128,6 @@ export default function UserListPage(): React.ReactElement {
       enqueueSnackbar("Class updated successfuly!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 
@@ -138,7 +137,6 @@ export default function UserListPage(): React.ReactElement {
       enqueueSnackbar(`School ${name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 

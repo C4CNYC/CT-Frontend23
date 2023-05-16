@@ -64,7 +64,6 @@ export const useFirebaseChat = (): FirebaseChatApi => {
           }
         );
       } catch (error) {
-        console.error(error);
       }
     },
     getMessages: async (senderId, reciverId, callback, limit) => {

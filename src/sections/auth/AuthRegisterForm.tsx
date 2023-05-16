@@ -76,7 +76,6 @@ export default function AuthRegisterForm({
         next();
       }
     } catch (error) {
-      console.error(error);
       setError("afterSubmit", {
         ...error,
         message: error.message,

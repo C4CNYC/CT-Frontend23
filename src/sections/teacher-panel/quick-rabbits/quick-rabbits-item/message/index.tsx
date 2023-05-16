@@ -76,7 +76,6 @@ export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
             </MessageList>
             <MessageInput
               onSend={(innerHtml, textContent) => {
-                console.log(textContent, reciverId, senderId)
                 sendMessage(textContent, reciverId, senderId);
               }}
               placeholder="Type message here"

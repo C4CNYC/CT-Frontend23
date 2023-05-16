@@ -26,7 +26,6 @@ export default function AddClassForm(): React.ReactElement {
     try {
       enqueueSnackbar("Verify success!");
     } catch (error) {
-      console.error(error);
     }
   };
 
