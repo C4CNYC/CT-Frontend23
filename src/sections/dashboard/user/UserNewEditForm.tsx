@@ -137,7 +137,6 @@ export default function UserNewEditForm({
       enqueueSnackbar(error.data.message, {
         variant: "error",
       });
-      console.error(error);
     }
     reset();
   };

@@ -132,7 +132,6 @@ export default function StudentNewEditForm({
       enqueueSnackbar(error.data.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
   };
 

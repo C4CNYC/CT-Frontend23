@@ -122,7 +122,6 @@ export default function CreateCourseDialog({
       enqueueSnackbar(error.data.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
     handleClose();
   };

@@ -149,7 +149,6 @@ export function AuthProvider({
         });
       }
     } catch (error) {
-      console.error(error);
       dispatch({
         type: Types.INITIAL,
         payload: {
@@ -162,7 +161,6 @@ export function AuthProvider({
 
   useEffect(() => {
     initialize().catch((e: any) => {
-      console.log("INIT FAIL");
     });
   }, [initialize]);
 
