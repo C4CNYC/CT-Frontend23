@@ -4,13 +4,13 @@ import { ILessonContentValidation } from "src/redux/services/interfaces/lessonCo
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
-import Checkers from "./checkers";
 
 import { getDocument } from "./extentions/collab";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
 
 import { Editor } from "./editor";
+import Checkers from "./Checkers";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 

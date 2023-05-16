@@ -105,7 +105,6 @@ export default function SchoolProfileForm({
       }
       enqueueSnackbar("Update success!");
     } catch (error) {
-      console.error(error);
     }
   };
 

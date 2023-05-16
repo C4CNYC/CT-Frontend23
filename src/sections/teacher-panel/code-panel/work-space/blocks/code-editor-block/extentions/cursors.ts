@@ -19,16 +19,20 @@ export interface Cursors {
 class TooltipWidget extends WidgetType {
   private readonly name: string = "John";
   private readonly suffix: string = "";
+  private readonly id: string = "";
 
-  constructor(name: string, color: number) {
+  constructor(name: string, color: number, id: string) {
     super();
     this.suffix = `${(color % 8) + 1}`;
     this.name = name;
+    this.id = id;
   }
 
   toDOM() {
     const dom = document.createElement("div");
     dom.className = "cm-tooltip-none";
+
+    if (this.name === this.id) return dom;
 
     const cursor_tooltip = document.createElement("div");
     cursor_tooltip.className = `cm-tooltip-cursor cm-tooltip cm-tooltip-above cm-tooltip-${this.suffix}`;
@@ -52,65 +56,77 @@ export const removeCursor = StateEffect.define<string>();
 
 const cursorsItems = new Map<string, number>();
 
-const cursorField = StateField.define<DecorationSet>({
-  create() {
-    return Decoration.none;
-  },
-  update(cursors, tr) {
-    let cursorTransacions = cursors.map(tr.changes);
-    for (const e of tr.effects) {
-      if (e.is(addCursor)) {
-        const addUpdates = [];
-        if (!cursorsItems.has(e.value.id)) {
-          cursorsItems.set(e.value.id, cursorsItems.size);
-        }
+const cursorField = (id: string) =>
+  StateField.define<DecorationSet>({
+    create() {
+      return Decoration.none;
+    },
+    update(cursors, tr) {
+      let cursorTransacions = cursors.map(tr.changes);
+      for (const e of tr.effects) {
+        if (e.is(addCursor)) {
+          const addUpdates = [];
+          if (!cursorsItems.has(e.value.id)) {
+            cursorsItems.set(e.value.id, cursorsItems.size);
+          }
 
-        if (e.value.from !== e.value.to) {
+          if (e.value.from !== e.value.to) {
+            addUpdates.push(
+              Decoration.mark({
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                class: `cm-highlight-${
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  (cursorsItems.get(e.value.id)! % 8) + 1
+                }`,
+                id: e.value.id,
+              }).range(e.value.from, e.value.to)
+            );
+          }
+
           addUpdates.push(
-            Decoration.mark({
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              class: `cm-highlight-${(cursorsItems.get(e.value.id)! % 8) + 1}`,
+            Decoration.widget({
+              widget: new TooltipWidget(
+                e.value.id,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                cursorsItems.get(e.value.id)!,
+                id
+              ),
+              block: false,
               id: e.value.id,
-            }).range(e.value.from, e.value.to)
+            }).range(e.value.to, e.value.to)
           );
+
+          cursorTransacions = cursorTransacions.update({
+            add: addUpdates,
+            filter: (from, to, value) => {
+              if (value?.spec?.id === e.value.id) return false;
+              return true;
+            },
+          });
         }
-
-        addUpdates.push(
-          Decoration.widget({
-            widget: new TooltipWidget(
-              e.value.id,
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              cursorsItems.get(e.value.id)!
-            ),
-            block: false,
-            id: e.value.id,
-          }).range(e.value.to, e.value.to)
-        );
-
-        cursorTransacions = cursorTransacions.update({
-          add: addUpdates,
-          filter: (from, to, value) => {
-            if (value?.spec?.id === e.value.id) return false;
-            return true;
-          },
-        });
       }
-    }
 
-    return cursorTransacions;
-  },
-  provide: (f) => EditorView.decorations.from(f),
-});
+      return cursorTransacions;
+    },
+    provide: (f) => EditorView.decorations.from(f),
+  });
 
 const cursorBaseTheme = EditorView.baseTheme({
+  ".cm-tooltip-above .cm-tooltip-arrow": {
+    bottom: "24px!important",
+    transform: "rotate(176deg)",
+  },
+  ".cm-highlight-me": {
+    display: "none",
+  },
   ".cm-tooltip.cm-tooltip-cursor": {
     color: "white",
     border: "none",
     padding: "2px 7px",
     borderRadius: "4px",
     position: "absolute",
-    marginTop: "-40px",
-    marginLeft: "-14px",
+    marginBottom: "-50px",
+    marginLeft: "-13px",
     "& .cm-tooltip-arrow:after": {
       borderTopColor: "transparent",
     },
@@ -197,7 +213,7 @@ const cursorBaseTheme = EditorView.baseTheme({
 
 export function cursorExtension(id: string = "") {
   return [
-    cursorField,
+    cursorField(id),
     cursorBaseTheme,
     EditorView.updateListener.of((update) => {
       update.transactions.forEach((e) => {

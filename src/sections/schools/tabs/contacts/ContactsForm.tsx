@@ -84,7 +84,6 @@ export default function ContactsForm({
       enqueueSnackbar("Update success!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 

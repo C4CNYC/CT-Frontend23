@@ -64,7 +64,6 @@ export default function InviteForm(): React.ReactElement {
         query: { tenant_name },
       });
     } catch (error) {
-      console.error(error);
       reset();
     }
   };

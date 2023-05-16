@@ -42,7 +42,6 @@ export default function AuthResetPasswordForm(): React.ReactElement {
       sessionStorage.setItem("email-recovery", data.email);
       push(PATH_AUTH.newPassword);
     } catch (error) {
-      console.error(error);
     }
   };
 

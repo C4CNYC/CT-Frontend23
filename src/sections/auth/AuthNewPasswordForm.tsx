@@ -100,7 +100,6 @@ export default function AuthNewPasswordForm(): React.ReactElement {
 
       push(PATH_DASHBOARD.root);
     } catch (error) {
-      console.error(error);
     }
   };
 
