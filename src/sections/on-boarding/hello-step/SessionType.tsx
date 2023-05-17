@@ -1,7 +1,7 @@
 import Image from "@components/image/Image";
 import { Badge, Box, Button, Stack, Tooltip, Typography } from "@mui/material";
 import { useAtom } from "jotai";
-import { stepperAtom } from "../stepper-atom";
+import { roadAtom } from "../road-atom";
 import { ISessionType } from "./HelloStep";
 interface Props {
   title: string;
@@ -10,6 +10,8 @@ interface Props {
   info: string;
   color: string;
   type: ISessionType;
+  nextStep?: () => void;
+  goToStep?: (step: number) => void;
 }
 
 export function SessionType({
@@ -19,10 +21,21 @@ export function SessionType({
   img,
   info,
   color,
+  nextStep,
+  goToStep,
 }: Props): React.ReactElement {
-  const [, setStep] = useAtom(stepperAtom);
+  const [, setSessionWay] = useAtom(roadAtom);
+  const chooseWay = () => {
+    if (type === ISessionType.popup) {
+      setSessionWay({ sessionWay: true });
+      nextStep?.();
+    } else {
+      setSessionWay({ sessionWay: false });
+      goToStep?.(3);
+    }
+  };
   return (
-    <Stack direction="row" sx={{}}>
+    <Stack direction="row">
       <Tooltip title={info} placement="top-end">
         <Badge
           anchorOrigin={{
@@ -53,14 +66,16 @@ export function SessionType({
         <Typography variant="h4" textAlign="start" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="body2" textAlign="start">
+        <Typography
+          variant="body2"
+          textAlign="start"
+          sx={{ maxWidth: "250px" }}
+        >
           {subtitle}
         </Typography>
       </Stack>
       <Button
-        onClick={() => {
-          type === ISessionType.popup ? setStep(1) : setStep(2);
-        }}
+        onClick={chooseWay}
         sx={{
           height: "72px",
           minWidth: "45px",

@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   FormControlLabel,
+  IconButton,
   Radio,
   RadioGroup,
   Stack,
@@ -21,12 +22,18 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { LoadingButton } from "@mui/lab";
 import { useAtom } from "jotai";
-import { stepperAtom } from "../stepper-atom";
+import { MdOutlineArrowBackIos } from "react-icons/md";
+import { StepWizardChildProps } from "react-step-wizard";
+import { roadAtom } from "../road-atom";
 
-export function IviteStep(): React.ReactElement {
+function IviteStep({
+  previousStep,
+  nextStep,
+  goToStep,
+}: Partial<StepWizardChildProps>) {
   const { enqueueSnackbar } = useSnackbar();
-  const [, setStep] = useAtom(stepperAtom);
   const [value] = useState("me.codetribe.com/join/AHJ123");
+  const [{ sessionWay }] = useAtom(roadAtom);
 
   const { copy } = useCopyToClipboard();
 
@@ -40,7 +47,26 @@ export function IviteStep(): React.ReactElement {
   return (
     <StepContainer>
       <InviteCover />
-      <Stack sx={{ pl: 4, pt: 1 }}>
+      <IconButton
+        onClick={() => {
+          if (sessionWay) {
+            goToStep?.(2);
+          } else {
+            previousStep?.();
+          }
+        }}
+        sx={{
+          position: "absolute",
+          top: "5px",
+          left: "10px",
+          width: "50px",
+          height: "50px",
+          zIndex: 10,
+        }}
+      >
+        <MdOutlineArrowBackIos size="30px" color="#FFF" />
+      </IconButton>
+      <Stack sx={{ pl: 3, pt: "190px" }}>
         <Typography variant="h3">Select a Language</Typography>
         <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
           Chose the project you will be using
@@ -73,7 +99,7 @@ export function IviteStep(): React.ReactElement {
             onClick={() => {
               onCopy(value);
             }}
-            sx={{ fontSize: "1.2rem", justifySelf: "flex-end" }}
+            sx={{ fontSize: "1.2rem", justifySelf: "flex-end", ml: 3 }}
           >
             COPY
             <Iconify icon="eva:copy-fill" width={24} ml={"5px"} />
@@ -138,7 +164,7 @@ export function IviteStep(): React.ReactElement {
           variant="contained"
           loading={false}
           onClick={() => {
-            setStep(3);
+            nextStep?.();
           }}
           sx={{
             color: "#EAEAEB",
@@ -151,3 +177,4 @@ export function IviteStep(): React.ReactElement {
     </StepContainer>
   );
 }
+export default IviteStep;

@@ -2,29 +2,29 @@ import FormProvider from "@components/hook-form/FormProvider";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { LoadingButton } from "@mui/lab";
 import {
   Autocomplete,
+  Button,
   IconButton,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import { StepWizardChildProps } from "react-step-wizard";
 import * as Yup from "yup";
 import StepContainer from "../StepContainer";
-import { stepperAtom } from "../stepper-atom";
 import { LanguageItem } from "./LanguageItem";
 
 interface FormValuesProps {
   language: string;
 }
 
-export default function LanguageStep(): React.ReactElement {
-  const [, setStep] = useAtom(stepperAtom);
-
+function LanguageStep({
+  previousStep,
+  goToStep,
+}: Partial<StepWizardChildProps>) {
   const CreateLanguage = Yup.object().shape({
     language: Yup.string(),
   });
@@ -41,20 +41,18 @@ export default function LanguageStep(): React.ReactElement {
   return (
     <StepContainer>
       <IconButton
-        onClick={() => {
-          setStep(0);
-        }}
+        onClick={previousStep}
         sx={{
           position: "absolute",
-          top: "10px",
-          left: "10px",
+          top: "5px",
+          left: "5px",
           width: "50px",
           height: "50px",
         }}
       >
         <MdOutlineArrowBackIos size="30px" color="#68767F" />
       </IconButton>
-      <Stack sx={{ pl: 2, pt: 1 }}>
+      <Stack sx={{ pl: 3, pt: 2 }}>
         <Typography variant="h3">Select a Language</Typography>
         <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
           Chose the project you will be using
@@ -75,10 +73,11 @@ export default function LanguageStep(): React.ReactElement {
             subtitle={el.subtitle}
             img={el.img}
             key={el.title}
+            goToStep={goToStep}
           />
         ))}
       </Stack>
-      <Stack sx={{ width: "100%", pb: "100px" }}>
+      <Stack sx={{ width: "100%", pb: "50px" }}>
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
@@ -104,12 +103,11 @@ export default function LanguageStep(): React.ReactElement {
                 />
               )}
             />
-            <LoadingButton
+            <Button
               type="submit"
               variant="contained"
-              loading={false}
               onClick={() => {
-                setStep(3);
+                goToStep?.(5);
               }}
               sx={{
                 color: "#EAEAEB",
@@ -117,14 +115,14 @@ export default function LanguageStep(): React.ReactElement {
               }}
             >
               GO <ArrowForwardIosIcon />
-            </LoadingButton>
+            </Button>
           </Stack>
         </FormProvider>
       </Stack>
     </StepContainer>
   );
 }
-
+export default LanguageStep;
 const LANGUAGE_INFO = [
   {
     title: "Kaboom.js",

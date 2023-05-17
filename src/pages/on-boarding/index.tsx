@@ -12,12 +12,12 @@ export default function OnBoarding(): React.ReactElement {
         <Container>
           <Box
             sx={{
-              py: 3,
+              pt: "20vh",
               px: 2,
               display: "flex",
               justifyContent: "center",
-              alignItems: "center",
               height: "100vh",
+              overflow: "hidden",
             }}
           >
             <StepperIndex />

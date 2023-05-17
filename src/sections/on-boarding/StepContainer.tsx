@@ -11,14 +11,11 @@ export default function StepContainer({ children }: Props): React.ReactElement {
       sx={{
         py: 3,
         px: 4,
-        width: "500px",
         borderRadius: "25px",
         position: "relative",
       }}
     >
-      <Stack spacing={3} sx={{ alignItems: "flex-start" }}>
-        {children}
-      </Stack>
+      <Stack sx={{ alignItems: "flex-start", gap: 3 }}>{children}</Stack>
     </Paper>
   );
 }

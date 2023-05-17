@@ -1,6 +1,7 @@
 import { Link, Stack, Typography } from "@mui/material";
 import { PATH_AUTH } from "@routes/paths";
 import nextLink from "next/link";
+import { StepWizardChildProps } from "react-step-wizard";
 import StepContainer from "../StepContainer";
 import { SessionType } from "./SessionType";
 
@@ -9,7 +10,7 @@ export enum ISessionType {
   course = "course",
 }
 
-export default function HelloStep(): React.ReactElement {
+function HelloStep({ nextStep, goToStep }: Partial<StepWizardChildProps>) {
   return (
     <StepContainer>
       <Stack direction="row" sx={{ alignItems: "baseline", mb: -2 }}>
@@ -19,8 +20,8 @@ export default function HelloStep(): React.ReactElement {
       <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
         Let’s start a learning adventure
       </Typography>
-      <SessionType {...POPUP_SESSION} />
-      <SessionType {...LAUNCH_SESSION} />
+      <SessionType {...POPUP_SESSION} nextStep={nextStep} />
+      <SessionType {...LAUNCH_SESSION} goToStep={goToStep} />
       <Typography variant="body1" sx={{ color: "#616161" }}>
         <Link
           component={nextLink}
@@ -58,3 +59,4 @@ const LAUNCH_SESSION = {
   img: "/assets/on-boarding/course.svg",
   color: "#EE467A33",
 };
+export default HelloStep;

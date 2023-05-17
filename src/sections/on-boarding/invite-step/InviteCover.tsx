@@ -7,6 +7,10 @@ import UploadImageModal from "@components/upload-image-modal";
 import { bgBlur } from "src/utils/cssStyles";
 
 const StyledRoot = styled("div")(({ theme }) => ({
+  position: "absolute",
+  left: "0",
+  top: "0",
+  height: "225px",
   borderRadius: "25px",
   "&:before": {
     ...bgBlur({
@@ -24,7 +28,7 @@ const StyledRoot = styled("div")(({ theme }) => ({
 
 const StyledInfo = styled("div")(({ theme }) => ({
   position: "absolute",
-  bottom: "10px",
+  top: "140px",
   zIndex: 3,
   left: 0,
 }));
@@ -33,17 +37,17 @@ export function InviteCover(): React.ReactElement {
   const onUpload = async (data: File): Promise<void> => {};
   return (
     <Stack
-      sx={{
-        position: "relative",
-        my: -3,
-        mx: -4,
-        width: "500px",
-      }}
+      sx={
+        {
+          // position: "relative",
+        }
+      }
     >
       <Stack
         sx={{
           position: "absolute",
           right: 0,
+          top: 0,
           zIndex: 10,
           mt: "10px",
           mr: "10px",
@@ -88,7 +92,11 @@ export function InviteCover(): React.ReactElement {
         </Box>
       </StyledInfo>
       <StyledRoot>
-        <Image alt="cover" src="/assets/on-boarding/usa.png" sx={{}} />
+        <Image
+          alt="cover"
+          src="/assets/on-boarding/usa.png"
+          sx={{ height: "100%", borderRadius: "25px" }}
+        />
       </StyledRoot>
     </Stack>
   );
