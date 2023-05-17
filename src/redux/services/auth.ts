@@ -3,11 +3,12 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
+import { IUser } from "./interfaces/user.interface";
 
 export interface User extends BaseResponseInterface {
+  avatar: string;
   email: string;
   name: string;
-  role: string;
 }
 
 export interface UserResponse {
@@ -75,11 +76,21 @@ export const authApi = createApi({
       }),
       providesTags: ["ProfileUser"],
     }),
-    profileAvatar: builder.query<void, void>({
-      query: () => ({
-        url: "/profile/avatar",
-        method: "GET",
+    updateProfile: builder.mutation<IUser, BaseResponseInterface>({
+      query: ({ ...body }) => ({
+        url: "/profile",
+        method: "PATCH",
+        body,
       }),
+      invalidatesTags: ["ProfileUser"],
+    }),
+    udpateProfileAvatar: builder.mutation<void, { file: FormData }>({
+      query: ({ file }) => ({
+        url: "/profile/avatar",
+        method: "PATCH",
+        body: file,
+      }),
+      invalidatesTags: ["ProfileUser"],
     }),
     protected: builder.mutation<{ message: string }, void>({
       query: () => "protected",
@@ -94,5 +105,6 @@ export const {
   useProtectedMutation,
   useProfileQuery,
   usePrefetch,
-  useProfileAvatarQuery,
+  useUdpateProfileAvatarMutation,
+  useUpdateProfileMutation,
 } = authApi;
