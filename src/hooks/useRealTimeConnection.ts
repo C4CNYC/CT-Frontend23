@@ -24,7 +24,7 @@ export const useRealTimeConnection = (
   const [data, setData] = useState<RealTimeConnectionBody>();
 
   const getWorkSpaceState = (userId: string): void => {
-    const starCountRef = ref(db, "streams/" + userId);
+    const starCountRef = ref(db, "class-streams/" + userId);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
 
