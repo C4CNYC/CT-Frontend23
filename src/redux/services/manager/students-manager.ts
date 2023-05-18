@@ -48,6 +48,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Students"],
     }),
+    updateStudentAvatar: builder.mutation<
+      void,
+      { schoolId: string; studentId: string; file: FormData }
+    >({
+      query: ({ schoolId, studentId, file }) => ({
+        url: `/school/${schoolId}/student/${studentId}/avatar`,
+        method: "PATCH",
+        body: file,
+      }),
+      invalidatesTags: ["Students", "School"],
+    }),
     studentJoinClass: builder.mutation<
       void,
       { schoolId: string; classId: string; student_id: string }
@@ -93,4 +104,5 @@ export const {
   useStudentJoinClassMutation,
   useStudentLeftClassMutation,
   useUpdateStudentMutation,
+  useUpdateStudentAvatarMutation,
 } = extendedApi;
