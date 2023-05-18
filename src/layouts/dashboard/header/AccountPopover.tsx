@@ -13,13 +13,15 @@ import { IconButtonAnimate } from "@components/animate";
 import { CustomAvatar } from "@components/custom-avatar";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
+import { useProfileQuery } from "src/redux/services/auth";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
+  const { data: profile } = useProfileQuery();
 
-  const { logout, user } = useAuthContext();
+  const { logout } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -72,7 +74,7 @@ export default function AccountPopover(): React.ReactElement {
           }),
         }}
       >
-        <CustomAvatar src={user?.avatar} alt={user?.email} name={user?.email} />
+        <CustomAvatar src={profile?.avatar} alt={profile?.email} name={profile?.email} />
       </IconButtonAnimate>
 
       <MenuPopover
@@ -82,11 +84,11 @@ export default function AccountPopover(): React.ReactElement {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.name}
+            {profile?.first_name}
           </Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-            {user?.email}
+            {profile?.email}
           </Typography>
         </Box>
 
