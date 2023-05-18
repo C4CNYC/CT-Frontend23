@@ -92,7 +92,8 @@ export default function UserListPage(): React.ReactElement {
     name: "",
   });
 
-  const [updateClassByManager] = useUpdateClassesMutation();
+  const [updateClassByManager, { isLoading: updateResult }] =
+    useUpdateClassesMutation();
   const [createClassByManager] = useCreateClassesMutation();
   const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
@@ -249,6 +250,7 @@ export default function UserListPage(): React.ReactElement {
                               handleDeleteRow(row.id);
                             }}
                             onEditRow={handleEditRow}
+                            updateResult={updateResult}
                           />
                         ))}
 

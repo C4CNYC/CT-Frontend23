@@ -29,6 +29,7 @@ interface Props {
   onEditRow: (id: string, name: string) => void;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  updateResult: boolean;
 }
 
 export default function ClassesTableRow({
@@ -37,6 +38,7 @@ export default function ClassesTableRow({
   onEditRow,
   onSelectRow,
   onDeleteRow,
+  updateResult,
 }: Props): React.ReactElement | null {
   const { name, active, total_students, total_courses, createdAt } = row;
 
@@ -133,9 +135,12 @@ export default function ClassesTableRow({
           Connect
         </MenuItem>
         <ClassPreferences
-          updateClass={(name: string) => { onEditRow(row.id, name); }}
+          updateClass={(name: string) => {
+            onEditRow(row.id, name);
+          }}
           defaultValues={{ name: row.name, description: "" }}
           rowId={row.id}
+          updateResult={updateResult}
         >
           <MenuItem>
             <Iconify icon="ant-design:setting-outlined" />
