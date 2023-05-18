@@ -40,84 +40,92 @@ function LanguageStep({
   const onSubmit = () => {};
   return (
     <StepContainer>
-      <IconButton
-        onClick={previousStep}
-        sx={{
-          position: "absolute",
-          top: "5px",
-          left: "5px",
-          width: "50px",
-          height: "50px",
-        }}
-      >
-        <MdOutlineArrowBackIos size="30px" color="#68767F" />
-      </IconButton>
-      <Stack sx={{ pl: 3, pt: 2 }}>
-        <Typography variant="h3">Select a Language</Typography>
-        <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
-          Chose the project you will be using
-        </Typography>
-      </Stack>
-      <Stack
-        sx={{
-          background: "#F0EEEE80",
-          p: "10px 10px 30px 30px",
-          borderRadius: "15px",
-          gap: 2,
-        }}
-      >
-        <Typography variant="h5">Popular:</Typography>
-        {LANGUAGE_INFO.map((el, i) => (
-          <LanguageItem
-            title={el.title}
-            subtitle={el.subtitle}
-            img={el.img}
-            key={el.title}
-            goToStep={goToStep}
-          />
-        ))}
-      </Stack>
-      <Stack sx={{ width: "100%", pb: "50px" }}>
-        <FormProvider
-          methods={methods}
-          onSubmit={methods.handleSubmit(onSubmit)}
+      <Stack>
+        <IconButton
+          onClick={previousStep}
+          sx={{
+            position: "absolute",
+            top: "5px",
+            left: "5px",
+            width: "50px",
+            height: "50px",
+          }}
         >
-          <Stack
-            sx={{
-              width: "100%",
-              flexDirection: "row",
-              gap: 2,
-              maxHeight: "56px",
-            }}
-          >
-            <Autocomplete
-              fullWidth
-              options={LANGUAGE_INFO}
-              getOptionLabel={(option) => option.title}
-              popupIcon={<ExpandMoreIcon />}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Select other languages"
-                  margin="none"
-                />
-              )}
+          <MdOutlineArrowBackIos size="30px" color="#68767F" />
+        </IconButton>
+        <Stack sx={{ pl: { xs: 4, sm: 3 }, py: { xs: 3, sm: 2 } }}>
+          <Typography variant="h3">Select a Language</Typography>
+          <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
+            Chose the project you will be using
+          </Typography>
+        </Stack>
+        <Stack
+          sx={{
+            background: "#F0EEEE80",
+            borderRadius: "15px",
+            gap: 2,
+            mb: 3,
+            p: {
+              xs: "5px 5px 10px",
+              sm: "20px 20px 30px",
+            },
+          }}
+        >
+          <Typography variant="h5" sx={{ pl: { xs: 2, sm: 0 } }}>
+            Popular:
+          </Typography>
+          {LANGUAGE_INFO.map((el, i) => (
+            <LanguageItem
+              title={el.title}
+              subtitle={el.subtitle}
+              img={el.img}
+              key={el.title}
+              goToStep={goToStep}
             />
-            <Button
-              type="submit"
-              variant="contained"
-              onClick={() => {
-                goToStep?.(5);
-              }}
+          ))}
+        </Stack>
+        <Stack sx={{ width: "100%", pb: "50px" }}>
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <Stack
               sx={{
-                color: "#EAEAEB",
-                fontSize: "1.5rem",
+                width: "100%",
+                flexDirection: "row",
+                gap: 2,
+                maxHeight: "56px",
               }}
             >
-              GO <ArrowForwardIosIcon />
-            </Button>
-          </Stack>
-        </FormProvider>
+              <Autocomplete
+                fullWidth
+                options={LANGUAGE_INFO}
+                getOptionLabel={(option) => option.title}
+                popupIcon={<ExpandMoreIcon />}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select other languages"
+                    margin="none"
+                  />
+                )}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={() => {
+                  goToStep?.(5);
+                }}
+                sx={{
+                  color: "#EAEAEB",
+                  fontSize: "1.5rem",
+                }}
+              >
+                GO <ArrowForwardIosIcon />
+              </Button>
+            </Stack>
+          </FormProvider>
+        </Stack>
       </Stack>
     </StepContainer>
   );

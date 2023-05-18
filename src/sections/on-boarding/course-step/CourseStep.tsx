@@ -23,13 +23,13 @@ export default function CourseStep({
       >
         <MdOutlineArrowBackIos size="30px" color="#68767F" />
       </IconButton>
-      <Stack sx={{ pl: 3, pt: 2 }}>
-        <Typography variant="h3">Select a Course</Typography>
-        <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
-          Project-based, hands-on and modular
-        </Typography>
-      </Stack>
-      <Stack gap={2}>
+      <Stack>
+        <Stack sx={{ pt: 2, pl: { xs: 6, md: 4 } }}>
+          <Typography variant="h3">Select a Course</Typography>
+          <Typography variant="body1" sx={{ pb: 1 }}>
+            Project-based, hands-on and modular
+          </Typography>
+        </Stack>
         {COURSE_STEPS.map((el, i) => (
           <CourseType {...el} key={el.title} goToStep={goToStep} />
         ))}

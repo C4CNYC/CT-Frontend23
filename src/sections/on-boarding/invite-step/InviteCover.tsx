@@ -10,7 +10,9 @@ const StyledRoot = styled("div")(({ theme }) => ({
   position: "absolute",
   left: "0",
   top: "0",
-  height: "225px",
+  display: "flex",
+  height: "100%",
+  maxHeight: "225px",
   borderRadius: "25px",
   "&:before": {
     ...bgBlur({
@@ -36,13 +38,7 @@ const StyledInfo = styled("div")(({ theme }) => ({
 export function InviteCover(): React.ReactElement {
   const onUpload = async (data: File): Promise<void> => {};
   return (
-    <Stack
-      sx={
-        {
-          // position: "relative",
-        }
-      }
-    >
+    <Stack>
       <Stack
         sx={{
           position: "absolute",
@@ -58,7 +54,7 @@ export function InviteCover(): React.ReactElement {
       <StyledInfo>
         <Box
           sx={{
-            ml: { md: 3 },
+            ml: 3,
             mt: { xs: 1, md: 0 },
             color: "common.white",
             textAlign: { xs: "center", md: "left" },
@@ -86,7 +82,7 @@ export function InviteCover(): React.ReactElement {
               </InputAdornment>
             }
           />
-          <Typography sx={{ color: "#fff" }} variant="h4">
+          <Typography sx={{ color: "#fff", textAlign: "left" }} variant="h4">
             CreativeLalaby23
           </Typography>
         </Box>

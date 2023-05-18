@@ -8,7 +8,6 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import NextImage from "next/image";
 
 interface Props {
   color: string;
@@ -32,99 +31,91 @@ export default function CourseType({
   goToStep,
 }: Props): React.ReactElement {
   return (
-    <Badge
-      badgeContent={badge}
-      color={badge === "BETA" ? "error" : "primary"}
-      invisible={!!badge}
+    <Button
+      disabled={disabled}
       sx={{
-        "& .MuiBadge-badge": {
-          fontSize: "10px",
-          whiteSpace: "nowrap",
-          right: "20px",
-        },
+        color: "inherit",
+        borderRadius: "15px",
+        textAlign: "start",
+        p: 2,
+        pl: 1,
+      }}
+      onClick={() => {
+        goToStep?.(4);
       }}
     >
-      <Stack
-        direction="row"
+      <Box
         sx={{
-          p: 1,
-          pr: 0,
-          background: disabled ? "#EAEAEB66" : "",
+          background: color,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           borderRadius: "15px",
+          minWidth: { xs: "50px", sm: "100px" },
+          height: { xs: "50px", sm: "100px" },
         }}
       >
-        <Box
+        <Image src={img} width={100} height={100} alt="" />
+      </Box>
+      <Stack justifyContent="space-between" mx={2}>
+        <Badge
+          badgeContent={badge}
+          color={badge === "BETA" ? "error" : "primary"}
+          invisible={!badge}
           sx={{
-            background: color,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: "15px",
-            minWidth: "100px",
-            height: "100px",
+            width: "fit-content",
+            "& .MuiBadge-badge": {
+              fontSize: "10px",
+              whiteSpace: "nowrap",
+              right: "-25px",
+              top: "-5px",
+            },
           }}
         >
-          <Image src={img} width={100} height={100} alt="" />
-        </Box>
-        <Stack justifyContent="space-between" ml={1}>
           <Typography variant="h5" sx={{ display: "flex" }}>
             {title}
           </Typography>
+        </Badge>
 
-          <Stack direction="row" gap={1}>
-            {chips.map((el) => (
-              <Chip
-                key={el}
-                sx={{ background: "#43D4DD33" }}
-                label={
-                  <Typography variant="caption" sx={{ fontSize: "10px" }}>
-                    {el}
-                  </Typography>
-                }
-                size="small"
-              />
-            ))}
-          </Stack>
-          <Tooltip
-            disableHoverListener={subtitle.length < 85}
-            title={<Typography variant="body2">{subtitle}</Typography>}
-          >
-            <Typography
-              variant="body2"
-              sx={{
-                width: "300px",
-                maxHeight: "50px",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                display: "-webkit-box !important",
-                "-webkit-line-clamp": "2",
-                "-webkit-box-orient": "vertical",
-                whiteSpace: "normal",
-              }}
-            >
-              {subtitle}
-            </Typography>
-          </Tooltip>
+        <Stack direction="row" sx={{ gap: 1, flexWrap: "wrap" }}>
+          {chips.map((el) => (
+            <Chip
+              key={el}
+              sx={{ background: "#43D4DD33" }}
+              label={
+                <Typography variant="caption" sx={{ fontSize: "10px" }}>
+                  {el}
+                </Typography>
+              }
+              size="small"
+            />
+          ))}
         </Stack>
-        <Button
-          onClick={() => {
-            goToStep?.(4);
-          }}
-          sx={{
-            minWidth: "0",
-            width: "35px",
-            mt: 2,
-            alignSelf: "flex-start",
-          }}
+        <Tooltip
+          disableHoverListener={subtitle.length < 85}
+          title={<Typography variant="body2">{subtitle}</Typography>}
         >
-          <NextImage
-            src="/assets/on-boarding/arrow.svg"
-            width={20}
-            height={30}
-            alt=""
-          />
-        </Button>
+          <Typography
+            variant="body2"
+            sx={{
+              maxWidth: "300px",
+              maxHeight: "50px",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              display: "-webkit-box !important",
+              "-webkit-line-clamp": "2",
+              "-webkit-box-orient": "vertical",
+              whiteSpace: "normal",
+            }}
+          >
+            {subtitle}
+          </Typography>
+        </Tooltip>
       </Stack>
-    </Badge>
+      <Image
+        src="/assets/on-boarding/arrow.svg"
+        sx={{ width: "18px", height: "30px", alignSelf: "center" }}
+      />
+    </Button>
   );
 }

@@ -1,41 +1,37 @@
 import Image from "@components/image/Image";
-import { Badge, Box, Button, Stack, Tooltip, Typography } from "@mui/material";
-import { useAtom } from "jotai";
-import { roadAtom } from "../road-atom";
-import { ISessionType } from "./HelloStep";
+import {
+  Badge,
+  Box,
+  Stack,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+
 interface Props {
   title: string;
   subtitle: string;
   img: string;
   info: string;
   color: string;
-  type: ISessionType;
-  nextStep?: () => void;
-  goToStep?: (step: number) => void;
 }
 
 export function SessionType({
-  type,
   title,
   subtitle,
   img,
   info,
   color,
-  nextStep,
-  goToStep,
 }: Props): React.ReactElement {
-  const [, setSessionWay] = useAtom(roadAtom);
-  const chooseWay = () => {
-    if (type === ISessionType.popup) {
-      setSessionWay({ sessionWay: true });
-      nextStep?.();
-    } else {
-      setSessionWay({ sessionWay: false });
-      goToStep?.(3);
-    }
-  };
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Stack direction="row">
+    <Stack
+      direction="row"
+      alignItems="center"
+      sx={{ pr: { xs: 0, sm: 0, md: 1 } }}
+    >
       <Tooltip title={info} placement="top-end">
         <Badge
           anchorOrigin={{
@@ -44,17 +40,19 @@ export function SessionType({
           }}
           color="primary"
           badgeContent={"i"}
+          invisible={isSmall}
         >
           <Box
             sx={{
+              display: { xs: "none", sm: "flex" },
               background: color,
               borderRadius: "15px",
               mr: 1,
               p: 1.5,
-              display: "flex",
               alignItems: "center",
               justifyContent: "center",
               minWidth: "100px",
+              width: "100px",
               height: "100px",
             }}
           >
@@ -74,19 +72,11 @@ export function SessionType({
           {subtitle}
         </Typography>
       </Stack>
-      <Button
-        onClick={chooseWay}
-        sx={{
-          height: "72px",
-          minWidth: "45px",
-          minHeight: "60px",
-          alignSelf: "center",
-          p: 1,
-          ml: 1,
-        }}
-      >
-        <Image src="/assets/on-boarding/arrow.svg" />
-      </Button>
+
+      <Image
+        src="/assets/on-boarding/arrow.svg"
+        sx={{ width: "38px", height: "60px" }}
+      />
     </Stack>
   );
 }

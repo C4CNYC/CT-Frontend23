@@ -1,49 +1,67 @@
-import { Link, Stack, Typography } from "@mui/material";
+import { Button, Link, Stack, Typography } from "@mui/material";
 import { PATH_AUTH } from "@routes/paths";
+import { useAtom } from "jotai";
 import nextLink from "next/link";
 import { StepWizardChildProps } from "react-step-wizard";
+import { roadAtom } from "../road-atom";
 import StepContainer from "../StepContainer";
 import { SessionType } from "./SessionType";
 
-export enum ISessionType {
-  popup = "popup",
-  course = "course",
-}
-
 function HelloStep({ nextStep, goToStep }: Partial<StepWizardChildProps>) {
+  const [, setSessionWay] = useAtom(roadAtom);
   return (
     <StepContainer>
-      <Stack direction="row" sx={{ alignItems: "baseline", mb: -2 }}>
-        <Typography variant="h3">Hi,</Typography>
-        <Typography variant="h3">👋</Typography>
-      </Stack>
-      <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
-        Let’s start a learning adventure
-      </Typography>
-      <SessionType {...POPUP_SESSION} nextStep={nextStep} />
-      <SessionType {...LAUNCH_SESSION} goToStep={goToStep} />
-      <Typography variant="body1" sx={{ color: "#616161" }}>
-        <Link
-          component={nextLink}
-          href={PATH_AUTH.register}
-          sx={{
-            color: "#616161",
-            textDecoration: "underline",
-            ml: 2,
-            my: 2,
-            display: "inline-block",
-          }}
+      <Stack>
+        <Stack
+          direction="row"
+          sx={{ alignItems: "flse-start", ml: { xs: 3, sm: 3, md: 0 } }}
         >
-          Register my school
-        </Link>{" "}
-        instead.
-      </Typography>
+          <Typography variant="h3">Hi,</Typography>
+          <Typography variant="h3">👋</Typography>
+        </Stack>
+        <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+          Let’s start a learning adventure
+        </Typography>
+        <Button
+          onClick={() => {
+            nextStep?.();
+            setSessionWay({ sessionWay: true });
+          }}
+          sx={{ color: "inherit", py: 2, mb: 1, borderRadius: "15px" }}
+        >
+          <SessionType {...POPUP_SESSION} />
+        </Button>
+        <Button
+          onClick={() => {
+            goToStep?.(3);
+            setSessionWay({ sessionWay: false });
+          }}
+          sx={{ color: "inherit", py: 2, borderRadius: "15px" }}
+        >
+          <SessionType {...LAUNCH_SESSION} />
+        </Button>
+        <Typography variant="body1" sx={{ color: "#616161" }}>
+          <Link
+            component={nextLink}
+            href={PATH_AUTH.register}
+            sx={{
+              color: "#616161",
+              textDecoration: "underline",
+              ml: 2,
+              my: 4,
+              display: "inline-block",
+            }}
+          >
+            Register my school
+          </Link>{" "}
+          instead.
+        </Typography>
+      </Stack>
     </StepContainer>
   );
 }
 
 const POPUP_SESSION = {
-  type: ISessionType.popup,
   title: "Pop-up Session",
   subtitle:
     "Real-time view of all participants while broadcasting code & voice.",
@@ -52,7 +70,6 @@ const POPUP_SESSION = {
   color: "#43D4DD33",
 };
 const LAUNCH_SESSION = {
-  type: ISessionType.course,
   title: "Launch Course",
   subtitle: "Teacher-led or self-paced modules assigned to class or group.",
   info: "Real-time view of all participants while broadcasting code & voice.",

@@ -10,28 +10,30 @@ export default function GroupStep({
 }: Partial<StepWizardChildProps>): React.ReactElement {
   return (
     <StepContainer>
-      <IconButton
-        onClick={previousStep}
-        sx={{
-          position: "absolute",
-          top: "5px",
-          left: "5px",
-          width: "50px",
-          height: "50px",
-        }}
-      >
-        <MdOutlineArrowBackIos size="30px" color="#68767F" />
-      </IconButton>
-      <Stack sx={{ pl: 3, pt: 2 }}>
-        <Typography variant="h3">Create Group</Typography>
-        <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
-          Learn and interact in your preferred format
-        </Typography>
-      </Stack>
-      <Stack gap={2}>
-        {GROUPS.map((el, i) => (
-          <GroupItem {...el} key={i + 20} nextStep={nextStep} />
-        ))}
+      <Stack>
+        <IconButton
+          onClick={previousStep}
+          sx={{
+            position: "absolute",
+            top: "5px",
+            left: "5px",
+            width: "50px",
+            height: "50px",
+          }}
+        >
+          <MdOutlineArrowBackIos size="30px" color="#68767F" />
+        </IconButton>
+        <Stack sx={{ pl: { xs: 6, md: 3 }, pt: 2 }}>
+          <Typography variant="h3">Create Group</Typography>
+          <Typography variant="body1" sx={{ display: "inline-flex", pb: 1 }}>
+            Learn and interact in your preferred format
+          </Typography>
+        </Stack>
+        <Stack>
+          {GROUPS.map((el, i) => (
+            <GroupItem {...el} key={i + 20} nextStep={nextStep} />
+          ))}
+        </Stack>
       </Stack>
     </StepContainer>
   );
@@ -56,13 +58,12 @@ const GROUPS = [
     img: "/assets/on-boarding/creator.svg",
     title: "Remote Cohort",
     subtitle: "Support remote learning and build together",
-    badge: "Coming Soon",
   },
   {
     color: "#CDFDE9",
     img: "/assets/on-boarding/data.svg",
     title: "Open Community",
     subtitle: "Invite the cousins, it’s your space.",
-    badge: "Coming Soon",
+    badge: "BETA",
   },
 ];
