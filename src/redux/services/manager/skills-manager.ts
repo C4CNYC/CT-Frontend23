@@ -28,7 +28,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     updateSkill: builder.mutation<
       ISkill & BaseResponseInterface,
-      { id: string }
+      { id: string; name: string; description: string }
     >({
       query: ({ id, ...body }) => ({
         url: `/skill/${id}`,

@@ -61,10 +61,11 @@ export default function UpdateModalSkills({
       if (id) {
         await updateSkill({
           id,
-          ...data,
+          name: data.name,
+          description: data.description,
         }).unwrap();
       } else {
-        await createSkill({ ...data }).unwrap();
+        await createSkill({ name: data.name, description: data.description }).unwrap();
       }
       methods.reset();
       handleClose();
