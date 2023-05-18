@@ -74,7 +74,12 @@ export default function CreateModuleDialog({
         const module = await createModule({
           ...data,
         }).unwrap();
-        if (!query.course_id) return;
+        if (!query.course_id) {
+          enqueueSnackbar("Please, choose course first", {
+            variant: "warning",
+          });
+          return;
+        }
         await addToCourse({
           id: query.course_id as string,
           unit_id: module.id,
