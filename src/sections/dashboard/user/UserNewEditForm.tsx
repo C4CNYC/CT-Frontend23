@@ -122,6 +122,7 @@ export default function UserNewEditForm({
           user_id: currentUser?.id,
           ...body,
         }).unwrap();
+        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
         if (!photoURL) return;
         await updateAvatar(currentUser?.id, photoURL);
       } else {

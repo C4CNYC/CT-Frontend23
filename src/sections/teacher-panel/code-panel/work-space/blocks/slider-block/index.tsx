@@ -32,7 +32,7 @@ interface IView {
 const SliderBlock = ({
   data,
   integrations,
-  isFetching
+  isFetching,
 }: ISliderBlock): React.ReactElement => {
   const [{ slideIndex }, updateGlobalAtom] = useAtom(globalCodePanelAtom);
   const carousel1 = useRef<Carousel | null>(null);
@@ -87,26 +87,28 @@ const SliderBlock = ({
           "&::-webkit-scrollbar": {
             width: 0,
           },
-          "& .slick-track": {
-            "& .slick-slide": {
-              "& div": {
-                height: "80vh",
-              },
-            },
-          },
+          // "& .slick-track": {
+          //   "& .slick-slide": {
+          //     "& div": {
+          //       height: "80vh",
+          //     },
+          //   },
+          // },
         }}
       >
         <LoaderDeleyContent deley={3000} isFetching={isFetching} />
-        {!isFetching ? <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
-          {data.map((step) => (
-            <View
-              key={step.id}
-              type={step.type}
-              body={step.body}
-              connectIntegrations={connectIntegrations}
-            />
-          ))}
-        </Carousel> : null}
+        {!isFetching ? (
+          <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
+            {data.map((step) => (
+              <View
+                key={step.id}
+                type={step.type}
+                body={step.body}
+                connectIntegrations={connectIntegrations}
+              />
+            ))}
+          </Carousel>
+        ) : null}
       </Box>
     </BaseBlock>
   );

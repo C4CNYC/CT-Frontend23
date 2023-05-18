@@ -5,47 +5,47 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
 
-import { getDocument } from "./extentions/collab";
-import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { getDocument } from "./extentions/collab";
 
+import Checkers from "./code-checkers";
 import { Editor } from "./editor";
-import Checkers from "./checkers/checkers";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
 interface ICodeEditorBlock {
   columns?: 1 | 2;
   validations: Array<ILessonContentValidation & BaseResponseInterface>;
-  onChangeCode: (code: string) => void
+  onChangeCode: (code: string) => void;
   // preloadedCode: string;
 }
 
 export interface State {
-  connected: boolean,
-  version?: number,
-  doc?: string
+  connected: boolean;
+  version?: number;
+  doc?: string;
 }
 
 const CodeEditorBlock = ({
   columns = 1,
   validations,
   onChangeCode,
-  // preloadedCode,
-}: ICodeEditorBlock): React.ReactElement | null => {
+}: // preloadedCode,
+ICodeEditorBlock): React.ReactElement | null => {
   const { user } = useAuthContext();
   const { query } = useRouter();
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,
-    doc: undefined
-  })
+    doc: undefined,
+  });
 
   useEffect(() => {
     socket.open();
     socket.emit("joinRoom", query.studentId);
     getDocument(socket).then(({ version, doc }) => {
-       setState((prev) => ({
+      setState((prev) => ({
         ...prev,
         version,
         connected: true,
@@ -99,7 +99,7 @@ const CodeEditorBlock = ({
     state?.doc === undefined ||
     !state.connected
   ) {
-    return null
+    return null;
   }
 
   return (

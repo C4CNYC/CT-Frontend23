@@ -20,11 +20,13 @@ interface FormValuesProps {
 interface UploadImageProps {
   onUpload: (file: File, id: string | undefined) => Promise<void>;
   id?: string;
+  color?: string;
 }
 
 export default function UploadImageModal({
   onUpload,
   id,
+  color,
 }: UploadImageProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -80,7 +82,7 @@ export default function UploadImageModal({
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <EditOutlinedIcon style={{ color: "rgb(161, 167, 172)" }} />
+        <EditOutlinedIcon style={{ color: color ?? "rgb(161, 167, 172)" }} />
       </IconButton>
       <Modal
         open={open}

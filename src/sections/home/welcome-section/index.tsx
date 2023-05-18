@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
-export default function WelcomeSection() {
+export default function WelcomeSection(): React.ReactElement {
   return (
     <>
       <Stack
