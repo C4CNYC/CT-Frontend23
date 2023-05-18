@@ -33,6 +33,7 @@ interface Props {
   updateClass: (name: string) => void;
   defaultValues: { name: string; description: string };
   rowId: string;
+  updateResult: boolean;
 }
 
 interface TabPanelProps {
@@ -77,6 +78,7 @@ export default function ClassPreferences({
   updateClass,
   defaultValues,
   rowId,
+  updateResult,
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false);
   const [value, setValue] = useState(0);
@@ -173,7 +175,7 @@ export default function ClassPreferences({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={false}
+                    loading={updateResult}
                   >
                     Save
                   </LoadingButton>
