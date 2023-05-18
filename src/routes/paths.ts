@@ -34,6 +34,7 @@ export const PATH_PAGE = {
   page404: "/404",
   page500: "/500",
   components: "/components",
+  profile: "/profile",
 };
 
 export const PATH_DASHBOARD = {

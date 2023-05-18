@@ -14,9 +14,10 @@ const CodeEditorBlock = dynamic(async () => await import("./blocks/code-editor-b
 
 interface IWorkSpace {
   data: Array<ILessonContent & BaseResponseInterface>;
+  isFetching: boolean;
 }
 
-const WorkSpace = ({ data }: IWorkSpace): React.ReactElement => {
+const WorkSpace = ({ data, isFetching }: IWorkSpace): React.ReactElement => {
   const [code, onChangeCode] = useState("")
   const [language, onChangeLanguage] = useState<SupportedLang>("html")
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
@@ -35,7 +36,7 @@ const WorkSpace = ({ data }: IWorkSpace): React.ReactElement => {
         setTab({ activeTab: index });
       }}
     >
-      <SliderBlock data={data} integrations={[]} />
+      <SliderBlock data={data} isFetching={isFetching} integrations={[]} />
       <CodeEditorBlock
         onChangeCode={onChangeCode}
         // preloadedCode={data[slideIndex]?.preload_body}

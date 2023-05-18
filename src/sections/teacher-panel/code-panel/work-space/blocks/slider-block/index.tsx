@@ -20,6 +20,7 @@ const ProsaMirrorView = dynamic(
 interface ISliderBlock {
   data: Array<ILessonContent & BaseResponseInterface>;
   integrations: IIntegration[];
+  isFetching: boolean;
 }
 
 interface IView {
@@ -31,6 +32,7 @@ interface IView {
 const SliderBlock = ({
   data,
   integrations,
+  isFetching
 }: ISliderBlock): React.ReactElement => {
   const [{ slideIndex }, updateGlobalAtom] = useAtom(globalCodePanelAtom);
   const carousel1 = useRef<Carousel | null>(null);
@@ -44,7 +46,7 @@ const SliderBlock = ({
     if (carousel1.current) {
       setNav2(carousel1.current);
     }
-  }, []);
+  }, [data]);
 
   const carouselSettings1 = {
     dots: false,
@@ -94,8 +96,8 @@ const SliderBlock = ({
           },
         }}
       >
-        <LoaderDeleyContent deley={3000} isFetching={true} />
-        <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
+        <LoaderDeleyContent deley={3000} isFetching={isFetching} />
+        {!isFetching ? <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
           {data.map((step) => (
             <View
               key={step.id}
@@ -104,7 +106,7 @@ const SliderBlock = ({
               connectIntegrations={connectIntegrations}
             />
           ))}
-        </Carousel>
+        </Carousel> : null}
       </Box>
     </BaseBlock>
   );

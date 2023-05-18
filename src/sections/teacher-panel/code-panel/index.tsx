@@ -6,7 +6,6 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
-import { codeAtom } from "./atoms/code.atom";
 import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
 import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
 import WorkSpace from "./work-space";
@@ -16,13 +15,12 @@ export const CodePanel = (): React.ReactElement => {
   const { query } = useRouter();
   const [loading, setLoading] = useState(false);
   const [, setGlobal] = useAtom(globalCodePanelAtom);
-  const [, setCode] = useAtom(codeAtom);
   const { data: realTimeData } = useRealTimeConnection(
     query?.studentId as string
   );
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
   const [{ lessonId }] = useAtom(globalCodePanelAtom);
-  const { data } = useGetLessonContentQuery(
+  const { data, isFetching } = useGetLessonContentQuery(
     {
       lessonId,
     },
@@ -30,11 +28,6 @@ export const CodePanel = (): React.ReactElement => {
   );
 
   useEffect(() => {
-    setCode((prev) => ({
-      code: realTimeData?.code ?? prev.code,
-      language: realTimeData?.language ?? prev.language,
-    }));
-
     setGlobal((prev) => ({
       ...prev,
       lessonId: realTimeData?.lessonId ?? "",
@@ -83,7 +76,7 @@ export const CodePanel = (): React.ReactElement => {
           }}
         />
       </Box>
-      <WorkSpace data={data ?? []} />
+      <WorkSpace isFetching={isFetching} data={data ?? []} />
     </Box>
   );
 };

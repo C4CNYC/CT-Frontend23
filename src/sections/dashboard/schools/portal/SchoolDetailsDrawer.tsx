@@ -24,7 +24,7 @@ export default function SchoolDetailsDrawer({
 }: Props): React.ReactElement | null {
   const countryName = React.useMemo(() => {
     const country = countries.find(
-      (country) => country.code.toLowerCase() === item.country.toLowerCase()
+      (country) => country?.code?.toLowerCase() === item?.country?.toLowerCase()
     );
     if (country) return country.label;
     return "";
