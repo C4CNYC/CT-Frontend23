@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
-import { IUser } from "./interfaces/user.interface";
+import { IStudentProfile } from "./interfaces/user.interface";
 
 export interface User extends BaseResponseInterface {
   avatar: string;
@@ -76,7 +76,7 @@ export const authApi = createApi({
       }),
       providesTags: ["ProfileUser"],
     }),
-    updateProfile: builder.mutation<IUser, BaseResponseInterface>({
+    updateProfile: builder.mutation<IStudentProfile, IStudentProfile>({
       query: ({ ...body }) => ({
         url: "/profile",
         method: "PATCH",
