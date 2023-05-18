@@ -53,6 +53,7 @@ export interface IStudent {
   verified: boolean;
   active: boolean;
   password?: string;
+  avatar: string;
 }
 
 export interface IMentor {
