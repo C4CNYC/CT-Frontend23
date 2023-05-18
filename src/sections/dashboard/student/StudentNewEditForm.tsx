@@ -66,8 +66,8 @@ export default function StudentNewEditForm({
     cityp: Yup.string(),
     post_code: Yup.string(),
     about: Yup.string(),
-    // verified: Yup.boolean(),
-    // active: Yup.boolean(),
+    verified: Yup.boolean(),
+    active: Yup.boolean(),
     password: !isEdit
       ? Yup.string().required("Password is required")
       : Yup.string(),
@@ -84,8 +84,8 @@ export default function StudentNewEditForm({
       city: currentUser?.city ?? "",
       post_code: currentUser?.post_code ?? "",
       about: currentUser?.about ?? "",
-      // verified: currentUser?.verified,
-      // active: currentUser?.active,
+      verified: currentUser?.verified,
+      active: currentUser?.active,
       password: generator.generate({
         length: 10,
         uppercase: true,
