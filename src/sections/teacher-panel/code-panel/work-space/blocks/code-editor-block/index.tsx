@@ -10,7 +10,7 @@ import { useAuthContext } from "src/auth/useAuthContext";
 import { useRouter } from "next/router";
 
 import { Editor } from "./editor";
-import Checkers from "./Checkers";
+import Checkers from "./checkers/checkers";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 

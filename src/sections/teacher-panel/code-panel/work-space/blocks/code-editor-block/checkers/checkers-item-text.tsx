@@ -6,10 +6,10 @@ interface Props {
   open: boolean;
 }
 
-export default function CheckersItemText({
+export const CheckersItemText = ({
   text,
   open,
-}: Props): React.ReactElement {
+}: Props): React.ReactElement => {
   const listVariants = {
     open: {
       width: "100%",

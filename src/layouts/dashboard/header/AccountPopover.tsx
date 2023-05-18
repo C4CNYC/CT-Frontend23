@@ -13,15 +13,13 @@ import { IconButtonAnimate } from "@components/animate";
 import { CustomAvatar } from "@components/custom-avatar";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
-import { useProfileQuery } from "src/redux/services/auth";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
 
-  const { logout } = useAuthContext();
-  const { data: user } = useProfileQuery();
+  const { logout, user } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 

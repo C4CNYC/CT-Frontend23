@@ -2,14 +2,14 @@ import { Box } from "@mui/material";
 import { domAnimation, LazyMotion, m } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IValidationMap } from "src/utils/validationMaping";
-import CheckersItemBtn from "./CheckersItemBtn";
+import { CheckersItemBtn } from "./checkers-item-btn";
 
 interface Props {
   visible: boolean;
   checkers: IValidationMap[];
 }
 
-export default function CheckersMenu({
+export function CheckersMenu({
   visible,
   checkers,
 }: Props): React.ReactElement {
