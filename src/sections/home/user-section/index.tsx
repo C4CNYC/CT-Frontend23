@@ -1,11 +1,11 @@
 import CustomAvatar from "@components/custom-avatar/CustomAvatar";
-import { Tooltip } from "@mui/material";
+import { Skeleton, Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/system/Stack";
 import { useProfileQuery } from "src/redux/services/auth";
 
 export default function UserSection(): React.ReactElement {
-  const { data: profile } = useProfileQuery();
+  const { data: profile, isLoading } = useProfileQuery();
   const name = profile?.first_name;
   const surname = profile?.last_name;
   return (
@@ -18,38 +18,53 @@ export default function UserSection(): React.ReactElement {
           role={profile?.role}
         ></CustomAvatar>
         <Stack display="flex">
-          <Tooltip
-            placement="top-end"
-            disableHoverListener={false}
-            title={
+          {!isLoading ? (
+            <Tooltip
+              placement="top-end"
+              disableHoverListener={
+                name && surname ? name.length + surname.length < 17 : true
+              }
+              title={
+                <Typography
+                  sx={{
+                    fontWeight: "600",
+                    fontSize: "14px",
+                  }}
+                  variant="subtitle2"
+                >
+                  {name && name?.charAt(0).toUpperCase() + name?.slice(1)}{" "}
+                  {surname &&
+                    surname?.charAt(0).toUpperCase() + surname?.slice(1)}
+                </Typography>
+              }
+            >
               <Typography
                 sx={{
                   fontWeight: "600",
                   fontSize: "14px",
+                  color: "#212B36",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  maxWidth: "140px",
                 }}
                 variant="subtitle2"
               >
                 {name && name?.charAt(0).toUpperCase() + name?.slice(1)}{" "}
-                {name && name?.charAt(0).toUpperCase() + name?.slice(1)}
+                {surname &&
+                  surname?.charAt(0).toUpperCase() + surname?.slice(1)}
               </Typography>
-            }
-          >
-            <Typography
-              sx={{
-                fontWeight: "600",
-                fontSize: "14px",
-                color: "#212B36",
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                maxWidth: "140px",
-              }}
-              variant="subtitle2"
-            >
-              {surname && surname?.charAt(0).toUpperCase() + surname?.slice(1)}{" "}
-              {surname && surname?.charAt(0).toUpperCase() + surname?.slice(1)}
-            </Typography>
-          </Tooltip>
+            </Tooltip>
+          ) : (
+            <Skeleton
+              variant="rounded"
+              animation="wave"
+              width="80px"
+              height="22px"
+              sx={{ background: "#FFF" }}
+            />
+          )}
+
           <Typography color="#637381" fontWeight="400" fontSize="14px">
             {profile?.role}
           </Typography>
