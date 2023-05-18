@@ -12,9 +12,6 @@ import { getDocument } from "./extentions/collab";
 import Checkers from "./code-checkers";
 import { Editor } from "./editor";
 
-import Checkers from "./Checkers";
-
-
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
 interface ICodeEditorBlock {
