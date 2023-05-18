@@ -52,7 +52,12 @@ export default function UploadImageModal({
 
   const methods = useForm<FormValuesProps>();
 
-  const { setValue, handleSubmit, reset } = methods;
+  const {
+    setValue,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
@@ -137,7 +142,11 @@ export default function UploadImageModal({
               }
             ></RHFUploadAvatar>
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: "30px" }}>
-              <LoadingButton type="submit" variant="contained">
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+              >
                 Update
               </LoadingButton>
             </Stack>
