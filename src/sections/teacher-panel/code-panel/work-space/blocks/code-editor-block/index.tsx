@@ -9,7 +9,6 @@ import { useRouter } from "next/router";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { getDocument } from "./extentions/collab";
 
-import Checkers from "./checkers/checkers";
 import Checkers from "./code-checkers";
 import { Editor } from "./editor";
 
