@@ -64,7 +64,7 @@ export default function UpdateModalSkills({
           ...data,
         }).unwrap();
       } else {
-        await createSkill({ ...data, active: true }).unwrap();
+        await createSkill({ ...data }).unwrap();
       }
       methods.reset();
       handleClose();
