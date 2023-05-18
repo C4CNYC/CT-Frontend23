@@ -65,7 +65,10 @@ export default function UpdateModalSkills({
           description: data.description,
         }).unwrap();
       } else {
-        await createSkill({ name: data.name, description: data.description }).unwrap();
+        await createSkill({
+          name: data.name,
+          description: data.description,
+        }).unwrap();
       }
       methods.reset();
       handleClose();
@@ -85,7 +88,13 @@ export default function UpdateModalSkills({
             <Stack spacing={4}>
               <Box display="flex" flexDirection="column" gap={2} mb={3}>
                 <RHFTextField placeholder="Name" name="name" />
-                <RHFTextField placeholder="Description" name="description" />
+                <RHFTextField
+                  name="description"
+                  label="Module description"
+                  required
+                  multiline
+                  rows={3}
+                />
               </Box>
             </Stack>
           </DialogContent>
