@@ -6,7 +6,7 @@ import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/gl
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { IValidationMap } from "src/utils/validationMaping";
-import CheckersMenu from "./components/checkers-menu";
+import { CheckersMenu } from "./checkers-menu";
 
 interface ICheckers {
   checkers: IValidationMap[];

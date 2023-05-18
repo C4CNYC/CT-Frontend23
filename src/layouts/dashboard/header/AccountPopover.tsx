@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Box, Divider, MenuItem, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 // routes
-import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
+import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 // auth
 import { useAuthContext } from "../../../auth/useAuthContext";
 // components
@@ -26,7 +26,7 @@ export default function AccountPopover(): React.ReactElement {
   const OPTIONS = [
     {
       label: "Profile",
-      linkTo: PATH_DASHBOARD.organization.edit(user?.id as string),
+      linkTo: PATH_PAGE.profile,
     },
   ];
 
@@ -72,7 +72,7 @@ export default function AccountPopover(): React.ReactElement {
           }),
         }}
       >
-        <CustomAvatar src={user?.avatar} alt={user?.name} name={user?.name} />
+        <CustomAvatar src={user?.avatar} alt={user?.email} name={user?.email} />
       </IconButtonAnimate>
 
       <MenuPopover
