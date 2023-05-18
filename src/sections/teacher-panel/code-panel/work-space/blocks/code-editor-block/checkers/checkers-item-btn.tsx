@@ -1,7 +1,7 @@
 import Iconify from "@components/iconify";
 import { Box, IconButton, ListItem } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import CheckersItemText from "./checkers-item-text";
+import { CheckersItemText } from "./checkers-item-text";
 
 interface Props {
   active: boolean;
@@ -10,7 +10,7 @@ interface Props {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function CheckersItemBtn({
+export function CheckersItemBtn({
   active,
   name,
   open,
