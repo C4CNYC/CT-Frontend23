@@ -92,9 +92,6 @@ export default function ProfileEditForm({
         const { email, ...body } = data;
         await updateUser({
           ...body,
-          id: "",
-          createdAt: "",
-          updatedAt: ""
         }).unwrap();
         enqueueSnackbar("Update success!");
         if (!photoURL) return;
