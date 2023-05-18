@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { Role } from "./enums/role.enum";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 import { IStudentProfile } from "./interfaces/user.interface";
@@ -8,7 +9,9 @@ import { IStudentProfile } from "./interfaces/user.interface";
 export interface User extends BaseResponseInterface {
   avatar: string;
   email: string;
-  name: string;
+  role: Role;
+  first_name: string;
+  last_name: string;
 }
 
 export interface UserResponse {

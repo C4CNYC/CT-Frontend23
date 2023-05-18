@@ -129,7 +129,7 @@ export default function StudentNewEditForm({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.school.students);
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }

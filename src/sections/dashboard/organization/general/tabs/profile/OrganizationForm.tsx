@@ -78,14 +78,14 @@ export default function OrganizationForm({
         })
           .unwrap()
           .catch((error) => {
-            enqueueSnackbar(error.data.message, {
+            enqueueSnackbar(error?.data?.message, {
               variant: "error",
             });
           });
       }
       enqueueSnackbar("Update success!");
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
