@@ -6,8 +6,7 @@ import { useProfileQuery } from "src/redux/services/auth";
 
 export default function UserSection(): React.ReactElement {
   const { data: profile, isLoading } = useProfileQuery();
-  const name = profile?.first_name;
-  const surname = profile?.last_name;
+
   return (
     <Stack bgcolor="rgba(145, 158, 171, 0.08)" borderRadius="12px">
       <Stack display="flex" direction="row" alignItems="center" mr="52px">
@@ -22,7 +21,9 @@ export default function UserSection(): React.ReactElement {
             <Tooltip
               placement="top-end"
               disableHoverListener={
-                name && surname ? name.length + surname.length < 17 : true
+                profile?.first_name && profile?.last_name
+                  ? profile?.first_name.length + profile?.last_name.length < 17
+                  : true
               }
               title={
                 <Typography
@@ -32,9 +33,12 @@ export default function UserSection(): React.ReactElement {
                   }}
                   variant="subtitle2"
                 >
-                  {name && name?.charAt(0).toUpperCase() + name?.slice(1)}{" "}
-                  {surname &&
-                    surname?.charAt(0).toUpperCase() + surname?.slice(1)}
+                  {profile?.first_name &&
+                    profile?.first_name?.charAt(0).toUpperCase() +
+                      profile?.first_name?.slice(1)}{" "}
+                  {profile?.last_name &&
+                    profile?.last_name?.charAt(0).toUpperCase() +
+                      profile?.last_name?.slice(1)}
                 </Typography>
               }
             >
@@ -50,9 +54,12 @@ export default function UserSection(): React.ReactElement {
                 }}
                 variant="subtitle2"
               >
-                {name && name?.charAt(0).toUpperCase() + name?.slice(1)}{" "}
-                {surname &&
-                  surname?.charAt(0).toUpperCase() + surname?.slice(1)}
+                {profile?.first_name &&
+                  profile?.first_name?.charAt(0).toUpperCase() +
+                    profile?.first_name?.slice(1)}{" "}
+                {profile?.last_name &&
+                  profile?.last_name?.charAt(0).toUpperCase() +
+                    profile?.last_name?.slice(1)}
               </Typography>
             </Tooltip>
           ) : (
