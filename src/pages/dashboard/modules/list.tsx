@@ -17,7 +17,7 @@ import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 import Head from "next/head";
 import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-import { getCountTakingElment } from "src/utils/countTakingElments";
+// import { getCountTakingElment } from "src/utils/countTakingElments";
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "../../../sections/dashboard/skeleton/skeletonList";
@@ -44,7 +44,6 @@ export default function ModulesListPage(): React.ReactElement | string {
   if (isLoading) {
     return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
   }
-
   return (
     <>
       <Head>
@@ -93,12 +92,11 @@ export default function ModulesListPage(): React.ReactElement | string {
               <ModuleCard key={index} module={module} />
             ))}
             {isFetching
-              ? Array(
-                  getCountTakingElment(
-                    Number(data.meta.itemCount),
-                    Number(filters.take)
-                  )
-                )
+              ? Array(3)
+                  // getCountTakingElment(
+                  //   Number(data.meta.itemCount),
+                  //   Number(filters.take)
+                  // )
                   .fill(null)
                   .map((v, i) => <DefaultSkeletonItem key={i} />)
               : null}

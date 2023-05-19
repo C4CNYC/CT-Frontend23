@@ -118,7 +118,12 @@ export default function CreateModuleDialog({
         const module = await createModule({
           ...data,
         }).unwrap();
-        if (!query.course_id) return;
+        methods.reset();
+        enqueueSnackbar("Create success!");
+        handleClose();
+        if (!query.course_id) {
+          return;
+        }
         await addToCourse({
           id: query.course_id as string,
           unit_id: module.id,
