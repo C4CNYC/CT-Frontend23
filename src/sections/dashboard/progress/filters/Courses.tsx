@@ -6,7 +6,7 @@ import {
   TextField,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -21,27 +21,50 @@ export default function FilterCoursesAutocomplete({
   setCourse,
 }: IFilterCoursesAutocomplete): React.ReactElement {
   const { data: courses, isLoading } = useGetCourseQuery({ take: 50 });
-
+  const [current, setCurrent] = useState<
+    (ICourse & BaseResponseInterface) | undefined
+  >();
   const onChangeCourse = (
     event: React.SyntheticEvent<any>,
     newValue: (ICourse & BaseResponseInterface) | null,
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<ICourse & BaseResponseInterface>
   ): void => {
-    if (!details?.option.id) return;
+    if (!details?.option.id) {
+      return;
+    }
     setCourse(details?.option.id);
   };
 
   useEffect(() => {
-    if (!courses || courseId) return;
+    if (!courses || courseId) {
+      return;
+    }
     setCourse(courses.data[0] ? courses.data[0].id : "");
   }, [courses]);
 
-  if (isLoading) return <Skeleton width="260px" height="56px" />;
+  useEffect(() => {
+    if (courseId) {
+      setCurrent(courses?.data.find((c) => c.id === courseId));
+    } else {
+      setCurrent(courses?.data[0]);
+    }
+  }, [courseId]);
 
-  const current = courseId
-    ? courses?.data.find((c) => c.id === courseId)
-    : courses?.data[0];
+  if (isLoading) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        animation="wave"
+        sx={{
+          mr: "16px",
+          width: "260px",
+          height: "56px",
+          borderRadius: "16px",
+        }}
+      />
+    );
+  }
 
   return (
     <>
