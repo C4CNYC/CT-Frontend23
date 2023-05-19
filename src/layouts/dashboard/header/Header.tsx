@@ -16,7 +16,6 @@ import { useSettingsContext } from "@components/settings";
 import { useRouter } from "next/router";
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
-import NotificationsPopover from "./NotificationsPopover";
 import NavAccount from "./SchoolAccount";
 
 // ----------------------------------------------------------------------
@@ -63,8 +62,6 @@ export default function Header({
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
         <LanguagePopover />
-
-        <NotificationsPopover />
 
         <AccountPopover />
       </Stack>

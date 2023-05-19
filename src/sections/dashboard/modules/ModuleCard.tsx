@@ -20,7 +20,6 @@ import { useState } from "react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { IModule } from "../../../redux/services/interfaces/class.interface";
 import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
-import SettingsModuleModal from "./SettingsModuleModal";
 
 // ----------------------------------------------------------------------
 
@@ -155,13 +154,6 @@ export default function ModuleCard({
             Edit
           </MenuItem>
         </CreateModuleDialog>
-
-        <SettingsModuleModal id={module.id}>
-          <MenuItem>
-            <Iconify icon="ant-design:setting-outlined" />
-            Settings
-          </MenuItem>
-        </SettingsModuleModal>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 
