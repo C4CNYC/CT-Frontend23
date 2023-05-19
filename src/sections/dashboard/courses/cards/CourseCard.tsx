@@ -161,7 +161,7 @@ export default function CourseCard({
               Price
             </Typography>
             <Typography variant="subtitle1">
-              {+price.substring(1) === 0 ? "FREE" : price}
+              {+price.substring(1) === 0 ? "free" : price}
             </Typography>
           </div>
         </Box>
