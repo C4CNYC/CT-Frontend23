@@ -74,7 +74,11 @@ export default function AccountPopover(): React.ReactElement {
           }),
         }}
       >
-        <CustomAvatar src={profile?.avatar} alt={profile?.email} name={profile?.email} />
+        <CustomAvatar
+          src={profile?.avatar}
+          alt={profile?.first_name}
+          name={profile?.first_name}
+        />
       </IconButtonAnimate>
 
       <MenuPopover
