@@ -20,7 +20,10 @@ export default function HomePage(): React.ReactElement | null {
 
   return (
     <>
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container
+        maxWidth={themeStretch ? false : "lg"}
+        sx={{ px: { xs: "5px", sm: "10px" } }}
+      >
         <Stack
           display="flex"
           flexDirection="row"
@@ -32,29 +35,37 @@ export default function HomePage(): React.ReactElement | null {
           <WelcomeSection />
           <SliderDemoMui />
         </Stack>
+        <Stack alignItems="center">
+          <MainSectionHome />
 
-        <MainSectionHome />
-
-        <InfoSectionHome />
-        <Stack
-          ml="40px"
-          mt="24px"
-          display="flex"
-          direction="row"
-          mr="24px"
-          sx={{
-            width: { xs: "auto", sm: "auto", md: "auto", lg: "1100px" },
-            ml: { xs: "0", sm: "0", md: "0", lg: "40px" },
-            mt: { xs: "0", sm: "0", md: "0", lg: "24px" },
-            mr: { xs: "0", sm: "0", md: "0", lg: "40px" },
-            gap: { xs: 3, sm: 3, md: 3, lg: "35px" },
-            flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
-            pt: { xs: 3, ms: 3, md: 3, lg: 0 },
-          }}
-        >
-          <WeeklyActivities />
-          <RecentLessons />
-          <RecentAssignments />
+          <InfoSectionHome />
+          <Stack
+            display="flex"
+            sx={{
+              flexDirection: {
+                xs: "column",
+                sm: "column",
+                md: "column",
+                lg: "row",
+              },
+              alignItems: {
+                xs: "center",
+                sm: "center",
+                md: "center",
+                lg: "flex-start",
+              },
+              justifyContent: "center",
+              width: "100%",
+              mt: "40px",
+              gap: { xs: 3, sm: 3, md: 3, lg: "35px" },
+              flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
+              pt: { xs: 3, ms: 3, md: 3, lg: 0 },
+            }}
+          >
+            <WeeklyActivities />
+            <RecentLessons />
+            <RecentAssignments />
+          </Stack>
         </Stack>
       </Container>
     </>
