@@ -41,16 +41,33 @@ export default function FilterClassesAutocomplete({
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<IClass & BaseResponseInterface>
   ): void => {
-    if (details?.option.id === classId) return;
+    if (details?.option.id === classId) {
+      return;
+    }
     setClass(details?.option.id as string);
   };
 
   useEffect(() => {
-    if (!classes || classId) return;
+    if (!classes || classId) {
+      return;
+    }
     setClass(classes.data[0] ? classes.data[0].id : "");
   }, [classes]);
 
-  if (isLoading) return <Skeleton width="260px" height="56px" />;
+  if (isLoading) {
+    return (
+      <Skeleton
+        variant="rectangular"
+        animation="wave"
+        sx={{
+          mr: "16px",
+          width: "260px",
+          height: "56px",
+          borderRadius: "16px",
+        }}
+      />
+    );
+  }
 
   return (
     <>
