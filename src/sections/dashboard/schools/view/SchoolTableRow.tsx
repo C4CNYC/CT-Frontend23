@@ -1,6 +1,5 @@
 import ConfirmDialog from "@components/confirm-dialog/ConfirmDialog";
 import Iconify from "@components/iconify/Iconify";
-import Image from "@components/image/Image";
 import Label from "@components/label/Label";
 import MenuPopover from "@components/menu-popover/MenuPopover";
 import {
@@ -8,7 +7,6 @@ import {
   Divider,
   IconButton,
   MenuItem,
-  Stack,
   TableCell,
   TableRow,
 } from "@mui/material";
@@ -54,15 +52,6 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
   };
   return (
     <TableRow>
-      <TableCell padding="checkbox">
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Image
-            sx={{ width: "40px", height: "40px" }}
-            alt="school"
-            src={row.cover ?? "/assets/icons/shool/school-icon.svg"}
-          />
-        </Stack>
-      </TableCell>
       <TableCell padding="checkbox" align="left">
         {row.name}
       </TableCell>

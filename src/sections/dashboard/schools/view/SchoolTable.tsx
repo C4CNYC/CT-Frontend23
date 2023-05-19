@@ -16,7 +16,6 @@ import SchoolTableToolbar from "./SchoolTableToolbar";
 import SkeletonSchoolRow from "./SkeletonSchoolRow";
 
 const TABLE_HEAD = [
-  { id: "Icon", label: "Icon" },
   { id: "name", label: "Name", align: "left" },
   { id: "country", label: "Country", align: "left" },
   { id: "city", label: "City", align: "left" },
