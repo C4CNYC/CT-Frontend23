@@ -13,7 +13,6 @@ export default function WelcomeSection(): React.ReactElement {
         display="flex"
         flexDirection="row"
         sx={{
-          ml: { xs: 0, sm: 0, md: "40px" },
           mb: { xs: 3, sm: 3, md: 0 },
           maxWidth: { xs: "344px", sm: "344px", md: "none" },
         }}
