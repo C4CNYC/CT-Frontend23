@@ -21,7 +21,7 @@ export default function RecentAssignments() {
             fontWeight="400"
             fontSize="16px"
             color="#637381"
-            mr="50px"
+            sx={{ mr: { xs: "20px", sm: "50px" } }}
           >
             (40)
           </Typography>

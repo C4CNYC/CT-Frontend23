@@ -17,7 +17,7 @@ export default function Slider() {
         <Stack
           sx={{
             backgroundImage: "url(/BG.png)",
-            width: "344px",
+            width: { xs: "324px", sm: "344px", md: "344px" },
             height: "260px",
             position: "relative",
             borderRadius: "16px",
