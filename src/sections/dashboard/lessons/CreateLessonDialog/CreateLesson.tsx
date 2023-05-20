@@ -88,7 +88,7 @@ export default function CreateLesson({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }

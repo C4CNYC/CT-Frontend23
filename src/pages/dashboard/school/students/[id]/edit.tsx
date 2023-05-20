@@ -43,7 +43,7 @@ export default function UserEditPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Edit user"
+          heading="Edit student"
           links={[
             {
               name: "Dashboard",

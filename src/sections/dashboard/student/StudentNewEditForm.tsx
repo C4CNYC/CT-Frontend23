@@ -27,6 +27,7 @@ import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useCreateStudentMutation,
+  useUpdateStudentAvatarMutation,
   useUpdateStudentMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
@@ -34,7 +35,9 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 // ----------------------------------------------------------------------
 
-interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {}
+interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
+  avatarUrl: File & { preview: string };
+}
 
 interface Props {
   isEdit?: boolean;
@@ -49,7 +52,7 @@ export default function StudentNewEditForm({
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [createStudent] = useCreateStudentMutation();
   const [updateStudent] = useUpdateStudentMutation();
-
+  const [updateStudentAvatar] = useUpdateStudentAvatarMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
@@ -63,6 +66,8 @@ export default function StudentNewEditForm({
     cityp: Yup.string(),
     post_code: Yup.string(),
     about: Yup.string(),
+    verified: Yup.boolean(),
+    active: Yup.boolean(),
     password: !isEdit
       ? Yup.string().required("Password is required")
       : Yup.string(),
@@ -79,6 +84,8 @@ export default function StudentNewEditForm({
       city: currentUser?.city ?? "",
       post_code: currentUser?.post_code ?? "",
       about: currentUser?.about ?? "",
+      verified: currentUser?.verified,
+      active: currentUser?.active,
       password: generator.generate({
         length: 10,
         uppercase: true,
@@ -111,25 +118,48 @@ export default function StudentNewEditForm({
     }
   }, [isEdit, currentUser]);
 
-  const onSubmit = async (data: FormValuesProps): Promise<void> => {
+  const updateAvatar = async (
+    id: string,
+    photoURL?: File
+  ): Promise<unknown> => {
+    if (!id ?? !photoURL) return;
+
+    const file = new FormData();
+    file.append("file", photoURL);
+
+    await updateStudentAvatar({
+      file,
+      schoolId: id,
+      studentId: id,
+    }).unwrap();
+  };
+
+  const onSubmit = async ({
+    avatarUrl,
+    ...data
+  }: FormValuesProps): Promise<void> => {
     try {
-      if (!isEdit) {
+      if (!isEdit && currentUser?.id) {
         await createStudent({
           schoolId,
           ...data,
         }).unwrap();
+        if (!avatarUrl) return;
+        await updateAvatar(currentUser?.id, avatarUrl);
       } else {
         const { email, password, ...body } = data;
         await updateStudent({
           studentId: currentUser?.id as string,
           schoolId,
           ...body,
-        });
+        }).unwrap();
+        if (!avatarUrl) return;
+        await updateAvatar(currentUser?.id as string, avatarUrl);
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.school.students);
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
@@ -139,12 +169,12 @@ export default function StudentNewEditForm({
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
 
-      // const newFile = Object.assign(file, {
-      //   preview: URL.createObjectURL(file),
-      // });
+      const newFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
 
       if (file) {
-        // #TODO upload file
+        setValue("avatarUrl", newFile, { shouldValidate: true });
       }
     },
     [setValue]
@@ -207,6 +237,21 @@ export default function StudentNewEditForm({
                 </>
               }
               sx={{ mx: 0, width: 1, justifyContent: "space-between" }}
+            />
+            <RHFSwitch
+              name="active"
+              labelPlacement="start"
+              label={
+                <>
+                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                    User Verified
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    Disabled user dont have access to resorce
+                  </Typography>
+                </>
+              }
+              sx={{ mx: 0, my: 1, width: 1, justifyContent: "space-between" }}
             />
           </Card>
         </Grid>

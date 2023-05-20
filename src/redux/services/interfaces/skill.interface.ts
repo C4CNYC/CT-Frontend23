@@ -1,6 +1,5 @@
 export interface ISkill {
   name: string;
-  active: boolean;
   description: string;
 }
 

@@ -15,7 +15,6 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "src/hooks/useFilters";
@@ -34,7 +33,6 @@ export function IntegrationsTab({
 }: {
   contentId: string;
 }): React.ReactElement {
-  const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
@@ -43,12 +41,12 @@ export function IntegrationsTab({
     useAddIntegrationMutation();
   const [removeIntegration, { isLoading: removeLoading }] =
     useRemoveIntegrationMutation();
-  const { data: usedIntegration, isFetching } = useGetLessonIntegrationsQuery({
-    id: router.query.lessonId as string,
+  const { data, isFetching } = useGetLessonIntegrationsQuery({
+    id: contentId,
   });
   const { data: integrations } = useGetIntegrationsQuery(filters);
 
-  if (!integrations?.data || !usedIntegration) {
+  if (!integrations?.data || !data) {
     return <CircularProgress />;
   }
 
@@ -60,7 +58,7 @@ export function IntegrationsTab({
   ): Promise<void> => {
     try {
       const payload = {
-        lessonId: router.query.lessonId as string,
+        lessonId: contentId,
         integration_id: details?.option.id ?? "",
       };
       switch (reason) {
@@ -96,7 +94,7 @@ export function IntegrationsTab({
     <Autocomplete<IIntegration & BaseResponseInterface, true>
       multiple
       loading={isFetching || addLoading || removeLoading}
-      value={usedIntegration}
+      value={data}
       onChange={onChange}
       options={integrations?.data}
       popupIcon={null}
@@ -126,7 +124,7 @@ export function IntegrationsTab({
         const matches = match(name, inputValue);
         const parts = parse(name, matches);
 
-        const selected = usedIntegration.find((c) => c.name === name);
+        const selected = data.find((c) => c.name === name);
 
         return (
           <Box

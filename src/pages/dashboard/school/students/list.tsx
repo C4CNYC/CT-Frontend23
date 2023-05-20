@@ -8,7 +8,6 @@ import {
   emptyRows,
   TableEmptyRows,
   TableHeadCustom,
-  TableLoader,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
@@ -243,7 +242,6 @@ export default function UserListPage(): React.ReactElement {
                             }}
                           />
                         ))}
-                    <TableLoader isLoading={isLoading} />
 
                     <TableNoData
                       isNotFound={!data?.data.length && !isLoading}

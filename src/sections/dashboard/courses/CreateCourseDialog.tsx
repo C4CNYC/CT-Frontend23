@@ -32,7 +32,6 @@ import {
   useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
-import CoursesController from "./CoursesController";
 
 interface FormValuesProps {
   name: string;
@@ -119,7 +118,7 @@ export default function CreateCourseDialog({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
@@ -263,9 +262,6 @@ export default function CreateCourseDialog({
                     type="number"
                   />
                 </FormGroup>
-                <Box sx={{ maxWidth: "350px" }}>
-                  <CoursesController skills={defaultValues?.skills} />
-                </Box>
                 <RHFTextField
                   name="description"
                   label="Course description"

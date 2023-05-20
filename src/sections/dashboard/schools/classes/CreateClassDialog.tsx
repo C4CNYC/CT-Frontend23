@@ -6,8 +6,7 @@ import { Box, Button, Card, Grid, IconButton } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
@@ -22,6 +21,7 @@ interface Prop {
   updateClass?: (name: string) => void;
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
+  createClassLoading?: boolean;
 }
 
 export default function AddClassDialog({
@@ -30,6 +30,7 @@ export default function AddClassDialog({
   updateClass,
   children,
   defaultValues,
+  createClassLoading,
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
   const handleClickOpen = (): void => {
@@ -56,9 +57,13 @@ export default function AddClassDialog({
     } else {
       createClass?.(data.name);
     }
-    handleClose();
+    methods.reset();
   };
-
+  useEffect(() => {
+    if (open && !createClassLoading) {
+      handleClose();
+    }
+  }, [createClassLoading]);
   return (
     <>
       <Box
@@ -108,7 +113,11 @@ export default function AddClassDialog({
                     }}
                   >
                     <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton type="submit" variant="contained">
+                    <LoadingButton
+                      type="submit"
+                      variant="contained"
+                      loading={createClassLoading}
+                    >
                       Save
                     </LoadingButton>
                   </Box>

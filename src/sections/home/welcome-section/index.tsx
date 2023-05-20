@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
-export default function WelcomeSection() {
+export default function WelcomeSection(): React.ReactElement {
   return (
     <>
       <Stack
@@ -13,7 +13,6 @@ export default function WelcomeSection() {
         display="flex"
         flexDirection="row"
         sx={{
-          ml: { xs: 0, sm: 0, md: "40px" },
           mb: { xs: 3, sm: 3, md: 0 },
           maxWidth: { xs: "344px", sm: "344px", md: "none" },
         }}

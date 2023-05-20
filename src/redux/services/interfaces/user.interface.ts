@@ -53,6 +53,7 @@ export interface IStudent {
   verified: boolean;
   active: boolean;
   password?: string;
+  avatar: string;
 }
 
 export interface IMentor {
@@ -72,4 +73,10 @@ export interface CreateUserRequest extends IUser {}
 
 export interface UpdateUserRequest extends Omit<IUser, "email"> {
   user_id: string;
+}
+export interface IStudentProfile {
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  avatar?: string;
 }

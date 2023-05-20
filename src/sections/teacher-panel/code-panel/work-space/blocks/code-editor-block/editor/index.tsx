@@ -36,7 +36,9 @@ export const Editor = ({ state, user, onChangeCode, socket }: IEditor): React.Re
         indentUnit.of("\t"),
         basicSetup(),
         langs.html(),
-        peerExtension(socket, state.version ?? 0, user?.email), cursorExtension(user?.email)],
+        peerExtension(socket, state.version ?? 0, user?.email),
+        cursorExtension(`${user?.first_name} ${user?.last_name?.[0]}`)
+      ],
     });
 
     let view: any;

@@ -7,6 +7,10 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";
 import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Courses";
 import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
+import {
+  SkeletonProgressTable,
+  SkeletonProgressTableRow,
+} from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
 import _ from "lodash";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -23,6 +27,7 @@ import {
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { getCountTakingElment } from "src/utils/countTakingElments";
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
@@ -56,20 +61,20 @@ export default function Progress(): React.ReactElement {
     },
     FilterMode.global
   );
-  const { data: students } = useGetStudentsQuery(
+  const { data: students, isLoading } = useGetStudentsQuery(
     {
       schoolId,
       class_id: filters.classId,
     },
     { skip: !filters.classId }
   );
-  const { data: content } = useGetProgressContentQuery({
-    id: query.courseId as string,
-  });
+  const { data: content, isLoading: isLoadingContent } =
+    useGetProgressContentQuery({
+      id: query.courseId as string,
+    });
   const { data: progress } = useGetProgressQuery({
     id: query.courseId as string,
   });
-
   return (
     <>
       <Container sx={{ ml: 0 }}>
@@ -83,7 +88,11 @@ export default function Progress(): React.ReactElement {
             { name: "Progress", href: PATH_DASHBOARD.school.progress },
           ]}
         />
-        <Stack direction="row" spacing={3} mb={3}>
+        <Stack
+          direction="row"
+          mb={3}
+          sx={{ flexWrap: { xs: "wrap", sm: "wrap" }, gap: 3 }}
+        >
           <FilterCoursesAutocomplete
             courseId={filters.courseId ?? query.courseId}
             setCourse={(courseId: string) => {
@@ -97,25 +106,44 @@ export default function Progress(): React.ReactElement {
             }}
           />
         </Stack>
-        <ProgressTable
-          goBack={() => {
-            if (filters.moduleId && filters.lessonId) setFilter("lessonId", "");
-            else if (filters.moduleId) setFilter("moduleId", "");
-          }}
-          hasBackLink={!!filters.moduleId || !!filters.lessonId}
-          hasNextLink={!filters.moduleId || !filters.lessonId}
-          data={getProgressData(
-            filters.moduleId,
-            filters.lessonId,
-            students?.data ?? [],
-            progress?.data ?? [],
-            content
-          )}
-          onSelectGroup={(groupId: string) => {
-            if (!filters.moduleId) setFilter("moduleId", groupId);
-            else if (!filters.lessonId) setFilter("lessonId", groupId);
-          }}
-        />
+        {isLoading ? (
+          <SkeletonProgressTable />
+        ) : (
+          <>
+            <ProgressTable
+              goBack={() => {
+                if (filters.moduleId && filters.lessonId) {
+                  setFilter("lessonId", "");
+                } else if (filters.moduleId) {
+                  setFilter("moduleId", "");
+                }
+              }}
+              hasBackLink={!!filters.moduleId || !!filters.lessonId}
+              hasNextLink={!filters.moduleId || !filters.lessonId}
+              data={getProgressData(
+                filters.moduleId,
+                filters.lessonId,
+                students?.data ?? [],
+                progress?.data ?? [],
+                content
+              )}
+              onSelectGroup={(groupId: string) => {
+                if (!filters.moduleId) setFilter("moduleId", groupId);
+                else if (!filters.lessonId) setFilter("lessonId", groupId);
+              }}
+            />
+            {isLoadingContent
+              ? Array(
+                  getCountTakingElment(
+                    Number(students?.meta.itemCount),
+                    Number(filters.take)
+                  )
+                )
+                  .fill(null)
+                  .map((v, i) => <SkeletonProgressTableRow key={i} />)
+              : null}
+          </>
+        )}
       </Container>
     </>
   );
