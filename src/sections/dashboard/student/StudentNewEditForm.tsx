@@ -153,8 +153,9 @@ export default function StudentNewEditForm({
           schoolId,
           ...body,
         }).unwrap();
-        if (!avatarUrl) return;
-        await updateAvatar(currentUser?.id as string, avatarUrl);
+        if (avatarUrl) {
+          await updateAvatar(currentUser?.id as string, avatarUrl);
+        }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.school.students);
