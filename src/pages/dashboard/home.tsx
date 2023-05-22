@@ -19,55 +19,43 @@ export default function HomePage(): React.ReactElement | null {
   const { themeStretch } = useSettingsContext();
 
   return (
-    <>
-      <Container
-        maxWidth={themeStretch ? false : "lg"}
-        sx={{ px: { xs: "5px", sm: "10px" } }}
+    <Container maxWidth={themeStretch ? false : "lg"}>
+      <Stack
+        display="flex"
+        flexDirection="row"
+        sx={{
+          flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
+          justifyContent: "center",
+          gap: 3,
+          mb: 3,
+        }}
       >
+        <WelcomeSection />
+        <SliderDemoMui />
+      </Stack>
+      <Stack alignItems="center" gap={3}>
+        <MainSectionHome />
+
+        <InfoSectionHome />
         <Stack
-          display="flex"
-          flexDirection="row"
+          direction="row"
           sx={{
-            flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
-            justifyContent: { xs: "center", sm: "center", md: "auto" },
+            justifyContent: {
+              xs: "center",
+              sm: "center",
+              md: "center",
+              lg: "space-between",
+            },
+            width: "100%",
+            gap: 2,
+            flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
           }}
         >
-          <WelcomeSection />
-          <SliderDemoMui />
+          <WeeklyActivities />
+          <RecentLessons />
+          <RecentAssignments />
         </Stack>
-        <Stack alignItems="center">
-          <MainSectionHome />
-
-          <InfoSectionHome />
-          <Stack
-            display="flex"
-            sx={{
-              flexDirection: {
-                xs: "column",
-                sm: "column",
-                md: "column",
-                lg: "row",
-              },
-              alignItems: {
-                xs: "center",
-                sm: "center",
-                md: "center",
-                lg: "flex-start",
-              },
-              justifyContent: "center",
-              width: "100%",
-              mt: "40px",
-              gap: { xs: 3, sm: 3, md: 3, lg: "35px" },
-              flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
-              pt: { xs: 3, ms: 3, md: 3, lg: 0 },
-            }}
-          >
-            <WeeklyActivities />
-            <RecentLessons />
-            <RecentAssignments />
-          </Stack>
-        </Stack>
-      </Container>
-    </>
+      </Stack>
+    </Container>
   );
 }

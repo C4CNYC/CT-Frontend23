@@ -28,14 +28,17 @@ export default function CardModule({ type, image }: Props): React.ReactElement {
   return (
     <>
       <Card
-        sx={{
+        sx={(theme) => ({
           minWidth: "328px",
           height: "250px",
           padding: "24px",
           borderRadius: "16px",
           border: "1px solid rgba(145, 158, 171, 0.24) ",
           boxShadow: "none",
-        }}
+          [theme.breakpoints.down(400)]: {
+            minWidth: "300px",
+          },
+        })}
       >
         <Stack display="flex" flexDirection="row">
           <Stack>
@@ -105,7 +108,15 @@ export default function CardModule({ type, image }: Props): React.ReactElement {
               </Typography>
             </Stack>
           </Stack>
-          <Stack mt="68px" ml="34px">
+          <Stack
+            mt="68px"
+            ml="34px"
+            sx={(theme) => ({
+              [theme.breakpoints.down(400)]: {
+                ml: "10px",
+              },
+            })}
+          >
             <Image src={image} alt={""} width="104" height="105" />
           </Stack>
         </Stack>
