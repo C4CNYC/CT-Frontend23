@@ -3,6 +3,7 @@ import Iconify from "@components/iconify/Iconify";
 import Label from "@components/label/Label";
 import MenuPopover from "@components/menu-popover/MenuPopover";
 import {
+  Avatar,
   Button,
   Divider,
   IconButton,
@@ -52,6 +53,22 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
   };
   return (
     <TableRow>
+      <TableCell>
+        {row.cover ? (
+          <Avatar
+            sx={{ width: "30px", height: "30px" }}
+            alt={row.name as string}
+            src={row.cover ?? "/assets/icons/shool/school-icon.svg"}
+          ></Avatar>
+        ) : (
+          <Avatar
+            variant="square"
+            sx={{ width: "30px", height: "30px" }}
+            alt={row.name as string}
+            src={row.cover ?? "/assets/icons/shool/school-icon.svg"}
+          ></Avatar>
+        )}
+      </TableCell>
       <TableCell padding="checkbox" align="left">
         {row.name}
       </TableCell>
