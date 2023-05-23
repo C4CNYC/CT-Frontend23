@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { io } from "socket.io-client";
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -7,10 +7,9 @@ import BaseBlock from "../BaseBlock";
 
 import { useRouter } from "next/router";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { getDocument } from "./extentions/collab";
 
 import Checkers from "./code-checkers";
-import { Editor } from "./editor";
+import RealTimeCodeEditor from "@components/real-time-code-editor";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
@@ -35,72 +34,7 @@ const CodeEditorBlock = ({
 ICodeEditorBlock): React.ReactElement | null => {
   const { user } = useAuthContext();
   const { query } = useRouter();
-  const [state, setState] = useState<State>({
-    connected: false,
-    version: undefined,
-    doc: undefined,
-  });
-
-  useEffect(() => {
-    socket.open();
-    socket.emit("joinRoom", query.studentId);
-    getDocument(socket).then(({ version, doc }) => {
-      setState((prev) => ({
-        ...prev,
-        version,
-        connected: true,
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        doc: doc?.toString(),
-      }));
-    });
-    socket.on("connection", () => {
-      setState((prev) => ({
-        ...prev,
-        connected: true,
-      }));
-    });
-
-    socket.on("disconnect", () => {
-      setState((prev) => ({
-        ...prev,
-        connected: false,
-      }));
-    });
-
-    window.addEventListener("beforeunload", () => {
-      socket.emit("leaveRoom", query?.studentId);
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pullUpdateResponse");
-      socket.off("pushUpdateResponse");
-      socket.off("getDocumentResponse");
-      socket.close();
-    });
-
-    return () => {
-      setState((prev) => ({
-        ...prev,
-        version: undefined,
-        doc: undefined,
-      }));
-      socket.emit("leaveRoom", query.studentId);
-      socket.off("connect");
-      socket.off("disconnect");
-      socket.off("pullUpdateResponse");
-      socket.off("pushUpdateResponse");
-      socket.off("getDocumentResponse");
-      socket.close();
-      socket.disconnect();
-    };
-  }, []);
-
-  if (
-    state?.version === undefined ||
-    state?.doc === undefined ||
-    !state.connected
-  ) {
-    return null;
-  }
+  const [code, setCode] = useState<string>("");
 
   return (
     <BaseBlock columns={columns}>
@@ -112,13 +46,17 @@ ICodeEditorBlock): React.ReactElement | null => {
         `}
       </style>
       {validations?.length ? (
-        <Checkers checkers={mapValidations(state.doc ?? "", validations)} />
+        <Checkers checkers={mapValidations(code, validations)} />
       ) : null}
-      <Editor
-        onChangeCode={onChangeCode}
-        state={state}
-        user={user}
+      <RealTimeCodeEditor
         socket={socket}
+        roomId={query.studentId as string}
+        colabCursonId={user?.email}
+        colabCursonText={`${user?.first_name} ${user?.last_name?.[0]}`}
+        onChangeCode={(code) => {
+          setCode(code);
+          onChangeCode(code);
+        }}
       />
     </BaseBlock>
   );

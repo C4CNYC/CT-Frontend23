@@ -7,20 +7,20 @@ import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultKeymap } from "@codemirror/commands";
 import { useEffect, useRef } from "react";
-import { peerExtension } from "../extentions/collab";
-import { State } from "..";
-import { AuthUserType } from "src/auth/types";
+import { peerExtension } from "./extentions/collab";
+import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
 import { Socket } from "socket.io-client";
-import { cursorExtension } from "../extentions/cursors";
+import { cursorExtension } from "./extentions/cursors";
 
 interface IEditor {
   state: State,
-  user: AuthUserType,
+  cursorId: string,
+  cursorText: string,
   onChangeCode: (code: string) => void,
   socket: Socket
 }
 
-export const Editor = ({ state, user, onChangeCode, socket }: IEditor): React.ReactElement => {
+export const CodeEditor = ({ state, cursorId, cursorText, onChangeCode, socket }: IEditor): React.ReactElement => {
   const editor = useRef();
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export const Editor = ({ state, user, onChangeCode, socket }: IEditor): React.Re
         indentUnit.of("\t"),
         basicSetup(),
         langs.html(),
-        peerExtension(socket, state.version ?? 0, user?.email),
-        cursorExtension(`${user?.first_name} ${user?.last_name?.[0]}`)
+        peerExtension(socket, state.version ?? 0, cursorId),
+        cursorExtension(cursorText)
       ],
     });
 
