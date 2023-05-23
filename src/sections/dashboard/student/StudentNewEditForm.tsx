@@ -139,33 +139,31 @@ export default function StudentNewEditForm({
     ...data
   }: FormValuesProps): Promise<void> => {
     try {
-      if (!isEdit && currentUser?.id) {
-        await createStudent({
-          schoolId,
-          ...data,
-        }).unwrap();
-        if (!avatarUrl) return;
-        await updateAvatar(currentUser?.id, avatarUrl);
-      } else {
+      if (isEdit && currentUser?.id) {
         const { email, password, ...body } = data;
         await updateStudent({
-          studentId: currentUser?.id as string,
+          studentId: currentUser?.id,
           schoolId,
           ...body,
         }).unwrap();
-        if (avatarUrl) {
-          await updateAvatar(currentUser?.id as string, avatarUrl);
-        }
+        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+        push(PATH_DASHBOARD.school.students);
+      } else {
+        const user = await createStudent({
+          ...data,
+          schoolId,
+        }).unwrap();
+        if (!avatarUrl) return;
+        await updateAvatar(user.id, avatarUrl)
+        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+        push(PATH_DASHBOARD.school.students);
       }
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      push(PATH_DASHBOARD.school.students);
     } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
-  };
-
+  }
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
