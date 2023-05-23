@@ -45,6 +45,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/school/${schoolId}`,
         method: "GET",
       }),
+      keepUnusedDataFor: 0,
       providesTags: ["School"],
     }),
     updateSchoolSettings: builder.mutation<

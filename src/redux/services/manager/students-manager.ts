@@ -29,7 +29,8 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["Students"],
     }),
-    createStudent: builder.mutation<void, { schoolId: string } & IStudent>({
+    createStudent: builder.mutation<IStudent & BaseResponseInterface,
+      { schoolId: string }>({
       query: ({ schoolId, ...body }) => ({
         url: `/school/${schoolId}/student`,
         method: "POST",
