@@ -129,6 +129,7 @@ type Extensions =
 
 interface Props {
   editable?: boolean;
+  realtime?: boolean;
   multimediaValue: string;
   setMultimediaValue?: (value: string) => void;
   onSubmit?: () => void;
@@ -136,6 +137,7 @@ interface Props {
 
 export default function MyEditor({
   editable = true,
+  realtime = false,
   onSubmit,
   multimediaValue,
   setMultimediaValue,
@@ -312,7 +314,7 @@ export default function MyEditor({
                 </div>
               </Stack>
 
-              <SaveButton onClick={saveContent} />
+              {!realtime ? <SaveButton onClick={saveContent} /> : null }
             </Toolbar>
             <FloatingToolbar
               sx={{

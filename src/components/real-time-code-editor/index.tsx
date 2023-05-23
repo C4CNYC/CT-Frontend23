@@ -10,6 +10,7 @@ export interface State {
 }
 
 interface IRealTimeCodeEditor {
+  connectionType?: "connect" | "create";
   onChangeCode: (value: string) => void;
   colabCursonId: string;
   colabCursonText: string;
@@ -22,6 +23,7 @@ export const RealTimeCodeEditor = ({
   roomId,
   colabCursonId,
   colabCursonText,
+  connectionType = "connect",
   onChangeCode,
 }:
 IRealTimeCodeEditor): React.ReactElement | null => {
@@ -33,7 +35,7 @@ IRealTimeCodeEditor): React.ReactElement | null => {
 
   useEffect(() => {
     socket.open();
-    socket.emit("joinRoom", roomId);
+    socket.emit(connectionType === "connect" ? "joinRoom" : "create", roomId);
     getDocument(socket).then(({ version, doc }) => {
       setState((prev) => ({
         ...prev,
@@ -58,7 +60,7 @@ IRealTimeCodeEditor): React.ReactElement | null => {
     });
 
     window.addEventListener("beforeunload", () => {
-      socket.emit("leaveRoom", roomId);
+      socket.emit(connectionType === "connect" ? "leaveRoom" : "deleteRoom", roomId);
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pullUpdateResponse");
@@ -73,7 +75,7 @@ IRealTimeCodeEditor): React.ReactElement | null => {
         version: undefined,
         doc: undefined,
       }));
-      socket.emit("leaveRoom", roomId);
+      socket.emit(connectionType === "connect" ? "leaveRoom" : "deleteRoom", roomId);
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pullUpdateResponse");
