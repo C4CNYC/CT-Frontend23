@@ -40,6 +40,7 @@ export const PATH_PAGE = {
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   home: path(ROOTS_DASHBOARD, "/home"),
+  stream: path(ROOTS_DASHBOARD, "/stream"),
   permissionDenied: path(ROOTS_DASHBOARD, "/permission-denied"),
   courses: {
     root: path(ROOTS_DASHBOARD, "/courses"),
