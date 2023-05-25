@@ -102,6 +102,7 @@ export default function AppsPage(): React.ReactElement {
                       <TableCell align="left">
                         <Stack direction="row" gap={2}>
                           <ModalIntegration
+                            isEdit
                             id={row.id}
                             defaultValues={_.omit(row, [
                               "updatedAt",
@@ -112,6 +113,7 @@ export default function AppsPage(): React.ReactElement {
                             <IconButton>
                               <Iconify icon="material-symbols:edit" />
                             </IconButton>
+
                           </ModalIntegration>
                           <IconButton
                             onClick={async () => {
