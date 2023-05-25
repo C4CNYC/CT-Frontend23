@@ -14,7 +14,7 @@ const ContentSpace = (): React.ReactElement | null => {
       />
     </Box>
     {index === 0 && <MyEditor multimediaValue={""} realtime/>}
-    {index === 0 && <SketchCanvas/>}
+    {index === 1 && <SketchCanvas/>}
   </Box>;
 }
 

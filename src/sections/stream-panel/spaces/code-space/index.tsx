@@ -16,7 +16,7 @@ const CodeSpace = (): React.ReactElement | null => {
 
   return (
     <Stack direction="row">
-      <Box flex="1">
+      <Box borderRight="1px solid grey" flex="1">
         <RealTimeCodeEditor
           roomId={query.id as string}
           colabCursonId={user?.email}
@@ -26,7 +26,7 @@ const CodeSpace = (): React.ReactElement | null => {
           onChangeCode={(code) => { setCode(code) }}
         />
       </Box>
-      <Box borderLeft="1px solid rgb(255, 255, 255)" flex="1">
+      <Box flex="1">
         <CodeResultView code={code} language={"html"} />
       </Box>
     </Stack>
