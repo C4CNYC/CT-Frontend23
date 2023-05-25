@@ -1,11 +1,17 @@
-import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
-import { IGlobalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 import { initializeApp } from "firebase/app";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, remove, set } from "firebase/database";
 import { useEffect, useState } from "react";
 
 interface IUseStream {
   data: any;
+  remove: () => void;
+  onChangeEditor: (data: Record<string, string>) => void;
+  onChangeCanvas: (data: Record<string, string>) => void;
+}
+
+interface IStreamBody {
+  editor: string;
+  canvas: string;
 }
 
 const app = initializeApp({
@@ -20,25 +26,39 @@ const app = initializeApp({
 
 const db = getDatabase(app);
 
-type RealTimeConnectionBody = ICodeContent & IGlobalCodePanelAtom;
+export const useStream = (uuid: string): IUseStream => {
+  const [data, setData] = useState<IStreamBody>({
+    editor: "",
+    canvas: "",
+  });
 
-export const useStream = (): IUseStream => {
-  const uuid = "test";
-  const [data, setData] = useState<RealTimeConnectionBody>();
+  const updateStreamState = (body: IStreamBody): void => {
+    if (!uuid) return;
+    const db = getDatabase(app);
+    set(ref(db, `streams/${uuid}`), body);
+  };
 
-  const getWorkSpaceState = (userId: string): void => {
-    const starCountRef = ref(db, "streams/" + userId);
+  useEffect(() => {
+    if (!uuid) return;
+
+    const starCountRef = ref(db, "streams/" + uuid);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
 
       setData(data);
     });
-  };
-
-  useEffect(() => {
-    if (!uuid) return;
-    getWorkSpaceState(uuid);
   }, [uuid]);
 
-  return { data };
+  return {
+    data,
+    onChangeEditor: (body) => {
+      updateStreamState({ ...data, editor: JSON.stringify(body) || "" });
+    },
+    onChangeCanvas: (body) => {
+      updateStreamState({ ...data, canvas: JSON.stringify(body) || "" });
+    },
+    remove: () => {
+      remove(ref(db, `streams/${uuid}`));
+    },
+  };
 };
