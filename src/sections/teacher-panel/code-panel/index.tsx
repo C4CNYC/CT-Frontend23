@@ -27,7 +27,7 @@ export const CodePanel = (): React.ReactElement => {
   );
 
   useEffect(() => {
-    refetch();
+    if (data) refetch();
     setGlobal((prev) => ({
       ...prev,
       lessonId: realTimeData?.lessonId ?? "",
