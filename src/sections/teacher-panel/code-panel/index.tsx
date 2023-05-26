@@ -19,15 +19,15 @@ export const CodePanel = (): React.ReactElement => {
     query?.studentId as string
   );
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
-  const [{ lessonId }] = useAtom(globalCodePanelAtom);
-  const { data, isFetching } = useGetLessonContentQuery(
+  const { data, isFetching, refetch } = useGetLessonContentQuery(
     {
-      lessonId,
+      lessonId: realTimeData?.lessonId as string,
     },
-    { skip: !lessonId }
+    { skip: !realTimeData?.lessonId }
   );
 
   useEffect(() => {
+    refetch();
     setGlobal((prev) => ({
       ...prev,
       lessonId: realTimeData?.lessonId ?? "",

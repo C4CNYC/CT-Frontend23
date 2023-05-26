@@ -29,7 +29,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["LessonContentItem"],
-      keepUnusedDataFor: 0,
+      // keepUnusedDataFor: 0,
     }),
 
     createLessonContent: builder.mutation<
