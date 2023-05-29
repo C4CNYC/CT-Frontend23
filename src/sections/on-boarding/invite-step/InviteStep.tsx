@@ -42,7 +42,7 @@ function IviteStep({
 
   const { copy } = useCopyToClipboard();
 
-  const onCopy = (text: string) => {
+  const onCopy = (text: string): void => {
     if (text) {
       enqueueSnackbar("Copied!");
       copy(text);

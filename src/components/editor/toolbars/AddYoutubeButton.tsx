@@ -34,7 +34,7 @@ export default function AddIframeButton(): JSX.Element {
     [addYouTubeVideo, href]
   );
 
-  const closeMenu = () => {
+  const closeMenu = (): void => {
     setEdit(false);
   };
   const ref = useDetectClickOutside({ onTriggered: closeMenu });

@@ -9,10 +9,10 @@ interface Props {
 
 export default function QrCodeDialog({ children }: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
-  const openDialog = () => {
+  const openDialog = (): void => {
     setOpen(true);
   };
-  const closeDialog = () => {
+  const closeDialog = (): void => {
     setOpen(false);
   };
   return (

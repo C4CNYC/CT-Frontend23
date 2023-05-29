@@ -16,14 +16,14 @@ import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 
+import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
+import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
+import { useAtom } from "jotai";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
-import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
-import { useAtom } from "jotai";
-import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
-import { useRouter } from "next/router";
 
 const drawerWidth = 250;
 
@@ -121,7 +121,13 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
                   mr: "5px",
                 }}
               />
-              <Typography variant="caption">{Object.keys(onlineStudents).filter(id => onlineStudents[id]).length} Live</Typography>
+              <Typography variant="caption">
+                {
+                  Object.keys(onlineStudents).filter((id) => onlineStudents[id])
+                    .length
+                }{" "}
+                Live
+              </Typography>
             </Box>
             <Box display="flex" alignItems="center" ml={3}>
               <Box
@@ -174,7 +180,7 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
               return (
                 <SidebarUser
                   student={student}
-                  key={i + student.id}
+                  key={i.toString() + student.id}
                   isLoading={isLoading}
                 />
               );
@@ -191,9 +197,14 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
             <Typography variant="h6">Group Chat</Typography>
           </Box>
           <IconButton>
-            <AddIcon onClick={() => {
-               setQuickRabbit((prev) => ({ ...prev, [classId]: { id: classId, email: "group chat" } }))
-            }}/>
+            <AddIcon
+              onClick={() => {
+                setQuickRabbit((prev) => ({
+                  ...prev,
+                  [classId]: { id: classId, email: "group chat" },
+                }));
+              }}
+            />
           </IconButton>
         </ListItem>
       </List>

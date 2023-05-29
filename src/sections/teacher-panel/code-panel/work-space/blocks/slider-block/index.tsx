@@ -65,7 +65,7 @@ const SliderBlock = ({
     },
   };
 
-  const connectIntegrations = (body: string) => {
+  const connectIntegrations = (body: string): string | undefined => {
     if (integrations) {
       return `<head>${integrations.reduce(
         (ac, cur) => ac + cur.head,

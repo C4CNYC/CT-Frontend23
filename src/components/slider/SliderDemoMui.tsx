@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 // mui
 import { Stack } from "@mui/system";
 
-export default function Slider() {
+export default function Slider(): React.ReactElement {
   return (
     <Stack
       sx={{
@@ -61,7 +61,7 @@ export default function Slider() {
   );
 }
 
-function IconSlider() {
+function IconSlider(): React.ReactElement {
   return (
     <Stack
       display="flex"

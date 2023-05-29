@@ -1,7 +1,7 @@
 import { Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
 
-export default function SkeletonSchoolDetailsDrawer() {
+export default function SkeletonSchoolDetailsDrawer(): React.ReactElement {
   return (
     <>
       <Stack spacing={1} display="flex" direction="row" mt="20px" ml="20px">
