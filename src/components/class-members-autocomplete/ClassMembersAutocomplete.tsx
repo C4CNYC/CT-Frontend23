@@ -15,7 +15,6 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useSelector } from "react-redux";
@@ -31,10 +30,14 @@ import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 type StudentType = IStudent & BaseResponseInterface;
 
-export default function ClassMembersAutocomplete(): React.ReactElement {
-  const router = useRouter();
+interface Props {
+  classId: string;
+}
+
+export default function ClassMembersAutocomplete({
+  classId,
+}: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const classId = router.query.id as string;
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
   const { filters, setFilter } = useFilters({ email: "", take: 50 });
@@ -91,9 +94,6 @@ export default function ClassMembersAutocomplete(): React.ReactElement {
       onChange={onChange}
       options={students.data}
       popupIcon={null}
-      onLoadStart={() => {
-        console.log("work");
-      }}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.email} />
       }

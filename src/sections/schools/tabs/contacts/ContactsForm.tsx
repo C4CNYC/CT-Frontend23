@@ -84,7 +84,6 @@ export default function ContactsForm({
       enqueueSnackbar("Update success!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 
@@ -198,7 +197,7 @@ export default function ContactsForm({
               />
             </Box>
 
-            <Stack spacing={3} alignItems="flex-end" sx={{ mt: 7 }}>
+            <Stack spacing={3} alignItems="flex-end" sx={{ mb: 10 }}>
               <LoadingButton
                 type="submit"
                 variant="contained"

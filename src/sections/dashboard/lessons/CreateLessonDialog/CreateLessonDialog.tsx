@@ -6,6 +6,7 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
+  DialogActions,
   Grid,
   Tab,
   Tabs,
@@ -82,7 +83,7 @@ export default function CreateLessonDialog({
 }: Prop): React.ReactElement {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [editLesson] = useUpdateLessonMutation();
   const [createLesson] = useCreateLessonMutation();
@@ -128,10 +129,9 @@ export default function CreateLessonDialog({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
     setLoading(false);
     // eslint-disable-next-line no-eval
@@ -185,70 +185,62 @@ export default function CreateLessonDialog({
 
                   <RHFSwitch name="active" label="Module active" />
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    gap: 2,
-                    mt: 7,
-                  }}
-                >
-                  <Button onClick={handleClose}>Close</Button>
-                  <LoadingButton
-                    type="submit"
-                    variant="contained"
-                    loading={loading}
-                  >
-                    Save
-                  </LoadingButton>
-                </Box>
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Box width="400px" height="290px">
                 <SkillsTab lessonId={id as string} />
               </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: 2,
-                  mt: 7,
-                }}
-              >
-                <Button onClick={handleClose}>Close</Button>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={loading}
-                >
-                  Save
-                </LoadingButton>
-              </Box>
             </TabPanel>
             <TabPanel value={value} index={2}>
               <Box width="400px" height="290px">
                 <IntegrationsTab contentId={id as string} />
               </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: 2,
-                  mt: 7,
-                }}
-              >
-                <Button onClick={handleClose}>Close</Button>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={loading}
-                >
-                  Save
-                </LoadingButton>
-              </Box>
             </TabPanel>
+            {value === 0 ? (
+              <DialogActions>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 2,
+                  }}
+                >
+                  <Button
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    Close
+                  </Button>
+                  <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    loading={false}
+                  >
+                    Save
+                  </LoadingButton>
+                </Box>
+              </DialogActions>
+            ) : (
+              <DialogActions>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 2,
+                  }}
+                >
+                  <Button
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Box>
+              </DialogActions>
+            )}
           </FormProvider>
         </DialogContent>
       </Dialog>

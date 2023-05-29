@@ -73,7 +73,10 @@ export default function StepCode({
             width: "100%",
             height: "90%",
           }}
-          src={"data:text/html," + encodeURIComponent(pageSkeleton(value))}
+          src={
+            "data:text/html," +
+            encodeURIComponent(pageSkeleton(value) as string)
+          }
         />
       </Box>
     </ResizerUi>

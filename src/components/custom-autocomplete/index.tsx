@@ -3,7 +3,6 @@ import Autocomplete, {
   AutocompleteChangeReason,
 } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -15,6 +14,7 @@ import {
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
 
+import SchoolFiltersSkeleton from "@pages/dashboard/school/students/school-filter-skeleton";
 import { useState } from "react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import Iconify from "../iconify/Iconify";
@@ -65,11 +65,7 @@ export default function CustomAutocomplete({
   };
 
   if (!clases?.data) {
-    return (
-      <Stack padding="24px 20px">
-        <CircularProgress />
-      </Stack>
-    );
+    return <SchoolFiltersSkeleton />;
   }
 
   return (

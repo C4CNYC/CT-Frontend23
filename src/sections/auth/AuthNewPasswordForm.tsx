@@ -93,11 +93,6 @@ export default function AuthNewPasswordForm(): React.ReactElement {
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      console.log("DATA:", {
-        email: data.email,
-        code: `${data.code1}${data.code2}${data.code3}${data.code4}${data.code5}${data.code6}`,
-        password: data.password,
-      });
 
       sessionStorage.removeItem("email-recovery");
 
@@ -105,7 +100,6 @@ export default function AuthNewPasswordForm(): React.ReactElement {
 
       push(PATH_DASHBOARD.root);
     } catch (error) {
-      console.error(error);
     }
   };
 

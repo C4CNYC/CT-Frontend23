@@ -104,7 +104,7 @@ export default function CreateCodeDialog({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       setCodeValue("");
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }

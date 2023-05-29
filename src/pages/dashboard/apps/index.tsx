@@ -3,8 +3,10 @@ import Iconify from "@components/iconify";
 import ModalIntegration from "@components/modal-integration";
 import Scrollbar from "@components/scrollbar";
 import { useSettingsContext } from "@components/settings";
+import { TablePaginationCustom } from "@components/table";
 import TableNoData from "@components/table/TableNoData";
 import useTable from "@components/table/useTable";
+import { useFilters } from "@hooks/useFilters";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import {
   Button,
@@ -34,15 +36,16 @@ AppsPage.getLayout = (page: React.ReactElement) => (
 );
 
 export default function AppsPage(): React.ReactElement {
-  const { dense } = useTable();
+  const { dense, onChangeDense } = useTable();
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetIntegrationsQuery({});
+  const { filters, setFilter } = useFilters({ name: "" });
+  const { data, isLoading } = useGetIntegrationsQuery({ ...filters });
   const [removeIntegration] = useRemoveIntegrationMutation();
 
   const onDelete = async (id: string): Promise<void> => {
     try {
-      await removeIntegration({ id }).unwrap();
+      await removeIntegration({ integration_id: id }).unwrap();
       enqueueSnackbar("integration removed");
     } catch (e) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });
@@ -99,6 +102,7 @@ export default function AppsPage(): React.ReactElement {
                       <TableCell align="left">
                         <Stack direction="row" gap={2}>
                           <ModalIntegration
+                            isEdit
                             id={row.id}
                             defaultValues={_.omit(row, [
                               "updatedAt",
@@ -109,6 +113,7 @@ export default function AppsPage(): React.ReactElement {
                             <IconButton>
                               <Iconify icon="material-symbols:edit" />
                             </IconButton>
+
                           </ModalIntegration>
                           <IconButton
                             onClick={async () => {
@@ -129,6 +134,19 @@ export default function AppsPage(): React.ReactElement {
               </Table>
             </Scrollbar>
           </TableContainer>
+          <TablePaginationCustom
+            count={data?.meta.itemCount ? data?.meta.itemCount : 0}
+            page={data?.meta.page ? data?.meta.page - 1 : 0}
+            rowsPerPage={data?.meta.take ?? 0}
+            onPageChange={(e: any, page: number) => {
+              setFilter("page", page + 1);
+            }}
+            onRowsPerPageChange={(e: any) => {
+              setFilter("take", e.target.value);
+            }}
+            dense={dense}
+            onChangeDense={onChangeDense}
+          />
         </Card>
       </Container>
     </>

@@ -63,7 +63,6 @@ export default function CustomizationForm({
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
     } catch (error) {
-      console.error(error);
     }
   };
 
@@ -189,7 +188,7 @@ export default function CustomizationForm({
           variant="contained"
           loading={isLoading}
           disabled={!isFormEdited}
-          sx={{ ml: "auto", mt: 4 }}
+          sx={{ ml: "auto", mt: 4, mb: 10 }}
         >
           {`${translate("actions_save_changes")}`}
         </LoadingButton>

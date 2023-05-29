@@ -37,7 +37,7 @@ interface SchoolProfileFormProps {
   schoolProfile?: SchoolProfile;
   schoolId: string;
   file: File;
-  setImgValue: Function;
+  setImgValue: (images: File[]) => void;
 }
 
 export default function SchoolProfileForm({
@@ -84,18 +84,8 @@ export default function SchoolProfileForm({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await updateSchoolProfile({
-        schoolId,
-        name: data.name,
-        country: data.country,
-        address: data.address,
-        city: data.city,
-        active: data.active ?? false,
-        about: data.about ?? "",
-        phone: data.phone,
-      }).unwrap();
       if (file) {
-        let formData = new FormData();
+        const formData = new FormData();
         formData.append("file", file);
         await updateSchoolAvatar({
           id: schoolId,
@@ -104,9 +94,19 @@ export default function SchoolProfileForm({
         setImgValue([]);
       }
       enqueueSnackbar("Update success!");
-    } catch (error) {
-      console.error(error);
-    }
+      if (methods.formState.isDirty) {
+        await updateSchoolProfile({
+          schoolId,
+          name: data.name,
+          country: data.country,
+          address: data.address,
+          city: data.city,
+          active: data.active ?? false,
+          about: data.about ?? "",
+          phone: data.phone,
+        }).unwrap();
+      }
+    } catch (error) {}
   };
 
   return (

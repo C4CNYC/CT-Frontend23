@@ -8,58 +8,56 @@ import { Stack } from "@mui/system";
 
 export default function Slider() {
   return (
-    <>
+    <Stack
+      sx={{
+        background: {
+          xs: "url(/BG.png) center  / cover no-repeat",
+          sm: "url(/BG.png) center  / contain no-repeat",
+        },
+        width: "100%",
+        maxWidth: { xs: "344px", sm: "344px", md: "344px" },
+        height: "260px",
+        position: "relative",
+        borderRadius: 2,
+        justifyContent: "space-between",
+        pb: 2,
+      }}
+    >
       <Stack
-        sx={{
-          ml: { xs: 0, sm: 0, md: "24px" },
-        }}
+        direction="row"
+        sx={{ width: "100%", justifyContent: "flex-end", pt: 2, pr: 2 }}
       >
-        <Stack
+        <IconButton style={{ width: "2px", height: "2px" }}>
+          <ArrowLeftIcon fontSize="small" sx={{ color: "gray" }} />
+        </IconButton>
+        <IconButton style={{ width: "2px", height: "2px" }}>
+          <ArrowRightIcon fontSize="small" sx={{ color: "white" }} />
+        </IconButton>
+      </Stack>
+      <Stack>
+        <Typography
+          variant="h5"
           sx={{
-            backgroundImage: "url(/BG.png)",
-            width: "344px",
-            height: "260px",
-            position: "relative",
-            borderRadius: "16px",
+            color: "#fff",
+
+            ml: 3,
           }}
         >
-          <Typography
-            position="absolute"
-            variant="h5"
-            fontWeight="700"
-            fontSize="20px"
-            color="white"
-            mt="132px"
-            ml="24px"
-          >
-            Suggest a new lesson or course
-          </Typography>
-          <Typography
-            position="absolute"
-            color="white"
-            variant="body2"
-            fontWeight="400"
-            fontSize="14px"
-            width="193px"
-            mt="170px"
-            ml="24px"
-          >
-            Ask us to create a new lesson. Add your suggestion to Google Form
-          </Typography>
-
-          <IconSlider />
-
-          <Stack display="flex" direction="row" mt="27px" ml="275px">
-            <IconButton style={{ width: "2px", height: "2px" }}>
-              <ArrowLeftIcon fontSize="small" sx={{ color: "gray" }} />
-            </IconButton>
-            <IconButton style={{ width: "2px", height: "2px" }}>
-              <ArrowRightIcon fontSize="small" sx={{ color: "white" }} />
-            </IconButton>
-          </Stack>
-        </Stack>
+          Suggest a new lesson or course
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            color: "#fff",
+            maxWidth: "190px",
+            ml: 3,
+          }}
+        >
+          Ask us to create a new lesson. Add your suggestion to Google Form
+        </Typography>
       </Stack>
-    </>
+      <IconSlider />
+    </Stack>
   );
 }
 
@@ -68,10 +66,7 @@ function IconSlider() {
     <Stack
       display="flex"
       direction="row"
-      spacing="8px"
-      position="absolute"
-      mt="223px"
-      ml="251px"
+      sx={{ bottom: "16px", right: "24px", gap: "8px", position: "absolute" }}
     >
       <FiberManualRecordIcon
         sx={{

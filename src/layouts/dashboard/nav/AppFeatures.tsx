@@ -25,12 +25,12 @@ const StyledOverlay = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-type ItemProps = {
+interface ItemProps {
   id: string;
   image: string;
   title: string;
   description: string;
-};
+}
 
 interface Props extends CardProps {
   list: ItemProps[];
@@ -96,10 +96,10 @@ export default function AppFeatured({ list, ...other }: Props) {
 
 // ----------------------------------------------------------------------
 
-type CarouselItemProps = {
+interface CarouselItemProps {
   item: ItemProps;
   isActive?: boolean;
-};
+}
 
 function CarouselItem({ item, isActive }: CarouselItemProps) {
   const { image, title } = item;

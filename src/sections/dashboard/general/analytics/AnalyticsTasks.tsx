@@ -86,22 +86,18 @@ function TaskItem({
 
   const handleMarkComplete = (): void => {
     handleClosePopover();
-    console.log("MARK COMPLETE", task.id);
   };
 
   const handleShare = (): void => {
     handleClosePopover();
-    console.log("SHARE", task.id);
   };
 
   const handleEdit = (): void => {
     handleClosePopover();
-    console.log("EDIT", task.id);
   };
 
   const handleDelete = (): void => {
     handleClosePopover();
-    console.log("DELETE", task.id);
   };
 
   return (

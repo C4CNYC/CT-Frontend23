@@ -129,7 +129,7 @@ interface CardItemProps {
 }
 
 function CardItem({ card }: CardItemProps): React.ReactElement | null {
-  const { id, cardType, balance, cardHolder, cardNumber, cardValid } = card;
+  const { cardType, balance, cardHolder, cardNumber, cardValid } = card;
 
   const [showCurrency, setShowCurrency] = useState(false);
 
@@ -149,12 +149,10 @@ function CardItem({ card }: CardItemProps): React.ReactElement | null {
 
   const handleDelete = (): void => {
     handleClosePopover();
-    console.log("DELETE", id);
   };
 
   const handleEdit = (): void => {
     handleClosePopover();
-    console.log("EDIT", id);
   };
 
   return (

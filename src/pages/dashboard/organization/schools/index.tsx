@@ -1,18 +1,13 @@
 import CustomBreadcrumbs from "@components/custom-breadcrumbs";
 import { useSettingsContext } from "@components/settings";
-import { useTable } from "@components/table";
 import DashboardLayout from "@layouts/dashboard";
-import { Container, Stack } from "@mui/material";
+import { Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
-import { FileFilterName, SchoolGridView } from "@sections/dashboard/schools";
 import Head from "next/head";
-import { useState } from "react";
 
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
-import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
-import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
+import SchoolTable from "@sections/dashboard/schools/view/SchoolTable";
 import { useLocales } from "../../../../locales";
-import SkeletonSchoolItem from "./skeleton-school-item";
 
 Index.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -23,26 +18,7 @@ Index.getLayout = (page: React.ReactElement) => (
 export default function Index(): React.ReactElement {
   const { translate } = useLocales();
 
-  const table = useTable({ defaultRowsPerPage: 10 });
-
   const { themeStretch } = useSettingsContext();
-
-  const [filterName, setFilterName] = useState("");
-
-  const { data, isLoading } = useGetSchoolListQuery({
-    name: filterName,
-  });
-
-  const handleFilterName = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    table.setPage(0);
-    setFilterName(event.target.value);
-  };
-
-  const handleDeleteItem = (id: string): void => {};
-
-  if (isLoading) return <SkeletonList item={<SkeletonSchoolItem />} />;
 
   return (
     <>
@@ -61,23 +37,7 @@ export default function Index(): React.ReactElement {
           ]}
           action={<AddSchoolDialog />}
         />
-        <Stack
-          spacing={2.5}
-          direction={{ xs: "column", md: "row" }}
-          alignItems={{ xs: "flex-start", md: "center" }}
-          justifyContent="space-between"
-          sx={{ mb: 5 }}
-        >
-          <FileFilterName
-            filterName={filterName}
-            onFilterName={handleFilterName}
-          />
-        </Stack>
-        <SchoolGridView
-          table={table}
-          data={data?.data ?? []}
-          onDeleteItem={handleDeleteItem}
-        />
+        <SchoolTable />
       </Container>
     </>
   );

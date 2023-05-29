@@ -8,7 +8,7 @@ export const baseQueryWrapper = (baseUrl: string): BaseQueryFn =>
     baseUrl,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("accessToken") ?? "";
-      const tenantName = localStorage.getItem("tenantName") ?? "";
+      const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
 
       headers.set(AUTHORIZATION_HEADER_KEY, `Bearer ${token}`);
       headers.set(TENANT_ID_HEADER_KEY, tenantName);

@@ -34,7 +34,7 @@ IRealTimeCodeEditor): React.ReactElement | null => {
   });
 
   const getStartData = (): void => {
-    getDocument(socket).then(({ version, doc }: { version: number, doc: string }) => {
+    getDocument(socket).then(({ version, doc }) => {
       if (version === undefined || !doc) {
         setTimeout(() => {
           getStartData();

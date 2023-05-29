@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { Box, Divider, MenuItem, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 // routes
-import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
+import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 // auth
 import { useAuthContext } from "../../../auth/useAuthContext";
 // components
@@ -13,22 +13,22 @@ import { IconButtonAnimate } from "@components/animate";
 import { CustomAvatar } from "@components/custom-avatar";
 import MenuPopover from "@components/menu-popover";
 import { useSnackbar } from "@components/snackbar";
+import { useProfileQuery } from "src/redux/services/auth";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
+  const { data: profile } = useProfileQuery();
 
-  const { user, logout } = useAuthContext();
-
+  const { logout } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const OPTIONS = [
     {
       label: "Profile",
-      linkTo: PATH_DASHBOARD.organization.edit(user?.id),
+      linkTo: PATH_PAGE.profile,
     },
   ];
 
@@ -46,7 +46,6 @@ export default function AccountPopover(): React.ReactElement {
       replace(PATH_AUTH.login);
       handleClosePopover();
     } catch (error) {
-      console.error(error);
       enqueueSnackbar("Unable to logout!", { variant: "error" });
     }
   };
@@ -76,9 +75,9 @@ export default function AccountPopover(): React.ReactElement {
         }}
       >
         <CustomAvatar
-          src={user?.avatar}
-          alt={user?.displayName}
-          name={user?.displayName}
+          src={profile?.avatar}
+          alt={profile?.first_name}
+          name={profile?.first_name}
         />
       </IconButtonAnimate>
 
@@ -89,11 +88,11 @@ export default function AccountPopover(): React.ReactElement {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+            {profile?.first_name}
           </Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-            {user?.email}
+            {profile?.email}
           </Typography>
         </Box>
 

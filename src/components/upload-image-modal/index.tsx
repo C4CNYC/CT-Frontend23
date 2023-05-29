@@ -20,11 +20,13 @@ interface FormValuesProps {
 interface UploadImageProps {
   onUpload: (file: File, id: string | undefined) => Promise<void>;
   id?: string;
+  color?: string;
 }
 
 export default function UploadImageModal({
   onUpload,
   id,
+  color,
 }: UploadImageProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
@@ -50,7 +52,12 @@ export default function UploadImageModal({
 
   const methods = useForm<FormValuesProps>();
 
-  const { setValue, handleSubmit, reset } = methods;
+  const {
+    setValue,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
@@ -80,7 +87,7 @@ export default function UploadImageModal({
   return (
     <>
       <IconButton onClick={handleOpen}>
-        <EditOutlinedIcon style={{ color: "rgb(161, 167, 172)" }} />
+        <EditOutlinedIcon style={{ color: color ?? "rgb(161, 167, 172)" }} />
       </IconButton>
       <Modal
         open={open}
@@ -135,7 +142,11 @@ export default function UploadImageModal({
               }
             ></RHFUploadAvatar>
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: "30px" }}>
-              <LoadingButton type="submit" variant="contained">
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+              >
                 Update
               </LoadingButton>
             </Stack>

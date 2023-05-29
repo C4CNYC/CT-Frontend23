@@ -160,7 +160,9 @@ export default function CourseCard({
             >
               Price
             </Typography>
-            <Typography variant="subtitle1">{price}</Typography>
+            <Typography variant="subtitle1">
+              {+price.substring(1) === 0 ? "free" : price}
+            </Typography>
           </div>
         </Box>
       </Card>
@@ -180,6 +182,7 @@ export default function CourseCard({
             description: course.description,
             active: course.active,
             draft: course.draft,
+            public: course.public,
             skills: course.skills,
           }}
         >
@@ -188,15 +191,6 @@ export default function CourseCard({
             Edit
           </MenuItem>
         </CreateCourseDialog>
-
-        <MenuItem
-          component={Link}
-          href={PATH_DASHBOARD.courses.setting(course.id)}
-        >
-          <Iconify icon="ant-design:setting-outlined" />
-          Settings
-        </MenuItem>
-
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem

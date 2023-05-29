@@ -18,7 +18,22 @@ export interface OrganizationSchoolRequest {
   city: string;
   country: string;
 }
-
+export interface ISchoolSummary {
+  id?: string;
+  email?: string;
+  name?: string;
+  country?: string;
+  address?: string;
+  cover?: string;
+  avatar?: string;
+  city?: string;
+  active?: boolean;
+  phone?: string;
+  about?: string;
+  socials?: [];
+  student_count?: number;
+  teacher_count?: number;
+}
 export interface SchoolProfile {
   email?: string;
   name?: string;

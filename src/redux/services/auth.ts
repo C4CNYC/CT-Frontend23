@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { Role } from "./enums/role.enum";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
+import { IStudentProfile } from "./interfaces/user.interface";
 
 export interface User extends BaseResponseInterface {
+  avatar: string;
   email: string;
-  name: string;
-  role: string;
+  role: Role;
+  first_name: string;
+  last_name: string;
 }
 
 export interface UserResponse {
@@ -45,6 +49,7 @@ export const authApi = createApi({
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/auth`)
   ),
+  tagTypes: ["ProfileUser"],
   endpoints: (builder) => ({
     createTenant: builder.mutation<TenantResponce, TenantRequest>({
       query: (body) => ({
@@ -69,9 +74,26 @@ export const authApi = createApi({
     }),
     profile: builder.query<User, void>({
       query: () => ({
-        url: "auth/profile",
+        url: "/profile",
         method: "GET",
       }),
+      providesTags: ["ProfileUser"],
+    }),
+    updateProfile: builder.mutation<IStudentProfile, IStudentProfile>({
+      query: ({ ...body }) => ({
+        url: "/profile",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["ProfileUser"],
+    }),
+    udpateProfileAvatar: builder.mutation<void, { file: FormData }>({
+      query: ({ file }) => ({
+        url: "/profile/avatar",
+        method: "PATCH",
+        body: file,
+      }),
+      invalidatesTags: ["ProfileUser"],
     }),
     protected: builder.mutation<{ message: string }, void>({
       query: () => "protected",
@@ -86,4 +108,6 @@ export const {
   useProtectedMutation,
   useProfileQuery,
   usePrefetch,
+  useUdpateProfileAvatarMutation,
+  useUpdateProfileMutation,
 } = authApi;

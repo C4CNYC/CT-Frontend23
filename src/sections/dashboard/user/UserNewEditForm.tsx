@@ -60,6 +60,7 @@ export default function UserNewEditForm({
       .email("Email must be a valid email address"),
     role: Yup.string().required("Role is required"),
     verifired: Yup.boolean(),
+    active: Yup.boolean(),
   });
 
   const defaultValues = useMemo(
@@ -69,6 +70,7 @@ export default function UserNewEditForm({
       email: currentUser?.email ?? "",
       role: (currentUser?.role as Role) ?? Role.Manager,
       verified: currentUser?.verified,
+      active: currentUser?.active,
     }),
     [currentUser]
   );
@@ -84,10 +86,6 @@ export default function UserNewEditForm({
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = {
-    status: "active",
-  };
 
   useEffect(() => {
     if (isEdit && currentUser) {
@@ -124,6 +122,7 @@ export default function UserNewEditForm({
           user_id: currentUser?.id,
           ...body,
         }).unwrap();
+        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
         if (!photoURL) return;
         await updateAvatar(currentUser?.id, photoURL);
       } else {
@@ -136,11 +135,11 @@ export default function UserNewEditForm({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(PATH_DASHBOARD.organization.members);
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
-      console.error(error);
     }
+    reset();
   };
 
   const handleDrop = useCallback(
@@ -165,7 +164,7 @@ export default function UserNewEditForm({
           <Card sx={{ pt: 10, pb: 5, px: 3 }}>
             {isEdit && (
               <Label
-                color={values.status === "active" ? "success" : "error"}
+                color={currentUser?.active ? "success" : "error"}
                 sx={{
                   textTransform: "uppercase",
                   position: "absolute",
@@ -173,7 +172,7 @@ export default function UserNewEditForm({
                   right: 24,
                 }}
               >
-                {values.status}
+                {currentUser?.active ? "active" : "not active"}
               </Label>
             )}
 
@@ -211,6 +210,21 @@ export default function UserNewEditForm({
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
                     Disabling this will automatically send the user a
                     verification email
+                  </Typography>
+                </>
+              }
+              sx={{ mx: 0, width: 1, justifyContent: "space-between" }}
+            />
+            <RHFSwitch
+              name="active"
+              labelPlacement="start"
+              label={
+                <>
+                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                    User Verified
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                    Disabled user dont have access to resorce
                   </Typography>
                 </>
               }

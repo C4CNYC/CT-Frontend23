@@ -13,13 +13,13 @@ import {
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import * as Yup from "yup";
 import { useForm } from "react-hook-form";
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from "src/redux/services/manager/lessons-manager";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
+import * as Yup from "yup";
 
 interface FormValuesProps {
   name: string;
@@ -88,10 +88,9 @@ export default function CreateLesson({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
     setLoading(false);
     // eslint-disable-next-line no-eval
@@ -126,7 +125,7 @@ export default function CreateLesson({
                     rows={3}
                   />
 
-                  <RHFSwitch name="active" label="Module active" />
+                  <RHFSwitch name="active" label="Lesson active" />
                 </Box>
                 <Box
                   sx={{

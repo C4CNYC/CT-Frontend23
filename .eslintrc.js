@@ -39,6 +39,7 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": 1,
     "@typescript-eslint/restrict-plus-operands": 1,
     quotes: [2, "double", { avoidEscape: true }],
-    "@typescript-eslint/indent": 0
+    "@typescript-eslint/indent": 0,
+    "no-console": ["error", {"allow": [""]}]
   }
 }

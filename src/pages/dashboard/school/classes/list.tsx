@@ -92,8 +92,10 @@ export default function UserListPage(): React.ReactElement {
     name: "",
   });
 
-  const [updateClassByManager] = useUpdateClassesMutation();
-  const [createClassByManager] = useCreateClassesMutation();
+  const [updateClassByManager, { isLoading: updateResult }] =
+    useUpdateClassesMutation();
+  const [createClassByManager, { isLoading: createClassLoading }] =
+    useCreateClassesMutation();
   const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { schoolId, ...filters },
@@ -102,7 +104,8 @@ export default function UserListPage(): React.ReactElement {
 
   const handleDeleteMember = async (classId: string): Promise<void> => {
     try {
-      await deleteCasses({ classId, schoolId }).unwrap();
+      await deleteCasses({ classId, schoolId });
+      enqueueSnackbar("Class deleted");
     } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -112,14 +115,13 @@ export default function UserListPage(): React.ReactElement {
 
   const handleDeleteRow = (user_id: string): void => {
     handleDeleteMember(user_id);
-    enqueueSnackbar("Member deleted");
   };
 
   const handleDeleteRows = (selected: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i]);
     }
-    enqueueSnackbar("Members deleted");
+    enqueueSnackbar("Classes deleted");
   };
 
   const handleEditRow = async (id: string, name: string): Promise<void> => {
@@ -128,17 +130,15 @@ export default function UserListPage(): React.ReactElement {
       enqueueSnackbar("Class updated successfuly!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 
   const createClass = async (name: string): Promise<void> => {
     try {
       await createClassByManager({ schoolId, name }).unwrap();
-      enqueueSnackbar(`School ${name} created successfuly!`);
+      enqueueSnackbar(`Class ${name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
-      console.error(error);
     }
   };
 
@@ -157,7 +157,10 @@ export default function UserListPage(): React.ReactElement {
             { name: "List" },
           ]}
           action={
-            <AddClassDialog createClass={createClass}>
+            <AddClassDialog
+              createClass={createClass}
+              createClassLoading={createClassLoading}
+            >
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
@@ -185,7 +188,7 @@ export default function UserListPage(): React.ReactElement {
           <Divider />
 
           <UserTableToolbar
-            filterName={filters.name}
+            filterName={filters.name ?? ""}
             onFilterName={(e: any) => {
               setFilter("name", e.target.value);
             }}
@@ -251,6 +254,7 @@ export default function UserListPage(): React.ReactElement {
                               handleDeleteRow(row.id);
                             }}
                             onEditRow={handleEditRow}
+                            updateResult={updateResult}
                           />
                         ))}
 

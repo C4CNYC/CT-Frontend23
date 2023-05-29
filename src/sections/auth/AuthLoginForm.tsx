@@ -30,7 +30,7 @@ interface FormValuesProps {
 export default function AuthLoginForm(): React.ReactElement {
   const { login } = useAuthContext();
   const router = useRouter();
-  const { tenant_name } = router.query;
+  // const { tenant_name } = router.query;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,7 +44,7 @@ export default function AuthLoginForm(): React.ReactElement {
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(LoginSchema),
-    defaultValues: { tenantName: tenant_name as string },
+    defaultValues: { tenantName: "codetribe" },
   });
 
   const {
@@ -59,7 +59,6 @@ export default function AuthLoginForm(): React.ReactElement {
       await login(data.email, data.password, data.tenantName);
       router.replace(PATH_AFTER_LOGIN);
     } catch (error) {
-      console.error(error);
       reset();
       setError("afterSubmit", {
         ...error,
@@ -74,13 +73,6 @@ export default function AuthLoginForm(): React.ReactElement {
         {!!errors.afterSubmit && (
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
-
-        <RHFTextField
-          name="tenantName"
-          label="Tenant name"
-          disabled={!!tenant_name}
-        />
-
         <RHFTextField name="email" label="Email address" />
 
         <RHFTextField
@@ -106,7 +98,7 @@ export default function AuthLoginForm(): React.ReactElement {
         />
       </Stack>
 
-      <Stack alignItems="flex-end" sx={{ my: 2 }}>
+      <Stack alignItems="flex-end" sx={{ my: 2, mr: 1 }}>
         <Link
           component={NextLink}
           href={PATH_AUTH.resetPassword}
@@ -114,7 +106,7 @@ export default function AuthLoginForm(): React.ReactElement {
           color="inherit"
           underline="always"
         >
-          {/* Forgot password? */}
+          Forgot password?
         </Link>
       </Stack>
 

@@ -19,7 +19,7 @@ import { FcFolder } from "react-icons/fc";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import AddClassDialog from "../../schools/classes/CreateClassDialog";
+import ClassPreferences from "../modal";
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +29,7 @@ interface Props {
   onEditRow: (id: string, name: string) => void;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  updateResult: boolean;
 }
 
 export default function ClassesTableRow({
@@ -37,6 +38,7 @@ export default function ClassesTableRow({
   onEditRow,
   onSelectRow,
   onDeleteRow,
+  updateResult,
 }: Props): React.ReactElement | null {
   const { name, active, total_students, total_courses, createdAt } = row;
 
@@ -125,23 +127,26 @@ export default function ClassesTableRow({
         arrow="right-top"
         sx={{ width: 140 }}
       >
-        <AddClassDialog
-          isEdit
-          defaultValues={{ name: row.name }}
-          updateClass={(name) => {
+        <MenuItem
+          component={Link}
+          href={PATH_DASHBOARD.school.controller(row.id)}
+        >
+          <Iconify icon="material-symbols:connect-without-contact" />
+          Connect
+        </MenuItem>
+        <ClassPreferences
+          updateClass={(name: string) => {
             onEditRow(row.id, name);
-            handleClosePopover();
           }}
+          defaultValues={{ name: row.name, description: "" }}
+          rowId={row.id}
+          updateResult={updateResult}
         >
           <MenuItem>
-            <Iconify icon="eva:edit-fill" />
-            Edit
+            <Iconify icon="ant-design:setting-outlined" />
+            Settings
           </MenuItem>
-        </AddClassDialog>
-        <MenuItem component={Link} href={PATH_DASHBOARD.school.setting(row.id)}>
-          <Iconify icon="ant-design:setting-outlined" />
-          Settings
-        </MenuItem>
+        </ClassPreferences>
         <MenuItem
           onClick={() => {
             handleOpenConfirm();

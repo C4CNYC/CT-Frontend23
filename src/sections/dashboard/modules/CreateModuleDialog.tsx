@@ -1,14 +1,25 @@
 import FormProvider, { RHFSwitch, RHFTextField } from "@components/hook-form";
+import { ModuleLessonsAutocomplete } from "@components/module-lessons-autocomplete";
 import { useSnackbar } from "@components/snackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Card, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  DialogActions,
+  Grid,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
 import * as Yup from "yup";
 import {
   useCreateModuleMutation,
@@ -28,17 +39,54 @@ interface Prop {
   id?: string;
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 export default function CreateModuleDialog({
   id,
   isEdit,
   children,
   defaultValues,
 }: Prop): React.ReactElement {
+  const { query } = useRouter();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
+
   const { enqueueSnackbar } = useSnackbar();
-  const [editModule] = useUpdateModuleMutation();
-  const [createModule] = useCreateModuleMutation();
+  const [addToCourse, { isLoading: isAddToCourseLoading }] =
+    useAddModuleToCourseMutation();
+  const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation();
+  const [createModule, { isLoading: isCreateLoading }] =
+    useCreateModuleMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -65,24 +113,38 @@ export default function CreateModuleDialog({
         await editModule({
           id,
           ...data,
-        });
+        }).unwrap();
       } else {
-        await createModule({
+        const module = await createModule({
           ...data,
+        }).unwrap();
+        methods.reset();
+        enqueueSnackbar("Create success!");
+        handleClose();
+        if (!query.course_id) {
+          return;
+        }
+        await addToCourse({
+          id: query.course_id as string,
+          unit_id: module.id,
         }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
     } catch (error) {
-      enqueueSnackbar(error.data.message, {
+      enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
-      console.error(error, "test");
     }
     setLoading(false);
+    // eslint-disable-next-line no-eval
     handleClose();
   };
+  const [value, setValue] = React.useState(0);
 
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
   return (
     <>
       <Box
@@ -94,15 +156,27 @@ export default function CreateModuleDialog({
       </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEdit ? "Edit" : "Create"} Module</DialogTitle>
-        <DialogContent sx={{ p: 0 }}>
+        <DialogContent sx={{ p: 0, mt: "-10px" }}>
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={12}>
-                <Card sx={{ p: 3 }}>
-                  <Box rowGap={3} display="grid">
+            <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+              {isEdit ? (
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="General" {...a11yProps(0)} />
+                  <Tab label="Lessons" {...a11yProps(1)} />
+                </Tabs>
+              ) : null}
+            </Box>
+            <TabPanel value={value} index={0}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={12}>
+                  <Box rowGap={3} display="grid" m={3}>
                     <RHFTextField
                       style={{ width: "350px" }}
                       name="name"
@@ -120,26 +194,35 @@ export default function CreateModuleDialog({
 
                     <RHFSwitch name="active" label="Module active" />
                   </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      gap: 2,
-                      mt: 7,
-                    }}
-                  >
-                    <Button onClick={handleClose}>Close</Button>
-                    <LoadingButton
-                      type="submit"
-                      variant="contained"
-                      loading={loading}
-                    >
-                      Save
-                    </LoadingButton>
-                  </Box>
-                </Card>
+                </Grid>
               </Grid>
-            </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Box width="400px" height="290px">
+                <ModuleLessonsAutocomplete id={id as string} />
+              </Box>
+            </TabPanel>
+            <DialogActions>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: 2,
+                  mt: 7,
+                }}
+              >
+                <Button onClick={handleClose}>Close</Button>
+                <LoadingButton
+                  type="submit"
+                  variant="contained"
+                  loading={
+                    isEditLoading || isCreateLoading || isAddToCourseLoading
+                  }
+                >
+                  Save
+                </LoadingButton>
+              </Box>
+            </DialogActions>
           </FormProvider>
         </DialogContent>
       </Dialog>

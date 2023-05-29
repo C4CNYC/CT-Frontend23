@@ -4,10 +4,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 
-type Props = {
+interface Props {
   setOptions: (event: string) => void;
   contentType: string;
-};
+}
 
 export default function LessonSelect({
   setOptions,

@@ -19,44 +19,43 @@ export default function HomePage(): React.ReactElement | null {
   const { themeStretch } = useSettingsContext();
 
   return (
-    <>
-      <Container maxWidth={themeStretch ? false : "lg"}>
-        <Stack
-          display="flex"
-          flexDirection="row"
-          sx={{
-            flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
-            justifyContent: { xs: "center", sm: "center", md: "auto" },
-          }}
-        >
-          <WelcomeSection />
-          <SliderDemoMui />
-        </Stack>
-
+    <Container maxWidth={themeStretch ? false : "lg"}>
+      <Stack
+        display="flex"
+        flexDirection="row"
+        sx={{
+          flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
+          justifyContent: "center",
+          gap: 3,
+          mb: 3,
+        }}
+      >
+        <WelcomeSection />
+        <SliderDemoMui />
+      </Stack>
+      <Stack alignItems="center" gap={3}>
         <MainSectionHome />
 
         <InfoSectionHome />
         <Stack
-          ml="40px"
-          mt="24px"
-          display="flex"
           direction="row"
-          mr="24px"
           sx={{
-            width: { xs: "auto", sm: "auto", md: "auto", lg: "1100px" },
-            ml: { xs: "0", sm: "0", md: "0", lg: "40px" },
-            mt: { xs: "0", sm: "0", md: "0", lg: "24px" },
-            mr: { xs: "0", sm: "0", md: "0", lg: "40px" },
-            gap: { xs: 3, sm: 3, md: 3, lg: "35px" },
+            justifyContent: {
+              xs: "center",
+              sm: "center",
+              md: "center",
+              lg: "space-between",
+            },
+            width: "100%",
+            gap: 2,
             flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
-            pt: { xs: 3, ms: 3, md: 3, lg: 0 },
           }}
         >
           <WeeklyActivities />
           <RecentLessons />
           <RecentAssignments />
         </Stack>
-      </Container>
-    </>
+      </Stack>
+    </Container>
   );
 }

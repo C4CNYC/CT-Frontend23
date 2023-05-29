@@ -98,7 +98,7 @@ export default function ClassItem({
         <>
           <AddClassDialog
             isEdit
-            defaultValues={{ name: classes.name }}
+            defaultValues={{ name: classes.name, description: "" }}
             updateClass={() => {
               updateClassByAdmin(classes.name);
               handleClosePopover();

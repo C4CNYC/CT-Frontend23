@@ -84,9 +84,7 @@ export default function SkillsTab({
       onChange={onChange}
       options={skills?.data}
       popupIcon={null}
-      onLoadStart={() => {
-        console.log("work");
-      }}
+      onLoadStart={() => {}}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }
@@ -104,9 +102,7 @@ export default function SkillsTab({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => (
-        <TextField {...params} placeholder="Integrations" />
-      )}
+      renderInput={(params) => <TextField {...params} placeholder="Skills" />}
       renderOption={(props, recipient, { inputValue }) => {
         const { name } = recipient;
         const matches = match(name, inputValue);

@@ -1,6 +1,8 @@
 import { BaseSearchInterface } from "src/utils/baseRequest.intergace";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import { LessonContentComplexity } from "../enums/lesson-content-complexity.enum";
 import { LessonContentType } from "../enums/lesson-content-type.enum";
+import { ILessonContentValidation } from "./lessonContentValidation.interface";
 
 export interface IModule {
   active: boolean;
@@ -14,7 +16,7 @@ export interface ILesson {
   active: boolean;
   name: string;
   description: string;
-  meta: Record<string, string>;
+  meta: Record<string, Record<string, any>>;
 }
 
 export interface ICourse {
@@ -24,12 +26,14 @@ export interface ICourse {
   description: string;
   active: boolean;
   cover: string;
+  public: boolean;
   draft: boolean;
   skills: [];
 }
 
 export interface ILessonContent {
   body: string;
+  name: string;
   type: LessonContentType;
   slug: string;
   title: string;
@@ -41,6 +45,7 @@ export interface ILessonContent {
   solution_body: string;
   meta: Record<string, any>;
   complexity: LessonContentComplexity;
+  validations: Array<ILessonContentValidation & BaseResponseInterface>;
 }
 
 export interface ILessonContentUpdate {

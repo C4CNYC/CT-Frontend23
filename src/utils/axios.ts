@@ -1,10 +1,10 @@
 import axios from "axios";
-// config
-import { HOST_API_KEY } from "../config-global";
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: HOST_API_KEY });
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
 
 axiosInstance.interceptors.response.use(
   (response) => response,
@@ -16,7 +16,8 @@ axiosInstance.interceptors.response.use(
 axiosInstance.interceptors.request.use(
   function (config) {
     if (config.headers) {
-      config.headers["x-tenant-id"] = localStorage.getItem("tenantName") ?? "";
+      config.headers["x-tenant-id"] =
+        localStorage.getItem("tenantName") ?? "codetribe";
     }
     return config;
   },

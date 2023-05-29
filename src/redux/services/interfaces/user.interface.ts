@@ -53,10 +53,30 @@ export interface IStudent {
   verified: boolean;
   active: boolean;
   password?: string;
+  avatar: string;
+}
+
+export interface IMentor {
+  schoolId?: string;
+  name: string;
+  class_id?: string;
+  email: string;
+}
+
+export interface MentorSearchParams extends BaseSearchInterface {
+  schoolId?: string;
+  name?: string;
+  class_id?: string;
 }
 
 export interface CreateUserRequest extends IUser {}
 
 export interface UpdateUserRequest extends Omit<IUser, "email"> {
   user_id: string;
+}
+export interface IStudentProfile {
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  avatar?: string;
 }

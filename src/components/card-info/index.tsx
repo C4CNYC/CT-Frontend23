@@ -11,13 +11,16 @@ export default function CardInfo() {
   return (
     <>
       <Card
-        sx={{
+        sx={(theme) => ({
           minWidth: "328px",
           borderRadius: "16px",
           boxShadow: "none",
           border: "1px solid rgba(145, 158, 171, 0.24)",
           padding: "24px",
-        }}
+          [theme.breakpoints.down(400)]: {
+            minWidth: "300px",
+          },
+        })}
       >
         <Stack>
           <Typography variant="subtitle2" mb="16px">
@@ -81,7 +84,15 @@ export default function CardInfo() {
               56
             </Typography>
           </Stack>
-          <Stack ml="91px" mt="40px">
+          <Stack
+            sx={(theme) => ({
+              ml: "91px",
+              mt: "40px",
+              [theme.breakpoints.down(400)]: {
+                ml: "51px",
+              },
+            })}
+          >
             <ImTwitter color="#00AAEC" size={44} />
           </Stack>
         </Stack>
@@ -90,13 +101,16 @@ export default function CardInfo() {
       {/* card2 */}
 
       <Card
-        sx={{
+        sx={(theme) => ({
           minWidth: "328px",
           borderRadius: "16px",
           boxShadow: "none",
           border: "1px solid rgba(145, 158, 171, 0.24)",
           padding: "24px",
-        }}
+          [theme.breakpoints.down(400)]: {
+            minWidth: "300px",
+          },
+        })}
       >
         <Stack>
           <Typography variant="subtitle2" mb="16px">
@@ -160,7 +174,15 @@ export default function CardInfo() {
               56
             </Typography>
           </Stack>
-          <Stack ml="91px" mt="40px">
+          <Stack
+            sx={(theme) => ({
+              ml: "91px",
+              mt: "40px",
+              [theme.breakpoints.down(400)]: {
+                ml: "51px",
+              },
+            })}
+          >
             <Image
               src="/assets/icons/home/ic_doc.svg"
               width="44"
@@ -174,13 +196,16 @@ export default function CardInfo() {
       {/* card3 */}
 
       <Card
-        sx={{
+        sx={(theme) => ({
           minWidth: "328px",
           borderRadius: "16px",
           boxShadow: "none",
           border: "1px solid rgba(145, 158, 171, 0.24)",
           padding: "24px",
-        }}
+          [theme.breakpoints.down(400)]: {
+            minWidth: "300px",
+          },
+        })}
       >
         <Stack>
           <Typography variant="subtitle2" mb="16px">
@@ -255,7 +280,15 @@ export default function CardInfo() {
               56
             </Typography>
           </Stack>
-          <Stack ml="17px" mt="40px">
+          <Stack
+            sx={(theme) => ({
+              ml: "17px",
+              mt: "40px",
+              [theme.breakpoints.down(400)]: {
+                ml: "10px",
+              },
+            })}
+          >
             <Image
               src="/assets/icons/home/ic_ruby.svg"
               width="44"
