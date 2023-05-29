@@ -8,6 +8,7 @@ import RecentAssignments from "@sections/home/recent-assignments";
 import RecentLessons from "@sections/home/recent-lessons";
 import WeeklyActivities from "@sections/home/weekly-activities";
 import WelcomeSection from "@sections/home/welcome-section";
+import Head from "next/head";
 
 // ----------------------------------------------------------------------
 
@@ -19,6 +20,10 @@ export default function HomePage(): React.ReactElement | null {
   const { themeStretch } = useSettingsContext();
 
   return (
+    <>
+    <Head>
+      <title>Home | CodeTribe </title>
+    </Head>
     <Container maxWidth={themeStretch ? false : "lg"}>
       <Stack
         display="flex"
@@ -57,5 +62,6 @@ export default function HomePage(): React.ReactElement | null {
         </Stack>
       </Stack>
     </Container>
+    </>
   );
 }

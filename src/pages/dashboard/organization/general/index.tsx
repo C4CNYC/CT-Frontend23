@@ -89,7 +89,7 @@ export default function UserProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{`${translate("organizations.title")} : Codetribe`}</title>
+        <title>{`${translate("organizations.title")} | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card

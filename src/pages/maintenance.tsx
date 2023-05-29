@@ -20,7 +20,7 @@ export default function MaintenancePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Maintenance | Minimal UI</title>
+        <title> Maintenance | CodeTribe</title>
       </Head>
 
       <Stack sx={{ alignItems: "center" }}>

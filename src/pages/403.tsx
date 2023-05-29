@@ -23,7 +23,7 @@ export default function Page403(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> 403 Forbidden | Minimal UI</title>
+        <title> 403 Forbidden | CodeTribe</title>
       </Head>
 
       <MotionContainer>

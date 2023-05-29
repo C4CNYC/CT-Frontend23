@@ -20,7 +20,7 @@ export default function ResetPasswordPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Reset Password | Minimal UI</title>
+        <title> Reset Password | CodeTribe</title>
       </Head>
 
       <PasswordIcon sx={{ mb: 5, height: 96 }} />
