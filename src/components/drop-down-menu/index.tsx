@@ -7,13 +7,13 @@ import { useUpdateOrgMemberMutation } from "src/redux/services/admin/members-adm
 import { Role } from "src/redux/services/enums/role.enum";
 
 interface Props {
-  user_id: string;
+  userId: string;
   role: Role;
   email: string;
 }
 
 export default function RoleSelector({
-  user_id,
+  userId,
   role,
   email,
 }: Props): React.ReactElement | null {
@@ -28,7 +28,7 @@ export default function RoleSelector({
     setAnchorEl(null);
     try {
       await updateUser({
-        user_id,
+        user_id: userId,
         role,
       }).unwrap();
       enqueueSnackbar(`${email} updated to ${role} `);

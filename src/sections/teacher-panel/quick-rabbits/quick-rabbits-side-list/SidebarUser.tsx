@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
-import { IChatMessage, useFirebaseChat } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
+import {
+  IChatMessage,
+  useFirebaseChat,
+} from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
 import { useAtom } from "jotai";
 import { isNull } from "lodash";
@@ -41,36 +44,48 @@ export const SidebarUser = ({
   isLoading,
 }: Props): React.ReactElement => {
   const senderId = "SUPPORT";
-  const [lastMessage, setLastMessage] = useState<IChatMessage>()
+  const [lastMessage, setLastMessage] = useState<IChatMessage>();
   const { getMessages } = useFirebaseChat();
-  const [,setUserOnline] = useAtom(onlineStudentsAtom);
+  const [, setUserOnline] = useAtom(onlineStudentsAtom);
   const [, setQuickRabbit] = useAtom(quickRabbitAtom);
   const { lastTimeActivity, isOnline } = useOnlineConnection(student.id);
-  const { first_name, last_name, email, active, id, avatar } = student;
+  const {
+    first_name: firstName,
+    last_name: lastName,
+    email,
+    active,
+    id,
+    avatar,
+  } = student;
 
   useEffect(() => {
-    getMessages(senderId, id, (data) => {
-      if (!data.length) return;
-      setLastMessage(data[0]);
-    }, 1)
-  }, [])
+    getMessages(
+      senderId,
+      id,
+      (data) => {
+        if (!data.length) return;
+        setLastMessage(data[0]);
+      },
+      1
+    );
+  }, []);
 
   useEffect(() => {
-    setUserOnline(prev => ({
+    setUserOnline((prev) => ({
       ...prev,
-      [student.id]: isOnline
-    }))
-  }, [isOnline])
+      [student.id]: isOnline,
+    }));
+  }, [isOnline]);
 
   const onConnectStudent = (): void => {
     setQuickRabbit((prev) => ({ ...prev, [id]: { id, email } }));
   };
 
   const getSubText = (): string => {
-    if (!lastMessage) return ""
-    const sender = lastMessage?.sender_id === senderId ? "Me" : first_name;
+    if (!lastMessage) return "";
+    const sender = lastMessage?.sender_id === senderId ? "Me" : firstName;
     return `${sender}: ${lastMessage.text}`;
-  }
+  };
 
   return (
     <ListItem sx={{ pl: 0 }}>
@@ -83,14 +98,20 @@ export const SidebarUser = ({
         <LoaderDelay
           skeleton={<AvatarSkeleton />}
           component={
-            <Tooltip placement="left" title={getTooltipAvatarMessage(lastTimeActivity, isOnline)} >
+            <Tooltip
+              placement="left"
+              title={getTooltipAvatarMessage(lastTimeActivity, isOnline)}
+            >
               <Avatar
-                alt={first_name}
-                src={avatar ?? "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"}
+                alt={firstName}
+                src={
+                  avatar ??
+                  "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
+                }
                 sx={{
                   width: { xs: 40, sm: 40, md: 50 },
                   height: { xs: 40, sm: 40, md: 50 },
-                  border: `5px solid ${getAvatarColor(lastTimeActivity)}`
+                  border: `5px solid ${getAvatarColor(lastTimeActivity)}`,
                 }}
               />
             </Tooltip>
@@ -117,7 +138,7 @@ export const SidebarUser = ({
             whiteSpace: "nowrap",
           }}
         >
-          {first_name} {last_name}
+          {firstName} {lastName}
         </Typography>
         <Typography
           variant="caption"
@@ -130,13 +151,15 @@ export const SidebarUser = ({
           {getSubText()}
         </Typography>
       </Box>
-      <Tooltip placement="left" title={isOnline ? "connect" : "user is not available"}>
+      <Tooltip
+        placement="left"
+        title={isOnline ? "connect" : "user is not available"}
+      >
         <Box>
           <IconButton disabled={!isOnline} onClick={onConnectStudent}>
-           <AddIcon />
+            <AddIcon />
           </IconButton>
         </Box>
-
       </Tooltip>
     </ListItem>
   );
@@ -149,10 +172,13 @@ function getAvatarColor(time: number | null): string {
   return "#C4C4C4";
 }
 
-function getTooltipAvatarMessage (time: number | null, isOnline: boolean): string {
-  if (!isOnline) return "student offline"
+function getTooltipAvatarMessage(
+  time: number | null,
+  isOnline: boolean
+): string {
+  if (!isOnline) return "student offline";
   if (isNull(time)) return "was active long time ago";
-  if (time === 0 || time <= 5) return "active"
-  if (time < 50 && time > 5) return `was active ${time} minutes ago`
-  return "was active long time ago"
+  if (time === 0 || time <= 5) return "active";
+  if (time < 50 && time > 5) return `was active ${time} minutes ago`;
+  return "was active long time ago";
 }

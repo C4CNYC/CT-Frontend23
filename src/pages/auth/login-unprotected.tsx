@@ -5,7 +5,7 @@ export default function LoginUnprotectedPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Login Unprotected | Minimal UI</title>
+        <title> Login Unprotected | CodeTribe</title>
       </Head>
 
       <Login />

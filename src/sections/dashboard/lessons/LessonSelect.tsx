@@ -13,7 +13,7 @@ export default function LessonSelect({
   setOptions,
   contentType,
 }: Props): React.ReactElement {
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChange = (event: SelectChangeEvent): void => {
     setOptions(event.target.value);
   };
 

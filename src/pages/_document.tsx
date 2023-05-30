@@ -12,7 +12,7 @@ import { primaryFont } from "../theme/typography";
 // ----------------------------------------------------------------------
 
 export default class MyDocument extends Document {
-  render() {
+  render(): React.ReactElement {
     return (
       <Html lang="en" className={primaryFont.className}>
         <Head>

@@ -48,11 +48,11 @@ export default function InviteTeacherDialog({
   );
 
   const addUserToSchool = async (
-    user_id: string,
+    userId: string,
     schoolId: string
   ): Promise<void> => {
     try {
-      await addTeacher({ user_id, schoolId }).unwrap();
+      await addTeacher({ user_id: userId, schoolId }).unwrap();
       enqueueSnackbar("teacher added");
     } catch (e) {
       enqueueSnackbar(e.data.message, { variant: "error" });

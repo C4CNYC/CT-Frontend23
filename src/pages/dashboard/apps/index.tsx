@@ -45,7 +45,7 @@ export default function AppsPage(): React.ReactElement {
 
   const onDelete = async (id: string): Promise<void> => {
     try {
-      await removeIntegration({ integration_id: id }).unwrap();
+      await removeIntegration({ integrationId: id }).unwrap();
       enqueueSnackbar("integration removed");
     } catch (e) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });
@@ -113,7 +113,6 @@ export default function AppsPage(): React.ReactElement {
                             <IconButton>
                               <Iconify icon="material-symbols:edit" />
                             </IconButton>
-
                           </ModalIntegration>
                           <IconButton
                             onClick={async () => {

@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
 
-export default function WeeklyActivities() {
+export default function WeeklyActivities(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>): void => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
   return (

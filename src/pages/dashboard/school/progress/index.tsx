@@ -12,6 +12,7 @@ import {
   SkeletonProgressTableRow,
 } from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
 import _ from "lodash";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
@@ -77,6 +78,9 @@ export default function Progress(): React.ReactElement {
   });
   return (
     <>
+      <Head>
+        <title>Progress | CodeTribe </title>
+      </Head>
       <Container sx={{ ml: 0 }}>
         <CustomBreadcrumbs
           heading="Progress"

@@ -29,10 +29,10 @@ export default function UploadImageModal({
   color,
 }: UploadImageProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
+  const handleOpen = (): void => {
     setOpen(true);
   };
-  const handleClose = () => {
+  const handleClose = (): void => {
     setOpen(false);
   };
 

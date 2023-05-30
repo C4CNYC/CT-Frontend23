@@ -6,7 +6,7 @@ export default function InvitePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Invite Login | Codetribe</title>
+        <title> Invite Login | CodeTribe</title>
       </Head>
       <InviteAuth />
     </>

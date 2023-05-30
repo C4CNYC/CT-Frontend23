@@ -31,7 +31,7 @@ export default function PermissionDeniedPage(): React.ReactElement {
   const handleChangeRole = (
     event: React.MouseEvent<HTMLElement>,
     newRole: string | null
-  ) => {
+  ): void => {
     if (newRole !== null) {
       setRole(newRole);
     }

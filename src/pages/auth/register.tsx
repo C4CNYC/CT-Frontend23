@@ -9,7 +9,7 @@ export default function RegisterPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Register | Minimal UI</title>
+        <title> Register | CodeTribe</title>
       </Head>
 
       <GuestGuard>

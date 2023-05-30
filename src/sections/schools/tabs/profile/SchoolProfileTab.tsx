@@ -78,8 +78,8 @@ export default function SchoolProfileTab({
               />
             </Card>
             <ProfileUsersInfo
-              student_count={data?.student_count}
-              teacher_count={data?.teacher_count}
+              studentCount={data?.student_count}
+              teacherCount={data?.teacher_count}
             />
             <ProfileAbout data={data} />
             <ProfileSocialInfo socialLinks={data?.socials} />
