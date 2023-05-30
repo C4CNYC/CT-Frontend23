@@ -20,7 +20,7 @@ export default function StepCode({
 }: Props): React.ReactElement {
   const [value, setValue] = useState<string>("");
 
-  const pageSkeleton = (userContent: string) => {
+  const pageSkeleton = (userContent: string): string | undefined => {
     if (integrations) {
       return `<head>${integrations.reduce(
         (ac, cur) => ac + cur.head,

@@ -10,7 +10,7 @@ import { useProfileQuery } from "src/redux/services/auth";
 Profile.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-export default function Profile() {
+export default function Profile(): React.ReactElement {
   const { data } = useProfileQuery();
   const { themeStretch } = useSettingsContext();
   return (

@@ -18,7 +18,7 @@ export default function AddIframeButton(): JSX.Element {
     setHref(e.target.value);
   }, []);
 
-  const closeMenu = () => {
+  const closeMenu = (): void => {
     setEdit(false);
   };
   const ref = useDetectClickOutside({ onTriggered: closeMenu });
@@ -27,7 +27,7 @@ export default function AddIframeButton(): JSX.Element {
     e.preventDefault();
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: any): void => {
     e.preventDefault();
     addIframe({ src: href, height: 250, width: 500 });
     setHref("");

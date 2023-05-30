@@ -28,7 +28,7 @@ export default function TablePicker(): JSX.Element {
     [createTable, rows]
   );
 
-  const closeMenu = () => {
+  const closeMenu = (): void => {
     setEdit(false);
   };
 
@@ -41,7 +41,7 @@ export default function TablePicker(): JSX.Element {
     []
   );
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: any): void => {
     e.preventDefault();
     createTable({ rowsCount: rows, columnsCount: cells, withHeaderRow: false });
   };
