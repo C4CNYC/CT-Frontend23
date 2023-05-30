@@ -36,8 +36,16 @@ export default function UserTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props): React.ReactElement | null {
-  const { first_name, last_name, email, verified, active, avatar, role, id } =
-    row;
+  const {
+    first_name: firstName,
+    last_name: lastName,
+    email,
+    verified,
+    active,
+    avatar,
+    role,
+    id,
+  } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -66,7 +74,7 @@ export default function UserTableRow({
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
             <Avatar
-              alt={first_name}
+              alt={firstName}
               src={avatar ?? "/assets/images/avatar_2.jpg"}
             />
           </Stack>
@@ -75,18 +83,17 @@ export default function UserTableRow({
         <TableCell align="left">{email}</TableCell>
 
         <TableCell align="left">
-          {first_name &&
-            first_name?.charAt(0).toUpperCase() + first_name?.slice(1)}
+          {firstName &&
+            firstName?.charAt(0).toUpperCase() + firstName?.slice(1)}
         </TableCell>
 
         <TableCell align="left">
-          {last_name &&
-            last_name?.charAt(0).toUpperCase() + last_name?.slice(1)}
+          {lastName && lastName?.charAt(0).toUpperCase() + lastName?.slice(1)}
         </TableCell>
 
         {role ? (
           <TableCell align="left" sx={{ textTransform: "capitalize" }}>
-            <RoleSelector user_id={id} role={role} email={email} />
+            <RoleSelector userId={id} role={role} email={email} />
           </TableCell>
         ) : null}
 

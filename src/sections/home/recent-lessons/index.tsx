@@ -1,7 +1,7 @@
 import { Avatar, Card, Stack, Typography } from "@mui/material";
 import { AiFillInfoCircle } from "react-icons/ai";
 
-export default function RecentLessons() {
+export default function RecentLessons(): React.ReactElement {
   return (
     <>
       <Card

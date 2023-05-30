@@ -74,10 +74,10 @@ export default function UserListPage(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteMember, { isLoading: loading }] = useDeleteOrgMemberMutation();
 
-  const useDeleteMember = async (user_id: string): Promise<void> => {
+  const useDeleteMember = async (userId: string): Promise<void> => {
     try {
       await deleteMember({
-        user_id,
+        user_id: userId,
       }).unwrap();
     } catch (e) {
       enqueueSnackbar(e.data.message, {
@@ -86,8 +86,8 @@ export default function UserListPage(): React.ReactElement {
     }
   };
 
-  const handleDeleteRow = (user_id: string): void => {
-    useDeleteMember(user_id);
+  const handleDeleteRow = (userId: string): void => {
+    useDeleteMember(userId);
     enqueueSnackbar("Member deleted");
     setSelected([]);
   };

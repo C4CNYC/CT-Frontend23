@@ -36,10 +36,10 @@ export default function ClassesSection({
     { skip: !schoolId }
   );
 
-  const handleDeleteClass = async (user_id: string): Promise<void> => {
+  const handleDeleteClass = async (userId: string): Promise<void> => {
     try {
       await deleteTeacher({
-        user_id,
+        user_id: userId,
         schoolId,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");

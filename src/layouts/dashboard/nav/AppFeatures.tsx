@@ -36,7 +36,10 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function AppFeatured({ list, ...other }: Props) {
+export default function AppFeatured({
+  list,
+  ...other
+}: Props): React.ReactElement {
   const theme = useTheme();
 
   const carouselRef = useRef<Carousel>(null);
@@ -65,11 +68,11 @@ export default function AppFeatured({ list, ...other }: Props) {
     }),
   };
 
-  const handlePrev = () => {
+  const handlePrev = (): void => {
     carouselRef.current?.slickPrev();
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     carouselRef.current?.slickNext();
   };
 
@@ -101,7 +104,10 @@ interface CarouselItemProps {
   isActive?: boolean;
 }
 
-function CarouselItem({ item, isActive }: CarouselItemProps) {
+function CarouselItem({
+  item,
+  isActive,
+}: CarouselItemProps): React.ReactElement {
   const { image, title } = item;
 
   return (

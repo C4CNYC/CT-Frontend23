@@ -1,6 +1,7 @@
 import { javascript } from "@codemirror/lang-javascript";
 import FormProvider from "@components/hook-form";
 import { RHFCode } from "@components/hook-form/RHFCode";
+import ModalCodeFullscreen from "@components/modal-code-fullscreen/ModalCodeFullscreen";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -168,20 +169,32 @@ export default function Preferences({
                 <GeneralTab />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <RHFCode
-                  placeholder="This code would be hint for step"
-                  name="solution_body"
-                  height="350px"
-                  extensions={[javascript({ jsx: true })]}
-                />
+                <Box>
+                  <ModalCodeFullscreen
+                    title="This code would be hint for step"
+                    name="solution_body"
+                  />
+                  <RHFCode
+                    placeholder="This code would be hint for step"
+                    name="solution_body"
+                    height="350px"
+                    extensions={[javascript({ jsx: true })]}
+                  />
+                </Box>
               </TabPanel>
               <TabPanel value={value} index={2}>
-                <RHFCode
-                  placeholder="This code will preload to work space"
-                  name="preload_body"
-                  height="350px"
-                  extensions={[javascript({ jsx: true })]}
-                />
+                <Box>
+                  <ModalCodeFullscreen
+                    title="This code will preload to work space"
+                    name="preload_body"
+                  />
+                  <RHFCode
+                    placeholder="This code will preload to work space"
+                    name="preload_body"
+                    height="350px"
+                    extensions={[javascript({ jsx: true })]}
+                  />
+                </Box>
               </TabPanel>
             </DialogContent>
             <DialogActions>
