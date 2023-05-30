@@ -1,7 +1,7 @@
 import { javascript } from "@codemirror/lang-javascript";
 import FormProvider, { RHFTextField } from "@components/hook-form";
 import { RHFCode } from "@components/hook-form/RHFCode";
-import ModalIntegrationFullscreen from "@components/modal-integrations-fullscreen/ModalIntegrationFullscreen";
+import ModalCodeFullscreen from "@components/modal-code-fullscreen/ModalCodeFullscreen";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -86,6 +86,10 @@ export default function ModalIntegration({
     methods.reset();
     handleClose();
   };
+  const onCancel = () => {
+    methods.reset();
+    handleClose();
+  };
 
   return (
     <>
@@ -100,22 +104,28 @@ export default function ModalIntegration({
                   <RHFTextField placeholder="Name" name="name" />
                 </Box>
                 <Box>
+                  <ModalCodeFullscreen
+                    title="Head links or scripts"
+                    name="head"
+                  />
                   <RHFCode
                     placeholder="Head links or scripts"
                     name="head"
                     height="180px"
                     extensions={[javascript({ jsx: true })]}
                   />
-                  <ModalIntegrationFullscreen defaultValues={defaultValues} />
                 </Box>
                 <Box>
+                  <ModalCodeFullscreen
+                    title="Body links or scripts"
+                    name="scripts"
+                  />
                   <RHFCode
                     placeholder="Body links or scripts"
                     name="scripts"
                     height="180px"
                     extensions={[javascript({ jsx: true })]}
                   />
-                  <ModalIntegrationFullscreen defaultValues={defaultValues} />
                 </Box>
               </Stack>
             ) : (
@@ -124,6 +134,10 @@ export default function ModalIntegration({
                   <RHFTextField placeholder="Name" name="name" />
                 </Box>
                 <Box>
+                  <ModalCodeFullscreen
+                    title="Head links or scripts"
+                    name="head"
+                  />
                   <RHFCode
                     placeholder="Head links or scripts"
                     name="head"
@@ -132,6 +146,10 @@ export default function ModalIntegration({
                   />
                 </Box>
                 <Box>
+                  <ModalCodeFullscreen
+                    title="Body links or scripts"
+                    name="scripts"
+                  />
                   <RHFCode
                     placeholder="Body links or scripts"
                     name="scripts"
@@ -142,8 +160,8 @@ export default function ModalIntegration({
               </Stack>
             )}
           </DialogContent>
-          <DialogActions sx={{ mt: "-40px" }}>
-            <Button variant="outlined" color="inherit" onClick={handleClose}>
+          <DialogActions>
+            <Button variant="outlined" color="inherit" onClick={onCancel}>
               Cancel
             </Button>
             <LoadingButton
