@@ -3,7 +3,7 @@ import { LazyMotion, m } from "framer-motion";
 // ----------------------------------------------------------------------
 
 // eslint-disable-next-line import/extensions
-const loadFeatures = async () =>
+const loadFeatures = async (): Promise<any> =>
   await import("./features.js").then((res) => res.default);
 
 interface Props {

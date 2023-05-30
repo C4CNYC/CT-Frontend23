@@ -2,16 +2,20 @@ import { combineReducers } from "redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 // slices
 import { adminApi } from "./services/admin";
+import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
 import assignmentsReducer from "./slices/assignments";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
-import { authApi } from "./services/auth";
 
 // ----------------------------------------------------------------------
-
-export const createNoopStorage = () => ({
+interface INoopStorage {
+  getItem: (_key: string) => Promise<null>;
+  setItem: (_key: string, value: any) => Promise<any>;
+  removeItem: (_key: string) => Promise<void>;
+}
+export const createNoopStorage = (): INoopStorage => ({
   async getItem(_key: string) {
     return await Promise.resolve(null);
   },
