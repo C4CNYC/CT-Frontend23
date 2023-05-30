@@ -7,7 +7,10 @@ import { roadAtom } from "../road-atom";
 import StepContainer from "../StepContainer";
 import { SessionType } from "./SessionType";
 
-function HelloStep({ nextStep, goToStep }: Partial<StepWizardChildProps>) {
+function HelloStep({
+  nextStep,
+  goToStep,
+}: Partial<StepWizardChildProps>): React.ReactElement {
   const [, setSessionWay] = useAtom(roadAtom);
   return (
     <StepContainer>

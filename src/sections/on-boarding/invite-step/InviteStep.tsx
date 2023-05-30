@@ -33,7 +33,7 @@ function IviteStep({
   previousStep,
   nextStep,
   goToStep,
-}: Partial<StepWizardChildProps>) {
+}: Partial<StepWizardChildProps>): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [value] = useState("me.codetribe.com/join/AHJ123");
   const [{ sessionWay }] = useAtom(roadAtom);

@@ -2,13 +2,13 @@ import { Card, Divider, Stack, Typography } from "@mui/material";
 import { fNumber } from "../../../../../utils/formatNumber";
 
 interface Props {
-  student_count?: number | null;
-  teacher_count?: number | null;
+  studentCount?: number | null;
+  teacherCount?: number | null;
 }
 
 export default function ProfileUsersInfo({
-  student_count = 0,
-  teacher_count = 0,
+  studentCount = 0,
+  teacherCount = 0,
 }: Props): React.ReactElement | null {
   return (
     <Card sx={{ py: 3 }}>
@@ -17,7 +17,7 @@ export default function ProfileUsersInfo({
         divider={<Divider orientation="vertical" flexItem />}
       >
         <Stack width={1} textAlign="center">
-          <Typography variant="h4">{fNumber(student_count)}</Typography>
+          <Typography variant="h4">{fNumber(studentCount)}</Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Students
@@ -25,7 +25,7 @@ export default function ProfileUsersInfo({
         </Stack>
 
         <Stack width={1} textAlign="center">
-          <Typography variant="h4">{fNumber(teacher_count)}</Typography>
+          <Typography variant="h4">{fNumber(teacherCount)}</Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Teachers

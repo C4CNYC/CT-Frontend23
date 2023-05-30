@@ -3,7 +3,7 @@ import { BackgroundType } from "../types";
 
 // ----------------------------------------------------------------------
 
-export const varBgColor = (props?: BackgroundType) => {
+export const varBgColor = (props?: BackgroundType): Record<string, any> => {
   const colors = props?.colors ?? ["#19dcea", "#b22cff"];
   const duration = props?.duration ?? 5;
   const ease = props?.ease ?? "linear";
@@ -18,7 +18,7 @@ export const varBgColor = (props?: BackgroundType) => {
 
 // ----------------------------------------------------------------------
 
-export const varBgKenburns = (props?: BackgroundType) => {
+export const varBgKenburns = (props?: BackgroundType): Record<string, any> => {
   const duration = props?.duration ?? 5;
   const ease = props?.ease ?? "easeOut";
 
@@ -62,12 +62,13 @@ export const varBgKenburns = (props?: BackgroundType) => {
 
 // ----------------------------------------------------------------------
 
-export const varBgPan = (props?: BackgroundType) => {
+export const varBgPan = (props?: BackgroundType): Record<string, any> => {
   const colors = props?.colors ?? ["#ee7752", "#e73c7e", "#23a6d5", "#23d5ab"];
   const duration = props?.duration ?? 5;
   const ease = props?.ease ?? "linear";
 
-  const gradient = (deg: number) => `linear-gradient(${deg}deg, ${colors})`;
+  const gradient = (deg: number): string =>
+    `linear-gradient(${deg}deg, ${colors})`;
 
   return {
     top: {

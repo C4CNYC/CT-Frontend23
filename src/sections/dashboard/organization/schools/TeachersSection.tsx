@@ -39,10 +39,10 @@ export default function TeacherSection({
 
   const teachersIds = teachers ? teachers.data.map((t) => t.id) : null;
 
-  const handleDeleteTeacher = async (user_id: string): Promise<void> => {
+  const handleDeleteTeacher = async (userId: string): Promise<void> => {
     try {
       await deleteTeacher({
-        user_id,
+        user_id: userId,
         schoolId,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");

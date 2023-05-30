@@ -113,8 +113,8 @@ export default function UserListPage(): React.ReactElement {
     }
   };
 
-  const handleDeleteRow = (user_id: string): void => {
-    handleDeleteMember(user_id);
+  const handleDeleteRow = (userId: string): void => {
+    handleDeleteMember(userId);
   };
 
   const handleDeleteRows = (selected: string[]): void => {

@@ -25,11 +25,11 @@ interface FormValuesProps {
 export default function InviteForm(): React.ReactElement {
   const router = useRouter();
   const { id } = router.query;
-  const { tenant_name } = router.query;
+  const { tenant_name: tenantName } = router.query;
 
   useEffect(() => {
-    localStorage.setItem("tenantName", tenant_name as string);
-  }, [tenant_name]);
+    localStorage.setItem("tenantName", tenantName as string);
+  }, [tenantName]);
 
   const [submitInvite, { isLoading }] = useInviteSubmitMutation();
   const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +61,7 @@ export default function InviteForm(): React.ReactElement {
       }).unwrap();
       router.replace({
         pathname: PATH_AUTH.login,
-        query: { tenant_name },
+        query: { tenantName },
       });
     } catch (error) {
       reset();

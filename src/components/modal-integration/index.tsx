@@ -86,7 +86,7 @@ export default function ModalIntegration({
     methods.reset();
     handleClose();
   };
-  const onCancel = () => {
+  const onCancel = (): void => {
     methods.reset();
     handleClose();
   };
