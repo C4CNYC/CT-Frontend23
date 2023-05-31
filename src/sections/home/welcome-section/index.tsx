@@ -8,14 +8,14 @@ export default function WelcomeSection(): React.ReactElement {
     <Stack
       sx={{
         width: "100%",
-        maxWidth: { xs: "344px", sm: "344px", md: "none" },
         minHeight: "260px",
         borderRadius: 2,
         bgcolor: "#E6FBFC",
         flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap", lg: "nowrap" },
         display: "flex",
-        flexDirection: "row",
+        flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
         justifyContent: "space-between",
+        alignItems: "center",
         pl: 4,
         pr: 2,
       }}
@@ -37,8 +37,6 @@ export default function WelcomeSection(): React.ReactElement {
       </Stack>
       <Box
         sx={{
-          display: { xs: "flex", sm: "none", md: "flex", lg: "flex" },
-
           minWidth: { xs: "200px", sm: "250px", md: "200px", lg: "250px" },
         }}
       >
