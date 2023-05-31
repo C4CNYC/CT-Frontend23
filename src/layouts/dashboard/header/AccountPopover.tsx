@@ -2,7 +2,14 @@ import { useState } from "react";
 // next
 import { useRouter } from "next/router";
 // @mui
-import { Box, Divider, MenuItem, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  MenuItem,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { alpha } from "@mui/material/styles";
 // routes
 import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
@@ -54,7 +61,6 @@ export default function AccountPopover(): React.ReactElement {
     handleClosePopover();
     push(path);
   };
-
   return (
     <>
       <IconButtonAnimate
@@ -90,10 +96,19 @@ export default function AccountPopover(): React.ReactElement {
           <Typography variant="subtitle2" noWrap>
             {profile?.first_name}
           </Typography>
-
-          <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-            {profile?.email}
-          </Typography>
+          <Tooltip
+            title={
+              profile?.email && profile?.email.length > 21 ? (
+                <Typography variant="body2">{profile?.email} </Typography>
+              ) : (
+                ""
+              )
+            }
+          >
+            <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
+              {profile?.email}
+            </Typography>
+          </Tooltip>
         </Box>
 
         <Divider sx={{ borderStyle: "dashed" }} />
