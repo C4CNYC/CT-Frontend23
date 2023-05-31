@@ -28,7 +28,6 @@ export default function AuthResetPasswordForm(): React.ReactElement {
       .required("Email is required")
       .email("Email must be a valid email address"),
   });
-
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(ResetPasswordSchema),
   });
