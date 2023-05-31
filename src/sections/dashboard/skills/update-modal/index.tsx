@@ -90,7 +90,7 @@ export default function UpdateModalSkills({
                 <RHFTextField placeholder="Name" name="name" />
                 <RHFTextField
                   name="description"
-                  label="Module description"
+                  label="Skill description"
                   required
                   multiline
                   rows={3}

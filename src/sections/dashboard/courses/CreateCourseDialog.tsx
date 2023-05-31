@@ -243,6 +243,7 @@ export default function CreateCourseDialog({
                   <Button
                     variant="contained"
                     sx={{
+                      maxHeight: "56px",
                       bgcolor: "grey.400",
                       color: "grey.800",
                       borderTopRightRadius: 0,
@@ -299,9 +300,9 @@ export default function CreateCourseDialog({
           <TabPanel value={value} index={1}>
             <Box
               sx={{
-                width: { xs: "100%", sm: "100%", md: "500px", lg: "500px" },
+                minHeight: "550px",
+                width: "350px",
               }}
-              p={3}
             >
               <CourseModuleAutocomplete id={id} />
             </Box>

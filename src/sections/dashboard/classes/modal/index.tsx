@@ -44,7 +44,7 @@ interface TabPanelProps {
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  description: Yup.string().required("Name is required"),
+  description: Yup.string().required("Description is required"),
 });
 
 function TabPanel(props: TabPanelProps): React.ReactElement {
