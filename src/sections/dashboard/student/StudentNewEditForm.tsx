@@ -54,7 +54,6 @@ export default function StudentNewEditForm({
   const [updateStudent] = useUpdateStudentMutation();
   const [updateStudentAvatar] = useUpdateStudentAvatarMutation();
   const { enqueueSnackbar } = useSnackbar();
-
   const NewUserSchema = Yup.object().shape({
     first_name: Yup.string().required("Name is required"),
     last_name: Yup.string().required("Surename is required"),
@@ -71,7 +70,6 @@ export default function StudentNewEditForm({
     password: !isEdit
       ? Yup.string().required("Password is required")
       : Yup.string(),
-    // avatarUrl: Yup.string().required("Avatar is required").nullable(true),
   });
 
   const defaultValues = useMemo(
@@ -153,8 +151,9 @@ export default function StudentNewEditForm({
           ...data,
           schoolId,
         }).unwrap();
-        if (!avatarUrl) return;
-        await updateAvatar(user.id, avatarUrl)
+        if (avatarUrl) {
+          await updateAvatar(user.id, avatarUrl);
+        }
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
         push(PATH_DASHBOARD.school.students);
       }
@@ -163,7 +162,7 @@ export default function StudentNewEditForm({
         variant: "error",
       });
     }
-  }
+  };
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
@@ -220,38 +219,52 @@ export default function StudentNewEditForm({
                 }
               />
             </Box>
-
-            <RHFSwitch
-              name="verified"
-              labelPlacement="start"
-              label={
-                <>
-                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Email Verified
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    Disabling this will automatically send the user a
-                    verification email
-                  </Typography>
-                </>
-              }
-              sx={{ mx: 0, width: 1, justifyContent: "space-between" }}
-            />
-            <RHFSwitch
-              name="active"
-              labelPlacement="start"
-              label={
-                <>
-                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    User Verified
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    Disabled user dont have access to resorce
-                  </Typography>
-                </>
-              }
-              sx={{ mx: 0, my: 1, width: 1, justifyContent: "space-between" }}
-            />
+            {isEdit && (
+              <>
+                <RHFSwitch
+                  name="verified"
+                  labelPlacement="start"
+                  label={
+                    <>
+                      <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                        Email Verified
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "text.secondary" }}
+                      >
+                        Disabling this will automatically send the user a
+                        verification email
+                      </Typography>
+                    </>
+                  }
+                  sx={{ mx: 0, width: 1, justifyContent: "space-between" }}
+                />
+                <RHFSwitch
+                  name="active"
+                  labelPlacement="start"
+                  label={
+                    <>
+                      <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                        User Verified
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "text.secondary" }}
+                      >
+                        Disabled user dont have access to resorce
+                      </Typography>
+                    </>
+                  }
+                  sx={{
+                    mx: 0,
+                    my: 1,
+                    width: 1,
+                    justifyContent: "space-between",
+                  }}
+                />
+              </>
+            )}
           </Card>
         </Grid>
 
