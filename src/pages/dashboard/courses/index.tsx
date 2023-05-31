@@ -42,11 +42,7 @@ export default function CoursesListPage(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <SkeletonList
-        item={<SkeletonCourses />}
-        filter={2}
-        count={DEFAULT_TAKE_PER_PAGE}
-      />
+      <SkeletonList item={<SkeletonCourses />} count={DEFAULT_TAKE_PER_PAGE} />
     );
   }
   return (
@@ -62,7 +58,7 @@ export default function CoursesListPage(): React.ReactElement {
             { name: "Courses", href: PATH_DASHBOARD.courses.root },
           ]}
           action={
-            <CreateCourseDialog id="" >
+            <CreateCourseDialog id="">
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
