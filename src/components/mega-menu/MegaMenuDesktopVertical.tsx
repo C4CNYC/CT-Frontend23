@@ -46,7 +46,11 @@ export default function MegaMenuDesktopVertical({
 
 // ----------------------------------------------------------------------
 
-function MegaMenuItem({ parent }: { parent: MegaMenuItemProps }) {
+function MegaMenuItem({
+  parent,
+}: {
+  parent: MegaMenuItemProps;
+}): React.ReactElement {
   const { title, path, more, products, tags, children } = parent;
 
   const [open, setOpen] = useState(false);

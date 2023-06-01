@@ -4,7 +4,6 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack } from "@mui/material";
 import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
 import { useSnackbar } from "notistack";
-import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   useUpdateSchoolAvatarImgMutation,
@@ -20,10 +19,12 @@ const UpdateSchoolSchema = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   address: Yup.string().required("Address is required"),
   city: Yup.string().required("City is required"),
+  active: Yup.boolean(),
+  about: Yup.string(),
+  phone: Yup.string(),
 });
 
 interface FormValuesProps {
-  schoolId: string;
   name: string;
   country: string;
   address: string;
@@ -50,22 +51,8 @@ export default function SchoolProfileForm({
   const [updateSchoolAvatar] = useUpdateSchoolAvatarImgMutation();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
-  useEffect(() => {
-    if (schoolProfile) {
-      reset({
-        schoolId,
-        name: schoolProfile?.name ?? "",
-        country: schoolProfile?.country ?? "",
-        address: schoolProfile?.address ?? "",
-        city: schoolProfile?.city ?? "",
-        active: schoolProfile?.active ?? false,
-        about: schoolProfile?.about ?? "",
-        phone: schoolProfile?.phone ?? "",
-      });
-    }
-  }, [schoolProfile]);
+
   const defaultValues = {
-    schoolId,
     name: schoolProfile?.name ?? "",
     country: schoolProfile?.country ?? "",
     address: schoolProfile?.address ?? "",
@@ -80,7 +67,7 @@ export default function SchoolProfileForm({
     defaultValues,
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -106,7 +93,9 @@ export default function SchoolProfileForm({
           phone: data.phone,
         }).unwrap();
       }
-    } catch (error) {}
+    } catch (error) {
+      enqueueSnackbar(error.message.text, { variant: "error" });
+    }
   };
 
   return (

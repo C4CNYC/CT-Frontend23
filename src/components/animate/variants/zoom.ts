@@ -5,7 +5,7 @@ import { varTranEnter, varTranExit } from "./transition";
 
 // ----------------------------------------------------------------------
 
-export const varZoom = (props?: VariantsType) => {
+export const varZoom = (props?: VariantsType): Record<string, any> => {
   const distance = props?.distance ?? 720;
   const durationIn = props?.durationIn;
   const durationOut = props?.durationOut;

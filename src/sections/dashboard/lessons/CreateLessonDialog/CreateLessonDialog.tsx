@@ -48,7 +48,7 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+function TabPanel(props: TabPanelProps): React.ReactElement {
   const { children, value, index, ...other } = props;
 
   return (
@@ -68,7 +68,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
+function a11yProps(index: number): Record<string, string> {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
@@ -140,7 +140,10 @@ export default function CreateLessonDialog({
 
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ): void => {
     setValue(newValue);
   };
 
@@ -188,12 +191,12 @@ export default function CreateLessonDialog({
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Box width="400px" height="290px">
+              <Box width="382px" height="276px">
                 <SkillsTab lessonId={id as string} />
               </Box>
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <Box width="400px" height="290px">
+              <Box width="382px" height="276px">
                 <IntegrationsTab contentId={id as string} />
               </Box>
             </TabPanel>

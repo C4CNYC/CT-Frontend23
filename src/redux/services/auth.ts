@@ -98,6 +98,23 @@ export const authApi = createApi({
     protected: builder.mutation<{ message: string }, void>({
       query: () => "protected",
     }),
+    resetPassword: builder.mutation<BaseResponseInterface, { email: string }>({
+      query: ({ ...body }) => ({
+        url: "/reset-password",
+        method: "POST",
+        body,
+      }),
+    }),
+    submitPassword: builder.mutation<
+      BaseResponseInterface,
+      { id: string; password: string }
+    >({
+      query: ({ ...body }) => ({
+        url: "/submit-password",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -110,4 +127,6 @@ export const {
   usePrefetch,
   useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
+  useResetPasswordMutation,
+  useSubmitPasswordMutation,
 } = authApi;

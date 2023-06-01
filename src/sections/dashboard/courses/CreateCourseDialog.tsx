@@ -66,7 +66,10 @@ export default function CreateCourseDialog({
   const [updateCover] = useUpdateCourseCoverMutation();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ): void => {
     setValue(newValue);
   };
 
@@ -90,7 +93,7 @@ export default function CreateCourseDialog({
   const handleClose = (): void => {
     setOpen(false);
   };
-  const handleDrop = (files: File[]) => {
+  const handleDrop = (files: File[]): void => {
     setUploadedFile(files[0]);
   };
 
@@ -124,7 +127,7 @@ export default function CreateCourseDialog({
     }
     handleClose();
   };
-  const clearFileHandler = () => {
+  const clearFileHandler = (): void => {
     setUploadedFile(null);
   };
 
@@ -240,6 +243,7 @@ export default function CreateCourseDialog({
                   <Button
                     variant="contained"
                     sx={{
+                      maxHeight: "56px",
                       bgcolor: "grey.400",
                       color: "grey.800",
                       borderTopRightRadius: 0,
@@ -296,9 +300,9 @@ export default function CreateCourseDialog({
           <TabPanel value={value} index={1}>
             <Box
               sx={{
-                width: { xs: "100%", sm: "100%", md: "500px", lg: "500px" },
+                minHeight: "550px",
+                width: "350px",
               }}
-              p={3}
             >
               <CourseModuleAutocomplete id={id} />
             </Box>
@@ -315,7 +319,7 @@ interface TabPanelProps {
   value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+function TabPanel(props: TabPanelProps): React.ReactElement {
   const { children, value, index, ...other } = props;
 
   return (
@@ -335,7 +339,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: number) {
+function a11yProps(index: number): Record<string, string> {
   return {
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,

@@ -33,10 +33,15 @@ IRealTimeCodeEditor): React.ReactElement | null => {
     doc: undefined,
   });
 
-  useEffect(() => {
-    socket.open();
-    socket.emit(connectionType === "connect" ? "joinRoom" : "create", roomId);
+  const getStartData = (): void => {
     getDocument(socket).then(({ version, doc }) => {
+      if (version === undefined || !doc) {
+        setTimeout(() => {
+          getStartData();
+        }, 3000);
+        return;
+      }
+
       setState((prev) => ({
         ...prev,
         version,
@@ -45,6 +50,14 @@ IRealTimeCodeEditor): React.ReactElement | null => {
         doc: doc?.toString(),
       }));
     });
+  };
+
+  useEffect(() => {
+    socket.open();
+    socket.emit(connectionType === "connect" ? "joinRoom" : "create", roomId);
+
+    getStartData();
+
     socket.on("connection", () => {
       setState((prev) => ({
         ...prev,

@@ -13,7 +13,9 @@ import { MdModeEdit, MdOutlineArrowBackIos } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 import StepContainer from "../StepContainer";
 
-function FinishStep({ previousStep }: Partial<StepWizardChildProps>) {
+function FinishStep({
+  previousStep,
+}: Partial<StepWizardChildProps>): React.ReactElement {
   return (
     <StepContainer>
       <Stack>

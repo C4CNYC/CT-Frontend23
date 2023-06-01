@@ -6,7 +6,7 @@ export default function LoginPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Login | Codetribe</title>
+        <title> Login | CodeTribe</title>
       </Head>
 
       <GuestGuard>

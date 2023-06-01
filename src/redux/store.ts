@@ -1,4 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {
+  AnyAction,
+  configureStore,
+  Dispatch,
+  ThunkDispatch,
+} from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
   useDispatch as useAppDispatch,
@@ -35,6 +40,7 @@ const { dispatch } = store;
 
 const useSelector: TypedUseSelectorHook<RootState> = useAppSelector;
 
-const useDispatch = () => useAppDispatch<AppDispatch>();
+const useDispatch = (): ThunkDispatch<any, undefined, AnyAction> &
+  Dispatch<AnyAction> => useAppDispatch<AppDispatch>();
 
 export { store, persistor, dispatch, useSelector, useDispatch };
