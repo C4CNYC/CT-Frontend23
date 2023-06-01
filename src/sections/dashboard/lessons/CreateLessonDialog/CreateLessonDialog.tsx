@@ -60,7 +60,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -169,10 +169,13 @@ export default function CreateLessonDialog({
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Grid item xs={12} md={12} p={2}>
-                <Box rowGap={3} display="grid">
+              <Grid item xs={12} md={12} mt={2}>
+                <Box rowGap={4} display="grid">
                   <RHFTextField
-                    style={{ width: "350px" }}
+                    sx={{
+                      width: { xs: "300px", sm: "350px" },
+                      minWidth: "300px",
+                    }}
                     name="name"
                     label="Lesson name"
                     required
@@ -191,12 +194,24 @@ export default function CreateLessonDialog({
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Box width="382px" height="276px">
+              <Box
+                sx={{
+                  width: { xs: "100%", sm: "350px" },
+                  minWidth: "300px",
+                  height: "276px",
+                }}
+              >
                 <SkillsTab lessonId={id as string} />
               </Box>
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <Box width="382px" height="276px">
+              <Box
+                sx={{
+                  width: { xs: "300px", sm: "350px" },
+                  minWidth: "300px",
+                  height: "276px",
+                }}
+              >
                 <IntegrationsTab contentId={id as string} />
               </Box>
             </TabPanel>

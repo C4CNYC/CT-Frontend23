@@ -7,10 +7,10 @@ import {
   AutocompleteChangeReason,
   Box,
   Chip,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import { useSnackbar } from "notistack";
@@ -45,7 +45,13 @@ export default function SkillsTab({
   );
 
   if (!lessonSkill || !skills) {
-    return <CircularProgress />;
+    return (
+      <Skeleton
+        animation="wave"
+        variant="rounded"
+        sx={{ width: "100%", height: "56px" }}
+      />
+    );
   }
 
   const onChange = async (

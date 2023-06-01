@@ -57,7 +57,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -179,9 +179,12 @@ export default function CreateModuleDialog({
             <TabPanel value={value} index={0}>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={12}>
-                  <Box rowGap={3} display="grid" m={3}>
+                  <Box rowGap={3} display="grid" mt={2}>
                     <RHFTextField
-                      style={{ width: "350px" }}
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
                       name="name"
                       label="Module name"
                       required
@@ -201,7 +204,13 @@ export default function CreateModuleDialog({
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Box width="400px" height="290px">
+              <Box
+                sx={{
+                  width: { xs: "300px", sm: "350px" },
+                  minWidth: "300px",
+                  height: "260px",
+                }}
+              >
                 <ModuleLessonsAutocomplete id={id as string} />
               </Box>
             </TabPanel>
