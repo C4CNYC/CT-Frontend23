@@ -28,25 +28,25 @@ class TooltipWidget extends WidgetType {
     this.id = id;
   }
 
-  toDOM() {
+  toDOM(): HTMLElement {
     const dom = document.createElement("div");
     dom.className = "cm-tooltip-none";
 
     if (this.name === this.id) return dom;
 
-    const cursor_tooltip = document.createElement("div");
-    cursor_tooltip.className = `cm-tooltip-cursor cm-tooltip cm-tooltip-above cm-tooltip-${this.suffix}`;
-    cursor_tooltip.textContent = this.name;
+    const cursorTooltip = document.createElement("div");
+    cursorTooltip.className = `cm-tooltip-cursor cm-tooltip cm-tooltip-above cm-tooltip-${this.suffix}`;
+    cursorTooltip.textContent = this.name;
 
-    const cursor_tooltip_arrow = document.createElement("div");
-    cursor_tooltip_arrow.className = "cm-tooltip-arrow";
+    const cursorTooltipArrow = document.createElement("div");
+    cursorTooltipArrow.className = "cm-tooltip-arrow";
 
-    cursor_tooltip.appendChild(cursor_tooltip_arrow);
-    dom.appendChild(cursor_tooltip);
+    cursorTooltip.appendChild(cursorTooltipArrow);
+    dom.appendChild(cursorTooltip);
     return dom;
   }
 
-  ignoreEvent() {
+  ignoreEvent(): boolean {
     return false;
   }
 }
@@ -56,7 +56,7 @@ export const removeCursor = StateEffect.define<string>();
 
 const cursorsItems = new Map<string, number>();
 
-const cursorField = (id: string) =>
+const cursorField = (id: string): StateField<DecorationSet> =>
   StateField.define<DecorationSet>({
     create() {
       return Decoration.none;
@@ -211,7 +211,7 @@ const cursorBaseTheme = EditorView.baseTheme({
   },
 });
 
-export function cursorExtension(id: string = "") {
+export function cursorExtension(id: string = ""): any[] {
   return [
     cursorField(id),
     cursorBaseTheme,

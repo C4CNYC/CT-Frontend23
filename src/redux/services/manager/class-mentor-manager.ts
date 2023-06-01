@@ -10,20 +10,20 @@ const extendetApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getMentors: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
-      { school_id: string; class_id: string }
+      { schoolId: string; classId: string }
     >({
-      query: ({ school_id, class_id }) => ({
-        url: `/school/${school_id}/class/${class_id}/mentor`,
+      query: ({ schoolId, classId }) => ({
+        url: `/school/${schoolId}/class/${classId}/mentor`,
         method: "GET",
       }),
       providesTags: ["Mentors"],
     }),
     updateMentor: builder.mutation<
       void,
-      { school_id: string; class_id: string; user_id: string }
+      { schoolId: string; classId: string; userId: string }
     >({
-      query: ({ school_id, class_id, ...body }) => ({
-        url: `/school/${school_id}/class/${class_id}/mentor`,
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}/mentor`,
         method: "PATCH",
         body,
       }),
@@ -31,10 +31,10 @@ const extendetApi = managerApi.injectEndpoints({
     }),
     deleteMentor: builder.mutation<
       void,
-      { school_id: string; class_id: string; user_id: string }
+      { schoolId: string; classId: string; userId: string }
     >({
-      query: ({ school_id, class_id, ...body }) => ({
-        url: `/school/${school_id}/class/${class_id}/mentor`,
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}/mentor`,
         method: "DELETE",
         body,
       }),

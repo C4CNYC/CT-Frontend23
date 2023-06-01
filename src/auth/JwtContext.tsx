@@ -160,8 +160,7 @@ export function AuthProvider({
   }, [storageAvailable]);
 
   useEffect(() => {
-    initialize().catch((e: any) => {
-    });
+    initialize().catch((e: any) => {});
   }, [initialize]);
 
   // AUTHENTICATE
@@ -182,11 +181,11 @@ export function AuthProvider({
         password,
       });
 
-      const { access_token, user } = data;
+      const { access_token: accessToken, user } = data;
       reduxDispatch(setUser(user));
 
       setSession(
-        access_token,
+        accessToken,
         localStorage.getItem("tenantName") ?? "codetribe"
       );
 
@@ -221,10 +220,10 @@ export function AuthProvider({
         last_name: lastName,
       });
 
-      const { access_token, user } = data;
+      const { access_token: accessToken, user } = data;
       reduxDispatch(setUser(user));
 
-      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("accessToken", accessToken);
 
       dispatch({
         type: Types.REGISTER,
@@ -249,10 +248,10 @@ export function AuthProvider({
         first_name: firstName,
         last_name: lastName,
       });
-      const { access_token, user } = data;
+      const { access_token: accessToken, user } = data;
       reduxDispatch(setUser(user));
 
-      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("accessToken", accessToken);
 
       dispatch({
         type: Types.REGISTER_TO_ORGANIZATION,

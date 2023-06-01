@@ -55,16 +55,6 @@ export default function ProfileAbout({
             </Link>
           </Typography>
         </Stack>
-        <Stack direction="row">
-          <StyledIcon icon="ic:round-business-center" />
-
-          <Typography variant="body2">
-            Studied at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              school
-            </Link>
-          </Typography>
-        </Stack>
       </Stack>
     </Card>
   );

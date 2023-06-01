@@ -20,7 +20,7 @@ export default function VerifyCodePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Verify Code | Minimal UI</title>
+        <title> Verify Code | CodeTribe</title>
       </Head>
 
       <EmailInboxIcon sx={{ mb: 5, height: 96 }} />

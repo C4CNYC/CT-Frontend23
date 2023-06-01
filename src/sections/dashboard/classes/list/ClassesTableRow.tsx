@@ -40,7 +40,13 @@ export default function ClassesTableRow({
   onDeleteRow,
   updateResult,
 }: Props): React.ReactElement | null {
-  const { name, active, total_students, total_courses, createdAt } = row;
+  const {
+    name,
+    active,
+    total_students: totalStudents,
+    total_courses: totalCourses,
+    createdAt,
+  } = row;
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -83,7 +89,7 @@ export default function ClassesTableRow({
             color="secondary"
             sx={{ textTransform: "capitalize" }}
           >
-            {total_students}
+            {totalStudents}
           </Label>
         </TableCell>
 
@@ -93,7 +99,7 @@ export default function ClassesTableRow({
             color="secondary"
             sx={{ textTransform: "capitalize" }}
           >
-            {total_courses}
+            {totalCourses}
           </Label>
         </TableCell>
 

@@ -1,100 +1,133 @@
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import IconButton from "@mui/material/IconButton";
+import { MotionContainer, varFade } from "@components/animate";
+import Carousel from "@components/carousel";
+import Image from "@components/image/Image";
+import { Card, CardProps, Link, Stack } from "@mui/material";
+import { alpha, styled, useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-// mui
-import { Stack } from "@mui/system";
+import { m } from "framer-motion";
+import { useRef, useState } from "react";
+import CarouselArrows from "./CarouselArrows";
+import CarouselDots from "./CarouselDots";
 
-export default function Slider() {
+const StyledOverlay = styled("div")(({ theme }) => ({
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: 8,
+  position: "absolute",
+  backgroundColor: alpha(theme.palette.grey[900], 0.64),
+}));
+
+interface ItemProps {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+}
+
+interface Props extends CardProps {
+  list: ItemProps[];
+}
+
+export default function Slider({ list, ...other }: Props): React.ReactElement {
+  const theme = useTheme();
+  const [currentIndex, setCurrentIndex] = useState(
+    theme.direction === "rtl" ? list.length - 1 : 0
+  );
+  const carouselRef = useRef<Carousel>(null);
+  const carouselSettings = {
+    speed: 900,
+    dots: true,
+    arrows: false,
+    autoplay: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    rtl: Boolean(theme.direction === "rtl"),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
+    ...CarouselDots({
+      sx: {
+        bottom: 20,
+        right: 20,
+        position: "absolute",
+      },
+    }),
+  };
+  const handlePrev = (): void => {
+    carouselRef.current?.slickPrev();
+  };
+  const handleNext = (): void => {
+    carouselRef.current?.slickNext();
+  };
+
   return (
-    <Stack
-      sx={{
-        background: {
-          xs: "url(/BG.png) center  / cover no-repeat",
-          sm: "url(/BG.png) center  / contain no-repeat",
-        },
-        width: "100%",
-        maxWidth: { xs: "344px", sm: "344px", md: "344px" },
-        height: "260px",
-        position: "relative",
-        borderRadius: 2,
-        justifyContent: "space-between",
-        pb: 2,
-      }}
-    >
-      <Stack
-        direction="row"
-        sx={{ width: "100%", justifyContent: "flex-end", pt: 2, pr: 2 }}
-      >
-        <IconButton style={{ width: "2px", height: "2px" }}>
-          <ArrowLeftIcon fontSize="small" sx={{ color: "gray" }} />
-        </IconButton>
-        <IconButton style={{ width: "2px", height: "2px" }}>
-          <ArrowRightIcon fontSize="small" sx={{ color: "white" }} />
-        </IconButton>
-      </Stack>
-      <Stack>
-        <Typography
-          variant="h5"
-          sx={{
-            color: "#fff",
+    <Card {...other}>
+      <Carousel ref={carouselRef} {...carouselSettings}>
+        {list.map((app, index) => (
+          <CarouselItem
+            key={app.id}
+            item={app}
+            isActive={index === currentIndex}
+          />
+        ))}
+      </Carousel>
 
-            ml: 3,
-          }}
-        >
-          Suggest a new lesson or course
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            color: "#fff",
-            maxWidth: "190px",
-            ml: 3,
-          }}
-        >
-          Ask us to create a new lesson. Add your suggestion to Google Form
-        </Typography>
-      </Stack>
-      <IconSlider />
-    </Stack>
+      <CarouselArrows
+        onNext={handleNext}
+        onPrevious={handlePrev}
+        sx={{ top: 8, right: 8, position: "absolute", color: "common.white" }}
+      />
+    </Card>
   );
 }
 
-function IconSlider() {
+interface CarouselItemProps {
+  item: ItemProps;
+  isActive?: boolean;
+}
+
+function CarouselItem({
+  item,
+  isActive,
+}: CarouselItemProps): React.ReactElement {
+  const { image, title, description } = item;
+
   return (
-    <Stack
-      display="flex"
-      direction="row"
-      sx={{ bottom: "16px", right: "24px", gap: "8px", position: "absolute" }}
-    >
-      <FiberManualRecordIcon
+    <MotionContainer action animate={isActive} sx={{ position: "relative" }}>
+      <Stack
+        spacing={1}
         sx={{
-          width: "8px",
-          height: "8px",
-          color: "#02D3D7",
-          opacity: "32%",
+          p: 3,
+          width: 1,
+          bottom: "30px",
+          zIndex: 9,
+          textAlign: "left",
+          position: "absolute",
+          color: "common.white",
+        }}
+      >
+        <m.div variants={varFade().inRight}>
+          <Link color="inherit" underline="none">
+            <Typography variant="h5">{title}</Typography>
+          </Link>
+        </m.div>
+
+        <m.div variants={varFade().inRight}>
+          <Typography variant="body2">{description}</Typography>
+        </m.div>
+      </Stack>
+
+      <StyledOverlay />
+
+      <Image
+        alt={title}
+        src={image}
+        sx={{
+          height: 260,
         }}
       />
-      <FiberManualRecordIcon
-        sx={{ width: "8px", height: "8px", color: "#02D3D7" }}
-      />
-      <FiberManualRecordIcon
-        sx={{
-          width: "8px",
-          height: "8px",
-          color: "#02D3D7",
-          opacity: "32%",
-        }}
-      />
-      <FiberManualRecordIcon
-        sx={{
-          width: "8px",
-          height: "8px",
-          color: "#02D3D7",
-          opacity: "32%",
-        }}
-      />
-    </Stack>
+    </MotionContainer>
   );
 }

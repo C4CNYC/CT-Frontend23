@@ -1,7 +1,7 @@
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 
-export default function SkeletonEditUserForm() {
+export default function SkeletonEditUserForm(): React.ReactElement {
   return (
     <>
       <Stack display="flex" direction="row" spacing={3}>

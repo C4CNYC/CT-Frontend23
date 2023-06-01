@@ -98,7 +98,7 @@ export default function UserProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Organizations: Codetribe</title>
+        <title>Organizations | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card

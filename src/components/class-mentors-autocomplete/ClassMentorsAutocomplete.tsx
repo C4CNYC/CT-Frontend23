@@ -52,7 +52,7 @@ export default function ClassMentorsAutocomplete({
   const { data: managers } = useGetOrgMembersQuery({ ...filters });
 
   const { data: mentors } = useGetMentorsQuery(
-    { school_id: schoolId, class_id: classId },
+    { schoolId, classId },
     { skip: !schoolId || !classId }
   );
   if (!managers?.data || !mentors) {
@@ -66,9 +66,9 @@ export default function ClassMentorsAutocomplete({
   ): Promise<void> => {
     try {
       const payload = {
-        school_id: schoolId,
-        class_id: classId,
-        user_id: details?.option.id ?? "",
+        schoolId,
+        classId,
+        userId: details?.option.id ?? "",
       };
       switch (reason) {
         case "selectOption": {

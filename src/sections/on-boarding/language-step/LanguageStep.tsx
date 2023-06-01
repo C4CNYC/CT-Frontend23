@@ -24,7 +24,7 @@ interface FormValuesProps {
 function LanguageStep({
   previousStep,
   goToStep,
-}: Partial<StepWizardChildProps>) {
+}: Partial<StepWizardChildProps>): React.ReactElement {
   const CreateLanguage = Yup.object().shape({
     language: Yup.string(),
   });
@@ -37,7 +37,7 @@ function LanguageStep({
     defaultValues,
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (): void => {};
   return (
     <StepContainer>
       <Stack>

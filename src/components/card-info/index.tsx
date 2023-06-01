@@ -7,7 +7,7 @@ import { Stack } from "@mui/system";
 import CircleIcon from "@mui/icons-material/Circle";
 import { ImTwitter } from "react-icons/im";
 
-export default function CardInfo() {
+export default function CardInfo(): React.ReactElement {
   return (
     <>
       <Card

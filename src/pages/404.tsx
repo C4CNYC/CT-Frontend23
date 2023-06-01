@@ -23,7 +23,7 @@ export default function Page404(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> 404 Page Not Found | Minimal UI</title>
+        <title> 404 Page Not Found | CodeTribe</title>
       </Head>
 
       <MotionContainer>

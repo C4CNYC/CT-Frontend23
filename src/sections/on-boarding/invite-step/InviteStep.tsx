@@ -33,7 +33,7 @@ function IviteStep({
   previousStep,
   nextStep,
   goToStep,
-}: Partial<StepWizardChildProps>) {
+}: Partial<StepWizardChildProps>): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [value] = useState("me.codetribe.com/join/AHJ123");
   const [{ sessionWay }] = useAtom(roadAtom);
@@ -42,7 +42,7 @@ function IviteStep({
 
   const { copy } = useCopyToClipboard();
 
-  const onCopy = (text: string) => {
+  const onCopy = (text: string): void => {
     if (text) {
       enqueueSnackbar("Copied!");
       copy(text);

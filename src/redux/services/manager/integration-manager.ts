@@ -43,10 +43,10 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     removeIntegration: builder.mutation<
       IIntegration,
-      { integration_id: string }
+      { integrationId: string }
     >({
-      query: ({ integration_id }) => ({
-        url: `/integration/${integration_id}`,
+      query: ({ integrationId }) => ({
+        url: `/integration/${integrationId}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Integrations" }],

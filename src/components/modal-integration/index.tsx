@@ -1,6 +1,7 @@
 import { javascript } from "@codemirror/lang-javascript";
 import FormProvider, { RHFTextField } from "@components/hook-form";
 import { RHFCode } from "@components/hook-form/RHFCode";
+import ModalCodeFullscreen from "@components/modal-code-fullscreen/ModalCodeFullscreen";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -35,9 +36,11 @@ interface Prop {
   id?: string;
   defaultValues?: IntegrationForm;
   children: React.ReactElement;
+  isEdit?: boolean;
 }
 // RHFCode
 export default function ModalIntegration({
+  isEdit = false,
   children,
   id,
   defaultValues = {
@@ -83,6 +86,10 @@ export default function ModalIntegration({
     methods.reset();
     handleClose();
   };
+  const onCancel = (): void => {
+    methods.reset();
+    handleClose();
+  };
 
   return (
     <>
@@ -91,30 +98,70 @@ export default function ModalIntegration({
         <DialogTitle sx={{ pb: 2 }}>Create Integration</DialogTitle>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
-            <Stack gap={3}>
-              <Box>
-                <RHFTextField placeholder="Name" name="name" />
-              </Box>
-              <Box>
-                <RHFCode
-                  placeholder="Head links or scripts"
-                  name="head"
-                  height="180px"
-                  extensions={[javascript({ jsx: true })]}
-                />
-              </Box>
-              <Box>
-                <RHFCode
-                  placeholder="Body links or scripts"
-                  name="scripts"
-                  height="180px"
-                  extensions={[javascript({ jsx: true })]}
-                />
-              </Box>
-            </Stack>
+            {isEdit ? (
+              <Stack gap={2}>
+                <Box>
+                  <RHFTextField placeholder="Name" name="name" />
+                </Box>
+                <Box>
+                  <ModalCodeFullscreen
+                    title="Head links or scripts"
+                    name="head"
+                  />
+                  <RHFCode
+                    placeholder="Head links or scripts"
+                    name="head"
+                    height="180px"
+                    extensions={[javascript({ jsx: true })]}
+                  />
+                </Box>
+                <Box>
+                  <ModalCodeFullscreen
+                    title="Body links or scripts"
+                    name="scripts"
+                  />
+                  <RHFCode
+                    placeholder="Body links or scripts"
+                    name="scripts"
+                    height="180px"
+                    extensions={[javascript({ jsx: true })]}
+                  />
+                </Box>
+              </Stack>
+            ) : (
+              <Stack gap={2}>
+                <Box>
+                  <RHFTextField placeholder="Name" name="name" />
+                </Box>
+                <Box>
+                  <ModalCodeFullscreen
+                    title="Head links or scripts"
+                    name="head"
+                  />
+                  <RHFCode
+                    placeholder="Head links or scripts"
+                    name="head"
+                    height="180px"
+                    extensions={[javascript({ jsx: true })]}
+                  />
+                </Box>
+                <Box>
+                  <ModalCodeFullscreen
+                    title="Body links or scripts"
+                    name="scripts"
+                  />
+                  <RHFCode
+                    placeholder="Body links or scripts"
+                    name="scripts"
+                    height="180px"
+                    extensions={[javascript({ jsx: true })]}
+                  />
+                </Box>
+              </Stack>
+            )}
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" color="inherit" onClick={handleClose}>
+            <Button variant="outlined" color="inherit" onClick={onCancel}>
               Cancel
             </Button>
             <LoadingButton
