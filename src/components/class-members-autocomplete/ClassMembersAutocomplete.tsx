@@ -104,12 +104,7 @@ export default function ClassMembersAutocomplete({
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
         tagValue.map((option, index) => (
           <Chip
-            avatar={
-              <CustomAvatar
-                alt={option.email}
-                src="/assets/images/avatar_2.jpg"
-              />
-            }
+            avatar={<CustomAvatar alt={option.email} src={option.avatar} />}
             label={option.email}
             {...getTagProps({ index })}
             key={option.email}

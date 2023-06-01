@@ -211,7 +211,6 @@ export default function CreateModuleDialog({
                   display: "flex",
                   justifyContent: "flex-end",
                   gap: 2,
-                  mt: 7,
                 }}
               >
                 <Button onClick={handleClose}>Close</Button>
