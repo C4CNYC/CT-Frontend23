@@ -6,7 +6,6 @@ import NextLink from "next/link";
 import LoginLayout from "../../layouts/login";
 import { PATH_AUTH } from "../../routes/paths";
 import AuthOrganizationForm from "./AuthOrganizationForm";
-import AuthWithSocial from "./AuthWithSocial";
 
 export default function RegisterOrganization(): React.ReactElement {
   return (
@@ -67,7 +66,7 @@ export default function RegisterOrganization(): React.ReactElement {
         </Link>
         .
       </Typography>
-      <AuthWithSocial />
+      {/* <AuthWithSocial /> */}
     </LoginLayout>
   );
 }

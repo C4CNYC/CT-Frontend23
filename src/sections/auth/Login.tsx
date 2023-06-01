@@ -10,7 +10,6 @@ import { PATH_AUTH } from "../../routes/paths";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import IconButton from "@mui/material/IconButton";
 import AuthLoginForm from "./AuthLoginForm";
-import AuthWithSocial from "./AuthWithSocial";
 
 // ----------------------------------------------------------------------
 
@@ -58,7 +57,7 @@ export default function Login(): React.ReactElement {
       </Stack>
       <AuthLoginForm />
 
-      <AuthWithSocial />
+      {/* <AuthWithSocial /> */}
     </LoginLayout>
   );
 }
