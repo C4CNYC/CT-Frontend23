@@ -219,7 +219,7 @@ export default function CreateCourseDialog({
                   />
                 </Box>
                 <RHFTextField
-                  style={{ width: "350px" }}
+                  sx={{ width: "100%" }}
                   name="name"
                   label="Course name"
                 />
@@ -283,7 +283,7 @@ export default function CreateCourseDialog({
                   display: "flex",
                   justifyContent: "flex-end",
                   gap: 2,
-                  mt: 7,
+                  mt: { xs: 3, sm: 7 },
                 }}
               >
                 <Button onClick={handleClose}>Close</Button>
@@ -301,7 +301,7 @@ export default function CreateCourseDialog({
             <Box
               sx={{
                 minHeight: "550px",
-                width: "350px",
+                width: { xs: "330px", sm: "350px" },
               }}
             >
               <CourseModuleAutocomplete id={id} />
@@ -331,7 +331,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           <Typography>{children}</Typography>
         </Box>
       )}
