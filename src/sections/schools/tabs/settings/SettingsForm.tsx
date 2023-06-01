@@ -67,8 +67,7 @@ export default function SettingsForm({
       }).unwrap();
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   return (
@@ -184,9 +183,6 @@ export default function SettingsForm({
           >
             <option key="en" value="en">
               English
-            </option>
-            <option key="fr" value="fr">
-              French
             </option>
           </RHFSelect>
         </Stack>
