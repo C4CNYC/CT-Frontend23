@@ -109,6 +109,7 @@
     "react-organizational-chart": "^2.2.0",
     "react-quill": "^0.0.2",
     "react-redux": "^8.0.5",
+    "react-sketch-canvas": "^6.2.0",
     "react-slick": "^0.29.0",
     "react-split-pane": "^0.1.92",
     "react-step-wizard": "^5.3.11",
