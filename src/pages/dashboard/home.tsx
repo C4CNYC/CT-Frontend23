@@ -1,6 +1,7 @@
 import { useSettingsContext } from "@components/settings";
 import SliderDemoMui from "@components/slider/SliderDemoMui";
 import DashboardLayout from "@layouts/dashboard";
+import { Grid } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import InfoSectionHome from "@sections/home/info-section-home";
 import MainSectionHome from "@sections/home/main-section-home";
@@ -25,19 +26,14 @@ export default function HomePage(): React.ReactElement | null {
         <title>Home | CodeTribe </title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
-        <Stack
-          display="flex"
-          flexDirection="row"
-          sx={{
-            flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
-            justifyContent: "center",
-            gap: 3,
-            mb: 3,
-          }}
-        >
-          <WelcomeSection />
-          <SliderDemoMui />
-        </Stack>
+        <Grid container spacing={3} sx={{ mb: 3 }}>
+          <Grid item xs={12} md={8}>
+            <WelcomeSection />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <SliderDemoMui list={SLIDER_CONTENT} />
+          </Grid>
+        </Grid>
         <Stack alignItems="center" gap={3}>
           <MainSectionHome />
 
@@ -66,3 +62,33 @@ export default function HomePage(): React.ReactElement | null {
     </>
   );
 }
+const SLIDER_CONTENT = [
+  {
+    id: "1",
+    image: "/BG.png",
+    title: "Suggest a new lesson or course",
+    description:
+      "Ask us to create a new lesson. Add your suggestion to Google Form",
+  },
+  {
+    id: "2",
+    image: "/BG.png",
+    title: "Suggest a new lesson or course",
+    description:
+      "Ask us to create a new lesson. Add your suggestion to Google Form",
+  },
+  {
+    id: "3",
+    image: "/BG.png",
+    title: "Suggest a new lesson or course",
+    description:
+      "Ask us to create a new lesson. Add your suggestion to Google Form",
+  },
+  {
+    id: "4",
+    image: "/BG.png",
+    title: "Suggest a new lesson or course",
+    description:
+      "Ask us to create a new lesson. Add your suggestion to Google Form",
+  },
+];

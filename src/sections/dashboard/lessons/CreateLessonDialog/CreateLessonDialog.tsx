@@ -191,12 +191,12 @@ export default function CreateLessonDialog({
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Box width="400px" height="290px">
+              <Box width="382px" height="276px">
                 <SkillsTab lessonId={id as string} />
               </Box>
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <Box width="400px" height="290px">
+              <Box width="382px" height="276px">
                 <IntegrationsTab contentId={id as string} />
               </Box>
             </TabPanel>
