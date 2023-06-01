@@ -1,4 +1,4 @@
-import { Avatar, Card, Stack, Typography } from "@mui/material";
+import { Card, Stack, Typography } from "@mui/material";
 import { AiFillInfoCircle } from "react-icons/ai";
 
 export default function RecentLessons(): React.ReactElement {
@@ -17,7 +17,7 @@ export default function RecentLessons(): React.ReactElement {
           </Typography>
           <AiFillInfoCircle size={30} fill="rgba(145, 158, 171, 0.16)" />
         </Stack>
-        <Stack display="flex" direction="row" gap="16px" mt="24px">
+        {/* <Stack display="flex" direction="row" gap="16px" mt="24px">
           <Avatar sizes="40"></Avatar>
           <Stack>
             <Typography
@@ -37,7 +37,7 @@ export default function RecentLessons(): React.ReactElement {
               Last signed up at 10.00AM
             </Typography>
           </Stack>
-        </Stack>
+        </Stack> */}
       </Card>
     </>
   );

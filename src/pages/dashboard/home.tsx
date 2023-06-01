@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import InfoSectionHome from "@sections/home/info-section-home";
 import MainSectionHome from "@sections/home/main-section-home";
-import RecentAssignments from "@sections/home/recent-assignments";
+// import RecentAssignments from "@sections/home/recent-assignments";
 import RecentLessons from "@sections/home/recent-lessons";
 import WeeklyActivities from "@sections/home/weekly-activities";
 import WelcomeSection from "@sections/home/welcome-section";
@@ -45,7 +45,8 @@ export default function HomePage(): React.ReactElement | null {
                 xs: "center",
                 sm: "center",
                 md: "center",
-                lg: "space-between",
+                // lg: "space-between",
+                lg: "flex-start",
               },
               width: "100%",
               gap: 2,
