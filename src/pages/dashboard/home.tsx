@@ -1,3 +1,4 @@
+import ComingSoon from "@components/coming-soon/ComingSoon";
 import { useSettingsContext } from "@components/settings";
 import SliderDemoMui from "@components/slider/SliderDemoMui";
 import DashboardLayout from "@layouts/dashboard";
@@ -36,7 +37,6 @@ export default function HomePage(): React.ReactElement | null {
         </Grid>
         <Stack alignItems="center" gap={3}>
           <MainSectionHome />
-
           <InfoSectionHome />
           <Stack
             direction="row"
@@ -52,9 +52,15 @@ export default function HomePage(): React.ReactElement | null {
               flexWrap: { xs: "wrap", sm: "wrap", md: "wrap", lg: "nowrap" },
             }}
           >
-            <WeeklyActivities />
-            <RecentLessons />
-            <RecentAssignments />
+            <ComingSoon title="Coming Soon . . .">
+              <WeeklyActivities />
+            </ComingSoon>
+            <ComingSoon title="On the way . . .">
+              <RecentLessons />
+            </ComingSoon>
+            <ComingSoon title="Coming Soon . . .">
+              <RecentAssignments />
+            </ComingSoon>
           </Stack>
         </Stack>
       </Container>
