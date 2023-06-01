@@ -7,10 +7,10 @@ import {
   AutocompleteChangeReason,
   Box,
   Chip,
+  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import { PATH_DASHBOARD } from "@routes/paths";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
@@ -47,7 +47,13 @@ export function IntegrationsTab({
   const { data: integrations } = useGetIntegrationsQuery(filters);
 
   if (!integrations?.data || !data) {
-    return <CircularProgress />;
+    return (
+      <Skeleton
+        animation="wave"
+        variant="rounded"
+        sx={{ width: "100%", height: "56px" }}
+      />
+    );
   }
 
   const onChange = async (
