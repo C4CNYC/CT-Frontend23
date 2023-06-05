@@ -6,6 +6,7 @@ import { Grid } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import InfoSectionHome from "@sections/home/info-section-home";
 import MainSectionHome from "@sections/home/main-section-home";
+import RecentAssignments from "@sections/home/recent-assignments";
 // import RecentAssignments from "@sections/home/recent-assignments";
 import RecentLessons from "@sections/home/recent-lessons";
 import WeeklyActivities from "@sections/home/weekly-activities";
