@@ -6,6 +6,7 @@ import { dracula } from "@uiw/codemirror-theme-dracula";
 import CodeMirror from "@uiw/react-codemirror";
 import { useState } from "react";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
+import useDebounceCallback from "@hooks/useDebounceCallback";
 
 interface Props {
   content: string;
@@ -19,6 +20,12 @@ export default function StepCode({
   onSubmit,
 }: Props): React.ReactElement {
   const [value, setValue] = useState<string>("");
+  const [staticValue, setStaticValue] = useState<string>("");
+  const handleDebouncedCallback = useDebounceCallback(1500);
+
+  handleDebouncedCallback(() => {
+    setStaticValue(value);
+  });
 
   const pageSkeleton = (userContent: string): string | undefined => {
     if (integrations) {
@@ -75,7 +82,7 @@ export default function StepCode({
           }}
           src={
             "data:text/html," +
-            encodeURIComponent(pageSkeleton(value) as string)
+            encodeURIComponent(pageSkeleton(staticValue) as string)
           }
         />
       </Box>

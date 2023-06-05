@@ -6,22 +6,36 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
+import CodeMirror from "@uiw/react-codemirror";
 import { useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { createTheme } from "@uiw/codemirror-themes";
+import { loadLanguage } from "@uiw/codemirror-extensions-langs";
+import { useEffect, useState } from "react";
+import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;
   onClose: (userId: string) => void;
 }
 
+enum TabbitView {
+  CHAT = "chat",
+  CODE = "code"
+}
+
 export default function QuickRabbitsItem({
   rabit,
   onClose,
 }: IQuickRabbitsItem): React.ReactElement | null {
+  const [view, setView] = useState<TabbitView>(TabbitView.CODE)
+
   const { query } = useRouter();
   const [onlineStudents] = useAtom(onlineStudentsAtom);
+  const { data: realTimeData } = useRealTimeConnection(
+    rabit.id
+  );
 
   useEffect(() => {
     if (!onlineStudents || rabit.id === query.id) return;
@@ -78,6 +92,20 @@ export default function QuickRabbitsItem({
         <Box display="flex" alignItems="center">
           <IconButton
             onClick={() => {
+              setView(TabbitView.CODE);
+            }}
+          >
+            <Iconify icon="material-symbols:code" color="#EAEAEB" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              setView(TabbitView.CHAT);
+            }}
+          >
+            <Iconify icon="basil:chat-outline" color="#EAEAEB" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
               onClose(rabit.id);
             }}
           >
@@ -85,7 +113,40 @@ export default function QuickRabbitsItem({
           </IconButton>
         </Box>
       </Box>
-      <Messages reciverId={rabit.id} />
+      {
+        view === TabbitView.CHAT
+        ? <Messages reciverId={rabit.id} />
+        : <CodeMirror
+            editable={false}
+            value={realTimeData?.code}
+            theme={myTheme}
+            height="449px"
+            style={ { fontSize: 11, overflow: "scroll" } }
+            placeholder="<Code for boxes appear...>"
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            extensions={[loadLanguage("html")]}
+        />
+      }
     </Box>
   );
 }
+
+  const myTheme = createTheme({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    lineWrapping: true,
+    dark: "dark",
+    settings: {
+      background: "#364954",
+      foreground: "#EAEAEB",
+      caret: "#EAEAEB",
+      selection: "",
+      selectionMatch: "#364954",
+      gutterBackground: "#364954",
+      gutterForeground: "#fff",
+      gutterBorder: "#364954",
+      gutterActiveForeground: "",
+      lineHighlight: "#364954",
+    },
+  });

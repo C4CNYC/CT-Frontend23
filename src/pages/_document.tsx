@@ -55,6 +55,18 @@ export default class MyDocument extends Document {
             content="react,material,kit,application,dashboard,admin,template"
           />
           <meta name="author" content="Minimal UI Kit" />
+
+          <style>
+            {`
+              .CodeMirror { height: 400px; width: 500px; border: 1px solid #ddd; }
+              .CodeMirror-scroll { max-height: 400px; width:500px; }
+              .CodeMirror pre { display:inline-block; padding-left: 7px; line-height: 1.25; }
+              #drawing { border: 1px solid #555555; float:left; display:inline-block; width:480px; height: 380px; }
+              .CodeMirror-wrap pre {
+                  word-break: break-word!important;
+              }
+            `}
+          </style>
         </Head>
 
         <body>
