@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { createTheme } from "@uiw/codemirror-themes";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 
 interface IQuickRabbitsItem {
@@ -20,10 +20,17 @@ interface IQuickRabbitsItem {
   onClose: (userId: string) => void;
 }
 
+enum TabbitView {
+  CHAT = "chat",
+  CODE = "code"
+}
+
 export default function QuickRabbitsItem({
   rabit,
   onClose,
 }: IQuickRabbitsItem): React.ReactElement | null {
+  const [view, setView] = useState<TabbitView>(TabbitView.CODE)
+
   const { query } = useRouter();
   const [onlineStudents] = useAtom(onlineStudentsAtom);
   const { data: realTimeData } = useRealTimeConnection(
@@ -85,6 +92,20 @@ export default function QuickRabbitsItem({
         <Box display="flex" alignItems="center">
           <IconButton
             onClick={() => {
+              setView(TabbitView.CODE);
+            }}
+          >
+            <Iconify icon="material-symbols:code" color="#EAEAEB" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              setView(TabbitView.CHAT);
+            }}
+          >
+            <Iconify icon="basil:chat-outline" color="#EAEAEB" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
               onClose(rabit.id);
             }}
           >
@@ -92,18 +113,21 @@ export default function QuickRabbitsItem({
           </IconButton>
         </Box>
       </Box>
-      <CodeMirror
-          editable={false}
-          value={realTimeData?.code}
-          theme={myTheme}
-          height="449px"
-          style={ { fontSize: 11, overflow: "scroll" } }
-          placeholder="<Code for boxes appear...>"
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          extensions={[loadLanguage("html")]}
-      />
-      <Messages reciverId={rabit.id} />
+      {
+        view === TabbitView.CHAT
+        ? <Messages reciverId={rabit.id} />
+        : <CodeMirror
+            editable={false}
+            value={realTimeData?.code}
+            theme={myTheme}
+            height="449px"
+            style={ { fontSize: 11, overflow: "scroll" } }
+            placeholder="<Code for boxes appear...>"
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            extensions={[loadLanguage("html")]}
+        />
+      }
     </Box>
   );
 }
