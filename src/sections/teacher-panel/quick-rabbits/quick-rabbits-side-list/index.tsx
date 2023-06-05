@@ -26,6 +26,7 @@ import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
 
 const drawerWidth = 250;
+export const GROUP_CHAT_RABBIT = "Group Chat";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -201,7 +202,7 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
               onClick={() => {
                 setQuickRabbit((prev) => ({
                   ...prev,
-                  [classId]: { id: classId, email: "group chat" },
+                  [classId]: { id: classId, email: GROUP_CHAT_RABBIT },
                 }));
               }}
             />

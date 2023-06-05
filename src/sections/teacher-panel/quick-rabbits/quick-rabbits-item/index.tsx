@@ -14,6 +14,7 @@ import { createTheme } from "@uiw/codemirror-themes";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { useEffect, useState } from "react";
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
+import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;
@@ -29,7 +30,11 @@ export default function QuickRabbitsItem({
   rabit,
   onClose,
 }: IQuickRabbitsItem): React.ReactElement | null {
-  const [view, setView] = useState<TabbitView>(TabbitView.CODE)
+  const [view, setView] = useState<TabbitView>(
+    rabit.email === GROUP_CHAT_RABBIT
+    ? TabbitView.CHAT
+    : TabbitView.CODE
+  )
 
   const { query } = useRouter();
   const [onlineStudents] = useAtom(onlineStudentsAtom);
@@ -90,20 +95,25 @@ export default function QuickRabbitsItem({
           </Tooltip>
         </Box>
         <Box display="flex" alignItems="center">
-          <IconButton
-            onClick={() => {
-              setView(TabbitView.CODE);
-            }}
-          >
-            <Iconify icon="material-symbols:code" color="#EAEAEB" />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setView(TabbitView.CHAT);
-            }}
-          >
-            <Iconify icon="basil:chat-outline" color="#EAEAEB" />
-          </IconButton>
+          {
+            rabit.email === GROUP_CHAT_RABBIT
+            ? null
+            : <>
+              <IconButton
+                onClick={() => {
+                  setView(TabbitView.CODE);
+                } }
+              >
+                <Iconify icon="material-symbols:code" color="#EAEAEB" />
+              </IconButton><IconButton
+                onClick={() => {
+                  setView(TabbitView.CHAT);
+                } }
+              >
+                  <Iconify icon="basil:chat-outline" color="#EAEAEB" />
+              </IconButton>
+            </>}
+
           <IconButton
             onClick={() => {
               onClose(rabit.id);
