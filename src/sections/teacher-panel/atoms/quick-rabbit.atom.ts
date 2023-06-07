@@ -5,6 +5,7 @@ export type SupportedLang = "html" | "javascript";
 export interface IQuickRabbit {
   id: string;
   email: string;
+  avatar: string;
 }
 
 export const quickRabbitAtom = atomWithStorage<Record<string, IQuickRabbit>>(

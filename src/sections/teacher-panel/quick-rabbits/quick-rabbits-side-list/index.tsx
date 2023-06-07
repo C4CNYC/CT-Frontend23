@@ -26,6 +26,7 @@ import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
 
 const drawerWidth = 250;
+export const GROUP_CHAT_RABBIT = "Group Chat";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -194,14 +195,14 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
         <ListItem sx={{ py: 0.5 }}>
           <MarkUnreadChatAltIcon />
           <Box sx={{ pl: 2, pr: 3 }}>
-            <Typography variant="h6">Group Chat</Typography>
+            <Typography variant="h6">{GROUP_CHAT_RABBIT}</Typography>
           </Box>
           <IconButton>
             <AddIcon
               onClick={() => {
                 setQuickRabbit((prev) => ({
                   ...prev,
-                  [classId]: { id: classId, email: "group chat" },
+                  [classId]: { id: classId, email: GROUP_CHAT_RABBIT, avatar: "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png" },
                 }));
               }}
             />

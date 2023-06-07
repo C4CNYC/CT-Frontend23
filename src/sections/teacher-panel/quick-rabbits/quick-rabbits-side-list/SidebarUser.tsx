@@ -78,7 +78,7 @@ export const SidebarUser = ({
   }, [isOnline]);
 
   const onConnectStudent = (): void => {
-    setQuickRabbit((prev) => ({ ...prev, [id]: { id, email } }));
+    setQuickRabbit((prev) => ({ ...prev, [id]: { id, email, avatar } }));
   };
 
   const getSubText = (): string => {

@@ -14,6 +14,10 @@ import { createTheme } from "@uiw/codemirror-themes";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { useEffect, useState } from "react";
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
+import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
+import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;
@@ -29,12 +33,25 @@ export default function QuickRabbitsItem({
   rabit,
   onClose,
 }: IQuickRabbitsItem): React.ReactElement | null {
-  const [view, setView] = useState<TabbitView>(TabbitView.CODE)
-
   const { query } = useRouter();
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const [view, setView] = useState<TabbitView>(
+    rabit.email === GROUP_CHAT_RABBIT
+    ? TabbitView.CHAT
+    : TabbitView.CODE
+  )
+
   const [onlineStudents] = useAtom(onlineStudentsAtom);
   const { data: realTimeData } = useRealTimeConnection(
     rabit.id
+  );
+
+  const { data: students } = useGetStudentsQuery(
+    {
+      schoolId,
+      class_id: query.id as string,
+    },
+    { skip: !query.id }
   );
 
   useEffect(() => {
@@ -79,9 +96,15 @@ export default function QuickRabbitsItem({
               (!isRabbitActive ? `?studentId=${rabit.id}` : "")
             }
           >
-            <IconButton>
-              <Iconify icon={isRabbitActive ? "majesticons:door-exit-line" : "majesticons:door-enter-line"} color={isRabbitActive ? "red" : "#EAEAEB"} />
-            </IconButton>
+            {
+              rabit.email === GROUP_CHAT_RABBIT
+              ? null
+              : (
+                <IconButton>
+                  <Iconify icon={isRabbitActive ? "majesticons:door-exit-line" : "majesticons:door-enter-line"} color={isRabbitActive ? "red" : "#EAEAEB"} />
+                </IconButton>
+              )
+            }
           </Link>
           <Tooltip title={rabit.email} placement="top">
             <Typography noWrap width="160px" color="#EAEAEB" ml="5px">
@@ -90,20 +113,25 @@ export default function QuickRabbitsItem({
           </Tooltip>
         </Box>
         <Box display="flex" alignItems="center">
-          <IconButton
-            onClick={() => {
-              setView(TabbitView.CODE);
-            }}
-          >
-            <Iconify icon="material-symbols:code" color="#EAEAEB" />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setView(TabbitView.CHAT);
-            }}
-          >
-            <Iconify icon="basil:chat-outline" color="#EAEAEB" />
-          </IconButton>
+          {
+            rabit.email === GROUP_CHAT_RABBIT
+            ? null
+            : <>
+              <IconButton
+                onClick={() => {
+                  setView(TabbitView.CODE);
+                } }
+              >
+                <Iconify icon="material-symbols:code" color="#EAEAEB" />
+              </IconButton><IconButton
+                onClick={() => {
+                  setView(TabbitView.CHAT);
+                } }
+              >
+                  <Iconify icon="basil:chat-outline" color="#EAEAEB" />
+              </IconButton>
+            </>}
+
           <IconButton
             onClick={() => {
               onClose(rabit.id);
@@ -115,7 +143,12 @@ export default function QuickRabbitsItem({
       </Box>
       {
         view === TabbitView.CHAT
-        ? <Messages reciverId={rabit.id} />
+        ? <Messages
+            getStudent={(id: string) => {
+              return students?.data.find(s => s.id === id)
+            }}
+            reciverId={rabit.id}
+          />
         : <CodeMirror
             editable={false}
             value={realTimeData?.code}
