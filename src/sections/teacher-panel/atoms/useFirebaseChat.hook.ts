@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import {
   addDoc,
   collection,
+  Firestore,
   getFirestore,
   limitToLast,
   onSnapshot,
@@ -10,6 +11,7 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 export interface IChatMessage {
   id: string;
@@ -33,28 +35,33 @@ interface FirebaseChatApi {
   sendMessage: (
     message: string,
     reciverId: string,
-    senderId: string
+    senderId: string,
+    callback?: (db: Firestore) => void
   ) => Promise<void>;
   getMessages: (
     senderId: string,
     reciverId: string,
-    callback: (messages: IChatMessage[]) => void,
+    callback: (messages: IChatMessage[], db: Firestore) => void,
     limit?: number
   ) => void;
 }
 export const useFirebaseChat = (): FirebaseChatApi => {
+  const {
+    query: { id: classId },
+  } = useRouter();
   return {
     sendMessage: async (
       message: string,
       reciverId: string,
-      senderId: string
+      senderId: string,
+      callback?: (db: Firestore) => void
     ) => {
       try {
         await addDoc(
           collection(
             db,
             "chat-rooms",
-            getRoomId(senderId, reciverId),
+            classId === reciverId ? reciverId : getRoomId(senderId, reciverId),
             "messages"
           ),
           {
@@ -63,8 +70,10 @@ export const useFirebaseChat = (): FirebaseChatApi => {
             timestamp: serverTimestamp(),
           }
         );
-      } catch (error) {
-      }
+        if (callback) {
+          callback(db);
+        }
+      } catch (error) {}
     },
     getMessages: async (senderId, reciverId, callback, limit) => {
       return onSnapshot(
@@ -72,7 +81,7 @@ export const useFirebaseChat = (): FirebaseChatApi => {
           collection(
             db,
             "chat-rooms",
-            getRoomId(senderId, reciverId),
+            classId === reciverId ? reciverId : getRoomId(senderId, reciverId),
             "messages"
           ),
           limitToLast(limit ?? 50),
@@ -83,13 +92,13 @@ export const useFirebaseChat = (): FirebaseChatApi => {
             id: doc.id,
             ...doc.data(),
           })) as IChatMessage[];
-          callback(messages);
+          callback(messages, db);
         }
       );
     },
   };
 };
 
-function getRoomId(senderId: string, reciverId: string): string {
+export function getRoomId(senderId: string, reciverId: string): string {
   return [senderId, reciverId].sort().join("_");
 }

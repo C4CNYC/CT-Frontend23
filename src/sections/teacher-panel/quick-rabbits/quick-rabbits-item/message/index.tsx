@@ -12,12 +12,15 @@ import {
   useFirebaseChat,
 } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import { useEffect, useState } from "react";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 interface IMessages {
   reciverId: string;
+  getStudent: (id: string) => IStudent & BaseResponseInterface | undefined;
 }
 
-export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
+export const Messages = ({ reciverId, getStudent }: IMessages): React.ReactElement => {
   const senderId = "SUPPORT";
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const { getMessages, sendMessage } = useFirebaseChat();
@@ -56,18 +59,17 @@ export const Messages = ({ reciverId }: IMessages): React.ReactElement => {
                     sentTime: "15 mins ago",
                     sender: "Emily",
                     direction:
-                      reciverId === message.sender_id ? "incoming" : "outgoing",
+                      senderId !== message.sender_id ? "incoming" : "outgoing",
                     position: "first",
                   }}
                   avatarSpacer={
-                    messages[i - 1]?.sender_id === message.sender_id &&
-                    reciverId === message.sender_id
+                    messages[i - 1]?.sender_id === message.sender_id && message.sender_id !== senderId
                   }
                 >
-                  {reciverId === message.sender_id &&
+                  {senderId !== message.sender_id &&
                   messages[i - 1]?.sender_id !== message.sender_id ? (
                     <Avatar
-                      src="https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
+                      src={getStudent(message.sender_id)?.avatar ?? "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"}
                       name="Zoe"
                     />
                   ) : null}
