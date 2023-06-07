@@ -90,6 +90,7 @@ export default function StudentNewEditForm({
         lowercase: true,
         symbols: true,
         numbers: true,
+        strict: true,
       }),
     }),
     [currentUser]

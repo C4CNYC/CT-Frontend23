@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 
-const useDebounceCallback = (delay = 0, cleaning = true) => {
+const useDebounceCallback = (
+  delay = 0,
+  cleaning = true
+): ((callback: () => void) => void) => {
   const ref = useRef<number | null>(null);
 
   useEffect(() => {
