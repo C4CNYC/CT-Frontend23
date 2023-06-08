@@ -107,5 +107,6 @@ export interface ClassResponce extends BaseResponseInterface {
 }
 export interface ClassRequest {
   name: string;
+  description?: string;
   schoolId: string;
 }

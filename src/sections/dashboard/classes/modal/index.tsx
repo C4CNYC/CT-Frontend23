@@ -15,7 +15,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -26,11 +26,12 @@ import AddClassTab from "./AddClassTab";
 interface FormValuesProps {
   name: string;
   description: string;
+  avatar?: File;
 }
 
 interface Props {
   children?: React.ReactElement;
-  updateClass: (name: string) => void;
+  updateClass: (name: string, description: string, uploadedFile?: File) => void;
   defaultValues: { name: string; description: string };
   rowId: string;
   updateResult: boolean;
@@ -58,7 +59,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 2 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -98,9 +99,22 @@ export default function ClassPreferences({
   });
 
   const onSubmit = (data: FormValuesProps): void => {
-    updateClass?.(data.name);
+    updateClass?.(data.name, data.description, data.avatar);
   };
+  const handleDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
 
+      const newFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+
+      if (file) {
+        methods.setValue("avatar", newFile, { shouldValidate: false });
+      }
+    },
+    [methods.setValue]
+  );
   return (
     <>
       <Box
@@ -125,7 +139,7 @@ export default function ClassPreferences({
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <DialogContent sx={{ p: 0, height: "430px" }}>
+            <DialogContent sx={{ p: 0, height: { xs: "530px", sm: "400px" } }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
                 <Tabs
                   value={value}
@@ -142,7 +156,7 @@ export default function ClassPreferences({
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
-                <AddClassTab />
+                <AddClassTab handleDrop={handleDrop} />
               </TabPanel>
               <TabPanel value={value} index={1}>
                 <ClassMembersAutocomplete classId={rowId} />

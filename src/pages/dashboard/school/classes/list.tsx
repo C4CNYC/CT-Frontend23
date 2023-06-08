@@ -40,6 +40,7 @@ import {
   useCreateClassesMutation,
   useDeleteClassesMutation,
   useGetClassesQuery,
+  useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
@@ -84,7 +85,6 @@ export default function UserListPage(): React.ReactElement {
   } = useTable();
 
   const [openConfirm, setOpenConfirm] = useState(false);
-
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
@@ -96,6 +96,7 @@ export default function UserListPage(): React.ReactElement {
     useUpdateClassesMutation();
   const [createClassByManager, { isLoading: createClassLoading }] =
     useCreateClassesMutation();
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
   const [deleteCasses] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { schoolId, ...filters },
@@ -124,18 +125,46 @@ export default function UserListPage(): React.ReactElement {
     enqueueSnackbar("Classes deleted");
   };
 
-  const handleEditRow = async (id: string, name: string): Promise<void> => {
+  const handleEditRow = async (
+    id: string,
+    name: string,
+    description: string,
+    uploadedFile?: File
+  ): Promise<void> => {
     try {
-      await updateClassByManager({ schoolId, classId: id, name }).unwrap();
+      await updateClassByManager({
+        schoolId,
+        classId: id,
+        name,
+        description,
+      }).unwrap();
+      if (uploadedFile) {
+        const file = new FormData();
+        file.append("file", uploadedFile);
+        await updateClassAvatar({ schoolId, classId: id, file }).unwrap();
+      }
       enqueueSnackbar("Class updated successfuly!");
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
-  const createClass = async (name: string): Promise<void> => {
+  const createClass = async (
+    name: string,
+    description: string,
+    uploadedFile?: File
+  ): Promise<void> => {
     try {
-      await createClassByManager({ schoolId, name }).unwrap();
+      const data = await createClassByManager({
+        schoolId,
+        name,
+        description,
+      }).unwrap();
+      if (uploadedFile) {
+        const file = new FormData();
+        file.append("file", uploadedFile);
+        await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
+      }
       enqueueSnackbar(`Class ${name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });

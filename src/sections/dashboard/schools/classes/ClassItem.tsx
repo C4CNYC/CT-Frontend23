@@ -12,6 +12,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
 import { IClass } from "src/redux/services/interfaces/class.interface";
+import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import AddClassDialog from "./CreateClassDialog";
 
@@ -31,6 +32,7 @@ export default function ClassItem({
 }: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [updateClass] = useUpdateClassMutation();
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -41,14 +43,28 @@ export default function ClassItem({
     setOpenPopover(null);
   };
 
-  const updateClassByAdmin = async (name: string): Promise<void> => {
+  const updateClassByAdmin = async (
+    name: string,
+    description: string,
+    uploadedFile?: File
+  ): Promise<void> => {
     try {
       const data = await updateClass({
         schoolId,
         classId: classes.id,
         name,
+        description,
       }).unwrap();
-      enqueueSnackbar(`School ${data.name} created successfuly!`);
+      if (uploadedFile) {
+        const file = new FormData();
+        file.append("file", uploadedFile);
+        await updateClassAvatar({
+          schoolId,
+          classId: classes.id,
+          file,
+        }).unwrap();
+      }
+      enqueueSnackbar(`Class ${data.name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
@@ -61,7 +77,7 @@ export default function ClassItem({
         sx={{ borderBottom: "solid 1px rgba(145, 158, 171, 0.24)" }}
       >
         <ListItemAvatar>
-          <Avatar alt={classes.name} src="/assets/images/classes.png" />
+          <Avatar alt={classes.name} src={classes.avatar} />
         </ListItemAvatar>
 
         <ListItemText
@@ -99,8 +115,12 @@ export default function ClassItem({
           <AddClassDialog
             isEdit
             defaultValues={{ name: classes.name, description: "" }}
-            updateClass={() => {
-              updateClassByAdmin(classes.name);
+            updateClass={(
+              name: string,
+              description: string,
+              uploadedFile?: File
+            ) => {
+              updateClassByAdmin(name, description, uploadedFile);
               handleClosePopover();
             }}
           >

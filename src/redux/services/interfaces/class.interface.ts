@@ -3,6 +3,8 @@ export interface IClass {
   total_courses?: number;
   name: string;
   active: boolean;
+  avatar: string;
+  description?: string;
 }
 
 export interface ClassSearchParams {

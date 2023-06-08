@@ -15,6 +15,7 @@ import {
   useDeleteTeacherMutation,
   useGetClassListQuery,
 } from "src/redux/services/admin/school-amdin";
+import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 
@@ -28,6 +29,7 @@ export default function ClassesSection({
   const { enqueueSnackbar } = useSnackbar();
   const [createClass] = useCreateClassMutation();
   const [deleteTeacher] = useDeleteTeacherMutation();
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
   const [open, setOpen] = useState(false);
   const { data: classes, isLoading } = useGetClassListQuery(
     {
@@ -50,9 +52,18 @@ export default function ClassesSection({
     }
   };
 
-  const createClassByAdmin = async (name: string): Promise<void> => {
+  const createClassByAdmin = async (
+    name: string,
+    description: string,
+    uploadedFile?: File
+  ): Promise<void> => {
     try {
-      const data = await createClass({ schoolId, name }).unwrap();
+      const data = await createClass({ schoolId, name, description }).unwrap();
+      if (uploadedFile) {
+        const file = new FormData();
+        file.append("file", uploadedFile);
+        await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
+      }
       enqueueSnackbar(`School ${data.name} created successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });

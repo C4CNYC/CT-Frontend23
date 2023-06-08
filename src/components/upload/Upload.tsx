@@ -193,7 +193,7 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
 
       <div>
         <Typography gutterBottom variant="h5">
-          Course image
+          Choose image
         </Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
