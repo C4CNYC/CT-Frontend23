@@ -46,14 +46,16 @@ export default function ClassItem({
   const updateClassByAdmin = async (
     name: string,
     description: string,
+    cover: string,
     uploadedFile?: File
   ): Promise<void> => {
     try {
-      const data = await updateClass({
+      await updateClass({
         schoolId,
         classId: classes.id,
         name,
         description,
+        cover,
       }).unwrap();
       const file = new FormData();
       if (uploadedFile) {
@@ -64,7 +66,7 @@ export default function ClassItem({
           file,
         }).unwrap();
       }
-      enqueueSnackbar(`Class ${data.name} created successfuly!`);
+      enqueueSnackbar(`Class ${name} updated successfuly!`);
     } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
@@ -117,13 +119,15 @@ export default function ClassItem({
             defaultValues={{
               name: classes.name,
               description: classes.description ?? "",
+              cover: classes.cover ?? "",
             }}
             updateClass={(
               name: string,
               description: string,
+              cover: string,
               uploadedFile?: File
             ) => {
-              updateClassByAdmin(name, description, uploadedFile);
+              updateClassByAdmin(name, description, cover, uploadedFile);
               handleClosePopover();
             }}
           >

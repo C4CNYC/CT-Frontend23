@@ -29,6 +29,7 @@ interface Props {
     id: string,
     name: string,
     description: string,
+    cover: string,
     uploadedFile?: File
   ) => void;
   onSelectRow: VoidFunction;
@@ -146,11 +147,16 @@ export default function ClassesTableRow({
           updateClass={(
             name: string,
             description: string,
+            cover: string,
             uploadedFile?: File
           ) => {
-            onEditRow(row.id, name, description, uploadedFile);
+            onEditRow(row.id, name, description, cover, uploadedFile);
           }}
-          defaultValues={{ name: row.name, description: row.description ?? "" }}
+          defaultValues={{
+            name: row.name,
+            description: row.description ?? "",
+            cover: row.cover,
+          }}
           rowId={row.id}
           updateResult={updateResult}
         >

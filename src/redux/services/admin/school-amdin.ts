@@ -18,23 +18,17 @@ import { IUser } from "../interfaces/user.interface";
 
 const extendedApi = adminApi.injectEndpoints({
   endpoints: (builder) => ({
-    createClass: builder.mutation<ClassResponce, ClassRequest>({
-      query: ({ schoolId, ...body }) => ({
-        url: `/school/${schoolId}/class`,
-        method: "POST",
-        body,
-      }),
-      invalidatesTags: [{ type: "Classes" }],
-    }),
-    updateClass: builder.mutation<
-      ClassResponce,
+    createClass: builder.mutation<ClassResponce, Omit<ClassRequest, "classId">>(
       {
-        schoolId: string;
-        classId: string;
-        name: string;
-        description: string;
+        query: ({ schoolId, ...body }) => ({
+          url: `/school/${schoolId}/class`,
+          method: "POST",
+          body,
+        }),
+        invalidatesTags: [{ type: "Classes" }],
       }
-    >({
+    ),
+    updateClass: builder.mutation<ClassResponce, ClassRequest>({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/school/${schoolId}/class/${classId}`,
         method: "PATCH",

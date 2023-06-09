@@ -9,13 +9,15 @@ import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { MuiColorInput } from "mui-color-input";
 import { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 interface FormValuesProps {
   name: string;
   description: string;
+  cover: string;
   avatar?: File;
 }
 
@@ -24,11 +26,13 @@ interface Prop {
   createClass?: (
     name: string,
     description: string,
+    cover?: string,
     uploadedFile?: File
   ) => void;
   updateClass?: (
     name: string,
     description: string,
+    cover: string,
     uploadedFile?: File
   ) => void;
   defaultValues?: FormValuesProps;
@@ -66,9 +70,9 @@ export default function AddClassDialog({
 
   const onSubmit = (data: FormValuesProps): void => {
     if (isEdit) {
-      updateClass?.(data.name, data.description, data.avatar);
+      updateClass?.(data.name, data.description, data.cover, data.avatar);
     } else {
-      createClass?.(data.name, data.description, data.avatar);
+      createClass?.(data.name, data.description, data.cover, data.avatar);
     }
     handleClose();
     methods.reset();
@@ -135,6 +139,21 @@ export default function AddClassDialog({
                         : "Live empty and we will generate it randomly"}
                     </Typography>
                   }
+                />
+                <Controller
+                  control={methods.control}
+                  name="cover"
+                  render={({ field, fieldState }) => (
+                    <MuiColorInput
+                      sx={{ width: "100%", pt: 3 }}
+                      {...field}
+                      value={field.value}
+                      helperText={fieldState.invalid ? "Color is invalid" : ""}
+                      error={fieldState.invalid}
+                      isAlphaHidden
+                      format="hex"
+                    />
+                  )}
                 />
               </Grid>
               <Grid item xs={12} md={12}>

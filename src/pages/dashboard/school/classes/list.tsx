@@ -45,7 +45,10 @@ import {
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
 import { ClassesTableRow } from "src/sections/dashboard/classes/list";
-import { createRandomAvatar } from "src/utils/createRandomAvatar";
+import {
+  createRandomAvatar,
+  getRandomColor,
+} from "src/utils/createRandomAvatar";
 
 // ----------------------------------------------------------------------
 
@@ -130,6 +133,7 @@ export default function UserListPage(): React.ReactElement {
     id: string,
     name: string,
     description: string,
+    cover: string,
     uploadedFile?: File
   ): Promise<void> => {
     try {
@@ -138,6 +142,7 @@ export default function UserListPage(): React.ReactElement {
         classId: id,
         name,
         description,
+        cover,
       }).unwrap();
       if (uploadedFile) {
         const file = new FormData();
@@ -153,13 +158,18 @@ export default function UserListPage(): React.ReactElement {
   const createClass = async (
     name: string,
     description: string,
+    cover?: string,
     uploadedFile?: File
   ): Promise<void> => {
     try {
+      if (!cover) {
+        cover = getRandomColor(true);
+      }
       const data = await createClassByManager({
         schoolId,
         name,
         description,
+        cover,
       }).unwrap();
       const file = new FormData();
       if (uploadedFile) {

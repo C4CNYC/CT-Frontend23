@@ -23,16 +23,22 @@ import { RootState } from "src/redux/store";
 import * as Yup from "yup";
 import AddClassTab from "./AddClassTab";
 
-interface FormValuesProps {
+export interface FormAddClassProps {
   name: string;
   description: string;
+  cover: string;
   avatar?: File;
 }
 
 interface Props {
   children?: React.ReactElement;
-  updateClass: (name: string, description: string, uploadedFile?: File) => void;
-  defaultValues: { name: string; description: string };
+  updateClass: (
+    name: string,
+    description: string,
+    cover: string,
+    uploadedFile?: File
+  ) => void;
+  defaultValues: { name: string; description: string; cover: string };
   rowId: string;
   updateResult: boolean;
 }
@@ -59,7 +65,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ px: 2, pt: 2 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -93,13 +99,13 @@ export default function ClassPreferences({
     setValue(newValue);
   };
 
-  const methods = useForm<FormValuesProps>({
+  const methods = useForm<FormAddClassProps>({
     resolver: yupResolver(UpdateUserSchema),
     defaultValues,
   });
 
-  const onSubmit = (data: FormValuesProps): void => {
-    updateClass?.(data.name, data.description, data.avatar);
+  const onSubmit = (data: FormAddClassProps): void => {
+    updateClass?.(data.name, data.description, data.cover, data.avatar);
   };
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -139,7 +145,7 @@ export default function ClassPreferences({
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <DialogContent sx={{ p: 0, height: { xs: "530px", sm: "400px" } }}>
+            <DialogContent sx={{ p: 0, height: { xs: "560px", sm: "400px" } }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
                 <Tabs
                   value={value}
@@ -156,7 +162,10 @@ export default function ClassPreferences({
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
-                <AddClassTab handleDrop={handleDrop} />
+                <AddClassTab
+                  control={methods.control}
+                  handleDrop={handleDrop}
+                />
               </TabPanel>
               <TabPanel value={value} index={1}>
                 <ClassMembersAutocomplete classId={rowId} />
