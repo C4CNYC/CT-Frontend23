@@ -22,10 +22,10 @@ const extendetApi = managerApi.injectEndpoints({
       void,
       { schoolId: string; classId: string; userId: string }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
+      query: ({ schoolId, classId, userId }) => ({
         url: `/school/${schoolId}/class/${classId}/mentor`,
         method: "PATCH",
-        body,
+        body: { user_id: userId },
       }),
       invalidatesTags: ["Mentors"],
     }),
@@ -33,10 +33,10 @@ const extendetApi = managerApi.injectEndpoints({
       void,
       { schoolId: string; classId: string; userId: string }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
+      query: ({ schoolId, classId, userId }) => ({
         url: `/school/${schoolId}/class/${classId}/mentor`,
         method: "DELETE",
-        body,
+        body: { user_id: userId },
       }),
       invalidatesTags: ["Mentors"],
     }),

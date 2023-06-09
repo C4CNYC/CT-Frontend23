@@ -12,10 +12,12 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import {
   useCreateClassMutation,
-  useDeleteTeacherMutation,
   useGetClassListQuery,
 } from "src/redux/services/admin/school-amdin";
-import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
+import {
+  useDeleteClassesMutation,
+  useUpdateClassesAvatarMutation,
+} from "src/redux/services/manager/classes-manager";
 import { createRandomAvatar } from "src/utils/createRandomAvatar";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
@@ -29,7 +31,7 @@ export default function ClassesSection({
 }: ClassesSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [createClass] = useCreateClassMutation();
-  const [deleteTeacher] = useDeleteTeacherMutation();
+  const [deleteClass] = useDeleteClassesMutation();
   const [updateClassAvatar] = useUpdateClassesAvatarMutation();
   const [open, setOpen] = useState(false);
   const { data: classes, isLoading } = useGetClassListQuery(
@@ -39,10 +41,10 @@ export default function ClassesSection({
     { skip: !schoolId }
   );
 
-  const handleDeleteClass = async (userId: string): Promise<void> => {
+  const handleDeleteClass = async (classId: string): Promise<void> => {
     try {
-      await deleteTeacher({
-        user_id: userId,
+      await deleteClass({
+        classId,
         schoolId,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");

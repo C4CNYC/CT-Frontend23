@@ -42,6 +42,19 @@ const extendedApi = adminApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Classes" }],
     }),
+    deleteClass: builder.mutation<
+      ClassResponce,
+      {
+        schoolId: string;
+        classId: string;
+      }
+    >({
+      query: ({ schoolId, classId }) => ({
+        url: `/school/${schoolId}/class/${classId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Classes" }],
+    }),
     getSchoolList: builder.query<
       BaseListResponseInterface<ISchool>,
       ISchoolSearchParams
