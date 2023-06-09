@@ -29,10 +29,10 @@ const extendedApi = managerApi.injectEndpoints({
       IClass & BaseResponseInterface,
       { schoolId: string; name: string; description: string }
     >({
-      query: ({ schoolId, ...body }) => ({
+      query: ({ schoolId, name, description }) => ({
         url: `/school/${schoolId}/class`,
         method: "POST",
-        ...body,
+        body: { name, description },
       }),
       invalidatesTags: ["Classes"],
     }),
@@ -45,10 +45,10 @@ const extendedApi = managerApi.injectEndpoints({
         description: string;
       }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
+      query: ({ schoolId, classId, name, description }) => ({
         url: `/school/${schoolId}/class/${classId}`,
         method: "PATCH",
-        ...body,
+        body: { name, description },
       }),
       invalidatesTags: ["Classes"],
     }),

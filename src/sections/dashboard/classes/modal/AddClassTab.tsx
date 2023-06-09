@@ -15,24 +15,7 @@ export default function AddClassTab({ handleDrop }: Props): React.ReactElement {
           mb: { xs: 2, sm: 0 },
         }}
       >
-        <RHFUploadAvatar
-          name="avatar"
-          onDrop={handleDrop}
-          helperText={
-            <Typography
-              variant="caption"
-              sx={{
-                mt: 2,
-                mx: "auto",
-                display: "block",
-                textAlign: "center",
-                color: "text.secondary",
-              }}
-            >
-              Live empty and we will generate it randomly
-            </Typography>
-          }
-        />
+        <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
       </Box>
       <Stack direction="column" sx={{ gap: 3, width: "100%" }}>
         <Box>

@@ -55,8 +55,8 @@ export default function ClassItem({
         name,
         description,
       }).unwrap();
+      const file = new FormData();
       if (uploadedFile) {
-        const file = new FormData();
         file.append("file", uploadedFile);
         await updateClassAvatar({
           schoolId,
@@ -114,7 +114,10 @@ export default function ClassItem({
         <>
           <AddClassDialog
             isEdit
-            defaultValues={{ name: classes.name, description: "" }}
+            defaultValues={{
+              name: classes.name,
+              description: classes.description ?? "",
+            }}
             updateClass={(
               name: string,
               description: string,

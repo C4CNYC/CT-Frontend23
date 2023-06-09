@@ -130,7 +130,9 @@ export default function AddClassDialog({
                         color: "text.secondary",
                       }}
                     >
-                      Live empty and we will generate it randomly
+                      {isEdit
+                        ? ""
+                        : "Live empty and we will generate it randomly"}
                     </Typography>
                   }
                 />

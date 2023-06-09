@@ -16,6 +16,7 @@ import {
   useGetClassListQuery,
 } from "src/redux/services/admin/school-amdin";
 import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
+import { createRandomAvatar } from "src/utils/createRandomAvatar";
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 
@@ -59,9 +60,13 @@ export default function ClassesSection({
   ): Promise<void> => {
     try {
       const data = await createClass({ schoolId, name, description }).unwrap();
+      const file = new FormData();
       if (uploadedFile) {
-        const file = new FormData();
         file.append("file", uploadedFile);
+        await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
+      } else {
+        const randomAvatar = await createRandomAvatar();
+        file.append("file", randomAvatar);
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
       enqueueSnackbar(`School ${data.name} created successfuly!`);

@@ -45,6 +45,7 @@ import {
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
 import { ClassesTableRow } from "src/sections/dashboard/classes/list";
+import { createRandomAvatar } from "src/utils/createRandomAvatar";
 
 // ----------------------------------------------------------------------
 
@@ -160,9 +161,13 @@ export default function UserListPage(): React.ReactElement {
         name,
         description,
       }).unwrap();
+      const file = new FormData();
       if (uploadedFile) {
-        const file = new FormData();
         file.append("file", uploadedFile);
+        await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
+      } else {
+        const randomAvatar = await createRandomAvatar();
+        file.append("file", randomAvatar);
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
       enqueueSnackbar(`Class ${name} created successfuly!`);
