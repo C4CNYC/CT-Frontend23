@@ -28,7 +28,12 @@ const extendedApi = adminApi.injectEndpoints({
     }),
     updateClass: builder.mutation<
       ClassResponce,
-      { schoolId: string; classId: string; name: string }
+      {
+        schoolId: string;
+        classId: string;
+        name: string;
+        description: string;
+      }
     >({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/school/${schoolId}/class/${classId}`,

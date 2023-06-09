@@ -25,22 +25,41 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["Classes"],
     }),
-    createClasses: builder.mutation<void, { schoolId: string; name: string }>({
-      query: ({ schoolId, ...body }) => ({
+    createClasses: builder.mutation<
+      IClass & BaseResponseInterface,
+      { schoolId: string; name: string; description: string }
+    >({
+      query: ({ schoolId, name, description }) => ({
         url: `/school/${schoolId}/class`,
         method: "POST",
-        body,
+        body: { name, description },
       }),
       invalidatesTags: ["Classes"],
     }),
     updateClasses: builder.mutation<
-      void,
-      { schoolId: string; classId: string; name: string }
+      IClass & BaseResponseInterface,
+      {
+        schoolId: string;
+        classId: string;
+        name: string;
+        description: string;
+      }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
+      query: ({ schoolId, classId, name, description }) => ({
         url: `/school/${schoolId}/class/${classId}`,
         method: "PATCH",
-        body,
+        body: { name, description },
+      }),
+      invalidatesTags: ["Classes"],
+    }),
+    updateClassesAvatar: builder.mutation<
+      void,
+      { schoolId: string; classId: string; file: FormData }
+    >({
+      query: ({ schoolId, classId, file }) => ({
+        url: `/school/${schoolId}/class/${classId}/avatar`,
+        method: "PATCH",
+        body: file,
       }),
       invalidatesTags: ["Classes"],
     }),
@@ -82,4 +101,5 @@ export const {
   useDeleteClassesMutation,
   useUpdateClassesMutation,
   useCreateClassesMutation,
+  useUpdateClassesAvatarMutation,
 } = extendedApi;
