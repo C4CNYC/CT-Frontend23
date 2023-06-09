@@ -15,7 +15,6 @@ import {
 import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
-import { FcFolder } from "react-icons/fc";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { PATH_DASHBOARD } from "src/routes/paths";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
@@ -26,7 +25,12 @@ import ClassPreferences from "../modal";
 interface Props {
   row: IClass & BaseResponseInterface;
   selected: boolean;
-  onEditRow: (id: string, name: string) => void;
+  onEditRow: (
+    id: string,
+    name: string,
+    description: string,
+    uploadedFile?: File
+  ) => void;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
   updateResult: boolean;
@@ -75,9 +79,7 @@ export default function ClassesTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name}>
-              <FcFolder />
-            </Avatar>
+            <Avatar alt={name} src={row.avatar} />
           </Stack>
         </TableCell>
 
@@ -141,10 +143,14 @@ export default function ClassesTableRow({
           Connect
         </MenuItem>
         <ClassPreferences
-          updateClass={(name: string) => {
-            onEditRow(row.id, name);
+          updateClass={(
+            name: string,
+            description: string,
+            uploadedFile?: File
+          ) => {
+            onEditRow(row.id, name, description, uploadedFile);
           }}
-          defaultValues={{ name: row.name, description: "" }}
+          defaultValues={{ name: row.name, description: row.description ?? "" }}
           rowId={row.id}
           updateResult={updateResult}
         >

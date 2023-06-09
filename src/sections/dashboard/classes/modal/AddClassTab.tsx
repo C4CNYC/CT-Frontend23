@@ -1,11 +1,23 @@
-import { RHFTextField } from "@components/hook-form";
+import { RHFTextField, RHFUploadAvatar } from "@components/hook-form";
 import { Box, Stack, Typography } from "@mui/material";
 import * as React from "react";
 
-export default function AddClassTab(): React.ReactElement {
+interface Props {
+  handleDrop: (acceptedFiles: File[]) => void;
+}
+export default function AddClassTab({ handleDrop }: Props): React.ReactElement {
   return (
-    <>
-      <Stack direction="column" sx={{ gap: 3, px: 3 }}>
+    <Stack sx={{ flexDirection: { xs: "column", sm: "row" } }}>
+      <Box
+        sx={{
+          mt: { xs: 0, sm: 2 },
+          mr: { xs: 0, sm: 3 },
+          mb: { xs: 2, sm: 0 },
+        }}
+      >
+        <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
+      </Box>
+      <Stack direction="column" sx={{ gap: 3, width: "100%" }}>
         <Box>
           <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
             Name:
@@ -16,9 +28,9 @@ export default function AddClassTab(): React.ReactElement {
           <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
             Description:
           </Typography>
-          <RHFTextField name="description" required multiline rows={5} />
+          <RHFTextField name="description" required multiline rows={3} />
         </Box>
       </Stack>
-    </>
+    </Stack>
   );
 }
