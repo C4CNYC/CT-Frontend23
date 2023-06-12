@@ -10,6 +10,7 @@ import {
   IClass,
   IRemoveCourseFromClass,
 } from "../interfaces/class.interface";
+import { ClassRequest } from "../interfaces/school.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -27,28 +28,23 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     createClasses: builder.mutation<
       IClass & BaseResponseInterface,
-      { schoolId: string; name: string; description: string }
+      Omit<ClassRequest, "classId">
     >({
-      query: ({ schoolId, name, description }) => ({
+      query: ({ schoolId, ...body }) => ({
         url: `/school/${schoolId}/class`,
         method: "POST",
-        body: { name, description },
+        body,
       }),
       invalidatesTags: ["Classes"],
     }),
     updateClasses: builder.mutation<
       IClass & BaseResponseInterface,
-      {
-        schoolId: string;
-        classId: string;
-        name: string;
-        description: string;
-      }
+      ClassRequest
     >({
-      query: ({ schoolId, classId, name, description }) => ({
+      query: ({ schoolId, classId, ...body }) => ({
         url: `/school/${schoolId}/class/${classId}`,
         method: "PATCH",
-        body: { name, description },
+        body,
       }),
       invalidatesTags: ["Classes"],
     }),

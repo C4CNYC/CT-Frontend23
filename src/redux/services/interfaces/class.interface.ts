@@ -2,6 +2,7 @@ export interface IClass {
   total_students?: number;
   total_courses?: number;
   name: string;
+  cover: string;
   active: boolean;
   avatar: string;
   description?: string;
