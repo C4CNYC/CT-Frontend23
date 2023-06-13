@@ -1,11 +1,18 @@
 import { RHFTextField, RHFUploadAvatar } from "@components/hook-form";
 import { Box, Stack, Typography } from "@mui/material";
+import { MuiColorInput } from "mui-color-input";
 import * as React from "react";
+import { Control, Controller } from "react-hook-form";
+import { FormAddClassProps } from ".";
 
 interface Props {
   handleDrop: (acceptedFiles: File[]) => void;
+  control: Control<FormAddClassProps, any>;
 }
-export default function AddClassTab({ handleDrop }: Props): React.ReactElement {
+export default function AddClassTab({
+  handleDrop,
+  control,
+}: Props): React.ReactElement {
   return (
     <Stack sx={{ flexDirection: { xs: "column", sm: "row" } }}>
       <Box
@@ -16,7 +23,23 @@ export default function AddClassTab({ handleDrop }: Props): React.ReactElement {
         }}
       >
         <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
+        <Controller
+          control={control}
+          name="cover"
+          render={({ field, fieldState }) => (
+            <MuiColorInput
+              sx={{ width: "100%", pt: 3 }}
+              {...field}
+              value={field.value}
+              helperText={fieldState.invalid ? "Color is invalid" : ""}
+              error={fieldState.invalid}
+              isAlphaHidden
+              format="hex"
+            />
+          )}
+        />
       </Box>
+
       <Stack direction="column" sx={{ gap: 3, width: "100%" }}>
         <Box>
           <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
