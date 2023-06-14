@@ -54,6 +54,7 @@ export interface IStudent {
   active: boolean;
   password?: string;
   avatar: string;
+  cover: string;
 }
 
 export interface IMentor {

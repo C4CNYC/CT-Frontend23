@@ -25,7 +25,7 @@ export default function UserCreatePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Student: Create a new student | Minimal UI</title>
+        <title> Student: Create a new student | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
