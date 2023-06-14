@@ -73,10 +73,7 @@ export default function UserTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar
-              alt={firstName}
-              src={avatar ?? "/assets/images/avatar_2.jpg"}
-            />
+            <Avatar alt={firstName} src={avatar} />
           </Stack>
         </TableCell>
 
