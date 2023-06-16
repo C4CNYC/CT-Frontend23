@@ -1,0 +1,174 @@
+import { RHFTextField, RHFUploadAvatar } from "@components/hook-form";
+import FormProvider from "@components/hook-form/FormProvider";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  Paper,
+  Stack,
+  Switch,
+  Typography,
+} from "@mui/material";
+import { useSnackbar } from "notistack";
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import {
+  useAddAuthorToCourseMutation,
+  useCreateAuthorMutation,
+  useRemoveAuthorFromCourseMutation,
+  useUpdateAuthorCoverMutation,
+  useUpdateAuthorMutation,
+} from "src/redux/services/manager/author-manager";
+import * as Yup from "yup";
+
+const LINK_URL =
+  /^((https?|ftp):\/\/)?(www.)?(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
+
+interface FormValuesProps {
+  name: string;
+  about: string;
+  linkedin: string;
+  email: string;
+  cover?: File;
+}
+interface Props {
+  isEdit?: boolean;
+  courseId: string;
+  authorId?: string;
+  defaultValues?: FormValuesProps;
+  setFormVisible: (close: boolean) => void;
+}
+export default function AuthorForm({
+  isEdit = false,
+  courseId,
+  authorId,
+  setFormVisible,
+  defaultValues,
+}: Props): React.ReactElement {
+  const [addToCourse, setAddToCourse] = useState<boolean>(true);
+  const { enqueueSnackbar } = useSnackbar();
+  const [postAuthor, { isLoading }] = useCreateAuthorMutation();
+  const [editAuthor, { isLoading: isEditing }] = useUpdateAuthorMutation();
+  const [postCover] = useUpdateAuthorCoverMutation();
+  const [addAuthorToCourse] = useAddAuthorToCourseMutation();
+  const [removeAuthorFromCourse] = useRemoveAuthorFromCourseMutation();
+
+  const CreateCourseSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    about: Yup.string(),
+    linkedin: Yup.string().matches(LINK_URL, "Enter a valid url"),
+    email: Yup.string().email("Email must be a valid email address"),
+  });
+  const methods = useForm<FormValuesProps>({
+    resolver: yupResolver(CreateCourseSchema),
+    defaultValues,
+  });
+
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    try {
+      const file = new FormData();
+      if (isEdit && authorId) {
+        await editAuthor({
+          id: authorId,
+          ...data,
+        }).unwrap();
+        if (data.cover) {
+          file.append("file", data.cover);
+          await postCover({ id: authorId, file });
+        }
+        if (!addToCourse) {
+          await removeAuthorFromCourse({ id: authorId, course_id: courseId });
+        }
+      } else {
+        const author = await postAuthor({
+          name: data.name,
+          about: data.about,
+          linkedin: data.linkedin,
+          email: data.email,
+        }).unwrap();
+        if (!data.cover) return;
+        file.append("file", data.cover);
+        await postCover({ id: author.id, file });
+        if (addToCourse) {
+          await addAuthorToCourse({ id: author.id, course_id: courseId });
+        }
+      }
+
+      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      methods.reset();
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+
+      const newFile = Object.assign(file, {
+        preview: URL.createObjectURL(file),
+      });
+
+      if (file) {
+        methods.setValue("cover", newFile, { shouldValidate: false });
+      }
+    },
+    [methods.setValue]
+  );
+  return (
+    <Paper elevation={5} sx={{ p: 2 }}>
+      <Typography variant="h5">
+        {isEdit ? "Edit author" : "Create Author"}
+      </Typography>
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+        <Stack direction="column" sx={{ gap: 2, width: "100%" }}>
+          <RHFUploadAvatar name="cover" onDrop={handleDrop} />
+          <RHFTextField name="name" label="Name" required />
+          <RHFTextField name="email" label="email" />
+          <RHFTextField name="linkedin" label="Linkedin" />
+          <RHFTextField name="about" label="About" multiline rows={3} />
+
+          <FormControlLabel
+            control={
+              <Switch
+                checked={addToCourse}
+                onChange={() => {
+                  setAddToCourse(!addToCourse);
+                }}
+              />
+            }
+            label="Add author to this course"
+          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: 2,
+              mt: { xs: 3, sm: 5 },
+            }}
+          >
+            <Button
+              onClick={() => {
+                setFormVisible(false);
+              }}
+              color="error"
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isEditing || isLoading}
+            >
+              Save
+            </LoadingButton>
+          </Box>
+        </Stack>
+      </FormProvider>
+    </Paper>
+  );
+}

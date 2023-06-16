@@ -32,6 +32,7 @@ import {
   useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
+import AuthorsList from "./authors-tab/AuthorsList";
 
 interface FormValuesProps {
   name: string;
@@ -165,6 +166,7 @@ export default function CreateCourseDialog({
                 <Tab label="General" {...a11yProps(0)} />
 
                 <Tab label="Modules" {...a11yProps(1)} />
+                {isEdit ? <Tab label="authors" {...a11yProps(2)} /> : null}
               </Tabs>
             ) : null}
           </Box>
@@ -301,10 +303,20 @@ export default function CreateCourseDialog({
             <Box
               sx={{
                 minHeight: "550px",
-                width: { xs: "330px", sm: "350px" },
+                width: { xs: "330px", sm: "350px", md: "450px" },
               }}
             >
               <CourseModuleAutocomplete id={id} />
+            </Box>
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <Box
+              sx={{
+                minHeight: "550px",
+                width: { xs: "330px", sm: "350px", md: "450px" },
+              }}
+            >
+              <AuthorsList id={id} />
             </Box>
           </TabPanel>
         </Box>
@@ -331,7 +343,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: { xs: 2, sm: 3 } }}>
+        <Box sx={{ p: { xs: 2, sm: 3 }, height: "700px", overflowY: "auto" }}>
           <Typography>{children}</Typography>
         </Box>
       )}
