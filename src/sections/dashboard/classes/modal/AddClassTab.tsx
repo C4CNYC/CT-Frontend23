@@ -23,7 +23,7 @@ export default function AddClassTab({
       >
         <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
         <Box>
-          <Typography variant="h6" sx={{ mb: 1, ml: 1, mt: 2 }}>
+          <Typography variant="h6" sx={{ mb: 1, ml: 1, mt: 2.3 }}>
             Cover:
           </Typography>
           <Controller
