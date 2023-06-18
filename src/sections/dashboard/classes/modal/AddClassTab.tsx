@@ -17,27 +17,31 @@ export default function AddClassTab({
     <Stack sx={{ flexDirection: { xs: "column", sm: "row" } }}>
       <Box
         sx={{
-          mt: { xs: 0, sm: 2 },
           mr: { xs: 0, sm: 3 },
           mb: { xs: 2, sm: 0 },
         }}
       >
         <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
-        <Controller
-          control={control}
-          name="cover"
-          render={({ field, fieldState }) => (
-            <MuiColorInput
-              sx={{ width: "100%", pt: 3 }}
-              {...field}
-              value={field.value}
-              helperText={fieldState.invalid ? "Color is invalid" : ""}
-              error={fieldState.invalid}
-              isAlphaHidden
-              format="hex"
-            />
-          )}
-        />
+        <Box>
+          <Typography variant="h6" sx={{ mb: 1, ml: 1, mt: 2 }}>
+            Cover:
+          </Typography>
+          <Controller
+            control={control}
+            name="cover"
+            render={({ field, fieldState }) => (
+              <MuiColorInput
+                sx={{ width: "100%" }}
+                {...field}
+                value={field.value}
+                helperText={fieldState.invalid ? "Color is invalid" : ""}
+                error={fieldState.invalid}
+                isAlphaHidden
+                format="hex"
+              />
+            )}
+          />
+        </Box>
       </Box>
 
       <Stack direction="column" sx={{ gap: 3, width: "100%" }}>
