@@ -7,6 +7,6 @@ export interface IAuthor {
   id?: string;
 }
 export interface IAuthorSearchParams {
-  name?: string;
+  course_id?: string;
   email?: string;
 }

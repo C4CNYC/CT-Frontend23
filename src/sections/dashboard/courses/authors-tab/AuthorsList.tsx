@@ -14,13 +14,14 @@ interface Props {
 
 export default function AuthorsList({ id }: Props): React.ReactElement {
   const { filters, setFilter } = useFilters<IAuthorSearchParams>({
-    name: "",
+    email: "",
   });
   const [formVisible, setFormVisible] = useState<boolean>(false);
-  const { data, isLoading } = useGetAuthorsQuery({});
+  const { data, isLoading } = useGetAuthorsQuery(filters);
+  const { data: usersInCurrnetCourse } = useGetAuthorsQuery({ course_id: id });
   return (
     <Stack gap={1}>
-      <Stack direction="row">
+      <Stack direction="row" mb={1}>
         <FilterAuthors filters={filters} setFilter={setFilter} />
         <IconButton
           sx={{
@@ -45,12 +46,19 @@ export default function AuthorsList({ id }: Props): React.ReactElement {
       <Collapse in={formVisible} unmountOnExit>
         <AuthorForm courseId={id} setFormVisible={setFormVisible} />
       </Collapse>
-      {isLoading || !data ? (
+      {isLoading || !data || !usersInCurrnetCourse ? (
         <Skeleton />
       ) : (
-        data.data.map((author) => (
-          <AuthorsCard key={author.id} author={author} courseId={id} />
-        ))
+        data.data.map((author, i) => {
+          return (
+            <AuthorsCard
+              key={author.id}
+              author={author}
+              courseId={id}
+              isAuthor={usersInCurrnetCourse?.data[i]?.id === author.id}
+            />
+          );
+        })
       )}
     </Stack>
   );

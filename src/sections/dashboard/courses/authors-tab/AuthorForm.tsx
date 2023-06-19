@@ -17,7 +17,6 @@ import { useForm } from "react-hook-form";
 import {
   useAddAuthorToCourseMutation,
   useCreateAuthorMutation,
-  useDeleteAuthorMutation,
   useRemoveAuthorFromCourseMutation,
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
@@ -54,7 +53,6 @@ export default function AuthorForm({
   const [postCover] = useUpdateAuthorCoverMutation();
   const [addAuthorToCourse] = useAddAuthorToCourseMutation();
   const [removeAuthorFromCourse] = useRemoveAuthorFromCourseMutation();
-  const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
 
   const CreateAuthorSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -95,30 +93,20 @@ export default function AuthorForm({
           linkedin: data.linkedin,
           email: data.email,
         }).unwrap();
-        if (!data.avatar) return;
-        file.append("file", data.avatar);
-        await postCover({ id: author.id, file });
+        if (data.avatar) {
+          file.append("file", data.avatar);
+          await postCover({ id: author.id, file });
+        }
         if (addToCourse) {
-          await addAuthorToCourse({ id: author.id, course_id: courseId });
+          await addAuthorToCourse({
+            id: author.id,
+            course_id: courseId,
+          }).unwrap();
         }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       setFormVisible(false);
       methods.reset();
-    } catch (error) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
-    }
-  };
-
-  const handleDeleteAuthor = (): void => {
-    try {
-      if (defaultValues?.id) {
-        deleteAuthor({ id: defaultValues.id }).unwrap();
-        enqueueSnackbar("Deleted successfully!");
-        setFormVisible(false);
-      }
     } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
@@ -164,40 +152,30 @@ export default function AuthorForm({
             }
             label="Add author to this course"
           />
+
           <Box
             sx={{
               display: "flex",
-              justifyContent: isEdit ? "space-between" : "flex-end",
+              justifyContent: "flex-end",
               mt: { xs: 3, sm: 5 },
+              gap: 2,
             }}
           >
-            {isEdit ? (
-              <LoadingButton
-                color="error"
-                loading={isDeleting}
-                onClick={handleDeleteAuthor}
-              >
-                Delete author
-              </LoadingButton>
-            ) : null}
-
-            <Stack direction="row" gap={2} justifyContent="flex-end">
-              <Button
-                onClick={() => {
-                  setFormVisible(false);
-                }}
-                color="error"
-              >
-                Cancel
-              </Button>
-              <LoadingButton
-                type="submit"
-                variant="contained"
-                loading={isEditing || isLoading}
-              >
-                Save
-              </LoadingButton>
-            </Stack>
+            <Button
+              onClick={() => {
+                setFormVisible(false);
+              }}
+              color="error"
+            >
+              Cancel
+            </Button>
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isEditing || isLoading}
+            >
+              Save
+            </LoadingButton>
           </Box>
         </Stack>
       </FormProvider>

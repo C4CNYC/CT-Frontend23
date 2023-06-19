@@ -1,90 +1,216 @@
+import SvgColor from "@components/svg-color/SvgColor";
+import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
+  Box,
   Button,
   Card,
   Collapse,
+  Divider,
   Link,
   Stack,
   Typography,
 } from "@mui/material";
 import NextLink from "next/link";
+import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { RxLinkedinLogo } from "react-icons/rx";
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
-// import {
-//   useAddAuthorToCourseMutation,
-//   useRemoveAuthorFromCourseMutation,
-// } from "src/redux/services/manager/author-manager";
+import {
+  useAddAuthorToCourseMutation,
+  useDeleteAuthorMutation,
+  useRemoveAuthorFromCourseMutation,
+} from "src/redux/services/manager/author-manager";
 import AuthorForm from "./AuthorForm";
 
 interface Props {
   author: IAuthor;
   courseId: string;
+  isAuthor: boolean;
 }
 
 export default function AuthorsCard({
   author,
   courseId,
+  isAuthor,
 }: Props): React.ReactElement {
   const [editVisible, setEditVisible] = useState<boolean>(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
+  const [addToCourse, { isLoading }] = useAddAuthorToCourseMutation();
+  const [removeFromCourse, { isLoading: isRemoving }] =
+    useRemoveAuthorFromCourseMutation();
 
-  // const [addToCourse, { isLoading }] = useAddAuthorToCourseMutation();
-  // const [removeFromCourse, { isLoading: isRemoving }] =
-  //   useRemoveAuthorFromCourseMutation();
+  const handleDeleteAuthor = (): void => {
+    try {
+      if (author.id) {
+        deleteAuthor({ id: author.id }).unwrap();
+        enqueueSnackbar("Deleted successfully!");
+      }
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, {
+        variant: "error",
+      });
+    }
+  };
 
-  // const addRemoveAuthorToCourse = () => {};
+  const addAuthorToCourse = (): void => {
+    try {
+      if (author.id) {
+        addToCourse({ id: author.id, course_id: courseId }).unwrap();
+      }
+      enqueueSnackbar("Added to course successfully!");
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, {
+        variant: "error",
+      });
+    }
+  };
+  const removeAuthorFromCourse = (): void => {
+    try {
+      if (author.id) {
+        removeFromCourse({ id: author.id, course_id: courseId }).unwrap();
+      }
+      enqueueSnackbar("Deleted from course successfully!");
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, {
+        variant: "error",
+      });
+    }
+  };
   return (
     <>
-      <Card sx={{ p: 2 }}>
-        <Stack>
+      <Card
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <Box sx={{ position: "relative" }}>
           <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="flex-start"
-            pb={1}
-          >
-            <Typography variant="h6" gutterBottom sx={{ maxWidth: "150px" }}>
-              {author.name}
-            </Typography>
-            <Stack direction="row" gap={1}>
-              <Button
-                variant="soft"
-                color="success"
-                size="small"
-                onClick={() => {
-                  setEditVisible(true);
-                }}
-              >
-                Edit
-              </Button>
-              <Button variant="contained" color="success" size="small">
-                Add to course
-              </Button>
-            </Stack>
-          </Stack>
-          <Stack direction="row">
-            <Typography variant="body2">
-              <Avatar
-                src={author.avatar ?? ""}
-                sx={{
-                  float: "left",
-                  width: "60px",
-                  height: "60px",
-                  mr: 1,
-                }}
-              />
-              {author.about}
-            </Typography>
-          </Stack>
-          <Stack direction="row" justifyContent="flex-end" gap={2} mt={2}>
-            <Typography variant="subtitle2">{author.email}</Typography>
-            <Link component={NextLink} href={author.linkedin}>
-              <RxLinkedinLogo size="25px" color="#0077b5" />
-            </Link>
-          </Stack>
-        </Stack>
-      </Card>
+            sx={(theme) => ({
+              pt: "50px",
+              background: theme.palette.primary.dark,
+            })}
+          />
+          <SvgColor
+            src="/assets/shape_avatar.svg"
+            sx={{
+              width: 144,
+              height: 62,
+              zIndex: 10,
+              left: 0,
+              right: 0,
+              bottom: -26,
+              mx: "auto",
+              position: "absolute",
+              color: "background.paper",
+            }}
+          />
 
+          <Avatar
+            alt={author.name}
+            src={author.avatar ?? ""}
+            sx={{
+              width: 64,
+              height: 64,
+              zIndex: 11,
+              left: 0,
+              right: 0,
+              bottom: -32,
+              mx: "auto",
+              position: "absolute",
+            }}
+          />
+          <Link
+            component={NextLink}
+            href={author.linkedin}
+            target="_blank"
+            sx={{
+              position: "absolute",
+              width: "25px",
+              height: "25px",
+              top: "60px",
+              right: "10px",
+            }}
+          >
+            <RxLinkedinLogo size="25px" color="#0077b5" />
+          </Link>
+        </Box>
+
+        <Typography
+          variant="subtitle1"
+          sx={{ mt: 6, mb: 0.5, textTransform: "capitalize" }}
+        >
+          {author.name}
+        </Typography>
+        <Typography
+          variant="subtitle2"
+          sx={{ color: "text.secondary", mb: 0.5 }}
+        >
+          {author.email}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+          {author.about}
+        </Typography>
+
+        <Divider sx={{ borderStyle: "dashed" }} />
+
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 1,
+            py: 2,
+            px: 1,
+          }}
+        >
+          <LoadingButton
+            color="error"
+            variant="soft"
+            sx={{ whiteSpace: "nowrap", textTransform: "none" }}
+            loading={isDeleting}
+            onClick={handleDeleteAuthor}
+          >
+            Delete author
+          </LoadingButton>
+          <Button
+            variant="soft"
+            color="success"
+            onClick={() => {
+              setEditVisible(true);
+            }}
+          >
+            Edit
+          </Button>
+          {isAuthor ? (
+            <LoadingButton
+              variant="soft"
+              color="error"
+              sx={{
+                whiteSpace: "nowrap",
+                textTransform: "none",
+              }}
+              loading={isRemoving}
+              onClick={removeAuthorFromCourse}
+            >
+              Delete from course
+            </LoadingButton>
+          ) : (
+            <LoadingButton
+              variant="soft"
+              color="success"
+              sx={{
+                whiteSpace: "nowrap",
+                textTransform: "none",
+              }}
+              loading={isLoading}
+              onClick={addAuthorToCourse}
+            >
+              Add to course
+            </LoadingButton>
+          )}
+        </Box>
+      </Card>
       <Collapse in={editVisible} unmountOnExit>
         <AuthorForm
           courseId={courseId}
