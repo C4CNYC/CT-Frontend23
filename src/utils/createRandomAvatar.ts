@@ -1,7 +1,7 @@
-export const createRandomAvatar = async (): Promise<File> => {
+export const createRandomAvatar = async (user?: boolean): Promise<File> => {
   const canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
-  const emoji = generateRandomEmoji();
+  const emoji = generateRandomEmoji(user);
 
   const EMOJI_SIZE = 30;
   canvas.width = EMOJI_SIZE + 15;
@@ -41,8 +41,9 @@ export const createRandomAvatar = async (): Promise<File> => {
   return file;
 };
 
-const generateRandomEmoji = (): string => {
-  const emoji = EMOJI_ARRAY[Math.floor(Math.random() * EMOJI_ARRAY.length)];
+const generateRandomEmoji = (user?: boolean): string => {
+  const arrayEmoji = user ? USER_EMOJI : EMOJI_ARRAY;
+  const emoji = arrayEmoji[Math.floor(Math.random() * arrayEmoji.length)];
   return emoji;
 };
 
@@ -59,7 +60,21 @@ export const getRandomColor = (cover?: boolean): string => {
   color += transparency;
   return color;
 };
-
+const USER_EMOJI = [
+  "😂",
+  "😝",
+  "😁",
+  "😱",
+  "😜",
+  "😵",
+  "👶",
+  "👸",
+  "😍",
+  "😉",
+  "😓",
+  "😳",
+  "👽",
+];
 const EMOJI_ARRAY = [
   "😂",
   "😝",

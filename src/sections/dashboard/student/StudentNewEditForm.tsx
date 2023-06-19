@@ -1,18 +1,3 @@
-import { useCallback, useEffect, useMemo } from "react";
-import * as Yup from "yup";
-// next
-import { useRouter } from "next/router";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-// @mui
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-// utils
-import { fData } from "../../../utils/formatNumber";
-// routes
-import { PATH_DASHBOARD } from "@routes/paths";
-// components
 import FormProvider, {
   RHFSelect,
   RHFSwitch,
@@ -21,7 +6,15 @@ import FormProvider, {
 } from "@components/hook-form";
 import Label from "@components/label";
 import { useSnackbar } from "@components/snackbar";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
 import generator from "generate-password";
+import { MuiColorInput } from "mui-color-input";
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
@@ -32,8 +25,11 @@ import {
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-
-// ----------------------------------------------------------------------
+import {
+  createRandomAvatar,
+  getRandomColor,
+} from "src/utils/createRandomAvatar";
+import * as Yup from "yup";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };
@@ -67,6 +63,7 @@ export default function StudentNewEditForm({
     about: Yup.string(),
     verified: Yup.boolean(),
     active: Yup.boolean(),
+    cover: Yup.string(),
     password: !isEdit
       ? Yup.string().required("Password is required")
       : Yup.string(),
@@ -83,6 +80,7 @@ export default function StudentNewEditForm({
       post_code: currentUser?.post_code ?? "",
       about: currentUser?.about ?? "",
       verified: currentUser?.verified,
+      cover: currentUser?.cover ?? getRandomColor(),
       active: currentUser?.active,
       password: generator.generate({
         length: 10,
@@ -154,6 +152,11 @@ export default function StudentNewEditForm({
         }).unwrap();
         if (avatarUrl) {
           await updateAvatar(user.id, avatarUrl);
+        } else {
+          const file = new FormData();
+          const randomAvatar = await createRandomAvatar(true);
+          file.append("file", randomAvatar);
+          await updateAvatar(user.id, randomAvatar);
         }
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
         push(PATH_DASHBOARD.school.students);
@@ -214,11 +217,30 @@ export default function StudentNewEditForm({
                       color: "text.secondary",
                     }}
                   >
-                    Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
+                    {isEdit
+                      ? ""
+                      : "Live empty and we will generate it randomly"}
                   </Typography>
                 }
               />
+              <Stack>
+                <Typography variant="body2">Cover color</Typography>
+                <Controller
+                  control={methods.control}
+                  name="cover"
+                  render={({ field, fieldState }) => (
+                    <MuiColorInput
+                      sx={{ width: "100%", pt: 1 }}
+                      {...field}
+                      value={field.value}
+                      helperText={fieldState.invalid ? "Color is invalid" : ""}
+                      error={fieldState.invalid}
+                      isAlphaHidden
+                      format="hex"
+                    />
+                  )}
+                />
+              </Stack>
             </Box>
             {isEdit && (
               <>

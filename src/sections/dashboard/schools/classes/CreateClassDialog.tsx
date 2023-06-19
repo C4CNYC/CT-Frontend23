@@ -145,13 +145,14 @@ export default function AddClassDialog({
                   name="cover"
                   render={({ field, fieldState }) => (
                     <MuiColorInput
-                      sx={{ width: "100%", pt: 3 }}
+                      sx={{ width: "100%", mt: 3 }}
                       {...field}
                       value={field.value}
                       helperText={fieldState.invalid ? "Color is invalid" : ""}
                       error={fieldState.invalid}
                       isAlphaHidden
                       format="hex"
+                      label="Cover"
                     />
                   )}
                 />

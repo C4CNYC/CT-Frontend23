@@ -32,6 +32,7 @@ export interface IUser {
   role?: Role;
   avatar?: string;
   cover?: string;
+  socials?: ISocials[];
 }
 
 export interface StudentSearchParams extends BaseSearchInterface {
@@ -54,6 +55,8 @@ export interface IStudent {
   active: boolean;
   password?: string;
   avatar: string;
+  cover: string;
+  socials: ISocials[];
 }
 
 export interface IMentor {
@@ -79,4 +82,11 @@ export interface IStudentProfile {
   first_name?: string;
   last_name?: string;
   avatar?: string;
+}
+
+export interface ISocials {
+  name: string;
+  type: string;
+  link: string;
+  id?: string;
 }
