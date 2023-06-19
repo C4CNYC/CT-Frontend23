@@ -24,6 +24,7 @@ interface Props {
   onResetFilter: VoidFunction;
   onFilterName: (name: string) => void;
   onFilterClass: (classId: string) => void;
+  disableClassFilter?: boolean;
 }
 
 type ClassType = IClass & BaseResponseInterface;
@@ -33,6 +34,7 @@ export default function CustomAutocomplete({
   onFilterName,
   onFilterClass,
   onResetFilter,
+  disableClassFilter,
 }: Props): React.ReactElement | null {
   const [value, setValue] = useState<ClassType | null>(null);
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
@@ -75,17 +77,19 @@ export default function CustomAutocomplete({
       justifyContent="space-between"
       padding="24px 20px"
     >
-      <Autocomplete<ClassType>
-        options={clases.data || []}
-        renderInput={(params) => <TextField {...params} label="Class" />}
-        onInputChange={(e, value) => {
-          setFilter("name", value);
-        }}
-        onChange={onChange}
-        value={value}
-        getOptionLabel={(option) => option.name}
-        sx={{ width: 350, marginRight: 2 }}
-      />
+      {!disableClassFilter && (
+        <Autocomplete<ClassType>
+          options={clases.data || []}
+          renderInput={(params) => <TextField {...params} label="Class" />}
+          onInputChange={(e, value) => {
+            setFilter("name", value);
+          }}
+          onChange={onChange}
+          value={value}
+          getOptionLabel={(option) => option.name}
+          sx={{ width: 350, marginRight: 2 }}
+        />
+      )}
 
       <TextField
         fullWidth
