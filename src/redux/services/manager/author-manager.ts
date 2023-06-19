@@ -4,24 +4,25 @@ import {
   BaseResponseInterface,
 } from "src/utils/baseResponce.interface";
 import { managerApi } from ".";
-import { IAuthor } from "../interfaces/author.interface";
+import { IAuthor, IAuthorSearchParams } from "../interfaces/author.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getAuthors: builder.query<
       BaseListResponseInterface<IAuthor & BaseResponseInterface>,
-      void
+      IAuthorSearchParams
     >({
-      query: () => ({
+      query: (params) => ({
         url: "/author",
         method: "GET",
+        params,
       }),
       keepUnusedDataFor: 0,
       providesTags: ["Author"],
     }),
     updateAuthor: builder.mutation<
       IAuthor & BaseResponseInterface,
-      { id: string }
+      Omit<IAuthor, "avatar" | "email">
     >({
       query: ({ id, ...body }) => ({
         url: `/author/${id}`,
@@ -41,7 +42,10 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Author" }],
     }),
-    createAuthor: builder.mutation<IAuthor & BaseResponseInterface, IAuthor>({
+    createAuthor: builder.mutation<
+      IAuthor & BaseResponseInterface,
+      Omit<IAuthor, "avatar" | "id">
+    >({
       query: ({ ...body }) => ({
         url: "/author",
         method: "POST",

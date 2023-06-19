@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import {
   useAddAuthorToCourseMutation,
   useCreateAuthorMutation,
+  useDeleteAuthorMutation,
   useRemoveAuthorFromCourseMutation,
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
@@ -31,21 +32,20 @@ interface FormValuesProps {
   about: string;
   linkedin: string;
   email: string;
-  cover?: File;
+  avatar?: File;
+  id?: string;
 }
 interface Props {
   isEdit?: boolean;
   courseId: string;
-  authorId?: string;
-  defaultValues?: FormValuesProps;
+  defaultValues?: Omit<FormValuesProps, "avatar">;
   setFormVisible: (close: boolean) => void;
 }
 export default function AuthorForm({
   isEdit = false,
   courseId,
-  authorId,
   setFormVisible,
-  defaultValues,
+  defaultValues = { name: "", about: "", linkedin: "", email: "" },
 }: Props): React.ReactElement {
   const [addToCourse, setAddToCourse] = useState<boolean>(true);
   const { enqueueSnackbar } = useSnackbar();
@@ -54,32 +54,39 @@ export default function AuthorForm({
   const [postCover] = useUpdateAuthorCoverMutation();
   const [addAuthorToCourse] = useAddAuthorToCourseMutation();
   const [removeAuthorFromCourse] = useRemoveAuthorFromCourseMutation();
+  const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
 
-  const CreateCourseSchema = Yup.object().shape({
+  const CreateAuthorSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     about: Yup.string(),
     linkedin: Yup.string().matches(LINK_URL, "Enter a valid url"),
     email: Yup.string().email("Email must be a valid email address"),
+    avatar: Yup.mixed(),
   });
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateCourseSchema),
+    resolver: yupResolver(CreateAuthorSchema),
     defaultValues,
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       const file = new FormData();
-      if (isEdit && authorId) {
+      if (isEdit && defaultValues?.id) {
         await editAuthor({
-          id: authorId,
-          ...data,
+          id: defaultValues.id,
+          name: data.name,
+          linkedin: data.linkedin,
+          about: data.about,
         }).unwrap();
-        if (data.cover) {
-          file.append("file", data.cover);
-          await postCover({ id: authorId, file });
+        if (data.avatar) {
+          file.append("file", data.avatar);
+          await postCover({ id: defaultValues.id, file });
         }
         if (!addToCourse) {
-          await removeAuthorFromCourse({ id: authorId, course_id: courseId });
+          await removeAuthorFromCourse({
+            id: defaultValues.id,
+            course_id: courseId,
+          });
         }
       } else {
         const author = await postAuthor({
@@ -88,16 +95,30 @@ export default function AuthorForm({
           linkedin: data.linkedin,
           email: data.email,
         }).unwrap();
-        if (!data.cover) return;
-        file.append("file", data.cover);
+        if (!data.avatar) return;
+        file.append("file", data.avatar);
         await postCover({ id: author.id, file });
         if (addToCourse) {
           await addAuthorToCourse({ id: author.id, course_id: courseId });
         }
       }
-
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      setFormVisible(false);
       methods.reset();
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, {
+        variant: "error",
+      });
+    }
+  };
+
+  const handleDeleteAuthor = (): void => {
+    try {
+      if (defaultValues?.id) {
+        deleteAuthor({ id: defaultValues.id }).unwrap();
+        enqueueSnackbar("Deleted successfully!");
+        setFormVisible(false);
+      }
     } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
@@ -114,7 +135,7 @@ export default function AuthorForm({
       });
 
       if (file) {
-        methods.setValue("cover", newFile, { shouldValidate: false });
+        methods.setValue("avatar", newFile, { shouldValidate: false });
       }
     },
     [methods.setValue]
@@ -126,9 +147,9 @@ export default function AuthorForm({
       </Typography>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Stack direction="column" sx={{ gap: 2, width: "100%" }}>
-          <RHFUploadAvatar name="cover" onDrop={handleDrop} />
+          <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
           <RHFTextField name="name" label="Name" required />
-          <RHFTextField name="email" label="email" />
+          <RHFTextField name="email" label="email" disabled={isEdit} />
           <RHFTextField name="linkedin" label="Linkedin" />
           <RHFTextField name="about" label="About" multiline rows={3} />
 
@@ -146,26 +167,37 @@ export default function AuthorForm({
           <Box
             sx={{
               display: "flex",
-              justifyContent: "flex-end",
-              gap: 2,
+              justifyContent: isEdit ? "space-between" : "flex-end",
               mt: { xs: 3, sm: 5 },
             }}
           >
-            <Button
-              onClick={() => {
-                setFormVisible(false);
-              }}
-              color="error"
-            >
-              Cancel
-            </Button>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isEditing || isLoading}
-            >
-              Save
-            </LoadingButton>
+            {isEdit ? (
+              <LoadingButton
+                color="error"
+                loading={isDeleting}
+                onClick={handleDeleteAuthor}
+              >
+                Delete author
+              </LoadingButton>
+            ) : null}
+
+            <Stack direction="row" gap={2} justifyContent="flex-end">
+              <Button
+                onClick={() => {
+                  setFormVisible(false);
+                }}
+                color="error"
+              >
+                Cancel
+              </Button>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={isEditing || isLoading}
+              >
+                Save
+              </LoadingButton>
+            </Stack>
           </Box>
         </Stack>
       </FormProvider>
