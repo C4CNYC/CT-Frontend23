@@ -19,15 +19,15 @@ interface SocialTypes {
 type Props = Record<string, React.ReactElement>;
 
 export const SOCIAL_ICONS: Props = {
-  youtube: <AiFillYoutube size={32} />,
-  facebook: <AiFillFacebook size={32} />,
-  twitter: <AiFillTwitterSquare size={32} />,
-  linkedin: <AiFillLinkedin size={32} />,
-  telegram: <BsTelegram size={32} />,
-  whatsapp: <AiOutlineWhatsApp size={32} />,
-  viber: <SiViber size={32} />,
-  instagram: <AiFillInstagram size={32} />,
-  dribble: <AiFillDribbbleCircle size={32} />,
+  youtube: <AiFillYoutube size={28} color="#FF0000" />,
+  facebook: <AiFillFacebook size={28} color="#4267B2" />,
+  twitter: <AiFillTwitterSquare size={28} color="#1DA1F2" />,
+  linkedin: <AiFillLinkedin size={28} color="#0077b5" />,
+  telegram: <BsTelegram size={28} color="#229ED9" />,
+  whatsapp: <AiOutlineWhatsApp size={28} color="#25D366" />,
+  viber: <SiViber size={28} color="#7360F2" />,
+  instagram: <AiFillInstagram size={28} color="#E1306C" />,
+  dribble: <AiFillDribbbleCircle size={28} color="#ea4c89" />,
 };
 
 export const Socials: SocialTypes[] = [

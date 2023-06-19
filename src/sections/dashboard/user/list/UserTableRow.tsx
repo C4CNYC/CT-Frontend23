@@ -1,3 +1,4 @@
+import { SOCIAL_ICONS } from "@assets/data";
 import ConfirmDialog from "@components/confirm-dialog";
 import RoleSelector from "@components/drop-down-menu";
 import Iconify from "@components/iconify";
@@ -6,17 +7,21 @@ import MenuPopover from "@components/menu-popover";
 import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
+  Box,
   Checkbox,
   IconButton,
+  Link,
   MenuItem,
   Stack,
   TableCell,
   TableRow,
+  Tooltip,
+  Typography,
 } from "@mui/material";
+import NextLink from "next/link";
 import { useState } from "react";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-
 // ----------------------------------------------------------------------
 
 interface Props {
@@ -45,6 +50,7 @@ export default function UserTableRow({
     avatar,
     role,
     id,
+    socials,
   } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -91,6 +97,50 @@ export default function UserTableRow({
         {role ? (
           <TableCell align="left" sx={{ textTransform: "capitalize" }}>
             <RoleSelector userId={id} role={role} email={email} />
+          </TableCell>
+        ) : null}
+
+        {!role ? (
+          <TableCell align="left">
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ maxWidth: "145px", flexWrap: "wrap" }}
+            >
+              {socials?.map((link) => (
+                <Tooltip
+                  key={link.link}
+                  title={<Typography variant="body2">{link.link}</Typography>}
+                >
+                  <Box
+                    key={link.name}
+                    sx={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <Link
+                      sx={{
+                        color: "#fff",
+                        "> svg": {
+                          width: "20px",
+                          height: "20px",
+                        },
+                        "&:hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                      component={NextLink}
+                      href={link.link}
+                      variant="body2"
+                      color="text.primary"
+                      target="_blank"
+                    >
+                      {SOCIAL_ICONS[link.type]}
+                    </Link>
+                  </Box>
+                </Tooltip>
+              ))}
+            </Stack>
           </TableCell>
         ) : null}
 

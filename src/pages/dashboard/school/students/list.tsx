@@ -55,6 +55,7 @@ const TABLE_HEAD = [
   { id: "email", label: "Email", align: "left" },
   { id: "first_name", label: "first name", align: "left" },
   { id: "last_name", label: "last name", align: "left" },
+  { id: "socials", label: "Socials", align: "left" },
   { id: "isVerified", label: "Verified", align: "center" },
   { id: "status", label: "Status", align: "left" },
   { id: "" },
