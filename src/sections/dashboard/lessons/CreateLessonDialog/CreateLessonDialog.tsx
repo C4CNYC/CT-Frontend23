@@ -149,7 +149,9 @@ export default function CreateLessonDialog({
 
   return (
     <>
-      <Box onClick={handleClickOpen}>{children}</Box>
+      <Box sx={{ display: "flex", width: "100%" }} onClick={handleClickOpen}>
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEdit ? "Edit" : "Create"} Lesson</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
