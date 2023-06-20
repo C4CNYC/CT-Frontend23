@@ -19,27 +19,24 @@ import { IAuthor } from "src/redux/services/interfaces/author.interface";
 import {
   useAddAuthorToCourseMutation,
   useDeleteAuthorMutation,
-  useRemoveAuthorFromCourseMutation,
 } from "src/redux/services/manager/author-manager";
 import AuthorForm from "./AuthorForm";
 
 interface Props {
   author: IAuthor;
   courseId: string;
-  isAuthor: boolean;
+  addAuthor: boolean;
 }
 
 export default function AuthorsCard({
   author,
   courseId,
-  isAuthor,
+  addAuthor,
 }: Props): React.ReactElement {
   const [editVisible, setEditVisible] = useState<boolean>(false);
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
   const [addToCourse, { isLoading }] = useAddAuthorToCourseMutation();
-  const [removeFromCourse, { isLoading: isRemoving }] =
-    useRemoveAuthorFromCourseMutation();
 
   const handleDeleteAuthor = (): void => {
     try {
@@ -66,18 +63,18 @@ export default function AuthorsCard({
       });
     }
   };
-  const removeAuthorFromCourse = (): void => {
-    try {
-      if (author.id) {
-        removeFromCourse({ id: author.id, course_id: courseId }).unwrap();
-      }
-      enqueueSnackbar("Deleted from course successfully!");
-    } catch (error) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
-    }
-  };
+  // const removeAuthorFromCourse = (): void => {
+  //   try {
+  //     if (author.id) {
+  //       removeFromCourse({ id: author.id, course_id: courseId }).unwrap();
+  //     }
+  //     enqueueSnackbar("Deleted from course successfully!");
+  //   } catch (error) {
+  //     enqueueSnackbar(error?.data?.message, {
+  //       variant: "error",
+  //     });
+  //   }
+  // };
   return (
     <>
       <Card
@@ -158,56 +155,45 @@ export default function AuthorsCard({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 1,
+            gridTemplateColumns: addAuthor
+              ? "repeat(1, 1fr)"
+              : "repeat(2, 1fr)",
+            gap: 2,
             py: 2,
-            px: 1,
+            px: 2,
           }}
         >
-          <LoadingButton
-            color="error"
-            variant="soft"
-            sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-            loading={isDeleting}
-            onClick={handleDeleteAuthor}
-          >
-            Delete author
-          </LoadingButton>
-          <Button
-            variant="soft"
-            color="success"
-            onClick={() => {
-              setEditVisible(true);
-            }}
-          >
-            Edit
-          </Button>
-          {isAuthor ? (
+          {addAuthor ? (
             <LoadingButton
-              variant="soft"
-              color="error"
-              sx={{
-                whiteSpace: "nowrap",
-                textTransform: "none",
-              }}
-              loading={isRemoving}
-              onClick={removeAuthorFromCourse}
-            >
-              Delete from course
-            </LoadingButton>
-          ) : (
-            <LoadingButton
-              variant="soft"
               color="success"
-              sx={{
-                whiteSpace: "nowrap",
-                textTransform: "none",
-              }}
+              variant="soft"
+              sx={{ whiteSpace: "nowrap", textTransform: "none" }}
               loading={isLoading}
               onClick={addAuthorToCourse}
             >
-              Add to course
+              Add author to course
             </LoadingButton>
+          ) : (
+            <>
+              <LoadingButton
+                color="error"
+                variant="soft"
+                sx={{ whiteSpace: "nowrap", textTransform: "none" }}
+                loading={isDeleting}
+                onClick={handleDeleteAuthor}
+              >
+                Delete author
+              </LoadingButton>
+              <Button
+                variant="soft"
+                color="success"
+                onClick={() => {
+                  setEditVisible(true);
+                }}
+              >
+                Edit
+              </Button>
+            </>
           )}
         </Box>
       </Card>

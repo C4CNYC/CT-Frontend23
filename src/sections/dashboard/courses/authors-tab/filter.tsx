@@ -1,22 +1,30 @@
 import { SetFilterType, useFilters } from "@hooks/useFilters";
-import { Autocomplete, Skeleton } from "@mui/material";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+import {
+  Autocomplete,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
+  InputAdornment,
+  Skeleton,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
+import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
+
 import {
   ICourse,
   ICourseSearchParams,
-  IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 
 interface Props {
-  filters: IModulesSearchParams;
-  setFilter: SetFilterType;
+  courseId: string;
+  setCourse: (courseId: string) => void;
 }
 
 export default function FilterModules({
-  filters,
-  setFilter,
+  courseId,
+  setCourse,
 }: Props): React.ReactElement {
   const { filters: courseFilters, setFilter: setCourseFilters } =
     useFilters<ICourseSearchParams>({
@@ -25,7 +33,17 @@ export default function FilterModules({
     });
 
   const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
-
+  const onChangeCourse = (
+    event: React.SyntheticEvent<any>,
+    newValue: (ICourse & BaseResponseInterface) | null,
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<ICourse & BaseResponseInterface>
+  ): void => {
+    if (details?.option.id === courseId) {
+      return;
+    }
+    setCourse(details?.option.id as string);
+  };
   if (isLoading) {
     return (
       <Skeleton
@@ -38,20 +56,57 @@ export default function FilterModules({
 
   return (
     <Autocomplete<ICourse & BaseResponseInterface>
+      value={
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+        (courseId && courses?.data.find((c) => c.id === courseId)) ||
+        courses?.data[0]
+      }
       options={courses?.data ?? []}
       renderInput={(params) => <TextField {...params} label="Course" />}
       onInputChange={(e, value) => {
+        if (courses?.data.find((c) => c.id === courseId)?.name === value) {
+          return;
+        }
         setCourseFilters("name", value);
       }}
-      defaultValue={courses?.data.filter((m) => m.id === filters.course_id)[0]}
-      onChange={(event, value, reason, details) => {
-        setFilter("course_id", details?.option.id ?? "");
-      }}
+      onChange={onChangeCourse}
       getOptionLabel={(option) => option.name}
+      disabled
       sx={{
         width: "80%",
         marginRight: 1,
       }}
     />
+  );
+}
+
+interface PropsAuthors {
+  filters: IAuthorSearchParams;
+  setFilter: SetFilterType;
+}
+
+export function FilterAuthor({
+  filters,
+  setFilter,
+}: PropsAuthors): React.ReactElement {
+  return (
+    <TextField
+      defaultValue={filters?.email ?? ""}
+      sx={{
+        width: "100%",
+        mb: 2,
+      }}
+      onChange={(event) => {
+        setFilter("email", event.target.value);
+      }}
+      placeholder="email"
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end" sx={{ cursor: "pointer" }}>
+            <SearchOutlined />
+          </InputAdornment>
+        ),
+      }}
+    ></TextField>
   );
 }

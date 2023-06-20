@@ -5,6 +5,7 @@ import { Collapse, IconButton, Skeleton, Stack } from "@mui/material";
 import { useState } from "react";
 import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+import AddAuthorDialog from "./AddAuthorDialog";
 import AuthorForm from "./AuthorForm";
 import AuthorsCard from "./AuthorsCard";
 import FilterAuthors from "./filter";
@@ -14,40 +15,43 @@ interface Props {
 
 export default function AuthorsList({ id }: Props): React.ReactElement {
   const { filters, setFilter } = useFilters<IAuthorSearchParams>({
-    email: "",
+    course_id: id,
   });
+
   const [formVisible, setFormVisible] = useState<boolean>(false);
   const { data, isLoading } = useGetAuthorsQuery(filters);
-  const { data: usersInCurrnetCourse } = useGetAuthorsQuery({ course_id: id });
   return (
     <Stack gap={1}>
       <Stack direction="row" mb={1}>
-        <FilterAuthors filters={filters} setFilter={setFilter} />
-        <IconButton
-          sx={{
-            display: "flex",
-            borderRadius: 1,
-            py: 1,
-            ml: 1,
-            background: "rgba(99, 115, 129, 0.18)",
-            width: "15%",
+        <FilterAuthors
+          courseId={filters.course_id ?? ""}
+          setCourse={(courseId: string) => {
+            setFilter("classId", id);
           }}
-          onClick={() => {
-            setFormVisible(!formVisible);
-          }}
-        >
-          {formVisible ? (
-            <HighlightOffIcon fontSize="large" />
-          ) : (
-            <ControlPointIcon fontSize="large" />
-          )}
-        </IconButton>
+        />
+        <AddAuthorDialog courseId={id}>
+          <IconButton
+            sx={{
+              display: "flex",
+              borderRadius: 1,
+              py: 1,
+              background: "rgba(99, 115, 129, 0.18)",
+              width: "100%",
+            }}
+          >
+            {formVisible ? (
+              <HighlightOffIcon fontSize="large" />
+            ) : (
+              <ControlPointIcon fontSize="large" />
+            )}
+          </IconButton>
+        </AddAuthorDialog>
       </Stack>
       <Collapse in={formVisible} unmountOnExit>
         <AuthorForm courseId={id} setFormVisible={setFormVisible} />
       </Collapse>
-      {isLoading || !data || !usersInCurrnetCourse ? (
-        <Skeleton />
+      {isLoading || !data ? (
+        <Skeleton variant="rounded" animation="wave" sx={{ height: "260px" }} />
       ) : (
         data.data.map((author, i) => {
           return (
@@ -55,7 +59,7 @@ export default function AuthorsList({ id }: Props): React.ReactElement {
               key={author.id}
               author={author}
               courseId={id}
-              isAuthor={usersInCurrnetCourse?.data[i]?.id === author.id}
+              addAuthor={false}
             />
           );
         })

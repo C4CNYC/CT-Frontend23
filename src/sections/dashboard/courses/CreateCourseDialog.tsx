@@ -344,7 +344,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
     >
       {value === index && (
         <Box sx={{ p: { xs: 2, sm: 3 }, height: "700px", overflowY: "auto" }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
