@@ -104,8 +104,7 @@ export default function UserTableRow({
           <TableCell align="left">
             <Stack
               direction="row"
-              spacing={1}
-              sx={{ maxWidth: "145px", flexWrap: "wrap" }}
+              sx={{ maxWidth: "145px", flexWrap: "wrap", gap: 1 }}
             >
               {socials?.map((link) => (
                 <Tooltip

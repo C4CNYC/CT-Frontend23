@@ -29,8 +29,10 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["Students"],
     }),
-    createStudent: builder.mutation<IStudent & BaseResponseInterface,
-      { schoolId: string }>({
+    createStudent: builder.mutation<
+      IStudent & BaseResponseInterface,
+      { schoolId: string }
+    >({
       query: ({ schoolId, ...body }) => ({
         url: `/school/${schoolId}/student`,
         method: "POST",
@@ -92,6 +94,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Students"],
     }),
+    inviteStudent: builder.mutation<
+      IStudent & BaseResponseInterface,
+      { schoolId: string; email: string }
+    >({
+      query: ({ schoolId, ...body }) => ({
+        url: `/school/${schoolId}/student/invite`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Students"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -106,4 +119,5 @@ export const {
   useStudentLeftClassMutation,
   useUpdateStudentMutation,
   useUpdateStudentAvatarMutation,
+  useInviteStudentMutation,
 } = extendedApi;

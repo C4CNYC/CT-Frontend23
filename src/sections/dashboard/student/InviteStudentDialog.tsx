@@ -13,6 +13,7 @@ import {
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
 import * as Yup from "yup";
 
 interface FormValueProps {
@@ -20,22 +21,21 @@ interface FormValueProps {
 }
 interface Props {
   children: React.ReactElement;
+  schoolId: string;
 }
 
 export default function InviteStudentDialog({
   children,
+  schoolId,
 }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-
+  const [inviteStudent, { isLoading }] = useInviteStudentMutation();
   const handleOpenDialog = (): void => {
     setOpenDialog(true);
   };
   const handleCloseDialog = (): void => {
     setOpenDialog(false);
-  };
-  const defaultValues = {
-    email: "",
   };
 
   const CreateInviteSchema = Yup.object().shape({
@@ -46,11 +46,11 @@ export default function InviteStudentDialog({
 
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateInviteSchema),
-    defaultValues,
   });
 
-  const onSubmit = async (): Promise<void> => {
+  const onSubmit = async (data: FormValueProps): Promise<void> => {
     try {
+      await inviteStudent({ schoolId, email: data.email }).unwrap();
       enqueueSnackbar("Message was sent successfully");
       methods.reset();
     } catch (error) {
@@ -63,28 +63,32 @@ export default function InviteStudentDialog({
     <>
       <Box onClick={handleOpenDialog}>{children}</Box>
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Invite Student</DialogTitle>
-        <DialogContent>
-          <FormProvider
-            methods={methods}
-            onSubmit={methods.handleSubmit(onSubmit)}
-          >
+        <FormProvider
+          methods={methods}
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          <DialogTitle>Invite Student</DialogTitle>
+          <DialogContent>
             <RHFTextField
               name="email"
               type="email"
               label="email:"
               sx={{ minWidth: { xs: "250xp", sm: "300px" }, my: 1 }}
             />
-          </FormProvider>
-        </DialogContent>
-        <DialogActions>
-          <Button color="error" onClick={handleCloseDialog}>
-            Cancel
-          </Button>
-          <LoadingButton variant="contained" loading={false}>
-            Send invite
-          </LoadingButton>
-        </DialogActions>
+          </DialogContent>
+          <DialogActions>
+            <Button color="error" onClick={handleCloseDialog}>
+              Cancel
+            </Button>
+            <LoadingButton
+              variant="contained"
+              type="submit"
+              loading={isLoading}
+            >
+              Send invite
+            </LoadingButton>
+          </DialogActions>
+        </FormProvider>
       </Dialog>
     </>
   );
