@@ -281,7 +281,7 @@ export default function MyEditor({
             <Toolbar
               style={{
                 position: "sticky",
-                zIndex: 999,
+                zIndex: 500,
                 top: 0,
                 padding: "15px",
                 overflowX: "scroll",

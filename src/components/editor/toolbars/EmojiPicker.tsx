@@ -31,6 +31,13 @@ export default function EmojiPickerBtn(): React.ReactElement {
 
   return (
     <Stack ref={ref} sx={{ position: "relative", alignItems: "center" }}>
+      <style>
+        {`
+            aside.EmojiPickerReact.epr-main {
+                z-index: 1000;
+            }
+        `}
+      </style>
       <ToggleButton
         value="left"
         key="left"
@@ -41,7 +48,13 @@ export default function EmojiPickerBtn(): React.ReactElement {
         <BsEmojiSmile size="20px" />
       </ToggleButton>
       {showMenu && (
-        <Box sx={{ position: "absolute", bottom: "-450px", left: "-150px" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: "-480px",
+            left: "-150px",
+          }}
+        >
           <EmojiPicker
             width={300}
             previewConfig={{ showPreview: false }}
