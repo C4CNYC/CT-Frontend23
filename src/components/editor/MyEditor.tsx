@@ -3,27 +3,28 @@ import { Stack } from "@mui/system";
 import { FileExtension } from "@remirror/extension-file";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import {
-  TableComponents,
+  // TableComponents,
   TableExtension,
 } from "@remirror/extension-react-tables";
 import {
   BasicFormattingButtonGroup,
-  CalloutTypeButtonGroup,
+  // CalloutTypeButtonGroup,
   CommandButtonGroup,
   DecreaseFontSizeButton,
   FloatingToolbar,
-  HeadingLevelButtonGroup,
-  HistoryButtonGroup,
+  // HeadingLevelButtonGroup,
+  // HistoryButtonGroup,
   IncreaseFontSizeButton,
-  IndentationButtonGroup,
-  InsertHorizontalRuleButton,
+  // IndentationButtonGroup,
+  // InsertHorizontalRuleButton,
   Remirror,
   TextAlignmentButtonGroup,
   ThemeProvider,
-  ToggleBlockquoteButton,
-  ToggleBulletListButton,
-  ToggleCodeBlockButton,
-  ToggleColumnsButton,
+  // ToggleBlockquoteButton,
+  ToggleBoldButton,
+  // ToggleBulletListButton,
+  // ToggleCodeBlockButton,
+  // ToggleColumnsButton,
   ToggleOrderedListButton,
   ToggleStrikeButton,
   ToggleSubscriptButton,
@@ -32,6 +33,7 @@ import {
   Toolbar,
   useRemirror,
 } from "@remirror/react";
+
 import { useS3Upload } from "next-s3-upload";
 import React, { useEffect } from "react";
 import {
@@ -68,11 +70,11 @@ import {
 import "remirror/styles/all.css";
 import SaveButton from "./SaveButton";
 import {
-  AddIframeButton,
-  AddYoutubeButton,
+  // AddIframeButton,
+  // AddYoutubeButton,
   FontFamilyButtons,
   FontSizeButtons,
-  TablePicker,
+  // TablePicker,
   TextBgColorPicker,
   TextCaseSelect,
   TextColorPicker,
@@ -81,6 +83,9 @@ import {
 import jsx from "refractor/lang/jsx.js";
 import typescript from "refractor/lang/typescript.js";
 import { isJson } from "src/utils/isJson";
+import data from "svgmoji/emoji.json";
+import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
+import EmojiPickerBtn from "./toolbars/EmojiPicker";
 
 interface FileWithProgress {
   file: File;
@@ -143,7 +148,7 @@ export default function MyEditor({
   const { uploadToS3 } = useS3Upload();
   const extensions = (): Extensions[] => [
     new HeadingExtension(),
-    new BoldExtension({}),
+    new BoldExtension(),
     new ItalicExtension(),
     new UnderlineExtension(),
     new ImageExtension({ enableResizing: true, uploadHandler }),
@@ -174,6 +179,7 @@ export default function MyEditor({
     new BulletListExtension(),
     new OrderedListExtension(),
     new TaskListExtension(),
+    new EmojiExtension({ data, moji: "noto" }),
   ];
 
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -284,22 +290,28 @@ export default function MyEditor({
                 borderBottom: "1px solid #cbcbcb",
               }}
             >
-              <Stack flexDirection="row" sx={{ flexWrap: "wrap", gap: "10px" }}>
-                <HistoryButtonGroup />
+              <Stack direction="column" sx={{ width: "100%", gap: 1 }}>
+                <Stack direction="row" justifyContent="space-between">
+                  <Stack
+                    flexDirection="row"
+                    sx={{ flexWrap: "wrap", gap: 1, alignItems: "center" }}
+                  >
+                    <ToggleBoldButton />
+                    <CommandButtonGroup>
+                      <ToggleOrderedListButton />
+                    </CommandButtonGroup>
+                    <TextColorPicker />
+
+                    <TextBgColorPicker />
+                    {/* <HistoryButtonGroup />
                 <HeadingLevelButtonGroup showAll />
                 <IndentationButtonGroup />
-                <CalloutTypeButtonGroup />
-
-                <CommandButtonGroup>
-                  <ToggleBulletListButton />
-                  <ToggleOrderedListButton />
-                  <ToggleTaskListButton />
-                </CommandButtonGroup>
-
-                <TextColorPicker />
-                <TextBgColorPicker />
-
-                <div style={{ height: "30px", display: "flex" }}>
+                <CalloutTypeButtonGroup /> */}
+                    <CommandButtonGroup>
+                      {/* <ToggleBulletListButton /> */}
+                      <ToggleTaskListButton />
+                    </CommandButtonGroup>
+                    {/* <div style={{ height: "30px", display: "flex" }}>
                   <ToggleBlockquoteButton />
                   <InsertHorizontalRuleButton />
                   <ToggleCodeBlockButton lang="html" />
@@ -309,10 +321,23 @@ export default function MyEditor({
                   <AddYoutubeButton />
                   <TablePicker />
                   <TableComponents />
-                </div>
-              </Stack>
+                  </div> */}
+                    <EmojiPickerBtn />
+                  </Stack>
+                  <SaveButton onClick={saveContent} />
+                </Stack>
 
-              <SaveButton onClick={saveContent} />
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  flexWrap="wrap"
+                  gap={1}
+                >
+                  <TemplateBtn />
+                  <ChallengeBtn />
+                  <SettingsBtn />
+                </Stack>
+              </Stack>
             </Toolbar>
             <FloatingToolbar
               sx={{
