@@ -1,6 +1,5 @@
-import { Tooltip } from "@mui/material";
 import Button from "@mui/material/Button";
-import { TfiSave } from "react-icons/tfi";
+import { FaSave } from "react-icons/fa";
 
 interface Props {
   onClick: VoidFunction;
@@ -9,17 +8,26 @@ interface Props {
 
 export default function SaveButton({ onClick, sx }: Props): JSX.Element {
   return (
-    <Tooltip title="Save">
-      <Button
-        value="left"
-        variant="outlined"
-        key="left"
-        onClick={onClick}
-        sx={{ ml: "auto!important", width: 60, maxHeight: "30px", ...sx }}
-        size="small"
-      >
-        <TfiSave />
-      </Button>
-    </Tooltip>
+    <Button
+      variant="outlined"
+      key="left"
+      onClick={onClick}
+      sx={{
+        flexShrink: 0,
+        ml: "auto!important",
+        maxHeight: "40px",
+        borderRadius: "20px",
+        border: "2px solid #75CF6D",
+        color: "#75CF6D",
+        gap: 1,
+        "&:hover": {
+          border: "2px solid #75CF6D",
+        },
+        ...sx,
+      }}
+    >
+      Save
+      <FaSave size="18px" style={{ marginBottom: "3px" }} />
+    </Button>
   );
 }

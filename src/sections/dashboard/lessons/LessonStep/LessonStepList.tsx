@@ -1,10 +1,10 @@
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { useEffect } from "react";
+import { FiSettings } from "react-icons/fi";
+import { ImPlus } from "react-icons/im";
 import { useSelector } from "react-redux";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {
@@ -100,7 +100,6 @@ export default function LessonStepList({
   const newContentOrder = idCardWithMaxOrder
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1;
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const onDublicate = async (
     data: ILessonContent & BaseResponseInterface
@@ -140,60 +139,44 @@ export default function LessonStepList({
       });
     }
   };
-  const handleOpenPopover = async (
-    event: React.MouseEvent<HTMLElement>
-  ): Promise<void> => {
-    setOpenPopover(event.currentTarget);
-    event.stopPropagation();
-    event.preventDefault();
-  };
+
   if (isLoading || isLessonLoading) return <SkeletonList />;
   return (
     <Box sx={{ p: 2 }}>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        pb="15px"
-      >
-        <Typography variant="subtitle1" sx={{ pl: 1 }}>
+      <Stack sx={{ gap: 2 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ pl: 1, fontWeight: 500, fontSize: "1.1rem" }}
+        >
           {lesson?.name}
         </Typography>
-        <IconButton
-          color={openPopover ? "inherit" : "default"}
-          onClick={handleOpenPopover}
-          sx={{ mr: "2px", pt: "5px", pb: "5px" }}
-          edge="end"
-        >
-          <CreateLessonDialog
-            id={lesson?.id}
-            defaultValues={{
-              name: lesson?.name as string,
-              description: lesson?.description as string,
-              active: lesson?.active as boolean,
-            }}
-          >
-            <BsThreeDotsVertical size="20px" />
-          </CreateLessonDialog>
-        </IconButton>
-      </Box>
-      <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
-        <Button
-          variant="outlined"
-          fullWidth
-          sx={{
-            mt: 2,
-            mb: 1,
-            p: 2,
-            display: "flex",
-            justifyContent: "center",
-            alighItems: "center",
+
+        <CreateLessonDialog
+          id={lesson?.id}
+          defaultValues={{
+            name: lesson?.name as string,
+            description: lesson?.description as string,
+            active: lesson?.active as boolean,
           }}
         >
-          <AddIcon />
-          <Typography variant="subtitle1">ADD STEP</Typography>
-        </Button>
-      </CreateDemonContent>
+          <Button
+            variant="outlined"
+            sx={{
+              width: "100%",
+              justifyContent: "flex-start",
+              p: 1.5,
+              fontWeight: 500,
+              fontSize: "1rem",
+              whiteSpace: "nowrap",
+              gap: 1,
+            }}
+          >
+            <FiSettings size="20px" />
+            LESSON SETUP & SETTINGS
+          </Button>
+        </CreateLessonDialog>
+      </Stack>
+
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="contents">
           {(provided) => (
@@ -219,6 +202,24 @@ export default function LessonStepList({
           )}
         </Droppable>
       </DragDropContext>
+      <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
+        <Button
+          variant="outlined"
+          fullWidth
+          sx={{
+            mt: 2,
+            mb: 1,
+            p: 2,
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alighItems: "center",
+          }}
+        >
+          <ImPlus size="22px" />
+          <Typography variant="subtitle1">ADD SLIDE</Typography>
+        </Button>
+      </CreateDemonContent>
       <Stack direction="column" spacing={3} sx={{ p: 2 }}></Stack>
     </Box>
   );
