@@ -3,17 +3,18 @@ import MenuPopover from "@components/menu-popover/MenuPopover";
 import { Draggable } from "@hello-pangea/dnd";
 import {
   Box,
-  Checkbox,
-  Divider,
   IconButton,
   MenuItem,
   Paper,
+  Stack,
   Typography,
 } from "@mui/material";
 import _ from "lodash";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { RxDragHandleDots2 } from "react-icons/rx";
+import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/utils/baseResponce.interface";
 import Preferences from "./Modals/Preferences";
@@ -27,6 +28,10 @@ interface Props {
   onDublicate: (step: ILessonContent & BaseResponseInterface) => void;
 }
 
+const BRIEFING = "#0198ED";
+const CUSTOM = "#364954";
+const CHALANGES = "#FBDD3F";
+
 export default function LessonListItem({
   onRemove,
   onDublicate,
@@ -36,6 +41,7 @@ export default function LessonListItem({
 }: Props): React.ReactElement {
   const router = useRouter();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const [hasValidation, setHasValidation] = useState<boolean>(false);
 
   const handleOpenPopover = async (
     event: React.MouseEvent<HTMLElement>
@@ -60,108 +66,127 @@ export default function LessonListItem({
     );
   };
 
+  const chooseBorderColor = (): string => {
+    if (hasValidation) {
+      return CHALANGES;
+    } else if (step.type === LessonContentType.Code) {
+      return CUSTOM;
+    } else {
+      return BRIEFING;
+    }
+  };
+
   return (
     <Draggable draggableId={step.id} index={index}>
       {(provided) => (
         <Paper
-          // onClick={selectStep}
           {...provided.draggableProps}
-          {...provided.dragHandleProps}
           ref={provided.innerRef}
+          onClick={selectStep}
           elevation={8}
           sx={{
             cursor: "pointer!important",
             display: "flex",
             p: "15px 10px 15px 5px",
-            justifyContent: "space-between",
+            justifyContent: "flex-start",
             alignItems: "flex-start",
+            border: `2px solid ${chooseBorderColor()}`,
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
-          >
-            <Checkbox
-              sx={{ mr: "5px" }}
-              onClick={selectStep}
-              size="small"
-              checked={step.id === router.query.stepId}
-            />
-            <Box
-              sx={{
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
+          <IconButton sx={{ mr: "5px" }} {...provided.dragHandleProps}>
+            <RxDragHandleDots2 size="24px" />
+          </IconButton>
+
+          <Stack sx={{ width: "100%", alignItems: "flex-end" }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="flex-start"
+              sx={{ width: "100%" }}
+            >
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: "160px",
+                }}
+              >
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                  }}
+                  gutterBottom
+                >
+                  {_.toUpper(step.title)}
+                </Typography>
+                <Typography
+                  sx={{
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                  }}
+                  noWrap
+                  variant="body2"
+                >
+                  {step.description}
+                </Typography>
+              </Box>
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleOpenPopover(e);
+                }}
+              >
+                <BsThreeDotsVertical size="20px" />
+              </IconButton>
+            </Stack>
+
+            <Stack
+              direction="row"
+              gap={1}
+              onClick={(e) => {
+                e.stopPropagation();
               }}
             >
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
+              <IconButton
+                onClick={() => {
+                  onDublicate(step);
                 }}
-                gutterBottom
               >
-                {_.toUpper(step.title)}
-              </Typography>
-              <Typography
-                sx={{
-                  textOverflow: "ellipsis",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                }}
-                noWrap
-                variant="body2"
+                <Iconify icon="material-symbols:content-copy-outline" />
+              </IconButton>
+              <Validation
+                stepId={step.id}
+                stepTitle={step.title}
+                setHasValidation={setHasValidation}
               >
-                {step.description}
-              </Typography>
-            </Box>
-          </Box>
-          <IconButton
-            sx={{ mr: "2px", mt: "6px" }}
-            edge="end"
-            onClick={handleOpenPopover}
-          >
-            <BsThreeDotsVertical size="20px" />
-          </IconButton>
+                <IconButton>
+                  <Iconify icon="fluent-mdl2:completed" />
+                </IconButton>
+              </Validation>
+              <Preferences
+                defaultValues={{ ...step }}
+                contentId={step.id}
+                lessonId={lessonId}
+              >
+                <IconButton>
+                  <Iconify icon="ep:setting" />
+                </IconButton>
+              </Preferences>
+            </Stack>
+          </Stack>
+
           <MenuPopover
             open={openPopover}
             onClose={handleClosePopover}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
             arrow="left-top"
             sx={{ width: 160 }}
           >
-            <MenuItem
-              onClick={() => {
-                handleClosePopover();
-                onDublicate(step);
-              }}
-            >
-              <Iconify icon="material-symbols:content-copy-outline" />
-              Dublicate
-            </MenuItem>
-            <Preferences
-              defaultValues={{ ...step }}
-              contentId={step.id}
-              lessonId={lessonId}
-            >
-              <MenuItem>
-                <Iconify icon="ep:setting" />
-                Preferences
-              </MenuItem>
-            </Preferences>
-            <Validation stepId={step.id} stepTitle={step.title}>
-              <MenuItem>
-                <Iconify icon="file-icons:test-generic" />
-                Validations
-              </MenuItem>
-            </Validation>
-            <Divider sx={{ borderStyle: "dashed" }} />
             <MenuItem
               onClick={() => {
                 onRemove(step.id);

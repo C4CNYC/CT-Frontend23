@@ -9,7 +9,7 @@ import {
   IconButton,
   Skeleton,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Iconify from "@components/iconify";
 import Paper from "@mui/material/Paper";
@@ -35,21 +35,22 @@ interface Props {
   children?: React.ReactElement;
   stepTitle: string;
   stepId: string;
+  setHasValidation: (has: boolean) => void;
 }
 
 export default function Validation({
   children,
   stepTitle,
   stepId,
+  setHasValidation,
 }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpenDialog] = useState<boolean>(false);
 
   const [removeRule] = useRemoveLessonContentValiationMutation();
-  const { data, isLoading } = useGetLessonContentValidationsQuery(
-    { id: stepId },
-    { skip: !open }
-  );
+  const { data, isLoading } = useGetLessonContentValidationsQuery({
+    id: stepId,
+  });
 
   const onDeleteRule = async (id: string): Promise<void> => {
     try {
@@ -60,6 +61,11 @@ export default function Validation({
     }
   };
 
+  useEffect(() => {
+    if (data?.length) {
+      setHasValidation(true);
+    }
+  }, [data]);
   return (
     <>
       <Box
