@@ -65,7 +65,7 @@ export default function Validation({
     if (data?.length) {
       setHasValidation(true);
     }
-  }, []);
+  }, [data]);
   return (
     <>
       <Box
