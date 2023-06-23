@@ -150,8 +150,14 @@ export default function UserListPage(): React.ReactElement {
             { name: "List" },
           ]}
           action={
-            <Box sx={{ display: "flex", gap: 1 }}>
-              <InviteStudentDialog>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                flexDirection: { xs: "column", sm: "row" },
+              }}
+            >
+              <InviteStudentDialog schoolId={schoolId}>
                 <Button
                   variant="soft"
                   startIcon={
