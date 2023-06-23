@@ -291,7 +291,7 @@ export default function MyEditor({
               }}
             >
               <Stack direction="column" sx={{ width: "100%", gap: 1 }}>
-                <Stack direction="row" justifyContent="space-between">
+                <Stack direction="row" justifyContent="space-between" gap={1}>
                   <Stack
                     flexDirection="row"
                     sx={{ flexWrap: "wrap", gap: 1, alignItems: "center" }}
@@ -329,9 +329,12 @@ export default function MyEditor({
 
                 <Stack
                   direction="row"
-                  justifyContent="space-between"
-                  flexWrap="wrap"
-                  gap={1}
+                  sx={{
+                    maxWidth: "400px",
+                    gap: 1,
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                  }}
                 >
                   <TemplateBtn />
                   <ChallengeBtn />

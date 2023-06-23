@@ -13,6 +13,7 @@ export default function SaveButton({ onClick, sx }: Props): JSX.Element {
       key="left"
       onClick={onClick}
       sx={{
+        flexShrink: 0,
         ml: "auto!important",
         maxHeight: "40px",
         borderRadius: "20px",
