@@ -1,0 +1,33 @@
+import { ListItemButtonProps, StackProps } from "@mui/material";
+
+// ----------------------------------------------------------------------
+
+export interface INavItem {
+  item: NavListProps;
+  depth: number;
+  open?: boolean;
+  active?: boolean;
+  isExternalLink?: boolean;
+  modal?: boolean;
+}
+
+export type NavItemProps = INavItem & ListItemButtonProps;
+
+export interface NavListProps {
+  title: string;
+  path: string;
+  icon?: React.ReactElement;
+  info?: React.ReactElement;
+  caption?: string;
+  disabled?: boolean;
+  roles?: string[];
+  children?: any;
+  modal?: string;
+}
+
+export interface NavSectionProps extends StackProps {
+  data: Array<{
+    subheader: string;
+    items: NavListProps[];
+  }>;
+}
