@@ -17,6 +17,7 @@ interface IEditor {
   preloadedCode: string;
   onChangeCode: (code: string) => void;
   socket: Socket;
+  code: string;
 }
 
 export const CodeEditor = ({
@@ -26,6 +27,7 @@ export const CodeEditor = ({
   cursorText,
   onChangeCode,
   socket,
+  code,
 }: IEditor): React.ReactElement => {
   const editor = useRef();
   const lineWrap = new Compartment();
@@ -76,7 +78,7 @@ export const CodeEditor = ({
         view.dispatch({
           changes: {
             from: view.state.doc.length,
-            insert: preloadedCode,
+            insert: code ? code : preloadedCode,
           },
         });
       }
