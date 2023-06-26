@@ -1,7 +1,11 @@
 import { ResizerUi } from "@ct-nx/components";
-import CloseIcon from "@mui/icons-material/Close";
-import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
+import { Box, Dialog } from "@mui/material";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { lessonViewAtom } from "./lesson-atoms/lesson-view-atom";
+import LessonTopBar from "./lesson-top-bar/LessonTopBar";
 import StepContentEditor from "./LessonStepContent/StepContentEditor";
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
@@ -9,36 +13,34 @@ import { NoSelectedStep } from "./NoSelectedStep";
 export default function LessonStepMain(): React.ReactElement {
   const router = useRouter();
   const { stepId, lessonId } = router.query;
-  const onClose = (): void => {
-    router.push(router.pathname, undefined, { shallow: true });
-  };
+  const [, setLessonView] = useAtom(lessonViewAtom);
+  const handle = useFullScreenHandle();
 
+  useEffect(() => {
+    setLessonView((prev) => ({
+      ...prev,
+      isFullScreenView: handle.active,
+      unitId: router.query.unit_id as string,
+    }));
+  }, [handle.active]);
+  useEffect(() => {
+    setLessonView((prev) => ({
+      ...prev,
+      fullScreenOpen: handle.enter,
+      fullScreenClose: handle.exit,
+    }));
+  }, []);
   return (
     <>
-      <Dialog open={Boolean(lessonId)} onClose={onClose} fullScreen>
-        <DialogContent>
-          <IconButton
-            edge="start"
-            size="small"
-            color="inherit"
-            onClick={onClose}
-            aria-label="close"
-            sx={{
-              position: "absolute",
-              zIndex: "10000",
-              mt: "2px",
-              mr: 1,
-              right: 0,
-              top: 0,
-              width: "40px",
-              height: "40px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
+      <FullScreen handle={handle}>
+        <Dialog
+          open={Boolean(lessonId)}
+          onClose={() => {}}
+          PaperProps={{ sx: { height: "100vh" } }}
+          fullScreen
+        >
+          <LessonTopBar />
+
           <Box>
             <ResizerUi
               split="vertical"
@@ -50,8 +52,8 @@ export default function LessonStepMain(): React.ReactElement {
               {stepId ? <StepContentEditor /> : <NoSelectedStep />}
             </ResizerUi>
           </Box>
-        </DialogContent>
-      </Dialog>
+        </Dialog>
+      </FullScreen>
     </>
   );
 }

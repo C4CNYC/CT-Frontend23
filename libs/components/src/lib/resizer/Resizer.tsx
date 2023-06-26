@@ -50,14 +50,21 @@ export const ResizerUi = ({
           .Pane1{
             overflow-y: auto;
           }
+          
+          
           .Pane2 .Pane1{
             overflow-y: auto;
+            max-height: calc(100vh - 96px);
           } 
           .Pane2 .Pane2{
              overflow-y: auto;
+             max-height: calc(100vh - 96px);
           }
           .Pane.vertical.Pane2{
             overflow-y: auto;
+          }
+          .SplitPane {
+            max-height: calc(100vh - 48px);
           }
         `}
       </style>

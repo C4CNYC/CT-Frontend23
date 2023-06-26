@@ -1,5 +1,7 @@
-import { ResizerUi, MyEditor } from "@ct-nx/components";
+import { MyEditor, ResizerUi } from "@ct-nx/components";
+import { useAtom } from "jotai";
 import { useState } from "react";
+import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";
 
 interface Props {
   content: string;
@@ -11,13 +13,15 @@ export default function StepMultimedia({
   content,
 }: Props): React.ReactElement {
   const [value, setValue] = useState<string>("");
+  const [{ isAllColumnsVisible }] = useAtom(lessonViewAtom);
 
   return (
     <ResizerUi
       split="vertical"
       maxSize={-100}
       primary="second"
-      defaultSize={500}
+      defaultSize={isAllColumnsVisible ? 500 : "100%"}
+      allowResize={isAllColumnsVisible}
     >
       <MyEditor
         onSubmit={() => {
@@ -26,7 +30,9 @@ export default function StepMultimedia({
         multimediaValue={content}
         setMultimediaValue={setValue}
       />
-      <MyEditor editable={false} multimediaValue={value} />
+      {isAllColumnsVisible && (
+        <MyEditor editable={false} multimediaValue={value} />
+      )}
     </ResizerUi>
   );
 }
