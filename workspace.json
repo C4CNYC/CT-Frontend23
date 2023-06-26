@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "teacher": {
+      "root": "apps/teacher",
+      "architect": {
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/apps/teacher",
+            "siteId": "579ccc0a-51e8-4e87-a447-1ccd874b9372"
+          }
+        }
+      }
+    }
+  }
+}
