@@ -1,10 +1,11 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { ILessonCurrent } from "src/redux/interfaces/content.interface";
+import { ILesson } from "src/redux/interfaces/content.interface";
 import TrainingsItem from "./TrainingsItem";
+import { BaseResponseInterface } from "@ct-nx/utils";
 
 interface Props {
-  lessons: ILessonCurrent[];
+  lessons: Array<ILesson & BaseResponseInterface>;
   unitId: string;
 }
 

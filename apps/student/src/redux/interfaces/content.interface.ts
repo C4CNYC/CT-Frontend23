@@ -30,9 +30,9 @@ export interface ILessonCurrent {
   active: boolean;
   name: string;
   description: string;
-  draft: boolean;
+  draft?: boolean;
   id: string;
-  lessons: [];
+  lessons?: [];
 }
 
 export interface ICourse {
@@ -78,7 +78,7 @@ export interface IUnitContent {
   id: string;
   lessons: ILesson[];
   name: string;
-  description: string;
+  description?: string;
   active: boolean;
 }
 

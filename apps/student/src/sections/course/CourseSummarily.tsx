@@ -1,10 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { MdCelebration } from "react-icons/md";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
+import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 interface Props {
-  data: ICourseElement;
+  data: ICourseContent;
 }
 
 export default function CourseSummarily({ data }: Props): React.ReactElement {

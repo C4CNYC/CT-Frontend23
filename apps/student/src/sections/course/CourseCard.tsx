@@ -8,14 +8,14 @@ import {
   useTheme,
 } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { IUnitContent } from "src/redux/interfaces/content.interface";
 import CourseInfoDialog from "./CourseInfoDialog";
+import { Unit } from "src/redux/interfaces/challenges.interface";
 
 interface Props {
   index: number;
   active?: boolean;
   setActive: Dispatch<SetStateAction<number>>;
-  unit: IUnitContent;
+  unit: Unit;
   lastItem: boolean;
 }
 

@@ -1,13 +1,13 @@
 import { EmptyContent } from "@ct-nx/components";
 import { Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
+import { ICourseContent } from "src/redux/interfaces/content.interface";
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
 import CourseCard from "./CourseCard";
 import CourseSummarily from "./CourseSummarily";
 
 interface Props {
-  course: ICourseElement;
+  course: ICourseContent;
 }
 
 export default function CourseLayaut({ course }: Props): React.ReactElement {
@@ -39,11 +39,11 @@ export default function CourseLayaut({ course }: Props): React.ReactElement {
           })}
         >
           {course?.units.length ? (
-            course?.units.map((i, index) => (
+            course?.units.map((unit, index) => (
               <CourseCard
                 key={index}
                 index={index}
-                unit={i}
+                unit={unit}
                 active={active === index}
                 setActive={setActive}
                 lastItem={(course?.units?.length as number) - 1 === index}

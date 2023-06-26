@@ -41,7 +41,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         <MdCelebration size="18px" />
         <Typography variant="body2" sx={{ ml: 1 }}>
           {totalLessons}
-          {totalLessons > 1 ? " lessons" : " lesson"}
+          {totalLessons && totalLessons > 1 ? " lessons" : " lesson"}
         </Typography>
       </Box>
     </Stack>

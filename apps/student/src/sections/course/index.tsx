@@ -3,12 +3,12 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { AiOutlineMinus } from "react-icons/ai";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
+import { ICourseContent } from "src/redux/interfaces/content.interface";
 import { BaseResponseInterface } from "@ct-nx/utils";
 import CourseLayaut from "./CourseLayaut";
 
 interface Props {
-  course: ICourseElement & BaseResponseInterface;
+  course: ICourseContent & BaseResponseInterface;
 }
 
 export default function CourseMain({ course }: Props): React.ReactElement {

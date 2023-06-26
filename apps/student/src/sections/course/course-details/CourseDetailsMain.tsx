@@ -1,11 +1,11 @@
 import { Box, Stack } from "@mui/material";
-import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 import CourseDescription from "./CourseDescription";
 import QuizPanel from "./quiz-panel";
 import TrainingsList from "./TrainingsList";
+import { Unit } from "src/redux/interfaces/challenges.interface";
 
 interface Props {
-  dataLessons: ILessonCurrent;
+  dataLessons: Unit;
   index: number;
 }
 
@@ -29,7 +29,7 @@ export default function CourseDetailsMain({
     >
       <CourseDescription
         name={dataLessons.name}
-        desc={dataLessons.description}
+        desc={dataLessons.description || ""}
         index={index}
       />
       <Stack
