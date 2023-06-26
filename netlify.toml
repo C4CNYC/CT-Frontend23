@@ -1,6 +1,3 @@
-[[plugins]]
-package = "./tools/plugins/netlify/stop-build"
-
 [build]
   command = "yarn nx build teacher"
   publish = "dist/apps/teacher/.next"
