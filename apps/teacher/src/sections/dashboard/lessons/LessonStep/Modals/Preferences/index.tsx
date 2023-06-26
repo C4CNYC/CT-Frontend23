@@ -11,7 +11,6 @@ import {
   DialogTitle,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
