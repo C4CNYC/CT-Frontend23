@@ -49,7 +49,7 @@ const LessonsManager = (): React.ReactElement => {
     );
 
   const onClick = (lessonId: string, moduleId: string): void => {
-    if (query.lesson_id === lessonId) return;
+    if (query.lessonId === lessonId) return;
     setGlobalCodePanel((prev) => ({
       ...prev,
       courseId: id as string,
@@ -58,15 +58,25 @@ const LessonsManager = (): React.ReactElement => {
     }));
     if (publicPage) {
       push(
-        `/${PATH_PAGE.publicCodePanel.workSpace(
+        `${PATH_PAGE.publicCodePanel.workSpace(
           id as string
-        )}/${moduleId}/${lessonId}`
+        )}?${new URLSearchParams({
+          unitId: moduleId,
+        })}&${new URLSearchParams({
+          lessonId,
+        })}`,
+        undefined,
+        { shallow: true }
       );
     } else {
       push(
-        `/${PATH_PAGE.codePanel.workSpace(
-          id as string
-        )}/${moduleId}/${lessonId}`
+        `${PATH_PAGE.codePanel.workSpace(id as string)}?${new URLSearchParams({
+          unitId: moduleId,
+        })}&${new URLSearchParams({
+          lessonId,
+        })}`,
+        undefined,
+        { shallow: true }
       );
     }
   };

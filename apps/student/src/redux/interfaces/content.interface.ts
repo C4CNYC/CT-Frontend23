@@ -1,4 +1,5 @@
 import { BaseResponseInterface, BaseSearchInterface } from "@ct-nx/utils";
+import { Unit } from "src/redux/interfaces/challenges.interface";
 import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { IIntegration } from "./integration.interface";
 
@@ -63,7 +64,7 @@ export interface ICourseElement {
 }
 export interface ICourseContent {
   id: string;
-  units: [];
+  units: Unit[];
   name: string;
   level: string;
   price: string;
@@ -75,7 +76,7 @@ export interface ICourseContent {
 }
 export interface IUnitContent {
   id: string;
-  lessons: [];
+  lessons: ILesson[];
   name: string;
   description: string;
   active: boolean;

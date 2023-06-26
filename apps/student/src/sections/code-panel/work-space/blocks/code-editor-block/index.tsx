@@ -1,8 +1,8 @@
 /* eslint-disable no-new */
+import { BaseResponseInterface } from "@ct-nx/utils";
 import { Box, Collapse, useMediaQuery } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { IValidation } from "src/redux/interfaces/content.interface";
-import { BaseResponseInterface } from "@ct-nx/utils";
 import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./checkers-code-editor";
@@ -121,6 +121,7 @@ const CodeEditorBlock = ({
           email={`${user?.first_name} ${user?.last_name?.[0]}.`}
           onChange={onChangeCode}
           userId={user?.id}
+          code={code}
         />
       ) : null}
       <Box sx={{ display: isDesktop ? "none" : "block" }}>
