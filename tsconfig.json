@@ -1,45 +1,27 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "es5",
-    "lib": [
-      "es6",
-      "dom"
-    ],
-    "strict": true,
-    "noEmit": true,
-    "allowJs": true,
-    "jsx": "preserve",
-    "module": "esnext",
-    "incremental": true,
-    "skipLibCheck": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
     "strictNullChecks": true,
-    "resolveJsonModule": true,
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
     "moduleResolution": "node",
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": false,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@pages/*": ["src/pages/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@sections/*": ["src/sections/*"],
-      "@routes/*": ["src/routes/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@assets/*": ["src/assets/*"],
+      "@ct-nx/components": ["libs/components/src/index.ts"],
+      "@ct-nx/hooks": ["libs/hooks/src/index.ts"],
+      "@ct-nx/theme": ["libs/theme/src/index.ts"],
+      "@ct-nx/types": ["libs/types/src/index.ts"],
+      "@ct-nx/utils": ["libs/utils/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "next-env.d.ts"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

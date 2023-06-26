@@ -1,0 +1,51 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "types": ["jest", "node"],
+    "paths": {
+      "@components/*": ["apps/student/src/components/*"],
+      "@pages/*": ["apps/student/pages/*"],
+      "@hooks/*": ["apps/student/src/hooks/*"],
+      "@sections/*": ["apps/student/src/sections/*"],
+      "@routes/*": ["apps/student/src/routes/*"],
+      "@layouts/*": ["apps/student/src/layouts/*"],
+      "@assets/*": ["apps/student/src/assets/*"],
+      "src/*": ["apps/student/src/*"],
+      "@ct-nx/components": ["libs/components/src/index.ts"],
+      "@ct-nx/hooks": ["libs/hooks/src/index.ts"],
+      "@ct-nx/theme": ["libs/theme/src/index.ts"],
+      "@ct-nx/types": ["libs/types/src/index.ts"],
+      "@ct-nx/utils": ["libs/utils/src/index.ts"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../apps/student/.next/types/**/*.ts",
+    "../../dist/apps/student/.next/types/**/*.ts",
+    "next-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
+}

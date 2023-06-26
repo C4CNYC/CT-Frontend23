@@ -1,0 +1,63 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
+import {
+  ClassSearchParams,
+  IClass,
+  IMentor,
+} from "src/redux/interfaces/class.interface";
+import {
+  BaseListResponseInterface,
+  BaseResponseInterface,
+} from "@ct-nx/utils";
+import { studentApi } from ".";
+
+const extendedApi = studentApi.injectEndpoints({
+  endpoints: (builder) => ({
+    createClass: builder.mutation<void, IClass>({
+      query: ({ ...body }) => ({
+        url: "/class",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Classes"],
+    }),
+    getClasses: builder.query<
+      BaseListResponseInterface<IClass & BaseResponseInterface>,
+      ClassSearchParams
+    >({
+      query: ({ ...params }) => ({
+        url: "/class",
+        method: "GET",
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ["Classes"],
+    }),
+    getClass: builder.query<IClass & BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/class/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Classes"],
+    }),
+    getClassMentor: builder.query<IMentor[], { id: string }>({
+      query: ({ id }) => ({
+        url: `/class/${id}/mentor`,
+        method: "GET",
+      }),
+      transformResponse: (response: IMentor[]) => {
+        const manager = response.filter((el) => el.role === "manager");
+        return manager ?? response;
+      },
+      providesTags: ["Classes"],
+    }),
+  }),
+  overrideExisting: false,
+});
+
+export const {
+  useGetClassesQuery,
+  useGetClassQuery,
+  useGetClassMentorQuery,
+  // -------------mutation-----------
+  useCreateClassMutation,
+} = extendedApi;
