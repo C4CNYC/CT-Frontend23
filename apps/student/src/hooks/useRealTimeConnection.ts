@@ -21,7 +21,7 @@ const udpateWorkSpaceState = (
   userId: string,
   body: { lessonId: string; slideIndex: number; code: string }
 ): void => {
-  if (!userId) return;
+  if (!userId || !body.lessonId) return;
   set(ref(db, "/class-streams/" + userId), body);
 };
 
@@ -30,9 +30,9 @@ export const useRealTimeConnection = (userId: string, code: string): void => {
   const [global] = useAtom(globalCodePanelAtom);
   useEffect(() => {
     udpateWorkSpaceState(userId, {
-      lessonId: query.lesson_id as string,
+      lessonId: query.lessonId as string,
       slideIndex: global.slideIndex,
       code,
     });
-  }, [global, query.lesson_id, code]);
+  }, [global, query.lessonId, code]);
 };
