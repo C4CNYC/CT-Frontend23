@@ -1,6 +1,4 @@
 import { javascript } from "@codemirror/lang-javascript";
-import { RHFCodes as RHFCode } from "../hook-form";
-import { Iconify } from "../iconify";
 import {
   Box,
   Dialog,
@@ -10,6 +8,8 @@ import {
   Stack,
 } from "@mui/material";
 import { useState } from "react";
+import { RHFCode } from "../hook-form";
+import { Iconify } from "../iconify";
 
 interface Props {
   title: string;

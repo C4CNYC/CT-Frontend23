@@ -1,5 +1,5 @@
 import { javascript } from "@codemirror/lang-javascript";
-import { RHFCodes, FormProvider, ModalCodeFullscreen } from "@ct-nx/components";
+import { FormProvider, ModalCodeFullscreen, RHFCode } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -64,11 +64,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -172,7 +168,7 @@ export default function Preferences({
                     title="This code would be hint for step"
                     name="solution_body"
                   />
-                  <RHFCodes
+                  <RHFCode
                     placeholder="This code would be hint for step"
                     name="solution_body"
                     height="350px"
@@ -186,7 +182,7 @@ export default function Preferences({
                     title="This code will preload to work space"
                     name="preload_body"
                   />
-                  <RHFCodes
+                  <RHFCode
                     placeholder="This code will preload to work space"
                     name="preload_body"
                     height="350px"
