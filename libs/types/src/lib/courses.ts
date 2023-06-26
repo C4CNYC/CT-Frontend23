@@ -8,7 +8,7 @@ export interface ICourse {
   cover?: string;
   active: boolean;
   draft: boolean;
-  total_lessons: number;
+  total_lessons?: number;
 }
 
 export interface IUserProfileSchool {
