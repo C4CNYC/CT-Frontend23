@@ -1,4 +1,3 @@
-import React from "react";
 import type { Meta } from "@storybook/react";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import { UploadImageModal, UploadImageProps } from "./index";

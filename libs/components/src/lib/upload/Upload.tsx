@@ -38,7 +38,7 @@ const StyledDropZone = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Upload({
+export function Upload({
   disabled,
   multiple = false,
   error,
