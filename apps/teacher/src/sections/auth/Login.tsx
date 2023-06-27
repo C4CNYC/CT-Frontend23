@@ -7,11 +7,13 @@ import LoginLayout from "@layouts/login";
 // routes
 import { PATH_AUTH } from "@routes/paths";
 //
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
-import IconButton from "@mui/material/IconButton";
 import AuthLoginForm from "./AuthLoginForm";
+import TipButton from "./TipButton";
 
 // ----------------------------------------------------------------------
+
+const TIP = `TIP: If your school has already signed up. 
+Please ask for a “Teacher” Join-Link from one of the School Admins.`;
 
 export default function Login(): React.ReactElement {
   return (
@@ -32,28 +34,7 @@ export default function Login(): React.ReactElement {
           </Link>
         </Typography>
 
-        <Stack
-          direction="row"
-          spacing={0.5}
-          sx={{ justifyContent: "center", m: "0 auto!important" }}
-        >
-          <IconButton
-            aria-label="info"
-            sx={{
-              position: "absolute",
-              right: "-40px",
-              top: "10px",
-              padding: "10px",
-              backgroundColor: "#FBDD3F",
-              borderTopLeftRadius: "8px",
-              borderBottomLeftRadius: "8px",
-              borderBottomRightRadius: 0,
-              borderTopRightRadius: 0,
-            }}
-          >
-            <EmojiObjectsIcon sx={{ color: "#000" }} />
-          </IconButton>
-        </Stack>
+        <TipButton tip={TIP} />
       </Stack>
       <AuthLoginForm />
 
