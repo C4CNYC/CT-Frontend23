@@ -1,8 +1,9 @@
 import { m } from "framer-motion";
 import type { Meta } from "@storybook/react";
-import { MotionContainer } from "./MotionContainer";
+import { Typography, Button } from "@mui/material"
+import { MotionContainer, MotionContainerProps } from "./MotionContainer";
 import { varBounce } from "./variants";
-import { ForbiddenIllustration } from "../../illustrations";
+import { useEffect, useState } from "react";
 
 const Component: Meta<typeof MotionContainer> = {
   component: MotionContainer,
@@ -11,14 +12,32 @@ const Component: Meta<typeof MotionContainer> = {
 
 export default Component;
 
-export const Default = {
+const ExampleComponent = ({animate, action, ...props}: MotionContainerProps) => {
+  return (
+    <>
+      <MotionContainer
+        {...props}
+      >
+        <m.div variants={varBounce().in}>
+          <Typography variant="h3" paragraph>
+            Some Motion Container Content
+          </Typography>
+        </m.div>
+
+      </MotionContainer>
+    </>
+  )
+}
+
+export const Default: Meta<typeof MotionContainer> = {
+  render: (args) => <ExampleComponent {...args} />,
   args: {
     animate: true,
-    action: true,
-    children: <>
-        <m.div variants={varBounce().in}>
-          <ForbiddenIllustration sx={{ height: 260, my: { xs: 5, sm: 10 } }} />
-        </m.div>
-    </>
+    action: false,
+    sx: {
+      display: 'flex',
+      justifyContent: 'center',
+      position: "relative",
+    }
   },
 };
