@@ -69,7 +69,7 @@ export function ModalCodeFullscreen({
             <RHFCode
               placeholder=""
               name={name}
-              height="70vh"
+              height="75vh"
               extensions={[javascript({ jsx: true })]}
             />
           </Box>
