@@ -10,7 +10,7 @@ export default Component;
 
 export const Default = {
   args: {
-    deley: 20,
+    deley: 10000,
     isFetching: true,
   },
 };
