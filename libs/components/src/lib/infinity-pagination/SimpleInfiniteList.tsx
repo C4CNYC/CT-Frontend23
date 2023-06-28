@@ -2,7 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 
-interface Props {
+export interface SimpleInfiniteListProps {
   onLoadMore: () => void;
   hasNextPage: boolean;
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export function SimpleInfiniteList({
   hasNextPage,
   children,
   loading,
-}: Props): React.ReactElement {
+}: SimpleInfiniteListProps): React.ReactElement {
   const [sentryRef] = useInfiniteScroll({
     loading,
     hasNextPage,
