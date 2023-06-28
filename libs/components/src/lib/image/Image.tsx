@@ -17,7 +17,7 @@ export const Image = forwardRef<HTMLSpanElement, ImageProps>(
         wrapperClassName="wrapper"
         effect={disabledEffect ? undefined : effect}
         placeholderSrc={
-          disabledEffect ? "/assets/transparent.png" : "/assets/placeholder.svg"
+          disabledEffect ? "/transparent.png" : "/placeholder.svg"
         }
         sx={{ width: 1, height: 1, objectFit: "cover" }}
         {...other}

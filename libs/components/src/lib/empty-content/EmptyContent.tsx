@@ -33,7 +33,7 @@ export function EmptyContent({
       <Image
         disabledEffect
         alt="empty content"
-        src={img ?? "/assets/illustrations/illustration_empty_content.svg"}
+        src={img ?? "/illustrations/illustration_empty_content.svg"}
         sx={{ height: 240, mb: 3 }}
       />
 

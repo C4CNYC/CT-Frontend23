@@ -29,7 +29,7 @@ function ForbiddenIllustration({ ...other }: BoxProps): React.ReactElement {
         <BackgroundIllustration />
 
         <image
-          href="/assets/illustrations/characters/character_4.png"
+          href="/illustrations/characters/character_4.png"
           height="300"
           x="220"
           y="30"

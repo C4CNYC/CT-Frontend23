@@ -29,7 +29,7 @@ function ComingSoonIllustration({ ...other }: BoxProps): React.ReactElement {
         <BackgroundIllustration />
 
         <image
-          href="/assets/illustrations/characters/character_1.png"
+          href="/illustrations/characters/character_1.png"
           height="300"
           x="320"
           y="30"

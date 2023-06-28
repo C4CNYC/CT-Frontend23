@@ -31,7 +31,7 @@ function SeverErrorIllustration({ ...other }: BoxProps): React.ReactElement {
         <BackgroundIllustration />
 
         <image
-          href="/assets/illustrations/characters/character_8.png"
+          href="/illustrations/characters/character_8.png"
           height="300"
           x="340"
           y="30"

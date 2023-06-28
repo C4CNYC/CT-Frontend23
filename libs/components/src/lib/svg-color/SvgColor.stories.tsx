@@ -11,6 +11,6 @@ export default Component;
 
 export const Default: Meta<typeof SvgColor> = {
   args: {
-    src: "/assets/shape_avatar.svg"
+    src: "/shape_avatar.svg"
   },
 };
