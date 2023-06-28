@@ -3,7 +3,7 @@ import { LightboxComponent } from "./LightboxComponent";
 
 const Component: Meta<typeof LightboxComponent> = {
   component: LightboxComponent,
-  title: "LightboxComponent/LightboxComponent",
+  title: "LightboxComponent",
 };
 
 export default Component;

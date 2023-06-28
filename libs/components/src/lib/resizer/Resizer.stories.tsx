@@ -3,7 +3,7 @@ import { ResizerUi } from "./Resizer";
 
 const Component: Meta<typeof ResizerUi> = {
   component: ResizerUi,
-  title: "Resizer/Resizer",
+  title: "Resizer",
 };
 
 export default Component;

@@ -3,7 +3,7 @@ import { InfoCourses } from "./index";
 
 const Component: Meta<typeof InfoCourses> = {
   component: InfoCourses,
-  title: "InfoCourses/InfoCourses",
+  title: "InfoCourses",
 };
 
 export default Component;

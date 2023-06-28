@@ -3,7 +3,7 @@ import { CardInfo } from "./index";
 
 const Component: Meta<typeof CardInfo> = {
   component: CardInfo,
-  title: "CardInfo/CardInfo",
+  title: "CardInfo",
 };
 
 export default Component;

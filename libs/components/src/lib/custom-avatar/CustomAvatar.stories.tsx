@@ -3,7 +3,7 @@ import { CustomAvatar } from "./CustomAvatar"
 
 const Component: Meta<typeof CustomAvatar> = {
   component: CustomAvatar,
-  title: "CustomAvatar/CustomAvatar",
+  title: "CustomAvatar",
 };
 
 export default Component;

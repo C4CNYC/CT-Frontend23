@@ -3,7 +3,7 @@ import { EmptyContent } from "./EmptyContent"
 
 const Component: Meta<typeof EmptyContent> = {
   component: EmptyContent,
-  title: "EmptyContent/EmptyContent",
+  title: "EmptyContent",
 };
 
 export default Component;

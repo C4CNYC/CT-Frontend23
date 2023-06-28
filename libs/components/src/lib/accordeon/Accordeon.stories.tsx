@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const Component: Meta<typeof Accordion> = {
   component: Accordion,
-  title: "Accordion/Accordion",
+  title: "Accordion",
 };
 
 export default Component;

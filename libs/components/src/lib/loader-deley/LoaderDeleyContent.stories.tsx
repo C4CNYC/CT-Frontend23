@@ -3,7 +3,7 @@ import { LoaderDeleyContent } from "./LoaderDeleyContent";
 
 const Component: Meta<typeof LoaderDeleyContent> = {
   component: LoaderDeleyContent,
-  title: "LLoaderDeleyContentogo/LoaderDeleyContent",
+  title: "LoaderDeleyContent",
 };
 
 export default Component;

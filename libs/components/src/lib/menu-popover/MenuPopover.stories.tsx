@@ -3,7 +3,7 @@ import { MenuPopover } from "./MenuPopover";
 
 const Component: Meta<typeof MenuPopover> = {
   component: MenuPopover,
-  title: "MenuPopover/MenuPopover",
+  title: "MenuPopover",
 };
 
 export default Component;

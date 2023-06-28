@@ -3,7 +3,7 @@ import { OrganizationalChart } from "./OrganizationalChart";
 
 const Component: Meta<typeof OrganizationalChart> = {
   component: OrganizationalChart,
-  title: "OrganizationalChart/OrganizationalChart",
+  title: "OrganizationalChart",
 };
 
 export default Component;

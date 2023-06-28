@@ -6,7 +6,7 @@ import { useDateRangePicker } from "./useDateRangePicker"
 
 const Component: Meta<typeof DateRangePicker> = {
   component: DateRangePicker,
-  title: "DateRangePicker/DateRangePicker",
+  title: "DateRangePicker",
 };
 
 export default Component;

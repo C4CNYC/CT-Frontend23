@@ -4,7 +4,7 @@ import { UploadImageModal, UploadImageProps } from "./index";
 
 const Component: Meta<typeof UploadImageModal> = {
   component: UploadImageModal,
-  title: "UploadImageModal/UploadImageModal",
+  title: "UploadImageModal",
 };
 
 export default Component;

@@ -7,7 +7,7 @@ import { fNumber } from "@ct-nx/utils";
 
 const Component: Meta<typeof Chart> = {
   component: Chart,
-  title: "Chart/Chart",
+  title: "Chart",
 };
 
 export default Component;

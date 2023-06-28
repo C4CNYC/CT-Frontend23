@@ -3,7 +3,7 @@ import { Iconify } from "./Iconify";
 
 const Component: Meta<typeof Iconify> = {
   component: Iconify,
-  title: "Iconify/Iconify",
+  title: "Iconify",
 };
 
 export default Component;

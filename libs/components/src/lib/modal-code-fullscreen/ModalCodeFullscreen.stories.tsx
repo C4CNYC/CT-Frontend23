@@ -3,7 +3,7 @@ import { ModalCodeFullscreen } from "./ModalCodeFullscreen";
 
 const Component: Meta<typeof ModalCodeFullscreen> = {
   component: ModalCodeFullscreen,
-  title: "ModalCodeFullscreen/ModalCodeFullscreen",
+  title: "ModalCodeFullscreen",
 };
 
 export default Component;

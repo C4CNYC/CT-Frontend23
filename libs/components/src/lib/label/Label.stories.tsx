@@ -4,7 +4,7 @@ import { Iconify } from "../iconify"
 
 const Component: Meta<typeof Label> = {
   component: Label,
-  title: "Label/Label",
+  title: "Label",
 };
 
 export default Component;

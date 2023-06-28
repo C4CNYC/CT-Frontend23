@@ -3,7 +3,7 @@ import { TextMaxLine } from "./index"
 
 const Component: Meta<typeof TextMaxLine> = {
   component: TextMaxLine,
-  title: "TextMaxLine/TextMaxLine",
+  title: "TextMaxLine",
 };
 
 export default Component;

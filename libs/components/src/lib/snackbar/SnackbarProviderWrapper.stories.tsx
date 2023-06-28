@@ -4,7 +4,7 @@ import { ThemeProvider } from "@ct-nx/theme"
 
 const Component: Meta<typeof SnackbarProviderWrapper> = {
   component: SnackbarProviderWrapper,
-  title: "SnackbarProviderWrapper/SnackbarProviderWrapper",
+  title: "SnackbarProviderWrapper",
 };
 
 export default Component;

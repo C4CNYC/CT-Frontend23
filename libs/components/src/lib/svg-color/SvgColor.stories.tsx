@@ -3,7 +3,7 @@ import { SvgColor } from "./SvgColor"
 
 const Component: Meta<typeof SvgColor> = {
   component: SvgColor,
-  title: "SvgColor/SvgColor",
+  title: "SvgColor",
 };
 
 export default Component;

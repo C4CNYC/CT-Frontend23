@@ -3,7 +3,7 @@ import { LoadingScreen } from "./LoadingScreen";
 
 const Component: Meta<typeof LoadingScreen> = {
   component: LoadingScreen,
-  title: "LoadingScreen/LoadingScreen",
+  title: "LoadingScreen",
 };
 
 export default Component;

@@ -3,7 +3,7 @@ import { Markdown } from "./Markdown";
 
 const Component: Meta<typeof Markdown> = {
   component: Markdown,
-  title: "Markdown/Markdown",
+  title: "Markdown",
 };
 
 export default Component;

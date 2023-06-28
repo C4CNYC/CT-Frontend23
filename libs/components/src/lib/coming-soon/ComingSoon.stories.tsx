@@ -3,7 +3,7 @@ import { ComingSoon } from "./ComingSoon"
 
 const Component: Meta<typeof ComingSoon> = {
   component: ComingSoon,
-  title: "ComingSoon/ComingSoon",
+  title: "ComingSoon",
 };
 
 export default Component;

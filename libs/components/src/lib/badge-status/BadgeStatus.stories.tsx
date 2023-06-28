@@ -3,7 +3,7 @@ import { BadgeStatus } from "./BadgeStatus";
 
 const Component: Meta<typeof BadgeStatus> = {
   component: BadgeStatus,
-  title: "BadgeStatus/BadgeStatus",
+  title: "BadgeStatus",
 };
 
 export default Component;

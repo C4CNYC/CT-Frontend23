@@ -3,7 +3,7 @@ import { CustomBreadcrumbs } from "./CustomBreadcrumbs"
 
 const Component: Meta<typeof CustomBreadcrumbs> = {
   component: CustomBreadcrumbs,
-  title: "CustomBreadcrumbs/CustomBreadcrumbs",
+  title: "CustomBreadcrumbs",
 };
 
 export default Component;

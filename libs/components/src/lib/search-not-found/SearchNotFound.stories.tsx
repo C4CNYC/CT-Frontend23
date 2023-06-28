@@ -3,7 +3,7 @@ import { SearchNotFound } from "./SearchNotFound";
 
 const Component: Meta<typeof SearchNotFound> = {
   component: SearchNotFound,
-  title: "SearchNotFound/SearchNotFound",
+  title: "SearchNotFound",
 };
 
 export default Component;

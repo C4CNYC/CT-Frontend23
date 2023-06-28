@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const Component: Meta<typeof SimpleInfiniteList> = {
   component: SimpleInfiniteList,
-  title: "SimpleInfiInfofotyPaginationsniteList/SimpleInfiniteList",
+  title: "SimpleInfiniteList",
 };
 
 export default Component;
