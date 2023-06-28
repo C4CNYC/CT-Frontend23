@@ -18,7 +18,6 @@ const ExampleComponent = ({startDate, endDate, ...props}: any) => {
         endDate: endDateNew,
         onChangeStartDate,
         onChangeEndDate,
-        open: openPicker,
         onClose: onClosePicker,
         isError,
         shortLabel,
@@ -30,10 +29,10 @@ const ExampleComponent = ({startDate, endDate, ...props}: any) => {
             endDate={endDateNew}
             onChangeEndDate={onChangeEndDate}
             onChangeStartDate={onChangeStartDate}
-            open={true}
             onClose={onClosePicker}
             isError={isError}
             shortLabel={shortLabel}
+            {...props}
         />
         
     </>
@@ -46,6 +45,7 @@ export const Default = {
   args: {
     startDate: new Date("Wed Jun 28 2023 15:24:11 GMT+0300 (Eastern European Summer Time)"),
     endDate: new Date("Wed Jul 28 2023 15:24:11 GMT+0300 (Eastern European Summer Time)"),
-    variant: "calendar"
+    variant: "calendar",
+    open: true,
   },
 };
