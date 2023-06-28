@@ -66,7 +66,7 @@ export function CardInfo(): React.ReactElement {
             </Stack>
             <Stack display="flex" direction="row" gap="8px" mt="16px">
               <Image
-                src="../../assets/icons/home/trendingup.png"
+                src="/assets/icons/home/trendingup.png"
                 alt={""}
                 width="24"
                 height="24"
