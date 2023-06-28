@@ -10,48 +10,28 @@ export default Component;
 
 export const Default = {
   args: {
-    index: 1,
+    index: 0,
     open: true,
     slides: [
       {
-        id: "123",
-        name: "Name",
-        createdAt: "Wed Jun 28 2023 01:30:11 GMT+0300 (Eastern European Summer Time)",
-        messages: [
-          "First message",
-          "Second message",
-        ],
-        message: "Message",
-        avatar: "avatar",
-        messageType: "default",
-        cardIds: ["1", "2", "3"]
+        src: "assets/images/portraits/protrait_1.jpg",
       },
       {
-        id: "1234",
-        name: "Name",
-        createdAt: "Wed Jun 28 2023 01:30:11 GMT+0300 (Eastern European Summer Time)",
-        messages: [
-          "First message",
-          "Second message",
-        ],
-        message: "Message",
-        avatar: "avatar",
-        messageType: "default",
-        cardIds: ["1", "2", "3"]
+        src: "https://www.pngwing.com/en/search?q=avatar",
       },
       {
-        id: "12345",
-        name: "Name",
-        createdAt: "Wed Jun 28 2023 01:30:11 GMT+0300 (Eastern European Summer Time)",
-        messages: [
-          "First message",
-          "Second message",
-        ],
-        message: "Message",
-        avatar: "avatar",
-        messageType: "default",
-        cardIds: ["1", "2", "3"]
+        src: "https://www.pngwing.com/en/search?q=avatar",
       },
-    ]
+      {
+        src: "https://www.pngwing.com/en/search?q=avatar",
+      },
+    ],
+    disabledZoom: false,
+    disabledVideo: false,
+    disabledTotal: false,
+    disabledCaptions: false,
+    disabledSlideshow: false,
+    disabledThumbnails: false,
+    disabledFullscreen: false,
   },
 };
