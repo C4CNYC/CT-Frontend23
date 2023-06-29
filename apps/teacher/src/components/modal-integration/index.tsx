@@ -1,5 +1,10 @@
 import { javascript } from "@codemirror/lang-javascript";
-import { RHFCodes, FormProvider, RHFTextField, ModalCodeFullscreen } from "@ct-nx/components";
+import {
+  FormProvider,
+  ModalCodeFullscreen,
+  RHFCode,
+  RHFTextField,
+} from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -106,7 +111,7 @@ export default function ModalIntegration({
                     title="Head links or scripts"
                     name="head"
                   />
-                  <RHFCodes
+                  <RHFCode
                     placeholder="Head links or scripts"
                     name="head"
                     height="180px"
@@ -118,7 +123,7 @@ export default function ModalIntegration({
                     title="Body links or scripts"
                     name="scripts"
                   />
-                  <RHFCodes
+                  <RHFCode
                     placeholder="Body links or scripts"
                     name="scripts"
                     height="180px"
@@ -136,7 +141,7 @@ export default function ModalIntegration({
                     title="Head links or scripts"
                     name="head"
                   />
-                  <RHFCodes
+                  <RHFCode
                     placeholder="Head links or scripts"
                     name="head"
                     height="180px"
@@ -148,7 +153,7 @@ export default function ModalIntegration({
                     title="Body links or scripts"
                     name="scripts"
                   />
-                  <RHFCodes
+                  <RHFCode
                     placeholder="Body links or scripts"
                     name="scripts"
                     height="180px"
