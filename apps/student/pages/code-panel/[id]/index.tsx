@@ -1,4 +1,4 @@
-import { EmptyContent, LoadingScreen } from "@ct-nx/components";
+import { EmptyContent } from "@ct-nx/components";
 import { useOnlineConnection } from "@ct-nx/hooks";
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
@@ -51,7 +51,10 @@ export default function Index(): React.ReactElement | null {
   useOnlineConnection(user?.id);
   useRealTimeConnection(user?.id, code);
 
-  const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
+  const [
+    { courseId: atomCourseId, unitId: atomUnitId, lessonId: atomLessonId },
+    setGlobalCodePanel,
+  ] = useAtom(globalCodePanelAtom);
 
   const [completeLesson] = useCompleteLessonMutation();
 
@@ -73,6 +76,8 @@ export default function Index(): React.ReactElement | null {
     setGlobalCodePanel((prev) => ({
       ...prev,
       courseId: query.id as string,
+      unitId: unitId,
+      lessonId: lessonId,
     }));
     push(
       `${PATH_PAGE.codePanel.workSpace(
@@ -87,10 +92,14 @@ export default function Index(): React.ReactElement | null {
 
   useEffect(() => {
     if (!courseContent) return;
-    onOpenLesson(
-      courseContent.units[0].lessons[0].id,
-      courseContent.units[0].id
-    );
+    if (!atomLessonId && !atomUnitId) {
+      onOpenLesson(
+        courseContent.units[0].lessons[0].id,
+        courseContent.units[0].id
+      );
+    } else {
+      onOpenLesson(atomLessonId, atomUnitId);
+    }
   }, [courseContent]);
 
   const onSubmitChalange = async (lessonContentId: string): Promise<void> => {
@@ -131,7 +140,8 @@ export default function Index(): React.ReactElement | null {
           setGlobalCodePanel((prev) => ({
             ...prev,
             slideIndex: 0,
-            lessonId: nextLessonInfo.lessonId,
+            unitId: pathStr[0],
+            lessonId: pathStr[1],
           }));
         });
       } else {
@@ -145,7 +155,6 @@ export default function Index(): React.ReactElement | null {
     setGlobalCodePanel((prev) => ({
       ...prev,
       isFullScreenView: handle.active,
-      unitId: query.unitId as string,
     }));
   }, [handle.active]);
   useEffect(() => {

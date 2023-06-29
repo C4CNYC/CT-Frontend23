@@ -12,12 +12,17 @@ interface Props {
 export default function LetsCodeBtn({ isMini }: Props) {
   const { push } = useRouter();
   const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
+  console.log({ courseId, unitId, lessonId });
   return (
     <Button
       onClick={() => {
-        push(
-          `/${PATH_PAGE.codePanel.workSpace(courseId)}/${unitId}/${lessonId}`
-        );
+        if (courseId && unitId && lessonId) {
+          push(
+            `${PATH_PAGE.codePanel.workSpace(courseId)}?${unitId}&${lessonId}}`
+          );
+        } else {
+          push(PATH_PAGE.courses.root);
+        }
       }}
       variant="contained"
       sx={{
