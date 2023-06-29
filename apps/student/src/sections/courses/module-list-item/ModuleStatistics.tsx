@@ -1,3 +1,4 @@
+import { convertNumber } from "@ct-nx/utils";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { GiThreeFriends } from "react-icons/gi";
 
@@ -37,9 +38,7 @@ export default function ModuleStatistics({
             ml: "10px",
           }}
         >
-          {/* #TODO must be handle case when we have big numbers
-           */}
-          {totalProgress}
+          {convertNumber(totalProgress)}
         </Typography>
       </Box>
       <Box
