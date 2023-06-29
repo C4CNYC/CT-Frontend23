@@ -87,7 +87,7 @@ export function RHFCodes({
               }}
               InputProps={{
                 sx: {
-                  width: { xs: 36, sm: 56 },
+                  width: { xs: 36, sm: 56, md: "100%" },
                   height: { xs: 36, sm: 56 },
                   "& input": { p: 0, textAlign: "center" },
                 },

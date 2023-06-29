@@ -6,7 +6,7 @@ import { varFade } from "./variants";
 
 // ----------------------------------------------------------------------
 
-interface Props extends DialogProps {
+export interface DialogAnimateProps extends DialogProps {
   variants?: Record<string, unknown>;
   onClose?: VoidFunction;
 }
@@ -18,7 +18,7 @@ export function DialogAnimate({
   children,
   sx,
   ...other
-}: Props): React.ReactElement | null {
+}: DialogAnimateProps): React.ReactElement | null {
   return (
     <AnimatePresence>
       {open && (

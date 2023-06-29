@@ -12,7 +12,7 @@ import BadgeDot from "./BadgeDot";
 
 // ----------------------------------------------------------------------
 
-interface Props {
+export interface ToggleButtonProps {
   open: boolean;
   notDefault: boolean;
   onToggle: VoidFunction;
@@ -22,7 +22,7 @@ export default function ToggleButton({
   notDefault,
   open,
   onToggle,
-}: Props): React.ReactElement | null {
+}: ToggleButtonProps): React.ReactElement | null {
   const theme = useTheme();
 
   const [mounted, setMounted] = useState(false);

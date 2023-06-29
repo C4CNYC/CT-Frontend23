@@ -34,7 +34,7 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
               background: "rgba(145, 158, 171, 0.32)",
               maxWidth: "215px",
               fontWeight: 700,
-              fontSize: "25px",
+              fontSize: { md: "25px" },
               color: "#fff",
               mr: 2,
             }}
@@ -47,7 +47,7 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
               background: "#FBDD3F",
               maxWidth: "215px",
               fontWeight: 700,
-              fontSize: "25px",
+              fontSize: { md: "25px" },
               color: "#fff",
               mr: 2,
             }}
