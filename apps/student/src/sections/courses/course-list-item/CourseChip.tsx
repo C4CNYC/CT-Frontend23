@@ -2,7 +2,7 @@ import { Chip } from "@mui/material";
 
 interface Props {
   text: string;
-  sx?: Record<string, any>;
+  sx?: Record<string, unknown>;
 }
 
 export default function CourseChip({ text, sx }: Props): React.ReactElement {

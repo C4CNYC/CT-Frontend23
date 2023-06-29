@@ -83,7 +83,7 @@ export default function CourseInfoDialog({
               </Button>
               <CourseDescription
                 name={unit.name}
-                desc={unit.description || ""}
+                desc={unit.description ?? ""}
                 index={index}
               />
               <Box

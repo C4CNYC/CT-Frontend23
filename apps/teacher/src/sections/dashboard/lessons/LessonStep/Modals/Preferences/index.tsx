@@ -122,7 +122,8 @@ export default function Preferences({
       }).unwrap();
       enqueueSnackbar("Your step is udpated successfully");
       setOpenDialog(false);
-    } catch (e: any) {
+    } catch (e
+      ) {
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
     }
   };

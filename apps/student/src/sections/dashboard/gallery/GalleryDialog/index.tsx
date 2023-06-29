@@ -34,7 +34,7 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
-  sx?: Record<string, any>;
+  sx?: Record<string, unknown>;
 }
 
 function TabPanel(props: TabPanelProps) {

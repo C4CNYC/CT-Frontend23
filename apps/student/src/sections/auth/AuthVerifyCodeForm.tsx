@@ -66,7 +66,7 @@ export default function AuthVerifyCodeForm(): React.ReactElement {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Verify success!");
       push(PATH_MAIN.root);
-    } catch (error: any) {}
+    } catch (error) {}
   };
 
   return (

@@ -102,7 +102,7 @@ export default function CreateCodeDialog({
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       setCodeValue("");
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

@@ -147,7 +147,7 @@ export function AuthProvider({
           },
         });
       }
-    } catch (error: any) {
+    } catch (error) {
       dispatch({
         type: Types.INITIAL,
         payload: {
@@ -159,7 +159,7 @@ export function AuthProvider({
   }, [storageAvailable]);
 
   useEffect(() => {
-    initialize().catch((e: any) => {});
+    initialize().catch(() => {});
   }, [initialize]);
 
   // AUTHENTICATE

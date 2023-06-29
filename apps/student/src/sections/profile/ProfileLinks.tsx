@@ -39,7 +39,7 @@ export default function ProfileLinks({
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your networks
             </Typography>
-            {data.map((item: any) => (
+            {data.map((item) => (
               <Stack
                 direction="row"
                 sx={{ wordBreak: "break-all" }}

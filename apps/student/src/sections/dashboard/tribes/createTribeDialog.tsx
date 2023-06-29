@@ -64,7 +64,7 @@ export default function CreateTribeDialog({
         name: "",
         description: "",
       }));
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

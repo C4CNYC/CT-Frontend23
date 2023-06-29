@@ -63,7 +63,7 @@ export default function SocialsForm({
       }).unwrap();
       enqueueSnackbar("Update success!");
       methods.reset();
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

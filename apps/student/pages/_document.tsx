@@ -1,6 +1,6 @@
 import * as React from "react";
 // next
-import Document, { Head, Html, Main, NextScript } from "next/document";
+import Document, { DocumentContext, DocumentProps, Head, Html, Main, NextScript } from "next/document";
 // @emotion
 import createEmotionServer from "@emotion/server/create-instance";
 // utils
@@ -9,6 +9,10 @@ import { createEmotionCache } from "@ct-nx/utils";
 import { palette, primaryFont } from "@ct-nx/theme";
 
 // ----------------------------------------------------------------------
+
+interface MyDocumentProps extends DocumentProps {
+  emotionStyleTags: JSX.Element[];
+}
 
 export default class MyDocument extends Document {
   render() {
@@ -42,7 +46,7 @@ export default class MyDocument extends Document {
 
           {/* Emotion */}
           <meta name="emotion-insertion-point" content="" />
-          {(this.props as any).emotionStyleTags}
+          {(this.props as MyDocumentProps).emotionStyleTags}
 
           {/* Meta */}
           <meta
@@ -67,7 +71,7 @@ export default class MyDocument extends Document {
 
 // ----------------------------------------------------------------------
 
-MyDocument.getInitialProps = async (ctx): Promise<any> => {
+MyDocument.getInitialProps = async (ctx: DocumentContext): Promise<any> => {
   const originalRenderPage = ctx.renderPage;
 
   const cache = createEmotionCache();

@@ -119,7 +119,7 @@ export default function LessonStepList({
         meta: { order: newContentOrder },
       }).unwrap();
       enqueueSnackbar(`Step ${data.title} dublicated`);
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("Sorry we can't dublicate at this moment", {
         variant: "error",
       });
@@ -133,7 +133,7 @@ export default function LessonStepList({
         id,
       }).unwrap();
       enqueueSnackbar("Step removed");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("Sorry we can't remove at this moment", {
         variant: "error",
       });

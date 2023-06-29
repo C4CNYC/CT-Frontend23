@@ -2,8 +2,8 @@ import { Box, Typography } from "@mui/material";
 
 interface Props {
   count: number;
-  sx?: Record<string, any>;
-  sxText?: Record<string, any>;
+  sx?: Record<string, unknown>;
+  sxText?: Record<string, unknown>;
 }
 
 export default function TribesCounter({

@@ -47,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       { headers: { "X-Tenant-Id": "codetribe" } }
     );
     return { props: { data } };
-  } catch (error: any) {
+  } catch (error) {
     return {
       props: {
         error: error.message,

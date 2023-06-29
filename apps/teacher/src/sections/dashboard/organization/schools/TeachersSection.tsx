@@ -46,7 +46,7 @@ export default function TeacherSection({
         schoolId,
       }).unwrap();
       enqueueSnackbar("Teacher deleted");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

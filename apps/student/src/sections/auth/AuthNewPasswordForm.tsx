@@ -99,7 +99,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
       enqueueSnackbar("Change password success!");
 
       push(PATH_MAIN.root);
-    } catch (error: any) {}
+    } catch (error) {}
   };
 
   return (

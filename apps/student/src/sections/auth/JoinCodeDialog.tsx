@@ -2,6 +2,7 @@ import {
   RHFTextField,
   FormProvider,
 } from "@ct-nx/components";
+import { voidFunction } from "@ct-nx/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -53,7 +54,7 @@ export default function JoinCodeDialog({
     // formState: { errors, isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps): Promise<void> => {};
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {voidFunction()};
 
   return (
     <>

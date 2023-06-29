@@ -13,6 +13,7 @@ import {
   Iconify,
 } from "@ct-nx/components";
 import { IoRocketSharp } from "react-icons/io5";
+import { voidFunction } from "@ct-nx/utils";
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ export default function RegisterTeacherForm(): React.ReactElement {
     formState: { isSubmitting, isSubmitSuccessful },
   } = methods;
 
-  const onSubmit = async (data: FormValuesProps): Promise<void> => {};
+  const onSubmit = async (data: FormValuesProps): Promise<void> => {voidFunction()};
 
   return (
     <>

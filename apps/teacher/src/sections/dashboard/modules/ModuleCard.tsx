@@ -42,7 +42,7 @@ export default function ModuleCard({
       await deleteModule({ id: module.id }).unwrap();
       handleCloseConfirm();
       enqueueSnackbar("Module deleted!");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

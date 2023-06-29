@@ -67,7 +67,7 @@ export default function SettingsForm({
       }).unwrap();
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
-    } catch (error: any) {}
+    } catch (error) {}
   };
 
   return (

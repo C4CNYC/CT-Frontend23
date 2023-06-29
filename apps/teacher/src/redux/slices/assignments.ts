@@ -125,7 +125,7 @@ export function getBoard(data: Array<IAssignment & BaseResponseInterface>) {
         },
       };
       dispatch(slice.actions.getBoardSuccess(response.board));
-    } catch (error: any) {
+    } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };

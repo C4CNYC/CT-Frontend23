@@ -25,7 +25,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
       try {
         await deleteTask({ id: task.id }).unwrap();
         enqueueSnackbar("Deleted succesfuly!");
-      } catch (error: any) {
+      } catch (error) {
         enqueueSnackbar(error?.data?.message, {
           variant: "error",
         });

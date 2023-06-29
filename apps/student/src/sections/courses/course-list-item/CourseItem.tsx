@@ -106,6 +106,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         >
           <Image
             src={course.cover || "/assets/courses/tiger.png"}
+            alt="tiger"
             sx={{
               objectFit: "contain",
               borderRadius: "25px",

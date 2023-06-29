@@ -26,7 +26,7 @@ export default function ClassStep(): React.ReactElement {
       // }).unwrap();
       // authenticate();
       // router.replace(PATH_AFTER_LOGIN);
-    } catch (e: any) {
+    } catch (e) {
       // #TODO show error
     }
   };

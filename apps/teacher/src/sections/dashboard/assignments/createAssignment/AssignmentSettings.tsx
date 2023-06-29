@@ -93,7 +93,7 @@ export default function AssignmentSettings({
         getAssignmentId(assignment?.id);
       }
       next();
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };
