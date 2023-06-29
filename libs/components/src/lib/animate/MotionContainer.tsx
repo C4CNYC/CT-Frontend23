@@ -8,7 +8,7 @@ import { varContainer } from "./variants";
 
 type IProps = BoxProps & MotionProps;
 
-interface Props extends IProps {
+export interface MotionContainerProps extends IProps {
   animate?: boolean;
   action?: boolean;
 }
@@ -18,7 +18,7 @@ export function MotionContainer({
   action = false,
   children,
   ...other
-}: Props): React.ReactElement | null {
+}: MotionContainerProps): React.ReactElement | null {
   if (action) {
     return (
       <Box

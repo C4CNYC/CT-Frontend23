@@ -7,7 +7,7 @@ import { Iconify } from "../iconify";
 
 // ----------------------------------------------------------------------
 
-interface IncrementerButtonProps extends StackProps {
+export interface IncrementerButtonProps extends StackProps {
   name?: string;
   quantity: number;
   disabledIncrease?: boolean;

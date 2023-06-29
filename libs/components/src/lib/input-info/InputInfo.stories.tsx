@@ -3,7 +3,7 @@ import { InputInfo } from "./InputInfo";
 
 const Component: Meta<typeof InputInfo> = {
   component: InputInfo,
-  title: "InputInfo/InputInfo",
+  title: "InputInfo",
 };
 
 export default Component;

@@ -17,7 +17,7 @@ interface FormValuesProps {
   cover: File;
 }
 
-interface UploadImageProps {
+export interface UploadImageProps {
   onUpload: (file: File, id: string | undefined) => Promise<void>;
   id?: string;
   color?: string;

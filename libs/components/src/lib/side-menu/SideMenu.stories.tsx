@@ -3,7 +3,7 @@ import { SideMenu } from "./index";
 
 const Component: Meta<typeof SideMenu> = {
   component: SideMenu,
-  title: "SideMenu/SideMenu",
+  title: "SideMenu",
 };
 
 export default Component;

@@ -11,13 +11,13 @@ import StyledNotistack from "./styles";
 
 // ----------------------------------------------------------------------
 
-interface Props {
+export interface SnackbarProviderWrapperProps {
   children: React.ReactNode;
 }
 
 export function SnackbarProviderWrapper({
   children,
-}: Props): React.ReactElement | null {
+}: SnackbarProviderWrapperProps): React.ReactElement | null {
   const { themeDirection } = useSettingsContext();
 
   const isRTL = themeDirection === "rtl";

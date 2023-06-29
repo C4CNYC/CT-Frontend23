@@ -6,7 +6,7 @@ import { fileData, fileFormat, fileThumb } from "./utils";
 
 // ----------------------------------------------------------------------
 
-interface FileIconProps {
+export interface FileIconProps {
   file: File | string;
   tooltip?: boolean;
   imageView?: boolean;

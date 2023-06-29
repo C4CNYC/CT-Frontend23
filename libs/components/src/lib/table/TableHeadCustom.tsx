@@ -25,7 +25,7 @@ const visuallyHidden = {
 
 // ----------------------------------------------------------------------
 
-interface Props {
+export interface TableHeadCustomProps {
   order?: "asc" | "desc";
   orderBy?: string;
   headLabel: any[];
@@ -45,7 +45,7 @@ export function TableHeadCustom({
   onSort,
   onSelectAllRows,
   sx,
-}: Props): React.ReactElement | null {
+}: TableHeadCustomProps): React.ReactElement | null {
   return (
     <TableHead sx={sx}>
       <TableRow>

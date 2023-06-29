@@ -6,3 +6,4 @@ export * from "./lib/globalStyles";
 export * from "./lib/palette";
 export * from "./lib/shadows";
 export * from "./lib/typography";
+export * from "./lib/index";
