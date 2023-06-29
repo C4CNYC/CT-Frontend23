@@ -69,7 +69,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
                 <CourseChip text={el} key={el} />
               ))}
             </Stack>
-            <CourseStatistics likesCount={course.likes_count ?? 0}/>
+            <CourseStatistics likesCount={course.likes_count ?? 0} />
           </Collapse>
           <Button
             sx={{

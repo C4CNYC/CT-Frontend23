@@ -6,7 +6,7 @@ export default function SkeletonModule(): React.ReactElement {
       sx={{
         display: "flex",
         flexBasis: { sm: "100%", md: "48%" },
-        height: "235px",
+        height: "232px",
       }}
       animation="wave"
       variant="rounded"
