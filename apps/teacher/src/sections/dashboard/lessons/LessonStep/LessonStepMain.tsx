@@ -9,6 +9,7 @@ import LessonTopBar from "./lesson-top-bar/LessonTopBar";
 import StepContentEditor from "./LessonStepContent/StepContentEditor";
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
+import { voidFunction } from "@ct-nx/utils";
 
 export default function LessonStepMain(): React.ReactElement {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function LessonStepMain(): React.ReactElement {
       <FullScreen handle={handle}>
         <Dialog
           open={Boolean(lessonId)}
-          onClose={() => {}}
+          onClose={voidFunction}
           PaperProps={{ sx: { height: "100vh" } }}
           fullScreen
         >

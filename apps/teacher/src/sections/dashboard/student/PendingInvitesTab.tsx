@@ -4,6 +4,7 @@ import {
   TableHeadCustom,
   Label,
 } from "@ct-nx/components";
+import { voidFunction } from "@ct-nx/utils";
 import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material";
 // import SkeletonMembers from "@pages/dashboard/organization/members/SkeletonMembers";
 
@@ -34,7 +35,7 @@ export default function PendingInvitesTab({
         // rowCount={data?.data.length}
         numSelected={selected.length}
         onSort={onSort}
-        onSelectAllRows={(checked: any) => {}}
+        onSelectAllRows={(checked: any) => {voidFunction()}}
       />
       <TableBody sx={{ minHeight: 12 }}>
         {/* {isLoading
@@ -44,9 +45,9 @@ export default function PendingInvitesTab({
           // key={row.id}
           row={{}}
           selected={selected.includes("")}
-          onSelectRow={() => {}}
-          onDeleteRow={() => {}}
-          onEditRow={() => {}}
+          onSelectRow={voidFunction}
+          onDeleteRow={voidFunction}
+          onEditRow={voidFunction}
         />
         {/* ))} */}
         {/* <TableNoData isNotFound={!data?.data.length && !isLoading} /> */}

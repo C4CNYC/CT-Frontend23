@@ -3,7 +3,7 @@ import { Box, Input, InputAdornment, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import { Image, UploadImageModal } from "@ct-nx/components";
-import { bgBlur } from "@ct-nx/utils";
+import { bgBlur, voidFunction } from "@ct-nx/utils";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   position: "absolute",
@@ -35,7 +35,7 @@ const StyledInfo = styled("div")(({ theme }) => ({
 }));
 
 export function InviteCover(): React.ReactElement {
-  const onUpload = async (data: File): Promise<void> => {};
+  const onUpload = async (data: File): Promise<void> => {voidFunction()};
   return (
     <Stack>
       <Stack

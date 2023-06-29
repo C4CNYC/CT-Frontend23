@@ -1,3 +1,4 @@
+import { voidFunction } from "@ct-nx/utils";
 import { atomWithStorage } from "jotai/utils";
 
 export interface ILessonViewAtom {
@@ -12,7 +13,7 @@ export const lessonViewAtom = atomWithStorage<ILessonViewAtom>(
   {
     isAllColumnsVisible: true,
     isFullScreenView: false,
-    fullScreenOpen: () => {},
-    fullScreenClose: () => {},
+    fullScreenOpen: voidFunction,
+    fullScreenClose: voidFunction,
   }
 );

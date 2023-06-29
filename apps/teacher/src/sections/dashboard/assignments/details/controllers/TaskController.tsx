@@ -55,6 +55,7 @@ export default function TaskController({
         case "selectOption": {
           await updateTask(payload).unwrap();
           enqueueSnackbar(`${details?.option.name ?? ""} added to assigment`);
+          // eslint-disable-next-line no-useless-return
           return;
         }
       }

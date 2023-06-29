@@ -49,7 +49,8 @@ export const SidebarUser = ({
   const [, setUserOnline] = useAtom(onlineStudentsAtom);
   const [, setQuickRabbit] = useAtom(quickRabbitAtom);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+  // @ts-expect-error undefined error
+  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
   const { lastTimeActivity, isOnline } = useOnlineConnection(student.id);
   const {
     first_name: firstName,

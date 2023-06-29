@@ -114,6 +114,7 @@ export default function CreateModuleDialog({
           ...data,
         }).unwrap();
       } else {
+        // eslint-disable-next-line @next/next/no-assign-module-variable
         const module = await createModule({
           ...data,
         }).unwrap();

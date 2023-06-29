@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 // utils
-import { fDateTime } from "@ct-nx/utils";
+import { fDateTime, voidFunction } from "@ct-nx/utils";
 // components
 import { CarouselArrows, Iconify } from "@ct-nx/components";
 
@@ -98,7 +98,7 @@ export default function BookingCustomerReviews({
           color="success"
           variant="contained"
           startIcon={<Iconify icon="eva:checkmark-circle-2-fill" />}
-          onClick={() => {}}
+          onClick={voidFunction}
         >
           Accept
         </Button>
@@ -108,7 +108,7 @@ export default function BookingCustomerReviews({
           color="error"
           variant="contained"
           startIcon={<Iconify icon="eva:close-circle-fill" />}
-          onClick={() => {}}
+          onClick={voidFunction}
         >
           Reject
         </Button>
