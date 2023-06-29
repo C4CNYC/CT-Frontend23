@@ -1,4 +1,5 @@
 import { addAlpha } from "@ct-nx/utils";
+import { Button, Link, Stack } from "@mui/material";
 import { Box, Button, Link, Stack } from "@mui/material";
 import { PATH_PAGE } from "@routes/paths";
 
@@ -15,7 +16,7 @@ export default function CourseButtons({
 }: Props): React.ReactElement {
   return (
     <Stack direction="row" sx={{ gap: { xs: 1, sm: 3 }, pb: 3, pt: 2 }}>
-      {progress ? (
+      {progress && progress > 0 ? (
         <Button
           component={Link}
           href={`${PATH_PAGE.codePanel.root}/${courseId}`}
