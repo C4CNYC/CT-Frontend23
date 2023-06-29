@@ -1,4 +1,4 @@
-import { Image, Iconify } from "@ct-nx/components";
+import { Iconify, Image } from "@ct-nx/components";
 
 import { Button, Grid, Link, Paper, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
@@ -108,7 +108,7 @@ export default function ProjectItem({
         </Grid>
         <Button
           component={Link}
-          href={`${PATH_PAGE.codePanel.root}/${course.id}`}
+          href={`${PATH_PAGE.codePanel.workSpace(course?.id as string)}`}
           sx={{
             border: "1px solid #02D3D7",
             borderRadius: "100px",
