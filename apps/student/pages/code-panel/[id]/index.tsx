@@ -1,4 +1,4 @@
-import { EmptyContent, LoadingScreen } from "@ct-nx/components";
+import { EmptyContent } from "@ct-nx/components";
 import { useOnlineConnection } from "@ct-nx/hooks";
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
