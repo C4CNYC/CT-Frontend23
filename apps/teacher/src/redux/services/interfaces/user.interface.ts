@@ -5,14 +5,14 @@ import {
 } from "@ct-nx/utils";
 import { Role } from "../enums/role.enum";
 
-export interface User {
-  first_name: string;
-  last_name: string;
-  role: string;
-  email: string;
-}
+// export interface User {
+//   first_name: string;
+//   last_name: string;
+//   role: string;
+//   email: string;
+// }
 
-export interface UserResponse extends User, BaseResponseInterface {}
+export interface UserResponse extends IUser, BaseResponseInterface {}
 
 export interface UserListResponse<Data>
   extends BaseListResponseInterface<Data> {}
@@ -25,11 +25,11 @@ export interface UserSearchParams extends BaseSearchInterface {
 
 export interface IUser {
   email: string;
-  first_name?: string;
-  last_name?: string;
+  first_name: string;
+  last_name: string;
   verified?: boolean;
   active?: boolean;
-  role?: Role;
+  role: Role;
   avatar?: string;
   cover?: string;
   socials?: ISocials[];

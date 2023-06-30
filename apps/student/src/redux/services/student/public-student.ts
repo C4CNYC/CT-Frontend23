@@ -1,16 +1,13 @@
+import { BaseListResponseInterface, BaseResponseInterface } from "@ct-nx/utils";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import {
-  ICourse,
   ICourseContent,
+  ICourseElement,
   ICourseSearchParams,
   ILesson,
   ILessonContent,
 } from "src/redux/interfaces/content.interface";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@ct-nx/utils";
 import { baseQueryWrapper } from "../helpers/base_query_wrapper";
 
 export const studentPublicApi = createApi({
@@ -31,7 +28,7 @@ export const studentPublicApi = createApi({
 const extendedApi = studentPublicApi.injectEndpoints({
   endpoints: (builder) => ({
     getPublicCourse: builder.query<
-      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      BaseListResponseInterface<ICourseElement & BaseResponseInterface>,
       ICourseSearchParams
     >({
       query: () => ({
