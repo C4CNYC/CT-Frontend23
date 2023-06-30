@@ -41,7 +41,7 @@ export default function MenuHugDialog({ children }: Props): React.ReactElement {
       >
         <DialogTitle variant="h4">BIG, BIIGGGGGGG HUGGG!!!</DialogTitle>
         <DialogContent>
-          <Image src={"/assets/code-panel/hug.png"} />
+          <Image src={"/assets/code-panel/hug.png"} alt="code-panel"/>
           <Typography variant="h5" sx={{ py: 1 }}>
             You are loved, needed and important. This world needs more people
             exactly like you.

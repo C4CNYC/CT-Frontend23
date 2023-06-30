@@ -38,13 +38,13 @@ async function pullUpdates(
   return await new Promise(function (resolve) {
     socket.emit("pullUpdates", version);
 
-    socket.once("pullUpdateResponse", function (updates: any) {
+    socket.once("pullUpdateResponse", function (updates) {
       resolve(JSON.parse(updates));
     });
   }).then((updates: any) =>
     updates.map((u: any) => {
       if (u.effects?.[0]) {
-        const effects: Array<StateEffect<any>> = [];
+        const effects: Array<StateEffect<unknown>> = [];
 
         u.effects.forEach((effect: StateEffect<any>) => {
           if (effect.value?.id && effect.value?.from) {

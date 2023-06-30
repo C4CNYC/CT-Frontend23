@@ -85,6 +85,6 @@ export const anonimUserConfig: IMenuConfigItem[] = [
 ];
 
 export default {
-  [UserType.Authorized]: authorizedUserConfig,
-  [UserType.Anonim]: anonimUserConfig,
+  authorized: authorizedUserConfig,
+  anonim: anonimUserConfig,
 };

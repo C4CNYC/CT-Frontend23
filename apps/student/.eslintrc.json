@@ -12,8 +12,7 @@
       "parserOptions": {
         "project": ["apps/student/tsconfig.json"]
       },
-      "rules": {
-      }
+      "rules": {}
     },
     {
       "files": ["*.ts", "*.tsx"],

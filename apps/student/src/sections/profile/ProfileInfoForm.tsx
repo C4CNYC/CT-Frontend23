@@ -3,7 +3,6 @@ import {
   RHFUploadAvatar,
   FormProvider,
 } from "@ct-nx/components";
-import { RequestCatchError } from "@ct-nx/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack } from "@mui/material";

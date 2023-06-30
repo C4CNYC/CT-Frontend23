@@ -4,6 +4,7 @@ import {
   IconButton,
   InputBase,
   Popover,
+  PopoverVirtualElement,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
@@ -12,6 +13,7 @@ import { RxCross2 } from "react-icons/rx";
 import TimerButton from "./button/timer-button";
 import { CircularProgressWithLabel } from "./progress/circularProgress";
 import { useStyles } from "./styles";
+import Image from "next/image";
 
 interface Props {
   mobile: boolean;
@@ -23,7 +25,7 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
   const [start, setStart] = useState(false);
   const [finish, setFinish] = useState(false);
   const [pause, setPause] = useState(false);
-  const [timerAnchorEl, setTimerAnchorEl] = useState(null);
+  const [timerAnchorEl, setTimerAnchorEl] = useState<null | Element | PopoverVirtualElement>(null);
   const [openTimer, setOpenTimer] = useState(false);
   const [delay, setDelay] = useState(0);
   const [animationsStart, setAnimationsStart] = useState(0);
@@ -95,7 +97,7 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
     setOpenTimer(true);
   };
 
-  const timerHandler = (e: any): void => {
+  const timerHandler = (e: {currentTarget: Element}): void => {
     setTimerAnchorEl(e.currentTarget);
     setOpenTimer((state) => !state);
   };
@@ -198,7 +200,7 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
               >
                 Great Job! High-five...
               </Typography>
-              <img
+              <Image
                 src="https://i.giphy.com/l4HogV6533Je2oG40.gif"
                 className={classes.gif}
                 alt="The timer has ended"
