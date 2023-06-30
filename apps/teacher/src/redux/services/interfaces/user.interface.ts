@@ -5,13 +5,6 @@ import {
 } from "@ct-nx/utils";
 import { Role } from "../enums/role.enum";
 
-// export interface User {
-//   first_name: string;
-//   last_name: string;
-//   role: string;
-//   email: string;
-// }
-
 export interface UserResponse extends IUser, BaseResponseInterface {}
 
 export interface UserListResponse<Data>

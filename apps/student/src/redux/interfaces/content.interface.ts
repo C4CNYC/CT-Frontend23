@@ -3,25 +3,6 @@ import { Unit } from "src/redux/interfaces/challenges.interface";
 import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { IIntegration } from "./integration.interface";
 
-// export interface IModule {
-//   active: boolean;
-//   name: string;
-//   description: string;
-//   data: [];
-// }
-
-// export interface ICourse {
-//   name: string;
-//   level: string;
-//   price: string;
-//   description: string;
-//   active: boolean;
-//   cover: string;
-//   draft: boolean;
-//   total_lessons: number;
-//   course_id: string;
-// }
-// ==== updated interfaces ===
 export interface ICourseElement {
   id?: string;
   course_id?: string;
@@ -50,13 +31,6 @@ export interface ICourseContent {
   draft: boolean;
   total_lessons: number;
 }
-// export interface IUnitContent {
-//   id: string;
-//   lessons: ILesson[];
-//   name: string;
-//   description?: string;
-//   active: boolean;
-// }
 
 export interface IModule {
   active?: boolean;
