@@ -9,12 +9,8 @@ import { Alert, IconButton, InputAdornment, Stack } from "@mui/material";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
+import { FormProvider, Iconify, RHFTextField } from "@ct-nx/components";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-import {
-  RHFTextField,
-  FormProvider,
-  Iconify,
- } from "@ct-nx/components";
 // ----------------------------------------------------------------------
 
 interface FormValuesProps {
@@ -38,13 +34,21 @@ export default function AuthRegisterForm({
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
-    tenantName: Yup.string().required("Tenant name required"),
+    tenantName: Yup.string()
+      .required("Organization name required")
+      .max(9, "Name must be shorter"),
     firstName: Yup.string().required("First name required"),
     lastName: Yup.string().required("Last name required"),
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+        "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
+      )
+      .min(10, "Password must be at least 10 characters long"),
   });
 
   const defaultValues = {
@@ -93,7 +97,7 @@ export default function AuthRegisterForm({
           <Alert severity="error">{errors.afterSubmit.message}</Alert>
         )}
 
-        <RHFTextField name="tenantName" label="Tenant name" />
+        <RHFTextField name="tenantName" label="Organization name" />
 
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <RHFTextField name="firstName" label="First name" />

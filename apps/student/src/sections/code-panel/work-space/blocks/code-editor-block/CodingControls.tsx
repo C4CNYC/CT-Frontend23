@@ -1,8 +1,13 @@
-import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from "@ct-nx/components";
+import {
+  moveCursorEvent,
+  pasteSymbolEvent,
+  undoRedoEvent,
+} from "@ct-nx/components";
 import { Box, Button, Divider } from "@mui/material";
 import { styled } from "@mui/system";
 import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
-import { memo } from "react";
+import { copyPasteEvent } from "libs/components/src/lib/real-time-editor/events/copy-paste";
+import { memo, useState } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 import { BsClipboard } from "react-icons/bs";
 import {
@@ -200,13 +205,25 @@ export function CodingTools({ symbolsHandler }: Props): React.ReactElement {
         <RiShareForwardFill size="20px" color="#FFF" />
       </SymbolBtn>
       <Divider sx={{ borderStyle: "solid" }} orientation="vertical" flexItem />
-      <SymbolBtn>
+      <SymbolBtn
+        onClick={() => {
+          window.dispatchEvent(copyPasteEvent({ detail: { type: "select" } }));
+        }}
+      >
         <TbBoxMargin size="20px" color="#FFF" />
       </SymbolBtn>
-      <SymbolBtn>
+      <SymbolBtn
+        onClick={() => {
+          window.dispatchEvent(copyPasteEvent({ detail: { type: "copy" } }));
+        }}
+      >
         <AiOutlineCopy size="18px" color="#FFF" />
       </SymbolBtn>
-      <SymbolBtn>
+      <SymbolBtn
+        onClick={() => {
+          window.dispatchEvent(copyPasteEvent({ detail: { type: "paste" } }));
+        }}
+      >
         <BsClipboard size="16px" color="#FFF" />
       </SymbolBtn>
       <Divider sx={{ borderStyle: "solid" }} orientation="vertical" flexItem />

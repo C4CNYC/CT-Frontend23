@@ -1,6 +1,8 @@
-import { MenuPopover, Iconify } from "@ct-nx/components";
+import { Iconify, MenuPopover } from "@ct-nx/components";
+import { BaseResponseInterface } from "@ct-nx/utils";
 import { Draggable } from "@hello-pangea/dnd";
 import {
+  Badge,
   Box,
   IconButton,
   MenuItem,
@@ -15,7 +17,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@ct-nx/utils";
 import Preferences from "./Modals/Preferences";
 import Validation from "./Modals/Validation";
 
@@ -89,13 +90,25 @@ export default function LessonListItem({
             p: "15px 10px 15px 5px",
             justifyContent: "flex-start",
             alignItems: "flex-start",
+            position: "relative",
             border: `2px solid ${chooseBorderColor()}`,
           }}
         >
+          {router.query.stepId === step.id && (
+            <Badge
+              color="primary"
+              variant="dot"
+              sx={{ position: "absolute", top: "10px", left: "10px" }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            />
+          )}
+
           <IconButton sx={{ mr: "5px" }} {...provided.dragHandleProps}>
             <RxDragHandleDots2 size="24px" />
           </IconButton>
-
           <Stack sx={{ width: "100%", alignItems: "flex-end" }}>
             <Stack
               direction="row"

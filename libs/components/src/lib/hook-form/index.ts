@@ -1,6 +1,7 @@
 export * from "./FormProvider";
 export * from "./RHFAutocomplete";
 export * from "./RHFCheckbox";
+export * from "./RHFCode";
 export * from "./RHFCodes";
 export * from "./RHFRadioGroup";
 export * from "./RHFSelect";
