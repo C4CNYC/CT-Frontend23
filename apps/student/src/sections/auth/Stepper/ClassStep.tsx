@@ -18,7 +18,7 @@ export default function ClassStep(): React.ReactElement {
   // const [createClass] = useCreateClassMutation();
   const { register, handleSubmit } = useForm();
   // const { schoolId } = router.query;
-  const onSubmit = async (data: any): Promise<void> => {
+  const onSubmit = async (data: unknown): Promise<void> => {
     try {
       // await createClass({
       //   schoolId,
