@@ -23,7 +23,7 @@ const AccordionExample = (props: AccordionProps) => {
     }
 
     useEffect(() => {
-        setExpanded(defaultExpanded || false)
+        setExpanded(defaultExpanded ?? false)
     }, [defaultExpanded])
 
     return (

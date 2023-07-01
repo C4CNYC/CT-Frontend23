@@ -23,7 +23,6 @@ const ExampleComponent = ({file, ...props}: FileIconProps) => {
         if (file) {
             setValue(file)
         }
-        console.log(file)
       };
 
       return (

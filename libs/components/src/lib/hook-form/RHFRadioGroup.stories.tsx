@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RHFRadioGroup } from "./RHFRadioGroup";
 import { FormProvider } from "./FormProvider";
+import { voidFunction } from "@ct-nx/utils";
 
 const Component: Meta<typeof RHFRadioGroup> = {
   component: RHFRadioGroup,
@@ -34,7 +35,7 @@ const ExampleComponent = ({children}: any) => {
         
     return (
         <FormProvider
-            methods={methods} onSubmit={handleSubmit(() => { console.log(1); })}
+            methods={methods} onSubmit={handleSubmit(voidFunction)}
         >
             {children}
         </FormProvider>

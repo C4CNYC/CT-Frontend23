@@ -6,13 +6,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true
   },
-  "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "**/*.jsx",
-  ],
+  "files": [],
+  "include": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"

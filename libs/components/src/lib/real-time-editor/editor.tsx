@@ -78,7 +78,7 @@ export const CodeEditor = ({
         view.dispatch({
           changes: {
             from: view.state.doc.length,
-            insert: code ? code : preloadedCode,
+            insert: code || preloadedCode,
           },
         });
       }
