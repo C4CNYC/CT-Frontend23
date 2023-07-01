@@ -7,7 +7,7 @@ import {
 
 export const baseQueryWithAuth: (
   baseQuery: any
-) => BaseQueryFn<string | FetchArgs, RequestCatchError, FetchBaseQueryError> =
+) => BaseQueryFn<string | FetchArgs, unknown, RequestCatchError> =
   (baseQuery) =>
   async (args: any, api: any, extraOptions: any): Promise<any> => {
     const result = await baseQuery(args, api, extraOptions);

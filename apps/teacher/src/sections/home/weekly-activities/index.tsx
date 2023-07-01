@@ -33,7 +33,7 @@ export default function WeeklyActivities(): React.ReactElement {
         <Stack mr="24px">
           <Button
             id="customized-button"
-            aria-controle={open ? "basic-menu" : undefined}
+            aria-controls={open ? "basic-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
             disableElevation
