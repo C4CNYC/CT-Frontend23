@@ -32,7 +32,7 @@ const ExampleComponent = ({onUpload, ...props}: UploadImageProps) => {
         if (!id) {
           return;
         } else {
-          console.log({ id, file });
+          // console.log({ id, file });
         }
         enqueueSnackbar("Image updated");
       } catch (error) {

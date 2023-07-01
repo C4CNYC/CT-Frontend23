@@ -20,8 +20,8 @@ const ExampleComponent = ({quantity, onIncrease, onDecrease, ...props}: Incremen
     return (
         <IncrementerButton 
             quantity={count} 
-            onIncrease={() => setCount(state => state + 1)}
-            onDecrease={() => setCount(state => state - 1)}
+            onIncrease={() => { setCount(state => state + 1); }}
+            onDecrease={() => { setCount(state => state - 1); }}
             {...props} 
         />
     )

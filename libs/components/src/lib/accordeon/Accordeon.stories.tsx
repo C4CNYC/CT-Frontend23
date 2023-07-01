@@ -27,7 +27,6 @@ const AccordionExample = (props: AccordionProps) => {
     }, [defaultExpanded])
 
     return (
-        <>
         <Accordion
             expanded={expanded}
             onChange={onChange}
@@ -40,7 +39,6 @@ const AccordionExample = (props: AccordionProps) => {
             Accordeon Details Wrapper
           </AccordionDetails>
         </Accordion>
-        </>
     );
   };
 

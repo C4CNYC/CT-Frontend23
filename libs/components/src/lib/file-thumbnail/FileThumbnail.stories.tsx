@@ -28,7 +28,7 @@ const ExampleComponent = ({file, ...props}: FileIconProps) => {
 
       return (
         <div style={{width: 200}}>
-            <input type="file" onChange={(e) => onUploadCustom(e.target.files)}/>
+            <input type="file" onChange={async (e) => { await onUploadCustom(e.target.files); }}/>
             <FileThumbnail file={value} {...props} />
         </div>
     )

@@ -11,7 +11,7 @@ export default Component;
 export const Default = {
   args: {
     colors: ["white", "lightgreen", "red", "darkblue"],
-    onChange: (e: any) => console.log(e.target.value)
+    onChange: (e: any) => { console.log(e.target.value); }
   },
 };
 

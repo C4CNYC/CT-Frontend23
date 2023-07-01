@@ -34,7 +34,7 @@ const ExampleComponent = ({children}: any) => {
         
     return (
         <FormProvider
-            methods={methods} onSubmit={handleSubmit(() => console.log(1))}
+            methods={methods} onSubmit={handleSubmit(() => { console.log(1); })}
         >
             {children}
         </FormProvider>

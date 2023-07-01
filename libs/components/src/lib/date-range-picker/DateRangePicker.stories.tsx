@@ -23,8 +23,7 @@ const ExampleComponent = ({startDate, endDate, ...props}: any) => {
         shortLabel,
       } = useDateRangePicker(startDate, endDate);
 
-    return <>
-        <DateRangePicker 
+    return <DateRangePicker 
             startDate={startDateNew}
             endDate={endDateNew}
             onChangeEndDate={onChangeEndDate}
@@ -34,8 +33,6 @@ const ExampleComponent = ({startDate, endDate, ...props}: any) => {
             shortLabel={shortLabel}
             {...props}
         />
-        
-    </>
 }
 
 export const Default = {
