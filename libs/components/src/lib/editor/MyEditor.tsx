@@ -1,136 +1,22 @@
-import { Divider } from "@mui/material";
-import { Stack } from "@mui/system";
-import { FileExtension } from "@remirror/extension-file";
-import { ReactComponentExtension } from "@remirror/extension-react-component";
-import {
-  // TableComponents,
-  TableExtension,
-} from "@remirror/extension-react-tables";
-import {
-  BasicFormattingButtonGroup,
-  // CalloutTypeButtonGroup,
-  CommandButtonGroup,
-  DecreaseFontSizeButton,
-  FloatingToolbar,
-  // HeadingLevelButtonGroup,
-  // HistoryButtonGroup,
-  IncreaseFontSizeButton,
-  // IndentationButtonGroup,
-  // InsertHorizontalRuleButton,
-  Remirror,
-  TextAlignmentButtonGroup,
-  ThemeProvider,
-  // ToggleBlockquoteButton,
-  ToggleBoldButton,
-  // ToggleBulletListButton,
-  // ToggleCodeBlockButton,
-  // ToggleColumnsButton,
-  ToggleOrderedListButton,
-  ToggleStrikeButton,
-  ToggleSubscriptButton,
-  ToggleSuperscriptButton,
-  ToggleTaskListButton,
-  Toolbar,
-  useRemirror,
-} from "@remirror/react";
-
+import { isJson } from "@ct-nx/utils";
+import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
 import { useS3Upload } from "next-s3-upload";
 import React, { useEffect } from "react";
-import {
-  BlockquoteExtension,
-  BoldExtension,
-  BulletListExtension,
-  CalloutExtension,
-  CodeBlockExtension,
-  CodeExtension,
-  ColumnsExtension,
-  EmojiExtension,
-  FontFamilyExtension,
-  FontSizeExtension,
-  HeadingExtension,
-  HorizontalRuleExtension,
-  IframeExtension,
-  ImageAttributes,
-  ImageExtension,
-  ItalicExtension,
-  LinkExtension,
-  NodeFormattingExtension,
-  OrderedListExtension,
-  ShortcutsExtension,
-  StrikeExtension,
-  SubExtension,
-  SupExtension,
-  TaskListExtension,
-  TextCaseExtension,
-  TextColorExtension,
-  TextHighlightExtension,
-  UnderlineExtension,
-  WhitespaceExtension,
-} from "remirror/extensions";
+import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
-import { SaveButton } from "./SaveButton";
-import {
-  // AddIframeButton,
-  // AddYoutubeButton,
-  FontFamilyButtons,
-  FontSizeButtons,
-  // TablePicker,
-  TextBgColorPicker,
-  TextCaseSelect,
-  TextColorPicker,
-} from "./toolbars";
-
-import jsx from "refractor/lang/jsx.js";
-import typescript from "refractor/lang/typescript.js";
-import { isJson } from "@ct-nx/utils";
-import data from "svgmoji/emoji.json";
-import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
-import EmojiPickerBtn from "./toolbars/EmojiPicker";
+import EditorToolbar from "./EditorToolbar";
+import { extensions } from "./extensions-template";
 
 interface FileWithProgress {
   file: File;
   progress: SetProgress;
 }
-
 declare type SetProgress = (progress: number) => void;
 
 export declare type DelayedPromiseCreator<Value> = (
   props: unknown
 ) => Promise<Value>;
 declare type DelayedImage = DelayedPromiseCreator<ImageAttributes>;
-
-type Extensions =
-  | HeadingExtension
-  | BoldExtension
-  | ItalicExtension
-  | BlockquoteExtension
-  | UnderlineExtension
-  | ImageExtension
-  | CodeBlockExtension
-  | CodeExtension
-  | ColumnsExtension
-  | IframeExtension
-  | FontFamilyExtension
-  | HorizontalRuleExtension
-  | NodeFormattingExtension
-  | TextColorExtension
-  | ReactComponentExtension
-  | TableExtension
-  | FileExtension
-  | CalloutExtension
-  | LinkExtension
-  | FontSizeExtension
-  | StrikeExtension
-  | WhitespaceExtension
-  | TextHighlightExtension
-  | TextCaseExtension
-  | SupExtension
-  | SubExtension
-  | ShortcutsExtension
-  | BulletListExtension
-  | OrderedListExtension
-  | TaskListExtension
-  | EmojiExtension;
 
 interface Props {
   editable?: boolean;
@@ -139,49 +25,13 @@ interface Props {
   onSubmit?: () => void;
 }
 
-export function MyEditor({
+function Editor({
   editable = true,
   onSubmit,
   multimediaValue,
   setMultimediaValue,
 }: Props): React.ReactElement {
   const { uploadToS3 } = useS3Upload();
-  const extensions = (): Extensions[] => [
-    new HeadingExtension(),
-    new BoldExtension(),
-    new ItalicExtension(),
-    new UnderlineExtension(),
-    new ImageExtension({ enableResizing: true, uploadHandler }),
-    new BlockquoteExtension(),
-    new CodeBlockExtension({
-      defaultLanguage: "js",
-      supportedLanguages: [typescript, jsx],
-    }),
-    new CodeExtension(),
-    new ColumnsExtension(),
-    new IframeExtension(),
-    new FontFamilyExtension(),
-    new HorizontalRuleExtension(),
-    new NodeFormattingExtension(),
-    new TextColorExtension(),
-    new ReactComponentExtension(),
-    new TableExtension(),
-    new FileExtension(),
-    new CalloutExtension(),
-    new LinkExtension({ autoLink: true }),
-    new FontSizeExtension({ defaultSize: "16", unit: "px" }),
-    new StrikeExtension(),
-    new TextHighlightExtension(),
-    new TextCaseExtension(),
-    new SupExtension(),
-    new SubExtension(),
-    new ShortcutsExtension(),
-    new BulletListExtension(),
-    new OrderedListExtension(),
-    new TaskListExtension(),
-    new EmojiExtension({ data, moji: "noto" }),
-  ];
-
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
     let completed = 0;
     const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
@@ -198,12 +48,17 @@ export function MyEditor({
           })
       );
     }
-
     return promises;
   };
 
-  const { manager, state, setState } = useRemirror({
-    extensions,
+  // ToDo find better solution for type
+  const newExtentions: any = [
+    ...extensions(),
+    new ImageExtension({ enableResizing: true, uploadHandler }),
+  ];
+
+  const { manager, state, setState, onChange } = useRemirror({
+    extensions: newExtentions,
     content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
     stringHandler: "html",
   });
@@ -219,7 +74,6 @@ export function MyEditor({
   const saveContent = async (): Promise<void> => {
     if (onSubmit) onSubmit();
   };
-
   return (
     <ThemeProvider>
       <style>
@@ -249,15 +103,12 @@ export function MyEditor({
           .remirror-theme ul {
             margin-left: 20px;
           }
-          
           .remirror-theme ol {
             padding-left: 20px;
           }
-          
           .remirror-theme [data-task-list] {
             margin-left: 30px;
           }
-          
         `}
       </style>
       <Remirror
@@ -269,143 +120,17 @@ export function MyEditor({
         autoFocus
         autoRender="end"
         onChange={(parameter) => {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          setState(parameter.state);
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          if (setMultimediaValue) setMultimediaValue(parameter.state);
+          onChange(parameter);
+          if (setMultimediaValue) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            setMultimediaValue(parameter.state);
+          }
         }}
       >
-        {editable ? (
-          <>
-            <Toolbar
-              style={{
-                position: "sticky",
-                zIndex: 500,
-                top: 0,
-                padding: "15px",
-                overflowX: "scroll",
-                overflowY: "scroll",
-                scrollbarWidth: "none",
-                borderBottom: "1px solid #cbcbcb",
-              }}
-            >
-              <Stack direction="column" sx={{ width: "100%", gap: 1 }}>
-                <Stack direction="row" justifyContent="space-between" gap={1}>
-                  <Stack
-                    flexDirection="row"
-                    sx={{ flexWrap: "wrap", gap: 1, alignItems: "center" }}
-                  >
-                    <ToggleBoldButton />
-                    <CommandButtonGroup>
-                      <ToggleOrderedListButton />
-                    </CommandButtonGroup>
-                    <TextColorPicker />
-
-                    <TextBgColorPicker />
-                    {/* <HistoryButtonGroup />
-                <HeadingLevelButtonGroup showAll />
-                <IndentationButtonGroup />
-                <CalloutTypeButtonGroup /> */}
-                    <CommandButtonGroup>
-                      {/* <ToggleBulletListButton /> */}
-                      <ToggleTaskListButton />
-                    </CommandButtonGroup>
-                    {/* <div style={{ height: "30px", display: "flex" }}>
-                  <ToggleBlockquoteButton />
-                  <InsertHorizontalRuleButton />
-                  <ToggleCodeBlockButton lang="html" />
-                  <ToggleColumnsButton />
-
-                  <AddIframeButton />
-                  <AddYoutubeButton />
-                  <TablePicker />
-                  <TableComponents />
-                  </div> */}
-                    <EmojiPickerBtn />
-                  </Stack>
-                  <SaveButton onClick={saveContent} />
-                </Stack>
-
-                <Stack
-                  direction="row"
-                  sx={{
-                    maxWidth: "400px",
-                    gap: 1,
-                    flexWrap: "wrap",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <TemplateBtn />
-                  <ChallengeBtn />
-                  <SettingsBtn />
-                </Stack>
-              </Stack>
-            </Toolbar>
-            <FloatingToolbar
-              sx={{
-                "&>div": {
-                  borderRadius: "5px",
-                  boxShadow: "0 5px 10px rgba(0, 0, 0, 0.2)",
-                },
-              }}
-              style={{
-                zIndex: 9999999,
-                padding: 10,
-              }}
-            >
-              <Stack
-                borderRadius="5px"
-                display="flex"
-                flexDirection="row"
-                p="5px 10px"
-                alignItems="center"
-                alignContent="center"
-              >
-                <BasicFormattingButtonGroup />
-                <Divider
-                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-                  orientation="vertical"
-                  flexItem
-                />
-                <CommandButtonGroup>
-                  <DecreaseFontSizeButton />
-                  <FontSizeButtons />
-                  <IncreaseFontSizeButton />
-                </CommandButtonGroup>
-                <Divider
-                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-                  orientation="vertical"
-                  flexItem
-                />
-                <Toolbar>
-                  <ToggleSuperscriptButton />
-                  <ToggleSubscriptButton />
-                  <TextCaseSelect />
-                </Toolbar>
-                <Divider
-                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-                  orientation="vertical"
-                  flexItem
-                />
-                <ToggleStrikeButton />
-                <Divider
-                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-                  orientation="vertical"
-                  flexItem
-                />
-                <TextAlignmentButtonGroup />
-                <Divider
-                  sx={{ ml: 1, mr: 1, mt: 0.5, height: "70%" }}
-                  orientation="vertical"
-                  flexItem
-                />
-                <FontFamilyButtons />
-              </Stack>
-            </FloatingToolbar>
-          </>
-        ) : null}
+        {editable ? <EditorToolbar saveContent={saveContent} /> : null}
       </Remirror>
     </ThemeProvider>
   );
 }
+export const MyEditor = React.memo(Editor);

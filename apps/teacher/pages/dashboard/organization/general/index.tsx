@@ -70,7 +70,7 @@ export default function UserProfilePage(): React.ReactElement {
       file.append("file", data);
       await uploadCoverOrgImage({ file }).unwrap();
       enqueueSnackbar("Image updated");
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };

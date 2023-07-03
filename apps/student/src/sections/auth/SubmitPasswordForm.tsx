@@ -55,7 +55,7 @@ export default function SubmitPasswordForm(): React.ReactElement {
       }).unwrap();
       setIsSuccess(true);
       router.push(PATH_AUTH.login);
-    } catch (error: any) {
+    } catch (error) {
       methods.reset();
     }
   };

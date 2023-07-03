@@ -78,7 +78,7 @@ export default function UserProfilePage(): React.ReactElement {
         await updateSchoolCoverImage({ id, file }).unwrap();
       }
       enqueueSnackbar("Image updated");
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };

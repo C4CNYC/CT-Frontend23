@@ -43,7 +43,7 @@ export default function AppsPage(): React.ReactElement {
     try {
       await removeIntegration({ integrationId: id }).unwrap();
       enqueueSnackbar("integration removed");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });
     }
   };

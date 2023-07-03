@@ -12,6 +12,6 @@ export const Default = {
   args: {
     disabledEffect: false,
     ratio: '4/3',
-    src: "/assets/background/overlay_2.jpg",
+    src: "/courses/courseImg.png",
   },
 };

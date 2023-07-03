@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { TablePaginationCustom } from "./TablePaginationCustom"
+import { voidFunction } from "@ct-nx/utils";
 
 const Component: Meta<typeof TablePaginationCustom> = {
   component: TablePaginationCustom,
@@ -11,7 +12,7 @@ export default Component;
 export const Default = {
   args: {
     dense: false,
-    onChangeDense: () => {},
+    onChangeDense: voidFunction,
     rowsPerPageOptions: [5, 10, 15],
     count: 50,
     page: 5,

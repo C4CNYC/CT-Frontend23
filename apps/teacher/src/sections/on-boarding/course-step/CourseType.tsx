@@ -114,6 +114,7 @@ export default function CourseType({
       </Stack>
       <Image
         src="/assets/on-boarding/arrow.svg"
+        alt="arrow image"
         sx={{ width: "18px", height: "30px", alignSelf: "center" }}
       />
     </Button>

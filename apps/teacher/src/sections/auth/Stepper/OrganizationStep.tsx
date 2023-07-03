@@ -32,9 +32,8 @@ export default function OrganizationStep({
         { shallow: true }
       );
       next();
-    } catch (e: any) {
       // #TODO show error
-    }
+    } catch (error) {}
   };
 
   return (

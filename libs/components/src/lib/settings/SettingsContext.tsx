@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 // utils
-import { localStorageAvailable } from "@ct-nx/utils";
+import { localStorageAvailable, voidFunction } from "@ct-nx/utils";
 //
 import { defaultSettings } from "./config-setting";
 import { defaultPreset, getPresets, presetsOption } from "./presets";
@@ -26,26 +26,26 @@ import {
 const initialState: SettingsContextProps = {
   ...defaultSettings,
   // Mode
-  onToggleMode: () => {},
-  onChangeMode: () => {},
+  onToggleMode: voidFunction,
+  onChangeMode: voidFunction,
   // Direction
-  onToggleDirection: () => {},
-  onChangeDirection: () => {},
-  onChangeDirectionByLang: () => {},
+  onToggleDirection: voidFunction,
+  onChangeDirection: voidFunction,
+  onChangeDirectionByLang: voidFunction,
   // Layout
-  onToggleLayout: () => {},
-  onChangeLayout: () => {},
+  onToggleLayout: voidFunction,
+  onChangeLayout: voidFunction,
   // Contrast
-  onToggleContrast: () => {},
-  onChangeContrast: () => {},
+  onToggleContrast: voidFunction,
+  onChangeContrast: voidFunction,
   // Color
-  onChangeColorPresets: () => {},
+  onChangeColorPresets: voidFunction,
   presetsColor: defaultPreset,
   presetsOption: [],
   // Stretch
-  onToggleStretch: () => {},
+  onToggleStretch: voidFunction,
   // Reset
-  onResetSetting: () => {},
+  onResetSetting: voidFunction,
 };
 
 // ----------------------------------------------------------------------

@@ -29,7 +29,7 @@ function PageNotFoundIllustration({ ...other }: BoxProps): React.ReactElement {
         <BackgroundIllustration />
 
         <image
-          href="/assets/illustrations/characters/character_6.png"
+          href="/illustrations/characters/character_6.png"
           height="300"
           x="205"
           y="30"

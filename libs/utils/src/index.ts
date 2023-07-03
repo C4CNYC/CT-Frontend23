@@ -18,3 +18,6 @@ export * from "./lib/highlight";
 export * from "./lib/isJson";
 export * from "./lib/localStorageAvailable";
 export * from "./lib/randomGradient";
+export * from "./lib/createRandomAvatar";
+export * from "./lib/getLinearGradient";
+export * from "./lib/voidFunction";

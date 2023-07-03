@@ -14,16 +14,13 @@ export const Default = {
     open: true,
     slides: [
       {
-        src: "assets/images/portraits/protrait_1.jpg",
+        src: "/images/card-image.png",
       },
       {
-        src: "https://www.pngwing.com/en/search?q=avatar",
+        src: "/images/card-image.png",
       },
       {
-        src: "https://www.pngwing.com/en/search?q=avatar",
-      },
-      {
-        src: "https://www.pngwing.com/en/search?q=avatar",
+        src: "/images/card-image.png",
       },
     ],
     disabledZoom: false,

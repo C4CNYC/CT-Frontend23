@@ -1,3 +1,4 @@
+
 import { InputInfo } from "@ct-nx/components";
 import { Box, Button, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -32,7 +33,7 @@ export default function OrganizationStep({
     //     { shallow: true }
     //   );
     //   next();
-    // } catch (e: any) {
+    // } catch (e) {
     //   // #TODO show error
     // }
   };

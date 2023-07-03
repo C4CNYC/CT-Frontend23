@@ -1,3 +1,4 @@
+import { voidFunction } from "@ct-nx/utils";
 import { Badge, SpeedDial, SpeedDialAction, useTheme } from "@mui/material";
 import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { useAtom } from "jotai";
@@ -19,12 +20,12 @@ export default function NavigationSpeedDial({
     {
       icon: <BiMedal color="#FBDD3F" size="20px" />,
       name: "Info",
-      action: () => {},
+      action: voidFunction,
     },
     {
       icon: <MdOutlineNoteAlt color="#FBDD3F" size="20px" />,
       name: "Notes",
-      action: () => {},
+      action: voidFunction,
     },
     {
       icon: (
@@ -44,7 +45,7 @@ export default function NavigationSpeedDial({
     {
       icon: <BiFullscreen color="#FBDD3F" size="20px" />,
       name: "Full screen",
-      action: () => {},
+      action: voidFunction,
     },
   ];
   return (

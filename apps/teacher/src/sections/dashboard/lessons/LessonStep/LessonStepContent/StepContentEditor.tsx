@@ -49,7 +49,7 @@ export default function StepContentEditor(): React.ReactElement {
         body,
       }).unwrap();
       enqueueSnackbar("Content updated");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
@@ -69,8 +69,6 @@ export default function StepContentEditor(): React.ReactElement {
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 96px)",
-        overflow: "hidden",
         position: "relative",
         boxSizing: "border-box",
         backgroundColor: "#FFF",
@@ -80,7 +78,6 @@ export default function StepContentEditor(): React.ReactElement {
         sx={{
           position: "relative",
           height: "48px",
-          overflow: "hidden",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -109,7 +106,8 @@ export default function StepContentEditor(): React.ReactElement {
       <Box
         sx={{
           position: "relative",
-          height: "calc(100vh - 96px)",
+          height: "calc(100vh - 80px)",
+          overflow: "scroll",
         }}
       >
         {bodyType === LessonContentType.Editable ? (

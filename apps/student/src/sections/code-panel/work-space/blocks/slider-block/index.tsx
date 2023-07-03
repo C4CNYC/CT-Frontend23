@@ -66,7 +66,7 @@ const SliderBlock = ({
     carousel1.current?.slickPrev();
   };
 
-  const handleNext = (skip: boolean = false): void => {
+  const handleNext = (skip = false): void => {
     if (stepHasValidation && !skip) {
       onSubmitChalange(data[slideIndex].id);
     }

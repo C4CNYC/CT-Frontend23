@@ -44,7 +44,7 @@ export default function AssignmentContent({
         name: data.name,
       });
       next();
-    } catch (e: any) {
+    } catch (e) {
       // #TODO show error
     }
   };

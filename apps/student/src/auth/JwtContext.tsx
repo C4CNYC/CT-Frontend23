@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 // utils
-import { axios, localStorageAvailable } from "@ct-nx/utils";
+import { axios, localStorageAvailable, voidFunction } from "@ct-nx/utils";
 //
 import { useDispatch } from "react-redux";
 import { cleanUser, setUser } from "src/redux/slices/global";
@@ -138,7 +138,7 @@ export function AuthProvider({
           },
         });
       }
-    } catch (e: any) {
+    } catch (e) {
       dispatch({
         type: Types.INITIAL,
         payload: {
@@ -150,7 +150,7 @@ export function AuthProvider({
   }, [storageAvailable]);
 
   useEffect(() => {
-    initialize().catch((e: any) => {});
+    initialize().catch();
   }, [initialize]);
 
   // AUTHENTICATE
@@ -239,9 +239,9 @@ export function AuthProvider({
       method: "jwt",
       login,
       authenticate,
-      loginWithGoogle: () => {},
-      loginWithGithub: () => {},
-      loginWithTwitter: () => {},
+      loginWithGoogle: voidFunction,
+      loginWithGithub: voidFunction,
+      loginWithTwitter: voidFunction,
       register,
       logout,
     }),

@@ -10,6 +10,7 @@ import {
 } from "../../../../@types/assignments";
 import { useDeleteAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
+import { voidFunction } from "@ct-nx/utils";
 
 interface Props {
   column: IAssignmentsColumn;
@@ -34,7 +35,7 @@ export default function AssignmentsColumn({
         assignmentId,
       }).unwrap();
       enqueueSnackbar("Assignment deleted");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
@@ -62,8 +63,8 @@ export default function AssignmentsColumn({
             <AssignmentsColumnToolBar
               schoolId={schoolId}
               columnName={column.name}
-              onDelete={() => {}}
-              onUpdate={() => {}}
+              onDelete={voidFunction}
+              onUpdate={voidFunction}
             />
 
             <Droppable droppableId={column.id} type="task">

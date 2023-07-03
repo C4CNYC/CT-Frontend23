@@ -2,7 +2,7 @@ import { Tree, TreeNode } from "react-organizational-chart";
 // @mui
 import { useTheme } from "@mui/material/styles";
 // utils
-import { flattenArray } from "@ct-nx/utils";
+import { flattenArray, voidFunction } from "@ct-nx/utils";
 //
 import { GroupNode, SimpleNode, StandardNode } from "./node";
 import { ListProps, OrganizationalChartProps, SubListProps } from "./types";
@@ -29,8 +29,8 @@ export function OrganizationalChart({
           <StandardNode
             sx={sx}
             node={data}
-            onEdit={() => {}}
-            onDelete={() => {}}
+            onEdit={voidFunction}
+            onDelete={voidFunction}
           />
         )) ||
         (variant === "group" && <GroupNode sx={sx} node={data} />)
@@ -62,8 +62,8 @@ export function List({
           <StandardNode
             sx={sx}
             node={data}
-            onEdit={() => {}}
-            onDelete={() => {}}
+            onEdit={voidFunction}
+            onDelete={voidFunction}
           />
         )) ||
         (variant === "group" && (

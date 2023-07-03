@@ -97,7 +97,7 @@ export default function ProfileEditForm({
         if (!photoURL) return;
         await updateAvatar(currentUser?.id, photoURL);
       }
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

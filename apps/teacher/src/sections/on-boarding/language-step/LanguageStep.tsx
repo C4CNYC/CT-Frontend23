@@ -16,6 +16,7 @@ import { StepWizardChildProps } from "react-step-wizard";
 import * as Yup from "yup";
 import StepContainer from "../StepContainer";
 import { LanguageItem } from "./LanguageItem";
+import { voidFunction } from "@ct-nx/utils";
 
 interface FormValuesProps {
   language: string;
@@ -37,7 +38,7 @@ function LanguageStep({
     defaultValues,
   });
 
-  const onSubmit = (): void => {};
+  const onSubmit = (): void => {voidFunction()};
   return (
     <StepContainer>
       <Stack>

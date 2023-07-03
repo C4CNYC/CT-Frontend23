@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { BaseListResponseInterface, BaseResponseInterface } from "@ct-nx/utils";
 import {
-  ICourse,
   ICourseContent,
+  ICourseElement,
   ICourseSearchParams,
 } from "src/redux/interfaces/content.interface";
 import { studentApi } from ".";
@@ -10,7 +10,7 @@ import { studentApi } from ".";
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({
     getCourse: builder.query<
-      BaseListResponseInterface<ICourse & BaseResponseInterface>,
+      BaseListResponseInterface<ICourseElement & BaseResponseInterface>,
       ICourseSearchParams
     >({
       query: (params) => ({
@@ -21,7 +21,10 @@ const extendedApi = studentApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["Courses"],
     }),
-    getCours: builder.query<ICourse & BaseResponseInterface, { id: string }>({
+    getCours: builder.query<
+      ICourseElement & BaseResponseInterface,
+      { id: string }
+    >({
       query: ({ id }) => ({
         url: `/course/${id}`,
         method: "GET",

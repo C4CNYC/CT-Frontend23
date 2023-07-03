@@ -22,7 +22,7 @@ export default function DirectionOptions(): React.ReactElement {
         {OPTIONS.map((direction) => (
           <StyledCard key={direction} selected={themeDirection === direction}>
             <SvgColor
-              src={`/assets/icons/setting/${
+              src={`/icons/setting/${
                 direction === "rtl" ? "ic_align_right" : "ic_align_left"
               }.svg`}
             />

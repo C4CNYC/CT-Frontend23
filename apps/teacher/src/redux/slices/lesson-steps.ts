@@ -105,7 +105,7 @@ export function getBoard(data: Array<ILessonContent & BaseResponseInterface>) {
         ],
       };
       dispatch(slice.actions.getBoardSuccess(board));
-    } catch (error: any) {
+    } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };

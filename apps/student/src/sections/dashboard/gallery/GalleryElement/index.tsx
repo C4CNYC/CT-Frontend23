@@ -34,7 +34,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
 
   useEffect(() => {
     setCode(JSON.parse(body).body.code);
-  }, [item]);
+  }, [item, body]);
 
   const handleOpenPopover = (e: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(e.currentTarget);
@@ -55,7 +55,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
     try {
       await deleteProject({ id: id as string }).unwrap();
       enqueueSnackbar("Project deleted!");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
@@ -72,7 +72,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
     try {
       await updataeProject({ id: id as string, ...updatedItem }).unwrap();
       enqueueSnackbar("Updated successfully");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

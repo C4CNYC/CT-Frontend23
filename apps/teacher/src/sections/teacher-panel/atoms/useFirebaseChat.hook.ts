@@ -73,7 +73,7 @@ export const useFirebaseChat = (): FirebaseChatApi => {
         if (callback) {
           callback(db);
         }
-      } catch (error: any) {}
+      } catch (error) {}
     },
     getMessages: async (senderId, reciverId, callback, limit) => {
       return onSnapshot(

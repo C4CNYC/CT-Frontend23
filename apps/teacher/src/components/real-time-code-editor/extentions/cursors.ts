@@ -211,7 +211,7 @@ const cursorBaseTheme = EditorView.baseTheme({
   },
 });
 
-export function cursorExtension(id: string = ""): any[] {
+export function cursorExtension(id = ""): any[] {
   return [
     cursorField(id),
     cursorBaseTheme,

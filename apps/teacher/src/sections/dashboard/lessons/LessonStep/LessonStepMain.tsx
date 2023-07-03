@@ -9,6 +9,7 @@ import LessonTopBar from "./lesson-top-bar/LessonTopBar";
 import StepContentEditor from "./LessonStepContent/StepContentEditor";
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
+import { voidFunction } from "@ct-nx/utils";
 
 export default function LessonStepMain(): React.ReactElement {
   const router = useRouter();
@@ -32,13 +33,20 @@ export default function LessonStepMain(): React.ReactElement {
   }, []);
   return (
     <>
-      <FullScreen handle={handle}>
-        <Dialog
-          open={Boolean(lessonId)}
-          onClose={() => {}}
-          PaperProps={{ sx: { height: "100vh" } }}
-          fullScreen
-        >
+      <style>
+        {`
+        .fullscreen-enabled {
+          background: #fff;
+        }
+      `}
+      </style>
+      <Dialog
+        open={Boolean(lessonId)}
+        onClose={() => {}}
+        PaperProps={{ sx: { height: "100vh" } }}
+        fullScreen
+      >
+        <FullScreen handle={handle}>
           <LessonTopBar />
 
           <Box>
@@ -52,8 +60,8 @@ export default function LessonStepMain(): React.ReactElement {
               {stepId ? <StepContentEditor /> : <NoSelectedStep />}
             </ResizerUi>
           </Box>
-        </Dialog>
-      </FullScreen>
+        </FullScreen>
+      </Dialog>
     </>
   );
 }

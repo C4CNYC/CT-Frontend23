@@ -37,7 +37,7 @@ import "remirror/styles/all.css";
 
 import jsx from "refractor/lang/jsx.js";
 import typescript from "refractor/lang/typescript.js";
-import { isJson } from "@ct-nx/utils";
+import { isJson, voidFunction } from "@ct-nx/utils";
 
 type Extensions =
   | HeadingExtension
@@ -171,7 +171,7 @@ export default function ProsaMirrorView({
         state={state}
         autoFocus
         autoRender="end"
-        onChange={() => {}}
+        onChange={voidFunction}
       ></Remirror>
     </ThemeProvider>
   );

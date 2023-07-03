@@ -10,6 +10,7 @@ import FeedbackDialog from "@sections/feedback/FeedbackDialog";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { NavListProps } from "../types";
 import NavItem from "./NavItem";
+import { voidFunction } from "@ct-nx/utils";
 
 // ----------------------------------------------------------------------
 
@@ -54,7 +55,7 @@ export default function NavList({
             open={open}
             active={false}
             isExternalLink={false}
-            onClick={() => {}}
+            onClick={voidFunction}
             modal={true}
           />
         </InviteFriendsModal>
@@ -69,7 +70,7 @@ export default function NavList({
             open={open}
             active={false}
             isExternalLink={false}
-            onClick={() => {}}
+            onClick={voidFunction}
             modal={true}
           />
         </FeedbackDialog>

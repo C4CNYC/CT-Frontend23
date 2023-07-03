@@ -25,7 +25,7 @@ import {
   useRemoveIntegrationMutation,
 } from "src/redux/services/manager/lessons-manager";
 
-import { BaseResponseInterface } from "@ct-nx/utils";
+import { BaseResponseInterface, voidFunction } from "@ct-nx/utils";
 
 export function IntegrationsTab({
   contentId,
@@ -75,6 +75,7 @@ export function IntegrationsTab({
         case "removeOption": {
           await removeIntegration(payload).unwrap();
           enqueueSnackbar(`${details?.option.name ?? ""} removed`);
+          // eslint-disable-next-line no-useless-return
           return;
         }
       }
@@ -103,7 +104,7 @@ export function IntegrationsTab({
       onChange={onChange}
       options={integrations?.data}
       popupIcon={null}
-      onLoadStart={() => {}}
+      onLoadStart={voidFunction}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

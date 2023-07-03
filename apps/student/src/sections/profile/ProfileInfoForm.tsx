@@ -111,7 +111,7 @@ export default function ProfileInfoForm({
           });
       }
       enqueueSnackbar("Update success!");
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

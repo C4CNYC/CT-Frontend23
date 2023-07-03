@@ -56,7 +56,7 @@ export function SessionType({
               height: "100px",
             }}
           >
-            <Image src={img} />
+            <Image src={img} alt="hello step"/>
           </Box>
         </Badge>
       </Tooltip>
@@ -75,6 +75,7 @@ export function SessionType({
 
       <Image
         src="/assets/on-boarding/arrow.svg"
+        alt="arrow image"
         sx={{ width: "38px", height: "60px" }}
       />
     </Stack>

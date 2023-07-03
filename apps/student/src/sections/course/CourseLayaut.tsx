@@ -46,7 +46,7 @@ export default function CourseLayaut({ course }: Props): React.ReactElement {
                 unit={unit}
                 active={active === index}
                 setActive={setActive}
-                lastItem={(course?.units?.length as number) - 1 === index}
+                lastItem={(course?.units?.length) - 1 === index}
               />
             ))
           ) : (

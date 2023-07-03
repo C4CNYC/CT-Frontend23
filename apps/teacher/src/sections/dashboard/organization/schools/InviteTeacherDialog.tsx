@@ -54,7 +54,7 @@ export default function InviteTeacherDialog({
     try {
       await addTeacher({ user_id: userId, schoolId }).unwrap();
       enqueueSnackbar("teacher added");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };
@@ -69,7 +69,8 @@ export default function InviteTeacherDialog({
       await addUserToSchool(user.id, schoolId);
       setFilter("email", "");
       onClose();
-    } catch (e: any) {
+    } catch (e
+      ) {
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };

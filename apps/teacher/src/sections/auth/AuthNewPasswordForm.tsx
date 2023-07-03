@@ -64,7 +64,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
       }).unwrap();
       enqueueSnackbar("Change password success!");
       router.push(PATH_AUTH.login);
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

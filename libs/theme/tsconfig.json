@@ -7,13 +7,15 @@
     "strict": true
   },
   "files": [],
-  "include": [],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+  ],
   "references": [
     {
       "path": "./tsconfig.lib.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
     }
   ],
   "extends": "../../tsconfig.base.json"

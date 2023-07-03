@@ -10,9 +10,7 @@ export default Component;
 
 export const Default = {
   args: {
-    children: <>
-        <h1>Some content for scroll bar element Some content for scroll bar element</h1>
-    </>,
+    children: <h1>Some content for scroll bar element Some content for scroll bar element</h1>,
     sx: {
         width: 200,
         "& h1": {

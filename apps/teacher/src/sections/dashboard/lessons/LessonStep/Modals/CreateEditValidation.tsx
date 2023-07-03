@@ -78,7 +78,7 @@ export default function CreateEditValidation({
         `Your validation rule is ${id ? "update" : "created"} successfully`
       );
       setOpenDialog(false);
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
     }
   };

@@ -27,7 +27,7 @@ function MotivationIllustration({ ...other }: BoxProps): React.ReactElement {
         <BackgroundIllustration />
 
         <image
-          href="/assets/illustrations/characters/character_2.png"
+          href="/illustrations/characters/character_2.png"
           height="300"
           x="322"
           y="30"

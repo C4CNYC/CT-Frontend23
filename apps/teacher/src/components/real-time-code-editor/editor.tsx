@@ -11,6 +11,7 @@ import { peerExtension } from "./extentions/collab";
 import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
 import { Socket } from "socket.io-client";
 import { cursorExtension } from "./extentions/cursors";
+import { voidFunction } from "@ct-nx/utils";
 
 interface IEditor {
   state: State,
@@ -24,7 +25,7 @@ export const CodeEditor = ({ state, cursorId, cursorText, onChangeCode, socket }
   const editor = useRef();
 
   useEffect(() => {
-    setTimeout(() => {}, 500)
+    setTimeout(() => {voidFunction()}, 500)
     const startState = EditorState.create({
       doc: state.doc,
       extensions: [

@@ -23,7 +23,7 @@ import {
   useRemoveLessonFromModuleMutation,
 } from "src/redux/services/manager/modules-manager";
 
-import { BaseResponseInterface } from "@ct-nx/utils";
+import { BaseResponseInterface, voidFunction } from "@ct-nx/utils";
 
 type LessonType = ILesson & BaseResponseInterface;
 
@@ -91,7 +91,7 @@ export default function ModuleLessonsAutocomplete({
       onChange={onChange}
       options={lessons.data}
       popupIcon={null}
-      onLoadStart={() => {}}
+      onLoadStart={voidFunction}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

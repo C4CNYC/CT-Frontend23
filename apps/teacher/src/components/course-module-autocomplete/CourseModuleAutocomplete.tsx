@@ -23,7 +23,7 @@ import {
 } from "src/redux/services/manager/courses-manager";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 
-import { BaseResponseInterface } from "@ct-nx/utils";
+import { BaseResponseInterface, voidFunction } from "@ct-nx/utils";
 
 type ModuleType = IModule & BaseResponseInterface;
 
@@ -91,7 +91,7 @@ export default function CourseModuleAutocomplete({
       onChange={onChange}
       options={lessons.data}
       popupIcon={null}
-      onLoadStart={() => {}}
+      onLoadStart={voidFunction}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

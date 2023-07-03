@@ -82,7 +82,7 @@ export default function AuthRegisterForm({
         );
         next();
       }
-    } catch (error: any) {
+    } catch (error) {
       setError("afterSubmit", {
         ...error,
         message: error.message,

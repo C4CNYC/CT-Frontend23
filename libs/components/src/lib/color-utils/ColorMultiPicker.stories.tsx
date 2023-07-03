@@ -19,9 +19,7 @@ const ExampleComponent = ({selected, onChangeColor, ...props}: ColorMultiPickerP
 
     const onChange = (color: string) => {
         if (customSelectedColors.includes(color)) {
-            {
-                setCustomSelectedColors(state => state.filter(item => item !== color))
-            }
+            setCustomSelectedColors(state => state.filter(item => item !== color))
         } else {
             setCustomSelectedColors(state => [color, ...state])
         }

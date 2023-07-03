@@ -216,7 +216,7 @@ function MaintenanceIllustration({ ...other }: BoxProps): React.ReactElement {
         </defs>
 
         <image
-          href="/assets/illustrations/characters/character_5.png"
+          href="/illustrations/characters/character_5.png"
           height="300"
           x="245"
           y="30"

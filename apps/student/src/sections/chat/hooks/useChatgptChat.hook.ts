@@ -26,5 +26,5 @@ export const ChatgptFirebaseOnSendMessage = async (
         timestamp: serverTimestamp(),
       }
     );
-  } catch (error: any) {}
+  } catch (error) {}
 };

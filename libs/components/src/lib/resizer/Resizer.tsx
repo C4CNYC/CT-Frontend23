@@ -23,7 +23,6 @@ export const ResizerUi = ({
             -webkit-background-clip: padding;
             background-clip: padding-box;
             owerflow-y: scroll;
-            
           }
           ::-webkit-scrollbar {
              width: 0
@@ -36,7 +35,6 @@ export const ResizerUi = ({
             cursor: col-resize;
             position: initial;
           }
-          
           .Resizer.vertical:hover {
             border-left: 5px solid rgba(0, 0, 0, 0.5);
             border-right: 5px solid rgba(0, 0, 0, 0.5);
@@ -47,23 +45,14 @@ export const ResizerUi = ({
           .Resizer.disabled:hover {
             border-color: transparent;
           }
+          .SplitPane{
+            max-height: calc(100vh - 48px);
+          }
           .Pane1{
             overflow-y: auto;
           }
-          
-          
-          .Pane2 .Pane1{
-            overflow-y: auto;
-            max-height: calc(100vh - 96px);
-          } 
-          .Pane2 .Pane2{
-             overflow-y: auto;
-             max-height: calc(100vh - 96px);
-          }
-          .Pane.vertical.Pane2{
-            overflow-y: auto;
-          }
-          .SplitPane {
+          .Pane2 {
+            overflow-y: hidden;
             max-height: calc(100vh - 48px);
           }
         `}

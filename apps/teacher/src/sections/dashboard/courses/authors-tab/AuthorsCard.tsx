@@ -44,7 +44,7 @@ export default function AuthorsCard({
         deleteAuthor({ id: author.id }).unwrap();
         enqueueSnackbar("Deleted successfully!");
       }
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
@@ -57,7 +57,7 @@ export default function AuthorsCard({
         addToCourse({ id: author.id, course_id: courseId }).unwrap();
       }
       enqueueSnackbar("Added to course successfully!");
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
@@ -69,7 +69,7 @@ export default function AuthorsCard({
   //       removeFromCourse({ id: author.id, course_id: courseId }).unwrap();
   //     }
   //     enqueueSnackbar("Deleted from course successfully!");
-  //   } catch (error: any) {
+  //   } catch (error) {
   //     enqueueSnackbar(error?.data?.message, {
   //       variant: "error",
   //     });
