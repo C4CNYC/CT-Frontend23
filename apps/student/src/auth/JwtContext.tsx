@@ -138,7 +138,7 @@ export function AuthProvider({
           },
         });
       }
-    } catch (e) {
+    } catch (e: any) {
       dispatch({
         type: Types.INITIAL,
         payload: {

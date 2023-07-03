@@ -16,7 +16,6 @@ import parse from "autosuggest-highlight/parse";
 import { useSnackbar } from "notistack";
 import * as React from "react";
 import { useFilters } from "@ct-nx/hooks";
-import { IModule } from "src/redux/services/interfaces/class.interface";
 import {
   useAddModuleToCourseMutation,
   useRemoveModuleFromCourseMutation,
@@ -24,6 +23,7 @@ import {
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 
 import { BaseResponseInterface, voidFunction } from "@ct-nx/utils";
+import { IModule } from "src/redux/services/interfaces/courseUnits.interface";
 
 type ModuleType = IModule & BaseResponseInterface;
 

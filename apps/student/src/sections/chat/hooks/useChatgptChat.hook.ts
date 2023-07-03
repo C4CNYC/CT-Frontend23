@@ -1,10 +1,10 @@
+import { aiAssistantId, chatgptTutor } from "@ct-nx/utils";
 import {
   addDoc,
   collection,
   Firestore,
   serverTimestamp,
 } from "firebase/firestore";
-import { aiAssistantId, chatgptTutor } from "@ct-nx/utils";
 import { getRoomId, IChatMessage } from "./useFirebaseChat.hook";
 
 export const ChatgptFirebaseOnSendMessage = async (
@@ -26,5 +26,5 @@ export const ChatgptFirebaseOnSendMessage = async (
         timestamp: serverTimestamp(),
       }
     );
-  } catch (error) {}
+  } catch (error: any) {}
 };

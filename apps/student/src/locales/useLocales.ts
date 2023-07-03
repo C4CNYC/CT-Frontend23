@@ -1,4 +1,3 @@
-
 import { useTranslation } from "react-i18next";
 // utils
 import { localStorageAvailable } from "@ct-nx/utils";
@@ -42,7 +41,7 @@ export default function useLocales(): IUseLocals {
     try {
       await i18n.changeLanguage(newlang);
       onChangeDirectionByLang(newlang);
-    } catch (e) {}
+    } catch (e: any) {}
   };
 
   return {

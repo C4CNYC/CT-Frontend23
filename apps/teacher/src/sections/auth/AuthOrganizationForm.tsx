@@ -73,7 +73,7 @@ export default function AuthOrganizationForm(): React.ReactElement | null {
         );
       }
       router.push(PATH_AUTH.login);
-    } catch (error) {
+    } catch (error: any) {
       setError("afterSubmit", {
         ...error,
         message: error.message,

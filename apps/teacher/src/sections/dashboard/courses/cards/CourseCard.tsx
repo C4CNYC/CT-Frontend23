@@ -56,7 +56,7 @@ export default function CourseCard({
       setLoading(false);
       setOpenConfirm(false);
       enqueueSnackbar("Course deleted!");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

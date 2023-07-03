@@ -57,7 +57,7 @@ export default function InviteFriendsModal({
         ...formValues,
         email: "",
       }));
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

@@ -24,7 +24,7 @@ export default function GoalsItem({ goal }: GoalsItemProps) {
     try {
       await deleteGoal({ id: goal.id as string }).unwrap();
       enqueueSnackbar("Deleted!");
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
