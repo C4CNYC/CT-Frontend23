@@ -109,7 +109,7 @@ export default function Index(): React.ReactElement | null {
         module_id: query.unit_id as string,
         lesson_content_id: lessonContentId,
       }).unwrap();
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
@@ -128,7 +128,7 @@ export default function Index(): React.ReactElement | null {
         const pathStr = nextLessonInfo.path.split("/");
         push(
           `${PATH_PAGE.codePanel.workSpace(
-            courseContent?.id as string
+            courseContent?.id
           )}?${new URLSearchParams({
             unitId: pathStr[0],
           })}&${new URLSearchParams({
@@ -147,7 +147,7 @@ export default function Index(): React.ReactElement | null {
       } else {
         enqueueSnackbar("course successfuly complete");
       }
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };

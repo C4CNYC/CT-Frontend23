@@ -73,7 +73,7 @@ export default function AssignmentsDetails({
         [fieldName]: value,
       }).unwrap();
       enqueueSnackbar(`${fieldName} updated`);
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };

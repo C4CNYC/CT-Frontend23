@@ -1,6 +1,6 @@
 import { EditorView } from "@codemirror/view";
 
-export function resetCodemirror(view: EditorView, preloadedCode: string = "") {
+export function resetCodemirror(view: EditorView, preloadedCode = "") {
   view.dispatch({
     changes: {
       from: 0,

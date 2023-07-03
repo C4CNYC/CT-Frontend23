@@ -66,7 +66,7 @@ export function CardInfo(): React.ReactElement {
             </Stack>
             <Stack display="flex" direction="row" gap="8px" mt="16px">
               <Image
-                src="/assets/icons/home/trendingup.png"
+                src="/icons/home/trendingup.png"
                 alt={""}
                 width="24"
                 height="24"
@@ -156,7 +156,7 @@ export function CardInfo(): React.ReactElement {
             </Stack>
             <Stack display="flex" direction="row" gap="8px" mt="16px">
               <Image
-                src="/assets/icons/home/trendingup.png"
+                src="/icons/home/trendingup.png"
                 alt={""}
                 width="24"
                 height="24"
@@ -184,7 +184,7 @@ export function CardInfo(): React.ReactElement {
             })}
           >
             <Image
-              src="/assets/icons/home/ic_doc.svg"
+              src="/icons/home/ic_doc.svg"
               width="44"
               height="44"
               alt=""
@@ -262,7 +262,7 @@ export function CardInfo(): React.ReactElement {
             </Stack>
             <Stack display="flex" direction="row" gap="8px" mt="16px">
               <Image
-                src="/assets/icons/home/trendingup.png"
+                src="/icons/home/trendingup.png"
                 alt={""}
                 width="24"
                 height="24"
@@ -290,7 +290,7 @@ export function CardInfo(): React.ReactElement {
             })}
           >
             <Image
-              src="/assets/icons/home/ic_ruby.svg"
+              src="/icons/home/ic_ruby.svg"
               width="44"
               height="44"
               alt=""

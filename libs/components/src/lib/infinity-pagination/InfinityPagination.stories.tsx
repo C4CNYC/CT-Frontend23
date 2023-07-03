@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
 import { SimpleInfiniteList, SimpleInfiniteListProps } from "./SimpleInfiniteList";
 import { useState } from "react";
+import { voidFunction } from "@ct-nx/utils";
 
 const Component: Meta<typeof SimpleInfiniteList> = {
   component: SimpleInfiniteList,
@@ -35,7 +36,7 @@ const ExampleComponent = (props: SimpleInfiniteListProps) => {
 export const Default: Meta<typeof SimpleInfiniteList> = {
   render: (args) => <ExampleComponent {...args} />,
   args: {
-    onLoadMore: () => {},
+    onLoadMore: voidFunction,
     hasNextPage: true,
     loading: false,
   },

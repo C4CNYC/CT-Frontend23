@@ -68,7 +68,7 @@ export default function SocialItem({
       }).unwrap();
       enqueueSnackbar("Social link edited");
       setEdit(!edit);
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
@@ -81,7 +81,7 @@ export default function SocialItem({
         socialID,
       }).unwrap();
       enqueueSnackbar("Social link deleted");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

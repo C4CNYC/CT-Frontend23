@@ -49,7 +49,7 @@ export default function StepContentEditor(): React.ReactElement {
         body,
       }).unwrap();
       enqueueSnackbar("Content updated");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

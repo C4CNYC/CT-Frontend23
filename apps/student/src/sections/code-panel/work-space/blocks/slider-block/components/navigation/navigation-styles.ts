@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import { BtnType } from ".";
 
-export const stylesPrev = (): Record<string, any> => {
+export const stylesPrev = (): Record<string, unknown> => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const theme = useTheme();
   return {
@@ -30,7 +30,7 @@ export const stylesPrev = (): Record<string, any> => {
   };
 };
 
-export const stylesNext = (btnNext: BtnType): Record<string, any> => {
+export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const theme = useTheme();
   const getBg = (): string => {

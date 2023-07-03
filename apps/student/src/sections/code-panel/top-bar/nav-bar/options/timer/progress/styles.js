@@ -6,8 +6,11 @@ export const useStyles = makeStyles((theme) => ({
     height: (props) => `${props.height}px`,
     transform: "rotate(-90deg) scale(1, -1)",
   },
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   "@keyframes circle": {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     "0%": { strokeDashoffset: "0px" },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     "100%": { strokeDashoffset: "126.92px" },
   },
   circleBefore: {

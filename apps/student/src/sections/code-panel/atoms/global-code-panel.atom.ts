@@ -1,3 +1,4 @@
+import { voidFunction } from "@ct-nx/utils";
 import { atomWithStorage } from "jotai/utils";
 
 export interface IGlobalCodePanelAtom {
@@ -24,7 +25,7 @@ export const globalCodePanelAtom = atomWithStorage<IGlobalCodePanelAtom>(
     nextStepAble: true,
     isAllColumnsVisible: true,
     isFullScreenView: false,
-    fullScreenOpen: () => {},
-    fullScreenClose: () => {},
+    fullScreenOpen: voidFunction,
+    fullScreenClose: voidFunction,
   }
 );

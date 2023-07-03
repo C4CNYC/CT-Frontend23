@@ -13,7 +13,7 @@ import {
   useReducer,
 } from "react";
 // utils
-import { axios } from "@ct-nx/utils";
+import { axios, voidFunction } from "@ct-nx/utils";
 // routes
 import { PATH_AUTH } from "../routes/paths";
 // config
@@ -279,9 +279,9 @@ export function AuthProvider({
       user: state.user,
       method: "cognito",
       login,
-      loginWithGoogle: () => {},
-      loginWithGithub: () => {},
-      loginWithTwitter: () => {},
+      loginWithGoogle: voidFunction,
+      loginWithGithub: voidFunction,
+      loginWithTwitter: voidFunction,
       register,
       logout,
     }),

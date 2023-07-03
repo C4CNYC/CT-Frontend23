@@ -22,9 +22,9 @@ export default Component;
       ): Promise<void> => {
         const file = data[0];
 
-        const newFile = Object.assign(file, {
-            preview: URL.createObjectURL(file),
-        });
+        // const newFile = Object.assign(file, {
+        //     preview: URL.createObjectURL(file),
+        // });
         if (file) {
             setValue(file)
         }

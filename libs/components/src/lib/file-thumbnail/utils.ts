@@ -16,7 +16,7 @@ const FORMAT_AUDIO = ["wav", "aif", "mp3", "aac"];
 const FORMAT_IMG = ["jpg", "jpeg", "gif", "bmp", "png", "svg"];
 const FORMAT_VIDEO = ["m4v", "avi", "mpg", "mp4", "webm"];
 
-const iconUrl = (icon: string) => `/assets/icons/files/${icon}.svg`;
+const iconUrl = (icon: string) => `/icons/files/${icon}.svg`;
 
 // ----------------------------------------------------------------------
 

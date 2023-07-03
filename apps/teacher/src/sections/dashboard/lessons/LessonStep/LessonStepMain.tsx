@@ -9,6 +9,7 @@ import LessonTopBar from "./lesson-top-bar/LessonTopBar";
 import StepContentEditor from "./LessonStepContent/StepContentEditor";
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
+import { voidFunction } from "@ct-nx/utils";
 
 export default function LessonStepMain(): React.ReactElement {
   const router = useRouter();

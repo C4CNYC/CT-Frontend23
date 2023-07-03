@@ -114,6 +114,7 @@ export default function CreateModuleDialog({
           ...data,
         }).unwrap();
       } else {
+        // eslint-disable-next-line @next/next/no-assign-module-variable
         const module = await createModule({
           ...data,
         }).unwrap();
@@ -130,7 +131,7 @@ export default function CreateModuleDialog({
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { IAssignmentsCard } from "../../../@types/assignments";
+import { voidFunction } from "@ct-nx/utils";
 
 interface Props {
   onAddTask: (task: IAssignmentsCard) => void;
@@ -40,7 +41,7 @@ export default function AssignmentsTaskAdd({
   } = useDateRangePicker(new Date(), new Date());
 
   return (
-    <ClickAwayListener onClickAway={() => {}}>
+    <ClickAwayListener onClickAway={voidFunction}>
       <div>
         <Paper variant="outlined">
           <InputBase
@@ -51,7 +52,7 @@ export default function AssignmentsTaskAdd({
             onChange={(event) => {
               setName(event.target.value);
             }}
-            onKeyUp={() => {}}
+            onKeyUp={voidFunction}
             sx={{ px: 2, pt: 2 }}
           />
 
@@ -61,7 +62,7 @@ export default function AssignmentsTaskAdd({
             sx={{ pl: 1, pr: 1.5, pb: 2 }}
           >
             <Stack direction="row" spacing={1.5} alignItems="center">
-              <Tooltip title="Assign" onClick={() => {}}>
+              <Tooltip title="Assign" onClick={voidFunction}>
                 <IconButton size="small">
                   <Iconify icon="eva:people-fill" />
                 </IconButton>

@@ -236,7 +236,7 @@ function SeoIllustration({ ...other }: BoxProps): React.ReactElement {
         </defs>
 
         <image
-          href="/assets/illustrations/characters/character_3.png"
+          href="/illustrations/characters/character_3.png"
           height="300"
           x="312"
           y="30"

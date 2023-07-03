@@ -25,7 +25,7 @@ import {
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
 
-import { BaseResponseInterface } from "@ct-nx/utils";
+import { BaseResponseInterface, voidFunction } from "@ct-nx/utils";
 
 type ClassType = IClass & BaseResponseInterface;
 
@@ -75,6 +75,7 @@ export default function ClassesCountroller({
         case "removeOption": {
           await removeClass(payload).unwrap();
           enqueueSnackbar(`${details?.option.name ?? ""} removed from module`);
+          // eslint-disable-next-line no-useless-return
           return;
         }
       }
@@ -93,7 +94,7 @@ export default function ClassesCountroller({
       options={classes.data}
       sx={{ width: "100%!important" }}
       popupIcon={null}
-      onLoadStart={() => {}}
+      onLoadStart={voidFunction}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

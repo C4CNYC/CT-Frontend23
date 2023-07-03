@@ -12,6 +12,7 @@ import { IoMdClose } from "react-icons/io";
 import { MdModeEdit, MdOutlineArrowBackIos } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 import StepContainer from "../StepContainer";
+import { voidFunction } from "@ct-nx/utils";
 
 function FinishStep({
   previousStep,
@@ -36,7 +37,7 @@ function FinishStep({
             <MdOutlineArrowBackIos size="30px" color="#616161" />
           </IconButton>
           <IconButton
-            onClick={() => {}}
+            onClick={voidFunction}
             sx={{
               position: "absolute",
               top: "5px",

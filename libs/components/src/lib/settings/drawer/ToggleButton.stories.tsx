@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react";
-import ToggleButton, { ToggleButtonProps } from "./ToggleButton";
-import { ThemeProvider } from "@ct-nx/theme";
+import ToggleButton from "./ToggleButton";
+import { voidFunction } from "@ct-nx/utils";
 
 const Component: Meta<typeof ToggleButton> = {
   component: ToggleButton,
@@ -13,6 +13,6 @@ export const Default: Meta<typeof ToggleButton> = {
   args: {
     open: true,
     notDefault: false,
-    onToggle: () => {}
+    onToggle: voidFunction
   },
 };

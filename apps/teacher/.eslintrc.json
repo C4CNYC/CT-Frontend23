@@ -3,12 +3,15 @@
     "plugin:@nx/react-typescript",
     "next",
     "next/core-web-vitals",
-    "../../.eslintrc.js"
+    "../../.eslintrc.json"
   ],
   "ignorePatterns": ["!**/*", ".next/**/*"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": ["apps/teacher/tsconfig.json"]
+      },
       "rules": {
         "@next/next/no-html-link-for-pages": ["error", "apps/teacher/pages"]
       }

@@ -91,7 +91,7 @@ export default function Index(): React.ReactElement {
         const pathStr = nextLessonInfo.path.split("/");
         push(
           `${PATH_PAGE.publicCodePanel.workSpace(
-            courseContent?.id as string
+            courseContent?.id
           )}?${new URLSearchParams({
             unitId: pathStr[0],
           })}&${new URLSearchParams({
@@ -109,7 +109,7 @@ export default function Index(): React.ReactElement {
       } else {
         enqueueSnackbar("course successfuly complete");
       }
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };

@@ -2,7 +2,6 @@ import { Scrollbar } from "@ct-nx/components";
 import { Box, Button, Dialog, DialogContent } from "@mui/material";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import { IUnitContent } from "src/redux/interfaces/content.interface";
 import CourseDescription from "./course-details/CourseDescription";
 import QuizPanel from "./course-details/quiz-panel";
 import TrainingsList from "./course-details/TrainingsList";
@@ -83,7 +82,7 @@ export default function CourseInfoDialog({
               </Button>
               <CourseDescription
                 name={unit.name}
-                desc={unit.description || ""}
+                desc={unit.description ?? ""}
                 index={index}
               />
               <Box

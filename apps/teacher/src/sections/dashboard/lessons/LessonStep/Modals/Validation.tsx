@@ -56,7 +56,7 @@ export default function Validation({
     try {
       await removeRule({ contentId: stepId, id }).unwrap();
       enqueueSnackbar("validation rule removed");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };

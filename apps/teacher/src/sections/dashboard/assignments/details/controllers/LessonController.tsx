@@ -55,6 +55,7 @@ export default function LessonController({
         case "selectOption": {
           await updateLesson(payload).unwrap();
           enqueueSnackbar(`${details?.option.name ?? ""} added to assigment`);
+          // eslint-disable-next-line no-useless-return
           return;
         }
       }

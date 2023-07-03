@@ -17,7 +17,7 @@ export default function LoginAuth0(): React.ReactElement {
     try {
       // NOTE: Turn off comments below to enable Auth0.
       // await login();
-    } catch (error: any) {}
+    } catch (error) {}
   };
 
   return (

@@ -71,7 +71,7 @@ export default function EditProjectDialog({
         ...data,
       }).unwrap();
       enqueueSnackbar("Updated successfully");
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

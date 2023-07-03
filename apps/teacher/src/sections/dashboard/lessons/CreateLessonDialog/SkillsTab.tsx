@@ -22,7 +22,7 @@ import {
   useUpdateLessonSkillMutation,
 } from "src/redux/services/manager/lesson-skill-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { BaseResponseInterface } from "@ct-nx/utils";
+import { BaseResponseInterface, voidFunction } from "@ct-nx/utils";
 
 export default function SkillsTab({
   lessonId,
@@ -73,6 +73,7 @@ export default function SkillsTab({
         case "removeOption": {
           await removeIntegration(payload).unwrap();
           enqueueSnackbar(`${details?.option.name ?? ""} removed`);
+          // eslint-disable-next-line no-useless-return
           return;
         }
       }
@@ -89,7 +90,7 @@ export default function SkillsTab({
       onChange={onChange}
       options={skills?.data}
       popupIcon={null}
-      onLoadStart={() => {}}
+      onLoadStart={voidFunction}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.name} />
       }

@@ -75,7 +75,7 @@ export default function UserListPage(): React.ReactElement {
       await deleteMember({
         user_id: userId,
       }).unwrap();
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

@@ -1,4 +1,5 @@
 import { Iconify } from "@ct-nx/components";
+import { voidFunction } from "@ct-nx/utils";
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -29,7 +30,7 @@ const SmallScreenTabs = ({
       >
         <Tab
           {...a11yProps(0)}
-          onClick={() => {}}
+          onClick={voidFunction}
           aria-label="Lesson"
           icon={<Iconify icon="material-symbols:play-lesson-outline" />}
           sx={index === 0 ? styles.activeTab : styles.Tab}

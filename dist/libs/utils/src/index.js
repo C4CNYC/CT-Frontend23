@@ -20,4 +20,5 @@ tslib_1.__exportStar(require("./lib/localStorageAvailable"), exports);
 tslib_1.__exportStar(require("./lib/randomGradient"), exports);
 tslib_1.__exportStar(require("./lib/createRandomAvatar"), exports);
 tslib_1.__exportStar(require("./lib/getLinearGradient"), exports);
+tslib_1.__exportStar(require("./lib/voidFunction"), exports);
 //# sourceMappingURL=index.js.map

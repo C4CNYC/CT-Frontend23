@@ -56,7 +56,7 @@ export default function FeedbackDialog({
         ...formValues,
         feedback: "",
       }));
-    } catch (e: any) {
+    } catch (e) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

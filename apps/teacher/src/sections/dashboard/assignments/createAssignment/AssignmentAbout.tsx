@@ -65,7 +65,7 @@ export default function AssignmentAbout({
         complexity: data.complexity,
       }).unwrap();
       next();
-    } catch (e: any) {
+    } catch (e) {
       // #TODO show error
     }
   };

@@ -1,6 +1,5 @@
 import type { Meta } from "@storybook/react";
 import { MenuHotProducts } from "./MenuHotProducts";
-import { Iconify } from "../iconify"
 import { ThemeProvider } from "@ct-nx/theme";
 
 const Component: Meta<typeof MenuHotProducts> = {

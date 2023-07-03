@@ -25,7 +25,7 @@ export default function AddClassForm(): React.ReactElement {
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       enqueueSnackbar("Verify success!");
-    } catch (error: any) {
+    } catch (error) {
     }
   };
 

@@ -23,6 +23,7 @@ import { fToNow } from "@ct-nx/utils";
 import { _notifications } from "../../../_mock/arrays";
 // components
 import { IconButtonAnimate, Iconify, MenuPopover, Scrollbar } from "@ct-nx/components";
+import Image from "next/image";
 
 // ----------------------------------------------------------------------
 
@@ -214,7 +215,7 @@ function renderContent(notification: NotificationItemProps): {
   if (notification.type === "order_placed") {
     return {
       avatar: (
-        <img
+        <Image
           alt={notification.title}
           src="/assets/icons/notification/ic_package.svg"
         />
@@ -225,7 +226,7 @@ function renderContent(notification: NotificationItemProps): {
   if (notification.type === "order_shipped") {
     return {
       avatar: (
-        <img
+        <Image
           alt={notification.title}
           src="/assets/icons/notification/ic_shipping.svg"
         />
@@ -236,7 +237,7 @@ function renderContent(notification: NotificationItemProps): {
   if (notification.type === "mail") {
     return {
       avatar: (
-        <img
+        <Image
           alt={notification.title}
           src="/assets/icons/notification/ic_mail.svg"
         />
@@ -247,7 +248,7 @@ function renderContent(notification: NotificationItemProps): {
   if (notification.type === "chat_message") {
     return {
       avatar: (
-        <img
+        <Image
           alt={notification.title}
           src="/assets/icons/notification/ic_chat.svg"
         />
@@ -257,7 +258,7 @@ function renderContent(notification: NotificationItemProps): {
   }
   return {
     avatar: notification.avatar ? (
-      <img alt={notification.title} src={notification.avatar} />
+      <Image alt={notification.title} src={notification.avatar} />
     ) : null,
     title,
   };

@@ -3,6 +3,7 @@ import { DialogAnimate, DialogAnimateProps } from "./DialogAnimate";
 import { useEffect, useState } from "react";
 import { varFade } from "./variants";
 import { Button, styled, Box } from "@mui/material";
+import { voidFunction } from "@ct-nx/utils";
 
 const Component: Meta<typeof DialogAnimate> = {
   component: DialogAnimate,
@@ -56,7 +57,7 @@ export const Default: Meta<typeof DialogAnimate> = {
   render: (args) => <ExampleComponent {...args} />,
   args: {
     open: false,
-    onClose: () => {},
+    onClose: voidFunction,
     variants: varFade({
       distance: 0,
       durationIn: 0.32,

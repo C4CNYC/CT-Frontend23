@@ -29,7 +29,7 @@ export default function CourseDetailsMain({
     >
       <CourseDescription
         name={dataLessons.name}
-        desc={dataLessons.description || ""}
+        desc={dataLessons.description ?? ""}
         index={index}
       />
       <Stack

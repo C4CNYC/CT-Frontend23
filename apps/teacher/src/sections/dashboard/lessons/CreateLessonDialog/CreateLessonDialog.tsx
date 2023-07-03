@@ -126,7 +126,7 @@ export default function CreateLessonDialog({
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

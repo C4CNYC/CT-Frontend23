@@ -10,6 +10,6 @@ export default Component;
 
 export const Default = {
   args: {
-    onDownload: () => alert("downloading file"),
+    onDownload: () => { alert("downloading file"); },
   },
 };
