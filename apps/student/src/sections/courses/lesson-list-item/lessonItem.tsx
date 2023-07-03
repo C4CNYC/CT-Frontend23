@@ -1,17 +1,14 @@
 import {
+  alpha,
   Box,
-  Button,
-  Collapse,
   Paper,
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 
-import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { ILesson } from "src/redux/interfaces/content.interface";
-import { addAlpha } from "@ct-nx/utils";
 import CourseChip from "../course-list-item/CourseChip";
 import LessonStatistics from "./LessonStatistics";
 
@@ -20,7 +17,8 @@ interface Props {
 }
 
 export default function LessonItem({ data }: Props): React.ReactElement {
-  const [open, setOpen] = useState<boolean>(false);
+  const theme = useTheme();
+
   return (
     <Paper
       elevation={5}
@@ -44,9 +42,9 @@ export default function LessonItem({ data }: Props): React.ReactElement {
       >
         <Tooltip title={<Typography sx={{ p: 1 }}>{data.name}</Typography>}>
           <Typography
-            variant="h5"
-            gutterBottom
+            variant="h6"
             sx={{
+              pb: 1,
               textTransform: "uppercase",
               textOverflow: "ellipsis",
               overflow: "hidden",
@@ -56,69 +54,32 @@ export default function LessonItem({ data }: Props): React.ReactElement {
             {data.name}
           </Typography>
         </Tooltip>
-        <Collapse in={open} collapsedSize={50}>
-          <Typography
-            variant="subtitle1"
-            sx={{ minHeight: "50px", whiteSpace: "normal" }}
-          >
-            {data.description}
-          </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{
+            height: { xs: "80px", sm: "100px" },
+            overflowY: "auto",
+            whiteSpace: "normal",
+            "&::-webkit-scrollbar": {
+              width: "0.3em",
+            },
+            "&::-webkit-scrollbar-track": {},
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: alpha(theme.palette.grey[600], 0.48),
+              borderRadius: "2px",
+            },
+          }}
+        >
+          {data.description}
+        </Typography>
 
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, py: 2 }}>
-            {["html", "css", "js", "react"].map((el, i) => (
-              <CourseChip key={i} text={el} />
-            ))}
-          </Box>
-        </Collapse>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            "&:hover": { cursor: "pointer" },
-          }}
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          <Typography variant="subtitle1" sx={{ mt: 1 }}>
-            See more
-          </Typography>
-          {open ? (
-            <SlArrowUp style={{ marginBottom: "-10px" }} />
-          ) : (
-            <SlArrowDown style={{ marginBottom: "-10px" }} />
-          )}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: { xs: 2, sm: 2, md: 2 },
-            pt: 3,
-          }}
-        >
-          <Button
-            variant="outlined"
-            sx={{
-              p: "5px 15px",
-              borderRadius: "25px",
-              fontSize: "1rem",
-              borderColor: "#D8476A",
-              color: "#D8476A",
-              whiteSpace: "nowrap",
-              borderWidth: "2px",
-              "&:hover": {
-                border: "2px solid #D8476A",
-                backgroundColor: addAlpha("#D8476A", 0.1),
-              },
-            }}
-          >
-            Continue 🙌
-          </Button>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, py: 2 }}>
+          {["html", "css", "js", "react"].map((el, i) => (
+            <CourseChip key={i} text={el} />
+          ))}
         </Box>
       </Stack>
-      <LessonStatistics progress={data?.progress ?? 0}/>
+      <LessonStatistics progress={data?.progress ?? 0} />
     </Paper>
   );
 }

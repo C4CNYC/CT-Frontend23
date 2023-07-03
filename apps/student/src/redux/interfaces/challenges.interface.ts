@@ -1,6 +1,5 @@
 import { BaseResponseInterface, BaseSearchInterface } from "@ct-nx/utils";
-import { IModule } from "./class.interface";
-import { ILesson } from "./content.interface";
+import { ILesson, IModule } from "./content.interface";
 
 export type Unit = IModule &
   BaseResponseInterface & {

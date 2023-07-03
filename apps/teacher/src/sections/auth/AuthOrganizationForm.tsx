@@ -9,14 +9,10 @@ import { Alert, IconButton, InputAdornment, Stack } from "@mui/material";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
+import { FormProvider, Iconify, RHFTextField } from "@ct-nx/components";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import { PATH_AUTH } from "@routes/paths";
 import { useRouter } from "next/router";
-import {
-  RHFTextField,
-  FormProvider,
-  Iconify,
- } from "@ct-nx/components";
 // ----------------------------------------------------------------------
 
 interface FormValuesProps {
@@ -39,7 +35,13 @@ export default function AuthOrganizationForm(): React.ReactElement | null {
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+        "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
+      )
+      .min(10, "Password must be at least 10 characters long"),
   });
 
   const defaultValues = {

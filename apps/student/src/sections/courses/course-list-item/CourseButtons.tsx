@@ -1,6 +1,6 @@
-import { Box, Button, Link } from "@mui/material";
-import { PATH_PAGE } from "@routes/paths";
 import { addAlpha } from "@ct-nx/utils";
+import { Button, Link, Stack } from "@mui/material";
+import { PATH_PAGE } from "@routes/paths";
 
 interface Props {
   redirect: () => void;
@@ -14,8 +14,8 @@ export default function CourseButtons({
   courseId,
 }: Props): React.ReactElement {
   return (
-    <Box sx={{ display: "flex", gap: { xs: 1, sm: 3 }, pb: 3, pt: 2 }}>
-      {progress ? (
+    <Stack direction="row" sx={{ gap: { xs: 1, sm: 3 }, pb: 3, pt: 2 }}>
+      {progress && progress > 0 ? (
         <Button
           component={Link}
           href={`${PATH_PAGE.codePanel.root}/${courseId}`}
@@ -34,7 +34,7 @@ export default function CourseButtons({
             },
           }}
         >
-          Continue 🙌
+          Continue 🙌🏾
         </Button>
       ) : (
         <Button
@@ -54,9 +54,28 @@ export default function CourseButtons({
             },
           }}
         >
-          Enroll Now 🚀
+          Enroll Now 👊🏽
         </Button>
       )}
-    </Box>
+      <Button
+        onClick={redirect}
+        variant="outlined"
+        sx={{
+          p: "5px 15px",
+          borderRadius: "25px",
+          fontSize: "1rem",
+          borderColor: "#364954",
+          color: "#364954",
+          whiteSpace: "nowrap",
+          borderWidth: "2px",
+          "&:hover": {
+            border: "2px solid #364954",
+            backgroundColor: addAlpha("#364954", 0.1),
+          },
+        }}
+      >
+        Explore
+      </Button>
+    </Stack>
   );
 }

@@ -1,10 +1,18 @@
-import { Image } from "@ct-nx/components";
-import { Box, Button, Collapse, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { PATH_PAGE } from "@routes/paths";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
+import CourseAvatar from "./CourseAvarar";
 import CourseButtons from "./CourseButtons";
 import CourseChip from "./CourseChip";
 import CourseHeader from "./CourseHeader";
@@ -17,6 +25,8 @@ interface Props {
 
 export default function CoursesItem({ course }: Props): React.ReactElement {
   const { push } = useRouter();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(false);
 
   const redirect = (): void => {
@@ -29,8 +39,8 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
         borderRadius: "25px",
         p: {
           xs: "20px 20px 20px 20px",
-          sm: "30px 30px 20px 20px",
-          md: "30px 55px 37px 80px",
+          sm: "30px 20px 20px 20px",
+          md: "30px 55px 37px 40px",
         },
       }}
     >
@@ -41,7 +51,12 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           justifyContent: "space-between",
         }}
       >
-        <Box sx={{ maxWidth: "600px" }}>
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: { xs: "none", sm: "none", md: "600px" },
+          }}
+        >
           <Typography
             variant="h4"
             sx={{ textTransform: "uppercase", pb: "10px" }}
@@ -69,7 +84,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
                 <CourseChip text={el} key={el} />
               ))}
             </Stack>
-            <CourseStatistics likesCount={course.likes_count ?? 0}/>
+            <CourseStatistics likesCount={course.likes_count ?? 0} />
           </Collapse>
           <Button
             sx={{
@@ -92,42 +107,27 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           </Button>
           <CourseButtons
             redirect={redirect}
-            progress={20}
+            progress={course.progress}
             courseId={course.id as string}
           />
+          {isMobile && (
+            <Stack alignItems="center" mb={3} mt={1}>
+              <CourseAvatar
+                cover={course.cover}
+                courseId={course.id ?? ""}
+                progress={course.progress}
+              />
+            </Stack>
+          )}
           <CourseInfo course={course} />
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <Image
-            src={course.cover || "/assets/courses/tiger.png"}
-            alt="tiger"
-            sx={{
-              objectFit: "contain",
-              borderRadius: "25px",
-              width: {
-                xs: "200px",
-                sm: "180px",
-                md: "250px",
-              },
-              height: {
-                xs: "200px",
-                sm: "180px",
-                md: "250px",
-              },
-              display: {
-                xs: "none",
-                sm: "flex",
-                md: "flex",
-              },
-            }}
+        {!isMobile && (
+          <CourseAvatar
+            cover={course.cover}
+            courseId={course.id ?? ""}
+            progress={course.progress}
           />
-        </Box>
+        )}
       </Box>
     </Stack>
   );

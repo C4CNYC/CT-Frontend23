@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-
+import { BaseListResponseInterface, BaseResponseInterface } from "@ct-nx/utils";
 import {
   ILesson,
   ILessonContent,
   ILessonSearchParams,
 } from "src/redux/interfaces/content.interface";
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@ct-nx/utils";
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({

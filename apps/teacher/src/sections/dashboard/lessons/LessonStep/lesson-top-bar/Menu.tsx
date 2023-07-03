@@ -88,7 +88,11 @@ const Menu = (): React.ReactElement => {
           <Link
             key={`${menuItem.title}${i}`}
             component={NextLink}
-            href={menuItem.href}
+            href={
+              menuItem.href !== "" && menuItem.href !== "close"
+                ? menuItem.href
+                : ""
+            }
             onClick={() => {
               if (menuItem.href === "") {
                 handleLogout();

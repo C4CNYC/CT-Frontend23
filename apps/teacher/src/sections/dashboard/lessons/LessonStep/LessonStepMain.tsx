@@ -33,13 +33,20 @@ export default function LessonStepMain(): React.ReactElement {
   }, []);
   return (
     <>
-      <FullScreen handle={handle}>
-        <Dialog
-          open={Boolean(lessonId)}
-          onClose={voidFunction}
-          PaperProps={{ sx: { height: "100vh" } }}
-          fullScreen
-        >
+      <style>
+        {`
+        .fullscreen-enabled {
+          background: #fff;
+        }
+      `}
+      </style>
+      <Dialog
+        open={Boolean(lessonId)}
+        onClose={() => {}}
+        PaperProps={{ sx: { height: "100vh" } }}
+        fullScreen
+      >
+        <FullScreen handle={handle}>
           <LessonTopBar />
 
           <Box>
@@ -53,8 +60,8 @@ export default function LessonStepMain(): React.ReactElement {
               {stepId ? <StepContentEditor /> : <NoSelectedStep />}
             </ResizerUi>
           </Box>
-        </Dialog>
-      </FullScreen>
+        </FullScreen>
+      </Dialog>
     </>
   );
 }

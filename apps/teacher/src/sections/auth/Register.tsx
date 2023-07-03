@@ -1,14 +1,15 @@
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
 import { Link, Stack, Typography } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
 import NextLink from "next/link";
 import { useState } from "react";
 import LoginLayout from "../../layouts/login";
 import { PATH_AUTH } from "../../routes/paths";
 import AuthRegisterForm from "./AuthRegisterForm";
-import AuthWithSocial from "./AuthWithSocial";
 import Stepper from "./Stepper/Stepper";
+import TipButton from "./TipButton";
+
+const TIP = `TIP: Only use this step if you are a representative of a large 
+organization or district with multiple schools.`;
 
 export default function Register(): React.ReactElement {
   const [stepperVisible, setStepperVisible] = useState(false);
@@ -31,23 +32,9 @@ export default function Register(): React.ReactElement {
           go to login <ArrowRightAltIcon sx={{ ml: 1 }} />
         </Link>
         <Typography variant="h4" sx={{ textAlign: "center" }}>
-          Create organisation
+          Create Organisation
         </Typography>
-        <IconButton
-          aria-label="info"
-          sx={{
-            position: "absolute",
-            right: "-40px",
-            padding: "10px",
-            backgroundColor: "#FBDD3F",
-            borderTopLeftRadius: "8px",
-            borderBottomLeftRadius: "8px",
-            borderBottomRightRadius: 0,
-            borderTopRightRadius: 0,
-          }}
-        >
-          <EmojiObjectsIcon sx={{ color: "#000" }} />
-        </IconButton>
+        <TipButton tip={TIP} />
       </Stack>
 
       {!stepperVisible ? (
@@ -85,7 +72,7 @@ export default function Register(): React.ReactElement {
         </Link>
         .
       </Typography>
-      <AuthWithSocial />
+      {/* <AuthWithSocial /> */}
     </LoginLayout>
   );
 }
