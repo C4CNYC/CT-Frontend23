@@ -1,5 +1,5 @@
 import { SOCIAL_ICONS } from "@assets/data";
-import { RHFTextField, FormProvider } from "@ct-nx/components";
+import { FormProvider, RHFTextField } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Box, FormGroup, Stack } from "@mui/material";
@@ -12,6 +12,7 @@ import {
   useUpdateSocialsMutation,
 } from "src/redux/services/student/socials-student";
 
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import * as Yup from "yup";
 import LinkSelect from "./LinkSelect";
 
@@ -63,8 +64,9 @@ export default function LinkItem({
       }).unwrap();
       enqueueSnackbar("Social link edited");
       setEdit(!edit);
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }
@@ -76,8 +78,9 @@ export default function LinkItem({
         studentId,
       }).unwrap();
       enqueueSnackbar("Social link deleted");
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

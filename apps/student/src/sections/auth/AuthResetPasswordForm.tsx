@@ -1,13 +1,10 @@
+import { FormProvider, RHFTextField } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "src/redux/services/auth";
 import * as Yup from "yup";
-import {
-  RHFTextField,
-  FormProvider,
-} from "@ct-nx/components";
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +38,7 @@ export default function AuthResetPasswordForm(): React.ReactElement {
       await resetPassword({ email: data.email }).unwrap();
       enqueueSnackbar("Letter was send to your email");
       reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

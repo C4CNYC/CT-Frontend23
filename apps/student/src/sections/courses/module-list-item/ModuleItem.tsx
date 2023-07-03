@@ -6,7 +6,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { IModule } from "src/redux/interfaces/class.interface";
+import { IModule } from "src/redux/interfaces/content.interface";
 import ModuleStatistics from "./ModuleStatistics";
 
 interface Props {

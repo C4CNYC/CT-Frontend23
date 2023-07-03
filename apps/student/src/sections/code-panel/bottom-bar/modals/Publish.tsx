@@ -1,7 +1,4 @@
-import {
-  RHFTextField,
-  FormProvider,
-} from "@ct-nx/components";
+import { FormProvider, RHFTextField } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -81,7 +78,7 @@ const PublishModal = ({
       }).unwrap();
       enqueueSnackbar("Added successfully!");
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

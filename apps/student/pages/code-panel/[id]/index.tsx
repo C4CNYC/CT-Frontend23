@@ -1,15 +1,15 @@
 import { EmptyContent } from "@ct-nx/components";
 import { useOnlineConnection } from "@ct-nx/hooks";
 import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { PATH_PAGE } from "@routes/paths";
 import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import BottomBar from "@sections/code-panel/bottom-bar";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import SkeletonCodePanel from "@sections/code-panel/skeleton";
-import TopPanel from "@sections/code-panel/top-bar";
-import ChatPopup from "@sections/code-panel/top-bar/nav-bar/options/ChatPopUp";
+import SkeletonCodePanel, {
+  CPTopBarSkeleton,
+} from "@sections/code-panel/skeleton";
 import { getNextLessonId } from "@sections/code-panel/utils/navigation";
 import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
 import { useAtom } from "jotai";
@@ -19,7 +19,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
@@ -28,7 +27,6 @@ import {
   useGetLessonQuery,
 } from "src/redux/services/student/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/student/progress-student";
-
 const Tour = dynamic(
   async () =>
     await import("@sections/code-panel/code-panel-tour/CodePanelTour"),
@@ -36,7 +34,18 @@ const Tour = dynamic(
     ssr: false,
   }
 );
-
+const TopPanel = dynamic(
+  async () => await import("@sections/code-panel/top-bar"),
+  { loading: () => <CPTopBarSkeleton /> }
+);
+const Confetti = dynamic(async () => await import("react-confetti"));
+const ChatPopup = dynamic(
+  async () =>
+    await import("@sections/code-panel/top-bar/nav-bar/options/ChatPopUp")
+);
+const BottomBar = dynamic(
+  async () => await import("@sections/code-panel/bottom-bar")
+);
 export default function Index(): React.ReactElement | null {
   const { push, query } = useRouter();
   const theme = useTheme();
@@ -51,20 +60,18 @@ export default function Index(): React.ReactElement | null {
   useOnlineConnection(user?.id);
   useRealTimeConnection(user?.id, code);
 
-  const [
-    { courseId: atomCourseId, unitId: atomUnitId, lessonId: atomLessonId },
-    setGlobalCodePanel,
-  ] = useAtom(globalCodePanelAtom);
+  const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
+    useAtom(globalCodePanelAtom);
 
   const [completeLesson] = useCompleteLessonMutation();
-
-  const { data: courseContent, isLoading: isLoadingCourseContent } =
-    useGetChallangesQuery({ id: query.id as string }, { skip: !query.id });
 
   const { data, isLoading, isFetching } = useGetLessonContentQuery(
     { id: query.lessonId as string },
     { skip: !query.lessonId }
   );
+  const { data: courseContent, isLoading: isLoadingCourseContent } =
+    useGetChallangesQuery({ id: query.id as string }, { skip: !query.id });
+
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonQuery(
     {
       id: query.lessonId as string,

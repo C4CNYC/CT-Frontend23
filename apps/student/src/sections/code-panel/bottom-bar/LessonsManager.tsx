@@ -6,17 +6,19 @@ import {
 } from "@ct-nx/components";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
+  Box,
   Divider,
   Drawer,
   IconButton,
   List,
   ListItem,
   ListItemButton,
+  Stack,
   Tooltip,
   Typography,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import { Box, Stack, useTheme } from "@mui/system";
 import { PATH_PAGE } from "@routes/paths";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
@@ -28,7 +30,7 @@ import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { CodePanelContext } from "../context/CodePanel.context";
 import SkeletonDrawer from "./SkeletonDrawer";
 
-const LessonsManager = (): React.ReactElement => {
+const LessonManager = (): React.ReactElement => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1000));
   const { lesson, publicPage } = useContext(CodePanelContext);
@@ -228,11 +230,10 @@ const LessonsManager = (): React.ReactElement => {
                   <Divider sx={{ height: 2 }} />
                 </>
               ))}
-          {}
         </Stack>
       </Drawer>
     </>
   );
 };
 
-export default LessonsManager;
+export default LessonManager;

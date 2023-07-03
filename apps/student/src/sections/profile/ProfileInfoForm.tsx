@@ -1,8 +1,4 @@
-import {
-  RHFTextField,
-  RHFUploadAvatar,
-  FormProvider,
-} from "@ct-nx/components";
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack } from "@mui/material";
@@ -12,6 +8,7 @@ import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IUser } from "src/redux/interfaces/auth.interface";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
   useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
@@ -112,7 +109,8 @@ export default function ProfileInfoForm({
       }
       enqueueSnackbar("Update success!");
     } catch (error) {
-      enqueueSnackbar(error?.data?.message, {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

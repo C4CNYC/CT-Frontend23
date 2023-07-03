@@ -7,6 +7,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
 import {
   useRemoveProjectMutation,
@@ -55,8 +56,9 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
     try {
       await deleteProject({ id: id as string }).unwrap();
       enqueueSnackbar("Project deleted!");
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }
@@ -72,8 +74,9 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
     try {
       await updataeProject({ id: id as string, ...updatedItem }).unwrap();
       enqueueSnackbar("Updated successfully");
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

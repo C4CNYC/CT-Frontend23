@@ -13,8 +13,8 @@ import { PATH_AUTH } from "../../routes/paths";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
+import { FormProvider, Iconify, RHFTextField } from "@ct-nx/components";
 import { useRouter } from "next/router";
-import { RHFTextField, Iconify, FormProvider } from "@ct-nx/components";
 
 // ----------------------------------------------------------------------
 
@@ -61,10 +61,12 @@ export default function AuthLoginForm(): React.ReactElement {
       }, 100);
     } catch (error) {
       reset();
-      setError("afterSubmit", {
-        ...error,
-        message: error.message,
-      });
+      if (error instanceof Error) {
+        setError("afterSubmit", {
+          ...error,
+          message: error.message,
+        });
+      }
     }
   };
 

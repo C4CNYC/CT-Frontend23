@@ -1,4 +1,4 @@
-import { useSettingsContext, CustomBreadcrumbs } from "@ct-nx/components";
+import { CustomBreadcrumbs, useSettingsContext } from "@ct-nx/components";
 
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Container, Grid, Link } from "@mui/material";
@@ -6,6 +6,7 @@ import { PATH_MAIN } from "@routes/paths";
 import FolderElement from "@sections/dashboard/gallery/FolderElement";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
+import { IGallery } from "src/redux/interfaces/gallary.interface";
 import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
 
 Gallery.getLayout = (page: React.ReactElement) => (
@@ -25,7 +26,9 @@ export default function Gallery(): React.ReactElement {
 
   useEffect(() => {
     if (data) {
-      const publicCount = data.data.filter((el: any) => el.public === true).length;
+      const publicCount = data.data.filter(
+        (el: IGallery) => el.public === true
+      ).length;
       setProjectsCount({
         publicPr: publicCount,
         privatePr: data.data.length - publicCount,

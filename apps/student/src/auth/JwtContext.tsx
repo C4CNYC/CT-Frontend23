@@ -9,7 +9,7 @@ import {
 import { axios, localStorageAvailable, voidFunction } from "@ct-nx/utils";
 //
 import { useDispatch } from "react-redux";
-import { cleanUser, setUser } from "src/redux/slices/global";
+import { cleanUser, setUser, User } from "src/redux/slices/global";
 import {
   ActionMapType,
   AuthStateType,
@@ -161,12 +161,16 @@ export function AuthProvider({
     });
   };
 
+  interface ISingIn {
+    access_token: string;
+    student: User;
+  }
   // LOGIN
   const login = useCallback(
     async (email: string, password: string, tenantName: string) => {
       localStorage.setItem("tenantName", tenantName);
       // Update <any, any> to normall types
-      const { data } = await axios.post<any, any>("student/auth/signin", {
+      const { data } = await axios.post<ISingIn>("student/auth/signin", {
         email,
         password,
       });

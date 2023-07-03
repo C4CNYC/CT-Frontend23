@@ -9,12 +9,8 @@ import { Alert, IconButton, InputAdornment, Stack } from "@mui/material";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
+import { FormProvider, Iconify, RHFTextField } from "@ct-nx/components";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-import {
-  RHFTextField,
-  FormProvider,
-  Iconify,
-} from "@ct-nx/components";
 // ----------------------------------------------------------------------
 
 interface FormValuesProps {
@@ -80,10 +76,12 @@ export default function AuthRegisterForm({
         next();
       }
     } catch (error) {
-      setError("afterSubmit", {
-        ...error,
-        message: error.message,
-      });
+      if (error instanceof Error) {
+        setError("afterSubmit", {
+          ...error,
+          message: error.message,
+        });
+      }
     }
   };
 

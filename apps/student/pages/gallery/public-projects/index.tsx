@@ -1,9 +1,11 @@
-import { useSettingsContext, SimpleInfiniteList, EmptyContent, CustomBreadcrumbs } from "@ct-nx/components";
 import {
-  DEFAULT_TAKE_PER_PAGE,
-  FilterMode,
-  useFilters,
-} from "@ct-nx/hooks";
+  CustomBreadcrumbs,
+  EmptyContent,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from "@ct-nx/components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@ct-nx/hooks";
+import { getCountTakingElment } from "@ct-nx/utils";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Container } from "@mui/material";
 import { PATH_MAIN } from "@routes/paths";
@@ -20,7 +22,6 @@ import {
   IGallerySearchParams,
 } from "src/redux/interfaces/gallary.interface";
 import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
-import { getCountTakingElment } from "@ct-nx/utils";
 
 PublicProjects.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -38,7 +39,7 @@ export default function PublicProjects(): React.ReactElement {
 
   useEffect(() => {
     if (data) {
-      setProjects(data.data.filter((el: any) => el.public === true));
+      setProjects(data.data.filter((el: IGallery) => el.public === true));
     }
   }, [data]);
 

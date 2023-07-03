@@ -12,6 +12,7 @@ import {
 
 import { useSnackbar } from "@ct-nx/components";
 import { LoadingButton } from "@mui/lab";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 
 interface Props {
   children: React.ReactElement;
@@ -37,8 +38,9 @@ export default function ExitTribeDialog({
     try {
       // add user adding logic
       enqueueSnackbar("You left the tribe");
-    } catch (e) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

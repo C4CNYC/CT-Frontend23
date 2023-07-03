@@ -1,8 +1,5 @@
-import {
-  RHFTextField,
-  RHFUploadAvatar,
-  FormProvider,
-} from "@ct-nx/components";
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@ct-nx/components";
+import { BaseResponseInterface, fData } from "@ct-nx/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
@@ -10,11 +7,11 @@ import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { IUser } from "src/redux/interfaces/auth.interface";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
   useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
 } from "src/redux/services/auth";
-import { BaseResponseInterface, fData } from "@ct-nx/utils";
 import * as Yup from "yup";
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };
@@ -65,6 +62,7 @@ export default function ProfileForm({
     if (!isEdit) {
       reset(defaultValues);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentUser]);
 
   const updateAvatar = async (
@@ -96,7 +94,8 @@ export default function ProfileForm({
         await updateAvatar(currentUser?.id, photoURL);
       }
     } catch (error) {
-      enqueueSnackbar(error?.data?.message, {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError?.data?.message, {
         variant: "error",
       });
     }

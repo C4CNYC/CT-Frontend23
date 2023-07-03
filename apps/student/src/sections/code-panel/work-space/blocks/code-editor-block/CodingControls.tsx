@@ -7,7 +7,7 @@ import { Box, Button, Divider } from "@mui/material";
 import { styled } from "@mui/system";
 import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
 import { copyPasteEvent } from "libs/components/src/lib/real-time-editor/events/copy-paste";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 import { BsClipboard } from "react-icons/bs";
 import {
@@ -248,9 +248,19 @@ export function CodingTools({ symbolsHandler }: Props): React.ReactElement {
         <RiFilePaper2Fill size="20px" color="#EE467A" />
       </SymbolBtn>
       <Divider sx={{ borderStyle: "solid" }} orientation="vertical" flexItem />
-      <SymbolBtn>
+      {/* <SymbolBtn> */}
+      <Box
+        sx={{
+          display: "flex",
+          minWidth: "auto",
+          flexGrow: 1,
+          justifyContent: "ceter",
+          alignItems: "center",
+        }}
+      >
         <SettingDrawer />
-      </SymbolBtn>
+      </Box>
+      {/* </SymbolBtn> */}
       <Divider sx={{ borderStyle: "solid" }} orientation="vertical" flexItem />
       <SymbolBtn
         onClick={() => {
