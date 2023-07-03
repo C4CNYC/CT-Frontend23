@@ -57,7 +57,7 @@ export default function AuthLoginForm(): React.ReactElement {
     try {
       await login(data.email, data.password, data.tenantName);
       router.replace(PATH_AFTER_LOGIN);
-    } catch (error) {
+    } catch (error: any) {
       reset();
       setError("afterSubmit", {
         ...error,

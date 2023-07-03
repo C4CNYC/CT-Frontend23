@@ -35,7 +35,7 @@ const ExampleComponent = ({onUpload, ...props}: UploadImageProps) => {
           // console.log({ id, file });
         }
         enqueueSnackbar("Image updated");
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar("Image not updated", { variant: "error" });
       }
     };

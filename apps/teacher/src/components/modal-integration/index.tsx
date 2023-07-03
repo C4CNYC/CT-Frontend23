@@ -75,7 +75,7 @@ export default function ModalIntegration({
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
       enqueueSnackbar(`integration ${id ? "updated" : "created"} successfuly`);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
     if (id) {

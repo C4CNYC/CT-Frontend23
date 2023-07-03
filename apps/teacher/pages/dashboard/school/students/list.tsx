@@ -106,7 +106,7 @@ export default function UserListPage(): React.ReactElement {
   const handleDeleteMember = async (studentId: string): Promise<void> => {
     try {
       await deleteStudent({ studentId, schoolId }).unwrap();
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

@@ -37,7 +37,7 @@ export default function ExitTribeDialog({
     try {
       // add user adding logic
       enqueueSnackbar("You left the tribe");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

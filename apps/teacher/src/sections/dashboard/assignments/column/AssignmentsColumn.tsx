@@ -35,7 +35,7 @@ export default function AssignmentsColumn({
         assignmentId,
       }).unwrap();
       enqueueSnackbar("Assignment deleted");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

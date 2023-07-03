@@ -82,7 +82,7 @@ export default function ContactsForm({
         billing_phone: data.billing_phone,
       }).unwrap();
       enqueueSnackbar("Update success!");
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

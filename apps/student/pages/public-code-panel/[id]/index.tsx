@@ -109,7 +109,7 @@ export default function Index(): React.ReactElement {
       } else {
         enqueueSnackbar("course successfuly complete");
       }
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };

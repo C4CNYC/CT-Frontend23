@@ -51,7 +51,7 @@ export default function ClassesSection({
         schoolId,
       }).unwrap();
       enqueueSnackbar("Class deleted");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
@@ -84,7 +84,7 @@ export default function ClassesSection({
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
       enqueueSnackbar(`School ${data.name} created successfuly!`);
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

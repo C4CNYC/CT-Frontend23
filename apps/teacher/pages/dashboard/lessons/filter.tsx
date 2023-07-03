@@ -4,9 +4,9 @@ import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
-import { IModule } from "src/redux/services/interfaces/class.interface";
 import {
   ILessonSearchParams,
+  IModule,
   IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";

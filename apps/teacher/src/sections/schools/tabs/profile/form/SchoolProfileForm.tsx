@@ -93,7 +93,7 @@ export default function SchoolProfileForm({
           phone: data.phone,
         }).unwrap();
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message.text, { variant: "error" });
     }
   };

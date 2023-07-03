@@ -59,7 +59,7 @@ export default function AuthLoginForm(): React.ReactElement {
       setTimeout(() => {
         router.push("/main");
       }, 100);
-    } catch (error) {
+    } catch (error: any) {
       reset();
       setError("afterSubmit", {
         ...error,

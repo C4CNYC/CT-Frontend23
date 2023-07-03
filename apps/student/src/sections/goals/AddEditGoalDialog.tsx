@@ -74,7 +74,7 @@ const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
 
       enqueueSnackbar(`${goal ? "Edited" : "Added"} successfully!`);
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

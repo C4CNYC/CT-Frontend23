@@ -81,7 +81,7 @@ const PublishModal = ({
       }).unwrap();
       enqueueSnackbar("Added successfully!");
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

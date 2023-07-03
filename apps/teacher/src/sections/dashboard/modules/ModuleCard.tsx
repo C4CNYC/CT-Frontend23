@@ -14,21 +14,13 @@ import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import Link from "next/link";
 import { useState } from "react";
 import { BaseResponseInterface } from "@ct-nx/utils";
-import { IModule } from "../../../redux/services/interfaces/class.interface";
 import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
 // ----------------------------------------------------------------------
 
-interface Props extends IModule {
-  selected?: boolean;
-  onSelect?: VoidFunction;
-  key: number;
-  module: IModule & BaseResponseInterface;
-}
-
 export default function ModuleCard({
   module,
-}: Props): React.ReactElement | null {
+}: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,7 +34,7 @@ export default function ModuleCard({
       await deleteModule({ id: module.id }).unwrap();
       handleCloseConfirm();
       enqueueSnackbar("Module deleted!");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

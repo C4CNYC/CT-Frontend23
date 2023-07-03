@@ -41,7 +41,7 @@ export function useLocales(): IUseLocals {
     try {
       await i18n.changeLanguage(newlang);
       onChangeDirectionByLang(newlang);
-    } catch (e) {}
+    } catch (e: any) {}
   };
 
   return {

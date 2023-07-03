@@ -85,7 +85,6 @@ export default function ModulesListPage(): React.ReactElement | string {
             loading={isLoading ?? isFetching}
           >
             {data?.data.map((module, index) => (
-              // @ts-expect-error
               <ModuleCard key={index} module={module} />
             ))}
             {isFetching

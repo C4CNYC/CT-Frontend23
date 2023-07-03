@@ -62,7 +62,7 @@ export default function InviteForm(): React.ReactElement {
         pathname: PATH_AUTH.login,
         query: { tenantName },
       });
-    } catch (e) {
+    } catch (e: any) {
       reset();
     }
   };

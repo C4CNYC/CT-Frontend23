@@ -59,7 +59,7 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
       }).unwrap();
       enqueueSnackbar("Update success!");
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

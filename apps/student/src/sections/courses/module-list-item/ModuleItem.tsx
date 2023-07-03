@@ -6,14 +6,9 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { IModule } from "src/redux/interfaces/class.interface";
 import ModuleStatistics from "./ModuleStatistics";
 
-interface Props {
-  data: IModule;
-}
-
-export default function ModuleItem({ data }: Props): React.ReactElement {
+export default function ModuleItem({ data }: any): React.ReactElement {
   const theme = useTheme();
   return (
     <Paper

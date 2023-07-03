@@ -76,8 +76,8 @@ export default function Index(): React.ReactElement | null {
     setGlobalCodePanel((prev) => ({
       ...prev,
       courseId: query.id as string,
-      unitId: unitId,
-      lessonId: lessonId,
+      unitId,
+      lessonId,
     }));
     push(
       `${PATH_PAGE.codePanel.workSpace(
@@ -109,7 +109,7 @@ export default function Index(): React.ReactElement | null {
         module_id: query.unit_id as string,
         lesson_content_id: lessonContentId,
       }).unwrap();
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
@@ -147,7 +147,7 @@ export default function Index(): React.ReactElement | null {
       } else {
         enqueueSnackbar("course successfuly complete");
       }
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };

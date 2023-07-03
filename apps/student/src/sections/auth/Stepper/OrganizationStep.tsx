@@ -33,7 +33,7 @@ export default function OrganizationStep({
     //     { shallow: true }
     //   );
     //   next();
-    // } catch (e) {
+    // } catch (e: any) {
     //   // #TODO show error
     // }
   };

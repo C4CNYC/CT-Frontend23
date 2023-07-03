@@ -107,7 +107,7 @@ export default function AuthorForm({
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       setFormVisible(false);
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

@@ -66,7 +66,7 @@ export default function ClassItem({
         }).unwrap();
       }
       enqueueSnackbar(`Class ${name} updated successfuly!`);
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

@@ -63,7 +63,7 @@ export default function LinkItem({
       }).unwrap();
       enqueueSnackbar("Social link edited");
       setEdit(!edit);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
@@ -76,7 +76,7 @@ export default function LinkItem({
         studentId,
       }).unwrap();
       enqueueSnackbar("Social link deleted");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });

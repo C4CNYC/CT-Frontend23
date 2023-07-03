@@ -1,7 +1,7 @@
+import { BaseResponseInterface } from "@ct-nx/utils";
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import keyBy from "lodash/keyBy";
 import omit from "lodash/omit";
-import { BaseResponseInterface } from "@ct-nx/utils";
 import { IAssignmentsCard, IAssignmentsState } from "src/@types/assignments";
 import { AssignmentStatuses } from "../services/enums/assignment-status.enum";
 import { IAssignment } from "../services/interfaces/assignment.interface";
@@ -125,7 +125,7 @@ export function getBoard(data: Array<IAssignment & BaseResponseInterface>) {
         },
       };
       dispatch(slice.actions.getBoardSuccess(response.board));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(slice.actions.hasError(error));
     }
   };
