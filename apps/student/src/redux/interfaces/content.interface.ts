@@ -3,50 +3,6 @@ import { Unit } from "src/redux/interfaces/challenges.interface";
 import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { IIntegration } from "./integration.interface";
 
-export interface IModule {
-  active: boolean;
-  name: string;
-  description: string;
-  data: [];
-}
-
-export interface ILesson {
-  active: boolean;
-  draft: boolean;
-  name: string;
-  description: string;
-  integrations: Array<IIntegration & BaseResponseInterface>;
-  id: string;
-  progress?: number;
-  skills: ISkill[];
-}
-
-export interface ISkill {
-  name: string;
-  description: string;
-  id: string;
-}
-export interface ILessonCurrent {
-  active: boolean;
-  name: string;
-  description: string;
-  draft?: boolean;
-  id: string;
-  lessons?: [];
-}
-
-export interface ICourse {
-  name: string;
-  level: string;
-  price: string;
-  description: string;
-  active: boolean;
-  cover: string;
-  draft: boolean;
-  total_lessons: number;
-  course_id: string;
-}
-// ==== updated interfaces ===
 export interface ICourseElement {
   id?: string;
   course_id?: string;
@@ -62,6 +18,7 @@ export interface ICourseElement {
   likes_count?: number;
   total_lessons: number;
 }
+
 export interface ICourseContent {
   id: string;
   units: Unit[];
@@ -74,17 +31,36 @@ export interface ICourseContent {
   draft: boolean;
   total_lessons: number;
 }
-export interface IUnitContent {
-  id: string;
-  lessons: ILesson[];
+
+export interface IModule {
+  active?: boolean;
+  key: any;
   name: string;
+  type: string;
+  progress?: number;
+  total_progress?: number;
+  lessons: Array<ILesson & BaseResponseInterface>;
   description?: string;
-  active: boolean;
 }
 
-export interface IValidation {
+export interface ILesson {
+  active: boolean;
+  draft: boolean;
   name: string;
-  regex: string;
+  description: string;
+  integrations: Array<IIntegration & BaseResponseInterface>;
+  id: string;
+  progress?: number;
+  skills: ISkill[];
+}
+
+export interface ILessonCurrent {
+  active: boolean;
+  name: string;
+  description: string;
+  draft?: boolean;
+  id: string;
+  lessons?: [];
 }
 
 export interface ILessonContent {
@@ -95,6 +71,17 @@ export interface ILessonContent {
   type: LessonContentType;
   meta: Record<string, any>;
   integrations: IIntegration[];
+}
+
+export interface ISkill {
+  name: string;
+  description: string;
+  id: string;
+}
+
+export interface IValidation {
+  name: string;
+  regex: string;
 }
 
 // ================

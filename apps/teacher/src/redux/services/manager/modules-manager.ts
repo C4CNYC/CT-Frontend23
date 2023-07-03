@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@ct-nx/utils";
+import { BaseListResponseInterface, BaseResponseInterface } from "@ct-nx/utils";
 import { managerApi } from ".";
-import { IModule } from "../interfaces/class.interface";
 import {
   IAddLessonToModule,
+  IModule,
   IModuleCreate,
   IModuleDelete,
   IModulesSearchParams,

@@ -1,6 +1,5 @@
 import { BaseResponseInterface } from "@ct-nx/utils";
-import { IModule } from "./class.interface";
-import { ILesson, ILessonContent } from "./courseUnits.interface";
+import { ILesson, ILessonContent, IModule } from "./courseUnits.interface";
 import { ILessonContentValidation } from "./lessonContentValidation.interface";
 import { IStudent } from "./user.interface";
 
