@@ -39,7 +39,7 @@ export const CodeEditor = ({
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString());
         }),
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup({
