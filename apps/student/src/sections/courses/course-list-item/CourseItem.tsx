@@ -112,22 +112,12 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           />
           {isMobile && (
             <Stack alignItems="center" mb={3} mt={1}>
-              <CourseAvatar
-                cover={course.cover}
-                courseId={course.id ?? ""}
-                progress={course.progress}
-              />
+              <CourseAvatar course={course} />
             </Stack>
           )}
           <CourseInfo course={course} />
         </Box>
-        {!isMobile && (
-          <CourseAvatar
-            cover={course.cover}
-            courseId={course.id ?? ""}
-            progress={course.progress}
-          />
-        )}
+        {!isMobile && <CourseAvatar course={course} />}
       </Box>
     </Stack>
   );

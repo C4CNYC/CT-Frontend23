@@ -65,6 +65,17 @@ const extendedApi = studentApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Courses" }],
     }),
+    courseAddRating: builder.mutation<
+      ICourseContent & BaseResponseInterface,
+      { id: string; rating: number }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/course/${id}/rating`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Courses" }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -76,4 +87,5 @@ export const {
   // -------------mutation-----------
   useCourseAddLikeMutation,
   useCourseRemoveLikeMutation,
+  useCourseAddRatingMutation,
 } = extendedApi;

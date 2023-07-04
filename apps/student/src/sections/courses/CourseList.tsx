@@ -1,6 +1,8 @@
-import { EmptyContent } from "@ct-nx/components";
+import { EmptyContent, SimpleInfiniteList } from "@ct-nx/components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@ct-nx/hooks";
 import { Stack } from "@mui/material";
 import { useEffect } from "react";
+import { ICourseSearchParams } from "src/redux/interfaces/content.interface";
 import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 import { useGetPublicCourseQuery } from "src/redux/services/student/public-student";
 import CoursesItem from "./course-list-item/CourseItem";
@@ -17,43 +19,72 @@ export default function CourseList({
   setCounter,
   setIsLoading,
 }: Props): React.ReactElement {
-  const { data, isLoading } = useGetCourseQuery(
-    { take: 5 },
+  const { filters, setFilter } = useFilters<ICourseSearchParams>(
+    {
+      name: "",
+      take: DEFAULT_TAKE_PER_PAGE,
+    },
+    FilterMode.global
+  );
+  const { data, isLoading, isFetching } = useGetCourseQuery(
+    { take: DEFAULT_TAKE_PER_PAGE },
     { skip: publicPage }
   );
-  const { data: publicData, isLoading: publicIsLoading } =
-    useGetPublicCourseQuery({}, { skip: !publicPage });
+  const {
+    data: publicData,
+    isLoading: publicIsLoading,
+    isFetching: publicFetching,
+  } = useGetPublicCourseQuery(filters, { skip: !publicPage });
   useEffect(() => {
     setIsLoading?.(publicPage ? publicIsLoading : isLoading);
   }, [isLoading]);
+
+  const createSkeletonList = (): React.ReactElement[] => {
+    return Array(DEFAULT_TAKE_PER_PAGE)
+      .fill(null)
+      .map((v, i) => <SkeletonCourse key={i + 14} />);
+  };
+
   if (data) {
     setCounter?.(data.data.length);
   }
+
+  if ((!publicPage && isLoading) || (publicPage && publicIsLoading)) {
+    return (
+      <Stack direction="column" gap={3} sx={{ pb: 4 }}>
+        {createSkeletonList()}
+      </Stack>
+    );
+  }
+
   return (
-    <Stack direction="column" gap={3} sx={{ pb: 4 }}>
-      {publicPage ? (
-        publicIsLoading ? (
-          <>
-            <SkeletonCourse />
-            <SkeletonCourse />
-          </>
-        ) : publicData?.data?.length ? (
-          publicData?.data?.map((el) => (
-            <CoursesItem course={el} key={el.course_id} />
-          ))
+    <SimpleInfiniteList
+      hasNextPage={data?.meta.hasNextPage ?? false}
+      onLoadMore={() => {
+        if (data?.meta.take !== filters?.take) return;
+        setFilter("take", Number(filters.take) + 10);
+      }}
+      loading={isLoading ?? isFetching}
+    >
+      <Stack direction="column" gap={3} sx={{ pb: 4 }}>
+        {publicPage ? (
+          publicFetching ? (
+            <>{createSkeletonList()}</>
+          ) : publicData?.data?.length ? (
+            publicData?.data?.map((el) => (
+              <CoursesItem course={el} key={el.id} />
+            ))
+          ) : (
+            <EmptyContent title="You dont have any course" />
+          )
+        ) : isFetching ? (
+          <>{createSkeletonList()}</>
+        ) : data?.data?.length ? (
+          data?.data?.map((el) => <CoursesItem course={el} key={el.id} />)
         ) : (
           <EmptyContent title="You dont have any course" />
-        )
-      ) : isLoading ? (
-        <>
-          <SkeletonCourse />
-          <SkeletonCourse />
-        </>
-      ) : data?.data?.length ? (
-        data?.data?.map((el) => <CoursesItem course={el} key={el.course_id} />)
-      ) : (
-        <EmptyContent title="You dont have any course" />
-      )}
-    </Stack>
+        )}
+      </Stack>
+    </SimpleInfiniteList>
   );
 }

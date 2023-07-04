@@ -11,7 +11,7 @@ import NextLink from "next/link";
 import { TbFileCertificate } from "react-icons/tb";
 
 interface Props {
-  progress?: number;
+  progress: number | null;
 }
 
 export default function CourseHeader({ progress }: Props): React.ReactElement {
