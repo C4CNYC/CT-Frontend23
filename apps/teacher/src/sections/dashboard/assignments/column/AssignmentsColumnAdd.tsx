@@ -33,7 +33,7 @@ export default function AssignmentsColumnAdd(): React.ReactElement {
         setName("");
       }
       handleClose();
-    } catch (e) {
+    } catch (e: any) {
     }
   };
 

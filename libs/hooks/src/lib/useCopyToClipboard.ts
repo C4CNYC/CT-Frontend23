@@ -24,7 +24,7 @@ export function useCopyToClipboard(): ReturnType {
       await navigator.clipboard.writeText(text);
       setCopiedText(text);
       return true;
-    } catch (error) {
+    } catch (error: any) {
       setCopiedText(null);
       return false;
     }

@@ -65,7 +65,7 @@ export default function AssignmentAssigning({
         end_date: data.end_date,
       });
       next();
-    } catch (e) {
+    } catch (e: any) {
       // #TODO show error
     }
   };

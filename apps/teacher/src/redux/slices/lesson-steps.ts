@@ -1,7 +1,7 @@
+import { BaseResponseInterface } from "@ct-nx/utils";
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import keyBy from "lodash/keyBy";
 import omit from "lodash/omit";
-import { BaseResponseInterface } from "@ct-nx/utils";
 import { ILessonContent } from "../services/interfaces/courseUnits.interface";
 
 // ----------------------------------------------------------------------
@@ -105,7 +105,7 @@ export function getBoard(data: Array<ILessonContent & BaseResponseInterface>) {
         ],
       };
       dispatch(slice.actions.getBoardSuccess(board));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(slice.actions.hasError(error));
     }
   };

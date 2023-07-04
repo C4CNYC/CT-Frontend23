@@ -81,7 +81,7 @@ export default function RegisterCoderForm(): React.ReactElement {
       await createClass({ name: "Happy Tribe" }).unwrap();
       router.reload();
       router.replace(PATH_MAIN.root);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
       enqueueSnackbar(
         "if you have manager account, you must create student there",

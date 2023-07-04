@@ -55,7 +55,7 @@ export default function ContactsForm({
         phone: data.phone,
       });
       enqueueSnackbar("Update success!");
-    } catch (error) {
+    } catch (error: any) {
     }
   };
 

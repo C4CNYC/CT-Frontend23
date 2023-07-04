@@ -18,7 +18,7 @@ import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 import { useGetOrgMembersQuery } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
-import { IUser } from "src/redux/services/interfaces/user.interface";
+import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
 import {
   useDeleteMentorMutation,
   useGetMentorsQuery,
@@ -84,7 +84,7 @@ export default function ClassMentorsAutocomplete({
     }
   };
   return (
-    <Autocomplete<IUser & BaseResponseInterface, true>
+    <Autocomplete<any, true>
       multiple
       id="add-user-input"
       value={mentors.data}

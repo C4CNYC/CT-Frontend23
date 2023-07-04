@@ -38,7 +38,7 @@ export default function LessonCard({
       try {
         await deleteLesson({ id: lesson.id }).unwrap();
         enqueueSnackbar("lesson deleted!");
-      } catch (e) {
+      } catch (e: any) {
         enqueueSnackbar(e.data.message, {
           variant: "error",
         });

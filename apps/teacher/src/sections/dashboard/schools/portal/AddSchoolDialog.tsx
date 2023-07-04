@@ -64,7 +64,7 @@ export default function AddSchoolDialog(): React.ReactElement {
       );
       handleClose();
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(`${translate("messages_error")}`, { variant: "error" });
     }
   };

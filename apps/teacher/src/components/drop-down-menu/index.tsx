@@ -30,6 +30,8 @@ export default function RoleSelector({
       await updateUser({
         user_id: userId,
         role,
+        first_name: "",
+        last_name: ""
       }).unwrap();
       enqueueSnackbar(`${email} updated to ${role} `);
     } catch {}

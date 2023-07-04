@@ -17,12 +17,13 @@ import {
 } from "@mui/material";
 import NextLink from "next/link";
 import { useState } from "react";
-import { IUser } from "src/redux/services/interfaces/user.interface";
+import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "@ct-nx/utils";
+import { Role } from "src/redux/services/enums/role.enum";
 // ----------------------------------------------------------------------
 
 interface Props {
-  row: IUser & BaseResponseInterface;
+  row: (IUser | IStudent) & BaseResponseInterface;
   selected: boolean;
   loading?: boolean;
   onEditRow: VoidFunction;
@@ -93,7 +94,7 @@ export default function UserTableRow({
 
         {role ? (
           <TableCell align="left" sx={{ textTransform: "capitalize" }}>
-            <RoleSelector userId={id} role={role} email={email} />
+            <RoleSelector userId={id} role={role as Role} email={email} />
           </TableCell>
         ) : null}
 

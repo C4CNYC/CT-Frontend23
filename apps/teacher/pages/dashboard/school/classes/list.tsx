@@ -107,7 +107,7 @@ export default function UserListPage(): React.ReactElement {
     try {
       await deleteCasses({ classId, schoolId });
       enqueueSnackbar("Class deleted");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
@@ -146,7 +146,7 @@ export default function UserListPage(): React.ReactElement {
         await updateClassAvatar({ schoolId, classId: id, file }).unwrap();
       }
       enqueueSnackbar("Class updated successfuly!");
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
@@ -177,7 +177,7 @@ export default function UserListPage(): React.ReactElement {
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
       enqueueSnackbar(`Class ${name} created successfuly!`);
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };

@@ -42,7 +42,7 @@ export default function Skills(): React.ReactElement {
     try {
       await removeSkill({ id }).unwrap();
       enqueueSnackbar("skill removed");
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });
     }
   };

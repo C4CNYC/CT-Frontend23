@@ -43,6 +43,7 @@ export interface IStudent {
   state: string;
   city: string;
   post_code: string;
+  role: string;
   about: string;
   verified: boolean;
   active: boolean;

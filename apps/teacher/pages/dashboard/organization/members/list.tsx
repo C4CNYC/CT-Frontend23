@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   emptyRows,
   TableEmptyRows,
@@ -75,7 +76,7 @@ export default function UserListPage(): React.ReactElement {
       await deleteMember({
         user_id: userId,
       }).unwrap();
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
       });
