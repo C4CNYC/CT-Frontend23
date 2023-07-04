@@ -1,6 +1,9 @@
-import { EmptyContent } from "@ct-nx/components";
+import { EmptyContent, SimpleInfiniteList } from "@ct-nx/components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@ct-nx/hooks";
+import { getCountTakingElment } from "@ct-nx/utils";
 import { Box, Stack } from "@mui/material";
 import { useEffect } from "react";
+import { IModulesSearchParams } from "src/redux/interfaces/content.interface";
 import { useGetModulesListQuery } from "src/redux/services/student/modules-student";
 import ModuleItem from "./module-list-item/ModuleItem";
 import SkeletonModule from "./module-list-item/SkeletonModule";
@@ -14,43 +17,71 @@ export default function ModuleList({
   setCounter,
   setIsLoading,
 }: Props): React.ReactElement {
-  const { data, isLoading } = useGetModulesListQuery({ take: 5 });
+  const { filters, setFilter } = useFilters<IModulesSearchParams>(
+    {
+      name: "",
+      take: DEFAULT_TAKE_PER_PAGE,
+    },
+    FilterMode.global
+  );
+  const { data, isLoading, isFetching } = useGetModulesListQuery(filters);
   useEffect(() => {
     setIsLoading(isLoading);
   }, [isLoading]);
   if (data) {
     setCounter(data.data.length);
   }
-  return (
-    <Box
+  if (isLoading) {
+    <Stack
+      direction="row"
       sx={{
-        display: "flex",
+        width: "100%",
         flexWrap: "wrap",
         gap: 3,
       }}
     >
-      {isLoading ? (
-        <Stack
-          direction="row"
-          sx={{
-            width: "100%",
-            flexWrap: "wrap",
-            gap: 3,
-          }}
-        >
-          {Array(5)
-            .fill(null)
-            .map((el, i) => (
-              <SkeletonModule key={i + 34} />
-            ))}
-        </Stack>
-      ) : data?.data?.length ? (
-        data.data?.map((el, i) => <ModuleItem key={i} data={el} />)
-      ) : (
-        <Box width="100%">
-          <EmptyContent title="You dont have any course" />
-        </Box>
-      )}
-    </Box>
+      {Array(DEFAULT_TAKE_PER_PAGE)
+        .fill(null)
+        .map((el, i) => (
+          <SkeletonModule key={i + 33} />
+        ))}
+    </Stack>;
+  }
+  return (
+    <SimpleInfiniteList
+      hasNextPage={data?.meta.hasNextPage ?? false}
+      onLoadMore={() => {
+        if (data?.meta.take !== filters?.take) return;
+        setFilter("take", Number(filters.take) + 10);
+      }}
+      loading={isLoading ?? isFetching}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 3,
+        }}
+      >
+        {data?.data?.map((el) => (
+          <ModuleItem key={el.id} data={el} />
+        ))}
+        {isFetching
+          ? Array(
+              getCountTakingElment(
+                Number(data?.meta.itemCount),
+                Number(filters.take)
+              )
+            )
+              .fill(null)
+              .map((v, i) => <SkeletonModule key={i} />)
+          : null}
+        {!isLoading && !isFetching && !data?.data.length ? (
+          <Box width="100%">
+            <EmptyContent title="You dont have any course" />
+          </Box>
+        ) : null}
+      </Box>
+    </SimpleInfiniteList>
   );
 }

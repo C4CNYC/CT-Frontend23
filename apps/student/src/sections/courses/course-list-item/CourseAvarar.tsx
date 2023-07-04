@@ -1,48 +1,50 @@
 import { Image, useSnackbar } from "@ct-nx/components";
 import { Box, IconButton } from "@mui/material";
-import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
+import { ICourseElement } from "src/redux/interfaces/content.interface";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
   useCourseAddLikeMutation,
+  useCourseAddRatingMutation,
   useCourseRemoveLikeMutation,
 } from "src/redux/services/student/courses-manager";
 interface Props {
-  cover: string | null;
-  courseId: string;
-  progress?: number;
+  course: ICourseElement;
 }
 
-export default function CourseAvatar({
-  cover,
-  courseId,
-  progress,
-}: Props): React.ReactElement {
+export default function CourseAvatar({ course }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [addLike, { isLoading }] = useCourseAddLikeMutation();
   const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation();
-
+  const [updateRating] = useCourseAddRatingMutation();
   const likeHandler = async (): Promise<void> => {
     try {
-      if (isLiked) {
-        removeLike({ id: courseId }).unwrap();
+      if (course.liked) {
+        removeLike({ id: course.id }).unwrap();
         enqueueSnackbar("Like removed!");
-        setIsLiked(false);
       } else {
-        addLike({ id: courseId }).unwrap();
+        addLike({ id: course.id }).unwrap();
         enqueueSnackbar("Liked!");
-        setIsLiked(true);
       }
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError?.data?.message, {
         variant: "error",
       });
     }
   };
 
-  const handleRating = (rate: number): void => {
-    // rate starts from 0
+  const handleRating = (rating: number): void => {
+    try {
+      updateRating({ id: course.id, rating }).unwrap();
+      enqueueSnackbar("You rated course!");
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError?.data?.message, {
+        variant: "error",
+      });
+    }
   };
 
   return (
@@ -63,14 +65,14 @@ export default function CourseAvatar({
             "&:hover": { opacity: 1 },
           }}
         >
-          {!isLiked ? (
+          {!course.liked ? (
             <AiOutlineHeart size={26} color="#EE467A" />
           ) : (
             <AiFillHeart size={26} color="#EE467A" />
           )}
         </IconButton>
         <Image
-          src={cover || "/assets/courses/tiger.png"}
+          src={course.cover ?? "/assets/courses/tiger.png"}
           sx={{
             objectFit: "contain",
             borderRadius: "25px",
@@ -87,7 +89,7 @@ export default function CourseAvatar({
             },
           }}
         />
-        {progress && progress > 30 && (
+        {course.progress && course.progress > 30 && (
           <Box
             sx={{
               position: "absolute",
@@ -105,9 +107,8 @@ export default function CourseAvatar({
           >
             <Rating
               onClick={handleRating}
-              initialValue={0}
+              initialValue={course.my_rating ?? 0}
               transition
-              allowFraction
               size={30}
             />
           </Box>

@@ -4,7 +4,7 @@ import { PATH_PAGE } from "@routes/paths";
 
 interface Props {
   redirect: () => void;
-  progress?: number | undefined;
+  progress: number | null;
   courseId: string;
 }
 

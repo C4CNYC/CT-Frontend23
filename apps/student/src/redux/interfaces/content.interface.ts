@@ -4,9 +4,8 @@ import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { IIntegration } from "./integration.interface";
 
 export interface ICourseElement {
-  id?: string;
+  id: string;
   course_id?: string;
-  units?: [];
   name: string;
   level: string;
   price: string;
@@ -14,9 +13,11 @@ export interface ICourseElement {
   active: boolean;
   cover: string;
   draft: boolean;
-  progress?: number;
+  progress: number | null;
   likes_count?: number;
   total_lessons: number;
+  liked: boolean;
+  my_rating: number | null;
 }
 
 export interface ICourseContent {

@@ -7,6 +7,7 @@ import LessonList from "@sections/courses/LessonList";
 import ModuleList from "@sections/courses/ModuleList";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 Courses.getLayout = (page: React.ReactElement) => (
@@ -42,12 +43,14 @@ function a11yProps(index: number) {
   };
 }
 export default function Courses(): React.ReactElement {
+  const router = useRouter();
   const { themeStretch } = useSettingsContext();
   const [counter, setCounter] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [value, setValue] = useState<number>(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    router.replace("/courses", undefined, { shallow: true });
   };
 
   return (
