@@ -17,6 +17,7 @@ export default function ModuleList({
   const { data, isLoading } = useGetModulesListQuery({ take: 5 });
   useEffect(() => {
     setIsLoading(isLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
   if (data) {
     setCounter(data.data.length);

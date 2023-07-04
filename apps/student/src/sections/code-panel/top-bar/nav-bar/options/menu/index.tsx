@@ -3,6 +3,7 @@ import Hamburger from "hamburger-react";
 import { SetStateAction, useState } from "react";
 
 import { Iconify, MenuPopover } from "@ct-nx/components";
+import { UserType } from "@ct-nx/utils";
 import {
   Divider,
   Link,
@@ -12,7 +13,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { UserType } from "@ct-nx/utils";
 
 import { PATH_AUTH } from "@routes/paths";
 import NextLink from "next/link";
@@ -101,7 +101,7 @@ const Menu = (): React.ReactElement => {
             if (menuItem.href === ILinks.modal) {
               return menuItem.component?.(
                 <MenuItem
-                  key={i}
+                  key={`${menuItem.title}${i}`}
                   sx={{ pl: "20px!important", height: 59, color: "#212B36" }}
                 >
                   <Iconify
@@ -135,7 +135,6 @@ const Menu = (): React.ReactElement => {
                   underline="none"
                 >
                   <MenuItem
-                    key={i}
                     sx={{ pl: "20px!important", height: 59, color: "#212B36" }}
                     onClick={handleClosePopover}
                   >

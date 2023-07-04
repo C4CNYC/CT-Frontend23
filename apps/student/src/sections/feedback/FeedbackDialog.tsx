@@ -11,11 +11,12 @@ import {
   IconButton,
 } from "@mui/material";
 
-import { RHFTextField, FormProvider, useSnackbar } from "@ct-nx/components";
+import { FormProvider, RHFTextField, useSnackbar } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import * as Yup from "yup";
 interface Props {
   children: React.ReactElement[] | React.ReactElement;
@@ -56,8 +57,9 @@ export default function FeedbackDialog({
         ...formValues,
         feedback: "",
       }));
-    } catch (e: any) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

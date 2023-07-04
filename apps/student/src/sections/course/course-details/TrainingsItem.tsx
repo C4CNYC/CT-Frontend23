@@ -120,11 +120,9 @@ export default function TrainingsItem({
           </Typography>
           <Button
             component={Link}
-            href={`${PATH_PAGE.codePanel.workSpace(courseId as string)}?${{
-              unitId,
-            }}&${{
-              lessonId: lesson.id,
-            }}`}
+            href={`${PATH_PAGE.codePanel.workSpace(
+              courseId as string
+            )}?${unitId}&${lesson.id}`}
             variant="outlined"
             sx={(theme) => ({
               color: "#364954",

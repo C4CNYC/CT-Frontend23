@@ -1,12 +1,22 @@
 import * as React from "react";
 // next
-import Document, { DocumentContext, DocumentProps, Head, Html, Main, NextScript } from "next/document";
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  DocumentProps,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from "next/document";
 // @emotion
 import createEmotionServer from "@emotion/server/create-instance";
 // utils
 import { createEmotionCache } from "@ct-nx/utils";
 // theme
 import { palette, primaryFont } from "@ct-nx/theme";
+import { EmotionCache } from "@emotion/cache";
+import { AppType } from "next/app";
 
 // ----------------------------------------------------------------------
 
@@ -70,8 +80,12 @@ export default class MyDocument extends Document {
 }
 
 // ----------------------------------------------------------------------
-
-MyDocument.getInitialProps = async (ctx: DocumentContext): Promise<any> => {
+interface IInitialWithEmotion extends DocumentInitialProps {
+  emotionStyleTags: JSX.Element[];
+}
+MyDocument.getInitialProps = async (
+  ctx: DocumentContext
+): Promise<IInitialWithEmotion> => {
   const originalRenderPage = ctx.renderPage;
 
   const cache = createEmotionCache();
@@ -80,7 +94,9 @@ MyDocument.getInitialProps = async (ctx: DocumentContext): Promise<any> => {
 
   ctx.renderPage = async () =>
     await originalRenderPage({
-      enhanceApp: (App: any) =>
+      enhanceApp: (
+        App: AppType | React.ComponentType<{ emotionCache: EmotionCache }>
+      ) =>
         function EnhanceApp(props): React.ReactElement | null {
           return <App emotionCache={cache} {...props} />;
         },

@@ -81,6 +81,7 @@ export default function GalleryDialog({
     if (isMobile) {
       setFullWidth(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickOpen = (): void => {

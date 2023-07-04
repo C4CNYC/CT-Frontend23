@@ -12,7 +12,6 @@ interface Props {
 export default function LetsCodeBtn({ isMini }: Props) {
   const { push } = useRouter();
   const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
-  console.log({ courseId, unitId, lessonId });
   return (
     <Button
       onClick={() => {

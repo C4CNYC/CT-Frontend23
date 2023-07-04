@@ -5,59 +5,7 @@ export default function SkeletonCodePanel(): React.ReactElement {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   return (
     <Box sx={{ height: "100vh", width: "100%" }}>
-      <Box
-        sx={{
-          width: "100%",
-          height: "50px",
-          display: "flex",
-          justifyContent: isDesktop ? "space-between" : "",
-          alignItems: "center",
-          px: "40px",
-        }}
-      >
-        <Skeleton
-          sx={{
-            width: { xs: "20px", sm: "20px", md: "20px", lg: "197px" },
-            height: { xs: "20px", sm: "20px", md: "20px", lg: "33px" },
-          }}
-          variant="rounded"
-          animation="wave"
-        />
-        <Skeleton
-          sx={{
-            display: isDesktop ? "none" : "block",
-            margin: isDesktop ? "0" : "0 auto",
-            width: { xs: "198px", sm: "248px", md: "248px", lg: "0px" },
-            height: { xs: "39px", sm: "39px", md: "39px", lg: "0px" },
-            borderRadius: "15px 15px 0 0 ",
-          }}
-          variant="rectangular"
-          animation="wave"
-        />
-        {isDesktop ? (
-          <>
-            <Skeleton
-              sx={{
-                width: "237px",
-                height: "40px",
-                ml: "141px",
-                borderRadius: "35px",
-              }}
-              variant="rounded"
-              animation="wave"
-            />
-            <Skeleton
-              sx={{
-                display: isDesktop ? "block" : "none",
-                width: "328px",
-                height: "48px",
-              }}
-              variant="rounded"
-              animation="wave"
-            />
-          </>
-        ) : null}
-      </Box>
+      <CPTopBarSkeleton />
       <Box
         sx={{ display: "flex", justifyContent: "space-between", gap: 1, px: 1 }}
       >
@@ -131,3 +79,62 @@ export default function SkeletonCodePanel(): React.ReactElement {
     </Box>
   );
 }
+export const CPTopBarSkeleton = (): React.ReactElement => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: "50px",
+        display: "flex",
+        justifyContent: isDesktop ? "space-between" : "",
+        alignItems: "center",
+        px: "40px",
+      }}
+    >
+      <Skeleton
+        sx={{
+          width: { xs: "20px", sm: "20px", md: "20px", lg: "197px" },
+          height: { xs: "20px", sm: "20px", md: "20px", lg: "33px" },
+        }}
+        variant="rounded"
+        animation="wave"
+      />
+      <Skeleton
+        sx={{
+          display: isDesktop ? "none" : "block",
+          margin: isDesktop ? "0" : "0 auto",
+          width: { xs: "198px", sm: "248px", md: "248px", lg: "0px" },
+          height: { xs: "39px", sm: "39px", md: "39px", lg: "0px" },
+          borderRadius: "15px 15px 0 0 ",
+        }}
+        variant="rectangular"
+        animation="wave"
+      />
+      {isDesktop ? (
+        <>
+          <Skeleton
+            sx={{
+              width: "237px",
+              height: "40px",
+              ml: "141px",
+              borderRadius: "35px",
+            }}
+            variant="rounded"
+            animation="wave"
+          />
+          <Skeleton
+            sx={{
+              display: isDesktop ? "block" : "none",
+              width: "328px",
+              height: "48px",
+            }}
+            variant="rounded"
+            animation="wave"
+          />
+        </>
+      ) : null}
+    </Box>
+  );
+};

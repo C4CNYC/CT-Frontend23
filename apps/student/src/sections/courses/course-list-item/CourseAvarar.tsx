@@ -3,6 +3,7 @@ import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
   useCourseAddLikeMutation,
   useCourseRemoveLikeMutation,
@@ -34,8 +35,9 @@ export default function CourseAvatar({
         enqueueSnackbar("Liked!");
         setIsLiked(true);
       }
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError?.data?.message, {
         variant: "error",
       });
     }
@@ -70,7 +72,8 @@ export default function CourseAvatar({
           )}
         </IconButton>
         <Image
-          src={cover || "/assets/courses/tiger.png"}
+          alt="course cover"
+          src={cover ?? "/assets/courses/tiger.png"}
           sx={{
             objectFit: "contain",
             borderRadius: "25px",

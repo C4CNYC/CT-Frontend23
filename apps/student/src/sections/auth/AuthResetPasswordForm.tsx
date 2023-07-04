@@ -1,13 +1,10 @@
+import { FormProvider, RHFTextField } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "src/redux/services/auth";
 import * as Yup from "yup";
-import {
-  RHFTextField,
-  FormProvider,
-} from "@ct-nx/components";
 
 // ----------------------------------------------------------------------
 

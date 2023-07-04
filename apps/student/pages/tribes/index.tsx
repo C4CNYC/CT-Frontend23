@@ -3,7 +3,6 @@ import DashboardLayout from "@layouts/dashboard/";
 
 import { Box, Container, Link, Tab, Tabs } from "@mui/material";
 import { PATH_MAIN, PATH_PAGE } from "@routes/paths";
-import AddTribeBtn from "@sections/dashboard/tribes/addTribeBtn";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
@@ -11,8 +10,8 @@ import Head from "next/head";
 import { useState } from "react";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
-import NextLink from "next/link";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
+import NextLink from "next/link";
 
 enum TabType {
   Active = "active",
@@ -82,7 +81,6 @@ export default function Tribes(): React.ReactElement {
                 iconPosition="end"
               />
             </Tabs>
-            <AddTribeBtn />
           </Box>
           <TribesFillter />
           <Box
