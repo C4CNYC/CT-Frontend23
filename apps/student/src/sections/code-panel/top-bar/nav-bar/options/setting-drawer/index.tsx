@@ -1,4 +1,10 @@
-import { Iconify, updateLineWrap, updateFontSize, updateColorsEvent, resetLessonEvent } from "@ct-nx/components";
+import {
+  Iconify,
+  resetLessonEvent,
+  updateColorsEvent,
+  updateFontSize,
+  updateLineWrap,
+} from "@ct-nx/components";
 import { IconButton, SwipeableDrawer, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
@@ -31,7 +37,14 @@ const SettingDrawer = (): React.ReactElement => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <IconButton
         onClick={() => {
           setDrawer(true);

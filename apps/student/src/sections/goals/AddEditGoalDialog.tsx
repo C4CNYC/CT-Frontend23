@@ -1,4 +1,5 @@
-import { RHFTextField, FormProvider } from "@ct-nx/components";
+import { FormProvider, RHFTextField } from "@ct-nx/components";
+import { getRandomColor } from "@ct-nx/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -13,12 +14,12 @@ import { MuiColorInput } from "mui-color-input";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
 import {
   usePostGoalMutation,
   useUpdateGoalMutation,
 } from "src/redux/services/student/goals-student";
-import { getRandomColor } from "@ct-nx/utils";
 import * as Yup from "yup";
 
 interface FormValuesProps {
@@ -74,8 +75,9 @@ const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
 
       enqueueSnackbar(`${goal ? "Edited" : "Added"} successfully!`);
       methods.reset();
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

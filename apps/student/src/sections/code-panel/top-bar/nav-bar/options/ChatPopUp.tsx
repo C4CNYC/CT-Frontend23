@@ -24,13 +24,11 @@ const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
           background: isChatVisible ? "#c5d6e3" : "#fff",
           "&:hover": { background: isChatVisible ? "#c5d6e3" : "" },
         }}
+        onClick={() => {
+          setChatVisible(!isChatVisible);
+        }}
       >
-        <Iconify
-          onClick={() => {
-            setChatVisible(!isChatVisible);
-          }}
-          icon="ph:chat"
-        />
+        <Iconify icon="ph:chat" />
       </IconButton>
 
       {isChatVisible ? (

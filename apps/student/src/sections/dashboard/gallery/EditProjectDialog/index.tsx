@@ -1,4 +1,4 @@
-import { RHFSwitch, RHFTextField, FormProvider } from "@ct-nx/components";
+import { FormProvider, RHFSwitch, RHFTextField } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -16,6 +16,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoClose } from "react-icons/io5";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useUpdateProjectMutation } from "src/redux/services/student/gallery-student";
 import * as Yup from "yup";
 interface Props {
@@ -71,8 +72,9 @@ export default function EditProjectDialog({
         ...data,
       }).unwrap();
       enqueueSnackbar("Updated successfully");
-    } catch (e: any) {
-      enqueueSnackbar(e.data.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

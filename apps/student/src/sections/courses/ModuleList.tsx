@@ -27,6 +27,7 @@ export default function ModuleList({
   const { data, isLoading, isFetching } = useGetModulesListQuery(filters);
   useEffect(() => {
     setIsLoading(isLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
   if (data) {
     setCounter(data.data.length);

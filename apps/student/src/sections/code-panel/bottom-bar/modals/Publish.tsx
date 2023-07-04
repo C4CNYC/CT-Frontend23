@@ -1,7 +1,4 @@
-import {
-  RHFTextField,
-  FormProvider,
-} from "@ct-nx/components";
+import { FormProvider, RHFTextField } from "@ct-nx/components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {

@@ -1,8 +1,11 @@
 import { Stack } from "@mui/system";
-import LessonsManager from "./LessonsManager";
-import Menu from "./Menu";
+// import { LessonsManager } from "./LessonsManager";
+// import Menu from "./Menu";
+import dynamic from "next/dynamic";
 import ProgressBottomBar from "./ProgressBottomBar";
 
+const Menu = dynamic(async () => await import("./Menu"));
+const LessonsManager = dynamic(async () => await import("./LessonsManager"));
 const BottomBar = (): React.ReactElement => {
   return (
     <Stack

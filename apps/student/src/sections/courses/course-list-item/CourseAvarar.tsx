@@ -72,7 +72,8 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
           )}
         </IconButton>
         <Image
-          src={course.cover ?? "/assets/courses/tiger.png"}
+          alt="course cover"
+          src={cover ?? "/assets/courses/tiger.png"}
           sx={{
             objectFit: "contain",
             borderRadius: "25px",

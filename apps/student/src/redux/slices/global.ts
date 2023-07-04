@@ -1,6 +1,6 @@
+import { BaseResponseInterface } from "@ct-nx/utils";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-import { BaseResponseInterface } from "@ct-nx/utils";
 import { IUser } from "../interfaces/auth.interface";
 import { IClass } from "../interfaces/class.interface";
 import { IFriend } from "../interfaces/friends.interface";
@@ -13,7 +13,7 @@ export interface ISchool extends BaseResponseInterface {
   country: string;
 }
 
-type User =
+export type User =
   | (IFriend & { school: ISchool } & {
       classes: Array<IClass & BaseResponseInterface>;
     } & {

@@ -1,8 +1,9 @@
-import { Iconify, ConfirmDialog } from "@ct-nx/components";
+import { ConfirmDialog, Iconify } from "@ct-nx/components";
 import { LoadingButton } from "@mui/lab";
 import { alpha, IconButton, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
 import { useRemoveGoalMutation } from "src/redux/services/student/goals-student";
 import AddEditGoalDialog from "./AddEditGoalDialog";
@@ -24,8 +25,9 @@ export default function GoalsItem({ goal }: GoalsItemProps) {
     try {
       await deleteGoal({ id: goal.id as string }).unwrap();
       enqueueSnackbar("Deleted!");
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
+    } catch (error) {
+      const typedError = error as APIError;
+      enqueueSnackbar(typedError.data.message, {
         variant: "error",
       });
     }

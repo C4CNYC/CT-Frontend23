@@ -9,9 +9,9 @@ export default function EditorSkeleton() {
     <Stack direction="row" flexWrap="wrap" pl="20px" pt="5px">
       {Array(getRandomNumber(60, 200))
         .fill(null)
-        .map((el) => (
+        .map((el, i) => (
           <Skeleton
-            key={el}
+            key={i + 7}
             variant="text"
             animation="pulse"
             sx={{

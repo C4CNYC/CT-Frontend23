@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import axios from "axios";
 import { GetServerSideProps } from "next";
+import { ReactNode } from "react";
 // @ts-expect-error dont see react-html-parser
 import ReactHtmlParser from "react-html-parser";
 import GuestGuard from "src/auth/GuestGuard";
@@ -14,7 +15,7 @@ export default function GallaryPublic({
   data,
   error,
 }: Props): React.ReactElement {
-  const commentsRemove = (code: any[]) => {
+  const commentsRemove = (code: ReactNode[]): ReactNode[] => {
     return code.filter((el) => !(typeof el === "string"));
   };
 
@@ -50,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   } catch (error: any) {
     return {
       props: {
-        error: error.message,
+        error: error,
       },
     };
   }
