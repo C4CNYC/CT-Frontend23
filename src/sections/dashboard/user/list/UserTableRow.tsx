@@ -1,0 +1,220 @@
+import { SOCIAL_ICONS } from "@assets/data";
+import { MenuPopover, ConfirmDialog, Iconify, Label, RoleSelector } from "@components";
+import { LoadingButton } from "@mui/lab";
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  IconButton,
+  Link,
+  MenuItem,
+  Stack,
+  TableCell,
+  TableRow,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import NextLink from "next/link";
+import { useState } from "react";
+import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "@utils";
+import { Role } from "src/redux/services/enums/role.enum";
+// ----------------------------------------------------------------------
+
+interface Props {
+  row: (IUser | IStudent) & BaseResponseInterface;
+  selected: boolean;
+  loading?: boolean;
+  onEditRow: VoidFunction;
+  onSelectRow: VoidFunction;
+  onDeleteRow: VoidFunction;
+}
+
+export default function UserTableRow({
+  row,
+  selected,
+  loading,
+  onEditRow,
+  onSelectRow,
+  onDeleteRow,
+}: Props): React.ReactElement | null {
+  const {
+    first_name: firstName,
+    last_name: lastName,
+    email,
+    verified,
+    active,
+    avatar,
+    role,
+    id,
+    socials,
+  } = row;
+  const [openConfirm, setOpenConfirm] = useState(false);
+
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const handleOpenConfirm = (): void => {
+    setOpenConfirm(true);
+  };
+
+  const handleCloseConfirm = (): void => {
+    setOpenConfirm(false);
+  };
+
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+    setOpenPopover(event.currentTarget);
+  };
+
+  const handleClosePopover = (): void => {
+    setOpenPopover(null);
+  };
+  return (
+    <>
+      <TableRow hover selected={selected}>
+        <TableCell padding="checkbox">
+          <Checkbox checked={selected} onClick={onSelectRow} />
+        </TableCell>
+        <TableCell>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar alt={firstName} src={avatar} />
+          </Stack>
+        </TableCell>
+
+        <TableCell align="left">{email}</TableCell>
+
+        <TableCell align="left">
+          {firstName &&
+            firstName?.charAt(0).toUpperCase() + firstName?.slice(1)}
+        </TableCell>
+
+        <TableCell align="left">
+          {lastName && lastName?.charAt(0).toUpperCase() + lastName?.slice(1)}
+        </TableCell>
+
+        {role ? (
+          <TableCell align="left" sx={{ textTransform: "capitalize" }}>
+            <RoleSelector userId={id} role={role as Role} email={email} />
+          </TableCell>
+        ) : null}
+
+        {!role ? (
+          <TableCell align="left">
+            <Stack
+              direction="row"
+              sx={{ maxWidth: "145px", flexWrap: "wrap", gap: 1 }}
+            >
+              {socials?.map((link) => (
+                <Tooltip
+                  key={link.link}
+                  title={<Typography variant="body2">{link.link}</Typography>}
+                >
+                  <Box
+                    key={link.name}
+                    sx={{
+                      alignItems: "center",
+                    }}
+                  >
+                    <Link
+                      sx={{
+                        color: "#fff",
+                        "> svg": {
+                          width: "20px",
+                          height: "20px",
+                        },
+                        "&:hover": {
+                          cursor: "pointer",
+                        },
+                      }}
+                      component={NextLink}
+                      href={link.link}
+                      variant="body2"
+                      color="text.primary"
+                      target="_blank"
+                    >
+                      {SOCIAL_ICONS[link.type]}
+                    </Link>
+                  </Box>
+                </Tooltip>
+              ))}
+            </Stack>
+          </TableCell>
+        ) : null}
+
+        <TableCell align="center">
+          <Iconify
+            icon={verified ? "eva:checkmark-circle-fill" : "eva:clock-outline"}
+            sx={{
+              width: 20,
+              height: 20,
+              color: !verified ? "warning.main" : "success.main",
+            }}
+          />
+        </TableCell>
+
+        <TableCell align="left">
+          <Label
+            variant="soft"
+            color={active ? "success" : "warning"}
+            sx={{ textTransform: "capitalize" }}
+          >
+            {active ? "active" : "not active"}
+          </Label>
+        </TableCell>
+
+        <TableCell align="right">
+          <IconButton
+            color={openPopover ? "inherit" : "default"}
+            onClick={handleOpenPopover}
+          >
+            <Iconify icon="eva:more-vertical-fill" />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        arrow="right-top"
+        sx={{ width: 140 }}
+      >
+        <MenuItem
+          onClick={() => {
+            handleOpenConfirm();
+            handleClosePopover();
+          }}
+          sx={{ color: "error.main" }}
+        >
+          <Iconify icon="eva:trash-2-outline" />
+          Delete
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            onEditRow();
+            handleClosePopover();
+          }}
+        >
+          <Iconify icon="eva:edit-fill" />
+          Edit
+        </MenuItem>
+      </MenuPopover>
+
+      <ConfirmDialog
+        open={openConfirm}
+        onClose={handleCloseConfirm}
+        title="Delete"
+        content="Are you sure want to delete?"
+        action={
+          <LoadingButton
+            variant="contained"
+            color="error"
+            onClick={onDeleteRow}
+            loading={loading}
+          >
+            Delete
+          </LoadingButton>
+        }
+      />
+    </>
+  );
+}

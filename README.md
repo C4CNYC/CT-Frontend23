@@ -1,6 +1,7 @@
+
 # Instalment
 
-### ENV'S (for student, teacher and components/.storybook/main.js)
+### ENV
 
 > base api url
 - NEXT_PUBLIC_API_URL
@@ -25,13 +26,16 @@
 - NEXT_PUBLIC_FIREBASE_APP_ID
 - NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 
+
 ### USING YARN (Recommend)
 
 - `yarn install`
+- `yarn dev`
 
 ### USING NPM
 
 - `npm i OR npm i --legacy-peer-deps`
+- `npm run dev`
 
 ### CODE EDITOR
 For using code efitor you must to be sure you have set env variables ```NEXT_PUBLIC_API_URL``` and ```NEXT_PUBLIC_CODE_STREAM_API```
@@ -42,21 +46,3 @@ Most component was pick from [Minimal](https://minimals.cc). In core of this we 
 # Login
 Email: student@gmail.com
 Password: y@GeP0t}c3
-
-# Usage
-
-### Run apps
-
-- `nx serve {app-name}`
-
-### Run storybook
-
-- `nx storybook {storybook-lib-name}`
-
-### Lint apps
-
-- `nx lint {app-name or lib-name}`
-
-### Build apps
-
-- `nx build {app-name}`

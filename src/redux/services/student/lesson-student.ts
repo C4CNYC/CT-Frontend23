@@ -1,0 +1,53 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+import {
+  ILesson,
+  ILessonContent,
+  ILessonSearchParams,
+} from "src/redux/interfaces/content.interface";
+import { studentApi } from ".";
+
+const extendedApi = studentApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getLessonContent: builder.query<
+      Array<ILessonContent & BaseResponseInterface>,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/lesson/${id}/content`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 0,
+      transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
+        res.sort((a, b) => a.meta.order - b.meta.order),
+    }),
+    getLesson: builder.query<ILesson & BaseResponseInterface, { id: string }>({
+      query: ({ id }) => ({
+        url: `/lesson/${id}`,
+        method: "GET",
+      }),
+      keepUnusedDataFor: 0,
+    }),
+    getLessonsList: builder.query<
+      BaseListResponseInterface<ILesson & BaseResponseInterface>,
+      ILessonSearchParams
+    >({
+      query: (params) => ({
+        url: "/content/lesson",
+        method: "GET",
+        params,
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ["Lessons"],
+    }),
+  }),
+
+  overrideExisting: false,
+});
+
+export const {
+  useGetLessonContentQuery,
+  useGetLessonQuery,
+  useGetLessonsListQuery,
+  // -------------mutation-----------
+} = extendedApi;
