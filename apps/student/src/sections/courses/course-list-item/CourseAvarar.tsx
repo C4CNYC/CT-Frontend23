@@ -1,5 +1,6 @@
 import { Image, useSnackbar } from "@ct-nx/components";
 import { Box, IconButton } from "@mui/material";
+import { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
@@ -15,17 +16,18 @@ interface Props {
 
 export default function CourseAvatar({ course }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
+  const [isLike, setIsLike] = useState<boolean | undefined>();
   const [addLike, { isLoading }] = useCourseAddLikeMutation();
   const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation();
   const [updateRating] = useCourseAddRatingMutation();
   const likeHandler = async (): Promise<void> => {
     try {
-      if (course.liked) {
+      if (isLike) {
         removeLike({ id: course.id }).unwrap();
-        enqueueSnackbar("Like removed!");
+        setIsLike(false);
       } else {
         addLike({ id: course.id }).unwrap();
-        enqueueSnackbar("Liked!");
+        setIsLike(true);
       }
     } catch (error) {
       const typedError = error as APIError;
@@ -47,6 +49,12 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
     }
   };
 
+  useEffect(() => {
+    if (course) {
+      setIsLike(course.liked);
+    }
+  }, [course]);
+
   return (
     <>
       <Box sx={{ position: "relative", alignSelf: "center" }}>
@@ -65,7 +73,7 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
             "&:hover": { opacity: 1 },
           }}
         >
-          {!course.liked ? (
+          {!isLike ? (
             <AiOutlineHeart size={26} color="#EE467A" />
           ) : (
             <AiFillHeart size={26} color="#EE467A" />
