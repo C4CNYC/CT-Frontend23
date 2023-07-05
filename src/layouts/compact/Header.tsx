@@ -46,7 +46,7 @@ export default function Header({ isOffset }: Props): React.ReactElement | null {
 
         <Link
           component={NextLink}
-          href={PATH_PAGE.faqs}
+          href={PATH_PAGE.page404}
           variant="subtitle2"
           color="inherit"
         >

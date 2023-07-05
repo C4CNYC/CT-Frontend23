@@ -1,9 +1,8 @@
 import { EmptyContent } from "@components";
-import { useOnlineConnection } from "@hooks";
-import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
+import { useOnlineConnection, useRealTimeConnection } from "@hooks";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
@@ -87,7 +86,7 @@ export default function Index(): React.ReactElement | null {
       lessonId,
     }));
     push(
-      `${PATH_PAGE.codePanel.workSpace(
+      `${PATH_DASHBOARD.codePanel.workSpace(
         courseContent?.id as string
       )}?${new URLSearchParams({ unitId })}&${new URLSearchParams({
         lessonId,
@@ -134,7 +133,7 @@ export default function Index(): React.ReactElement | null {
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split("/");
         push(
-          `${PATH_PAGE.codePanel.workSpace(
+          `${PATH_DASHBOARD.codePanel.workSpace(
             courseContent?.id
           )}?${new URLSearchParams({
             unitId: pathStr[0],

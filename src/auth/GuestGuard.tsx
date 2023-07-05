@@ -1,5 +1,5 @@
 import { LoadingScreen } from "@components";
-import { PATH_MAIN } from "@routes/paths";
+import { PATH_DASHBOARD, PATH_MAIN } from "@routes/paths";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuthContext } from "./useAuthContext";
@@ -22,7 +22,7 @@ export default function GuestGuard({
       if (route.includes("public")) {
         push(asPath);
       } else {
-        push(PATH_MAIN.root);
+        push(PATH_DASHBOARD.root);
       }
     }
   }, [isAuthenticated]);

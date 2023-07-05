@@ -37,8 +37,6 @@ export default function Login(): React.ReactElement {
         <TipButton tip={TIP} />
       </Stack>
       <AuthLoginForm />
-
-      {/* <AuthWithSocial /> */}
     </LoginLayout>
   );
 }

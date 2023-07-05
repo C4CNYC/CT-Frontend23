@@ -1,19 +1,25 @@
-import { Label, Iconify } from "@components";
+import { Iconify, Label } from "@components";
 import { PATH_DASHBOARD, PATH_MAIN, PATH_PAGE } from "@routes/paths";
+import { AiOutlineSolution } from "react-icons/ai";
 import {
   BsFillFileEarmarkMedicalFill,
   BsFlagFill,
   BsSpeedometer2,
 } from "react-icons/bs";
-import { AiOutlineSolution } from "react-icons/ai";
-import { FaSchool, FaTasks, FaUsers, FaUserShield, FaUserFriends } from "react-icons/fa";
+import {
+  FaSchool,
+  FaTasks,
+  FaUserFriends,
+  FaUsers,
+  FaUserShield,
+} from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
 import { GrOrganization } from "react-icons/gr";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
-import { RiOrganizationChart, RiFeedbackFill } from "react-icons/ri";
+import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
 import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
 
 export const admin = {
@@ -85,7 +91,7 @@ export const content = {
   items: [
     {
       title: "courses",
-      path: PATH_DASHBOARD.courses.root,
+      path: PATH_DASHBOARD.coursesMain.root,
       icon: <MdPlayLesson />,
     },
     {
@@ -122,12 +128,12 @@ export const general = {
   items: [
     {
       title: "HOME",
-      path: PATH_PAGE.home,
+      path: PATH_DASHBOARD.home,
       icon: <BsSpeedometer2 size={20} />,
     },
     {
       title: "COURSES",
-      path: PATH_PAGE.courses.root,
+      path: PATH_DASHBOARD.courses.root,
       icon: <BsFillFileEarmarkMedicalFill size={20} />,
     },
   ],
@@ -137,17 +143,17 @@ export const social = {
   items: [
     {
       title: "Tribes",
-      path: PATH_MAIN.tribes.root,
+      path: PATH_DASHBOARD.tribes.root,
       icon: <Tb3DCubeSphere size={20} />,
     },
     {
       title: "Friends",
-      path: PATH_PAGE.friends.root,
+      path: PATH_DASHBOARD.friends.root,
       icon: <FaUserFriends size={20} />,
     },
     {
       title: "Gallery",
-      path: PATH_MAIN.gallery.root,
+      path: PATH_DASHBOARD.gallery.root,
       icon: <TbPhoto size={20} />,
     },
   ],
@@ -157,7 +163,7 @@ export const apps = {
   items: [
     {
       title: "Goals",
-      path: PATH_MAIN.goals,
+      path: PATH_DASHBOARD.goals,
       disabled: true,
       icon: <BsFlagFill size={20} />,
     },
