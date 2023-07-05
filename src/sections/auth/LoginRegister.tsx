@@ -45,21 +45,7 @@ export default function LoginRegister({ isLogin }: Props): React.ReactElement {
         <Typography variant="h5" gutterBottom>
           {isLogin ? "Welcome back!" : "Let’s register your account!"}
         </Typography>
-        {!isLogin ? (
-          <Typography sx={{ mt: "8px" }} variant="body2">
-            I’ve been here before.
-            <Link component={NextLink} href={PATH_AUTH.login} sx={{ ml: 1 }}>
-              Login
-            </Link>
-          </Typography>
-        ) : (
-          <Typography sx={{ mt: "8px" }} variant="body2">
-            First time here?
-            <Link component={NextLink} href={PATH_AUTH.register} sx={{ ml: 1 }}>
-              Register
-            </Link>
-          </Typography>
-        )}
+
         <Tabs
           value={value}
           onChange={handleChange}
@@ -133,11 +119,26 @@ export default function LoginRegister({ isLogin }: Props): React.ReactElement {
           </Box>
           {isLogin ? "Login" : "Register"} with Google
         </Button>
-        {!isLogin && (
+        {!isLogin ? (
           <Typography variant="subtitle2">
             I’ve been here before.
-            <Link component={NextLink} href={PATH_AUTH.login} sx={{ ml: 1 }}>
+            <Link
+              component={NextLink}
+              href={PATH_AUTH.login}
+              sx={{ ml: 1, color: "#02D3D7" }}
+            >
               Let me Login
+            </Link>
+          </Typography>
+        ) : (
+          <Typography sx={{ mt: "8px" }} variant="body2">
+            First time here?
+            <Link
+              component={NextLink}
+              href={PATH_AUTH.register}
+              sx={{ ml: 1, color: "#02D3D7" }}
+            >
+              Register
             </Link>
           </Typography>
         )}

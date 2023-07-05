@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
+import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -88,21 +88,21 @@ export default function RegisterCoderForm({
       }
     } else {
       try {
-        // const { user } = await registerManagerProfile({
-        //   ...data,
-        //   first_name: "Happy",
-        //   last_name: "Cat",
-        // }).unwrap();
-        // const studentProfile = await register({
-        //   ...data,
-        //   first_name: "Happy",
-        //   last_name: "Cat",
-        //   manager_id: user.id,
-        // }).unwrap();
-        // localStorage.setItem("accessToken", studentProfile.access_token);
-        // await createClass({ name: "Happy Tribe" }).unwrap();
-        // router.reload();
-        // router.replace(PATH_MAIN.root);
+        const { user } = await registerManagerProfile({
+          ...data,
+          first_name: "Happy",
+          last_name: "Cat",
+        }).unwrap();
+        const studentProfile = await register({
+          ...data,
+          first_name: "Happy",
+          last_name: "Cat",
+          manager_id: user.id,
+        }).unwrap();
+        localStorage.setItem("accessToken", studentProfile.access_token);
+        await createClass({ name: "Happy Tribe" }).unwrap();
+        router.reload();
+        router.replace(PATH_DASHBOARD.home);
       } catch (e: any) {
         enqueueSnackbar("something went wrong", { variant: "error" });
         enqueueSnackbar(
@@ -124,7 +124,7 @@ export default function RegisterCoderForm({
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <Button>Apply Join Code</Button>
+              <Button sx={{ color: "#02D3D7" }}>Apply Join Code</Button>
             </InputAdornment>
           ),
         }}
@@ -190,14 +190,17 @@ export default function RegisterCoderForm({
           />
         </Stack>
 
-        <Stack direction="row" sx={{ ml: 1, mt: 1, mb: 2 }}>
+        <Stack direction="row" sx={{ ml: 1, mt: 1, mb: 1, height: "18px" }}>
           {isLogin && (
-            <Typography sx={{ alignSelf: "left" }} variant="caption">
+            <Typography
+              sx={{ alignSelf: "left", mt: "-5px" }}
+              variant="caption"
+            >
               Forgot password?{" "}
               <Link
                 component={NextLink}
                 href={PATH_AUTH.resetPassword}
-                sx={{ ml: 1 }}
+                sx={{ ml: 1, color: "#02D3D7" }}
               >
                 Reset password
               </Link>
@@ -217,7 +220,7 @@ export default function RegisterCoderForm({
           }
           sx={{
             boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
-            bgcolor: "primary",
+            bgcolor: "#02D3D7",
             borderRadius: "100px",
             fontSize: "15px",
             "&:hover": {
