@@ -72,7 +72,6 @@ export default function Register(): React.ReactElement {
         </Link>
         .
       </Typography>
-      {/* <AuthWithSocial /> */}
     </LoginLayout>
   );
 }

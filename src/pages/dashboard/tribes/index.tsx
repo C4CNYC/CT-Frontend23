@@ -2,7 +2,7 @@ import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard/";
 
 import { Box, Container, Link, Tab, Tabs } from "@mui/material";
-import { PATH_MAIN, PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
@@ -39,8 +39,8 @@ export default function Tribes(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Tribes"
           links={[
-            { name: "Dashboard", href: PATH_MAIN.index },
-            { name: "Tribes", href: PATH_MAIN.tribes.root },
+            { name: "Dashboard", href: PATH_DASHBOARD.home },
+            { name: "Tribes", href: PATH_DASHBOARD.tribes.root },
           ]}
         />
         <Container disableGutters>
@@ -100,7 +100,7 @@ export default function Tribes(): React.ReactElement {
               <Link
                 component={NextLink}
                 key={tribe.id}
-                href={PATH_PAGE.tribes.tribe(tribe.id)}
+                href={PATH_DASHBOARD.tribes.tribe(tribe.id)}
                 sx={{
                   textDecoration: "none",
                   "&:hover": {

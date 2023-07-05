@@ -1,10 +1,10 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { BaseResponseInterface } from "@utils";
-import { IFriend } from "../interfaces/friends.interface";
-import { IClass } from "../interfaces/class.interface";
 import { createSlice } from "@reduxjs/toolkit";
-import { OrganizationResponce } from "../services/interfaces/organization.interface";
+import { BaseResponseInterface } from "@utils";
 import { IUser } from "../interfaces/auth.interface";
+import { IClass } from "../interfaces/class.interface";
+import { IFriend } from "../interfaces/friends.interface";
+import { OrganizationResponce } from "../services/interfaces/organization.interface";
 
 export interface CounterState {
   org_id: string;

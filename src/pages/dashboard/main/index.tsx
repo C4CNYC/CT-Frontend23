@@ -1,8 +1,8 @@
-import { useSettingsContext, EmptyContent } from "@components";
+import { EmptyContent, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard/";
 import { Box, Grid, Link, Paper, Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import DefaultClassInfo from "@sections/main/DefaultClassInfo";
 import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
@@ -64,7 +64,7 @@ export default function HomeOverview(): React.ReactElement {
               >
                 <Typography variant="h5">Continue Learning</Typography>
                 <Link
-                  href={PATH_PAGE.courses.root}
+                  href={PATH_DASHBOARD.courses.root}
                   underline="none"
                   variant="body2"
                   sx={{ color: "#02D3D7" }}
@@ -84,8 +84,7 @@ export default function HomeOverview(): React.ReactElement {
             gap: 3,
             flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
           }}
-        >
-        </Grid>
+        ></Grid>
       </Container>
     </>
   );

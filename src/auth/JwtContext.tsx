@@ -9,6 +9,7 @@ import {
 import { axios, localStorageAvailable, voidFunction } from "@utils";
 //
 import { useDispatch } from "react-redux";
+import { Role } from "src/redux/services/enums/role.enum";
 import { cleanUser, setUser } from "src/redux/slices/global";
 import {
   ActionMapType,
@@ -159,7 +160,9 @@ export function AuthProvider({
   }, [storageAvailable]);
 
   useEffect(() => {
-    initialize().catch(() => { voidFunction() });
+    initialize().catch(() => {
+      voidFunction();
+    });
   }, [initialize]);
 
   // AUTHENTICATE
@@ -172,16 +175,25 @@ export function AuthProvider({
 
   // LOGIN
   const login = useCallback(
-    async (email: string, password: string, tenantName: string) => {
+    async (
+      email: string,
+      password: string,
+      tenantName: string,
+      isStudent: boolean
+    ) => {
       localStorage.setItem("tenantName", tenantName);
       // Update <any, any> to normall types
-      const { data } = await axios.post<any, any>("auth/signin", {
+      const path = isStudent ? "student/auth/signin" : "auth/signin";
+
+      const { data } = await axios.post<any, any>(path, {
         email,
         password,
       });
 
       const { access_token: accessToken, user } = data;
-      reduxDispatch(setUser(user));
+      reduxDispatch(
+        setUser({ ...user, role: isStudent ? Role.Student : Role.Admin })
+      );
 
       setSession(
         accessToken,
