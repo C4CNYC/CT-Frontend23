@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { IProgressTableData } from "@pages/teacher/dashboard/school/progress";
+import { IProgressTableData } from "@pages/dashboard/school/progress";
 import _ from "lodash";
 
 interface IProgressTable {

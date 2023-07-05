@@ -8,7 +8,7 @@ import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 import { NAV } from "../../../config-global";
 import { useResponsive } from "@hooks";
-import { admin, content, managment } from "./config-navigation";
+import { admin, content, managment, general, apps, social, socials } from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
 // ----------------------------------------------------------------------
 
@@ -20,6 +20,7 @@ interface Props {
 const menuConfig = {
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
+  [Role.Student]: [general, apps, social, socials],
   [Role.Manager]: [managment, content],
   [Role.Editor]: [content],
 };

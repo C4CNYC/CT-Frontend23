@@ -6,7 +6,7 @@ import {
 } from "@hooks";
 import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, Container } from "@mui/material";
-import FilterLessons from "@pages/teacher/dashboard/lessons/filter";
+import FilterLessons from "@pages/dashboard/lessons/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";

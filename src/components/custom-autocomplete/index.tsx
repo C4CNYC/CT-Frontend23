@@ -14,7 +14,7 @@ import {
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
 
-import SchoolFiltersSkeleton from "@pages/teacher/dashboard/school/students/school-filter-skeleton";
+import SchoolFiltersSkeleton from "@pages/dashboard/school/students/school-filter-skeleton";
 import { useState } from "react";
 import { BaseResponseInterface } from "@utils";
 import { Iconify } from "@components";

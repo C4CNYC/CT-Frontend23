@@ -25,41 +25,34 @@ export const PATH_AUTH = {
 
 export const PATH_PAGE = {
   onBoarding: "/on-boarding",
-  comingSoon: "/coming-soon",
-  maintenance: "/maintenance",
-  pricing: "/pricing",
-  payment: "/payment",
-  about: "/about-us",
-  contact: "/contact-us",
-  faqs: "/faqs",
   page403: "/403",
   page404: "/404",
   page500: "/500",
   components: "/components",
   profile: "/profile",
   home: "/main",
-  projects: "/student/projects",
+  projects: "/dashboard/projects",
 
   tribes: {
-    root: "/student/tribes",
-    tribe: (id: string) => path("/student/tribes/", `${id}`),
+    root: "/dashboard/tribes",
+    tribe: (id: string) => path("/dashboard/tribes/", `${id}`),
   },
   codePanel: {
-    root: "/student/code-panel",
-    workSpace: (id: string) => path("/student/code-panel/", `${id}`),
+    root: "/dashboard/code-panel",
+    workSpace: (id: string) => path("/dashboard/code-panel/", `${id}`),
   },
   publicCodePanel: {
-    root: "/student/public-code-panel",
-    workSpace: (id: string) => path("/student/public-code-panel/", `${id}`),
+    root: "/dashboard/public-code-panel",
+    workSpace: (id: string) => path("/dashboard/public-code-panel/", `${id}`),
   },
   courses: {
-    root: "/student/courses",
-    course: (id: string) => path("/student/courses/", `${id}`),
+    root: "/dashboard/courses",
+    course: (id: string) => path("/dashboard/courses/", `${id}`),
   },
-  publicCourses: "/student/public-courses",
+  publicCourses: "/dashboard/public-courses",
   friends: {
-    root: "/student/friends",
-    friend: (id: string) => path("/student/friends/", `${id}`),
+    root: "/dashboard/friends",
+    friend: (id: string) => path("/dashboard/friends/", `${id}`),
   },
 };
 
@@ -67,25 +60,22 @@ export const PATH_MAIN = {
   root: ROOTS_MAIN,
   index: "/",
   permissionDenied: path(ROOTS_MAIN, "/permission-denied"),
-  pinned: "/pinned",
-  recources: "/recources",
-  onlineBooks: "/online-books",
-  settings: "/settings",
+  settings: "/dashboard/settings",
   tribes: {
-    root: "/tribes",
+    root: "/dashboard/tribes",
     tribe: (id: string) => path("/tribes/", `${id}`),
   },
-  goals: "/goals",
+  goals: "/dashboard/goals",
   gallery: {
-    root: "/gallery",
-    publicProject: "/gallery/public-projects",
-    privateProject: "/gallery/private-projects",
+    root: "/dashboard/gallery",
+    publicProject: "/dashboard/gallery/public-projects",
+    privateProject: "/dashboard/gallery/private-projects",
   },
   galleryPublic: {
     root: "/gallery-public",
     project: (id: string) => path("/gallery-public/", `${id}`),
   },
-  profile: "/profile",
+  profile: "/student-profile",
 };
 
 export const PATH_DASHBOARD = {
@@ -144,20 +134,3 @@ export const PATH_DASHBOARD = {
       path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
   },
 };
-
-export const PATH_DOCS = {
-  root: "https://docs.minimals.cc",
-  changelog: "https://docs.minimals.cc/changelog",
-};
-
-export const PATH_ZONE_ON_STORE =
-  "https://mui.com/store/items/zone-landing-page/";
-
-export const PATH_MINIMAL_ON_STORE =
-  "https://mui.com/store/items/minimal-dashboard/";
-
-export const PATH_FREE_VERSION =
-  "https://mui.com/store/items/minimal-dashboard-free/";
-
-export const PATH_FIGMA_PREVIEW =
-  "https://www.figma.com/file/rWMDOkMZYw2VpTdNuBBCvN/%5BPreview%5D-Minimal-Web.26.11.22?node-id=0%3A1&t=ya2mDFiuhTXXLLF1-1";

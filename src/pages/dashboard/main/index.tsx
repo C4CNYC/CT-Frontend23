@@ -6,10 +6,8 @@ import { PATH_PAGE } from "@routes/paths";
 import DefaultClassInfo from "@sections/main/DefaultClassInfo";
 import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
-// import PendingTasks from "@sections/main/pendingTasks";
 import ProjectList from "@sections/main/projectList";
 import Head from "next/head";
-// import TriberList from "../../sections/main/triberList";
 
 // ----------------------------------------------------------------------
 
@@ -80,8 +78,6 @@ export default function HomeOverview(): React.ReactElement {
           </>
         )}
 
-        {/* <SummatyList /> */}
-
         <Grid
           sx={{
             display: "flex",
@@ -89,8 +85,6 @@ export default function HomeOverview(): React.ReactElement {
             flexWrap: { xs: "wrap", sm: "wrap", md: "nowrap" },
           }}
         >
-          {/* <PendingTasks /> */}
-          {/* <TriberList /> */}
         </Grid>
       </Container>
     </>

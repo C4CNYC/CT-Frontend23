@@ -24,7 +24,7 @@ import {
   Tabs,
   Tooltip,
 } from "@mui/material";
-import SkeletonMembers from "@pages/teacher/dashboard/organization/members/SkeletonMembers";
+import SkeletonMembers from "@pages/dashboard/organization/members/SkeletonMembers";
 import { PATH_DASHBOARD } from "@routes/paths";
 import InviteStudentDialog from "@sections/dashboard/student/InviteStudentDialog";
 import PendingInvitesTab from "@sections/dashboard/student/PendingInvitesTab";

@@ -1,12 +1,9 @@
 import {
-  //   emptyRows,
-  //   TableEmptyRows,
   TableHeadCustom,
   Label,
 } from "@components";
 import { voidFunction } from "@utils";
 import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material";
-// import SkeletonMembers from "@pages/teacher/dashboard/organization/members/SkeletonMembers";
 
 const TABLE_HEAD = [
   { id: "email", label: "Email", align: "left" },
@@ -30,17 +27,12 @@ export default function PendingInvitesTab({
     <>
       <TableHeadCustom
         order={order}
-        // orderBy={orderBy}
         headLabel={TABLE_HEAD}
-        // rowCount={data?.data.length}
         numSelected={selected.length}
         onSort={onSort}
         onSelectAllRows={ (checked: any) => { voidFunction() } }
       />
       <TableBody sx={{ minHeight: 12 }}>
-        {/* {isLoading
-          ? [...Array(5)].map((item, i) => <SkeletonMembers key={i} />)
-          : data?.data.map((row) => ( */}
         <PendingUserRow
           // key={row.id}
           row={{}}
@@ -49,17 +41,6 @@ export default function PendingInvitesTab({
           onDeleteRow={voidFunction}
           onEditRow={voidFunction}
         />
-        {/* ))} */}
-        {/* <TableNoData isNotFound={!data?.data.length && !isLoading} /> */}
-
-        {/* <TableEmptyRows
-      height={dense ? 52 : 72}
-      emptyRows={emptyRows(
-        page,
-        filters?.take ?? 10,
-        data?.data.length ?? 0
-      )}
-    /> */}
       </TableBody>
     </>
   );

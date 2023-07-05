@@ -7,7 +7,7 @@ import {
 } from "@hooks";
 import DashboardLayout from "@layouts/dashboard";
 import { Box, Button, Container } from "@mui/material";
-import FilterModules from "@pages/teacher/dashboard/modules/filter";
+import FilterModules from "@pages/dashboard/modules/filter";
 import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";

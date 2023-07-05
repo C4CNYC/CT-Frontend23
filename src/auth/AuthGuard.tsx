@@ -1,5 +1,5 @@
 import { LoadingScreen } from "@components";
-import Login from "@pages/teacher/auth/login";
+import Login from "@pages/auth/login";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "./useAuthContext";

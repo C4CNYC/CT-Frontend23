@@ -5,7 +5,7 @@ import { ProfileCover } from "@sections/dashboard/user/profile";
 import Head from "next/head";
 import { useState } from "react";
 // auth
-import SkeletonSchool from "@pages/teacher/dashboard/school/general/skeleton-school";
+import SkeletonSchool from "@pages/dashboard/school/general/skeleton-school";
 import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
 import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
 import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
