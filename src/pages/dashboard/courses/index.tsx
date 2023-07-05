@@ -50,7 +50,7 @@ export default function Courses(): React.ReactElement {
   const [value, setValue] = useState<number>(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    router.replace("/courses", undefined, { shallow: true });
+    router.replace("/dashboard/courses", undefined, { shallow: true });
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Courses(): React.ReactElement {
           <CustomBreadcrumbs
             heading="Courses"
             links={[
-              { name: "Dashboard", href: PATH_MAIN.index },
+              { name: "Dashboard", href: PATH_DASHBOARD.home },
               { name: "Courses", href: PATH_DASHBOARD.courses.root },
             ]}
           />

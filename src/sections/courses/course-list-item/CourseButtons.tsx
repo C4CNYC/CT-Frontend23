@@ -1,6 +1,6 @@
-import { addAlpha } from "@utils";
 import { Button, Link, Stack } from "@mui/material";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { addAlpha } from "@utils";
 
 interface Props {
   redirect: () => void;
@@ -18,7 +18,7 @@ export default function CourseButtons({
       {progress && progress > 0 ? (
         <Button
           component={Link}
-          href={`${PATH_PAGE.codePanel.root}/${courseId}`}
+          href={`${PATH_DASHBOARD.codePanel.root}/${courseId}`}
           variant="outlined"
           sx={{
             p: "5px 15px",

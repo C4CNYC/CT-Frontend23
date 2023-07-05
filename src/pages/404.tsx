@@ -1,11 +1,12 @@
 import { m } from "framer-motion";
 // next
-import { Box, Button, Typography } from "@mui/material";
-import Head from "next/head";
-import NextLink from "next/link";
 import { PageNotFoundIllustration } from "@assets/illustrations";
 import { MotionContainer, varBounce } from "@components";
 import CompactLayout from "@layouts/compact";
+import { Box, Button, Typography } from "@mui/material";
+import { PATH_DASHBOARD } from "@routes/paths";
+import Head from "next/head";
+import NextLink from "next/link";
 
 // ----------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ export default function Page404(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> 404 Page Not Found | Minimal UI</title>
+        <title> 404 Page Not Found | CodeTribe</title>
       </Head>
 
       <MotionContainer>
@@ -46,7 +47,7 @@ export default function Page404(): React.ReactElement {
           <Box display="flex" flexDirection="row">
             <Button
               component={NextLink}
-              href="/"
+              href={PATH_DASHBOARD.home}
               size="large"
               variant="contained"
               fullWidth
@@ -55,7 +56,7 @@ export default function Page404(): React.ReactElement {
             </Button>
             <Button
               component={NextLink}
-              href="/gallery"
+              href={PATH_DASHBOARD.gallery.root}
               size="large"
               variant="contained"
               fullWidth
@@ -68,7 +69,7 @@ export default function Page404(): React.ReactElement {
             </Button>
             <Button
               component={NextLink}
-              href="/courses"
+              href={PATH_DASHBOARD.codePanel.root}
               size="large"
               variant="contained"
               fullWidth
