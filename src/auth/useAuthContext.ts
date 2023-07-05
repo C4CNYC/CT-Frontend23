@@ -2,9 +2,6 @@ import { useContext } from "react";
 //
 import { AuthContext } from "./JwtContext";
 import { JWTContextType } from "./types";
-// import { AuthContext } from './Auth0Context';
-// import { AuthContext } from './FirebaseContext';
-// import { AuthContext } from './AwsCognitoContext';
 
 // ----------------------------------------------------------------------
 
