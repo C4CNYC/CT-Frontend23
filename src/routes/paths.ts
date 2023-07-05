@@ -32,28 +32,6 @@ export const PATH_PAGE = {
   profile: "/profile",
   home: "/main",
   projects: "/dashboard/projects",
-
-  tribes: {
-    root: "/dashboard/tribes",
-    tribe: (id: string) => path("/dashboard/tribes/", `${id}`),
-  },
-  codePanel: {
-    root: "/dashboard/code-panel",
-    workSpace: (id: string) => path("/dashboard/code-panel/", `${id}`),
-  },
-  publicCodePanel: {
-    root: "/dashboard/public-code-panel",
-    workSpace: (id: string) => path("/dashboard/public-code-panel/", `${id}`),
-  },
-  courses: {
-    root: "/dashboard/courses",
-    course: (id: string) => path("/dashboard/courses/", `${id}`),
-  },
-  publicCourses: "/dashboard/public-courses",
-  friends: {
-    root: "/dashboard/friends",
-    friend: (id: string) => path("/dashboard/friends/", `${id}`),
-  },
 };
 
 export const PATH_MAIN = {
@@ -61,16 +39,7 @@ export const PATH_MAIN = {
   index: "/",
   permissionDenied: path(ROOTS_MAIN, "/permission-denied"),
   settings: "/dashboard/settings",
-  tribes: {
-    root: "/dashboard/tribes",
-    tribe: (id: string) => path("/tribes/", `${id}`),
-  },
-  goals: "/dashboard/goals",
-  gallery: {
-    root: "/dashboard/gallery",
-    publicProject: "/dashboard/gallery/public-projects",
-    privateProject: "/dashboard/gallery/private-projects",
-  },
+
   galleryPublic: {
     root: "/gallery-public",
     project: (id: string) => path("/gallery-public/", `${id}`),
@@ -83,9 +52,10 @@ export const PATH_DASHBOARD = {
   home: path(ROOTS_DASHBOARD, "/home"),
   stream: path(ROOTS_DASHBOARD, "/stream"),
   permissionDenied: path(ROOTS_DASHBOARD, "/permission-denied"),
-  courses: {
-    root: path(ROOTS_DASHBOARD, "/courses"),
-    setting: (id: string) => path(ROOTS_DASHBOARD, `/courses/${id}/setting`),
+  coursesMain: {
+    root: path(ROOTS_DASHBOARD, "/courses-main"),
+    setting: (id: string) =>
+      path(ROOTS_DASHBOARD, `/courses-main/${id}/setting`),
   },
   modules: {
     root: path(ROOTS_DASHBOARD, "/modules/list"),
@@ -132,5 +102,32 @@ export const PATH_DASHBOARD = {
       path(ROOTS_DASHBOARD, `/school/classes/${id}/controller`),
     edit: (name: string) =>
       path(ROOTS_DASHBOARD, `/school/students/${name}/edit`),
+  },
+  tribes: {
+    root: "/dashboard/tribes",
+    tribe: (id: string) => path("/dashboard/tribes/", `${id}`),
+  },
+  codePanel: {
+    root: "/dashboard/code-panel",
+    workSpace: (id: string) => path("/dashboard/code-panel/", `${id}`),
+  },
+  publicCodePanel: {
+    root: "/dashboard/public-code-panel",
+    workSpace: (id: string) => path("/dashboard/public-code-panel/", `${id}`),
+  },
+  courses: {
+    root: "/dashboard/courses",
+    course: (id: string) => path("/dashboard/courses/", `${id}`),
+  },
+  publicCourses: "/dashboard/public-courses",
+  friends: {
+    root: "/dashboard/friends",
+    friend: (id: string) => path("/dashboard/friends/", `${id}`),
+  },
+  goals: "/dashboard/goals",
+  gallery: {
+    root: "/dashboard/gallery",
+    publicProject: "/dashboard/gallery/public-projects",
+    privateProject: "/dashboard/gallery/private-projects",
   },
 };

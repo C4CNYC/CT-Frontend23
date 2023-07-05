@@ -10,7 +10,7 @@ export default function HomePage(): React.ReactElement {
   const { push } = useRouter();
   useEffect(() => {
     if (isAuthenticated) {
-      push(PATH_DASHBOARD.root);
+      push(PATH_DASHBOARD.home);
     } else {
       push(PATH_AUTH.login);
     }

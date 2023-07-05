@@ -13,9 +13,9 @@ import { PATH_AUTH } from "../../routes/paths";
 // auth
 import { useAuthContext } from "../../auth/useAuthContext";
 // components
+import { FormProvider, Iconify, RHFTextField } from "@components";
 import { useRouter } from "next/router";
 import { PATH_AFTER_LOGIN } from "src/config-global";
-import { RHFTextField, FormProvider, Iconify } from "@components";
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,6 @@ interface FormValuesProps {
 export default function AuthLoginForm(): React.ReactElement {
   const { login } = useAuthContext();
   const router = useRouter();
-  // const { tenant_name } = router.query;
 
   const [showPassword, setShowPassword] = useState(false);
 

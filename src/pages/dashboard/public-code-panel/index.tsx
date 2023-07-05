@@ -1,5 +1,5 @@
 import { LoadingScreen } from "@components";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import GuestGuard from "src/auth/GuestGuard";
@@ -12,7 +12,7 @@ export default function Index(): React.ReactElement {
 
   useEffect(() => {
     if (!data) return;
-    push(`${PATH_PAGE.publicCodePanel.workSpace(data?.data[0].id)}`);
+    push(`${PATH_DASHBOARD.publicCodePanel.workSpace(data?.data[0].id)}`);
   }, [data]);
   if (isLoading || !data) return <LoadingScreen />;
 

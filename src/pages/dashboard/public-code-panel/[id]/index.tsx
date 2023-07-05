@@ -1,6 +1,6 @@
 import { EmptyContent } from "@components";
 import { Box } from "@mui/material";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import BottomBar from "@sections/code-panel/bottom-bar";
@@ -63,7 +63,7 @@ export default function Index(): React.ReactElement {
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     push(
-      `${PATH_PAGE.publicCodePanel.workSpace(
+      `${PATH_DASHBOARD.publicCodePanel.workSpace(
         query?.id as string
       )}?${new URLSearchParams({ unitId })}&${new URLSearchParams({
         lessonId,
@@ -90,7 +90,7 @@ export default function Index(): React.ReactElement {
       if (nextLessonInfo) {
         const pathStr = nextLessonInfo.path.split("/");
         push(
-          `${PATH_PAGE.publicCodePanel.workSpace(
+          `${PATH_DASHBOARD.publicCodePanel.workSpace(
             courseContent?.id
           )}?${new URLSearchParams({
             unitId: pathStr[0],

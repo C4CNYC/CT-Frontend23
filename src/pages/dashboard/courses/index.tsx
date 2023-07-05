@@ -1,7 +1,7 @@
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Container, Skeleton, Tab, Tabs, Typography } from "@mui/material";
-import { PATH_MAIN, PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD, PATH_MAIN } from "@routes/paths";
 import CourseList from "@sections/courses/CourseList";
 import LessonList from "@sections/courses/LessonList";
 import ModuleList from "@sections/courses/ModuleList";
@@ -64,7 +64,7 @@ export default function Courses(): React.ReactElement {
             heading="Courses"
             links={[
               { name: "Dashboard", href: PATH_MAIN.index },
-              { name: "Courses", href: PATH_PAGE.courses.root },
+              { name: "Courses", href: PATH_DASHBOARD.courses.root },
             ]}
           />
         </>
