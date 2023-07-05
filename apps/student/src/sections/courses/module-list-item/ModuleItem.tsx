@@ -9,7 +9,7 @@ import {
 import { IModule } from "src/redux/interfaces/content.interface";
 import ModuleStatistics from "./ModuleStatistics";
 
-export default function ModuleItem({ data }: any): React.ReactElement {
+export default function ModuleItem(data: IModule): React.ReactElement {
   const theme = useTheme();
   return (
     <Paper

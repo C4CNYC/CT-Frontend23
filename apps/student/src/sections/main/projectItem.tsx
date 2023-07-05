@@ -85,7 +85,7 @@ export default function ProjectItem({
           </Grid>
           <Button
             component={Link}
-            href={`${PATH_PAGE.courses.course(course?.id as string)}`}
+            href={`${PATH_PAGE.courses.course(course?.id)}`}
             size="small"
             endIcon={<AiOutlineArrowRight color="gray" size={16} />}
             sx={{
@@ -108,7 +108,7 @@ export default function ProjectItem({
         </Grid>
         <Button
           component={Link}
-          href={`${PATH_PAGE.codePanel.workSpace(course?.id as string)}`}
+          href={`${PATH_PAGE.codePanel.workSpace(course?.id)}`}
           sx={{
             border: "1px solid #02D3D7",
             borderRadius: "100px",

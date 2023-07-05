@@ -1,6 +1,6 @@
+import { UserType } from "@ct-nx/utils";
 import { PATH_AUTH, PATH_MAIN, PATH_PAGE } from "@routes/paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
-import { UserType } from "@ct-nx/utils";
 import MenuHugDialog from "./MenuHugDialog";
 
 interface IMenuConfigItem {
@@ -84,7 +84,9 @@ export const anonimUserConfig: IMenuConfigItem[] = [
   },
 ];
 
-export default {
+const config = {
   [UserType.Authorized]: authorizedUserConfig,
   [UserType.Anonim]: anonimUserConfig,
 };
+
+export default config;

@@ -12,7 +12,10 @@
       "parserOptions": {
         "project": ["apps/student/tsconfig.json"]
       },
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-console": ["error", { "allow": [""] }]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],
@@ -23,8 +26,7 @@
       "rules": {}
     }
   ],
-  "rules": {
-  },
+  "rules": {},
   "env": {
     "jest": true
   }

@@ -1,9 +1,5 @@
 import { RequestCatchError } from "@ct-nx/types";
-import {
-  BaseQueryFn,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query";
+import { BaseQueryFn, FetchArgs } from "@reduxjs/toolkit/query";
 
 export const baseQueryWithAuth: (
   baseQuery: any

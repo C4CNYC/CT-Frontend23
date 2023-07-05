@@ -30,7 +30,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const redirect = (): void => {
-    push(`${PATH_PAGE.courses.course(course.id as string)}`);
+    push(`${PATH_PAGE.courses.course(course.id)}`);
   };
   return (
     <Stack
@@ -108,7 +108,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           <CourseButtons
             redirect={redirect}
             progress={course.progress}
-            courseId={course.id as string}
+            courseId={course.id}
           />
           {isMobile && (
             <Stack alignItems="center" mb={3} mt={1}>

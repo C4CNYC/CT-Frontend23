@@ -2,7 +2,7 @@ import { useMediaQuery, useTheme } from "@mui/material";
 import { differenceInSeconds } from "date-fns";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import JoyRide, { ACTIONS, CallBackProps, EVENTS, STATUS } from "react-joyride";
+import JoyRide, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 import { useSelector } from "src/redux/store";
 import { startTour } from "./tour-atom";
 import { TOUR_STEPS_DECKTOP, TOUR_STEPS_MOBILE } from "./TourSteps";

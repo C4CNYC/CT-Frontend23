@@ -33,7 +33,8 @@
         "quotes": [2, "double", { "avoidEscape": true }],
         "@typescript-eslint/indent": 0,
         "@typescript-eslint/no-explicit-any": "off",
-        "no-console": ["error", {"allow": [""]}]
+        "no-console": ["error", { "allow": [""] }],
+        "react-hooks/exhaustive-deps": "off"
       }
     },
     {

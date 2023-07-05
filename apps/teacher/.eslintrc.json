@@ -13,7 +13,9 @@
         "project": ["apps/teacher/tsconfig.json"]
       },
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/teacher/pages"]
+        "@next/next/no-html-link-for-pages": ["error", "apps/teacher/pages"],
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-console": ["error", { "allow": [""] }]
       }
     },
     {
