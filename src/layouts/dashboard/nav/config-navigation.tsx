@@ -67,18 +67,8 @@ export const managment = {
     },
     {
       title: "assignments",
-      path: " ",
+      path: PATH_DASHBOARD.school.assignments,
       icon: <AiOutlineSolution />,
-      info: (
-        <Label
-          color="success"
-          sx={{
-            mr: "-4px",
-          }}
-        >
-          Coming soon
-        </Label>
-      ),
     },
     {
       title: "progress",
