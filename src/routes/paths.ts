@@ -30,6 +30,7 @@ export const PATH_PAGE = {
   page500: "/500",
   components: "/components",
   profile: "/profile",
+  studentProfile: "/student-profile",
   home: "/main",
 };
 

@@ -10,8 +10,8 @@ import {
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
 
-export const authApi = createApi({
-  reducerPath: "api/auth",
+export const studentAuthApi = createApi({
+  reducerPath: "api/student-auth",
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/student/auth`)
   ),
@@ -50,7 +50,7 @@ export const authApi = createApi({
         body,
       }),
     }),
-    profile: builder.query<User, void>({
+    profileStudent: builder.query<User, any>({
       query: () => ({
         url: "/profile",
         method: "GET",
@@ -94,7 +94,7 @@ export const authApi = createApi({
 });
 
 export const {
-  useProfileQuery,
+  useProfileStudentQuery,
   usePrefetch,
   // ---------mutation-----------
   useLoginMutation,
@@ -105,4 +105,4 @@ export const {
   useSubmitPasswordMutation,
   useUpdateProfileMutation,
   useUdpateProfileAvatarMutation,
-} = authApi;
+} = studentAuthApi;

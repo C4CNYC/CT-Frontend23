@@ -1,7 +1,9 @@
-import { useState } from "react";
-// next
-import { useRouter } from "next/router";
-// @mui
+import {
+  CustomAvatar,
+  IconButtonAnimate,
+  MenuPopover,
+  useSnackbar,
+} from "@components";
 import {
   Box,
   Divider,
@@ -11,44 +13,43 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-// routes
 import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
-// auth
-import { useAuthContext } from "../../../auth/useAuthContext";
-// components
-import {
-  CustomAvatar,
-  IconButtonAnimate,
-  MenuPopover,
-  useSnackbar,
-} from "@components";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { IUser } from "src/redux/interfaces/auth.interface";
 import { useProfileQuery } from "src/redux/services/auth";
+import { useProfileStudentQuery } from "src/redux/services/student-auth";
+import { useSelector } from "src/redux/store";
+import { useAuthContext } from "../../../auth/useAuthContext";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
-  const { replace, push } = useRouter();
-  const { data: profile } = useProfileQuery();
-
-  const { logout } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
+  const { logout } = useAuthContext();
+  const { replace, push } = useRouter();
+  const [profile, setProfile] = useState<IUser>();
+  const isStudent = useSelector((state) => state.global.isStudent);
+  const { data: profileTeacher } = useProfileQuery({}, { skip: isStudent });
+  const { data: profileStudent } = useProfileStudentQuery(
+    {},
+    { skip: !isStudent }
+  );
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-
-  const OPTIONS = [
-    {
-      label: "Profile",
-      linkTo: PATH_PAGE.profile,
-    },
-  ];
-
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
-
+  useEffect(() => {
+    if (isStudent && profileStudent) {
+      setProfile(profileStudent);
+    }
+    if (!isStudent && profileTeacher) {
+      setProfile(profileTeacher);
+    }
+  }, [profileTeacher, profileStudent]);
   const handleLogout = (): void => {
     try {
       logout();
@@ -63,6 +64,7 @@ export default function AccountPopover(): React.ReactElement {
     handleClosePopover();
     push(path);
   };
+
   return (
     <>
       <IconButtonAnimate
@@ -116,16 +118,15 @@ export default function AccountPopover(): React.ReactElement {
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <Stack sx={{ p: 1 }}>
-          {OPTIONS.map((option) => (
-            <MenuItem
-              key={option.label}
-              onClick={() => {
-                handleClickItem(option.linkTo);
-              }}
-            >
-              {option.label}
-            </MenuItem>
-          ))}
+          <MenuItem
+            onClick={() => {
+              handleClickItem(
+                isStudent ? PATH_PAGE.studentProfile : PATH_PAGE.profile
+              );
+            }}
+          >
+            Profile
+          </MenuItem>
         </Stack>
 
         <Divider sx={{ borderStyle: "dashed" }} />

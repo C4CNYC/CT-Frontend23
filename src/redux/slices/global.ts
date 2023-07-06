@@ -2,15 +2,13 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { BaseResponseInterface } from "@utils";
 import { IUser } from "../interfaces/auth.interface";
-import { IClass } from "../interfaces/class.interface";
-import { IFriend } from "../interfaces/friends.interface";
 import { OrganizationResponce } from "../services/interfaces/organization.interface";
 
 export interface CounterState {
   org_id: string;
   organizations: OrganizationResponce[];
-  isStudentManager: boolean;
   user: IUser | null;
+  isStudent: boolean;
 }
 
 export interface ISchool extends BaseResponseInterface {
@@ -21,19 +19,11 @@ export interface ISchool extends BaseResponseInterface {
   country: string;
 }
 
-export type User =
-  | (IFriend & { school: ISchool } & {
-      classes: Array<IClass & BaseResponseInterface>;
-    } & {
-      teacher_profile: (IUser & BaseResponseInterface) | null;
-    })
-  | null;
-
 const initialState: CounterState = {
   org_id: "",
   organizations: [],
-  isStudentManager: false,
   user: null,
+  isStudent: true,
 };
 
 export const globalSlice = createSlice({
@@ -46,17 +36,28 @@ export const globalSlice = createSlice({
     setOrganizationList: (state, action: PayloadAction<any[]>) => {
       state.organizations = action.payload;
     },
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
-      state.isStudentManager = !!action.payload?.teacher_profile;
     },
     cleanUser: (state, action: PayloadAction<undefined>) => {
       state.user = null;
     },
+    setUserRole: (state, action: PayloadAction<boolean>) => {
+      state.isStudent = action.payload;
+    },
+    cleanUserRole: (state, action: PayloadAction<undefined>) => {
+      state.isStudent = true;
+    },
   },
 });
 
-export const { setUser, setOrganization, setOrganizationList, cleanUser } =
-  globalSlice.actions;
+export const {
+  setUser,
+  setOrganization,
+  setOrganizationList,
+  cleanUser,
+  setUserRole,
+  cleanUserRole,
+} = globalSlice.actions;
 
 export default globalSlice.reducer;

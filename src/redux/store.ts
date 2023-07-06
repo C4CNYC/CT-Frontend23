@@ -15,6 +15,7 @@ import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
 import { studentApi } from "./services/student";
+import { studentAuthApi } from "./services/student-auth";
 import { schoolSettingsApi } from "./services/student/school-settings-manager";
 
 // ----------------------------------------------------------------------
@@ -32,6 +33,7 @@ const store = configureStore({
     })
       .concat(studentApi.middleware)
       .concat(authApi.middleware)
+      .concat(studentAuthApi.middleware)
       .concat(schoolSettingsApi.middleware)
       .concat(adminApi.middleware)
       .concat(managerApi.middleware),

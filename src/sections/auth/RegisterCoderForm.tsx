@@ -77,7 +77,7 @@ export default function RegisterCoderForm({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (isLogin) {
       try {
-        await login(data.email, data.password, "codetribe", isStudent);
+        await login(data.email, data.password, "codetribe");
         router.replace(PATH_AFTER_LOGIN);
       } catch (error: any) {
         reset();
@@ -114,21 +114,23 @@ export default function RegisterCoderForm({
   };
   return (
     <>
-      <TextField
-        id="join code"
-        label="Do you have a join code?"
-        variant="filled"
-        fullWidth
-        disabled
-        sx={{ "& .MuiInputBase-root": { height: "52px" }, mb: "24px" }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <Button sx={{ color: "#02D3D7" }}>Apply Join Code</Button>
-            </InputAdornment>
-          ),
-        }}
-      />
+      {isStudent && !isLogin && (
+        <TextField
+          id="join code"
+          label="Do you have a join code?"
+          variant="filled"
+          fullWidth
+          disabled
+          sx={{ "& .MuiInputBase-root": { height: "52px" }, mb: "24px" }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button sx={{ color: "#02D3D7" }}>Apply Join Code</Button>
+              </InputAdornment>
+            ),
+          }}
+        />
+      )}
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <RHFTextField
@@ -136,7 +138,7 @@ export default function RegisterCoderForm({
               mb: "24px",
               "& .MuiInputBase-root": { height: "52px" },
               "& .MuiFormLabel-root.Mui-focused": {
-                color: (theme) => theme.palette.primary.main,
+                color: "#02D3D7",
               },
               "& .MuiInput-underline:after": {
                 borderBottomColor: "#02D3D7",
@@ -144,7 +146,7 @@ export default function RegisterCoderForm({
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {
                   border: "2px solid",
-                  borderColor: (theme) => theme.palette.primary.main,
+                  borderColor: "#02D3D7",
                 },
               },
             }}
@@ -159,7 +161,7 @@ export default function RegisterCoderForm({
             sx={{
               "& .MuiInputBase-root": { height: "52px" },
               "& .MuiFormLabel-root.Mui-focused": {
-                color: (theme) => theme.palette.primary.main,
+                color: "#02D3D7",
               },
               "& .MuiInput-underline:after": {
                 borderBottomColor: "#02D3D7",
@@ -167,7 +169,7 @@ export default function RegisterCoderForm({
               "& .MuiOutlinedInput-root": {
                 "&.Mui-focused fieldset": {
                   border: "2px solid",
-                  borderColor: (theme) => theme.palette.primary.main,
+                  borderColor: "#02D3D7",
                 },
               },
             }}
@@ -179,6 +181,7 @@ export default function RegisterCoderForm({
                       setShowPassword(!showPassword);
                     }}
                     edge="end"
+                    sx={{ color: "#02D3D7" }}
                   >
                     <Iconify
                       icon={showPassword ? "eva:eye-fill" : "eva:eye-off-fill"}
@@ -233,7 +236,7 @@ export default function RegisterCoderForm({
           <Box sx={{ mr: 1, height: "20px" }}>
             <IoRocketSharp size="20px" />
           </Box>
-          Whoop whoop, register now!
+          {isLogin ? "Login" : "Whoop whoop, register now!"}
         </LoadingButton>
       </FormProvider>
     </>

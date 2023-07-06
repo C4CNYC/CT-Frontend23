@@ -5,7 +5,7 @@ import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
 import { studentApi } from "./services/student";
-import { authApi as studentAuthApi } from "./services/student-auth";
+import { studentAuthApi } from "./services/student-auth";
 import { studentPublicApi } from "./services/student/public-student";
 import { schoolSettingsApi } from "./services/student/school-settings-manager";
 import assignmentsReducer from "./slices/assignments";
