@@ -1,4 +1,4 @@
-import { Label, Iconify } from "@ct-nx/components";
+import { Iconify, Label } from "@ct-nx/components";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { AiOutlineSolution } from "react-icons/ai";
 import { FaSchool, FaTasks, FaUsers, FaUserShield } from "react-icons/fa";
@@ -53,18 +53,8 @@ export const managment = {
     },
     {
       title: "assignments",
-      path: " ",
+      path: PATH_DASHBOARD.school.assignments,
       icon: <AiOutlineSolution />,
-      info: (
-        <Label
-          color="success"
-          sx={{
-            mr: "-4px",
-          }}
-        >
-          Coming soon
-        </Label>
-      ),
     },
     {
       title: "progress",
