@@ -3,7 +3,7 @@ import { baseQueryWrapper } from "../helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "../helpers/query_with_auth";
 
 export const studentApi = createApi({
-  reducerPath: "api/manager",
+  reducerPath: "api/student",
   baseQuery: baseQueryWithAuth(
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/student`)
   ),
