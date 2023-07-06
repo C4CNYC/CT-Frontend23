@@ -10,7 +10,8 @@ import { axios, localStorageAvailable, voidFunction } from "@utils";
 //
 import { useDispatch } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
-import { cleanUser, setUser } from "src/redux/slices/global";
+import { cleanUser, cleanUserRole, setUser } from "src/redux/slices/global";
+import { useSelector } from "src/redux/store";
 import {
   ActionMapType,
   AuthStateType,
@@ -113,7 +114,7 @@ export function AuthProvider({
 }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
-
+  const isStudent = useSelector((state) => state.global.isStudent);
   const storageAvailable = localStorageAvailable();
 
   const initialize = useCallback(async () => {
@@ -126,17 +127,25 @@ export function AuthProvider({
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
+        const path = isStudent ? "student/auth/profile" : "/auth/profile";
+        const response = await axios.get(path);
 
-        const response = await axios.get("/auth/profile");
-
-        const user = response.data;
-        reduxDispatch(setUser(user));
+        const data = response.data;
+        reduxDispatch(
+          setUser({
+            ...(data.user || data.student),
+            role: data.user?.role || Role.Student,
+          })
+        );
 
         dispatch({
           type: Types.INITIAL,
           payload: {
             isAuthenticated: true,
-            user,
+            user: {
+              ...(data.user || data.student),
+              role: data.user?.role || Role.Student,
+            },
           },
         });
       } else {
@@ -157,7 +166,7 @@ export function AuthProvider({
         },
       });
     }
-  }, [storageAvailable]);
+  }, [isStudent]);
 
   useEffect(() => {
     initialize().catch(() => {
@@ -175,12 +184,7 @@ export function AuthProvider({
 
   // LOGIN
   const login = useCallback(
-    async (
-      email: string,
-      password: string,
-      tenantName: string,
-      isStudent: boolean
-    ) => {
+    async (email: string, password: string, tenantName: string) => {
       localStorage.setItem("tenantName", tenantName);
       // Update <any, any> to normall types
       const path = isStudent ? "student/auth/signin" : "auth/signin";
@@ -190,9 +194,12 @@ export function AuthProvider({
         password,
       });
 
-      const { access_token: accessToken, user } = data;
+      const { access_token: accessToken } = data;
       reduxDispatch(
-        setUser({ ...user, role: isStudent ? Role.Student : Role.Admin })
+        setUser({
+          ...(data.user || data.student),
+          role: data.user?.role || Role.Student,
+        })
       );
 
       setSession(
@@ -203,11 +210,14 @@ export function AuthProvider({
       dispatch({
         type: Types.LOGIN,
         payload: {
-          user,
+          user: {
+            ...(data.user || data.student),
+            role: data.user?.role || Role.Student,
+          },
         },
       });
     },
-    []
+    [isStudent]
   );
 
   // REGISTER
@@ -278,6 +288,7 @@ export function AuthProvider({
   const logout = useCallback(() => {
     setSession(null, null);
     reduxDispatch(cleanUser());
+    reduxDispatch(cleanUserRole());
     dispatch({
       type: Types.LOGOUT,
     });

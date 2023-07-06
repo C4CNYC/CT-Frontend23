@@ -1,8 +1,4 @@
-import {
-  RHFTextField,
-  RHFUploadAvatar,
-  FormProvider,
-} from "@components";
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Typography } from "@mui/material";
@@ -10,12 +6,13 @@ import { Stack } from "@mui/system";
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { IUser } from "src/redux/interfaces/auth.interface";
 import {
   useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
 } from "src/redux/services/auth";
-import { IUser } from "src/redux/services/interfaces/user.interface";
-import { BaseResponseInterface, fData } from "@utils";
+import { BaseResponseInterface } from "src/utils/baseResponce.interface";
+import { fData } from "src/utils/formatNumber";
 import * as Yup from "yup";
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
@@ -24,7 +21,7 @@ interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
 
 interface Props {
   isEdit?: boolean;
-  currentUser?: IUser & BaseResponseInterface;
+  currentUser?: IUser;
 }
 export default function ProfileEditForm({
   isEdit,
@@ -97,7 +94,7 @@ export default function ProfileEditForm({
         if (!photoURL) return;
         await updateAvatar(currentUser?.id, photoURL);
       }
-    } catch (error: any) {
+    } catch (error) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

@@ -16,6 +16,8 @@ import { useState } from "react";
 import { FaGraduationCap } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { GoFileCode } from "react-icons/go";
+import { useDispatch } from "react-redux";
+import { setUserRole } from "src/redux/slices/global";
 import RegisterCoderForm from "./RegisterCoderForm";
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -28,15 +30,24 @@ interface Props {
 }
 
 export default function LoginRegister({ isLogin }: Props): React.ReactElement {
+  const reduxDispatch = useDispatch();
   const [value, setValue] = useState<number>(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    reduxDispatch(setUserRole(!!value));
   };
 
   return (
     <LoginLayout title="Hi, I’m Mumu." subtitle="So glad you’re here!">
-      <Stack direction="column" sx={{ textAlign: "center" }}>
+      <Stack
+        direction="column"
+        sx={{
+          textAlign: "center",
+          justifyContent: "space-between",
+          height: "666px",
+        }}
+      >
         <Logo
           sx={{
             m: "0px auto 30px",

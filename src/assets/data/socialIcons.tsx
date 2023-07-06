@@ -33,38 +33,38 @@ export const SOCIAL_ICONS: Props = {
 export const Socials: SocialTypes[] = [
   {
     name: "youtube",
-    icon: <AiFillYoutube size={32} />,
+    icon: <AiFillYoutube size={28} color="#FF0000" />,
   },
   {
     name: "facebook",
-    icon: <AiFillFacebook size={32} />,
+    icon: <AiFillFacebook size={28} color="#4267B2" />,
   },
   {
     name: "twitter",
-    icon: <AiFillTwitterSquare size={32} />,
+    icon: <AiFillTwitterSquare size={28} color="#1DA1F2" />,
   },
   {
     name: "linkedin",
-    icon: <AiFillLinkedin size={32} />,
+    icon: <AiFillLinkedin size={28} color="#0077b5" />,
   },
   {
     name: "telegram",
-    icon: <BsTelegram size={32} />,
+    icon: <BsTelegram size={28} color="#229ED9" />,
   },
   {
     name: "whatsapp",
-    icon: <AiOutlineWhatsApp size={32} />,
+    icon: <AiOutlineWhatsApp size={28} color="#25D366" />,
   },
   {
     name: "viber",
-    icon: <SiViber size={32} />,
+    icon: <SiViber size={28} color="#7360F2" />,
   },
   {
     name: "instagram",
-    icon: <AiFillInstagram size={32} />,
+    icon: <AiFillInstagram size={28} color="#E1306C" />,
   },
   {
     name: "dribble",
-    icon: <AiFillDribbbleCircle size={32} />,
+    icon: <AiFillDribbbleCircle size={28} color="#ea4c89" />,
   },
 ];

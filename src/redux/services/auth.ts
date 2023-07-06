@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "@utils";
+import { IUser } from "../interfaces/auth.interface";
 import { Role } from "./enums/role.enum";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
@@ -72,7 +73,7 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
-    profile: builder.query<User, void>({
+    profile: builder.query<IUser, any>({
       query: () => ({
         url: "/profile",
         method: "GET",
