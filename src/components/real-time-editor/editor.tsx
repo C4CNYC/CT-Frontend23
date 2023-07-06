@@ -1,4 +1,4 @@
-import { defaultKeymap } from "@codemirror/commands";
+// import { defaultKeymap } from "@codemirror/commands";
 import { indentUnit } from "@codemirror/language";
 import { Compartment, EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
@@ -39,7 +39,7 @@ export const CodeEditor = ({
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString());
         }),
-        keymap.of(defaultKeymap),
+        // keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup({
           highlightActiveLineGutter: true,
