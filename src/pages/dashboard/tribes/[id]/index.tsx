@@ -13,10 +13,10 @@ import {
 import { format } from "date-fns";
 
 import { fNumber } from "@utils";
-import ProfileCover from "@sections/profile/ProfileCover";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import ProfileCover from "@sections/student-profile/ProfileCover";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

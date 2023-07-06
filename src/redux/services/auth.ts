@@ -73,7 +73,7 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
-    profile: builder.query<IUser, any>({
+    profile: builder.query<IUser, void>({
       query: () => ({
         url: "/profile",
         method: "GET",

@@ -13,11 +13,11 @@ import { useRouter } from "next/router";
 import { createTheme } from "@uiw/codemirror-themes";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { useEffect, useState } from "react";
-import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+import { useRealTimeConnection } from "@hooks";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;

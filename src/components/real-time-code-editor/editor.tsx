@@ -33,7 +33,6 @@ export const CodeEditor = ({ state, cursorId, cursorText, onChangeCode, socket }
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString())
         }),
-        // @ts-expect-error
         keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup(),

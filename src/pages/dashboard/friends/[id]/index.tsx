@@ -2,8 +2,7 @@ import { useSettingsContext, Iconify, CustomBreadcrumbs } from "@components";
 import DashboardLayout from "@layouts/dashboard";
 import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
 import { PATH_MAIN } from "@routes/paths";
-import ProfileCover from "@sections/profile/ProfileCover";
-import ProfileMain from "@sections/profile/ProfileMain";
+import ProfileCover from "@sections/student-profile/ProfileCover";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -22,14 +21,14 @@ export default function FriendProfile(): React.ReactElement {
   const { data, isLoading } = useGetFriendQuery({ id: query.id as string });
 
   if (isLoading || !data) return <Skeleton />;
-  const TABS = [
-    {
-      value: "profile",
-      label: "Profile",
-      icon: <Iconify icon="ic:round-account-box" />,
-      component: <ProfileMain data={data} isFriend={true} />,
-    },
-  ];
+  // const TABS = [
+    // {
+    //   value: "profile",
+    //   label: "Profile",
+    //   icon: <Iconify icon="ic:round-account-box" />,
+    //   component: <ProfileMain data={data} isFriend={true} />,
+    // },
+  // ];
   return (
     <>
       <Head>
@@ -77,24 +76,24 @@ export default function FriendProfile(): React.ReactElement {
               },
             }}
           >
-            {TABS.map((tab) => (
+            {/* {TABS.map((tab) => (
               <Tab
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
                 label={tab.label}
               />
-            ))}
+            ))} */}
           </Tabs>
         </Card>
 
-        {TABS.map((tab) => {
+        {/* {TABS.map((tab) => {
           return (
             tab.value === currentTab && (
               <Box key={tab.value}> {tab.component} </Box>
             )
           );
-        })}
+        })} */}
       </Container>
     </>
   );

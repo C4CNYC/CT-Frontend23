@@ -26,7 +26,7 @@ import { useGetClassMentorQuery } from "src/redux/services/student/classes-manag
 import ClassInfoHeader from "./ClassInfoToggle";
 
 export default function DefaultClassInfo(): React.ReactElement {
-  const { data: student } = useProfileQuery({});
+  const { data: student } = useProfileQuery();
   const { data, isLoading } = useGetClassMentorQuery(
     { id: student?.classes?.[0]?.id as string },
     { skip: !student }

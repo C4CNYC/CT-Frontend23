@@ -6,7 +6,6 @@ import {
 import { Box, Button, Divider } from "@mui/material";
 import { styled } from "@mui/system";
 import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
-import { copyPasteEvent } from "libs/components/src/lib/real-time-editor/events/copy-paste";
 import { memo } from "react";
 import { AiOutlineCopy } from "react-icons/ai";
 import { BsClipboard } from "react-icons/bs";
@@ -17,6 +16,7 @@ import {
 } from "react-icons/md";
 import { RiFilePaper2Fill, RiShareForwardFill } from "react-icons/ri";
 import { TbBoxMargin, TbBraces, TbTool } from "react-icons/tb";
+import { copyPasteEvent } from "src/components/real-time-editor/events/copy-paste";
 
 export enum ICodingActonsType {
   symbol = "symbol",
