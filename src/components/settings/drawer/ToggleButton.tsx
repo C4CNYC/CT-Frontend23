@@ -64,7 +64,7 @@ export default function ToggleButton({
 
       <Tooltip title="Settings">
         <IconButtonAnimate color="primary" onClick={onToggle} sx={{ p: 1.25 }}>
-          <SvgColor src="/icons/setting/ic_setting.svg" />
+          <SvgColor src="/assets/icons/setting/ic_setting.svg" />
         </IconButtonAnimate>
       </Tooltip>
     </Box>

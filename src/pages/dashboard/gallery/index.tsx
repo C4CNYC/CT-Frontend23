@@ -2,7 +2,7 @@ import { CustomBreadcrumbs, useSettingsContext } from "@components";
 
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Container, Grid, Link } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
+import { PATH_DASHBOARD, PATH_MAIN } from "@routes/paths";
 import FolderElement from "@sections/dashboard/gallery/FolderElement";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
@@ -41,8 +41,8 @@ export default function Gallery(): React.ReactElement {
       <CustomBreadcrumbs
         heading="Gallery"
         links={[
-          { name: "Dashboard", href: PATH_MAIN.index },
-          { name: "Gallery", href: PATH_MAIN.gallery.root },
+          { name: "Dashboard", href: PATH_DASHBOARD.home },
+          { name: "Gallery", href: PATH_DASHBOARD.gallery.root },
         ]}
       />
 
@@ -50,7 +50,7 @@ export default function Gallery(): React.ReactElement {
         <Grid item xs={12} md={6}>
           <Link
             component={NextLink}
-            href={PATH_MAIN.gallery.publicProject}
+            href={PATH_DASHBOARD.gallery.publicProject}
             underline="none"
           >
             <FolderElement
@@ -63,7 +63,7 @@ export default function Gallery(): React.ReactElement {
         <Grid item xs={12} md={6}>
           <Link
             component={NextLink}
-            href={PATH_MAIN.gallery.privateProject}
+            href={PATH_DASHBOARD.gallery.privateProject}
             underline="none"
           >
             <FolderElement

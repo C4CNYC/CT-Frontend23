@@ -1,22 +1,23 @@
-import { useSettingsContext, SimpleInfiniteList, EmptyContent, CustomBreadcrumbs } from "@components";
 import {
-  DEFAULT_TAKE_PER_PAGE,
-  FilterMode,
-  useFilters,
-} from "@hooks";
+  CustomBreadcrumbs,
+  EmptyContent,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from "@components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Container } from "@mui/material";
-import { PATH_MAIN, PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { SkeletonFriends } from "@sections/dashboard/friends/SkeletonFriends";
 import UserCard from "@sections/dashboard/friends/UserCard";
 import SkeletonBreadcrumbs from "@sections/skeleton/SkeletonBreadcrumbs";
 import SkeletonFilter from "@sections/skeleton/skeletonFilter";
+import { getCountTakingElment } from "@utils";
 import {
   IFriend,
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
-import { getCountTakingElment } from "@utils";
 import FilterFriends from "./filter";
 
 Friends.getLayout = (page: React.ReactElement) => (
@@ -45,8 +46,8 @@ export default function Friends(): React.ReactElement {
             <CustomBreadcrumbs
               heading="Friends"
               links={[
-                { name: "Dashboard", href: PATH_MAIN.index },
-                { name: "Friends", href: PATH_PAGE.friends.root },
+                { name: "Dashboard", href: PATH_DASHBOARD.home },
+                { name: "Friends", href: PATH_DASHBOARD.friends.root },
               ]}
             />
             <FilterFriends filters={filters} setFilter={setFilter} />

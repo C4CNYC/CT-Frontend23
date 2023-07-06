@@ -18,7 +18,7 @@ export default function ModeOptions(): React.ReactElement {
         {OPTIONS.map((mode) => (
           <StyledCard key={mode} selected={themeMode === mode}>
             <SvgColor
-              src={`/icons/setting/${
+              src={`/assets/icons/setting/${
                 mode === "light" ? "ic_sun" : "ic_moon"
               }.svg`}
             />

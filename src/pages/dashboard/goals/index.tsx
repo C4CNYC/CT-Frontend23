@@ -1,7 +1,7 @@
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Container, Grid, Skeleton } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import GoalsList from "@sections/goals/GoalsList";
 import Head from "next/head";
 import { useGetGoalsQuery } from "src/redux/services/student/goals-student";
@@ -26,8 +26,8 @@ export default function Goals(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Goals"
           links={[
-            { name: "Dashboard", href: PATH_MAIN.index },
-            { name: "Goals", href: PATH_MAIN.goals },
+            { name: "Dashboard", href: PATH_DASHBOARD.home },
+            { name: "Goals", href: PATH_DASHBOARD.goals },
           ]}
         />
         <Grid item xs={12} md={6} lg={8}>

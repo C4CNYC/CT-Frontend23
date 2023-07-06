@@ -35,7 +35,6 @@ const store = configureStore({
       .concat(schoolSettingsApi.middleware)
       .concat(adminApi.middleware)
       .concat(managerApi.middleware),
-  // .concat(studentApi.middleware),
 });
 
 const persistor = persistStore(store);

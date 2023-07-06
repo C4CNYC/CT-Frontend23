@@ -1,5 +1,7 @@
 import { Iconify, Label } from "@components";
 import { PATH_DASHBOARD, PATH_MAIN, PATH_PAGE } from "@routes/paths";
+import FeedbackDialog from "@sections/feedback/FeedbackDialog";
+import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { AiOutlineSolution } from "react-icons/ai";
 import {
   BsFillFileEarmarkMedicalFill,
@@ -176,13 +178,17 @@ export const socials = {
       title: "Invite Friends",
       path: "#",
       icon: <FaUserFriends size={20} />,
-      modal: "invite",
+      component: (children: React.ReactElement) => (
+        <InviteFriendsModal>{children}</InviteFriendsModal>
+      ),
     },
     {
       title: "Feedback",
-      path: PATH_PAGE.page404,
+      path: "#",
       icon: <RiFeedbackFill size={20} />,
-      modal: "feedback",
+      component: (children: React.ReactElement) => (
+        <FeedbackDialog>{children}</FeedbackDialog>
+      ),
     },
   ],
 };

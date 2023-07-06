@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import NextLink from "next/link";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 
@@ -76,7 +76,7 @@ export default function UserCard({ user }: Props) {
         />
         <Link
           component={NextLink}
-          href={PATH_PAGE.friends.friend(user.id)}
+          href={PATH_DASHBOARD.friends.friend(user.id)}
           sx={{
             textDecoration: "none",
             "&:hover": {

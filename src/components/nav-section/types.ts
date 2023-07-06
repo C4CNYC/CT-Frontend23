@@ -21,6 +21,7 @@ export interface NavListProps {
   disabled?: boolean;
   roles?: string[];
   children?: any;
+  component?: (children: React.ReactElement) => React.ReactElement;
 }
 
 export interface NavSectionProps extends StackProps {

@@ -16,7 +16,12 @@ import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 // auth
 import { useAuthContext } from "../../../auth/useAuthContext";
 // components
-import { IconButtonAnimate, useSnackbar, CustomAvatar, MenuPopover } from "@components";
+import {
+  CustomAvatar,
+  IconButtonAnimate,
+  MenuPopover,
+  useSnackbar,
+} from "@components";
 import { useProfileQuery } from "src/redux/services/auth";
 
 // ----------------------------------------------------------------------

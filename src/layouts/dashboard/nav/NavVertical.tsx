@@ -1,4 +1,5 @@
-import { Scrollbar, Logo, NavSectionVertical } from "@components";
+import { Logo, NavSectionVertical, Scrollbar } from "@components";
+import { useResponsive } from "@hooks";
 import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
 import UserSection from "@sections/home/user-section";
 import { useRouter } from "next/router";
@@ -7,8 +8,15 @@ import { useSelector } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 import { NAV } from "../../../config-global";
-import { useResponsive } from "@hooks";
-import { admin, content, managment, general, apps, social, socials } from "./config-navigation";
+import {
+  admin,
+  apps,
+  content,
+  general,
+  managment,
+  social,
+  socials,
+} from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
 // ----------------------------------------------------------------------
 

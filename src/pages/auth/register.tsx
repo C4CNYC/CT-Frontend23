@@ -1,5 +1,4 @@
-// next
-import Register from "@sections/auth/Register";
+import LoginRegister from "@sections/auth/LoginRegister";
 import Head from "next/head";
 import GuestGuard from "src/auth/GuestGuard";
 
@@ -9,11 +8,11 @@ export default function RegisterPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Register | Minimal UI</title>
+        <title> Register | CodeTribe</title>
       </Head>
 
       <GuestGuard>
-        <Register />
+        <LoginRegister isLogin={false} />
       </GuestGuard>
     </>
   );

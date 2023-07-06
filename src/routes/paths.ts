@@ -31,7 +31,6 @@ export const PATH_PAGE = {
   components: "/components",
   profile: "/profile",
   home: "/main",
-  projects: "/dashboard/projects",
 };
 
 export const PATH_MAIN = {
@@ -39,12 +38,10 @@ export const PATH_MAIN = {
   index: "/",
   permissionDenied: path(ROOTS_MAIN, "/permission-denied"),
   settings: "/dashboard/settings",
-
   galleryPublic: {
     root: "/gallery-public",
     project: (id: string) => path("/gallery-public/", `${id}`),
   },
-  profile: "/student-profile",
 };
 
 export const PATH_DASHBOARD = {

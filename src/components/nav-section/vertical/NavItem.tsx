@@ -24,7 +24,7 @@ export default function NavItem({
 }: NavItemProps): React.ReactElement | null {
   const { translate } = useLocales();
 
-  const { title, path, icon, info, children, caption, roles } = item;
+  const { title, path, icon, info, children, caption, roles, component } = item;
 
   const subItem = depth !== 1;
 
@@ -94,6 +94,10 @@ export default function NavItem({
     // Has child
     if (children || info) {
       return renderContent;
+    }
+
+    if (component) {
+      return component(renderContent);
     }
 
     // Default
