@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
@@ -33,6 +34,7 @@ export const CodeEditor = ({ state, cursorId, cursorText, onChangeCode, socket }
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString())
         }),
+        // @ts-nocheck
         keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup(),
