@@ -1,4 +1,4 @@
-import { PATH_DASHBOARD, PATH_MAIN } from "@routes/paths";
+import { PATH_MAIN } from "@routes/paths";
 
 // API
 // ----------------------------------------------------------------------
