@@ -8,6 +8,13 @@ export interface IAssignments {
   createdAt: Date | string | number;
   messageType: "image" | "text";
   message: string;
+  type: string;
+  duration: {
+    hours: string;
+    minutes: string;
+  };
+  complexity: string;
+  meta: any;
 }
 
 export interface IAssignmentsAssignee {

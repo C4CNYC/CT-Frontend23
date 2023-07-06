@@ -19,7 +19,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
@@ -60,7 +60,7 @@ const LessonManager = (): React.ReactElement => {
     }));
     if (publicPage) {
       push(
-        `${PATH_PAGE.publicCodePanel.workSpace(
+        `${PATH_DASHBOARD.publicCodePanel.workSpace(
           id as string
         )}?${new URLSearchParams({
           unitId: moduleId,
@@ -72,7 +72,7 @@ const LessonManager = (): React.ReactElement => {
       );
     } else {
       push(
-        `${PATH_PAGE.codePanel.workSpace(id as string)}?${new URLSearchParams({
+        `${PATH_DASHBOARD.codePanel.workSpace(id as string)}?${new URLSearchParams({
           unitId: moduleId,
         })}&${new URLSearchParams({
           lessonId,

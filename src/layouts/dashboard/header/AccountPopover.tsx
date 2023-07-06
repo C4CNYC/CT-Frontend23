@@ -30,7 +30,7 @@ export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
   const [profile, setProfile] = useState<IUser>();
   const isStudent = useSelector((state) => state.global.isStudent);
-  const { data: profileTeacher } = useProfileQuery({}, { skip: isStudent });
+  const { data: profileTeacher } = useProfileQuery(undefined, { skip: isStudent });
   const { data: profileStudent } = useProfileStudentQuery(
     {},
     { skip: !isStudent }

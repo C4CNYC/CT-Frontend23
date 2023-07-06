@@ -1,4 +1,4 @@
-import { PATH_AUTH, PATH_MAIN, PATH_PAGE } from "@routes/paths";
+import { PATH_AUTH, PATH_DASHBOARD, PATH_MAIN, PATH_PAGE } from "@routes/paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { UserType } from "@utils";
 import MenuHugDialog from "./MenuHugDialog";
@@ -20,7 +20,7 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     title: "What's poppin'?",
     subTitle: "Courses Page",
     icon: "uil:meeting-board",
-    href: PATH_PAGE.courses.root,
+    href: PATH_DASHBOARD.courses.root,
   },
   {
     title: "Overview",
@@ -32,13 +32,13 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     title: "Me, me, me",
     subTitle: "Profile",
     icon: "tabler:run",
-    href: PATH_MAIN.profile,
+    href: PATH_PAGE.profile,
   },
   {
     title: "Fun stuff",
     subTitle: "Gallery",
     icon: "maki:art-gallery",
-    href: PATH_MAIN.gallery.root,
+    href: PATH_DASHBOARD.gallery.root,
   },
   {
     title: "Get me out of here",

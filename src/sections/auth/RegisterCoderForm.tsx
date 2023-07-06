@@ -53,8 +53,6 @@ export default function RegisterCoderForm({
   const [register, { isLoading }] = useRegisterMutation();
   const [createClass, { isLoading: isCreateClassLoading }] =
     useCreateClassMutation();
-  const [registerManagerProfile, { isLoading: isManagerLoading }] =
-    useRegisterManagerProfileMutation();
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -88,16 +86,10 @@ export default function RegisterCoderForm({
       }
     } else {
       try {
-        const { user } = await registerManagerProfile({
-          ...data,
-          first_name: "Happy",
-          last_name: "Cat",
-        }).unwrap();
         const studentProfile = await register({
           ...data,
           first_name: "Happy",
           last_name: "Cat",
-          manager_id: user.id,
         }).unwrap();
         localStorage.setItem("accessToken", studentProfile.access_token);
         await createClass({ name: "Happy Tribe" }).unwrap();
@@ -218,7 +210,6 @@ export default function RegisterCoderForm({
           loading={
             isSubmitting ||
             isLoading ||
-            isManagerLoading ||
             isCreateClassLoading
           }
           sx={{

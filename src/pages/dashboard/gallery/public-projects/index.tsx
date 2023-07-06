@@ -8,7 +8,7 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { getCountTakingElment } from "@utils";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { Box, Container } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
+import { PATH_DASHBOARD, PATH_MAIN } from "@routes/paths";
 import FilterGallery from "@sections/dashboard/gallery/filter";
 import GalleryItem from "@sections/dashboard/gallery/GalleryElement";
 import {
@@ -57,8 +57,8 @@ export default function PublicProjects(): React.ReactElement {
               heading="Public projects"
               links={[
                 { name: "Dashboard", href: PATH_MAIN.index },
-                { name: "Gallery", href: PATH_MAIN.gallery.root },
-                { name: "Privat", href: PATH_MAIN.gallery.publicProject },
+                { name: "Gallery", href: PATH_DASHBOARD.gallery.root },
+                { name: "Privat", href: PATH_DASHBOARD.gallery.publicProject },
               ]}
             />
             <FilterGallery filters={filters} setFilter={setFilter} />
