@@ -1,0 +1,69 @@
+import { Iconify } from "@components";
+import { Card, CardHeader, Stack, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { IUser } from "src/redux/interfaces/auth.interface";
+import { fDateTime } from "@utils";
+
+const StyledIcon = styled(Iconify)(({ theme }) => ({
+  width: 20,
+  height: 20,
+  marginTop: 1,
+  flexShrink: 0,
+  marginRight: theme.spacing(2),
+}));
+
+interface Props {
+  data: IUser;
+}
+
+export default function ProfileAbout({ data }: Props): React.ReactElement {
+  const {
+    email,
+    school,
+    phone,
+    createdAt,
+    country,
+    post_code: postCode,
+  } = data;
+  return (
+    <Card>
+      <CardHeader title="About" />
+
+      <Stack spacing={2} sx={{ p: 3 }}>
+        <Stack direction="row">
+          <StyledIcon icon="eva:pin-fill" />
+
+          <Typography variant="body2">Live at country {country}</Typography>
+        </Stack>
+        <Stack direction="row">
+          <StyledIcon icon="eva:pin-fill" />
+
+          <Typography variant="body2">Postcode {postCode}</Typography>
+        </Stack>
+        <Stack direction="row">
+          <StyledIcon icon="eva:email-fill" />
+          <Typography variant="body2">{email}</Typography>
+        </Stack>
+
+        <Stack direction="row">
+          <StyledIcon icon="tabler:phone-filled" />
+
+          <Typography variant="body2">{phone}</Typography>
+        </Stack>
+        <Stack direction="row">
+          <StyledIcon icon="mingcute:school-fill" />
+
+          <Typography variant="body2">{school?.name}</Typography>
+        </Stack>
+
+        <Stack direction="row">
+          <StyledIcon icon="ic:round-more-time" />
+
+          <Typography variant="body2">
+            Created at {fDateTime(createdAt ?? "")}
+          </Typography>
+        </Stack>
+      </Stack>
+    </Card>
+  );
+}

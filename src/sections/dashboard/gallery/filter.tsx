@@ -1,0 +1,49 @@
+import { SetFilterType } from "@hooks";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/system/Stack";
+import { IGallerySearchParams } from "src/redux/interfaces/gallary.interface";
+
+interface Props {
+  filters: IGallerySearchParams;
+  setFilter: SetFilterType;
+}
+
+export default function FilterGallery({
+  filters,
+  setFilter,
+}: Props): React.ReactElement {
+  return (
+    <>
+      <Stack
+        spacing={2}
+        sx={{ mb: 4 }}
+        alignItems="center"
+        direction={{
+          xs: "column",
+          sm: "row",
+        }}
+      >
+        <TextField
+          sx={{
+            width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
+          }}
+          placeholder="Title"
+          type="text"
+          value={filters.title}
+          onChange={(event) => {
+            setFilter("title", event.target.value);
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end" sx={{ cursor: "pointer" }}>
+                <SearchOutlined />
+              </InputAdornment>
+            ),
+          }}
+        ></TextField>
+      </Stack>
+    </>
+  );
+}

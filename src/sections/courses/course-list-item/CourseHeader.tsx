@@ -1,0 +1,131 @@
+import {
+  Avatar,
+  Box,
+  Chip,
+  LinearProgress,
+  Link,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import NextLink from "next/link";
+import { TbFileCertificate } from "react-icons/tb";
+
+interface Props {
+  progress: number | null;
+}
+
+export default function CourseHeader({ progress }: Props): React.ReactElement {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        mb: 2,
+        position: "relative",
+      }}
+    >
+      {!progress ? (
+        <>
+          <Chip
+            label="not started"
+            variant="filled"
+            sx={{
+              textTransform: "uppercase",
+              background: "rgba(145, 158, 171, 0.32)",
+              maxWidth: "215px",
+              fontWeight: 700,
+              fontSize: { md: "25px" },
+              color: "#fff",
+              mr: 2,
+            }}
+          />
+          <Chip
+            label="free"
+            variant="filled"
+            sx={{
+              textTransform: "uppercase",
+              background: "#FBDD3F",
+              maxWidth: "215px",
+              fontWeight: 700,
+              fontSize: { md: "25px" },
+              color: "#fff",
+              mr: 2,
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Avatar
+            sx={{
+              width: "50px",
+              height: "50px",
+              border: "3px solid #C4C4C4",
+              background: "#fff",
+              color: "#333",
+              zIndex: 1,
+            }}
+          >
+            <Typography variant="body2" sx={{ fontWeight: 700 }}>
+              {progress}%
+            </Typography>
+          </Avatar>
+          <LinearProgress
+            sx={{
+              width: "100%",
+              height: "25px",
+              mx: "-5px",
+              "& .MuiLinearProgress-bar": {
+                backgroundColor: "#75CF6D",
+                borderRadius: 20,
+              },
+              backgroundColor: "#C4C4C4",
+            }}
+            variant="determinate"
+            value={progress === 0 ? 2 : progress}
+          />
+          <Typography
+            variant="subtitle1"
+            sx={{
+              position: "absolute",
+              color: "#fff",
+              top: "14px",
+              left: "20%",
+              textTransform: "uppercase",
+            }}
+          >
+            ENROLLED
+          </Typography>{" "}
+        </>
+      )}
+
+      <Tooltip
+        title={
+          <Box sx={{ width: "200px", p: "8px" }}>
+            <Typography variant="body2" sx={{ color: "#fff", mb: "5px" }}>
+              This course is eligiable for a certificate.
+            </Typography>
+            <Link component={NextLink} href="/" sx={{ color: "#FBDD3F" }}>
+              See sample certificate
+            </Link>
+          </Box>
+        }
+        sx={{ background: "#000" }}
+        placement="right-start"
+      >
+        <Avatar
+          sx={{
+            width: "50px",
+            height: "50px",
+            border: "3px solid #FBDD3F",
+            background: "#fff",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
+        >
+          <TbFileCertificate color="#FBDD3F" size="25px" />
+        </Avatar>
+      </Tooltip>
+    </Box>
+  );
+}
