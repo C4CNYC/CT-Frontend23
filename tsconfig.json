@@ -41,9 +41,10 @@
   "exclude": [
     "next-env.d.ts",
     "node_modules",
+    "editor.tsx"
   ],
   "include": [
     "**/*.ts",
-    "**/*.tsx",
+    "**/*.tsx", "src/components/real-time-code-editor/editor.jsx",
   ]
 }
