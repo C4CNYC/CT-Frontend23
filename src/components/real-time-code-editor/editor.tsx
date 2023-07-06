@@ -7,7 +7,7 @@ import { indentUnit } from "@codemirror/language"
 
 import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
-import { defaultKeymap } from "@codemirror/commands";
+// import { defaultKeymap } from "@codemirror/commands";
 import { useEffect, useRef } from "react";
 import { peerExtension } from "./extentions/collab";
 import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
@@ -36,7 +36,7 @@ export const CodeEditor = ({ state, cursorId, cursorText, onChangeCode, socket }
           onChangeCode(e.state.doc.toString())
         }),
         /* tslint:disable */
-        keymap.of(defaultKeymap),
+        // keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup(),
         langs.html(),
