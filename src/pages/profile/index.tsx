@@ -10,7 +10,7 @@ Profile.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 export default function Profile() {
-  const { data } = useProfileQuery({});
+  const { data } = useProfileQuery();
   const { themeStretch } = useSettingsContext();
   return (
     <>

@@ -72,10 +72,14 @@ export interface UpdateUserRequest extends Omit<IUser, "email"> {
   user_id: string;
 }
 export interface IStudentProfile {
+  post_code?: string;
+  username?: string;
+  about?: string;
   email?: string;
   first_name?: string;
   last_name?: string;
   avatar?: string;
+  cover?: string;
 }
 
 export interface ISocials {

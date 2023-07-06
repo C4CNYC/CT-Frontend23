@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
-import { PATH_MAIN } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import nextLink from "next/link";
 import { useContext, useState } from "react";
 import { BsFolder2Open } from "react-icons/bs";
@@ -55,7 +55,7 @@ const Menu = (): React.ReactElement => {
       icon: (
         <Link
           component={nextLink}
-          href={PATH_MAIN.gallery.publicProject}
+          href={PATH_DASHBOARD.gallery.publicProject}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -84,7 +84,7 @@ const Menu = (): React.ReactElement => {
       icon: (
         <Link
           component={nextLink}
-          href={PATH_MAIN.gallery.privateProject}
+          href={PATH_DASHBOARD.gallery.privateProject}
           sx={{
             display: "flex",
             justifyContent: "center",

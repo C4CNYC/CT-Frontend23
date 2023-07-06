@@ -57,7 +57,7 @@ export default function Index(): React.ReactElement | null {
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
   // ONLY LOGINED USER CAN USE
   useOnlineConnection(user?.id);
-  useRealTimeConnection(user?.id, code);
+  useRealTimeConnection(user?.id);
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
     useAtom(globalCodePanelAtom);

@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineClockCircle } from "react-icons/ai";
@@ -120,7 +120,7 @@ export default function TrainingsItem({
           </Typography>
           <Button
             component={Link}
-            href={`${PATH_PAGE.codePanel.workSpace(
+            href={`${PATH_DASHBOARD.codePanel.workSpace(
               courseId as string
             )}?${unitId}&${lesson.id}`}
             variant="outlined"

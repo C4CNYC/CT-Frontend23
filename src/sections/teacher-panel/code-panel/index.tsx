@@ -1,4 +1,3 @@
-import { useRealTimeConnection } from "@hooks/useRealTimeConnection";
 import { Box } from "@mui/system";
 import { useAtom } from "jotai";
 
@@ -10,6 +9,7 @@ import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
 import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
 import WorkSpace from "./work-space";
 import SmallScreenTabs from "./work-space/tabs";
+import { useRealTimeConnection } from "src/hooks/useRealTimeConnection";
 
 export const CodePanel = (): React.ReactElement => {
   const { query } = useRouter();
