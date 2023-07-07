@@ -54,6 +54,8 @@ export default function DefaultClassInfo(): React.ReactElement {
               background: getLinearGradient(
                 student?.classes?.[0].cover ?? "#75CF6D"
               ),
+              borderBottomRightRadius: "20px",
+              borderBottomLeftRadius: "20px",
             }}
           >
             <Stack

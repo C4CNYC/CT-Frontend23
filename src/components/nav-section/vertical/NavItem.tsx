@@ -9,6 +9,8 @@ import RoleBasedGuard from "../../../auth/RoleBasedGuard";
 //
 import { Iconify } from "@components";
 //
+import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
+import { useRouter } from "next/router";
 import { NavItemProps } from "../types";
 import { StyledDotIcon, StyledIcon, StyledItem } from "./styles";
 
@@ -23,6 +25,7 @@ export default function NavItem({
   ...other
 }: NavItemProps): React.ReactElement | null {
   const { translate } = useLocales();
+  const { pathname } = useRouter();
 
   const { title, path, icon, info, children, caption, roles, component } = item;
 
@@ -81,7 +84,6 @@ export default function NavItem({
       )}
     </StyledItem>
   );
-
   const renderItem = (): React.ReactElement => {
     // ExternalLink
     if (isExternalLink) {
@@ -94,6 +96,10 @@ export default function NavItem({
     // Has child
     if (children || info) {
       return renderContent;
+    }
+
+    if (pathname === "/dashboard/home" && path === "/dashboard/home") {
+      return <MenuTribesList />;
     }
 
     if (component) {
