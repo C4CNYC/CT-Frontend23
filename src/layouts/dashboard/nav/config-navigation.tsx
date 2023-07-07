@@ -119,14 +119,19 @@ export const general = {
   subheader: "GENERAL",
   items: [
     {
-      title: "HOME",
-      path: PATH_DASHBOARD.home,
-      icon: <BsSpeedometer2 size={20} />,
-    },
-    {
-      title: "COURSES",
+      title: "Catalog",
       path: PATH_DASHBOARD.courses.root,
       icon: <BsFillFileEarmarkMedicalFill size={20} />,
+    },
+  ],
+};
+export const home = {
+  subheader: "",
+  items: [
+    {
+      title: "Home",
+      path: PATH_DASHBOARD.home,
+      icon: <BsSpeedometer2 size={20} />,
     },
   ],
 };
@@ -183,5 +188,5 @@ export const socials = {
   ],
 };
 
-const navConfig = [admin, managment, general, social, apps, socials];
+const navConfig = [admin, managment, general, social, apps, socials, home];
 export default navConfig;
