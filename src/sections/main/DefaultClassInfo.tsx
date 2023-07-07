@@ -15,7 +15,6 @@ import { FaSchool } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 
 import { MenuPopover } from "@components";
-import { PATH_DASHBOARD } from "@routes/paths";
 import { useState } from "react";
 
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
@@ -24,6 +23,7 @@ import { TbShare2 } from "react-icons/tb";
 import { useProfileQuery } from "src/redux/services/auth";
 import { useGetClassMentorQuery } from "src/redux/services/student/classes-manager";
 import ClassInfoHeader from "./ClassInfoToggle";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 export default function DefaultClassInfo(): React.ReactElement {
   const { data: student } = useProfileQuery();
@@ -79,7 +79,7 @@ export default function DefaultClassInfo(): React.ReactElement {
               </Typography>
               <Link
                 sx={{ display: "flex", alignItems: "center", color: "#fff" }}
-                href={PATH_DASHBOARD.tribes.root}
+                href={STUDENT_PATH_DASHBOARD.tribes.root}
                 component={nextLink}
               >
                 <Typography variant="caption"> See All Groups</Typography>
@@ -148,7 +148,7 @@ export default function DefaultClassInfo(): React.ReactElement {
               <Stack direction="row" alignItems="center">
                 <Link
                   sx={{ display: "flex", alignItems: "center", color: "#fff" }}
-                  href={PATH_DASHBOARD.friends.root}
+                  href={STUDENT_PATH_DASHBOARD.friends.root}
                   component={nextLink}
                 >
                   <FiUser color="#fff" size="18px" />

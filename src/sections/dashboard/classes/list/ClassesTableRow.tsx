@@ -13,9 +13,9 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
 import { IClass } from "src/redux/services/interfaces/class.interface";
-import { PATH_DASHBOARD } from "src/routes/paths";
 import { BaseResponseInterface } from "@utils";
 import ClassPreferences from "../modal";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 // ----------------------------------------------------------------------
 
@@ -135,7 +135,7 @@ export default function ClassesTableRow({
       >
         <MenuItem
           component={Link}
-          href={PATH_DASHBOARD.school.controller(row.id)}
+          href={MANAGER_PATH_DASHBOARD.school.controller(row.id)}
         >
           <Iconify icon="material-symbols:connect-without-contact" />
           Connect

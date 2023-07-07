@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
@@ -17,10 +17,10 @@ export default function LetsCodeBtn({ isMini }: Props) {
       onClick={() => {
         if (courseId && unitId && lessonId) {
           push(
-            `${PATH_DASHBOARD.codePanel.workSpace(courseId)}?${unitId}&${lessonId}}`
+            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(courseId)}?${unitId}&${lessonId}}`
           );
         } else {
-          push(PATH_DASHBOARD.courses.root);
+          push(STUDENT_PATH_DASHBOARD.courses.root);
         }
       }}
       variant="contained"

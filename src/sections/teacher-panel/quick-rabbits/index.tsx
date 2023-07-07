@@ -6,7 +6,7 @@ import { quickRabbitAtom } from "../atoms/quick-rabbit.atom";
 import QuickRabbitsItem from "./quick-rabbits-item";
 import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
 import { useRouter } from "next/router";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 export const QuickRabbits = (): React.ReactElement => {
   const theme = useTheme();
@@ -16,7 +16,7 @@ export const QuickRabbits = (): React.ReactElement => {
   const onClose = (userId: string): void => {
     setQuckRabit((prev) => _.omit(prev, [userId]));
     if (userId === query.studentId) {
-      push(PATH_DASHBOARD.school.controller(query.id as string))
+      push(MANAGER_PATH_DASHBOARD.school.controller(query.id as string))
     }
   };
 

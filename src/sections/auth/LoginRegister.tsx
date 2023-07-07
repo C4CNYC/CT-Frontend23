@@ -19,11 +19,6 @@ import { GoFileCode } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { setUserRole } from "src/redux/slices/global";
 import RegisterCoderForm from "./RegisterCoderForm";
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
 
 interface Props {
   isLogin: boolean;
@@ -165,22 +160,6 @@ export default function LoginRegister({ isLogin }: Props): React.ReactElement {
         </Typography>
       </Stack>
     </LoginLayout>
-  );
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </div>
   );
 }
 

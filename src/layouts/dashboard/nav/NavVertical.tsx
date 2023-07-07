@@ -13,7 +13,6 @@ import {
   apps,
   content,
   general,
-  home,
   managment,
   social,
   socials,
@@ -27,11 +26,11 @@ interface Props {
 }
 
 const menuConfig = {
-  [Role.Owner]: [home, admin, managment, content],
-  [Role.Admin]: [home, admin, managment, content],
-  [Role.Student]: [general, home, apps, social, socials],
-  [Role.Manager]: [home, managment, content],
-  [Role.Editor]: [home, content],
+  [Role.Owner]: [admin, managment, content],
+  [Role.Admin]: [admin, managment, content],
+  [Role.Student]: [general, apps, social, socials],
+  [Role.Manager]: [managment, content],
+  [Role.Editor]: [content],
 };
 
 export default function NavVertical({

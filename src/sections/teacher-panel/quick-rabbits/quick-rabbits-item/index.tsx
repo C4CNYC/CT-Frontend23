@@ -2,7 +2,6 @@ import { Iconify } from "@components";
 
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { PATH_DASHBOARD } from "@routes/paths";
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
@@ -18,6 +17,7 @@ import { useGetStudentsQuery } from "src/redux/services/manager/students-manager
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 import { useRealTimeConnection } from "@hooks";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;
@@ -92,7 +92,7 @@ export default function QuickRabbitsItem({
             replace
             shallow
             href={
-              PATH_DASHBOARD.school.controller(query.id as string) +
+              MANAGER_PATH_DASHBOARD.school.controller(query.id as string) +
               (!isRabbitActive ? `?studentId=${rabit.id}` : "")
             }
           >

@@ -22,10 +22,9 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { IoRocketSharp } from "react-icons/io5";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { PATH_AFTER_LOGIN } from "src/config-global";
 import { useRegisterMutation } from "src/redux/services/auth";
-import { useRegisterManagerProfileMutation } from "src/redux/services/student-auth";
 import { useCreateClassMutation } from "src/redux/services/student/classes-manager";
+import { MANAGER_PATH_AFTER_LOGIN, STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 // ----------------------------------------------------------------------
 
@@ -76,7 +75,11 @@ export default function RegisterCoderForm({
     if (isLogin) {
       try {
         await login(data.email, data.password, "codetribe");
-        router.replace(PATH_AFTER_LOGIN);
+        router.replace(
+          isStudent
+            ? STUDENT_PATH_AFTER_LOGIN
+            : MANAGER_PATH_AFTER_LOGIN
+        );
       } catch (error: any) {
         reset();
         setError("afterSubmit", {

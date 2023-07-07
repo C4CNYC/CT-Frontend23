@@ -19,7 +19,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
@@ -29,6 +28,7 @@ import { useGetPublicCourseContentQuery } from "src/redux/services/student/publi
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { CodePanelContext } from "../context/CodePanel.context";
 import SkeletonDrawer from "./SkeletonDrawer";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 const LessonManager = (): React.ReactElement => {
   const theme = useTheme();
@@ -60,7 +60,7 @@ const LessonManager = (): React.ReactElement => {
     }));
     if (publicPage) {
       push(
-        `${PATH_DASHBOARD.publicCodePanel.workSpace(
+        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
           id as string
         )}?${new URLSearchParams({
           unitId: moduleId,
@@ -72,7 +72,7 @@ const LessonManager = (): React.ReactElement => {
       );
     } else {
       push(
-        `${PATH_DASHBOARD.codePanel.workSpace(id as string)}?${new URLSearchParams({
+        `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(id as string)}?${new URLSearchParams({
           unitId: moduleId,
         })}&${new URLSearchParams({
           lessonId,

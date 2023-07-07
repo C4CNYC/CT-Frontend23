@@ -1,8 +1,9 @@
 import { LoadingScreen } from "@components";
-import { PATH_DASHBOARD, PATH_MAIN } from "@routes/paths";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useAuthContext } from "./useAuthContext";
+import { MANAGER_PATH_AFTER_LOGIN, STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
+import { Role } from "src/redux/services/enums/role.enum";
 
 // ----------------------------------------------------------------------
 
@@ -15,14 +16,18 @@ export default function GuestGuard({
 }: GuestGuardProps): React.ReactElement | null {
   const { push, route, asPath } = useRouter();
 
-  const { isAuthenticated, isInitialized } = useAuthContext();
+  const { isAuthenticated, isInitialized, user } = useAuthContext();
 
   useEffect(() => {
     if (isAuthenticated) {
       if (route.includes("public")) {
         push(asPath);
       } else {
-        push(PATH_DASHBOARD.root);
+        push(
+          user?.role === Role.Student
+            ? STUDENT_PATH_AFTER_LOGIN
+            : MANAGER_PATH_AFTER_LOGIN
+        );
       }
     }
   }, [isAuthenticated]);

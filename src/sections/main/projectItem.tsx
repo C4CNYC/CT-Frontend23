@@ -2,7 +2,7 @@ import { Iconify, Image } from "@components";
 
 import { Button, Grid, Link, Paper, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
 import { ICourseElement } from "src/redux/interfaces/content.interface";
@@ -85,7 +85,7 @@ export default function ProjectItem({
           </Grid>
           <Button
             component={Link}
-            href={`${PATH_DASHBOARD.courses.course(course?.id)}`}
+            href={`${STUDENT_PATH_DASHBOARD.courses.course(course?.id)}`}
             size="small"
             endIcon={<AiOutlineArrowRight color="gray" size={16} />}
             sx={{
@@ -108,7 +108,7 @@ export default function ProjectItem({
         </Grid>
         <Button
           component={Link}
-          href={`${PATH_DASHBOARD.codePanel.workSpace(course?.id)}`}
+          href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(course?.id)}`}
           sx={{
             border: "1px solid #02D3D7",
             borderRadius: "100px",

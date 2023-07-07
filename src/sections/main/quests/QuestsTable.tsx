@@ -3,12 +3,12 @@ import { Button, Link, Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import { PATH_DASHBOARD } from "@routes/paths";
 import { useState } from "react";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import CardCourse from "./quest-card";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 export default function QuestsTable() {
   const [value, setValue] = useState(0);
@@ -57,7 +57,7 @@ export default function QuestsTable() {
         >
           <Link
             noWrap
-            href={PATH_DASHBOARD.gallery.root}
+            href={STUDENT_PATH_DASHBOARD.gallery.root}
             variant="body2"
             underline="none"
             sx={{

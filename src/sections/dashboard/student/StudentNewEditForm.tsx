@@ -10,7 +10,6 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import generator from "generate-password";
 import { MuiColorInput } from "mui-color-input";
 import { useRouter } from "next/router";
@@ -31,6 +30,7 @@ import {
   BaseResponseInterface,
 } from "@utils";
 import * as Yup from "yup";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };
@@ -145,7 +145,7 @@ export default function StudentNewEditForm({
           ...body,
         }).unwrap();
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-        push(PATH_DASHBOARD.school.students);
+        push(MANAGER_PATH_DASHBOARD.school.students);
       } else {
         const user = await createStudent({
           ...data,
@@ -160,7 +160,7 @@ export default function StudentNewEditForm({
           await updateAvatar(user.id, randomAvatar);
         }
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-        push(PATH_DASHBOARD.school.students);
+        push(MANAGER_PATH_DASHBOARD.school.students);
       }
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {

@@ -114,7 +114,6 @@ export function AuthProvider({
 }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
-  const isStudent = useSelector((state) => state.global.isStudent);
   const storageAvailable = localStorageAvailable();
 
   const initialize = useCallback(async () => {
@@ -127,8 +126,7 @@ export function AuthProvider({
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const path = isStudent ? "student/auth/profile" : "/auth/profile";
-        const response = await axios.get(path);
+        const response = await axios.get("/auth/profile");
 
         const data = response.data;
         reduxDispatch(
@@ -166,7 +164,7 @@ export function AuthProvider({
         },
       });
     }
-  }, [isStudent]);
+  }, []);
 
   useEffect(() => {
     initialize().catch(() => {
@@ -186,20 +184,15 @@ export function AuthProvider({
   const login = useCallback(
     async (email: string, password: string, tenantName: string) => {
       localStorage.setItem("tenantName", tenantName);
-      // Update <any, any> to normall types
-      const path = isStudent ? "student/auth/signin" : "auth/signin";
 
-      const { data } = await axios.post<any, any>(path, {
+      const { data } = await axios.post<any, any>("auth/signin", {
         email,
         password,
       });
 
       const { access_token: accessToken } = data;
       reduxDispatch(
-        setUser({
-          ...(data.user || data.student),
-          role: data.user?.role || Role.Student,
-        })
+        setUser(data.user)
       );
 
       setSession(
@@ -210,14 +203,11 @@ export function AuthProvider({
       dispatch({
         type: Types.LOGIN,
         payload: {
-          user: {
-            ...(data.user || data.student),
-            role: data.user?.role || Role.Student,
-          },
+          user: data.user,
         },
       });
     },
-    [isStudent]
+    []
   );
 
   // REGISTER
