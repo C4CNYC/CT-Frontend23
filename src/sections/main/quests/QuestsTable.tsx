@@ -17,11 +17,12 @@ export default function QuestsTable() {
     setValue(newValue);
   };
   return (
-    <Stack sx={{ px: 2, pt: 1 }}>
+    <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack direction="row" alignItems="center" pb={2}>
         <Tabs
           value={value}
           onChange={handleChange}
+          scrollButtons={false}
           sx={{
             "& .MuiTabs-indicator": {
               backgroundColor: "#43D4DD",
@@ -77,7 +78,11 @@ export default function QuestsTable() {
               <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
             </Typography>
           </Link>
-          <Button sx={(theme) => ({ gap: 1 })} variant="outlined" color="info">
+          <Button
+            sx={(theme) => ({ gap: 1, whiteSpace: "nowrap" })}
+            variant="outlined"
+            color="info"
+          >
             <FaPlus size={15} style={{ marginBottom: "2px" }} />
             Add Quest
           </Button>

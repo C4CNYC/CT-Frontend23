@@ -1,12 +1,20 @@
 import { EmptyContent, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard/";
-import { Box, Grid, Link, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  Link,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Container } from "@mui/system";
 import { PATH_DASHBOARD } from "@routes/paths";
 import DefaultClassInfo from "@sections/main/DefaultClassInfo";
 import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
-import ProjectList from "@sections/main/projectList";
+import Notes from "@sections/main/main-notes/Notes";
 import QuestsTable from "@sections/main/quests/QuestsTable";
 import Head from "next/head";
 
@@ -31,7 +39,10 @@ export default function HomeOverview(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
         {!isLoading && <DefaultClassInfo />}
-        <QuestsTable />
+        <Stack sx={{ flexDirection: { lg: "row" } }}>
+          <QuestsTable />
+          <Notes />
+        </Stack>
       </Container>
     </>
   );
