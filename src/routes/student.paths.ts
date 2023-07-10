@@ -10,8 +10,8 @@ export const STUDENT_ROOTS_MAIN = "/main";
 export const STUDENT_PATH_PAGE = {
   onBoarding: "/on-boarding",
   components: "/components",
-  profile: "/profile",
-  studentProfile: "/student-profile",
+  profile: "/student/profile",
+  studentProfile: "/profile",
   home: "/student",
 };
 

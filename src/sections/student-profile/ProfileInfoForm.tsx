@@ -28,7 +28,6 @@ const UpdateUserSchema = Yup.object().shape({
 interface FormValuesProps {
   firstName: string;
   lastName: string;
-  email: string;
   address: string;
   about: string;
   phone: string;
@@ -49,7 +48,6 @@ export default function ProfileInfoForm({
     first_name: firstName,
     last_name: lastName,
     post_code: postcode,
-    email,
     about,
     phone,
     username,
@@ -66,7 +64,6 @@ export default function ProfileInfoForm({
     postcode,
     username,
     cover,
-    email,
   };
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
@@ -183,7 +180,6 @@ export default function ProfileInfoForm({
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
-              <RHFTextField name="email" label="email" disabled />
               <RHFTextField name="postcode" label="postcode" />
               <Controller
                 name="phone"

@@ -37,11 +37,16 @@ export default function NavVertical({
   openNav,
   onCloseNav,
 }: Props): React.ReactElement | null {
+  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
   const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = menuConfig[user?.role as Role];
+  const menu = menuConfig[
+    isStudentMode
+      ? Role.Student
+      : user?.role as Role
+    ];
 
   useEffect(() => {
     if (openNav) {

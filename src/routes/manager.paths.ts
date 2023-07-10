@@ -12,8 +12,8 @@ const MANAGER_ROOTS_MAIN = "/main";
 export const MANAGER_PATH_PAGE = {
   onBoarding: "/on-boarding",
   components: "/components",
-  profile: "/profile",
-  studentProfile: "/student-profile",
+  profile: "/manager/profile",
+  studentProfile: "/profile",
   home: "/manager",
 };
 

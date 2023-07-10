@@ -8,10 +8,10 @@ import {
 // utils
 import { axios, localStorageAvailable, voidFunction } from "@utils";
 //
+import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
-import { cleanUser, cleanUserRole, setUser } from "src/redux/slices/global";
-import { useSelector } from "src/redux/store";
+import { cleanUser, cleanUserRole, setUser, setUserRole } from "src/redux/slices/global";
 import {
   ActionMapType,
   AuthStateType,
@@ -19,6 +19,7 @@ import {
   JWTContextType,
 } from "./types";
 import { isValidToken, setSession } from "./utils";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 // ----------------------------------------------------------------------
 
@@ -123,27 +124,32 @@ export function AuthProvider({
         : "";
 
       const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
+      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
+      const isStudentRoute = window.location.pathname.includes("manager/");
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const response = await axios.get("/auth/profile");
+        const response = await axios.get(
+          "/auth/profile",
+          {
+            params: {
+              profile_type: (parsedJWT.role === Role.Student || isStudentRoute)
+                ? ProfileType.STUDENT
+                : ProfileType.MANAGER
+            }
+          }
+        );
 
         const data = response.data;
-        reduxDispatch(
-          setUser({
-            ...(data.user || data.student),
-            role: data.user?.role || Role.Student,
-          })
-        );
+
+        reduxDispatch(setUserRole(parsedJWT.role === Role.Student));
+        reduxDispatch(setUser(data));
 
         dispatch({
           type: Types.INITIAL,
           payload: {
             isAuthenticated: true,
-            user: {
-              ...(data.user || data.student),
-              role: data.user?.role || Role.Student,
-            },
+            user: data
           },
         });
       } else {
@@ -190,9 +196,9 @@ export function AuthProvider({
         password,
       });
 
-      const { access_token: accessToken } = data;
+      const { access_token: accessToken, user } = data;
       reduxDispatch(
-        setUser(data.user)
+        setUser(user)
       );
 
       setSession(
@@ -203,7 +209,7 @@ export function AuthProvider({
       dispatch({
         type: Types.LOGIN,
         payload: {
-          user: data.user,
+          user,
         },
       });
     },

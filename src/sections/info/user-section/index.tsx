@@ -3,27 +3,21 @@ import { Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/system/Stack";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { useProfileQuery } from "src/redux/services/auth";
-import { useProfileStudentQuery } from "src/redux/services/student-auth";
-import { useSelector } from "src/redux/store";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
+import { RootState } from "src/redux/store";
 
 export default function UserSection(): React.ReactElement {
-  const [profile, setProfile] = useState<IUser>();
-  const isStudent = useSelector((state) => state.global.isStudent);
-  const { data: profileTeacher } = useProfileQuery(undefined, { skip: isStudent });
-  const { data: profileStudent } = useProfileStudentQuery(
-    {},
-    { skip: !isStudent }
-  );
+  const [, setProfile] = useState<IUser>();
+  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
+  const { data: profile } = useProfileQuery(isStudentMode ? ProfileType.STUDENT : ProfileType.MANAGER);
+
   useEffect(() => {
-    if (isStudent && profileStudent) {
-      setProfile(profileStudent);
-    }
-    if (!isStudent && profileTeacher) {
-      setProfile(profileTeacher);
-    }
-  }, [profileTeacher, profileStudent]);
+    setProfile(profile);
+  }, [profile]);
+
   return (
     <Stack bgcolor="rgba(145, 158, 171, 0.08)" borderRadius="12px">
       <Stack display="flex" direction="row" alignItems="center" mr="52px">

@@ -50,7 +50,6 @@ export const admin = {
 export const managment = {
   subheader: "managment",
   items: [
-    // organizations
     {
       path: "",
       title: "",
@@ -92,7 +91,7 @@ export const content = {
   items: [
     {
       title: "courses",
-      path: MANAGER_PATH_DASHBOARD.coursesMain.root,
+      path: MANAGER_PATH_DASHBOARD.courses.root,
       icon: <MdPlayLesson />,
     },
     {
@@ -125,12 +124,15 @@ export const content = {
 };
 
 export const general = {
-  subheader: "GENERAL",
+  subheader: "Tribes",
   items: [
     {
-      title: "Catalog",
-      path: STUDENT_PATH_DASHBOARD.courses.root,
-      icon: <BsFillFileEarmarkMedicalFill size={20} />,
+      path: "",
+      title: "",
+      icon: <FaUserFriends size={20} />,
+      component: () => (
+        <MenuTribesList />
+      ),
     },
   ],
 };

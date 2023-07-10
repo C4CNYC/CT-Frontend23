@@ -15,12 +15,13 @@ import {
 import { alpha } from "@mui/material/styles";
 import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { IUser } from "src/redux/interfaces/auth.interface";
+import { useState } from "react";
 import { useProfileQuery } from "src/redux/services/auth";
-import { useProfileStudentQuery } from "src/redux/services/student-auth";
-import { useSelector } from "src/redux/store";
+import { RootState, useSelector } from "src/redux/store";
 import { useAuthContext } from "../../../auth/useAuthContext";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
+import { MANAGER_PATH_PAGE } from "@routes/manager.paths";
+import { STUDENT_PATH_PAGE } from "@routes/student.paths";
 
 // ----------------------------------------------------------------------
 
@@ -28,13 +29,13 @@ export default function AccountPopover(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { logout } = useAuthContext();
   const { replace, push } = useRouter();
-  const [profile, setProfile] = useState<IUser>();
-  const isStudent = useSelector((state) => state.global.isStudent);
-  const { data: profileTeacher } = useProfileQuery(undefined, { skip: isStudent });
-  const { data: profileStudent } = useProfileStudentQuery(
-    {},
-    { skip: !isStudent }
+  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
+  const { data: profile } = useProfileQuery(
+    isStudentMode
+      ? ProfileType.STUDENT
+      : ProfileType.MANAGER
   );
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
@@ -42,14 +43,7 @@ export default function AccountPopover(): React.ReactElement {
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
-  useEffect(() => {
-    if (isStudent && profileStudent) {
-      setProfile(profileStudent);
-    }
-    if (!isStudent && profileTeacher) {
-      setProfile(profileTeacher);
-    }
-  }, [profileTeacher, profileStudent]);
+
   const handleLogout = (): void => {
     try {
       logout();
@@ -121,7 +115,9 @@ export default function AccountPopover(): React.ReactElement {
           <MenuItem
             onClick={() => {
               handleClickItem(
-                isStudent ? PATH_PAGE.studentProfile : PATH_PAGE.profile
+                isStudentMode
+                  ? STUDENT_PATH_PAGE.profile
+                  : MANAGER_PATH_PAGE.profile
               );
             }}
           >

@@ -5,12 +5,13 @@ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import ProfileEditForm from "@sections/profile/ProfileEditForm";
 import Head from "next/head";
 import { useProfileQuery } from "src/redux/services/auth";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 Profile.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 export default function Profile() {
-  const { data } = useProfileQuery();
+  const { data } = useProfileQuery(ProfileType.MANAGER);
   const { themeStretch } = useSettingsContext();
   return (
     <>
