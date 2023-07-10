@@ -20,7 +20,7 @@ import { useProfileQuery } from "src/redux/services/auth";
 import { RootState, useSelector } from "src/redux/store";
 import { useAuthContext } from "../../../auth/useAuthContext";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
-import { MANAGER_PATH_PAGE } from "@routes/manager.paths";
+import { MANAGER_PATH_DASHBOARD, MANAGER_PATH_PAGE } from "@routes/manager.paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -152,6 +152,22 @@ export default function AccountPopover(): React.ReactElement {
                   ? "Manager Account"
                   : "Student Account"
               }
+            </MenuItem>
+          </Stack>
+        </RoleBasedGuard>
+
+        <RoleBasedGuard
+          roles={[
+            Role.Owner
+          ]}
+        >
+          <Stack sx={{ p: 1 }}>
+            <MenuItem
+              onClick={() => {
+                handleClickItem(MANAGER_PATH_DASHBOARD.organization.general);
+              }}
+            >
+              Organization Setting
             </MenuItem>
           </Stack>
         </RoleBasedGuard>

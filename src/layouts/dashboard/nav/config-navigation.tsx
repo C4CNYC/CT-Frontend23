@@ -18,7 +18,6 @@ import {
 import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
-import { GrOrganization } from "react-icons/gr";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
 import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
@@ -28,12 +27,6 @@ import { Role } from "src/redux/services/enums/role.enum";
 export const admin = {
   subheader: "administration",
   items: [
-    // organizations
-    {
-      title: "organization",
-      path: MANAGER_PATH_DASHBOARD.organization.general,
-      icon: <GrOrganization />,
-    },
     {
       title: "Members",
       path: MANAGER_PATH_DASHBOARD.organization.members,

@@ -12,6 +12,7 @@ import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 import NextLink from "next/link";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 enum TabType {
   Active = "active",
@@ -100,7 +101,7 @@ export default function Tribes(): React.ReactElement {
               <Link
                 component={NextLink}
                 key={tribe.id}
-                href={PATH_DASHBOARD.tribes.tribe(tribe.id)}
+                href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
                 sx={{
                   textDecoration: "none",
                   "&:hover": {
