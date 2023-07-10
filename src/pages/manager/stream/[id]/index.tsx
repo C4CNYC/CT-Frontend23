@@ -1,4 +1,4 @@
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import StreamPanel from "@sections/stream-panel";
 
 // ----------------------------------------------------------------------

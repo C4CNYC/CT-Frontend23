@@ -1,5 +1,5 @@
 import { useSettingsContext, UploadImageModal, Iconify } from "@components";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
 import { ProfileCover } from "@sections/dashboard/user/profile";
 import {

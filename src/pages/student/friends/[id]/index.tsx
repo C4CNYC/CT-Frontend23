@@ -1,5 +1,5 @@
 import { useSettingsContext, Iconify, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
 import { PATH_MAIN } from "@routes/paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useGetFriendQuery } from "src/redux/services/student/friends-manager";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function FriendProfile(): React.ReactElement {

@@ -1,5 +1,5 @@
 import { Iconify, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import {
   Card,
   CardHeader,
@@ -19,7 +19,7 @@ import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function TribeProfilePage(): React.ReactElement {

@@ -5,7 +5,7 @@ import { useSettingsContext, CustomBreadcrumbs } from "@components";
 import { Container } from "@mui/material";
 import SkeletonEditUserForm from "@sections/dashboard/user/skeleton/SkeletonEditUserForm";
 import { useSelector } from "react-redux";
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayout";
 import { useGetStudentQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";

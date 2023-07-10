@@ -1,6 +1,6 @@
 import { CustomBreadcrumbs } from "@components";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container, Stack } from "@mui/material";
 import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
 import { useEffect } from "react";

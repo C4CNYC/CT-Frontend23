@@ -6,7 +6,7 @@ import {
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { getCountTakingElment } from "@utils";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
 import { Box, Container } from "@mui/material";
 import FilterGallery from "@sections/dashboard/gallery/filter";
 import GalleryItem from "@sections/dashboard/gallery/GalleryElement";
@@ -24,7 +24,7 @@ import { useGetProjectsQuery } from "src/redux/services/student/gallery-student"
 import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN } from "@routes/student.paths";
 
 PublicProjects.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 export default function PublicProjects(): React.ReactElement {
   const [projects, setProjects] = useState<IGallery[] | []>([]);

@@ -30,7 +30,7 @@ export default function UserEditPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> User: Edit user | Minimal UI</title>
+        <title> User: Edit user </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

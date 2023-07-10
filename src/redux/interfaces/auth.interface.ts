@@ -69,5 +69,5 @@ export interface IUser {
   post_code?: string;
   cover?: string;
   role: Role;
-  student_profile: IStudent;
+  student_profile: IStudent & BaseResponseInterface;
 }

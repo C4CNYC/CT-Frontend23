@@ -1,5 +1,5 @@
 import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container } from "@mui/material";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import StudentNewEditForm from "@sections/dashboard/student/StudentNewEditForm";
@@ -19,7 +19,7 @@ export default function UserCreatePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Student: Create a new student | Minimal UI</title>
+        <title> Student: Create a new student </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

@@ -125,22 +125,24 @@ export function AuthProvider({
 
       const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
       const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
-      const isStudentRoute = window.location.pathname.includes("manager/");
+      const isManagerRoute = window.location.pathname.includes("manager/");
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const response = await axios.get(
+        const { data } = await axios.get(
           "/auth/profile",
           {
             params: {
-              profile_type: (parsedJWT.role === Role.Student || isStudentRoute)
+              profile_type: (parsedJWT.role === Role.Student || !isManagerRoute)
                 ? ProfileType.STUDENT
                 : ProfileType.MANAGER
             }
           }
         );
 
-        const data = response.data;
+        if (isManagerRoute && data.role === Role.Student) {
+          window.location.pathname = "/permission-denied"
+        }
 
         reduxDispatch(setUserRole(parsedJWT.role === Role.Student));
         reduxDispatch(setUser(data));

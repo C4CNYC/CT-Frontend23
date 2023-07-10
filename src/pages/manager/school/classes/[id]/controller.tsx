@@ -1,4 +1,4 @@
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { TeacherPanel } from "@sections/teacher-panel";
 
 // ----------------------------------------------------------------------

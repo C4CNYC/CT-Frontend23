@@ -28,7 +28,7 @@ import { useSnackbar } from "notistack";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useFilters } from "@hooks";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
 import {
   useCreateClassesMutation,

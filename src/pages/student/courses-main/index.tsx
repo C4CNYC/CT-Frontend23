@@ -4,7 +4,7 @@ import {
   FilterMode,
   useFilters,
 } from "@hooks";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
 import { Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
 import { CourseCard } from "@sections/dashboard/courses/cards";
@@ -21,7 +21,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 // ----------------------------------------------------------------------
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 // ----------------------------------------------------------------------

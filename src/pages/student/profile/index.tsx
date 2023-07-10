@@ -1,5 +1,5 @@
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
 import { PATH_MAIN } from "@routes/paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
@@ -11,7 +11,7 @@ import { useProfileQuery } from "src/redux/services/auth";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 UserProfile.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function UserProfile(): React.ReactElement {

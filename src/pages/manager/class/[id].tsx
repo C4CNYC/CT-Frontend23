@@ -5,7 +5,7 @@ import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
 import QuestsTable from "@sections/main/quests/QuestsTable";
 import Head from "next/head";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 
 // ----------------------------------------------------------------------
 

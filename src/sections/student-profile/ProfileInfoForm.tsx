@@ -10,8 +10,8 @@ import { Controller, useForm } from "react-hook-form";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
-  useUdpateProfileAvatarMutation,
-  useUpdateProfileMutation,
+  useUdpateStudentProfileAvatarMutation,
+  useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
 import * as Yup from "yup";
 
@@ -54,8 +54,8 @@ export default function ProfileInfoForm({
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
-  const [updateStudent, { isLoading }] = useUpdateProfileMutation();
-  const [updateStudentvatar] = useUdpateProfileAvatarMutation();
+  const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation();
+  const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation();
   const defaultValues = {
     firstName,
     lastName,
@@ -94,7 +94,7 @@ export default function ProfileInfoForm({
       if (data.photoURL) {
         const file = new FormData();
         file.append("file", data.photoURL);
-        updateStudentvatar({
+        updateStudentAvatar({
           file,
         })
           .unwrap()

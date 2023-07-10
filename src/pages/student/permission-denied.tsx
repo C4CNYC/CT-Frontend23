@@ -1,5 +1,5 @@
 import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import {
   Box,
   Card,
@@ -17,7 +17,7 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 // ----------------------------------------------------------------------
 
 PermissionDeniedPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 // ----------------------------------------------------------------------
@@ -39,7 +39,7 @@ export default function PermissionDeniedPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Other Cases: Permission Denied | Minimal UI</title>
+        <title>  Permission Denied </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

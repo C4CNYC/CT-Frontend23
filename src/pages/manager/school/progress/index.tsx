@@ -1,6 +1,6 @@
 import { CustomBreadcrumbs } from "@components";
 import { FilterMode, useFilters } from "@hooks";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";

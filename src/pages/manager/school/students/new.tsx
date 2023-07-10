@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 // components
 import { useSettingsContext, CustomBreadcrumbs } from "@components";
 // sections
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayout";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 

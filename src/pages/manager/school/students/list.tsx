@@ -9,7 +9,7 @@ import {
   useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ConfirmDialog, CustomAutocomplete
 } from "@components";
 import { useFilters } from "@hooks";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import {
   Box,
   Button,

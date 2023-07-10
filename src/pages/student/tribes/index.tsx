@@ -1,5 +1,5 @@
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard/";
+import { StudentDashboardLayout } from "@layouts/dashboard/";
 
 import { Box, Container, Link, Tab, Tabs } from "@mui/material";
 import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
@@ -19,7 +19,7 @@ enum TabType {
 }
 
 Tribes.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function Tribes(): React.ReactElement {

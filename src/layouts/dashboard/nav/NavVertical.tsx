@@ -8,45 +8,28 @@ import { useSelector } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 import { NAV } from "../../../config-global";
-import {
-  admin,
-  apps,
-  content,
-  general,
-  managment,
-  social,
-  socials,
-} from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
+import { menuConfig } from "./config-navigation";
 // ----------------------------------------------------------------------
 
-interface Props {
+interface INavVertical {
   openNav: boolean;
+  isManager?: boolean;
   onCloseNav: VoidFunction;
 }
 
-const menuConfig = {
-  [Role.Owner]: [admin, managment, content],
-  [Role.Admin]: [admin, managment, content],
-  [Role.Student]: [general, apps, social, socials],
-  [Role.Manager]: [managment, content],
-  [Role.Editor]: [content],
-};
-
 export default function NavVertical({
   openNav,
+  isManager,
   onCloseNav,
-}: Props): React.ReactElement | null {
-  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
+}: INavVertical): React.ReactElement | null {
   const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = menuConfig[
-    isStudentMode
-      ? Role.Student
-      : user?.role as Role
-    ];
+  const menu = isManager
+    ? menuConfig[user?.role as Role]
+    : menuConfig[Role.Student]
 
   useEffect(() => {
     if (openNav) {

@@ -5,7 +5,7 @@ import {
   useSettingsContext,
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import { Box, Container } from "@mui/material";
 import { SkeletonFriends } from "@sections/dashboard/friends/SkeletonFriends";
 import UserCard from "@sections/dashboard/friends/UserCard";
@@ -21,7 +21,7 @@ import FilterFriends from "./filter";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 Friends.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function Friends(): React.ReactElement {

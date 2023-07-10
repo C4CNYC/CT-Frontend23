@@ -6,7 +6,6 @@ import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
 import { AiOutlineSolution } from "react-icons/ai";
 import {
-  BsFillFileEarmarkMedicalFill,
   BsFlagFill,
 } from "react-icons/bs";
 import {
@@ -24,6 +23,7 @@ import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
 import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
 import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
+import { Role } from "src/redux/services/enums/role.enum";
 
 export const admin = {
   subheader: "administration",
@@ -190,5 +190,10 @@ export const socials = {
   ],
 };
 
-const navConfig = [admin, managment, general, social, apps, socials];
-export default navConfig;
+export const menuConfig = {
+  [Role.Owner]: [admin, managment, content],
+  [Role.Admin]: [admin, managment, content],
+  [Role.Student]: [general, apps, social, socials],
+  [Role.Manager]: [managment, content],
+  [Role.Editor]: [content],
+};

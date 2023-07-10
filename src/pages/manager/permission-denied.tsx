@@ -39,7 +39,7 @@ export default function PermissionDeniedPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Other Cases: Permission Denied | Minimal UI</title>
+        <title>  Permission Denied | Minimal UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

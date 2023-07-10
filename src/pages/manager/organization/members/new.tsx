@@ -20,7 +20,7 @@ export default function UserCreatePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> User: Create a new user | Minimal UI</title>
+        <title> User: Create a new user </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

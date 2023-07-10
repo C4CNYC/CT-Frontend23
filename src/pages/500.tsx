@@ -23,7 +23,7 @@ export default function Page500(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> 500 Internal Server Error | Minimal UI</title>
+        <title> 500 Internal Server Error </title>
       </Head>
 
       <MotionContainer>

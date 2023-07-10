@@ -82,11 +82,27 @@ export const authApi = createApi({
       }),
       providesTags: ["ProfileUser"],
     }),
+    updateStudentProfile: builder.mutation<IStudentProfile, IStudentProfile>({
+      query: ({ ...body }) => ({
+        url: "/student/profile",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["ProfileUser"],
+    }),
     updateProfile: builder.mutation<IStudentProfile, IStudentProfile>({
       query: ({ ...body }) => ({
         url: "/profile",
         method: "PATCH",
         body,
+      }),
+      invalidatesTags: ["ProfileUser"],
+    }),
+    udpateStudentProfileAvatar: builder.mutation<void, { file: FormData }>({
+      query: ({ file }) => ({
+        url: "/student/profile/avatar",
+        method: "PATCH",
+        body: file,
       }),
       invalidatesTags: ["ProfileUser"],
     }),
@@ -128,7 +144,9 @@ export const {
   useProtectedMutation,
   useProfileQuery,
   usePrefetch,
+  useUpdateStudentProfileMutation,
   useUdpateProfileAvatarMutation,
+  useUdpateStudentProfileAvatarMutation,
   useUpdateProfileMutation,
   useResetPasswordMutation,
   useSubmitPasswordMutation,

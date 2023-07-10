@@ -1,6 +1,6 @@
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
 import { Container, Grid, Link } from "@mui/material";
 import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN } from "@routes/student.paths";
 import FolderElement from "@sections/dashboard/gallery/FolderElement";
@@ -10,7 +10,7 @@ import { IGallery } from "src/redux/interfaces/gallary.interface";
 import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
 
 Gallery.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 interface IProjectCount {
   publicPr: number;
