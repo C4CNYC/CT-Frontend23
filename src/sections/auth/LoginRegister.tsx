@@ -17,7 +17,7 @@ import { FaGraduationCap } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { GoFileCode } from "react-icons/go";
 import { useDispatch } from "react-redux";
-import { setUserRole } from "src/redux/slices/global";
+import { setStudentMode } from "src/redux/slices/global";
 import RegisterCoderForm from "./RegisterCoderForm";
 
 interface Props {
@@ -30,7 +30,7 @@ export default function LoginRegister({ isLogin }: Props): React.ReactElement {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    reduxDispatch(setUserRole(!!value));
+    reduxDispatch(setStudentMode(!!value));
   };
 
   return (

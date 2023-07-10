@@ -22,40 +22,44 @@ import { useAuthContext } from "../../../auth/useAuthContext";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
 import { MANAGER_PATH_PAGE } from "@routes/manager.paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { Role } from "src/redux/services/enums/role.enum";
+import { setStudentMode } from "src/redux/slices/global";
+import { useDispatch } from "react-redux";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
+  const reduxDispatch = useDispatch();
+  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
   const { logout } = useAuthContext();
   const { replace, push } = useRouter();
-  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
+  const { enqueueSnackbar } = useSnackbar();
+
   const { data: profile } = useProfileQuery(
     isStudentMode
       ? ProfileType.STUDENT
       : ProfileType.MANAGER
   );
 
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
-  };
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
   };
 
   const handleLogout = (): void => {
     try {
       logout();
       replace(PATH_AUTH.login);
-      handleClosePopover();
+      setOpenPopover(null);
     } catch (error: any) {
       enqueueSnackbar("Unable to logout!", { variant: "error" });
     }
   };
 
   const handleClickItem = (path: string): void => {
-    handleClosePopover();
+    setOpenPopover(null);
     push(path);
   };
 
@@ -87,7 +91,7 @@ export default function AccountPopover(): React.ReactElement {
 
       <MenuPopover
         open={openPopover}
-        onClose={handleClosePopover}
+        onClose={() => { setOpenPopover(null); }}
         sx={{ width: 200, p: 0 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
@@ -124,6 +128,33 @@ export default function AccountPopover(): React.ReactElement {
             Profile
           </MenuItem>
         </Stack>
+
+        <RoleBasedGuard
+          roles={[
+            Role.Owner,
+            Role.Admin,
+            Role.Manager
+          ]}
+        >
+          <Stack sx={{ p: 1 }}>
+            <MenuItem
+              onClick={() => {
+                handleClickItem(
+                  isStudentMode
+                    ? MANAGER_PATH_PAGE.home
+                    : STUDENT_PATH_PAGE.home
+                );
+                reduxDispatch(setStudentMode(!isStudentMode))
+              }}
+            >
+              {
+                isStudentMode
+                  ? "Manager Account"
+                  : "Student Account"
+              }
+            </MenuItem>
+          </Stack>
+        </RoleBasedGuard>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

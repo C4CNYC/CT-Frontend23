@@ -42,7 +42,7 @@ export const globalSlice = createSlice({
     cleanUser: (state, action: PayloadAction<undefined>) => {
       state.user = null;
     },
-    setUserRole: (state, action: PayloadAction<boolean>) => {
+    setStudentMode: (state, action: PayloadAction<boolean>) => {
       state.isStudent = action.payload;
     },
     cleanUserRole: (state, action: PayloadAction<undefined>) => {
@@ -56,7 +56,7 @@ export const {
   setOrganization,
   setOrganizationList,
   cleanUser,
-  setUserRole,
+  setStudentMode,
   cleanUserRole,
 } = globalSlice.actions;
 

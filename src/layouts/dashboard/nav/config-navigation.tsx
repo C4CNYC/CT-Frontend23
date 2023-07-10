@@ -51,14 +51,6 @@ export const managment = {
   subheader: "managment",
   items: [
     {
-      path: "",
-      title: "",
-      icon: <FaUserFriends size={20} />,
-      component: () => (
-        <MenuTribesList />
-      ),
-    },
-    {
       title: "school",
       path: MANAGER_PATH_DASHBOARD.school.general,
       icon: <FaSchool />,

@@ -11,7 +11,7 @@ import { axios, localStorageAvailable, voidFunction } from "@utils";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
-import { cleanUser, cleanUserRole, setUser, setUserRole } from "src/redux/slices/global";
+import { cleanUser, cleanUserRole, setUser, setStudentMode } from "src/redux/slices/global";
 import {
   ActionMapType,
   AuthStateType,
@@ -144,7 +144,7 @@ export function AuthProvider({
           window.location.pathname = "/permission-denied"
         }
 
-        reduxDispatch(setUserRole(parsedJWT.role === Role.Student));
+        reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
         reduxDispatch(setUser(data));
 
         dispatch({
