@@ -1,19 +1,20 @@
-// @mui
 import {
   Box,
   Card,
-  CardHeader,
-  CardProps,
-  Rating,
   Stack,
+  Rating,
+  CardProps,
+  CardHeader,
   Typography,
 } from "@mui/material";
-// utils
-import { fCurrency, fShortenNumber } from "@utils";
-// components
-import { Scrollbar, Label, Iconify } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Label, 
+  Iconify,
+  Scrollbar, 
+} from "@components";
+
+import { fCurrency, fShortenNumber } from "@utils";
 
 interface ItemProps {
   id: string;

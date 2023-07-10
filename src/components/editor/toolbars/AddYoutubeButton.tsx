@@ -1,12 +1,12 @@
 import "remirror/styles/all.css";
-
-import { IconButton, Stack, TextField } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
 import { useCommands } from "@remirror/react";
-import React, { MouseEventHandler, useCallback, useState } from "react";
-import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiFillCheckCircle, AiFillYoutube } from "react-icons/ai";
 import { RxCrossCircled } from "react-icons/rx";
+import { AiFillCheckCircle, AiFillYoutube } from "react-icons/ai";
+import { useDetectClickOutside } from "react-detect-click-outside";
+import React, { MouseEventHandler, useCallback, useState } from "react";
+
+import ToggleButton from "@mui/material/ToggleButton";
+import { IconButton, Stack, TextField } from "@mui/material";
 
 export default function AddIframeButton(): JSX.Element {
   const { addYouTubeVideo } = useCommands();

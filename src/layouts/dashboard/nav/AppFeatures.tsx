@@ -1,19 +1,17 @@
 import { m } from "framer-motion";
-import { useRef, useState } from "react";
 import Carousel from "react-slick";
-// @mui
-import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
-import { alpha, styled, useTheme } from "@mui/material/styles";
-// components
-import {
-  CarouselArrows,
-  CarouselDots,
-  MotionContainer,
-  varFade,
-  Image,
-} from "@components";
+import { useRef, useState } from "react";
 
-// ----------------------------------------------------------------------
+import { alpha, styled, useTheme } from "@mui/material/styles";
+import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
+
+import {
+  Image,
+  varFade,
+  CarouselDots,
+  CarouselArrows,
+  MotionContainer,
+} from "@components";
 
 const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,
@@ -24,8 +22,6 @@ const StyledOverlay = styled("div")(({ theme }) => ({
   position: "absolute",
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
 }));
-
-// ----------------------------------------------------------------------
 
 interface ItemProps {
   id: string;

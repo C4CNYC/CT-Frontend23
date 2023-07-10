@@ -1,16 +1,16 @@
 import {
-  alpha,
   Box,
-  Paper,
   Stack,
+  alpha,
+  Paper,
   Tooltip,
-  Typography,
   useTheme,
+  Typography,
 } from "@mui/material";
 
-import { ILesson } from "src/redux/interfaces/content.interface";
-import CourseChip from "../course-list-item/CourseChip";
 import LessonStatistics from "./LessonStatistics";
+import CourseChip from "../course-list-item/CourseChip";
+import { ILesson } from "src/redux/interfaces/content.interface";
 
 interface Props {
   data: ILesson;

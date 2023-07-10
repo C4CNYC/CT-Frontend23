@@ -1,7 +1,13 @@
-import { alpha } from "@mui/material";
-import { AnimatePresence, m, useAnimationControls } from "framer-motion";
+import { 
+  m, 
+  AnimatePresence, 
+  useAnimationControls,
+ } from "framer-motion";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
+
+import { alpha } from "@mui/material";
+
 import { checkersAnimationAtom } from "./checkers-animation-atom";
 
 export default function CheckersCompleated(): React.ReactElement {

@@ -1,16 +1,13 @@
-// @mui
 import { Stack, Typography } from "@mui/material";
-// components
+
 import { Logo, Image } from "@components";
-//
+
 import {
   StyledContent,
   StyledRoot,
   StyledSection,
   StyledSectionBg,
 } from "./styles";
-
-// ----------------------------------------------------------------------
 
 interface Props {
   subtitle?: string;

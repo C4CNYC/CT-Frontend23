@@ -1,31 +1,28 @@
-import { useSettingsContext, Iconify, UploadImageModal } from "@components";
-import DashboardLayout from "@layouts/dashboard";
-import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
-import { ProfileCover } from "@sections/dashboard/user/profile";
 import Head from "next/head";
 import { useState } from "react";
-// auth
-import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
-import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
-import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
-import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
-import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
 import { useSnackbar } from "notistack";
+
+import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
+
+import { useSettingsContext, Iconify, UploadImageModal } from "@components";
+
+import { useLocales } from "src/locales";
+import DashboardLayout from "@layouts/dashboard";
 import {
   useGetOrganizationQuery,
   useUpdateOrgCoverMutation,
 } from "src/redux/services/admin/organization-admin";
-import { useLocales } from "src/locales";
+import { ProfileCover } from "@sections/dashboard/user/profile";
 import SkeletonSchool from "@pages/manager/school/general/skeleton-school";
-
-// components
-// ----------------------------------------------------------------------
+import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
+import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
+import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
+import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
+import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserProfilePage(): React.ReactElement {
   const { translate } = useLocales();

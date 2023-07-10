@@ -1,13 +1,10 @@
-// next
 import dynamic from "next/dynamic";
-// hooks
-import { useOffSetTop } from "@hooks";
-// config
-import { HEADER } from "../../config-global";
-//
-const Header = dynamic(async () => await import("./Header"), { ssr: false });
 
-// ----------------------------------------------------------------------
+import { useOffSetTop } from "@hooks";
+
+import { HEADER } from "../../config-global";
+
+const Header = dynamic(async () => await import("./Header"), { ssr: false });
 
 interface Props {
   children?: React.ReactNode;

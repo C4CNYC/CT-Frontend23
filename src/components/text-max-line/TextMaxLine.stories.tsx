@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { TextMaxLine } from "./index"
 
 const Component: Meta<typeof TextMaxLine> = {

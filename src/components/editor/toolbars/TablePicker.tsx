@@ -1,9 +1,10 @@
+import { useCommands } from "@remirror/react";
+import { AiOutlineTable } from "react-icons/ai";
+import { useDetectClickOutside } from "react-detect-click-outside";
+import React, { MouseEventHandler, useCallback, useState } from "react";
+
 import { Button, Stack } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
-import { useCommands } from "@remirror/react";
-import React, { MouseEventHandler, useCallback, useState } from "react";
-import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiOutlineTable } from "react-icons/ai";
 
 export default function TablePicker(): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);

@@ -1,11 +1,9 @@
 import { forwardRef } from "react";
-// @mui
+
 import { Link, Typography } from "@mui/material";
-//
+
 import { TextMaxLineProps } from "./types";
 import { useTypography } from "./useTypography";
-
-// ----------------------------------------------------------------------
 
 // eslint-disable-next-line react/display-name
 export const TextMaxLine = forwardRef<HTMLAnchorElement, TextMaxLineProps>(

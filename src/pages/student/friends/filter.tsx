@@ -1,8 +1,9 @@
-import { SetFilterType } from "@hooks";
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+
+import { SetFilterType } from "@hooks";
 import { IFriendsSearchParams } from "src/redux/interfaces/friends.interface";
 
 interface Props {

@@ -1,12 +1,11 @@
 import { m } from "framer-motion";
-// @mui
+
 import { Container, Typography } from "@mui/material";
-// components
+
 import { MotionContainer, varBounce } from "@components";
-// assets
-import { ForbiddenIllustration } from "../assets/illustrations";
-//
+
 import { useAuthContext } from "./useAuthContext";
+import { ForbiddenIllustration } from "../assets/illustrations";
 
 // ----------------------------------------------------------------------
 

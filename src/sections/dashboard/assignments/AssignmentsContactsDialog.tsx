@@ -1,21 +1,22 @@
-import { SearchNotFound, Iconify, Scrollbar } from "@components";
+import { useState } from "react";
+
 import {
-  Avatar,
   Box,
+  Avatar,
   Button,
   Dialog,
-  DialogContent,
-  DialogTitle,
-  InputAdornment,
   ListItem,
-  ListItemAvatar,
-  ListItemText,
   TextField,
+  DialogTitle,
+  ListItemText,
+  DialogContent,
+  ListItemAvatar,
+  InputAdornment,
 } from "@mui/material";
-import { useState } from "react";
-import { IAssignmentsAssignee } from "../../../@types/assignments";
 
-// ----------------------------------------------------------------------
+import { SearchNotFound, Iconify, Scrollbar } from "@components";
+
+import { IAssignmentsAssignee } from "../../../@types/assignments";
 
 const ITEM_HEIGHT = 64;
 

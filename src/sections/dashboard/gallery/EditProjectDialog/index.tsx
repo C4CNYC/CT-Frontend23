@@ -1,24 +1,28 @@
-import { FormProvider, RHFSwitch, RHFTextField } from "@components";
+import * as Yup from "yup";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { IoClose } from "react-icons/io5";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
+
 import {
   Box,
+  Grid,
   Button,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
   IconButton,
   Typography,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { IoClose } from "react-icons/io5";
+import { LoadingButton } from "@mui/lab";
+
+import { FormProvider, RHFSwitch, RHFTextField } from "@components";
+
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useUpdateProjectMutation } from "src/redux/services/student/gallery-student";
-import * as Yup from "yup";
+
 interface Props {
   children: React.ReactElement;
   title: string;

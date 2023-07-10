@@ -1,5 +1,5 @@
-import HomeIcon from "@mui/icons-material/Home";
 import { IconButton } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function HomeButton(): React.ReactElement {
   return (

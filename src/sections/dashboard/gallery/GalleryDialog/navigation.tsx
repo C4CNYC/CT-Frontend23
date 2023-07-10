@@ -1,7 +1,9 @@
+import React from "react";
+
+import { alpha, Box, IconButton } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { alpha, Box, IconButton } from "@mui/material";
-import React from "react";
+
 interface Props {
   setValue: (value: number) => void;
   value: number;

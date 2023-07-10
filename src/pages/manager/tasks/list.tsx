@@ -1,23 +1,26 @@
-import { useSettingsContext, CustomBreadcrumbs, Iconify } from "@components";
-import { FilterMode, useFilters } from "@hooks";
-import { Box, Button, CircularProgress, Container } from "@mui/material";
-import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
-import TaskCard from "@sections/dashboard/tasks/TaskCard";
 import Head from "next/head";
-import DashboardLayout from "src/layouts/dashboard";
-import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
-import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
-import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
-import FilterTasks from "./filter";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
-// ----------------------------------------------------------------------
+import { Box, Button, CircularProgress, Container } from "@mui/material";
+
+import { 
+  Iconify,
+  CustomBreadcrumbs, 
+  useSettingsContext, 
+} from "@components";
+
+import FilterTasks from "./filter";
+import { FilterMode, useFilters } from "@hooks";
+import DashboardLayout from "src/layouts/dashboard";
+import TaskCard from "@sections/dashboard/tasks/TaskCard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
+import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
+import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
+import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
 
 TasksListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function TasksListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

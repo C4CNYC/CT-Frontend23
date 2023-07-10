@@ -1,10 +1,12 @@
-import type { Meta } from "@storybook/react";
-import { useForm } from "react-hook-form";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import type { Meta } from "@storybook/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { voidFunction } from "@utils";
+
 import { RHFTextField } from "./RHFTextField";
 import { FormProvider } from "./FormProvider";
-import { voidFunction } from "@utils";
 
 const Component: Meta<typeof RHFTextField> = {
   component: RHFTextField,

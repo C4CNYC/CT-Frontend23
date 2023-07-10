@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { Box, Container } from "@mui/material";
 import SplitPane from "react-split-pane";
-import ChallengeTask from "./challenge-task";
+
+import { Box, Container } from "@mui/material";
+
 import CodeTab from "./code-tab";
+import ChallengeTask from "./challenge-task";
 
 export default function ChallnegesBody(): React.ReactElement {
   return (

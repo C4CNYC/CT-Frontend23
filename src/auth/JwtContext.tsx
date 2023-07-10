@@ -1,25 +1,26 @@
 import {
-  createContext,
-  useCallback,
-  useEffect,
   useMemo,
+  useEffect,
   useReducer,
+  useCallback,
+  createContext,
 } from "react";
-// utils
-import { axios, localStorageAvailable, voidFunction } from "@utils";
-//
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
+
+
+import { isValidToken, setSession } from "./utils";
 import { Role } from "src/redux/services/enums/role.enum";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
+import { axios, localStorageAvailable, voidFunction } from "@utils";
 import { cleanUser, cleanUserRole, setUser, setUserRole } from "src/redux/slices/global";
+
 import {
+  AuthUserType,
   ActionMapType,
   AuthStateType,
-  AuthUserType,
   JWTContextType,
 } from "./types";
-import { isValidToken, setSession } from "./utils";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 // ----------------------------------------------------------------------
 

@@ -1,19 +1,17 @@
-import { useSettingsContext } from "@components";
+import Head from "next/head";
+
 import { Container } from "@mui/system";
-import DefaultClassInfo from "@sections/main/DefaultClassInfo";
-import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
+
+import { useSettingsContext } from "@components";
 
 import QuestsTable from "@sections/main/quests/QuestsTable";
-import Head from "next/head";
+import DefaultClassInfo from "@sections/main/DefaultClassInfo";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-
-// ----------------------------------------------------------------------
+import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 const GET_COURSES = 2;
 

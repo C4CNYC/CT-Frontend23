@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { TableSkeleton } from "./TableSkeleton"
 
 const Component: Meta<typeof TableSkeleton> = {

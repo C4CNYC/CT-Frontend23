@@ -1,20 +1,28 @@
-import Carousel from "react-slick";
-import { useMediaQuery } from "@mui/material";
-import { Box, useTheme } from "@mui/system";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
+import React, { 
+  useRef, 
+  useState,
+  useEffect, 
+  useContext, 
+} from "react";
 import { useAtom } from "jotai";
+import Carousel from "react-slick";
 import dynamic from "next/dynamic";
-import React, { useContext, useEffect, useRef, useState } from "react";
 import { SlDirections } from "react-icons/sl";
-import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
+
+import { Box, useTheme } from "@mui/system";
+import { useMediaQuery } from "@mui/material";
+
+import BaseBlock from "../BaseBlock";
+import { BaseResponseInterface } from "@utils";
+import Navigation from "./components/navigation";
+import LoaderDelay from "./components/LoaderDelay";
+import BrowserView from "../view-block/BrowserView";
 import { ILessonContent } from "src/redux/interfaces/content.interface";
 import { IIntegration } from "src/redux/interfaces/integration.interface";
-import { BaseResponseInterface } from "@utils";
-import BaseBlock from "../BaseBlock";
-import BrowserView from "../view-block/BrowserView";
-import LoaderDelay from "./components/LoaderDelay";
-import Navigation from "./components/navigation";
+import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
+import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+
 const ProsaMirrorView = dynamic(
   async () => await import("./components/prosa-mirror-view"),
   { ssr: false }

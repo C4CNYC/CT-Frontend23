@@ -1,42 +1,42 @@
-import { FileExtension } from "@remirror/extension-file";
-import { ReactComponentExtension } from "@remirror/extension-react-component";
-import { TableExtension } from "@remirror/extension-react-tables";
-import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
 import React from "react";
 import {
-  BlockquoteExtension,
-  BoldExtension,
-  BulletListExtension,
-  CalloutExtension,
-  CodeBlockExtension,
-  CodeExtension,
-  ColumnsExtension,
-  EmojiExtension,
-  FontFamilyExtension,
-  FontSizeExtension,
-  HeadingExtension,
-  HorizontalRuleExtension,
-  IframeExtension,
-  ImageExtension,
-  ItalicExtension,
-  LinkExtension,
-  NodeFormattingExtension,
-  OrderedListExtension,
-  ShortcutsExtension,
-  StrikeExtension,
-  SubExtension,
   SupExtension,
+  SubExtension,
+  BoldExtension,
+  CodeExtension,
+  LinkExtension,
+  ImageExtension,
+  EmojiExtension,
+  ItalicExtension,
+  IframeExtension,
+  StrikeExtension,
+  HeadingExtension,
+  CalloutExtension,
+  ColumnsExtension,
   TaskListExtension,
+  FontSizeExtension,
   TextCaseExtension,
+  CodeBlockExtension,
   TextColorExtension,
-  TextHighlightExtension,
   UnderlineExtension,
+  ShortcutsExtension,
+  BlockquoteExtension,
+  BulletListExtension,
   WhitespaceExtension,
+  FontFamilyExtension,
+  OrderedListExtension,
+  TextHighlightExtension,
+  HorizontalRuleExtension,
+  NodeFormattingExtension,
 } from "remirror/extensions";
 import "remirror/styles/all.css";
-
 import jsx from "refractor/lang/jsx.js";
 import typescript from "refractor/lang/typescript.js";
+import { FileExtension } from "@remirror/extension-file";
+import { TableExtension } from "@remirror/extension-react-tables";
+import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
+import { ReactComponentExtension } from "@remirror/extension-react-component";
+
 import { isJson, voidFunction } from "@utils";
 
 type Extensions =

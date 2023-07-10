@@ -1,20 +1,23 @@
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
+  TextField,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
-  TextField,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useSelector } from "react-redux";
-import { useFilters } from "@hooks";
-import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
-import { useUdpateLessonAssignmentMutation } from "src/redux/services/manager/assignments-manager";
-import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
-import { RootState } from "src/redux/store";
 
 import { BaseResponseInterface } from "@utils";
+
+import { useFilters } from "@hooks";
+import { RootState } from "src/redux/store";
+import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+import { useUdpateLessonAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+
 
 type LessonType = ILesson & BaseResponseInterface;
 

@@ -1,21 +1,16 @@
-// next
 import Head from "next/head";
-// @mui
+
 import { Container } from "@mui/material";
-// components
+
 import { useSettingsContext, CustomBreadcrumbs } from "@components";
-// sections
+
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
 
 UserCreatePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserCreatePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

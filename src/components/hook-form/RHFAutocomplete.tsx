@@ -1,9 +1,6 @@
-// form
 import { Controller, useFormContext } from "react-hook-form";
-// @mui
-import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
 
 interface Props<
   T,

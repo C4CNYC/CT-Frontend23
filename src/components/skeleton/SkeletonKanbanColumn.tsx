@@ -1,7 +1,4 @@
-// @mui
 import { Box, BoxProps, Paper, Skeleton, Stack } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export function SkeletonKanbanColumn({
   ...other

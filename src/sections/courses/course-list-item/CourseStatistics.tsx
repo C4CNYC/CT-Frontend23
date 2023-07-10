@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
-import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
 import { TbFileCertificate } from "react-icons/tb";
+import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
+
+import { Box, Typography } from "@mui/material";
 
 interface ICourseStatistics {
   likesCount: number

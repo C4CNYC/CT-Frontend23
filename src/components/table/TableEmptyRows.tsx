@@ -1,7 +1,4 @@
-// @mui
 import { TableCell, TableRow } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 interface Props {
   height?: number;

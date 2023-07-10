@@ -1,12 +1,8 @@
-// @mui
 import { Box, Stack } from "@mui/material";
-//
-import { Iconify } from "../../iconify";
-//
-import { useSettingsContext } from "../SettingsContext";
-import { StyledCard } from "../styles";
 
-// ----------------------------------------------------------------------
+import { StyledCard } from "../styles";
+import { Iconify } from "../../iconify";
+import { useSettingsContext } from "../SettingsContext";
 
 export default function StretchOptions(): React.ReactElement {
   const { themeStretch, onToggleStretch } = useSettingsContext();

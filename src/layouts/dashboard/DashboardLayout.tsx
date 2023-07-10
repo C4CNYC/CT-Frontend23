@@ -1,20 +1,16 @@
 import { useState } from "react";
-// @mui
+
 import { Box } from "@mui/material";
-// hooks
-import { useResponsive } from "@hooks";
-// auth
-import AuthGuard from "../../auth/AuthGuard";
-// components
-import { useSettingsContext } from "@components";
-//
-import Header from "./header";
+
 import Main from "./Main";
-import NavHorizontal from "./nav/NavHorizontal";
+import Header from "./header";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";
+import NavHorizontal from "./nav/NavHorizontal";
+import { useSettingsContext } from "@components";
 
-// ----------------------------------------------------------------------
+import { useResponsive } from "@hooks";
+import AuthGuard from "../../auth/AuthGuard";
 
 interface Props {
   children?: React.ReactNode;

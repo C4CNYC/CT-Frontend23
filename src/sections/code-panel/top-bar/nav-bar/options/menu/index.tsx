@@ -1,25 +1,26 @@
-import { Box } from "@mui/system";
-import Hamburger from "hamburger-react";
-import { SetStateAction, useState } from "react";
-
-import { Iconify, MenuPopover } from "@components";
-import { UserType } from "@utils";
-import {
-  Divider,
-  Link,
-  MenuItem,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { useAuthContext } from "src/auth/useAuthContext";
-
-import { PATH_AUTH } from "@routes/paths";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import Hamburger from "hamburger-react";
+import { SetStateAction, useState } from "react";
+
+import {
+  Link,
+  Divider,
+  useTheme,
+  MenuItem,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { Box } from "@mui/system";
+
+import { Iconify, MenuPopover } from "@components";
+
+import { UserType } from "@utils";
+import { PATH_AUTH } from "@routes/paths";
 import config, { ILinks } from "./config";
 import MobileHamburger from "./MobileHamburger";
+import { useAuthContext } from "src/auth/useAuthContext";
 
 const Menu = (): React.ReactElement => {
   const theme = useTheme();

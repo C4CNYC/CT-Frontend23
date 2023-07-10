@@ -1,19 +1,26 @@
-import { useState } from "react";
 import * as Yup from "yup";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-// @mui
-import { LoadingButton } from "@mui/lab";
-import { Alert, IconButton, InputAdornment, Stack } from "@mui/material";
-// auth
-import { useAuthContext } from "../../auth/useAuthContext";
-// components
-import { FormProvider, Iconify, RHFTextField } from "@components";
-import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-import { PATH_AUTH } from "@routes/paths";
+import { useState } from "react";
 import { useRouter } from "next/router";
-// ----------------------------------------------------------------------
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Alert, 
+  Stack,
+  IconButton, 
+  InputAdornment, 
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+
+ import { 
+   Iconify, 
+  FormProvider, 
+  RHFTextField,
+ } from "@components";
+ 
+ import { PATH_AUTH } from "@routes/paths";
+import { useAuthContext } from "../../auth/useAuthContext";
 
 interface FormValuesProps {
   email: string;

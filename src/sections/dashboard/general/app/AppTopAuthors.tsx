@@ -1,21 +1,19 @@
 import orderBy from "lodash/orderBy";
-// @mui
+
 import {
-  Avatar,
   Box,
   Card,
-  CardHeader,
-  CardProps,
   Stack,
+  Avatar,
+  CardProps,
   Typography,
+  CardHeader,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-// utils
-import { fShortenNumber } from "@utils";
-// components
+
 import { Iconify } from "@components";
 
-// ----------------------------------------------------------------------
+import { fShortenNumber } from "@utils";
 
 interface ItemProps {
   id: string;

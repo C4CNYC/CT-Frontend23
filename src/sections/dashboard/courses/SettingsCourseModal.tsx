@@ -1,13 +1,16 @@
-import { CourseModuleAutocomplete } from "@components";
-import CloseIcon from "@mui/icons-material/Close";
+import { ReactElement, useState } from "react";
+
 import {
   Box,
   Dialog,
-  DialogContent,
   IconButton,
   Typography,
+  DialogContent,
 } from "@mui/material";
-import { ReactElement, useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { CourseModuleAutocomplete } from "@components";
+
 interface Props {
   children: ReactElement;
   id: string;

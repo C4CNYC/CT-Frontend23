@@ -3,9 +3,10 @@ import {
   Paper,
   Stack,
   Tooltip,
-  Typography,
   useTheme,
+  Typography,
 } from "@mui/material";
+
 import ModuleStatistics from "./ModuleStatistics";
 
 export default function ModuleItem({ data }: any): React.ReactElement {

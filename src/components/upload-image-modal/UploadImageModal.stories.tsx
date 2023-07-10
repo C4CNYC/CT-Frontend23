@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
 import { SnackbarProvider, useSnackbar } from "notistack";
+
 import { UploadImageModal, UploadImageProps } from "./index";
 
 const Component: Meta<typeof UploadImageModal> = {

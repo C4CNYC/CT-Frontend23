@@ -1,8 +1,5 @@
-// @mui
 import { GlobalStyles } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
 
 export default function StyledLightbox(): React.ReactElement | null {
   const theme = useTheme();

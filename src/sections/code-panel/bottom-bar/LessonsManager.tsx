@@ -1,34 +1,39 @@
+import { useAtom } from "jotai";
+import { useRouter } from "next/router";
+import { IoMdClose } from "react-icons/io";
+import { useContext, useState } from "react";
+
 import {
+  Box,
+  List,
+  Stack,
+  Drawer,
+  Divider,
+  Tooltip,
+  ListItem,
+  useTheme,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  ListItemButton,
+} from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import {
+  Iconify,
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Iconify,
 } from "@components";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  Stack,
-  Tooltip,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import { useAtom } from "jotai";
-import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import { IoMdClose } from "react-icons/io";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
 import { useGetPublicCourseContentQuery } from "src/redux/services/student/public-student";
-import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
-import { CodePanelContext } from "../context/CodePanel.context";
+
 import SkeletonDrawer from "./SkeletonDrawer";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { CodePanelContext } from "../context/CodePanel.context";
+import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 
 const LessonManager = (): React.ReactElement => {
   const theme = useTheme();

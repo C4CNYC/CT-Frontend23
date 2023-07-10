@@ -1,32 +1,31 @@
-import { useSettingsContext, SimpleInfiniteList, Iconify, CustomBreadcrumbs } from "@components";
-import {
-  DEFAULT_TAKE_PER_PAGE,
-  FilterMode,
-  useFilters,
-} from "@hooks";
-import DashboardLayout from "@layouts/dashboard";
-import { Box, Button, Container } from "@mui/material";
-import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
-import LessonCard from "@sections/dashboard/lessons/LessonCard";
-import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
 import Head from "next/head";
-import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+
+import { Box, Button, Container } from "@mui/material";
+
+import FilterLessons from "./filter";
+import SkeletonLesson from "./skeletonLesson";
+import { useSettingsContext, SimpleInfiniteList, Iconify, CustomBreadcrumbs } from "@components";
+
+import {
+  useFilters,
+  FilterMode,
+  DEFAULT_TAKE_PER_PAGE,
+} from "@hooks";
 import { getCountTakingElment } from "@utils";
+import DashboardLayout from "@layouts/dashboard";
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "@sections/dashboard/skeleton/skeletonList";
-import SkeletonLesson from "./skeletonLesson";
-import FilterLessons from "./filter";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
+import LessonCard from "@sections/dashboard/lessons/LessonCard";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
+import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
+import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 
 LessonsListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function LessonsListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

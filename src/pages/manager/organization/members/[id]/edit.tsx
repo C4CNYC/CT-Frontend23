@@ -1,21 +1,18 @@
-// next
 import Head from "next/head";
 import { useRouter } from "next/router";
-// @mui
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import { Container } from "@mui/material";
-import DashboardLayout from "@layouts/dashboard";
-import { useGetOrgMemberQuery } from "src/redux/services/admin/members-admin";
-import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
-// ----------------------------------------------------------------------
+import { Container } from "@mui/material";
+
+import { useSettingsContext, CustomBreadcrumbs } from "@components";
+
+import DashboardLayout from "@layouts/dashboard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
+import { useGetOrgMemberQuery } from "src/redux/services/admin/members-admin";
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserEditPage(): React.ReactElement {
   const {

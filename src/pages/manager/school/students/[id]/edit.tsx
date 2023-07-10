@@ -1,23 +1,21 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-// @mui
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import { Container } from "@mui/material";
-import SkeletonEditUserForm from "@sections/dashboard/user/skeleton/SkeletonEditUserForm";
 import { useSelector } from "react-redux";
+
+import { Container } from "@mui/material";
+
+import { useSettingsContext, CustomBreadcrumbs } from "@components";
+
+import { RootState } from "src/redux/store";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 import { useGetStudentQuery } from "src/redux/services/manager/students-manager";
-import { RootState } from "src/redux/store";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
+import SkeletonEditUserForm from "@sections/dashboard/user/skeleton/SkeletonEditUserForm";
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserEditPage(): React.ReactElement {
   const {

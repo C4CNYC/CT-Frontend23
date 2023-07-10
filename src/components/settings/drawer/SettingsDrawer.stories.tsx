@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import SettingsDrawer from "./SettingsDrawer";
+
 import { ThemeProvider } from "@theme/index";
+import SettingsDrawer from "./SettingsDrawer";
 
 const Component: Meta<typeof SettingsDrawer> = {
   component: SettingsDrawer,

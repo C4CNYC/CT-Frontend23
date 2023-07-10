@@ -1,17 +1,21 @@
-import { useState } from "react";
 import * as Yup from "yup";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-// @mui
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Stack,
+  Alert, 
+  IconButton, 
+  InputAdornment, 
+ } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { Alert, IconButton, InputAdornment, Stack } from "@mui/material";
-// auth
-import { useAuthContext } from "../../auth/useAuthContext";
-// components
-import { FormProvider, Iconify, RHFTextField } from "@components";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
-// ----------------------------------------------------------------------
+
+import { FormProvider, Iconify, RHFTextField } from "@components";
+
+import { useAuthContext } from "../../auth/useAuthContext";
+
 
 interface FormValuesProps {
   email: string;

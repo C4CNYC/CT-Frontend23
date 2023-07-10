@@ -1,15 +1,18 @@
-import { Iconify } from "@components";
-import { Box, useMediaQuery, useTheme } from "@mui/material";
-import { Stack } from "@mui/system";
-import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { AnimatePresence, m } from "framer-motion";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
+import { AnimatePresence, m } from "framer-motion";
+
+import { Stack } from "@mui/system";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
+
+import { Iconify } from "@components";
+
+import CheckersMenu from "./CheckersMenu";
+import CheckersCompleated from "./CheckersCompleated";
 import { IValidationMap } from "src/utils/validationMaping";
 import { checkersAnimationAtom } from "./checkers-animation-atom";
-import CheckersCompleated from "./CheckersCompleated";
-import CheckersMenu from "./CheckersMenu";
+import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/types";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 interface ICheckers {
   checkers: IValidationMap[];

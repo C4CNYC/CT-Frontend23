@@ -1,19 +1,26 @@
+import React, { 
+  useRef, 
+  useState,
+  useEffect, 
+} from "react";
+import Image from "next/image";
+ import { RxCross2 } from "react-icons/rx";
+ import { MdOutlineTimer } from "react-icons/md";
+
 import {
-  Button,
   Grid,
-  IconButton,
-  InputBase,
+  Button,
   Popover,
-  PopoverVirtualElement,
+  InputBase,
   Typography,
+  IconButton,
+  PopoverVirtualElement,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { MdOutlineTimer } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
+
 import TimerButton from "./button/timer-button";
+
 import { CircularProgressWithLabel } from "./progress/circularProgress";
 import { useStyles } from "./styles";
-import Image from "next/image";
 
 interface Props {
   mobile: boolean;

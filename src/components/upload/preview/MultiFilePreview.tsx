@@ -1,17 +1,13 @@
 import { AnimatePresence, m } from "framer-motion";
-// @mui
-import { IconButton, Stack, Typography } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-// utils
-import { fData } from "@utils";
-//
-import { varFade } from "../../animate";
-import { fileData, FileThumbnail } from "../../file-thumbnail";
-import { Iconify } from "../../iconify";
-//
-import { UploadProps } from "../types";
 
-// ----------------------------------------------------------------------
+import { alpha } from "@mui/material/styles";
+import { IconButton, Stack, Typography } from "@mui/material";
+
+import { fData } from "@utils";
+import { UploadProps } from "../types";
+import { varFade } from "../../animate";
+import { Iconify } from "../../iconify";
+import { fileData, FileThumbnail } from "../../file-thumbnail";
 
 export default function MultiFilePreview({
   thumbnail,

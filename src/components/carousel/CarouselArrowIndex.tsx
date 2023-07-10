@@ -1,11 +1,9 @@
-// @mui
-import { Box, IconButton, SxProps, Typography } from "@mui/material";
 import { styled, Theme, useTheme } from "@mui/material/styles";
-// utils
+import { Box, IconButton, SxProps, Typography } from "@mui/material";
+
 import { bgBlur } from "@utils";
-//
+
 import { IconifyProps } from "../iconify";
-//
 import { LeftIcon, RightIcon } from "./Icon";
 
 // ----------------------------------------------------------------------

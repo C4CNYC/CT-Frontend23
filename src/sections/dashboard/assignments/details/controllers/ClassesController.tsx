@@ -1,31 +1,34 @@
-import { SearchNotFound, Iconify } from "@components";
-import {
-  alpha,
-  Autocomplete,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
-  Avatar,
-  Box,
-  Chip,
-  TextField,
-  Typography,
-} from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useSelector } from "react-redux";
+
+import {
+  Box,
+  Chip,
+  alpha,
+  Avatar,
+  TextField,
+  Typography,
+  Autocomplete,
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
+} from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
+import { SearchNotFound, Iconify } from "@components";
+import { BaseResponseInterface, voidFunction } from "@utils";
+
 import { useFilters } from "@hooks";
-import { IClass } from "src/redux/services/interfaces/class.interface";
+import { RootState } from "src/redux/store";
 import {
   useRemoveClassAssignmentMutation,
   useUdpateClassAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
+import { IClass } from "src/redux/services/interfaces/class.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
-import { RootState } from "src/redux/store";
 
-import { BaseResponseInterface, voidFunction } from "@utils";
 
 type ClassType = IClass & BaseResponseInterface;
 

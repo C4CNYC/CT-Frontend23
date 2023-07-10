@@ -1,7 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { MegaMenuDesktopHorizon } from "./MegaMenuDesktopHorizon";
+
 import { Iconify } from "../iconify"
 import { ThemeProvider } from "@theme/index";
+import { MegaMenuDesktopHorizon } from "./MegaMenuDesktopHorizon";
 
 const Component: Meta<typeof MegaMenuDesktopHorizon> = {
   component: MegaMenuDesktopHorizon,

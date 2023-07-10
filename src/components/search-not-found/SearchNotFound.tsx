@@ -1,7 +1,5 @@
 import { Paper, PaperProps, Typography } from "@mui/material";
 
-// ----------------------------------------------------------------------
-
 interface Props extends PaperProps {
   query?: string;
 }

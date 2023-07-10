@@ -1,8 +1,8 @@
-import { MultiFilePreview, UploadBox } from "@components";
-import { Stack } from "@mui/material";
 import { useCallback, useState } from "react";
 
-// ----------------------------------------------------------------------
+import { Stack } from "@mui/material";
+
+import { MultiFilePreview, UploadBox } from "@components";
 
 interface Props {
   attachments: string[];

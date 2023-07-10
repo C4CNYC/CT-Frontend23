@@ -1,6 +1,7 @@
-import { Box } from "@mui/system";
 import React from "react";
 import useInfiniteScroll from "react-infinite-scroll-hook";
+
+import { Box } from "@mui/system";
 
 export interface SimpleInfiniteListProps {
   onLoadMore: () => void;

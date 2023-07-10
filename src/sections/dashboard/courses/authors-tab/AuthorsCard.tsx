@@ -1,26 +1,29 @@
-import { SvgColor } from "@components";
-import { LoadingButton } from "@mui/lab";
+import NextLink from "next/link";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { RxLinkedinLogo } from "react-icons/rx";
+
 import {
-  Avatar,
   Box,
-  Button,
-  Card,
-  Collapse,
-  Divider,
   Link,
+  Card,
   Stack,
+  Avatar,
+  Button,
+  Divider,
+  Collapse,
   Typography,
 } from "@mui/material";
-import NextLink from "next/link";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { RxLinkedinLogo } from "react-icons/rx";
-import { IAuthor } from "src/redux/services/interfaces/author.interface";
-import {
-  useAddAuthorToCourseMutation,
-  useDeleteAuthorMutation,
-} from "src/redux/services/manager/author-manager";
+import { LoadingButton } from "@mui/lab";
+
+import { SvgColor } from "@components";
+
 import AuthorForm from "./AuthorForm";
+import {
+  useDeleteAuthorMutation,
+  useAddAuthorToCourseMutation,
+} from "src/redux/services/manager/author-manager";
+import { IAuthor } from "src/redux/services/interfaces/author.interface";
 
 interface Props {
   author: IAuthor;

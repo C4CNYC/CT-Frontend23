@@ -1,31 +1,28 @@
-import { noCase } from "change-case";
+import Image from "next/image";
 import { useState } from "react";
-// @mui
+import { noCase } from "change-case";
+
 import {
-  Avatar,
-  Badge,
   Box,
-  Button,
-  Divider,
-  IconButton,
   List,
-  ListItemAvatar,
-  ListItemButton,
+  Stack,
+  Badge,
+  Avatar,
+  Button,
+  Tooltip,
+  Divider,
+  Typography,
+  IconButton,
   ListItemText,
   ListSubheader,
-  Stack,
-  Tooltip,
-  Typography,
+  ListItemButton,
+  ListItemAvatar,
 } from "@mui/material";
-// utils
-import { fToNow } from "@utils";
-// _mock_
-import { _notifications } from "../../../_mock/arrays";
-// components
-import { IconButtonAnimate, Iconify, MenuPopover, Scrollbar } from "@components";
-import Image from "next/image";
 
-// ----------------------------------------------------------------------
+import { IconButtonAnimate, Iconify, MenuPopover, Scrollbar } from "@components";
+
+import { fToNow } from "@utils";
+import { _notifications } from "../../../_mock/arrays";
 
 export default function NotificationsPopover(): React.ReactElement {
   const [notifications, setNotifications] = useState(_notifications);

@@ -1,13 +1,10 @@
 import { FileRejection } from "react-dropzone";
-// @mui
-import { Box, Paper, Typography } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-// utils
-import { fData } from "@utils";
-//
-import { fileData } from "../../file-thumbnail";
 
-// ----------------------------------------------------------------------
+import { alpha } from "@mui/material/styles";
+import { Box, Paper, Typography } from "@mui/material";
+
+import { fData } from "@utils";
+import { fileData } from "../../file-thumbnail";
 
 interface Props {
   fileRejections: FileRejection[];

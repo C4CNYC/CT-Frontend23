@@ -1,5 +1,5 @@
-import { Skeleton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { Skeleton, Typography } from "@mui/material";
 
 export default function SkeletonViewBlock(): React.ReactElement {
   return (

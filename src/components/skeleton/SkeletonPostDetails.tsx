@@ -1,7 +1,4 @@
-// @mui
 import { Box, Skeleton } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export function SkeletonPostDetails(): React.ReactElement {
   return (

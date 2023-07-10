@@ -1,47 +1,35 @@
-// i18n
 import "src/locales/i18n";
-
-// scroll bar
 import "simplebar/src/simplebar.css";
-
-// lightbox
+import "mapbox-gl/dist/mapbox-gl.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import "yet-another-react-lightbox/styles.css";
-
-// map
-import "mapbox-gl/dist/mapbox-gl.css";
-
-// slick-carousel
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-
-// lazy image
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-// ----------------------------------------------------------------------
-
-import { CacheProvider, EmotionCache } from "@emotion/react";
-// next
+import Head from "next/head";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
-import Head from "next/head";
-// redux
 import { Provider as ReduxProvider } from "react-redux";
-// @mui
+import { CacheProvider, EmotionCache } from "@emotion/react";
+
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// redux
-import { store } from "src/redux/store";
-// utils
-import { createEmotionCache } from "@utils";
-// theme
-import { ThemeProvider } from "@theme/index";
-// locales
-import ThemeLocalization from "src/locales";
-// components
-import { SnackbarProviderWrapper, MotionLazyContainer, SettingsProvider, ThemeSettings, ProgressBar, StyledChart } from "@components";
 
+import { 
+  ProgressBar, 
+  StyledChart, 
+  ThemeSettings, 
+  SettingsProvider, 
+  MotionLazyContainer, 
+  SnackbarProviderWrapper, 
+} from "@components";
+
+import { store } from "src/redux/store";
+import ThemeLocalization from "src/locales";
+import { createEmotionCache } from "@utils";
+import { ThemeProvider } from "@theme/index";
 import { AuthProvider } from "src/auth/JwtContext";
 
 const clientSideEmotionCache = createEmotionCache();

@@ -1,10 +1,7 @@
-// @mui
 import { RadioGroup } from "@mui/material";
-//
+
 import { useSettingsContext } from "../SettingsContext";
 import { LayoutIcon, MaskControl, StyledCard, StyledWrap } from "../styles";
-
-// ----------------------------------------------------------------------
 
 const OPTIONS = ["vertical", "horizontal", "mini"] as const;
 

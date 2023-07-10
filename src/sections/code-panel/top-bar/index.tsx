@@ -1,7 +1,8 @@
 import { Box, useMediaQuery, useTheme } from "@mui/material";
-import GroupHeader from "./GroupHeader";
+
 import Logo from "./Logo";
 import NavBar from "./nav-bar";
+import GroupHeader from "./GroupHeader";
 
 interface ITopPanel {
   chatComponent: React.ReactElement;

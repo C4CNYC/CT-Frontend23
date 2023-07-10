@@ -1,10 +1,8 @@
-import { Box, Stack } from "@mui/material";
 import { memo } from "react";
-//
-import { NavListProps, NavSectionProps } from "../types";
-import NavList from "./NavList";
+import { Box, Stack } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import NavList from "./NavList";
+import { NavListProps, NavSectionProps } from "../types";
 
 function NavSectionMini({
   data,

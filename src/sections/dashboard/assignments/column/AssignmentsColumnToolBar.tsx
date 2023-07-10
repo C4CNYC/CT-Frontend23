@@ -1,13 +1,23 @@
-import { Iconify, ConfirmDialog } from "@components";
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+import { 
+  useRef, 
+  useState,
+  useEffect, 
+ } from "react";
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
-import Stepper from "./../createAssignment/Stepper";
 
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Stack, 
+  Button, 
+  Typography,
+  IconButton, 
+ } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+
+import { Iconify, ConfirmDialog } from "@components";
+import Stepper from "./../createAssignment/Stepper";
 
 interface Props {
   columnName: string;

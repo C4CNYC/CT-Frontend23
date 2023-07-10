@@ -1,24 +1,22 @@
-// Icons
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
-// Mui
+import { useState } from "react";
+
 import {
-  Avatar,
   Box,
+  Menu,
+  Avatar,
   Button,
   Divider,
-  ListItemIcon,
-  Menu,
   MenuItem,
   Typography,
+  ListItemIcon,
 } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import Container from "@mui/system/Container";
 import Stack from "@mui/system/Stack";
-// Hooks
-import { useState } from "react";
-// commponents
+import Container from "@mui/system/Container";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
 import { MenuPopover, IconButtonAnimate } from "@components";
 
 export default function FilterAssignments(): React.ReactElement {

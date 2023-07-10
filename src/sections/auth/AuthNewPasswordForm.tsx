@@ -1,25 +1,21 @@
-import { useState } from "react";
 import * as Yup from "yup";
-// next
+import { useState } from "react";
 import { useRouter } from "next/router";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-// @mui
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
-// routes
-import { PATH_AUTH } from "../../routes/paths";
-// components
-import { useSubmitPasswordMutation } from "src/redux/services/auth";
+
 import {
-  RHFTextField,
-  FormProvider,
   Iconify,
   useSnackbar,
+  RHFTextField,
+  FormProvider,
  } from "@components";
 
-// ----------------------------------------------------------------------
+import { PATH_AUTH } from "../../routes/paths";
+import { useSubmitPasswordMutation } from "src/redux/services/auth";
 
 interface FormValuesProps {
   password: string;

@@ -1,7 +1,9 @@
-import { MenuPopover } from "@components";
-import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
-import { IconButton } from "@mui/material";
 import { useState } from "react";
+
+import { IconButton } from "@mui/material";
+import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
+
+import { MenuPopover } from "@components";
 
 interface Props {
   tip: string;

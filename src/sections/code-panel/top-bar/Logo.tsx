@@ -1,6 +1,13 @@
-import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
 import NextLink from "next/link";
 import { forwardRef } from "react";
+
+import { 
+  Box, 
+  Link, 
+  useTheme,
+  BoxProps, 
+  useMediaQuery, 
+ } from "@mui/material";
 
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean;

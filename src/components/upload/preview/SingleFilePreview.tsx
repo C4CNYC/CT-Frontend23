@@ -1,9 +1,5 @@
-//
 import { Image } from "../../image";
-//
 import { CustomFile } from "../types";
-
-// ----------------------------------------------------------------------
 
 interface Props {
   file: CustomFile | string | null;

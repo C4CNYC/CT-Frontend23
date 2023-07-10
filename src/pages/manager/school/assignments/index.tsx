@@ -1,22 +1,23 @@
-import { CustomBreadcrumbs } from "@components";
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { Container, Stack } from "@mui/material";
-import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
 import { useEffect } from "react";
-import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+
+import { Container, Stack } from "@mui/material";
+
+import { CustomBreadcrumbs } from "@components";
+
+import { hideScrollbarX } from "@utils";
+import FilterAssignments from "./filter";
+import { getOrder } from "src/utils/getTaskOrder";
 import {
   useGetAssignmentListQuery,
   useUdpateAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
-import { getOrder } from "src/utils/getTaskOrder";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { getBoard, persistCard } from "src/redux/slices/assignments";
 import { RootState, useDispatch, useSelector } from "src/redux/store";
-import { hideScrollbarX } from "@utils";
-import FilterAssignments from "./filter";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
+import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
+import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
 
 Index.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

@@ -1,30 +1,24 @@
-// @mui
 import {
-  AppBar,
   Box,
-  BoxProps,
-  Button,
-  Container,
   Link,
+  Button,
+  AppBar,
   Toolbar,
+  BoxProps,
+  Container,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// hooks
-import { useResponsive, useOffSetTop } from "@hooks";
-// utils
-import { bgBlur } from "@utils";
-// config
-import { HEADER } from "../../config-global";
-// routes
-import { PATH_AUTH } from "../../routes/paths";
-// components
-import { Logo, Label } from "@components";
-//
-import navConfig from "./nav/config-navigation";
-import NavDesktop from "./nav/desktop";
-import NavMobile from "./nav/mobile";
 
-// ----------------------------------------------------------------------
+import { Logo, Label } from "@components";
+
+import { bgBlur } from "@utils";
+import { HEADER } from "../../config-global";
+import { PATH_AUTH } from "../../routes/paths";
+import { useResponsive, useOffSetTop } from "@hooks";
+
+import NavMobile from "./nav/mobile";
+import NavDesktop from "./nav/desktop";
+import navConfig from "./nav/config-navigation";
 
 export default function Header(): React.ReactElement {
   const theme = useTheme();

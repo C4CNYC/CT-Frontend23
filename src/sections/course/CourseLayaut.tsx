@@ -1,10 +1,17 @@
-import { EmptyContent } from "@components";
-import { Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { ICourseContent } from "src/redux/interfaces/content.interface";
-import CourseDetailsMain from "./course-details/CourseDetailsMain";
+
+import { 
+  Box, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+
+import { EmptyContent } from "@components";
+
 import CourseCard from "./CourseCard";
 import CourseSummarily from "./CourseSummarily";
+import CourseDetailsMain from "./course-details/CourseDetailsMain";
+import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 interface Props {
   course: ICourseContent;

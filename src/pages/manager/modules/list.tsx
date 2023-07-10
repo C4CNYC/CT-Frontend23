@@ -1,31 +1,30 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
+import Head from "next/head";
+
+import { Box, Button, Container } from "@mui/material";
+
 import { useSettingsContext, CustomBreadcrumbs, SimpleInfiniteList, Iconify } from "@components";
+
 import {
   DEFAULT_TAKE_PER_PAGE,
   FilterMode,
   useFilters,
 } from "@hooks";
+import FilterModules from "./filter";
 import DashboardLayout from "@layouts/dashboard";
-import { Box, Button, Container } from "@mui/material";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import ModuleCard from "@sections/dashboard/modules/ModuleCard";
-import Head from "next/head";
-import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-// import { getCountTakingElment } from "src/utils/countTakingElments";
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "@sections/dashboard/skeleton/skeletonList";
-import FilterModules from "./filter";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
+import ModuleCard from "@sections/dashboard/modules/ModuleCard";
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
+import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
+// import { getCountTakingElment } from "src/utils/countTakingElments";
 
 ModulesListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext();

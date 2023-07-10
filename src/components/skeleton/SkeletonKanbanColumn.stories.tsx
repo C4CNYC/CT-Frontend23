@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { SkeletonKanbanColumn } from "./SkeletonKanbanColumn"
 
 const Component: Meta<typeof SkeletonKanbanColumn> = {

@@ -1,8 +1,5 @@
-// @mui
-import GlobalStyles from "@mui/material/GlobalStyles";
 import { useTheme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
+import GlobalStyles from "@mui/material/GlobalStyles";
 
 export function StyledProgressBar(): React.ReactElement {
   const theme = useTheme();

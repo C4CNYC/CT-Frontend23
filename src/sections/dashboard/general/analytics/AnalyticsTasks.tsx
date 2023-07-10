@@ -1,21 +1,22 @@
 import { useState } from "react";
-// @mui
+
 import {
   Card,
-  CardHeader,
-  CardProps,
-  Checkbox,
-  CheckboxProps,
-  Divider,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
   Stack,
+  Divider,
+  MenuItem,
+  Checkbox,
+  CardProps,
+  IconButton,
+  CardHeader,
+  CheckboxProps,
+  FormControlLabel,
 } from "@mui/material";
-// components
-import { MenuPopover, Iconify } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Iconify,
+  MenuPopover, 
+ } from "@components";
 
 interface ItemProps {
   id: string;

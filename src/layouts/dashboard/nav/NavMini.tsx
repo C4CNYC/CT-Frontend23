@@ -1,14 +1,11 @@
-// @mui
 import { Box, Stack } from "@mui/material";
-// config
-import { NAV } from "../../../config-global";
-// utils
-import { hideScrollbarX } from "@utils";
-import { LogoMin, NavSectionMini } from "@components";
-import navConfig from "./config-navigation";
-import NavToggleButton from "./NavToggleButton";
 
-// ----------------------------------------------------------------------
+import { LogoMin, NavSectionMini } from "@components";
+
+import { hideScrollbarX } from "@utils";
+import navConfig from "./config-navigation";
+import { NAV } from "../../../config-global";
+import NavToggleButton from "./NavToggleButton";
 
 export default function NavMini(): React.ReactElement {
   return (

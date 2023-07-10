@@ -1,18 +1,13 @@
-// form
 import { Controller, useFormContext } from "react-hook-form";
-// @mui
-import { FormHelperText } from "@mui/material";
-//
-import { Upload, UploadAvatar, UploadBox, UploadProps } from "../upload";
 
-// ----------------------------------------------------------------------
+import { FormHelperText } from "@mui/material";
+
+import { Upload, UploadAvatar, UploadBox, UploadProps } from "../upload";
 
 interface Props extends Omit<UploadProps, "file"> {
   name: string;
   multiple?: boolean;
 }
-
-// ----------------------------------------------------------------------
 
 export function RHFUploadAvatar({
   name,

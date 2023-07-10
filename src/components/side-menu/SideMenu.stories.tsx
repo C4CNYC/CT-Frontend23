@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { SideMenu } from "./index";
 
 const Component: Meta<typeof SideMenu> = {

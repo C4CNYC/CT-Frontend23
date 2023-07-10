@@ -1,14 +1,10 @@
-// @mui
-import { Avatar, Box, Card, Stack, SxProps, Typography } from "@mui/material";
 import { alpha, Theme, useTheme } from "@mui/material/styles";
-// theme
-import { ColorSchema } from "@theme/palette";
-//
-import { Label } from "../../label/Label";
-//
-import { ItemProps } from "../types";
+import { Avatar, Box, Card, Stack, SxProps, Typography } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { ItemProps } from "../types";
+import { Label } from "../../label/Label";
+
+import { ColorSchema } from "@theme/palette";
 
 interface Props {
   node: ItemProps;

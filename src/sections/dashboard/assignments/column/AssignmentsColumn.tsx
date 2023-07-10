@@ -1,16 +1,16 @@
-import { useSnackbar } from "@components";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
-import { Paper, Stack } from "@mui/material";
-import AssignmentsTaskCard from "../AssignmentsTaskCard";
 
-// ----------------------------------------------------------------------
+import { Paper, Stack } from "@mui/material";
+
+import { voidFunction } from "@utils";
 import {
   IAssignmentsCard,
   IAssignmentsColumn,
 } from "../../../../@types/assignments";
-import { useDeleteAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
+import { useSnackbar } from "@components";
+import AssignmentsTaskCard from "../AssignmentsTaskCard";
 import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
-import { voidFunction } from "@utils";
+import { useDeleteAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 interface Props {
   column: IAssignmentsColumn;

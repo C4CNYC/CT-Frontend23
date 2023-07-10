@@ -1,31 +1,35 @@
-import { EmptyContent } from "@components";
-import { useOnlineConnection, useRealTimeConnection } from "@hooks";
-import { Box, useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { CodePanelChat } from "@sections/chat";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import SkeletonCodePanel, {
-  CPTopBarSkeleton,
-} from "@sections/code-panel/skeleton";
-import { getNextLessonId } from "@sections/code-panel/utils/navigation";
-import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
-import { useAtom } from "jotai";
 import _ from "lodash";
-import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useAtom } from "jotai";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
+
+import { useTheme } from "@mui/material/styles";
+import { Box, useMediaQuery } from "@mui/material";
+
+import { EmptyContent } from "@components";
+
+import SkeletonCodePanel, {
+  CPTopBarSkeleton,
+} from "@sections/code-panel/skeleton";
+import { CodePanelChat } from "@sections/chat";
 import {
   useGetLessonContentQuery,
   useGetLessonQuery,
 } from "src/redux/services/student/lesson-student";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { useOnlineConnection, useRealTimeConnection } from "@hooks";
+import { getNextLessonId } from "@sections/code-panel/utils/navigation";
+import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
+import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
+import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useCompleteLessonMutation } from "src/redux/services/student/progress-student";
+
 const Tour = dynamic(
   async () =>
     await import("@sections/code-panel/code-panel-tour/CodePanelTour"),

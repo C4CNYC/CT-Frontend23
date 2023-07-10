@@ -1,12 +1,13 @@
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { FiSettings } from "react-icons/fi";
+import { BsBookmark } from "react-icons/bs";
+import { TbCheckupList } from "react-icons/tb";
+
 import { Button } from "@mui/material";
+import { Container } from "@mui/system";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/system";
-import { BsBookmark } from "react-icons/bs";
-import { FiSettings } from "react-icons/fi";
-import { TbCheckupList } from "react-icons/tb";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export function SideMenu() {
   return (

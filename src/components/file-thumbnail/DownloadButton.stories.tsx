@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { DownloadButton } from "./DownloadButton";
 
 const Component: Meta<typeof DownloadButton> = {

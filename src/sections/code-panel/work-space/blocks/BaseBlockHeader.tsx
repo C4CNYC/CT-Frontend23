@@ -1,4 +1,9 @@
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { 
+  Box, 
+  useTheme,
+  Typography, 
+  useMediaQuery, 
+ } from "@mui/material";
 
 interface Props {
   title: string;

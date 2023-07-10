@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 interface IBasePreference {
   children: React.ReactElement;

@@ -1,15 +1,17 @@
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { Stack } from "@mui/system";
 import { useAtom } from "jotai";
 import { useContext } from "react";
 import SwipeableViews from "react-swipeable-views";
-import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
-import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
-import { CodePanelContext } from "../context/CodePanel.context";
-import CodeEditorBlock from "./blocks/code-editor-block";
-import SliderBlock from "./blocks/slider-block";
+
+import { Stack } from "@mui/system";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import ViewBlock from "./blocks/view-block";
+import SliderBlock from "./blocks/slider-block";
+import CodeEditorBlock from "./blocks/code-editor-block";
+import { CodePanelContext } from "../context/CodePanel.context";
+import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
+import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 
 export type SupportedLang = "html" | "javascript";
 

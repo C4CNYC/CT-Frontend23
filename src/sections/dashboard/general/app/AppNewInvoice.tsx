@@ -1,27 +1,31 @@
-import { sentenceCase } from "change-case";
 import { useState } from "react";
-// @mui
+import { sentenceCase } from "change-case";
+
 import {
   Box,
-  Button,
   Card,
-  CardHeader,
-  CardProps,
-  Divider,
-  IconButton,
-  MenuItem,
   Table,
+  Button,
+  Divider,
+  TableRow,
+  MenuItem,
   TableBody,
   TableCell,
+  CardProps,
+  IconButton,
+  CardHeader,
   TableContainer,
-  TableRow,
 } from "@mui/material";
-// utils
-import { fCurrency } from "@utils";
-// components
-import { TableHeadCustom, Iconify, Scrollbar, MenuPopover, Label } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Label,
+  Iconify, 
+  Scrollbar, 
+  MenuPopover, 
+  TableHeadCustom, 
+} from "@components";
+
+import { fCurrency } from "@utils";
 
 interface RowProps {
   id: string;

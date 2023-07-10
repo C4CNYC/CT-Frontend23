@@ -1,16 +1,12 @@
-// @mui
 import {
   Box,
-  FormControlLabel,
   Switch,
   SxProps,
   TablePagination,
+  FormControlLabel,
   TablePaginationProps,
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
-//
-
-// ----------------------------------------------------------------------
 
 interface Props {
   dense?: boolean;

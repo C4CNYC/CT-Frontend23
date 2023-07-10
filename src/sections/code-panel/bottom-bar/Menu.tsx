@@ -1,23 +1,25 @@
+import nextLink from "next/link";
+import { GiSave } from "react-icons/gi";
+import { useContext, useState } from "react";
+import { BsFolder2Open } from "react-icons/bs";
+import { IoSaveOutline } from "react-icons/io5";
+import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+
 import {
   Chip,
   Link,
+  useTheme,
   SpeedDial,
-  SpeedDialAction,
   Typography,
   useMediaQuery,
-  useTheme,
+  SpeedDialAction,
 } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
-import nextLink from "next/link";
-import { useContext, useState } from "react";
-import { BsFolder2Open } from "react-icons/bs";
-import { GiSave } from "react-icons/gi";
-import { IoSaveOutline } from "react-icons/io5";
-import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
-import { CodePanelContext } from "../context/CodePanel.context";
+import makeStyles from "@mui/styles/makeStyles";
+
 import PublishModal from "./modals/Publish";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { CodePanelContext } from "../context/CodePanel.context";
 
 const tooltipRewrite = makeStyles(() => ({
   tooltip: {

@@ -1,22 +1,24 @@
-import { Iconify, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import Head from "next/head";
+import { format } from "date-fns";
+import { useRouter } from "next/router";
+
 import {
   Card,
-  CardHeader,
-  CircularProgress,
-  Container,
-  Divider,
   Grid,
   Stack,
+  Divider,
+  Container,
+  CardHeader,
   Typography,
+  CircularProgress,
 } from "@mui/material";
-import { format } from "date-fns";
+
+import { Iconify, useSettingsContext } from "@components";
 
 import { fNumber } from "@utils";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import DashboardLayout from "@layouts/dashboard";
 import ProfileCover from "@sections/student-profile/ProfileCover";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

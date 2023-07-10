@@ -1,29 +1,31 @@
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+
 import {
-  alpha,
-  Autocomplete,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
-  Avatar,
   Box,
   Chip,
+  alpha,
+  Avatar,
   Skeleton,
   TextField,
   Typography,
+  Autocomplete,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
 } from "@mui/material";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
+import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+
 import { useFilters } from "@hooks";
-import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
 } from "src/redux/services/manager/modules-manager";
-
 import { BaseResponseInterface, voidFunction } from "@utils";
+import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 
 type LessonType = ILesson & BaseResponseInterface;
 

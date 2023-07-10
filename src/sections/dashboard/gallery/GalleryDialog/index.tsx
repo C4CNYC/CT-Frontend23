@@ -1,24 +1,25 @@
-import CloseIcon from "@mui/icons-material/Close";
-import {
-  alpha,
-  Box,
-  Dialog,
-  IconButton,
-  Stack,
-  Tab,
-  Tabs,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
 import { BiSave } from "react-icons/bi";
+import { TbArrowsMinimize } from "react-icons/tb";
+import React, { useEffect, useState } from "react";
 import { BsArrowsFullscreen } from "react-icons/bs";
 import { HiCode, HiOutlineDesktopComputer } from "react-icons/hi";
-import { TbArrowsMinimize } from "react-icons/tb";
+
+import {
+  Box,
+  Tab,
+  Tabs,
+  Stack,
+  alpha,
+  Dialog,
+  useTheme,
+  IconButton,
+  useMediaQuery,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 import BrowserTab from "../BrowserTab";
-import GalleryCodeTab from "../GalleryCodeTab";
 import ModalFooter from "../ModalFooter";
+import GalleryCodeTab from "../GalleryCodeTab";
 import { ArrowLeft, ArrowRight } from "./navigation";
 
 interface Props {

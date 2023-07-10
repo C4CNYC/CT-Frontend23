@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-// next
 import { useRouter } from "next/router";
-// hooks
-import { useActiveLink } from "@hooks";
-//
-import { NavListProps } from "../types";
+import { useEffect, useRef, useState } from "react";
+
 import NavItem from "./NavItem";
+import { NavListProps } from "../types";
 import { StyledPopover } from "./styles";
 
-// ----------------------------------------------------------------------
+import { useActiveLink } from "@hooks";
 
 interface NavListRootProps {
   data: NavListProps;

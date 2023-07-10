@@ -1,29 +1,31 @@
-import { CustomAvatar, SearchNotFound, Iconify } from "@components";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
+
 import {
-  alpha,
-  Autocomplete,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
-  Avatar,
   Box,
   Chip,
+  alpha,
+  Avatar,
   Skeleton,
   TextField,
   Typography,
+  Autocomplete,
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
 } from "@mui/material";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
+import { CustomAvatar, SearchNotFound, Iconify } from "@components";
+
 import { useFilters } from "@hooks";
 import {
   useAddModuleToCourseMutation,
   useRemoveModuleFromCourseMutation,
 } from "src/redux/services/manager/courses-manager";
-import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-
 import { BaseResponseInterface, voidFunction } from "@utils";
 import { IModule } from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 
 type ModuleType = IModule & BaseResponseInterface;
 

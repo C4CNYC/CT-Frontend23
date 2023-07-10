@@ -1,16 +1,17 @@
-// mui
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/system/Stack";
-// icons
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import _ from "lodash";
-import Image from "next/image";
 import Link from "next/link";
-import { CgMenuMotion } from "react-icons/cg";
+import Image from "next/image";
 import { FcInfo } from "react-icons/fc";
+import { CgMenuMotion } from "react-icons/cg";
 import { MdAddCircleOutline, MdEdit } from "react-icons/md";
+
+import Card from "@mui/material/Card";
+import Stack from "@mui/system/Stack";
+import Typography from "@mui/material/Typography";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import { CardTypes } from "src/redux/services/enums/card-types.enum";
+
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 interface Props {

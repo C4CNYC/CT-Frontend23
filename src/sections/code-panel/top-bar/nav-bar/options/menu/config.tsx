@@ -1,7 +1,7 @@
-import { PATH_AUTH } from "@routes/paths";
-import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { UserType } from "@utils";
+import { PATH_AUTH } from "@routes/paths";
 import MenuHugDialog from "./MenuHugDialog";
+import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN, STUDENT_PATH_PAGE } from "@routes/student.paths";
 
 interface IMenuConfigItem {

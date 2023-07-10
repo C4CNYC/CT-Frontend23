@@ -1,11 +1,11 @@
 import { memo } from "react";
-// @mui
+
 import { Box } from "@mui/material";
-//
+
 import { StyledRootScrollbar, StyledScrollbar } from "./styles";
+
 import { ScrollbarProps } from "./types";
 
-// ----------------------------------------------------------------------
 /* eslint-disable react/display-name */
 export const Scrollbar = memo(({
   children,

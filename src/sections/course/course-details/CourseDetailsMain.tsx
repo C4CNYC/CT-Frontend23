@@ -1,7 +1,8 @@
 import { Box, Stack } from "@mui/material";
-import CourseDescription from "./CourseDescription";
+
 import QuizPanel from "./quiz-panel";
 import TrainingsList from "./TrainingsList";
+import CourseDescription from "./CourseDescription";
 import { Unit } from "src/redux/interfaces/challenges.interface";
 
 interface Props {

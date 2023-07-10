@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { SnackbarProviderWrapper, SnackbarProviderWrapperProps } from "./SnackbarProviderWrapper"
+
 import { ThemeProvider } from "@theme/index";
+import { SnackbarProviderWrapper, SnackbarProviderWrapperProps } from "./SnackbarProviderWrapper"
 
 const Component: Meta<typeof SnackbarProviderWrapper> = {
   component: SnackbarProviderWrapper,

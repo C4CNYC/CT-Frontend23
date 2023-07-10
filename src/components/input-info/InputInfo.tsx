@@ -1,5 +1,6 @@
-import InfoIcon from "@mui/icons-material/Info";
 import * as React from "react";
+
+import InfoIcon from "@mui/icons-material/Info";
 
 interface InputInfoProps {
   text: string;

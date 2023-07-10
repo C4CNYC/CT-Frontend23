@@ -1,6 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { MegaMenuMobile } from "./MegaMenuMobile";
+
 import { Iconify } from "../iconify"
+import { MegaMenuMobile } from "./MegaMenuMobile";
+
 import { ThemeProvider } from "@theme/index";
 
 const Component: Meta<typeof MegaMenuMobile> = {

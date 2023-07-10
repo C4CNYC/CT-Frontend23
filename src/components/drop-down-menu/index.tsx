@@ -1,10 +1,12 @@
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+
 import { Button, Menu } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useUpdateOrgMemberMutation } from "src/redux/services/admin/members-admin";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
 import { Role } from "src/redux/services/enums/role.enum";
+import { useUpdateOrgMemberMutation } from "src/redux/services/admin/members-admin";
 
 interface Props {
   userId: string;

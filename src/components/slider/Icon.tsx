@@ -1,7 +1,5 @@
 import { IconifyProps, Iconify } from "@components";
 
-// ----------------------------------------------------------------------
-
 interface Props {
   icon?: IconifyProps; // Right icon
   isRTL?: boolean;

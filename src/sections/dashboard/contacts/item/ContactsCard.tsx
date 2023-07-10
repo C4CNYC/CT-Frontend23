@@ -1,22 +1,25 @@
-import { useState } from "react";
-// @mui
-import {
-  Button,
-  Card,
-  CardProps,
-  Divider,
-  IconButton,
-  MenuItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-// hooks
-import { TextMaxLine, MenuPopover, Iconify, ConfirmDialog } from "@components";
-//
-// import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import Image from "next/image";
+import { useState } from "react";
+
+import {
+  Card,
+  Stack,
+  Button,
+  Divider,
+  MenuItem,
+  CardProps,
+  Typography,
+  IconButton,
+} from "@mui/material";
+
+import { 
+  Iconify, 
+  TextMaxLine, 
+  MenuPopover, 
+  ConfirmDialog,
+ } from "@components";
+// import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import { IUserProfileSchool } from "@types";
-// ----------------------------------------------------------------------
 
 interface Props extends CardProps {
   school: IUserProfileSchool;

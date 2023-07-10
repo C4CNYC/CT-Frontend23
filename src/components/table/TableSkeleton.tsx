@@ -1,13 +1,10 @@
-// @mui
 import {
-  Skeleton,
   Stack,
-  TableCell,
+  Skeleton,
   TableRow,
+  TableCell,
   TableRowProps,
 } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export function TableSkeleton({
   ...other

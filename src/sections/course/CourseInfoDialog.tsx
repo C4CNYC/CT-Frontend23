@@ -1,11 +1,19 @@
-import { Scrollbar } from "@components";
-import { Box, Button, Dialog, DialogContent } from "@mui/material";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import CourseDescription from "./course-details/CourseDescription";
+
+import { 
+  Box, 
+  Button, 
+  Dialog, 
+  DialogContent,
+ } from "@mui/material";
+
+import { Scrollbar } from "@components";
+
 import QuizPanel from "./course-details/quiz-panel";
 import TrainingsList from "./course-details/TrainingsList";
 import { Unit } from "src/redux/interfaces/challenges.interface";
+import CourseDescription from "./course-details/CourseDescription";
 
 interface Props {
   children: React.ReactElement;

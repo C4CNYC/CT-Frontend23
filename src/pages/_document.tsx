@@ -1,15 +1,12 @@
 import * as React from "react";
-// next
 import Document, { Head, Html, Main, NextScript } from "next/document";
-// @emotion
+
 import createEmotionServer from "@emotion/server/create-instance";
-// utils
+
 import { createEmotionCache } from "@utils";
-// theme
+
 import { palette } from "@theme/palette";
 import { primaryFont } from "@theme/typography";
-
-// ----------------------------------------------------------------------
 
 export default class MyDocument extends Document {
   render(): React.ReactElement {

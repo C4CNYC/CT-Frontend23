@@ -1,29 +1,32 @@
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+import parse from "autosuggest-highlight/parse";
+import match from "autosuggest-highlight/match";
+
 import {
-  alpha,
-  Autocomplete,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
   Box,
   Chip,
+  alpha,
   TextField,
   Typography,
+  Autocomplete,
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useSelector } from "react-redux";
+
+import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+
 import { ICourse } from "@types";
 import { useFilters } from "@hooks";
+import { RootState } from "src/redux/store";
+import { BaseResponseInterface } from "@utils"
 import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
 } from "src/redux/services/manager/classes-manager";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { RootState } from "src/redux/store";
-import { BaseResponseInterface } from "@utils"
 
 type CourseType = ICourse & BaseResponseInterface;
 

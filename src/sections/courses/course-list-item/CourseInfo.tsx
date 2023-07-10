@@ -1,6 +1,12 @@
-import { Box, Stack, Typography } from "@mui/material";
-import { AiOutlineClockCircle } from "react-icons/ai";
 import { MdCelebration } from "react-icons/md";
+import { AiOutlineClockCircle } from "react-icons/ai";
+
+import { 
+  Box, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+ 
 import { ICourse } from "@types";
 
 interface Props {

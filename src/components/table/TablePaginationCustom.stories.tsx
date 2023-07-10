@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { TablePaginationCustom } from "./TablePaginationCustom"
+
 import { voidFunction } from "@utils";
+import { TablePaginationCustom } from "./TablePaginationCustom"
 
 const Component: Meta<typeof TablePaginationCustom> = {
   component: TablePaginationCustom,

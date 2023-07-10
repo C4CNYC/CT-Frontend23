@@ -1,20 +1,18 @@
-import { m } from "framer-motion";
-// next
-import { PageNotFoundIllustration } from "@assets/illustrations";
-import { MotionContainer, varBounce } from "@components";
-import CompactLayout from "@layouts/compact";
-import { Box, Button, Typography } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import Head from "next/head";
 import NextLink from "next/link";
+import { m } from "framer-motion";
 
-// ----------------------------------------------------------------------
+import { Box, Button, Typography } from "@mui/material";
+
+import { MotionContainer, varBounce } from "@components";
+
+import CompactLayout from "@layouts/compact";
+import { PATH_DASHBOARD } from "@routes/paths";
+import { PageNotFoundIllustration } from "@assets/illustrations";
 
 Page404.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function Page404(): React.ReactElement {
   return (

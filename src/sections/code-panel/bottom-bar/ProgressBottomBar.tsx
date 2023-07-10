@@ -1,8 +1,14 @@
-import { Box, Slider, useMediaQuery, useTheme } from "@mui/material";
+import { 
+  useState, 
+  useEffect, 
+  useContext, 
+} from "react";
 import { useAtom } from "jotai";
-import { useContext, useEffect, useState } from "react";
-import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
+
+import { Box, Slider, useMediaQuery, useTheme } from "@mui/material";
+
 import { CodePanelContext } from "../context/CodePanel.context";
+import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 
 export default function ProgressBottomBar(): React.ReactElement {
   const theme = useTheme();

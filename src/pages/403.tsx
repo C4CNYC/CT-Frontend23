@@ -1,23 +1,17 @@
-import { m } from "framer-motion";
-// next
 import Head from "next/head";
 import NextLink from "next/link";
-// @mui
-import { Button, Typography } from "@mui/material";
-// layouts
-import CompactLayout from "@layouts/compact";
-// components
-import { MotionContainer, varBounce } from "@components";
-// assets
-import { ForbiddenIllustration } from "@assets/illustrations";
+import { m } from "framer-motion";
 
-// ----------------------------------------------------------------------
+import { Button, Typography } from "@mui/material";
+
+import { MotionContainer, varBounce } from "@components";
+
+import CompactLayout from "@layouts/compact";
+import { ForbiddenIllustration } from "@assets/illustrations";
 
 Page403.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function Page403(): React.ReactElement {
   return (

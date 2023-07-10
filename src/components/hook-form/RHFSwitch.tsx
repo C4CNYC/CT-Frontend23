@@ -1,14 +1,11 @@
-// form
 import { Controller, useFormContext } from "react-hook-form";
-// @mui
+
 import {
+  Switch,
+  FormHelperText,
   FormControlLabel,
   FormControlLabelProps,
-  FormHelperText,
-  Switch,
 } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 interface Props extends Omit<FormControlLabelProps, "control"> {
   name: string;

@@ -1,15 +1,17 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Typography,
-} from "@mui/material";
-import { Stack } from "@mui/system";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { CopyBlock, dracula } from "react-code-blocks";
+
+import {
+  Button,
+  Dialog,
+  Typography,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
+import { Stack } from "@mui/system";
+
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 interface IFullCodeSolutionModal {
   children: React.ReactElement;

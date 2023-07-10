@@ -1,7 +1,12 @@
-import CloseIcon from "@mui/icons-material/Close";
-import MenuIcon from "@mui/icons-material/Menu";
-import { alpha, Box, IconButton } from "@mui/material";
 import { SetStateAction } from "react";
+
+import { 
+  alpha, 
+  Box, 
+  IconButton,
+ } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface Props {
   open: boolean | null;

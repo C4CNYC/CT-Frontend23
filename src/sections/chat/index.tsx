@@ -1,10 +1,12 @@
-import { Chat } from "@components";
-import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import { Firestore } from "firebase/firestore";
 import { useContext } from "react";
+import { Firestore } from "firebase/firestore";
+
+import { Chat } from "@components";
+
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
 import { IChatMessage, useFirebaseChat } from "./hooks/useFirebaseChat.hook";
+import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
+import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
 
 export const CodePanelChat = (): React.ReactElement => {
   const { sendMessage, getMessages } = useFirebaseChat();

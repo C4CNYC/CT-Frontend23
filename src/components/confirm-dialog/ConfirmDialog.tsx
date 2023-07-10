@@ -1,15 +1,12 @@
-// @mui
 import {
   Button,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
 } from "@mui/material";
-//
-import { ConfirmDialogProps } from "./types";
 
-// ----------------------------------------------------------------------
+import { ConfirmDialogProps } from "./types";
 
 export function ConfirmDialog({
   title,

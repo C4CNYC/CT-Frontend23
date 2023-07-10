@@ -1,7 +1,9 @@
-import { Iconify } from "@components";
-import { voidFunction } from "@utils";
-import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
+import { Tab, Tabs } from "@mui/material";
+
+import { Iconify } from "@components";
+
+import { voidFunction } from "@utils";
 
 interface ISmallScreenTabs {
   index: number;

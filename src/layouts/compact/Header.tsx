@@ -1,18 +1,13 @@
-// next
 import NextLink from "next/link";
-// @mui
-import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// config
-import { HEADER } from "../../config-global";
-// utils
-import { bgBlur } from "@utils";
-// routes
-import { PATH_PAGE } from "../../routes/paths";
-// components
-import { Logo } from "@components";
 
-// ----------------------------------------------------------------------
+import { useTheme } from "@mui/material/styles";
+import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
+
+import { bgBlur } from "@utils";
+import { Logo } from "@components";
+import { HEADER } from "../../config-global";
+
+import { PATH_PAGE } from "../../routes/paths";
 
 interface Props {
   isOffset: boolean;

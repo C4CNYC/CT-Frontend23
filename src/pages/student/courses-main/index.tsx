@@ -1,30 +1,29 @@
+import Head from "next/head";
+
+import { Container } from "@mui/system";
+import { Box, Button } from "@mui/material";
+
 import { useSettingsContext, CustomBreadcrumbs, SimpleInfiniteList, Iconify } from "@components";
+
 import {
   DEFAULT_TAKE_PER_PAGE,
   FilterMode,
   useFilters,
 } from "@hooks";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { Box, Button } from "@mui/material";
-import { Container } from "@mui/system";
-import { CourseCard } from "@sections/dashboard/courses/cards";
-import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import FilterCourses from "@sections/dashboard/courses/filter";
-import SkeletonCourses from "@sections/dashboard/courses/skeletonCourses";
-import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
-import Head from "next/head";
-import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { getCountTakingElment } from "@utils";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import FilterCourses from "@sections/dashboard/courses/filter";
+import { CourseCard } from "@sections/dashboard/courses/cards";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-
-// ----------------------------------------------------------------------
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
+import SkeletonCourses from "@sections/dashboard/courses/skeletonCourses";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

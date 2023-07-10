@@ -1,17 +1,13 @@
 import { useState } from "react";
-// next
 import { useRouter } from "next/router";
-// @mui
-import { Collapse } from "@mui/material";
-// hooks
-import { useActiveLink } from "@hooks";
-// components
-import { NavSectionVertical } from "@components";
-//
-import { NavItemProps } from "../types";
-import NavItem from "./NavItem";
 
-// ----------------------------------------------------------------------
+import { Collapse } from "@mui/material";
+
+import NavItem from "./NavItem";
+import { NavSectionVertical } from "@components";
+
+import { useActiveLink } from "@hooks";
+import { NavItemProps } from "../types";
 
 interface NavListProps {
   item: NavItemProps;

@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { CustomAvatarGroup } from "./CustomAvatarGroup"
+
 import { CustomAvatar } from "./CustomAvatar"
+import { CustomAvatarGroup } from "./CustomAvatarGroup"
 
 const Component: Meta<typeof CustomAvatarGroup> = {
   component: CustomAvatarGroup,

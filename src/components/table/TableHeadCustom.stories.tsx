@@ -1,7 +1,9 @@
 import type { Meta } from "@storybook/react";
+
 import { Table } from "@mui/material";
-import { TableHeadCustom, TableHeadCustomProps } from "./TableHeadCustom"
+
 import { voidFunction } from "@utils";
+import { TableHeadCustom, TableHeadCustomProps } from "./TableHeadCustom"
 
 const Component: Meta<typeof TableHeadCustom> = {
   component: TableHeadCustom,

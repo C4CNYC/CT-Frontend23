@@ -1,16 +1,18 @@
-import { Image } from "@components";
+import { useState } from "react";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 import {
   Box,
+  Dialog,
   Button,
   Collapse,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Typography,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
-import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
+import { Image } from "@components";
 
 interface Props {
   children: React.ReactElement;

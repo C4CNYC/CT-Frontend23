@@ -1,34 +1,37 @@
+import _ from "lodash";
+import { useAtom } from "jotai";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { Firestore } from "firebase/firestore";
+
 import {
   Avatar,
-  ConversationHeader,
-  ConversationList,
-  ExpansionPanel,
   MainContainer,
+  ExpansionPanel,
+  ConversationList,
+  ConversationHeader,
 } from "@chatscope/chat-ui-kit-react";
-import { Iconify } from "@components";
+
 import {
-  IconButton,
-  keyframes,
   styled,
-  useMediaQuery,
   useTheme,
+  keyframes,
+  IconButton,
+  useMediaQuery,
 } from "@mui/material";
-import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
-import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
-import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
-import { Firestore } from "firebase/firestore";
-import { useAtom } from "jotai";
-import _ from "lodash";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
+import { Iconify } from "@components";
+import { Messages } from "./messages";
+import { RootState } from "src/redux/store";
+import { chatAtom } from "./atoms/chat.atom";
+import { BaseResponseInterface } from "@utils"
+import { User, UsersItem } from "./users-item";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from "src/redux/interfaces/friends.interface";
-import { RootState } from "src/redux/store";
-import { BaseResponseInterface } from "@utils"
+import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { ChatgptFirebaseOnSendMessage } from "../../sections/chat/hooks/useChatgptChat.hook";
-import { chatAtom } from "./atoms/chat.atom";
-import { Messages } from "./messages";
-import { User, UsersItem } from "./users-item";
+import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
+import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
 
 interface IChat {
   users: Array<IFriend & BaseResponseInterface>;

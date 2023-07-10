@@ -1,21 +1,22 @@
-// @mui
 import {
   Box,
-  Button,
-  Card,
-  CardHeader,
-  CardProps,
-  Divider,
   Link,
+  Card,
   Stack,
+  Button,
+  Divider,
+  CardProps,
+  CardHeader,
   Typography,
 } from "@mui/material";
-// utils
-import { fToNow } from "@utils";
-// components
-import { Scrollbar, Image, Iconify } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Scrollbar, 
+  Image, 
+  Iconify,
+ } from "@components";
+
+import { fToNow } from "@utils";
 
 interface ItemProps {
   id: string;

@@ -1,7 +1,10 @@
-import { Iconify } from "@components";
-import { IconButton, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
+
+import { Box } from "@mui/system";
+import { IconButton, Typography } from "@mui/material";
+
+import { Iconify } from "@components";
+
 import BasePreference from "./BasePreference";
 
 const MIN_FONT_SIZE = 7;

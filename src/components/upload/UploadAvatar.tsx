@@ -1,16 +1,13 @@
 import { useDropzone } from "react-dropzone";
-// @mui
+
 import { Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-//
-import { Iconify } from "../iconify";
-//
-import { useLocales } from "../../locales/useLocales";
-import RejectionFiles from "./errors/RejectionFiles";
-import AvatarPreview from "./preview/AvatarPreview";
-import { UploadProps } from "./types";
 
-// ----------------------------------------------------------------------
+import { Iconify } from "../iconify";
+import { UploadProps } from "./types";
+import AvatarPreview from "./preview/AvatarPreview";
+import RejectionFiles from "./errors/RejectionFiles";
+import { useLocales } from "../../locales/useLocales";
 
 const StyledDropZone = styled("div")(({ theme }) => ({
   width: 144,

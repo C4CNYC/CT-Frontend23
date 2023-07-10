@@ -1,10 +1,7 @@
-// @mui
-import { Box, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-//
-import { ColorPreviewProps } from "./types";
+import { Box, Stack, Typography } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { ColorPreviewProps } from "./types";
 
 export function ColorPreview({
   colors,

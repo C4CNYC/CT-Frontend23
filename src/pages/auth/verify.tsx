@@ -1,20 +1,18 @@
-// next
-import { EmailInboxIcon } from "@assets/icons";
-import CompactLayout from "@layouts/compact";
-import { Link, Typography } from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
-import AuthVerifyCodeForm from "@sections/auth/AuthVerifyCodeForm";
 import Head from "next/head";
 import NextLink from "next/link";
+
+import { Link, Typography } from "@mui/material";
+
 import { Iconify } from "@components";
 
-// ----------------------------------------------------------------------
+import { PATH_AUTH } from "@routes/paths";
+import CompactLayout from "@layouts/compact";
+import { EmailInboxIcon } from "@assets/icons";
+import AuthVerifyCodeForm from "@sections/auth/AuthVerifyCodeForm";
 
 VerifyCodePage.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function VerifyCodePage(): React.ReactElement {
   return (

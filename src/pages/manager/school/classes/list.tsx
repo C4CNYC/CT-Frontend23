@@ -1,35 +1,39 @@
+import Head from "next/head";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
+  Tab,
+  Card,
+  Tabs,
+  Table,
+  Button,
+  Divider,
+  Tooltip,
+  TableBody,
+  Container,
+  IconButton,
+  TableContainer,
+} from "@mui/material";
+
+import {
+  useTable,
   emptyRows,
+  TableNoData,
   TableEmptyRows,
   TableHeadCustom,
-  TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  useTable,
   useSettingsContext, ConfirmDialog, CustomBreadcrumbs, Iconify, Scrollbar
 } from "@components";
+
 import {
-  Button,
-  Card,
-  Container,
-  Divider,
-  IconButton,
-  Tab,
-  Table,
-  TableBody,
-  TableContainer,
-  Tabs,
-  Tooltip,
-} from "@mui/material";
-import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
-import { UserTableToolbar } from "@sections/dashboard/user/list";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+  createRandomAvatar,
+  getRandomColor,
+} from "@utils";
 import { useFilters } from "@hooks";
-import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
+import { RootState } from "src/redux/store";
 import {
   useCreateClassesMutation,
   useDeleteClassesMutation,
@@ -37,16 +41,13 @@ import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
-import { RootState } from "src/redux/store";
-import { ClassesTableRow } from "@sections/dashboard/classes/list";
-import {
-  createRandomAvatar,
-  getRandomColor,
-} from "@utils";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { UserTableToolbar } from "@sections/dashboard/user/list";
+import { ClassesTableRow } from "@sections/dashboard/classes/list";
+import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";
 import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
-
-// ----------------------------------------------------------------------
+import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
+import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 
 const STATUS_OPTIONS = ["all"];
 
@@ -59,8 +60,6 @@ const TABLE_HEAD = [
   { id: "status", label: "Status", align: "left" },
   { id: "" },
 ];
-
-// ----------------------------------------------------------------------
 
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

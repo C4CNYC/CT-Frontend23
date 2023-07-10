@@ -1,12 +1,19 @@
-// @mui
-import { Card, CardHeader, CardProps, Stack, Typography } from "@mui/material";
+import { 
+  Card, 
+  Stack, 
+  CardProps, 
+  CardHeader, 
+  Typography,
+ } from "@mui/material";
 import { styled } from "@mui/material/styles";
-// utils
-import { fShortenNumber } from "@utils";
-// components
-import { Scrollbar, Iconify, Image } from "@components";
 
-// ----------------------------------------------------------------------
+import { fShortenNumber } from "@utils";
+
+import { 
+  Image,
+  Iconify, 
+  Scrollbar, 
+ } from "@components";
 
 const StyledBlock = styled((props: any) => (
   <Stack direction="row" alignItems="center" {...props} />

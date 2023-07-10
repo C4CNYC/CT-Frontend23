@@ -1,32 +1,41 @@
-import { useSettingsContext, CustomBreadcrumbs, Iconify, Scrollbar, TableNoData } from "@components";
+import _ from "lodash";
+import React from "react";
+import Head from "next/head";
+import { format } from "date-fns";
+import { useSnackbar } from "notistack";
+
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import {
-  Button,
   Card,
-  IconButton,
-  Skeleton,
   Table,
+  Button,
+  Skeleton,
+  TableRow,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
-  TableRow,
+  IconButton,
+  TableContainer,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import Container from "@mui/system/Container";
+
+import { 
+  Iconify, 
+  Scrollbar, 
+  TableNoData,
+  CustomBreadcrumbs, 
+  useSettingsContext, 
+ } from "@components";
+
+ import {
+   useGetSkillQuery,
+   useRemoveSkillMutation,
+ } from "src/redux/services/manager/skills-manager";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
 import UpdateModalSkills from "@sections/dashboard/skills/update-modal";
-import { format } from "date-fns";
-import _ from "lodash";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
-import React from "react";
-import {
-  useGetSkillQuery,
-  useRemoveSkillMutation,
-} from "src/redux/services/manager/skills-manager";
+import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 
 Skills.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

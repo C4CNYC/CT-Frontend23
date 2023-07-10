@@ -1,14 +1,14 @@
-import { Iconify } from "@components";
 import {
-  Button,
-  InputAdornment,
-  MenuItem,
   Stack,
+  Button,
+  MenuItem,
   TextField,
+  InputAdornment,
 } from "@mui/material";
-import { useLocales } from "../../../../locales";
 
-// ----------------------------------------------------------------------
+import { Iconify } from "@components";
+
+import { useLocales } from "../../../../locales";
 
 interface Props {
   filterName: string;

@@ -1,7 +1,6 @@
 import { Iconify } from "@components";
-import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 
-// ----------------------------------------------------------------------
+import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 
 const navConfig = [
   {

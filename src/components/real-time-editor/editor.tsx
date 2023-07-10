@@ -1,15 +1,17 @@
 // import { defaultKeymap } from "@codemirror/commands";
-import { indentUnit } from "@codemirror/language";
-import { Compartment, EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
-import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
-import { langs } from "@uiw/codemirror-extensions-langs";
-import { useEffect, useRef } from "react";
-import { Socket } from "socket.io-client";
 import { State } from ".";
+import { Socket } from "socket.io-client";
+import { useEffect, useRef } from "react";
+import { indentUnit } from "@codemirror/language";
+import { EditorView, keymap } from "@codemirror/view";
+import { langs } from "@uiw/codemirror-extensions-langs";
+import { Compartment, EditorState } from "@codemirror/state";
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
+
 import { peerExtension } from "./extentions/collab";
 // import { cursorExtension } from "./extentions/cursors";
 import { initListeners, removeListeners } from "./listeners";
+
 interface IEditor {
   state: State;
   cursorId: string;

@@ -1,11 +1,13 @@
-import { Iconify } from "@components";
 import {
   ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Typography,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
 } from "@mui/material";
+
+import { Iconify } from "@components";
+
 import { ILesson } from "src/redux/interfaces/content.interface";
 
 export enum LessonStatus {

@@ -1,12 +1,9 @@
 import { useDropzone } from "react-dropzone";
-// @mui
-import { alpha, styled } from "@mui/material/styles";
-//
-import { Iconify } from "../iconify";
-//
-import { UploadProps } from "./types";
 
-// ----------------------------------------------------------------------
+import { alpha, styled } from "@mui/material/styles";
+
+import { Iconify } from "../iconify";
+import { UploadProps } from "./types";
 
 const StyledDropZone = styled("div")(({ theme }) => ({
   width: 64,
@@ -26,8 +23,6 @@ const StyledDropZone = styled("div")(({ theme }) => ({
     opacity: 0.72,
   },
 }));
-
-// ----------------------------------------------------------------------
 
 export default function UploadBox({
   placeholder,

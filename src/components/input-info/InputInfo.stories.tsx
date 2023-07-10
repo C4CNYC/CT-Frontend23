@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { InputInfo } from "./InputInfo";
 
 const Component: Meta<typeof InputInfo> = {

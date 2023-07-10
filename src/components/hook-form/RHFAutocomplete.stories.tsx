@@ -1,10 +1,11 @@
-import type { Meta } from "@storybook/react";
-import { useForm } from "react-hook-form";
 import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import type { Meta } from "@storybook/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RHFAutocomplete } from "./RHFAutocomplete";
-import { FormProvider } from "./FormProvider";
+
 import { voidFunction } from "@utils";
+import { FormProvider } from "./FormProvider";
+import { RHFAutocomplete } from "./RHFAutocomplete";
 
 const Component: Meta<typeof RHFAutocomplete> = {
   component: RHFAutocomplete,

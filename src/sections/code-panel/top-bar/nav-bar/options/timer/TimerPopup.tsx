@@ -1,9 +1,15 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { 
+  useState,
+  useEffect, 
+  SetStateAction, 
+} from "react";
 import { useTimer } from "react-timer-hook";
 
+ import { Box, Stack, useTheme } from "@mui/system";
+ import { IconButton, Typography, useMediaQuery } from "@mui/material";
+
 import { Iconify, MenuPopover } from "@components";
-import { IconButton, Typography, useMediaQuery } from "@mui/material";
-import { Box, Stack, useTheme } from "@mui/system";
+
 import { TimerInput } from "./TimerInput";
 
 const TimerPopup = (): React.ReactElement => {

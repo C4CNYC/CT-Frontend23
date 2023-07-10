@@ -1,18 +1,20 @@
+import { useState } from "react";
 import { useFilters } from "@hooks";
-import CloseIcon from "@mui/icons-material/Close";
+
 import {
   Box,
   Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Skeleton,
+  IconButton,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
-import { useState } from "react";
-import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
-import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
-import AuthorsCard from "./AuthorsCard";
+import CloseIcon from "@mui/icons-material/Close";
+
 import { FilterAuthor } from "./filter";
+import AuthorsCard from "./AuthorsCard";
+import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 
 interface Props {
   children: React.ReactElement;

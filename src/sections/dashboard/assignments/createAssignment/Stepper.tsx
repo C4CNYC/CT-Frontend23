@@ -1,13 +1,14 @@
-import Box from "@mui/material/Box";
-import Step from "@mui/material/Step";
-import StepButton from "@mui/material/StepButton";
-import Stepper from "@mui/material/Stepper";
 import { useState } from "react";
 
-import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
+import Box from "@mui/material/Box";
+import Step from "@mui/material/Step";
+import Stepper from "@mui/material/Stepper";
+import StepButton from "@mui/material/StepButton";
+
 import AssignmentAbout from "./AssignmentAbout";
-import AssignmentAssigning from "./AssignmentAssigning";
 import AssignmentSettings from "./AssignmentSettings";
+import AssignmentAssigning from "./AssignmentAssigning";
+import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
 
 const steps = [
   "Assignment Content",

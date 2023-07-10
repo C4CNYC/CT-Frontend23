@@ -1,9 +1,11 @@
+import { useState } from "react";
 import type { Meta } from "@storybook/react";
+
 import { Typography } from "@mui/material";
+
 import { fData } from "@utils";
 import UploadBox from "./UploadBox";
 import { UploadProps } from "./types";
-import { useState } from "react";
 
 const Component: Meta<typeof UploadBox> = {
   component: UploadBox,

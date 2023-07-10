@@ -1,11 +1,18 @@
-import { Scrollbar } from "@components";
-import { Box, Button, Container, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { AiOutlineMinus } from "react-icons/ai";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { ICourseContent } from "src/redux/interfaces/content.interface";
-import { BaseResponseInterface } from "@utils";
+
+import { 
+  Box, 
+  Button, 
+  Container, 
+  Typography,
+ } from "@mui/material";
+
+import { Scrollbar } from "@components";
 import CourseLayaut from "./CourseLayaut";
+import { BaseResponseInterface } from "@utils";
+import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 interface Props {
   course: ICourseContent & BaseResponseInterface;

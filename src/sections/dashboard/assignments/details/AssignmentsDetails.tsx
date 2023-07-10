@@ -1,27 +1,33 @@
-import { CustomSmallSelect, Scrollbar } from "@components";
-import { Divider, Drawer, Stack, TextField } from "@mui/material";
+import _ from "lodash";
+import { useRef } from "react";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+
+import { 
+  Stack, 
+  Drawer, 
+  Divider, 
+  TextField,
+ } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import _ from "lodash";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useRef } from "react";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+
 import { convertDuration } from "@utils";
-import { IAssignmentsCard } from "../../../../@types/assignments";
-import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
+import { CustomSmallSelect, Scrollbar } from "@components";
+
+import AssignmentInput from "../AssignmentInput";
+import TaskController from "./controllers/TaskController";
+import LessonController from "./controllers/LessonController";
 import {
   useGetAssignmentQuery,
   useUdpateAssignmentMutation,
 } from "../../../../redux/services/manager/assignments-manager";
-import AssignmentInput from "../AssignmentInput";
-import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
-import AssignmentsDetailsToolbar from "./AssignmentsDetailsToolbar";
 import ClassesCountroller from "./controllers/ClassesController";
-import LessonController from "./controllers/LessonController";
-import TaskController from "./controllers/TaskController";
-
-// ----------------------------------------------------------------------
+import { IAssignmentsCard } from "../../../../@types/assignments";
+import AssignmentsDetailsToolbar from "./AssignmentsDetailsToolbar";
+import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
+import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
 
 const StyledLabel = styled("span")(({ theme }) => ({
   ...theme.typography.caption,
@@ -29,8 +35,6 @@ const StyledLabel = styled("span")(({ theme }) => ({
   flexShrink: 0,
   color: theme.palette.text.secondary,
 }));
-
-// ----------------------------------------------------------------------
 
 interface Props {
   task: IAssignmentsCard;

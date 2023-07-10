@@ -1,20 +1,23 @@
-import { Iconify } from "@components";
-import {
-  Box,
-  Checkbox,
-  Dialog,
-  DialogTitle,
-  IconButton,
-  Link,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@mui/material";
 import { useState } from "react";
 import { BsChatText } from "react-icons/bs";
+
+import {
+  Box,
+  List,
+  Link,
+  Dialog,
+  ListItem,
+  Checkbox,
+  IconButton,
+  Typography,
+  DialogTitle,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+} from "@mui/material";
+
+import { Iconify } from "@components";
+
 import FullCodeSolutionModal from "../modals/FullCodeSolution";
 
 interface Props {

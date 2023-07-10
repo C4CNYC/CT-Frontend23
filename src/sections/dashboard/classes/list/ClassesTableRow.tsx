@@ -1,23 +1,29 @@
-import { MenuPopover, Label, Iconify, ConfirmDialog } from "@components";
-import {
-  Avatar,
-  Button,
-  Checkbox,
-  IconButton,
-  MenuItem,
-  Stack,
-  TableCell,
-  TableRow,
-} from "@mui/material";
-import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
-import { IClass } from "src/redux/services/interfaces/class.interface";
-import { BaseResponseInterface } from "@utils";
-import ClassPreferences from "../modal";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { format } from "date-fns";
 
-// ----------------------------------------------------------------------
+import {
+  Stack,
+  Avatar,
+  Button,
+  TableRow,
+  Checkbox,
+  MenuItem,
+  TableCell,
+  IconButton,
+} from "@mui/material";
+
+import { 
+  Label, 
+  Iconify, 
+  MenuPopover, 
+  ConfirmDialog,
+ } from "@components";
+ import ClassPreferences from "../modal";
+ import { BaseResponseInterface } from "@utils";
+
+ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { IClass } from "src/redux/services/interfaces/class.interface";
 
 interface Props {
   row: IClass & BaseResponseInterface;

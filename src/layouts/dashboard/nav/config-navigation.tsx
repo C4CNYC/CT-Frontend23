@@ -1,14 +1,3 @@
-import { Iconify, Label } from "@components";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import FeedbackDialog from "@sections/feedback/FeedbackDialog";
-import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
-import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
-import { AiOutlineSolution } from "react-icons/ai";
-import {
-  BsFillFileEarmarkMedicalFill,
-  BsFlagFill,
-} from "react-icons/bs";
 import {
   FaSchool,
   FaTasks,
@@ -16,14 +5,27 @@ import {
   FaUsers,
   FaUserShield,
 } from "react-icons/fa";
+import {
+  BsFlagFill,
+  BsFillFileEarmarkMedicalFill,
+} from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
-import { GiProgression } from "react-icons/gi";
-import { GoFileSubmodule } from "react-icons/go";
-import { GrOrganization } from "react-icons/gr";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
-import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
+import { GiProgression } from "react-icons/gi";
+import { GrOrganization } from "react-icons/gr";
+import { GoFileSubmodule } from "react-icons/go";
+import { AiOutlineSolution } from "react-icons/ai";
 import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
+import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
+
+import { Iconify, Label } from "@components";
+
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import FeedbackDialog from "@sections/feedback/FeedbackDialog";
+import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
+import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 
 export const admin = {
   subheader: "administration",

@@ -1,10 +1,15 @@
-import { Image, LightboxComponent } from "@components";
-import { Avatar, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { IAssignmentsComment } from "../../../../@types/assignments";
+
+import { 
+  Stack, 
+  Avatar, 
+  Typography,
+ } from "@mui/material";
+
+import { Image, LightboxComponent } from "@components";
 import { fToNow } from "@utils";
 
-// ----------------------------------------------------------------------
+import { IAssignmentsComment } from "../../../../@types/assignments";
 
 interface Props {
   comments: IAssignmentsComment[];

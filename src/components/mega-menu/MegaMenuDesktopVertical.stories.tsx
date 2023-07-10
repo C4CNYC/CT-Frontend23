@@ -1,6 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { MegaMenuDesktopVertical } from "./MegaMenuDesktopVertical";
+
 import { Iconify } from "../iconify"
+import { MegaMenuDesktopVertical } from "./MegaMenuDesktopVertical";
+
 import { ThemeProvider } from "@theme/index";
 
 const Component: Meta<typeof MegaMenuDesktopVertical> = {

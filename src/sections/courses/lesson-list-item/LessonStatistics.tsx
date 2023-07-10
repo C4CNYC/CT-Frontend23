@@ -1,4 +1,8 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { 
+  Box, 
+  Typography,
+  CircularProgress, 
+ } from "@mui/material";
 
 interface ILessonStatistics {
   progress: number;

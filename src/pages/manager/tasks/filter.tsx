@@ -1,11 +1,12 @@
-import { SetFilterType, useFilters } from "@hooks";
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
-import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
-import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+
+import { SetFilterType, useFilters } from "@hooks";
 import SkeletonTaskFilter from "./skeletonTaskFilter";
+import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
+import { ITaskSearchParams } from "src/redux/services/interfaces/task.interface";
 
 interface Props {
   filters: ITaskSearchParams;

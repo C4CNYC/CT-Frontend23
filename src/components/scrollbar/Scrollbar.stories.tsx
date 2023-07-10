@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { Scrollbar } from "./Scrollbar"
 
 const Component: Meta<typeof Scrollbar> = {

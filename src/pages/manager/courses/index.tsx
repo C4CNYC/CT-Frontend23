@@ -1,14 +1,17 @@
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import Head from "next/head";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 import { Box, Container, Skeleton, Tab, Tabs, Typography } from "@mui/material";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
+
+import ModuleList from "@sections/courses/ModuleList";
 import CourseList from "@sections/courses/CourseList";
 import LessonList from "@sections/courses/LessonList";
-import ModuleList from "@sections/courses/ModuleList";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useState } from "react";
 
 Courses.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

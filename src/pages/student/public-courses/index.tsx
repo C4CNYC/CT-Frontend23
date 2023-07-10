@@ -1,7 +1,9 @@
-import { useSettingsContext } from "@components";
 import { Container, Stack, Typography } from "@mui/material";
-import CourseList from "@sections/courses/CourseList";
+
+import { useSettingsContext } from "@components";
+
 import GuestGuard from "src/auth/GuestGuard";
+import CourseList from "@sections/courses/CourseList";
 
 export default function PublicCourses(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

@@ -1,16 +1,18 @@
-import { Iconify } from "@components";
+import { useAtom } from "jotai";
+import { useState } from "react";
+
 import {
   Button,
   Dialog,
-  DialogActions,
-  DialogContent,
   TextField,
   Typography,
+  DialogActions,
+  DialogContent,
 } from "@mui/material";
-import { useAtom } from "jotai";
-import { useState } from "react";
-import { chatHandlerAtom } from "../../chatHendlerAtom";
+
+import { Iconify } from "@components";
 import { helpMsgAtom } from "./helpMsgAtom";
+import { chatHandlerAtom } from "../../chatHendlerAtom";
 
 interface IHelpQuestion {
   children: React.ReactElement;

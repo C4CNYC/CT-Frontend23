@@ -1,13 +1,16 @@
-import { InputInfo } from "@components";
-import { Box, Button, Stack } from "@mui/material";
+import * as React from "react";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
+
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/router";
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { useAuthContext } from "src/auth/useAuthContext";
+import { Box, Button, Stack } from "@mui/material";
+
+import { InputInfo } from "@components";
+
 import { PATH_AFTER_LOGIN } from "src/config-global";
+import { useAuthContext } from "src/auth/useAuthContext";
 import { useCreateClassMutation } from "src/redux/services/admin/school-amdin";
 
 export default function ClassStep(): React.ReactElement {

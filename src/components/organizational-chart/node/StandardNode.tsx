@@ -1,21 +1,19 @@
 import { useState } from "react";
-// @mui
+
 import {
-  Avatar,
   Card,
-  IconButton,
-  MenuItem,
+  Avatar,
   SxProps,
+  MenuItem,
+  IconButton,
   Typography,
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
-//
+
 import { Iconify } from "../../iconify";
 import { MenuPopover } from "../../menu-popover";
-//
-import { ItemProps } from "../types";
 
-// ----------------------------------------------------------------------
+import { ItemProps } from "../types";
 
 interface Props {
   node: ItemProps;

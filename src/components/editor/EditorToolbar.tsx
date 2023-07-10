@@ -1,29 +1,31 @@
-import { Divider, Stack } from "@mui/material";
 import {
-  BasicFormattingButtonGroup,
-  CommandButtonGroup,
-  DecreaseFontSizeButton,
-  FloatingToolbar,
-  IncreaseFontSizeButton,
-  TextAlignmentButtonGroup,
-  ToggleBoldButton,
-  ToggleOrderedListButton,
-  ToggleStrikeButton,
-  ToggleSubscriptButton,
-  ToggleSuperscriptButton,
-  ToggleTaskListButton,
   Toolbar,
+  FloatingToolbar,
+  ToggleBoldButton,
+  ToggleStrikeButton,
+  CommandButtonGroup,
+  ToggleTaskListButton,
+  ToggleSubscriptButton,
+  DecreaseFontSizeButton,
+  IncreaseFontSizeButton,
+  ToggleSuperscriptButton,
+  ToggleOrderedListButton,
+  TextAlignmentButtonGroup,
+  BasicFormattingButtonGroup,
 } from "@remirror/react";
-import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
-import { SaveButton } from "./SaveButton";
+
+import { Divider, Stack } from "@mui/material";
+
 import {
-  FontFamilyButtons,
-  FontSizeButtons,
-  TextBgColorPicker,
   TextCaseSelect,
+  FontSizeButtons,
   TextColorPicker,
+  FontFamilyButtons,
+  TextBgColorPicker,
 } from "./toolbars";
+import { SaveButton } from "./SaveButton";
 import EmojiPickerBtn from "./toolbars/EmojiPicker";
+import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
 
 interface Props {
   saveContent: () => void;

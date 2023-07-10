@@ -1,27 +1,26 @@
 import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
   useMemo,
   useState,
+  useEffect,
+  useContext,
+  useCallback,
+  createContext,
 } from "react";
-// utils
+
 import { localStorageAvailable, voidFunction } from "@utils";
-//
-import { defaultSettings } from "./config-setting";
-import { defaultPreset, getPresets, presetsOption } from "./presets";
+
 import {
-  SettingsContextProps,
-  ThemeColorPresetsValue,
+  ThemeModeValue,
+  ThemeLayoutValue,
+  ThemeStretchValue,
   ThemeContrastValue,
   ThemeDirectionValue,
-  ThemeLayoutValue,
-  ThemeModeValue,
-  ThemeStretchValue,
+  SettingsContextProps,
+  ThemeColorPresetsValue,
 } from "./types";
+import { defaultSettings } from "./config-setting";
+import { defaultPreset, getPresets, presetsOption } from "./presets";
 
-// ----------------------------------------------------------------------
 
 const initialState: SettingsContextProps = {
   ...defaultSettings,

@@ -1,12 +1,12 @@
 import { useRef } from "react";
-// @mui
-import { Box, Collapse, TableProps } from "@mui/material";
-// @types
-import { IFile } from "@types";
-// components
-//
 
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Collapse, 
+  TableProps,
+ } from "@mui/material";
+
+import { IFile } from "@types";
 
 interface Props {
   table: TableProps;

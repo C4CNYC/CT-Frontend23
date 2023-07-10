@@ -1,20 +1,17 @@
-import ReactLightbox, { Plugin } from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Video from "yet-another-react-lightbox/plugins/video";
 import { useLightboxState } from "yet-another-react-lightbox/core";
+import ReactLightbox, { Plugin } from "yet-another-react-lightbox";
 import Captions from "yet-another-react-lightbox/plugins/captions";
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Video from "yet-another-react-lightbox/plugins/video";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
-// @mui
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+
 import { Typography } from "@mui/material";
-//
+
 import { Iconify } from "../iconify";
-//
 import StyledLightbox from "./styles";
 import { LightBoxProps } from "./types";
-
-// ----------------------------------------------------------------------
 
 const ICON_SIZE = 24;
 

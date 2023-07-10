@@ -1,13 +1,11 @@
 import { Tree, TreeNode } from "react-organizational-chart";
-// @mui
+
 import { useTheme } from "@mui/material/styles";
-// utils
-import { flattenArray, voidFunction } from "@utils";
-//
+
 import { GroupNode, SimpleNode, StandardNode } from "./node";
 import { ListProps, OrganizationalChartProps, SubListProps } from "./types";
 
-// ----------------------------------------------------------------------
+import { flattenArray, voidFunction } from "@utils";
 
 export function OrganizationalChart({
   data,

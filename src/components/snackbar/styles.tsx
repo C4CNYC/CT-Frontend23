@@ -1,8 +1,5 @@
-// @mui
 import { GlobalStyles } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
 
 export default function StyledNotistack(): React.ReactElement {
   const theme = useTheme();

@@ -1,7 +1,13 @@
+import { useEffect, useState } from "react";
+
 import { Button } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
-import { useEffect, useState } from "react";
-import { stylesNext, stylesPrev, stylesSkip } from "./navigation-styles";
+
+import { 
+  stylesNext, 
+  stylesPrev, 
+  stylesSkip,
+ } from "./navigation-styles";
 import NavigationElement from "./NavigationElement";
 import NavigationSpeedDial from "./NavigationSpeedDial";
 

@@ -1,9 +1,7 @@
 import SettingsDrawer from "./drawer";
-import ThemeColorPresets from "./ThemeColorPresets";
 import ThemeContrast from "./ThemeContrast";
 import ThemeRtlLayout from "./ThemeRtlLayout";
-
-// ----------------------------------------------------------------------
+import ThemeColorPresets from "./ThemeColorPresets";
 
 interface Props {
   children: React.ReactNode;

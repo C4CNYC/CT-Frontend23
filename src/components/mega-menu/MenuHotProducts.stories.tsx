@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { MenuHotProducts } from "./MenuHotProducts";
+
 import { ThemeProvider } from "@theme/index";
+import { MenuHotProducts } from "./MenuHotProducts";
 
 const Component: Meta<typeof MenuHotProducts> = {
   component: MenuHotProducts,

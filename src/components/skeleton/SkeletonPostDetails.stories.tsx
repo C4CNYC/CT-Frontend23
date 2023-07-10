@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { SkeletonPostDetails } from "./SkeletonPostDetails"
 
 const Component: Meta<typeof SkeletonPostDetails> = {

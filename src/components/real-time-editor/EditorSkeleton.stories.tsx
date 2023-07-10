@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import EditorSkeleton from "./EditorSkeleton";
 
 const Component: Meta<typeof EditorSkeleton> = {

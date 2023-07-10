@@ -1,10 +1,9 @@
-import { Iconify } from "../iconify";
-import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import MuiAccordionSummary, {
-  AccordionSummaryProps,
-} from "@mui/material/AccordionSummary";
 import { styled } from "@mui/material/styles";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import MuiAccordionSummary, {  AccordionSummaryProps } from "@mui/material/AccordionSummary";
+
+import { Iconify } from "../iconify";
 
 export const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />

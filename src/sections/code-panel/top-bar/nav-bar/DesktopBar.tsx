@@ -1,12 +1,14 @@
-import { Stack } from "@mui/system";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useAtom } from "jotai";
+
+import { Stack } from "@mui/system";
+
+import Menu from "./options/menu";
+import Timer from "./options/timer/timer";
 import ChatPopup from "./options/ChatPopUp";
 import HelpPopup from "./options/help-popup";
-import Menu from "./options/menu";
-import SettingDrawer from "./options/setting-drawer";
-import Timer from "./options/timer/timer";
 import ViewTumbler from "./options/ViewTumbler";
+import SettingDrawer from "./options/setting-drawer";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 interface IDesktopBar {
   chatComponent: React.ReactElement;

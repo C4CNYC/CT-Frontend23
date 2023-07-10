@@ -1,18 +1,16 @@
 import { useRef } from "react";
-import Carousel from "react-slick";
-// next
 import NextLink from "next/link";
-// @mui
+import Carousel from "react-slick";
+
 import { Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// @types
-import { MenuCarouselProps } from "./types";
-//
-import { CarouselArrows, CarouselDots } from "../carousel";
+
+
 import { Image } from "../image";
 import { TextMaxLine } from "../text-max-line";
+import { CarouselArrows, CarouselDots } from "../carousel";
 
-// ----------------------------------------------------------------------
+import { MenuCarouselProps } from "./types";
 
 export function MenuCarousel({
   products,

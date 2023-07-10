@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { ResizerUi } from "./Resizer";
 
 const Component: Meta<typeof ResizerUi> = {

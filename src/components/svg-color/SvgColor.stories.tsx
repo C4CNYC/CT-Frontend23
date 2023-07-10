@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { SvgColor } from "./SvgColor"
 
 const Component: Meta<typeof SvgColor> = {

@@ -1,13 +1,15 @@
+import { Dispatch, SetStateAction } from "react";
+
 import {
   Box,
-  Button,
-  CircularProgress,
   Stack,
+  Button,
+  useTheme,
   Typography,
   useMediaQuery,
-  useTheme,
+  CircularProgress,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+
 import CourseInfoDialog from "./CourseInfoDialog";
 import { Unit } from "src/redux/interfaces/challenges.interface";
 

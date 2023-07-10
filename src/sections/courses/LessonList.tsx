@@ -1,12 +1,14 @@
-import { EmptyContent, SimpleInfiniteList } from "@components";
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
-import { getCountTakingElment } from "@utils";
-import { Box, Stack } from "@mui/material";
 import { useEffect } from "react";
+
+import { Box, Stack } from "@mui/material";
+
+import { getCountTakingElment } from "@utils";
+import LessonItem from "./lesson-list-item/lessonItem";
+import { EmptyContent, SimpleInfiniteList } from "@components";
+import SkeletonLesson from "./lesson-list-item/SkeletonLesson";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { ILessonSearchParams } from "src/redux/interfaces/content.interface";
 import { useGetLessonsListQuery } from "src/redux/services/student/lesson-student";
-import LessonItem from "./lesson-list-item/lessonItem";
-import SkeletonLesson from "./lesson-list-item/SkeletonLesson";
 
 interface Props {
   setCounter: (count: number) => void;

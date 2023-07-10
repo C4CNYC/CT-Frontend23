@@ -1,4 +1,8 @@
-import { Box, Container, Skeleton } from "@mui/material";
+import { 
+  Box, 
+  Skeleton,
+  Container, 
+ } from "@mui/material";
 
 export default function SkeletonCoursePage(): React.ReactElement {
   return (

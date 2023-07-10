@@ -1,13 +1,27 @@
-import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard";
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
-import ProfileCover from "@sections/student-profile/ProfileCover";
-import ProfileLinks from "@sections/student-profile/ProfileLinks";
-import ProfileMain from "@sections/student-profile/ProfileMain";
 import Head from "next/head";
 import { useState } from "react";
+
+import { 
+  Tab, 
+  Box, 
+  Card, 
+  Tabs, 
+  Skeleton, 
+  Container, 
+} from "@mui/material";
+
+import { 
+  Iconify, 
+  CustomBreadcrumbs, 
+  useSettingsContext,
+ } from "@components";
+
+import { PATH_MAIN } from "@routes/paths";
+import DashboardLayout from "@layouts/dashboard";
 import { useProfileQuery } from "src/redux/services/auth";
+import ProfileMain from "@sections/student-profile/ProfileMain";
+import ProfileCover from "@sections/student-profile/ProfileCover";
+import ProfileLinks from "@sections/student-profile/ProfileLinks";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 UserProfile.getLayout = (page: React.ReactElement) => (

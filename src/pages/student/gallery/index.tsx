@@ -1,13 +1,15 @@
+import NextLink from "next/link";
+import { useEffect, useState } from "react";
+
+import { Container, Grid, Link } from "@mui/material";
+
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { Container, Grid, Link } from "@mui/material";
-import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN } from "@routes/student.paths";
-import FolderElement from "@sections/dashboard/gallery/FolderElement";
-import NextLink from "next/link";
-import { useEffect, useState } from "react";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
+import FolderElement from "@sections/dashboard/gallery/FolderElement";
 import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
+import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN } from "@routes/student.paths";
 
 Gallery.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

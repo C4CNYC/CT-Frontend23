@@ -1,13 +1,28 @@
 import { m } from "framer-motion";
-import { useRef, useState } from "react";
 import Carousel from "react-slick";
-// @mui
-import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
-import { alpha, styled, useTheme } from "@mui/material/styles";
-// components
-import { MotionContainer, varFade, CarouselDots, CarouselArrows, Image } from "@components";
+import { useRef, useState } from "react";
 
-// ----------------------------------------------------------------------
+import { 
+  Card, 
+  Link, 
+  Stack, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
+
+import { 
+  alpha, 
+  styled, 
+  useTheme,
+ } from "@mui/material/styles";
+
+ import { 
+  Image,
+  varFade, 
+  CarouselDots, 
+  CarouselArrows, 
+  MotionContainer, 
+ } from "@components";
 
 const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,

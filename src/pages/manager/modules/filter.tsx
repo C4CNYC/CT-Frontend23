@@ -1,17 +1,18 @@
-import { SetFilterType, useFilters } from "@hooks";
-import SearchOutlined from "@mui/icons-material/SearchOutlined";
+import Stack from "@mui/system/Stack";
+import TextField from "@mui/material/TextField";
 import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/system/Stack";
+import SearchOutlined from "@mui/icons-material/SearchOutlined";
+
+import { BaseResponseInterface } from "@utils";
+import { SetFilterType, useFilters } from "@hooks";
 import {
   ICourse,
   ICourseSearchParams,
   IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { BaseResponseInterface } from "@utils";
 import SkeletonFilter from "@sections/dashboard/skeleton/skeletonFilter";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 interface Props {
   filters: IModulesSearchParams;

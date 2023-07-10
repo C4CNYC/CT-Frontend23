@@ -1,13 +1,11 @@
 import {
-  FullscreenControl,
-  GeolocateControl,
-  NavigationControl,
   ScaleControl,
+  GeolocateControl,
+  FullscreenControl,
+  NavigationControl,
 } from "react-map-gl";
-//
-import { StyledMapControls } from "./styles";
 
-// ----------------------------------------------------------------------
+import { StyledMapControls } from "./styles";
 
 interface Props {
   hideScaleControl?: boolean;

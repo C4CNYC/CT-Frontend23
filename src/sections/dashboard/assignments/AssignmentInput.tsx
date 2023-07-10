@@ -1,7 +1,4 @@
-// @mui
 import { InputBase, InputBaseProps } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export default function AssignmentInput({
   sx,

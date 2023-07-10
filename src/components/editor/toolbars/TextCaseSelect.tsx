@@ -1,13 +1,12 @@
-import "remirror/styles/all.css";
-
 import {
-  CommandButtonGroup,
-  CommandMenuItem,
-  DropdownButton,
   useActive,
   useCommands,
+  DropdownButton,
+  CommandMenuItem,
+  CommandButtonGroup,
 } from "@remirror/react";
 import React from "react";
+import "remirror/styles/all.css";
 
 const TEXT_CASES: Array<[React.CSSProperties["textTransform"], string]> = [
   ["none", "None"],

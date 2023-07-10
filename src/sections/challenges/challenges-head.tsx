@@ -1,24 +1,25 @@
-import AddToHomeScreenIcon from "@mui/icons-material/AddToHomeScreen";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import LogoutIcon from "@mui/icons-material/Logout";
-import NoteAltIcon from "@mui/icons-material/NoteAlt";
-import VideocamIcon from "@mui/icons-material/Videocam";
 import {
-  Button,
-  IconButton,
   List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
   Paper,
   Stack,
+  Button,
+  ListItem,
+  IconButton,
   Typography,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
 } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import NoteAltIcon from "@mui/icons-material/NoteAlt";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import AddToHomeScreenIcon from "@mui/icons-material/AddToHomeScreen";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+
 import { PATH_PAGE } from "@routes/paths";
 import ChallengesDialog from "./challenges-dialog";
 

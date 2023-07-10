@@ -1,12 +1,13 @@
-import Box from "@mui/material/Box";
-import Step from "@mui/material/Step";
-import StepButton from "@mui/material/StepButton";
-import Stepper from "@mui/material/Stepper";
 import { useState } from "react";
 
+import Box from "@mui/material/Box";
+import Step from "@mui/material/Step";
+import Stepper from "@mui/material/Stepper";
+import StepButton from "@mui/material/StepButton";
+
 import ClassStep from "./ClassStep";
-import OrganizationStep from "./OrganizationStep";
 import SchoolStep from "./SchoolStep";
+import OrganizationStep from "./OrganizationStep";
 
 const steps = ["District / Organization", "School / Location", "Class Created"];
 

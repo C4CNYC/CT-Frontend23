@@ -1,11 +1,14 @@
-import { Typography } from "@mui/material";
 import axios from "axios";
-import { GetServerSideProps } from "next";
 import { ReactNode } from "react";
+import { GetServerSideProps } from "next";
 // @ts-expect-error dont see react-html-parser
 import ReactHtmlParser from "react-html-parser";
+
+import { Typography } from "@mui/material";
+
 import GuestGuard from "src/auth/GuestGuard";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
+
 interface Props {
   data?: IGallery;
   error?: string;

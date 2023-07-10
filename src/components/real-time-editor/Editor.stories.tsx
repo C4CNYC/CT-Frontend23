@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { CodeEditor } from "./editor";
 
 const Component: Meta<typeof CodeEditor> = {

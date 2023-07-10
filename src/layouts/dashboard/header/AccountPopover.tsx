@@ -1,29 +1,30 @@
-import {
-  CustomAvatar,
-  IconButtonAnimate,
-  MenuPopover,
-  useSnackbar,
-} from "@components";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 import {
   Box,
-  Divider,
-  MenuItem,
   Stack,
   Tooltip,
+  Divider,
+  MenuItem,
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+
+import {
+  MenuPopover,
+  useSnackbar,
+  CustomAvatar,
+  IconButtonAnimate,
+} from "@components";
+
 import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useProfileQuery } from "src/redux/services/auth";
 import { RootState, useSelector } from "src/redux/store";
-import { useAuthContext } from "../../../auth/useAuthContext";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
+import { useProfileQuery } from "src/redux/services/auth";
 import { MANAGER_PATH_PAGE } from "@routes/manager.paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
-
-// ----------------------------------------------------------------------
+import { useAuthContext } from "../../../auth/useAuthContext";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 export default function AccountPopover(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();

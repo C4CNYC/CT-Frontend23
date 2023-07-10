@@ -1,9 +1,15 @@
-import { Iconify } from "@components";
-import { Box, FormControlLabel, Radio, RadioGroup, Stack } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
+import { 
+  Box, 
+  Stack,
+  Radio, 
+  RadioGroup, 
+  FormControlLabel, 
+ } from "@mui/material";
+ import { alpha } from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+import { Iconify } from "@components";
+
+import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
 
 const PRIORITIZES_OPTIONS = [
   { value: AssignmentComplexity.Low, label: "Easy", color: "info" },

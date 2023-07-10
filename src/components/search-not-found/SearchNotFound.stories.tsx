@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { SearchNotFound } from "./SearchNotFound";
 
 const Component: Meta<typeof SearchNotFound> = {

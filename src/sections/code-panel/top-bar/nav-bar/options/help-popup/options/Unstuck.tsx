@@ -1,16 +1,17 @@
 import { useState } from "react";
 
 import {
-  Checkbox,
   Link,
   List,
+  Checkbox,
   ListItem,
-  ListItemButton,
+  Typography,
   ListItemIcon,
   ListItemText,
-  Typography,
+  ListItemButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
+
 import FullCodeSolutionModal from "../modals/FullCodeSolution";
 
 const Unstuck = (): React.ReactElement => {

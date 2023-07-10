@@ -1,13 +1,15 @@
+import { useAtom } from "jotai";
+
 import {
   Box,
   Button,
   Popper,
+  useTheme,
   Typography,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
+
 import { mobileTabManager } from "@sections/code-panel/atoms/mobile-tab-manager.atom";
-import { useAtom } from "jotai";
 
 interface Props {
   openPoper: boolean;

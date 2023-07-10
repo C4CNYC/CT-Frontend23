@@ -1,20 +1,21 @@
-import { SOCIAL_ICONS } from "@assets/data";
-import { SvgColor } from "@components";
+import NextLink from "next/link";
+
 import {
-  Avatar,
   Box,
   Card,
-  Divider,
   Link,
   Stack,
+  Avatar,
+  Divider,
   Typography,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import NextLink from "next/link";
-import { IFriend } from "src/redux/interfaces/friends.interface";
 
-// ----------------------------------------------------------------------
+import { SvgColor } from "@components";
+
+import { SOCIAL_ICONS } from "@assets/data";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { IFriend } from "src/redux/interfaces/friends.interface";
 
 const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,

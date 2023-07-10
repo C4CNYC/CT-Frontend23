@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import Block from "./Block";
 
 const Component: Meta<typeof Block> = {

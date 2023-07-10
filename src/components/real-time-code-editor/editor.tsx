@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-tslint-comment */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-
+import { useEffect, useRef } from "react";
+import { EditorState } from "@codemirror/state";
+import { indentUnit } from "@codemirror/language"
+import { EditorView, keymap } from "@codemirror/view";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
-import { indentUnit } from "@codemirror/language"
 
-import { EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
 // import { defaultKeymap } from "@codemirror/commands";
-import { useEffect, useRef } from "react";
 import { peerExtension } from "./extentions/collab";
-import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
+
+import { voidFunction } from "@utils";
 import { Socket } from "socket.io-client";
 import { cursorExtension } from "./extentions/cursors";
-import { voidFunction } from "@utils";
+import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
 
 interface IEditor {
   state: State,

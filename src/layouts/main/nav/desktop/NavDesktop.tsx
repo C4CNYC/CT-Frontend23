@@ -1,10 +1,8 @@
-// @mui
 import { Stack } from "@mui/material";
-//
-import { NavProps } from "../types";
+
 import NavList from "./NavList";
 
-// ----------------------------------------------------------------------
+import { NavProps } from "../types";
 
 export default function NavDesktop({
   isOffset,

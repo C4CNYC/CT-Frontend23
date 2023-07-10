@@ -1,14 +1,11 @@
-// next
 import NextLink from "next/link";
-// @mui
-import { Link, ListItemIcon, ListItemText } from "@mui/material";
-// components
-import { Iconify } from "@components";
-//
-import { NavItemMobileProps } from "../types";
-import { ListItem } from "./styles";
 
-// ----------------------------------------------------------------------
+import { Link, ListItemIcon, ListItemText } from "@mui/material";
+
+import { Iconify } from "@components";
+
+import { ListItem } from "./styles";
+import { NavItemMobileProps } from "../types";
 
 export default function NavItem({
   item,

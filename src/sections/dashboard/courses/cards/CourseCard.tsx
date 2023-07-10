@@ -1,5 +1,6 @@
-import { useSnackbar, MenuPopover, Label, Image, Iconify, ConfirmDialog } from "@components";
-import { LoadingButton } from "@mui/lab";
+import Link from "next/link";
+import { useState } from "react";
+
 import {
   Box,
   Card,
@@ -9,13 +10,22 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  Label, 
+  Image, 
+  Iconify, 
+  MenuPopover, 
+  useSnackbar, 
+  ConfirmDialog,
+ } from "@components";
+
+ import { BaseResponseInterface } from "@utils";
+ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+ import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import Link from "next/link";
-import { useState } from "react";
-import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 interface Props {
   course: ICourse & BaseResponseInterface;

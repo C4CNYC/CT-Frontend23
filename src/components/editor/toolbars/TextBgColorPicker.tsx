@@ -1,9 +1,10 @@
-import { IconButton, Stack } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
 import { useCommands } from "@remirror/react";
-import React, { MouseEventHandler, useCallback, useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { AiOutlineClear, AiOutlineHighlight } from "react-icons/ai";
+import React, { MouseEventHandler, useCallback, useState } from "react";
+
+import { IconButton, Stack } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
 
 export default function TextColorPicker(): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);

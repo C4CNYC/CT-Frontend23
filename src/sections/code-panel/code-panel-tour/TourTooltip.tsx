@@ -1,5 +1,11 @@
+import { 
+  Box, 
+  Paper, 
+  Button, 
+  IconButton, 
+  Typography, 
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Button, IconButton, Paper, Typography } from "@mui/material";
 
 interface IToolTipProps {
   continuous: boolean;

@@ -1,37 +1,33 @@
 import { useState } from "react";
-// @mui
+
 import {
   Box,
-  Divider,
-  Drawer,
-  IconButton,
   Stack,
+  Drawer,
   Tooltip,
+  Divider,
+  IconButton,
   Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-// utils
-import { bgBlur } from "@utils";
-// config
-import { NAV } from "../../../config-global";
-//
-import { Iconify } from "../../iconify";
-import { Scrollbar } from "../../scrollbar";
-//
-import { defaultSettings } from "../config-setting";
-import { useSettingsContext } from "../SettingsContext";
-import BadgeDot from "./BadgeDot";
+
 import Block from "./Block";
-import ColorPresetsOptions from "./ColorPresetsOptions";
+import { bgBlur } from "@utils";
+import BadgeDot from "./BadgeDot";
+import ModeOptions from "./ModeOptions";
+import { Iconify } from "../../iconify";
+import ToggleButton from "./ToggleButton";
+import { Scrollbar } from "../../scrollbar";
+import LayoutOptions from "./LayoutOptions";
+import StretchOptions from "./StretchOptions";
 import ContrastOptions from "./ContrastOptions";
 import DirectionOptions from "./DirectionOptions";
 import FullScreenOptions from "./FullScreenOptions";
-import LayoutOptions from "./LayoutOptions";
-import ModeOptions from "./ModeOptions";
-import StretchOptions from "./StretchOptions";
-import ToggleButton from "./ToggleButton";
+import { defaultSettings } from "../config-setting";
+import { useSettingsContext } from "../SettingsContext";
+import ColorPresetsOptions from "./ColorPresetsOptions";
 
-// ----------------------------------------------------------------------
+import { NAV } from "../../../config-global";
 
 const SPACING = 2.5;
 

@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { CustomAvatar } from "./CustomAvatar"
 
 const Component: Meta<typeof CustomAvatar> = {

@@ -1,7 +1,4 @@
-// @mui
 import { Skeleton, Stack, StackProps } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export function SkeletonMailNavItem({
   sx,

@@ -1,23 +1,20 @@
-// @mui
 import {
   Timeline,
-  TimelineConnector,
-  TimelineContent,
   TimelineDot,
   TimelineItem,
+  TimelineContent,
+  TimelineConnector,
   TimelineSeparator,
 } from "@mui/lab";
 import {
   Card,
-  CardContent,
-  CardHeader,
   CardProps,
+  CardHeader,
   Typography,
+  CardContent,
 } from "@mui/material";
-// utils
-import { fDateTime } from "@utils";
 
-// ----------------------------------------------------------------------
+import { fDateTime } from "@utils";
 
 interface ItemProps {
   id: string;

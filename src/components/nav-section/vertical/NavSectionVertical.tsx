@@ -1,13 +1,10 @@
-// @mui
 import { List, Stack } from "@mui/material";
-// locales
-import { useLocales } from "../../../locales";
-//
-import { NavSectionProps } from "../types";
+
 import NavList from "./NavList";
+import { NavSectionProps } from "../types";
 import { StyledSubheader } from "./styles";
 
-// ----------------------------------------------------------------------
+import { useLocales } from "../../../locales";
 
 export default function NavSectionVertical({
   data,

@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { ColorSinglePicker } from "./ColorSinglePicker"
+
 import { voidFunction } from "@utils";
+import { ColorSinglePicker } from "./ColorSinglePicker"
 
 const Component: Meta<typeof ColorSinglePicker> = {
   component: ColorSinglePicker,

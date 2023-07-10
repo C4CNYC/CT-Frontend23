@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { Label } from "./Label";
 import { Iconify } from "../iconify"
 

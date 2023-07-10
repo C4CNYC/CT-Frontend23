@@ -1,13 +1,15 @@
 import { ApexOptions } from "apexcharts";
-// @mui
-import { Card, CardHeader, CardProps } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
-// utils
-import { fNumber } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Card, 
+  CardProps,
+  CardHeader, 
+ } from "@mui/material";
+import { styled, useTheme } from "@mui/material/styles";
+
+import { fNumber } from "@utils";
+
+import { useChart, Chart } from "@components";
 
 const CHART_HEIGHT = 400;
 

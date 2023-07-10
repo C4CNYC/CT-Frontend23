@@ -1,26 +1,24 @@
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import Head from "next/head";
+import { useState } from "react";
+
 import {
   Box,
   Card,
-  CardHeader,
   Container,
+  CardHeader,
+  Typography,
   ToggleButton,
   ToggleButtonGroup,
-  Typography,
 } from "@mui/material";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import Head from "next/head";
-import { useState } from "react";
-import RoleBasedGuard from "src/auth/RoleBasedGuard";
 
-// ----------------------------------------------------------------------
+import DashboardLayout from "@layouts/dashboard";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { useSettingsContext, CustomBreadcrumbs } from "@components";
 
 PermissionDeniedPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function PermissionDeniedPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

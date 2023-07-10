@@ -1,8 +1,7 @@
-// @mui
 import { useTheme } from "@mui/material/styles";
-//
-import { StyledBadgeStatus } from "./styles";
+
 import { BadgeStatusProps } from "./types";
+import { StyledBadgeStatus } from "./styles";
 
 // ----------------------------------------------------------------------
 

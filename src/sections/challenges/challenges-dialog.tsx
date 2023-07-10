@@ -1,24 +1,26 @@
-import CloseIcon from "@mui/icons-material/Close";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TerminalIcon from "@mui/icons-material/Terminal";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 import {
+  Box,
+  List,
+  Dialog,
+  Checkbox,
+  ListItem,
   Accordion,
+  IconButton,
+  Typography,
+  DialogTitle,
+  DialogContent,
   AccordionDetails,
   AccordionSummary,
-  Box,
-  Checkbox,
   CircularProgress,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  List,
-  ListItem,
-  Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
 
 interface Props {

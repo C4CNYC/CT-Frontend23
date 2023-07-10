@@ -1,22 +1,25 @@
 import {
-  moveCursorEvent,
-  pasteSymbolEvent,
-  undoRedoEvent,
-} from "@components";
-import { Box, Button, Divider } from "@mui/material";
-import { styled } from "@mui/system";
-import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
-import { memo } from "react";
-import { AiOutlineCopy } from "react-icons/ai";
-import { BsClipboard } from "react-icons/bs";
-import {
   MdKeyboardHide,
   MdNavigateBefore,
   MdNavigateNext,
 } from "react-icons/md";
-import { RiFilePaper2Fill, RiShareForwardFill } from "react-icons/ri";
+import { memo } from "react";
+import { BsClipboard } from "react-icons/bs";
+import { AiOutlineCopy } from "react-icons/ai";
 import { TbBoxMargin, TbBraces, TbTool } from "react-icons/tb";
+import { RiFilePaper2Fill, RiShareForwardFill } from "react-icons/ri";
+
+import { styled } from "@mui/system";
+import { Box, Button, Divider } from "@mui/material";
+
+import {
+  moveCursorEvent,
+  pasteSymbolEvent,
+  undoRedoEvent,
+} from "@components";
+
 import { copyPasteEvent } from "src/components/real-time-editor/events/copy-paste";
+import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
 
 export enum ICodingActonsType {
   symbol = "symbol",

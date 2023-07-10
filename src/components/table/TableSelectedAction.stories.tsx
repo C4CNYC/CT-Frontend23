@@ -1,7 +1,9 @@
 import type { Meta } from "@storybook/react";
+
 import { Tooltip, IconButton } from "@mui/material";
-import { TableSelectedAction } from "./TableSelectedAction"
+
 import { Iconify } from "../iconify"
+import { TableSelectedAction } from "./TableSelectedAction"
 
 const Component: Meta<typeof TableSelectedAction> = {
   component: TableSelectedAction,

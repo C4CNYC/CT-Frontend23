@@ -1,9 +1,11 @@
-import type { Meta } from "@storybook/react";
-import { Typography } from "@mui/material";
-import { fData } from "@utils";
-import UploadAvatar from "./UploadAvatar";
-import { UploadProps } from "./types";
 import { useState } from "react";
+import type { Meta } from "@storybook/react";
+
+import { Typography } from "@mui/material";
+
+import { fData } from "@utils";
+import { UploadProps } from "./types";
+import UploadAvatar from "./UploadAvatar";
 
 const Component: Meta<typeof UploadAvatar> = {
   component: UploadAvatar,

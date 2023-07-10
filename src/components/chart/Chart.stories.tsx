@@ -1,9 +1,11 @@
-import type { Meta } from "@storybook/react";
 import { ApexOptions } from "apexcharts";
+import type { Meta } from "@storybook/react";
+
 import { CardProps } from "@mui/material";
+
 import { Chart } from "./index";
-import { useChart } from "./useChart";
 import { fNumber } from "@utils";
+import { useChart } from "./useChart";
 
 const Component: Meta<typeof Chart> = {
   component: Chart,

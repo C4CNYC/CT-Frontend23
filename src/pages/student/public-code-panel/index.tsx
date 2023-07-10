@@ -1,8 +1,10 @@
-import { LoadingScreen } from "@components";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+
+import { LoadingScreen } from "@components";
+
 import GuestGuard from "src/auth/GuestGuard";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetPublicCourseQuery } from "src/redux/services/student/public-student";
 
 export default function Index(): React.ReactElement {

@@ -1,11 +1,19 @@
-import { voidFunction } from "@utils";
-import { Badge, SpeedDial, SpeedDialAction, useTheme } from "@mui/material";
-import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { useAtom } from "jotai";
-import { BiFullscreen, BiMedal } from "react-icons/bi";
-import { BsLightningCharge } from "react-icons/bs";
-import { MdOutlineNoteAlt } from "react-icons/md";
 import { TbMessageCircle } from "react-icons/tb";
+import { MdOutlineNoteAlt } from "react-icons/md";
+import { BsLightningCharge } from "react-icons/bs";
+import { BiFullscreen, BiMedal } from "react-icons/bi";
+
+import { 
+  Badge, 
+  useTheme,
+  SpeedDial, 
+  SpeedDialAction, 
+ } from "@mui/material";
+
+import { voidFunction } from "@utils";
+
+import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 
 interface Props {
   stepHasValidation: boolean;

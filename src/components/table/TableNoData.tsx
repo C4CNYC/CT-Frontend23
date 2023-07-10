@@ -1,11 +1,7 @@
-
-// @mui
 import { TableCell, TableRow } from "@mui/material";
-//
-import { useLocales } from "../../locales/useLocales";
-import { EmptyContent } from "../empty-content";
 
-// ----------------------------------------------------------------------
+import { EmptyContent } from "../empty-content";
+import { useLocales } from "../../locales/useLocales";
 
 interface Props {
   isNotFound: boolean;

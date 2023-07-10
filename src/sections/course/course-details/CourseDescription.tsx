@@ -1,4 +1,8 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { 
+  Box, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 
 interface Props {

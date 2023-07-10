@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { Iconify } from "./Iconify";
 
 const Component: Meta<typeof Iconify> = {

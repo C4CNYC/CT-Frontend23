@@ -1,7 +1,9 @@
-import { Box, IconButton } from "@mui/material";
-import { mobileTabManager } from "@sections/code-panel/atoms/mobile-tab-manager.atom";
 import { useAtom } from "jotai";
 import { MdOutlineSwipeLeft, MdOutlineSwipeRight } from "react-icons/md";
+
+import { Box, IconButton } from "@mui/material";
+
+import { mobileTabManager } from "@sections/code-panel/atoms/mobile-tab-manager.atom";
 
 interface Props {
   orientation: string;

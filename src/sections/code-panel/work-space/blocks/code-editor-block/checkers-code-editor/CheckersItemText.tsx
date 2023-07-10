@@ -1,6 +1,12 @@
-import { Box, Tooltip, Typography } from "@mui/material";
-import { m } from "framer-motion";
 import { useAtom } from "jotai";
+import { m } from "framer-motion";
+
+import { 
+  Box, 
+  Tooltip, 
+  Typography,
+ } from "@mui/material";
+
 import { checkersAnimationAtom } from "./checkers-animation-atom";
 
 interface Props {

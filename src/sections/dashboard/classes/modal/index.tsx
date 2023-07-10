@@ -1,24 +1,32 @@
-import { ClassCoursesAutocomplete, ClassMembersAutocomplete, ClassMentorsAutocomplete, FormProvider } from "@components";
+import * as Yup from "yup";
+import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useCallback, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
+
 import {
+  Tab,
   Box,
+  Tabs,
   Button,
   Dialog,
+  Typography,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Tab,
-  Tabs,
-  Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  FormProvider,
+  ClassCoursesAutocomplete, 
+  ClassMembersAutocomplete, 
+  ClassMentorsAutocomplete, 
+ } from "@components";
+
+ import AddClassTab from "./AddClassTab";
+ import { RootState } from "src/redux/store";
 import { Role } from "src/redux/services/enums/role.enum";
-import { RootState } from "src/redux/store";
-import * as Yup from "yup";
-import AddClassTab from "./AddClassTab";
 
 export interface FormAddClassProps {
   name: string;

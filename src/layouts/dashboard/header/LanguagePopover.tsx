@@ -1,12 +1,10 @@
 import { useState } from "react";
-// @mui
-import { MenuItem, Stack } from "@mui/material";
-// locales
-import { useLocales } from "../../../locales";
-// components
-import { IconButtonAnimate, Image, MenuPopover } from "@components";
 
-// ----------------------------------------------------------------------
+import { MenuItem, Stack } from "@mui/material";
+
+import { useLocales } from "../../../locales";
+
+import { IconButtonAnimate, Image, MenuPopover } from "@components";
 
 export default function LanguagePopover(): React.ReactElement {
   const { allLangs, currentLang, onChangeLang } = useLocales();

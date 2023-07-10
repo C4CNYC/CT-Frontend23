@@ -1,21 +1,16 @@
-// @mui
-import { AppBar, IconButton, Stack, Toolbar } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// utils
-import { bgBlur } from "@utils";
-// hooks
-import { useOffSetTop, useResponsive } from "@hooks";
-// config
-import { HEADER, NAV } from "../../../config-global";
-// components
-import { useSettingsContext, Logo, Iconify } from "@components";
-//
 import { useRouter } from "next/router";
+
+import { useTheme } from "@mui/material/styles";
+import { AppBar, IconButton, Stack, Toolbar } from "@mui/material";
+
+import { useSettingsContext, Logo, Iconify } from "@components";
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
 import NavAccount from "./SchoolAccount";
 
-// ----------------------------------------------------------------------
+import { bgBlur } from "@utils";
+import { HEADER, NAV } from "../../../config-global";
+import { useOffSetTop, useResponsive } from "@hooks";
 
 interface Props {
   onOpenNav?: VoidFunction;

@@ -1,4 +1,9 @@
-import { Box, Chip, Tooltip, Typography } from "@mui/material";
+import { 
+  Box, 
+  Chip, 
+  Tooltip, 
+  Typography,
+ } from "@mui/material";
 
 interface Props {
   name: string;

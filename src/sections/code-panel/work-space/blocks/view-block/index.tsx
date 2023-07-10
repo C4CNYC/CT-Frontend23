@@ -1,7 +1,9 @@
-import { Typography } from "@mui/material";
 import { CgBrowser } from "react-icons/cg";
-import { SupportedLang } from "../..";
+
+import { Typography } from "@mui/material";
+
 import BaseBlock from "../BaseBlock";
+import { SupportedLang } from "../..";
 import BrowserView from "./BrowserView";
 
 const title = "Browser Preview";

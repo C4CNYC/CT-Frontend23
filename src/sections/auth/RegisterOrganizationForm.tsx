@@ -1,10 +1,12 @@
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { Link, Stack, Typography } from "@mui/material";
 import NextLink from "next/link";
+
+import { Link, Stack, Typography } from "@mui/material";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+
+import TipButton from "./TipButton";
 import LoginLayout from "../../layouts/login";
 import { PATH_AUTH } from "../../routes/paths";
 import AuthOrganizationForm from "./AuthOrganizationForm";
-import TipButton from "./TipButton";
 
 const TIP = `TIP: If your school has already signed up. 
 Please ask for a “Teacher” Join-Link from one of the School Admins.`;

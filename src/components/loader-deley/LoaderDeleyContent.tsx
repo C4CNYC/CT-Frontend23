@@ -1,5 +1,6 @@
-import { LoadingScreen } from "../loading-screen";
 import { useEffect, useState } from "react";
+
+import { LoadingScreen } from "../loading-screen";
 
 interface Props {
   deley: number;

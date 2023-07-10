@@ -1,24 +1,27 @@
-import { Logo } from "@components";
-import LoginLayout from "@layouts/login/LoginLayout";
-import {
-  Box,
-  Button,
-  Divider,
-  Link,
-  Stack,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
 import NextLink from "next/link";
 import { useState } from "react";
-import { FaGraduationCap } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { GoFileCode } from "react-icons/go";
 import { useDispatch } from "react-redux";
-import { setUserRole } from "src/redux/slices/global";
+import { GoFileCode } from "react-icons/go";
+import { FaGraduationCap } from "react-icons/fa";
+
+import {
+  Box,
+  Tab,
+  Link,
+  Tabs,
+  Stack,
+  Button,
+  Divider,
+  Typography,
+} from "@mui/material";
+
+import { Logo } from "@components";
+
+import { PATH_AUTH } from "@routes/paths";
 import RegisterCoderForm from "./RegisterCoderForm";
+import LoginLayout from "@layouts/login/LoginLayout";
+import { setUserRole } from "src/redux/slices/global";
 
 interface Props {
   isLogin: boolean;

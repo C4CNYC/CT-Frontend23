@@ -1,22 +1,17 @@
-// @mui
 import {
   Box,
-  CardActionArea,
-  FormControlLabel,
   Radio,
   Stack,
+  CardActionArea,
+  FormControlLabel,
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
 
 export const StyledWrap = styled(Box)(() => ({
   gap: 8,
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
 }));
-
-// ----------------------------------------------------------------------
 
 interface StyledCardProps {
   selected: boolean;

@@ -1,12 +1,8 @@
-// @mui
-import { ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-// config
-import { ICON, NAV } from "../../../config-global";
-//
-import { NavItemProps } from "../types";
+import { ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { NavItemProps } from "../types";
+import { ICON, NAV } from "../../../config-global";
 
 type StyledItemProps = Omit<NavItemProps, "item"> & {
   caption?: boolean;

@@ -1,22 +1,31 @@
 /* eslint-disable no-new */
-import { BaseResponseInterface } from "@utils";
-import { Box, Collapse, useMediaQuery } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { IValidation } from "src/redux/interfaces/content.interface";
-import { mapValidations } from "src/utils/validationMaping";
-import BaseBlock from "../BaseBlock";
-import Checkers from "./checkers-code-editor";
-
-import { CodingSymbols, CodingTools } from "./CodingControls";
-
-import { RealTimeEditor } from "@components";
-import { useTheme } from "@mui/material/styles";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import BrowserTab from "@sections/code-panel/top-bar/nav-bar/options/BrowserTab";
+import React, { 
+  useRef, 
+  useState,
+  useEffect, 
+} from "react";
 import { useAtom } from "jotai";
 import { BiCodeAlt } from "react-icons/bi";
-import { AuthUserType } from "src/auth/types";
+ 
+import { 
+  Box, 
+  Collapse, 
+  useMediaQuery,
+ } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+import { RealTimeEditor } from "@components";
+
+import BaseBlock from "../BaseBlock";
 import MumuSpeedDial from "./MumuSpeedDial";
+import Checkers from "./checkers-code-editor";
+import { AuthUserType } from "src/auth/types";
+import { BaseResponseInterface } from "@utils";
+import { mapValidations } from "src/utils/validationMaping";
+import { CodingSymbols, CodingTools } from "./CodingControls";
+import { IValidation } from "src/redux/interfaces/content.interface";
+import BrowserTab from "@sections/code-panel/top-bar/nav-bar/options/BrowserTab";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 const TYPING_DELEY = 20000;
 const FIRST_LOADING_DELEY = 15000;

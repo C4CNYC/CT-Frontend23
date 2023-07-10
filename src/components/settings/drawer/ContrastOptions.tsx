@@ -1,11 +1,8 @@
-// @mui
 import { RadioGroup } from "@mui/material";
-//
+
 import { SvgColor } from "../../svg-color";
 import { useSettingsContext } from "../SettingsContext";
 import { MaskControl, StyledCard, StyledWrap } from "../styles";
-
-// ----------------------------------------------------------------------
 
 const OPTIONS = ["default", "bold"] as const;
 

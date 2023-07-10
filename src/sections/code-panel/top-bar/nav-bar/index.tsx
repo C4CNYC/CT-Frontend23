@@ -1,7 +1,8 @@
-import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
-import DesktopBar from "./DesktopBar";
+import { useMediaQuery } from "@mui/material";
+
 import MobileBar from "./MobileBar";
+import DesktopBar from "./DesktopBar";
 
 interface INavBar {
   chatComponent: React.ReactElement;

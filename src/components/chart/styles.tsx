@@ -1,7 +1,6 @@
-// @mui
 import { GlobalStyles } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
-// utils
+
 import { bgBlur } from "@utils";
 
 // ----------------------------------------------------------------------

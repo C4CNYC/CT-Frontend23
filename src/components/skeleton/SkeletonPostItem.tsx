@@ -1,7 +1,4 @@
-// @mui
 import { Box, Grid, GridProps, Skeleton } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export function SkeletonPostItem({
   ...other

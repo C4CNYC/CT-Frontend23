@@ -1,10 +1,12 @@
+import { useAtom } from "jotai";
+
+import { Box } from "@mui/system";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Box } from "@mui/system";
-import { mobileTabManager } from "@sections/code-panel/atoms/mobile-tab-manager.atom";
-import { useAtom } from "jotai";
-import BaseBlockHeader from "./BaseBlockHeader";
+
 import TabChangerBtn from "./TabChangerBtn";
+import BaseBlockHeader from "./BaseBlockHeader";
+import { mobileTabManager } from "@sections/code-panel/atoms/mobile-tab-manager.atom";
 
 interface IBaseBlock {
   children: React.ReactElement | React.ReactFragment;

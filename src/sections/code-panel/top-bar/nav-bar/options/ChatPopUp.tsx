@@ -1,11 +1,17 @@
-import { Iconify } from "@components";
-import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { useAtom } from "jotai";
 import Draggable from "react-draggable";
-
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
-import CloseIcon from "@mui/icons-material/Close";
-import { useAtom } from "jotai";
+import { 
+  Box, 
+  useTheme,
+  IconButton, 
+  useMediaQuery, 
+ } from "@mui/material";
+ import CloseIcon from "@mui/icons-material/Close";
+
+import { Iconify } from "@components";
+
 import { chatHandlerAtom } from "./chatHendlerAtom";
 
 interface IChatPopup {

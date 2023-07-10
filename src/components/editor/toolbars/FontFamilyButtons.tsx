@@ -1,11 +1,11 @@
+import React from "react";
 import {
-  CommandButtonGroup,
-  CommandMenuItem,
-  DropdownButton,
   useActive,
   useCommands,
+  DropdownButton,
+  CommandMenuItem,
+  CommandButtonGroup,
 } from "@remirror/react";
-import React from "react";
 
 const FONT_FAMILIES: Array<[React.CSSProperties["fontFamily"], string]> = [
   ["serif", "Serif"],

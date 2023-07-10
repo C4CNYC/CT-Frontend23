@@ -1,18 +1,15 @@
-// @mui
 import {
-  Button,
-  IconButton,
-  InputBase,
   Paper,
   Stack,
+  Button,
   Tooltip,
+  InputBase,
+  IconButton,
 } from "@mui/material";
-// auth
-import { useAuthContext } from "../../../../auth/useAuthContext";
-// components
+
 import { CustomAvatar, Iconify } from "@components";
 
-// ----------------------------------------------------------------------
+import { useAuthContext } from "../../../../auth/useAuthContext";
 
 export default function AssignmentsDetailsCommentInput(): React.ReactElement {
   const { user } = useAuthContext();

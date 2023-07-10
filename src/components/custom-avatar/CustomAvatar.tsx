@@ -1,10 +1,9 @@
+import { forwardRef } from "react";
+
 import { Avatar, Badge } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { forwardRef } from "react";
-//
-import { CustomAvatarProps } from "./types";
 
-// ----------------------------------------------------------------------
+import { CustomAvatarProps } from "./types";
 
 const getCharAtName = (name: string): string => name?.charAt(0).toUpperCase();
 
@@ -16,8 +15,6 @@ const getColorByName = (name: string): string => {
   if (["V", "W", "X", "M", "Z"].includes(getCharAtName(name))) return "error";
   return "default";
 };
-
-// ----------------------------------------------------------------------
 
 // eslint-disable-next-line react/display-name
 export const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(

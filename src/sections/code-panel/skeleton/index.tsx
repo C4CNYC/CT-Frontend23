@@ -1,4 +1,9 @@
-import { Box, Skeleton, useMediaQuery, useTheme } from "@mui/material";
+import { 
+  Box, 
+  Skeleton, 
+  useTheme, 
+  useMediaQuery, 
+} from "@mui/material";
 
 export default function SkeletonCodePanel(): React.ReactElement {
   const theme = useTheme();

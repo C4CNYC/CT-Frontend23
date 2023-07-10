@@ -1,23 +1,32 @@
-import { ConfirmDialog, Label } from "@components";
-import { LoadingButton } from "@mui/lab";
-import { Box, IconButton, Link, Paper, Stack } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { IGallery } from "src/redux/interfaces/gallary.interface";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
+import { 
+  Box, 
+  Link, 
+  Paper, 
+  Stack,
+  IconButton, 
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { ConfirmDialog, Label } from "@components";
+
+import ElementMenu from "../ElementMenu";
+import ElementInfo from "../ElementInfo";
+import { PATH_MAIN } from "@routes/paths";
+import ProjectStatistic from "../ProjectStatistic";
 import {
   useRemoveProjectMutation,
   useUpdateProjectMutation,
 } from "src/redux/services/student/gallery-student";
-import { RootState, useSelector } from "src/redux/store";
-import ElementInfo from "../ElementInfo";
-import ElementMenu from "../ElementMenu";
 import GalleryItemSkills from "../GalleryItemSkills";
-import ProjectStatistic from "../ProjectStatistic";
+import { RootState, useSelector } from "src/redux/store";
+import { IGallery } from "src/redux/interfaces/gallary.interface";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 
 interface Props {
   item: IGallery;

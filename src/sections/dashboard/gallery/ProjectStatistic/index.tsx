@@ -1,7 +1,12 @@
-import { Box, Stack, Typography } from "@mui/material";
 import { AiOutlineHeart } from "react-icons/ai";
-import { BiCommentDetail, BiGitBranch } from "react-icons/bi";
 import { MdOutlineVisibility } from "react-icons/md";
+import { BiCommentDetail, BiGitBranch } from "react-icons/bi";
+
+import { 
+  Box, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
 
 export default function ProjectStatistic(): React.ReactElement {
   return (

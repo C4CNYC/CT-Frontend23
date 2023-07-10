@@ -1,19 +1,19 @@
-// @mui
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
-// components
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import {
+  Box,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  SelectChangeEvent,
+} from "@mui/material";
+
+import { RootState } from "src/redux/store";
+import { setSchool } from "src/redux/slices/manager";
 import { ISchool } from "src/redux/services/interfaces/school.interface";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { setSchool } from "src/redux/slices/manager";
-import { RootState } from "src/redux/store";
 
 export default function SchoolAccount(): React.ReactElement | null {
   const dispatch = useDispatch();

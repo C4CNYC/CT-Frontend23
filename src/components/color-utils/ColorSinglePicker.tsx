@@ -1,11 +1,9 @@
 import { forwardRef } from "react";
-// @mui
+
 import { Radio, RadioGroup } from "@mui/material";
-//
+
 import { Icon } from "./Icon";
 import { ColorSinglePickerProps } from "./types";
-
-// ----------------------------------------------------------------------
 
 // eslint-disable-next-line react/display-name
 export const ColorSinglePicker = forwardRef<HTMLDivElement, ColorSinglePickerProps>(

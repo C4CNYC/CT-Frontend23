@@ -1,7 +1,7 @@
 import { AnimatePresence, m } from "framer-motion";
-// @mui
+
 import { Box, Dialog, DialogProps, Paper } from "@mui/material";
-//
+
 import { varFade } from "./variants";
 
 // ----------------------------------------------------------------------

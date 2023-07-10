@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
 import { m } from "framer-motion";
 import { useEffect, useState } from "react";
-import { LogoSmall } from "../logoSmall";
 
-// ----------------------------------------------------------------------
+import { Box } from "@mui/material";
+import { alpha, styled } from "@mui/material/styles";
+
+import { LogoSmall } from "../logoSmall";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   right: 0,
@@ -18,8 +18,6 @@ const StyledRoot = styled("div")(({ theme }) => ({
   justifyContent: "center",
   backgroundColor: theme.palette.background.default,
 }));
-
-// ----------------------------------------------------------------------
 
 interface Props {
   sx?: Record<string, any>;

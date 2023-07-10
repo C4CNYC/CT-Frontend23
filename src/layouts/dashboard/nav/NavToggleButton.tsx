@@ -1,13 +1,9 @@
-// @mui
 import { IconButton, IconButtonProps } from "@mui/material";
-// hooks
-import { useResponsive } from "@hooks";
-// config
-import { NAV } from "../../../config-global";
-// components
+
 import { Iconify, useSettingsContext } from "@components";
 
-// ----------------------------------------------------------------------
+import { useResponsive } from "@hooks";
+import { NAV } from "../../../config-global";
 
 export default function NavToggleButton({
   sx,

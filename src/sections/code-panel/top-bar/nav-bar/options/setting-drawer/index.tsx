@@ -1,3 +1,13 @@
+import { useAtom } from "jotai";
+import { useState } from "react";
+
+import { 
+  Typography,
+  IconButton, 
+  SwipeableDrawer, 
+ } from "@mui/material";
+import { Box } from "@mui/system";
+
 import {
   Iconify,
   resetLessonEvent,
@@ -5,18 +15,15 @@ import {
   updateFontSize,
   updateLineWrap,
 } from "@components";
-import { IconButton, SwipeableDrawer, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
-import { useAtom } from "jotai";
-import { useState } from "react";
-// import ChatVisible from "./preferences/ChatVisible";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+
+import ResetCode from "./preferences/ResetCode";
+import IntroTour from "./preferences/IntroTour";
 import EditColors from "./preferences/EditColors";
 import EditorFontSize from "./preferences/EditorFontSize";
 import EditorWordWrap from "./preferences/EditorWordWrap";
-import IntroTour from "./preferences/IntroTour";
-import ResetCode from "./preferences/ResetCode";
+import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
+// import ChatVisible from "./preferences/ChatVisible";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 const SettingDrawer = (): React.ReactElement => {
   const [openDrawer, setDrawer] = useState<boolean>(false);

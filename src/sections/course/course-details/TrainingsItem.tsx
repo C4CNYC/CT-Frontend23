@@ -1,9 +1,11 @@
-import { Box, Button, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineClockCircle } from "react-icons/ai";
+
+import { Stack } from "@mui/system";
+import { Box, Button, Typography } from "@mui/material";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 
 interface Props {

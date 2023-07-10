@@ -1,9 +1,11 @@
-import { isJson } from "@utils";
-import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
-import { useS3Upload } from "next-s3-upload";
-import React, { useEffect } from "react";
-import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
+import React, { useEffect } from "react";
+import { useS3Upload } from "next-s3-upload";
+import { ImageAttributes, ImageExtension } from "remirror/extensions";
+import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
+
+import { isJson } from "@utils";
+
 import EditorToolbar from "./EditorToolbar";
 import { extensions } from "./extensions-template";
 

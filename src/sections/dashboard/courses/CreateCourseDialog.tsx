@@ -1,39 +1,42 @@
-import {
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUpload,
-  useSnackbar,
-  SingleFilePreview,
-  CourseModuleAutocomplete,
-  FormProvider,
-} from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import CloseIcon from "@mui/icons-material/Close";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  FormGroup,
-  IconButton,
-  Stack,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
+import * as Yup from "yup";
 import * as React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdClose } from "react-icons/io";
-import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import {
+  Box,
+  Tab,
+  Tabs,
+  Stack,
+  Button,
+  FormGroup,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import Dialog from "@mui/material/Dialog";
+import CloseIcon from "@mui/icons-material/Close";
+import DialogTitle from "@mui/material/DialogTitle";
+
+import {
+  RHFUpload,
+  RHFSelect,
+  RHFSwitch,
+  useSnackbar,
+  RHFTextField,
+  FormProvider,
+  SingleFilePreview,
+  CourseModuleAutocomplete,
+} from "@components";
+
+import AuthorsList from "./authors-tab/AuthorsList";
+import {
+  useUpdateCourseMutation,
   useCreateCourseMutation,
   useUpdateCourseCoverMutation,
-  useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
-import AuthorsList from "./authors-tab/AuthorsList";
 
 interface FormValuesProps {
   name: string;

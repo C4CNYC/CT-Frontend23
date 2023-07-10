@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import type { Meta } from "@storybook/react";
+
 import { ColorMultiPickerProps } from "./types";
 import { ColorMultiPicker } from "./ColorMultiPicker"
-import { useEffect, useState } from "react";
 
 const Component: Meta<typeof ColorMultiPicker> = {
   component: ColorMultiPicker,

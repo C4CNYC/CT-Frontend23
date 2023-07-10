@@ -1,29 +1,32 @@
-import { javascript } from "@codemirror/lang-javascript";
-import {
-  FormProvider,
-  ModalCodeFullscreen,
-  RHFCode,
-  RHFTextField,
-} from "@components";
+import * as Yup from "yup";
+import React, { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
+import { javascript } from "@codemirror/lang-javascript";
+
 import {
+  Stack,
   Button,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Stack,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useSnackbar } from "notistack";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
+
+import {
+  RHFCode,
+  RHFTextField,
+  FormProvider,
+  ModalCodeFullscreen,
+} from "@components";
+
 import {
   useCreateIntegrationMutation,
   useUpdateIntegrationMutation,
 } from "src/redux/services/manager/integration-manager";
-import * as Yup from "yup";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Tenant name is required"),

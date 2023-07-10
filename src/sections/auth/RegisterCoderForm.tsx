@@ -1,32 +1,31 @@
-import { useState } from "react";
 import * as Yup from "yup";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-// @mui
-import { FormProvider, Iconify, RHFTextField } from "@components";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Link,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
 import NextLink from "next/link";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 import { IoRocketSharp } from "react-icons/io5";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import {
+  Box,
+  Link,
+  Stack,
+  Button,
+  TextField,
+  Typography,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { FormProvider, Iconify, RHFTextField } from "@components";
+
 import { useAuthContext } from "src/auth/useAuthContext";
+import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
 import { useRegisterMutation } from "src/redux/services/auth";
 import { useCreateClassMutation } from "src/redux/services/student/classes-manager";
 import { MANAGER_PATH_AFTER_LOGIN, STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
-
-// ----------------------------------------------------------------------
 
 interface FormValuesProps {
   email: string;

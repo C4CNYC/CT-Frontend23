@@ -1,14 +1,15 @@
-import {
-  Avatar,
-  Box,
-  Chip,
-  LinearProgress,
-  Link,
-  Tooltip,
-  Typography,
-} from "@mui/material";
 import NextLink from "next/link";
 import { TbFileCertificate } from "react-icons/tb";
+
+import {
+  Box,
+  Chip,
+  Link,
+  Avatar,
+  Tooltip,
+  Typography,
+  LinearProgress,
+} from "@mui/material";
 
 interface Props {
   progress: number | null;

@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
-// next
 import { useRouter } from "next/router";
-// @mui
-import { Drawer, IconButton, List } from "@mui/material";
-// config
-import { NAV } from "../../../../config-global";
-// components
-import { Scrollbar, Iconify, Logo } from "@components";
-//
-import { NavProps } from "../types";
-import NavList from "./NavList";
+import { useEffect, useState } from "react";
 
-// ----------------------------------------------------------------------
+import { Drawer, IconButton, List } from "@mui/material";
+
+import NavList from "./NavList";
+import { Scrollbar, Iconify, Logo } from "@components";
+
+import { NavProps } from "../types";
+import { NAV } from "../../../../config-global";
 
 export default function NavMobile({
   isOffset,

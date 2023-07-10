@@ -1,7 +1,4 @@
-// @mui
 import { Grid, GridProps, Skeleton } from "@mui/material";
-
-// ----------------------------------------------------------------------
 
 export function SkeletonProductDetails({
   ...other

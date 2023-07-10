@@ -1,20 +1,18 @@
 import * as Yup from "yup";
-// next
 import { useRouter } from "next/router";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-// @mui
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { LoadingButton } from "@mui/lab";
 import { FormHelperText, Stack } from "@mui/material";
-// components
+
 import {
-  FormProvider,
   RHFCodes,
   useSnackbar,
+  FormProvider,
  } from "@components";
+
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-// ----------------------------------------------------------------------
 
 interface FormValuesProps {
   code1: string;

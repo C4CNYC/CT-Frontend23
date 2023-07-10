@@ -1,19 +1,25 @@
+import React, { 
+  useRef, 
+  useState,
+  useEffect, 
+ } from "react";
+import { BsChatText } from "react-icons/bs";
+import { AiOutlineCode } from "react-icons/ai";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
+
 import {
   Box,
+  useTheme,
   SpeedDial,
-  SpeedDialAction,
   Typography,
   useMediaQuery,
-  useTheme,
+  SpeedDialAction,
 } from "@mui/material";
-import SolutionMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/SolutionMobileDialog";
+
+import TipsPopover from "./TipsPopover";
 import TipsMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/TIpsMobileDialog";
 import UnstuckMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/UnstuckMobileDialog";
-import React, { useEffect, useRef, useState } from "react";
-import { AiOutlineCode } from "react-icons/ai";
-import { BsChatText } from "react-icons/bs";
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
-import TipsPopover from "./TipsPopover";
+import SolutionMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/SolutionMobileDialog";
 
 const enum IActionDialogType {
   tips = "Tips",

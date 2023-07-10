@@ -1,8 +1,7 @@
-import LoginRegister from "@sections/auth/LoginRegister";
 import Head from "next/head";
-import GuestGuard from "src/auth/GuestGuard";
 
-// ----------------------------------------------------------------------
+import GuestGuard from "src/auth/GuestGuard";
+import LoginRegister from "@sections/auth/LoginRegister";
 
 export default function RegisterPage(): React.ReactElement {
   return (

@@ -1,11 +1,14 @@
-import { useSettingsContext, Iconify, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
-import ProfileCover from "@sections/student-profile/ProfileCover";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
+
+import { useSettingsContext, Iconify, CustomBreadcrumbs } from "@components";
+
+import { PATH_MAIN } from "@routes/paths";
+import DashboardLayout from "@layouts/dashboard";
+import ProfileCover from "@sections/student-profile/ProfileCover";
 import { useGetFriendQuery } from "src/redux/services/student/friends-manager";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (

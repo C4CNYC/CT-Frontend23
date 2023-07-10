@@ -1,15 +1,17 @@
 import React from "react";
+
 import {
-  AiFillDribbbleCircle,
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillLinkedin,
-  AiFillTwitterSquare,
   AiFillYoutube,
+  AiFillFacebook,
+  AiFillLinkedin,
+  AiFillInstagram,
   AiOutlineWhatsApp,
+  AiFillTwitterSquare,
+  AiFillDribbbleCircle,
 } from "react-icons/ai";
-import { BsTelegram } from "react-icons/bs";
+
 import { SiViber } from "react-icons/si";
+import { BsTelegram } from "react-icons/bs";
 
 interface SocialTypes {
   name: string;

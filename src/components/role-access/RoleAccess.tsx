@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Role } from "src/redux/services/enums/role.enum";
+
 import { RootState } from "src/redux/store";
+import { Role } from "src/redux/services/enums/role.enum";
 
 interface Props {
   children: React.ReactElement;

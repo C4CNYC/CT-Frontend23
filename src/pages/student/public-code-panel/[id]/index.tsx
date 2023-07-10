@@ -1,30 +1,32 @@
-import { EmptyContent } from "@components";
-import { Box } from "@mui/material";
-import { CodePanelChat } from "@sections/chat";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import BottomBar from "@sections/code-panel/bottom-bar";
-import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import SkeletonCodePanel from "@sections/code-panel/skeleton";
-import TopPanel from "@sections/code-panel/top-bar";
-import { getNextLessonId } from "@sections/code-panel/utils/navigation";
-import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
-import { useRouter } from "next/router";
-
-import { useAtom } from "jotai";
 import _ from "lodash";
-import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useAtom } from "jotai";
+import dynamic from "next/dynamic";
+import Confetti from "react-confetti";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
+import { Box } from "@mui/material";
+
+import { EmptyContent } from "@components";
+
 import GuestGuard from "src/auth/GuestGuard";
+import { CodePanelChat } from "@sections/chat";
 import {
   useGetPublicCourseContentQuery,
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
 } from "src/redux/services/student/public-student";
+import TopPanel from "@sections/code-panel/top-bar";
+import BottomBar from "@sections/code-panel/bottom-bar";
+import SkeletonCodePanel from "@sections/code-panel/skeleton";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { getNextLessonId } from "@sections/code-panel/utils/navigation";
+import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
+import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 const Tour = dynamic(
   async () =>

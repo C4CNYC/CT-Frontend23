@@ -1,12 +1,13 @@
 import {
   Avatar,
   Message,
-  MessageInput,
   MessageList,
+  MessageInput,
 } from "@chatscope/chat-ui-kit-react";
-import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
-import { IFriend } from "src/redux/interfaces/friends.interface";
+
 import { BaseResponseInterface } from "@utils";
+import { IFriend } from "src/redux/interfaces/friends.interface";
+import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 
 interface IMessages {
   senderId: string;

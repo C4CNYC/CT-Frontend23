@@ -1,9 +1,6 @@
-// @mui
 import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
-//
-import { useLocales } from "./useLocales";
 
-// ----------------------------------------------------------------------
+import { useLocales } from "./useLocales";
 
 interface Props {
   children: React.ReactNode;

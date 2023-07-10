@@ -1,24 +1,26 @@
-import { Logo, NavSectionVertical, Scrollbar } from "@components";
-import { useResponsive } from "@hooks";
-import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
-import UserSection from "@sections/info/user-section";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { Role } from "src/redux/services/enums/role.enum";
+
+import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
+
+import NavToggleButton from "./NavToggleButton";
+import { Logo, NavSectionVertical, Scrollbar } from "@components";
+
+import {
+  apps,
+  admin,
+  social,
+  general,
+  socials,
+  content,
+  managment,
+} from "./config-navigation";
+import { useResponsive } from "@hooks";
 import { RootState } from "src/redux/store";
 import { NAV } from "../../../config-global";
-import {
-  admin,
-  apps,
-  content,
-  general,
-  managment,
-  social,
-  socials,
-} from "./config-navigation";
-import NavToggleButton from "./NavToggleButton";
-// ----------------------------------------------------------------------
+import UserSection from "@sections/info/user-section";
+import { Role } from "src/redux/services/enums/role.enum";
 
 interface Props {
   openNav: boolean;

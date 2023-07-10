@@ -1,15 +1,18 @@
-import { MotionContainer, varBounce } from "@components";
-import { Button, Typography } from "@mui/material";
-import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
-import { m } from "framer-motion";
 import Link from "next/link";
+import { m } from "framer-motion";
 import React, { useEffect } from "react";
-import { PageNotFoundIllustration } from "src/assets/illustrations";
-import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { setSchool } from "src/redux/slices/manager";
-import { dispatch, RootState, useSelector } from "src/redux/store";
+
+import { Button, Typography } from "@mui/material";
+
+import { MotionContainer, varBounce } from "@components";
+
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
+import { setSchool } from "src/redux/slices/manager";
+import { dispatch, RootState, useSelector } from "src/redux/store";
+import { PageNotFoundIllustration } from "src/assets/illustrations";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
+import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
 
 interface Props {
   children: React.ReactElement;

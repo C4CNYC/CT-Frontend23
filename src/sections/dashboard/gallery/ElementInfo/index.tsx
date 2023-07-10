@@ -1,6 +1,7 @@
 import { Stack, Tooltip, Typography } from "@mui/material";
-import GalleryDialog from "../GalleryDialog";
+
 import HomeButton from "../HomeButton";
+import GalleryDialog from "../GalleryDialog";
 
 interface Props {
   name: string | undefined;

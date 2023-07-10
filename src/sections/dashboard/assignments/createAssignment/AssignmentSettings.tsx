@@ -1,20 +1,31 @@
-import { RHFSelect, RHFTextField, FormProvider } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Stack } from "@mui/material";
-import { useSnackbar } from "notistack";
+import * as Yup from "yup";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
-import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Button, 
+  Stack,
+ } from "@mui/material";
+
+import { 
+  RHFSelect, 
+  RHFTextField, 
+  FormProvider,
+ } from "@components";
+
 import { RootState } from "src/redux/store";
 import { BaseResponseInterface } from "@utils";
-import * as Yup from "yup";
 import {
-  useCreateAssignmentMutation,
-  useUdpateAssignmentMutation,
-} from "../../../../redux/services/manager/assignments-manager";
+   useCreateAssignmentMutation,
+   useUdpateAssignmentMutation,
+ } from "../../../../redux/services/manager/assignments-manager";
+import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
 
 interface AssignmentStepProps {
   next: () => void;

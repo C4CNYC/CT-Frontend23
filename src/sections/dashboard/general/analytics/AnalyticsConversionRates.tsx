@@ -1,12 +1,14 @@
 import { ApexOptions } from "apexcharts";
-// @mui
-import { Box, Card, CardHeader, CardProps } from "@mui/material";
-// utils
-import { fNumber } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Card, 
+  CardProps,
+  CardHeader, 
+ } from "@mui/material";
+
+import { fNumber } from "@utils";
+import { useChart, Chart } from "@components";
 
 interface Props extends CardProps {
   title?: string;

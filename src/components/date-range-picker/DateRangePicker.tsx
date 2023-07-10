@@ -1,22 +1,19 @@
-// @mui
 import {
+  Stack,
+  Paper,
   Button,
   Dialog,
+  TextField,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormHelperText,
-  Paper,
-  Stack,
-  TextField,
 } from "@mui/material";
 import { CalendarPicker, DatePicker } from "@mui/x-date-pickers";
-// hooks
-import { useResponsive } from "@hooks";
-//
-import { DateRangePickerProps } from "./types";
 
-// ----------------------------------------------------------------------
+import { useResponsive } from "@hooks";
+
+import { DateRangePickerProps } from "./types";
 
 export function DateRangePicker({
   title = "Select date range",

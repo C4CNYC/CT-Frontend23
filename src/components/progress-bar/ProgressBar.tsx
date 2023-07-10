@@ -1,11 +1,8 @@
 import NProgress from "nprogress";
 import { useEffect } from "react";
-// next
 import { useRouter } from "next/router";
-//
-import { StyledProgressBar } from "./styles";
 
-// ----------------------------------------------------------------------
+import { StyledProgressBar } from "./styles";
 
 export function ProgressBar(): React.ReactElement {
   const router = useRouter();

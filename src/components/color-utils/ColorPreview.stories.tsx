@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { ColorPreview } from "./ColorPreview"
 
 const Component: Meta<typeof ColorPreview> = {

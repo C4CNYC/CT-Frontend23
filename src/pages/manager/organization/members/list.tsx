@@ -1,4 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Head from "next/head";
+import NextLink from "next/link";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
+
 import {
   emptyRows,
   TableEmptyRows,
@@ -9,47 +15,38 @@ import {
   useTable,
   useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ConfirmDialog
 } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+
 import {
-  Button,
-  Card,
-  Container,
-  Divider,
-  IconButton,
   Tab,
-  Table,
-  TableBody,
-  TableContainer,
   Tabs,
+  Card,
+  Table,
+  Button,
+  Divider,
   Tooltip,
+  TableBody,
+  Container,
+  IconButton,
+  TableContainer,
 } from "@mui/material";
-import { UserTableRow, UserTableToolbar } from "@sections/dashboard/user/list";
-import Head from "next/head";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
+
 import { useFilters } from "@hooks";
+import { useLocales } from "src/locales";
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
 } from "src/redux/services/admin/members-admin";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useLocales } from "src/locales";
 import SkeletonMembers from "./SkeletonMembers";
+import DashboardLayout from "@layouts/dashboard";
+import { Role } from "src/redux/services/enums/role.enum";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
+import { UserTableRow, UserTableToolbar } from "@sections/dashboard/user/list";
 
 const STATUS_OPTIONS = ["all"];
-
-// ----------------------------------------------------------------------
 
 UserListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserListPage(): React.ReactElement {
   const {

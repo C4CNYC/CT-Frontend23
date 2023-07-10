@@ -1,30 +1,34 @@
-import { TablePaginationCustom, useTable, TableNoData, useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ModalIntegration } from "@components";
-import { useFilters } from "@hooks";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import {
-  Button,
-  Card,
-  IconButton,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
-import { Container, Stack } from "@mui/system";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
-import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
-import { format } from "date-fns";
 import _ from "lodash";
 import Head from "next/head";
+import { format } from "date-fns";
 import { useSnackbar } from "notistack";
+
+import {
+  Card,
+  Table,
+  Button,
+  Skeleton,
+  TableRow,
+  TableCell,
+  TableBody,
+  TableHead,
+  IconButton,
+  TableContainer,
+} from "@mui/material";
+import { Container, Stack } from "@mui/system";
+
+import { TablePaginationCustom, useTable, TableNoData, useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ModalIntegration } from "@components";
+
 import {
   useGetIntegrationsQuery,
   useRemoveIntegrationMutation,
 } from "src/redux/services/manager/integration-manager";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
+import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
+
+import { useFilters } from "@hooks";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

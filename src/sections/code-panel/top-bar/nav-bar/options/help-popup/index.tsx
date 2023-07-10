@@ -1,19 +1,21 @@
+import { SetStateAction, useState } from "react";
+
+import { Box } from "@mui/system";
+import Typography from "@mui/material/Typography";
+import { Divider, IconButton, MenuItem } from "@mui/material";
+
 import {
+  Iconify,
   Accordion,
+  MenuPopover,
   AccordionDetails,
   AccordionSummary,
-  Iconify,
-  MenuPopover,
 } from "@components";
-import { Divider, IconButton, MenuItem } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
-import { SetStateAction, useState } from "react";
-import HelpQuestionModal from "./modals/HelpQuestion";
 
-import Solution from "./options/Solution";
 import Tips from "./options/Tips";
 import Unstack from "./options/Unstuck";
+import Solution from "./options/Solution";
+import HelpQuestionModal from "./modals/HelpQuestion";
 
 const HelpPopup = (): React.ReactElement => {
   const [expanded, setExpanded] = useState<string | false>();

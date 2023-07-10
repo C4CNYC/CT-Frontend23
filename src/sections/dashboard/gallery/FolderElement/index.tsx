@@ -1,5 +1,12 @@
+import { 
+  Grid, 
+  Paper, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+
 import { Image } from "@components";
-import { Grid, Paper, Stack, Typography } from "@mui/material";
+
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 
 interface Props {

@@ -1,15 +1,13 @@
 import {
   Box,
-  Checkbox,
   SxProps,
+  Checkbox,
+  TableRow,
   TableCell,
   TableHead,
-  TableRow,
   TableSortLabel,
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
-
-// ----------------------------------------------------------------------
 
 const visuallyHidden = {
   border: 0,
@@ -22,8 +20,6 @@ const visuallyHidden = {
   whiteSpace: "nowrap",
   clip: "rect(0 0 0 0)",
 } as const;
-
-// ----------------------------------------------------------------------
 
 export interface TableHeadCustomProps {
   order?: "asc" | "desc";

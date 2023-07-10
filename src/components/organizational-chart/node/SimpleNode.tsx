@@ -1,10 +1,7 @@
-// @mui
-import { Card, SxProps, Typography } from "@mui/material";
 import { alpha, Theme } from "@mui/material/styles";
-//
-import { ItemProps } from "../types";
+import { Card, SxProps, Typography } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { ItemProps } from "../types";
 
 interface Props {
   node: ItemProps;

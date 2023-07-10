@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { ModalCodeFullscreen } from "./ModalCodeFullscreen";
 
 const Component: Meta<typeof ModalCodeFullscreen> = {

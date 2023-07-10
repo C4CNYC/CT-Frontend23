@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { SkeletonProductDetails } from "./SkeletonProductDetails"
 
 const Component: Meta<typeof SkeletonProductDetails> = {

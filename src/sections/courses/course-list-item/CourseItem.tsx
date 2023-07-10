@@ -1,23 +1,25 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
 import {
   Box,
-  Button,
-  Collapse,
   Stack,
+  Button,
+  useTheme,
+  Collapse,
   Typography,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
+
+import CourseChip from "./CourseChip";
+import CourseInfo from "./CourseInfo";
+import CourseHeader from "./CourseHeader";
 import CourseAvatar from "./CourseAvarar";
 import CourseButtons from "./CourseButtons";
-import CourseChip from "./CourseChip";
-import CourseHeader from "./CourseHeader";
-import CourseInfo from "./CourseInfo";
 import CourseStatistics from "./CourseStatistics";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { ICourseElement } from "src/redux/interfaces/content.interface";
 
 interface Props {
   course: ICourseElement;

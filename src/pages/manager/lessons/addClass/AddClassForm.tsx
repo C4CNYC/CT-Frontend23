@@ -1,7 +1,8 @@
-import { FormProvider } from "@components";
-import { useSnackbar } from "notistack";
 import * as React from "react";
+import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
+
+import { FormProvider } from "@components";
 import AddClassInput from "./AddClassInput";
 
 interface FormValuesProps {

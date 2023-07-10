@@ -1,17 +1,13 @@
 import { memo } from "react";
-// @mui
-import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// config
-import { HEADER } from "../../../config-global";
-// utils
-import { bgBlur } from "@utils";
-// components
-import { NavSectionHorizontal } from "@components";
-//
-import navConfig from "./config-navigation";
 
-// ----------------------------------------------------------------------
+import { useTheme } from "@mui/material/styles";
+import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
+
+import { NavSectionHorizontal } from "@components";
+
+import { bgBlur } from "@utils";
+import navConfig from "./config-navigation";
+import { HEADER } from "../../../config-global";
 
 function NavHorizontal(): React.ReactElement {
   const theme = useTheme();

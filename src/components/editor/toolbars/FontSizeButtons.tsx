@@ -1,10 +1,10 @@
 import "remirror/styles/all.css";
 
 import {
-  CommandMenuItem,
-  DropdownButton,
   useActive,
   useCommands,
+  DropdownButton,
+  CommandMenuItem,
 } from "@remirror/react";
 import React from "react";
 

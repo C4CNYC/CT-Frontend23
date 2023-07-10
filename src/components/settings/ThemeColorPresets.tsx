@@ -1,16 +1,14 @@
-import merge from "lodash/merge";
 import { useMemo } from "react";
-// @mui
+import merge from "lodash/merge";
+
 import {
   alpha,
+  useTheme,
   createTheme,
   ThemeProvider,
-  useTheme,
 } from "@mui/material/styles";
-//
-import { useSettingsContext } from "./SettingsContext";
 
-// ----------------------------------------------------------------------
+import { useSettingsContext } from "./SettingsContext";
 
 interface Props {
   children: React.ReactNode;

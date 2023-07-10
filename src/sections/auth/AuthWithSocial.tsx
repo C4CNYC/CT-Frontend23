@@ -1,9 +1,10 @@
-// @mui
-import { Button, Divider, Stack } from "@mui/material";
-// components
-import { Iconify } from "@components";
+import { 
+  Stack,
+  Button, 
+  Divider, 
+ } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { Iconify } from "@components";
 
 export default function AuthWithSocial(): React.ReactElement {
   return (

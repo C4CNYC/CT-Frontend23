@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { OrganizationalChart } from "./OrganizationalChart";
 
 const Component: Meta<typeof OrganizationalChart> = {
