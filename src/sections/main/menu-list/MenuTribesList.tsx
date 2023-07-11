@@ -4,9 +4,11 @@ import TribeListItem from "./TribesListItem";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+import { useRouter } from "next/router";
 
 export default function MenuTribesList(): React.ReactElement {
   const { data: tribes } = useGetClassesQuery({});
+  const { query } = useRouter();
   return (
     <Stack sx={{}}>
       <Divider sx={{ borderBottomWidth: "4px", mb: 2, ml: 2 }} />
@@ -48,7 +50,7 @@ export default function MenuTribesList(): React.ReactElement {
         <Stack gap={1} ml={2}>
           {
             tribes?.data.map(t => (
-              <TribeListItem active key={t.id} tribe={t} />
+              <TribeListItem active={t.id === query.id} key={t.id} tribe={t} />
             ))
           }
         </Stack>

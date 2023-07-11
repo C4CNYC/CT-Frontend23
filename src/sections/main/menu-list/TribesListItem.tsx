@@ -1,5 +1,7 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
+import { useRouter } from "next/router";
 import { IClass } from "src/redux/interfaces/class.interface";
 interface Props {
   active: boolean;
@@ -7,8 +9,15 @@ interface Props {
 }
 
 export default function TribeListItem({ active, tribe }: Props): React.ReactElement {
+  const { push } = useRouter();
   return (
-    <Stack direction="row" sx={{ alignItems: "center", position: "relative" }}>
+    <Stack
+      onClick={() => {
+        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+      }}
+      direction="row"
+      sx={{ alignItems: "center", position: "relative" }}
+    >
       <Box
         sx={(theme) => ({
           position: "absolute",
