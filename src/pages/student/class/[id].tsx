@@ -5,12 +5,12 @@ import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
 import QuestsTable from "@sections/main/quests/QuestsTable";
 import Head from "next/head";
-import SchoolStudentDashboardLayout from "@layouts/dashboard/SchoolStudentDashboardLayout";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 
 // ----------------------------------------------------------------------
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
-  <SchoolStudentDashboardLayout>{page}</SchoolStudentDashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 // ----------------------------------------------------------------------

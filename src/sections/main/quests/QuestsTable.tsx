@@ -8,6 +8,8 @@ import { useState } from "react";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { Role } from "src/redux/services/enums/role.enum";
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
@@ -79,10 +81,16 @@ export default function QuestsTable() {
               <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
             </Typography>
           </Link>
-          <Button sx={(theme) => ({ gap: 1 })} variant="outlined" color="info">
-            <FaPlus size={15} style={{ marginBottom: "2px" }} />
-            Add Quest
-          </Button>
+          <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+            <Button
+              sx={(theme) => ({ gap: 1 })}
+              variant="outlined"
+              color="info"
+            >
+              <FaPlus size={15} style={{ marginBottom: "2px" }} />
+              Add Quest
+            </Button>
+          </RoleBasedGuard>
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
