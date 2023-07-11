@@ -18,7 +18,6 @@ interface Props {
 
 export default function ProfileAbout({ data }: Props): React.ReactElement {
   const {
-    email,
     school,
     phone,
     createdAt,
@@ -39,10 +38,6 @@ export default function ProfileAbout({ data }: Props): React.ReactElement {
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">Postcode {postCode}</Typography>
-        </Stack>
-        <Stack direction="row">
-          <StyledIcon icon="eva:email-fill" />
-          <Typography variant="body2">{email}</Typography>
         </Stack>
 
         <Stack direction="row">

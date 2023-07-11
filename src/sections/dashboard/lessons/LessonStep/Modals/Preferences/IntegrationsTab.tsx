@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import Link from "next/link";
@@ -26,6 +25,7 @@ import {
 } from "src/redux/services/manager/lessons-manager";
 
 import { BaseResponseInterface, voidFunction } from "@utils";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 export function IntegrationsTab({
   contentId,
@@ -90,7 +90,7 @@ export function IntegrationsTab({
         <Typography>You don't have any integrations.</Typography>
         <Typography>
           Lest's create integration{" "}
-          <Link href={PATH_DASHBOARD.apps.root}>here</Link>
+          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>here</Link>
         </Typography>
       </Box>
     );

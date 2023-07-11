@@ -7,14 +7,13 @@ import { useForm } from "react-hook-form";
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { FormHelperText, Stack } from "@mui/material";
-// routes
-import { PATH_DASHBOARD } from "../../routes/paths";
 // components
 import {
   FormProvider,
   RHFCodes,
   useSnackbar,
  } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 // ----------------------------------------------------------------------
 
 interface FormValuesProps {
@@ -64,7 +63,7 @@ export default function AuthVerifyCodeForm(): React.ReactElement {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Verify success!");
-      push(PATH_DASHBOARD.root);
+      push(STUDENT_PATH_DASHBOARD.root);
     } catch (e: any) {
     }
   };

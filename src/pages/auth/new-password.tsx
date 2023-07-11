@@ -20,7 +20,7 @@ export default function NewPasswordPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> New Password | Minimal UI</title>
+        <title> New Password </title>
       </Head>
 
       <SentIcon sx={{ mb: 5, height: 96 }} />

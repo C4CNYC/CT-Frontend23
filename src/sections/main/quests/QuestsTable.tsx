@@ -3,7 +3,7 @@ import { Button, Link, Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useState } from "react";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
@@ -59,7 +59,7 @@ export default function QuestsTable() {
         >
           <Link
             noWrap
-            href={PATH_DASHBOARD.gallery.root}
+            href={STUDENT_PATH_DASHBOARD.gallery.root}
             variant="body2"
             underline="none"
             sx={{

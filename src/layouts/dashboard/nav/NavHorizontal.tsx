@@ -9,12 +9,23 @@ import { bgBlur } from "@utils";
 // components
 import { NavSectionHorizontal } from "@components";
 //
-import navConfig from "./config-navigation";
+import { menuConfig } from "./config-navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+import { Role } from "src/redux/services/enums/role.enum";
 
 // ----------------------------------------------------------------------
 
-function NavHorizontal(): React.ReactElement {
+interface INavHorizontal {
+  isManager?: boolean
+}
+
+function NavHorizontal({ isManager }: INavHorizontal): React.ReactElement {
   const theme = useTheme();
+  const user = useSelector((state: RootState) => state.global.user);
+  const menu = isManager
+    ? menuConfig[user?.role as Role]
+    : menuConfig[Role.Student]
 
   return (
     <AppBar
@@ -32,7 +43,7 @@ function NavHorizontal(): React.ReactElement {
           }),
         }}
       >
-        <NavSectionHorizontal data={navConfig} />
+        <NavSectionHorizontal data={menu} />
       </Toolbar>
 
       <Shadow />

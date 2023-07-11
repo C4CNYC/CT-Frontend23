@@ -1,4 +1,4 @@
-import { MenuPopover, Label, Iconify, ConfirmDialog } from "@components";
+import { MenuPopover, Label, Iconify, ConfirmDialog, useSnackbar } from "@components";
 import {
   Avatar,
   Button,
@@ -13,9 +13,12 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { useState } from "react";
 import { IClass } from "src/redux/services/interfaces/class.interface";
-import { PATH_DASHBOARD } from "src/routes/paths";
 import { BaseResponseInterface } from "@utils";
 import ClassPreferences from "../modal";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 
@@ -42,33 +45,29 @@ export default function ClassesTableRow({
   onDeleteRow,
   updateResult,
 }: Props): React.ReactElement | null {
-  const {
-    name,
-    active,
-    total_students: totalStudents,
-    total_courses: totalCourses,
-    createdAt,
-  } = row;
+  const { enqueueSnackbar } = useSnackbar();
+
+  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const myStudentProfileId = useSelector((state: RootState) => state.global.user?.student_profile?.id);
 
   const [openConfirm, setOpenConfirm] = useState(false);
-
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = (): void => {
-    setOpenConfirm(true);
-  };
+  const [joinClass] = useStudentJoinClassMutation();
 
-  const handleCloseConfirm = (): void => {
-    setOpenConfirm(false);
-  };
+  const onJoinHandle = async () => {
+    try {
+      await joinClass({
+        schoolId,
+        classId: row.id,
+        student_id: myStudentProfileId ?? ""
+      }).unwrap();
+      enqueueSnackbar("you joined to class")
+    } catch (e) {
+      enqueueSnackbar("you joined to class", { variant: "error" })
+    }
+  }
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
-    setOpenPopover(event.currentTarget);
-  };
-
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
   return (
     <>
       <TableRow hover selected={selected}>
@@ -77,11 +76,11 @@ export default function ClassesTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={name} src={row.avatar} />
+            <Avatar alt={row.name} src={row.avatar} />
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{name}</TableCell>
+        <TableCell align="left">{row.name}</TableCell>
 
         <TableCell align="left">
           <Label
@@ -89,7 +88,7 @@ export default function ClassesTableRow({
             color="secondary"
             sx={{ textTransform: "capitalize" }}
           >
-            {totalStudents}
+            {row.total_students}
           </Label>
         </TableCell>
 
@@ -99,28 +98,30 @@ export default function ClassesTableRow({
             color="secondary"
             sx={{ textTransform: "capitalize" }}
           >
-            {totalCourses}
+            {row.total_courses}
           </Label>
         </TableCell>
 
         <TableCell align="left">
-          {format(new Date(createdAt), "MM/dd/yyyy")}
+          {format(new Date(row.createdAt), "MM/dd/yyyy")}
         </TableCell>
 
         <TableCell align="left">
           <Label
             variant="soft"
-            color={active ? "success" : "warning"}
+            color={row.active ? "success" : "warning"}
             sx={{ textTransform: "capitalize" }}
           >
-            {active ? "active" : "not active"}
+            {row.active ? "active" : "not active"}
           </Label>
         </TableCell>
 
         <TableCell align="right">
           <IconButton
             color={openPopover ? "inherit" : "default"}
-            onClick={handleOpenPopover}
+            onClick={
+              (e: React.MouseEvent<HTMLElement>) => { setOpenPopover(e.currentTarget) }
+            }
           >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
@@ -129,13 +130,17 @@ export default function ClassesTableRow({
 
       <MenuPopover
         open={openPopover}
-        onClose={handleClosePopover}
+        onClose={() => { setOpenPopover(null); }}
         arrow="right-top"
         sx={{ width: 140 }}
       >
+        <MenuItem onClick={onJoinHandle}>
+          <Iconify icon="gala:add" />
+          Join
+        </MenuItem>
         <MenuItem
           component={Link}
-          href={PATH_DASHBOARD.school.controller(row.id)}
+          href={MANAGER_PATH_DASHBOARD.school.controller(row.id)}
         >
           <Iconify icon="material-symbols:connect-without-contact" />
           Connect
@@ -164,8 +169,8 @@ export default function ClassesTableRow({
         </ClassPreferences>
         <MenuItem
           onClick={() => {
-            handleOpenConfirm();
-            handleClosePopover();
+            setOpenConfirm(true);
+            setOpenPopover(null);
           }}
           sx={{ color: "error.main" }}
         >
@@ -176,7 +181,7 @@ export default function ClassesTableRow({
 
       <ConfirmDialog
         open={openConfirm}
-        onClose={handleCloseConfirm}
+        onClose={() => { setOpenConfirm(false) }}
         title="Delete"
         content="Are you sure want to delete?"
         action={

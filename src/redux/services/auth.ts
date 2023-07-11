@@ -2,6 +2,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "@utils";
 import { IUser } from "../interfaces/auth.interface";
+import { ProfileType } from "./enums/profile.enum";
 import { Role } from "./enums/role.enum";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
@@ -73,18 +74,35 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
-    profile: builder.query<IUser, void>({
-      query: () => ({
+    profile: builder.query<IUser, ProfileType>({
+      query: (profileType) => ({
         url: "/profile",
         method: "GET",
+        params: { profile_type: profileType },
       }),
       providesTags: ["ProfileUser"],
+    }),
+    updateStudentProfile: builder.mutation<IStudentProfile, IStudentProfile>({
+      query: ({ ...body }) => ({
+        url: "/student/profile",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["ProfileUser"],
     }),
     updateProfile: builder.mutation<IStudentProfile, IStudentProfile>({
       query: ({ ...body }) => ({
         url: "/profile",
         method: "PATCH",
         body,
+      }),
+      invalidatesTags: ["ProfileUser"],
+    }),
+    udpateStudentProfileAvatar: builder.mutation<void, { file: FormData }>({
+      query: ({ file }) => ({
+        url: "/student/profile/avatar",
+        method: "PATCH",
+        body: file,
       }),
       invalidatesTags: ["ProfileUser"],
     }),
@@ -126,7 +144,9 @@ export const {
   useProtectedMutation,
   useProfileQuery,
   usePrefetch,
+  useUpdateStudentProfileMutation,
   useUdpateProfileAvatarMutation,
+  useUdpateStudentProfileAvatarMutation,
   useUpdateProfileMutation,
   useResetPasswordMutation,
   useSubmitPasswordMutation,

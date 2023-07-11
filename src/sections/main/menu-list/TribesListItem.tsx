@@ -1,9 +1,12 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
 interface Props {
   active: boolean;
+  tribe: IClass & BaseResponseInterface
 }
 
-export default function TribeListItem({ active }: Props): React.ReactElement {
+export default function TribeListItem({ active, tribe }: Props): React.ReactElement {
   return (
     <Stack direction="row" sx={{ alignItems: "center", position: "relative" }}>
       <Box
@@ -21,6 +24,7 @@ export default function TribeListItem({ active }: Props): React.ReactElement {
       />
       <Avatar
         variant="rounded"
+        src={tribe.avatar}
         sx={(theme) => ({
           border: `2px solid ${theme.palette.info.light}`,
           width: "30px",
@@ -31,7 +35,7 @@ export default function TribeListItem({ active }: Props): React.ReactElement {
         sx={(theme) => ({ ml: 2, color: theme.palette.text.secondary })}
         variant="body1"
       >
-        Tribe name
+        {tribe.name}
       </Typography>
     </Stack>
   );

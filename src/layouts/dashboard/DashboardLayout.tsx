@@ -42,7 +42,7 @@ export default function DashboardLayout({
   };
 
   const renderNavVertical = (
-    <NavVertical openNav={open} onCloseNav={handleClose} />
+    <NavVertical isManager openNav={open} onCloseNav={handleClose} />
   );
 
   const renderContent = (): React.ReactElement => {
@@ -51,7 +51,7 @@ export default function DashboardLayout({
         <>
           <Header onOpenNav={handleOpen} />
 
-          {isDesktop ? <NavHorizontal /> : renderNavVertical}
+          {isDesktop ? <NavHorizontal isManager/> : renderNavVertical}
 
           <Main>{children}</Main>
         </>
@@ -69,7 +69,7 @@ export default function DashboardLayout({
               minHeight: { lg: 1 },
             }}
           >
-            {isDesktop ? <NavMini /> : renderNavVertical}
+            {isDesktop ? <NavMini isManager/> : renderNavVertical}
 
             <Main>{children}</Main>
           </Box>

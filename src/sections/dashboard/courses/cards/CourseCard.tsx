@@ -9,13 +9,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import Link from "next/link";
 import { useState } from "react";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "@utils";
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 interface Props {
   course: ICourse & BaseResponseInterface;
@@ -78,7 +78,7 @@ export default function CourseCard({
           },
         }}
         component={Link}
-        href={`${PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
+        href={`${MANAGER_PATH_DASHBOARD.modules.root}?course_id=${course.id}`}
       >
         <Stack
           direction="row"
