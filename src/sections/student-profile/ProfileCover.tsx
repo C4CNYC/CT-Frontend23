@@ -1,7 +1,9 @@
 import { CustomAvatar } from "@components";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { getLinearGradient } from "@utils";
+import NextLink from "next/link";
+import { FaEdit } from "react-icons/fa";
 
 const StyledInfo = styled("div")(({ theme }) => ({
   left: 0,
@@ -34,6 +36,22 @@ export default function ProfileCover({ name, cover, avatar }: Props) {
         height: "100%",
       }}
     >
+      <Link
+        component={NextLink}
+        underline="none"
+        href="#"
+        sx={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 1,
+          color: "inherit",
+          ml: "auto",
+          p: 2,
+        }}
+      >
+        <FaEdit size={22} style={{ marginBottom: "3px" }} />
+        Edit
+      </Link>
       <StyledInfo>
         <CustomAvatar
           src={avatar}

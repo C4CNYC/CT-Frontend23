@@ -8,7 +8,9 @@ import { useState } from "react";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
-import CardCourse from "./quest-card";
+import DetailsTab from "./details-card";
+import MemberCard from "./members-card";
+import QuestsTab from "./quest-card";
 
 export default function QuestsTable() {
   const [value, setValue] = useState(0);
@@ -84,10 +86,14 @@ export default function QuestsTable() {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <CardCourse />
+        <QuestsTab />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}></CustomTabPanel>
-      <CustomTabPanel value={value} index={2}></CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <MemberCard />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <DetailsTab />
+      </CustomTabPanel>
     </Stack>
   );
 }

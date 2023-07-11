@@ -47,7 +47,10 @@ export const PATH_MAIN = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
-  home: path(ROOTS_DASHBOARD, "/home"),
+  home: {
+    root: path(ROOTS_DASHBOARD, "/home"),
+    edit: (id: string) => path(ROOTS_DASHBOARD, `/edit/${id}`),
+  },
   info: path(ROOTS_DASHBOARD, "/info"),
   main: path(ROOTS_DASHBOARD, "/main"),
   stream: path(ROOTS_DASHBOARD, "/stream"),

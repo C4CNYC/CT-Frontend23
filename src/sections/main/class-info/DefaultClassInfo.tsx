@@ -1,6 +1,4 @@
 import {
-  Avatar,
-  Box,
   Button,
   Divider,
   IconButton,
@@ -11,21 +9,26 @@ import {
 } from "@mui/material";
 import nextLink from "next/link";
 import { BsThreeDots } from "react-icons/bs";
-import { FaSchool } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 
-import { MenuPopover } from "@components";
+import { MenuPopover, useSnackbar } from "@components";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { useState } from "react";
 
+import { useCopyToClipboard } from "@hooks";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
+import { MdCopyAll } from "react-icons/md";
 import { TbShare2 } from "react-icons/tb";
 import { useProfileQuery } from "src/redux/services/auth";
 import { useGetClassMentorQuery } from "src/redux/services/student/classes-manager";
-import ClassInfoHeader from "./ClassInfoToggle";
+import ClassInfoMain from "./ClassInfoMain";
+import ClassInfoToggle from "./ClassInfoToggle";
 
 export default function DefaultClassInfo(): React.ReactElement {
+  const { copy } = useCopyToClipboard();
+  const { enqueueSnackbar } = useSnackbar();
+  const [textToCopy] = useState("AHWE2383");
   const { data: student } = useProfileQuery();
   const { data, isLoading } = useGetClassMentorQuery(
     { id: student?.classes?.[0]?.id as string },
@@ -38,6 +41,13 @@ export default function DefaultClassInfo(): React.ReactElement {
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
+
+  const onCopy = () => {
+    if (textToCopy) {
+      copy(textToCopy);
+      enqueueSnackbar("Copied!");
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -48,7 +58,7 @@ export default function DefaultClassInfo(): React.ReactElement {
         />
       ) : (
         <Stack>
-          <ClassInfoHeader />
+          <ClassInfoToggle />
           <Stack
             sx={{
               background: getLinearGradient(
@@ -56,105 +66,73 @@ export default function DefaultClassInfo(): React.ReactElement {
               ),
               borderBottomRightRadius: "20px",
               borderBottomLeftRadius: "20px",
+              color: "#fff",
             }}
           >
             <Stack
               direction="row"
               sx={{
-                justifyContent: "flex-end",
+                justifyContent: "space-between",
                 pb: "65px",
                 pt: 1,
                 pr: 2,
               }}
             >
-              <Typography
-                variant="caption"
-                sx={{ color: "#fff", textTransform: "uppercase" }}
-              >
-                GROUP HOME
-              </Typography>
-              <Typography variant="caption" sx={{ color: "#fff", mx: 1 }}>
-                {" "}
-                -{" "}
-              </Typography>
-              <Link
-                sx={{ display: "flex", alignItems: "center", color: "#fff" }}
-                href={PATH_DASHBOARD.tribes.root}
-                component={nextLink}
-              >
-                <Typography variant="caption"> See All Groups</Typography>
-              </Link>
+              <Stack direction="row" alignItems="center" sx={{ gap: 1, ml: 1 }}>
+                <Typography variant="subtitle2">Join-code:</Typography>
+                <Button onClick={onCopy} sx={{ gap: 0.5, color: "inherit" }}>
+                  <Typography variant="subtitle2">{textToCopy}</Typography>
+                  <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
+                </Button>
+              </Stack>
+              <Stack direction="row">
+                <Typography
+                  variant="caption"
+                  sx={{ textTransform: "uppercase" }}
+                >
+                  GROUP HOME
+                </Typography>
+                <Typography variant="caption" sx={{ mx: 1 }}>
+                  {" "}
+                  -{" "}
+                </Typography>
+                <Link
+                  sx={{
+                    color: "inherit",
+                  }}
+                  typography="caption"
+                  href={PATH_DASHBOARD.tribes.root}
+                  component={nextLink}
+                >
+                  See All Groups
+                </Link>
+              </Stack>
             </Stack>
-            <Typography variant="h4" sx={{ color: "#fff", pb: 0.5, pl: 2 }}>
-              {student?.classes?.[0]?.name}
-            </Typography>
+
             <Stack
               direction="row"
               sx={{
                 justifyContent: "space-between",
-                alignItems: "ceter",
+                alignItems: "flex-end",
                 px: 2,
                 pb: 2,
                 flexWrap: "wrap",
               }}
             >
+              <ClassInfoMain />
               <Stack
                 direction="row"
-                sx={{
-                  py: 1,
-                  flexWrap: "wrap",
-                  gap: 1,
-                  alignItems: "center",
-                }}
+                alignItems="center"
+                sx={{ maxHeight: "20px" }}
               >
-                {data ? (
-                  <Stack direction="row" alignItems="center">
-                    <Avatar
-                      sx={{
-                        width: "25px",
-                        height: "25px",
-                      }}
-                      src={data[0]?.avatar ? data[0].avatar : ""}
-                      alt=""
-                    >
-                      &#128540;
-                    </Avatar>
-                    <Box sx={{ height: "fit-content" }}>
-                      <Typography
-                        variant="subtitle2"
-                        sx={{
-                          color: "#fff",
-                          ml: 1,
-                          width: "180px",
-                        }}
-                      >
-                        Teacher: {data[0]?.first_name} {data[0]?.last_name}
-                      </Typography>
-                    </Box>
-                  </Stack>
-                ) : null}
-
-                <Stack direction="row" sx={{ pl: { xs: 4, sm: 0 } }}>
-                  <FaSchool
-                    color="#fff"
-                    size="16px"
-                    style={{ marginTop: "2px" }}
-                  />
-                  <Typography variant="subtitle2" sx={{ color: "#fff", ml: 1 }}>
-                    {student?.school?.name}
-                  </Typography>
-                </Stack>
-              </Stack>
-              <Stack direction="row" alignItems="center">
                 <Link
                   sx={{ display: "flex", alignItems: "center", color: "#fff" }}
                   href={PATH_DASHBOARD.friends.root}
                   component={nextLink}
+                  typography="button"
                 >
                   <FiUser color="#fff" size="18px" />
-                  <Typography variant="button" sx={{ ml: 0.5 }}>
-                    Members
-                  </Typography>
+                  Members
                 </Link>
                 <InviteFriendsModal>
                   <Button
