@@ -1,6 +1,6 @@
 import { Logo, NavSectionVertical, Scrollbar } from "@components";
 import { useResponsive } from "@hooks";
-import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
+import { Box, Drawer, Stack } from "@mui/material";
 import UserSection from "@sections/info/user-section";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -69,8 +69,6 @@ export default function NavVertical({
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );
-
-  if (!user?.role) return <CircularProgress />;
 
   return (
     <Box
