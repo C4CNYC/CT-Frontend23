@@ -1,11 +1,9 @@
 import { useSettingsContext } from "@components";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import { Container } from "@mui/system";
-import DefaultClassInfo from "@sections/main/DefaultClassInfo";
-import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
-
+import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
 import QuestsTable from "@sections/main/quests/QuestsTable";
 import Head from "next/head";
-import { StudentDashboardLayout } from "@layouts/dashboard";
 
 // ----------------------------------------------------------------------
 
@@ -15,11 +13,8 @@ HomeOverview.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-const GET_COURSES = 2;
-
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetCourseQuery({ take: GET_COURSES });
 
   return (
     <>
@@ -27,7 +22,7 @@ export default function HomeOverview(): React.ReactElement {
         <title>Home Overview | Code Tribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-        {!isLoading && <DefaultClassInfo />}
+        <DefaultClassInfo />
         <QuestsTable />
       </Container>
     </>

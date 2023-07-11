@@ -28,6 +28,7 @@ export const STUDENT_PATH_DASHBOARD = {
   root: STUDENT_ROOTS_MAIN,
   permissionDenied: "/student/permission-denied",
   class: {
+    root: "/student/class",
     id: (id: string) => path("/student/class/", `${id}`),
   },
   tribes: {

@@ -8,7 +8,7 @@ export default function Index(): null {
   const { replace } = useRouter();
 
   useEffect(() => {
-    replace(STUDENT_PATH_DASHBOARD.tribes.root);
+    replace(STUDENT_PATH_DASHBOARD.class.root);
   }, []);
 
   return null;

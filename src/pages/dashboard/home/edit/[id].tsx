@@ -1,9 +1,9 @@
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import { SchoolDashboardLayout } from "@layouts/dashboard";
 import { Container } from "@mui/material";
 import { PATH_DASHBOARD } from "@routes/paths";
 import TribeEditForm from "@sections/main/edit/TribeEditForm";
 import Head from "next/head";
-import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";
 
 EditTribePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
