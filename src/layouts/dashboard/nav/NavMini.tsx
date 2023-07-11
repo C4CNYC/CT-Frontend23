@@ -13,7 +13,7 @@ import { RootState } from "src/redux/store";
 
 // ----------------------------------------------------------------------
 interface INavMini {
-  isManager: boolean
+  isManager?: boolean
 }
 
 export default function NavMini({ isManager }: INavMini): React.ReactElement {

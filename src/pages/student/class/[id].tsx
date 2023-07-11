@@ -19,7 +19,7 @@ const GET_COURSES = 2;
 
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetCourseQuery({ take: GET_COURSES });
+  const { isLoading } = useGetCourseQuery({ take: GET_COURSES });
 
   return (
     <>
