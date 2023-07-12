@@ -1,14 +1,18 @@
+import DetailsTab from "./details-card";
+import MemberCard from "./members-card";
+import QuestsTab from "./quest-card";
 import { Iconify } from "@components";
 import { Button, Link, Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useState } from "react";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
-import CardCourse from "./quest-card";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { Role } from "src/redux/services/enums/role.enum";
 
 export default function QuestsTable() {
   const [value, setValue] = useState(0);
@@ -58,7 +62,7 @@ export default function QuestsTable() {
         >
           <Link
             noWrap
-            href={PATH_DASHBOARD.gallery.root}
+            href={STUDENT_PATH_DASHBOARD.gallery.root}
             variant="body2"
             underline="none"
             sx={{
@@ -78,21 +82,27 @@ export default function QuestsTable() {
               <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
             </Typography>
           </Link>
-          <Button
-            sx={(theme) => ({ gap: 1, whiteSpace: "nowrap" })}
-            variant="outlined"
-            color="info"
-          >
-            <FaPlus size={15} style={{ marginBottom: "2px" }} />
-            Add Quest
-          </Button>
+          <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+            <Button
+              sx={(theme) => ({ gap: 1 })}
+              variant="outlined"
+              color="info"
+            >
+              <FaPlus size={15} style={{ marginBottom: "2px" }} />
+              Add Quest
+            </Button>
+          </RoleBasedGuard>
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <CardCourse />
+        <QuestsTab />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}></CustomTabPanel>
-      <CustomTabPanel value={value} index={2}></CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <MemberCard />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <DetailsTab />
+      </CustomTabPanel>
     </Stack>
   );
 }

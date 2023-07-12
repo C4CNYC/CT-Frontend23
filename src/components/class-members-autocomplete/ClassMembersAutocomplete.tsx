@@ -102,7 +102,7 @@ export default function ClassMembersAutocomplete({
         tagValue.map((option, index) => (
           <Chip
             avatar={<CustomAvatar alt={option.email} src={option.avatar} />}
-            label={option.email}
+            label={option.account.email}
             {...getTagProps({ index })}
             key={option.email}
           />
@@ -111,11 +111,11 @@ export default function ClassMembersAutocomplete({
       style={{ width: "100%" }}
       renderInput={(params) => <TextField {...params} placeholder="Students" />}
       renderOption={(props, recipient, { inputValue }) => {
-        const { email } = recipient;
+        const { email } = recipient.account;
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
 
-        const selected = classMembers.data.find((c) => c.email === email);
+        const selected = classMembers.data.find((c) => c.account.email === email);
 
         return (
           <Box

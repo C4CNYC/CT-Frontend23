@@ -9,11 +9,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import Link from "next/link";
 import { useState } from "react";
 import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ export default function ModuleCard({
     <>
       <Card
         component={Link}
-        href={`${PATH_DASHBOARD.lessons.root}?module_id=${module.id}`}
+        href={`${MANAGER_PATH_DASHBOARD.lessons.root}?module_id=${module.id}`}
         sx={{
           textDecoration: "none",
           p: 2.5,

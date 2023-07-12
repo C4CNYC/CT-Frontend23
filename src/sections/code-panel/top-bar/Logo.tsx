@@ -1,5 +1,4 @@
 import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import NextLink from "next/link";
 import { forwardRef } from "react";
 
@@ -58,7 +57,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     return (
       <Link
         component={NextLink}
-        href={PATH_DASHBOARD.home}
+        href="#"
         sx={{ display: "contents" }}
       >
         {logo}

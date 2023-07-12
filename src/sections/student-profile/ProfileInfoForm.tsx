@@ -10,8 +10,8 @@ import { Controller, useForm } from "react-hook-form";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
-  useUdpateProfileAvatarMutation,
-  useUpdateProfileMutation,
+  useUdpateStudentProfileAvatarMutation,
+  useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
 import * as Yup from "yup";
 
@@ -28,7 +28,6 @@ const UpdateUserSchema = Yup.object().shape({
 interface FormValuesProps {
   firstName: string;
   lastName: string;
-  email: string;
   address: string;
   about: string;
   phone: string;
@@ -49,15 +48,14 @@ export default function ProfileInfoForm({
     first_name: firstName,
     last_name: lastName,
     post_code: postcode,
-    email,
     about,
     phone,
     username,
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
-  const [updateStudent, { isLoading }] = useUpdateProfileMutation();
-  const [updateStudentvatar] = useUdpateProfileAvatarMutation();
+  const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation();
+  const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation();
   const defaultValues = {
     firstName,
     lastName,
@@ -66,7 +64,6 @@ export default function ProfileInfoForm({
     postcode,
     username,
     cover,
-    email,
   };
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
@@ -97,7 +94,7 @@ export default function ProfileInfoForm({
       if (data.photoURL) {
         const file = new FormData();
         file.append("file", data.photoURL);
-        updateStudentvatar({
+        updateStudentAvatar({
           file,
         })
           .unwrap()
@@ -183,7 +180,6 @@ export default function ProfileInfoForm({
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
-              <RHFTextField name="email" label="email" disabled />
               <RHFTextField name="postcode" label="postcode" />
               <Controller
                 name="phone"

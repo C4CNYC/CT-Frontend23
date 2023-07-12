@@ -1,6 +1,6 @@
 import { Logo, NavSectionVertical, Scrollbar } from "@components";
 import { useResponsive } from "@hooks";
-import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
+import { Box, Drawer, Stack } from "@mui/material";
 import UserSection from "@sections/info/user-section";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -8,41 +8,28 @@ import { useSelector } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 import { NAV } from "../../../config-global";
-import {
-  admin,
-  apps,
-  content,
-  general,
-  home,
-  managment,
-  social,
-  socials,
-} from "./config-navigation";
 import NavToggleButton from "./NavToggleButton";
+import { menuConfig } from "./config-navigation";
 // ----------------------------------------------------------------------
 
-interface Props {
+interface INavVertical {
   openNav: boolean;
+  isManager?: boolean;
   onCloseNav: VoidFunction;
 }
 
-const menuConfig = {
-  [Role.Owner]: [home, admin, managment, content],
-  [Role.Admin]: [home, admin, managment, content],
-  [Role.Student]: [general, home, apps, social, socials],
-  [Role.Manager]: [home, managment, content],
-  [Role.Editor]: [home, content],
-};
-
 export default function NavVertical({
   openNav,
+  isManager,
   onCloseNav,
-}: Props): React.ReactElement | null {
+}: INavVertical): React.ReactElement | null {
   const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
-  const menu = menuConfig[user?.role as Role];
+  const menu = isManager
+    ? menuConfig[user?.role as Role]
+    : menuConfig[Role.Student]
 
   useEffect(() => {
     if (openNav) {
@@ -82,8 +69,6 @@ export default function NavVertical({
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );
-
-  if (!user?.role) return <CircularProgress />;
 
   return (
     <Box

@@ -14,10 +14,10 @@ import {
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
 
-import SchoolFiltersSkeleton from "@pages/dashboard/school/students/school-filter-skeleton";
 import { useState } from "react";
 import { BaseResponseInterface } from "@utils";
 import { Iconify } from "@components";
+import SchoolFiltersSkeleton from "@pages/manager/school/students/school-filter-skeleton";
 
 interface Props {
   filterName: string;

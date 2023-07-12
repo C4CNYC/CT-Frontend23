@@ -48,13 +48,13 @@ export default class MyDocument extends Document {
           {/* Meta */}
           <meta
             name="description"
-            content="The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style"
+            content="Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends."
           />
           <meta
             name="keywords"
-            content="react,material,kit,application,dashboard,admin,template"
+            content="coding,study,it,school"
           />
-          <meta name="author" content="Minimal UI Kit" />
+          <meta name="author" content="codetribe.com" />
 
           <style>
             {`

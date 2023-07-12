@@ -8,10 +8,10 @@ import {
 // utils
 import { axios, localStorageAvailable, voidFunction } from "@utils";
 //
+import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { Role } from "src/redux/services/enums/role.enum";
-import { cleanUser, cleanUserRole, setUser } from "src/redux/slices/global";
-import { useSelector } from "src/redux/store";
+import { cleanUser, cleanUserRole, setUser, setStudentMode } from "src/redux/slices/global";
 import {
   ActionMapType,
   AuthStateType,
@@ -19,6 +19,7 @@ import {
   JWTContextType,
 } from "./types";
 import { isValidToken, setSession } from "./utils";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 // ----------------------------------------------------------------------
 
@@ -114,7 +115,6 @@ export function AuthProvider({
 }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
-  const isStudent = useSelector((state) => state.global.isStudent);
   const storageAvailable = localStorageAvailable();
 
   const initialize = useCallback(async () => {
@@ -124,28 +124,34 @@ export function AuthProvider({
         : "";
 
       const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
+      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
+      const isManagerRoute = window.location.pathname.includes("manager/");
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const path = isStudent ? "student/auth/profile" : "/auth/profile";
-        const response = await axios.get(path);
-
-        const data = response.data;
-        reduxDispatch(
-          setUser({
-            ...(data.user || data.student),
-            role: data.user?.role || Role.Student,
-          })
+        const { data } = await axios.get(
+          "/auth/profile",
+          {
+            params: {
+              profile_type: (parsedJWT.role === Role.Student || !isManagerRoute)
+                ? ProfileType.STUDENT
+                : ProfileType.MANAGER
+            }
+          }
         );
+
+        if (isManagerRoute && data.role === Role.Student) {
+          window.location.pathname = "/permission-denied"
+        }
+
+        reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
+        reduxDispatch(setUser(data));
 
         dispatch({
           type: Types.INITIAL,
           payload: {
             isAuthenticated: true,
-            user: {
-              ...(data.user || data.student),
-              role: data.user?.role || Role.Student,
-            },
+            user: data
           },
         });
       } else {
@@ -166,7 +172,7 @@ export function AuthProvider({
         },
       });
     }
-  }, [isStudent]);
+  }, []);
 
   useEffect(() => {
     initialize().catch(() => {
@@ -186,20 +192,15 @@ export function AuthProvider({
   const login = useCallback(
     async (email: string, password: string, tenantName: string) => {
       localStorage.setItem("tenantName", tenantName);
-      // Update <any, any> to normall types
-      const path = isStudent ? "student/auth/signin" : "auth/signin";
 
-      const { data } = await axios.post<any, any>(path, {
+      const { data } = await axios.post<any, any>("auth/signin", {
         email,
         password,
       });
 
-      const { access_token: accessToken } = data;
+      const { access_token: accessToken, user } = data;
       reduxDispatch(
-        setUser({
-          ...(data.user || data.student),
-          role: data.user?.role || Role.Student,
-        })
+        setUser(user)
       );
 
       setSession(
@@ -210,14 +211,11 @@ export function AuthProvider({
       dispatch({
         type: Types.LOGIN,
         payload: {
-          user: {
-            ...(data.user || data.student),
-            role: data.user?.role || Role.Student,
-          },
+          user,
         },
       });
     },
-    [isStudent]
+    []
   );
 
   // REGISTER

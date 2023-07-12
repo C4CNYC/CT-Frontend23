@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactElement;
   isFullScreen?: boolean;
 }
-export default function SchoolDashboardLayout({
+export function SchoolDashboardLayout({
   children,
   isFullScreen,
 }: Props): React.ReactElement | null {

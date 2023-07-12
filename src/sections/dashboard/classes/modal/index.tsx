@@ -1,4 +1,9 @@
-import { ClassCoursesAutocomplete, ClassMembersAutocomplete, ClassMentorsAutocomplete, FormProvider } from "@components";
+import {
+  ClassCoursesAutocomplete,
+  ClassMembersAutocomplete,
+  ClassMentorsAutocomplete,
+  FormProvider,
+} from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -61,11 +66,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ px: 2, pt: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ px: 2, pt: 2 }}>{children}</Box>}
     </div>
   );
 }

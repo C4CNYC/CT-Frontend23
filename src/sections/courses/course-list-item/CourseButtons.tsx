@@ -1,5 +1,5 @@
 import { Button, Link, Stack } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { addAlpha } from "@utils";
 
 interface Props {
@@ -18,7 +18,7 @@ export default function CourseButtons({
       {progress && progress > 0 ? (
         <Button
           component={Link}
-          href={`${PATH_DASHBOARD.codePanel.root}/${courseId}`}
+          href={`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`}
           variant="outlined"
           sx={{
             p: "5px 15px",

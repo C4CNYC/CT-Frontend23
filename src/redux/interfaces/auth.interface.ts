@@ -1,5 +1,6 @@
 import { BaseResponseInterface } from "@utils";
 import { Role } from "../services/enums/role.enum";
+import { IStudent } from "../services/interfaces/user.interface";
 import { ISchool } from "../slices/global";
 import { IClass } from "./class.interface";
 import { ISocials } from "./socials.interface";
@@ -68,4 +69,5 @@ export interface IUser {
   post_code?: string;
   cover?: string;
   role: Role;
+  student_profile: IStudent & BaseResponseInterface;
 }

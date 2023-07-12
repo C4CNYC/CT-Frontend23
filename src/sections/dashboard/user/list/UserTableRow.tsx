@@ -39,15 +39,16 @@ export default function UserTableRow({
   onDeleteRow,
 }: Props): React.ReactElement | null {
   const {
+    email,
     first_name: firstName,
     last_name: lastName,
-    email,
     verified,
     active,
     avatar,
     role,
     id,
     socials,
+    account
   } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -76,11 +77,11 @@ export default function UserTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={firstName} src={avatar} />
+            <Avatar alt={firstName} src={avatar ?? account?.avatar} />
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{email}</TableCell>
+        <TableCell align="left">{email || account?.email}</TableCell>
 
         <TableCell align="left">
           {firstName &&

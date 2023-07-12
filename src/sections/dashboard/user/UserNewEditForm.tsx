@@ -10,8 +10,6 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 // utils
 import { fData, BaseResponseInterface } from "@utils";
-// routes
-import { PATH_DASHBOARD } from "@routes/paths";
 // components
 import {
   RHFSelect,
@@ -29,6 +27,7 @@ import {
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 // ----------------------------------------------------------------------
 
@@ -133,7 +132,7 @@ export default function UserNewEditForm({
         await updateAvatar(user.id, photoURL);
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      push(PATH_DASHBOARD.organization.members);
+      push(MANAGER_PATH_DASHBOARD.organization.members);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
