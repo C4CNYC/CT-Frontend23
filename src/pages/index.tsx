@@ -9,15 +9,14 @@ import { Role } from "src/redux/services/enums/role.enum";
 
 export default function HomePage(): React.ReactElement {
   const { isAuthenticated, user } = useAuthContext();
-
   const { push } = useRouter();
   useEffect(() => {
     if (isAuthenticated) {
       push(
         user?.role === Role.Student
-          ? STUDENT_PATH_DASHBOARD.tribes.root
+          ? STUDENT_PATH_DASHBOARD.class.root
           : MANAGER_PATH_DASHBOARD.organization.general
-        );
+      );
     } else {
       push(PATH_AUTH.login);
     }

@@ -5,7 +5,7 @@ import { HiOutlineStatusOnline } from "react-icons/hi";
 import { RiExternalLinkLine } from "react-icons/ri";
 import { Iconify } from "src/components/iconify";
 
-export default function CardCourse() {
+export default function QuestsTab() {
   return (
     <Stack
       direction="row"

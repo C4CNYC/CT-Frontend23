@@ -6,7 +6,7 @@ import { getLinearGradient } from "@utils";
 const StyledInfo = styled("div")(({ theme }) => ({
   left: 0,
   right: 0,
-  zIndex: 99,
+  zIndex: 15,
   position: "absolute",
   marginTop: theme.spacing(5),
   [theme.breakpoints.up("md")]: {

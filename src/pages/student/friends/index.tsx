@@ -7,6 +7,7 @@ import {
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { Box, Container } from "@mui/material";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { SkeletonFriends } from "@sections/dashboard/friends/SkeletonFriends";
 import UserCard from "@sections/dashboard/friends/UserCard";
 import SkeletonBreadcrumbs from "@sections/skeleton/SkeletonBreadcrumbs";
@@ -18,7 +19,6 @@ import {
 } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
 import FilterFriends from "./filter";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 Friends.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -46,7 +46,7 @@ export default function Friends(): React.ReactElement {
             <CustomBreadcrumbs
               heading="Friends"
               links={[
-                { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.home },
+                { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
                 { name: "Friends", href: STUDENT_PATH_DASHBOARD.friends.root },
               ]}
             />
