@@ -1,7 +1,9 @@
 import { useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
+import { Stack } from "@mui/material";
 import { Container } from "@mui/system";
 import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
+import Notes from "@sections/main/main-notes/Notes";
 import QuestsTable from "@sections/main/quests/QuestsTable";
 import Head from "next/head";
 
@@ -23,7 +25,14 @@ export default function HomeOverview(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
         <DefaultClassInfo />
-        <QuestsTable />
+        <Stack
+          sx={{
+            flexDirection: { lg: "row" },
+          }}
+        >
+          <QuestsTable />
+          <Notes />
+        </Stack>
       </Container>
     </>
   );

@@ -1,3 +1,6 @@
+import DetailsTab from "./details-card";
+import MemberCard from "./members-card";
+import QuestsTab from "./quest-card";
 import { Iconify } from "@components";
 import { Button, Link, Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
@@ -10,9 +13,6 @@ import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
-import DetailsTab from "./details-card";
-import MemberCard from "./members-card";
-import QuestsTab from "./quest-card";
 
 export default function QuestsTable() {
   const [value, setValue] = useState(0);
@@ -21,11 +21,12 @@ export default function QuestsTable() {
     setValue(newValue);
   };
   return (
-    <Stack sx={{ px: 2, pt: 1 }}>
+    <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack direction="row" alignItems="center" pb={2}>
         <Tabs
           value={value}
           onChange={handleChange}
+          scrollButtons={false}
           sx={{
             "& .MuiTabs-indicator": {
               backgroundColor: "#43D4DD",
