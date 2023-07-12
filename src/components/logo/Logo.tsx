@@ -1,7 +1,11 @@
 import NextLink from "next/link";
 import { forwardRef } from "react";
 
-import { Box, BoxProps, Link } from "@mui/material";
+import { 
+  Box, 
+  Link,
+  BoxProps, 
+} from "@mui/material";
 
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean;

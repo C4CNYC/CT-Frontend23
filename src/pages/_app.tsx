@@ -12,7 +12,10 @@ import Head from "next/head";
 import { NextPage } from "next";
 import { AppProps } from "next/app";
 import { Provider as ReduxProvider } from "react-redux";
-import { CacheProvider, EmotionCache } from "@emotion/react";
+import { 
+  CacheProvider, 
+  EmotionCache,
+} from "@emotion/react";
 
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -26,9 +29,10 @@ import {
   SnackbarProviderWrapper, 
 } from "@components";
 
+import { createEmotionCache } from "@utils";
+
 import { store } from "src/redux/store";
 import ThemeLocalization from "src/locales";
-import { createEmotionCache } from "@utils";
 import { ThemeProvider } from "@theme/index";
 import { AuthProvider } from "src/auth/JwtContext";
 

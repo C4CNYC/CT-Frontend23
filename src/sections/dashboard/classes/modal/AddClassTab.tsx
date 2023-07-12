@@ -1,11 +1,22 @@
+import { 
+  Control, 
+  Controller,
+} from "react-hook-form";
 import * as React from "react";
-import { Control, Controller } from "react-hook-form";
 
+import { 
+  Box, 
+  Stack, 
+  Typography,
+} from "@mui/material";
 import { MuiColorInput } from "mui-color-input";
-import { Box, Stack, Typography } from "@mui/material";
+
+import { 
+  RHFTextField, 
+  RHFUploadAvatar,
+} from "@components";
 
 import { FormAddClassProps } from ".";
-import { RHFTextField, RHFUploadAvatar } from "@components";
 
 interface Props {
   handleDrop: (acceptedFiles: File[]) => void;

@@ -5,15 +5,26 @@ import { useSelector } from "react-redux";
 import { MdContacts } from "react-icons/md";
 import { BsPeopleFill } from "react-icons/bs";
 
-import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
+import { 
+  Box, 
+  Tab, 
+  Card, 
+  Tabs,
+  Stack, 
+  Container, 
+} from "@mui/material";
 
-import { useSettingsContext, UploadImageModal, Iconify } from "@components";
+import { 
+  Iconify,
+  UploadImageModal, 
+  useSettingsContext, 
+} from "@components";
 
 import {
-  SchoolContactsTab,
   SchoolProfileTab,
-  SchoolSettingsTab,
   SchoolSocialsTab,
+  SchoolContactsTab,
+  SchoolSettingsTab,
 } from "@sections/schools/tabs";
 import { RootState } from "src/redux/store";
 import SkeletonSchool from "./skeleton-school";

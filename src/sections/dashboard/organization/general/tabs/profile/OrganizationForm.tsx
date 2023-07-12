@@ -1,22 +1,32 @@
+import * as Yup from "yup";
+import { useCallback } from "react";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
 import {
+  FormProvider,
   RHFTextField,
   RHFUploadAvatar,
-  FormProvider,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
+
+import { fData } from "@utils";
+
 import {
   useUpdateOrganizationMutation,
   useUpdateOrgAvatarMutation,
 } from "src/redux/services/admin/organization-admin";
-import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
-import { fData } from "@utils";
-import * as Yup from "yup";
 import { useLocales } from "../../../../../../locales";
+import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 
 const UpdateUserSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),

@@ -1,18 +1,23 @@
-import { MenuPopover, Iconify } from "@components";
+import { useState } from "react";
+
 import {
   Avatar,
   Button,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  MenuItem,
   Tooltip,
+  ListItem,
+  MenuItem,
+  ListItemText,
+  ListItemAvatar,
 } from "@mui/material";
-import { useState } from "react";
-import { IUser } from "src/redux/services/interfaces/user.interface";
+
+import { 
+  Iconify,
+  MenuPopover, 
+} from "@components";
+
 import { BaseResponseInterface } from "@utils";
 
-// ----------------------------------------------------------------------
+import { IUser } from "src/redux/services/interfaces/user.interface";
 
 interface Props {
   person: IUser & BaseResponseInterface;

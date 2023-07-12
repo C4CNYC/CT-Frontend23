@@ -10,7 +10,10 @@ import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 import { BaseResponseInterface } from "@utils";
 
-import { SetFilterType, useFilters } from "@hooks";
+import {
+  useFilters,
+  SetFilterType, 
+} from "@hooks";
 import {
   ICourse,
   ICourseSearchParams,

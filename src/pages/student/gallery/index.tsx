@@ -1,9 +1,19 @@
+import { 
+  useEffect, 
+  useState,
+} from "react";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
 
-import { Container, Grid, Link } from "@mui/material";
+import { 
+  Grid, 
+  Link,
+  Container, 
+} from "@mui/material";
 
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import { 
+  CustomBreadcrumbs, 
+  useSettingsContext,
+} from "@components";
 
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { IGallery } from "src/redux/interfaces/gallary.interface";

@@ -1,4 +1,8 @@
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import { 
+  useTheme,
+  createTheme, 
+  ThemeProvider, 
+} from "@mui/material/styles";
 
 import { useLocales } from "./useLocales";
 

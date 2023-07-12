@@ -1,9 +1,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import Head from "next/head";
 
-import { Box, Button, Container } from "@mui/material";
+import { 
+  Box, 
+  Button, 
+  Container,
+} from "@mui/material";
 
-import { useSettingsContext, CustomBreadcrumbs, SimpleInfiniteList, Iconify } from "@components";
+import { 
+  Iconify,
+  CustomBreadcrumbs, 
+  useSettingsContext, 
+  SimpleInfiniteList, 
+} from "@components";
 
 import {
   DEFAULT_TAKE_PER_PAGE,

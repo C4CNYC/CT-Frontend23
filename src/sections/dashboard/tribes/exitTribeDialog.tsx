@@ -2,16 +2,17 @@ import { useState } from "react";
 
 import {
   Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
   Grid,
+  Card,
+  Button,
+  Dialog,
   Typography,
+  DialogContent,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 import { useSnackbar } from "@components";
-import { LoadingButton } from "@mui/lab";
+
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 
 interface Props {

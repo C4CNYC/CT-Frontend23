@@ -2,7 +2,10 @@ import { memo } from "react";
 
 import { Box } from "@mui/material";
 
-import { StyledRootScrollbar, StyledScrollbar } from "./styles";
+import {
+  StyledScrollbar,
+  StyledRootScrollbar, 
+} from "./styles";
 
 import { ScrollbarProps } from "./types";
 

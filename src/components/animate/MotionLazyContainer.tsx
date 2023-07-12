@@ -1,6 +1,7 @@
-import { LazyMotion, m } from "framer-motion";
-
-// ----------------------------------------------------------------------
+import { 
+  m,
+  LazyMotion,
+} from "framer-motion";
 
 // eslint-disable-next-line import/extensions
 const loadFeatures = async () =>

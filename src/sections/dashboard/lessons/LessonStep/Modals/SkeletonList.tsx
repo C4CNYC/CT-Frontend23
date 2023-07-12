@@ -1,5 +1,9 @@
-import { Box, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+ } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
+
 export default function SkeletonList(): React.ReactElement {
   return (
     <Box sx={{ p: 2 }}>

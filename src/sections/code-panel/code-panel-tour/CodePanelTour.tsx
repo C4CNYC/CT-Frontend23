@@ -1,9 +1,19 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
+import JoyRide, { 
+  EVENTS, 
+  STATUS,
+  ACTIONS, 
+} from "react-joyride";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
 import { differenceInSeconds } from "date-fns";
-import JoyRide, { ACTIONS, EVENTS, STATUS } from "react-joyride";
 
-import { useMediaQuery, useTheme } from "@mui/material";
+import { 
+  useTheme,
+  useMediaQuery, 
+} from "@mui/material";
 
 import { startTour } from "./tour-atom";
 import { useSelector } from "src/redux/store";

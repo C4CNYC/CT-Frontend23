@@ -1,27 +1,39 @@
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { Box, Button, Stack, Typography } from "@mui/material";
 import _ from "lodash";
-import { useSnackbar } from "notistack";
+import { 
+  Droppable, 
+  DropResult,
+  DragDropContext, 
+ } from "@hello-pangea/dnd";
 import { useEffect } from "react";
-import { FiSettings } from "react-icons/fi";
 import { ImPlus } from "react-icons/im";
+import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import {
-  useCreateLessonContentMutation,
-  useGetLessonContentQuery,
-  useRemoveLessonContentMutation,
-  useUpdateLessonContentMutation,
-} from "src/redux/services/manager/lesson-content-manager";
-import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
-import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
-import { RootState, useDispatch } from "src/redux/store";
-import { BaseResponseInterface } from "@utils";
-import { getOrder } from "src/utils/getTaskOrder";
-import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
-import LessonListItem from "./LesonListItem";
-import CreateDemonContent from "./Modals/CreateLessonContent";
-import SkeletonList from "./Modals/SkeletonList";
+import { FiSettings } from "react-icons/fi";
+
+import { 
+  Box, 
+  Stack, 
+  Button, 
+  Typography,
+ } from "@mui/material";
+
+ import { BaseResponseInterface } from "@utils";
+ 
+ import LessonListItem from "./LesonListItem";
+ import SkeletonList from "./Modals/SkeletonList";
+ import { getOrder } from "src/utils/getTaskOrder";
+ import { RootState, useDispatch } from "src/redux/store";
+ import {
+   useCreateLessonContentMutation,
+   useGetLessonContentQuery,
+   useRemoveLessonContentMutation,
+   useUpdateLessonContentMutation,
+  } from "src/redux/services/manager/lesson-content-manager";
+  import CreateDemonContent from "./Modals/CreateLessonContent";
+  import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
+  import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
+  import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
+  import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 
 interface Props {
   lessonId: string;

@@ -2,9 +2,20 @@ import Head from "next/head";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
 
-import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
+import { 
+  Box, 
+  Tab, 
+  Card, 
+  Tabs,
+  Stack, 
+  Container, 
+} from "@mui/material";
 
-import { useSettingsContext, Iconify, UploadImageModal } from "@components";
+import { 
+  Iconify, 
+  UploadImageModal,
+  useSettingsContext, 
+} from "@components";
 
 import { useLocales } from "src/locales";
 import DashboardLayout from "@layouts/dashboard";

@@ -1,11 +1,19 @@
 import { useEffect } from "react";
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import { 
+  Droppable, 
+  DropResult,
+  DragDropContext, 
+} from "@hello-pangea/dnd";
 
-import { Container, Stack } from "@mui/material";
+import { 
+  Stack,
+  Container, 
+} from "@mui/material";
 
 import { CustomBreadcrumbs } from "@components";
 
 import { hideScrollbarX } from "@utils";
+
 import FilterAssignments from "./filter";
 import { getOrder } from "src/utils/getTaskOrder";
 import {

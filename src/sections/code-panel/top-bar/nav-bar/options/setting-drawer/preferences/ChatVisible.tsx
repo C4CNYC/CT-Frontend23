@@ -1,4 +1,8 @@
-import { Stack, Switch, Typography } from "@mui/material";
+import { 
+  Stack, 
+  Switch, 
+  Typography,
+} from "@mui/material";
 
 import { Iconify } from "@components";
 

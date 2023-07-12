@@ -1,12 +1,19 @@
 import { useRef } from "react";
 import { SnackbarKey, SnackbarProvider as NotistackProvider } from "notistack";
 
+import { 
+  Box, 
+  Collapse, 
+  IconButton,
+} from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { Box, Collapse, IconButton } from "@mui/material";
 
 import StyledNotistack from "./styles";
 import { useSettingsContext } from "../settings";
-import { IconifyProps, Iconify } from "../iconify";
+import { 
+  Iconify,
+  IconifyProps, 
+} from "../iconify";
 
 export interface SnackbarProviderWrapperProps {
   children: React.ReactNode;

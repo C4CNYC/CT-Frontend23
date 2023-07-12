@@ -5,10 +5,12 @@ import Carousel from "react-slick";
 import { Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-
 import { Image } from "../image";
 import { TextMaxLine } from "../text-max-line";
-import { CarouselArrows, CarouselDots } from "../carousel";
+import { 
+  CarouselDots,
+  CarouselArrows, 
+} from "../carousel";
 
 import { MenuCarouselProps } from "./types";
 

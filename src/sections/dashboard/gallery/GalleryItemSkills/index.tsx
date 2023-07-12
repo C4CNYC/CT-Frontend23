@@ -1,4 +1,7 @@
-import { Box, Chip } from "@mui/material";
+import {
+  Box, 
+  Chip,
+} from "@mui/material";
 
 export default function GalleryItemSkills(): React.ReactElement {
   return (

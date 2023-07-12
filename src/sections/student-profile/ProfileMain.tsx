@@ -1,8 +1,13 @@
-import { Grid, Skeleton, Stack } from "@mui/material";
-import { IUser } from "src/redux/interfaces/auth.interface";
+import { 
+  Grid, 
+  Stack,
+  Skeleton, 
+ } from "@mui/material";
+
 import ProfileAbout from "./ProfileAbout";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileSocialInfo from "./ProfileSocialInfo";
+import { IUser } from "src/redux/interfaces/auth.interface";
 
 interface Props {
   data?: IUser;

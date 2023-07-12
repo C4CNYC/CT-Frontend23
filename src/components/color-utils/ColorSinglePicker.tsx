@@ -1,8 +1,12 @@
 import { forwardRef } from "react";
 
-import { Radio, RadioGroup } from "@mui/material";
+import { 
+  Radio, 
+  RadioGroup,
+} from "@mui/material";
 
 import { Icon } from "./Icon";
+
 import { ColorSinglePickerProps } from "./types";
 
 // eslint-disable-next-line react/display-name

@@ -1,4 +1,9 @@
-import { Stack, StackProps, Tooltip, Typography } from "@mui/material";
+import { 
+  Stack, 
+  Tooltip, 
+  StackProps, 
+  Typography,
+} from "@mui/material";
 
 import { Iconify } from "../../iconify";
 

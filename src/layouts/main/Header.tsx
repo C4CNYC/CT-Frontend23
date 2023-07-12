@@ -9,7 +9,10 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { Logo, Label } from "@components";
+import { 
+  Logo, 
+  Label,
+} from "@components";
 
 import { bgBlur } from "@utils";
 import { HEADER } from "../../config-global";

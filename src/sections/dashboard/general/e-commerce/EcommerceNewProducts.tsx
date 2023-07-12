@@ -1,20 +1,25 @@
 import Carousel from "react-slick";
-// @mui
+
 import {
   Box,
-  Button,
   Card,
-  CardContent,
+  Button,
   CardProps,
   Typography,
+  CardContent,
 } from "@mui/material";
-import { alpha, styled, useTheme } from "@mui/material/styles";
-// utils
-import { bgGradient } from "@utils";
-// components
-import { CarouselDots, Image } from "@components";
+import { 
+  alpha, 
+  styled, 
+  useTheme,
+ } from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+ import { 
+   Image,
+   CarouselDots, 
+  } from "@components";
+  
+  import { bgGradient } from "@utils";
 
 const StyledOverlay = styled("div")(({ theme }) => ({
   ...bgGradient({

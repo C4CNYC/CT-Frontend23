@@ -1,7 +1,9 @@
+import { 
+  SlArrowUp,
+  SlArrowDown, 
+} from "react-icons/sl";
 import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
-import Diversity1Icon from "@mui/icons-material/Diversity1";
 import {
   Box,
   Dialog,
@@ -11,6 +13,7 @@ import {
   DialogTitle,
   DialogContent,
 } from "@mui/material";
+import Diversity1Icon from "@mui/icons-material/Diversity1";
 
 import { Image } from "@components";
 

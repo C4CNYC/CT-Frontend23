@@ -1,19 +1,25 @@
-import { RHFTextField, FormProvider } from "@components";
+import * as Yup from "yup";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
+
 import {
   Box,
   Button,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  RHFTextField, 
+  FormProvider,
+} from "@components";
+
 import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
-import * as Yup from "yup";
 
 interface FormValueProps {
   email: string;

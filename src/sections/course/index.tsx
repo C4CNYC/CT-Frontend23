@@ -10,8 +10,10 @@ import {
  } from "@mui/material";
 
 import { Scrollbar } from "@components";
-import CourseLayaut from "./CourseLayaut";
+
 import { BaseResponseInterface } from "@utils";
+
+import CourseLayaut from "./CourseLayaut";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 interface Props {

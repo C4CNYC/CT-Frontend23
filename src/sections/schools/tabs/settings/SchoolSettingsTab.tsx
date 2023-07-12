@@ -1,8 +1,10 @@
-import { Box } from "@mui/material";
 import React from "react";
-import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
+
+import { Box } from "@mui/material";
+
 import SettingsForm from "./SettingsForm";
 import SkeletonSettingsTab from "./SkeletonSettingsTab";
+import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
 
 interface Props {
   schoolId: string;

@@ -2,9 +2,19 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { Box, Container, Skeleton, Tab, Tabs, Typography } from "@mui/material";
+import { 
+  Box, 
+  Tab, 
+  Tabs, 
+  Skeleton, 
+  Container, 
+  Typography,
+} from "@mui/material";
 
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import { 
+  CustomBreadcrumbs, 
+  useSettingsContext,
+} from "@components";
 
 import ModuleList from "@sections/courses/ModuleList";
 import CourseList from "@sections/courses/CourseList";

@@ -8,21 +8,31 @@ import {
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
+import { 
+  isValidToken, 
+  setSession,
+} from "./utils";
+import { 
+  axios, 
+  voidFunction,
+  localStorageAvailable, 
+} from "@utils";
 
-import { isValidToken, setSession } from "./utils";
+import { 
+  setUser, 
+  cleanUser, 
+  setUserRole,
+  cleanUserRole, 
+} from "src/redux/slices/global";
+
 import { Role } from "src/redux/services/enums/role.enum";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
-import { axios, localStorageAvailable, voidFunction } from "@utils";
-import { cleanUser, cleanUserRole, setUser, setUserRole } from "src/redux/slices/global";
-
 import {
   AuthUserType,
   ActionMapType,
   AuthStateType,
   JWTContextType,
 } from "./types";
-
-// ----------------------------------------------------------------------
 
 enum Types {
   INITIAL = "INITIAL",

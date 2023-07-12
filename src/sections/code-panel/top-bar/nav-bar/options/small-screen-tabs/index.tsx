@@ -1,5 +1,8 @@
 import { Box } from "@mui/system";
-import { Tab, Tabs } from "@mui/material";
+import { 
+  Tab, 
+  Tabs,
+} from "@mui/material";
 
 import { Iconify } from "@components";
 

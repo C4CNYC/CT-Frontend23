@@ -1,6 +1,7 @@
-import { IconifyProps, Iconify } from "../iconify";
-
-// ----------------------------------------------------------------------
+import { 
+  Iconify,
+  IconifyProps, 
+} from "../iconify";
 
 interface Props {
   icon?: IconifyProps; // Right icon

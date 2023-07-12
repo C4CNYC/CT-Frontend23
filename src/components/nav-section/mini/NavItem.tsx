@@ -1,12 +1,19 @@
 import NextLink from "next/link";
 import React, { forwardRef } from "react";
 
-import { Link, ListItemText, Tooltip } from "@mui/material";
+import { 
+  Link, 
+  Tooltip,
+  ListItemText, 
+} from "@mui/material";
 
+import { 
+  StyledIcon, 
+  StyledItem,
+} from "./styles";
 import { Iconify } from "@components";
-import { NavItemProps } from "../types";
-import { StyledIcon, StyledItem } from "./styles";
 
+import { NavItemProps } from "../types";
 import { useLocales } from "../../../locales";
 import RoleBasedGuard from "../../../auth/RoleBasedGuard";
 

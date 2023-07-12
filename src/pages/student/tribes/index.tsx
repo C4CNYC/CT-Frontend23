@@ -2,9 +2,18 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { useState } from "react";
 
-import { Box, Container, Link, Tab, Tabs } from "@mui/material";
+import { 
+  Box, 
+  Link, 
+  Tab, 
+  Tabs,
+  Container, 
+} from "@mui/material";
 
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import { 
+  CustomBreadcrumbs, 
+  useSettingsContext,
+} from "@components";
 
 import DashboardLayout from "@layouts/dashboard/";
 import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";

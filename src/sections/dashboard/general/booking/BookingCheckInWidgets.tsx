@@ -1,15 +1,22 @@
 import { ApexOptions } from "apexcharts";
-// @mui
-import { Card, CardProps, Divider, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// hooks
-import { useResponsive } from "@hooks";
-// utils
-import { fNumber } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Card, 
+  Stack, 
+  Divider, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+import {
+  Chart,
+  useChart, 
+} from "@components";
+
+import { fNumber } from "@utils";
+
+import { useResponsive } from "@hooks";
 
 const CHART_SIZE = { width: 106, height: 106 };
 

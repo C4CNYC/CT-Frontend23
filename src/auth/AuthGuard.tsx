@@ -1,11 +1,13 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+
+import { LoadingScreen } from "@components";
 
 import Login from "@pages/auth/login";
-import { LoadingScreen } from "@components";
 import { useAuthContext } from "./useAuthContext";
-
-// ----------------------------------------------------------------------
 
 interface AuthGuardProps {
   children: React.ReactNode;

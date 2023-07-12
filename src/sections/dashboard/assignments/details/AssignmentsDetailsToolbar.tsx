@@ -8,7 +8,10 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Iconify, ConfirmDialog } from "@components";
+import { 
+  Iconify, 
+  ConfirmDialog,
+} from "@components";
 
 import { useResponsive } from "@hooks";
 

@@ -5,9 +5,15 @@ import {
   CardProps,
   CardHeader, 
  } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
+import { 
+  styled, 
+  useTheme,
+} from "@mui/material/styles";
 
-import { useChart, Chart } from "@components";
+import { 
+  Chart,
+  useChart, 
+} from "@components";
 
 const CHART_HEIGHT = 400;
 

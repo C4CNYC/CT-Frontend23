@@ -1,4 +1,8 @@
-import { Box, Skeleton, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+  Skeleton, 
+ } from "@mui/material";
 
 export default function SkeletonCustomizationOrg(): React.ReactElement {
   return (

@@ -1,35 +1,45 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { 
+  useMemo,
+  useEffect, 
+  useCallback, 
+} from "react";
 import * as Yup from "yup";
-// next
 import { useRouter } from "next/router";
-// form
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-// @mui
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-// utils
-import { fData, BaseResponseInterface } from "@utils";
-// components
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+ import { LoadingButton } from "@mui/lab";
+
 import {
-  RHFSelect,
-  RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
   Label,
+  RHFSwitch,
+  RHFSelect,
   useSnackbar,
+  RHFTextField,
   FormProvider,
-} from "@components";
+  RHFUploadAvatar,
+ } from "@components";
+
+import { 
+  fData, 
+  BaseResponseInterface,
+ } from "@utils";
+
 import {
+  useUpdateOrgMemberMutation,
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
-  useUpdateOrgMemberMutation,
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
-import { IUser } from "src/redux/services/interfaces/user.interface";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-
-// ----------------------------------------------------------------------
+import { IUser } from "src/redux/services/interfaces/user.interface";
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };

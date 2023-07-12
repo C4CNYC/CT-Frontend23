@@ -1,10 +1,20 @@
-import { alpha, styled, useTheme } from "@mui/material/styles";
-import { IconButton, IconButtonProps, Stack, StackProps } from "@mui/material";
+import { 
+  Stack, 
+  StackProps,
+  IconButton, 
+  IconButtonProps, 
+} from "@mui/material";
+import { 
+  alpha, 
+  styled, 
+  useTheme,
+} from "@mui/material/styles";
 
+import { 
+  LeftIcon, 
+  RightIcon,
+} from "./Icon";
 import { IconifyProps } from "../iconify";
-import { LeftIcon, RightIcon } from "./Icon";
-
-// ----------------------------------------------------------------------
 
 interface StyledIconButtonProps extends IconButtonProps {
   filled?: boolean;

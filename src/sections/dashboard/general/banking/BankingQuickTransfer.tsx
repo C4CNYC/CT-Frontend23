@@ -1,34 +1,36 @@
-import { useEffect, useRef, useState } from "react";
+import { 
+  useRef, 
+  useState,
+  useEffect, 
+ } from "react";
 import Carousel from "react-slick";
-// @mui
+
 import {
-  Avatar,
   Box,
-  Button,
   Card,
-  CardContent,
-  CardHeader,
-  CardProps,
+  Link,
+  Input,
+  Stack,
+  Avatar,
+  Button,
   Dialog,
-  DialogActions,
+  Slider,
+  Tooltip,
+  TextField,
+  CardProps,
+  Typography,
+  InputProps,
+  CardHeader,
   DialogProps,
   DialogTitle,
-  Input,
-  InputProps,
-  Link,
-  Slider,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography,
+  CardContent,
+  DialogActions,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// utils
-import { fCurrency } from "@utils";
-// components
+
 import { CarouselArrows } from "@components";
 
-// ----------------------------------------------------------------------
+import { fCurrency } from "@utils";
 
 const STEP = 50;
 

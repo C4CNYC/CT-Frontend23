@@ -6,11 +6,22 @@ import {
 import { memo } from "react";
 import { BsClipboard } from "react-icons/bs";
 import { AiOutlineCopy } from "react-icons/ai";
-import { TbBoxMargin, TbBraces, TbTool } from "react-icons/tb";
-import { RiFilePaper2Fill, RiShareForwardFill } from "react-icons/ri";
+import { 
+  TbTool,
+  TbBraces, 
+  TbBoxMargin, 
+} from "react-icons/tb";
+import { 
+  RiFilePaper2Fill, 
+  RiShareForwardFill,
+} from "react-icons/ri";
 
+import { 
+  Box, 
+  Button, 
+  Divider,
+} from "@mui/material";
 import { styled } from "@mui/system";
-import { Box, Button, Divider } from "@mui/material";
 
 import {
   moveCursorEvent,

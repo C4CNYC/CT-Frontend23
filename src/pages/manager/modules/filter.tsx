@@ -5,6 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 import { BaseResponseInterface } from "@utils";
+
 import { SetFilterType, useFilters } from "@hooks";
 import {
   ICourse,

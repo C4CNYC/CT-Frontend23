@@ -1,10 +1,16 @@
-import { AnimatePresence, m } from "framer-motion";
+import { 
+  m,
+  AnimatePresence, 
+} from "framer-motion";
 
-import { Box, Dialog, DialogProps, Paper } from "@mui/material";
+import { 
+  Box, 
+  Paper,
+  Dialog, 
+  DialogProps, 
+} from "@mui/material";
 
 import { varFade } from "./variants";
-
-// ----------------------------------------------------------------------
 
 export interface DialogAnimateProps extends DialogProps {
   variants?: Record<string, unknown>;

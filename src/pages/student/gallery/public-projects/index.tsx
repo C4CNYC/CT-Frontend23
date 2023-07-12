@@ -1,6 +1,12 @@
-import { useEffect, useState } from "react";
+import { 
+  useState,
+  useEffect, 
+} from "react";
 
-import { Box, Container } from "@mui/material";
+import { 
+  Box, 
+  Container,
+} from "@mui/material";
 
 import {
   CustomBreadcrumbs,
@@ -10,19 +16,24 @@ import {
 } from "@components";
 
 import { getCountTakingElment } from "@utils";
+
+import { 
+  useFilters,
+  FilterMode, 
+  DEFAULT_TAKE_PER_PAGE, 
+} from "@hooks";
 import {
   IGallery,
   IGallerySearchParams,
 } from "src/redux/interfaces/gallary.interface";
 import {
-  SkeletonGalleryBreadcrumbs,
-  SkeletonGalleryFilter,
   SkeletonGalleryItem,
+  SkeletonGalleryFilter,
+  SkeletonGalleryBreadcrumbs,
 } from "@sections/dashboard/gallery/SkeletonGallery";
 import FilterGallery from "@sections/dashboard/gallery/filter";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import GalleryItem from "@sections/dashboard/gallery/GalleryElement";
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
 import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN } from "@routes/student.paths";
 

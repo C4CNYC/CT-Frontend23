@@ -1,9 +1,11 @@
-import { Button } from "@mui/material";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { BsChatLeftTextFill } from "react-icons/bs";
+
+import { Button } from "@mui/material";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 interface Props {
   isMini?: boolean;

@@ -1,17 +1,35 @@
-import { RHFSelect, RHFTextField, FormProvider } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack } from "@mui/material";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
-import {
-  useUpdateSchoolAvatarImgMutation,
-  useUpdateSchoolProfileMutation,
-} from "src/redux/services/manager/schools-manager";
+import { 
+  MuiTelInput,
+  matchIsValidTel, 
+} from "mui-tel-input";
+import { 
+  useForm,
+  Controller, 
+} from "react-hook-form";
 import * as Yup from "yup";
-import { countries } from "../../../../../assets/data";
+import { useSnackbar } from "notistack";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Stack,
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  RHFSelect, 
+  RHFTextField, 
+  FormProvider,
+ } from "@components";
+
+import {
+  useUpdateSchoolProfileMutation,
+  useUpdateSchoolAvatarImgMutation,
+} from "src/redux/services/manager/schools-manager";
 import { useLocales } from "../../../../../locales";
+import { countries } from "../../../../../assets/data";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const UpdateSchoolSchema = Yup.object().shape({

@@ -1,33 +1,38 @@
-import CloseIcon from "@mui/icons-material/Close";
+import { 
+  useEffect, 
+  useState,
+} from "react";
+  import { format } from "date-fns";
+import { useSnackbar } from "notistack";
+
 import {
-  Alert,
   Box,
+  Alert,
   Button,
   Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Skeleton,
+  IconButton,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Stack } from "@mui/system";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material/styles";
+import TableBody from "@mui/material/TableBody";
+import TableHead from "@mui/material/TableHead";
+import CloseIcon from "@mui/icons-material/Close";
+import TableContainer from "@mui/material/TableContainer";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 
 import { Iconify } from "@components";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import { Stack } from "@mui/system";
-import { format } from "date-fns";
-import { useSnackbar } from "notistack";
+import CreateEditValidation from "./CreateEditValidation";
+
 import {
   useGetLessonContentValidationsQuery,
   useRemoveLessonContentValiationMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
-import CreateEditValidation from "./CreateEditValidation";
 
 const RECOMENDED_COUNT_VALIDATION = 3;
 

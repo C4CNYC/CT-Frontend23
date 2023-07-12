@@ -1,10 +1,14 @@
-import { m, MotionProps } from "framer-motion";
+import {
+  m, 
+  MotionProps,
+} from "framer-motion";
 
-import { Box, BoxProps } from "@mui/material";
+import { 
+  Box, 
+  BoxProps,
+} from "@mui/material";
 
 import { varFade } from "./variants";
-
-// ----------------------------------------------------------------------
 
 type Props = BoxProps & MotionProps;
 

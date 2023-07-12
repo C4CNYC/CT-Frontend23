@@ -4,11 +4,19 @@ import {
   Typography,
  } from "@mui/material";
 
-import { alpha, useTheme } from "@mui/material/styles";
+import { 
+  alpha, 
+  useTheme,
+} from "@mui/material/styles";
 
 import { Iconify } from "@components";
+
+import { 
+  bgGradient,
+  fShortenNumber, 
+} from "@utils";
+
 import { ColorSchema } from "@theme/palette";
-import { fShortenNumber, bgGradient } from "@utils";
 
 interface Props extends CardProps {
   title: string;

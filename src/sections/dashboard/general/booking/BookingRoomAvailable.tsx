@@ -1,21 +1,25 @@
-import { ApexOptions } from "apexcharts";
 import sumBy from "lodash/sumBy";
-// @mui
+import { ApexOptions } from "apexcharts";
+
 import {
   Box,
   Card,
-  CardHeader,
-  CardProps,
   Stack,
+  CardProps,
   Typography,
+  CardHeader,
 } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
-// utils
-import { fNumber } from "@utils";
-// components
-import { useChart, Chart } from "@components";
+import { 
+  alpha, 
+  useTheme,
+} from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+import { 
+  Chart,
+  useChart, 
+} from "@components";
+
+import { fNumber } from "@utils";
 
 interface ItemProps {
   label: string;

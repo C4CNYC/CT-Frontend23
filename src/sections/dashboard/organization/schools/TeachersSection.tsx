@@ -1,22 +1,25 @@
-import { Iconify } from "@components";
+import Image from "next/image";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+
 import {
-  Collapse,
-  IconButton,
   List,
-  ListItem,
   Stack,
+  Collapse,
+  ListItem,
+  IconButton,
   Typography,
 } from "@mui/material";
-import InviteTeacherDialog from "@sections/dashboard/organization/schools/InviteTeacherDialog";
-import SkeletonSchoolDetailsDrawer from "@sections/dashboard/schools/portal/SkeletonSchoolDetailsDrawer";
-import Image from "next/image";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
+
+import { Iconify } from "@components";
+
+import TeacherItem from "./TeacherItem";
 import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
 } from "src/redux/services/admin/school-amdin";
-import TeacherItem from "./TeacherItem";
+import InviteTeacherDialog from "@sections/dashboard/organization/schools/InviteTeacherDialog";
+import SkeletonSchoolDetailsDrawer from "@sections/dashboard/schools/portal/SkeletonSchoolDetailsDrawer";
 
 interface TeacherSectionProps {
   schoolId: string;

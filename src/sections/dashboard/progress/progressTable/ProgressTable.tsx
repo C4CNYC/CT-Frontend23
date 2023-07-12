@@ -1,21 +1,23 @@
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import _ from "lodash";
+
 import {
-  Checkbox,
-  IconButton,
-  LinearProgress,
   Paper,
   Table,
+  Tooltip,
+  Checkbox,
+  TableRow,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
-  TableRow,
-  Tooltip,
+  IconButton,
   Typography,
+  TableContainer,
+  LinearProgress,
 } from "@mui/material";
 import { Stack } from "@mui/system";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
 import { IProgressTableData } from "@pages/dashboard/school/progress";
-import _ from "lodash";
 
 interface IProgressTable {
   hasBackLink: boolean;

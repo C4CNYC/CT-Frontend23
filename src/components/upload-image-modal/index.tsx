@@ -3,15 +3,19 @@ import { useCallback } from "react";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 
+import { 
+  IconButton, 
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import { Stack } from "@mui/system";
 import Modal from "@mui/material/Modal";
 import { LoadingButton } from "@mui/lab";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton, Typography } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import { fData } from "@utils";
+
 import { useLocales } from "../../locales/useLocales";
 import { RHFUploadAvatar, FormProvider } from "../hook-form";
 

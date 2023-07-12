@@ -1,21 +1,39 @@
-import { CustomSmallSelect, useSnackbar } from "@components";
-import SaveIcon from "@mui/icons-material/Save";
-import { LoadingButton } from "@mui/lab";
-import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import { Box } from "@mui/system";
-import { langs, loadLanguage } from "@uiw/codemirror-extensions-langs";
+import { 
+  useState,
+  useEffect, 
+} from "react";
+import * as React from "react";
+import CodeMirror from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
-import CodeMirror from "@uiw/react-codemirror";
-import * as React from "react";
-import { useEffect, useState } from "react";
+import { 
+  langs, 
+  loadLanguage,
+} from "@uiw/codemirror-extensions-langs";
+
+import { 
+  Stack, 
+  AppBar, 
+  Toolbar, 
+  Typography,
+ } from "@mui/material";
+import { Box } from "@mui/system";
+import { LoadingButton } from "@mui/lab";
+import Dialog from "@mui/material/Dialog";
+import SaveIcon from "@mui/icons-material/Save";
+import DialogContent from "@mui/material/DialogContent";
+
+import { 
+  useSnackbar,
+  CustomSmallSelect, 
+ } from "@components";
+ 
+import TasksInput from "./TasksInput";
+
 import {
   useCreateTaskMutation,
   useUpdateTaskMutation,
 } from "src/redux/services/manager/tasks-manager";
-import TasksInput from "./TasksInput";
 
 interface Prop {
   children: React.ReactElement;

@@ -3,8 +3,6 @@ import { useTheme } from "@mui/material/styles";
 import { BadgeStatusProps } from "./types";
 import { StyledBadgeStatus } from "./styles";
 
-// ----------------------------------------------------------------------
-
 export function BadgeStatus({
   size = "medium",
   status = "offline",

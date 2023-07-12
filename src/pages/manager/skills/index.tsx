@@ -4,7 +4,6 @@ import Head from "next/head";
 import { format } from "date-fns";
 import { useSnackbar } from "notistack";
 
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import {
   Card,
   Table,
@@ -26,7 +25,9 @@ import {
   TableNoData,
   CustomBreadcrumbs, 
   useSettingsContext, 
- } from "@components";
+} from "@components";
+
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 
  import {
    useGetSkillQuery,

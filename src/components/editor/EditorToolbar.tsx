@@ -14,7 +14,10 @@ import {
   BasicFormattingButtonGroup,
 } from "@remirror/react";
 
-import { Divider, Stack } from "@mui/material";
+import { 
+  Stack,
+  Divider, 
+} from "@mui/material";
 
 import {
   TextCaseSelect,

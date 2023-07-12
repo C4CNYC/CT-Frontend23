@@ -1,14 +1,16 @@
+import { FaPlus } from "react-icons/fa";
+
 import {
   Card,
-  CardHeader,
   CardProps,
+  CardHeader,
   IconButton,
   Typography,
 } from "@mui/material";
-import { FaPlus } from "react-icons/fa";
-import { IGoals } from "src/redux/interfaces/goals.interface";
-import AddEditGoalDialog from "./AddEditGoalDialog";
+
 import GoalsItem from "./GoalItem";
+import AddEditGoalDialog from "./AddEditGoalDialog";
+import { IGoals } from "src/redux/interfaces/goals.interface";
 
 interface Props extends CardProps {
   list: IGoals[];

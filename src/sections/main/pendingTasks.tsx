@@ -1,9 +1,16 @@
-import { EmptyContent } from "@components";
-import { Grid, Link, Paper, Typography } from "@mui/material";
+import { 
+  Grid, 
+  Link, 
+  Paper, 
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
-import { useGetAssignmentListQuery } from "src/redux/services/student/assignments-student";
-import { SkeletonPendingTask } from "./skeletonsMain";
+
+import { EmptyContent } from "@components";
+
 import TaskItem from "./taskItem";
+import { SkeletonPendingTask } from "./skeletonsMain";
+import { useGetAssignmentListQuery } from "src/redux/services/student/assignments-student";
 
 export default function PendingTasks(): React.ReactElement {
   const { data, isLoading } = useGetAssignmentListQuery();

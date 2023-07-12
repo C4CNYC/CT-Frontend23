@@ -1,7 +1,14 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-import { Fade, Portal, Stack } from "@mui/material";
+import { 
+  Fade, 
+  Stack,
+  Portal, 
+} from "@mui/material";
 
 import { useActiveLink } from "@hooks";
 import { NavItemProps } from "../types";

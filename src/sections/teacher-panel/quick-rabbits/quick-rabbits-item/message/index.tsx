@@ -1,19 +1,24 @@
-import {
-  Avatar,
-  ChatContainer,
-  MainContainer,
-  Message,
-  MessageInput,
-  MessageList,
+import { 
+  useState,
+  useEffect, 
+} from "react";
+ import {
+   Avatar,
+   Message,
+   MessageList,
+   MessageInput,
+   ChatContainer,
+   MainContainer,
 } from "@chatscope/chat-ui-kit-react";
-import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   IChatMessage,
   useFirebaseChat,
 } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
-import { useEffect, useState } from "react";
+ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+
+ import { BaseResponseInterface } from "@utils";
+ 
 import { IStudent } from "src/redux/services/interfaces/user.interface";
-import { BaseResponseInterface } from "@utils";
 
 interface IMessages {
   reciverId: string;

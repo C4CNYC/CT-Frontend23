@@ -1,11 +1,17 @@
 import { memo } from "react";
 
+import { 
+  Box, 
+  AppBar, 
+  Toolbar,
+  BoxProps, 
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
 
 import { NavSectionHorizontal } from "@components";
 
 import { bgBlur } from "@utils";
+
 import navConfig from "./config-navigation";
 import { HEADER } from "../../../config-global";
 

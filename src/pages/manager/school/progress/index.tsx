@@ -6,19 +6,27 @@ import { useSelector } from "react-redux";
 import { Stack } from "@mui/system";
 import { Container } from "@mui/material";
 
-import { RootState } from "src/redux/store";
-import { FilterMode, useFilters } from "@hooks";
 import { CustomBreadcrumbs } from "@components";
+
+import { 
+  getCountTakingElment,
+  BaseResponseInterface, 
+} from "@utils";
+
+import { 
+  useFilters,
+  FilterMode, 
+} from "@hooks";
+import { RootState } from "src/redux/store";
 import {
-  useGetProgressContentQuery,
   useGetProgressQuery,
+  useGetProgressContentQuery,
 } from "src/redux/services/manager/progress-manager";
 import {
   IProgress,
   IProgressChalanges,
 } from "src/redux/services/interfaces/progress.interface";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { BaseResponseInterface, getCountTakingElment } from "@utils";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   SkeletonProgressTable,

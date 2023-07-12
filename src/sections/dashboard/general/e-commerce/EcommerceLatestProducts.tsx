@@ -1,19 +1,20 @@
-// @mui
 import {
   Box,
-  Card,
-  CardHeader,
-  CardProps,
   Link,
+  Card,
   Stack,
+  CardProps,
   Typography,
+  CardHeader,
 } from "@mui/material";
-// utils
-import { fCurrency } from "@utils";
-//
-import { ColorPreview, Image, Scrollbar } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Image, 
+  Scrollbar,
+  ColorPreview, 
+} from "@components";
+
+import { fCurrency } from "@utils";
 
 interface ItemProps {
   id: string;

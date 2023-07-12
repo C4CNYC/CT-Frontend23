@@ -1,18 +1,25 @@
-import { Image } from "@components";
+import { 
+  MdModeEdit, 
+  MdOutlineArrowBackIos,
+} from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
+import { FaRegSave } from "react-icons/fa";
+import { StepWizardChildProps } from "react-step-wizard";
+
 import {
   Box,
-  Button,
-  IconButton,
   Stack,
+  Button,
   TextField,
+  IconButton,
   Typography,
 } from "@mui/material";
-import { FaRegSave } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
-import { MdModeEdit, MdOutlineArrowBackIos } from "react-icons/md";
-import { StepWizardChildProps } from "react-step-wizard";
-import StepContainer from "../StepContainer";
+
+import { Image } from "@components";
+
 import { voidFunction } from "@utils";
+
+import StepContainer from "../StepContainer";
 
 function FinishStep({
   previousStep,

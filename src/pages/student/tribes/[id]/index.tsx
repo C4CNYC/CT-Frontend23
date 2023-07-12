@@ -13,9 +13,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { Iconify, useSettingsContext } from "@components";
+import { 
+  Iconify, 
+  useSettingsContext,
+} from "@components";
 
 import { fNumber } from "@utils";
+
 import DashboardLayout from "@layouts/dashboard";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";

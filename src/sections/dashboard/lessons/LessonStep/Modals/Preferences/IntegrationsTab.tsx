@@ -1,31 +1,41 @@
-import { SearchNotFound, Iconify } from "@components";
+import Link from "next/link";
+import * as React from "react";
+import { useSnackbar } from "notistack";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+
 import {
-  alpha,
-  Autocomplete,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
   Box,
   Chip,
+  alpha,
   Skeleton,
   TextField,
   Typography,
+  Autocomplete,
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
 } from "@mui/material";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import Link from "next/link";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
+import { 
+  Iconify,
+  SearchNotFound, 
+ } from "@components";
+
+ import { 
+   voidFunction,
+  BaseResponseInterface, 
+} from "@utils";
+
 import { useFilters } from "@hooks";
-import { IIntegration } from "src/redux/services/interfaces/integration.interface";
-import { useGetIntegrationsQuery } from "src/redux/services/manager/integration-manager";
 import {
   useAddIntegrationMutation,
-  useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
+  useGetLessonIntegrationsQuery,
 } from "src/redux/services/manager/lessons-manager";
-
-import { BaseResponseInterface, voidFunction } from "@utils";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { IIntegration } from "src/redux/services/interfaces/integration.interface";
+import { useGetIntegrationsQuery } from "src/redux/services/manager/integration-manager";
+
 
 export function IntegrationsTab({
   contentId,

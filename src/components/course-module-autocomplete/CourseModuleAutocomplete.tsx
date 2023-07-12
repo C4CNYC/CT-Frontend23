@@ -16,7 +16,11 @@ import {
   AutocompleteChangeDetails,
 } from "@mui/material";
 
-import { CustomAvatar, SearchNotFound, Iconify } from "@components";
+import { 
+  Iconify,
+  CustomAvatar, 
+  SearchNotFound, 
+} from "@components";
 
 import { useFilters } from "@hooks";
 import {

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { Container } from "@mui/system";
 
 import { useSettingsContext } from "@components";
+
 import QuestsTable from "@sections/main/quests/QuestsTable";
 import DefaultClassInfo from "@sections/main/DefaultClassInfo";
 import SchoolDashboardLayout from "@layouts/dashboard/SchoolDashboardLayout";

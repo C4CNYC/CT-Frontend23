@@ -1,15 +1,18 @@
-// @mui
-import { Box, Typography } from "@mui/material";
+import { 
+  Box, 
+  Typography,
+ } from "@mui/material";
 import { styled } from "@mui/material/styles";
-// utils
-import { bgBlur } from "@utils";
-// auth
-import { useAuthContext } from "../../../../auth/useAuthContext";
-// components
-import { CustomAvatar, Image } from "@components";
-import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 
-// ----------------------------------------------------------------------
+import { 
+  Image,
+  CustomAvatar, 
+} from "@components";
+
+import { bgBlur } from "@utils";
+
+import { useAuthContext } from "../../../../auth/useAuthContext";
+import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   "&:before": {

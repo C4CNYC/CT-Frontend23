@@ -1,19 +1,36 @@
-import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Card, Grid, Stack } from "@mui/material";
-import { MuiColorInput } from "mui-color-input";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
-import { useSnackbar } from "notistack";
+import { 
+  MuiTelInput,
+  matchIsValidTel, 
+} from "mui-tel-input";
+import { 
+  useForm,
+  Controller, 
+} from "react-hook-form";
+import * as Yup from "yup";
 import { useCallback } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useSnackbar } from "notistack";
+import { MuiColorInput } from "mui-color-input";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Card, 
+  Grid, 
+  Stack,
+ } from "@mui/material";
+ import { LoadingButton } from "@mui/lab";
+
+import { 
+  FormProvider, 
+  RHFTextField, 
+  RHFUploadAvatar,
+ } from "@components";
+
+import {
+   useUdpateProfileAvatarMutation,
+   useUpdateProfileMutation,
+  } from "src/redux/services/auth";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import {
-  useUdpateProfileAvatarMutation,
-  useUpdateProfileMutation,
-} from "src/redux/services/auth";
-import * as Yup from "yup";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),

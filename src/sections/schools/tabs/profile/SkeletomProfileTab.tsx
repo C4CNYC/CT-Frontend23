@@ -1,4 +1,8 @@
-import { Grid, Skeleton, Stack } from "@mui/material";
+import { 
+  Grid, 
+  Stack,
+  Skeleton, 
+ } from "@mui/material";
 
 export default function SkeletonProfileTab(): React.ReactElement {
   return (

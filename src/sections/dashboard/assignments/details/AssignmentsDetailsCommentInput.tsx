@@ -7,7 +7,10 @@ import {
   IconButton,
 } from "@mui/material";
 
-import { CustomAvatar, Iconify } from "@components";
+import { 
+  Iconify,
+  CustomAvatar, 
+} from "@components";
 
 import { useAuthContext } from "../../../../auth/useAuthContext";
 

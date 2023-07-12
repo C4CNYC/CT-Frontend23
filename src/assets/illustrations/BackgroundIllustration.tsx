@@ -2,8 +2,6 @@ import { memo } from "react";
 
 import { useTheme } from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
-
 function BackgroundIllustration(): React.ReactElement {
   const theme = useTheme();
 

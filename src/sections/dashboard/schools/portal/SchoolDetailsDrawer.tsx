@@ -1,13 +1,20 @@
-import { Scrollbar } from "@components";
-import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import * as React from "react";
-import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
+
+import { 
+  Stack, 
+  Drawer, 
+  Divider, 
+  Typography,
+  DrawerProps, 
+ } from "@mui/material";
+
+import { Scrollbar } from "@components";
+
+import ClassSection from "../classes/ClassSection";
 import { countries } from "../../../../assets/data";
 import TeacherSection from "../../organization/schools/TeachersSection";
-import ClassSection from "../classes/ClassSection";
-
-// ----------------------------------------------------------------------
+import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
 
 interface Props extends DrawerProps {
   item: ISchoolSummary;

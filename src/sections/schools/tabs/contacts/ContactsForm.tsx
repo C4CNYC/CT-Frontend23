@@ -1,13 +1,31 @@
-import { RHFTextField, FormProvider } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
-import { useSnackbar } from "notistack";
-import { Controller, useForm } from "react-hook-form";
-import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
+import { 
+  MuiTelInput,
+  matchIsValidTel, 
+} from "mui-tel-input";
+import { 
+  Controller, 
+  useForm,
+} from "react-hook-form";
 import * as Yup from "yup";
+import { useSnackbar } from "notistack";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  FormProvider,
+  RHFTextField, 
+ } from "@components";
+
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
+import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
 
 const UpdateUserSchema = Yup.object().shape({
   email: Yup.string().email("Email must be a valid email address"),

@@ -1,6 +1,9 @@
 import NextLink from "next/link";
 
-import { Box, Link } from "@mui/material";
+import { 
+  Box, 
+  Link,
+} from "@mui/material";
 
 import { BreadcrumbsLinkProps } from "./types";
 

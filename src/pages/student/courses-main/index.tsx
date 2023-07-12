@@ -1,16 +1,25 @@
 import Head from "next/head";
 
+import { 
+  Box, 
+  Button,
+} from "@mui/material";
 import { Container } from "@mui/system";
-import { Box, Button } from "@mui/material";
 
-import { useSettingsContext, CustomBreadcrumbs, SimpleInfiniteList, Iconify } from "@components";
+import { 
+  Iconify,
+  CustomBreadcrumbs, 
+  useSettingsContext, 
+  SimpleInfiniteList, 
+ } from "@components";
+
+import { getCountTakingElment } from "@utils";
 
 import {
-  DEFAULT_TAKE_PER_PAGE,
   FilterMode,
   useFilters,
+  DEFAULT_TAKE_PER_PAGE,
 } from "@hooks";
-import { getCountTakingElment } from "@utils";
 import FilterCourses from "@sections/dashboard/courses/filter";
 import { CourseCard } from "@sections/dashboard/courses/cards";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";

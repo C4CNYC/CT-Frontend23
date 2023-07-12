@@ -2,7 +2,11 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { m } from "framer-motion";
 
-import { Box, Button, Typography } from "@mui/material";
+import { 
+  Box, 
+  Button, 
+  Typography,
+} from "@mui/material";
 
 import { MotionContainer, varBounce } from "@components";
 

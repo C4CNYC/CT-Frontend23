@@ -17,7 +17,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-import { MenuPopover, IconButtonAnimate } from "@components";
+import { 
+  MenuPopover, 
+  IconButtonAnimate,
+} from "@components";
 
 export default function FilterAssignments(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

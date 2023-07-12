@@ -1,4 +1,8 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { 
+  Box, 
+  useTheme,
+  useMediaQuery, 
+} from "@mui/material";
 
 import Logo from "./Logo";
 import NavBar from "./nav-bar";

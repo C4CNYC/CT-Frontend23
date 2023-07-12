@@ -1,29 +1,32 @@
+import * as Yup from "yup";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Button,
+  Dialog,
+  IconButton,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import CloseIcon from "@mui/icons-material/Close";
+
 import {
   RHFSelect,
   RHFSwitch,
-  RHFTextField,
   FormProvider,
+  RHFTextField,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import CloseIcon from "@mui/icons-material/Close";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  IconButton,
-  Stack,
-} from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useCreateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
-import * as Yup from "yup";
 
 interface FormValuesProps {
   slug: string;

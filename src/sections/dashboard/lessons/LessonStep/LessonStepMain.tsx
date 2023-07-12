@@ -1,14 +1,23 @@
-import { ResizerUi } from "@components";
-import { Box, Dialog } from "@mui/material";
+import { 
+  FullScreen, 
+  useFullScreenHandle,
+ } from "react-full-screen";
 import { useAtom } from "jotai";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { lessonViewAtom } from "./lesson-atoms/lesson-view-atom";
-import LessonTopBar from "./lesson-top-bar/LessonTopBar";
-import StepContentEditor from "./LessonStepContent/StepContentEditor";
+import { useRouter } from "next/router";
+
+import { 
+  Box, 
+  Dialog,
+ } from "@mui/material";
+
+import { ResizerUi } from "@components";
+
 import LessonStepList from "./LessonStepList";
 import { NoSelectedStep } from "./NoSelectedStep";
+import LessonTopBar from "./lesson-top-bar/LessonTopBar";
+import { lessonViewAtom } from "./lesson-atoms/lesson-view-atom";
+import StepContentEditor from "./LessonStepContent/StepContentEditor";
 
 export default function LessonStepMain(): React.ReactElement {
   const router = useRouter();

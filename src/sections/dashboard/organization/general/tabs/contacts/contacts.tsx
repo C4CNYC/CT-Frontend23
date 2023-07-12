@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import { useGetOrgContactsQuery } from "src/redux/services/admin/organization-contacts";
-// auth
-import ContactsForm from "src/sections/dashboard/organization/general/tabs/contacts/ContactsForm";
+
 import SkeletonContactsForm from "./SkeletonContactsForm";
+import { useGetOrgContactsQuery } from "src/redux/services/admin/organization-contacts";
+import ContactsForm from "src/sections/dashboard/organization/general/tabs/contacts/ContactsForm";
 
 export default function ContactsTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgContactsQuery();

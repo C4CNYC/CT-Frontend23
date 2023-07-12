@@ -1,6 +1,12 @@
-import CircleIcon from "@mui/icons-material/Circle";
-import { Avatar, Card, Stack, Typography } from "@mui/material";
 import { AiFillInfoCircle } from "react-icons/ai";
+
+import { 
+  Card, 
+  Stack, 
+  Avatar, 
+  Typography,
+ } from "@mui/material";
+import CircleIcon from "@mui/icons-material/Circle";
 
 export default function RecentAssignments(): React.ReactElement {
   return (

@@ -1,7 +1,8 @@
 import { FormControl } from "@mui/material";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 
 interface Props {

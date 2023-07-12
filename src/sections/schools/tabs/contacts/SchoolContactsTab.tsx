@@ -1,8 +1,10 @@
-import { Box } from "@mui/material";
 import React from "react";
-import { useGetSchoolContactsQuery } from "src/redux/services/manager/schools-manager";
+
+import { Box } from "@mui/material";
+
 import ContactsForm from "./ContactsForm";
 import SkeletonContactsTab from "./SkeletonContactsTab";
+import { useGetSchoolContactsQuery } from "src/redux/services/manager/schools-manager";
 
 interface Props {
   schoolId: string;

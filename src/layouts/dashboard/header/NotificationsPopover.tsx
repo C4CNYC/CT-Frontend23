@@ -19,9 +19,15 @@ import {
   ListItemAvatar,
 } from "@mui/material";
 
-import { IconButtonAnimate, Iconify, MenuPopover, Scrollbar } from "@components";
+import { 
+  Iconify, 
+  Scrollbar,
+  MenuPopover, 
+  IconButtonAnimate, 
+} from "@components";
 
 import { fToNow } from "@utils";
+
 import { _notifications } from "../../../_mock/arrays";
 
 export default function NotificationsPopover(): React.ReactElement {

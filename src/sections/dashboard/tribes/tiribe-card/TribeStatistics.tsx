@@ -1,9 +1,14 @@
-import { Box, Typography } from "@mui/material";
 import { format } from "date-fns";
-import { FaGraduationCap } from "react-icons/fa";
 import { HiUsers } from "react-icons/hi";
-import { IoCalendar } from "react-icons/io5";
 import { TiLocation } from "react-icons/ti";
+import { IoCalendar } from "react-icons/io5";
+import { FaGraduationCap } from "react-icons/fa";
+
+import { 
+  Box, 
+  Typography,
+ } from "@mui/material";
+
 import { User } from "src/redux/interfaces/auth.interface";
 
 interface Props {

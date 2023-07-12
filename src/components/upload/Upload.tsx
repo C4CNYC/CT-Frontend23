@@ -8,12 +8,15 @@ import {
   Typography,
   IconButton,
 } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { 
+  alpha, 
+  styled,
+} from "@mui/material/styles";
 
 import { Iconify } from "../iconify";
 import { UploadProps } from "./types";
-import RejectionFiles from "./errors/RejectionFiles";
 import { UploadIllustration } from "./illustrations";
+import RejectionFiles from "./errors/RejectionFiles";
 import MultiFilePreview from "./preview/MultiFilePreview";
 import { SingleFilePreview } from "./preview/SingleFilePreview";
 

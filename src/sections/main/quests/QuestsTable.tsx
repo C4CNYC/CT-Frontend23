@@ -1,12 +1,25 @@
-import { Iconify } from "@components";
-import { Button, Link, Stack } from "@mui/material";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import Typography from "@mui/material/Typography";
+import { 
+  CiShare1,
+  CiMountain1, 
+} from "react-icons/ci";
+import { 
+  IoPeopleOutline, 
+  IoSettingsOutline,
+} from "react-icons/io5";
 import { useState } from "react";
-import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
-import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
+
+import { 
+  Link, 
+  Stack,
+  Button, 
+ } from "@mui/material";
+ import Tab from "@mui/material/Tab";
+ import Tabs from "@mui/material/Tabs";
+ import Typography from "@mui/material/Typography";
+
+import { Iconify } from "@components";
+
 import CardCourse from "./quest-card";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 

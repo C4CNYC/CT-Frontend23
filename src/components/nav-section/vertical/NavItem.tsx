@@ -1,13 +1,22 @@
 import NextLink from "next/link";
 
-import { Box, Link, ListItemText, Tooltip } from "@mui/material";
+import { 
+  Box, 
+  Link, 
+  Tooltip,
+  ListItemText, 
+} from "@mui/material";
 
 import { Iconify } from "@components";
 
+import { 
+  StyledIcon, 
+  StyledItem,
+  StyledDotIcon, 
+} from "./styles";
 import { NavItemProps } from "../types";
 import { useLocales } from "../../../locales";
 import RoleBasedGuard from "../../../auth/RoleBasedGuard";
-import { StyledDotIcon, StyledIcon, StyledItem } from "./styles";
 
 export default function NavItem({
   item,

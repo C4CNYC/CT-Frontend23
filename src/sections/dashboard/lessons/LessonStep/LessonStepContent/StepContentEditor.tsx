@@ -1,20 +1,28 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
 import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
-import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
+
+import { 
+  Box, 
+  Tab, 
+  Tabs,
+ } from "@mui/material";
+
+import StepCode from "./StepCode";
+import StepMultimedia from "./StepMultimedia";
+import SkeletonContentCode from "./SkeletonContentCode";
+import SkeletonContentMulti from "./SkeletonContentMulti";
 import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
-
+import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
-import SkeletonContentCode from "./SkeletonContentCode";
-import SkeletonContentMulti from "./SkeletonContentMulti";
-import StepCode from "./StepCode";
-import StepMultimedia from "./StepMultimedia";
 
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;

@@ -1,15 +1,25 @@
-import { RHFTextField, FormProvider } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, FormGroup, Stack } from "@mui/material";
+import * as Yup from "yup";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Stack,
+  FormGroup, 
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  RHFTextField, 
+  FormProvider,
+ } from "@components";
+
 import {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 } from "src/redux/services/manager/schools-manager";
-import * as Yup from "yup";
 import { SOCIAL_ICONS } from "../../../../assets/data";
 
 interface FormValuesProps {

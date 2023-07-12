@@ -1,22 +1,30 @@
-import { useSnackbar, Iconify, TextMaxLine, MenuPopover, ConfirmDialog } from "@components";
-import { LoadingButton } from "@mui/lab";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 import {
   Box,
   Card,
-  Divider,
-  IconButton,
-  MenuItem,
   Stack,
+  Divider,
+  MenuItem,
+  IconButton,
   Typography,
 } from "@mui/material";
-import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
-import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
+import { LoadingButton } from "@mui/lab";
 
-// ----------------------------------------------------------------------
+import { 
+  Iconify, 
+  TextMaxLine, 
+  useSnackbar, 
+  MenuPopover, 
+  ConfirmDialog,
+ } from "@components";
+
+ import { BaseResponseInterface } from "@utils";
+ 
+ import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+ import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
+ import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
 
 interface Props {
   lesson: ILesson & BaseResponseInterface;

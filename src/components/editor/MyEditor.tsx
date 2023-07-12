@@ -1,8 +1,15 @@
 import "remirror/styles/all.css";
 import React, { useEffect } from "react";
 import { useS3Upload } from "next-s3-upload";
-import { ImageAttributes, ImageExtension } from "remirror/extensions";
-import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
+import { 
+  ImageExtension,
+  ImageAttributes, 
+} from "remirror/extensions";
+import { 
+  Remirror, 
+  useRemirror,
+  ThemeProvider, 
+} from "@remirror/react";
 
 import { isJson } from "@utils";
 

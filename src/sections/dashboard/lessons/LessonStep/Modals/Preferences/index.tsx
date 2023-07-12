@@ -1,25 +1,33 @@
-import { javascript } from "@codemirror/lang-javascript";
-import { FormProvider, ModalCodeFullscreen, RHFCode } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Tab,
-  Tabs,
-} from "@mui/material";
 import _ from "lodash";
+import * as Yup from "yup";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { javascript } from "@codemirror/lang-javascript";
+
+import {
+  Box,
+  Tab,
+  Tabs,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  RHFCode,
+  FormProvider, 
+  ModalCodeFullscreen, 
+ } from "@components";
+ 
+import { GeneralTab } from "./GeneralTab";
+
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
-import * as Yup from "yup";
-import { GeneralTab } from "./GeneralTab";
 
 interface FormValuesProps {
   slug: string;

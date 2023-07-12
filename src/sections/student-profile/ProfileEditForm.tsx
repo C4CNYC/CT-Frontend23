@@ -1,22 +1,38 @@
+import { 
+  useMemo,
+  useEffect, 
+  useCallback, 
+ } from "react";
+ import * as Yup from "yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Typography,
+ } from "@mui/material";
+ import { Stack } from "@mui/system";
+ import { LoadingButton } from "@mui/lab";
+
 import {
   RHFTextField,
-  RHFUploadAvatar,
   FormProvider,
+  RHFUploadAvatar,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import { useSnackbar } from "notistack";
-import { useCallback, useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+
+import { 
+  fData,
+  BaseResponseInterface, 
+ } from "@utils";
+
 import {
-  useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
+  useUdpateProfileAvatarMutation,
 } from "src/redux/services/auth";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import { BaseResponseInterface, fData } from "@utils";
-import * as Yup from "yup";
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };

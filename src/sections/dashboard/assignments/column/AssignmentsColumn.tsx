@@ -1,13 +1,20 @@
-import { Draggable, Droppable } from "@hello-pangea/dnd";
+import { 
+  Droppable,
+  Draggable, 
+} from "@hello-pangea/dnd";
 
-import { Paper, Stack } from "@mui/material";
+import { 
+  Stack,
+  Paper, 
+} from "@mui/material";
+
+import { useSnackbar } from "@components";
 
 import { voidFunction } from "@utils";
 import {
   IAssignmentsCard,
   IAssignmentsColumn,
 } from "../../../../@types/assignments";
-import { useSnackbar } from "@components";
 import AssignmentsTaskCard from "../AssignmentsTaskCard";
 import AssignmentsColumnToolBar from "./AssignmentsColumnToolBar";
 import { useDeleteAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";

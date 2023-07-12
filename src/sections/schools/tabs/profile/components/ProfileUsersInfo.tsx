@@ -1,4 +1,10 @@
-import { Card, Divider, Stack, Typography } from "@mui/material";
+import { 
+  Card, 
+  Stack, 
+  Divider, 
+  Typography,
+ } from "@mui/material";
+
 import { fNumber } from "@utils";
 
 interface Props {

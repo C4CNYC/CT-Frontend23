@@ -1,6 +1,15 @@
-import { RHFSelect, RHFSwitch, RHFTextField } from "@components";
+import { 
+  Box, 
+  Stack,
+} from "@mui/system";
 import { Grid } from "@mui/material";
-import { Box, Stack } from "@mui/system";
+
+import { 
+  RHFSwitch, 
+  RHFSelect, 
+  RHFTextField,
+ } from "@components";
+
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 
 export const GeneralTab = (): React.ReactElement => {

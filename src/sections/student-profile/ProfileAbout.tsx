@@ -1,8 +1,15 @@
-import { Iconify } from "@components";
-import { Card, CardHeader, Stack, Typography } from "@mui/material";
+import { 
+  Card, 
+  Stack, 
+  Typography,
+  CardHeader, 
+ } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IUser } from "src/redux/interfaces/auth.interface";
+
 import { fDateTime } from "@utils";
+import { Iconify } from "@components";
+
+import { IUser } from "src/redux/interfaces/auth.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,

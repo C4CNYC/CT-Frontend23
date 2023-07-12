@@ -1,8 +1,16 @@
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Button, Card, Menu, MenuItem, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
+
+import { 
+  Stack, 
+  Card, 
+  Menu, 
+  Button, 
+  MenuItem, 
+  Typography,
+ } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function WeeklyActivities(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

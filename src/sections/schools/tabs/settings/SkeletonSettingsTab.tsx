@@ -1,5 +1,5 @@
-import { Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
+import { Skeleton } from "@mui/material";
 
 export default function SkeletonSettingsTab(): React.ReactElement {
   return (

@@ -1,6 +1,11 @@
 import Head from "next/head";
 
-import { Box, Button, CircularProgress, Container } from "@mui/material";
+import { 
+  Box, 
+  Button, 
+  Container,
+  CircularProgress, 
+} from "@mui/material";
 
 import { 
   Iconify,
@@ -9,7 +14,11 @@ import {
 } from "@components";
 
 import FilterTasks from "./filter";
-import { FilterMode, useFilters } from "@hooks";
+
+import { 
+  useFilters,
+  FilterMode, 
+} from "@hooks";
 import DashboardLayout from "src/layouts/dashboard";
 import TaskCard from "@sections/dashboard/tasks/TaskCard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";

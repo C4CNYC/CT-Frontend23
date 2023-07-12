@@ -19,8 +19,10 @@ import {
   MenuPopover, 
   ConfirmDialog,
  } from "@components";
- import ClassPreferences from "../modal";
+
  import { BaseResponseInterface } from "@utils";
+ 
+ import ClassPreferences from "../modal";
 
  import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { IClass } from "src/redux/services/interfaces/class.interface";

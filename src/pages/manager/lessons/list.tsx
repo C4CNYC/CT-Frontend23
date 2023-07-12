@@ -1,17 +1,28 @@
 import Head from "next/head";
 
-import { Box, Button, Container } from "@mui/material";
+import { 
+  Box, 
+  Button, 
+  Container,
+} from "@mui/material";
+
+import { 
+  Iconify, 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+  SimpleInfiniteList, 
+} from "@components";
+
+import { getCountTakingElment } from "@utils";
 
 import FilterLessons from "./filter";
 import SkeletonLesson from "./skeletonLesson";
-import { useSettingsContext, SimpleInfiniteList, Iconify, CustomBreadcrumbs } from "@components";
 
 import {
   useFilters,
   FilterMode,
   DEFAULT_TAKE_PER_PAGE,
 } from "@hooks";
-import { getCountTakingElment } from "@utils";
 import DashboardLayout from "@layouts/dashboard";
 import SkeletonList, {
   DefaultSkeletonItem,

@@ -1,13 +1,20 @@
 import { ApexOptions } from "apexcharts";
-// @mui
-import { Avatar, Card, CardProps, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// utils
-import { fData } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Card, 
+  Stack, 
+  Avatar, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+import { 
+  Chart,
+  useChart, 
+ } from "@components";
+ 
+import { fData } from "@utils";
 
 interface Props extends CardProps {
   total: number;

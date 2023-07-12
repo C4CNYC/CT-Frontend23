@@ -1,7 +1,16 @@
-import { useEffect, useState } from "react";
+import { 
+  useState,
+  useEffect, 
+} from "react";
 
-import { Box, Tooltip } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
+import { 
+  Box, 
+  Tooltip,
+} from "@mui/material";
+import { 
+  alpha, 
+  useTheme,
+} from "@mui/material/styles";
 
 import { bgBlur } from "@utils";
 import BadgeDot from "./BadgeDot";

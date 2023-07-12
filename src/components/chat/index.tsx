@@ -1,9 +1,9 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import _ from "lodash";
 import { useAtom } from "jotai";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { Firestore } from "firebase/firestore";
-
 import {
   Avatar,
   MainContainer,
@@ -11,6 +11,8 @@ import {
   ConversationList,
   ConversationHeader,
 } from "@chatscope/chat-ui-kit-react";
+import { useSelector } from "react-redux";
+import { Firestore } from "firebase/firestore";
 
 import {
   styled,
@@ -21,6 +23,7 @@ import {
 } from "@mui/material";
 
 import { Iconify } from "@components";
+
 import { Messages } from "./messages";
 import { RootState } from "src/redux/store";
 import { chatAtom } from "./atoms/chat.atom";

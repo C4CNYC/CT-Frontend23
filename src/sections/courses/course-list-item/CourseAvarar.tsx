@@ -1,9 +1,19 @@
+import { 
+  AiFillHeart, 
+  AiOutlineHeart,
+} from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
-import { Box, IconButton } from "@mui/material";
+import { 
+  Box, 
+  IconButton,
+} from "@mui/material";
 
-import { Image, useSnackbar } from "@components";
+import { 
+  Image, 
+  useSnackbar,
+} from "@components";
+
 import {
   useCourseAddLikeMutation,
   useCourseAddRatingMutation,

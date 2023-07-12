@@ -1,8 +1,12 @@
 import { useMemo } from "react";
 import merge from "lodash/merge";
 
+import { 
+  useTheme,
+  createTheme, 
+  ThemeProvider, 
+} from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 
 import { useSettingsContext } from "./SettingsContext";
 

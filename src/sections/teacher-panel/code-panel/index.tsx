@@ -1,15 +1,22 @@
-import { Box } from "@mui/system";
+import { 
+  useEffect, 
+  useState,
+} from "react";
 import { useAtom } from "jotai";
-
-import { CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
-import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
-import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
+
+import { 
+  Typography,
+  CircularProgress, 
+} from "@mui/material";
+import { Box } from "@mui/system";
+
 import WorkSpace from "./work-space";
 import SmallScreenTabs from "./work-space/tabs";
+import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
+import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
 import { useRealTimeConnection } from "src/hooks/useRealTimeConnection";
+import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
 
 export const CodePanel = (): React.ReactElement => {
   const { query } = useRouter();

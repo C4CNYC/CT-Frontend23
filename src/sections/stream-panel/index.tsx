@@ -1,9 +1,15 @@
-import { ResizerUi } from "@components";
-import { Box, Stack } from "@mui/system";
 import { memo } from "react";
-import ContentSpace from "./spaces/content-space";
+
+import { 
+  Box, 
+  Stack,
+ } from "@mui/system";
+
+import { ResizerUi } from "@components";
+
 import CodeSpace from "./spaces/code-space";
 import ViewSpace from "./spaces/view-space";
+import ContentSpace from "./spaces/content-space";
 
 const StreamPanel = (): React.ReactElement | null => {
   return <Box>

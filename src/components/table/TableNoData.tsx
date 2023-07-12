@@ -1,4 +1,7 @@
-import { TableCell, TableRow } from "@mui/material";
+import { 
+  TableRow,
+  TableCell, 
+} from "@mui/material";
 
 import { EmptyContent } from "../empty-content";
 import { useLocales } from "../../locales/useLocales";

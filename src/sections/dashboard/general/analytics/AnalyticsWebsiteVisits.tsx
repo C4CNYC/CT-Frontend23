@@ -7,7 +7,10 @@ import {
   CardHeader, 
  } from "@mui/material";
 
- import { useChart, Chart } from "@components";
+ import { 
+  Chart,
+  useChart, 
+} from "@components";
 
 interface Props extends CardProps {
   title?: string;

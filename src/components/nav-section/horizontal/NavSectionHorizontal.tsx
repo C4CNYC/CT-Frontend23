@@ -3,9 +3,12 @@ import { memo } from "react";
 import { Stack } from "@mui/material";
 
 import NavList from "./NavList";
-import { NavListProps, NavSectionProps } from "../types";
-
 import { hideScrollbarY } from "@utils";
+
+import { 
+  NavListProps, 
+  NavSectionProps,
+} from "../types";
 
 function NavSectionHorizontal({
   data,

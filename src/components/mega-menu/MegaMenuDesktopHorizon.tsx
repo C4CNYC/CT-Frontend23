@@ -2,13 +2,22 @@ import { useState } from "react";
 import NextLink from "next/link";
 
 import { Masonry } from "@mui/lab";
-import { Divider, Link, Paper, Stack, Typography } from "@mui/material";
+import { 
+  Link, 
+  Paper, 
+  Stack, 
+  Divider, 
+  Typography,
+} from "@mui/material";
 
 import { Iconify } from "../iconify";
 import { MenuHotProducts } from "./MenuHotProducts";
 import { MenuCarousel as MegaMenuCarousel } from "./MenuCarousel";
 
-import { MegaMenuItemProps, ParentItemProps } from "./types";
+import {
+  ParentItemProps,
+  MegaMenuItemProps, 
+} from "./types";
 
 const ITEM_SPACING = 4;
 const PARENT_ITEM_HEIGHT = 64;

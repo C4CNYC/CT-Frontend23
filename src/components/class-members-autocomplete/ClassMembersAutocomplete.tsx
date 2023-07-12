@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import parse from "autosuggest-highlight/parse";
 import match from "autosuggest-highlight/match";
 
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import {
   Box,
   Chip,
@@ -18,16 +17,21 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { 
+  Iconify, 
+  CustomAvatar, 
+  SearchNotFound,
+} from "@components";
+import { BaseResponseInterface } from "@utils";
+
+import { useFilters } from "@hooks";
 import { RootState } from "src/redux/store";
 import {
   useGetStudentsQuery,
-  useStudentLeftClassMutation,
   useStudentJoinClassMutation,
+  useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
-
-import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "@utils";
 
 type StudentType = IStudent & BaseResponseInterface;
 

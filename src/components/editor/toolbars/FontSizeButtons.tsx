@@ -1,5 +1,3 @@
-import "remirror/styles/all.css";
-
 import {
   useActive,
   useCommands,
@@ -7,6 +5,7 @@ import {
   CommandMenuItem,
 } from "@remirror/react";
 import React from "react";
+import "remirror/styles/all.css";
 
 const FONT_SIZES = ["8", "10", "12", "14", "16", "18", "24", "30"];
 

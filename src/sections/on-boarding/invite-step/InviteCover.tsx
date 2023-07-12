@@ -1,9 +1,22 @@
+import { 
+  Box, 
+  Stack, 
+  Input, 
+  Typography,
+  InputAdornment, 
+ } from "@mui/material";
+ import { styled } from "@mui/material/styles";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { Box, Input, InputAdornment, Stack, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
 
-import { Image, UploadImageModal } from "@components";
-import { bgBlur, voidFunction } from "@utils";
+import { 
+  Image, 
+  UploadImageModal,
+} from "@components";
+
+import { 
+  bgBlur, 
+  voidFunction,
+} from "@utils";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   position: "absolute",

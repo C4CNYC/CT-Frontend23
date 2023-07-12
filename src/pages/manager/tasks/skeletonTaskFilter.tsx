@@ -1,4 +1,7 @@
-import { Skeleton, Stack } from "@mui/material";
+import { 
+  Stack,
+  Skeleton, 
+ } from "@mui/material";
 
 export default function SkeletonTaskFilter(): React.ReactElement {
   return (

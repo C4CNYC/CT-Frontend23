@@ -3,6 +3,7 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 
 import { FormProvider } from "@components";
+
 import AddClassInput from "./AddClassInput";
 
 interface FormValuesProps {

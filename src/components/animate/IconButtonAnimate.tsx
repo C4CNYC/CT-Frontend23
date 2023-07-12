@@ -1,9 +1,11 @@
 import { m } from "framer-motion";
 import { forwardRef } from "react";
 
-import { Box, IconButton, IconButtonProps } from "@mui/material";
-
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  IconButton, 
+  IconButtonProps,
+} from "@mui/material";
 
 // eslint-disable-next-line react/display-name
 export const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -15,8 +17,6 @@ export const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
     </AnimateWrap>
   )
 );
-
-// ----------------------------------------------------------------------
 
 interface AnimateWrapProp {
   children: React.ReactNode;

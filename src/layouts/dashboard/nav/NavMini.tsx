@@ -1,8 +1,12 @@
 import { Box, Stack } from "@mui/material";
 
-import { LogoMin, NavSectionMini } from "@components";
+import { 
+  LogoMin, 
+  NavSectionMini,
+} from "@components";
 
 import { hideScrollbarX } from "@utils";
+
 import navConfig from "./config-navigation";
 import { NAV } from "../../../config-global";
 import NavToggleButton from "./NavToggleButton";

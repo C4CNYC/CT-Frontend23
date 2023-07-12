@@ -1,16 +1,13 @@
-// @mui
 import {
   Box,
   Card,
-  CardProps,
-  LinearProgress,
   Stack,
+  CardProps,
   Typography,
+  LinearProgress,
 } from "@mui/material";
-// utils
-import { fData } from "@utils";
 
-// ----------------------------------------------------------------------
+import { fData } from "@utils";
 
 interface Props extends CardProps {
   title: string;

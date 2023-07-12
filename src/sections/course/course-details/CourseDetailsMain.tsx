@@ -1,4 +1,7 @@
-import { Box, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+} from "@mui/material";
 
 import QuizPanel from "./quiz-panel";
 import TrainingsList from "./TrainingsList";

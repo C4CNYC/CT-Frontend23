@@ -1,24 +1,32 @@
-import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
+import _ from "lodash";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { Draggable } from "@hello-pangea/dnd";
+import { RxDragHandleDots2 } from "react-icons/rx";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import {
-  Badge,
   Box,
-  IconButton,
-  MenuItem,
+  Badge,
   Paper,
   Stack,
+  MenuItem,
   Typography,
+  IconButton,
 } from "@mui/material";
-import _ from "lodash";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { RxDragHandleDots2 } from "react-icons/rx";
-import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import Preferences from "./Modals/Preferences";
+
+import { 
+  Iconify, 
+  MenuPopover,
+ } from "@components";
+
+import { BaseResponseInterface } from "@utils";
+
 import Validation from "./Modals/Validation";
+import Preferences from "./Modals/Preferences";
+
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 
 interface Props {
   lessonId: string;

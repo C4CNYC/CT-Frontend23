@@ -1,7 +1,8 @@
-// @mui
-import { Box, Button, ButtonProps } from "@mui/material";
-
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Button, 
+  ButtonProps,
+ } from "@mui/material";
 
 interface Props extends ButtonProps {
   children?: React.ReactNode;

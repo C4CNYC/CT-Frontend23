@@ -2,9 +2,20 @@ import Head from "next/head";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
+import { 
+  Box, 
+  Tab, 
+  Card, 
+  Tabs,
+  Skeleton, 
+  Container, 
+} from "@mui/material";
 
-import { useSettingsContext, Iconify, CustomBreadcrumbs } from "@components";
+import { 
+  Iconify, 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
 
 import { PATH_MAIN } from "@routes/paths";
 import DashboardLayout from "@layouts/dashboard";

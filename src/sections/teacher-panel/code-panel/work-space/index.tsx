@@ -1,14 +1,16 @@
 import { useAtom } from "jotai";
-import SwipeableViews from "react-swipeable-views";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
-import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
-import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
-import SliderBlock from "./blocks/slider-block";
-import ViewBlock from "./blocks/view-block";
-import dynamic from "next/dynamic";
-import { SupportedLang, WorkSpaceContext } from "../context/WorkSpace.context";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+import SwipeableViews from "react-swipeable-views";
+
+import { BaseResponseInterface } from "@utils";
+
+import ViewBlock from "./blocks/view-block";
+import SliderBlock from "./blocks/slider-block";
+import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
+import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
+import { SupportedLang, WorkSpaceContext } from "../context/WorkSpace.context";
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 
 const CodeEditorBlock = dynamic(async () => await import("./blocks/code-editor-block"), { ssr: false })
 

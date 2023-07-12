@@ -1,9 +1,22 @@
 import { m } from "framer-motion";
 import Carousel from "react-slick";
-import { useRef, useState } from "react";
+import { 
+  useRef, 
+  useState,
+} from "react";
 
-import { alpha, styled, useTheme } from "@mui/material/styles";
-import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
+import { 
+  Card, 
+  Link, 
+  Stack, 
+  CardProps, 
+  Typography,
+} from "@mui/material";
+import { 
+  alpha, 
+  styled, 
+  useTheme,
+} from "@mui/material/styles";
 
 import {
   Image,

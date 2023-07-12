@@ -2,10 +2,20 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
-import { Box, CircularProgress, Drawer, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+  Drawer, 
+  CircularProgress, 
+} from "@mui/material";
+
+import { 
+  Logo, 
+  Scrollbar,
+  NavSectionVertical, 
+} from "@components";
 
 import NavToggleButton from "./NavToggleButton";
-import { Logo, NavSectionVertical, Scrollbar } from "@components";
 
 import {
   apps,

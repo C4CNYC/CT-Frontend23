@@ -1,5 +1,13 @@
-import { Tooltip, Typography } from "@mui/material";
-import { domAnimation, LazyMotion, m } from "framer-motion";
+import { 
+  m,
+  LazyMotion, 
+  domAnimation, 
+} from "framer-motion";
+
+import { 
+  Tooltip, 
+  Typography,
+ } from "@mui/material";
 
 interface Props {
   text: string;

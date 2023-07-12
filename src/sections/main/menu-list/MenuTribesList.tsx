@@ -1,5 +1,11 @@
-import { Button, Divider, Stack } from "@mui/material";
 import { FaPlus } from "react-icons/fa";
+
+import { 
+  Stack,
+  Button, 
+  Divider, 
+ } from "@mui/material";
+ 
 import TribeListItem from "./TribesListItem";
 
 export default function MenuTribesList(): React.ReactElement {

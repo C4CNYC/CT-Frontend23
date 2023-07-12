@@ -1,14 +1,16 @@
-import { MenuPopover } from "@components";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
+
 import {
   Box,
   Button,
-  InputAdornment,
   TextField,
   Typography,
+  InputAdornment,
 } from "@mui/material";
-import { useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import { MenuPopover } from "@components";
 
 export default function TribesFillter(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);

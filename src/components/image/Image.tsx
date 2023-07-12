@@ -1,4 +1,7 @@
-import { ElementType, forwardRef } from "react";
+import { 
+  forwardRef,
+  ElementType, 
+} from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 import { Box } from "@mui/material";

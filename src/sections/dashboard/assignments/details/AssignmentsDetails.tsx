@@ -12,8 +12,12 @@ import {
 import { styled } from "@mui/material/styles";
 import { DateTimePicker } from "@mui/x-date-pickers";
 
+import { 
+  Scrollbar,
+  CustomSmallSelect, 
+} from "@components";
+
 import { convertDuration } from "@utils";
-import { CustomSmallSelect, Scrollbar } from "@components";
 
 import AssignmentInput from "../AssignmentInput";
 import TaskController from "./controllers/TaskController";

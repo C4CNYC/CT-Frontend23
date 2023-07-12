@@ -3,7 +3,10 @@ import Head from "next/head";
 
 import { Container } from "@mui/material";
 
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
+import { 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
 
 import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";

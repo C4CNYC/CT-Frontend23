@@ -1,11 +1,12 @@
 import { memo } from "react";
 
-import { Box, BoxProps } from "@mui/material";
+import { 
+  Box, 
+  BoxProps,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import BackgroundIllustration from "./BackgroundIllustration";
-
-// ----------------------------------------------------------------------
 
 function MaintenanceIllustration({ ...other }: BoxProps): React.ReactElement {
   const theme = useTheme();

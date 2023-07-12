@@ -1,8 +1,6 @@
 import { alpha, type Theme } from "@mui/material/styles";
-//
-import { StarIcon } from "./CustomIcons";
 
-// ----------------------------------------------------------------------
+import { StarIcon } from "./CustomIcons";
 
 export default function Rating(theme: Theme): unknown {
   return {

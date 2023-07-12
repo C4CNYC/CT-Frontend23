@@ -1,6 +1,9 @@
 import { forwardRef } from "react";
 
-import { Avatar, Badge } from "@mui/material";
+import { 
+  Badge,
+  Avatar, 
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import { CustomAvatarProps } from "./types";

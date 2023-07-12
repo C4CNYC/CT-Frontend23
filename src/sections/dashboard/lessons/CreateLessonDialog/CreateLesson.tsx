@@ -1,25 +1,32 @@
-import { RHFSwitch, RHFTextField, FormProvider } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Grid,
-} from "@mui/material";
+import * as Yup from "yup";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+import {
+  Box,
+  Card,
+  Grid,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  RHFSwitch, 
+  RHFTextField, 
+  FormProvider,
+ } from "@components";
+ 
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,
 } from "src/redux/services/manager/lessons-manager";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
-import * as Yup from "yup";
 
 interface FormValuesProps {
   name: string;

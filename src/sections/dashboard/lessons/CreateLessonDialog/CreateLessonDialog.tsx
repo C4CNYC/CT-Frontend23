@@ -1,30 +1,39 @@
-import { useSnackbar, FormProvider, RHFSwitch, RHFTextField } from "@components";
+import * as Yup from "yup";
+import * as React from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
-  Button,
-  DialogActions,
-  Grid,
   Tab,
+  Grid,
   Tabs,
+  Button,
   Typography,
+  DialogActions,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useRouter } from "next/router";
-import * as React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import DialogContent from "@mui/material/DialogContent";
+
+import { 
+  RHFSwitch, 
+  useSnackbar, 
+  FormProvider, 
+  RHFTextField,
+ } from "@components";
+ 
+ import SkillsTab from "./SkillsTab";
+
+ import {
+   useCreateLessonMutation,
+   useUpdateLessonMutation,
+ } from "../../../../redux/services/manager/lessons-manager";
+ import { IntegrationsTab } from "../LessonStep/Modals/Preferences/IntegrationsTab";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
-import * as Yup from "yup";
-import {
-  useCreateLessonMutation,
-  useUpdateLessonMutation,
-} from "../../../../redux/services/manager/lessons-manager";
-import { IntegrationsTab } from "../LessonStep/Modals/Preferences/IntegrationsTab";
-import SkillsTab from "./SkillsTab";
 
 interface FormValuesProps {
   name: string;

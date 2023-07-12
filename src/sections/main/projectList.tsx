@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
+
+import ProjectItem from "./projectItem";
 import { SkeletonProjectItem } from "@sections/main/skeletonsMain";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
-import ProjectItem from "./projectItem";
 
 interface Props {
   data: ICourseElement[] | undefined;

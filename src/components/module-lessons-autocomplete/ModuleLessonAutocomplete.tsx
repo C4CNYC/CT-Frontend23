@@ -12,18 +12,25 @@ import {
   TextField,
   Typography,
   Autocomplete,
-  AutocompleteChangeDetails,
   AutocompleteChangeReason,
+  AutocompleteChangeDetails,
 } from "@mui/material";
 
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+import { 
+  voidFunction,
+  BaseResponseInterface, 
+} from "@utils";
+import { 
+  Iconify, 
+  CustomAvatar, 
+  SearchNotFound,
+} from "@components";
 
 import { useFilters } from "@hooks";
 import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
 } from "src/redux/services/manager/modules-manager";
-import { BaseResponseInterface, voidFunction } from "@utils";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 

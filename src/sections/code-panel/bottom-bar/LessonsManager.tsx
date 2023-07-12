@@ -1,7 +1,10 @@
+import { 
+  useState,
+  useContext, 
+} from "react";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { IoMdClose } from "react-icons/io";
-import { useContext, useState } from "react";
 
 import {
   Box,

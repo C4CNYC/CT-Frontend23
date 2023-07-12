@@ -1,11 +1,19 @@
+import 
+  React, { 
+  useState,
+  useCallback, 
+  MouseEventHandler, 
+} from "react";
 import "remirror/styles/all.css";
-import { BsEmojiSmile } from "react-icons/bs";
 import { useCommands } from "@remirror/react";
+import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import React, { MouseEventHandler, useCallback, useState } from "react";
 
-import { Box, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+} from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 
 export default function EmojiPickerBtn(): React.ReactElement {

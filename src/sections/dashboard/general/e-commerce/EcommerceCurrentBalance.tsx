@@ -1,9 +1,12 @@
-// @mui
-import { Button, Card, CardProps, Stack, Typography } from "@mui/material";
-// utils
-import { fCurrency } from "@utils";
+import { 
+  Card, 
+  Stack, 
+  Button, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
 
-// ----------------------------------------------------------------------
+import { fCurrency } from "@utils";
 
 interface Props extends CardProps {
   title: string;

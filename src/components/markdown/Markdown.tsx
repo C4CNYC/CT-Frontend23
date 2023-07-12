@@ -4,7 +4,11 @@ import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 
-import { Divider, Link, Typography } from "@mui/material";
+import { 
+  Link, 
+  Divider, 
+  Typography,
+} from "@mui/material";
 
 import "@utils";
 import { Image } from "../image";

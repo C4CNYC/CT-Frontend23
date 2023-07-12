@@ -1,13 +1,19 @@
-import { CustomAvatar } from "@components";
+import { 
+  useState,
+  useEffect, 
+ } from "react";
+import { useSelector } from "react-redux";
+
+import Stack from "@mui/system/Stack";
 import { Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/system/Stack";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { IUser } from "src/redux/interfaces/auth.interface";
-import { useProfileQuery } from "src/redux/services/auth";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
+
+import { CustomAvatar } from "@components";
+
 import { RootState } from "src/redux/store";
+import { useProfileQuery } from "src/redux/services/auth";
+import { IUser } from "src/redux/interfaces/auth.interface";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 export default function UserSection(): React.ReactElement {
   const [, setProfile] = useState<IUser>();

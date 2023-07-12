@@ -1,9 +1,12 @@
-import { List, Stack } from "@mui/material";
+import { 
+  List, 
+  Stack,
+} from "@mui/material";
 
 import NavList from "./NavList";
+
 import { NavSectionProps } from "../types";
 import { StyledSubheader } from "./styles";
-
 import { useLocales } from "../../../locales";
 
 export default function NavSectionVertical({

@@ -1,23 +1,32 @@
-import { Iconify } from "@components";
-
-import { IconButton, Tooltip, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
-import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
-import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
-import CodeMirror from "@uiw/react-codemirror";
-import { useAtom } from "jotai";
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import Link from "next/link";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import CodeMirror from "@uiw/react-codemirror";
 import { createTheme } from "@uiw/codemirror-themes";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
-import { useEffect, useState } from "react";
-import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
-import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
-import { useSelector } from "react-redux";
+
+import { 
+  Tooltip, 
+  IconButton, 
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+
+import { Iconify } from "@components";
+
 import { RootState } from "src/redux/store";
 import { useRealTimeConnection } from "@hooks";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
+import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
+import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
+import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
+import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;

@@ -1,12 +1,20 @@
-import { Grid, Stack } from "@mui/material";
-import { Box, useTheme } from "@mui/system";
-import { useAtom } from "jotai";
 import _ from "lodash";
-import { quickRabbitAtom } from "../atoms/quick-rabbit.atom";
-import QuickRabbitsItem from "./quick-rabbits-item";
-import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
+import { useAtom } from "jotai";
 import { useRouter } from "next/router";
+
+import { 
+  Box, 
+  useTheme,
+} from "@mui/system";
+import { 
+  Grid, 
+  Stack,
+} from "@mui/material";
+
+import QuickRabbitsItem from "./quick-rabbits-item";
+import { quickRabbitAtom } from "../atoms/quick-rabbit.atom";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
 
 export const QuickRabbits = (): React.ReactElement => {
   const theme = useTheme();

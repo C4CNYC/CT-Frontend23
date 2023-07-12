@@ -7,8 +7,16 @@ import {
   createContext,
 } from "react";
 
-import { localStorageAvailable, voidFunction } from "@utils";
+import { 
+  voidFunction,
+  localStorageAvailable, 
+} from "@utils";
 
+import { 
+  getPresets, 
+  presetsOption,
+  defaultPreset, 
+} from "./presets";
 import {
   ThemeModeValue,
   ThemeLayoutValue,
@@ -18,8 +26,8 @@ import {
   SettingsContextProps,
   ThemeColorPresetsValue,
 } from "./types";
+
 import { defaultSettings } from "./config-setting";
-import { defaultPreset, getPresets, presetsOption } from "./presets";
 
 
 const initialState: SettingsContextProps = {

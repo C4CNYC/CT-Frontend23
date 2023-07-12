@@ -1,7 +1,8 @@
-import { CardInfo } from "@components";
 import { Paper } from "@mui/material";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+
+import { CardInfo } from "@components";
 
 export default function InfoSectionHome(): React.ReactElement {
   return (

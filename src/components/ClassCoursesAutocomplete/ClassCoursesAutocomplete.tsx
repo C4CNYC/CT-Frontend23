@@ -16,7 +16,11 @@ import {
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+import { 
+  Iconify, 
+  CustomAvatar, 
+  SearchNotFound,
+} from "@components";
 
 import { ICourse } from "@types";
 import { useFilters } from "@hooks";

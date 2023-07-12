@@ -1,4 +1,7 @@
-import { Box, BoxProps } from "@mui/material";
+import { 
+  Box, 
+  BoxProps,
+} from "@mui/material";
 
 export default function BadgeDot({
   sx,

@@ -1,14 +1,24 @@
-import { Box, Container } from "@mui/material";
+import { 
+  Box, 
+  Container,
+} from "@mui/material";
 
 import {
-  CustomBreadcrumbs,
   EmptyContent,
+  CustomBreadcrumbs,
   SimpleInfiniteList,
   useSettingsContext,
 } from "@components";
 
-import FilterFriends from "./filter";
 import { getCountTakingElment } from "@utils";
+
+import { 
+  FilterMode, 
+  useFilters,
+  DEFAULT_TAKE_PER_PAGE, 
+} from "@hooks";
+
+import FilterFriends from "./filter";
 import {
   IFriend,
   IFriendsSearchParams,
@@ -17,7 +27,6 @@ import UserCard from "@sections/dashboard/friends/UserCard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import SkeletonFilter from "@sections/skeleton/skeletonFilter";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { SkeletonFriends } from "@sections/dashboard/friends/SkeletonFriends";
 import SkeletonBreadcrumbs from "@sections/skeleton/SkeletonBreadcrumbs";
 import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";

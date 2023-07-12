@@ -1,6 +1,10 @@
+import { 
+  forwardRef, 
+  useEffect, 
+  useState,
+} from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { forwardRef, useEffect, useState } from "react";
 
 import {
   Box,
@@ -17,12 +21,18 @@ import {
   ListItemButton,
 } from "@mui/material";
 
-import { Iconify } from "../iconify";
 import { Logo } from "../logo";
+import { Iconify } from "../iconify";
 import { Scrollbar } from "../scrollbar";
 
-import { ICON, NAV } from "../../config-global";
-import { MegaMenuItemProps, ParentItemProps } from "./types";
+import { 
+  ParentItemProps,
+  MegaMenuItemProps, 
+} from "./types";
+import { 
+  NAV,
+  ICON, 
+} from "../../config-global";
 
 interface Props {
   data: MegaMenuItemProps[];

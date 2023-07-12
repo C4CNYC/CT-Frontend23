@@ -1,9 +1,16 @@
-import { Collapse, IconButton, Link, Stack, Typography } from "@mui/material";
 import nextLink from "next/link";
 import { useState } from "react";
-import { HiArrowNarrowRight } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
+import { HiArrowNarrowRight } from "react-icons/hi";
 import { MdOutlineWifiTethering } from "react-icons/md";
+
+import { 
+  Link, 
+  Stack, 
+  Collapse, 
+  IconButton, 
+  Typography,
+ } from "@mui/material";
 
 export default function ClassInfoHeader(): React.ReactElement {
   const [openJoin, setOpenJoin] = useState<boolean>(true);

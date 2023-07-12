@@ -1,5 +1,12 @@
+import { 
+  Card, 
+  Link, 
+  Stack,
+  Skeleton, 
+  CardHeader, 
+ } from "@mui/material";
+
 import { SOCIAL_ICONS } from "@assets/data";
-import { Card, CardHeader, Link, Skeleton, Stack } from "@mui/material";
 import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
 
 interface Props {

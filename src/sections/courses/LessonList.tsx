@@ -1,10 +1,18 @@
 import { useEffect } from "react";
 
-import { Box, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+} from "@mui/material";
+
+import { 
+  EmptyContent, 
+  SimpleInfiniteList,
+} from "@components";
 
 import { getCountTakingElment } from "@utils";
+
 import LessonItem from "./lesson-list-item/lessonItem";
-import { EmptyContent, SimpleInfiniteList } from "@components";
 import SkeletonLesson from "./lesson-list-item/SkeletonLesson";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { ILessonSearchParams } from "src/redux/interfaces/content.interface";

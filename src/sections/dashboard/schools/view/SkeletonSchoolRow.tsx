@@ -1,4 +1,8 @@
-import { Skeleton, TableCell, TableRow } from "@mui/material";
+import { 
+  Skeleton, 
+  TableRow,
+  TableCell, 
+ } from "@mui/material";
 
 export default function SkeletonSchoolRow(): React.ReactElement {
   return (

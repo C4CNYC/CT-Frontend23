@@ -1,8 +1,17 @@
-import { useEffect, useState } from "react";
-import { matchIsValidColor, MuiColorInput } from "mui-color-input";
+import { 
+  useEffect, 
+  useState,
+} from "react";
+import { 
+  MuiColorInput,
+  matchIsValidColor, 
+} from "mui-color-input";
 
+import { 
+  IconButton, 
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import { IconButton, Typography } from "@mui/material";
 
 import { Iconify } from "@components";
 

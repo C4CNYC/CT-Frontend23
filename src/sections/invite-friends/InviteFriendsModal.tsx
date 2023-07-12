@@ -1,23 +1,29 @@
+import * as Yup from "yup";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
   Box,
-  Button,
   Card,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Grid,
+  Dialog,
+  Button,
   IconButton,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
-
-import { FormProvider, RHFTextField, useSnackbar } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
-import { useForm } from "react-hook-form";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { 
+  useSnackbar,
+  FormProvider, 
+  RHFTextField, 
+ } from "@components";
+
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import * as Yup from "yup";
+
 interface Props {
   children: React.ReactElement[] | React.ReactElement;
 }

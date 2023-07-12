@@ -1,10 +1,18 @@
 import {
-  FaSchool,
   FaTasks,
-  FaUserFriends,
   FaUsers,
+  FaSchool,
   FaUserShield,
+  FaUserFriends,
 } from "react-icons/fa";
+import { 
+  TbPhoto,
+  Tb3DCubeSphere, 
+} from "react-icons/tb";
+import { 
+  RiFeedbackFill, 
+  RiOrganizationChart,
+} from "react-icons/ri";
 import {
   BsFlagFill,
   BsFillFileEarmarkMedicalFill,
@@ -16,13 +24,12 @@ import { GiProgression } from "react-icons/gi";
 import { GrOrganization } from "react-icons/gr";
 import { GoFileSubmodule } from "react-icons/go";
 import { AiOutlineSolution } from "react-icons/ai";
-import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
-import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
 
 import { Iconify, Label } from "@components";
 
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+
 import FeedbackDialog from "@sections/feedback/FeedbackDialog";
 import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";

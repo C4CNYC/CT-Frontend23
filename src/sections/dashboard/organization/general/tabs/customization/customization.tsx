@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import { useGetOrgCustomizationQuery } from "src/redux/services/admin/organization-customization";
-// auth
+
 import CustomizationForm from "./CustomizationForm";
 import SkeletonCustomizationOrg from "./SkeletonCustomizationOrg";
+import { useGetOrgCustomizationQuery } from "src/redux/services/admin/organization-customization";
 
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrgCustomizationQuery();

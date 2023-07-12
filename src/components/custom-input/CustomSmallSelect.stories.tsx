@@ -1,7 +1,8 @@
 import type { Meta } from "@storybook/react";
 
-import { ThemeProvider } from "@theme/index";
 import CustomSmallSelect from "./CustomSmallSelect"
+
+import { ThemeProvider } from "@theme/index";
 
 const Component: Meta<typeof CustomSmallSelect> = {
   component: CustomSmallSelect,

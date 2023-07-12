@@ -9,7 +9,10 @@ import Carousel from "react-slick";
 import dynamic from "next/dynamic";
 import { SlDirections } from "react-icons/sl";
 
-import { Box, useTheme } from "@mui/system";
+import { 
+  Box, 
+  useTheme,
+} from "@mui/system";
 import { useMediaQuery } from "@mui/material";
 
 import BaseBlock from "../BaseBlock";

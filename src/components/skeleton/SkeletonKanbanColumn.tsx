@@ -1,4 +1,10 @@
-import { Box, BoxProps, Paper, Skeleton, Stack } from "@mui/material";
+import { 
+  Box, 
+  Paper, 
+  Stack,
+  BoxProps, 
+  Skeleton, 
+} from "@mui/material";
 
 export function SkeletonKanbanColumn({
   ...other

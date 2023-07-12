@@ -2,14 +2,24 @@ import Link from "next/link";
 import { m } from "framer-motion";
 import React, { useEffect } from "react";
 
-import { Button, Typography } from "@mui/material";
+import { 
+  Button, 
+  Typography,
+} from "@mui/material";
 
-import { MotionContainer, varBounce } from "@components";
+import { 
+  varBounce,
+  MotionContainer, 
+} from "@components";
 
+import { 
+  dispatch, 
+  RootState, 
+  useSelector,
+} from "src/redux/store";
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
 import { setSchool } from "src/redux/slices/manager";
-import { dispatch, RootState, useSelector } from "src/redux/store";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";

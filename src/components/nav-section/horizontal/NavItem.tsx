@@ -1,13 +1,21 @@
 import NextLink from "next/link";
 import { forwardRef } from "react";
 
-import { Box, Link, ListItemText, Tooltip } from "@mui/material";
+import { 
+  Box, 
+  Link, 
+  Tooltip,
+  ListItemText, 
+} from "@mui/material";
 
 import { Iconify } from "@components";
 
+import { 
+  StyledIcon, 
+  StyledItem,
+} from "./styles";
 import { NavItemProps } from "../types";
 import { useLocales } from "../../../locales";
-import { StyledIcon, StyledItem } from "./styles";
 import RoleBasedGuard from "../../../auth/RoleBasedGuard";
 
 // eslint-disable-next-line react/display-name

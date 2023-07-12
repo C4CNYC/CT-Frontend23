@@ -1,19 +1,21 @@
-import { useFilters } from "@hooks";
-import {
-  Autocomplete,
-  AutocompleteChangeDetails,
-  AutocompleteChangeReason,
-  Skeleton,
-  TextField,
-} from "@mui/material";
-import { Stack } from "@mui/system";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { IClass } from "src/redux/services/interfaces/class.interface";
-import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
-import { RootState } from "src/redux/store";
+
+import {
+  Skeleton,
+  TextField,
+  Autocomplete,
+  AutocompleteChangeReason,
+  AutocompleteChangeDetails,
+} from "@mui/material";
+import { Stack } from "@mui/system";
+
+import { useFilters } from "@hooks";
 import { BaseResponseInterface } from "@utils";
+import { RootState } from "src/redux/store";
+import { IClass } from "src/redux/services/interfaces/class.interface";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
+import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 
 interface IFilterCoursesAutocomplete {
   classId: string;

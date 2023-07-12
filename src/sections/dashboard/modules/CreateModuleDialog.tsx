@@ -1,28 +1,37 @@
-import { useSnackbar, FormProvider, RHFTextField, RHFSwitch, ModuleLessonsAutocomplete } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  DialogActions,
-  Grid,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { useRouter } from "next/router";
+import * as Yup from "yup";
 import * as React from "react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
-import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import {
-  useCreateModuleMutation,
-  useUpdateModuleMutation,
-} from "../../../redux/services/manager/modules-manager";
+  Box,
+  Tab,
+  Grid,
+  Tabs,
+  Button,
+  Typography,
+  DialogActions,
+} from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+
+import { 
+  RHFSwitch, 
+  useSnackbar, 
+  FormProvider, 
+  RHFTextField, 
+  ModuleLessonsAutocomplete,
+ } from "@components";
+
+ import {
+   useCreateModuleMutation,
+   useUpdateModuleMutation,
+  } from "../../../redux/services/manager/modules-manager";
+  import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
 
 interface FormValuesProps {
   name: string;

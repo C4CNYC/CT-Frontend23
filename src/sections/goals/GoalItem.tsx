@@ -1,12 +1,23 @@
-import { ConfirmDialog, Iconify } from "@components";
-import { LoadingButton } from "@mui/lab";
-import { alpha, IconButton, Stack, Typography } from "@mui/material";
-import { useSnackbar } from "notistack";
 import { useState } from "react";
-import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { IGoals } from "src/redux/interfaces/goals.interface";
-import { useRemoveGoalMutation } from "src/redux/services/student/goals-student";
+import { useSnackbar } from "notistack";
+
+import { 
+  alpha, 
+  Stack, 
+  IconButton, 
+  Typography,
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
+import { 
+  Iconify,
+  ConfirmDialog, 
+ } from "@components";
+
 import AddEditGoalDialog from "./AddEditGoalDialog";
+import { IGoals } from "src/redux/interfaces/goals.interface";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { useRemoveGoalMutation } from "src/redux/services/student/goals-student";
 
 interface GoalsItemProps {
   goal: IGoals;

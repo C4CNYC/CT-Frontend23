@@ -1,18 +1,26 @@
-import { MenuPopover, Label, Iconify, ConfirmDialog } from "@components";
+import { useState } from "react";
+import { BiDotsVerticalRounded } from "react-icons/bi";
+
 import {
   Avatar,
   Button,
   Divider,
-  IconButton,
   MenuItem,
-  TableCell,
   TableRow,
+  TableCell,
+  IconButton,
 } from "@mui/material";
-import { useState } from "react";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+
+import { 
+  Label, 
+  Iconify, 
+  MenuPopover, 
+  ConfirmDialog,
+ } from "@components";
+
 import { useLocales } from "src/locales";
-import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
+import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
 
 interface Props {
   row: ISchoolSummary;

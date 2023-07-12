@@ -1,11 +1,18 @@
-import { ApexOptions } from "apexcharts";
 import { useState } from "react";
-// @mui
-import { Box, Card, CardHeader, CardProps } from "@mui/material";
-// components
-import { useChart, Chart, CustomSmallSelect } from "@components";
+import { ApexOptions } from "apexcharts";
 
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Card, 
+  CardProps,
+  CardHeader, 
+ } from "@mui/material";
+
+import { 
+  Chart, 
+  useChart, 
+  CustomSmallSelect,
+ } from "@components";
 
 interface Props extends CardProps {
   title?: string;

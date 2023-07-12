@@ -1,9 +1,17 @@
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
-import SkeletonSocialsTab from "./SkeletonSocialsTab";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+
 import SocialItem from "./SocialItem";
 import SocialsForm from "./SocialsForm";
+import SkeletonSocialsTab from "./SkeletonSocialsTab";
+import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
 
 interface Props {
   schoolId: string;

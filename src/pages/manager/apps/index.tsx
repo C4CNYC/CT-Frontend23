@@ -15,9 +15,21 @@ import {
   IconButton,
   TableContainer,
 } from "@mui/material";
-import { Container, Stack } from "@mui/system";
+import { 
+  Stack,
+  Container, 
+} from "@mui/system";
 
-import { TablePaginationCustom, useTable, TableNoData, useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ModalIntegration } from "@components";
+import { 
+  Iconify, 
+  useTable, 
+  Scrollbar, 
+  TableNoData, 
+  ModalIntegration,
+  CustomBreadcrumbs, 
+  useSettingsContext, 
+  TablePaginationCustom, 
+} from "@components";
 
 import {
   useGetIntegrationsQuery,

@@ -2,7 +2,10 @@
 // @ts-nocheck
 import SplitPane from "react-split-pane";
 
-import { Box, Container } from "@mui/material";
+import { 
+  Box, 
+  Container,
+} from "@mui/material";
 
 import CodeTab from "./code-tab";
 import ChallengeTask from "./challenge-task";

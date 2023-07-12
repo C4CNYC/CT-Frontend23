@@ -1,9 +1,14 @@
-import { Logo } from "@components";
-import CampaignIcon from "@mui/icons-material/Campaign";
-import MicIcon from "@mui/icons-material/Mic";
-import { Box, IconButton } from "@mui/material";
-import { Stack } from "@mui/system";
 import Link from "next/link";
+
+import { 
+  Box, 
+  IconButton,
+} from "@mui/material";
+import { Stack } from "@mui/system";
+import MicIcon from "@mui/icons-material/Mic";
+import CampaignIcon from "@mui/icons-material/Campaign";
+
+import { Logo } from "@components";
 import { TopBarMenu } from "./TopBarMenu";
 
 export const TopBar = (): React.ReactElement => {

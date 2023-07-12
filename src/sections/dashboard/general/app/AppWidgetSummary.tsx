@@ -1,13 +1,23 @@
 import { ApexOptions } from "apexcharts";
-// @mui
-import { Box, Card, CardProps, Stack, Typography } from "@mui/material";
-import { alpha } from "@mui/material/styles";
-// utils
-import { fNumber, fPercent } from "@utils";
-// components
-import { Iconify, Chart } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Card, 
+  Stack, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
+import { alpha } from "@mui/material/styles";
+
+import { 
+  Chart,
+  Iconify, 
+} from "@components";
+
+import { 
+  fNumber, 
+  fPercent,
+} from "@utils";
 
 interface Props extends CardProps {
   title: string;

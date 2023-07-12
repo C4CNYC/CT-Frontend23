@@ -1,6 +1,9 @@
+import { 
+  CopyBlock, 
+  dracula,
+} from "react-code-blocks";
 import { useAtom } from "jotai";
 import { AiOutlineCode } from "react-icons/ai";
-import { CopyBlock, dracula } from "react-code-blocks";
 
 import {
   Dialog,
@@ -11,6 +14,7 @@ import {
 } from "@mui/material";
 
 import { Iconify } from "@components";
+
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 interface Props {

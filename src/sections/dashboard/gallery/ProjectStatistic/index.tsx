@@ -1,6 +1,9 @@
+import { 
+  BiGitBranch,
+  BiCommentDetail, 
+} from "react-icons/bi";
 import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineVisibility } from "react-icons/md";
-import { BiCommentDetail, BiGitBranch } from "react-icons/bi";
 
 import { 
   Box, 

@@ -1,5 +1,9 @@
+import { 
+  useRef, 
+  useState,
+  useEffect, 
+} from "react";
 import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
 
 import NavItem from "./NavItem";
 import { NavListProps } from "../types";

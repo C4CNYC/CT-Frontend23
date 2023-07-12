@@ -1,8 +1,10 @@
-import { ResizerUi } from "@components";
 import { Stack } from "@mui/system";
+
+import { ResizerUi } from "@components";
+
+import { TopBar } from "./top-bar";
 import { CodePanel } from "./code-panel";
 import { QuickRabbits } from "./quick-rabbits";
-import { TopBar } from "./top-bar";
 
 export const TeacherPanel = (): React.ReactElement => {
   return (

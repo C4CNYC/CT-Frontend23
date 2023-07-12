@@ -3,7 +3,10 @@ import type { Meta } from "@storybook/react";
 
 import { voidFunction } from "@utils";
 
-import { SimpleInfiniteList, SimpleInfiniteListProps } from "./SimpleInfiniteList";
+import { 
+  SimpleInfiniteList, 
+  SimpleInfiniteListProps,
+} from "./SimpleInfiniteList";
 
 const Component: Meta<typeof SimpleInfiniteList> = {
   component: SimpleInfiniteList,

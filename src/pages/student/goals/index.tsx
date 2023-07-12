@@ -1,11 +1,19 @@
 import Head from "next/head";
 
-import { Container, Grid, Skeleton } from "@mui/material";
+import { 
+  Grid, 
+  Skeleton,
+  Container, 
+} from "@mui/material";
+
+import { 
+  CustomBreadcrumbs, 
+  useSettingsContext,
+} from "@components";
 
 import GoalsList from "@sections/goals/GoalsList";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { useGetGoalsQuery } from "src/redux/services/student/goals-student";
 
 Goals.getLayout = (page: React.ReactElement) => (

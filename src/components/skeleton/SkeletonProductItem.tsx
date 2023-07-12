@@ -1,4 +1,9 @@
-import { Card, CardProps, Skeleton, Stack } from "@mui/material";
+import { 
+  Card, 
+  Stack,
+  Skeleton, 
+  CardProps, 
+} from "@mui/material";
 
 export function SkeletonProductItem({
   ...other

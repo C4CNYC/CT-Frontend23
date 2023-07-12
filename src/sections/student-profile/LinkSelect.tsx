@@ -1,6 +1,8 @@
-import { Socials } from "@assets/data";
-import { RHFSelect } from "@components";
 import { MenuItem } from "@mui/material";
+
+import { RHFSelect } from "@components";
+
+import { Socials } from "@assets/data";
 
 interface Props {
   defaultValue?: string;

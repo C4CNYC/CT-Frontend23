@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import type { Meta } from "@storybook/react";
 
-import { ThemeProvider } from "@theme/index";
 import IncrementerButton, { IncrementerButtonProps } from "./IncrementerButton"
+
+import { ThemeProvider } from "@theme/index";
 
 const Component: Meta<typeof IncrementerButton> = {
   component: IncrementerButton,

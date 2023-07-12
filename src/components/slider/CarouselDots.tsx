@@ -1,5 +1,13 @@
-import { styled, Theme } from "@mui/material/styles";
-import { Box, BoxProps, Stack, SxProps } from "@mui/material";
+import { 
+  Theme,
+  styled, 
+} from "@mui/material/styles";
+import { 
+  Box, 
+  Stack, 
+  SxProps,
+  BoxProps, 
+} from "@mui/material";
 
 interface StyledRootProps {
   rounded: boolean;

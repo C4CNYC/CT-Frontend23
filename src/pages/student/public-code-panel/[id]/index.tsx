@@ -15,9 +15,9 @@ import { EmptyContent } from "@components";
 import GuestGuard from "src/auth/GuestGuard";
 import { CodePanelChat } from "@sections/chat";
 import {
+  useGetPublicLessonQuery,
   useGetPublicCourseContentQuery,
   useGetPublicLessonContentQuery,
-  useGetPublicLessonQuery,
 } from "src/redux/services/student/public-student";
 import TopPanel from "@sections/code-panel/top-bar";
 import BottomBar from "@sections/code-panel/bottom-bar";

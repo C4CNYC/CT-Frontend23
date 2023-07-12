@@ -3,8 +3,11 @@ import { Firestore } from "firebase/firestore";
 
 import { Chat } from "@components";
 
+import { 
+  IChatMessage, 
+  useFirebaseChat,
+} from "./hooks/useFirebaseChat.hook";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { IChatMessage, useFirebaseChat } from "./hooks/useFirebaseChat.hook";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
 import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
 

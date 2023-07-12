@@ -1,19 +1,19 @@
-// @mui
 import {
   Box,
-  BoxProps,
-  Button,
-  InputBase,
   Stack,
+  Button,
+  BoxProps,
+  InputBase,
   Typography,
 } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
-// components
-import { Image } from "@components";
-// utils
-import { bgGradient } from "@utils";
+import { 
+  alpha, 
+  useTheme,
+} from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+import { Image } from "@components";
+
+import { bgGradient } from "@utils";
 
 interface Props extends BoxProps {
   img?: string;

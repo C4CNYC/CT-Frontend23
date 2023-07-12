@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
+import 
+  React, { 
+    memo, 
+    useState,
+    useEffect, 
+} from "react";
 import { io } from "socket.io-client";
-import React, { memo, useEffect, useState } from "react";
 
 import { CodeEditor } from "./editor";
 import EditorSkeleton from "./EditorSkeleton";

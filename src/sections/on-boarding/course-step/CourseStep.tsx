@@ -1,8 +1,14 @@
-import { IconButton, Stack, Typography } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
-import StepContainer from "../StepContainer";
+
+import { 
+  Stack, 
+  IconButton, 
+  Typography,
+} from "@mui/material";
+
 import CourseType from "./CourseType";
+import StepContainer from "../StepContainer";
 
 export default function CourseStep({
   goToStep,

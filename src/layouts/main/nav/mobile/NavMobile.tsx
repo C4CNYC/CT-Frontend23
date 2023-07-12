@@ -1,10 +1,22 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
-import { Drawer, IconButton, List } from "@mui/material";
+import { 
+  List,
+  Drawer, 
+  IconButton, 
+} from "@mui/material";
+
+import { 
+  Logo,
+  Iconify, 
+  Scrollbar, 
+} from "@components";
 
 import NavList from "./NavList";
-import { Scrollbar, Iconify, Logo } from "@components";
 
 import { NavProps } from "../types";
 import { NAV } from "../../../../config-global";

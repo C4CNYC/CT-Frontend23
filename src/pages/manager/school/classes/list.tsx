@@ -18,28 +18,33 @@ import {
 } from "@mui/material";
 
 import {
+  Iconify, 
   useTable,
   emptyRows,
+  Scrollbar,
   TableNoData,
+  ConfirmDialog, 
   TableEmptyRows,
   TableHeadCustom,
-  TablePaginationCustom,
+  CustomBreadcrumbs, 
+  useSettingsContext, 
   TableSelectedAction,
-  useSettingsContext, ConfirmDialog, CustomBreadcrumbs, Iconify, Scrollbar
+  TablePaginationCustom,
 } from "@components";
 
 import {
   createRandomAvatar,
   getRandomColor,
 } from "@utils";
+
 import { useFilters } from "@hooks";
 import { RootState } from "src/redux/store";
 import {
+  useGetClassesQuery,
   useCreateClassesMutation,
   useDeleteClassesMutation,
-  useGetClassesQuery,
-  useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
+  useUpdateClassesAvatarMutation,
 } from "src/redux/services/manager/classes-manager";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";

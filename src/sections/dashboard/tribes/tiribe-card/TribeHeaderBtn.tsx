@@ -1,11 +1,18 @@
-import { MenuPopover } from "@components";
 import { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { CiExport } from "react-icons/ci";
-
-import { Box, Button, IconButton } from "@mui/material";
 import { ImExit } from "react-icons/im";
+import { CiExport } from "react-icons/ci";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
+import { 
+  Box, 
+  Button, 
+  IconButton,
+ } from "@mui/material";
+
+import { MenuPopover } from "@components";
+
 import ExitTribeDialog from "../exitTribeDialog";
+
 export default function TribeHeaderBtn(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 

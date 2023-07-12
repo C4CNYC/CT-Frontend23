@@ -1,15 +1,26 @@
 import { ApexOptions } from "apexcharts";
-// @mui
-import { Box, Card, CardProps, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-// utils
-import { fCurrency, fPercent } from "@utils";
-// theme
-import { ColorSchema } from "@theme/palette";
-// components
-import { useChart, Iconify, Chart } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Box, 
+  Card, 
+  Stack, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+import { 
+  useChart, 
+  Iconify, 
+  Chart,
+ } from "@components";
+
+ import { 
+  fPercent,
+  fCurrency, 
+} from "@utils";
+
+import { ColorSchema } from "@theme/palette";
 
 interface Props extends CardProps {
   title: string;

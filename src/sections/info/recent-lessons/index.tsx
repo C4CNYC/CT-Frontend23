@@ -1,5 +1,10 @@
-import { Card, Stack, Typography } from "@mui/material";
 import { AiFillInfoCircle } from "react-icons/ai";
+
+import { 
+  Card, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
 
 export default function RecentLessons(): React.ReactElement {
   return (

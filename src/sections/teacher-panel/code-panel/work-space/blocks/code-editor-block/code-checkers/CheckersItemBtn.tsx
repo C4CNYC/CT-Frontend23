@@ -1,6 +1,16 @@
+import { 
+  Dispatch, 
+  SetStateAction,
+ } from "react";
+
+import { 
+  Box, 
+  ListItem,
+  IconButton, 
+ } from "@mui/material";
+
 import { Iconify } from "@components";
-import { Box, IconButton, ListItem } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
+
 import { CheckersItemText } from "../checkers/checkers-item-text";
 
 interface Props {

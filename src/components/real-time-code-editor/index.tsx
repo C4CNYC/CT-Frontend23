@@ -1,5 +1,9 @@
 import { Socket } from "socket.io-client";
-import React, { useState, useEffect } from "react";
+import 
+  React, { 
+    useState, 
+    useEffect,
+  } from "react";
 
 import { CodeEditor } from "./editor";
 import { getDocument } from "./extentions/collab";

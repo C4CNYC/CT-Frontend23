@@ -1,10 +1,21 @@
-import { Iconify, Image } from "@components";
-
-import { Button, Grid, Link, Paper, Tooltip, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
+import { 
+  Grid, 
+  Link, 
+  Paper, 
+  Button, 
+  Tooltip, 
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+
+import { 
+  Image,
+  Iconify, 
+} from "@components";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
 
 interface Props {

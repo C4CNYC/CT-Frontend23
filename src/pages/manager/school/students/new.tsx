@@ -2,7 +2,10 @@ import Head from "next/head";
 
 import { Container } from "@mui/material";
 
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
+import { 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
 
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import SchoolDashboardLayout from "src/layouts/dashboard/SchoolDashboardLayout";

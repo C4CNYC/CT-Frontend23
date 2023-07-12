@@ -1,22 +1,25 @@
 import { useRef } from "react";
 import Carousel from "react-slick";
-// @mui
+
 import {
-  Avatar,
   Box,
-  BoxProps,
-  CardHeader,
-  Paper,
   Stack,
+  Paper,
+  Avatar,
+  BoxProps,
   Typography,
+  CardHeader,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// utils
-import { fDateTime } from "@utils";
-// components
-import { CarouselArrows, Label, Iconify, Image } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Image,
+  Label, 
+  Iconify, 
+  CarouselArrows, 
+} from "@components";
+
+import { fDateTime } from "@utils";
 
 interface ItemProps {
   id: string;

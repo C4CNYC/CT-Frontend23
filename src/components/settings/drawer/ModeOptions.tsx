@@ -1,8 +1,12 @@
 import { RadioGroup } from "@mui/material";
 
+import { 
+  StyledCard, 
+  StyledWrap,
+  MaskControl, 
+} from "../styles";
 import { SvgColor } from "../../svg-color";
 import { useSettingsContext } from "../SettingsContext";
-import { MaskControl, StyledCard, StyledWrap } from "../styles";
 
 const OPTIONS = ["light", "dark"] as const;
 

@@ -1,5 +1,8 @@
+import { 
+  TableCell, 
+  TableRow,
+} from "@mui/material";
 import { Box } from "@mui/system";
-import { TableCell, TableRow } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {

@@ -1,7 +1,13 @@
 import NextLink from "next/link";
 
+import { 
+  Box, 
+  Link, 
+  AppBar, 
+  Toolbar,
+  BoxProps, 
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
 
 import { Logo } from "@components";
 

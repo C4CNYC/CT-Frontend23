@@ -1,7 +1,10 @@
 import { useState } from "react";
 import type { Meta } from "@storybook/react";
 
-import { FileThumbnail, FileIconProps } from "./FileThumbnail";
+import { 
+    FileThumbnail, 
+    FileIconProps,
+} from "./FileThumbnail";
 
 const Component: Meta<typeof FileThumbnail> = {
   component: FileThumbnail,

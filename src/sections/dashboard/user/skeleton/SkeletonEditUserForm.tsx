@@ -1,5 +1,5 @@
-import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function SkeletonEditUserForm(): React.ReactElement {
   return (

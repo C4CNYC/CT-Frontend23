@@ -1,8 +1,14 @@
+import React, { 
+  useState,
+  useEffect, 
+} from "react";
+import { 
+  HiCode, 
+  HiOutlineDesktopComputer,
+} from "react-icons/hi";
 import { BiSave } from "react-icons/bi";
 import { TbArrowsMinimize } from "react-icons/tb";
-import React, { useEffect, useState } from "react";
 import { BsArrowsFullscreen } from "react-icons/bs";
-import { HiCode, HiOutlineDesktopComputer } from "react-icons/hi";
 
 import {
   Box,

@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { 
+    useState,
+    useEffect, 
+ } from "react";
 import type { Meta } from "@storybook/react";
 
 import { ColorMultiPickerProps } from "./types";

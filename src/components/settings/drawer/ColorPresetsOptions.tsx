@@ -6,8 +6,8 @@ import { useSettingsContext } from "../SettingsContext";
 import {
   MaskControl,
   StyledCard,
-  StyledCircleColor,
   StyledWrap,
+  StyledCircleColor,
 } from "../styles";
 
 export default function ColorPresetsOptions(): React.ReactElement {

@@ -1,5 +1,16 @@
-import { alpha, Theme, useTheme } from "@mui/material/styles";
-import { Avatar, Box, Card, Stack, SxProps, Typography } from "@mui/material";
+import { 
+  Box, 
+  Card, 
+  Stack, 
+  Avatar, 
+  SxProps, 
+  Typography,
+} from "@mui/material";
+import { 
+  alpha, 
+  Theme, 
+  useTheme,
+} from "@mui/material/styles";
 
 import { ItemProps } from "../types";
 import { Label } from "../../label/Label";

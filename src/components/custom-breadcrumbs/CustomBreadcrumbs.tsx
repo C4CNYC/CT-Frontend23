@@ -1,6 +1,13 @@
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { 
+  Box, 
+  Link, 
+  Stack, 
+  Typography,
+  Breadcrumbs, 
+} from "@mui/material";
 
 import { LinkItem } from "./LinkItem";
+
 import { CustomBreadcrumbsProps } from "./types";
 
 export function CustomBreadcrumbs({

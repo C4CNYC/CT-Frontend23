@@ -1,9 +1,16 @@
+import { 
+  Checkbox, 
+  TableRow,
+  TableBody, 
+  TableCell, 
+ } from "@mui/material";
+
 import {
-  TableHeadCustom,
   Label,
+  TableHeadCustom,
 } from "@components";
+
 import { voidFunction } from "@utils";
-import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material";
 
 const TABLE_HEAD = [
   { id: "email", label: "Email", align: "left" },

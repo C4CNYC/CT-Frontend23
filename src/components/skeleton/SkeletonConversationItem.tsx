@@ -1,4 +1,8 @@
-import { Skeleton, Stack, StackProps } from "@mui/material";
+import { 
+  Stack, 
+  Skeleton, 
+  StackProps,
+} from "@mui/material";
 
 export function SkeletonConversationItem({
   sx,

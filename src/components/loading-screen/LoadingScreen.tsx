@@ -1,8 +1,14 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
 import { m } from "framer-motion";
-import { useEffect, useState } from "react";
 
+import { 
+  alpha, 
+  styled,
+} from "@mui/material/styles";
 import { Box } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
 
 import { LogoSmall } from "../logoSmall";
 

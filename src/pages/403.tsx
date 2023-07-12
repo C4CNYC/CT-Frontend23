@@ -2,9 +2,15 @@ import Head from "next/head";
 import NextLink from "next/link";
 import { m } from "framer-motion";
 
-import { Button, Typography } from "@mui/material";
+import { 
+  Button, 
+  Typography,
+} from "@mui/material";
 
-import { MotionContainer, varBounce } from "@components";
+import { 
+  varBounce,
+  MotionContainer, 
+} from "@components";
 
 import CompactLayout from "@layouts/compact";
 import { ForbiddenIllustration } from "@assets/illustrations";

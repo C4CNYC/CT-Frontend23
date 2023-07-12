@@ -4,7 +4,10 @@ import { useSelector } from "react-redux";
 
 import { Container } from "@mui/material";
 
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
+import { 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
 
 import { RootState } from "src/redux/store";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";

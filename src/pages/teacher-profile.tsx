@@ -2,7 +2,10 @@ import Head from "next/head";
 
 import { Container } from "@mui/system";
 
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
+import { 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
 
 import DashboardLayout from "@layouts/dashboard";
 import { useProfileQuery } from "src/redux/services/auth";

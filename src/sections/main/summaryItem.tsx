@@ -1,5 +1,11 @@
+import { 
+  Box, 
+  Grid, 
+  Typography,
+  CircularProgress, 
+ } from "@mui/material";
+
 import { Iconify } from "@components";
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 
 interface Props {
   title: string;

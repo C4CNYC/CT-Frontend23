@@ -1,4 +1,9 @@
-import { Box, Grid, GridProps, Skeleton } from "@mui/material";
+import { 
+  Box, 
+  Grid, 
+  Skeleton,
+  GridProps, 
+ } from "@mui/material";
 
 export function SkeletonPostItem({
   ...other

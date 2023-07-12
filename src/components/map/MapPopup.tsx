@@ -1,6 +1,9 @@
 import { PopupProps } from "react-map-gl";
 
-import { SxProps, Theme } from "@mui/material/styles";
+import { 
+  Theme,
+  SxProps, 
+} from "@mui/material/styles";
 
 import { StyledPopup } from "./styles";
 

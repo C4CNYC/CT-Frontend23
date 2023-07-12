@@ -5,7 +5,10 @@ import {
   CardActionArea,
   FormControlLabel,
 } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { 
+  alpha, 
+  styled,
+} from "@mui/material/styles";
 
 export const StyledWrap = styled(Box)(() => ({
   gap: 8,

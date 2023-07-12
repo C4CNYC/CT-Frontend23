@@ -1,24 +1,26 @@
-// @mui
 import {
-  Avatar,
   Box,
   Card,
-  CardHeader,
-  CardProps,
   Stack,
   Table,
+  Avatar,
+  TableRow,
+  CardProps,
   TableBody,
   TableCell,
-  TableContainer,
-  TableRow,
+  CardHeader,
   Typography,
+  TableContainer,
 } from "@mui/material";
-// utils
-import { fCurrency } from "@utils";
-// components
-import { TableHeadCustom, Image, Scrollbar, Label } from "@components";
 
-// ----------------------------------------------------------------------
+import { 
+  Label,
+  Image, 
+  Scrollbar, 
+  TableHeadCustom, 
+} from "@components";
+
+import { fCurrency } from "@utils";
 
 interface RowProps {
   id: string;

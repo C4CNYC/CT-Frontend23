@@ -1,16 +1,23 @@
-import Carousel from "react-slick";
-import { LoaderDeleyContent } from "@components";
-import { Box } from "@mui/system";
-import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
+import { 
+  useRef, 
+  useState,
+  useEffect, 
+ } from "react";
 import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
-import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { IIntegration } from "src/redux/services/interfaces/integration.interface";
+import Carousel from "react-slick";
+
+import { Box } from "@mui/system";
+
 import { BaseResponseInterface } from "@utils";
+import { LoaderDeleyContent } from "@components";
+
 import BaseBlock from "../BaseBlock";
 import BrowserView from "../view-block/BrowserView";
+import { IIntegration } from "src/redux/services/interfaces/integration.interface";
+import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
+import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 
 const ProsaMirrorView = dynamic(
   async () => await import("./components/ProsaMirrorView"),

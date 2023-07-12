@@ -1,9 +1,11 @@
-
 import Head from "next/head";
 
 import { Container } from "@mui/material";
 
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
+import { 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
 
 import { useLocales } from "src/locales";
 import DashboardLayout from "@layouts/dashboard";

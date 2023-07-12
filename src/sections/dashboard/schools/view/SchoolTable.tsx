@@ -1,19 +1,25 @@
+import { 
+  Table, 
+  TableBody, 
+  TableContainer,
+ } from "@mui/material";
+
 import {
+  useTable,
   emptyRows,
+  Scrollbar,
+  TableNoData,
   TableEmptyRows,
   TableHeadCustom,
-  TableNoData,
   TablePaginationCustom,
-  useTable,
-  Scrollbar,
 } from "@components";
+
 import { useFilters } from "@hooks";
-import { Table, TableBody, TableContainer } from "@mui/material";
+import SchoolTableRow from "./SchoolTableRow";
+import SkeletonSchoolRow from "./SkeletonSchoolRow";
+import SchoolTableToolbar from "./SchoolTableToolbar";
 import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
-import SchoolTableRow from "./SchoolTableRow";
-import SchoolTableToolbar from "./SchoolTableToolbar";
-import SkeletonSchoolRow from "./SkeletonSchoolRow";
 
 const TABLE_HEAD = [
   { id: "cover", label: "Cover", align: "left" },

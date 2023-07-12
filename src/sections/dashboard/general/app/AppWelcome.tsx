@@ -1,10 +1,11 @@
-// @mui
-import { CardProps, Stack, Typography } from "@mui/material";
+import { 
+  Stack, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
 import { styled } from "@mui/material/styles";
-// utils
-import { bgGradient } from "@utils";
 
-// ----------------------------------------------------------------------
+import { bgGradient } from "@utils";
 
 const StyledRoot = styled("div")(({ theme }) => ({
   height: "100%",

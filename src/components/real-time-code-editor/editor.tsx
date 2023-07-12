@@ -3,7 +3,10 @@
 import { useEffect, useRef } from "react";
 import { EditorState } from "@codemirror/state";
 import { indentUnit } from "@codemirror/language"
-import { EditorView, keymap } from "@codemirror/view";
+import { 
+  keymap,
+  EditorView, 
+} from "@codemirror/view";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 

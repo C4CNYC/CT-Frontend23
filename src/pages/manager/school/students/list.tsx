@@ -40,8 +40,8 @@ import {
 import { useFilters } from "@hooks";
 import { RootState } from "src/redux/store";
 import {
-  useDeleteStudentMutation,
   useGetStudentsQuery,
+  useDeleteStudentMutation,
 } from "src/redux/services/manager/students-manager";
 import { UserTableRow } from "@sections/dashboard/user/list";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";

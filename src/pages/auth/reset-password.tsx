@@ -1,7 +1,10 @@
 import Head from "next/head";
 import NextLink from "next/link";
 
-import { Link, Typography } from "@mui/material";
+import { 
+  Link, 
+  Typography,
+} from "@mui/material";
 
 import { Iconify } from "@components";
 

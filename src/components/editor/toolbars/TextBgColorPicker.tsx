@@ -1,9 +1,20 @@
+import 
+  React, { 
+    MouseEventHandler, 
+    useCallback, 
+    useState,
+  } from "react";
+import { 
+  AiOutlineClear, 
+  AiOutlineHighlight,
+} from "react-icons/ai";
 import { useCommands } from "@remirror/react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiOutlineClear, AiOutlineHighlight } from "react-icons/ai";
-import React, { MouseEventHandler, useCallback, useState } from "react";
 
-import { IconButton, Stack } from "@mui/material";
+import { 
+  Stack,
+  IconButton, 
+} from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 
 export default function TextColorPicker(): JSX.Element {

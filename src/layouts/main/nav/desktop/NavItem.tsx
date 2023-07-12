@@ -2,12 +2,22 @@ import NextLink from "next/link";
 import { m } from "framer-motion";
 import { forwardRef } from "react";
 
-import { CardActionArea, Link, LinkProps } from "@mui/material";
+import { 
+  Link, 
+  LinkProps,
+  CardActionArea, 
+} from "@mui/material";
 
-import { Image, Iconify } from "@components";
+import { 
+  Image, 
+  Iconify,
+} from "@components";
 
 import { ListItem } from "./styles";
-import { NavItemDesktopProps, NavItemProps } from "../types";
+import { 
+  NavItemProps,
+  NavItemDesktopProps, 
+} from "../types";
 
 // eslint-disable-next-line react/display-name
 export const NavItem = forwardRef<HTMLDivElement, NavItemDesktopProps>(

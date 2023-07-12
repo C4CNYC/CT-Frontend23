@@ -1,6 +1,11 @@
 import React from "react";
 
-import { alpha, Box, IconButton } from "@mui/material";
+import { 
+  Box, 
+  alpha, 
+  IconButton,
+} from "@mui/material";
+
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 

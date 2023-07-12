@@ -1,21 +1,25 @@
 import { ApexOptions } from "apexcharts";
-// @mui
+
 import {
   Box,
   Card,
-  CardHeader,
-  CardProps,
-  Divider,
   Stack,
+  Divider,
+  CardProps,
+  CardHeader,
   Typography,
 } from "@mui/material";
-import { styled, useTheme } from "@mui/material/styles";
-// hooks
-import { useResponsive } from "@hooks";
-// components
-import { useChart, Chart } from "@components";
+import { 
+  styled, 
+  useTheme,
+} from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+import { 
+  Chart,
+  useChart, 
+} from "@components";
+
+import { useResponsive } from "@hooks";
 
 const StyledRoot = styled(Card)(({ theme }) => ({
   "& .apexcharts-legend": {

@@ -1,9 +1,10 @@
+import { 
+  alpha, 
+  useTheme,
+} from "@mui/material/styles";
 import { GlobalStyles } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
 
 import { bgBlur } from "@utils";
-
-// ----------------------------------------------------------------------
 
 export function StyledChart(): React.ReactElement {
   const theme = useTheme();

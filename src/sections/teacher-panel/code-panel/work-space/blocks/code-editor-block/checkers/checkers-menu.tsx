@@ -1,8 +1,17 @@
+import { 
+  useState,
+  useEffect, 
+} from "react";
+import { 
+  m,
+  LazyMotion, 
+  domAnimation, 
+} from "framer-motion";
+
 import { Box } from "@mui/material";
-import { domAnimation, LazyMotion, m } from "framer-motion";
-import { useEffect, useState } from "react";
-import { IValidationMap } from "src/utils/validationMaping";
+
 import { CheckersItemBtn } from "./checkers-item-btn";
+import { IValidationMap } from "src/utils/validationMaping";
 
 interface Props {
   visible: boolean;

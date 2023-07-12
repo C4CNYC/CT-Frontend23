@@ -1,6 +1,9 @@
+import { 
+  useEffect, 
+  useState,
+} from "react";
 import NextLink from "next/link";
 import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -13,7 +16,10 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import { ConfirmDialog, Label } from "@components";
+import { 
+  Label,
+  ConfirmDialog, 
+} from "@components";
 
 import ElementMenu from "../ElementMenu";
 import ElementInfo from "../ElementInfo";

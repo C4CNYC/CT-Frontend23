@@ -1,9 +1,11 @@
-// @mui
-import { Box, Card, CardProps, Typography } from "@mui/material";
-// utils
-import { fShortenNumber } from "@utils";
+import { 
+  Box, 
+  Card, 
+  CardProps, 
+  Typography,
+ } from "@mui/material";
 
-// ----------------------------------------------------------------------
+ import { fShortenNumber } from "@utils";
 
 interface Props extends CardProps {
   title: string;

@@ -1,7 +1,15 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
 import _ from "lodash";
-import { IClass } from "src/redux/interfaces/class.interface";
+
+import { 
+  Box, 
+  Stack, 
+  Avatar, 
+  Typography,
+ } from "@mui/material";
+
 import { BaseResponseInterface } from "@utils";
+
+import { IClass } from "src/redux/interfaces/class.interface";
 
 interface Props {
   tribe?: IClass & BaseResponseInterface;

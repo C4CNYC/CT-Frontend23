@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
+
+import SkeletonProfileOrg from "./SkeletonProfileOrg";
 import { useGetOrganizationQuery } from "src/redux/services/admin/organization-admin";
 import OrganizationForm from "src/sections/dashboard/organization/general/tabs/profile/OrganizationForm";
-import SkeletonProfileOrg from "./SkeletonProfileOrg";
 
 export default function UserProfileTab(): React.ReactElement {
   const { data, isLoading } = useGetOrganizationQuery();

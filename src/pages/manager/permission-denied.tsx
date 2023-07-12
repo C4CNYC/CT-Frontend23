@@ -11,10 +11,14 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 
+import { 
+  CustomBreadcrumbs,
+  useSettingsContext, 
+} from "@components";
+
 import DashboardLayout from "@layouts/dashboard";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
 
 PermissionDeniedPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

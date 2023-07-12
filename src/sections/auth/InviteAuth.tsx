@@ -1,4 +1,7 @@
-import { Stack, Typography } from "@mui/material";
+import { 
+  Stack, 
+  Typography,
+} from "@mui/material";
 
 import InviteForm from "./InviteForm";
 import LoginLayout from "@layouts/login";

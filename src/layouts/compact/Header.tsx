@@ -1,12 +1,18 @@
 import NextLink from "next/link";
 
+import { 
+  Box, 
+  Link, 
+  AppBar, 
+  Toolbar,
+  BoxProps, 
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
 
 import { bgBlur } from "@utils";
 import { Logo } from "@components";
-import { HEADER } from "../../config-global";
 
+import { HEADER } from "../../config-global";
 import { PATH_PAGE } from "../../routes/paths";
 
 interface Props {

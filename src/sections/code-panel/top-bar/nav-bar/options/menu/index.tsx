@@ -1,8 +1,11 @@
+import { 
+  useState,
+  SetStateAction, 
+} from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import Hamburger from "hamburger-react";
-import { SetStateAction, useState } from "react";
 
 import {
   Link,
@@ -14,7 +17,10 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify, MenuPopover } from "@components";
+import { 
+  Iconify, 
+  MenuPopover,
+} from "@components";
 
 import { UserType } from "@utils";
 import { PATH_AUTH } from "@routes/paths";

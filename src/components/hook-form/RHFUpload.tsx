@@ -1,8 +1,16 @@
-import { Controller, useFormContext } from "react-hook-form";
+import { 
+  Controller, 
+  useFormContext,
+} from "react-hook-form";
 
 import { FormHelperText } from "@mui/material";
 
-import { Upload, UploadAvatar, UploadBox, UploadProps } from "../upload";
+import { 
+  Upload, 
+  UploadBox,
+  UploadProps,
+  UploadAvatar, 
+} from "../upload";
 
 interface Props extends Omit<UploadProps, "file"> {
   name: string;

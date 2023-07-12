@@ -1,8 +1,13 @@
-import { Button, Link, Stack } from "@mui/material";
+import { 
+  Link, 
+  Stack,
+  Button, 
+} from "@mui/material";
+
+import { addAlpha } from "@utils";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
-import { addAlpha } from "@utils";
 
 interface Props {
   redirect: () => void;

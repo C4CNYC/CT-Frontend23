@@ -1,4 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { 
+  Box, 
+  Typography,
+ } from "@mui/material";
 
 interface Props {
   count: number;

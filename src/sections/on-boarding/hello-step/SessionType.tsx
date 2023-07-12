@@ -1,13 +1,14 @@
-import { Image } from "@components";
 import {
-  Badge,
   Box,
   Stack,
+  Badge,
   Tooltip,
+  useTheme,
   Typography,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
+
+import { Image } from "@components";
 
 interface Props {
   title: string;

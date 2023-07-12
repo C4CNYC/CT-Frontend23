@@ -1,4 +1,8 @@
-import { Card, Stack, Typography } from "@mui/material";
+import { 
+  Card, 
+  Stack, 
+  Typography,
+} from "@mui/material";
 
 export function InfoCourses(): React.ReactElement {
   return (

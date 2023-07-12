@@ -1,29 +1,37 @@
 import { useState } from "react";
-// @mui
-import {
-  Avatar,
-  AvatarGroup,
-  Box,
-  Checkbox,
-  Divider,
-  IconButton,
-  MenuItem,
-  PaperProps,
-  Stack,
-  Typography,
-} from "@mui/material";
-// hooks
-import { useCopyToClipboard, useResponsive } from "@hooks";
-// utils
-import { fData, fDateTime } from "@utils";
-// @types
-import { IFileManager } from "@types"
-// components
-import { useSnackbar, FileThumbnail, MenuPopover, Iconify } from "@components";
-//
-// import { FileShareDialog, FileDetailsDrawer } from "../../schools";
 
-// ----------------------------------------------------------------------
+import {
+  Box,
+  Stack,
+  Avatar,
+  Divider,
+  MenuItem,
+  Checkbox,
+  IconButton,
+  PaperProps,
+  Typography,
+  AvatarGroup,
+} from "@mui/material";
+
+import { 
+  Iconify,
+  MenuPopover, 
+  useSnackbar, 
+  FileThumbnail, 
+} from "@components";
+
+import { 
+  fData, 
+  fDateTime,
+ } from "@utils";
+
+import { 
+  useCopyToClipboard, 
+  useResponsive,
+ } from "@hooks";
+ 
+import { IFileManager } from "@types"
+// import { FileShareDialog, FileDetailsDrawer } from "../../schools";
 
 interface Props extends PaperProps {
   file: IFileManager;

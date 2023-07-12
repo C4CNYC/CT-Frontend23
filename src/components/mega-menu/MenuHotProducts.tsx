@@ -1,6 +1,10 @@
 import NextLink from "next/link";
 
-import { Box, Link, Typography } from "@mui/material";
+import { 
+  Box, 
+  Link, 
+  Typography,
+} from "@mui/material";
 
 import { MenuHotProductsProps } from "./types";
 

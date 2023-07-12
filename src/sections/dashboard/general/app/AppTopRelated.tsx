@@ -14,7 +14,10 @@ import {
   Scrollbar, 
 } from "@components";
 
-import { fCurrency, fShortenNumber } from "@utils";
+import { 
+  fCurrency, 
+  fShortenNumber,
+} from "@utils";
 
 interface ItemProps {
   id: string;

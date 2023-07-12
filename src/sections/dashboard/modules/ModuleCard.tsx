@@ -1,21 +1,28 @@
-import { useSnackbar, TextMaxLine, MenuPopover, Iconify, ConfirmDialog } from "@components";
-import { LoadingButton } from "@mui/lab";
+import Link from "next/link";
+import { useState } from "react";
+
 import {
   Box,
   Card,
-  Divider,
-  IconButton,
-  MenuItem,
   Stack,
+  Divider,
+  MenuItem,
   Typography,
+  IconButton,
 } from "@mui/material";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import Link from "next/link";
-import { useState } from "react";
-import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { LoadingButton } from "@mui/lab";
 
-// ----------------------------------------------------------------------
+import { 
+  Iconify, 
+  TextMaxLine, 
+  MenuPopover, 
+  useSnackbar, 
+  ConfirmDialog,
+ } from "@components";
+
+ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
 export default function ModuleCard({
   module,

@@ -1,14 +1,21 @@
+import { 
+  Box,
+  Autocomplete, 
+} from "@mui/material";
 import Stack from "@mui/system/Stack";
 import TextField from "@mui/material/TextField";
-import { Autocomplete, Box } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 import { BaseResponseInterface } from "@utils";
-import { SetFilterType, useFilters } from "@hooks";
+
+import { 
+  useFilters,
+  SetFilterType, 
+} from "@hooks";
 import {
-  ILessonSearchParams,
   IModule,
+  ILessonSearchParams,
   IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import SkeletonFilter from "@sections/dashboard/skeleton/skeletonFilter";

@@ -1,25 +1,31 @@
-import { RHFTextField, FormProvider } from "@components";
+import * as Yup from "yup";
+import { useState } from "react";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CloseIcon from "@mui/icons-material/Close";
-import { LoadingButton } from "@mui/lab";
+
 import {
   Box,
-  Button,
-  Card,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Grid,
+  Card,
+  Button,
+  Dialog,
   IconButton,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { LoadingButton } from "@mui/lab";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { 
+  FormProvider,
+  RHFTextField, 
+} from "@components";
+
 import {
   useCreateLessonContentValidationMutation,
   useUpdateLessonContentValidationMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
-import * as Yup from "yup";
 
 interface FormValuesProps {
   regex: string;

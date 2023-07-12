@@ -6,7 +6,11 @@ import {
   Typography,
  } from "@mui/material";
 
-import { Image, LightboxComponent } from "@components";
+import { 
+  Image, 
+  LightboxComponent,
+} from "@components";
+
 import { fToNow } from "@utils";
 
 import { IAssignmentsComment } from "../../../../@types/assignments";

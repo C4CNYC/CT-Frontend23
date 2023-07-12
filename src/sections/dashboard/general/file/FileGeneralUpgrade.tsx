@@ -1,9 +1,11 @@
-// @mui
-import { Button, Stack, StackProps, Typography } from "@mui/material";
-// assets
-import { UpgradeStorageIllustration } from "../../../../assets/illustrations";
+import { 
+  Stack, 
+  Button, 
+  StackProps, 
+  Typography,
+ } from "@mui/material";
 
-// ----------------------------------------------------------------------
+ import { UpgradeStorageIllustration } from "../../../../assets/illustrations";
 
 export default function FileGeneralUpgrade({
   sx,

@@ -18,7 +18,11 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
-import { FormProvider, RHFSwitch, RHFTextField } from "@components";
+import { 
+  RHFSwitch, 
+  FormProvider, 
+  RHFTextField,
+} from "@components";
 
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useUpdateProjectMutation } from "src/redux/services/student/gallery-student";

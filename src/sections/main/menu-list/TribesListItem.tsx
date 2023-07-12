@@ -1,4 +1,10 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { 
+  Box, 
+  Stack, 
+  Avatar, 
+  Typography,
+ } from "@mui/material";
+
 interface Props {
   active: boolean;
 }

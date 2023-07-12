@@ -4,6 +4,10 @@ import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { 
+  Box, 
+  Stack,
+} from "@mui/system";
 import {
   Button,
   Dialog,
@@ -11,10 +15,13 @@ import {
   DialogActions,
   DialogContent,
 } from "@mui/material";
-import { Box, Stack } from "@mui/system";
 import { LoadingButton } from "@mui/lab";
 
-import { FormProvider, RHFTextField } from "@components";
+import { 
+  FormProvider, 
+  RHFTextField,
+} from "@components";
+
 import { usePostProjectMutation } from "src/redux/services/student/gallery-student";
 
 interface IPublishModal {

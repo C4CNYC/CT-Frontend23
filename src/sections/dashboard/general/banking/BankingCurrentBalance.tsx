@@ -1,22 +1,33 @@
 import { useState } from "react";
 import Carousel from "react-slick";
-// @mui
+
 import {
-  alpha,
   Box,
-  IconButton,
-  MenuItem,
   Stack,
+  alpha,
   SxProps,
+  MenuItem,
+  IconButton,
   Typography,
 } from "@mui/material";
-import { styled, Theme, useTheme } from "@mui/material/styles";
-// utils
-import { fCurrency, bgGradient } from "@utils";
-// components
-import { CarouselDots, Iconify, Image, MenuPopover } from "@components";
+import { 
+  Theme, 
+  styled, 
+  useTheme,
+ } from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+ 
+ import { 
+  Image, 
+  Iconify, 
+  MenuPopover,
+  CarouselDots, 
+} from "@components";
+
+import { 
+  fCurrency, 
+  bgGradient,
+} from "@utils";
 
 const HEIGHT = 276;
 

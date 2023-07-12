@@ -1,6 +1,9 @@
 import { memo } from "react";
 
-import { Box, BoxProps } from "@mui/material";
+import { 
+  Box, 
+  BoxProps,
+} from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 function CheckOutIllustration({ ...other }: BoxProps): React.ReactElement {

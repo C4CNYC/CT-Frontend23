@@ -5,10 +5,16 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { 
+  FullScreen, 
+  useFullScreenHandle,
+} from "react-full-screen";
 
 import { useTheme } from "@mui/material/styles";
-import { Box, useMediaQuery } from "@mui/material";
+import { 
+  Box, 
+  useMediaQuery,
+} from "@mui/material";
 
 import { EmptyContent } from "@components";
 

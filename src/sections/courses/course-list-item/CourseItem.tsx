@@ -1,6 +1,9 @@
+import { 
+  SlArrowDown, 
+  SlArrowUp,
+} from "react-icons/sl";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 import {
   Box,

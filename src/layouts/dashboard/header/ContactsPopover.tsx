@@ -3,7 +3,12 @@ import { useState } from "react";
 import { Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
-import { IconButtonAnimate, Iconify, MenuPopover, Scrollbar } from "@components";
+import { 
+  Iconify, 
+  Scrollbar,
+  MenuPopover, 
+  IconButtonAnimate, 
+} from "@components";
 
 const ITEM_HEIGHT = 64;
 

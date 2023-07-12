@@ -1,36 +1,50 @@
+import { 
+  useMemo,
+  useEffect, 
+  useCallback, 
+} from "react";
+import * as Yup from "yup";
+import { useRouter } from "next/router";
+import generator from "generate-password";
+import { useSelector } from "react-redux";
+import { MuiColorInput } from "mui-color-input";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller, useForm } from "react-hook-form";
+
+import { 
+  Box, 
+  Card, 
+  Grid, 
+  Stack, 
+  Typography,
+ } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+
 import {
+  Label,
   RHFSelect,
   RHFSwitch,
-  RHFTextField,
-  RHFUploadAvatar,
-  Label,
   useSnackbar,
+  RHFTextField,
   FormProvider,
+  RHFUploadAvatar,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import generator from "generate-password";
-import { MuiColorInput } from "mui-color-input";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { countries } from "src/assets/data";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+
 import {
-  useCreateStudentMutation,
-  useUpdateStudentAvatarMutation,
-  useUpdateStudentMutation,
-} from "src/redux/services/manager/students-manager";
-import { RootState } from "src/redux/store";
-import {
-  createRandomAvatar,
   getRandomColor,
+  createRandomAvatar,
   BaseResponseInterface,
 } from "@utils";
-import * as Yup from "yup";
+
+import { countries } from "src/assets/data";
+import { RootState } from "src/redux/store";
+import {
+  useCreateStudentMutation,
+  useUpdateStudentMutation,
+  useUpdateStudentAvatarMutation,
+} from "src/redux/services/manager/students-manager";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };

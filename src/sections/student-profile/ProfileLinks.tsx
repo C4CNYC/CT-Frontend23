@@ -1,15 +1,17 @@
+import React from "react";
+
 import {
   Box,
   Card,
-  CircularProgress,
   Grid,
   Stack,
   Typography,
+  CircularProgress,
 } from "@mui/material";
-import React from "react";
-import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
+
 import LinkForm from "./LinkForm";
 import LinkItem from "./LinkItem";
+import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
 
 interface Props {
   studentId: string;

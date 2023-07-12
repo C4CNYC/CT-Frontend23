@@ -1,4 +1,7 @@
-import { Popover, PopoverOrigin } from "@mui/material";
+import { 
+  Popover, 
+  PopoverOrigin,
+} from "@mui/material";
 
 import { StyledArrow } from "./styles";
 import { MenuPopoverProps } from "./types";

@@ -9,7 +9,10 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { alpha, useTheme } from "@mui/material/styles";
+import { 
+  alpha, 
+  useTheme,
+} from "@mui/material/styles";
 
 import Block from "./Block";
 import { bgBlur } from "@utils";

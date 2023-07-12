@@ -5,7 +5,12 @@ import {
 } from "react";
 import { useAtom } from "jotai";
 
-import { Box, Slider, useMediaQuery, useTheme } from "@mui/material";
+import { 
+  Box, 
+  Slider, 
+  useTheme,
+  useMediaQuery, 
+} from "@mui/material";
 
 import { CodePanelContext } from "../context/CodePanel.context";
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";

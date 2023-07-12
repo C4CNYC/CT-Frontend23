@@ -1,4 +1,7 @@
-import { Box, Stack } from "@mui/material";
+import { 
+  Box, 
+  Stack,
+} from "@mui/material";
 
 import { StyledCard } from "../styles";
 import { Iconify } from "../../iconify";

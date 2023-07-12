@@ -1,12 +1,22 @@
-import { styled, Theme, useTheme } from "@mui/material/styles";
-import { Box, IconButton, SxProps, Typography } from "@mui/material";
-
-import { bgBlur } from "@utils";
+import { 
+  Box, 
+  SxProps, 
+  IconButton, 
+  Typography,
+} from "@mui/material";
+import { 
+  Theme, 
+  styled, 
+  useTheme,
+} from "@mui/material/styles";
 
 import { IconifyProps } from "../iconify";
-import { LeftIcon, RightIcon } from "./Icon";
+import { bgBlur } from "@utils";
 
-// ----------------------------------------------------------------------
+import { 
+  LeftIcon, 
+  RightIcon,
+} from "./Icon";
 
 const StyledRoot = styled(Box)(({ theme }) => ({
   ...bgBlur({
