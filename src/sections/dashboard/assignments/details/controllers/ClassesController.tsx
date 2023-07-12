@@ -1,6 +1,11 @@
-import { SearchNotFound, Iconify } from "@components";
+import * as React from "react";
+
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
-  alpha,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -9,14 +14,13 @@ import {
   Chip,
   TextField,
   Typography,
+  alpha,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useSelector } from "react-redux";
+
+import { Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
+import { BaseResponseInterface, voidFunction } from "@utils";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import {
   useRemoveClassAssignmentMutation,
@@ -24,8 +28,6 @@ import {
 } from "src/redux/services/manager/assignments-manager";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-
-import { BaseResponseInterface, voidFunction } from "@utils";
 
 type ClassType = IClass & BaseResponseInterface;
 

@@ -1,5 +1,6 @@
-import { LoadingScreen } from "@components";
 import { useEffect, useState } from "react";
+
+import { LoadingScreen } from "@components";
 
 interface Props {
   deley: number;

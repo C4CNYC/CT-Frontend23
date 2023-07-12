@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
+
 import { Button } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
-import { useEffect, useState } from "react";
-import { stylesNext, stylesPrev, stylesSkip } from "./navigation-styles";
+
 import NavigationElement from "./NavigationElement";
 import NavigationSpeedDial from "./NavigationSpeedDial";
+import { stylesNext, stylesPrev, stylesSkip } from "./navigation-styles";
 
 export enum BtnType {
   next = "NEXT",

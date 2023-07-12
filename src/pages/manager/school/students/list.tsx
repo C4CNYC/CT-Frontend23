@@ -1,15 +1,12 @@
-import {
-  emptyRows,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  useTable,
-  useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ConfirmDialog, CustomAutocomplete
-} from "@components";
-import { useFilters } from "@hooks";
-import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
+import Head from "next/head";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
   Box,
   Button,
@@ -24,17 +21,28 @@ import {
   Tabs,
   Tooltip,
 } from "@mui/material";
-import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
+
+import {
+  ConfirmDialog,
+  CustomAutocomplete,
+  CustomBreadcrumbs,
+  Iconify,
+  Scrollbar,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  emptyRows,
+  useSettingsContext,
+  useTable,
+} from "@components";
+import { useFilters } from "@hooks";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import InviteStudentDialog from "@sections/dashboard/student/InviteStudentDialog";
 import PendingInvitesTab from "@sections/dashboard/student/PendingInvitesTab";
 import { UserTableRow } from "@sections/dashboard/user/list";
-import Head from "next/head";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 import {
   useDeleteStudentMutation,
   useGetStudentsQuery,
@@ -141,7 +149,10 @@ export default function UserListPage(): React.ReactElement {
           heading="Students"
           links={[
             { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
-            { name: "Students", href: MANAGER_PATH_DASHBOARD.organization.root },
+            {
+              name: "Students",
+              href: MANAGER_PATH_DASHBOARD.organization.root,
+            },
             { name: "List" },
           ]}
           action={

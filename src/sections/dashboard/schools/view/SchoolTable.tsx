@@ -1,16 +1,18 @@
+import { Table, TableBody, TableContainer } from "@mui/material";
+
 import {
-  emptyRows,
+  Scrollbar,
   TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
+  emptyRows,
   useTable,
-  Scrollbar,
 } from "@components";
 import { useFilters } from "@hooks";
-import { Table, TableBody, TableContainer } from "@mui/material";
 import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
+
 import SchoolTableRow from "./SchoolTableRow";
 import SchoolTableToolbar from "./SchoolTableToolbar";
 import SkeletonSchoolRow from "./SkeletonSchoolRow";

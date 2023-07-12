@@ -1,7 +1,9 @@
-import { Iconify } from "@components";
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+import { Iconify } from "@components";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
+
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({

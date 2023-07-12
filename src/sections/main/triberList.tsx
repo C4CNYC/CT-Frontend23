@@ -1,9 +1,10 @@
-import { Iconify, EmptyContent } from "@components";
 import { Grid, Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { SkeletonTriberListItem } from "@sections/main/skeletonsMain";
 
+import { EmptyContent, Iconify } from "@components";
+import { SkeletonTriberListItem } from "@sections/main/skeletonsMain";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+
 import TriberItem from "./triberItem";
 
 export default function TriberList(): React.ReactElement {

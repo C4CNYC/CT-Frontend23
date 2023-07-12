@@ -1,12 +1,15 @@
 // next
-import { EmailInboxIcon } from "@assets/icons";
-import CompactLayout from "@layouts/compact";
-import { Link, Typography } from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
-import AuthVerifyCodeForm from "@sections/auth/AuthVerifyCodeForm";
 import Head from "next/head";
 import NextLink from "next/link";
+
+import { EmailInboxIcon } from "@assets/icons";
+
+import { Link, Typography } from "@mui/material";
+
 import { Iconify } from "@components";
+import CompactLayout from "@layouts/compact";
+import { PATH_AUTH } from "@routes/paths";
+import AuthVerifyCodeForm from "@sections/auth/AuthVerifyCodeForm";
 
 // ----------------------------------------------------------------------
 

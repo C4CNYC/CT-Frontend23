@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
+
+import { m } from "framer-motion";
+
 import { Box } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-import { m } from "framer-motion";
-import { useEffect, useState } from "react";
+
 import { LogoSmall } from "../logoSmall";
 
 // ----------------------------------------------------------------------
@@ -25,9 +28,7 @@ interface Props {
   sx?: Record<string, any>;
 }
 
-export function LoadingScreen({
-  sx,
-}: Props): React.ReactElement | null {
+export function LoadingScreen({ sx }: Props): React.ReactElement | null {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

@@ -1,7 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { MegaMenuDesktopHorizon } from "./MegaMenuDesktopHorizon";
-import { Iconify } from "../iconify"
 import { ThemeProvider } from "@theme/index";
+
+import { Iconify } from "../iconify";
+import { MegaMenuDesktopHorizon } from "./MegaMenuDesktopHorizon";
 
 const Component: Meta<typeof MegaMenuDesktopHorizon> = {
   component: MegaMenuDesktopHorizon,
@@ -11,7 +12,11 @@ const Component: Meta<typeof MegaMenuDesktopHorizon> = {
 export default Component;
 
 export const Default: Meta<typeof MegaMenuDesktopHorizon> = {
-  render: (args) => <ThemeProvider><MegaMenuDesktopHorizon {...args} /></ThemeProvider>,
+  render: (args) => (
+    <ThemeProvider>
+      <MegaMenuDesktopHorizon {...args} />
+    </ThemeProvider>
+  ),
   args: {
     data: [
       {
@@ -20,7 +25,7 @@ export const Default: Meta<typeof MegaMenuDesktopHorizon> = {
         icon: <Iconify icon="ic:round-account-box" />,
         more: {
           title: "More title",
-          path: "more-path"
+          path: "more-path",
         },
         products: [
           {
@@ -32,7 +37,7 @@ export const Default: Meta<typeof MegaMenuDesktopHorizon> = {
             name: "Product Name",
             image: "image",
             path: "product path",
-          }
+          },
         ],
         tags: [
           {
@@ -42,7 +47,7 @@ export const Default: Meta<typeof MegaMenuDesktopHorizon> = {
           {
             name: "Tag name",
             path: "path",
-          }
+          },
         ],
         children: [
           {
@@ -55,11 +60,11 @@ export const Default: Meta<typeof MegaMenuDesktopHorizon> = {
               {
                 title: "Tag title",
                 path: "path",
-              }
-            ]
-          }
-        ]
-      }
-    ]
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 };

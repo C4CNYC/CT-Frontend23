@@ -1,7 +1,9 @@
-import { BaseResponseInterface } from "@utils";
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
+import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import keyBy from "lodash/keyBy";
 import omit from "lodash/omit";
+
+import { BaseResponseInterface } from "@utils";
+
 import { ILessonContent } from "../services/interfaces/courseUnits.interface";
 
 // ----------------------------------------------------------------------

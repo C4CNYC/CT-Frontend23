@@ -1,8 +1,10 @@
-import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
-import { IGlobalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
+import { useEffect, useState } from "react";
+
 import { initializeApp } from "firebase/app";
 import { getDatabase, onValue, ref } from "firebase/database";
-import { useEffect, useState } from "react";
+
+import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
+import { IGlobalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

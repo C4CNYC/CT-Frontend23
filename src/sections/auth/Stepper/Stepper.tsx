@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Stepper from "@mui/material/Stepper";
-import { useState } from "react";
 
 import ClassStep from "./ClassStep";
 import OrganizationStep from "./OrganizationStep";

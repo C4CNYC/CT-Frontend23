@@ -1,10 +1,13 @@
-import { RHFSelect, RHFSwitch, FormProvider } from "@components";
-import { LoadingButton } from "@mui/lab";
-import { Card, Link, Stack, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
+
+import { LoadingButton } from "@mui/lab";
+import { Card, Link, Stack, Typography } from "@mui/material";
+
+import { FormProvider, RHFSelect, RHFSwitch } from "@components";
 import { useUpdateOrgSettingsMutation } from "src/redux/services/admin/organization-settings";
 import { SettingsResponce } from "src/redux/services/interfaces/organization.interface";
+
 import { useLocales } from "../../../../../../locales";
 
 interface FormValuesProps {

@@ -1,3 +1,9 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import { useAtom } from "jotai";
+import { useSelector } from "react-redux";
+
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -11,17 +17,14 @@ import {
   Typography,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import { CSSObject, styled, Theme } from "@mui/material/styles";
+import { CSSObject, Theme, styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
 
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
-import { useAtom } from "jotai";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
+import { RootState } from "src/redux/store";
+
 import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
 
@@ -202,7 +205,12 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
               onClick={() => {
                 setQuickRabbit((prev) => ({
                   ...prev,
-                  [classId]: { id: classId, email: GROUP_CHAT_RABBIT, avatar: "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png" },
+                  [classId]: {
+                    id: classId,
+                    email: GROUP_CHAT_RABBIT,
+                    avatar:
+                      "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
+                  },
                 }));
               }}
             />

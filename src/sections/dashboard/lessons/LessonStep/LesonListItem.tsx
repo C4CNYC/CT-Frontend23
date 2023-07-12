@@ -1,6 +1,11 @@
-import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
 import { Draggable } from "@hello-pangea/dnd";
+import _ from "lodash";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { RxDragHandleDots2 } from "react-icons/rx";
+
 import {
   Badge,
   Box,
@@ -10,13 +15,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import _ from "lodash";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { RxDragHandleDots2 } from "react-icons/rx";
+
+import { Iconify, MenuPopover } from "@components";
+import { BaseResponseInterface } from "@utils";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
+
 import Preferences from "./Modals/Preferences";
 import Validation from "./Modals/Validation";
 

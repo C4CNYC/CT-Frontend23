@@ -8,10 +8,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
+// components
+import { Iconify, Label, Scrollbar } from "@components";
 // utils
 import { fCurrency, fShortenNumber } from "@utils";
-// components
-import { Scrollbar, Label, Iconify } from "@components";
 
 // ----------------------------------------------------------------------
 

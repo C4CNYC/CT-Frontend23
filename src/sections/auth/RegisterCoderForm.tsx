@@ -1,10 +1,14 @@
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import * as Yup from "yup";
+
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-// @mui
-import { FormProvider, Iconify, RHFTextField } from "@components";
+import { IoRocketSharp } from "react-icons/io5";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -16,15 +20,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
+// @mui
+import { FormProvider, Iconify, RHFTextField } from "@components";
 import { PATH_AUTH, PATH_DASHBOARD } from "@routes/paths";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import { IoRocketSharp } from "react-icons/io5";
 import { useAuthContext } from "src/auth/useAuthContext";
+import {
+  MANAGER_PATH_AFTER_LOGIN,
+  STUDENT_PATH_AFTER_LOGIN,
+} from "src/config-global";
 import { useRegisterMutation } from "src/redux/services/auth";
 import { useCreateClassMutation } from "src/redux/services/student/classes-manager";
-import { MANAGER_PATH_AFTER_LOGIN, STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 // ----------------------------------------------------------------------
 
@@ -76,9 +82,7 @@ export default function RegisterCoderForm({
       try {
         await login(data.email, data.password, "codetribe");
         router.replace(
-          isStudent
-            ? STUDENT_PATH_AFTER_LOGIN
-            : MANAGER_PATH_AFTER_LOGIN
+          isStudent ? STUDENT_PATH_AFTER_LOGIN : MANAGER_PATH_AFTER_LOGIN
         );
       } catch (error: any) {
         reset();
@@ -210,11 +214,7 @@ export default function RegisterCoderForm({
           size="large"
           type="submit"
           variant="contained"
-          loading={
-            isSubmitting ||
-            isLoading ||
-            isCreateClassLoading
-          }
+          loading={isSubmitting || isLoading || isCreateClassLoading}
           sx={{
             boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
             bgcolor: "#02D3D7",

@@ -1,4 +1,6 @@
-import { useSnackbar, TextMaxLine, MenuPopover, Iconify, ConfirmDialog } from "@components";
+import Link from "next/link";
+import { useState } from "react";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -9,17 +11,22 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import Link from "next/link";
-import { useState } from "react";
-import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
+
+import {
+  ConfirmDialog,
+  Iconify,
+  MenuPopover,
+  TextMaxLine,
+  useSnackbar,
+} from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+
+import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
 // ----------------------------------------------------------------------
 
-export default function ModuleCard({
-  module,
-}: any): React.ReactElement | null {
+export default function ModuleCard({ module }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);

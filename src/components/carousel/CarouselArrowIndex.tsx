@@ -1,8 +1,10 @@
 // @mui
 import { Box, IconButton, SxProps, Typography } from "@mui/material";
-import { styled, Theme, useTheme } from "@mui/material/styles";
+import { Theme, styled, useTheme } from "@mui/material/styles";
+
 // utils
 import { bgBlur } from "@utils";
+
 //
 import { IconifyProps } from "../iconify";
 //

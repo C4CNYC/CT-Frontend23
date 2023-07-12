@@ -1,19 +1,19 @@
-import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
+
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { FormHelperText, Stack } from "@mui/material";
+
 // components
-import {
-  FormProvider,
-  RHFCodes,
-  useSnackbar,
- } from "@components";
+import { FormProvider, RHFCodes, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+
 // ----------------------------------------------------------------------
 
 interface FormValuesProps {
@@ -64,8 +64,7 @@ export default function AuthVerifyCodeForm(): React.ReactElement {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Verify success!");
       push(STUDENT_PATH_DASHBOARD.root);
-    } catch (e: any) {
-    }
+    } catch (e: any) {}
   };
 
   return (

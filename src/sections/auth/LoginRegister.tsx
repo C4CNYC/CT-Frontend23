@@ -1,5 +1,10 @@
-import { Logo } from "@components";
-import LoginLayout from "@layouts/login/LoginLayout";
+import NextLink from "next/link";
+import { useState } from "react";
+
+import { FaGraduationCap } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { GoFileCode } from "react-icons/go";
+
 import {
   Box,
   Button,
@@ -10,12 +15,11 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
+
+import { Logo } from "@components";
+import LoginLayout from "@layouts/login/LoginLayout";
 import { PATH_AUTH } from "@routes/paths";
-import NextLink from "next/link";
-import { useState } from "react";
-import { FaGraduationCap } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { GoFileCode } from "react-icons/go";
+
 import RegisterCoderForm from "./RegisterCoderForm";
 
 interface Props {

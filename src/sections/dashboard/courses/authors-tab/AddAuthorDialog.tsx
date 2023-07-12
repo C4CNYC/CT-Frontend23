@@ -1,4 +1,5 @@
-import { useFilters } from "@hooks";
+import { useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
@@ -8,9 +9,11 @@ import {
   IconButton,
   Skeleton,
 } from "@mui/material";
-import { useState } from "react";
+
+import { useFilters } from "@hooks";
 import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+
 import AuthorsCard from "./AuthorsCard";
 import { FilterAuthor } from "./filter";
 

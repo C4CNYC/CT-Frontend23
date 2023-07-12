@@ -1,15 +1,18 @@
 import { useState } from "react";
+
 // @mui
 import { Box } from "@mui/material";
-// hooks
-import { useResponsive } from "@hooks";
-// auth
-import AuthGuard from "../../auth/AuthGuard";
+
 // components
 import { useSettingsContext } from "@components";
+// hooks
+import { useResponsive } from "@hooks";
+
+// auth
+import AuthGuard from "../../auth/AuthGuard";
+import Main from "./Main";
 //
 import Header from "./header";
-import Main from "./Main";
 import NavHorizontal from "./nav/NavHorizontal";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";

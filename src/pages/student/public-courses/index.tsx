@@ -1,5 +1,6 @@
-import { useSettingsContext } from "@components";
 import { Container, Stack, Typography } from "@mui/material";
+
+import { useSettingsContext } from "@components";
 import CourseList from "@sections/courses/CourseList";
 import GuestGuard from "src/auth/GuestGuard";
 

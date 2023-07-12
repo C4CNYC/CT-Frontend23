@@ -1,7 +1,11 @@
-import { Box } from "@mui/material";
-import { domAnimation, LazyMotion, m } from "framer-motion";
 import { useEffect, useState } from "react";
+
+import { LazyMotion, domAnimation, m } from "framer-motion";
+
+import { Box } from "@mui/material";
+
 import { IValidationMap } from "src/utils/validationMaping";
+
 import { CheckersItemBtn } from "./checkers-item-btn";
 
 interface Props {
@@ -9,10 +13,7 @@ interface Props {
   checkers: IValidationMap[];
 }
 
-export function CheckersMenu({
-  visible,
-  checkers,
-}: Props): React.ReactElement {
+export function CheckersMenu({ visible, checkers }: Props): React.ReactElement {
   const [visibleText, setVisibleText] = useState(false);
   const [openText, setOpenText] = useState(true);
   const variants = {

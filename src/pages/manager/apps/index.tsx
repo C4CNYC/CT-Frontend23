@@ -1,6 +1,9 @@
-import { TablePaginationCustom, useTable, TableNoData, useSettingsContext, Scrollbar, Iconify, CustomBreadcrumbs, ModalIntegration } from "@components";
-import { useFilters } from "@hooks";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import Head from "next/head";
+
+import { format } from "date-fns";
+import _ from "lodash";
+import { useSnackbar } from "notistack";
+
 import {
   Button,
   Card,
@@ -14,13 +17,22 @@ import {
   TableRow,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
+
+import {
+  CustomBreadcrumbs,
+  Iconify,
+  ModalIntegration,
+  Scrollbar,
+  TableNoData,
+  TablePaginationCustom,
+  useSettingsContext,
+  useTable,
+} from "@components";
+import { useFilters } from "@hooks";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
-import { format } from "date-fns";
-import _ from "lodash";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
+import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import {
   useGetIntegrationsQuery,
   useRemoveIntegrationMutation,

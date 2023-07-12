@@ -1,11 +1,12 @@
-import { useSettingsContext } from "@components";
-import { Container } from "@mui/system";
-import DefaultClassInfo from "@sections/main/DefaultClassInfo";
-import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
-
-import QuestsTable from "@sections/main/quests/QuestsTable";
 import Head from "next/head";
+
+import { Container } from "@mui/system";
+
+import { useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
+import DefaultClassInfo from "@sections/main/DefaultClassInfo";
+import QuestsTable from "@sections/main/quests/QuestsTable";
+import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
 // ----------------------------------------------------------------------
 

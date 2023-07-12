@@ -1,9 +1,12 @@
 import { SetStateAction, useEffect, useState } from "react";
+
 import { useTimer } from "react-timer-hook";
 
-import { Iconify, MenuPopover } from "@components";
 import { IconButton, Typography, useMediaQuery } from "@mui/material";
 import { Box, Stack, useTheme } from "@mui/system";
+
+import { Iconify, MenuPopover } from "@components";
+
 import { TimerInput } from "./TimerInput";
 
 const TimerPopup = (): React.ReactElement => {

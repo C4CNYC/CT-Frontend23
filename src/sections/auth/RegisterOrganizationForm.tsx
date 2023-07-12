@@ -1,6 +1,8 @@
+import NextLink from "next/link";
+
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { Link, Stack, Typography } from "@mui/material";
-import NextLink from "next/link";
+
 import LoginLayout from "../../layouts/login";
 import { PATH_AUTH } from "../../routes/paths";
 import AuthOrganizationForm from "./AuthOrganizationForm";

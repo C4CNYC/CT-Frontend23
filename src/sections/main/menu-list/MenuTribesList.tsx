@@ -1,10 +1,14 @@
-import { Button, Divider, Stack } from "@mui/material";
+import { useRouter } from "next/router";
+
 import { FaPlus } from "react-icons/fa";
-import TribeListItem from "./TribesListItem";
+
+import { Button, Divider, Stack } from "@mui/material";
+
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
-import { useRouter } from "next/router";
+
+import TribeListItem from "./TribesListItem";
 
 export default function MenuTribesList(): React.ReactElement {
   const { data: tribes } = useGetClassesQuery({});
@@ -24,13 +28,7 @@ export default function MenuTribesList(): React.ReactElement {
           },
         }}
       >
-        <RoleBasedGuard
-          roles={[
-            Role.Owner,
-            Role.Admin,
-            Role.Manager
-          ]}
-        >
+        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
           <Button
             sx={(theme) => ({
               alignSelf: "flex-start",
@@ -48,11 +46,9 @@ export default function MenuTribesList(): React.ReactElement {
           </Button>
         </RoleBasedGuard>
         <Stack gap={1} ml={2}>
-          {
-            tribes?.data.map(t => (
-              <TribeListItem active={t.id === query.id} key={t.id} tribe={t} />
-            ))
-          }
+          {tribes?.data.map((t) => (
+            <TribeListItem active={t.id === query.id} key={t.id} tribe={t} />
+          ))}
         </Stack>
       </Stack>
       <Divider sx={{ borderBottomWidth: "4px", mt: 2, ml: 2 }} />

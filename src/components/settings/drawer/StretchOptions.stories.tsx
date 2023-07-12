@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import StretchOptions from "./StretchOptions";
 
 const Component: Meta<typeof StretchOptions> = {

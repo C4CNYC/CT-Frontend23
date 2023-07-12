@@ -1,21 +1,21 @@
-import {
-  RHFTextField,
-  RHFUploadAvatar,
-  FormProvider,
-} from "@components";
+import { useCallback } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
+import { fData } from "@utils";
 import {
-  useUpdateOrganizationMutation,
   useUpdateOrgAvatarMutation,
+  useUpdateOrganizationMutation,
 } from "src/redux/services/admin/organization-admin";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
-import { fData } from "@utils";
-import * as Yup from "yup";
+
 import { useLocales } from "../../../../../../locales";
 
 const UpdateUserSchema = Yup.object().shape({

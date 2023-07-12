@@ -1,9 +1,12 @@
-import { ApexOptions } from "apexcharts";
 import { useState } from "react";
+
+import { ApexOptions } from "apexcharts";
+
 // @mui
 import { Box, Card, CardHeader, CardProps } from "@mui/material";
+
 // components
-import { useChart, Chart, CustomSmallSelect } from "@components";
+import { Chart, CustomSmallSelect, useChart } from "@components";
 
 // ----------------------------------------------------------------------
 

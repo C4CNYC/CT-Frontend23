@@ -1,6 +1,7 @@
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 // ----------------------------------------------------------------------
 

@@ -1,6 +1,9 @@
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
+
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
+
 import SkeletonSocialsTab from "./SkeletonSocialsTab";
 import SocialItem from "./SocialItem";
 import SocialsForm from "./SocialsForm";

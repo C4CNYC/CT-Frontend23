@@ -1,4 +1,6 @@
+// hooks
 import { ApexOptions } from "apexcharts";
+
 // @mui
 import {
   Box,
@@ -10,10 +12,10 @@ import {
   Typography,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
-// hooks
-import { useResponsive } from "@hooks";
+
 // components
-import { useChart, Chart } from "@components";
+import { Chart, useChart } from "@components";
+import { useResponsive } from "@hooks";
 
 // ----------------------------------------------------------------------
 

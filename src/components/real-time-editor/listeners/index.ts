@@ -1,6 +1,8 @@
+import { MutableRefObject } from "react";
+
 import { Compartment } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
-import { MutableRefObject } from "react";
+
 import { COPY_PASTE_EVENT } from "../events/copy-paste";
 import { MOVE_CURSOR_EVENT } from "../events/move-cursor-event";
 import { PASTE_SYMBOL_EVENT } from "../events/paste-sumbol.event";

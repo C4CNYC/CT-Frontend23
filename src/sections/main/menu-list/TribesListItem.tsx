@@ -1,19 +1,25 @@
+import { useRouter } from "next/router";
+
 import { Avatar, Box, Stack, Typography } from "@mui/material";
+
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
-import { useRouter } from "next/router";
 import { IClass } from "src/redux/interfaces/class.interface";
+
 interface Props {
   active: boolean;
-  tribe: IClass & BaseResponseInterface
+  tribe: IClass & BaseResponseInterface;
 }
 
-export default function TribeListItem({ active, tribe }: Props): React.ReactElement {
+export default function TribeListItem({
+  active,
+  tribe,
+}: Props): React.ReactElement {
   const { push } = useRouter();
   return (
     <Stack
       onClick={() => {
-        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id));
       }}
       direction="row"
       sx={{ alignItems: "center", position: "relative" }}

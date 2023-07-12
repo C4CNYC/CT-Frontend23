@@ -1,8 +1,11 @@
 import { memo } from "react";
+
 // @mui
 import { Stack } from "@mui/material";
+
 // utils
 import { hideScrollbarY } from "@utils";
+
 //
 import { NavListProps, NavSectionProps } from "../types";
 import NavList from "./NavList";

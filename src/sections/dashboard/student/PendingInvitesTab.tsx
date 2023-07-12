@@ -1,9 +1,7 @@
-import {
-  TableHeadCustom,
-  Label,
-} from "@components";
-import { voidFunction } from "@utils";
 import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material";
+
+import { Label, TableHeadCustom } from "@components";
+import { voidFunction } from "@utils";
 
 const TABLE_HEAD = [
   { id: "email", label: "Email", align: "left" },
@@ -30,7 +28,9 @@ export default function PendingInvitesTab({
         headLabel={TABLE_HEAD}
         numSelected={selected.length}
         onSort={onSort}
-        onSelectAllRows={ (checked: any) => { voidFunction() } }
+        onSelectAllRows={(checked: any) => {
+          voidFunction();
+        }}
       />
       <TableBody sx={{ minHeight: 12 }}>
         <PendingUserRow

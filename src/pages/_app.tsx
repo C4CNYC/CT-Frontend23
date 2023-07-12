@@ -1,48 +1,50 @@
 // i18n
-import "src/locales/i18n";
+// next
+import { NextPage } from "next";
+import { AppProps } from "next/app";
+import Head from "next/head";
 
+// ----------------------------------------------------------------------
+import { CacheProvider, EmotionCache } from "@emotion/react";
+// theme
+import { ThemeProvider } from "@theme/index";
+// map
+import "mapbox-gl/dist/mapbox-gl.css";
+// lazy image
+import "react-lazy-load-image-component/src/effects/blur.css";
+// redux
+import { Provider as ReduxProvider } from "react-redux";
 // scroll bar
 import "simplebar/src/simplebar.css";
-
+// slick-carousel
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 // lightbox
 import "yet-another-react-lightbox/plugins/captions.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import "yet-another-react-lightbox/styles.css";
 
-// map
-import "mapbox-gl/dist/mapbox-gl.css";
-
-// slick-carousel
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-
-// lazy image
-import "react-lazy-load-image-component/src/effects/blur.css";
-
-// ----------------------------------------------------------------------
-
-import { CacheProvider, EmotionCache } from "@emotion/react";
-// next
-import { NextPage } from "next";
-import { AppProps } from "next/app";
-import Head from "next/head";
-// redux
-import { Provider as ReduxProvider } from "react-redux";
 // @mui
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-// redux
-import { store } from "src/redux/store";
+
+// components
+import {
+  MotionLazyContainer,
+  ProgressBar,
+  SettingsProvider,
+  SnackbarProviderWrapper,
+  StyledChart,
+  ThemeSettings,
+} from "@components";
 // utils
 import { createEmotionCache } from "@utils";
-// theme
-import { ThemeProvider } from "@theme/index";
+import { AuthProvider } from "src/auth/JwtContext";
 // locales
 import ThemeLocalization from "src/locales";
-// components
-import { SnackbarProviderWrapper, MotionLazyContainer, SettingsProvider, ThemeSettings, ProgressBar, StyledChart } from "@components";
-
-import { AuthProvider } from "src/auth/JwtContext";
+import "src/locales/i18n";
+// redux
+import { store } from "src/redux/store";
 
 const clientSideEmotionCache = createEmotionCache();
 

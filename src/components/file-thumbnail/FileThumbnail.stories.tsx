@@ -1,6 +1,8 @@
-import type { Meta } from "@storybook/react";
-import { FileThumbnail, FileIconProps } from "./FileThumbnail";
 import { useState } from "react";
+
+import type { Meta } from "@storybook/react";
+
+import { FileIconProps, FileThumbnail } from "./FileThumbnail";
 
 const Component: Meta<typeof FileThumbnail> = {
   component: FileThumbnail,
@@ -9,34 +11,37 @@ const Component: Meta<typeof FileThumbnail> = {
 
 export default Component;
 
-const ExampleComponent = ({file, ...props}: FileIconProps) => {
-    const [value, setValue] = useState<File | string>("")
-    
-    const onUploadCustom = async (
-        data: any,
-      ): Promise<void> => {
-        const file = data[0];
+const ExampleComponent = ({ file, ...props }: FileIconProps) => {
+  const [value, setValue] = useState<File | string>("");
 
-        const newFile = Object.assign(file, {
-            preview: URL.createObjectURL(file),
-        });
-        if (file) {
-            setValue(file)
-        }
-      };
+  const onUploadCustom = async (data: any): Promise<void> => {
+    const file = data[0];
 
-      return (
-        <div style={{width: 200}}>
-            <input type="file" onChange={async (e) => { await onUploadCustom(e.target.files); }}/>
-            <FileThumbnail file={value} {...props} />
-        </div>
-    )
-}
+    const newFile = Object.assign(file, {
+      preview: URL.createObjectURL(file),
+    });
+    if (file) {
+      setValue(file);
+    }
+  };
 
-export const Default: Meta<typeof FileThumbnail>  = {
-    render: (args) => <ExampleComponent {...args} />,
-    args: {
-        tooltip: true,
-        imageView: true,
-    },
+  return (
+    <div style={{ width: 200 }}>
+      <input
+        type="file"
+        onChange={async (e) => {
+          await onUploadCustom(e.target.files);
+        }}
+      />
+      <FileThumbnail file={value} {...props} />
+    </div>
+  );
+};
+
+export const Default: Meta<typeof FileThumbnail> = {
+  render: (args) => <ExampleComponent {...args} />,
+  args: {
+    tooltip: true,
+    imageView: true,
+  },
 };

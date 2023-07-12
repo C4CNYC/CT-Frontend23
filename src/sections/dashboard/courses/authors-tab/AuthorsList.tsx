@@ -1,14 +1,18 @@
-import { useFilters } from "@hooks";
+import { useState } from "react";
+
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { Collapse, IconButton, Skeleton, Stack } from "@mui/material";
-import { useState } from "react";
+
+import { useFilters } from "@hooks";
 import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+
 import AddAuthorDialog from "./AddAuthorDialog";
 import AuthorForm from "./AuthorForm";
 import AuthorsCard from "./AuthorsCard";
 import FilterAuthors from "./filter";
+
 interface Props {
   id: string;
 }

@@ -1,11 +1,13 @@
 import { ApexOptions } from "apexcharts";
+
 // @mui
 import { Avatar, Card, CardProps, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
+// components
+import { Chart, useChart } from "@components";
 // utils
 import { fData } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
 // ----------------------------------------------------------------------
 

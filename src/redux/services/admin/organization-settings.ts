@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-
 import { BaseResponseInterface } from "@utils";
+
 import { adminApi } from ".";
 import {
   ISettings,

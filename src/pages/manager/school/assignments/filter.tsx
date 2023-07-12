@@ -1,4 +1,7 @@
 // Icons
+// Hooks
+import { useState } from "react";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 // Mui
@@ -16,10 +19,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/system/Container";
 import Stack from "@mui/system/Stack";
-// Hooks
-import { useState } from "react";
+
 // commponents
-import { MenuPopover, IconButtonAnimate } from "@components";
+import { IconButtonAnimate, MenuPopover } from "@components";
 
 export default function FilterAssignments(): React.ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

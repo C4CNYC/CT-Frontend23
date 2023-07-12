@@ -1,5 +1,6 @@
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import Head from "next/head";
+import { useState } from "react";
+
 import {
   Box,
   Card,
@@ -9,9 +10,10 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import Head from "next/head";
-import { useState } from "react";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 
 // ----------------------------------------------------------------------
@@ -39,7 +41,7 @@ export default function PermissionDeniedPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>  Permission Denied | Minimal UI</title>
+        <title> Permission Denied | Minimal UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

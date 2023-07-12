@@ -1,9 +1,13 @@
-import { Iconify } from "@components";
-import { IconButton, ListItem } from "@mui/material";
-import { useAtom } from "jotai";
 import { useEffect } from "react";
-import { checkersAnimationAtom } from "./checkers-animation-atom";
+
+import { useAtom } from "jotai";
+
+import { IconButton, ListItem } from "@mui/material";
+
+import { Iconify } from "@components";
+
 import CheckersItemText from "./CheckersItemText";
+import { checkersAnimationAtom } from "./checkers-animation-atom";
 
 interface Props {
   active: boolean;

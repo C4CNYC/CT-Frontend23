@@ -1,12 +1,15 @@
-import { RHFTextField, FormProvider } from "@components";
-import { LoadingButton } from "@mui/lab";
-import { Box, Stack, Typography } from "@mui/material";
 import { MuiColorInput } from "mui-color-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
+
+import { LoadingButton } from "@mui/lab";
+import { Box, Stack, Typography } from "@mui/material";
+
+import { FormProvider, RHFTextField } from "@components";
+import { BaseResponseInterface } from "@utils";
 import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin/organization-customization";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
-import { BaseResponseInterface } from "@utils";
+
 import { useLocales } from "../../../../../../locales";
 
 interface FormValuesProps {
@@ -62,8 +65,7 @@ export default function CustomizationForm({
       }).unwrap();
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
-    } catch (error: any) {
-    }
+    } catch (error: any) {}
   };
 
   return (

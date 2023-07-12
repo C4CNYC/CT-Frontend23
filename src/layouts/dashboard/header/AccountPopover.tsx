@@ -1,9 +1,8 @@
-import {
-  CustomAvatar,
-  IconButtonAnimate,
-  MenuPopover,
-  useSnackbar,
-} from "@components";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import { useDispatch } from "react-redux";
+
 import {
   Box,
   Divider,
@@ -13,25 +12,35 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+
+import {
+  CustomAvatar,
+  IconButtonAnimate,
+  MenuPopover,
+  useSnackbar,
+} from "@components";
+import {
+  MANAGER_PATH_DASHBOARD,
+  MANAGER_PATH_PAGE,
+} from "@routes/manager.paths";
 import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useProfileQuery } from "src/redux/services/auth";
-import { RootState, useSelector } from "src/redux/store";
-import { useAuthContext } from "../../../auth/useAuthContext";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
-import { MANAGER_PATH_DASHBOARD, MANAGER_PATH_PAGE } from "@routes/manager.paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { useProfileQuery } from "src/redux/services/auth";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 import { Role } from "src/redux/services/enums/role.enum";
 import { setStudentMode } from "src/redux/slices/global";
-import { useDispatch } from "react-redux";
+import { RootState, useSelector } from "src/redux/store";
+
+import { useAuthContext } from "../../../auth/useAuthContext";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
   const reduxDispatch = useDispatch();
-  const isStudentMode = useSelector((state: RootState) => state.global.isStudent);
+  const isStudentMode = useSelector(
+    (state: RootState) => state.global.isStudent
+  );
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const { logout } = useAuthContext();
@@ -39,9 +48,7 @@ export default function AccountPopover(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const { data: profile } = useProfileQuery(
-    isStudentMode
-      ? ProfileType.STUDENT
-      : ProfileType.MANAGER
+    isStudentMode ? ProfileType.STUDENT : ProfileType.MANAGER
   );
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -91,7 +98,9 @@ export default function AccountPopover(): React.ReactElement {
 
       <MenuPopover
         open={openPopover}
-        onClose={() => { setOpenPopover(null); }}
+        onClose={() => {
+          setOpenPopover(null);
+        }}
         sx={{ width: 200, p: 0 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
@@ -129,13 +138,7 @@ export default function AccountPopover(): React.ReactElement {
           </MenuItem>
         </Stack>
 
-        <RoleBasedGuard
-          roles={[
-            Role.Owner,
-            Role.Admin,
-            Role.Manager
-          ]}
-        >
+        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
           <Stack sx={{ p: 1 }}>
             <MenuItem
               onClick={() => {
@@ -144,23 +147,15 @@ export default function AccountPopover(): React.ReactElement {
                     ? MANAGER_PATH_PAGE.home
                     : STUDENT_PATH_PAGE.home
                 );
-                reduxDispatch(setStudentMode(!isStudentMode))
+                reduxDispatch(setStudentMode(!isStudentMode));
               }}
             >
-              {
-                isStudentMode
-                  ? "Manager Account"
-                  : "Student Account"
-              }
+              {isStudentMode ? "Manager Account" : "Student Account"}
             </MenuItem>
           </Stack>
         </RoleBasedGuard>
 
-        <RoleBasedGuard
-          roles={[
-            Role.Owner
-          ]}
-        >
+        <RoleBasedGuard roles={[Role.Owner]}>
           <Stack sx={{ p: 1 }}>
             <MenuItem
               onClick={() => {

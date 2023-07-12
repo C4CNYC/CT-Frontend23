@@ -1,11 +1,12 @@
-import { EmptyContent } from "@components";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
-
-import ProjectMain from "@sections/course";
-import SkeletonCoursePage from "@sections/course/SkeletonCoursePage";
-import _ from "lodash";
 import Head from "next/head";
 import { useRouter } from "next/router";
+
+import _ from "lodash";
+
+import { EmptyContent } from "@components";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import ProjectMain from "@sections/course";
+import SkeletonCoursePage from "@sections/course/SkeletonCoursePage";
 import { useGetCoursContentQuery } from "src/redux/services/student/courses-manager";
 
 CoursePage.getLayout = (page: React.ReactElement) => (

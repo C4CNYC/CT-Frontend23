@@ -1,8 +1,11 @@
+import React from "react";
+
 import { FileExtension } from "@remirror/extension-file";
 import { ReactComponentExtension } from "@remirror/extension-react-component";
 import { TableExtension } from "@remirror/extension-react-tables";
 import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
-import React from "react";
+import jsx from "refractor/lang/jsx.js";
+import typescript from "refractor/lang/typescript.js";
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -35,8 +38,6 @@ import {
 } from "remirror/extensions";
 import "remirror/styles/all.css";
 
-import jsx from "refractor/lang/jsx.js";
-import typescript from "refractor/lang/typescript.js";
 import { isJson, voidFunction } from "@utils";
 
 type Extensions =

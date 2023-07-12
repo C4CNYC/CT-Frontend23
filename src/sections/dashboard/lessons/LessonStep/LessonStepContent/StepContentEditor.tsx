@@ -1,16 +1,19 @@
-import { Box, Tab, Tabs } from "@mui/material";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
+
+import { useSnackbar } from "notistack";
 import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
+
+import { Box, Tab, Tabs } from "@mui/material";
+
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
   useGetLessonContentByIdQuery,
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
-
 import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
+
 import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";

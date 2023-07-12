@@ -1,5 +1,7 @@
 import { Typography } from "@mui/material";
+
 import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
+
 import BaseBlock from "../BaseBlock";
 import BrowserView from "./BrowserView";
 

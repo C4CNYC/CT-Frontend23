@@ -1,18 +1,22 @@
+// components
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import * as Yup from "yup";
+
 // next
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
+
+import { FormProvider, Iconify, RHFTextField } from "@components";
+import { useInviteSubmitMutation } from "src/redux/services/admin/invite-admin";
+
 // routes
 import { PATH_AUTH } from "../../routes/paths";
-// components
-import { useRouter } from "next/router";
-import { useInviteSubmitMutation } from "src/redux/services/admin/invite-admin";
-import { RHFTextField, FormProvider, Iconify } from "@components";
 
 // ----------------------------------------------------------------------
 

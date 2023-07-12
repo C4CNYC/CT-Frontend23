@@ -1,9 +1,10 @@
-import { Box } from "@mui/system";
-import Hamburger from "hamburger-react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { SetStateAction, useState } from "react";
 
-import { Iconify, MenuPopover } from "@components";
-import { UserType } from "@utils";
+import Hamburger from "hamburger-react";
+import { useSnackbar } from "notistack";
+
 import {
   Divider,
   Link,
@@ -12,14 +13,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { Box } from "@mui/system";
+
+import { Iconify, MenuPopover } from "@components";
+import { PATH_AUTH } from "@routes/paths";
+import { UserType } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 
-import { PATH_AUTH } from "@routes/paths";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import config, { ILinks } from "./config";
 import MobileHamburger from "./MobileHamburger";
+import config, { ILinks } from "./config";
 
 const Menu = (): React.ReactElement => {
   const theme = useTheme();

@@ -1,8 +1,10 @@
 // @mui
-import { Avatar, Box, Card, Stack, SxProps, Typography } from "@mui/material";
-import { alpha, Theme, useTheme } from "@mui/material/styles";
 // theme
 import { ColorSchema } from "@theme/palette";
+
+import { Avatar, Box, Card, Stack, SxProps, Typography } from "@mui/material";
+import { Theme, alpha, useTheme } from "@mui/material/styles";
+
 //
 import { Label } from "../../label/Label";
 //

@@ -1,8 +1,9 @@
-import { Iconify } from "@components";
 import { Grid, Link, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+
+import { Iconify } from "@components";
+import { BaseResponseInterface, convertDuration } from "@utils";
 import { IAssignment } from "src/redux/interfaces/assignment.interface";
-import { convertDuration, BaseResponseInterface } from "@utils";
 
 interface Props {
   assignment?: IAssignment & BaseResponseInterface;

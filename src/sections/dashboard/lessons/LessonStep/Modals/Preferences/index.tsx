@@ -1,6 +1,12 @@
+import React, { useState } from "react";
+
 import { javascript } from "@codemirror/lang-javascript";
-import { FormProvider, ModalCodeFullscreen, RHFCode } from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
+import _ from "lodash";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -12,13 +18,11 @@ import {
   Tab,
   Tabs,
 } from "@mui/material";
-import _ from "lodash";
-import { useSnackbar } from "notistack";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, ModalCodeFullscreen, RHFCode } from "@components";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
-import * as Yup from "yup";
+
 import { GeneralTab } from "./GeneralTab";
 
 interface FormValuesProps {
@@ -117,8 +121,7 @@ export default function Preferences({
       }).unwrap();
       enqueueSnackbar("Your step is udpated successfully");
       setOpenDialog(false);
-    } catch (e
-      ) {
+    } catch (e) {
       enqueueSnackbar("sorry something went wrong", { variant: "error" });
     }
   };

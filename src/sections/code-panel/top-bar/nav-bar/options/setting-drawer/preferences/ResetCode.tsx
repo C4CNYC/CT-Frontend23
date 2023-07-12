@@ -1,5 +1,7 @@
-import { Iconify } from "@components";
 import { Button } from "@mui/material";
+
+import { Iconify } from "@components";
+
 import BasePreference from "./BasePreference";
 
 interface IResetCode {

@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import ColorPresetsOptions from "./ColorPresetsOptions";
 
 const Component: Meta<typeof ColorPresetsOptions> = {

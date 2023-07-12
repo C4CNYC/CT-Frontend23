@@ -1,4 +1,5 @@
 // @mui
+// hooks
 import {
   AppBar,
   Box,
@@ -9,16 +10,17 @@ import {
   Toolbar,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// hooks
-import { useResponsive, useOffSetTop } from "@hooks";
+
+// components
+import { Label, Logo } from "@components";
+import { useOffSetTop, useResponsive } from "@hooks";
 // utils
 import { bgBlur } from "@utils";
+
 // config
 import { HEADER } from "../../config-global";
 // routes
 import { PATH_AUTH } from "../../routes/paths";
-// components
-import { Logo, Label } from "@components";
 //
 import navConfig from "./nav/config-navigation";
 import NavDesktop from "./nav/desktop";

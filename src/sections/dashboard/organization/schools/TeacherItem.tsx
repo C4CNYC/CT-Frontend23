@@ -1,4 +1,5 @@
-import { MenuPopover, Iconify } from "@components";
+import { useState } from "react";
+
 import {
   Avatar,
   Button,
@@ -8,9 +9,10 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import { useState } from "react";
-import { IUser } from "src/redux/services/interfaces/user.interface";
+
+import { Iconify, MenuPopover } from "@components";
 import { BaseResponseInterface } from "@utils";
+import { IUser } from "src/redux/services/interfaces/user.interface";
 
 // ----------------------------------------------------------------------
 

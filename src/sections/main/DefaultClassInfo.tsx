@@ -1,3 +1,11 @@
+import nextLink from "next/link";
+import { useState } from "react";
+
+import { BsThreeDots } from "react-icons/bs";
+import { FaSchool } from "react-icons/fa";
+import { FiUser } from "react-icons/fi";
+import { TbShare2 } from "react-icons/tb";
+
 import {
   Avatar,
   Box,
@@ -9,21 +17,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import nextLink from "next/link";
-import { BsThreeDots } from "react-icons/bs";
-import { FaSchool } from "react-icons/fa";
-import { FiUser } from "react-icons/fi";
 
 import { MenuPopover } from "@components";
-import { useState } from "react";
-
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
-import { TbShare2 } from "react-icons/tb";
 import { useProfileQuery } from "src/redux/services/auth";
 import { useGetClassMentorQuery } from "src/redux/services/student/classes-manager";
+
 import ClassInfoHeader from "./ClassInfoToggle";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 export default function DefaultClassInfo(): React.ReactElement {
   const { data: student } = useProfileQuery();

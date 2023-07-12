@@ -1,5 +1,11 @@
-import { FormProvider, RHFSwitch, RHFTextField } from "@components";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { IoClose } from "react-icons/io5";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -12,13 +18,11 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { IoClose } from "react-icons/io5";
+
+import { FormProvider, RHFSwitch, RHFTextField } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useUpdateProjectMutation } from "src/redux/services/student/gallery-student";
-import * as Yup from "yup";
+
 interface Props {
   children: React.ReactElement;
   title: string;

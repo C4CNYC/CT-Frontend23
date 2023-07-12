@@ -1,4 +1,9 @@
-import { MenuPopover, Label, Iconify, ConfirmDialog, useSnackbar } from "@components";
+import Link from "next/link";
+import { useState } from "react";
+
+import { format } from "date-fns";
+import { useSelector } from "react-redux";
+
 import {
   Avatar,
   Button,
@@ -9,16 +14,21 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { format } from "date-fns";
-import Link from "next/link";
-import { useState } from "react";
-import { IClass } from "src/redux/services/interfaces/class.interface";
-import { BaseResponseInterface } from "@utils";
-import ClassPreferences from "../modal";
+
+import {
+  ConfirmDialog,
+  Iconify,
+  Label,
+  MenuPopover,
+  useSnackbar,
+} from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/services/interfaces/class.interface";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
-import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
+
+import ClassPreferences from "../modal";
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +58,9 @@ export default function ClassesTableRow({
   const { enqueueSnackbar } = useSnackbar();
 
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const myStudentProfileId = useSelector((state: RootState) => state.global.user?.student_profile?.id);
+  const myStudentProfileId = useSelector(
+    (state: RootState) => state.global.user?.student_profile?.id
+  );
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -60,13 +72,13 @@ export default function ClassesTableRow({
       await joinClass({
         schoolId,
         classId: row.id,
-        student_id: myStudentProfileId ?? ""
+        student_id: myStudentProfileId ?? "",
       }).unwrap();
-      enqueueSnackbar("you joined to class")
+      enqueueSnackbar("you joined to class");
     } catch (e) {
-      enqueueSnackbar("you joined to class", { variant: "error" })
+      enqueueSnackbar("you joined to class", { variant: "error" });
     }
-  }
+  };
 
   return (
     <>
@@ -119,9 +131,9 @@ export default function ClassesTableRow({
         <TableCell align="right">
           <IconButton
             color={openPopover ? "inherit" : "default"}
-            onClick={
-              (e: React.MouseEvent<HTMLElement>) => { setOpenPopover(e.currentTarget) }
-            }
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              setOpenPopover(e.currentTarget);
+            }}
           >
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
@@ -130,7 +142,9 @@ export default function ClassesTableRow({
 
       <MenuPopover
         open={openPopover}
-        onClose={() => { setOpenPopover(null); }}
+        onClose={() => {
+          setOpenPopover(null);
+        }}
         arrow="right-top"
         sx={{ width: 140 }}
       >
@@ -181,7 +195,9 @@ export default function ClassesTableRow({
 
       <ConfirmDialog
         open={openConfirm}
-        onClose={() => { setOpenConfirm(false) }}
+        onClose={() => {
+          setOpenConfirm(false);
+        }}
         title="Delete"
         content="Are you sure want to delete?"
         action={

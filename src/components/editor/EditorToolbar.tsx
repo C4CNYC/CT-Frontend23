@@ -1,4 +1,3 @@
-import { Divider, Stack } from "@mui/material";
 import {
   BasicFormattingButtonGroup,
   CommandButtonGroup,
@@ -14,8 +13,11 @@ import {
   ToggleTaskListButton,
   Toolbar,
 } from "@remirror/react";
-import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
+
+import { Divider, Stack } from "@mui/material";
+
 import { SaveButton } from "./SaveButton";
+import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
 import {
   FontFamilyButtons,
   FontSizeButtons,

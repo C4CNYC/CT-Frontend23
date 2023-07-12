@@ -1,6 +1,8 @@
-import { Box, Stack, Typography } from "@mui/material";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { MdCelebration } from "react-icons/md";
+
+import { Box, Stack, Typography } from "@mui/material";
+
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 interface Props {

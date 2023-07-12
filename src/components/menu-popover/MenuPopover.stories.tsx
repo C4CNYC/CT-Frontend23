@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { MenuPopover } from "./MenuPopover";
 
 const Component: Meta<typeof MenuPopover> = {
@@ -13,6 +14,6 @@ export const Default = {
     open: true,
     children: <>children</>,
     disabledArrow: false,
-    arrow: "top-left"
+    arrow: "top-left",
   },
 };

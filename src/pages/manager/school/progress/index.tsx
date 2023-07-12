@@ -1,8 +1,16 @@
+import Head from "next/head";
+import { useRouter } from "next/router";
+
+import _ from "lodash";
+import { useSelector } from "react-redux";
+
+import { Container } from "@mui/material";
+import { Stack } from "@mui/system";
+
 import { CustomBreadcrumbs } from "@components";
 import { FilterMode, useFilters } from "@hooks";
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
-import { Container } from "@mui/material";
-import { Stack } from "@mui/system";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";
 import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Courses";
 import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
@@ -10,10 +18,7 @@ import {
   SkeletonProgressTable,
   SkeletonProgressTableRow,
 } from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
-import _ from "lodash";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { BaseResponseInterface, getCountTakingElment } from "@utils";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {
   IProgress,
@@ -26,8 +31,6 @@ import {
 } from "src/redux/services/manager/progress-manager";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { BaseResponseInterface, getCountTakingElment } from "@utils";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

@@ -1,5 +1,6 @@
 import { selectAll } from "@codemirror/commands";
 import { EditorView } from "@codemirror/view";
+
 export async function copyPaste(view: EditorView, type: string) {
   view.focus();
   const cursor = view.state.selection.ranges[0].from;

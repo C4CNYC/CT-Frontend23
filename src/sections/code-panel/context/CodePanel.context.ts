@@ -1,10 +1,12 @@
 import { createContext } from "react";
+
+import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
 import {
   ILesson,
   ILessonContent,
 } from "src/redux/interfaces/content.interface";
-import { BaseResponseInterface } from "@utils";
+
 import { SupportedLang } from "../work-space";
 
 interface ICodePanelContext {

@@ -1,7 +1,9 @@
 // @mui
 import { Stack, Typography } from "@mui/material";
+
 // components
-import { Logo, Image } from "@components";
+import { Image, Logo } from "@components";
+
 //
 import {
   StyledContent,

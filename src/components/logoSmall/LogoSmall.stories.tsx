@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { LogoSmall } from "./LogoSmall";
 
 const Component: Meta<typeof LogoSmall> = {

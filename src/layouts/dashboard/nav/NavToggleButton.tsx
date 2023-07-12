@@ -1,11 +1,13 @@
 // @mui
-import { IconButton, IconButtonProps } from "@mui/material";
 // hooks
-import { useResponsive } from "@hooks";
-// config
-import { NAV } from "../../../config-global";
+import { IconButton, IconButtonProps } from "@mui/material";
+
 // components
 import { Iconify, useSettingsContext } from "@components";
+import { useResponsive } from "@hooks";
+
+// config
+import { NAV } from "../../../config-global";
 
 // ----------------------------------------------------------------------
 

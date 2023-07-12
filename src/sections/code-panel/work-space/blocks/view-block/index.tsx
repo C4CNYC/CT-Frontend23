@@ -1,5 +1,7 @@
-import { Typography } from "@mui/material";
 import { CgBrowser } from "react-icons/cg";
+
+import { Typography } from "@mui/material";
+
 import { SupportedLang } from "../..";
 import BaseBlock from "../BaseBlock";
 import BrowserView from "./BrowserView";

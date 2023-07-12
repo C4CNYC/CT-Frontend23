@@ -1,8 +1,5 @@
-import {
-  useDateRangePicker,
-  Iconify,
-  DateRangePicker,
-} from "@components";
+import { useState } from "react";
+
 import {
   Box,
   ClickAwayListener,
@@ -12,9 +9,11 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
-import { useState } from "react";
-import { IAssignmentsCard } from "../../../@types/assignments";
+
+import { DateRangePicker, Iconify, useDateRangePicker } from "@components";
 import { voidFunction } from "@utils";
+
+import { IAssignmentsCard } from "../../../@types/assignments";
 
 interface Props {
   onAddTask: (task: IAssignmentsCard) => void;

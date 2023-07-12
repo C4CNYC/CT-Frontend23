@@ -1,16 +1,18 @@
-import { Iconify } from "@components";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
+
 import {
   Alert,
-  alpha,
   Dialog,
   DialogContent,
   DialogTitle,
   IconButton,
   Stack,
   Typography,
+  alpha,
   useTheme,
 } from "@mui/material";
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
+
+import { Iconify } from "@components";
 
 interface Props {
   open: boolean;

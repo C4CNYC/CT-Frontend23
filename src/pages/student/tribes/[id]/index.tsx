@@ -1,5 +1,8 @@
-import { Iconify, useSettingsContext } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard";
+import Head from "next/head";
+import { useRouter } from "next/router";
+
+import { format } from "date-fns";
+
 import {
   Card,
   CardHeader,
@@ -10,13 +13,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { format } from "date-fns";
 
-import { fNumber } from "@utils";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import { Iconify, useSettingsContext } from "@components";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import ProfileCover from "@sections/student-profile/ProfileCover";
+import { fNumber } from "@utils";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

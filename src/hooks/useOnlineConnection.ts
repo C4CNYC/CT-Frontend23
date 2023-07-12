@@ -1,6 +1,8 @@
+import { useEffect } from "react";
+
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, remove, set } from "firebase/database";
-import { useEffect } from "react";
+
 import { useUserActivity } from "./useUserActivity";
 
 const app = initializeApp({

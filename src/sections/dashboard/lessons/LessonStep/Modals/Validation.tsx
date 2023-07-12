@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react";
+
+import { format } from "date-fns";
+import { useSnackbar } from "notistack";
+
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Alert,
@@ -9,24 +14,22 @@ import {
   IconButton,
   Skeleton,
 } from "@mui/material";
-import { useEffect, useState } from "react";
-
-import { Iconify } from "@components";
 import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { styled } from "@mui/material/styles";
 import { Stack } from "@mui/system";
-import { format } from "date-fns";
-import { useSnackbar } from "notistack";
+
+import { Iconify } from "@components";
 import {
   useGetLessonContentValidationsQuery,
   useRemoveLessonContentValiationMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
+
 import CreateEditValidation from "./CreateEditValidation";
 
 const RECOMENDED_COUNT_VALIDATION = 3;

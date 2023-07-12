@@ -1,10 +1,13 @@
-import { EmptyContent } from "@components";
-import { Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+
+import { Box, Stack, Typography } from "@mui/material";
+
+import { EmptyContent } from "@components";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
-import CourseDetailsMain from "./course-details/CourseDetailsMain";
+
 import CourseCard from "./CourseCard";
 import CourseSummarily from "./CourseSummarily";
+import CourseDetailsMain from "./course-details/CourseDetailsMain";
 
 interface Props {
   course: ICourseContent;
@@ -46,7 +49,7 @@ export default function CourseLayaut({ course }: Props): React.ReactElement {
                 unit={unit}
                 active={active === index}
                 setActive={setActive}
-                lastItem={(course?.units?.length) - 1 === index}
+                lastItem={course?.units?.length - 1 === index}
               />
             ))
           ) : (

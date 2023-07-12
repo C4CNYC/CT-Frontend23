@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   Box,
   Card,
@@ -6,8 +8,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+
 import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
+
 import LinkForm from "./LinkForm";
 import LinkItem from "./LinkItem";
 

@@ -1,6 +1,8 @@
-import { IconButton, Stack, Typography } from "@mui/material";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
+
+import { IconButton, Stack, Typography } from "@mui/material";
+
 import StepContainer from "../StepContainer";
 import CourseType from "./CourseType";
 

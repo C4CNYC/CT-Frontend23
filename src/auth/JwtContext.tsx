@@ -5,13 +5,22 @@ import {
   useMemo,
   useReducer,
 } from "react";
-// utils
-import { axios, localStorageAvailable, voidFunction } from "@utils";
+
 //
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
+
+// utils
+import { axios, localStorageAvailable, voidFunction } from "@utils";
+import { ProfileType } from "src/redux/services/enums/profile.enum";
 import { Role } from "src/redux/services/enums/role.enum";
-import { cleanUser, cleanUserRole, setUser, setStudentMode } from "src/redux/slices/global";
+import {
+  cleanUser,
+  cleanUserRole,
+  setStudentMode,
+  setUser,
+} from "src/redux/slices/global";
+
 import {
   ActionMapType,
   AuthStateType,
@@ -19,7 +28,10 @@ import {
   JWTContextType,
 } from "./types";
 import { isValidToken, setSession } from "./utils";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
+
+utils;
+
+//
 
 // ----------------------------------------------------------------------
 
@@ -129,19 +141,17 @@ export function AuthProvider({
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const { data } = await axios.get(
-          "/auth/profile",
-          {
-            params: {
-              profile_type: (parsedJWT.role === Role.Student || !isManagerRoute)
+        const { data } = await axios.get("/auth/profile", {
+          params: {
+            profile_type:
+              parsedJWT.role === Role.Student || !isManagerRoute
                 ? ProfileType.STUDENT
-                : ProfileType.MANAGER
-            }
-          }
-        );
+                : ProfileType.MANAGER,
+          },
+        });
 
         if (isManagerRoute && data.role === Role.Student) {
-          window.location.pathname = "/permission-denied"
+          window.location.pathname = "/permission-denied";
         }
 
         reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
@@ -151,7 +161,7 @@ export function AuthProvider({
           type: Types.INITIAL,
           payload: {
             isAuthenticated: true,
-            user: data
+            user: data,
           },
         });
       } else {
@@ -199,9 +209,7 @@ export function AuthProvider({
       });
 
       const { access_token: accessToken, user } = data;
-      reduxDispatch(
-        setUser(user)
-      );
+      reduxDispatch(setUser(user));
 
       setSession(
         accessToken,

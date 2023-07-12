@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
+
 import { IValidationMap } from "src/utils/validationMaping";
+
 import CheckersItemButton from "./CheckersItemButton";
 
 interface Props {

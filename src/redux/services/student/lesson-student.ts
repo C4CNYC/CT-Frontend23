@@ -5,6 +5,7 @@ import {
   ILessonContent,
   ILessonSearchParams,
 } from "src/redux/interfaces/content.interface";
+
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({

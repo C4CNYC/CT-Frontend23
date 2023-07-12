@@ -1,6 +1,8 @@
-import { Image } from "@components";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Box, Button, Stack, Typography } from "@mui/material";
+
+import { Image } from "@components";
+
 interface Props {
   img: string;
   title: string;

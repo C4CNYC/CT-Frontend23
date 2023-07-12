@@ -1,6 +1,8 @@
+import { useState } from "react";
+
 import { sentenceCase } from "change-case";
 import { format } from "date-fns";
-import { useState } from "react";
+
 // @mui
 import {
   Avatar,
@@ -21,8 +23,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
 // components
-import { TableHeadCustom, Iconify, Scrollbar, MenuPopover, Label } from "@components";
+import {
+  Iconify,
+  Label,
+  MenuPopover,
+  Scrollbar,
+  TableHeadCustom,
+} from "@components";
 
 // ----------------------------------------------------------------------
 

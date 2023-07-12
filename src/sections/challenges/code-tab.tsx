@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import { TabPanel } from "@mui/lab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import { Box, Container, Tab, Typography } from "@mui/material";
-import { useState } from "react";
 
 export default function CodeTab(): React.ReactElement {
   const [value, setValue] = useState("1");

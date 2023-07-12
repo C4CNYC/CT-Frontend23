@@ -1,12 +1,10 @@
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   IGallery,
   IGallerySearchParams,
 } from "src/redux/interfaces/gallary.interface";
+
 import { studentApi } from ".";
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@utils";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({

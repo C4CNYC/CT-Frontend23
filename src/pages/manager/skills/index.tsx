@@ -1,5 +1,10 @@
-import { useSettingsContext, CustomBreadcrumbs, Iconify, Scrollbar, TableNoData } from "@components";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import Head from "next/head";
+import React from "react";
+
+import { format } from "date-fns";
+import _ from "lodash";
+import { useSnackbar } from "notistack";
+
 import {
   Button,
   Card,
@@ -14,15 +19,19 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import Container from "@mui/system/Container";
+
+import {
+  CustomBreadcrumbs,
+  Iconify,
+  Scrollbar,
+  TableNoData,
+  useSettingsContext,
+} from "@components";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
+import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import UpdateModalSkills from "@sections/dashboard/skills/update-modal";
-import { format } from "date-fns";
-import _ from "lodash";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
-import React from "react";
 import {
   useGetSkillQuery,
   useRemoveSkillMutation,

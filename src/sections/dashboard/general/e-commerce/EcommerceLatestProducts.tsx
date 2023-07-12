@@ -8,10 +8,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-// utils
-import { fCurrency } from "@utils";
+
 //
 import { ColorPreview, Image, Scrollbar } from "@components";
+// utils
+import { fCurrency } from "@utils";
+
+utils;
+
+//
 
 // ----------------------------------------------------------------------
 

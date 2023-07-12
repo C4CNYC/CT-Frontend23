@@ -1,5 +1,7 @@
 import { BaseSearchInterface } from "@utils";
+
 import { ISocials } from "./socials.interface";
+
 export interface IFriend {
   id: string;
   email: string;

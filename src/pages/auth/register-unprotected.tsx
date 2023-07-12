@@ -1,5 +1,6 @@
-import Register from "@sections/auth/Register";
 import Head from "next/head";
+
+import Register from "@sections/auth/Register";
 
 // ----------------------------------------------------------------------
 

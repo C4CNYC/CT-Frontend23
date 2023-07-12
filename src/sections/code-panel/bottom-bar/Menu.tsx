@@ -1,3 +1,11 @@
+import nextLink from "next/link";
+import { useContext, useState } from "react";
+
+import { BsFolder2Open } from "react-icons/bs";
+import { GiSave } from "react-icons/gi";
+import { IoSaveOutline } from "react-icons/io5";
+import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+
 import {
   Chip,
   Link,
@@ -9,15 +17,11 @@ import {
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
-import nextLink from "next/link";
-import { useContext, useState } from "react";
-import { BsFolder2Open } from "react-icons/bs";
-import { GiSave } from "react-icons/gi";
-import { IoSaveOutline } from "react-icons/io5";
-import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+
 import { CodePanelContext } from "../context/CodePanel.context";
 import PublishModal from "./modals/Publish";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 const tooltipRewrite = makeStyles(() => ({
   tooltip: {

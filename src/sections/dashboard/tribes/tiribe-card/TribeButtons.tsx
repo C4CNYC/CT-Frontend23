@@ -1,7 +1,8 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { FaChartLine } from "react-icons/fa";
 import { TbBrandWechat } from "react-icons/tb";
+
+import { Box, Button, Stack, Typography } from "@mui/material";
 
 export default function TribeButtons(): React.ReactElement {
   return (

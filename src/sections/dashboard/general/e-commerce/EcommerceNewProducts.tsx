@@ -1,4 +1,5 @@
 import Carousel from "react-slick";
+
 // @mui
 import {
   Box,
@@ -9,10 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
-// utils
-import { bgGradient } from "@utils";
+
 // components
 import { CarouselDots, Image } from "@components";
+// utils
+import { bgGradient } from "@utils";
 
 // ----------------------------------------------------------------------
 

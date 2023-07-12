@@ -1,21 +1,31 @@
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo } from "react";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import generator from "generate-password";
+import { MuiColorInput } from "mui-color-input";
+import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
+
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+
 import {
+  FormProvider,
+  Label,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
-  Label,
   useSnackbar,
-  FormProvider,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import generator from "generate-password";
-import { MuiColorInput } from "mui-color-input";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import {
+  BaseResponseInterface,
+  createRandomAvatar,
+  getRandomColor,
+} from "@utils";
 import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
@@ -24,13 +34,6 @@ import {
   useUpdateStudentMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import {
-  createRandomAvatar,
-  getRandomColor,
-  BaseResponseInterface,
-} from "@utils";
-import * as Yup from "yup";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };

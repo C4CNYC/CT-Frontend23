@@ -1,5 +1,6 @@
-import LoginLayout from "@layouts/login/LoginLayout";
 import { Stack, Typography } from "@mui/material";
+
+import LoginLayout from "@layouts/login/LoginLayout";
 
 export default function SubmitPassword(): React.ReactElement {
   return (

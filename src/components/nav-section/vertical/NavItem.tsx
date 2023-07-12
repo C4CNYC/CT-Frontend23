@@ -1,16 +1,23 @@
 // next
 import NextLink from "next/link";
+
 // @mui
 import { Box, Link, ListItemText, Tooltip } from "@mui/material";
-// locales
-import { useLocales } from "../../../locales";
-// auth
-import RoleBasedGuard from "../../../auth/RoleBasedGuard";
+
 //
 import { Iconify } from "@components";
+
+// auth
+import RoleBasedGuard from "../../../auth/RoleBasedGuard";
+// locales
+import { useLocales } from "../../../locales";
 //
 import { NavItemProps } from "../types";
 import { StyledDotIcon, StyledIcon, StyledItem } from "./styles";
+
+locales;
+
+//
 
 // ----------------------------------------------------------------------
 

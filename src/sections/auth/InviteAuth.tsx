@@ -1,7 +1,9 @@
 // @mui
 import { Stack, Typography } from "@mui/material";
+
 // layouts
 import LoginLayout from "@layouts/login";
+
 import InviteForm from "./InviteForm";
 
 // ----------------------------------------------------------------------

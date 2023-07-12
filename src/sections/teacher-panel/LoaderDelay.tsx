@@ -16,7 +16,9 @@ export default function LoaderDelay({
   const [isExist, setIsExist] = useState<boolean>(true);
   useEffect(() => {
     if (isLoading) {
-      setTimeout(() => { setIsExist(false); }, deley);
+      setTimeout(() => {
+        setIsExist(false);
+      }, deley);
     }
     if (!isLoading) {
       setIsExist(true);

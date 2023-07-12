@@ -1,6 +1,7 @@
+import React from "react";
+
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
-import React from "react";
 
 interface Props {
   code: string;

@@ -1,3 +1,5 @@
+import React from "react";
+
 import {
   CommandButtonGroup,
   CommandMenuItem,
@@ -5,7 +7,6 @@ import {
   useActive,
   useCommands,
 } from "@remirror/react";
-import React from "react";
 
 const FONT_FAMILIES: Array<[React.CSSProperties["fontFamily"], string]> = [
   ["serif", "Serif"],

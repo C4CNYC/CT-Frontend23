@@ -1,4 +1,9 @@
 // @mui
+// components
+import { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   Box,
   FormControl,
@@ -7,9 +12,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-// components
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { ISchool } from "src/redux/services/interfaces/school.interface";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { setSchool } from "src/redux/slices/manager";

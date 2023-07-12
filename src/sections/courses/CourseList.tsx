@@ -1,10 +1,13 @@
+import { useEffect } from "react";
+
+import { Stack } from "@mui/material";
+
 import { EmptyContent, SimpleInfiniteList } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
-import { Stack } from "@mui/material";
-import { useEffect } from "react";
 import { ICourseSearchParams } from "src/redux/interfaces/content.interface";
 import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 import { useGetPublicCourseQuery } from "src/redux/services/student/public-student";
+
 import CoursesItem from "./course-list-item/CourseItem";
 import SkeletonCourse from "./course-list-item/SkeletonCourse";
 

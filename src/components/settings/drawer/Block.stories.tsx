@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import Block from "./Block";
 
 const Component: Meta<typeof Block> = {
@@ -12,8 +13,6 @@ export const Default: Meta<typeof Block> = {
   args: {
     title: "Title",
     tooltip: "Tooltip",
-    children: <>
-      children component
-    </>
+    children: <>children component</>,
   },
 };
