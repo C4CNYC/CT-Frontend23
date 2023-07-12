@@ -1,9 +1,14 @@
-import { LoadingScreen } from "@components";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useAuthContext } from "./useAuthContext";
-import { MANAGER_PATH_AFTER_LOGIN, STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
+
+import { LoadingScreen } from "@components";
+import {
+  MANAGER_PATH_AFTER_LOGIN,
+  STUDENT_PATH_AFTER_LOGIN,
+} from "src/config-global";
 import { Role } from "src/redux/services/enums/role.enum";
+
+import { useAuthContext } from "./useAuthContext";
 
 // ----------------------------------------------------------------------
 

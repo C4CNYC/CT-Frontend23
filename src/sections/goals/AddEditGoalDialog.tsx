@@ -1,6 +1,11 @@
-import { FormProvider, RHFTextField } from "@components";
-import { getRandomColor } from "@utils";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { MuiColorInput } from "mui-color-input";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
@@ -10,17 +15,15 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import { MuiColorInput } from "mui-color-input";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField } from "@components";
+import { getRandomColor } from "@utils";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
 import {
   usePostGoalMutation,
   useUpdateGoalMutation,
 } from "src/redux/services/student/goals-student";
-import * as Yup from "yup";
 
 interface FormValuesProps {
   title: string;

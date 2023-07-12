@@ -1,10 +1,12 @@
 // @mui
-import { Breakpoint, useTheme } from "@mui/material/styles";
-import { Variant } from "@mui/material/styles/createTypography";
 // hooks
-import { useWidth } from "@hooks";
 // theme
 import { remToPx } from "@theme/typography";
+
+import { Breakpoint, useTheme } from "@mui/material/styles";
+import { Variant } from "@mui/material/styles/createTypography";
+
+import { useWidth } from "@hooks";
 
 // ----------------------------------------------------------------------
 

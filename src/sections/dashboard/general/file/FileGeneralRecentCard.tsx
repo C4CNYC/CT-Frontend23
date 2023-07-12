@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 // @mui
 import {
   Avatar,
@@ -12,14 +13,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
+// components
+import { FileThumbnail, Iconify, MenuPopover, useSnackbar } from "@components";
 // hooks
 import { useCopyToClipboard, useResponsive } from "@hooks";
+// @types
+import { IFileManager } from "@types";
 // utils
 import { fData, fDateTime } from "@utils";
-// @types
-import { IFileManager } from "@types"
-// components
-import { useSnackbar, FileThumbnail, MenuPopover, Iconify } from "@components";
+
 //
 // import { FileShareDialog, FileDetailsDrawer } from "../../schools";
 

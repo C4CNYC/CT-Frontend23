@@ -1,5 +1,18 @@
-import { EmptyContent } from "@components";
+import dynamic from "next/dynamic";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+import { useAtom } from "jotai";
+import _ from "lodash";
+import { useSnackbar } from "notistack";
+import Confetti from "react-confetti";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 import { Box } from "@mui/material";
+
+import { EmptyContent } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import BottomBar from "@sections/code-panel/bottom-bar";
@@ -8,23 +21,12 @@ import SkeletonCodePanel from "@sections/code-panel/skeleton";
 import TopPanel from "@sections/code-panel/top-bar";
 import { getNextLessonId } from "@sections/code-panel/utils/navigation";
 import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
-import { useRouter } from "next/router";
-
-import { useAtom } from "jotai";
-import _ from "lodash";
-import dynamic from "next/dynamic";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import GuestGuard from "src/auth/GuestGuard";
 import {
   useGetPublicCourseContentQuery,
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
 } from "src/redux/services/student/public-student";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 const Tour = dynamic(
   async () =>

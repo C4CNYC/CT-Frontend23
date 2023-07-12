@@ -1,8 +1,11 @@
-import { Divider, IconButton, Link, Stack, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import NextLink from "next/link";
+
 import { HiOutlineStatusOnline } from "react-icons/hi";
 import { RiExternalLinkLine } from "react-icons/ri";
+
+import { Divider, IconButton, Link, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+
 import { Iconify } from "src/components/iconify";
 
 export default function QuestsTab() {

@@ -1,4 +1,8 @@
-import { Iconify } from "@components";
+import Image from "next/image";
+import { useState } from "react";
+
+import { useSnackbar } from "notistack";
+
 import {
   Collapse,
   IconButton,
@@ -7,9 +11,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
+
+import { Iconify } from "@components";
+import { createRandomAvatar, getRandomColor } from "@utils";
 import {
   useCreateClassMutation,
   useGetClassListQuery,
@@ -18,10 +22,7 @@ import {
   useDeleteClassesMutation,
   useUpdateClassesAvatarMutation,
 } from "src/redux/services/manager/classes-manager";
-import {
-  createRandomAvatar,
-  getRandomColor,
-} from "@utils";
+
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
 

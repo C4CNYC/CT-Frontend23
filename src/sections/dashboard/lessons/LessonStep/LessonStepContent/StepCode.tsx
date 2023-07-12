@@ -1,12 +1,16 @@
-import { ResizerUi, SaveButton } from "@components";
-import { useDebounceCallback } from "@hooks";
-import { Box } from "@mui/system";
+import { useState } from "react";
+
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import CodeMirror from "@uiw/react-codemirror";
 import { useAtom } from "jotai";
-import { useState } from "react";
+
+import { Box } from "@mui/system";
+
+import { ResizerUi, SaveButton } from "@components";
+import { useDebounceCallback } from "@hooks";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
+
 import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";
 
 interface Props {

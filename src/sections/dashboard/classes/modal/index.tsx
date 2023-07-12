@@ -1,10 +1,10 @@
-import {
-  ClassCoursesAutocomplete,
-  ClassMembersAutocomplete,
-  ClassMentorsAutocomplete,
-  FormProvider,
-} from "@components";
+import { useCallback, useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -15,14 +15,17 @@ import {
   DialogTitle,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
-import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+
+import {
+  ClassCoursesAutocomplete,
+  ClassMembersAutocomplete,
+  ClassMentorsAutocomplete,
+  FormProvider,
+} from "@components";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
-import * as Yup from "yup";
+
 import AddClassTab from "./AddClassTab";
 
 export interface FormAddClassProps {

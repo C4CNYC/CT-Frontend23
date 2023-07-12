@@ -1,5 +1,7 @@
+import NextLink from "next/link";
+
 import { SOCIAL_ICONS } from "@assets/data";
-import { SvgColor } from "@components";
+
 import {
   Avatar,
   Box,
@@ -10,8 +12,9 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
+
+import { SvgColor } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import NextLink from "next/link";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 
 // ----------------------------------------------------------------------

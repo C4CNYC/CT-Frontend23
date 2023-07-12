@@ -1,3 +1,7 @@
+import { useState } from "react";
+
+import SchoolFiltersSkeleton from "@pages/manager/school/students/school-filter-skeleton";
+
 import Autocomplete, {
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -6,18 +10,16 @@ import Button from "@mui/material/Button";
 import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+
+import { Iconify } from "@components";
 import { useFilters } from "@hooks";
+import { BaseResponseInterface } from "@utils";
 import {
   ClassSearchParams,
   IClass,
 } from "src/redux/services/interfaces/class.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
-
-import { useState } from "react";
-import { BaseResponseInterface } from "@utils";
-import { Iconify } from "@components";
-import SchoolFiltersSkeleton from "@pages/manager/school/students/school-filter-skeleton";
 
 interface Props {
   filterName: string;

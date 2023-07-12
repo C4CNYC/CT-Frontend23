@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   IFriend,
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
+
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({

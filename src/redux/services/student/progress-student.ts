@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-
-import { IProgress } from "src/redux/interfaces/progress.interface";
 import { BaseResponseInterface } from "@utils";
+import { IProgress } from "src/redux/interfaces/progress.interface";
+
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({

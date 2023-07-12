@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import { MenuHotProducts } from "./MenuHotProducts";
 import { ThemeProvider } from "@theme/index";
+
+import { MenuHotProducts } from "./MenuHotProducts";
 
 const Component: Meta<typeof MenuHotProducts> = {
   component: MenuHotProducts,
@@ -10,7 +11,11 @@ const Component: Meta<typeof MenuHotProducts> = {
 export default Component;
 
 export const Default: Meta<typeof MenuHotProducts> = {
-  render: (args) => <ThemeProvider><MenuHotProducts {...args} /></ThemeProvider>,
+  render: (args) => (
+    <ThemeProvider>
+      <MenuHotProducts {...args} />
+    </ThemeProvider>
+  ),
   args: {
     tags: [
       {
@@ -20,7 +25,7 @@ export const Default: Meta<typeof MenuHotProducts> = {
       {
         name: "Tag name",
         path: "path",
-      }
+      },
     ],
   },
 };

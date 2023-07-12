@@ -1,4 +1,3 @@
-import { Iconify } from "@components";
 import {
   Button,
   InputAdornment,
@@ -6,6 +5,9 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+
+import { Iconify } from "@components";
+
 import { useLocales } from "../../../../locales";
 
 // ----------------------------------------------------------------------

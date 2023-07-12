@@ -1,22 +1,25 @@
-import { useSettingsContext, CustomBreadcrumbs, SimpleInfiniteList, Iconify } from "@components";
-import {
-  DEFAULT_TAKE_PER_PAGE,
-  FilterMode,
-  useFilters,
-} from "@hooks";
-import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
+import Head from "next/head";
+
 import { Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
-import { CourseCard } from "@sections/dashboard/courses/cards";
+
+import {
+  CustomBreadcrumbs,
+  Iconify,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from "@components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
+import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
+import { CourseCard } from "@sections/dashboard/courses/cards";
 import FilterCourses from "@sections/dashboard/courses/filter";
 import SkeletonCourses from "@sections/dashboard/courses/skeletonCourses";
 import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
-import Head from "next/head";
-import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { getCountTakingElment } from "@utils";
+import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 // ----------------------------------------------------------------------
 

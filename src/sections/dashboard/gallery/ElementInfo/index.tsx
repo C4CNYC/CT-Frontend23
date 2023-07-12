@@ -1,4 +1,5 @@
 import { Stack, Tooltip, Typography } from "@mui/material";
+
 import GalleryDialog from "../GalleryDialog";
 import HomeButton from "../HomeButton";
 

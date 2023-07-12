@@ -1,5 +1,10 @@
-import { RHFTextField, FormProvider } from "@components";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import { Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
@@ -7,14 +12,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Box, Stack } from "@mui/system";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField } from "@components";
 import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
 } from "src/redux/services/manager/skills-manager";
-import * as Yup from "yup";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Skill name is required"),

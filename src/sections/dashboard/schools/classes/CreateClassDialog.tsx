@@ -1,19 +1,18 @@
-import {
-  RHFTextField,
-  RHFUploadAvatar,
-  FormProvider,
-} from "@components";
+import { useCallback, useEffect, useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { MuiColorInput } from "mui-color-input";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Grid, IconButton, Typography } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { MuiColorInput } from "mui-color-input";
-import { useCallback, useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import * as Yup from "yup";
+
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 
 interface FormValuesProps {
   name: string;

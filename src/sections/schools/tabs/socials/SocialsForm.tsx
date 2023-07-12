@@ -1,12 +1,16 @@
-import { RHFSelect, RHFTextField, FormProvider } from "@components";
+import React from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import { Box, Grid, MenuItem } from "@mui/material";
-import { useSnackbar } from "notistack";
-import React from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, RHFSelect, RHFTextField } from "@components";
 import { useCreateSchoolSocialMutation } from "src/redux/services/manager/schools-manager";
-import * as Yup from "yup";
+
 import { Socials } from "../../../../assets/data";
 import { SchoolSocials } from "../../../../redux/services/interfaces/school.interface";
 

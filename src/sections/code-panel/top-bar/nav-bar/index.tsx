@@ -1,5 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
+
 import DesktopBar from "./DesktopBar";
 import MobileBar from "./MobileBar";
 

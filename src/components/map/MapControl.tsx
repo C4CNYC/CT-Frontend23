@@ -4,6 +4,7 @@ import {
   NavigationControl,
   ScaleControl,
 } from "react-map-gl";
+
 //
 import { StyledMapControls } from "./styles";
 

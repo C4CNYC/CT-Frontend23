@@ -1,19 +1,22 @@
-import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
+import { useCallback } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { MuiColorInput } from "mui-color-input";
+import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack } from "@mui/material";
-import { MuiColorInput } from "mui-color-input";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
-import { useSnackbar } from "notistack";
-import { useCallback } from "react";
-import { Controller, useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
-import * as Yup from "yup";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),

@@ -1,6 +1,7 @@
-import LoginLayout from "@layouts/login/LoginLayout";
 import { Stack, Typography } from "@mui/material";
 import SubmitPasswordForm from "@sections/auth/SubmitPasswordForm";
+
+import LoginLayout from "@layouts/login/LoginLayout";
 
 export default function SubmitPassword(): React.ReactElement {
   return (

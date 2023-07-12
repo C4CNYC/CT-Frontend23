@@ -1,9 +1,13 @@
-import { Button, Divider, Stack } from "@mui/material";
 import { useRouter } from "next/router";
+
 import { FaPlus } from "react-icons/fa";
+
+import { Button, Divider, Stack } from "@mui/material";
+
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+
 import CreateClassModal from "./CreateClassModal";
 import TribeListItem from "./TribesListItem";
 

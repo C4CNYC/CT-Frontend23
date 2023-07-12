@@ -1,7 +1,9 @@
-import NProgress from "nprogress";
-import { useEffect } from "react";
 // next
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+import NProgress from "nprogress";
+
 //
 import { StyledProgressBar } from "./styles";
 

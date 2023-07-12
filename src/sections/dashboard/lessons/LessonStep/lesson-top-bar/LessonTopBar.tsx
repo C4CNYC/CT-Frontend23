@@ -1,7 +1,10 @@
+import { useAtom } from "jotai";
+
+import { Stack } from "@mui/material";
+
 import { Logo } from "@components";
 import AccountPopover from "@layouts/dashboard/header/AccountPopover";
-import { Stack } from "@mui/material";
-import { useAtom } from "jotai";
+
 import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";
 import Menu from "./Menu";
 import ViewTumbler from "./ViewTumbler";

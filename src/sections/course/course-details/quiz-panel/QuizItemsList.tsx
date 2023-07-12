@@ -1,6 +1,8 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+
 import { ILesson } from "src/redux/interfaces/content.interface";
+
 import QuizItem from "./QuizItem";
 
 interface Props {

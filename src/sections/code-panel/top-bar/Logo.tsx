@@ -1,6 +1,7 @@
-import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
 import NextLink from "next/link";
 import { forwardRef } from "react";
+
+import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
 
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean;
@@ -55,11 +56,7 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     }
 
     return (
-      <Link
-        component={NextLink}
-        href="#"
-        sx={{ display: "contents" }}
-      >
+      <Link component={NextLink} href="#" sx={{ display: "contents" }}>
         {logo}
       </Link>
     );

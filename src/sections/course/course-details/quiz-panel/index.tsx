@@ -1,6 +1,9 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
 import { BiLockOpenAlt } from "react-icons/bi";
+
+import { Box, Button, Stack, Typography } from "@mui/material";
+
 import { ILesson } from "src/redux/interfaces/content.interface";
+
 import QuizItemsList from "./QuizItemsList";
 
 interface Props {

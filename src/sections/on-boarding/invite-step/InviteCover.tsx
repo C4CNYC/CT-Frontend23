@@ -35,7 +35,9 @@ const StyledInfo = styled("div")(({ theme }) => ({
 }));
 
 export function InviteCover(): React.ReactElement {
-  const onUpload = async (data: File): Promise<void> => { voidFunction() };
+  const onUpload = async (data: File): Promise<void> => {
+    voidFunction();
+  };
   return (
     <Stack>
       <Stack

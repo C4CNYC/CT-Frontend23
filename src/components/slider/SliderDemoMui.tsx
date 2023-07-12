@@ -1,10 +1,14 @@
-import { MotionContainer, varFade, Image } from "@components";
-import Carousel from "react-slick";
-import { Card, CardProps, Link, Stack } from "@mui/material";
-import { alpha, styled, useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import { m } from "framer-motion";
 import { useRef, useState } from "react";
+
+import { m } from "framer-motion";
+import Carousel from "react-slick";
+
+import { Card, CardProps, Link, Stack } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { alpha, styled, useTheme } from "@mui/material/styles";
+
+import { Image, MotionContainer, varFade } from "@components";
+
 import CarouselArrows from "./CarouselArrows";
 import CarouselDots from "./CarouselDots";
 

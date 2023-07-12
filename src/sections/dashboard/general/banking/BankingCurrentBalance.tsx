@@ -1,20 +1,23 @@
 import { useState } from "react";
+
 import Carousel from "react-slick";
+
 // @mui
 import {
-  alpha,
   Box,
   IconButton,
   MenuItem,
   Stack,
   SxProps,
   Typography,
+  alpha,
 } from "@mui/material";
-import { styled, Theme, useTheme } from "@mui/material/styles";
-// utils
-import { fCurrency, bgGradient } from "@utils";
+import { Theme, styled, useTheme } from "@mui/material/styles";
+
 // components
 import { CarouselDots, Iconify, Image, MenuPopover } from "@components";
+// utils
+import { bgGradient, fCurrency } from "@utils";
 
 // ----------------------------------------------------------------------
 

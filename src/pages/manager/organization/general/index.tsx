@@ -1,22 +1,25 @@
-import { useSettingsContext, Iconify, UploadImageModal } from "@components";
-import DashboardLayout from "@layouts/dashboard";
-import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
-import { ProfileCover } from "@sections/dashboard/user/profile";
 import Head from "next/head";
 import { useState } from "react";
+
+import SkeletonSchool from "@pages/manager/school/general/skeleton-school";
+import { useSnackbar } from "notistack";
+
+import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
+
+import { Iconify, UploadImageModal, useSettingsContext } from "@components";
+import DashboardLayout from "@layouts/dashboard";
 // auth
 import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
 import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
-import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
 import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
+import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
 import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
-import { useSnackbar } from "notistack";
+import { ProfileCover } from "@sections/dashboard/user/profile";
+import { useLocales } from "src/locales";
 import {
   useGetOrganizationQuery,
   useUpdateOrgCoverMutation,
 } from "src/redux/services/admin/organization-admin";
-import { useLocales } from "src/locales";
-import SkeletonSchool from "@pages/manager/school/general/skeleton-school";
 
 // components
 // ----------------------------------------------------------------------

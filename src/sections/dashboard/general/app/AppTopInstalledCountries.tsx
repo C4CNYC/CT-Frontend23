@@ -1,10 +1,11 @@
 // @mui
 import { Card, CardHeader, CardProps, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+// components
+import { Iconify, Image, Scrollbar } from "@components";
 // utils
 import { fShortenNumber } from "@utils";
-// components
-import { Scrollbar, Iconify, Image } from "@components";
 
 // ----------------------------------------------------------------------
 

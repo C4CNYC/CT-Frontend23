@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { TableNoData } from "./TableNoData"
+
+import { TableNoData } from "./TableNoData";
 
 const Component: Meta<typeof TableNoData> = {
   component: TableNoData,

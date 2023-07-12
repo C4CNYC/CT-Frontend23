@@ -1,3 +1,1 @@
-export const voidFunction = () => {
-
-}
+export const voidFunction = () => {};

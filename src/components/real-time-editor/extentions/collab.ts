@@ -1,13 +1,14 @@
 import {
+  Update,
   collab,
   getSyncedVersion,
   receiveUpdates,
   sendableUpdates,
-  Update,
 } from "@codemirror/collab";
 import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
+
 import { addCursor, removeCursor } from "./cursors";
 
 async function pushUpdates(

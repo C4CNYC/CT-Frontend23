@@ -1,9 +1,11 @@
-import { Avatar, Conversation } from "@chatscope/chat-ui-kit-react";
-import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
-import _ from "lodash";
 import { useEffect, useState } from "react";
-import { IFriend } from "src/redux/interfaces/friends.interface";
+
+import { Avatar, Conversation } from "@chatscope/chat-ui-kit-react";
+import _ from "lodash";
+
+import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { BaseResponseInterface } from "@utils";
+import { IFriend } from "src/redux/interfaces/friends.interface";
 
 export type User =
   | (IFriend & BaseResponseInterface)

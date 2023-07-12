@@ -1,9 +1,10 @@
-import { initializeApp } from "firebase/app";
+import { useRouter } from "next/router";
 
+import { initializeApp } from "firebase/app";
 import {
+  Firestore,
   addDoc,
   collection,
-  Firestore,
   getFirestore,
   limitToLast,
   onSnapshot,
@@ -11,7 +12,6 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
-import { useRouter } from "next/router";
 
 export interface IChatMessage {
   id: string;

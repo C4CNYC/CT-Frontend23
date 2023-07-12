@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Autocomplete,
   AutocompleteChangeDetails,
@@ -6,10 +8,10 @@ import {
   TextField,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useEffect, useState } from "react";
+
+import { BaseResponseInterface } from "@utils";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { BaseResponseInterface } from "@utils";
 
 interface IFilterCoursesAutocomplete {
   courseId: string;

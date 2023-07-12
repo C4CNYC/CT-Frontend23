@@ -6,8 +6,10 @@ import {
   useMemo,
   useState,
 } from "react";
+
 // utils
 import { localStorageAvailable, voidFunction } from "@utils";
+
 //
 import { defaultSettings } from "./config-setting";
 import { defaultPreset, getPresets, presetsOption } from "./presets";

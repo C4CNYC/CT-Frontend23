@@ -1,5 +1,6 @@
 import { ChipProps } from "@mui/material";
-import { alpha, Theme } from "@mui/material/styles";
+import { Theme, alpha } from "@mui/material/styles";
+
 //
 import { CloseIcon } from "./CustomIcons";
 

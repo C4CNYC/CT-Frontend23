@@ -1,18 +1,23 @@
-import DetailsTab from "./details-card";
-import MemberCard from "./members-card";
-import QuestsTab from "./quest-card";
-import { Iconify } from "@components";
+import { useState } from "react";
+
+import { CiMountain1, CiShare1 } from "react-icons/ci";
+import { FaPlus } from "react-icons/fa";
+import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
+
 import { Button, Link, Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
+
+import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useState } from "react";
-import { CiMountain1, CiShare1 } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa";
-import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
+
+import DetailsTab from "./details-card";
+import MemberCard from "./members-card";
+import QuestsTab from "./quest-card";
+import CardCourse from "./quest-card";
 
 export default function QuestsTable() {
   const [value, setValue] = useState(0);

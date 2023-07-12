@@ -1,8 +1,8 @@
 import {
   AnyAction,
-  configureStore,
   Dispatch,
   ThunkDispatch,
+  configureStore,
 } from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
@@ -10,6 +10,7 @@ import {
   useSelector as useAppSelector,
 } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
+
 import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";

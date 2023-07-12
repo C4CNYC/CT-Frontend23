@@ -1,13 +1,17 @@
+// next
+import NextLink from "next/link";
+
 import ReactMarkdown from "react-markdown";
-import "@utils";
 // markdown plugins
 import rehypeHighlight from "rehype-highlight";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-// next
-import NextLink from "next/link";
+
 // @mui
 import { Divider, Link, Typography } from "@mui/material";
+
+import "@utils";
+
 //
 import { Image } from "../image";
 //

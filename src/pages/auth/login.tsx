@@ -1,6 +1,7 @@
+import Head from "next/head";
+
 import LoginLayout from "@layouts/login/LoginLayout";
 import Login from "@sections/auth/Login";
-import Head from "next/head";
 import GuestGuard from "src/auth/GuestGuard";
 
 export default function LoginPage(): React.ReactElement {

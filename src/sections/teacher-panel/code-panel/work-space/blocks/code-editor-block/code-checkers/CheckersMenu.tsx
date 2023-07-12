@@ -1,7 +1,11 @@
-import { Box } from "@mui/material";
-import { domAnimation, LazyMotion, m } from "framer-motion";
 import { useEffect, useState } from "react";
+
+import { LazyMotion, domAnimation, m } from "framer-motion";
+
+import { Box } from "@mui/material";
+
 import { IValidationMap } from "src/utils/validationMaping";
+
 import { CheckersItemBtn } from "../checkers/checkers-item-btn";
 
 interface Props {

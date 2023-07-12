@@ -1,25 +1,29 @@
-import { useCallback, useEffect, useMemo } from "react";
-import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo } from "react";
+
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-// utils
-import { fData, BaseResponseInterface } from "@utils";
+
 // components
 import {
+  FormProvider,
+  Label,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
-  Label,
   useSnackbar,
-  FormProvider,
 } from "@components";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+// utils
+import { BaseResponseInterface, fData } from "@utils";
 import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
@@ -27,7 +31,6 @@ import {
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 // ----------------------------------------------------------------------
 

@@ -10,9 +10,7 @@ interface Props {
   isLoading: boolean;
 }
 
-export function TableLoader({
-  isLoading,
-}: Props): React.ReactElement | null {
+export function TableLoader({ isLoading }: Props): React.ReactElement | null {
   if (!isLoading) return null;
 
   return (

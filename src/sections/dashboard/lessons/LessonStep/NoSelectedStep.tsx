@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+
+import { Box, Typography } from "@mui/material";
 
 export const NoSelectedStep = (): React.ReactElement => {
   return (

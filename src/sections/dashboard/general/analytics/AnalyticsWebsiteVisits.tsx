@@ -1,8 +1,10 @@
 import { ApexOptions } from "apexcharts";
+
 // @mui
 import { Box, Card, CardHeader, CardProps } from "@mui/material";
+
 // components
-import { useChart, Chart } from "@components";
+import { Chart, useChart } from "@components";
 
 // ----------------------------------------------------------------------
 

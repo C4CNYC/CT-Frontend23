@@ -1,3 +1,6 @@
+import { MdWifiTethering } from "react-icons/md";
+import { useSelector } from "react-redux";
+
 import {
   Avatar,
   Stack,
@@ -6,8 +9,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { MdWifiTethering } from "react-icons/md";
-import { useSelector } from "react-redux";
+
 import { RootState } from "src/redux/store";
 
 export default function GroupHeader(): React.ReactElement {

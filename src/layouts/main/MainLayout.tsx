@@ -1,8 +1,10 @@
 // next
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+
 // @mui
 import { Box } from "@mui/material";
+
 //
 const Header = dynamic(async () => await import("./Header"), { ssr: false });
 

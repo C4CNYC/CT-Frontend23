@@ -1,5 +1,7 @@
-import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import React from "react";
+
+import { Box, Stack, Tooltip, Typography } from "@mui/material";
+
 import HomeButton from "../HomeButton";
 
 interface Props {

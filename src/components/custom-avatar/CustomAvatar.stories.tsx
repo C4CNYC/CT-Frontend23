@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { CustomAvatar } from "./CustomAvatar"
+
+import { CustomAvatar } from "./CustomAvatar";
 
 const Component: Meta<typeof CustomAvatar> = {
   component: CustomAvatar,
@@ -12,7 +13,6 @@ export const Default = {
   args: {
     color: "primary",
     variant: "rounded",
-    name: "Custom avatar"
+    name: "Custom avatar",
   },
 };
-

@@ -1,4 +1,7 @@
-import { MenuPopover, Label, Iconify, ConfirmDialog } from "@components";
+import { useState } from "react";
+
+import { BiDotsVerticalRounded } from "react-icons/bi";
+
 import {
   Avatar,
   Button,
@@ -8,10 +11,11 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
-import { BiDotsVerticalRounded } from "react-icons/bi";
+
+import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { useLocales } from "src/locales";
 import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
+
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 
 interface Props {

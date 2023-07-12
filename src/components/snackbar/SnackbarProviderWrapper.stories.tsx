@@ -1,6 +1,10 @@
 import type { Meta } from "@storybook/react";
-import { SnackbarProviderWrapper, SnackbarProviderWrapperProps } from "./SnackbarProviderWrapper"
 import { ThemeProvider } from "@theme/index";
+
+import {
+  SnackbarProviderWrapper,
+  SnackbarProviderWrapperProps,
+} from "./SnackbarProviderWrapper";
 
 const Component: Meta<typeof SnackbarProviderWrapper> = {
   component: SnackbarProviderWrapper,
@@ -10,17 +14,16 @@ const Component: Meta<typeof SnackbarProviderWrapper> = {
 export default Component;
 
 const ExampleComponent = (props: SnackbarProviderWrapperProps) => {
-    return (
-        <ThemeProvider>
-            <SnackbarProviderWrapper {...props} />
-        </ThemeProvider>
-    )
-}
-
+  return (
+    <ThemeProvider>
+      <SnackbarProviderWrapper {...props} />
+    </ThemeProvider>
+  );
+};
 
 export const Default: Meta<typeof SnackbarProviderWrapper> = {
-    render: (args) => <ExampleComponent {...args} />,
+  render: (args) => <ExampleComponent {...args} />,
   args: {
-    children: <>Some children content</>
+    children: <>Some children content</>,
   },
 };

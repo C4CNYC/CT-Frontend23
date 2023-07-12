@@ -1,13 +1,13 @@
-
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
-import { Container } from "@mui/material";
 import Head from "next/head";
 
+import { Container } from "@mui/material";
+
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import DashboardLayout from "@layouts/dashboard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
 import SchoolTable from "@sections/dashboard/schools/view/SchoolTable";
 import { useLocales } from "src/locales";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 Index.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

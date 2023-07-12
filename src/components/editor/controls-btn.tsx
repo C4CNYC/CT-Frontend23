@@ -1,7 +1,8 @@
-import { Button } from "@mui/material";
 import { CgIfDesign } from "react-icons/cg";
 import { FiSettings } from "react-icons/fi";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+
+import { Button } from "@mui/material";
 
 export function TemplateBtn(): React.ReactElement {
   return (

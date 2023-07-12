@@ -1,3 +1,5 @@
+import { Box, Container } from "@mui/material";
+
 import {
   CustomBreadcrumbs,
   EmptyContent,
@@ -6,7 +8,6 @@ import {
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { StudentDashboardLayout } from "@layouts/dashboard";
-import { Box, Container } from "@mui/material";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { SkeletonFriends } from "@sections/dashboard/friends/SkeletonFriends";
 import UserCard from "@sections/dashboard/friends/UserCard";
@@ -18,6 +19,7 @@ import {
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
+
 import FilterFriends from "./filter";
 
 Friends.getLayout = (page: React.ReactElement) => (

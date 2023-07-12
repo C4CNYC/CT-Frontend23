@@ -1,4 +1,4 @@
-import "remirror/styles/all.css";
+import React from "react";
 
 import {
   CommandButtonGroup,
@@ -7,7 +7,7 @@ import {
   useActive,
   useCommands,
 } from "@remirror/react";
-import React from "react";
+import "remirror/styles/all.css";
 
 const TEXT_CASES: Array<[React.CSSProperties["textTransform"], string]> = [
   ["none", "None"],

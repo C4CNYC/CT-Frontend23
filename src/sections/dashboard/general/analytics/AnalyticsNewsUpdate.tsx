@@ -10,10 +10,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
+// components
+import { Iconify, Image, Scrollbar } from "@components";
 // utils
 import { fToNow } from "@utils";
-// components
-import { Scrollbar, Image, Iconify } from "@components";
 
 // ----------------------------------------------------------------------
 

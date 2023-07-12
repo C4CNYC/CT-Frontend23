@@ -3,6 +3,7 @@ import {
   BaseResponseInterface,
   BaseSearchInterface,
 } from "@utils";
+
 import { Role } from "../enums/role.enum";
 
 export interface UserResponse extends IUser, BaseResponseInterface {}

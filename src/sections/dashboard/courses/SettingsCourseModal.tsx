@@ -1,4 +1,5 @@
-import { CourseModuleAutocomplete } from "@components";
+import { ReactElement, useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
@@ -7,7 +8,9 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { ReactElement, useState } from "react";
+
+import { CourseModuleAutocomplete } from "@components";
+
 interface Props {
   children: ReactElement;
   id: string;
@@ -52,7 +55,11 @@ export default function SettingsCourseModal({
           }}
         >
           <Typography variant="h5">Course Preferences</Typography>
-          <IconButton onClick={() => { setOpenDialog(false); }}>
+          <IconButton
+            onClick={() => {
+              setOpenDialog(false);
+            }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>

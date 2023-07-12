@@ -1,5 +1,5 @@
 export interface RequestCatchError {
-    data: {
-        message: string;
-    },
-};
+  data: {
+    message: string;
+  };
+}

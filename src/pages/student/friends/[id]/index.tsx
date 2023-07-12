@@ -1,11 +1,13 @@
-import { useSettingsContext, Iconify, CustomBreadcrumbs } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard";
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
-import { PATH_MAIN } from "@routes/paths";
-import ProfileCover from "@sections/student-profile/ProfileCover";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
+
+import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
+
+import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
+import { StudentDashboardLayout } from "@layouts/dashboard";
+import { PATH_MAIN } from "@routes/paths";
+import ProfileCover from "@sections/student-profile/ProfileCover";
 import { useGetFriendQuery } from "src/redux/services/student/friends-manager";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
@@ -22,12 +24,12 @@ export default function FriendProfile(): React.ReactElement {
 
   if (isLoading || !data) return <Skeleton />;
   // const TABS = [
-    // {
-    //   value: "profile",
-    //   label: "Profile",
-    //   icon: <Iconify icon="ic:round-account-box" />,
-    //   component: <ProfileMain data={data} isFriend={true} />,
-    // },
+  // {
+  //   value: "profile",
+  //   label: "Profile",
+  //   icon: <Iconify icon="ic:round-account-box" />,
+  //   component: <ProfileMain data={data} isFriend={true} />,
+  // },
   // ];
   return (
     <>

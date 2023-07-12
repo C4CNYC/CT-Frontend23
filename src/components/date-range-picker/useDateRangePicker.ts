@@ -1,7 +1,10 @@
-import { getYear, isBefore, isSameDay, isSameMonth } from "date-fns";
 import { useState } from "react";
+
+import { getYear, isBefore, isSameDay, isSameMonth } from "date-fns";
+
 // utils
 import { fDate } from "@utils";
+
 //
 import { DateRangePickerProps } from "./types";
 

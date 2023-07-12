@@ -1,7 +1,8 @@
+import * as React from "react";
+
 import Autocomplete from "@mui/material/Autocomplete";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
-import * as React from "react";
 
 export default function AddClassInput(): React.ReactElement {
   const fixedOptions = [top100Films[6]];

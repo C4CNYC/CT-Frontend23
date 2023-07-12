@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
+import CloseIcon from "@mui/icons-material/Close";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -12,12 +18,8 @@ import {
 } from "@mui/material";
 
 import { FormProvider, RHFTextField, useSnackbar } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import CloseIcon from "@mui/icons-material/Close";
-import { LoadingButton } from "@mui/lab";
-import { useForm } from "react-hook-form";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import * as Yup from "yup";
+
 interface Props {
   children: React.ReactElement[] | React.ReactElement;
 }

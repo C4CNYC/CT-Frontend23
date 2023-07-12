@@ -1,15 +1,18 @@
-import { RHFSelect, RHFTextField, FormProvider } from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack } from "@mui/material";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
+import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack } from "@mui/material";
+
+import { FormProvider, RHFSelect, RHFTextField } from "@components";
 import {
   useUpdateSchoolAvatarImgMutation,
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
-import * as Yup from "yup";
+
 import { countries } from "../../../../../assets/data";
 import { useLocales } from "../../../../../locales";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";

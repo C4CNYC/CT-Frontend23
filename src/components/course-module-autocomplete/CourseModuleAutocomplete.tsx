@@ -1,6 +1,10 @@
-import { CustomAvatar, SearchNotFound, Iconify } from "@components";
+import * as React from "react";
+
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useSnackbar } from "notistack";
+
 import {
-  alpha,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -10,20 +14,18 @@ import {
   Skeleton,
   TextField,
   Typography,
+  alpha,
 } from "@mui/material";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
+import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
+import { BaseResponseInterface, voidFunction } from "@utils";
+import { IModule } from "src/redux/services/interfaces/courseUnits.interface";
 import {
   useAddModuleToCourseMutation,
   useRemoveModuleFromCourseMutation,
 } from "src/redux/services/manager/courses-manager";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-
-import { BaseResponseInterface, voidFunction } from "@utils";
-import { IModule } from "src/redux/services/interfaces/courseUnits.interface";
 
 type ModuleType = IModule & BaseResponseInterface;
 

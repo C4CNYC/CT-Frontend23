@@ -1,6 +1,15 @@
-import { useSettingsContext, UploadImageModal, Iconify } from "@components";
-import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
+import Head from "next/head";
+import { useState } from "react";
+
+import { useSnackbar } from "notistack";
+import { BsPeopleFill } from "react-icons/bs";
+import { MdContacts } from "react-icons/md";
+import { useSelector } from "react-redux";
+
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
+
+import { Iconify, UploadImageModal, useSettingsContext } from "@components";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { ProfileCover } from "@sections/dashboard/user/profile";
 import {
   SchoolContactsTab,
@@ -9,17 +18,12 @@ import {
   SchoolSocialsTab,
 } from "@sections/schools/tabs";
 import SkeletonProfileTab from "@sections/schools/tabs/profile/SkeletomProfileTab";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { BsPeopleFill } from "react-icons/bs";
-import { MdContacts } from "react-icons/md";
-import { useSelector } from "react-redux";
 import {
   useGetSchoolProfileQuery,
   useUpdateSchoolCoverImgMutation,
 } from "src/redux/services/manager/schools-manager";
 import { RootState } from "src/redux/store";
+
 import SkeletonSchool from "./skeleton-school";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (

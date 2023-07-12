@@ -1,5 +1,7 @@
 import { Grid, Skeleton, Stack } from "@mui/material";
+
 import { IUser } from "src/redux/interfaces/auth.interface";
+
 import ProfileAbout from "./ProfileAbout";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileSocialInfo from "./ProfileSocialInfo";

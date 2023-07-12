@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react";
-import CustomTextField from "./CustomTextField"
 import { ThemeProvider } from "@theme/index";
+
+import CustomTextField from "./CustomTextField";
 
 const Component: Meta<typeof CustomTextField> = {
   component: CustomTextField,
@@ -10,12 +11,16 @@ const Component: Meta<typeof CustomTextField> = {
 export default Component;
 
 export const Default: Meta<typeof CustomTextField> = {
-    render: (args) => <ThemeProvider><CustomTextField {...args} /></ThemeProvider>,
+  render: (args) => (
+    <ThemeProvider>
+      <CustomTextField {...args} />
+    </ThemeProvider>
+  ),
   args: {
     variant: "outlined",
     margin: "normal",
     focused: false,
     hiddenLabel: false,
-    placeholder: "CustomTextField"
+    placeholder: "CustomTextField",
   },
 };

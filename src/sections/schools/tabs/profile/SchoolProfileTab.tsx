@@ -1,14 +1,17 @@
-import { UploadAvatar } from "@components";
-import { Card, Grid, Stack, Typography } from "@mui/material";
 import { useCallback, useState } from "react";
+
+import { Card, Grid, Stack, Typography } from "@mui/material";
+
+import { UploadAvatar } from "@components";
+import { fData } from "@utils";
 import { useLocales } from "src/locales";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
-import { fData } from "@utils";
+
+import SkeletonProfileTab from "./SkeletomProfileTab";
 import ProfileAbout from "./components/ProfileAbout";
 import ProfileSocialInfo from "./components/ProfileSocialInfo";
 import ProfileUsersInfo from "./components/ProfileUsersInfo";
 import SchoolProfileForm from "./form/SchoolProfileForm";
-import SkeletonProfileTab from "./SkeletomProfileTab";
 
 interface Props {
   schoolId: string;

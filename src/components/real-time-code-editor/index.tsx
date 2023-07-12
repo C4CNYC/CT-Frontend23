@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { getDocument } from "./extentions/collab";
+import React, { useEffect, useState } from "react";
+
 import { Socket } from "socket.io-client";
+
 import { CodeEditor } from "./editor";
+import { getDocument } from "./extentions/collab";
 
 interface State {
   connected: boolean;
@@ -25,8 +27,7 @@ export const RealTimeCodeEditor = ({
   colabCursonText,
   connectionType = "connect",
   onChangeCode,
-}:
-IRealTimeCodeEditor): React.ReactElement | null => {
+}: IRealTimeCodeEditor): React.ReactElement | null => {
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,
@@ -73,7 +74,10 @@ IRealTimeCodeEditor): React.ReactElement | null => {
     });
 
     window.addEventListener("beforeunload", () => {
-      socket.emit(connectionType === "connect" ? "leaveRoom" : "deleteRoom", roomId);
+      socket.emit(
+        connectionType === "connect" ? "leaveRoom" : "deleteRoom",
+        roomId
+      );
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pullUpdateResponse");
@@ -88,7 +92,10 @@ IRealTimeCodeEditor): React.ReactElement | null => {
         version: undefined,
         doc: undefined,
       }));
-      socket.emit(connectionType === "connect" ? "leaveRoom" : "deleteRoom", roomId);
+      socket.emit(
+        connectionType === "connect" ? "leaveRoom" : "deleteRoom",
+        roomId
+      );
       socket.off("connect");
       socket.off("disconnect");
       socket.off("pullUpdateResponse");

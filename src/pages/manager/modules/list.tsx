@@ -1,23 +1,27 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useSettingsContext, CustomBreadcrumbs, SimpleInfiniteList, Iconify } from "@components";
-import {
-  DEFAULT_TAKE_PER_PAGE,
-  FilterMode,
-  useFilters,
-} from "@hooks";
-import DashboardLayout from "@layouts/dashboard";
+import Head from "next/head";
+
 import { Box, Button, Container } from "@mui/material";
+
+import {
+  CustomBreadcrumbs,
+  Iconify,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from "@components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
+import DashboardLayout from "@layouts/dashboard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
-import Head from "next/head";
-import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 // import { getCountTakingElment } from "src/utils/countTakingElments";
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "@sections/dashboard/skeleton/skeletonList";
+import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
+
 import FilterModules from "./filter";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 // ----------------------------------------------------------------------
 

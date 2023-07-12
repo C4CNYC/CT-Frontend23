@@ -1,8 +1,11 @@
-import { Scrollbar } from "@components";
-import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import * as React from "react";
+
+import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
+
+import { Scrollbar } from "@components";
 import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
+
 import { countries } from "../../../../assets/data";
 import TeacherSection from "../../organization/schools/TeachersSection";
 import ClassSection from "../classes/ClassSection";

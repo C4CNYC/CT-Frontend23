@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { LoaderDeleyContent } from "./LoaderDeleyContent";
 
 const Component: Meta<typeof LoaderDeleyContent> = {

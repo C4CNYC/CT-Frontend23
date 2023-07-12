@@ -1,6 +1,7 @@
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useAtom } from "jotai";
 import { CopyBlock, dracula } from "react-code-blocks";
+
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 const Solution = (): React.ReactElement => {
   const [{ solutionCode }] = useAtom(globalCodePanelAtom);

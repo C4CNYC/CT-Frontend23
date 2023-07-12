@@ -1,8 +1,11 @@
-import { Avatar, Box, Button, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+
+import { Avatar, Box, Button, Typography } from "@mui/material";
+
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
-import { useRouter } from "next/router";
 import { IClass } from "src/redux/interfaces/class.interface";
+
 interface Props {
   active: boolean;
   classItem: IClass & BaseResponseInterface;
@@ -20,12 +23,7 @@ export default function TribeListItem({
       onClick={() => {
         push(STUDENT_PATH_DASHBOARD.class.id(classItem.id));
       }}
-      sx={{
-        justifyContent: "flex-start",
-        alignItems: "center",
-        position: "relative",
-        p: 0,
-      }}
+      sx={{ p: 0, justifyContent: "flex-start" }}
     >
       <Box
         sx={(theme) => ({

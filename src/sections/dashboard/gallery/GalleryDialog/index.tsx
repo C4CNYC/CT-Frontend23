@@ -1,20 +1,22 @@
+import React, { useEffect, useState } from "react";
+
+import { BiSave } from "react-icons/bi";
+import { BsArrowsFullscreen } from "react-icons/bs";
+import { HiCode, HiOutlineDesktopComputer } from "react-icons/hi";
+import { TbArrowsMinimize } from "react-icons/tb";
+
 import CloseIcon from "@mui/icons-material/Close";
 import {
-  alpha,
   Box,
   Dialog,
   IconButton,
   Stack,
   Tab,
   Tabs,
+  alpha,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { BiSave } from "react-icons/bi";
-import { BsArrowsFullscreen } from "react-icons/bs";
-import { HiCode, HiOutlineDesktopComputer } from "react-icons/hi";
-import { TbArrowsMinimize } from "react-icons/tb";
 
 import BrowserTab from "../BrowserTab";
 import GalleryCodeTab from "../GalleryCodeTab";

@@ -1,20 +1,24 @@
-import { CustomBreadcrumbs } from "@components";
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
-import { Container, Stack } from "@mui/material";
-import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
 import { useEffect } from "react";
+
+import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
+
+import { Container, Stack } from "@mui/material";
+
+import { CustomBreadcrumbs } from "@components";
+import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import AssignmentColumn from "@sections/dashboard/assignments/column/AssignmentsColumn";
+import { hideScrollbarX } from "@utils";
 import { AssignmentStatuses } from "src/redux/services/enums/assignment-status.enum";
 import {
   useGetAssignmentListQuery,
   useUdpateAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
-import { getOrder } from "src/utils/getTaskOrder";
 import { getBoard, persistCard } from "src/redux/slices/assignments";
 import { RootState, useDispatch, useSelector } from "src/redux/store";
-import { hideScrollbarX } from "@utils";
+import { getOrder } from "src/utils/getTaskOrder";
+
 import FilterAssignments from "./filter";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 // ----------------------------------------------------------------------
 
@@ -124,7 +128,10 @@ export default function Index(): React.ReactElement {
               name: "Dashboard",
               href: MANAGER_PATH_DASHBOARD.root,
             },
-            { name: "Assignments", href: MANAGER_PATH_DASHBOARD.school.assignments },
+            {
+              name: "Assignments",
+              href: MANAGER_PATH_DASHBOARD.school.assignments,
+            },
           ]}
         />
         <Stack display="flex" marginLeft="-25px" marginBottom="20px">

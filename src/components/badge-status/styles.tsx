@@ -1,5 +1,6 @@
 // @mui
-import { styled, Theme } from "@mui/material/styles";
+import { Theme, styled } from "@mui/material/styles";
+
 //
 import { BadgeSizeValue, BadgeStatusValue } from "./types";
 

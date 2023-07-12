@@ -1,6 +1,7 @@
-import { CustomAvatar } from "@components";
 import { Box, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+import { CustomAvatar } from "@components";
 import { getLinearGradient } from "@utils";
 
 const StyledInfo = styled("div")(({ theme }) => ({

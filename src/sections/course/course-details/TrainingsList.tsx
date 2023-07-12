@@ -1,8 +1,10 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import { ILesson } from "src/redux/interfaces/content.interface";
-import TrainingsItem from "./TrainingsItem";
+
 import { BaseResponseInterface } from "@utils";
+import { ILesson } from "src/redux/interfaces/content.interface";
+
+import TrainingsItem from "./TrainingsItem";
 
 interface Props {
   lessons: Array<ILesson & BaseResponseInterface>;

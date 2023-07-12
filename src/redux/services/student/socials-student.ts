@@ -1,6 +1,7 @@
-import { ISocials } from "src/redux/interfaces/socials.interface";
-import { studentApi } from ".";
 import { BaseResponseInterface } from "@utils";
+import { ISocials } from "src/redux/interfaces/socials.interface";
+
+import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({

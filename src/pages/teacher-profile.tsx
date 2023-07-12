@@ -1,9 +1,11 @@
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
+import Head from "next/head";
+
 import { Container } from "@mui/system";
+
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import ProfileEditForm from "@sections/profile/ProfileEditForm";
-import Head from "next/head";
 import { useProfileQuery } from "src/redux/services/auth";
 
 Profile.getLayout = (page: React.ReactElement) => (

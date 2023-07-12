@@ -1,8 +1,11 @@
+import * as React from "react";
+
+import { useSnackbar } from "notistack";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Menu } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
 import { useUpdateOrgMemberMutation } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 
@@ -31,7 +34,7 @@ export function RoleSelector({
         user_id: userId,
         role,
         first_name: "",
-        last_name: ""
+        last_name: "",
       }).unwrap();
       enqueueSnackbar(`${email} updated to ${role} `);
     } catch {}

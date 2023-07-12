@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
+
 import { BaseResponseInterface } from "@utils";
+
 import { IUser } from "../interfaces/auth.interface";
 import { ProfileType } from "./enums/profile.enum";
 import { Role } from "./enums/role.enum";

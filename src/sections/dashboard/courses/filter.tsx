@@ -1,8 +1,9 @@
-import { SetFilterType } from "@hooks";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/system/Stack";
+
+import { SetFilterType } from "@hooks";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 
 interface Props {

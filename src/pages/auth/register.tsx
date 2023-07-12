@@ -1,6 +1,7 @@
+import Head from "next/head";
+
 import LoginLayout from "@layouts/login/LoginLayout";
 import Register from "@sections/auth/Register";
-import Head from "next/head";
 import GuestGuard from "src/auth/GuestGuard";
 
 // ----------------------------------------------------------------------

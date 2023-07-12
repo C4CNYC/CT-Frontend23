@@ -1,3 +1,8 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
 import {
   Box,
   Button,
@@ -7,17 +12,16 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
+
 import CourseAvatar from "./CourseAvarar";
 import CourseButtons from "./CourseButtons";
 import CourseChip from "./CourseChip";
 import CourseHeader from "./CourseHeader";
 import CourseInfo from "./CourseInfo";
 import CourseStatistics from "./CourseStatistics";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 interface Props {
   course: ICourseElement;

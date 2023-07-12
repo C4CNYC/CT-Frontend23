@@ -1,5 +1,11 @@
-import { useSnackbar, FormProvider, RHFSwitch, RHFTextField } from "@components";
+import { useRouter } from "next/router";
+import * as React from "react";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -13,12 +19,15 @@ import {
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useRouter } from "next/router";
-import * as React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+
+import {
+  FormProvider,
+  RHFSwitch,
+  RHFTextField,
+  useSnackbar,
+} from "@components";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
-import * as Yup from "yup";
+
 import {
   useCreateLessonMutation,
   useUpdateLessonMutation,

@@ -1,5 +1,6 @@
 import { BaseResponseInterface, BaseSearchInterface } from "@utils";
 import { Unit } from "src/redux/interfaces/challenges.interface";
+
 import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { IIntegration } from "./integration.interface";
 

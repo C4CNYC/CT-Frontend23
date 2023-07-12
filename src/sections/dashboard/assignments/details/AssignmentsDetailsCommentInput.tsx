@@ -7,10 +7,12 @@ import {
   Stack,
   Tooltip,
 } from "@mui/material";
-// auth
-import { useAuthContext } from "../../../../auth/useAuthContext";
+
 // components
 import { CustomAvatar, Iconify } from "@components";
+
+// auth
+import { useAuthContext } from "../../../../auth/useAuthContext";
 
 // ----------------------------------------------------------------------
 

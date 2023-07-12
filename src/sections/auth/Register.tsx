@@ -1,4 +1,11 @@
-import { Logo } from "@components";
+import NextLink from "next/link";
+import { useState } from "react";
+
+import { FaGraduationCap } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { GoFileCode } from "react-icons/go";
+import SwipeableViews from "react-swipeable-views";
+
 import {
   Box,
   Button,
@@ -9,13 +16,10 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
-import NextLink from "next/link";
-import { useState } from "react";
-import { FaGraduationCap } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { GoFileCode } from "react-icons/go";
-import SwipeableViews from "react-swipeable-views";
+
+import { Logo } from "@components";
+
+import { PATH_AUTH } from "../../routes/paths";
 import RegisterForm from "./RegisterForm";
 
 export default function Register(): React.ReactElement {

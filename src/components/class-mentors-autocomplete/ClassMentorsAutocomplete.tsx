@@ -1,7 +1,9 @@
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
-import { useFilters } from "@hooks";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
-  alpha,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -11,11 +13,12 @@ import {
   CircularProgress,
   TextField,
   Typography,
+  alpha,
 } from "@mui/material";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import { useSelector } from "react-redux";
+
+import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+import { useFilters } from "@hooks";
+import { BaseResponseInterface } from "@utils";
 import { useGetOrgMembersQuery } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
@@ -25,7 +28,6 @@ import {
   useUpdateMentorMutation,
 } from "src/redux/services/manager/class-mentor-manager";
 import { RootState } from "src/redux/store";
-import { BaseResponseInterface } from "@utils";
 
 type UserType = IUser & BaseResponseInterface;
 

@@ -1,5 +1,10 @@
-import { RHFTextField, RHFUploadAvatar, FormProvider } from "@components";
+import { useCallback, useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -10,9 +15,8 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import {
   useAddAuthorToCourseMutation,
   useCreateAuthorMutation,
@@ -20,7 +24,6 @@ import {
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
 } from "src/redux/services/manager/author-manager";
-import * as Yup from "yup";
 
 const LINK_URL =
   // eslint-disable-next-line no-useless-escape

@@ -1,16 +1,19 @@
-import { m } from "framer-motion";
 import { useRef, useState } from "react";
+
+import { m } from "framer-motion";
 import Carousel from "react-slick";
+
 // @mui
 import { Card, CardProps, Link, Stack, Typography } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
+
 // components
 import {
   CarouselArrows,
   CarouselDots,
+  Image,
   MotionContainer,
   varFade,
-  Image,
 } from "@components";
 
 // ----------------------------------------------------------------------

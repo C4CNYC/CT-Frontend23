@@ -1,5 +1,12 @@
-import { FormProvider, Iconify, RHFTextField } from "@components";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { IoRocketSharp } from "react-icons/io5";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -9,11 +16,8 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { IoRocketSharp } from "react-icons/io5";
+
+import { FormProvider, Iconify, RHFTextField } from "@components";
 import {
   MANAGER_PATH_AFTER_LOGIN,
   STUDENT_PATH_AFTER_LOGIN,
@@ -22,7 +26,7 @@ import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useRegisterMutation } from "src/redux/services/auth";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useCreateClassMutation } from "src/redux/services/student/classes-manager";
-import * as Yup from "yup";
+
 import JoinCode from "./JoinCode";
 
 // ----------------------------------------------------------------------
