@@ -21,16 +21,19 @@ import { createRandomAvatar, getRandomColor } from "@utils";
 import { MuiColorInput } from "mui-color-input";
 import { useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
 import {
   useCreateClassesMutation,
   useUpdateClassesAvatarMutation,
 } from "src/redux/services/manager/classes-manager";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
+import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
+import { useSelector } from "src/redux/store";
 import * as Yup from "yup";
 
 const CreateClassSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   description: Yup.string().required("Description is required"),
+  schoolId: Yup.string().required("Select school"),
 });
 
 export interface FormAddClassProps {
@@ -48,12 +51,15 @@ export default function CreateClassModal({
   children,
 }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
+  const studentId = useSelector(
+    (state) => state.global.user?.student_profile.id
+  );
   const [open, setOpenDialog] = useState<boolean>(false);
   const [createClassByManager, { isLoading: createClassLoading }] =
     useCreateClassesMutation();
   const [updateClassAvatar] = useUpdateClassesAvatarMutation();
-  const { data } = useGetSchoolListQuery({});
-
+  const [studentJoin] = useStudentJoinClassMutation();
+  const { data } = useGetMySchoolsQuery({});
   const methods = useForm<FormAddClassProps>({
     resolver: yupResolver(CreateClassSchema),
   });
@@ -71,6 +77,11 @@ export default function CreateClassModal({
         description,
         cover,
       }).unwrap();
+      await studentJoin({
+        schoolId,
+        classId: data.id,
+        student_id: studentId as string,
+      }).unwrap();
       const file = new FormData();
       if (avatar) {
         file.append("file", avatar);
@@ -81,6 +92,7 @@ export default function CreateClassModal({
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
       enqueueSnackbar(`Tribe ${name} created successfuly!`);
+      setOpenDialog(false);
     } catch (error: any) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
@@ -175,7 +187,8 @@ export default function CreateClassModal({
                     rows={3}
                   />
                 </Box>
-                <RHFSelect native name="school" label="School">
+                <RHFSelect native name="schoolId" label="School">
+                  <option key="empty" value="none"></option>
                   {data?.data ? (
                     <>
                       {data.data.map((el) => (
@@ -198,8 +211,9 @@ export default function CreateClassModal({
               }}
             >
               <Button
+                color="error"
                 onClick={() => {
-                  setOpenDialog(false);
+                  setOpenDialog(createClassLoading);
                 }}
               >
                 Close

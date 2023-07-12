@@ -12,7 +12,7 @@ export const STUDENT_PATH_PAGE = {
   components: "/components",
   profile: "/student/profile",
   studentProfile: "/profile",
-  home: "/student/tribes",
+  home: "/student/class",
 };
 
 export const STUDENT_PATH_MAIN = {

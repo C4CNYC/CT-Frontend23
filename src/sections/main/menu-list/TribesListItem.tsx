@@ -5,18 +5,20 @@ import { useRouter } from "next/router";
 import { IClass } from "src/redux/interfaces/class.interface";
 interface Props {
   active: boolean;
-  tribe: IClass & BaseResponseInterface;
+  classItem: IClass & BaseResponseInterface;
 }
 
 export default function TribeListItem({
   active,
-  tribe,
+  classItem,
 }: Props): React.ReactElement {
   const { push } = useRouter();
+
   return (
     <Button
+      variant="text"
       onClick={() => {
-        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id));
+        push(STUDENT_PATH_DASHBOARD.class.id(classItem.id));
       }}
       sx={{
         justifyContent: "flex-start",
@@ -40,7 +42,7 @@ export default function TribeListItem({
       />
       <Avatar
         variant="rounded"
-        src={tribe.avatar}
+        src={classItem.avatar}
         sx={(theme) => ({
           border: `2px solid ${theme.palette.info.light}`,
           width: "30px",
@@ -51,7 +53,7 @@ export default function TribeListItem({
         sx={(theme) => ({ ml: 2, color: theme.palette.text.secondary })}
         variant="body1"
       >
-        {tribe.name}
+        {classItem.name}
       </Typography>
     </Button>
   );

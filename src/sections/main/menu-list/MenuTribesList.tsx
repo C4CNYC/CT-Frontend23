@@ -8,12 +8,11 @@ import CreateClassModal from "./CreateClassModal";
 import TribeListItem from "./TribesListItem";
 
 export default function MenuTribesList(): React.ReactElement {
-  const { data: tribes } = useGetClassesQuery({});
+  const { data } = useGetClassesQuery({});
   const { query } = useRouter();
   return (
-    <Stack sx={{}}>
+    <Stack>
       <Divider sx={{ borderBottomWidth: "4px", mb: 2, ml: 2 }} />
-
       <Stack
         sx={{
           gap: 1,
@@ -45,8 +44,12 @@ export default function MenuTribesList(): React.ReactElement {
           </CreateClassModal>
         </RoleBasedGuard>
         <Stack gap={1} ml={2}>
-          {tribes?.data.map((t) => (
-            <TribeListItem active={t.id === query.id} key={t.id} tribe={t} />
+          {data?.data.map((c) => (
+            <TribeListItem
+              active={c.id === query.id}
+              key={c.id}
+              classItem={c}
+            />
           ))}
         </Stack>
       </Stack>

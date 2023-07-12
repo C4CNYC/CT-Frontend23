@@ -10,9 +10,9 @@ import Head from "next/head";
 import { useState } from "react";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 import NextLink from "next/link";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 enum TabType {
   Active = "active",
@@ -40,7 +40,7 @@ export default function Tribes(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Tribes"
           links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.home },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Tribes", href: PATH_DASHBOARD.tribes.root },
           ]}
         />
