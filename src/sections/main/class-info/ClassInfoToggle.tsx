@@ -7,7 +7,7 @@ import { MdOutlineWifiTethering } from "react-icons/md";
 
 import { Collapse, IconButton, Link, Stack, Typography } from "@mui/material";
 
-export default function ClassInfoHeader(): React.ReactElement {
+export default function ClassInfoToggle(): React.ReactElement {
   const [openJoin, setOpenJoin] = useState<boolean>(true);
   return (
     <Collapse in={openJoin}>

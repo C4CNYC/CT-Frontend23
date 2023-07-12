@@ -15,7 +15,6 @@ import {
   DialogTitle,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
 
 import {
@@ -70,11 +69,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ px: 2, pt: 2 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ px: 2, pt: 2 }}>{children}</Box>}
     </div>
   );
 }

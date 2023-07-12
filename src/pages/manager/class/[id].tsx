@@ -16,11 +16,8 @@ HomeOverview.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-const GET_COURSES = 2;
-
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetCourseQuery({ take: GET_COURSES });
 
   return (
     <>
@@ -28,7 +25,7 @@ export default function HomeOverview(): React.ReactElement {
         <title>Home Overview | Code Tribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-        {!isLoading && <DefaultClassInfo />}
+        <DefaultClassInfo />
         <QuestsTable />
       </Container>
     </>

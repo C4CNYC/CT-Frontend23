@@ -48,7 +48,7 @@ export default function Friends(): React.ReactElement {
             <CustomBreadcrumbs
               heading="Friends"
               links={[
-                { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.home },
+                { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
                 { name: "Friends", href: STUDENT_PATH_DASHBOARD.friends.root },
               ]}
             />

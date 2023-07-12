@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 
 import { Iconify } from "src/components/iconify";
 
-export default function CardCourse() {
+export default function QuestsTab() {
   return (
     <Stack
       direction="row"

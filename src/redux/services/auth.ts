@@ -46,6 +46,7 @@ export interface RegisterRequest {
   first_name: string;
   last_name: string;
   password: string;
+  role: Role;
 }
 
 export const authApi = createApi({
@@ -64,7 +65,7 @@ export const authApi = createApi({
     }),
     register: builder.mutation<RegisterResponce, RegisterRequest>({
       query: (body) => ({
-        url: "auth/signup",
+        url: "/signup",
         method: "POST",
         body,
       }),

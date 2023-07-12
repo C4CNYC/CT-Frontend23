@@ -14,6 +14,9 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 
+import DetailsTab from "./details-card";
+import MemberCard from "./members-card";
+import QuestsTab from "./quest-card";
 import CardCourse from "./quest-card";
 
 export default function QuestsTable() {
@@ -23,11 +26,12 @@ export default function QuestsTable() {
     setValue(newValue);
   };
   return (
-    <Stack sx={{ px: 2, pt: 1 }}>
+    <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack direction="row" alignItems="center" pb={2}>
         <Tabs
           value={value}
           onChange={handleChange}
+          scrollButtons={false}
           sx={{
             "& .MuiTabs-indicator": {
               backgroundColor: "#43D4DD",
@@ -96,10 +100,14 @@ export default function QuestsTable() {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <CardCourse />
+        <QuestsTab />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}></CustomTabPanel>
-      <CustomTabPanel value={value} index={2}></CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <MemberCard />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <DetailsTab />
+      </CustomTabPanel>
     </Stack>
   );
 }

@@ -40,7 +40,7 @@ export default function Tribes(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Tribes"
           links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.home },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Tribes", href: PATH_DASHBOARD.tribes.root },
           ]}
         />
