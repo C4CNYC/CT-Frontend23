@@ -1,11 +1,8 @@
-// @mui
-import { List, Stack } from "@mui/material";
-// locales
 import { useLocales } from "../../../locales";
-//
 import { NavSectionProps } from "../types";
 import NavList from "./NavList";
 import { StyledSubheader } from "./styles";
+import { List, Stack } from "@mui/material";
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +15,7 @@ export default function NavSectionVertical({
 
   return (
     <Stack sx={sx} {...other}>
-      {data.map((group) => {
+      {data?.map((group) => {
         const key = group.subheader || group.items[0].title;
 
         return (

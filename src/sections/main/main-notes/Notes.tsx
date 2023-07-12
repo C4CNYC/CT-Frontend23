@@ -1,6 +1,6 @@
+import NotesItem from "./NotesItem";
 import { Button, Divider, Stack, Typography } from "@mui/material";
 import { Iconify } from "src/components/iconify";
-import NotesItem from "./NotesItem";
 
 export default function Notes() {
   return (
@@ -20,7 +20,7 @@ export default function Notes() {
         }}
         orientation="vertical"
       />
-      <Stack sx={{ px: 1 }}>
+      <Stack sx={{ px: 1, width: "100%" }}>
         <Typography variant="h5" gutterBottom>
           <Iconify
             icon="solar:notes-broken"
