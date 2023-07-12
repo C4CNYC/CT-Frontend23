@@ -23,6 +23,7 @@ export default function TribeListItem({
       onClick={() => {
         push(STUDENT_PATH_DASHBOARD.class.id(classItem.id));
       }}
+      sx={{ p: 0, justifyContent: "flex-start" }}
     >
       <Box
         sx={(theme) => ({

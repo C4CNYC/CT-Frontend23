@@ -5,7 +5,7 @@ import { Container } from "@mui/system";
 
 import { useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
-import DefaultClassInfo from "@sections/main/DefaultClassInfo";
+import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
 import Notes from "@sections/main/main-notes/Notes";
 import QuestsTable from "@sections/main/quests/QuestsTable";
 

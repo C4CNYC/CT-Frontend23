@@ -6,11 +6,9 @@ import {
   useReducer,
 } from "react";
 
-//
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
-// utils
 import { axios, localStorageAvailable, voidFunction } from "@utils";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -28,10 +26,6 @@ import {
   JWTContextType,
 } from "./types";
 import { isValidToken, setSession } from "./utils";
-
-utils;
-
-//
 
 // ----------------------------------------------------------------------
 

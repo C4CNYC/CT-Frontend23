@@ -1,26 +1,16 @@
-// @mui
-//
 import { useRouter } from "next/router";
 
 import { AppBar, IconButton, Stack, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-// components
 import { Iconify, Logo, useSettingsContext } from "@components";
-// hooks
 import { useOffSetTop, useResponsive } from "@hooks";
-// utils
 import { bgBlur } from "@utils";
 
-// config
 import { HEADER, NAV } from "../../../config-global";
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
 import NavAccount from "./SchoolAccount";
-
-utils;
-
-//
 
 // ----------------------------------------------------------------------
 
