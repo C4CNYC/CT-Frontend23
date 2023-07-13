@@ -147,7 +147,6 @@ export function AuthProvider({
         if (isManagerRoute && data.role === Role.Student) {
           window.location.pathname = "/permission-denied";
         }
-
         reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
         reduxDispatch(setUser(data));
 
@@ -196,15 +195,15 @@ export function AuthProvider({
   const login = useCallback(
     async (email: string, password: string, tenantName: string) => {
       localStorage.setItem("tenantName", tenantName);
-
       const { data } = await axios.post<any, any>("auth/signin", {
         email,
         password,
       });
 
       const { access_token: accessToken, user } = data;
+      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
       reduxDispatch(setUser(user));
-
+      reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
       setSession(
         accessToken,
         localStorage.getItem("tenantName") ?? "codetribe"
