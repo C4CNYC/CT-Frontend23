@@ -10,7 +10,7 @@ export default function Notes() {
       direction="row"
       sx={{
         mt: { xs: 2, sm: 2, md: 2, lg: "72px" },
-        maxWidth: { lg: "400px" },
+        maxWidth: { lg: "300px" },
         px: { sm: 1, md: 1, lg: 0 },
       }}
     >

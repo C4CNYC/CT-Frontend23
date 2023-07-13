@@ -1,4 +1,5 @@
 import nextLink from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { BsThreeDots } from "react-icons/bs";
@@ -18,22 +19,24 @@ import {
 import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
-import { useRouter } from "next/router";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
-export default function DefaultClassInfo(): React.ReactElement {
-  const { query } = useRouter();
+interface Props {
+  data: IClass;
+}
+
+export default function DefaultClassInfo({ data }: Props): React.ReactElement {
   const { copy } = useCopyToClipboard();
+  const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-
-  const { data } = useGetClassQuery({ id: query.id as string })
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
@@ -75,7 +78,9 @@ export default function DefaultClassInfo(): React.ReactElement {
             >
               <Typography variant="subtitle2">Join-code:</Typography>
               <Button
-                onClick={() => { onCopy("AHWE2383"); }}
+                onClick={() => {
+                  onCopy("AHWE2383");
+                }}
                 sx={{ gap: 0.5, color: "inherit", p: 0 }}
               >
                 <Typography variant="subtitle2">AHWE2383</Typography>
@@ -104,7 +109,7 @@ export default function DefaultClassInfo(): React.ReactElement {
               flexWrap: "wrap",
             }}
           >
-            <ClassInfoMain data={data}/>
+            <ClassInfoMain data={data} />
             <Stack
               direction="row"
               alignItems="center"
@@ -160,7 +165,9 @@ export default function DefaultClassInfo(): React.ReactElement {
                   minWidth: "150px",
                 }}
                 open={openPopover}
-                onClose={() => { setOpenPopover(null) }}
+                onClose={() => {
+                  setOpenPopover(null);
+                }}
               >
                 <Button
                   sx={{

@@ -1,20 +1,6 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
-// next
-import {
-  ConfirmDialog,
-  emptyRows,
-  getComparator,
-  Iconify,
-  Label,
-  Scrollbar,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  useTable,
-} from "@components";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+
 import {
   Button,
   Card,
@@ -27,11 +13,27 @@ import {
   Tabs,
   Tooltip,
 } from "@mui/material";
+
+import {
+  ConfirmDialog,
+  Iconify,
+  Label,
+  Scrollbar,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  emptyRows,
+  getComparator,
+  useTable,
+} from "@components";
 import { PATH_DASHBOARD } from "@routes/paths";
-import { UserTableRow, UserTableToolbar } from "@sections/dashboard/user/list";
-import { IUserAccountGeneral } from "@types";
-import { useRouter } from "next/router";
+import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { _userList } from "src/_mock/arrays";
+import { User } from "src/redux/interfaces/auth.interface";
+
+import MemberRow from "./MemberRow";
 
 const ROLE_OPTIONS = [
   "all",
@@ -47,25 +49,20 @@ const ROLE_OPTIONS = [
 ];
 
 const TABLE_HEAD = [
-  { id: "name", label: "Name", align: "left" },
-  { id: "company", label: "Company", align: "left" },
-  { id: "role", label: "Role", align: "left" },
-  { id: "isVerified", label: "Verified", align: "center" },
-  { id: "status", label: "Status", align: "left" },
-  { id: "" },
-  { id: "" },
-  { id: "" },
+  { id: "avatar", label: "Avarat", align: "left" },
+  { id: "firstName", label: "First name", align: "left" },
+  { id: "lastName", label: "Lastname", align: "left" },
+  { id: "username", label: "username", align: "left" },
+  { id: "city", label: "City", align: "left" },
+  { id: "", label: "", align: "left" },
 ];
 
-// ----------------------------------------------------------------------
+interface Props {
+  members: User[] | [];
+}
 
-MemberCard.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
-);
-
-// ----------------------------------------------------------------------
-
-export default function MemberCard() {
+export default function MemberCard({ members }: Props) {
+  console.log(members);
   const {
     dense,
     page,
@@ -87,7 +84,7 @@ export default function MemberCard() {
 
   const { push } = useRouter();
 
-  const [tableData, setTableData] = useState(_userList);
+  const [tableData, setTableData] = useState(members);
 
   const [filterName, setFilterName] = useState("");
 
@@ -101,8 +98,6 @@ export default function MemberCard() {
     inputData: tableData,
     comparator: getComparator(order, orderBy),
     filterName,
-    filterRole,
-    filterStatus,
   });
 
   const dataInPage = dataFiltered.slice(
@@ -206,19 +201,11 @@ export default function MemberCard() {
             icon={<Label>{dataFiltered.length}</Label>}
             iconPosition="end"
           />
-          <Tab
-            key={1}
-            label={"Pending"}
-            value={"pending"}
-            icon={<Label>{dataFiltered.length}</Label>}
-            iconPosition="end"
-          />
         </Tabs>
 
         <Divider />
 
         <UserTableToolbar
-          isFiltered={isFiltered}
           filterName={filterName}
           filterRole={filterRole}
           optionsRole={ROLE_OPTIONS}
@@ -268,13 +255,13 @@ export default function MemberCard() {
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => (
-                    <UserTableRow
+                    <MemberRow
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id)}
                       onSelectRow={() => onSelectRow(row.id)}
                       onDeleteRow={() => handleDeleteRow(row.id)}
-                      onEditRow={() => handleEditRow(row.name)}
+                      onEditRow={() => handleEditRow(row.last_name)}
                     />
                   ))}
 
@@ -334,14 +321,10 @@ function applyFilter({
   inputData,
   comparator,
   filterName,
-  filterStatus,
-  filterRole,
 }: {
-  inputData: IUserAccountGeneral[];
+  inputData: User[];
   comparator: (a: any, b: any) => number;
   filterName: string;
-  filterStatus: string;
-  filterRole: string;
 }) {
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -355,17 +338,9 @@ function applyFilter({
 
   if (filterName) {
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user) =>
+        user.last_name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
-
-  if (filterStatus !== "all") {
-    inputData = inputData.filter((user) => user.status === filterStatus);
-  }
-
-  if (filterRole !== "all") {
-    inputData = inputData.filter((user) => user.role === filterRole);
-  }
-
   return inputData;
 }

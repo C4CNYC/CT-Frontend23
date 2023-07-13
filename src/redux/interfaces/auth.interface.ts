@@ -16,6 +16,8 @@ export interface User extends BaseResponseInterface {
   school?: ISchool;
   cover?: string;
   role: Role;
+  city?: string | null;
+  username?: string | null;
 }
 
 export interface UserResponse {
@@ -71,4 +73,5 @@ export interface IUser {
   cover?: string;
   role: Role;
   student_profile: IStudent & BaseResponseInterface;
+  city?: string | null;
 }

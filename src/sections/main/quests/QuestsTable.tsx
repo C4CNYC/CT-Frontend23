@@ -13,13 +13,18 @@ import { useTheme } from "@mui/system";
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
 
-export default function QuestsTable() {
+interface Props {
+  data: IClass;
+}
+
+export default function QuestsTable({ data }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
@@ -111,7 +116,7 @@ export default function QuestsTable() {
         <QuestsTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard />
+        <MemberCard members={data?.students ?? []} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />

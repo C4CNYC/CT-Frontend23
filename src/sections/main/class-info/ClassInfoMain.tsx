@@ -1,14 +1,27 @@
+import { useRouter } from "next/router";
+
 import { FaSchool } from "react-icons/fa";
 
 import { Avatar, Stack, Typography } from "@mui/material";
+
 import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { useGetClassMentorQuery } from "src/redux/services/student/classes-manager";
 
 interface IClassInfoMain {
-  data?: IClass & BaseResponseInterface
+  data?: IClass & BaseResponseInterface;
 }
 
-export default function ClassInfoMain({ data }: IClassInfoMain): React.ReactElement {
+interface Props {
+  data: IClass;
+}
+
+export default function ClassInfoMain({ data }: Props): React.ReactElement {
+  const { query } = useRouter();
+  const { data: teacher, isLoading } = useGetClassMentorQuery(
+    { id: query.id as string },
+    { skip: !query.id }
+  );
   return (
     <Stack direction="row" gap={2}>
       <Avatar
@@ -21,10 +34,8 @@ export default function ClassInfoMain({ data }: IClassInfoMain): React.ReactElem
           mt: { xs: 1, sm: 0 },
         }}
         src={data?.avatar}
-        alt=""
-      >
-        🦄
-      </Avatar>
+        alt={data?.avatar}
+      />
       <Stack>
         <Typography variant="h4" sx={{ color: "#fff" }}>
           {data?.name}
@@ -44,7 +55,7 @@ export default function ClassInfoMain({ data }: IClassInfoMain): React.ReactElem
               size="16px"
               style={{ marginRight: "10px" }}
             />
-            School
+            {data?.school?.name}
           </Typography>
           <Avatar
             sx={{
@@ -57,7 +68,6 @@ export default function ClassInfoMain({ data }: IClassInfoMain): React.ReactElem
           >
             &#128540;
           </Avatar>
-          {data?.school?.name}
           <Typography
             variant="subtitle2"
             sx={{
