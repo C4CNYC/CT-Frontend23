@@ -16,6 +16,8 @@ export default function NavSectionVertical({
 }: NavSectionProps): React.ReactElement | null {
   const { translate } = useLocales();
 
+  if (!data?.length) return null;
+
   return (
     <Stack sx={sx} {...other}>
       {data.map((group) => {
