@@ -4,10 +4,11 @@ import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 
-import { Button, Link, Stack } from "@mui/material";
+import { Button, Link, Stack, useMediaQuery } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/system";
 
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -17,9 +18,10 @@ import { Role } from "src/redux/services/enums/role.enum";
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
-import CardCourse from "./quest-card";
 
 export default function QuestsTable() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -39,19 +41,19 @@ export default function QuestsTable() {
           }}
         >
           <Tab
-            label="Quests"
+            label={!isMobile && "Quests"}
             icon={<CiMountain1 size={20} />}
             {...a11yProps(0)}
             sx={{ fontSize: "1.1rem" }}
           />
           <Tab
-            label="21 Members"
+            label={!isMobile && "Members"}
             icon={<IoPeopleOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
             {...a11yProps(1)}
           />
           <Tab
-            label="Details"
+            label={!isMobile && "Details"}
             icon={<IoSettingsOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
             {...a11yProps(2)}
@@ -82,19 +84,25 @@ export default function QuestsTable() {
               width={20}
               sx={{ ml: 5 }}
             />
-            <Typography color="#637381" fontSize="1.1rem" mr="10px">
-              Gallery
-              <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
-            </Typography>
+            {!isMobile && (
+              <Typography color="#637381" fontSize="1.1rem" mr="10px">
+                Gallery
+                <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
+              </Typography>
+            )}
           </Link>
           <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
             <Button
-              sx={(theme) => ({ gap: 1 })}
+              sx={(theme) => ({
+                gap: 1,
+                p: isMobile ? 1 : "",
+                minWidth: 0,
+              })}
               variant="outlined"
               color="info"
             >
               <FaPlus size={15} style={{ marginBottom: "2px" }} />
-              Add Quest
+              {!isMobile && "Add Quest"}
             </Button>
           </RoleBasedGuard>
         </Stack>

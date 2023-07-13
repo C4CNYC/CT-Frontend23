@@ -1,13 +1,15 @@
-import NotesItem from "./NotesItem";
 import { Button, Divider, Stack, Typography } from "@mui/material";
+
 import { Iconify } from "src/components/iconify";
+
+import NotesItem from "./NotesItem";
 
 export default function Notes() {
   return (
     <Stack
       direction="row"
       sx={{
-        mt: "72px",
+        mt: { xs: 2, sm: 2, md: 2, lg: "72px" },
         maxWidth: { lg: "400px" },
         px: { sm: 1, md: 1, lg: 0 },
       }}

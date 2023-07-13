@@ -1,5 +1,6 @@
-import { Avatar, Stack, Typography } from "@mui/material";
 import { FaSchool } from "react-icons/fa";
+
+import { Avatar, Stack, Typography } from "@mui/material";
 
 export default function ClassInfoMain(): React.ReactElement {
   return (
@@ -11,6 +12,7 @@ export default function ClassInfoMain(): React.ReactElement {
           border: "2px solid #ED9526",
           background: "#FBDD3F",
           fontSize: "40px",
+          mt: { xs: 1, sm: 0 },
         }}
         src={""}
         alt=""
@@ -18,14 +20,14 @@ export default function ClassInfoMain(): React.ReactElement {
         🦄
       </Avatar>
       <Stack>
-        <Typography variant="h4" sx={{ color: "#fff", pb: 0.5 }}>
+        <Typography variant="h4" sx={{ color: "#fff" }}>
           BarkRiders - Class5A 🐆
         </Typography>
         <Stack
           direction="row"
           sx={{
             flexWrap: "wrap",
-            pt: 1,
+
             gap: 2,
             alignItems: "center",
           }}
