@@ -1,11 +1,14 @@
-import { Iconify } from "@components";
-import { Box } from "@mui/material";
-import { Stack } from "@mui/system";
-import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
+import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+
+import { Box } from "@mui/material";
+import { Stack } from "@mui/system";
+
+import { Iconify } from "@components";
+import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
 import { IValidationMap } from "src/utils/validationMaping";
+
 import { CheckersMenu } from "../checkers/checkers-menu";
 
 interface ICheckers {

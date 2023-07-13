@@ -1,5 +1,7 @@
-import { useDebounceCallback } from "@hooks";
 import React, { useState } from "react";
+
+import { useDebounceCallback } from "@hooks";
+
 import SkeletonViewBlock from "./SkeletonViewBlock";
 
 interface IBrowserView {

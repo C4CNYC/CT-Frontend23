@@ -1,7 +1,9 @@
-import { Image, useSnackbar } from "@components";
-import { Box, IconButton } from "@mui/material";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
+
+import { Box, IconButton } from "@mui/material";
+
+import { Image, useSnackbar } from "@components";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
@@ -9,6 +11,7 @@ import {
   useCourseAddRatingMutation,
   useCourseRemoveLikeMutation,
 } from "src/redux/services/student/courses-manager";
+
 interface Props {
   course: ICourseElement;
 }

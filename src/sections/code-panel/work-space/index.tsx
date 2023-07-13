@@ -1,9 +1,12 @@
+import { useContext } from "react";
+
+import { useAtom } from "jotai";
+import SwipeableViews from "react-swipeable-views";
+
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Stack } from "@mui/system";
-import { useAtom } from "jotai";
-import { useContext } from "react";
-import SwipeableViews from "react-swipeable-views";
+
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { mobileTabManager } from "../atoms/mobile-tab-manager.atom";
 import { CodePanelContext } from "../context/CodePanel.context";

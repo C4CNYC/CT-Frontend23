@@ -1,12 +1,5 @@
-import {
-  moveCursorEvent,
-  pasteSymbolEvent,
-  undoRedoEvent,
-} from "@components";
-import { Box, Button, Divider } from "@mui/material";
-import { styled } from "@mui/system";
-import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
 import { memo } from "react";
+
 import { AiOutlineCopy } from "react-icons/ai";
 import { BsClipboard } from "react-icons/bs";
 import {
@@ -16,6 +9,12 @@ import {
 } from "react-icons/md";
 import { RiFilePaper2Fill, RiShareForwardFill } from "react-icons/ri";
 import { TbBoxMargin, TbBraces, TbTool } from "react-icons/tb";
+
+import { Box, Button, Divider } from "@mui/material";
+import { styled } from "@mui/system";
+
+import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from "@components";
+import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
 import { copyPasteEvent } from "src/components/real-time-editor/events/copy-paste";
 
 export enum ICodingActonsType {

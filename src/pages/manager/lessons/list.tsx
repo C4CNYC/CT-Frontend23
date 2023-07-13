@@ -1,24 +1,28 @@
-import { useSettingsContext, SimpleInfiniteList, Iconify, CustomBreadcrumbs } from "@components";
-import {
-  DEFAULT_TAKE_PER_PAGE,
-  FilterMode,
-  useFilters,
-} from "@hooks";
-import DashboardLayout from "@layouts/dashboard";
+import Head from "next/head";
+
 import { Box, Button, Container } from "@mui/material";
+
+import {
+  CustomBreadcrumbs,
+  Iconify,
+  SimpleInfiniteList,
+  useSettingsContext,
+} from "@components";
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
+import DashboardLayout from "@layouts/dashboard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
-import Head from "next/head";
-import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
-import { getCountTakingElment } from "@utils";
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "@sections/dashboard/skeleton/skeletonList";
-import SkeletonLesson from "./skeletonLesson";
+import { getCountTakingElment } from "@utils";
+import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
+import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
+
 import FilterLessons from "./filter";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import SkeletonLesson from "./skeletonLesson";
 
 // ----------------------------------------------------------------------
 

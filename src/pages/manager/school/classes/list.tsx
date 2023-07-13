@@ -1,13 +1,10 @@
-import {
-  emptyRows,
-  TableEmptyRows,
-  TableHeadCustom,
-  TableNoData,
-  TablePaginationCustom,
-  TableSelectedAction,
-  useTable,
-  useSettingsContext, ConfirmDialog, CustomBreadcrumbs, Iconify, Scrollbar
-} from "@components";
+import Head from "next/head";
+import { useState } from "react";
+
+import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
   Button,
   Card,
@@ -21,14 +18,28 @@ import {
   Tabs,
   Tooltip,
 } from "@mui/material";
-import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
-import { UserTableToolbar } from "@sections/dashboard/user/list";
-import Head from "next/head";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+
+import {
+  ConfirmDialog,
+  CustomBreadcrumbs,
+  Iconify,
+  Scrollbar,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableNoData,
+  TablePaginationCustom,
+  TableSelectedAction,
+  emptyRows,
+  useSettingsContext,
+  useTable,
+} from "@components";
 import { useFilters } from "@hooks";
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { ClassesTableRow } from "@sections/dashboard/classes/list";
+import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
+import { UserTableToolbar } from "@sections/dashboard/user/list";
+import { createRandomAvatar, getRandomColor } from "@utils";
 import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
 import {
   useCreateClassesMutation,
@@ -38,13 +49,6 @@ import {
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-import { ClassesTableRow } from "@sections/dashboard/classes/list";
-import {
-  createRandomAvatar,
-  getRandomColor,
-} from "@utils";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
 
 // ----------------------------------------------------------------------
 

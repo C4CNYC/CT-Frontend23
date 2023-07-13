@@ -1,7 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { MegaMenuMobile } from "./MegaMenuMobile";
-import { Iconify } from "../iconify"
 import { ThemeProvider } from "@theme/index";
+
+import { Iconify } from "../iconify";
+import { MegaMenuMobile } from "./MegaMenuMobile";
 
 const Component: Meta<typeof MegaMenuMobile> = {
   component: MegaMenuMobile,
@@ -11,7 +12,11 @@ const Component: Meta<typeof MegaMenuMobile> = {
 export default Component;
 
 export const Default: Meta<typeof MegaMenuMobile> = {
-  render: (args) => <ThemeProvider><MegaMenuMobile {...args} /></ThemeProvider>,
+  render: (args) => (
+    <ThemeProvider>
+      <MegaMenuMobile {...args} />
+    </ThemeProvider>
+  ),
   args: {
     data: [
       {
@@ -20,7 +25,7 @@ export const Default: Meta<typeof MegaMenuMobile> = {
         icon: <Iconify icon="ic:round-account-box" />,
         more: {
           title: "More title",
-          path: "more-path"
+          path: "more-path",
         },
         products: [
           {
@@ -32,7 +37,7 @@ export const Default: Meta<typeof MegaMenuMobile> = {
             name: "Product Name",
             image: "image",
             path: "product path",
-          }
+          },
         ],
         tags: [
           {
@@ -42,7 +47,7 @@ export const Default: Meta<typeof MegaMenuMobile> = {
           {
             name: "Tag name",
             path: "path",
-          }
+          },
         ],
         children: [
           {
@@ -55,11 +60,11 @@ export const Default: Meta<typeof MegaMenuMobile> = {
               {
                 title: "Tag title",
                 path: "path",
-              }
-            ]
-          }
-        ]
-      }
-    ]
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 };

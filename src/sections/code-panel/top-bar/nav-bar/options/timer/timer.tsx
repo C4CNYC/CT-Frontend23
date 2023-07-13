@@ -1,3 +1,9 @@
+import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+
+import { MdOutlineTimer } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
+
 import {
   Button,
   Grid,
@@ -7,13 +13,10 @@ import {
   PopoverVirtualElement,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
-import { MdOutlineTimer } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
+
 import TimerButton from "./button/timer-button";
 import { CircularProgressWithLabel } from "./progress/circularProgress";
 import { useStyles } from "./styles";
-import Image from "next/image";
 
 interface Props {
   mobile: boolean;
@@ -25,7 +28,9 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
   const [start, setStart] = useState(false);
   const [finish, setFinish] = useState(false);
   const [pause, setPause] = useState(false);
-  const [timerAnchorEl, setTimerAnchorEl] = useState<null | Element | PopoverVirtualElement>(null);
+  const [timerAnchorEl, setTimerAnchorEl] = useState<
+    null | Element | PopoverVirtualElement
+  >(null);
   const [openTimer, setOpenTimer] = useState(false);
   const [delay, setDelay] = useState(0);
   const [animationsStart, setAnimationsStart] = useState(0);

@@ -1,13 +1,16 @@
-import { Draggable } from "@hello-pangea/dnd";
-import { Box, Paper, Stack, Tooltip, Typography } from "@mui/material";
-import * as _ from "lodash";
+import NextImage from "next/image";
 import { useState } from "react";
 
+import { Draggable } from "@hello-pangea/dnd";
+import * as _ from "lodash";
+
+import { Box, Paper, Stack, Tooltip, Typography } from "@mui/material";
+
 import { Image } from "@components";
-import NextImage from "next/image";
+import { convertDuration } from "@utils";
 import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
-import { convertDuration } from "@utils";
+
 import { IAssignmentsCard } from "../../../@types/assignments";
 import AssignmentsDetails from "./details/AssignmentsDetails";
 

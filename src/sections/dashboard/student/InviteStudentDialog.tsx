@@ -1,5 +1,10 @@
-import { RHFTextField, FormProvider } from "@components";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -9,11 +14,9 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField } from "@components";
 import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
-import * as Yup from "yup";
 
 interface FormValueProps {
   email: string;

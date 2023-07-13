@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
+
+import { useAtom } from "jotai";
+import { BsChatLeftTextFill } from "react-icons/bs";
+
 import { Button } from "@mui/material";
+
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { useAtom } from "jotai";
-import { useRouter } from "next/router";
-import { BsChatLeftTextFill } from "react-icons/bs";
 
 interface Props {
   isMini?: boolean;
@@ -17,7 +20,9 @@ export default function LetsCodeBtn({ isMini }: Props) {
       onClick={() => {
         if (courseId && unitId && lessonId) {
           push(
-            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(courseId)}?${unitId}&${lessonId}}`
+            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              courseId
+            )}?${unitId}&${lessonId}}`
           );
         } else {
           push(STUDENT_PATH_DASHBOARD.courses.root);

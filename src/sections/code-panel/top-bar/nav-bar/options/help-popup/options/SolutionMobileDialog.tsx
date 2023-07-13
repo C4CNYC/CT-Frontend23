@@ -1,4 +1,7 @@
-import { Iconify } from "@components";
+import { useAtom } from "jotai";
+import { CopyBlock, dracula } from "react-code-blocks";
+import { AiOutlineCode } from "react-icons/ai";
+
 import {
   Dialog,
   DialogContent,
@@ -6,10 +9,9 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
+
+import { Iconify } from "@components";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { useAtom } from "jotai";
-import { CopyBlock, dracula } from "react-code-blocks";
-import { AiOutlineCode } from "react-icons/ai";
 
 interface Props {
   open: boolean;

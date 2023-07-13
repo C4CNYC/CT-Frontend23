@@ -1,6 +1,9 @@
-import { Box } from "@mui/material";
 import React from "react";
+
+import { Box } from "@mui/material";
+
 import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
+
 import SettingsForm from "./SettingsForm";
 import SkeletonSettingsTab from "./SkeletonSettingsTab";
 

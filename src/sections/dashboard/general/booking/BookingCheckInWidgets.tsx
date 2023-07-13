@@ -1,13 +1,15 @@
+// hooks
 import { ApexOptions } from "apexcharts";
+
 // @mui
 import { Card, CardProps, Divider, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// hooks
+
+// components
+import { Chart, useChart } from "@components";
 import { useResponsive } from "@hooks";
 // utils
 import { fNumber } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
 // ----------------------------------------------------------------------
 

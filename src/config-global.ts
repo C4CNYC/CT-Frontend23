@@ -1,5 +1,4 @@
 // ----------------------------------------------------------------------
-
 import { MANAGER_PATH_PAGE } from "@routes/manager.paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
 

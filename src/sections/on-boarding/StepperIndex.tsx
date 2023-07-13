@@ -1,4 +1,5 @@
 import StepWizard from "react-step-wizard";
+
 import CourseStep from "./course-step/CourseStep";
 import FinishStep from "./finish-step/FinishStep";
 import GroupStep from "./group-step/GroupStep";

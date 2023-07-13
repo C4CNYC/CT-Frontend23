@@ -1,7 +1,8 @@
 import type { Meta } from "@storybook/react";
-import { MegaMenuDesktopVertical } from "./MegaMenuDesktopVertical";
-import { Iconify } from "../iconify"
 import { ThemeProvider } from "@theme/index";
+
+import { Iconify } from "../iconify";
+import { MegaMenuDesktopVertical } from "./MegaMenuDesktopVertical";
 
 const Component: Meta<typeof MegaMenuDesktopVertical> = {
   component: MegaMenuDesktopVertical,
@@ -11,7 +12,11 @@ const Component: Meta<typeof MegaMenuDesktopVertical> = {
 export default Component;
 
 export const Default: Meta<typeof MegaMenuDesktopVertical> = {
-  render: (args) => <ThemeProvider><MegaMenuDesktopVertical {...args} /></ThemeProvider>,
+  render: (args) => (
+    <ThemeProvider>
+      <MegaMenuDesktopVertical {...args} />
+    </ThemeProvider>
+  ),
   args: {
     data: [
       {
@@ -20,7 +25,7 @@ export const Default: Meta<typeof MegaMenuDesktopVertical> = {
         icon: <Iconify icon="ic:round-account-box" />,
         more: {
           title: "More title",
-          path: "more-path"
+          path: "more-path",
         },
         products: [
           {
@@ -32,7 +37,7 @@ export const Default: Meta<typeof MegaMenuDesktopVertical> = {
             name: "Product Name",
             image: "image",
             path: "product path",
-          }
+          },
         ],
         tags: [
           {
@@ -42,7 +47,7 @@ export const Default: Meta<typeof MegaMenuDesktopVertical> = {
           {
             name: "Tag name",
             path: "path",
-          }
+          },
         ],
         children: [
           {
@@ -55,11 +60,11 @@ export const Default: Meta<typeof MegaMenuDesktopVertical> = {
               {
                 title: "Tag title",
                 path: "path",
-              }
-            ]
-          }
-        ]
-      }
-    ]
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 };

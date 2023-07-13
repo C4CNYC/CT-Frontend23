@@ -1,4 +1,5 @@
 import orderBy from "lodash/orderBy";
+
 // @mui
 import {
   Avatar,
@@ -10,10 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-// utils
-import { fShortenNumber } from "@utils";
+
 // components
 import { Iconify } from "@components";
+// utils
+import { fShortenNumber } from "@utils";
 
 // ----------------------------------------------------------------------
 

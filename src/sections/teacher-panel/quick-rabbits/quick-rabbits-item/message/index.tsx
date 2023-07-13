@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Avatar,
   ChatContainer,
@@ -7,20 +9,23 @@ import {
   MessageList,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+
 import {
   IChatMessage,
   useFirebaseChat,
 } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
-import { useEffect, useState } from "react";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { BaseResponseInterface } from "@utils";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 interface IMessages {
   reciverId: string;
-  getStudent: (id: string) => IStudent & BaseResponseInterface | undefined;
+  getStudent: (id: string) => (IStudent & BaseResponseInterface) | undefined;
 }
 
-export const Messages = ({ reciverId, getStudent }: IMessages): React.ReactElement => {
+export const Messages = ({
+  reciverId,
+  getStudent,
+}: IMessages): React.ReactElement => {
   const senderId = "SUPPORT";
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const { getMessages, sendMessage } = useFirebaseChat();
@@ -63,13 +68,17 @@ export const Messages = ({ reciverId, getStudent }: IMessages): React.ReactEleme
                     position: "first",
                   }}
                   avatarSpacer={
-                    messages[i - 1]?.sender_id === message.sender_id && message.sender_id !== senderId
+                    messages[i - 1]?.sender_id === message.sender_id &&
+                    message.sender_id !== senderId
                   }
                 >
                   {senderId !== message.sender_id &&
                   messages[i - 1]?.sender_id !== message.sender_id ? (
                     <Avatar
-                      src={getStudent(message.sender_id)?.avatar ?? "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"}
+                      src={
+                        getStudent(message.sender_id)?.avatar ??
+                        "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
+                      }
                       name="Zoe"
                     />
                   ) : null}

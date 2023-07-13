@@ -1,15 +1,18 @@
-import { Box } from "@mui/system";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
 import { useAtom } from "jotai";
 
 import { CircularProgress, Typography } from "@mui/material";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Box } from "@mui/system";
+
+import { useRealTimeConnection } from "src/hooks/useRealTimeConnection";
 import { useGetLessonContentQuery } from "src/redux/services/manager/lesson-content-manager";
+
 import { globalCodePanelAtom } from "./atoms/global-code-panel.atom";
 import { mobileTabManager } from "./atoms/mobile-tab-manager.atom";
 import WorkSpace from "./work-space";
 import SmallScreenTabs from "./work-space/tabs";
-import { useRealTimeConnection } from "src/hooks/useRealTimeConnection";
 
 export const CodePanel = (): React.ReactElement => {
   const { query } = useRouter();
@@ -36,18 +39,18 @@ export const CodePanel = (): React.ReactElement => {
   }, [realTimeData]);
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(() => {
-      setLoading(false)
-    }, 500)
-  }, [query])
+      setLoading(false);
+    }, 500);
+  }, [query]);
 
   if (loading) {
     return (
       <Box>
-        <CircularProgress/>
+        <CircularProgress />
       </Box>
-    )
+    );
   }
 
   if (!query?.studentId) {

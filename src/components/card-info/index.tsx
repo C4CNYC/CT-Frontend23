@@ -1,11 +1,13 @@
 // next
 import Image from "next/image";
+
+import { ImTwitter } from "react-icons/im";
+
+// icons
+import CircleIcon from "@mui/icons-material/Circle";
 // mui
 import { Card, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-// icons
-import CircleIcon from "@mui/icons-material/Circle";
-import { ImTwitter } from "react-icons/im";
 
 export function CardInfo(): React.ReactElement {
   return (

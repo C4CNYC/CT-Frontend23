@@ -1,8 +1,10 @@
 import { Box, Stack } from "@mui/material";
-import CourseDescription from "./CourseDescription";
-import QuizPanel from "./quiz-panel";
-import TrainingsList from "./TrainingsList";
+
 import { Unit } from "src/redux/interfaces/challenges.interface";
+
+import CourseDescription from "./CourseDescription";
+import TrainingsList from "./TrainingsList";
+import QuizPanel from "./quiz-panel";
 
 interface Props {
   dataLessons: Unit;

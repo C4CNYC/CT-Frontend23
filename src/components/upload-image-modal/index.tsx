@@ -1,4 +1,9 @@
-import { RHFUploadAvatar, FormProvider } from "../hook-form";
+import * as React from "react";
+import { useCallback } from "react";
+
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+
 import CloseIcon from "@mui/icons-material/Close";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { LoadingButton } from "@mui/lab";
@@ -6,12 +11,11 @@ import { IconButton, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/system";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import { useLocales } from "../../locales/useLocales";
+
 import { fData } from "@utils";
+
+import { useLocales } from "../../locales/useLocales";
+import { FormProvider, RHFUploadAvatar } from "../hook-form";
 
 interface FormValuesProps {
   cover: File;

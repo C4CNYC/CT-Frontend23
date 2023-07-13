@@ -1,3 +1,10 @@
+import { useState } from "react";
+
+import { useAtom } from "jotai";
+
+import { IconButton, SwipeableDrawer, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+
 import {
   Iconify,
   resetLessonEvent,
@@ -5,13 +12,10 @@ import {
   updateFontSize,
   updateLineWrap,
 } from "@components";
-import { IconButton, SwipeableDrawer, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
-import { useAtom } from "jotai";
-import { useState } from "react";
 // import ChatVisible from "./preferences/ChatVisible";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
+
 import EditColors from "./preferences/EditColors";
 import EditorFontSize from "./preferences/EditorFontSize";
 import EditorWordWrap from "./preferences/EditorWordWrap";

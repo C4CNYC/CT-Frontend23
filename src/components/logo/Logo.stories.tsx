@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { Logo } from "./Logo";
 
 const Component: Meta<typeof Logo> = {

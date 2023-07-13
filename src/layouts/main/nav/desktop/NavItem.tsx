@@ -1,11 +1,15 @@
-import { m } from "framer-motion";
-import { forwardRef } from "react";
 // next
 import NextLink from "next/link";
+import { forwardRef } from "react";
+
+import { m } from "framer-motion";
+
 // @mui
 import { CardActionArea, Link, LinkProps } from "@mui/material";
+
 // components
-import { Image, Iconify } from "@components";
+import { Iconify, Image } from "@components";
+
 //
 import { NavItemDesktopProps, NavItemProps } from "../types";
 import { ListItem } from "./styles";

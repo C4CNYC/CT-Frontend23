@@ -1,6 +1,8 @@
-import _ from "lodash";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
+import _ from "lodash";
+
 import { BaseSearchInterface } from "@utils";
 
 export const DEFAULT_TAKE_PER_PAGE = 10;

@@ -1,7 +1,9 @@
 import { Popup } from "react-map-gl";
+
 // @mui
 import { GlobalStyles } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
+
 // utils
 import { bgBlur } from "@utils";
 

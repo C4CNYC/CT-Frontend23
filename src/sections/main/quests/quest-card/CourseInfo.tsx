@@ -1,3 +1,5 @@
+import { CiShare1 } from "react-icons/ci";
+
 import {
   Box,
   Button,
@@ -6,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { CiShare1 } from "react-icons/ci";
+
 import { Iconify } from "src/components/iconify";
 
 export default function CourseInfo() {

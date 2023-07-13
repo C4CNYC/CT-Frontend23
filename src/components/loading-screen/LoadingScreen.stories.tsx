@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { LoadingScreen } from "./LoadingScreen";
 
 const Component: Meta<typeof LoadingScreen> = {

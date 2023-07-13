@@ -1,12 +1,14 @@
+import Head from "next/head";
+import { useState } from "react";
+
+import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
+
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
-import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
 import { PATH_MAIN } from "@routes/paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileLinks from "@sections/student-profile/ProfileLinks";
 import ProfileMain from "@sections/student-profile/ProfileMain";
-import Head from "next/head";
-import { useState } from "react";
 import { useProfileQuery } from "src/redux/services/auth";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
 

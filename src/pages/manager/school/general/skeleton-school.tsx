@@ -1,5 +1,6 @@
-import { useSettingsContext } from "@components";
 import { Container, Skeleton } from "@mui/material";
+
+import { useSettingsContext } from "@components";
 
 export default function SkeletonSchool(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

@@ -2,6 +2,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import { Box, IconButton, Paper, Stack, Typography } from "@mui/material";
+
 export default function ChallengeTask(): React.ReactElement {
   return (
     <>

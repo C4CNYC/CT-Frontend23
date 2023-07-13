@@ -1,6 +1,10 @@
-import { SearchNotFound, Iconify } from "@components"
+import * as React from "react";
+
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useSnackbar } from "notistack";
+
 import {
-  alpha,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -9,12 +13,12 @@ import {
   Skeleton,
   TextField,
   Typography,
+  alpha,
 } from "@mui/material";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
+import { Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
+import { BaseResponseInterface, voidFunction } from "@utils";
 import { ISkill } from "src/redux/services/interfaces/skill.interface";
 import {
   useGetLessonSkillQuery,
@@ -22,7 +26,6 @@ import {
   useUpdateLessonSkillMutation,
 } from "src/redux/services/manager/lesson-skill-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { BaseResponseInterface, voidFunction } from "@utils";
 
 export default function SkillsTab({
   lessonId,

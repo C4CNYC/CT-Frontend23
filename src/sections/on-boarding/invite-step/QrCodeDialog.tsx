@@ -1,7 +1,9 @@
-import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
 import { useState } from "react";
+
 import { ImQrcode } from "react-icons/im";
 import { IoMdClose } from "react-icons/io";
+
+import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
 
 interface Props {
   children: React.ReactElement;

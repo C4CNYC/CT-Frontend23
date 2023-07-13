@@ -1,15 +1,18 @@
-import { useSnackbar, RHFTextField, FormProvider } from "@components";
+import * as React from "react";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import AddIcon from "@mui/icons-material/Add";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Card, Grid } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import * as React from "react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+
+import { FormProvider, RHFTextField, useSnackbar } from "@components";
 
 interface FormValuesProps {
   name: string;
@@ -56,8 +59,7 @@ export default function AddContactsDialog(): React.ReactElement {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Update success!");
-    } catch (e: any) {
-    }
+    } catch (e: any) {}
   };
 
   return (

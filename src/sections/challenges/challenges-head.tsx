@@ -19,7 +19,9 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
 import { PATH_PAGE } from "@routes/paths";
+
 import ChallengesDialog from "./challenges-dialog";
 
 export default function ChallengesHead(): React.ReactElement {

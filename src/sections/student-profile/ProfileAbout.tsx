@@ -1,8 +1,9 @@
-import { Iconify } from "@components";
 import { Card, CardHeader, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IUser } from "src/redux/interfaces/auth.interface";
+
+import { Iconify } from "@components";
 import { fDateTime } from "@utils";
+import { IUser } from "src/redux/interfaces/auth.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -17,13 +18,7 @@ interface Props {
 }
 
 export default function ProfileAbout({ data }: Props): React.ReactElement {
-  const {
-    school,
-    phone,
-    createdAt,
-    country,
-    post_code: postCode,
-  } = data;
+  const { school, phone, createdAt, country, post_code: postCode } = data;
   return (
     <Card>
       <CardHeader title="About" />

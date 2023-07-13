@@ -1,6 +1,8 @@
-import { Box } from "@mui/material";
-import StepperIndex from "@sections/on-boarding/StepperIndex";
 import Head from "next/head";
+
+import { Box } from "@mui/material";
+
+import StepperIndex from "@sections/on-boarding/StepperIndex";
 
 export default function OnBoarding(): React.ReactElement {
   return (

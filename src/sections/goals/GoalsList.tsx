@@ -1,3 +1,5 @@
+import { FaPlus } from "react-icons/fa";
+
 import {
   Card,
   CardHeader,
@@ -5,8 +7,9 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { FaPlus } from "react-icons/fa";
+
 import { IGoals } from "src/redux/interfaces/goals.interface";
+
 import AddEditGoalDialog from "./AddEditGoalDialog";
 import GoalsItem from "./GoalItem";
 

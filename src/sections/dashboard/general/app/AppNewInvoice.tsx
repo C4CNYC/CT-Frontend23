@@ -1,5 +1,7 @@
-import { sentenceCase } from "change-case";
 import { useState } from "react";
+
+import { sentenceCase } from "change-case";
+
 // @mui
 import {
   Box,
@@ -16,10 +18,17 @@ import {
   TableContainer,
   TableRow,
 } from "@mui/material";
+
+// components
+import {
+  Iconify,
+  Label,
+  MenuPopover,
+  Scrollbar,
+  TableHeadCustom,
+} from "@components";
 // utils
 import { fCurrency } from "@utils";
-// components
-import { TableHeadCustom, Iconify, Scrollbar, MenuPopover, Label } from "@components";
 
 // ----------------------------------------------------------------------
 

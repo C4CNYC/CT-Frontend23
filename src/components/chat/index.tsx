@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   Avatar,
   ConversationHeader,
@@ -5,7 +7,11 @@ import {
   ExpansionPanel,
   MainContainer,
 } from "@chatscope/chat-ui-kit-react";
-import { Iconify } from "@components";
+import { Firestore } from "firebase/firestore";
+import { useAtom } from "jotai";
+import _ from "lodash";
+import { useSelector } from "react-redux";
+
 import {
   IconButton,
   keyframes,
@@ -13,18 +19,16 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
+import { Iconify } from "@components";
 import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
-import { Firestore } from "firebase/firestore";
-import { useAtom } from "jotai";
-import _ from "lodash";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { BaseResponseInterface } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { RootState } from "src/redux/store";
-import { BaseResponseInterface } from "@utils"
+
 import { ChatgptFirebaseOnSendMessage } from "../../sections/chat/hooks/useChatgptChat.hook";
 import { chatAtom } from "./atoms/chat.atom";
 import { Messages } from "./messages";

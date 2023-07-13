@@ -1,4 +1,7 @@
-import { useFilters } from "@hooks";
+import { useEffect } from "react";
+
+import { useSelector } from "react-redux";
+
 import {
   Autocomplete,
   AutocompleteChangeDetails,
@@ -7,13 +10,13 @@ import {
   TextField,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+
+import { useFilters } from "@hooks";
+import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-import { BaseResponseInterface } from "@utils";
 
 interface IFilterCoursesAutocomplete {
   classId: string;

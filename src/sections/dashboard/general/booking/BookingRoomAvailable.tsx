@@ -1,5 +1,6 @@
 import { ApexOptions } from "apexcharts";
 import sumBy from "lodash/sumBy";
+
 // @mui
 import {
   Box,
@@ -10,10 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+
+// components
+import { Chart, useChart } from "@components";
 // utils
 import { fNumber } from "@utils";
-// components
-import { useChart, Chart } from "@components";
 
 // ----------------------------------------------------------------------
 

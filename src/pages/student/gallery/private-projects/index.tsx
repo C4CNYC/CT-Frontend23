@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+
+import { Box, Container } from "@mui/material";
+
 import {
   CustomBreadcrumbs,
   EmptyContent,
@@ -5,23 +9,24 @@ import {
   useSettingsContext,
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
-import { getCountTakingElment } from "@utils";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
-import { Box, Container } from "@mui/material";
-import FilterGallery from "@sections/dashboard/gallery/filter";
+import {
+  STUDENT_PATH_DASHBOARD,
+  STUDENT_PATH_MAIN,
+} from "@routes/student.paths";
 import GalleryItem from "@sections/dashboard/gallery/GalleryElement";
 import {
   SkeletonGalleryBreadcrumbs,
   SkeletonGalleryFilter,
   SkeletonGalleryItem,
 } from "@sections/dashboard/gallery/SkeletonGallery";
-import { useEffect, useState } from "react";
+import FilterGallery from "@sections/dashboard/gallery/filter";
+import { getCountTakingElment } from "@utils";
 import {
   IGallery,
   IGallerySearchParams,
 } from "src/redux/interfaces/gallary.interface";
 import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
-import { STUDENT_PATH_DASHBOARD, STUDENT_PATH_MAIN } from "@routes/student.paths";
 
 PrivateProjects.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -58,7 +63,10 @@ export default function PrivateProjects(): React.ReactElement {
               links={[
                 { name: "Dashboard", href: STUDENT_PATH_MAIN.home },
                 { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
-                { name: "Privat", href: STUDENT_PATH_DASHBOARD.gallery.privateProject },
+                {
+                  name: "Privat",
+                  href: STUDENT_PATH_DASHBOARD.gallery.privateProject,
+                },
               ]}
             />
             <FilterGallery filters={filters} setFilter={setFilter} />

@@ -1,13 +1,15 @@
-import * as React from "react";
 // next
 import Document, { Head, Html, Main, NextScript } from "next/document";
+import * as React from "react";
+
 // @emotion
 import createEmotionServer from "@emotion/server/create-instance";
-// utils
-import { createEmotionCache } from "@utils";
 // theme
 import { palette } from "@theme/palette";
 import { primaryFont } from "@theme/typography";
+
+// utils
+import { createEmotionCache } from "@utils";
 
 // ----------------------------------------------------------------------
 
@@ -50,10 +52,7 @@ export default class MyDocument extends Document {
             name="description"
             content="Text-based Coding for Teens, Schools & Summer Camps – Coding real-world, social-impact websites. Learn web development with friends."
           />
-          <meta
-            name="keywords"
-            content="coding,study,it,school"
-          />
+          <meta name="keywords" content="coding,study,it,school" />
           <meta name="author" content="codetribe.com" />
 
           <style>

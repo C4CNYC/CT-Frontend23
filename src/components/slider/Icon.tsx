@@ -1,4 +1,4 @@
-import { IconifyProps, Iconify } from "@components";
+import { Iconify, IconifyProps } from "@components";
 
 // ----------------------------------------------------------------------
 

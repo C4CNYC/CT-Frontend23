@@ -1,19 +1,11 @@
-import { Iconify, Label } from "@components";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import FeedbackDialog from "@sections/feedback/FeedbackDialog";
-import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
-import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
 import { AiOutlineSolution } from "react-icons/ai";
-import {
-  BsFlagFill,
-} from "react-icons/bs";
+import { BsFlagFill } from "react-icons/bs";
 import {
   FaSchool,
   FaTasks,
   FaUserFriends,
-  FaUsers,
   FaUserShield,
+  FaUsers,
 } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
@@ -21,7 +13,14 @@ import { GoFileSubmodule } from "react-icons/go";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
 import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
-import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
+import { TbPhoto } from "react-icons/tb";
+
+import { Iconify, Label } from "@components";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import FeedbackDialog from "@sections/feedback/FeedbackDialog";
+import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
+import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
 import { Role } from "src/redux/services/enums/role.enum";
 
 export const admin = {
@@ -115,9 +114,7 @@ export const general = {
       path: "",
       title: "",
       icon: <FaUserFriends size={20} />,
-      component: () => (
-        <MenuTribesList />
-      ),
+      component: () => <MenuTribesList />,
     },
   ],
 };
@@ -125,11 +122,6 @@ export const general = {
 export const social = {
   subheader: "SOCIAL",
   items: [
-    {
-      title: "Tribes",
-      path: STUDENT_PATH_DASHBOARD.tribes.root,
-      icon: <Tb3DCubeSphere size={20} />,
-    },
     {
       title: "Friends",
       path: STUDENT_PATH_DASHBOARD.friends.root,

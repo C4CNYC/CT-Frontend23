@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 // @mui
 import {
   Box,
@@ -10,16 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+
 // utils
 import { bgBlur } from "@utils";
+
 // config
 import { NAV } from "../../../config-global";
 //
 import { Iconify } from "../../iconify";
 import { Scrollbar } from "../../scrollbar";
+import { useSettingsContext } from "../SettingsContext";
 //
 import { defaultSettings } from "../config-setting";
-import { useSettingsContext } from "../SettingsContext";
 import BadgeDot from "./BadgeDot";
 import Block from "./Block";
 import ColorPresetsOptions from "./ColorPresetsOptions";

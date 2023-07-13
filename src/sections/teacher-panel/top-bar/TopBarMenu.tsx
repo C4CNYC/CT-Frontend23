@@ -1,10 +1,13 @@
-import { MenuPopover } from "@components";
-import { Box, Divider, Link, List, ListItem, Typography } from "@mui/material";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import Hamburger from "hamburger-react";
 import { SetStateAction, useState } from "react";
+
+import Hamburger from "hamburger-react";
 import { FaUsers } from "react-icons/fa";
 import { IoMdSchool } from "react-icons/io";
+
+import { Box, Divider, Link, List, ListItem, Typography } from "@mui/material";
+
+import { MenuPopover } from "@components";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 export const TopBarMenu = (): React.ReactElement => {
   const [openPopover, setOpenPopover] = useState(null);

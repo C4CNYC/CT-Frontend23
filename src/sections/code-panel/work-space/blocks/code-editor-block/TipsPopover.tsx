@@ -1,3 +1,5 @@
+import { useAtom } from "jotai";
+
 import {
   Box,
   Button,
@@ -6,8 +8,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
 import { mobileTabManager } from "@sections/code-panel/atoms/mobile-tab-manager.atom";
-import { useAtom } from "jotai";
 
 interface Props {
   openPoper: boolean;

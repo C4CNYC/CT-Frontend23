@@ -1,4 +1,3 @@
-import { Image } from "@components";
 import {
   Badge,
   Box,
@@ -8,6 +7,8 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+
+import { Image } from "@components";
 
 interface Props {
   color: string;

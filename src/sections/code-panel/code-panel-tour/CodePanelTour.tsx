@@ -1,12 +1,16 @@
-import { useMediaQuery, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+
 import { differenceInSeconds } from "date-fns";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
 import JoyRide, { ACTIONS, EVENTS, STATUS } from "react-joyride";
+
+import { useMediaQuery, useTheme } from "@mui/material";
+
 import { useSelector } from "src/redux/store";
-import { startTour } from "./tour-atom";
+
 import { TOUR_STEPS_DECKTOP, TOUR_STEPS_MOBILE } from "./TourSteps";
 import { TooltipTourCodePanel } from "./TourTooltip";
+import { startTour } from "./tour-atom";
 
 export default function CodePanelTour(): React.ReactElement {
   const theme = useTheme();

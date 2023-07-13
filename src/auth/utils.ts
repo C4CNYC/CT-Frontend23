@@ -1,7 +1,8 @@
 // routes
-import { PATH_AUTH } from "../routes/paths";
 // utils
 import { axios } from "@utils";
+
+import { PATH_AUTH } from "../routes/paths";
 
 // ----------------------------------------------------------------------
 

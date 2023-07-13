@@ -1,5 +1,6 @@
-import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import { createApi } from "@reduxjs/toolkit/query/react";
+
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ICourseContent,
   ICourseElement,
@@ -8,6 +9,7 @@ import {
   ILessonContent,
 } from "src/redux/interfaces/content.interface";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
+
 import { baseQueryWrapper } from "../helpers/base_query_wrapper";
 
 export const studentPublicApi = createApi({

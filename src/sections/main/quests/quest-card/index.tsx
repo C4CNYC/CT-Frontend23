@@ -1,26 +1,27 @@
-import { Divider, IconButton, Link, Stack, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import NextLink from "next/link";
+
 import { HiOutlineStatusOnline } from "react-icons/hi";
 import { RiExternalLinkLine } from "react-icons/ri";
+
+import { Divider, IconButton, Link, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+
 import { Iconify } from "src/components/iconify";
 
-export default function CardCourse() {
+export default function QuestsTab() {
   return (
     <Stack
-      direction="row"
       sx={{
         backgroundColor: "#E6F5FD",
         borderRadius: "10px",
         py: 1,
         px: 2,
+        flexDirection: { md: "row" },
       }}
     >
       <Stack sx={{ width: "100%", gap: 2 }}>
         <Stack direction="row" justifyContent="space-between">
-          <Stack direction="row" gap={2}>
-            <Typography variant="body2">3 hours ago</Typography>
-            <Typography variant="body2">Due: Not Available</Typography>
+          <Stack gap={2} sx={{ flexDirection: { sm: "row" } }}>
             <Typography
               sx={{ color: "#0198ED", display: "inline-flex" }}
               variant="subtitle2"
@@ -28,6 +29,8 @@ export default function CardCourse() {
               Live Now
               <HiOutlineStatusOnline size={20} style={{ marginLeft: "3px" }} />
             </Typography>
+            <Typography variant="body2">3 hours ago</Typography>
+            <Typography variant="body2">Due: Not Available</Typography>
           </Stack>
           <Typography sx={{}}>course</Typography>
         </Stack>
@@ -38,8 +41,8 @@ export default function CardCourse() {
           <Box display="flex" gap={1} alignItems="center">
             <Iconify icon="bx:award" sx={{ color: "#EE467A" }} />
             <Iconify icon="flat-color-icons:ok" sx={{ color: "#75CF6D" }} />
-            <Typography fontSize="16px" fontWeight="700">
-              82 %
+            <Typography variant="h6" whiteSpace="nowrap">
+              82%
             </Typography>
           </Box>
         </Stack>
@@ -89,7 +92,10 @@ export default function CardCourse() {
       />
       <Stack
         alignSelf="flex-end"
-        sx={(theme) => ({ color: theme.palette.grey[500] })}
+        sx={(theme) => ({
+          color: theme.palette.grey[500],
+          flexDirection: { xs: "row", sm: "row", md: "column" },
+        })}
       >
         <IconButton sx={{ alignSelf: "flex-end" }}>
           <Iconify icon="tabler:pinned" width={22} />

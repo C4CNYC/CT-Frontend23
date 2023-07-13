@@ -1,9 +1,7 @@
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import { IGoals } from "src/redux/interfaces/goals.interface";
+
 import { studentApi } from ".";
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@utils";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({

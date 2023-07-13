@@ -1,3 +1,7 @@
+import NextLink from "next/link";
+
+import { TbFileCertificate } from "react-icons/tb";
+
 import {
   Avatar,
   Box,
@@ -7,8 +11,6 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import NextLink from "next/link";
-import { TbFileCertificate } from "react-icons/tb";
 
 interface Props {
   progress: number | null;

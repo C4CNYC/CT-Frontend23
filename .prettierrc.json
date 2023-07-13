@@ -1,3 +1,12 @@
 {
-  "organizeImportsSkipDestructiveCodeActions": true
+  "importOrder": [
+    "^((react|next)(?!-.*)(/.*)?)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@mui/(.*)$",
+    "^assets/(.*)$",
+    "^(?:(@(?:components|sections|utils|routes|layouts|hooks|types))|src)(/.*)?$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

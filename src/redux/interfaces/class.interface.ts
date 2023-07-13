@@ -1,4 +1,5 @@
 import { BaseSearchInterface } from "@utils";
+
 import { ISchool } from "../slices/global";
 import { User } from "./auth.interface";
 import { ICourseElement } from "./content.interface";

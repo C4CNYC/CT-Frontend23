@@ -1,18 +1,18 @@
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard/";
+import Head from "next/head";
+import NextLink from "next/link";
+import { useState } from "react";
 
 import { Box, Container, Link, Tab, Tabs } from "@mui/material";
+
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import { StudentDashboardLayout } from "@layouts/dashboard/";
 import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
-import Head from "next/head";
-import { useState } from "react";
-import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
-
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
-import NextLink from "next/link";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
 enum TabType {
   Active = "active",
@@ -40,7 +40,7 @@ export default function Tribes(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Tribes"
           links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.home },
+            { name: "Dashboard", href: PATH_DASHBOARD.root },
             { name: "Tribes", href: PATH_DASHBOARD.tribes.root },
           ]}
         />

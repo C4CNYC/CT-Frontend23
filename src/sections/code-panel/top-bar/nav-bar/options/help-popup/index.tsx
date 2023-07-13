@@ -1,3 +1,9 @@
+import { SetStateAction, useState } from "react";
+
+import { Divider, IconButton, MenuItem } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { Box } from "@mui/system";
+
 import {
   Accordion,
   AccordionDetails,
@@ -5,12 +11,8 @@ import {
   Iconify,
   MenuPopover,
 } from "@components";
-import { Divider, IconButton, MenuItem } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
-import { SetStateAction, useState } from "react";
-import HelpQuestionModal from "./modals/HelpQuestion";
 
+import HelpQuestionModal from "./modals/HelpQuestion";
 import Solution from "./options/Solution";
 import Tips from "./options/Tips";
 import Unstack from "./options/Unstuck";

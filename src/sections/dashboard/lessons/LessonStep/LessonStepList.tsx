@@ -1,11 +1,15 @@
-import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { useEffect } from "react";
+
+import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import _ from "lodash";
 import { useSnackbar } from "notistack";
-import { useEffect } from "react";
 import { FiSettings } from "react-icons/fi";
 import { ImPlus } from "react-icons/im";
 import { useSelector } from "react-redux";
+
+import { Box, Button, Stack, Typography } from "@mui/material";
+
+import { BaseResponseInterface } from "@utils";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {
   useCreateLessonContentMutation,
@@ -16,8 +20,8 @@ import {
 import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
 import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
 import { RootState, useDispatch } from "src/redux/store";
-import { BaseResponseInterface } from "@utils";
 import { getOrder } from "src/utils/getTaskOrder";
+
 import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
 import LessonListItem from "./LesonListItem";
 import CreateDemonContent from "./Modals/CreateLessonContent";

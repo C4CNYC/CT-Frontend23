@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { SkeletonKanbanColumn } from "./SkeletonKanbanColumn"
+
+import { SkeletonKanbanColumn } from "./SkeletonKanbanColumn";
 
 const Component: Meta<typeof SkeletonKanbanColumn> = {
   component: SkeletonKanbanColumn,
@@ -7,7 +8,6 @@ const Component: Meta<typeof SkeletonKanbanColumn> = {
 };
 
 export default Component;
-
 
 export const Default: Meta<typeof SkeletonKanbanColumn> = {
   args: {},

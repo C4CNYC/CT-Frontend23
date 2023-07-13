@@ -1,7 +1,9 @@
-import { Stack } from "@mui/system";
 // import { LessonsManager } from "./LessonsManager";
 // import Menu from "./Menu";
 import dynamic from "next/dynamic";
+
+import { Stack } from "@mui/system";
+
 import ProgressBottomBar from "./ProgressBottomBar";
 
 const Menu = dynamic(async () => await import("./Menu"));

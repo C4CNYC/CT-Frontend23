@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { SkeletonProductDetails } from "./SkeletonProductDetails"
+
+import { SkeletonProductDetails } from "./SkeletonProductDetails";
 
 const Component: Meta<typeof SkeletonProductDetails> = {
   component: SkeletonProductDetails,
@@ -7,7 +8,6 @@ const Component: Meta<typeof SkeletonProductDetails> = {
 };
 
 export default Component;
-
 
 export const Default: Meta<typeof SkeletonProductDetails> = {
   args: {},

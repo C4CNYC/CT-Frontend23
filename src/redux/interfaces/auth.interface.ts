@@ -1,4 +1,5 @@
 import { BaseResponseInterface } from "@utils";
+
 import { Role } from "../services/enums/role.enum";
 import { IStudent } from "../services/interfaces/user.interface";
 import { ISchool } from "../slices/global";

@@ -1,5 +1,6 @@
 import { redo, undo } from "@codemirror/commands";
 import { EditorView } from "@codemirror/view";
+
 export function undoRedo(view: EditorView, type: string) {
   view.focus();
   if (type === "undo") {

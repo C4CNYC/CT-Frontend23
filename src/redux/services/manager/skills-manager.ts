@@ -1,7 +1,5 @@
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+
 import { managerApi } from ".";
 import { ISkill, ISkillSearch } from "../interfaces/skill.interface";
 

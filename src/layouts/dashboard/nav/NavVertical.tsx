@@ -1,15 +1,20 @@
-import { Logo, NavSectionVertical, Scrollbar } from "@components";
-import { useResponsive } from "@hooks";
-import { Box, Drawer, Stack } from "@mui/material";
-import UserSection from "@sections/info/user-section";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+
 import { useSelector } from "react-redux";
+
+import { Box, Drawer, Stack } from "@mui/material";
+
+import { Logo, NavSectionVertical, Scrollbar } from "@components";
+import { useResponsive } from "@hooks";
+import UserSection from "@sections/info/user-section";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
+
 import { NAV } from "../../../config-global";
 import NavToggleButton from "./NavToggleButton";
 import { menuConfig } from "./config-navigation";
+
 // ----------------------------------------------------------------------
 
 interface INavVertical {
@@ -29,7 +34,7 @@ export default function NavVertical({
   const isDesktop = useResponsive("up", "lg");
   const menu = isManager
     ? menuConfig[user?.role as Role]
-    : menuConfig[Role.Student]
+    : menuConfig[Role.Student];
 
   useEffect(() => {
     if (openNav) {

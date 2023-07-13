@@ -1,4 +1,7 @@
-import { Iconify } from "@components";
+import { useState } from "react";
+
+import { BsChatText } from "react-icons/bs";
+
 import {
   Box,
   Checkbox,
@@ -13,8 +16,9 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { BsChatText } from "react-icons/bs";
+
+import { Iconify } from "@components";
+
 import FullCodeSolutionModal from "../modals/FullCodeSolution";
 
 interface Props {

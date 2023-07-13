@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import BadgeDot from "./BadgeDot";
 
 const Component: Meta<typeof BadgeDot> = {

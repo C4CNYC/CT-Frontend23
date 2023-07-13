@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, useTheme } from "@mui/material/styles";
+
 // components
 import { Image } from "@components";
 // utils

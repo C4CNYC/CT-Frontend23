@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-// next
 import { useRouter } from "next/router";
-// hooks
-import { useActiveLink } from "@hooks";
-//
+import { useEffect, useRef, useState } from "react";
+
+import useActiveLink from "src/hooks/useActiveLink";
+
 import { NavListProps } from "../types";
 import NavItem from "./NavItem";
 import { StyledPopover } from "./styles";

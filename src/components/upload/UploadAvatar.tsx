@@ -1,11 +1,13 @@
 import { useDropzone } from "react-dropzone";
+
 // @mui
 import { Typography } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-//
-import { Iconify } from "../iconify";
+
 //
 import { useLocales } from "../../locales/useLocales";
+//
+import { Iconify } from "../iconify";
 import RejectionFiles from "./errors/RejectionFiles";
 import AvatarPreview from "./preview/AvatarPreview";
 import { UploadProps } from "./types";

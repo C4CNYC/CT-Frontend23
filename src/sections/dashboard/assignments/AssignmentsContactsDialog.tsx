@@ -1,4 +1,5 @@
-import { SearchNotFound, Iconify, Scrollbar } from "@components";
+import { useState } from "react";
+
 import {
   Avatar,
   Box,
@@ -12,7 +13,9 @@ import {
   ListItemText,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+
+import { Iconify, Scrollbar, SearchNotFound } from "@components";
+
 import { IAssignmentsAssignee } from "../../../@types/assignments";
 
 // ----------------------------------------------------------------------

@@ -1,4 +1,5 @@
 import { BaseResponseInterface } from "@utils";
+
 import { ISchool } from "../../slices/global";
 import { IClass } from "./class.interface";
 import { ISocials } from "./socials.interface";

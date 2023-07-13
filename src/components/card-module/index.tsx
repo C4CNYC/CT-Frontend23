@@ -1,17 +1,20 @@
 // mui
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/system/Stack";
-// icons
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
+
+import _ from "lodash";
 import { CgMenuMotion } from "react-icons/cg";
 import { FcInfo } from "react-icons/fc";
 import { MdAddCircleOutline, MdEdit } from "react-icons/md";
-import { CardTypes } from "src/redux/services/enums/card-types.enum";
+
+// icons
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/system/Stack";
+
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { CardTypes } from "src/redux/services/enums/card-types.enum";
 
 interface Props {
   type: CardTypes.lesson | CardTypes.course | CardTypes.module;

@@ -1,4 +1,3 @@
-import { SetFilterType, useFilters } from "@hooks";
 import SearchOutlined from "@mui/icons-material/SearchOutlined";
 import {
   Autocomplete,
@@ -8,14 +7,15 @@ import {
   Skeleton,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 
+import { SetFilterType, useFilters } from "@hooks";
+import { BaseResponseInterface } from "@utils";
+import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 import {
   ICourse,
   ICourseSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { BaseResponseInterface } from "@utils";
 
 interface Props {
   courseId: string;

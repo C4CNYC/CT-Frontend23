@@ -1,22 +1,29 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+
+import { Avatar, Box, Button, Typography } from "@mui/material";
+
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
-import { useRouter } from "next/router";
 import { IClass } from "src/redux/interfaces/class.interface";
+
 interface Props {
   active: boolean;
-  tribe: IClass & BaseResponseInterface
+  classItem: IClass & BaseResponseInterface;
 }
 
-export default function TribeListItem({ active, tribe }: Props): React.ReactElement {
+export default function TribeListItem({
+  active,
+  classItem,
+}: Props): React.ReactElement {
   const { push } = useRouter();
+
   return (
-    <Stack
+    <Button
+      variant="text"
       onClick={() => {
-        push(STUDENT_PATH_DASHBOARD.class.id(tribe.id))
+        push(STUDENT_PATH_DASHBOARD.class.id(classItem.id));
       }}
-      direction="row"
-      sx={{ alignItems: "center", position: "relative" }}
+      sx={{ p: 0, justifyContent: "flex-start" }}
     >
       <Box
         sx={(theme) => ({
@@ -33,7 +40,7 @@ export default function TribeListItem({ active, tribe }: Props): React.ReactElem
       />
       <Avatar
         variant="rounded"
-        src={tribe.avatar}
+        src={classItem.avatar}
         sx={(theme) => ({
           border: `2px solid ${theme.palette.info.light}`,
           width: "30px",
@@ -44,8 +51,8 @@ export default function TribeListItem({ active, tribe }: Props): React.ReactElem
         sx={(theme) => ({ ml: 2, color: theme.palette.text.secondary })}
         variant="body1"
       >
-        {tribe.name}
+        {classItem.name}
       </Typography>
-    </Stack>
+    </Button>
   );
 }

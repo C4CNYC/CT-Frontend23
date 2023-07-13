@@ -1,5 +1,7 @@
-import { m } from "framer-motion";
 import { forwardRef } from "react";
+
+import { m } from "framer-motion";
+
 // @mui
 import { Box, Fab, FabProps, SxProps } from "@mui/material";
 
@@ -10,15 +12,16 @@ export interface FabButtonAnimateProps extends FabProps {
 }
 
 // eslint-disable-next-line react/display-name
-export const FabButtonAnimate = forwardRef<HTMLButtonElement, FabButtonAnimateProps>(
-  ({ size = "large", children, sx, sxWrap, ...other }, ref) => (
-    <AnimateWrap size={size} sxWrap={sxWrap}>
-      <Fab ref={ref} size={size} sx={sx} {...other}>
-        {children}
-      </Fab>
-    </AnimateWrap>
-  )
-);
+export const FabButtonAnimate = forwardRef<
+  HTMLButtonElement,
+  FabButtonAnimateProps
+>(({ size = "large", children, sx, sxWrap, ...other }, ref) => (
+  <AnimateWrap size={size} sxWrap={sxWrap}>
+    <Fab ref={ref} size={size} sx={sx} {...other}>
+      {children}
+    </Fab>
+  </AnimateWrap>
+));
 
 // ----------------------------------------------------------------------
 

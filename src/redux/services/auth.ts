@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
+
 import { BaseResponseInterface } from "@utils";
+
 import { IUser } from "../interfaces/auth.interface";
 import { ProfileType } from "./enums/profile.enum";
 import { Role } from "./enums/role.enum";
@@ -44,6 +46,7 @@ export interface RegisterRequest {
   first_name: string;
   last_name: string;
   password: string;
+  role: Role;
 }
 
 export const authApi = createApi({
@@ -62,7 +65,7 @@ export const authApi = createApi({
     }),
     register: builder.mutation<RegisterResponce, RegisterRequest>({
       query: (body) => ({
-        url: "auth/signup",
+        url: "/signup",
         method: "POST",
         body,
       }),

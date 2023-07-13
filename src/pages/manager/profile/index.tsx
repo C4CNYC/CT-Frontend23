@@ -1,9 +1,11 @@
+import Head from "next/head";
+
+import { Container } from "@mui/system";
+
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard";
-import { Container } from "@mui/system";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import ProfileEditForm from "@sections/profile/ProfileEditForm";
-import Head from "next/head";
 import { useProfileQuery } from "src/redux/services/auth";
 import { ProfileType } from "src/redux/services/enums/profile.enum";
 

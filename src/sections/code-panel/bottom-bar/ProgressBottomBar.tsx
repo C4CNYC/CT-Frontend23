@@ -1,6 +1,9 @@
-import { Box, Slider, useMediaQuery, useTheme } from "@mui/material";
-import { useAtom } from "jotai";
 import { useContext, useEffect, useState } from "react";
+
+import { useAtom } from "jotai";
+
+import { Box, Slider, useMediaQuery, useTheme } from "@mui/material";
+
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { CodePanelContext } from "../context/CodePanel.context";
 

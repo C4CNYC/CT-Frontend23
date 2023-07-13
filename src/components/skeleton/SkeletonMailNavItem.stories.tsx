@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react";
-import { SkeletonMailNavItem } from "./SkeletonMailNavItem"
+
+import { SkeletonMailNavItem } from "./SkeletonMailNavItem";
 
 const Component: Meta<typeof SkeletonMailNavItem> = {
   component: SkeletonMailNavItem,
@@ -7,7 +8,6 @@ const Component: Meta<typeof SkeletonMailNavItem> = {
 };
 
 export default Component;
-
 
 export const Default: Meta<typeof SkeletonMailNavItem> = {
   args: {},

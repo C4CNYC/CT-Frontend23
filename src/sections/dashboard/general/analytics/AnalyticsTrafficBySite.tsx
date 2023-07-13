@@ -8,10 +8,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-// utils
-import { fShortenNumber } from "@utils";
+
 // components
 import { Iconify } from "@components";
+// utils
+import { fShortenNumber } from "@utils";
 
 // ----------------------------------------------------------------------
 

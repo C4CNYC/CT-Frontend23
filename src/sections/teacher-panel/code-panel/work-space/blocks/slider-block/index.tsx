@@ -1,14 +1,18 @@
-import Carousel from "react-slick";
-import { LoaderDeleyContent } from "@components";
-import { Box } from "@mui/system";
-import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
-import { useAtom } from "jotai";
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+
+import { useAtom } from "jotai";
+import Carousel from "react-slick";
+
+import { Box } from "@mui/system";
+
+import { LoaderDeleyContent } from "@components";
+import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
+import { BaseResponseInterface } from "@utils";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
-import { BaseResponseInterface } from "@utils";
+
 import BaseBlock from "../BaseBlock";
 import BrowserView from "../view-block/BrowserView";
 
