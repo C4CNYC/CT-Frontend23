@@ -1,3 +1,11 @@
+import nextLink from "next/link";
+import { useState } from "react";
+
+import { BsThreeDots } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { MdCopyAll } from "react-icons/md";
+import { TbShare2 } from "react-icons/tb";
+
 import {
   Button,
   Divider,
@@ -7,19 +15,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import nextLink from "next/link";
-import { BsThreeDots } from "react-icons/bs";
-import { FiUser } from "react-icons/fi";
 
 import { MenuPopover, useSnackbar } from "@components";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { useState } from "react";
-
 import { useCopyToClipboard } from "@hooks";
+import { PATH_DASHBOARD } from "@routes/paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
-import { MdCopyAll } from "react-icons/md";
-import { TbShare2 } from "react-icons/tb";
+
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
 
@@ -63,37 +65,36 @@ export default function DefaultClassInfo(): React.ReactElement {
             direction="row"
             sx={{
               justifyContent: "space-between",
+              alignItems: "center",
               pb: "65px",
               pt: 1,
-              pr: 2,
+              px: 2,
             }}
           >
-            <Stack direction="row" alignItems="center" sx={{ gap: 1, ml: 1 }}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+            >
               <Typography variant="subtitle2">Join-code:</Typography>
-              <Button onClick={onCopy} sx={{ gap: 0.5, color: "inherit" }}>
+              <Button
+                onClick={onCopy}
+                sx={{ gap: 0.5, color: "inherit", p: 0 }}
+              >
                 <Typography variant="subtitle2">{textToCopy}</Typography>
                 <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
               </Button>
             </Stack>
-            <Stack direction="row">
-              <Typography variant="caption" sx={{ textTransform: "uppercase" }}>
-                GROUP HOME
-              </Typography>
-              <Typography variant="caption" sx={{ mx: 1 }}>
-                {" "}
-                -{" "}
-              </Typography>
-              <Link
-                sx={{
-                  color: "inherit",
-                }}
-                typography="caption"
-                href={PATH_DASHBOARD.tribes.root}
-                component={nextLink}
-              >
-                See All Groups
-              </Link>
-            </Stack>
+            <Link
+              sx={{
+                color: "inherit",
+              }}
+              typography="caption"
+              href={PATH_DASHBOARD.tribes.root}
+              component={nextLink}
+            >
+              See All Groups
+            </Link>
           </Stack>
 
           <Stack
@@ -110,10 +111,19 @@ export default function DefaultClassInfo(): React.ReactElement {
             <Stack
               direction="row"
               alignItems="center"
-              sx={{ maxHeight: "20px" }}
+              sx={{
+                maxHeight: "20px",
+                pt: { xs: 2, sm: 0 },
+                m: { xs: "10px auto", sm: 0 },
+              }}
             >
               <Link
-                sx={{ display: "flex", alignItems: "center", color: "#fff" }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  color: "#fff",
+                  gap: 0.5,
+                }}
                 href={PATH_DASHBOARD.friends.root}
                 component={nextLink}
                 typography="button"
