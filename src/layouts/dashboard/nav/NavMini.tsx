@@ -57,7 +57,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
             ml: 2.2,
           }}
         />
-        <LetsCodeBtn />
+        <LetsCodeBtn isMini />
         <NavSectionMini data={menu} />
       </Stack>
     </Box>
