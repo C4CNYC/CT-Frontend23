@@ -10,7 +10,6 @@ import {
   useSettingsContext,
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
-import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { CourseCard } from "@sections/dashboard/courses/cards";
@@ -20,11 +19,12 @@ import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import { getCountTakingElment } from "@utils";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 
 // ----------------------------------------------------------------------
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
-  <StudentDashboardLayout>{page}</StudentDashboardLayout>
+  <DashboardLayout>{page}</DashboardLayout>
 );
 
 // ----------------------------------------------------------------------
