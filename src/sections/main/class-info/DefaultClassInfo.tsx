@@ -11,7 +11,6 @@ import {
   Divider,
   IconButton,
   Link,
-  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -21,15 +20,21 @@ import { useCopyToClipboard } from "@hooks";
 import { PATH_DASHBOARD } from "@routes/paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
 
-export default function DefaultClassInfo(): React.ReactElement {
+interface Props {
+  data: IClass;
+}
+
+export default function DefaultClassInfo({ data }: Props): React.ReactElement {
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [textToCopy] = useState("AHWE2383");
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
@@ -45,17 +50,11 @@ export default function DefaultClassInfo(): React.ReactElement {
   };
   return (
     <>
-      {/* <Skeleton
-          sx={{ width: "100%", height: "188px" }}
-          variant="rectangular"
-          animation="wave"
-        /> */}
-
       <Stack>
         <ClassInfoToggle />
         <Stack
           sx={{
-            background: getLinearGradient("#75CF6D"),
+            background: getLinearGradient(`${data.cover}`),
             borderBottomRightRadius: "20px",
             borderBottomLeftRadius: "20px",
             color: "#fff",
@@ -107,7 +106,7 @@ export default function DefaultClassInfo(): React.ReactElement {
               flexWrap: "wrap",
             }}
           >
-            <ClassInfoMain />
+            <ClassInfoMain data={data} />
             <Stack
               direction="row"
               alignItems="center"
