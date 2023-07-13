@@ -1,8 +1,14 @@
 import { FaSchool } from "react-icons/fa";
 
 import { Avatar, Stack, Typography } from "@mui/material";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
 
-export default function ClassInfoMain(): React.ReactElement {
+interface IClassInfoMain {
+  data?: IClass & BaseResponseInterface
+}
+
+export default function ClassInfoMain({ data }: IClassInfoMain): React.ReactElement {
   return (
     <Stack direction="row" gap={2}>
       <Avatar
@@ -14,14 +20,14 @@ export default function ClassInfoMain(): React.ReactElement {
           fontSize: "40px",
           mt: { xs: 1, sm: 0 },
         }}
-        src={""}
+        src={data?.avatar}
         alt=""
       >
         🦄
       </Avatar>
       <Stack>
         <Typography variant="h4" sx={{ color: "#fff" }}>
-          BarkRiders - Class5A 🐆
+          {data?.name}
         </Typography>
         <Stack
           direction="row"
@@ -46,11 +52,12 @@ export default function ClassInfoMain(): React.ReactElement {
               height: "25px",
               mr: -1,
             }}
-            src={""}
+            src={data?.school?.avatar}
             alt=""
           >
             &#128540;
           </Avatar>
+          {data?.school?.name}
           <Typography
             variant="subtitle2"
             sx={{
@@ -59,6 +66,7 @@ export default function ClassInfoMain(): React.ReactElement {
           >
             Teacher:
           </Typography>
+          Admin
         </Stack>
       </Stack>
     </Stack>

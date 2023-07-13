@@ -21,16 +21,19 @@ import {
 import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
 
 import FilterFriends from "./filter";
+import { useRouter } from "next/router";
 
 Friends.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function Friends(): React.ReactElement {
+  const { query } = useRouter();
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter } = useFilters<IFriendsSearchParams>(
     {
       name: "",
+      class_id: query.class_id as string
     },
     FilterMode.global
   );

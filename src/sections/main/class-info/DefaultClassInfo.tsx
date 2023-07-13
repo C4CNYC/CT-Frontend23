@@ -11,7 +11,6 @@ import {
   Divider,
   IconButton,
   Link,
-  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -24,38 +23,36 @@ import { getLinearGradient } from "@utils";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import { useRouter } from "next/router";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 export default function DefaultClassInfo(): React.ReactElement {
+  const { query } = useRouter();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
-  const [textToCopy] = useState("AHWE2383");
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const { data } = useGetClassQuery({ id: query.id as string })
+
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
 
-  const onCopy = () => {
+  const onCopy = (textToCopy: string) => {
     if (textToCopy) {
       copy(textToCopy);
       enqueueSnackbar("Copied!");
     }
   };
+
   return (
     <>
-      {/* <Skeleton
-          sx={{ width: "100%", height: "188px" }}
-          variant="rectangular"
-          animation="wave"
-        /> */}
-
       <Stack>
         <ClassInfoToggle />
         <Stack
           sx={{
-            background: getLinearGradient("#75CF6D"),
+            background: getLinearGradient(data?.cover ?? "#75CF6D"),
             borderBottomRightRadius: "20px",
             borderBottomLeftRadius: "20px",
             color: "#fff",
@@ -78,10 +75,10 @@ export default function DefaultClassInfo(): React.ReactElement {
             >
               <Typography variant="subtitle2">Join-code:</Typography>
               <Button
-                onClick={onCopy}
+                onClick={() => { onCopy("AHWE2383"); }}
                 sx={{ gap: 0.5, color: "inherit", p: 0 }}
               >
-                <Typography variant="subtitle2">{textToCopy}</Typography>
+                <Typography variant="subtitle2">AHWE2383</Typography>
                 <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
               </Button>
             </Stack>
@@ -107,7 +104,7 @@ export default function DefaultClassInfo(): React.ReactElement {
               flexWrap: "wrap",
             }}
           >
-            <ClassInfoMain />
+            <ClassInfoMain data={data}/>
             <Stack
               direction="row"
               alignItems="center"
@@ -124,7 +121,7 @@ export default function DefaultClassInfo(): React.ReactElement {
                   color: "#fff",
                   gap: 0.5,
                 }}
-                href={PATH_DASHBOARD.friends.root}
+                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${query.id}`}
                 component={nextLink}
                 typography="button"
               >
@@ -163,7 +160,7 @@ export default function DefaultClassInfo(): React.ReactElement {
                   minWidth: "150px",
                 }}
                 open={openPopover}
-                onClose={handleClosePopover}
+                onClose={() => { setOpenPopover(null) }}
               >
                 <Button
                   sx={{
