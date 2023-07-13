@@ -11,6 +11,7 @@ import { RootState } from "src/redux/store";
 
 // config
 import { NAV } from "../../../config-global";
+import LetsCodeBtn from "./LetsCodeBtn";
 import NavToggleButton from "./NavToggleButton";
 import { menuConfig } from "./config-navigation";
 
@@ -56,7 +57,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
             ml: 2.2,
           }}
         />
-
+        <LetsCodeBtn />
         <NavSectionMini data={menu} />
       </Stack>
     </Box>
