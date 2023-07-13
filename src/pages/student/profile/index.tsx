@@ -10,7 +10,6 @@ import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileLinks from "@sections/student-profile/ProfileLinks";
 import ProfileMain from "@sections/student-profile/ProfileMain";
 import { useProfileQuery } from "src/redux/services/auth";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
 
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -18,9 +17,10 @@ UserProfile.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfile(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useProfileQuery(ProfileType.STUDENT);
+  const { data: userData, isLoading } = useProfileQuery();
   const [currentTab, setCurrentTab] = useState("profile");
-  if (isLoading || !data) return <Skeleton />;
+  if (isLoading || !userData) return <Skeleton />;
+  const data = userData.student_profile;
   const TABS = [
     {
       value: "profile",

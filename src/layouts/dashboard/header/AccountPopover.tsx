@@ -23,14 +23,12 @@ import {
   MANAGER_PATH_DASHBOARD,
   MANAGER_PATH_PAGE,
 } from "@routes/manager.paths";
-import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
+import { PATH_AUTH } from "@routes/paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { useProfileQuery } from "src/redux/services/auth";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
 import { Role } from "src/redux/services/enums/role.enum";
 import { setStudentMode } from "src/redux/slices/global";
-import { RootState, useSelector } from "src/redux/store";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 
@@ -38,18 +36,16 @@ import { useAuthContext } from "../../../auth/useAuthContext";
 
 export default function AccountPopover(): React.ReactElement {
   const reduxDispatch = useDispatch();
-  const isStudentMode = useSelector(
-    (state: RootState) => state.global.isStudent
-  );
+  const { pathname } = useRouter();
+  // eslint-disable-next-line @typescript-eslint/prefer-includes
+  const isStudentMode = /\/student/.test(pathname);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const { logout } = useAuthContext();
   const { replace, push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: profile } = useProfileQuery(
-    isStudentMode ? ProfileType.STUDENT : ProfileType.MANAGER
-  );
+  const { data: profile } = useProfileQuery();
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);

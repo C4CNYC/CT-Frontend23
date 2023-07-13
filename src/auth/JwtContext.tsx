@@ -10,7 +10,6 @@ import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
 import { axios, localStorageAvailable, voidFunction } from "@utils";
-import { ProfileType } from "src/redux/services/enums/profile.enum";
 import { Role } from "src/redux/services/enums/role.enum";
 import {
   cleanUser,
@@ -135,14 +134,7 @@ export function AuthProvider({
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const { data } = await axios.get("/auth/profile", {
-          params: {
-            profile_type:
-              parsedJWT.role === Role.Student || !isManagerRoute
-                ? ProfileType.STUDENT
-                : ProfileType.MANAGER,
-          },
-        });
+        const { data } = await axios.get("/auth/profile");
 
         if (isManagerRoute && data.role === Role.Student) {
           window.location.pathname = "/permission-denied";

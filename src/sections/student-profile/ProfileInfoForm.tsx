@@ -17,12 +17,13 @@ import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "@utils";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
   lastName: Yup.string(),
   about: Yup.string(),
-  username: Yup.string(),
   phone: Yup.string(),
   postcode: Yup.string(),
   cover: Yup.string(),
@@ -34,14 +35,13 @@ interface FormValuesProps {
   address: string;
   about: string;
   phone: string;
-  username: string;
   postcode: string;
   cover: string;
   photoURL: File | null;
 }
 
 interface Props {
-  data: IUser;
+  data: (IUser | IStudent) & BaseResponseInterface;
 }
 
 export default function ProfileInfoForm({
@@ -52,8 +52,7 @@ export default function ProfileInfoForm({
     last_name: lastName,
     post_code: postcode,
     about,
-    phone,
-    username,
+    phone
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
@@ -65,7 +64,6 @@ export default function ProfileInfoForm({
     about,
     phone,
     postcode,
-    username,
     cover,
   };
   const methods = useForm<FormValuesProps>({
@@ -85,15 +83,15 @@ export default function ProfileInfoForm({
         post_code: data.postcode,
         cover: data.cover,
       }).unwrap();
-      if (username !== data.username) {
-        updateStudent({ username: data.username })
-          .unwrap()
-          .catch((error) => {
-            enqueueSnackbar(error?.data?.message, {
-              variant: "error",
-            });
-          });
-      }
+      // if (username !== data.username) {
+      //   updateStudent({ username: data.username })
+      //     .unwrap()
+      //     .catch((error) => {
+      //       enqueueSnackbar(error?.data?.message, {
+      //         variant: "error",
+      //       });
+      //     });
+      // }
       if (data.photoURL) {
         const file = new FormData();
         file.append("file", data.photoURL);
@@ -179,7 +177,7 @@ export default function ProfileInfoForm({
               >
                 <RHFTextField name="firstName" label="Name" />
                 <RHFTextField name="lastName" label="Last name" />
-                <RHFTextField name="username" label="username" />
+                {/* <RHFTextField name="username" label="username" /> */}
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
