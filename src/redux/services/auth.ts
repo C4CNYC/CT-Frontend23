@@ -4,7 +4,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { BaseResponseInterface } from "@utils";
 
 import { IUser } from "../interfaces/auth.interface";
-import { ProfileType } from "./enums/profile.enum";
 import { Role } from "./enums/role.enum";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 import { baseQueryWithAuth } from "./helpers/query_with_auth";
@@ -77,11 +76,10 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
-    profile: builder.query<IUser, ProfileType>({
-      query: (profileType) => ({
+    profile: builder.query<IUser, void>({
+      query: () => ({
         url: "/profile",
         method: "GET",
-        params: { profile_type: profileType },
       }),
       providesTags: ["ProfileUser"],
     }),

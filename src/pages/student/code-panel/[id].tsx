@@ -59,12 +59,11 @@ export default function Index(): React.ReactElement | null {
   const [confetti, setConfetti] = useState(false);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
+  const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
+    useAtom(globalCodePanelAtom);
   // ONLY LOGINED USER CAN USE
   useOnlineConnection(user?.id);
   useRealTimeConnection(user?.id);
-
-  const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
-    useAtom(globalCodePanelAtom);
 
   const [completeLesson] = useCompleteLessonMutation();
 

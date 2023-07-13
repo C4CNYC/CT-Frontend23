@@ -3,6 +3,12 @@ import { useRouter } from "next/router";
 import { FaSchool } from "react-icons/fa";
 
 import { Avatar, Stack, Typography } from "@mui/material";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
+
+interface IClassInfoMain {
+  data?: IClass & BaseResponseInterface
+}
 
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useGetClassMentorQuery } from "src/redux/services/student/classes-manager";
@@ -58,11 +64,12 @@ export default function ClassInfoMain({ data }: Props): React.ReactElement {
               height: "25px",
               mr: -1,
             }}
-            src={""}
-            alt={""}
+            src={data?.school?.avatar}
+            alt=""
           >
             &#128540;
           </Avatar>
+          {data?.school?.name}
           <Typography
             variant="subtitle2"
             sx={{
@@ -71,6 +78,7 @@ export default function ClassInfoMain({ data }: Props): React.ReactElement {
           >
             Teacher:
           </Typography>
+          Admin
         </Stack>
       </Stack>
     </Stack>

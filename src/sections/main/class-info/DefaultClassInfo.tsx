@@ -1,4 +1,5 @@
 import nextLink from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { BsThreeDots } from "react-icons/bs";
@@ -18,9 +19,11 @@ import {
 import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
@@ -31,30 +34,28 @@ interface Props {
 
 export default function DefaultClassInfo({ data }: Props): React.ReactElement {
   const { copy } = useCopyToClipboard();
+  const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [textToCopy] = useState("AHWE2383");
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
 
-  const onCopy = () => {
+  const onCopy = (textToCopy: string) => {
     if (textToCopy) {
       copy(textToCopy);
       enqueueSnackbar("Copied!");
     }
   };
+
   return (
     <>
       <Stack>
         <ClassInfoToggle />
         <Stack
           sx={{
-            background: getLinearGradient(`${data.cover}`),
+            background: getLinearGradient(data?.cover ?? "#75CF6D"),
             borderBottomRightRadius: "20px",
             borderBottomLeftRadius: "20px",
             color: "#fff",
@@ -77,10 +78,12 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
             >
               <Typography variant="subtitle2">Join-code:</Typography>
               <Button
-                onClick={onCopy}
+                onClick={() => {
+                  onCopy("AHWE2383");
+                }}
                 sx={{ gap: 0.5, color: "inherit", p: 0 }}
               >
-                <Typography variant="subtitle2">{textToCopy}</Typography>
+                <Typography variant="subtitle2">AHWE2383</Typography>
                 <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
               </Button>
             </Stack>
@@ -123,7 +126,7 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
                   color: "#fff",
                   gap: 0.5,
                 }}
-                href={PATH_DASHBOARD.friends.root}
+                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${query.id}`}
                 component={nextLink}
                 typography="button"
               >
@@ -162,7 +165,9 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
                   minWidth: "150px",
                 }}
                 open={openPopover}
-                onClose={handleClosePopover}
+                onClose={() => {
+                  setOpenPopover(null);
+                }}
               >
                 <Button
                   sx={{

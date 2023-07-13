@@ -77,7 +77,7 @@ export default function StudentNewEditForm({
     () => ({
       first_name: currentUser?.first_name ?? "",
       last_name: currentUser?.last_name ?? "",
-      email: currentUser?.email ?? "",
+      email: currentUser?.account.email ?? "",
       phone: currentUser?.phone ?? "",
       country: currentUser?.country ?? "",
       city: currentUser?.city ?? "",

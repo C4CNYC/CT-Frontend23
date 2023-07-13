@@ -37,6 +37,8 @@ export default function UserEditPage(): React.ReactElement {
     { skip: !schoolId || !id }
   );
 
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -51,7 +53,7 @@ export default function UserEditPage(): React.ReactElement {
               name: "Dashboard",
               href: MANAGER_PATH_DASHBOARD.root,
             },
-            { name: data?.email },
+            { name: data?.account?.email },
           ]}
         />
         {isLoading ? (
