@@ -10,7 +10,7 @@ export interface CounterState {
   org_id: string;
   organizations: OrganizationResponce[];
   user: IUser | null;
-  isStudent: boolean;
+  isStudent: boolean | null;
 }
 
 export interface ISchool extends BaseResponseInterface {
@@ -48,7 +48,7 @@ export const globalSlice = createSlice({
       state.isStudent = action.payload;
     },
     cleanUserRole: (state, action: PayloadAction<undefined>) => {
-      state.isStudent = true;
+      state.isStudent = null;
     },
   },
 });
