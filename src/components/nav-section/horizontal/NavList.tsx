@@ -1,11 +1,8 @@
-// next
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
-// hooks
-import { useActiveLink } from "@hooks";
+import useActiveLink from "src/hooks/useActiveLink";
 
-//
 import { NavListProps } from "../types";
 import NavItem from "./NavItem";
 import { StyledPopover } from "./styles";
