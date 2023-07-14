@@ -1,25 +1,22 @@
-// import { defaultKeymap } from "@codemirror/commands";
 import { useEffect, useRef } from "react";
 
 import { indentUnit } from "@codemirror/language";
 import { Compartment, EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
+import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { Socket } from "socket.io-client";
 
 import { State } from ".";
 import { peerExtension } from "./extentions/collab";
-// import { cursorExtension } from "./extentions/cursors";
 import { initListeners, removeListeners } from "./listeners";
 
 interface IEditor {
-  state: State;
-  cursorId: string;
-  cursorText: string;
+  state?: State;
+  cursorId?: string;
   preloadedCode: string;
   onChangeCode: (code: string) => void;
-  socket: Socket;
+  socket?: Socket;
   code: string;
 }
 
@@ -27,7 +24,6 @@ export const CodeEditor = ({
   preloadedCode,
   state,
   cursorId,
-  cursorText,
   onChangeCode,
   socket,
   code,
@@ -36,13 +32,12 @@ export const CodeEditor = ({
   const lineWrap = new Compartment();
   useEffect(() => {
     const startState = EditorState.create({
-      doc: state.doc,
+      doc: state?.doc,
       extensions: [
         EditorView.updateListener.of(function (e) {
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString());
         }),
-        // keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup({
           highlightActiveLineGutter: true,
@@ -63,11 +58,11 @@ export const CodeEditor = ({
           completionKeymap: true,
           lintKeymap: true,
         }),
-        // materialDark,
         lineWrap.of(EditorView.lineWrapping),
         langs.html(),
-        peerExtension(socket, state.version ?? 0, cursorId),
-        // cursorExtension(cursorText),  commented because in combination with line-wrapping produce bug
+        socket && state && cursorId
+          ? peerExtension(socket, state.version ?? 0, cursorId)
+          : [],
       ],
     });
 
@@ -76,7 +71,7 @@ export const CodeEditor = ({
     setTimeout(() => {
       view = new EditorView({ state: startState, parent: editor.current });
 
-      if (!state.doc?.toString()) {
+      if (!state?.doc?.toString()) {
         view.dispatch({
           changes: {
             from: view.state.doc.length,

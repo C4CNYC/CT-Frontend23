@@ -12,6 +12,7 @@ import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-pane
 import BrowserTab from "@sections/code-panel/top-bar/nav-bar/options/BrowserTab";
 import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
+import { CodeEditor } from "src/components/real-time-editor/editor";
 import { IValidation } from "src/redux/interfaces/content.interface";
 import { mapValidations } from "src/utils/validationMaping";
 
@@ -125,7 +126,13 @@ const CodeEditorBlock = ({
           userId={user?.id}
           code={code}
         />
-      ) : null}
+      ) : (
+        <CodeEditor
+          code={code}
+          onChangeCode={onChangeCode}
+          preloadedCode={preloadedCode}
+        />
+      )}
       <Box sx={{ display: isDesktop ? "none" : "block" }}>
         <Collapse in={codingSymbols} timeout={!codingSymbols ? 0 : 1000}>
           <CodingSymbols symbolsHandler={symbolsHandler} />

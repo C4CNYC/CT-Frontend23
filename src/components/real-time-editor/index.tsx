@@ -118,7 +118,6 @@ export const RealTimeEditor = memo(
         <CodeEditor
           state={state}
           cursorId={email}
-          cursorText={email}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}
           socket={socket}

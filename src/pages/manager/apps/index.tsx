@@ -34,8 +34,8 @@ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
 import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import {
-  useGetIntegrationsQuery,
-  useRemoveIntegrationMutation,
+  useDeleteIntegrationMutation,
+  useGetIntegrationsListQuery,
 } from "src/redux/services/manager/integration-manager";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
@@ -47,8 +47,8 @@ export default function AppsPage(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter } = useFilters({ name: "" });
-  const { data, isLoading } = useGetIntegrationsQuery({ ...filters });
-  const [removeIntegration] = useRemoveIntegrationMutation();
+  const { data, isLoading } = useGetIntegrationsListQuery({ ...filters });
+  const [removeIntegration] = useDeleteIntegrationMutation();
 
   const onDelete = async (id: string): Promise<void> => {
     try {
