@@ -1,23 +1,17 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-// @mui
 import { Box } from "@mui/material";
 
-// components
 import { useSettingsContext } from "@components";
-// hooks
 import { useResponsive } from "@hooks";
 
-// auth
 import AuthGuard from "../../auth/AuthGuard";
 import Main from "./Main";
-//
 import Header from "./header";
 import NavHorizontal from "./nav/NavHorizontal";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";
-
-// ----------------------------------------------------------------------
 
 interface Props {
   children?: React.ReactNode;
@@ -27,6 +21,7 @@ export function StudentDashboardLayout({
   children,
 }: Props): React.ReactElement | null {
   const { themeLayout } = useSettingsContext();
+  const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
 
@@ -34,7 +29,7 @@ export function StudentDashboardLayout({
 
   const isNavHorizontal = themeLayout === "horizontal";
 
-  const isNavMini = themeLayout === "mini";
+  const isNavMini = themeLayout === "mini" || pathname.includes("courses/");
 
   const handleOpen = (): void => {
     setOpen(true);
