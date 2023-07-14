@@ -9,7 +9,7 @@ import {
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getIntegrations: builder.query<
+    getIntegrationsList: builder.query<
       BaseListResponseInterface<IIntegration & BaseResponseInterface>,
       IIntegrationSearch
     >({
@@ -28,7 +28,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Integrations" }],
     }),
-    updateIntegration: builder.mutation<
+    editIntegration: builder.mutation<
       IIntegration,
       { id: string } & IIntegration
     >({
@@ -39,7 +39,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Integrations" }],
     }),
-    removeIntegration: builder.mutation<
+    deleteIntegration: builder.mutation<
       IIntegration,
       { integrationId: string }
     >({
@@ -54,9 +54,9 @@ const extendedApi = managerApi.injectEndpoints({
 });
 
 export const {
-  useGetIntegrationsQuery,
+  useGetIntegrationsListQuery,
   // -------------mutation-----------
   useCreateIntegrationMutation,
-  useRemoveIntegrationMutation,
-  useUpdateIntegrationMutation,
+  useDeleteIntegrationMutation,
+  useEditIntegrationMutation,
 } = extendedApi;

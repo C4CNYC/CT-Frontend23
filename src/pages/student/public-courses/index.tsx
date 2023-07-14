@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { Container, Stack, Typography } from "@mui/material";
 
 import { useSettingsContext } from "@components";
@@ -8,15 +10,20 @@ export default function PublicCourses(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   return (
-    <GuestGuard>
-      <Container maxWidth={themeStretch ? false : "lg"}>
-        <Stack sx={{ pt: 10 }}>
-          <Typography variant="h3" sx={{ pb: 4 }}>
-            Courses
-          </Typography>
-          <CourseList publicPage={true} />
-        </Stack>
-      </Container>
-    </GuestGuard>
+    <>
+      <Head>
+        <title>Courses | CodeTribe</title>
+      </Head>
+      <GuestGuard>
+        <Container maxWidth={themeStretch ? false : "lg"}>
+          <Stack sx={{ pt: 10 }}>
+            <Typography variant="h3" sx={{ pb: 4 }}>
+              Courses
+            </Typography>
+            <CourseList publicPage={true} />
+          </Stack>
+        </Container>
+      </GuestGuard>
+    </>
   );
 }
