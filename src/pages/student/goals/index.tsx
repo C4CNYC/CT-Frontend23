@@ -28,7 +28,7 @@ export default function Goals(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Goals"
           links={[
-            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.home },
+            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
             { name: "Goals", href: STUDENT_PATH_DASHBOARD.goals },
           ]}
         />

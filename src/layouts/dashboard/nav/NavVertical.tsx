@@ -72,8 +72,6 @@ export default function NavVertical({
 
         <NavSectionVertical data={menu} />
       </>
-
-      <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );
 

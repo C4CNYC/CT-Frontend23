@@ -17,7 +17,7 @@ const navConfig = [
   {
     title: "Login",
     icon: <Iconify icon="ic:round-grain" />,
-    path: PATH_AUTH.loginUnprotected,
+    path: PATH_AUTH.login,
   },
 ];
 

@@ -1,5 +1,5 @@
 import { AiOutlineSolution } from "react-icons/ai";
-import { BsFlagFill } from "react-icons/bs";
+import { BsFileEarmarkTextFill, BsFlagFill } from "react-icons/bs";
 import {
   FaSchool,
   FaTasks,
@@ -13,7 +13,7 @@ import { GoFileSubmodule } from "react-icons/go";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
 import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
-import { TbPhoto } from "react-icons/tb";
+import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
 
 import { Iconify, Label } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
@@ -107,6 +107,17 @@ export const content = {
   ],
 };
 
+export const courses = {
+  subheader: "",
+  items: [
+    {
+      title: "Catalog",
+      path: STUDENT_PATH_DASHBOARD.courses.root,
+      icon: <BsFileEarmarkTextFill size={20} />,
+    },
+  ],
+};
+
 export const general = {
   subheader: "Tribes",
   items: [
@@ -115,6 +126,11 @@ export const general = {
       title: "",
       icon: <FaUserFriends size={20} />,
       component: () => <MenuTribesList />,
+    },
+    {
+      title: "Tribes",
+      path: STUDENT_PATH_DASHBOARD.tribes.root,
+      icon: <Tb3DCubeSphere size={20} />,
     },
   ],
 };
@@ -170,7 +186,7 @@ export const socials = {
 export const menuConfig = {
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
-  [Role.Student]: [general, apps, social, socials],
+  [Role.Student]: [courses, general, apps, social, socials],
   [Role.Manager]: [managment, content],
   [Role.Editor]: [content],
 };

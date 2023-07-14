@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
 
@@ -18,17 +20,20 @@ interface Props {
 
 export default function CourseAvatar({ course }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
+  const [liked, setLiked] = useState(course.liked);
   const [addLike, { isLoading }] = useCourseAddLikeMutation();
   const [removeLike, { isLoading: isRemoving }] = useCourseRemoveLikeMutation();
   const [updateRating] = useCourseAddRatingMutation();
   const likeHandler = async (): Promise<void> => {
     try {
-      if (course.liked) {
+      if (liked) {
         removeLike({ id: course.id }).unwrap();
+        setLiked(false);
         enqueueSnackbar("Like removed!");
       } else {
         addLike({ id: course.id }).unwrap();
         enqueueSnackbar("Liked!");
+        setLiked(true);
       }
     } catch (error) {
       const typedError = error as APIError;
@@ -68,7 +73,7 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
             "&:hover": { opacity: 1 },
           }}
         >
-          {!course.liked ? (
+          {!liked ? (
             <AiOutlineHeart size={26} color="#EE467A" />
           ) : (
             <AiFillHeart size={26} color="#EE467A" />

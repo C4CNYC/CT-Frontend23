@@ -37,7 +37,7 @@ export default function CourseMain({ course }: Props): React.ReactElement {
           },
           pb: "187px",
           background:
-            'no-repeat url("/assets/projects/btn_bg.png")  top -169px right -197px / 523px 323px, #ECF4FF',
+            'no-repeat url("/assets/projects/btn_bg.svg")  top -169px right -197px / 523px 323px, #ECF4FF',
         })}
       >
         <Container maxWidth={false} sx={{ maxWidth: "1922px" }}>

@@ -117,7 +117,7 @@ export const StyledDotIcon = styled("span", {
 export const StyledSubheader = styled(ListSubheader)(({ theme }) => ({
   ...theme.typography.overline,
   fontSize: 11,
-  paddingTop: theme.spacing(3),
+  paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(1),
   color: theme.palette.text.secondary,
 }));

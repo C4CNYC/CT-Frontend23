@@ -2,10 +2,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { Box, Container, Skeleton, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Container, Skeleton, Tab, Tabs } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { StudentDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CourseList from "@sections/courses/CourseList";
 import LessonList from "@sections/courses/LessonList";
@@ -13,7 +13,7 @@ import ModuleList from "@sections/courses/ModuleList";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 
 Courses.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
+  <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -30,11 +30,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ pt: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -52,7 +48,7 @@ export default function Courses(): React.ReactElement {
   const [value, setValue] = useState<number>(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    router.replace("/dashboard/courses", undefined, { shallow: true });
+    router.replace("/student/courses", undefined, { shallow: true });
   };
 
   return (
