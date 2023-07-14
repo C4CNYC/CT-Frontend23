@@ -67,7 +67,7 @@ export default function NavVertical({
           <Logo />
           <Stack sx={{ mt: "30px" }}></Stack>
           <UserSection />
-          <LetsCodeBtn />
+          {!isManager && <LetsCodeBtn />}
         </Stack>
 
         <NavSectionVertical data={menu} />

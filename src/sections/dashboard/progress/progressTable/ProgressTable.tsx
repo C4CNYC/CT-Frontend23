@@ -1,4 +1,4 @@
-import { IProgressTableData } from "@pages/dashboard/school/progress";
+import { IProgressTableData } from "@pages/manager/school/progress";
 import _ from "lodash";
 
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
