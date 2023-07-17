@@ -1,11 +1,10 @@
-import {
-  FormProvider,
-  RHFSelect,
-  RHFTextField,
-  RHFUploadAvatar,
-  useSnackbar,
-} from "@components";
+import { useCallback, useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { MuiColorInput } from "mui-color-input";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -17,10 +16,15 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
+import {
+  FormProvider,
+  RHFSelect,
+  RHFTextField,
+  RHFUploadAvatar,
+  useSnackbar,
+} from "@components";
 import { createRandomAvatar, getRandomColor } from "@utils";
-import { MuiColorInput } from "mui-color-input";
-import { useCallback, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import {
   useCreateClassesMutation,
   useUpdateClassesAvatarMutation,
@@ -28,7 +32,6 @@ import {
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
-import * as Yup from "yup";
 
 const CreateClassSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -172,6 +175,25 @@ export default function CreateClassModal({
               <Stack direction="column" sx={{ gap: 3, width: "100%", pr: 2 }}>
                 <Box>
                   <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
+                    School:
+                  </Typography>
+                  <RHFSelect native name="schoolId">
+                    <option key="empty" value="none">
+                      Select school
+                    </option>
+                    {data?.data ? (
+                      <>
+                        {data.data.map((el) => (
+                          <option key={el.id} value={el.id}>
+                            {el.name}
+                          </option>
+                        ))}
+                      </>
+                    ) : null}
+                  </RHFSelect>
+                </Box>
+                <Box>
+                  <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
                     Name:
                   </Typography>
                   <RHFTextField name="name" required />
@@ -187,18 +209,6 @@ export default function CreateClassModal({
                     rows={3}
                   />
                 </Box>
-                <RHFSelect native name="schoolId" label="School">
-                  <option key="empty" value="none"></option>
-                  {data?.data ? (
-                    <>
-                      {data.data.map((el) => (
-                        <option key={el.id} value={el.id}>
-                          {el.name}
-                        </option>
-                      ))}
-                    </>
-                  ) : null}
-                </RHFSelect>
               </Stack>
             </Stack>
           </DialogContent>
