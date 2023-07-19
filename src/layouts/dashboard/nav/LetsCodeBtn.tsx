@@ -7,6 +7,7 @@ import { Button } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
 
 interface Props {
   isMini?: boolean;
@@ -15,14 +16,23 @@ interface Props {
 export default function LetsCodeBtn({ isMini }: Props) {
   const { push } = useRouter();
   const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
+  const { data } = useGetCourseQuery({}, { skip: Boolean(courseId) });
   return (
     <Button
       onClick={() => {
-        push(
-          `/${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-            courseId
-          )}?${unitId}&${lessonId}`
-        );
+        if (!courseId || !unitId || !lessonId) {
+          push(
+            `/${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              data?.data[0].course_id as string
+            )}`
+          );
+        } else {
+          push(
+            `/${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              courseId
+            )}?${unitId}&${lessonId}`
+          );
+        }
       }}
       variant="contained"
       sx={{
