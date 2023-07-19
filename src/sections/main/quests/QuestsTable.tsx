@@ -1,21 +1,24 @@
 import { useState } from "react";
 
+import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
+import { SiGoogleclassroom } from "react-icons/si";
 
-import { Button, Link, Stack, useMediaQuery } from "@mui/material";
+import { Button, Link, MenuItem, Stack, useMediaQuery } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 
+import AddQuestModal from "./add-quest/AddQuestsModal";
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
@@ -28,9 +31,19 @@ export default function QuestsTable({ data }: Props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+  };
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation();
+    event.preventDefault();
+    setOpenPopover(event.currentTarget);
+  };
+
+  const handleClosePopover = (): void => {
+    setOpenPopover(null);
   };
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
@@ -98,11 +111,12 @@ export default function QuestsTable({ data }: Props) {
           </Link>
           <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
             <Button
-              sx={(theme) => ({
+              onClick={handleOpenPopover}
+              sx={{
                 gap: 1,
                 p: isMobile ? 1 : "",
                 minWidth: 0,
-              })}
+              }}
               variant="outlined"
               color="info"
             >
@@ -121,6 +135,26 @@ export default function QuestsTable({ data }: Props) {
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />
       </CustomTabPanel>
+      <MenuPopover
+        open={openPopover}
+        onClose={handleClosePopover}
+        disabledArrow
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        transformOrigin={{ vertical: -5, horizontal: 5 }}
+      >
+        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+          <MenuItem>
+            <AiOutlineFundProjectionScreen size="20px" />
+            Assign Open Project
+          </MenuItem>
+        </RoleBasedGuard>
+        <AddQuestModal>
+          <MenuItem>
+            <SiGoogleclassroom size="20px" />
+            Assign Course or Section
+          </MenuItem>
+        </AddQuestModal>
+      </MenuPopover>
     </Stack>
   );
 }

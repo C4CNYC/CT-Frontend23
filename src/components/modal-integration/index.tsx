@@ -25,7 +25,7 @@ import {
 } from "@components";
 import {
   useCreateIntegrationMutation,
-  useUpdateIntegrationMutation,
+  useEditIntegrationMutation,
 } from "src/redux/services/manager/integration-manager";
 
 const IntegrationSchema = Yup.object().shape({
@@ -66,7 +66,7 @@ export function ModalIntegration({
   const [createIntegration, { isLoading: creatLoading }] =
     useCreateIntegrationMutation();
   const [updateIntegration, { isLoading: updateLoading }] =
-    useUpdateIntegrationMutation();
+    useEditIntegrationMutation();
 
   const methods = useForm<IntegrationForm>({
     resolver: yupResolver(IntegrationSchema),
