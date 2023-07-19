@@ -35,18 +35,7 @@ import { User } from "src/redux/interfaces/auth.interface";
 
 import MemberRow from "./MemberRow";
 
-const ROLE_OPTIONS = [
-  "all",
-  "ux designer",
-  "full stack designer",
-  "backend developer",
-  "project manager",
-  "leader",
-  "ui designer",
-  "ui/ux designer",
-  "front end developer",
-  "full stack developer",
-];
+const ROLE_OPTIONS = ["all"];
 
 const TABLE_HEAD = [
   { id: "avatar", label: "Avarat", align: "left" },
@@ -339,6 +328,8 @@ function applyFilter({
   if (filterName) {
     inputData = inputData.filter(
       (user) =>
+        user.first_name.toLowerCase().indexOf(filterName.toLowerCase()) !==
+          -1 ||
         user.last_name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
