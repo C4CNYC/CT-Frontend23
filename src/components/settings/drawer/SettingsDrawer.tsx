@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 // @mui
@@ -39,6 +40,7 @@ import ToggleButton from "./ToggleButton";
 const SPACING = 2.5;
 
 export default function SettingsDrawer(): React.ReactElement {
+  const { pathname } = useRouter();
   const {
     themeMode,
     themeLayout,
@@ -69,6 +71,9 @@ export default function SettingsDrawer(): React.ReactElement {
     themeDirection !== defaultSettings.themeDirection ||
     themeColorPresets !== defaultSettings.themeColorPresets;
 
+  if (pathname.includes("code-panel")) {
+    return <></>;
+  }
   return (
     <>
       {!open && (
