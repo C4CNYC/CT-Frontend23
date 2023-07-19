@@ -3,6 +3,8 @@ import { forwardRef } from "react";
 
 import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
 
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean;
 }
@@ -48,7 +50,6 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
 
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-
     if (!isDesktop) return null;
 
     if (disabledLink) {
@@ -56,7 +57,11 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
     }
 
     return (
-      <Link component={NextLink} href="#" sx={{ display: "contents" }}>
+      <Link
+        component={NextLink}
+        href={STUDENT_PATH_DASHBOARD.class.root}
+        sx={{ display: "contents" }}
+      >
         {logo}
       </Link>
     );
