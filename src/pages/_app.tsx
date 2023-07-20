@@ -45,6 +45,7 @@ import ThemeLocalization from "src/locales";
 import "src/locales/i18n";
 // redux
 import { store } from "src/redux/store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -69,25 +70,29 @@ export default function MyApp(props: MyAppProps): React.ReactElement {
       </Head>
 
       <ReduxProvider store={store}>
-        <AuthProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <SettingsProvider>
-              <MotionLazyContainer>
-                <ThemeProvider>
-                  <ThemeSettings>
-                    <ThemeLocalization>
-                      <SnackbarProviderWrapper>
-                        <StyledChart />
-                        <ProgressBar />
-                        {getLayout(<Component {...pageProps} />)}
-                      </SnackbarProviderWrapper>
-                    </ThemeLocalization>
-                  </ThemeSettings>
-                </ThemeProvider>
-              </MotionLazyContainer>
-            </SettingsProvider>
-          </LocalizationProvider>
-        </AuthProvider>
+        <GoogleOAuthProvider
+          clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
+        >
+          <AuthProvider>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <SettingsProvider>
+                <MotionLazyContainer>
+                  <ThemeProvider>
+                    <ThemeSettings>
+                      <ThemeLocalization>
+                        <SnackbarProviderWrapper>
+                          <StyledChart />
+                          <ProgressBar />
+                          {getLayout(<Component {...pageProps} />)}
+                        </SnackbarProviderWrapper>
+                      </ThemeLocalization>
+                    </ThemeSettings>
+                  </ThemeProvider>
+                </MotionLazyContainer>
+              </SettingsProvider>
+            </LocalizationProvider>
+          </AuthProvider>
+        </GoogleOAuthProvider>
       </ReduxProvider>
     </CacheProvider>
   );
