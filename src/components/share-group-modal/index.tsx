@@ -36,70 +36,84 @@ export default function ShareGroupModal({
   return (
     <>
       <div onClick={handleOpen}>{children}</div>
-      <Dialog open={open} onClose={handleClose} sx={{borderRadius: "20px"}}>
-        <Box>
-          <Box
-            sx={{
-              backgroundColor: "#60ced2",
-              minHeight: "350px",
-              borderTopLeftRadius: "20px",
-              borderTopRightRadius: "20px",
-              p: 1,
-            }}
-          >
-            <Box display="flex" justifyContent="end" alignItems="center">
-              <IconButton
-                sx={{
-                  color: "white",
-                }}
-              >
-                <Iconify icon="prime:qrcode" width={24} height={24} />
-              </IconButton>
-              <IconButton onClick={handleClose} sx={{ color: "white" }}>
-                <Iconify icon="jam:close-rectangle-f" width={24} height={24} />
-              </IconButton>
-            </Box>
-            <Typography mt="80px" ml="40px" variant="h1" color="white">
-              Test
-            </Typography>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        sx={{ width: "100%" }}
+        scroll="body"
+      >
+        <Box
+          sx={{
+            backgroundColor: "#60ced2",
+            borderTopLeftRadius: 2,
+            borderTopRightRadius: 2,
+            p: 1,
+          }}
+        >
+          <Box display="flex" justifyContent="end" alignItems="center">
+            <IconButton
+              sx={{
+                color: "white",
+              }}
+            >
+              <Iconify icon="prime:qrcode" width={24} height={24} />
+            </IconButton>
+            <IconButton onClick={handleClose} sx={{ color: "white" }}>
+              <Iconify icon="jam:close-rectangle-f" width={24} height={24} />
+            </IconButton>
           </Box>
-
-          <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexDirection="column"
-          >
+          <Typography mt="80px" ml="40px" variant="h1" color="white">
+            Test
+          </Typography>
+        </Box>
+        <Box p="32px">
+          <Box>
             <Typography
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-              mt="20px"
+              fontSize="20px"
+              color="#292929"
+              variant="h4"
+              textAlign="center"
             >
               Share group
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Typography
+              fontSize="16px"
+              color="#4f4f4f"
+              mt="12px"
+              mb="40px"
+              textAlign="center"
+              variant="subtitle1"
+            >
               Send the link below to invite students to the group.
             </Typography>
           </Box>
           <Box
             sx={{
               backgroundColor: "#f0f0f0",
-              width: "400px",
-              height: "60px",
+              width: "100%",
+              height: "55px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              mt: 3,
               borderRadius: "10px",
               p: "0px 5px 0px 15px",
-              ml: 12,
             }}
           >
-            <Box display="flex" alignItems="center">
-              <IconButton>
-                <Iconify icon="basil:copy-outline" width={24} height={24} />
-              </IconButton>
+            <Box display="flex" alignItems="center" width="100%">
+              <Button
+                sx={{
+                  background: "#f9f9f9",
+                  color: "#000",
+                  "&:hover": {
+                    background: "#bebebe",
+                  },
+                  width: "36px",
+                  height: "36px",
+                  m: "0px 8px",
+                }}
+              >
+                <Iconify icon="basil:copy-outline" width={16} height={16} />
+              </Button>
               <Box ml="10px">
                 <Typography>Invite link Edit</Typography>
                 <Typography>flip.com/906e3999</Typography>
@@ -108,32 +122,62 @@ export default function ShareGroupModal({
             <Button
               variant="contained"
               sx={{
-                mr: "8px",
+                background: "#d1329e",
+                "&:hover": {
+                  background: "#c31a8b",
+                },
+                width: "64px",
+                height: "36px",
+                m: "6px 12px",
               }}
             >
               Copy
             </Button>
           </Box>
-          <Box mt="20px" ml={12}>
+          <Box mt="20px" ml="15px">
             <FormControl>
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={value}
                 onChange={handleChange}
+                sx={{
+                  fontSize: "24px",
+                }}
               >
                 <FormControlLabel
                   value="anyone"
-                  control={<Radio />}
-                  label="Anyone with the link can join"
-                  sx={{
-                    fontSize: "24px",
-                  }}
+                  control={
+                    <Radio
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#d1329e",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography color="#292929" variant="h6">
+                      Anyone with the link can join
+                    </Typography>
+                  }
                 />
                 <FormControlLabel
                   value="one"
-                  control={<Radio />}
-                  label="Only people you approve can join"
+                  control={
+                    <Radio
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#d1329e",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography color="#292929" variant="h6">
+                      Only people you approve can join
+                    </Typography>
+                  }
                 />
               </RadioGroup>
             </FormControl>
@@ -149,23 +193,72 @@ export default function ShareGroupModal({
               borderRadius: 2,
             }}
           />
-          <Box ml={12}>
-            <Typography variant="h5">Other ways to add students:</Typography>
-            <Button
-              startIcon={<SiGoogleclassroom />}
-              sx={{ height: "50px", mb: "10px", width: "400px", mt: "10px" }}
+          <Box ml="15px">
+            <Typography
+              variant="h6"
+              fontSize="16px"
+              m="0px 0px 13px"
+              color="#292929"
             >
-              <Typography mr="200px">Google Classroom</Typography>
-              <AiOutlineArrowRight />
+              Other ways to add students:
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<SiGoogleclassroom />}
+              sx={{
+                width: "100%",
+                borderRadius: "8px",
+                p: "16px",
+                m: "0px 0px 12px",
+                color: "#292929",
+                background: "#f0f0f0",
+                "&:hover": {
+                  background: "#b7b5b5",
+                  boxShadow: "none",
+                },
+                fontSize: "16px",
+                fontWeight: "400",
+                justifyContent: "space-between",
+              }}
+            >
+              Google Classroom
+              <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
             </Button>
             <Button
               startIcon={<MdOutlineMail />}
-              sx={{ height: "50px", mb: "10px", width: "400px" }}
+              sx={{
+                width: "100%",
+                borderRadius: "8px",
+                p: "16px",
+                m: "0px 0px 12px",
+                color: "#292929",
+                background: "#f0f0f0",
+                "&:hover": {
+                  background: "#b7b5b5",
+                  boxShadow: "none",
+                },
+                fontSize: "16px",
+                fontWeight: "400",
+                justifyContent: "space-between",
+              }}
             >
-              <Typography mr="150px">Email address or domain</Typography>
-              <AiOutlineArrowRight />
+              Email address or domain
+              <AiOutlineArrowRight
+                style={{ marginLeft: "auto", backgroundColor: "#f9f9f9" }}
+              />
             </Button>
-            <Button>By username</Button>
+            <Button
+              sx={{
+                textDecoration: "underline",
+                color: "#292929",
+                "&hover": {
+                  backgroundColor: "none",
+                  background: "none",
+                },
+              }}
+            >
+              By username
+            </Button>
           </Box>
         </Box>
       </Dialog>
