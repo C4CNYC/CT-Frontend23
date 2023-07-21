@@ -12,10 +12,12 @@ import {
   FormControl,
   FormControlLabel,
   IconButton,
+  Link,
   Radio,
   RadioGroup,
   Typography,
 } from "@mui/material";
+import { Stack } from "@mui/system";
 
 import { Iconify } from "../iconify";
 
@@ -62,7 +64,14 @@ export default function ShareGroupModal({
               <Iconify icon="jam:close-rectangle-f" width={24} height={24} />
             </IconButton>
           </Box>
-          <Typography mt="80px" ml="40px" variant="h1" color="white">
+          <Typography
+            mt="55px"
+            ml="32px"
+            mb="55px"
+            variant="h3"
+            color="white"
+            fontSize="32px"
+          >
             Test
           </Typography>
         </Box>
@@ -82,7 +91,7 @@ export default function ShareGroupModal({
               mt="12px"
               mb="40px"
               textAlign="center"
-              variant="subtitle1"
+              variant="body2"
             >
               Send the link below to invite students to the group.
             </Typography>
@@ -134,7 +143,7 @@ export default function ShareGroupModal({
               Copy
             </Button>
           </Box>
-          <Box mt="20px" ml="15px">
+          <Stack mt="20px" ml="15px" gap="20px">
             <FormControl>
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -143,10 +152,15 @@ export default function ShareGroupModal({
                 onChange={handleChange}
                 sx={{
                   fontSize: "24px",
+                  mb: "24px",
                 }}
               >
                 <FormControlLabel
                   value="anyone"
+                  sx={{
+                    mb: "24px",
+                    mt: "10px",
+                  }}
                   control={
                     <Radio
                       sx={{
@@ -181,7 +195,7 @@ export default function ShareGroupModal({
                 />
               </RadioGroup>
             </FormControl>
-          </Box>
+          </Stack>
           <Divider
             variant="middle"
             orientation="horizontal"
@@ -193,7 +207,7 @@ export default function ShareGroupModal({
               borderRadius: 2,
             }}
           />
-          <Box ml="15px">
+          <Box ml="15px" mt="28px" mb="28px">
             <Typography
               variant="h6"
               fontSize="16px"
@@ -202,63 +216,78 @@ export default function ShareGroupModal({
             >
               Other ways to add students:
             </Typography>
-            <Button
-              variant="contained"
-              startIcon={<SiGoogleclassroom />}
+            <Box
               sx={{
+                backgroundColor: "#f0f0f0",
                 width: "100%",
-                borderRadius: "8px",
-                p: "16px",
-                m: "0px 0px 12px",
-                color: "#292929",
-                background: "#f0f0f0",
-                "&:hover": {
-                  background: "#b7b5b5",
-                  boxShadow: "none",
-                },
-                fontSize: "16px",
-                fontWeight: "400",
+                height: "55px",
+                display: "flex",
+                alignItems: "center",
                 justifyContent: "space-between",
+                borderRadius: "10px",
+                pr: "15px",
+                mb: "12px",
+                cursor: "pointer",
               }}
             >
-              Google Classroom
+              <Box display="flex" alignItems="center" width="100%">
+                <Button
+                  startIcon={<SiGoogleclassroom />}
+                  sx={{
+                    background: "#f9f9f9",
+                    color: "#000",
+                    "&:hover": {
+                      background: "#bebebe",
+                    },
+                    width: "34px",
+                    height: "40px",
+                    m: "0px 8px",
+                  }}
+                ></Button>
+                <Box ml="10px">
+                  <Typography> Google Classroom</Typography>
+                </Box>
+                <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              width="100%"
+              sx={{
+                backgroundColor: "#f0f0f0",
+                width: "100%",
+                height: "55px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderRadius: "10px",
+                pr: "15px",
+                mb: "12px",
+                cursor: "pointer",
+              }}
+            >
+              <Button
+                startIcon={<MdOutlineMail />}
+                sx={{
+                  background: "#f9f9f9",
+                  color: "#000",
+                  "&:hover": {
+                    background: "#bebebe",
+                  },
+                  width: "34px",
+                  height: "40px",
+                  m: "0px 8px",
+                }}
+              ></Button>
+              <Box ml="10px">
+                <Typography> Email address or domain</Typography>
+              </Box>
               <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
-            </Button>
-            <Button
-              startIcon={<MdOutlineMail />}
-              sx={{
-                width: "100%",
-                borderRadius: "8px",
-                p: "16px",
-                m: "0px 0px 12px",
-                color: "#292929",
-                background: "#f0f0f0",
-                "&:hover": {
-                  background: "#b7b5b5",
-                  boxShadow: "none",
-                },
-                fontSize: "16px",
-                fontWeight: "400",
-                justifyContent: "space-between",
-              }}
-            >
-              Email address or domain
-              <AiOutlineArrowRight
-                style={{ marginLeft: "auto", backgroundColor: "#f9f9f9" }}
-              />
-            </Button>
-            <Button
-              sx={{
-                textDecoration: "underline",
-                color: "#292929",
-                "&hover": {
-                  backgroundColor: "none",
-                  background: "none",
-                },
-              }}
-            >
+            </Box>
+            <Link href="#" color="inherit">
               By username
-            </Button>
+            </Link>
           </Box>
         </Box>
       </Dialog>
