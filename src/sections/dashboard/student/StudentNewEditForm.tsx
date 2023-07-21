@@ -1,22 +1,31 @@
+import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo } from "react";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import generator from "generate-password";
+import { MuiColorInput } from "mui-color-input";
+import { Controller, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import * as Yup from "yup";
+
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+
 import {
+  FormProvider,
+  Label,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
-  Label,
   useSnackbar,
-  FormProvider,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import generator from "generate-password";
-import { MuiColorInput } from "mui-color-input";
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import {
+  BaseResponseInterface,
+  createRandomAvatar,
+  getRandomColor,
+} from "@utils";
 import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
@@ -25,12 +34,6 @@ import {
   useUpdateStudentMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import {
-  createRandomAvatar,
-  getRandomColor,
-  BaseResponseInterface,
-} from "@utils";
-import * as Yup from "yup";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };
@@ -74,7 +77,7 @@ export default function StudentNewEditForm({
     () => ({
       first_name: currentUser?.first_name ?? "",
       last_name: currentUser?.last_name ?? "",
-      email: currentUser?.email ?? "",
+      email: currentUser?.account.email ?? "",
       phone: currentUser?.phone ?? "",
       country: currentUser?.country ?? "",
       city: currentUser?.city ?? "",
@@ -145,7 +148,7 @@ export default function StudentNewEditForm({
           ...body,
         }).unwrap();
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-        push(PATH_DASHBOARD.school.students);
+        push(MANAGER_PATH_DASHBOARD.school.students);
       } else {
         const user = await createStudent({
           ...data,
@@ -160,7 +163,7 @@ export default function StudentNewEditForm({
           await updateAvatar(user.id, randomAvatar);
         }
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-        push(PATH_DASHBOARD.school.students);
+        push(MANAGER_PATH_DASHBOARD.school.students);
       }
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {

@@ -1,14 +1,11 @@
-import { ChatgptTutor } from "chatgpttutor"
+import { ChatgptTutor } from "chatgpttutor";
 
-const aiAssistantId = "SUPPORT"
+const aiAssistantId = "SUPPORT";
 
-const chatgptTutor = new ChatgptTutor()
+const chatgptTutor = new ChatgptTutor();
 chatgptTutor.initializeChatgptTutor(
   process.env.NEXT_PUBLIC_OPENAI_API_KEY as string,
-  "NONE",
-)
+  "NONE"
+);
 
-export {
-  aiAssistantId,
-  chatgptTutor
-}
+export { aiAssistantId, chatgptTutor };

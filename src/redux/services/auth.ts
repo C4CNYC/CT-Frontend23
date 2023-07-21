@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { createApi } from "@reduxjs/toolkit/query/react";
+
 import { BaseResponseInterface } from "@utils";
+
 import { IUser } from "../interfaces/auth.interface";
 import { Role } from "./enums/role.enum";
 import { baseQueryWrapper } from "./helpers/base_query_wrapper";
@@ -43,6 +45,7 @@ export interface RegisterRequest {
   first_name: string;
   last_name: string;
   password: string;
+  role: Role;
 }
 
 export const authApi = createApi({
@@ -61,7 +64,7 @@ export const authApi = createApi({
     }),
     register: builder.mutation<RegisterResponce, RegisterRequest>({
       query: (body) => ({
-        url: "auth/signup",
+        url: "/signup",
         method: "POST",
         body,
       }),
@@ -80,11 +83,27 @@ export const authApi = createApi({
       }),
       providesTags: ["ProfileUser"],
     }),
+    updateStudentProfile: builder.mutation<IStudentProfile, IStudentProfile>({
+      query: ({ ...body }) => ({
+        url: "/student/profile",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["ProfileUser"],
+    }),
     updateProfile: builder.mutation<IStudentProfile, IStudentProfile>({
       query: ({ ...body }) => ({
         url: "/profile",
         method: "PATCH",
         body,
+      }),
+      invalidatesTags: ["ProfileUser"],
+    }),
+    udpateStudentProfileAvatar: builder.mutation<void, { file: FormData }>({
+      query: ({ file }) => ({
+        url: "/student/profile/avatar",
+        method: "PATCH",
+        body: file,
       }),
       invalidatesTags: ["ProfileUser"],
     }),
@@ -126,7 +145,9 @@ export const {
   useProtectedMutation,
   useProfileQuery,
   usePrefetch,
+  useUpdateStudentProfileMutation,
   useUdpateProfileAvatarMutation,
+  useUdpateStudentProfileAvatarMutation,
   useUpdateProfileMutation,
   useResetPasswordMutation,
   useSubmitPasswordMutation,

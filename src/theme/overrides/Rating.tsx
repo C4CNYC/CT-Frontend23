@@ -1,4 +1,5 @@
-import { alpha, type Theme } from "@mui/material/styles";
+import { type Theme, alpha } from "@mui/material/styles";
+
 //
 import { StarIcon } from "./CustomIcons";
 

@@ -1,5 +1,7 @@
+import NextLink from "next/link";
+
 import { SOCIAL_ICONS } from "@assets/data";
-import { SvgColor } from "@components";
+
 import {
   Avatar,
   Box,
@@ -10,8 +12,9 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, styled, useTheme } from "@mui/material/styles";
-import { PATH_DASHBOARD } from "@routes/paths";
-import NextLink from "next/link";
+
+import { SvgColor } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 
 // ----------------------------------------------------------------------
@@ -76,7 +79,7 @@ export default function UserCard({ user }: Props) {
         />
         <Link
           component={NextLink}
-          href={PATH_DASHBOARD.friends.friend(user.id)}
+          href={STUDENT_PATH_DASHBOARD.friends.friend(user.id)}
           sx={{
             textDecoration: "none",
             "&:hover": {

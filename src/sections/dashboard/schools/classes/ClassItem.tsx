@@ -1,4 +1,7 @@
-import { MenuPopover, Iconify } from "@components";
+import { useState } from "react";
+
+import { useSnackbar } from "notistack";
+
 import {
   Avatar,
   Button,
@@ -7,12 +10,13 @@ import {
   ListItemText,
   MenuItem,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
+
+import { Iconify, MenuPopover } from "@components";
+import { BaseResponseInterface } from "@utils";
 import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
-import { BaseResponseInterface } from "@utils";
+
 import AddClassDialog from "./CreateClassDialog";
 
 // ----------------------------------------------------------------------

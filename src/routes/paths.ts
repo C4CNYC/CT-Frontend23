@@ -14,10 +14,6 @@ export const PATH_AUTH = {
   root: ROOTS_AUTH,
   login: path(ROOTS_AUTH, "/login"),
   register: path(ROOTS_AUTH, "/register"),
-  registerOrganization: path(ROOTS_AUTH, "/register-organization"),
-  loginUnprotected: path(ROOTS_AUTH, "/login-unprotected"),
-  registerUnprotected: path(ROOTS_AUTH, "/register-unprotected"),
-  verify: path(ROOTS_AUTH, "/verify"),
   resetPassword: path(ROOTS_AUTH, "/reset-password"),
   newPassword: path(ROOTS_AUTH, "/new-password"),
   submitPassword: path(ROOTS_AUTH, "/submit-password"),
@@ -30,7 +26,7 @@ export const PATH_PAGE = {
   page500: "/500",
   components: "/components",
   profile: "/profile",
-  studentProfile: "/student-profile",
+  studentProfile: "/student/profile",
   home: "/main",
 };
 
@@ -47,7 +43,11 @@ export const PATH_MAIN = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
-  home: path(ROOTS_DASHBOARD, "/home"),
+  home: {
+    root: path(ROOTS_DASHBOARD, "/home"),
+    edit: (id: string) => path(ROOTS_DASHBOARD, `/edit/${id}`),
+  },
+  info: path(ROOTS_DASHBOARD, "/info"),
   main: path(ROOTS_DASHBOARD, "/main"),
   stream: path(ROOTS_DASHBOARD, "/stream"),
   permissionDenied: path(ROOTS_DASHBOARD, "/permission-denied"),

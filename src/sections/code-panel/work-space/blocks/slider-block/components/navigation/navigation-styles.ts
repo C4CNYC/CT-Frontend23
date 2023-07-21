@@ -1,4 +1,5 @@
 import { useTheme } from "@mui/material";
+
 import { BtnType } from ".";
 
 export const stylesPrev = (): Record<string, unknown> => {

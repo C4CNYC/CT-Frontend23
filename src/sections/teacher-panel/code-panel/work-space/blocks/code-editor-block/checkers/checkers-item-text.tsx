@@ -1,15 +1,13 @@
+import { LazyMotion, domAnimation, m } from "framer-motion";
+
 import { Tooltip, Typography } from "@mui/material";
-import { domAnimation, LazyMotion, m } from "framer-motion";
 
 interface Props {
   text: string;
   open: boolean;
 }
 
-export const CheckersItemText = ({
-  text,
-  open,
-}: Props): React.ReactElement => {
+export const CheckersItemText = ({ text, open }: Props): React.ReactElement => {
   const listVariants = {
     open: {
       width: "100%",
@@ -53,4 +51,4 @@ export const CheckersItemText = ({
       </m.p>
     </LazyMotion>
   );
-}
+};

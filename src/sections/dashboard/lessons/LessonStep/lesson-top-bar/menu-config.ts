@@ -1,4 +1,7 @@
-import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
+import {
+  STUDENT_PATH_DASHBOARD,
+  STUDENT_PATH_PAGE,
+} from "@routes/student.paths";
 
 interface IMenuConfigItem {
   title: string;
@@ -12,13 +15,13 @@ export const menuConfig: IMenuConfigItem[] = [
     title: "Overview",
     subTitle: "Home",
     icon: "fluent:top-speed-24-regular",
-    href: PATH_DASHBOARD.home,
+    href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
     title: "Me, me, me",
     subTitle: "Profile",
     icon: "tabler:run",
-    href: PATH_PAGE.profile,
+    href: STUDENT_PATH_PAGE.profile,
   },
 
   {

@@ -1,10 +1,14 @@
-import { Scrollbar } from "@components";
-import { Box, Button, Container, Typography } from "@mui/material";
 import { useRouter } from "next/router";
+
 import { AiOutlineMinus } from "react-icons/ai";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { ICourseContent } from "src/redux/interfaces/content.interface";
+
+import { Box, Button, Container, Typography } from "@mui/material";
+
+import { Scrollbar } from "@components";
 import { BaseResponseInterface } from "@utils";
+import { ICourseContent } from "src/redux/interfaces/content.interface";
+
 import CourseLayaut from "./CourseLayaut";
 
 interface Props {
@@ -33,7 +37,7 @@ export default function CourseMain({ course }: Props): React.ReactElement {
           },
           pb: "187px",
           background:
-            'no-repeat url("/assets/projects/btn_bg.png")  top -169px right -197px / 523px 323px, #ECF4FF',
+            'no-repeat url("/assets/projects/btn_bg.svg")  top -169px right -197px / 523px 323px, #ECF4FF',
         })}
       >
         <Container maxWidth={false} sx={{ maxWidth: "1922px" }}>

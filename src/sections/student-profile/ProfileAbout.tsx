@@ -1,8 +1,10 @@
-import { Iconify } from "@components";
 import { Card, CardHeader, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { IUser } from "src/redux/interfaces/auth.interface";
+
+import { Iconify } from "@components";
 import { fDateTime } from "@utils";
+import { IUser } from "src/redux/interfaces/auth.interface";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -13,18 +15,11 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
 }));
 
 interface Props {
-  data: IUser;
+  data: IUser | IStudent;
 }
 
 export default function ProfileAbout({ data }: Props): React.ReactElement {
-  const {
-    email,
-    school,
-    phone,
-    createdAt,
-    country,
-    post_code: postCode,
-  } = data;
+  const { school, phone, createdAt, country, post_code: postCode } = data;
   return (
     <Card>
       <CardHeader title="About" />
@@ -39,10 +34,6 @@ export default function ProfileAbout({ data }: Props): React.ReactElement {
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">Postcode {postCode}</Typography>
-        </Stack>
-        <Stack direction="row">
-          <StyledIcon icon="eva:email-fill" />
-          <Typography variant="body2">{email}</Typography>
         </Stack>
 
         <Stack direction="row">

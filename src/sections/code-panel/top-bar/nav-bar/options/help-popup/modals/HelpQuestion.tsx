@@ -1,4 +1,7 @@
-import { Iconify } from "@components";
+import { useState } from "react";
+
+import { useAtom } from "jotai";
+
 import {
   Button,
   Dialog,
@@ -7,8 +10,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useAtom } from "jotai";
-import { useState } from "react";
+
+import { Iconify } from "@components";
+
 import { chatHandlerAtom } from "../../chatHendlerAtom";
 import { helpMsgAtom } from "./helpMsgAtom";
 

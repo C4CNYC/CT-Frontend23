@@ -1,4 +1,7 @@
-import { Image } from "@components";
+import { useState } from "react";
+
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 import {
   Box,
@@ -9,8 +12,8 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
+import { Image } from "@components";
 
 interface Props {
   children: React.ReactElement;
@@ -41,7 +44,7 @@ export default function MenuHugDialog({ children }: Props): React.ReactElement {
       >
         <DialogTitle variant="h4">BIG, BIIGGGGGGG HUGGG!!!</DialogTitle>
         <DialogContent>
-          <Image src={"/assets/code-panel/hug.png"} alt="code-panel"/>
+          <Image src={"/assets/code-panel/hug.png"} alt="code-panel" />
           <Typography variant="h5" sx={{ py: 1 }}>
             You are loved, needed and important. This world needs more people
             exactly like you.

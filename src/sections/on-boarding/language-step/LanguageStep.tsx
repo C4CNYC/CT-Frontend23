@@ -1,5 +1,9 @@
-import { FormProvider } from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { MdOutlineArrowBackIos } from "react-icons/md";
+import { StepWizardChildProps } from "react-step-wizard";
+import * as Yup from "yup";
+
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -10,13 +14,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { MdOutlineArrowBackIos } from "react-icons/md";
-import { StepWizardChildProps } from "react-step-wizard";
-import * as Yup from "yup";
+
+import { FormProvider } from "@components";
+import { voidFunction } from "@utils";
+
 import StepContainer from "../StepContainer";
 import { LanguageItem } from "./LanguageItem";
-import { voidFunction } from "@utils";
 
 interface FormValuesProps {
   language: string;
@@ -38,7 +41,9 @@ function LanguageStep({
     defaultValues,
   });
 
-  const onSubmit = (): void => { voidFunction() };
+  const onSubmit = (): void => {
+    voidFunction();
+  };
   return (
     <StepContainer>
       <Stack>

@@ -1,8 +1,12 @@
-import { RHFTextField, RHFUploadAvatar } from "@components";
-import { Box, Stack, Typography } from "@mui/material";
-import { MuiColorInput } from "mui-color-input";
 import * as React from "react";
+
+import { MuiColorInput } from "mui-color-input";
 import { Control, Controller } from "react-hook-form";
+
+import { Box, Stack, Typography } from "@mui/material";
+
+import { RHFTextField, RHFUploadAvatar } from "@components";
+
 import { FormAddClassProps } from ".";
 
 interface Props {

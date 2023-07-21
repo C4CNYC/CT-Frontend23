@@ -1,7 +1,10 @@
 import type { Meta } from "@storybook/react";
+
 import { Table } from "@mui/material";
-import { TableHeadCustom, TableHeadCustomProps } from "./TableHeadCustom"
+
 import { voidFunction } from "@utils";
+
+import { TableHeadCustom, TableHeadCustomProps } from "./TableHeadCustom";
 
 const Component: Meta<typeof TableHeadCustom> = {
   component: TableHeadCustom,
@@ -11,16 +14,12 @@ const Component: Meta<typeof TableHeadCustom> = {
 export default Component;
 
 const ExampleComponent = (props: TableHeadCustomProps) => {
-
   return (
     <Table size={"medium"} sx={{ minWidth: 800 }}>
-                  <TableHeadCustom
-                    {...props}
-                  />
-                </Table>
-  )
-}
-
+      <TableHeadCustom {...props} />
+    </Table>
+  );
+};
 
 export const Default = {
   render: (args: TableHeadCustomProps) => <ExampleComponent {...args} />,

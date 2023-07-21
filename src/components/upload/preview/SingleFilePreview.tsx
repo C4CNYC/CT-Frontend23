@@ -9,9 +9,7 @@ interface Props {
   file: CustomFile | string | null;
 }
 
-export function SingleFilePreview({
-  file,
-}: Props): React.ReactElement | null {
+export function SingleFilePreview({ file }: Props): React.ReactElement | null {
   if (!file) {
     return null;
   }

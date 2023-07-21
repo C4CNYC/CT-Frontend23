@@ -1,10 +1,13 @@
 import { useState } from "react";
+
 // @mui
 import { MenuItem, Stack } from "@mui/material";
-// locales
-import { useLocales } from "../../../locales";
+
 // components
 import { IconButtonAnimate, Image, MenuPopover } from "@components";
+
+// locales
+import { useLocales } from "../../../locales";
 
 // ----------------------------------------------------------------------
 

@@ -1,13 +1,12 @@
-import InfoIcon from "@mui/icons-material/Info";
 import * as React from "react";
+
+import InfoIcon from "@mui/icons-material/Info";
 
 interface InputInfoProps {
   text: string;
 }
 
-export function InputInfo({
-  text,
-}: InputInfoProps): React.ReactElement | null {
+export function InputInfo({ text }: InputInfoProps): React.ReactElement | null {
   return (
     <div
       style={{

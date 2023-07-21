@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
-
 import {
+  Firestore,
   addDoc,
   collection,
-  Firestore,
   getFirestore,
   limitToLast,
   onSnapshot,
@@ -12,6 +11,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { useSelector } from "react-redux";
+
 import { RootState } from "src/redux/store";
 
 export interface IChatMessage {

@@ -1,5 +1,5 @@
 import { type ToggleButtonProps } from "@mui/material";
-import { alpha, type Theme } from "@mui/material/styles";
+import { type Theme, alpha } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------
 

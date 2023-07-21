@@ -1,6 +1,9 @@
-import { Box } from "@mui/material";
 import React from "react";
+
+import { Box } from "@mui/material";
+
 import { useGetSchoolContactsQuery } from "src/redux/services/manager/schools-manager";
+
 import ContactsForm from "./ContactsForm";
 import SkeletonContactsTab from "./SkeletonContactsTab";
 

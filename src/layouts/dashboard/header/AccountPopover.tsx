@@ -1,9 +1,8 @@
-import {
-  CustomAvatar,
-  IconButtonAnimate,
-  MenuPopover,
-  useSnackbar,
-} from "@components";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import { useDispatch } from "react-redux";
+
 import {
   Box,
   Divider,
@@ -13,55 +12,57 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
-import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { IUser } from "src/redux/interfaces/auth.interface";
+
+import {
+  CustomAvatar,
+  IconButtonAnimate,
+  MenuPopover,
+  useSnackbar,
+} from "@components";
+import {
+  MANAGER_PATH_DASHBOARD,
+  MANAGER_PATH_PAGE,
+} from "@routes/manager.paths";
+import { PATH_AUTH } from "@routes/paths";
+import { STUDENT_PATH_PAGE } from "@routes/student.paths";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { useProfileQuery } from "src/redux/services/auth";
-import { useProfileStudentQuery } from "src/redux/services/student-auth";
-import { useSelector } from "src/redux/store";
+import { Role } from "src/redux/services/enums/role.enum";
+import { setStudentMode } from "src/redux/slices/global";
+
 import { useAuthContext } from "../../../auth/useAuthContext";
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover(): React.ReactElement {
-  const { enqueueSnackbar } = useSnackbar();
+  const reduxDispatch = useDispatch();
+  const { pathname } = useRouter();
+  // eslint-disable-next-line @typescript-eslint/prefer-includes
+  const isStudentMode = /\/student/.test(pathname);
+  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
   const { logout } = useAuthContext();
   const { replace, push } = useRouter();
-  const [profile, setProfile] = useState<IUser>();
-  const isStudent = useSelector((state) => state.global.isStudent);
-  const { data: profileTeacher } = useProfileQuery(undefined, { skip: isStudent });
-  const { data: profileStudent } = useProfileStudentQuery(
-    {},
-    { skip: !isStudent }
-  );
-  const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { data: profile } = useProfileQuery();
+
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-  const handleClosePopover = (): void => {
-    setOpenPopover(null);
-  };
-  useEffect(() => {
-    if (isStudent && profileStudent) {
-      setProfile(profileStudent);
-    }
-    if (!isStudent && profileTeacher) {
-      setProfile(profileTeacher);
-    }
-  }, [profileTeacher, profileStudent]);
+
   const handleLogout = (): void => {
     try {
       logout();
       replace(PATH_AUTH.login);
-      handleClosePopover();
+      setOpenPopover(null);
     } catch (error: any) {
       enqueueSnackbar("Unable to logout!", { variant: "error" });
     }
   };
 
   const handleClickItem = (path: string): void => {
-    handleClosePopover();
+    setOpenPopover(null);
     push(path);
   };
 
@@ -93,7 +94,9 @@ export default function AccountPopover(): React.ReactElement {
 
       <MenuPopover
         open={openPopover}
-        onClose={handleClosePopover}
+        onClose={() => {
+          setOpenPopover(null);
+        }}
         sx={{ width: 200, p: 0 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
@@ -121,13 +124,44 @@ export default function AccountPopover(): React.ReactElement {
           <MenuItem
             onClick={() => {
               handleClickItem(
-                isStudent ? PATH_PAGE.studentProfile : PATH_PAGE.profile
+                isStudentMode
+                  ? STUDENT_PATH_PAGE.profile
+                  : MANAGER_PATH_PAGE.profile
               );
             }}
           >
             Profile
           </MenuItem>
         </Stack>
+
+        <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
+          <Stack sx={{ p: 1 }}>
+            <MenuItem
+              onClick={() => {
+                handleClickItem(
+                  isStudentMode
+                    ? MANAGER_PATH_PAGE.home
+                    : STUDENT_PATH_PAGE.home
+                );
+                reduxDispatch(setStudentMode(!isStudentMode));
+              }}
+            >
+              {isStudentMode ? "Manager Account" : "Student Account"}
+            </MenuItem>
+          </Stack>
+        </RoleBasedGuard>
+
+        <RoleBasedGuard roles={[Role.Owner]}>
+          <Stack sx={{ p: 1 }}>
+            <MenuItem
+              onClick={() => {
+                handleClickItem(MANAGER_PATH_DASHBOARD.organization.general);
+              }}
+            >
+              Organization Setting
+            </MenuItem>
+          </Stack>
+        </RoleBasedGuard>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 

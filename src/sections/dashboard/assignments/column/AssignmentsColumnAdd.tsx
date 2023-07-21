@@ -1,6 +1,8 @@
 import { useState } from "react";
+
 // @mui
 import { Button, ClickAwayListener, Paper, TextField } from "@mui/material";
+
 // import { createColumn } from "../../../../redux/slices/kanban";
 // components
 import { Iconify } from "@components";
@@ -33,8 +35,7 @@ export default function AssignmentsColumnAdd(): React.ReactElement {
         setName("");
       }
       handleClose();
-    } catch (e: any) {
-    }
+    } catch (e: any) {}
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>): void => {

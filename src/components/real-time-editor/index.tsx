@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
 import React, { memo, useEffect, useState } from "react";
+
 import { io } from "socket.io-client";
-import { CodeEditor } from "./editor";
+
 import EditorSkeleton from "./EditorSkeleton";
+import { CodeEditor } from "./editor";
 import { getDocument } from "./extentions/collab";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
@@ -116,7 +118,6 @@ export const RealTimeEditor = memo(
         <CodeEditor
           state={state}
           cursorId={email}
-          cursorText={email}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}
           socket={socket}

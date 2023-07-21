@@ -1,11 +1,15 @@
 import { Grid, Skeleton, Stack } from "@mui/material";
+
 import { IUser } from "src/redux/interfaces/auth.interface";
+
 import ProfileAbout from "./ProfileAbout";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileSocialInfo from "./ProfileSocialInfo";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "@utils";
 
 interface Props {
-  data?: IUser;
+  data?: (IUser | IStudent) & BaseResponseInterface;
   isFriend?: boolean;
 }
 

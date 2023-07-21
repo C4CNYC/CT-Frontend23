@@ -1,5 +1,6 @@
-import { IChallanges } from "src/redux/interfaces/challenges.interface";
 import { BaseResponseInterface } from "@utils";
+import { IChallanges } from "src/redux/interfaces/challenges.interface";
+
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({

@@ -1,5 +1,5 @@
 import { useDropzone } from "react-dropzone";
-// @mui
+
 import {
   Box,
   Button,
@@ -9,12 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
-// assets
-import { UploadIllustration } from "./illustrations";
-//
+
 import { Iconify } from "../iconify";
-//
 import RejectionFiles from "./errors/RejectionFiles";
+import { UploadIllustration } from "./illustrations";
 import MultiFilePreview from "./preview/MultiFilePreview";
 import { SingleFilePreview } from "./preview/SingleFilePreview";
 import { UploadProps } from "./types";

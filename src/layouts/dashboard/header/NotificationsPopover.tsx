@@ -1,5 +1,8 @@
-import { noCase } from "change-case";
+import Image from "next/image";
 import { useState } from "react";
+
+import { noCase } from "change-case";
+
 // @mui
 import {
   Avatar,
@@ -17,13 +20,19 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+
+// components
+import {
+  IconButtonAnimate,
+  Iconify,
+  MenuPopover,
+  Scrollbar,
+} from "@components";
 // utils
 import { fToNow } from "@utils";
+
 // _mock_
 import { _notifications } from "../../../_mock/arrays";
-// components
-import { IconButtonAnimate, Iconify, MenuPopover, Scrollbar } from "@components";
-import Image from "next/image";
 
 // ----------------------------------------------------------------------
 

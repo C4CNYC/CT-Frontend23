@@ -1,9 +1,12 @@
-import { matchIsValidColor, MuiColorInput } from "mui-color-input";
+import { useEffect, useState } from "react";
 
-import { Iconify } from "@components";
+import { MuiColorInput, matchIsValidColor } from "mui-color-input";
+
 import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useEffect, useState } from "react";
+
+import { Iconify } from "@components";
+
 import BasePreference from "./BasePreference";
 
 const DEFAULT_BACKGROUDN = "#FFF";

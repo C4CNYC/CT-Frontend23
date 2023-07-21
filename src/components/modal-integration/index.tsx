@@ -1,11 +1,11 @@
+import React, { useState } from "react";
+
 import { javascript } from "@codemirror/lang-javascript";
-import {
-  FormProvider,
-  ModalCodeFullscreen,
-  RHFCode,
-  RHFTextField,
-} from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Button,
@@ -16,14 +16,17 @@ import {
   Stack,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { useSnackbar } from "notistack";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+
+import {
+  FormProvider,
+  ModalCodeFullscreen,
+  RHFCode,
+  RHFTextField,
+} from "@components";
 import {
   useCreateIntegrationMutation,
-  useUpdateIntegrationMutation,
+  useEditIntegrationMutation,
 } from "src/redux/services/manager/integration-manager";
-import * as Yup from "yup";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Tenant name is required"),
@@ -63,7 +66,7 @@ export function ModalIntegration({
   const [createIntegration, { isLoading: creatLoading }] =
     useCreateIntegrationMutation();
   const [updateIntegration, { isLoading: updateLoading }] =
-    useUpdateIntegrationMutation();
+    useEditIntegrationMutation();
 
   const methods = useForm<IntegrationForm>({
     resolver: yupResolver(IntegrationSchema),

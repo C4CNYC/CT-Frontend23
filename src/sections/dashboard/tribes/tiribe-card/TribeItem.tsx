@@ -1,4 +1,3 @@
-import { SvgColor, Scrollbar } from "@components";
 import {
   Avatar,
   AvatarGroup,
@@ -11,8 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 
-import { IClass } from "src/redux/interfaces/class.interface";
+import { Scrollbar, SvgColor } from "@components";
 import { BaseResponseInterface, getLinearGradient } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
+
 import TribeButtons from "./TribeButtons";
 import TribeHeaderBtn from "./TribeHeaderBtn";
 import TribeStatistics from "./TribeStatistics";

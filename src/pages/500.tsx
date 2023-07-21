@@ -1,15 +1,18 @@
-import { m } from "framer-motion";
 // next
 import Head from "next/head";
 import NextLink from "next/link";
-// @mui
-import { Button, Typography } from "@mui/material";
-// layouts
-import CompactLayout from "@layouts/compact";
-// components
-import { MotionContainer, varBounce } from "@components";
+
 // assets
 import { SeverErrorIllustration } from "@assets/illustrations";
+import { m } from "framer-motion";
+
+// @mui
+import { Button, Typography } from "@mui/material";
+
+// components
+import { MotionContainer, varBounce } from "@components";
+// layouts
+import CompactLayout from "@layouts/compact";
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +26,7 @@ export default function Page500(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> 500 Internal Server Error | Minimal UI</title>
+        <title> 500 Internal Server Error </title>
       </Head>
 
       <MotionContainer>

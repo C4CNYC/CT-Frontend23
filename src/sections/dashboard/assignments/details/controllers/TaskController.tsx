@@ -1,3 +1,8 @@
+import * as React from "react";
+
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
   Autocomplete,
   AutocompleteChangeDetails,
@@ -5,16 +10,13 @@ import {
   TextField,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useSelector } from "react-redux";
+
 import { useFilters } from "@hooks";
+import { BaseResponseInterface } from "@utils";
 import { ITask } from "src/redux/services/interfaces/task.interface";
 import { useUdpateTaskAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
 import { RootState } from "src/redux/store";
-
-import { BaseResponseInterface } from "@utils";
 
 type TaskType = ITask & BaseResponseInterface;
 

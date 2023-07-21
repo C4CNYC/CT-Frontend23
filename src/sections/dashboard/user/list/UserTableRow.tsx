@@ -1,5 +1,8 @@
+import NextLink from "next/link";
+import { useState } from "react";
+
 import { SOCIAL_ICONS } from "@assets/data";
-import { MenuPopover, ConfirmDialog, Iconify, Label, RoleSelector } from "@components";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
@@ -14,11 +17,18 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import NextLink from "next/link";
-import { useState } from "react";
-import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
+
+import {
+  ConfirmDialog,
+  Iconify,
+  Label,
+  MenuPopover,
+  RoleSelector,
+} from "@components";
 import { BaseResponseInterface } from "@utils";
 import { Role } from "src/redux/services/enums/role.enum";
+import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
+
 // ----------------------------------------------------------------------
 
 interface Props {
@@ -39,15 +49,16 @@ export default function UserTableRow({
   onDeleteRow,
 }: Props): React.ReactElement | null {
   const {
+    email,
     first_name: firstName,
     last_name: lastName,
-    email,
     verified,
     active,
     avatar,
     role,
     id,
     socials,
+    account,
   } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -76,11 +87,11 @@ export default function UserTableRow({
         </TableCell>
         <TableCell>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <Avatar alt={firstName} src={avatar} />
+            <Avatar alt={firstName} src={avatar ?? account?.avatar} />
           </Stack>
         </TableCell>
 
-        <TableCell align="left">{email}</TableCell>
+        <TableCell align="left">{email || account?.email}</TableCell>
 
         <TableCell align="left">
           {firstName &&

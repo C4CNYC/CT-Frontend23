@@ -1,6 +1,6 @@
-
 // @mui
 import { TableCell, TableRow } from "@mui/material";
+
 //
 import { useLocales } from "../../locales/useLocales";
 import { EmptyContent } from "../empty-content";
@@ -11,9 +11,7 @@ interface Props {
   isNotFound: boolean;
 }
 
-export function TableNoData({
-  isNotFound,
-}: Props): React.ReactElement | null {
+export function TableNoData({ isNotFound }: Props): React.ReactElement | null {
   const { translate } = useLocales();
 
   return (

@@ -1,5 +1,7 @@
-import { Box, Stack } from "@mui/material";
 import { memo } from "react";
+
+import { Box, Stack } from "@mui/material";
+
 //
 import { NavListProps, NavSectionProps } from "../types";
 import NavList from "./NavList";

@@ -1,6 +1,11 @@
-import { SearchNotFound, Iconify } from "@components";
+import Link from "next/link";
+import * as React from "react";
+
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useSnackbar } from "notistack";
+
 import {
-  alpha,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -9,14 +14,13 @@ import {
   Skeleton,
   TextField,
   Typography,
+  alpha,
 } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import Link from "next/link";
-import { useSnackbar } from "notistack";
-import * as React from "react";
+
+import { Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { BaseResponseInterface, voidFunction } from "@utils";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
 import { useGetIntegrationsQuery } from "src/redux/services/manager/integration-manager";
 import {
@@ -24,8 +28,6 @@ import {
   useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
 } from "src/redux/services/manager/lessons-manager";
-
-import { BaseResponseInterface, voidFunction } from "@utils";
 
 export function IntegrationsTab({
   contentId,
@@ -90,7 +92,7 @@ export function IntegrationsTab({
         <Typography>You don't have any integrations.</Typography>
         <Typography>
           Lest's create integration{" "}
-          <Link href={PATH_DASHBOARD.apps.root}>here</Link>
+          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>here</Link>
         </Typography>
       </Box>
     );

@@ -1,6 +1,11 @@
-import { CustomAvatar, Iconify, SearchNotFound } from "@components";
+import * as React from "react";
+
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import { useSnackbar } from "notistack";
+import { useSelector } from "react-redux";
+
 import {
-  alpha,
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
@@ -9,14 +14,13 @@ import {
   Chip,
   TextField,
   Typography,
+  alpha,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import match from "autosuggest-highlight/match";
-import parse from "autosuggest-highlight/parse";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useSelector } from "react-redux";
+
+import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
+import { BaseResponseInterface } from "@utils";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useGetStudentsQuery,
@@ -24,7 +28,6 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { BaseResponseInterface } from "@utils";
 
 type StudentType = IStudent & BaseResponseInterface;
 
@@ -102,7 +105,7 @@ export default function ClassMembersAutocomplete({
         tagValue.map((option, index) => (
           <Chip
             avatar={<CustomAvatar alt={option.email} src={option.avatar} />}
-            label={option.email}
+            label={option.account.email}
             {...getTagProps({ index })}
             key={option.email}
           />
@@ -111,11 +114,13 @@ export default function ClassMembersAutocomplete({
       style={{ width: "100%" }}
       renderInput={(params) => <TextField {...params} placeholder="Students" />}
       renderOption={(props, recipient, { inputValue }) => {
-        const { email } = recipient;
+        const { email } = recipient.account;
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
 
-        const selected = classMembers.data.find((c) => c.email === email);
+        const selected = classMembers.data.find(
+          (c) => c.account.email === email
+        );
 
         return (
           <Box

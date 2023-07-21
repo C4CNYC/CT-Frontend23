@@ -1,3 +1,8 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
 import {
   Box,
   Button,
@@ -7,11 +12,10 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
+
 import CourseAvatar from "./CourseAvarar";
 import CourseButtons from "./CourseButtons";
 import CourseChip from "./CourseChip";
@@ -30,7 +34,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
   const [open, setOpen] = useState(false);
 
   const redirect = (): void => {
-    push(`${PATH_DASHBOARD.courses.course(course.id)}`);
+    push(`${STUDENT_PATH_DASHBOARD.courses.course(course.id)}`);
   };
   return (
     <Stack

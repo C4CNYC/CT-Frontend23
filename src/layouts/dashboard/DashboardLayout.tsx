@@ -1,15 +1,18 @@
 import { useState } from "react";
+
 // @mui
 import { Box } from "@mui/material";
-// hooks
-import { useResponsive } from "@hooks";
-// auth
-import AuthGuard from "../../auth/AuthGuard";
+
 // components
 import { useSettingsContext } from "@components";
+// hooks
+import { useResponsive } from "@hooks";
+
+// auth
+import AuthGuard from "../../auth/AuthGuard";
+import Main from "./Main";
 //
 import Header from "./header";
-import Main from "./Main";
 import NavHorizontal from "./nav/NavHorizontal";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";
@@ -42,7 +45,7 @@ export default function DashboardLayout({
   };
 
   const renderNavVertical = (
-    <NavVertical openNav={open} onCloseNav={handleClose} />
+    <NavVertical isManager openNav={open} onCloseNav={handleClose} />
   );
 
   const renderContent = (): React.ReactElement => {
@@ -51,7 +54,7 @@ export default function DashboardLayout({
         <>
           <Header onOpenNav={handleOpen} />
 
-          {isDesktop ? <NavHorizontal /> : renderNavVertical}
+          {isDesktop ? <NavHorizontal isManager /> : renderNavVertical}
 
           <Main>{children}</Main>
         </>
@@ -69,7 +72,7 @@ export default function DashboardLayout({
               minHeight: { lg: 1 },
             }}
           >
-            {isDesktop ? <NavMini /> : renderNavVertical}
+            {isDesktop ? <NavMini isManager /> : renderNavVertical}
 
             <Main>{children}</Main>
           </Box>

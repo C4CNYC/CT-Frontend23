@@ -1,4 +1,5 @@
 import { BaseRequestHandler } from "next/dist/server/base-server";
+
 import { ILesson } from "./content.interface";
 
 export interface IProgress {

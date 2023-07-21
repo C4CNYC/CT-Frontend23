@@ -1,20 +1,35 @@
 import { memo } from "react";
+
+import { useSelector } from "react-redux";
+
 // @mui
 import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-// config
-import { HEADER } from "../../../config-global";
-// utils
-import { bgBlur } from "@utils";
+
 // components
 import { NavSectionHorizontal } from "@components";
+// utils
+import { bgBlur } from "@utils";
+import { Role } from "src/redux/services/enums/role.enum";
+import { RootState } from "src/redux/store";
+
+// config
+import { HEADER } from "../../../config-global";
 //
-import navConfig from "./config-navigation";
+import { menuConfig } from "./config-navigation";
 
 // ----------------------------------------------------------------------
 
-function NavHorizontal(): React.ReactElement {
+interface INavHorizontal {
+  isManager?: boolean;
+}
+
+function NavHorizontal({ isManager }: INavHorizontal): React.ReactElement {
   const theme = useTheme();
+  const user = useSelector((state: RootState) => state.global.user);
+  const menu = isManager
+    ? menuConfig[user?.role as Role]
+    : menuConfig[Role.Student];
 
   return (
     <AppBar
@@ -32,7 +47,7 @@ function NavHorizontal(): React.ReactElement {
           }),
         }}
       >
-        <NavSectionHorizontal data={navConfig} />
+        <NavSectionHorizontal data={menu} />
       </Toolbar>
 
       <Shadow />

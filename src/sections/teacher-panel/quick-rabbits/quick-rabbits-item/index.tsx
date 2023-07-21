@@ -1,23 +1,26 @@
-import { Iconify } from "@components";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+import { loadLanguage } from "@uiw/codemirror-extensions-langs";
+import { createTheme } from "@uiw/codemirror-themes";
+import CodeMirror from "@uiw/react-codemirror";
+import { useAtom } from "jotai";
+import { useSelector } from "react-redux";
 
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { PATH_DASHBOARD } from "@routes/paths";
+
+import { Iconify } from "@components";
+import { useRealTimeConnection } from "@hooks";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
 import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
-import CodeMirror from "@uiw/react-codemirror";
-import { useAtom } from "jotai";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { createTheme } from "@uiw/codemirror-themes";
-import { loadLanguage } from "@uiw/codemirror-extensions-langs";
-import { useEffect, useState } from "react";
-import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
-import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
-import { useRealTimeConnection } from "@hooks";
+
+import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
 
 interface IQuickRabbitsItem {
   rabit: IQuickRabbit;
@@ -26,7 +29,7 @@ interface IQuickRabbitsItem {
 
 enum TabbitView {
   CHAT = "chat",
-  CODE = "code"
+  CODE = "code",
 }
 
 export default function QuickRabbitsItem({
@@ -36,15 +39,11 @@ export default function QuickRabbitsItem({
   const { query } = useRouter();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [view, setView] = useState<TabbitView>(
-    rabit.email === GROUP_CHAT_RABBIT
-    ? TabbitView.CHAT
-    : TabbitView.CODE
-  )
+    rabit.email === GROUP_CHAT_RABBIT ? TabbitView.CHAT : TabbitView.CODE
+  );
 
   const [onlineStudents] = useAtom(onlineStudentsAtom);
-  const { data: realTimeData } = useRealTimeConnection(
-    rabit.id
-  );
+  const { data: realTimeData } = useRealTimeConnection(rabit.id);
 
   const { data: students } = useGetStudentsQuery(
     {
@@ -57,7 +56,7 @@ export default function QuickRabbitsItem({
   useEffect(() => {
     if (!onlineStudents || rabit.id === query.id) return;
     if (!onlineStudents[rabit.id]) onClose(rabit.id);
-  }, [onlineStudents])
+  }, [onlineStudents]);
 
   const isRabbitActive = rabit.id === query.studentId;
 
@@ -92,19 +91,22 @@ export default function QuickRabbitsItem({
             replace
             shallow
             href={
-              PATH_DASHBOARD.school.controller(query.id as string) +
+              MANAGER_PATH_DASHBOARD.school.controller(query.id as string) +
               (!isRabbitActive ? `?studentId=${rabit.id}` : "")
             }
           >
-            {
-              rabit.email === GROUP_CHAT_RABBIT
-              ? null
-              : (
-                <IconButton>
-                  <Iconify icon={isRabbitActive ? "majesticons:door-exit-line" : "majesticons:door-enter-line"} color={isRabbitActive ? "red" : "#EAEAEB"} />
-                </IconButton>
-              )
-            }
+            {rabit.email === GROUP_CHAT_RABBIT ? null : (
+              <IconButton>
+                <Iconify
+                  icon={
+                    isRabbitActive
+                      ? "majesticons:door-exit-line"
+                      : "majesticons:door-enter-line"
+                  }
+                  color={isRabbitActive ? "red" : "#EAEAEB"}
+                />
+              </IconButton>
+            )}
           </Link>
           <Tooltip title={rabit.email} placement="top">
             <Typography noWrap width="160px" color="#EAEAEB" ml="5px">
@@ -113,24 +115,24 @@ export default function QuickRabbitsItem({
           </Tooltip>
         </Box>
         <Box display="flex" alignItems="center">
-          {
-            rabit.email === GROUP_CHAT_RABBIT
-            ? null
-            : <>
+          {rabit.email === GROUP_CHAT_RABBIT ? null : (
+            <>
               <IconButton
                 onClick={() => {
                   setView(TabbitView.CODE);
-                } }
+                }}
               >
                 <Iconify icon="material-symbols:code" color="#EAEAEB" />
-              </IconButton><IconButton
+              </IconButton>
+              <IconButton
                 onClick={() => {
                   setView(TabbitView.CHAT);
-                } }
+                }}
               >
-                  <Iconify icon="basil:chat-outline" color="#EAEAEB" />
+                <Iconify icon="basil:chat-outline" color="#EAEAEB" />
               </IconButton>
-            </>}
+            </>
+          )}
 
           <IconButton
             onClick={() => {
@@ -141,45 +143,45 @@ export default function QuickRabbitsItem({
           </IconButton>
         </Box>
       </Box>
-      {
-        view === TabbitView.CHAT
-        ? <Messages
-            getStudent={(id: string) => {
-              return students?.data.find(s => s.id === id)
-            }}
-            reciverId={rabit.id}
-          />
-        : <CodeMirror
-            editable={false}
-            value={realTimeData?.code}
-            theme={myTheme}
-            height="449px"
-            style={ { fontSize: 11, overflow: "scroll" } }
-            placeholder="<Code for boxes appear...>"
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
-            extensions={[loadLanguage("html")]}
+      {view === TabbitView.CHAT ? (
+        <Messages
+          getStudent={(id: string) => {
+            return students?.data.find((s) => s.id === id);
+          }}
+          reciverId={rabit.id}
         />
-      }
+      ) : (
+        <CodeMirror
+          editable={false}
+          value={realTimeData?.code}
+          theme={myTheme}
+          height="449px"
+          style={{ fontSize: 11, overflow: "scroll" }}
+          placeholder="<Code for boxes appear...>"
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          extensions={[loadLanguage("html")]}
+        />
+      )}
     </Box>
   );
 }
 
-  const myTheme = createTheme({
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    lineWrapping: true,
-    dark: "dark",
-    settings: {
-      background: "#364954",
-      foreground: "#EAEAEB",
-      caret: "#EAEAEB",
-      selection: "",
-      selectionMatch: "#364954",
-      gutterBackground: "#364954",
-      gutterForeground: "#fff",
-      gutterBorder: "#364954",
-      gutterActiveForeground: "",
-      lineHighlight: "#364954",
-    },
-  });
+const myTheme = createTheme({
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  lineWrapping: true,
+  dark: "dark",
+  settings: {
+    background: "#364954",
+    foreground: "#EAEAEB",
+    caret: "#EAEAEB",
+    selection: "",
+    selectionMatch: "#364954",
+    gutterBackground: "#364954",
+    gutterForeground: "#fff",
+    gutterBorder: "#364954",
+    gutterActiveForeground: "",
+    lineHighlight: "#364954",
+  },
+});

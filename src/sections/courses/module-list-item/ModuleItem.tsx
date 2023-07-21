@@ -1,11 +1,12 @@
 import {
-  alpha,
   Paper,
   Stack,
   Tooltip,
   Typography,
+  alpha,
   useTheme,
 } from "@mui/material";
+
 import ModuleStatistics from "./ModuleStatistics";
 
 export default function ModuleItem({ data }: any): React.ReactElement {

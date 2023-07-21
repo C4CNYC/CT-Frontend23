@@ -1,10 +1,14 @@
-import { Button, Link, Stack, Typography } from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
-import { useAtom } from "jotai";
 import nextLink from "next/link";
+
+import { useAtom } from "jotai";
 import { StepWizardChildProps } from "react-step-wizard";
-import { roadAtom } from "../road-atom";
+
+import { Button, Link, Stack, Typography } from "@mui/material";
+
+import { PATH_AUTH } from "@routes/paths";
+
 import StepContainer from "../StepContainer";
+import { roadAtom } from "../road-atom";
 import { SessionType } from "./SessionType";
 
 function HelloStep({

@@ -1,9 +1,11 @@
-import { useSettingsContext, CustomBreadcrumbs } from "@components";
-import DashboardLayout from "@layouts/dashboard";
-import { Container } from "@mui/system";
-import { PATH_DASHBOARD } from "@routes/paths";
-import ProfileEditForm from "@sections/profile/ProfileEditForm";
 import Head from "next/head";
+
+import { Container } from "@mui/system";
+
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import DashboardLayout from "@layouts/dashboard";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import ProfileEditForm from "@sections/profile/ProfileEditForm";
 import { useProfileQuery } from "src/redux/services/auth";
 
 Profile.getLayout = (page: React.ReactElement) => (
@@ -21,7 +23,7 @@ export default function Profile(): React.ReactElement {
         <CustomBreadcrumbs
           heading="Profile"
           links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.root },
+            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
             { name: data?.email },
           ]}
         />

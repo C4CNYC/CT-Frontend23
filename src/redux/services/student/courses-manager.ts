@@ -5,6 +5,7 @@ import {
   ICourseElement,
   ICourseSearchParams,
 } from "src/redux/interfaces/content.interface";
+
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({
@@ -52,7 +53,6 @@ const extendedApi = studentApi.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "Courses" }],
     }),
     courseRemoveLike: builder.mutation<
       ICourseContent & BaseResponseInterface,
@@ -63,7 +63,6 @@ const extendedApi = studentApi.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "Courses" }],
     }),
     courseAddRating: builder.mutation<
       ICourseContent & BaseResponseInterface,

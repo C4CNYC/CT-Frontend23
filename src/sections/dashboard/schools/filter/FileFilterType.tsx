@@ -1,9 +1,12 @@
 import { useState } from "react";
+
 // @mui
 import { Box, Button, CardActionArea, Stack, Typography } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+
 // components
-import { MenuPopover, FileThumbnail, Label, Iconify } from "@components";
+import { FileThumbnail, Iconify, Label, MenuPopover } from "@components";
+
 //
 import FileFilterButton from "./FileFilterButton";
 

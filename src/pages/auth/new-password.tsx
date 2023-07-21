@@ -1,12 +1,15 @@
 // next
-import { SentIcon } from "@assets/icons";
-import { Iconify } from "@components";
-import { Link, Typography } from "@mui/material";
-import { PATH_AUTH } from "@routes/paths";
-import AuthNewPasswordForm from "@sections/auth/AuthNewPasswordForm";
 import Head from "next/head";
 import NextLink from "next/link";
+
+import { SentIcon } from "@assets/icons";
+
+import { Link, Typography } from "@mui/material";
+
+import { Iconify } from "@components";
 import CompactLayout from "@layouts/compact";
+import { PATH_AUTH } from "@routes/paths";
+import AuthNewPasswordForm from "@sections/auth/AuthNewPasswordForm";
 
 // ----------------------------------------------------------------------
 
@@ -20,7 +23,7 @@ export default function NewPasswordPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> New Password | Minimal UI</title>
+        <title> New Password </title>
       </Head>
 
       <SentIcon sx={{ mb: 5, height: 96 }} />

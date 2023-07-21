@@ -1,5 +1,10 @@
-import { RHFTextField, FormProvider } from "@components";
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -12,14 +17,12 @@ import {
   Grid,
   IconButton,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField } from "@components";
 import {
   useCreateLessonContentValidationMutation,
   useUpdateLessonContentValidationMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
-import * as Yup from "yup";
 
 interface FormValuesProps {
   regex: string;

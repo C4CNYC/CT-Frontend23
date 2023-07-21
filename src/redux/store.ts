@@ -1,8 +1,8 @@
 import {
   AnyAction,
-  configureStore,
   Dispatch,
   ThunkDispatch,
+  configureStore,
 } from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
@@ -10,15 +10,15 @@ import {
   useSelector as useAppSelector,
 } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
+
 import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
 import { studentApi } from "./services/student";
 import { studentAuthApi } from "./services/student-auth";
+import { studentPublicApi } from "./services/student/public-student";
 import { schoolSettingsApi } from "./services/student/school-settings-manager";
-
-// ----------------------------------------------------------------------
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -36,7 +36,8 @@ const store = configureStore({
       .concat(studentAuthApi.middleware)
       .concat(schoolSettingsApi.middleware)
       .concat(adminApi.middleware)
-      .concat(managerApi.middleware),
+      .concat(managerApi.middleware)
+      .concat(studentPublicApi.middleware),
 });
 
 const persistor = persistStore(store);

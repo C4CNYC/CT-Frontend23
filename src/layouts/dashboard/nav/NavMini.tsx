@@ -1,16 +1,31 @@
 // @mui
+import { useSelector } from "react-redux";
+
 import { Box, Stack } from "@mui/material";
-// config
-import { NAV } from "../../../config-global";
+
+import { LogoMin, NavSectionMini } from "@components";
 // utils
 import { hideScrollbarX } from "@utils";
-import { LogoMin, NavSectionMini } from "@components";
-import navConfig from "./config-navigation";
+import { Role } from "src/redux/services/enums/role.enum";
+import { RootState } from "src/redux/store";
+
+// config
+import { NAV } from "../../../config-global";
+import LetsCodeBtn from "./LetsCodeBtn";
 import NavToggleButton from "./NavToggleButton";
+import { menuConfig } from "./config-navigation";
 
 // ----------------------------------------------------------------------
+interface INavMini {
+  isManager?: boolean;
+}
 
-export default function NavMini(): React.ReactElement {
+export default function NavMini({ isManager }: INavMini): React.ReactElement {
+  const user = useSelector((state: RootState) => state.global.user);
+  const menu = isManager
+    ? menuConfig[user?.role as Role]
+    : menuConfig[Role.Student];
+
   return (
     <Box
       component="nav"
@@ -43,7 +58,8 @@ export default function NavMini(): React.ReactElement {
           }}
         />
 
-        <NavSectionMini data={navConfig} />
+        {!isManager && <LetsCodeBtn isMini />}
+        <NavSectionMini data={menu} />
       </Stack>
     </Box>
   );

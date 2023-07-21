@@ -1,46 +1,39 @@
-import { Iconify, Label } from "@components";
-import { PATH_DASHBOARD, PATH_MAIN, PATH_PAGE } from "@routes/paths";
-import FeedbackDialog from "@sections/feedback/FeedbackDialog";
-import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { AiOutlineSolution } from "react-icons/ai";
-import {
-  BsFillFileEarmarkMedicalFill,
-  BsFlagFill,
-  BsSpeedometer2,
-} from "react-icons/bs";
+import { BsFileEarmarkTextFill, BsFlagFill } from "react-icons/bs";
 import {
   FaSchool,
   FaTasks,
   FaUserFriends,
-  FaUsers,
   FaUserShield,
+  FaUsers,
 } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
 import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
-import { GrOrganization } from "react-icons/gr";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
 import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
 import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
 
+import { Iconify, Label } from "@components";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import FeedbackDialog from "@sections/feedback/FeedbackDialog";
+import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
+import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
+import { Role } from "src/redux/services/enums/role.enum";
+
 export const admin = {
   subheader: "administration",
   items: [
-    // organizations
-    {
-      title: "organization",
-      path: PATH_DASHBOARD.organization.general,
-      icon: <GrOrganization />,
-    },
     {
       title: "Members",
-      path: PATH_DASHBOARD.organization.members,
+      path: MANAGER_PATH_DASHBOARD.organization.members,
       icon: <FaUserShield />,
     },
     {
       title: "Schools",
-      path: PATH_DASHBOARD.organization.schools,
+      path: MANAGER_PATH_DASHBOARD.organization.schools,
       icon: <RiOrganizationChart />,
     },
   ],
@@ -49,30 +42,29 @@ export const admin = {
 export const managment = {
   subheader: "managment",
   items: [
-    // organizations
     {
       title: "school",
-      path: PATH_DASHBOARD.school.general,
+      path: MANAGER_PATH_DASHBOARD.school.general,
       icon: <FaSchool />,
     },
     {
       title: "students",
-      path: PATH_DASHBOARD.school.students,
+      path: MANAGER_PATH_DASHBOARD.school.students,
       icon: <FaUsers />,
     },
     {
       title: "classes",
-      path: PATH_DASHBOARD.school.classes,
+      path: MANAGER_PATH_DASHBOARD.school.classes,
       icon: <IoMdSchool />,
     },
     {
       title: "assignments",
-      path: PATH_DASHBOARD.school.assignments,
+      path: MANAGER_PATH_DASHBOARD.school.assignments,
       icon: <AiOutlineSolution />,
     },
     {
       title: "progress",
-      path: PATH_DASHBOARD.school.progress,
+      path: MANAGER_PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
     },
   ],
@@ -83,17 +75,17 @@ export const content = {
   items: [
     {
       title: "courses",
-      path: PATH_DASHBOARD.coursesMain.root,
+      path: MANAGER_PATH_DASHBOARD.courses.root,
       icon: <MdPlayLesson />,
     },
     {
       title: "modules",
-      path: PATH_DASHBOARD.modules.root,
+      path: MANAGER_PATH_DASHBOARD.modules.root,
       icon: <GoFileSubmodule />,
     },
     {
       title: "lessons",
-      path: PATH_DASHBOARD.lessons.root,
+      path: MANAGER_PATH_DASHBOARD.lessons.root,
       icon: <MdPlayLesson />,
     },
     {
@@ -104,48 +96,56 @@ export const content = {
     },
     {
       title: "integrations",
-      path: PATH_DASHBOARD.apps.root,
+      path: MANAGER_PATH_DASHBOARD.apps.root,
       icon: <FiSettings />,
     },
     {
       title: "skills",
-      path: PATH_DASHBOARD.skills.root,
+      path: MANAGER_PATH_DASHBOARD.skills.root,
       icon: <Iconify icon="ion:bulb" />,
     },
   ],
 };
 
-export const general = {
-  subheader: "GENERAL",
+export const courses = {
+  subheader: "",
   items: [
     {
-      title: "HOME",
-      path: PATH_DASHBOARD.home,
-      icon: <BsSpeedometer2 size={20} />,
-    },
-    {
-      title: "COURSES",
-      path: PATH_DASHBOARD.courses.root,
-      icon: <BsFillFileEarmarkMedicalFill size={20} />,
+      title: "Catalog",
+      path: STUDENT_PATH_DASHBOARD.courses.root,
+      icon: <BsFileEarmarkTextFill size={20} />,
     },
   ],
 };
+
+export const general = {
+  subheader: "Tribes",
+  items: [
+    {
+      path: "",
+      title: "",
+      icon: <FaUserFriends size={20} />,
+      component: () => <MenuTribesList />,
+    },
+    {
+      title: "Tribes",
+      path: STUDENT_PATH_DASHBOARD.tribes.root,
+      icon: <Tb3DCubeSphere size={20} />,
+    },
+  ],
+};
+
 export const social = {
   subheader: "SOCIAL",
   items: [
     {
-      title: "Tribes",
-      path: PATH_DASHBOARD.tribes.root,
-      icon: <Tb3DCubeSphere size={20} />,
-    },
-    {
       title: "Friends",
-      path: PATH_DASHBOARD.friends.root,
+      path: STUDENT_PATH_DASHBOARD.friends.root,
       icon: <FaUserFriends size={20} />,
     },
     {
       title: "Gallery",
-      path: PATH_DASHBOARD.gallery.root,
+      path: STUDENT_PATH_DASHBOARD.gallery.root,
       icon: <TbPhoto size={20} />,
     },
   ],
@@ -155,7 +155,7 @@ export const apps = {
   items: [
     {
       title: "Goals",
-      path: PATH_DASHBOARD.goals,
+      path: STUDENT_PATH_DASHBOARD.goals,
       disabled: true,
       icon: <BsFlagFill size={20} />,
     },
@@ -183,5 +183,10 @@ export const socials = {
   ],
 };
 
-const navConfig = [admin, managment, general, social, apps, socials];
-export default navConfig;
+export const menuConfig = {
+  [Role.Owner]: [admin, managment, content],
+  [Role.Admin]: [admin, managment, content],
+  [Role.Student]: [courses, general, apps, social, socials],
+  [Role.Manager]: [managment, content],
+  [Role.Editor]: [content],
+};

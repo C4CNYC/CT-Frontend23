@@ -13,10 +13,11 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+
+// components
+import { Image, Label, Scrollbar, TableHeadCustom } from "@components";
 // utils
 import { fCurrency } from "@utils";
-// components
-import { TableHeadCustom, Image, Scrollbar, Label } from "@components";
 
 // ----------------------------------------------------------------------
 

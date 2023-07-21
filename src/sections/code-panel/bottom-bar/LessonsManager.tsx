@@ -1,9 +1,9 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Iconify,
-} from "@components";
+import { useRouter } from "next/router";
+import { useContext, useState } from "react";
+
+import { useAtom } from "jotai";
+import { IoMdClose } from "react-icons/io";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
@@ -19,13 +19,17 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
-import { useAtom } from "jotai";
-import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import { IoMdClose } from "react-icons/io";
+
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Iconify,
+} from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
 import { useGetPublicCourseContentQuery } from "src/redux/services/student/public-student";
+
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { CodePanelContext } from "../context/CodePanel.context";
 import SkeletonDrawer from "./SkeletonDrawer";
@@ -60,7 +64,7 @@ const LessonManager = (): React.ReactElement => {
     }));
     if (publicPage) {
       push(
-        `${PATH_DASHBOARD.publicCodePanel.workSpace(
+        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
           id as string
         )}?${new URLSearchParams({
           unitId: moduleId,
@@ -72,7 +76,9 @@ const LessonManager = (): React.ReactElement => {
       );
     } else {
       push(
-        `${PATH_DASHBOARD.codePanel.workSpace(id as string)}?${new URLSearchParams({
+        `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+          id as string
+        )}?${new URLSearchParams({
           unitId: moduleId,
         })}&${new URLSearchParams({
           lessonId,

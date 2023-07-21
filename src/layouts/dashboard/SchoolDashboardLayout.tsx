@@ -1,13 +1,17 @@
-import { MotionContainer, varBounce } from "@components";
-import { Button, Typography } from "@mui/material";
-import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
-import { m } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect } from "react";
+
+import { m } from "framer-motion";
+
+import { Button, Typography } from "@mui/material";
+
+import { MotionContainer, varBounce } from "@components";
+import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { setSchool } from "src/redux/slices/manager";
-import { dispatch, RootState, useSelector } from "src/redux/store";
+import { RootState, dispatch, useSelector } from "src/redux/store";
+
 import CompactLayout from "../compact";
 import DashboardLayout from "./DashboardLayout";
 
@@ -15,7 +19,7 @@ interface Props {
   children: React.ReactElement;
   isFullScreen?: boolean;
 }
-export default function SchoolDashboardLayout({
+export function SchoolDashboardLayout({
   children,
   isFullScreen,
 }: Props): React.ReactElement | null {

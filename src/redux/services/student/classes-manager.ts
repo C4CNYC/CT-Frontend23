@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ClassSearchParams,
   IClass,
   IMentor,
 } from "src/redux/interfaces/class.interface";
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@utils";
+
 import { studentApi } from ".";
 
 const extendedApi = studentApi.injectEndpoints({

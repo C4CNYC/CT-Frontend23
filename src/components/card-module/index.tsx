@@ -1,16 +1,19 @@
 // mui
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/system/Stack";
-// icons
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { PATH_DASHBOARD } from "@routes/paths";
-import _ from "lodash";
 import Image from "next/image";
 import Link from "next/link";
+
+import _ from "lodash";
 import { CgMenuMotion } from "react-icons/cg";
 import { FcInfo } from "react-icons/fc";
 import { MdAddCircleOutline, MdEdit } from "react-icons/md";
+
+// icons
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/system/Stack";
+
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { CardTypes } from "src/redux/services/enums/card-types.enum";
 
 interface Props {
@@ -21,10 +24,10 @@ interface Props {
 export function CardModule({ type, image }: Props): React.ReactElement {
   const link =
     type === CardTypes.lesson
-      ? PATH_DASHBOARD.lessons.root
+      ? MANAGER_PATH_DASHBOARD.lessons.root
       : type === CardTypes.course
-      ? PATH_DASHBOARD.courses.root
-      : PATH_DASHBOARD.modules.root;
+      ? MANAGER_PATH_DASHBOARD.courses.root
+      : MANAGER_PATH_DASHBOARD.modules.root;
   return (
     <>
       <Card

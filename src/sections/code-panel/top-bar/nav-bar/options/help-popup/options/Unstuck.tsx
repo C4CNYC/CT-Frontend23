@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+
 import FullCodeSolutionModal from "../modals/FullCodeSolution";
 
 const Unstuck = (): React.ReactElement => {

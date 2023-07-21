@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { LogoMin } from "./LogoMin";
 
 const Component: Meta<typeof LogoMin> = {

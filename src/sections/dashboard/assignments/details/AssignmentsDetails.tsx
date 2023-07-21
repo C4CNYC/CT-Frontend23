@@ -1,13 +1,17 @@
-import { CustomSmallSelect, Scrollbar } from "@components";
+import * as React from "react";
+import { useRef } from "react";
+
+import _ from "lodash";
+import { useSnackbar } from "notistack";
+
 import { Divider, Drawer, Stack, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { DateTimePicker } from "@mui/x-date-pickers";
-import _ from "lodash";
-import { useSnackbar } from "notistack";
-import * as React from "react";
-import { useRef } from "react";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+
+import { CustomSmallSelect, Scrollbar } from "@components";
 import { convertDuration } from "@utils";
+import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+
 import { IAssignmentsCard } from "../../../../@types/assignments";
 import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
 import {

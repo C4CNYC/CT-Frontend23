@@ -1,5 +1,7 @@
-import { Scrollbar } from "@components";
-import { useFilters } from "@hooks";
+import React from "react";
+
+import { useSnackbar } from "notistack";
+
 import {
   Button,
   Dialog,
@@ -11,14 +13,16 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
-import React from "react";
+
+import { Scrollbar } from "@components";
+import { useFilters } from "@hooks";
 import {
   useCreateOrgMemberMutation,
   useGetOrgMembersQuery,
 } from "src/redux/services/admin/members-admin";
 import { useAddTeacherMutation } from "src/redux/services/admin/school-amdin";
 import { Role } from "src/redux/services/enums/role.enum";
+
 import UserItem from "./UserItem";
 
 // ----------------------------------------------------------------------
@@ -65,14 +69,13 @@ export default function InviteTeacherDialog({
         email: filters.email,
         role: Role.Manager,
         first_name: "",
-        last_name: ""
+        last_name: "",
       }).unwrap();
       enqueueSnackbar("Invite sent");
       await addUserToSchool(user.id, schoolId);
       setFilter("email", "");
       onClose();
-    } catch (e: any
-      ) {
+    } catch (e: any) {
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
   };

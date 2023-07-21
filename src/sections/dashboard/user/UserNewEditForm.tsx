@@ -1,27 +1,29 @@
-import { useCallback, useEffect, useMemo } from "react";
-import * as Yup from "yup";
 // next
 import { useRouter } from "next/router";
+import { useCallback, useEffect, useMemo } from "react";
+
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 // @mui
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
-// utils
-import { fData, BaseResponseInterface } from "@utils";
-// routes
-import { PATH_DASHBOARD } from "@routes/paths";
+
 // components
 import {
+  FormProvider,
+  Label,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
-  Label,
   useSnackbar,
-  FormProvider,
 } from "@components";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+// utils
+import { BaseResponseInterface, fData } from "@utils";
 import {
   useCreateOrgMemberMutation,
   useUdpateMemberAvatarMutation,
@@ -133,7 +135,7 @@ export default function UserNewEditForm({
         await updateAvatar(user.id, photoURL);
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      push(PATH_DASHBOARD.organization.members);
+      push(MANAGER_PATH_DASHBOARD.organization.members);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",

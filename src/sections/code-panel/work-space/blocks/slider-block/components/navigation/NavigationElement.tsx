@@ -1,5 +1,6 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Button } from "@mui/material";
+
 import { BtnType } from ".";
 
 interface INavigationElement {

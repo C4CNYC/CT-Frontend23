@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { io } from "socket.io-client";
-import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
-import { BaseResponseInterface } from "@utils";
-import { mapValidations } from "src/utils/validationMaping";
-import BaseBlock from "../BaseBlock";
-
 import { useRouter } from "next/router";
-import { useAuthContext } from "src/auth/useAuthContext";
+import React, { useState } from "react";
 
-import Checkers from "./code-checkers";
+import { io } from "socket.io-client";
+
 import { RealTimeCodeEditor } from "@components";
+import { BaseResponseInterface } from "@utils";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
+import { mapValidations } from "src/utils/validationMaping";
+
+import BaseBlock from "../BaseBlock";
+import Checkers from "./code-checkers";
 
 const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 

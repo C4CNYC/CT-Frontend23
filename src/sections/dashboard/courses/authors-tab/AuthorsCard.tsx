@@ -1,4 +1,9 @@
-import { SvgColor } from "@components";
+import NextLink from "next/link";
+import { useState } from "react";
+
+import { useSnackbar } from "notistack";
+import { RxLinkedinLogo } from "react-icons/rx";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
@@ -11,15 +16,14 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import NextLink from "next/link";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
-import { RxLinkedinLogo } from "react-icons/rx";
+
+import { SvgColor } from "@components";
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
 import {
   useAddAuthorToCourseMutation,
   useDeleteAuthorMutation,
 } from "src/redux/services/manager/author-manager";
+
 import AuthorForm from "./AuthorForm";
 
 interface Props {

@@ -1,4 +1,6 @@
-import { useSnackbar, Iconify, TextMaxLine, MenuPopover, ConfirmDialog } from "@components";
+import { useRouter } from "next/router";
+import { useState } from "react";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -9,11 +11,18 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
+import {
+  ConfirmDialog,
+  Iconify,
+  MenuPopover,
+  TextMaxLine,
+  useSnackbar,
+} from "@components";
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "@utils";
+import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+
 import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
 
 // ----------------------------------------------------------------------

@@ -1,5 +1,7 @@
-import { MyEditor } from "@components";
 import { useState } from "react";
+
+import { MyEditor } from "@components";
+
 interface Props {
   content: string;
   onSubmit: (value: string) => void;

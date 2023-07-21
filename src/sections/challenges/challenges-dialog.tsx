@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TerminalIcon from "@mui/icons-material/Terminal";
@@ -17,8 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { useRouter } from "next/router";
-import { useState } from "react";
+
 import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
 
 interface Props {

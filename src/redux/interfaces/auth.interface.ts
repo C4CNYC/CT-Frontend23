@@ -1,5 +1,7 @@
 import { BaseResponseInterface } from "@utils";
+
 import { Role } from "../services/enums/role.enum";
+import { IStudent } from "../services/interfaces/user.interface";
 import { ISchool } from "../slices/global";
 import { IClass } from "./class.interface";
 import { ISocials } from "./socials.interface";
@@ -14,6 +16,8 @@ export interface User extends BaseResponseInterface {
   school?: ISchool;
   cover?: string;
   role: Role;
+  city?: string | null;
+  username?: string | null;
 }
 
 export interface UserResponse {
@@ -68,4 +72,6 @@ export interface IUser {
   post_code?: string;
   cover?: string;
   role: Role;
+  student_profile: IStudent & BaseResponseInterface;
+  city?: string | null;
 }

@@ -1,10 +1,13 @@
-import { MenuPopover } from "@components";
-import { Box, Divider, Link, List, ListItem, Typography } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
-import Hamburger from "hamburger-react";
 import { SetStateAction, useState } from "react";
+
+import Hamburger from "hamburger-react";
 import { FaUsers } from "react-icons/fa";
 import { IoMdSchool } from "react-icons/io";
+
+import { Box, Divider, Link, List, ListItem, Typography } from "@mui/material";
+
+import { MenuPopover } from "@components";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
 export const TopBarMenu = (): React.ReactElement => {
   const [openPopover, setOpenPopover] = useState(null);
@@ -34,7 +37,7 @@ export const TopBarMenu = (): React.ReactElement => {
       >
         <List>
           <Link
-            href={PATH_DASHBOARD.school.students}
+            href={MANAGER_PATH_DASHBOARD.school.students}
             sx={{
               color: "#637381",
               "&:hover": { color: "#333", textDecoration: "none" },
@@ -49,7 +52,7 @@ export const TopBarMenu = (): React.ReactElement => {
           </Link>
           <Divider />
           <Link
-            href={PATH_DASHBOARD.school.classes}
+            href={MANAGER_PATH_DASHBOARD.school.classes}
             sx={{
               color: "#637381",
               "&:hover": { color: "#333", textDecoration: "none" },

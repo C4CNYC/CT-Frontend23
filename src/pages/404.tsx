@@ -1,12 +1,14 @@
-import { m } from "framer-motion";
-// next
-import { PageNotFoundIllustration } from "@assets/illustrations";
-import { MotionContainer, varBounce } from "@components";
-import CompactLayout from "@layouts/compact";
-import { Box, Button, Typography } from "@mui/material";
-import { PATH_DASHBOARD } from "@routes/paths";
 import Head from "next/head";
 import NextLink from "next/link";
+
+import { PageNotFoundIllustration } from "@assets/illustrations";
+import { m } from "framer-motion";
+
+import { Box, Button, Typography } from "@mui/material";
+
+import { MotionContainer, varBounce } from "@components";
+import CompactLayout from "@layouts/compact";
+import { PATH_DASHBOARD } from "@routes/paths";
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +49,7 @@ export default function Page404(): React.ReactElement {
           <Box display="flex" flexDirection="row">
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.home}
+              href={PATH_DASHBOARD.root}
               size="large"
               variant="contained"
               fullWidth

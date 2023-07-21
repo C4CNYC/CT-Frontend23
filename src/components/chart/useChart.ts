@@ -1,7 +1,8 @@
-import { ApexOptions } from "apexcharts";
-import merge from "lodash/merge";
 // @mui
 import { Theme } from "@emotion/react";
+import { ApexOptions } from "apexcharts";
+import merge from "lodash/merge";
+
 import { alpha, useTheme } from "@mui/material/styles";
 
 // ----------------------------------------------------------------------

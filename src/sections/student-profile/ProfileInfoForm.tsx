@@ -1,25 +1,29 @@
-import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
+import { useCallback } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { MuiColorInput } from "mui-color-input";
+import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
+import { useSnackbar } from "notistack";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack } from "@mui/material";
-import { MuiColorInput } from "mui-color-input";
-import { matchIsValidTel, MuiTelInput } from "mui-tel-input";
-import { useSnackbar } from "notistack";
-import { useCallback } from "react";
-import { Controller, useForm } from "react-hook-form";
+
+import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
-  useUdpateProfileAvatarMutation,
-  useUpdateProfileMutation,
+  useUdpateStudentProfileAvatarMutation,
+  useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
-import * as Yup from "yup";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "@utils";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
   lastName: Yup.string(),
   about: Yup.string(),
-  username: Yup.string(),
   phone: Yup.string(),
   postcode: Yup.string(),
   cover: Yup.string(),
@@ -28,18 +32,16 @@ const UpdateUserSchema = Yup.object().shape({
 interface FormValuesProps {
   firstName: string;
   lastName: string;
-  email: string;
   address: string;
   about: string;
   phone: string;
-  username: string;
   postcode: string;
   cover: string;
   photoURL: File | null;
 }
 
 interface Props {
-  data: IUser;
+  data: (IUser | IStudent) & BaseResponseInterface;
 }
 
 export default function ProfileInfoForm({
@@ -49,24 +51,20 @@ export default function ProfileInfoForm({
     first_name: firstName,
     last_name: lastName,
     post_code: postcode,
-    email,
     about,
-    phone,
-    username,
+    phone
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
-  const [updateStudent, { isLoading }] = useUpdateProfileMutation();
-  const [updateStudentvatar] = useUdpateProfileAvatarMutation();
+  const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation();
+  const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation();
   const defaultValues = {
     firstName,
     lastName,
     about,
     phone,
     postcode,
-    username,
     cover,
-    email,
   };
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateUserSchema),
@@ -85,19 +83,19 @@ export default function ProfileInfoForm({
         post_code: data.postcode,
         cover: data.cover,
       }).unwrap();
-      if (username !== data.username) {
-        updateStudent({ username: data.username })
-          .unwrap()
-          .catch((error) => {
-            enqueueSnackbar(error?.data?.message, {
-              variant: "error",
-            });
-          });
-      }
+      // if (username !== data.username) {
+      //   updateStudent({ username: data.username })
+      //     .unwrap()
+      //     .catch((error) => {
+      //       enqueueSnackbar(error?.data?.message, {
+      //         variant: "error",
+      //       });
+      //     });
+      // }
       if (data.photoURL) {
         const file = new FormData();
         file.append("file", data.photoURL);
-        updateStudentvatar({
+        updateStudentAvatar({
           file,
         })
           .unwrap()
@@ -179,11 +177,10 @@ export default function ProfileInfoForm({
               >
                 <RHFTextField name="firstName" label="Name" />
                 <RHFTextField name="lastName" label="Last name" />
-                <RHFTextField name="username" label="username" />
+                {/* <RHFTextField name="username" label="username" /> */}
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
-              <RHFTextField name="email" label="email" disabled />
               <RHFTextField name="postcode" label="postcode" />
               <Controller
                 name="phone"

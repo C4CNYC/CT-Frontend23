@@ -1,5 +1,7 @@
 import { BaseSearchInterface } from "@utils";
+
 import { ISocials } from "./socials.interface";
+
 export interface IFriend {
   id: string;
   email: string;
@@ -21,4 +23,5 @@ export interface IFriend {
 }
 export interface IFriendsSearchParams extends BaseSearchInterface {
   name?: string;
+  class_id?: string;
 }

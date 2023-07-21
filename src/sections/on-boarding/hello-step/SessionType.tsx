@@ -1,4 +1,3 @@
-import { Image } from "@components";
 import {
   Badge,
   Box,
@@ -8,6 +7,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
+import { Image } from "@components";
 
 interface Props {
   title: string;
@@ -56,7 +57,7 @@ export function SessionType({
               height: "100px",
             }}
           >
-            <Image src={img} alt="hello step"/>
+            <Image src={img} alt="hello step" />
           </Box>
         </Badge>
       </Tooltip>

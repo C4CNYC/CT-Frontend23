@@ -1,22 +1,25 @@
 /* eslint-disable no-new */
-import { BaseResponseInterface } from "@utils";
-import { Box, Collapse, useMediaQuery } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
-import { IValidation } from "src/redux/interfaces/content.interface";
-import { mapValidations } from "src/utils/validationMaping";
-import BaseBlock from "../BaseBlock";
-import Checkers from "./checkers-code-editor";
 
-import { CodingSymbols, CodingTools } from "./CodingControls";
-
-import { RealTimeEditor } from "@components";
-import { useTheme } from "@mui/material/styles";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import BrowserTab from "@sections/code-panel/top-bar/nav-bar/options/BrowserTab";
 import { useAtom } from "jotai";
 import { BiCodeAlt } from "react-icons/bi";
+
+import { Box, Collapse, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+import { RealTimeEditor } from "@components";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+import BrowserTab from "@sections/code-panel/top-bar/nav-bar/options/BrowserTab";
+import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
+import { CodeEditor } from "src/components/real-time-editor/editor";
+import { IValidation } from "src/redux/interfaces/content.interface";
+import { mapValidations } from "src/utils/validationMaping";
+
+import BaseBlock from "../BaseBlock";
+import { CodingSymbols, CodingTools } from "./CodingControls";
 import MumuSpeedDial from "./MumuSpeedDial";
+import Checkers from "./checkers-code-editor";
 
 const TYPING_DELEY = 20000;
 const FIRST_LOADING_DELEY = 15000;
@@ -123,7 +126,13 @@ const CodeEditorBlock = ({
           userId={user?.id}
           code={code}
         />
-      ) : null}
+      ) : (
+        <CodeEditor
+          code={code}
+          onChangeCode={onChangeCode}
+          preloadedCode={preloadedCode}
+        />
+      )}
       <Box sx={{ display: isDesktop ? "none" : "block" }}>
         <Collapse in={codingSymbols} timeout={!codingSymbols ? 0 : 1000}>
           <CodingSymbols symbolsHandler={symbolsHandler} />

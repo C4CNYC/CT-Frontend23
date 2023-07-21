@@ -1,4 +1,5 @@
 import type { Meta } from "@storybook/react";
+
 import { Iconify } from "./Iconify";
 
 const Component: Meta<typeof Iconify> = {
@@ -11,6 +12,6 @@ export default Component;
 export const Default = {
   args: {
     icon: "devicon-plain:materialui",
-    width: 40
+    width: 40,
   },
 };

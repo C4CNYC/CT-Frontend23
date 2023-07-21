@@ -1,12 +1,15 @@
-import merge from "lodash/merge";
 import { useMemo } from "react";
+
+import merge from "lodash/merge";
+
 // @mui
 import {
+  ThemeProvider,
   alpha,
   createTheme,
-  ThemeProvider,
   useTheme,
 } from "@mui/material/styles";
+
 //
 import { useSettingsContext } from "./SettingsContext";
 

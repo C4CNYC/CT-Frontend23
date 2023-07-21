@@ -1,6 +1,8 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+
 import { BaseResponseInterface } from "@utils";
+
 import { IUser } from "../interfaces/auth.interface";
 import { OrganizationResponce } from "../services/interfaces/organization.interface";
 
@@ -8,7 +10,7 @@ export interface CounterState {
   org_id: string;
   organizations: OrganizationResponce[];
   user: IUser | null;
-  isStudent: boolean;
+  isStudent: boolean | null;
 }
 
 export interface ISchool extends BaseResponseInterface {
@@ -42,11 +44,11 @@ export const globalSlice = createSlice({
     cleanUser: (state, action: PayloadAction<undefined>) => {
       state.user = null;
     },
-    setUserRole: (state, action: PayloadAction<boolean>) => {
+    setStudentMode: (state, action: PayloadAction<boolean>) => {
       state.isStudent = action.payload;
     },
     cleanUserRole: (state, action: PayloadAction<undefined>) => {
-      state.isStudent = true;
+      state.isStudent = null;
     },
   },
 });
@@ -56,7 +58,7 @@ export const {
   setOrganization,
   setOrganizationList,
   cleanUser,
-  setUserRole,
+  setStudentMode,
   cleanUserRole,
 } = globalSlice.actions;
 

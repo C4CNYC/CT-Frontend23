@@ -1,5 +1,6 @@
-import { IconButton } from "@mui/material";
 import { HiDesktopComputer } from "react-icons/hi";
+
+import { IconButton } from "@mui/material";
 
 interface ViewToomblerProps {
   allColumnsVisible: boolean;

@@ -1,9 +1,12 @@
-import { Box, Button, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import { PATH_DASHBOARD } from "@routes/paths";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
 import { AiOutlineClockCircle } from "react-icons/ai";
+
+import { Box, Button, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 
 interface Props {
@@ -120,7 +123,7 @@ export default function TrainingsItem({
           </Typography>
           <Button
             component={Link}
-            href={`${PATH_DASHBOARD.codePanel.workSpace(
+            href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
               courseId as string
             )}?${unitId}&${lesson.id}`}
             variant="outlined"

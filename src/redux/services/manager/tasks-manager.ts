@@ -1,7 +1,5 @@
-import {
-  BaseListResponseInterface,
-  BaseResponseInterface,
-} from "@utils";
+import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
+
 import { managerApi } from ".";
 import {
   ITask,
@@ -9,6 +7,7 @@ import {
   ITaskDelete,
   ITaskSearchParams,
 } from "../interfaces/task.interface";
+
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getTasks: builder.query<

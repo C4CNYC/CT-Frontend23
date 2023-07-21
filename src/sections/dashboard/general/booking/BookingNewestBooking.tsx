@@ -1,5 +1,7 @@
 import { useRef } from "react";
+
 import Carousel from "react-slick";
+
 // @mui
 import {
   Avatar,
@@ -11,10 +13,11 @@ import {
   Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
+// components
+import { CarouselArrows, Iconify, Image, Label } from "@components";
 // utils
 import { fDateTime } from "@utils";
-// components
-import { CarouselArrows, Label, Iconify, Image } from "@components";
 
 // ----------------------------------------------------------------------
 
