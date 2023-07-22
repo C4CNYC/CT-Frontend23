@@ -1,7 +1,7 @@
 import { BaseSearchInterface } from "@utils";
 
+import { IStudent } from "../services/interfaces/user.interface";
 import { ISchool } from "../slices/global";
-import { User } from "./auth.interface";
 import { ICourseElement } from "./content.interface";
 
 export interface IClass {
@@ -10,8 +10,8 @@ export interface IClass {
   description?: string;
   name: string;
   active?: boolean;
-  students?: User[];
-  school?: ISchool;
+  students?: IStudent[];
+  school: ISchool;
   courses?: ICourseElement[];
   avatar?: string;
   cover?: string;

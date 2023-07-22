@@ -45,6 +45,7 @@ export default function QuestsTable({ data }: Props) {
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
+
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack direction="row" alignItems="center" pb={2}>
@@ -148,7 +149,7 @@ export default function QuestsTable({ data }: Props) {
             Assign Open Project
           </MenuItem>
         </RoleBasedGuard>
-        <AddQuestModal>
+        <AddQuestModal data={data}>
           <MenuItem>
             <SiGoogleclassroom size="20px" />
             Assign Course or Section

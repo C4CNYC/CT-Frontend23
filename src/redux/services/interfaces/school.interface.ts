@@ -6,6 +6,7 @@ export interface ISchool extends BaseResponseInterface {
   avatar: string;
   cover: string;
   country: string;
+  id: string;
 }
 
 export interface ISchoolSearchParams extends BaseSearchInterface {

@@ -1,4 +1,7 @@
+import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
+import { ISkill } from "src/redux/interfaces/content.interface";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 
 import { AssignmentComplexity } from "../enums/assignment-complexity.enum";
 import { AssignmentStatuses } from "../enums/assignment-status.enum";
@@ -7,21 +10,26 @@ import { ILesson } from "./courseUnits.interface";
 import { ITask } from "./task.interface";
 
 export interface IAssignment {
+  id: string;
   createdAt: string;
   updatedAt: string;
   name: string;
+  course: ICourse;
   description: string;
-  type: string;
+  type: AssignmentTypes;
   status: AssignmentStatuses;
   active: boolean;
   start_date: string;
   end_date: string;
+  close_date: string;
   complexity: AssignmentComplexity;
   duration?: { hours: string; minutes: string };
   assignee_classes: Array<IClass & BaseResponseInterface>;
   lesson: ILesson & BaseResponseInterface;
   code_assignment: ITask & BaseResponseInterface;
-  meta: Record<string, number | string>;
+  skills?: ISkill[];
+  students?: string[];
+  meta: Record<string, any>;
 }
 
 export interface IAssignmentUpdate {
@@ -34,18 +42,23 @@ export interface IAssignmentUpdate {
   active?: boolean;
   start_date?: string;
   end_date?: string;
+  close_date?: string;
   complexity?: AssignmentComplexity;
   duration?: string;
   meta?: Record<string, number | string>;
+  skills?: ISkill[] | [];
 }
 
 export interface IAssignmentCreate {
-  createdAt?: string;
-  updatedAt?: string;
-  name?: string;
+  name: string;
   description?: string;
   type?: string;
-  start_date?: string;
-  end_date?: string;
+  start_date: string;
+  end_date: string;
+  close_date: string;
+  classes?: string[];
+  students?: string[];
+  active: boolean;
   meta?: Record<string, unknown>;
+  skills?: ISkill[] | [];
 }

@@ -43,7 +43,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Assignments"],
     }),
-    udpateAssignment: builder.mutation<
+    updateAssignment: builder.mutation<
       void,
       {
         assignmentId: string;
@@ -57,7 +57,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Assignments", "Assignment"],
     }),
-    udpateLessonAssignment: builder.mutation<
+    updateLessonAssignment: builder.mutation<
       void,
       {
         assignmentId: string;
@@ -72,7 +72,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Assignment"],
     }),
-    udpateTaskAssignment: builder.mutation<
+    updateTaskAssignment: builder.mutation<
       void,
       {
         assignmentId: string;
@@ -87,7 +87,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Assignment"],
     }),
-    udpateClassAssignment: builder.mutation<
+    updateClassAssignment: builder.mutation<
       void,
       {
         assignmentId: string;
@@ -117,6 +117,96 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Assignment"],
     }),
+    udpateStudentAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        student_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/student`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    removeStudentAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        student_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/class`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    updateCourseAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        course_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/course`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    removeCourseAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        course_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/course`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    updateSkillAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        skill_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/skill`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
+    removeSkillAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+        schoolId: string;
+        skill_id: string;
+      }
+    >({
+      query: ({ schoolId, assignmentId, ...body }) => ({
+        url: `/school/${schoolId}/assignment/${assignmentId}/skill`,
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["Assignment"],
+    }),
     deleteAssignment: builder.mutation<
       void,
       { schoolId: string; assignmentId: string }
@@ -136,10 +226,16 @@ export const {
   useGetAssignmentQuery,
   // -------------mutation-----------
   useRemoveClassAssignmentMutation,
-  useUdpateClassAssignmentMutation,
-  useUdpateLessonAssignmentMutation,
-  useUdpateTaskAssignmentMutation,
+  useUpdateClassAssignmentMutation,
+  useUpdateLessonAssignmentMutation,
+  useUpdateTaskAssignmentMutation,
   useCreateAssignmentMutation,
+  useUdpateStudentAssignmentMutation,
+  useRemoveStudentAssignmentMutation,
+  useUpdateCourseAssignmentMutation,
+  useRemoveCourseAssignmentMutation,
+  useUpdateSkillAssignmentMutation,
+  useRemoveSkillAssignmentMutation,
   useDeleteAssignmentMutation,
-  useUdpateAssignmentMutation,
+  useUpdateAssignmentMutation,
 } = extendedApi;

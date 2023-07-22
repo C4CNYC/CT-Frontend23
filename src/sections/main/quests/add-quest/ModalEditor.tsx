@@ -16,7 +16,7 @@ import { Button } from "@mui/material";
 import { Stack, styled } from "@mui/system";
 
 interface Props {
-  editorValue: string;
+  editorValue?: string;
   setEditorValue: (value: string) => void;
 }
 
@@ -53,7 +53,7 @@ const Menu = () => {
 };
 
 export default function ModalEditor({
-  editorValue,
+  editorValue = "",
   setEditorValue,
 }: Props): React.ReactElement {
   const { manager, state } = useRemirror({

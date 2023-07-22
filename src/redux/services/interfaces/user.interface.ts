@@ -37,6 +37,7 @@ export interface StudentSearchParams extends BaseSearchInterface {
 }
 
 export interface IStudent {
+  id: string;
   email: string;
   first_name: string;
   last_name: string;
@@ -53,6 +54,7 @@ export interface IStudent {
   avatar: string;
   cover: string;
   account: IUser;
+  username?: string | null;
   socials: ISocials[];
 }
 

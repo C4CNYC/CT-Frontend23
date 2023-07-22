@@ -34,6 +34,7 @@ import {
   useSettingsContext,
   useTable,
 } from "@components";
+import { FilterMode, useFilters } from "@hooks";
 import { SchoolDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import AssignmentsTableRow from "@sections/dashboard/assignments/assignments-table/AssignmentsTableRow";
@@ -44,6 +45,11 @@ import _mock from "src/_mock/_mock";
 import { _invoices } from "src/_mock/arrays";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
 import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { ISchoolSearchParams } from "src/redux/services/interfaces/school.interface";
+import { useGetAssignmentListQuery } from "src/redux/services/manager/assignments-manager";
+import { useSelector } from "src/redux/store";
+
+import FilterAssignments from "./filter";
 
 const TYPE_OPTIONS = ["all", "course"];
 
@@ -94,21 +100,19 @@ export default function AsssignmentsListPage() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: "createDate" });
-
+  const [schoolId, setSchoolId] = useState<string | undefined>();
   const [tableData, setTableData] = useState(_tableData);
-
   const [filterName, setFilterName] = useState("");
-
   const [openConfirm, setOpenConfirm] = useState(false);
-
   const [filterStatus, setFilterStatus] = useState("all");
-
   const [filterType, setFilterType] = useState("all");
-
   const [filterEndDate, setFilterEndDate] = useState<Date | null>(null);
-
   const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
-
+  const { data, isLoading } = useGetAssignmentListQuery(
+    { schoolId: schoolId as string },
+    { skip: !schoolId }
+  );
+  console.log(data, schoolId);
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(order, orderBy),
@@ -278,16 +282,8 @@ export default function AsssignmentsListPage() {
               name: "List",
             },
           ]}
-          action={
-            <Button
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-            >
-              New Assignments
-            </Button>
-          }
         />
-
+        <FilterAssignments setSchoolId={setSchoolId} />
         <Card>
           <Tabs
             value={filterStatus}

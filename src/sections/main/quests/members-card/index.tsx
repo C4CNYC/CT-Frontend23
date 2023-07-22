@@ -32,6 +32,7 @@ import { PATH_DASHBOARD } from "@routes/paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { _userList } from "src/_mock/arrays";
 import { User } from "src/redux/interfaces/auth.interface";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 import MemberRow from "./MemberRow";
 
@@ -47,11 +48,10 @@ const TABLE_HEAD = [
 ];
 
 interface Props {
-  members: User[] | [];
+  members: IStudent[] | [];
 }
 
 export default function MemberCard({ members }: Props) {
-  console.log(members);
   const {
     dense,
     page,
@@ -311,7 +311,7 @@ function applyFilter({
   comparator,
   filterName,
 }: {
-  inputData: User[];
+  inputData: IStudent[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {
