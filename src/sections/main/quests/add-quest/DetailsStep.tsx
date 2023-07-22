@@ -27,7 +27,7 @@ export default function DetailsStep({
   };
 
   return (
-    <Stack sx={{ gap: 4, px: { md: 10 }, minHeight: "675px" }}>
+    <Stack sx={{ gap: 4, px: { md: 10 }, minHeight: "685px" }}>
       <Stack direction="row" gap={3} flexWrap="wrap">
         <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
           <Typography variant="h5" gutterBottom pl={2}>

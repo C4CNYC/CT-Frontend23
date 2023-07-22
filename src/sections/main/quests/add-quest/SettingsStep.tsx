@@ -39,7 +39,7 @@ export default function SettingsStep({
     setValue((event.target as HTMLInputElement).value);
   };
   return (
-    <Stack sx={{ gap: 2, px: 10, minHeight: "675px" }}>
+    <Stack sx={{ gap: 2, px: 10, minHeight: "685px" }}>
       <Stack direction="row" gap={4}>
         <TimeController
           title="Schedule Date:"

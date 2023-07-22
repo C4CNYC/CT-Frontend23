@@ -128,7 +128,7 @@ export default function QuestsTable({ data }: Props) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab />
+        <QuestsTab schoolId={data.school.id} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MemberCard members={data?.students ?? []} />

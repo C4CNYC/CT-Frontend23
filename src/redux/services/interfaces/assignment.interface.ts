@@ -45,7 +45,7 @@ export interface IAssignmentUpdate {
   close_date?: string;
   complexity?: AssignmentComplexity;
   duration?: string;
-  meta?: Record<string, number | string>;
+  meta?: Record<string, any>;
   skills?: ISkill[] | [];
 }
 
@@ -59,6 +59,6 @@ export interface IAssignmentCreate {
   classes?: string[];
   students?: string[];
   active: boolean;
-  meta?: Record<string, unknown>;
+  meta?: Record<string, any>;
   skills?: ISkill[] | [];
 }
