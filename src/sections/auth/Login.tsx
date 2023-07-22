@@ -1,3 +1,5 @@
+import { useGoogleLogin } from "@react-oauth/google";
+
 import { Logo } from "@components";
 import {
   Box,
@@ -17,12 +19,28 @@ import { FcGoogle } from "react-icons/fc";
 import { GoFileCode } from "react-icons/go";
 import SwipeableViews from "react-swipeable-views";
 import LoginForm from "./LoginForm";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { useRouter } from "next/router";
+import { STUDENT_PATH_AFTER_LOGIN, MANAGER_PATH_AFTER_LOGIN } from "src/config-global";
 
 export default function Login(): React.ReactElement {
+  const router = useRouter();
+  const { loginWithGoogle } = useAuthContext();
   const [value, setValue] = useState<number>(0);
+
+  const onLoginWithGoogle = useGoogleLogin({
+    onSuccess: ({ access_token: token }) => {
+      loginWithGoogle(token)
+      router.replace(
+        !value ? STUDENT_PATH_AFTER_LOGIN : MANAGER_PATH_AFTER_LOGIN
+      );
+    },
+  });
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
@@ -108,6 +126,7 @@ export default function Login(): React.ReactElement {
         OR
       </Divider>
       <Button
+        onClick={onLoginWithGoogle}
         sx={{
           width: "100%",
           py: "15px",
@@ -123,7 +142,6 @@ export default function Login(): React.ReactElement {
         </Box>
         Login with Google
       </Button>
-
       <Typography sx={{ mt: "8px" }} variant="body2">
         First time here?
         <Link

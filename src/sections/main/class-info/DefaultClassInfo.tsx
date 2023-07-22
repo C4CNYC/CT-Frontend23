@@ -27,6 +27,7 @@ import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
+import ShareGroupModal from "src/components/share-group-modal";
 
 interface Props {
   data: IClass;
@@ -133,7 +134,7 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
                 <FiUser color="#fff" size="18px" />
                 Members
               </Link>
-              <InviteFriendsModal>
+              <ShareGroupModal>
                 <Button
                   variant="text"
                   disableRipple
@@ -152,7 +153,7 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
                     Share
                   </Typography>
                 </Button>
-              </InviteFriendsModal>
+              </ShareGroupModal>
               <IconButton
                 onClick={handleOpenPopover}
                 sx={{ ml: "30px", p: 0.7 }}

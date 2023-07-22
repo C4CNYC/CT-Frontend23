@@ -1,0 +1,296 @@
+import { useState } from "react";
+
+import { AiOutlineArrowRight } from "react-icons/ai";
+import { MdOutlineMail } from "react-icons/md";
+import { SiGoogleclassroom } from "react-icons/si";
+
+import {
+  Box,
+  Button,
+  Dialog,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  Link,
+  Radio,
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+import { Stack } from "@mui/system";
+
+import { Iconify } from "../iconify";
+
+interface Prop {
+  children: React.ReactElement;
+}
+export default function ShareGroupModal({
+  children,
+}: Prop): React.ReactElement {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [value, setValue] = useState("anyone");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
+  return (
+    <>
+      <div onClick={handleOpen}>{children}</div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        sx={{ width: "100%" }}
+        scroll="body"
+      >
+        <Box
+          sx={{
+            backgroundColor: "#60ced2",
+            borderTopLeftRadius: 2,
+            borderTopRightRadius: 2,
+            p: 1,
+          }}
+        >
+          <Box display="flex" justifyContent="end" alignItems="center">
+            <IconButton
+              sx={{
+                color: "white",
+              }}
+            >
+              <Iconify icon="prime:qrcode" width={24} height={24} />
+            </IconButton>
+            <IconButton onClick={handleClose} sx={{ color: "white" }}>
+              <Iconify icon="jam:close-rectangle-f" width={24} height={24} />
+            </IconButton>
+          </Box>
+          <Typography
+            mt="55px"
+            ml="32px"
+            mb="55px"
+            variant="h3"
+            color="white"
+            fontSize="32px"
+          >
+            Test
+          </Typography>
+        </Box>
+        <Box p="32px">
+          <Box>
+            <Typography
+              fontSize="20px"
+              color="#292929"
+              variant="h4"
+              textAlign="center"
+            >
+              Share group
+            </Typography>
+            <Typography
+              fontSize="16px"
+              color="#4f4f4f"
+              mt="12px"
+              mb="40px"
+              textAlign="center"
+              variant="body2"
+            >
+              Send the link below to invite students to the group.
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: "#f0f0f0",
+              width: "100%",
+              height: "55px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderRadius: "10px",
+              p: "0px 5px 0px 15px",
+            }}
+          >
+            <Box display="flex" alignItems="center" width="100%">
+              <Button
+                sx={{
+                  background: "#f9f9f9",
+                  color: "#000",
+                  "&:hover": {
+                    background: "#bebebe",
+                  },
+                  width: "36px",
+                  height: "36px",
+                  m: "0px 8px",
+                }}
+              >
+                <Iconify icon="basil:copy-outline" width={16} height={16} />
+              </Button>
+              <Box ml="10px">
+                <Typography>Invite link Edit</Typography>
+                <Typography>flip.com/906e3999</Typography>
+              </Box>
+            </Box>
+            <Button
+              variant="contained"
+              sx={{
+                background: "#d1329e",
+                "&:hover": {
+                  background: "#c31a8b",
+                },
+                width: "64px",
+                height: "36px",
+                m: "6px 12px",
+              }}
+            >
+              Copy
+            </Button>
+          </Box>
+          <Stack mt="20px" ml="15px" gap="20px">
+            <FormControl>
+              <RadioGroup
+                aria-labelledby="demo-controlled-radio-buttons-group"
+                name="controlled-radio-buttons-group"
+                value={value}
+                onChange={handleChange}
+                sx={{
+                  fontSize: "24px",
+                  mb: "24px",
+                }}
+              >
+                <FormControlLabel
+                  value="anyone"
+                  sx={{
+                    mb: "24px",
+                    mt: "10px",
+                  }}
+                  control={
+                    <Radio
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#d1329e",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography color="#292929" variant="h6">
+                      Anyone with the link can join
+                    </Typography>
+                  }
+                />
+                <FormControlLabel
+                  value="one"
+                  control={
+                    <Radio
+                      sx={{
+                        "&.Mui-checked": {
+                          color: "#d1329e",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography color="#292929" variant="h6">
+                      Only people you approve can join
+                    </Typography>
+                  }
+                />
+              </RadioGroup>
+            </FormControl>
+          </Stack>
+          <Divider
+            variant="middle"
+            orientation="horizontal"
+            sx={{
+              mt: "10px",
+              mb: "10px",
+              background: "#E6F5FD",
+              borderRightWidth: "4px",
+              borderRadius: 2,
+            }}
+          />
+          <Box ml="15px" mt="28px" mb="28px">
+            <Typography
+              variant="h6"
+              fontSize="16px"
+              m="0px 0px 13px"
+              color="#292929"
+            >
+              Other ways to add students:
+            </Typography>
+            <Box
+              sx={{
+                backgroundColor: "#f0f0f0",
+                width: "100%",
+                height: "55px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderRadius: "10px",
+                pr: "15px",
+                mb: "12px",
+                cursor: "pointer",
+              }}
+            >
+              <Box display="flex" alignItems="center" width="100%">
+                <Button
+                  startIcon={<SiGoogleclassroom />}
+                  sx={{
+                    background: "#f9f9f9",
+                    color: "#000",
+                    "&:hover": {
+                      background: "#bebebe",
+                    },
+                    width: "34px",
+                    height: "40px",
+                    m: "0px 8px",
+                  }}
+                ></Button>
+                <Box ml="10px">
+                  <Typography> Google Classroom</Typography>
+                </Box>
+                <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
+              </Box>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              width="100%"
+              sx={{
+                backgroundColor: "#f0f0f0",
+                width: "100%",
+                height: "55px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderRadius: "10px",
+                pr: "15px",
+                mb: "12px",
+                cursor: "pointer",
+              }}
+            >
+              <Button
+                startIcon={<MdOutlineMail />}
+                sx={{
+                  background: "#f9f9f9",
+                  color: "#000",
+                  "&:hover": {
+                    background: "#bebebe",
+                  },
+                  width: "34px",
+                  height: "40px",
+                  m: "0px 8px",
+                }}
+              ></Button>
+              <Box ml="10px">
+                <Typography> Email address or domain</Typography>
+              </Box>
+              <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
+            </Box>
+            <Link href="#" color="inherit">
+              By username
+            </Link>
+          </Box>
+        </Box>
+      </Dialog>
+    </>
+  );
+}
