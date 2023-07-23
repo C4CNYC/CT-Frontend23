@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { differenceInDays } from "date-fns";
 
 import {
   Avatar,
@@ -14,8 +16,8 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
-import { Publish, Status } from "src/redux/enums/assignments.enum";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { Status } from "src/redux/enums/assignments.enum";
+import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
 import { fDate } from "../../../../utils/formatTime";
 
@@ -36,9 +38,9 @@ export default function AssignmentsTableRow({
   onEditRow,
   onDeleteRow,
 }: Props) {
-  const { name, description, type, start, dueDate, status, assigned, publish } =
-    row;
+  const { name, type, start_date, end_date, active } = row;
 
+  const [status, setStatus] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -59,6 +61,13 @@ export default function AssignmentsTableRow({
     setOpenPopover(null);
   };
 
+  useEffect(() => {
+    const currentDate = new Date();
+    console.log(differenceInDays(currentDate, new Date(end_date)));
+    if (differenceInDays(currentDate, new Date(end_date))) {
+    }
+  }, []);
+
   return (
     <>
       <TableRow hover selected={selected}>
@@ -69,9 +78,6 @@ export default function AssignmentsTableRow({
         <TableCell>
           <Typography variant="subtitle2" noWrap>
             {name}
-          </Typography>
-          <Typography variant="body2" noWrap>
-            {description}
           </Typography>
         </TableCell>
 
@@ -100,18 +106,15 @@ export default function AssignmentsTableRow({
           </Label>
         </TableCell>
 
-        <TableCell align="left">{fDate(start)}</TableCell>
+        <TableCell align="left">{fDate(start_date)}</TableCell>
 
-        <TableCell align="left">{fDate(dueDate)}</TableCell>
+        <TableCell align="left">{fDate(end_date)}</TableCell>
 
-        <TableCell align="center">{assigned}</TableCell>
+        {/* <TableCell align="center">{assigned}</TableCell> */}
 
         <TableCell align="center">
-          <Label
-            variant="soft"
-            color={(publish === Publish.published && "info") || "default"}
-          >
-            {publish}
+          <Label variant="soft" color={(active && "info") || "default"}>
+            {active ? "Published" : "Draft"}
           </Label>
         </TableCell>
 

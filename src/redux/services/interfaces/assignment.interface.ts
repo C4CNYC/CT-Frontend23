@@ -17,7 +17,7 @@ export interface IAssignment {
   course: ICourse;
   description: string;
   type: AssignmentTypes;
-  status: AssignmentStatuses;
+  status: string;
   active: boolean;
   start_date: string;
   end_date: string;
