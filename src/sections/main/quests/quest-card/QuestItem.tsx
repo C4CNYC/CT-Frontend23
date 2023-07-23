@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 import { format, formatDistanceToNow } from "date-fns";
 import { HiOutlineStatusOnline } from "react-icons/hi";
@@ -7,36 +8,49 @@ import { RiExternalLinkLine } from "react-icons/ri";
 import { Divider, IconButton, Link, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { Iconify } from "src/components/iconify";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
+import AddQuestModal from "../add-quest/AddQuestsModal";
+
 interface Props {
   item: IAssignment;
-  schoolId: string;
 }
 
-export default function QuestItem({
-  item,
-  schoolId,
-}: Props): React.ReactElement {
+export default function QuestItem({ item }: Props): React.ReactElement {
+  const { query, push } = useRouter();
   const [updateAssignment] = useUpdateAssignmentMutation();
 
   const pinAssignment = () => {
     if (item?.meta?.pin) {
       updateAssignment({
-        schoolId,
+        schoolId: query.schoolId as string,
         assignmentId: item.id,
         meta: { ...item.meta, pin: false },
       });
     } else {
       updateAssignment({
-        schoolId,
+        schoolId: query.schoolId as string,
         assignmentId: item.id,
         meta: { ...item.meta, pin: true },
       });
     }
   };
+
+  const edit = () => {
+    push(
+      `${STUDENT_PATH_DASHBOARD.class.id(
+        query.id as string
+      )}?${new URLSearchParams({
+        schoolId: query.schoolId as string,
+      })}&${new URLSearchParams({ assignmentId: item.id })}`,
+      undefined,
+      { shallow: true }
+    );
+  };
+
   return (
     <Stack
       sx={{
@@ -105,7 +119,9 @@ export default function QuestItem({
           </Link>
           <Link
             component={NextLink}
-            href="#"
+            href={`${STUDENT_PATH_DASHBOARD.quest.id(
+              item.id
+            )}?${new URLSearchParams({ schoolId: query.schoolId as string })}`}
             underline="none"
             sx={(theme) => ({
               display: "inline-flex",
@@ -147,9 +163,11 @@ export default function QuestItem({
           <IconButton>
             <Iconify icon="ion:share-outline" width={22} />
           </IconButton>
-          <IconButton>
-            <Iconify icon="pepicons-pop:dots-y" width={22} />
-          </IconButton>
+          <AddQuestModal>
+            <IconButton onClick={edit}>
+              <Iconify icon="pepicons-pop:dots-y" width={22} />
+            </IconButton>
+          </AddQuestModal>
         </Stack>
       </Stack>
     </Stack>

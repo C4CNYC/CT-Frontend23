@@ -128,7 +128,7 @@ export default function QuestsTable({ data }: Props) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab schoolId={data.school.id} />
+        <QuestsTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MemberCard members={data?.students ?? []} />
@@ -149,7 +149,7 @@ export default function QuestsTable({ data }: Props) {
             Assign Open Project
           </MenuItem>
         </RoleBasedGuard>
-        <AddQuestModal data={data}>
+        <AddQuestModal>
           <MenuItem>
             <SiGoogleclassroom size="20px" />
             Assign Course or Section

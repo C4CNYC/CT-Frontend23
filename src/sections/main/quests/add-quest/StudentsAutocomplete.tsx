@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import * as React from "react";
 
 import match from "autosuggest-highlight/match";
@@ -21,14 +22,14 @@ import { useGetStudentsQuery } from "src/redux/services/manager/students-manager
 
 import { addQuestAtom } from "./add-quest-atom";
 
-interface Props {
-  schoolId: string;
-}
-export default function StudentsAutocomplete({
-  schoolId,
-}: Props): React.ReactElement {
+export default function StudentsAutocomplete(): React.ReactElement {
+  const { query } = useRouter();
+
   const [choosen] = React.useState<IStudent[] | []>([]);
-  const { data, isLoading } = useGetStudentsQuery({ schoolId });
+  const { data, isLoading } = useGetStudentsQuery(
+    { schoolId: query.schoolId as string },
+    { skip: !query.schoolId }
+  );
   const [{ students }, setQuestAtom] = useAtom(addQuestAtom);
 
   const getStudents = () => {

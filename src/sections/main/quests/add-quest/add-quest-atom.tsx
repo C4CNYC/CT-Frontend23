@@ -2,7 +2,6 @@ import { add } from "date-fns";
 import { atom } from "jotai";
 
 import { ISkill } from "src/redux/interfaces/content.interface";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 interface IAddQuestAtom {
   startDate: string;

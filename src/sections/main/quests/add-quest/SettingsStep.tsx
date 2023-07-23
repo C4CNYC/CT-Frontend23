@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 
 import { RHFSelect } from "@components";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 import { FormProps } from "./AddQuestsModal";
 import SkillsAutocomplete from "./SkillsAutocomplete";
@@ -24,13 +23,9 @@ import { addQuestAtom } from "./add-quest-atom";
 
 interface Props {
   control: Control<FormProps, any>;
-  schoolId: string;
 }
 
-export default function SettingsStep({
-  control,
-  schoolId,
-}: Props): React.ReactElement {
+export default function SettingsStep({ control }: Props): React.ReactElement {
   const [value, setValue] = useState("class");
   const [{ startDate, closeDate, dueDate, assignmentId }, setQuestAtom] =
     useAtom(addQuestAtom);
@@ -149,7 +144,7 @@ export default function SettingsStep({
             label={<Typography variant="subtitle2">Students</Typography>}
           />
         </RadioGroup>
-        {value === "students" && <StudentsAutocomplete schoolId={schoolId} />}
+        {value === "students" && <StudentsAutocomplete />}
       </FormControl>
     </Stack>
   );

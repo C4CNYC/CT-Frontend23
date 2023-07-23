@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAtom } from "jotai";
@@ -28,19 +28,15 @@ import {
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { IClass } from "src/redux/interfaces/class.interface";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
-import {
-  IAssignmentCreate,
-  IAssignmentUpdate,
-} from "src/redux/services/interfaces/assignment.interface";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { IAssignmentCreate } from "src/redux/services/interfaces/assignment.interface";
 import {
   useCreateAssignmentMutation,
   useGetAssignmentQuery,
   useUpdateAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import DetailsStep from "./DetailsStep";
 import ModalActionsBtn from "./ModalActionsBtn";
@@ -48,9 +44,7 @@ import SettingsStep from "./SettingsStep";
 import { addQuestAtom } from "./add-quest-atom";
 
 interface Props {
-  isEdit?: boolean;
   children: React.ReactElement;
-  data: IClass;
 }
 
 export interface FormProps {
@@ -66,11 +60,7 @@ export interface FormProps {
   active: boolean;
 }
 
-export default function AddQuestModal({
-  children,
-  isEdit,
-  data,
-}: Props): React.ReactElement {
+export default function AddQuestModal({ children }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
   const nameConfig: Config = {
@@ -84,16 +74,33 @@ export default function AddQuestModal({
     { startDate, closeDate, dueDate, assingmentSkills, students },
     setQuestAtom,
   ] = useAtom(addQuestAtom);
+  const { data } = useGetClassQuery(
+    { id: query.id as string },
+    { skip: !query.id }
+  );
   const { data: assignment } = useGetAssignmentQuery(
     {
-      schoolId: data.school.id,
+      schoolId: query.schoolId as string,
       assignmentId: query.assignmentId as string,
     },
-    { skip: !query.assignmentId }
+    { skip: !query.assignmentId && !query.scholId }
   );
   const [createAssignment] = useCreateAssignmentMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
   const [addAssignmrntsToClass] = useUpdateCourseAssignmentMutation();
+
+  const defaultValues = {
+    name: assignment?.name ?? uniqueNamesGenerator(nameConfig),
+    description: assignment?.description
+      ? JSON.parse(assignment?.description)
+      : "",
+    type: assignment?.type ?? AssignmentTypes.RESEARCH,
+    course: assignment?.course?.id,
+    startDate: assignment?.start_date ?? startDate,
+    dueDate: assignment?.end_date ?? dueDate,
+    closeDate: assignment?.close_date ?? closeDate,
+    active: assignment?.active ?? true,
+  };
 
   useEffect(() => {
     if (assignment) {
@@ -105,6 +112,7 @@ export default function AddQuestModal({
         assingmentSkills: assignment?.skills ?? [],
       }));
     }
+    methods.reset(defaultValues);
   }, [assignment]);
 
   const CreateSchema = Yup.object().shape({
@@ -125,23 +133,16 @@ export default function AddQuestModal({
 
   const methods = useForm<FormProps>({
     resolver: yupResolver(CreateSchema),
-    defaultValues: {
-      name: assignment?.name ?? uniqueNamesGenerator(nameConfig),
-      description: assignment?.description ?? "",
-      type: assignment?.type ?? AssignmentTypes.RESEARCH,
-      course: assignment?.course?.id,
-      startDate: assignment?.start_date ?? startDate,
-      dueDate: assignment?.end_date ?? dueDate,
-      closeDate: assignment?.close_date ?? closeDate,
-      active: assignment?.active ?? true,
-    },
+    defaultValues: useMemo(() => {
+      return defaultValues;
+    }, [defaultValues]),
   });
   const onSubmit = async (formData: FormProps) => {
     console.log(formData, assingmentSkills, "data");
     const assignmentData: IAssignmentCreate & {
       schoolId: string;
     } = {
-      schoolId: data.school.id,
+      schoolId: query.schoolId as string,
       name: formData.name,
       description: JSON.stringify(formData.description),
       type: formData.type,
@@ -154,12 +155,12 @@ export default function AddQuestModal({
     if (students?.length) {
       assignmentData.students = students;
     } else {
-      assignmentData.classes = [data.id as string];
+      assignmentData.classes = [query.id as string];
     }
-    try {
-      if (assignment) {
+    if (assignment) {
+      try {
         updateAssignment({
-          schoolId: data.school.id,
+          schoolId: query.schoolId as string,
           assignmentId: query.assignmentId as string,
           name: formData.name,
           description: JSON.stringify(formData.description),
@@ -167,26 +168,37 @@ export default function AddQuestModal({
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-          skills: assingmentSkills,
+          // skills: assingmentSkills,
+        }).unwrap();
+        enqueueSnackbar("Assignment updated successfuly!");
+      } catch (error: any) {
+        enqueueSnackbar("Something went wrong when updating", {
+          variant: "error",
         });
-      } else {
+      }
+    } else {
+      try {
         const newAssignment = await createAssignment(assignmentData).unwrap();
         addAssignmrntsToClass({
           assignmentId: newAssignment.id,
-          schoolId: data.school.id,
-          course_id: data.id as string,
+          schoolId: query.schoolId as string,
+          course_id: query.id as string,
         });
         push(
           `${STUDENT_PATH_DASHBOARD.class.id(
             query.id as string
-          )}?${new URLSearchParams({ assignmentId: newAssignment.id })}`,
+          )}?${new URLSearchParams({
+            schoolId: query.schoolId as string,
+          })}&${new URLSearchParams({ assignmentId: newAssignment.id })}`,
           undefined,
           { shallow: true }
         );
+        enqueueSnackbar("Assignment created successfuly!");
+      } catch (error: any) {
+        enqueueSnackbar("Something went wrong when creating", {
+          variant: "error",
+        });
       }
-      enqueueSnackbar("Assignment created successfuly!");
-    } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
@@ -270,14 +282,11 @@ export default function AddQuestModal({
             <CustomTabPanel value={value} index={0}>
               <DetailsStep
                 control={methods.control}
-                courses={data.courses ?? []}
+                courses={data?.courses ?? []}
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-              <SettingsStep
-                schoolId={data.school.id}
-                control={methods.control}
-              />
+              <SettingsStep control={methods.control} />
             </CustomTabPanel>
             <ModalActionsBtn handleCloseDialog={handleCloseDialog} />
           </FormProvider>
