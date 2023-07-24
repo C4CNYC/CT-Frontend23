@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 function path(root: string, sublink: string): string {
   return `${root}${sublink}`;
 }
@@ -8,19 +6,17 @@ const ROOTS_AUTH = "/auth";
 const ROOTS_DASHBOARD = "/dashboard";
 const ROOTS_MAIN = "/main";
 
-// ----------------------------------------------------------------------
-
 export const PATH_AUTH = {
   root: ROOTS_AUTH,
-  login: path(ROOTS_AUTH, "/login"),
-  register: path(ROOTS_AUTH, "/register"),
   resetPassword: path(ROOTS_AUTH, "/reset-password"),
   newPassword: path(ROOTS_AUTH, "/new-password"),
   submitPassword: path(ROOTS_AUTH, "/submit-password"),
+  onBoardingTeacher: path(ROOTS_AUTH, "/on-boarding/teacher"),
+  onBoardingStudent: path(ROOTS_AUTH, "/on-boarding/student"),
+  singIn: path(ROOTS_AUTH, "/singIn"),
 };
 
 export const PATH_PAGE = {
-  onBoarding: "/on-boarding",
   page403: "/403",
   page404: "/404",
   page500: "/500",
