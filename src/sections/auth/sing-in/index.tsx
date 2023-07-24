@@ -19,7 +19,7 @@ interface FormValuesProps {
   password: string;
 }
 export default function SingInMain(): React.ReactElement {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const { login } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -38,7 +38,7 @@ export default function SingInMain(): React.ReactElement {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await login(data.email, data.password, "codetribe");
-      push(STUDENT_PATH_AFTER_LOGIN);
+      replace(STUDENT_PATH_AFTER_LOGIN);
     } catch (e) {
       enqueueSnackbar("WRONG CREDENTIAL", { variant: "error" })
     }
