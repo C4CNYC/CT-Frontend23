@@ -43,7 +43,13 @@ export default function SingInPassword({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
-            mb: 4,
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
+            mb: 3,
           })}
           InputProps={{
             endAdornment: (
@@ -73,7 +79,7 @@ export default function SingInPassword({
             color: "#43D4DD",
             fontSize: "1.5rem",
             mt: 1,
-            mb: 3,
+            mb: 2,
           }}
         >
           LET'S GO!
@@ -86,6 +92,7 @@ export default function SingInPassword({
             background: "#EE467A33",
             color: "#EE467A",
             fontSize: "1.5rem",
+            mb: 2,
             "&:hover": {
               background: "#f9e0ef",
             },

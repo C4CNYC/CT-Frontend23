@@ -82,32 +82,6 @@ export default function StepperInfo({
             </option>
           ))}
       </RHFSelect>
-      <Stack sx={{ mt: 3 }}>
-        <Button
-          sx={{
-            background: "#43D4DD33",
-            color: "#43D4DD",
-            fontSize: "1.5rem",
-            mt: 1,
-            mb: 2,
-          }}
-        >
-          ALL DONE
-        </Button>
-        <Button
-          onClick={handleBack}
-          sx={{
-            background: "#EE467A33",
-            color: "#EE467A",
-            fontSize: "1.5rem",
-            "&:hover": {
-              background: "#f9e0ef",
-            },
-          }}
-        >
-          BACK
-        </Button>
-      </Stack>
     </>
   );
 }

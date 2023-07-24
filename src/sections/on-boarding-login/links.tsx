@@ -19,11 +19,12 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
       underline="none"
       sx={{
         display: "flex",
+        width: "100%",
+        justifyContent: "center",
         position: "absolute",
-        bottom: "-25px",
-        left: "-10px",
+        bottom: "-15px",
+        left: "0px",
         gap: 1,
-        ml: 2,
         color: "inherit",
         alignItems: "center",
       }}
@@ -57,10 +58,8 @@ export function RegisterStudenTeacher({
       sx={{
         position: "absolute",
         right: "0px",
-        top: "-100px",
+        top: "-80px",
         color: "#02D3D7",
-        ml: 2,
-        mt: 2,
         display: "flex",
         gap: 1,
         alignItems: "center",

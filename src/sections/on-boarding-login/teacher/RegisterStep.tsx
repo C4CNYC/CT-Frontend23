@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { fi } from "date-fns/locale";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import {
@@ -42,12 +43,15 @@ export default function RegisterStep({
         sx={(theme) => ({
           "& .MuiStepLabel-root .Mui-completed": {
             color: "#43D4DD",
+            transition: "all .3s linear!important",
           },
 
           "& .MuiStepLabel-root .Mui-active": {
             color: "#43D4DD",
+            transition: "all .3s linear!important",
           },
           "& .MuiStepIcon-root": { color: theme.palette.grey[300] },
+          justifySelf: "flex-start",
         })}
         connector={<ColorlibConnector />}
       >
@@ -57,28 +61,42 @@ export default function RegisterStep({
           </Step>
         ))}
       </Stepper>
-      <Box>
+      <Stack sx={{ minHeight: "400px" }}>
         {activeStep === 0 && <AddTeacher handleNext={handleNext} />}
         {activeStep === 1 && <AddSchool handleBack={handleBack} />}
-      </Box>
-      {activeStep === 0 && (
-        <Button
-          onClick={() => {
+      </Stack>
+      <Button
+        onClick={handleNext}
+        sx={{
+          background: "#43D4DD33",
+          color: "#43D4DD",
+          fontSize: "1.5rem",
+          mt: 1,
+        }}
+      >
+        {activeStep === 0 ? "WHOOPIE" : "ALL DONE"}
+      </Button>
+
+      <Button
+        onClick={() => {
+          if (activeStep === 1) {
+            handleBack();
+          } else {
             previousStep?.();
-          }}
-          sx={{
-            background: "#EE467A33",
-            color: "#EE467A",
-            fontSize: "1.5rem",
-            mt: 3,
-            "&:hover": {
-              background: "#f9e0ef",
-            },
-          }}
-        >
-          BACK
-        </Button>
-      )}
+          }
+        }}
+        sx={{
+          background: "#EE467A33",
+          color: "#EE467A",
+          fontSize: "1.5rem",
+          mt: 2,
+          "&:hover": {
+            background: "#f9e0ef",
+          },
+        }}
+      >
+        BACK
+      </Button>
     </Stack>
   );
 }
@@ -87,14 +105,17 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       background: "#43D4DD",
+      transition: "all .3s linear!important",
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       background: "#43D4DD",
+      transition: "all .3s linear!important",
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
+    transition: "all .3s linear!important",
     height: 3,
     border: 0,
     backgroundColor:

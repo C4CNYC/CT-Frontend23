@@ -81,17 +81,6 @@ export default function StepperRegister({
             ),
           }}
         />
-        <Button
-          onClick={handleNext}
-          sx={{
-            background: "#43D4DD33",
-            color: "#43D4DD",
-            fontSize: "1.5rem",
-            mt: 1,
-          }}
-        >
-          WHOOPIE
-        </Button>
       </Stack>
     </>
   );
