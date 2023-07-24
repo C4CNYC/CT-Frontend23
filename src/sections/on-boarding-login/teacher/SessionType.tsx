@@ -16,6 +16,7 @@ interface Props {
   img: string;
   info: string;
   color: string;
+  disabled?: boolean;
 }
 
 export function SessionType({
@@ -24,6 +25,7 @@ export function SessionType({
   img,
   info,
   color,
+  disabled,
 }: Props): React.ReactElement {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -39,7 +41,7 @@ export function SessionType({
             vertical: "top",
             horizontal: "right",
           }}
-          color="primary"
+          color="info"
           badgeContent={"i"}
           invisible={isSmall}
         >
@@ -62,9 +64,18 @@ export function SessionType({
         </Badge>
       </Tooltip>
       <Stack sx={{ pl: 2 }}>
-        <Typography variant="h4" textAlign="start" gutterBottom>
-          {title}
-        </Typography>
+        {disabled ? (
+          <Badge badgeContent={"coming soon"} color="success">
+            <Typography variant="h4" textAlign="start" gutterBottom>
+              {title}
+            </Typography>
+          </Badge>
+        ) : (
+          <Typography variant="h4" textAlign="start" gutterBottom>
+            {title}
+          </Typography>
+        )}
+
         <Typography
           variant="body2"
           textAlign="start"
