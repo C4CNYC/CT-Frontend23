@@ -13,7 +13,7 @@ import {
   Stepper,
   stepConnectorClasses,
 } from "@mui/material";
-import { styled } from "@mui/system";
+import { Theme, keyframes, styled } from "@mui/system";
 
 import StepperInfo from "./StepperInfo";
 import StepperRegister from "./StepperRegister";
@@ -43,72 +43,96 @@ export default function RegisterStudent({
 
   return (
     <Stack>
-      <Stepper
-        activeStep={activeStep}
-        sx={(theme) => ({
-          "& .MuiStepLabel-root .Mui-completed": {
-            color: "#43D4DD",
-          },
-
-          "& .MuiStepLabel-root .Mui-active": {
-            color: "#43D4DD",
-          },
-          "& .MuiStepIcon-root": { color: theme.palette.grey[300] },
-        })}
-        connector={<ColorlibConnector />}
-      >
-        {steps.map((label, index) => (
-          <Step key={index}>
-            <StepLabel />
-          </Step>
-        ))}
-      </Stepper>
-      <Box>
-        {activeStep === 0 && <StepperRegister handleNext={handleNext} />}
-        {activeStep === 1 && (
-          <StepperInfo handleBack={handleBack} control={control} />
-        )}
-      </Box>
-      {activeStep === 0 && (
-        <Button
-          onClick={() => {
-            previousStep?.();
-          }}
-          sx={{
-            background: "#EE467A33",
-            color: "#EE467A",
-            fontSize: "1.5rem",
-            mt: 3,
-            "&:hover": {
-              background: "#f9e0ef",
+      <Stack sx={{ justifyContent: "space-between" }}>
+        <Stepper
+          activeStep={activeStep}
+          sx={(theme) => ({
+            "& .MuiStepLabel-root .Mui-completed": {
+              color: "#43D4DD",
+              transition: "all .3s linear!important",
             },
-          }}
+            "& .MuiStepLabel-root .Mui-active": {
+              color: "#43D4DD",
+              transition: "all .3s linear!important",
+            },
+            "& .MuiStepIcon-root": { color: theme.palette.grey[300] },
+          })}
+          connector={<ColorlibConnector />}
         >
-          BACK
-        </Button>
-      )}
+          {steps.map((label, index) => (
+            <Step key={index}>
+              <StepLabel />
+            </Step>
+          ))}
+        </Stepper>
+        <Stack sx={{ minHeight: "350px" }}>
+          {activeStep === 0 && <StepperRegister handleNext={handleNext} />}
+          {activeStep === 1 && (
+            <StepperInfo handleBack={handleBack} control={control} />
+          )}
+        </Stack>
+      </Stack>
+
+      <Button
+        onClick={handleNext}
+        sx={{
+          background: "#43D4DD33",
+          color: "#43D4DD",
+          fontSize: "1.5rem",
+          mt: 2,
+        }}
+      >
+        {activeStep === 0 ? "WHOOPIE" : "ALL DONE"}
+      </Button>
+
+      <Button
+        onClick={() => {
+          if (activeStep === 1) {
+            handleBack();
+          } else {
+            previousStep?.();
+          }
+        }}
+        sx={{
+          background: "#EE467A33",
+          color: "#EE467A",
+          fontSize: "1.5rem",
+          mt: 2,
+          "&:hover": {
+            background: "#f9e0ef",
+          },
+        }}
+      >
+        BACK
+      </Button>
     </Stack>
   );
 }
 
-const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      background: "#43D4DD",
+const ColorlibConnector = styled(StepConnector)(({ theme }) => {
+  return {
+    [`&.${stepConnectorClasses.active}`]: {
+      [`& .${stepConnectorClasses.line}`]: {
+        background: "#43D4DD",
+        transition: "all .3s linear!important",
+      },
     },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      background: "#43D4DD",
+    [`&.${stepConnectorClasses.completed}`]: {
+      [`& .${stepConnectorClasses.line}`]: {
+        background: "#43D4DD",
+        transition: "all .3s linear!important",
+      },
     },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    height: 3,
-    border: 0,
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.grey[800]
-        : theme.palette.grey[300],
-    borderRadius: 1,
-  },
-}));
+    [`& .${stepConnectorClasses.line}`]: {
+      transition: "all .3s linear!important",
+
+      height: 3,
+      border: 0,
+      backgroundColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[800]
+          : theme.palette.grey[300],
+      borderRadius: 1,
+    },
+  };
+});

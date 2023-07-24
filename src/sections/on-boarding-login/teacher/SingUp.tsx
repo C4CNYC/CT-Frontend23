@@ -45,6 +45,12 @@ export default function SingUp({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
           InputProps={{
             endAdornment: (

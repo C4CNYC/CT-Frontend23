@@ -31,22 +31,22 @@ export default function StudentStepper(): React.ReactElement {
     console.log(data);
   };
   return (
-    <Stack
-      sx={{
-        minHeight: "600px",
-        justifyContent: "center",
-        position: "relative",
-      }}
-    >
-      <RegisterStudenTeacher />
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+    <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+      <Stack
+        sx={{
+          minHeight: "650px",
+          justifyContent: "center",
+          position: "relative",
+        }}
+      >
+        <RegisterStudenTeacher />
         <StepWizard transitions={custom}>
           <SingUp isValid={methods.formState.isValid} isTeacher={false} />
           <RegisterStudent control={methods.control} />
         </StepWizard>
-      </FormProvider>
-      <SingLink />
-    </Stack>
+        <SingLink />
+      </Stack>
+    </FormProvider>
   );
 }
 const custom = {};

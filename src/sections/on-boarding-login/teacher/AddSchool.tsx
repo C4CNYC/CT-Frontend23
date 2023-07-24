@@ -36,6 +36,12 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
         />
         <RHFSelect
@@ -47,6 +53,12 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
         >
           <option key="empty" value="empty"></option>
@@ -75,7 +87,7 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
             Other
           </option>
         </RHFSelect>
-        <Stack direction="row" sx={{ my: 2, gap: 2 }}>
+        <Stack direction="row" sx={{ gap: 2 }}>
           <RHFTextField
             name="city"
             label="City"
@@ -86,6 +98,12 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
                 background: theme.palette.grey[200],
               },
               "& fieldset": { border: "none" },
+              "& input:-webkit-autofill": {
+                "-webkit-background-clip": "text",
+                "-webkit-text-fill-color": "#000",
+                transition: "background-color 5000s ease-in-out 0s",
+                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+              },
             })}
           />
           <RHFTextField
@@ -97,6 +115,12 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
                 background: theme.palette.grey[200],
               },
               "& fieldset": { border: "none" },
+              "& input:-webkit-autofill": {
+                "-webkit-background-clip": "text",
+                "-webkit-text-fill-color": "#000",
+                transition: "background-color 5000s ease-in-out 0s",
+                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+              },
             })}
           />
         </Stack>
@@ -111,6 +135,12 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
         >
           <option key={"US"} value={"United States"}>
@@ -125,30 +155,6 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
               </option>
             ))}
         </RHFSelect>
-        <Button
-          sx={{
-            background: "#43D4DD33",
-            color: "#43D4DD",
-            fontSize: "1.5rem",
-            mt: 1,
-          }}
-        >
-          ALL DONE
-        </Button>
-        <Button
-          onClick={handleBack}
-          sx={{
-            background: "#EE467A33",
-            color: "#EE467A",
-            fontSize: "1.5rem",
-            mt: 1,
-            "&:hover": {
-              background: "#f9e0ef",
-            },
-          }}
-        >
-          BACK
-        </Button>
       </Stack>
     </>
   );
