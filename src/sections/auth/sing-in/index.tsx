@@ -5,29 +5,45 @@ import * as Yup from "yup";
 
 import { Stack } from "@mui/material";
 
-import { FormProvider } from "@components";
+import { FormProvider, useSnackbar } from "@components";
 import { SingLink } from "@sections/on-boarding-login/links";
 
 import SingInLogin from "./SingInLogin";
 import SingInPassword from "./SingInPassword";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { useRouter } from "next/router";
+import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 interface FormValuesProps {
   email: string;
+  password: string;
 }
 export default function SingInMain(): React.ReactElement {
+  const { push } = useRouter();
+  const { login } = useAuthContext();
+  const { enqueueSnackbar } = useSnackbar();
+
   const CreateEmailSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
+    password: Yup.string()
+      .required("Password is required")
   });
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateEmailSchema),
   });
 
-  const onSubmit = (data: FormValuesProps) => {
-    console.log(data);
+  const onSubmit = async (data: FormValuesProps) => {
+    try {
+      await login(data.email, data.password, "codetribe");
+      push(STUDENT_PATH_AFTER_LOGIN);
+    } catch (e) {
+      enqueueSnackbar("WRONG CREDENTIAL", { variant: "error" })
+    }
   };
+
   return (
     <Stack
       sx={{

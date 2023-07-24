@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { StepWizardChildProps } from "react-step-wizard";
@@ -12,11 +14,25 @@ import {
 } from "@mui/material";
 
 import { RHFTextField } from "@components";
+import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
+import { useAuthContext } from "src/auth/useAuthContext";
 
 export default function SingInLogin({
   nextStep,
   isValid,
 }: Partial<StepWizardChildProps> & { isValid: boolean }): React.ReactElement {
+  const router = useRouter();
+  const { loginWithGoogle } = useAuthContext();
+
+  const onLoginWithGoogle = useGoogleLogin({
+    onSuccess: ({ access_token: token }) => {
+      loginWithGoogle(token)
+      router.push(
+        STUDENT_PATH_AFTER_LOGIN
+      );
+    },
+  });
+
   return (
     <>
       <Stack
@@ -66,6 +82,7 @@ export default function SingInLogin({
           </Typography>
         </Divider>
         <Button
+          onClick={() => { onLoginWithGoogle() }}
           sx={(theme) => ({
             color: theme.palette.grey[600],
             textTransform: "none",

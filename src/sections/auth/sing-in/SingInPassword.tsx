@@ -64,6 +64,7 @@ export default function SingInPassword({
           }}
         />
         <Button
+          type="submit"
           onClick={() => {
             nextStep?.();
           }}

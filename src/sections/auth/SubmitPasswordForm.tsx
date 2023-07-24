@@ -10,14 +10,14 @@ import { useSubmitPasswordMutation } from "src/redux/services/auth";
 import * as Yup from "yup";
 import { FormProvider, RHFTextField } from "../../components/hook-form";
 import { useSnackbar } from "../../components/snackbar";
-import { PATH_AUTH, PATH_DASHBOARD } from "../../routes/paths";
+import { PATH_AUTH } from "../../routes/paths";
 
 // ----------------------------------------------------------------------
 
-type FormValuesProps = {
+interface FormValuesProps {
   password: string;
   confirmPassword: string;
-};
+}
 
 export default function SubmitPasswordForm() {
   const { push, query } = useRouter();
@@ -54,7 +54,7 @@ export default function SubmitPasswordForm() {
     try {
       submitPassword({ id: query.id as string, password: data.password });
       enqueueSnackbar("Change password success!");
-      push(PATH_AUTH.login);
+      push(PATH_AUTH.singIn);
     } catch (error) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, { variant: "error" });
@@ -72,7 +72,7 @@ export default function SubmitPasswordForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => { setShowPassword(!showPassword); }}
                   edge="end"
                 >
                   <Iconify
@@ -92,7 +92,7 @@ export default function SubmitPasswordForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => { setShowPassword(!showPassword); }}
                   edge="end"
                 >
                   <Iconify
