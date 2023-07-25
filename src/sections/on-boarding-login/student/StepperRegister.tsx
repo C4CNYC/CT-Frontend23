@@ -29,7 +29,7 @@ export default function StepperRegister({
       </Typography>
       <Stack gap={2}>
         <RHFTextField
-          name="name"
+          name="firstName"
           label="First Name"
           sx={(theme) => ({
             "& .MuiInputBase-root": {

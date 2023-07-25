@@ -1,6 +1,9 @@
 import { useState } from "react";
 
+import { useAtom } from "jotai";
+
 import {
+  Button,
   Divider,
   IconButton,
   InputAdornment,
@@ -10,11 +13,11 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
-export default function AddTeacher({
-  handleNext,
-}: {
-  handleNext: () => void;
-}): React.ReactElement {
+import { teacherStepperAtom } from "./teacher-stepper-atom";
+
+export default function AddTeacher(): React.ReactElement {
+  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
@@ -30,7 +33,7 @@ export default function AddTeacher({
       </Typography>
       <Stack gap={2}>
         <RHFTextField
-          name="name"
+          name="firstName"
           label="First Name"
           sx={(theme) => ({
             "& .MuiInputBase-root": {
@@ -101,6 +104,21 @@ export default function AddTeacher({
           }}
         />
       </Stack>
+      <Button
+        onClick={() => {
+          setActiveStep(activeStep + 1);
+        }}
+        type="submit"
+        sx={{
+          background: "#43D4DD33",
+          color: "#43D4DD",
+          fontSize: "1.5rem",
+          mt: 2,
+          width: "100%",
+        }}
+      >
+        WHOOPIE
+      </Button>
     </>
   );
 }

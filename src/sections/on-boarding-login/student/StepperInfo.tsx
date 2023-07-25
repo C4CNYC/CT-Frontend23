@@ -31,8 +31,9 @@ export default function StepperInfo({
         This helps us assign you to the right groups
       </Typography>
       <Controller
-        name="birth_date"
+        name="birthDate"
         control={control}
+        defaultValue=""
         render={({ field: { onChange, value, ...restField } }) => (
           <DatePicker
             value={value}
@@ -70,6 +71,7 @@ export default function StepperInfo({
           "& fieldset": { border: "none" },
         })}
       >
+        <option value=""></option>
         <option key={"US"} value={"United States"}>
           United States
         </option>

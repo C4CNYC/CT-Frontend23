@@ -1,12 +1,14 @@
+import { useAtom } from "jotai";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import { Button, Stack, Typography } from "@mui/material";
 
 import { SessionType } from "./SessionType";
+import { teacherStepperAtom } from "./teacher-stepper-atom";
 
-export default function WelcomeStep({
-  nextStep,
-}: Partial<StepWizardChildProps>): React.ReactElement {
+export default function WelcomeStep(): React.ReactElement {
+  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
+
   return (
     <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "60px" }}>
@@ -20,16 +22,14 @@ export default function WelcomeStep({
       </Typography>
       <Button
         disabled={true}
-        onClick={() => {
-          nextStep?.();
-        }}
+        onClick={() => {}}
         sx={{ py: 2, mb: 1, borderRadius: "15px" }}
       >
         <SessionType {...POPUP_SESSION} disabled={true} />
       </Button>
       <Button
         onClick={() => {
-          nextStep?.();
+          setActiveStep(activeStep + 1);
         }}
         sx={{ color: "inherit", py: 2, borderRadius: "15px" }}
       >

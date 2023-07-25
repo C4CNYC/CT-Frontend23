@@ -5,7 +5,6 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import {
-  Box,
   Button,
   IconButton,
   Stack,
@@ -15,7 +14,7 @@ import {
   Stepper,
   stepConnectorClasses,
 } from "@mui/material";
-import { Theme, keyframes, styled } from "@mui/system";
+import { styled } from "@mui/system";
 
 import StepperInfo from "./StepperInfo";
 import StepperRegister from "./StepperRegister";
@@ -24,11 +23,13 @@ import { FormValuesProps } from "./StudentStepper";
 const steps = ["1", "2"];
 interface Props {
   control: Control<FormValuesProps, any>;
+  onSubmit: () => void;
 }
 
 export default function RegisterStudent({
   previousStep,
   control,
+  onSubmit,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const [activeStep, setActiveStep] = useState(0);
 
@@ -90,7 +91,14 @@ export default function RegisterStudent({
       </Stack>
 
       <Button
-        onClick={handleNext}
+        onClick={() => {
+          if (activeStep === 0) {
+            handleNext();
+          }
+          if (activeStep === 1) {
+            onSubmit();
+          }
+        }}
         sx={{
           background: "#43D4DD33",
           color: "#43D4DD",
