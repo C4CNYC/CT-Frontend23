@@ -129,7 +129,6 @@ export function AuthProvider({
         : "";
 
       const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
-      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
       const isManagerRoute = window.location.pathname.includes("manager/");
 
       if (accessToken && isValidToken(accessToken)) {
@@ -139,7 +138,6 @@ export function AuthProvider({
         if (isManagerRoute && data.role === Role.Student) {
           window.location.pathname = "/permission-denied";
         }
-        reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
         reduxDispatch(setUser(data));
 
         dispatch({
@@ -193,9 +191,7 @@ export function AuthProvider({
       });
 
       const { access_token: accessToken, user } = data;
-      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
       reduxDispatch(setUser(user));
-      reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
       setSession(
         accessToken,
         localStorage.getItem("tenantName") ?? "codetribe"

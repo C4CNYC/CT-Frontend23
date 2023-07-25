@@ -7,7 +7,6 @@ import EditorSkeleton from "./EditorSkeleton";
 import { CodeEditor } from "./editor";
 import { getDocument } from "./extentions/collab";
 
-const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 export interface State {
   connected: boolean;
   version?: number;
@@ -31,6 +30,8 @@ export const RealTimeEditor = memo(
     preloadedCode,
     code,
   }: IRealTimeEditor): React.ReactElement => {
+    const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
+
     const [state, setState] = useState<State>({
       connected: false,
       version: undefined,
@@ -112,7 +113,7 @@ export const RealTimeEditor = memo(
           .cm-editor {
             height: 100vh
           }
-          
+
         `}
         </style>
         <CodeEditor

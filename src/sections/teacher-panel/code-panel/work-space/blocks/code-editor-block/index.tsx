@@ -12,8 +12,6 @@ import { mapValidations } from "src/utils/validationMaping";
 import BaseBlock from "../BaseBlock";
 import Checkers from "./code-checkers";
 
-const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
-
 interface ICodeEditorBlock {
   columns?: 1 | 2;
   validations: Array<ILessonContentValidation & BaseResponseInterface>;
@@ -36,6 +34,8 @@ ICodeEditorBlock): React.ReactElement | null => {
   const { user } = useAuthContext();
   const { query } = useRouter();
   const [code, setCode] = useState<string>("");
+
+  const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
   return (
     <BaseBlock columns={columns}>
