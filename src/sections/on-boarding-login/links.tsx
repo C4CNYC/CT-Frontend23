@@ -21,12 +21,10 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
         display: "flex",
         width: "100%",
         justifyContent: "center",
-        position: "absolute",
-        bottom: "-15px",
-        left: "0px",
         gap: 1,
         color: "inherit",
         alignItems: "center",
+        mt: "auto",
       }}
     >
       {isRegister ? (

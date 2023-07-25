@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import {
@@ -20,18 +21,24 @@ export default function SingInPassword({
 
   return (
     <>
+      <IconButton
+        onClick={() => {
+          previousStep?.();
+        }}
+        sx={{ ml: "-30px", mt: "-30px" }}
+      >
+        <MdArrowBackIosNew />
+      </IconButton>
       <Stack
         direction="row"
-        sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 } }}
+        sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 }, mt: 1, mb: 4 }}
       >
         <Typography variant="h3">Sign in with Email</Typography>
         <Typography variant="h2" sx={{ ml: 1 }}>
           ✉️
         </Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-        Welcome back
-      </Typography>
+
       <Stack sx={{ mt: 2 }}>
         <RHFTextField
           name="password"
@@ -83,22 +90,6 @@ export default function SingInPassword({
           }}
         >
           LET'S GO!
-        </Button>
-        <Button
-          onClick={() => {
-            previousStep?.();
-          }}
-          sx={{
-            background: "#EE467A33",
-            color: "#EE467A",
-            fontSize: "1.5rem",
-            mb: 2,
-            "&:hover": {
-              background: "#f9e0ef",
-            },
-          }}
-        >
-          BACK
         </Button>
       </Stack>
     </>

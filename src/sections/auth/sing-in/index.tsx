@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import StepWizard from "react-step-wizard";
@@ -7,12 +9,12 @@ import { Stack } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
 import { SingLink } from "@sections/on-boarding-login/links";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
+import EmailNotFound from "./EmailNotFound";
 import SingInLogin from "./SingInLogin";
 import SingInPassword from "./SingInPassword";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { useRouter } from "next/router";
-import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 interface FormValuesProps {
   email: string;
@@ -27,8 +29,7 @@ export default function SingInMain(): React.ReactElement {
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
-    password: Yup.string()
-      .required("Password is required")
+    password: Yup.string().required("Password is required"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -40,7 +41,7 @@ export default function SingInMain(): React.ReactElement {
       await login(data.email, data.password, "codetribe");
       replace(STUDENT_PATH_AFTER_LOGIN);
     } catch (e) {
-      enqueueSnackbar("WRONG CREDENTIAL", { variant: "error" })
+      enqueueSnackbar("WRONG CREDENTIAL", { variant: "error" });
     }
   };
 
@@ -56,6 +57,7 @@ export default function SingInMain(): React.ReactElement {
         <StepWizard transitions={custom}>
           <SingInLogin isValid={methods.formState.isValid} />
           <SingInPassword />
+          <EmailNotFound />
         </StepWizard>
       </FormProvider>
       <SingLink isRegister />

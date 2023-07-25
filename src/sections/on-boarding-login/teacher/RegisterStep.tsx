@@ -1,11 +1,13 @@
 import { useState } from "react";
 
 import { fi } from "date-fns/locale";
+import { MdArrowBackIos, MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import {
   Box,
   Button,
+  IconButton,
   Stack,
   Step,
   StepConnector,
@@ -37,7 +39,19 @@ export default function RegisterStep({
   };
 
   return (
-    <Stack>
+    <>
+      <IconButton
+        onClick={() => {
+          if (activeStep === 1) {
+            handleBack();
+          } else {
+            previousStep?.();
+          }
+        }}
+        sx={{ ml: "-30px", mt: "-30px" }}
+      >
+        <MdArrowBackIosNew />
+      </IconButton>
       <Stepper
         activeStep={activeStep}
         sx={(theme) => ({
@@ -52,6 +66,8 @@ export default function RegisterStep({
           },
           "& .MuiStepIcon-root": { color: theme.palette.grey[300] },
           justifySelf: "flex-start",
+          px: 3,
+          mt: "-38px",
         })}
         connector={<ColorlibConnector />}
       >
@@ -61,7 +77,7 @@ export default function RegisterStep({
           </Step>
         ))}
       </Stepper>
-      <Stack sx={{ minHeight: "400px" }}>
+      <Stack sx={{ minHeight: "400px", mt: "30px" }}>
         {activeStep === 0 && <AddTeacher handleNext={handleNext} />}
         {activeStep === 1 && <AddSchool handleBack={handleBack} />}
       </Stack>
@@ -72,32 +88,12 @@ export default function RegisterStep({
           color: "#43D4DD",
           fontSize: "1.5rem",
           mt: 1,
+          width: "100%",
         }}
       >
         {activeStep === 0 ? "WHOOPIE" : "ALL DONE"}
       </Button>
-
-      <Button
-        onClick={() => {
-          if (activeStep === 1) {
-            handleBack();
-          } else {
-            previousStep?.();
-          }
-        }}
-        sx={{
-          background: "#EE467A33",
-          color: "#EE467A",
-          fontSize: "1.5rem",
-          mt: 2,
-          "&:hover": {
-            background: "#f9e0ef",
-          },
-        }}
-      >
-        BACK
-      </Button>
-    </Stack>
+    </>
   );
 }
 

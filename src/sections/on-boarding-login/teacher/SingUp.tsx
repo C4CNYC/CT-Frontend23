@@ -1,5 +1,6 @@
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { MdArrowBackIos, MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import {
@@ -26,7 +27,20 @@ export default function SingUp({
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   return (
     <>
-      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 } }}>
+      {isTeacher && (
+        <IconButton
+          onClick={() => {
+            previousStep?.();
+          }}
+          sx={{ ml: "-30px", mt: "-30px" }}
+        >
+          <MdArrowBackIosNew />
+        </IconButton>
+      )}
+      <Stack
+        direction="row"
+        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: isTeacher ? "50px" : "70px" }}
+      >
         <Typography variant="h3">Sing up</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           😃
@@ -93,24 +107,6 @@ export default function SingUp({
           <FcGoogle size="50px" />
           Sing up with Google
         </Button>
-        {isTeacher && (
-          <Button
-            onClick={() => {
-              previousStep?.();
-            }}
-            sx={{
-              background: "#EE467A33",
-              color: "#EE467A",
-              fontSize: "1.5rem",
-              mt: 2,
-              "&:hover": {
-                background: "#f9e0ef",
-              },
-            }}
-          >
-            BACK
-          </Button>
-        )}
       </Stack>
     </>
   );
