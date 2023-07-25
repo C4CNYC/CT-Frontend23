@@ -1,6 +1,6 @@
 import { countries } from "@assets/data";
 
-import { Button, MenuItem, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 
@@ -45,6 +45,7 @@ export default function AddSchool({ handleBack }: Props): React.ReactElement {
           })}
         />
         <RHFSelect
+          native
           name="schoolType"
           label="Type of School"
           sx={(theme) => ({

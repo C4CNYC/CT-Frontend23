@@ -8,8 +8,8 @@ export default function WelcomeStep({
   nextStep,
 }: Partial<StepWizardChildProps>): React.ReactElement {
   return (
-    <Stack>
-      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 } }}>
+    <>
+      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "60px" }}>
         <Typography variant="h3">Hey, Teachers</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           👋
@@ -35,7 +35,7 @@ export default function WelcomeStep({
       >
         <SessionType {...LAUNCH_SESSION} />
       </Button>
-    </Stack>
+    </>
   );
 }
 
