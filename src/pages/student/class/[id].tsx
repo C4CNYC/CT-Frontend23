@@ -22,11 +22,11 @@ HomeOverview.getLayout = (page: React.ReactElement) => (
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { query } = useRouter();
-  const { data, isLoading } = useGetClassQuery(
+  const { data, isLoading, isFetching } = useGetClassQuery(
     { id: query.id as string },
     { skip: !query.id }
   );
-  if (isLoading || !data) {
+  if (isFetching || isLoading || !data) {
     return (
       <Skeleton
         sx={{ width: "100%", height: "188px" }}
