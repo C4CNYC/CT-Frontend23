@@ -1,5 +1,5 @@
 import LoginLayout from "@layouts/login/LoginLayout";
-import StudentStepper from "@sections/on-boarding-login/student/StudentStepper";
+import StudentStepper from "@sections/on-boarding-register/student/StudentStepper";
 import GuestGuard from "src/auth/GuestGuard";
 
 export default function StudentOnBoarding(): React.ReactElement {

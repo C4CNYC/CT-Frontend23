@@ -29,6 +29,7 @@ export function SessionType({
 }: Props): React.ReactElement {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Stack
       direction="row"
