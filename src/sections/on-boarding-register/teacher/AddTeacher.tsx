@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { useAtom } from "jotai";
+
+import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Divider,
   IconButton,
   InputAdornment,
@@ -11,21 +13,38 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
+import { teacherStepperAtom } from "./teacher-stepper-atom";
+
 interface Props {
-  handleNext: () => void;
+  onSubmit: () => void;
+  isSubmiting: boolean;
+  isSubmitSuccessful: boolean;
 }
-export default function StepperRegister({
-  handleNext,
+
+export default function AddTeacher({
+  onSubmit,
+  isSubmiting,
+  isSubmitSuccessful,
 }: Props): React.ReactElement {
+  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setActiveStep(activeStep + 1);
+    }
+  }, [isSubmitSuccessful]);
 
   return (
     <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
-        <Typography variant="h3">Register</Typography>
+        <Typography variant="h3">Register as Teacher</Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-        This name will be on your certificate
+      <Typography
+        variant="body1"
+        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}
+      >
+        Get ready for awesome
       </Typography>
       <Stack gap={2}>
         <RHFTextField
@@ -37,6 +56,12 @@ export default function StepperRegister({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
         />
         <RHFTextField
@@ -48,6 +73,12 @@ export default function StepperRegister({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
         />
         <Divider sx={{ my: 1 }} />
@@ -62,6 +93,12 @@ export default function StepperRegister({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
           })}
           InputProps={{
             endAdornment: (
@@ -82,6 +119,21 @@ export default function StepperRegister({
           }}
         />
       </Stack>
+      <LoadingButton
+        onClick={() => {
+          onSubmit();
+        }}
+        loading={isSubmiting}
+        sx={{
+          background: "#43D4DD33",
+          color: "#43D4DD",
+          fontSize: "1.5rem",
+          mt: 2,
+          width: "100%",
+        }}
+      >
+        WHOOPIE
+      </LoadingButton>
     </>
   );
 }

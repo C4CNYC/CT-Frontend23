@@ -1,14 +1,11 @@
-import { BaseSyntheticEvent, SyntheticEvent } from "react";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
-import StepWizard from "react-step-wizard";
 import * as Yup from "yup";
 
 import { Stack } from "@mui/material";
 
-import { FormProvider } from "@components";
+import { FormProvider, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
@@ -27,6 +24,7 @@ interface FormValuesProps {
 }
 
 export default function TeacherStepper(): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
   const [activeStep] = useAtom(teacherStepperAtom);
   const { register } = useAuthContext();
 
@@ -49,23 +47,18 @@ export default function TeacherStepper(): React.ReactElement {
     mode: "all",
   });
 
-  console.log(methods.getValues(), methods.formState.isValid);
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      const user = await register(
-        data.email,
-        data.password,
-        data.firstName,
-        data.surname
-      );
-      console.log(user, "user");
+      await register(data.email, data.password, data.firstName, data.surname);
     } catch (error) {
-      // methods.setError("afterSubmit", {
-      //   ...error,
-      //   message: error.message,
-      // });
+      methods.setError("root", {
+        ...error,
+        message: error.message,
+      });
+      enqueueSnackbar(error.message, { variant: "error" });
     }
   };
+
   return (
     <Stack
       sx={{
@@ -75,7 +68,7 @@ export default function TeacherStepper(): React.ReactElement {
       }}
     >
       <RegisterStudenTeacher isTeacher />
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider methods={methods}>
         {activeStep === 0 && <WelcomeStep />}
         {activeStep === 1 && (
           <SingUp
@@ -87,7 +80,13 @@ export default function TeacherStepper(): React.ReactElement {
           />
         )}
         {(activeStep === 2 || activeStep === 3) && <StepperProgress />}
-        {activeStep === 2 && <AddTeacher />}
+        {activeStep === 2 && (
+          <AddTeacher
+            onSubmit={methods.handleSubmit(onSubmit)}
+            isSubmiting={methods.formState.isSubmitting}
+            isSubmitSuccessful={methods.formState.isSubmitSuccessful}
+          />
+        )}
       </FormProvider>
 
       {activeStep === 3 && <AddSchool />}

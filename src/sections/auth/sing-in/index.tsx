@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -8,7 +9,7 @@ import * as Yup from "yup";
 import { Stack } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
-import { SingLink } from "@sections/on-boarding-login/links";
+import { SingLink } from "@sections/on-boarding-register/links";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
@@ -23,7 +24,7 @@ interface FormValuesProps {
 export default function SingInMain(): React.ReactElement {
   const { replace } = useRouter();
   const { login } = useAuthContext();
-  const { enqueueSnackbar } = useSnackbar();
+  const [isError, setError] = useState("");
 
   const CreateEmailSchema = Yup.object().shape({
     email: Yup.string()
@@ -41,7 +42,7 @@ export default function SingInMain(): React.ReactElement {
       await login(data.email, data.password, "codetribe");
       replace(STUDENT_PATH_AFTER_LOGIN);
     } catch (e) {
-      enqueueSnackbar("WRONG CREDENTIAL", { variant: "error" });
+      setError(e.message);
     }
   };
 
@@ -56,8 +57,11 @@ export default function SingInMain(): React.ReactElement {
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <StepWizard transitions={custom}>
           <SingInLogin isValid={methods.formState.isValid} />
-          <SingInPassword />
-          <EmailNotFound />
+          <SingInPassword
+            isSubmiting={methods.formState.isSubmitting}
+            isError={isError}
+          />
+          <EmailNotFound setError={setError} />
         </StepWizard>
       </FormProvider>
       <SingLink isRegister />

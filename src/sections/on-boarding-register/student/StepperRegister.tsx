@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
 
+import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Divider,
   IconButton,
   InputAdornment,
@@ -13,23 +13,35 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
-import { teacherStepperAtom } from "./teacher-stepper-atom";
+import { studentStepperAtom } from "./student-stepper-atom";
 
-export default function AddTeacher(): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
+interface Props {
+  onSubmit: () => void;
+  isSubmiting: boolean;
+  isSubmitSuccessful: boolean;
+}
 
+export default function StepperRegister({
+  onSubmit,
+  isSubmiting,
+  isSubmitSuccessful,
+}: Props): React.ReactElement {
+  const [aciveStep, setActiveStep] = useAtom(studentStepperAtom);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setActiveStep(aciveStep + 1);
+    }
+  }, [isSubmitSuccessful]);
 
   return (
     <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
-        <Typography variant="h3">Register as Teacher</Typography>
+        <Typography variant="h3">Register</Typography>
       </Stack>
-      <Typography
-        variant="body1"
-        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}
-      >
-        Get ready for awesome
+      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+        This name will be on your certificate
       </Typography>
       <Stack gap={2}>
         <RHFTextField
@@ -41,12 +53,6 @@ export default function AddTeacher(): React.ReactElement {
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
           })}
         />
         <RHFTextField
@@ -58,12 +64,6 @@ export default function AddTeacher(): React.ReactElement {
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
           })}
         />
         <Divider sx={{ my: 1 }} />
@@ -104,11 +104,11 @@ export default function AddTeacher(): React.ReactElement {
           }}
         />
       </Stack>
-      <Button
+      <LoadingButton
         onClick={() => {
-          setActiveStep(activeStep + 1);
+          onSubmit();
         }}
-        type="submit"
+        loading={isSubmiting}
         sx={{
           background: "#43D4DD33",
           color: "#43D4DD",
@@ -118,7 +118,7 @@ export default function AddTeacher(): React.ReactElement {
         }}
       >
         WHOOPIE
-      </Button>
+      </LoadingButton>
     </>
   );
 }

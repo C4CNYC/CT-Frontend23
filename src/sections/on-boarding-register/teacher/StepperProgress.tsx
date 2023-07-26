@@ -21,6 +21,7 @@ const steps = ["1", "2"];
 export default function StepperProgress(): React.ReactElement {
   const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
   const [stepperActive, setStepperActive] = useState(0);
+
   useEffect(() => {
     if (activeStep === 2) {
       setStepperActive(0);
@@ -29,6 +30,7 @@ export default function StepperProgress(): React.ReactElement {
       setStepperActive(1);
     }
   }, [activeStep]);
+
   return (
     <>
       {activeStep === 2 && (

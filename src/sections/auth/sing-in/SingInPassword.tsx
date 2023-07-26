@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 
+import { SetStateAction } from "jotai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   IconButton,
@@ -13,12 +15,22 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
+interface Props {
+  isSubmiting: boolean;
+  isError: string;
+}
+
 export default function SingInPassword({
   previousStep,
   nextStep,
-}: Partial<StepWizardChildProps>): React.ReactElement {
+  isSubmiting,
+  isError,
+}: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
+  if (isError) {
+    nextStep?.();
+  }
   return (
     <>
       <IconButton
@@ -76,11 +88,9 @@ export default function SingInPassword({
             ),
           }}
         />
-        <Button
+        <LoadingButton
           type="submit"
-          onClick={() => {
-            nextStep?.();
-          }}
+          loading={isSubmiting}
           sx={{
             background: "#43D4DD33",
             color: "#43D4DD",
@@ -90,7 +100,7 @@ export default function SingInPassword({
           }}
         >
           LET'S GO!
-        </Button>
+        </LoadingButton>
       </Stack>
     </>
   );

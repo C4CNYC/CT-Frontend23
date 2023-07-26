@@ -1,5 +1,4 @@
 import { useAtom } from "jotai";
-import { StepWizardChildProps } from "react-step-wizard";
 
 import { Button, Stack, Typography } from "@mui/material";
 

@@ -1,30 +1,31 @@
-import { useEffect } from "react";
-
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
-import StepWizard from "react-step-wizard";
 import * as Yup from "yup";
 
 import { Stack } from "@mui/material";
 
-import { FormProvider } from "@components";
+import { FormProvider, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
 import SingUp from "../teacher/SingUp";
-import RegisterStudent from "./RegisterStudent";
+import StepperInfo from "./StepperInfo";
+import StepperProgres from "./StepperProgress";
+import StepperRegister from "./StepperRegister";
+import { studentStepperAtom } from "./student-stepper-atom";
 
-export interface FormValuesProps {
+interface FormValuesProps {
   email: string;
   firstName: string;
   surname: string;
   password: string;
-  birthDate: string;
-  country: string;
 }
 
 export default function StudentStepper(): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
   const { register } = useAuthContext();
+  const [activeStep] = useAtom(studentStepperAtom);
 
   const CreateRegisterSchema = Yup.object().shape({
     email: Yup.string()
@@ -45,7 +46,7 @@ export default function StudentStepper(): React.ReactElement {
     mode: "all",
     defaultValues: {},
   });
-  console.log(methods.getValues(), methods.formState.isValid);
+
   const onSubmit = async (data: FormValuesProps) => {
     try {
       const user = await register(
@@ -54,21 +55,26 @@ export default function StudentStepper(): React.ReactElement {
         data.firstName,
         data.surname
       );
-      console.log(user, "user");
-    } catch (error) {}
-    console.log(data);
+    } catch (error) {
+      methods.setError("root", {
+        ...error,
+        message: error.message,
+      });
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
   };
+
   return (
-    <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-      <Stack
-        sx={{
-          minHeight: "650px",
-          justifyContent: "center",
-          position: "relative",
-        }}
-      >
-        <RegisterStudenTeacher />
-        <StepWizard transitions={custom}>
+    <Stack
+      sx={{
+        minHeight: "550px",
+        justifyContent: "center",
+        position: "relative",
+      }}
+    >
+      <RegisterStudenTeacher />
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+        {activeStep === 0 && (
           <SingUp
             isValid={
               !methods.formState.errors.email &&
@@ -76,14 +82,19 @@ export default function StudentStepper(): React.ReactElement {
             }
             isTeacher={false}
           />
-          <RegisterStudent
-            control={methods.control}
+        )}
+        {(activeStep === 1 || activeStep === 2) && <StepperProgres />}
+
+        {activeStep === 1 && (
+          <StepperRegister
             onSubmit={methods.handleSubmit(onSubmit)}
+            isSubmiting={methods.formState.isSubmitting}
+            isSubmitSuccessful={methods.formState.isSubmitSuccessful}
           />
-        </StepWizard>
-        <SingLink />
-      </Stack>
-    </FormProvider>
+        )}
+      </FormProvider>
+      {activeStep === 2 && <StepperInfo />}
+      <SingLink />
+    </Stack>
   );
 }
-const custom = {};

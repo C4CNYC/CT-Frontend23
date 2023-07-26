@@ -1,49 +1,91 @@
-import { BaseSyntheticEvent } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { countries } from "@assets/data";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
-import { MdArrowBackIosNew } from "react-icons/md";
 import * as Yup from "yup";
 
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Stack, Typography } from "@mui/material";
 
-import { FormProvider, RHFSelect, RHFTextField } from "@components";
+import {
+  FormProvider,
+  RHFSelect,
+  RHFTextField,
+  useSnackbar,
+} from "@components";
+import { PATH_AUTH } from "@routes/paths";
+import { SchoolType } from "src/redux/services/enums/school-type.enum";
+import {
+  useGetMySchoolsQuery,
+  useUpdateSchoolProfileMutation,
+} from "src/redux/services/manager/schools-manager";
 
 import { teacherStepperAtom } from "./teacher-stepper-atom";
 
 interface SchoolFormProps {
-  schcoolName: string;
-  type: string;
+  schoolName: string;
+  type: SchoolType;
   city: string;
   zip: string;
   country: string;
 }
 
 export default function AddSchool(): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
+  const [, setActiveStep] = useAtom(teacherStepperAtom);
+  const { push } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
+  const { data, isLoading } = useGetMySchoolsQuery({});
+  const [updateSchool, { isLoading: isUpdating }] =
+    useUpdateSchoolProfileMutation();
 
   const CreateSchoolSchema = Yup.object().shape({
-    shcoolName: Yup.string().required("Name is required"),
+    schoolName: Yup.string().required("Name is required"),
     type: Yup.string().required("Choose type of school"),
     city: Yup.string().required("City your surname"),
     zip: Yup.string(),
     country: Yup.string().required("Choose school country"),
   });
 
+  useEffect(() => {
+    if (!isLoading && data) {
+      methods.reset({
+        schoolName: data.data[0].name ?? "",
+        type: data.data[0].type ?? SchoolType.Other,
+        city: data.data[0].city ?? "",
+        zip: data.data[0].zip ?? "",
+        country: data.data[0].country ?? "",
+      });
+    }
+  }, [isLoading]);
+
   const methods = useForm<SchoolFormProps>({
     resolver: yupResolver(CreateSchoolSchema),
     mode: "all",
   });
 
-  const onSubmit = async (data: SchoolFormProps) => {
-    console.log(data);
+  const onSubmit = async (schoolData: SchoolFormProps) => {
+    try {
+      await updateSchool({
+        schoolId: data?.data[0].id as string,
+        name: schoolData.schoolName,
+        type: schoolData.type,
+        zip: schoolData.zip,
+        country: schoolData.country,
+        city: schoolData.city,
+      }).unwrap();
+      push(PATH_AUTH.singIn);
+      setActiveStep(0);
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
   };
 
   return (
     <>
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormProvider methods={methods}>
         <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}>
           <Typography
             variant="h3"
@@ -94,30 +136,13 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
-            <option key="pre-k" value="Pre-K">
-              Pre-K
-            </option>
-            <option key="primary" value="primary school">
-              Primary School
-            </option>
-            <option key="middle" value="middle school">
-              Middle School
-            </option>
-            <option key="high" value="high school">
-              High School
-            </option>
-            <option key="technical" value="technical school">
-              Technical School
-            </option>
-            <option key="college" value="college">
-              College
-            </option>
-            <option key="university" value="university">
-              University
-            </option>
-            <option key="other" value="other">
-              Other
-            </option>
+            <option key="empty" value="empty"></option>
+
+            {Object.keys(SchoolType).map((c) => (
+              <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
+                {c}
+              </option>
+            ))}
           </RHFSelect>
           <Stack direction="row" sx={{ gap: 2 }}>
             <RHFTextField
@@ -140,6 +165,7 @@ export default function AddSchool(): React.ReactElement {
             <RHFTextField
               name="zip"
               label="Zip code"
+              type="number"
               sx={(theme) => ({
                 "& .MuiInputBase-root": {
                   height: "52px",
@@ -173,6 +199,7 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
+            <option key="empty" value="empty"></option>
             <option key={"US"} value={"United States"}>
               United States
             </option>
@@ -186,7 +213,8 @@ export default function AddSchool(): React.ReactElement {
               ))}
           </RHFSelect>
         </Stack>
-        <Button
+        <LoadingButton
+          onClick={methods.handleSubmit(onSubmit)}
           sx={{
             background: "#43D4DD33",
             color: "#43D4DD",
@@ -194,16 +222,10 @@ export default function AddSchool(): React.ReactElement {
             mt: 1,
             width: "100%",
           }}
+          loading={isUpdating}
         >
           ALL DONE
-        </Button>
-        <IconButton
-          onClick={() => {
-            setActiveStep(activeStep - 1);
-          }}
-        >
-          <MdArrowBackIosNew />
-        </IconButton>
+        </LoadingButton>
       </FormProvider>
     </>
   );

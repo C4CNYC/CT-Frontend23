@@ -15,6 +15,7 @@ import {
 
 import { RHFTextField } from "@components";
 
+import { studentStepperAtom } from "../student/student-stepper-atom";
 import { teacherStepperAtom } from "./teacher-stepper-atom";
 
 interface Props {
@@ -28,6 +29,7 @@ export default function SingUp({
   isTeacher,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
+  const [activeStepStudent, setActiveStepStudent] = useAtom(studentStepperAtom);
 
   return (
     <>
@@ -81,7 +83,7 @@ export default function SingUp({
                     if (isTeacher) {
                       setActiveStep(activeStep + 1);
                     } else {
-                      nextStep?.();
+                      setActiveStepStudent(activeStepStudent + 1);
                     }
                   }}
                 >
