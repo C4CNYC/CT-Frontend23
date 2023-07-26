@@ -18,6 +18,17 @@ const extendedApi = studentApi.injectEndpoints({
       }),
       invalidatesTags: ["Classes"],
     }),
+    joinClass: builder.mutation<
+      { status: "joined"; tribe: IClass & BaseResponseInterface },
+      { share_token: string }
+    >({
+      query: ({ ...body }) => ({
+        url: "/class/join",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Classes"],
+    }),
     getClasses: builder.query<
       BaseListResponseInterface<IClass & BaseResponseInterface>,
       ClassSearchParams
@@ -57,5 +68,6 @@ export const {
   useGetClassQuery,
   useGetClassMentorQuery,
   // -------------mutation-----------
+  useJoinClassMutation,
   useCreateClassMutation,
 } = extendedApi;

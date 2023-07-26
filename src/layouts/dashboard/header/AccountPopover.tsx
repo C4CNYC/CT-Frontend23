@@ -54,7 +54,7 @@ export default function AccountPopover(): React.ReactElement {
   const handleLogout = (): void => {
     try {
       logout();
-      replace(PATH_AUTH.login);
+      replace(PATH_AUTH.singIn);
       setOpenPopover(null);
     } catch (error: any) {
       enqueueSnackbar("Unable to logout!", { variant: "error" });

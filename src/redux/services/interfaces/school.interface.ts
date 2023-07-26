@@ -1,11 +1,15 @@
 import { BaseResponseInterface, BaseSearchInterface } from "@utils";
 
+import { SchoolType } from "../enums/school-type.enum";
+
 export interface ISchool extends BaseResponseInterface {
   name: string;
   city: string;
   avatar: string;
   cover: string;
   country: string;
+  type: SchoolType | null;
+  zip: string | null;
 }
 
 export interface ISchoolSearchParams extends BaseSearchInterface {
@@ -46,6 +50,8 @@ export interface SchoolProfile {
   phone?: string;
   about?: string;
   socials?: [];
+  type?: SchoolType;
+  zip: string;
   student_count?: number;
   teacher_count?: number;
 }

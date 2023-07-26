@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -20,6 +21,7 @@ import {
 import { Stack } from "@mui/system";
 
 import { Iconify } from "../iconify";
+import ClassroomModal from "../classroom-modal";
 
 interface Prop {
   children: React.ReactElement;
@@ -216,79 +218,52 @@ export default function ShareGroupModal({
             >
               Other ways to add students:
             </Typography>
-            <Box
-              sx={{
-                backgroundColor: "#f0f0f0",
-                width: "100%",
-                height: "55px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                borderRadius: "10px",
-                pr: "15px",
-                mb: "12px",
-                cursor: "pointer",
-              }}
-            >
-              <Box display="flex" alignItems="center" width="100%">
-                <Button
-                  startIcon={<SiGoogleclassroom />}
-                  sx={{
-                    background: "#f9f9f9",
-                    color: "#000",
-                    "&:hover": {
-                      background: "#bebebe",
-                    },
-                    width: "34px",
-                    height: "40px",
-                    m: "0px 8px",
-                  }}
-                ></Button>
-                <Box ml="10px">
-                  <Typography> Google Classroom</Typography>
-                </Box>
-                <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
-              </Box>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              width="100%"
-              sx={{
-                backgroundColor: "#f0f0f0",
-                width: "100%",
-                height: "55px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                borderRadius: "10px",
-                pr: "15px",
-                mb: "12px",
-                cursor: "pointer",
-              }}
-            >
+            <ClassroomModal>
               <Button
-                startIcon={<MdOutlineMail />}
+                fullWidth
                 sx={{
                   background: "#f9f9f9",
                   color: "#000",
+                  justifyContent: "space-between",
+                  borderRadius: "8px",
+                  mb: "16px",
+                  p: "18px",
                   "&:hover": {
                     background: "#bebebe",
                   },
-                  width: "34px",
-                  height: "40px",
-                  m: "0px 8px",
                 }}
-              ></Button>
-              <Box ml="10px">
-                <Typography> Email address or domain</Typography>
+              >
+                <Box display="flex" alignItems="center">
+                  <SiGoogleclassroom size={24} />
+                  <Typography ml={2}> Google Classroom</Typography>
+                </Box>
+                <AiOutlineArrowRight />
+              </Button>
+            </ClassroomModal>
+
+            <Button
+              fullWidth
+              sx={{
+                backgroundColor: "#f9f9f9",
+                color: "#000",
+                justifyContent: "space-between",
+                borderRadius: "8px",
+                p: "18px",
+                "&:hover": {
+                  background: "#bebebe",
+                },
+              }}
+            >
+              <Box display="flex" alignItems="center">
+                <MdOutlineMail size={24} />
+                <Typography ml={2}> Email address or domain</Typography>
               </Box>
-              <AiOutlineArrowRight style={{ marginLeft: "auto" }} />
-            </Box>
-            <Link href="#" color="inherit">
-              By username
-            </Link>
+              <AiOutlineArrowRight />
+            </Button>
           </Box>
+          {/* <Link href="#" color="inherit">
+              By username
+            </Link> */}
         </Box>
       </Dialog>
     </>

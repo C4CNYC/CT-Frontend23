@@ -11,12 +11,21 @@ export interface IClass {
   name: string;
   active?: boolean;
   students?: User[];
+  setting: IClassSetting;
   school?: ISchool;
   courses?: ICourseElement[];
   avatar?: string;
   cover?: string;
   id?: string;
 }
+
+export interface IClassSetting {
+  share_token_enable: boolean;
+  request_join_enable: boolean;
+  subscribe_enable: boolean;
+  share_token: string;
+}
+
 export interface IMentor {
   id: string;
   email: string;

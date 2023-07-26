@@ -129,7 +129,6 @@ export function AuthProvider({
         : "";
 
       const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
-      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
       const isManagerRoute = window.location.pathname.includes("manager/");
 
       if (accessToken && isValidToken(accessToken)) {
@@ -139,7 +138,6 @@ export function AuthProvider({
         if (isManagerRoute && data.role === Role.Student) {
           window.location.pathname = "/permission-denied";
         }
-        reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
         reduxDispatch(setUser(data));
 
         dispatch({
@@ -193,32 +191,6 @@ export function AuthProvider({
       });
 
       const { access_token: accessToken, user } = data;
-      const parsedJWT = jwt_decode<{ role: Role }>(accessToken ?? "");
-      reduxDispatch(setUser(user));
-      reduxDispatch(setStudentMode(parsedJWT.role === Role.Student));
-      setSession(
-        accessToken,
-        localStorage.getItem("tenantName") ?? "codetribe"
-      );
-
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user,
-        },
-      });
-    },
-    []
-  );
-
-    // LOGIN WITH GOOGLE
-  const loginWithGoogle = useCallback(
-    async (token: string) => {
-      const { data } = await axios.post<any, any>("auth/google-signin", {
-        auth_token: token
-      });
-
-      const { access_token: accessToken, user } = data;
       reduxDispatch(setUser(user));
       setSession(
         accessToken,
@@ -234,6 +206,24 @@ export function AuthProvider({
     },
     []
   );
+
+  // LOGIN WITH GOOGLE
+  const loginWithGoogle = useCallback(async (token: string) => {
+    const { data } = await axios.post<any, any>("auth/google-signin", {
+      auth_token: token,
+    });
+
+    const { access_token: accessToken, user } = data;
+    reduxDispatch(setUser(user));
+    setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
+
+    dispatch({
+      type: Types.LOGIN,
+      payload: {
+        user,
+      },
+    });
+  }, []);
 
   // REGISTER
   const register = useCallback(
@@ -242,13 +232,14 @@ export function AuthProvider({
       password: string,
       firstName: string,
       lastName: string,
-      tenantName: string
+      tenantName?: string
     ) => {
-      await axios.post("/tenant", {
-        name: tenantName,
-      });
-      localStorage.setItem("tenantName", tenantName);
-
+      if (tenantName) {
+        await axios.post("/tenant", {
+          name: tenantName,
+        });
+        localStorage.setItem("tenantName", tenantName);
+      }
       const { data } = await axios.post("/auth/signup", {
         email,
         password,
