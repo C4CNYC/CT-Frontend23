@@ -13,7 +13,8 @@ import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
 import CreateClassModal from "./CreateClassModal";
 import TribeListItem from "./TribesListItem";
-import JoinGroupModal from "src/components/join-group-modal";
+
+import JoinClassModal from "./JoinTribeModal";
 
 export default function MenuTribesList(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -88,12 +89,12 @@ export default function MenuTribesList(): React.ReactElement {
             </MenuItem>
           </CreateClassModal>
         </RoleBasedGuard>
-        <JoinGroupModal  rowId={""}>
+        <JoinClassModal>
           <MenuItem>
             <FaCampground size="20px" />
             Join a group
           </MenuItem>
-        </JoinGroupModal>
+        </JoinClassModal>
       </MenuPopover>
     </Stack>
   );

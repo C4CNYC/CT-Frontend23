@@ -20,10 +20,8 @@ import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { getLinearGradient } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
@@ -72,22 +70,26 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
               px: 2,
             }}
           >
-            <Stack
-              direction="row"
-              alignItems="center"
-              sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
-            >
-              <Typography variant="subtitle2">Join-code:</Typography>
-              <Button
-                onClick={() => {
-                  onCopy("AHWE2383");
-                }}
-                sx={{ gap: 0.5, color: "inherit", p: 0 }}
-              >
-                <Typography variant="subtitle2">AHWE2383</Typography>
-                <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
-              </Button>
-            </Stack>
+            {
+              data?.setting?.share_token_enable ? (
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+                >
+                  <Typography variant="subtitle2">Join-code:</Typography>
+                  <Button
+                    onClick={() => {
+                      onCopy(data?.setting?.share_token);
+                    }}
+                    sx={{ gap: 0.5, color: "inherit", p: 0 }}
+                  >
+                    <Typography variant="subtitle2">{data?.setting?.share_token}</Typography>
+                    <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
+                  </Button>
+                </Stack>
+              ) : null
+            }
             <Link
               sx={{
                 color: "inherit",

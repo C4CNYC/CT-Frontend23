@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import {
-  Button,
   Divider,
   IconButton,
   InputAdornment,
@@ -23,7 +22,10 @@ export default function AddTeacher({
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
         <Typography variant="h3">Register as Teacher</Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+      <Typography
+        variant="body1"
+        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}
+      >
         Get ready for awesome
       </Typography>
       <Stack gap={2}>

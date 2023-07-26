@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+
 import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -14,8 +15,8 @@ import {
 } from "@mui/material";
 
 import { RHFTextField } from "@components";
-import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 export default function SingInLogin({
   nextStep,
@@ -26,10 +27,8 @@ export default function SingInLogin({
 
   const onLoginWithGoogle = useGoogleLogin({
     onSuccess: ({ access_token: token }) => {
-      loginWithGoogle(token)
-      router.push(
-        STUDENT_PATH_AFTER_LOGIN
-      );
+      loginWithGoogle(token);
+      router.push(STUDENT_PATH_AFTER_LOGIN);
     },
   });
 
@@ -44,7 +43,10 @@ export default function SingInLogin({
           🫶
         </Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+      <Typography
+        variant="body1"
+        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 2 }}
+      >
         Welcome back
       </Typography>
       <Stack sx={{ mt: 1 }}>
@@ -88,7 +90,9 @@ export default function SingInLogin({
           </Typography>
         </Divider>
         <Button
-          onClick={() => { onLoginWithGoogle() }}
+          onClick={() => {
+            onLoginWithGoogle();
+          }}
           sx={(theme) => ({
             color: theme.palette.grey[600],
             textTransform: "none",
