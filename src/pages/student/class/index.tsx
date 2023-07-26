@@ -7,7 +7,7 @@ export default function ClassMain(): React.ReactElement {
   const { push } = useRouter();
   const { data: tribes } = useGetClassesQuery({});
   if (tribes) {
-    // push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id));
+    push(STUDENT_PATH_DASHBOARD.class?.id(tribes.data[0]?.id));
   }
   return <></>;
 }
