@@ -13,6 +13,7 @@ import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
 import CreateClassModal from "./CreateClassModal";
 import TribeListItem from "./TribesListItem";
+
 import JoinClassModal from "./JoinTribeModal";
 
 export default function MenuTribesList(): React.ReactElement {

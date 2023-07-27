@@ -1,12 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { fi } from "date-fns/locale";
-import { MdArrowBackIos, MdArrowBackIosNew } from "react-icons/md";
-import { StepWizardChildProps } from "react-step-wizard";
+import { useAtom } from "jotai";
+import { MdArrowBackIosNew } from "react-icons/md";
 
 import {
-  Box,
-  Button,
   IconButton,
   Stack,
   Step,
@@ -17,43 +14,37 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 
-import AddSchool from "./AddSchool";
-import AddTeacher from "./AddTeacher";
+import { teacherStepperAtom } from "./teacher-stepper-atom";
 
 const steps = ["1", "2"];
 
-export default function RegisterStep({
-  previousStep,
-}: Partial<StepWizardChildProps>): React.ReactElement {
-  const [activeStep, setActiveStep] = useState(0);
+export default function StepperProgress(): React.ReactElement {
+  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
+  const [stepperActive, setStepperActive] = useState(0);
 
-  const handleNext = (): void => {
-    if (activeStep === steps.length) return;
-    setActiveStep(activeStep + 1);
-  };
-  const handleBack = (): void => {
-    if (activeStep === 0) {
-      return;
+  useEffect(() => {
+    if (activeStep === 2) {
+      setStepperActive(0);
     }
-    setActiveStep(activeStep - 1);
-  };
+    if (activeStep === 3) {
+      setStepperActive(1);
+    }
+  }, [activeStep]);
 
   return (
     <>
-      <IconButton
-        onClick={() => {
-          if (activeStep === 1) {
-            handleBack();
-          } else {
-            previousStep?.();
-          }
-        }}
-        sx={{ ml: "-30px", mt: "-30px" }}
-      >
-        <MdArrowBackIosNew />
-      </IconButton>
+      {activeStep === 2 && (
+        <IconButton
+          onClick={() => {
+            setActiveStep(activeStep - 1);
+          }}
+          sx={{ position: "absolute", top: "-22px", left: "-30px" }}
+        >
+          <MdArrowBackIosNew />
+        </IconButton>
+      )}
       <Stepper
-        activeStep={activeStep}
+        activeStep={stepperActive}
         sx={(theme) => ({
           "& .MuiStepLabel-root .Mui-completed": {
             color: "#43D4DD",
@@ -66,8 +57,9 @@ export default function RegisterStep({
           },
           "& .MuiStepIcon-root": { color: theme.palette.grey[300] },
           justifySelf: "flex-start",
-          px: 3,
-          mt: "-38px",
+          width: "100%",
+          pl: 1,
+          mt: "-13px",
         })}
         connector={<ColorlibConnector />}
       >
@@ -77,26 +69,9 @@ export default function RegisterStep({
           </Step>
         ))}
       </Stepper>
-      <Stack sx={{ minHeight: "400px", mt: "30px" }}>
-        {activeStep === 0 && <AddTeacher handleNext={handleNext} />}
-        {activeStep === 1 && <AddSchool handleBack={handleBack} />}
-      </Stack>
-      <Button
-        onClick={handleNext}
-        sx={{
-          background: "#43D4DD33",
-          color: "#43D4DD",
-          fontSize: "1.5rem",
-          mt: 1,
-          width: "100%",
-        }}
-      >
-        {activeStep === 0 ? "WHOOPIE" : "ALL DONE"}
-      </Button>
     </>
   );
 }
-
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {

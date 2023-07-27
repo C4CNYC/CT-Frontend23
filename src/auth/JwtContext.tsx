@@ -207,29 +207,23 @@ export function AuthProvider({
     []
   );
 
-    // LOGIN WITH GOOGLE
-  const loginWithGoogle = useCallback(
-    async (token: string) => {
-      const { data } = await axios.post<any, any>("auth/google-signin", {
-        auth_token: token
-      });
+  // LOGIN WITH GOOGLE
+  const loginWithGoogle = useCallback(async (token: string) => {
+    const { data } = await axios.post<any, any>("auth/google-signin", {
+      auth_token: token,
+    });
 
-      const { access_token: accessToken, user } = data;
-      reduxDispatch(setUser(user));
-      setSession(
-        accessToken,
-        localStorage.getItem("tenantName") ?? "codetribe"
-      );
+    const { access_token: accessToken, user } = data;
+    reduxDispatch(setUser(user));
+    setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
 
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user,
-        },
-      });
-    },
-    []
-  );
+    dispatch({
+      type: Types.LOGIN,
+      payload: {
+        user,
+      },
+    });
+  }, []);
 
   // REGISTER
   const register = useCallback(
@@ -238,13 +232,14 @@ export function AuthProvider({
       password: string,
       firstName: string,
       lastName: string,
-      tenantName: string
+      tenantName?: string
     ) => {
-      await axios.post("/tenant", {
-        name: tenantName,
-      });
-      localStorage.setItem("tenantName", tenantName);
-
+      if (tenantName) {
+        await axios.post("/tenant", {
+          name: tenantName,
+        });
+        localStorage.setItem("tenantName", tenantName);
+      }
       const { data } = await axios.post("/auth/signup", {
         email,
         password,

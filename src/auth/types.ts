@@ -33,7 +33,7 @@ export interface JWTContextType {
     password: string,
     firstName: string,
     lastName: string,
-    tenantName: string
+    tenantName?: string
   ) => Promise<void>;
   registerToOrganization: (
     email: string,

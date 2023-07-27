@@ -85,6 +85,8 @@ export interface IStudentProfile {
   last_name?: string;
   avatar?: string;
   cover?: string;
+  country?: string;
+  birthDate?: string;
 }
 
 export interface ISocials {

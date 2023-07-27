@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { useAtom } from "jotai";
+
+import { LoadingButton } from "@mui/lab";
 import {
   Divider,
   IconButton,
@@ -10,27 +13,39 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
-export default function AddTeacher({
-  handleNext,
-}: {
-  handleNext: () => void;
-}): React.ReactElement {
+import { studentStepperAtom } from "./student-stepper-atom";
+
+interface Props {
+  onSubmit: () => void;
+  isSubmiting: boolean;
+  isSubmitSuccessful: boolean;
+}
+
+export default function StepperRegister({
+  onSubmit,
+  isSubmiting,
+  isSubmitSuccessful,
+}: Props): React.ReactElement {
+  const [aciveStep, setActiveStep] = useAtom(studentStepperAtom);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setActiveStep(aciveStep + 1);
+    }
+  }, [isSubmitSuccessful]);
 
   return (
     <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
-        <Typography variant="h3">Register as Teacher</Typography>
+        <Typography variant="h3">Register</Typography>
       </Stack>
-      <Typography
-        variant="body1"
-        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}
-      >
-        Get ready for awesome
+      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+        This name will be on your certificate
       </Typography>
       <Stack gap={2}>
         <RHFTextField
-          name="name"
+          name="firstName"
           label="First Name"
           sx={(theme) => ({
             "& .MuiInputBase-root": {
@@ -38,12 +53,6 @@ export default function AddTeacher({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
           })}
         />
         <RHFTextField
@@ -55,12 +64,6 @@ export default function AddTeacher({
               background: theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
           })}
         />
         <Divider sx={{ my: 1 }} />
@@ -101,6 +104,21 @@ export default function AddTeacher({
           }}
         />
       </Stack>
+      <LoadingButton
+        onClick={() => {
+          onSubmit();
+        }}
+        loading={isSubmiting}
+        sx={{
+          background: "#43D4DD33",
+          color: "#43D4DD",
+          fontSize: "1.5rem",
+          mt: 2,
+          width: "100%",
+        }}
+      >
+        WHOOPIE
+      </LoadingButton>
     </>
   );
 }
