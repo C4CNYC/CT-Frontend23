@@ -12,11 +12,10 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
-import { User } from "src/redux/interfaces/auth.interface";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 interface Props {
-  row: User & BaseResponseInterface;
+  row: IStudent;
   selected: boolean;
   loading?: boolean;
   onEditRow: VoidFunction;

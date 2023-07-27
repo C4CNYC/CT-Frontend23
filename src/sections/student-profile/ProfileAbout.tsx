@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function ProfileAbout({ data }: Props): React.ReactElement {
-  const { school, phone, createdAt, country, post_code: postCode } = data;
+  const { phone, school, createdAt, country, post_code: postCode } = data;
   return (
     <Card>
       <CardHeader title="About" />

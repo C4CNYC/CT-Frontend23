@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { add, subDays } from "date-fns";
 
@@ -9,6 +9,7 @@ import {
   Container,
   Divider,
   IconButton,
+  Skeleton,
   Stack,
   Tab,
   Table,
@@ -43,21 +44,12 @@ import { randomInArray } from "src/_mock";
 import _mock from "src/_mock/_mock";
 import { _invoices } from "src/_mock/arrays";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { useGetAssignmentListQuery } from "src/redux/services/manager/assignments-manager";
+
+import FilterAssignments from "./filter";
 
 const TYPE_OPTIONS = ["all", "course"];
-
-const _tableData: IAssignment[] = [...Array(20)].map((_, index) => ({
-  id: _mock.id(index),
-  name: randomInArray(["Wild", "Web-Dev"]),
-  description: "It`s important that this is a new",
-  type: randomInArray(["course", " "]),
-  status: randomInArray(Object.values(Status)),
-  start: subDays(new Date(), index),
-  dueDate: add(new Date(), { days: index + 15, hours: index }),
-  assigned: "WildGraffes67",
-  publish: randomInArray(Object.values(Publish)),
-}));
 
 const TABLE_HEAD = [
   { id: "name", label: "Name & Notes", align: "left" },
@@ -94,23 +86,27 @@ export default function AsssignmentsListPage() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: "createDate" });
-
-  const [tableData, setTableData] = useState(_tableData);
-
+  const [schoolId, setSchoolId] = useState<string | undefined>();
   const [filterName, setFilterName] = useState("");
-
+  const [tableData, setTableData] = useState<IAssignment[] | undefined>();
   const [openConfirm, setOpenConfirm] = useState(false);
-
   const [filterStatus, setFilterStatus] = useState("all");
-
   const [filterType, setFilterType] = useState("all");
-
   const [filterEndDate, setFilterEndDate] = useState<Date | null>(null);
-
   const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
+  const { data, isLoading } = useGetAssignmentListQuery(
+    { schoolId: schoolId as string },
+    { skip: !schoolId }
+  );
+
+  useEffect(() => {
+    if (data) {
+      setTableData(data);
+    }
+  }, [data]);
 
   const dataFiltered = applyFilter({
-    inputData: tableData,
+    inputData: tableData ?? [],
     comparator: getComparator(order, orderBy),
     filterName,
     filterType,
@@ -141,13 +137,13 @@ export default function AsssignmentsListPage() {
 
   const getLengthByStatus = (status: Status | Publish) => {
     if (Object.values(Status).includes(status as unknown as Status)) {
-      return tableData.filter((item) => item.status === status).length;
+      return tableData?.filter((item) => item.status === status)?.length;
     } else {
-      return tableData.filter((item) => item.publish === status).length;
+      return tableData?.filter((item) => item.active)?.length;
     }
   };
   const TABS = [
-    { value: "all", label: "All", color: "info", count: tableData.length },
+    { value: "all", label: "All", color: "info", count: tableData?.length },
     {
       value: Status.open,
       label: "Open",
@@ -213,7 +209,7 @@ export default function AsssignmentsListPage() {
   };
 
   const handleDeleteRow = (id: string) => {
-    const deleteRow = tableData.filter((row) => row.id !== id);
+    const deleteRow = tableData?.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
 
@@ -225,7 +221,7 @@ export default function AsssignmentsListPage() {
   };
 
   const handleDeleteRows = (selectedRows: string[]) => {
-    const deleteRows = tableData.filter(
+    const deleteRows = tableData?.filter(
       (row) => !selectedRows.includes(row.id)
     );
     setSelected([]);
@@ -237,9 +233,12 @@ export default function AsssignmentsListPage() {
       } else if (selectedRows.length === dataFiltered.length) {
         setPage(0);
       } else if (selectedRows.length > dataInPage.length) {
-        const newPage =
-          Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) - 1;
-        setPage(newPage);
+        if (tableData?.length) {
+          const newPage =
+            Math.ceil((tableData.length - selectedRows.length) / rowsPerPage) -
+            1;
+          setPage(newPage);
+        }
       }
     }
   };
@@ -278,16 +277,8 @@ export default function AsssignmentsListPage() {
               name: "List",
             },
           ]}
-          action={
-            <Button
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-            >
-              New Assignments
-            </Button>
-          }
         />
-
+        <FilterAssignments setSchoolId={setSchoolId} />
         <Card>
           <Tabs
             value={filterStatus}
@@ -336,11 +327,11 @@ export default function AsssignmentsListPage() {
             <TableSelectedAction
               dense={dense}
               numSelected={selected.length}
-              rowCount={tableData.length}
+              rowCount={tableData?.length ?? 0}
               onSelectAllRows={(checked) =>
                 onSelectAllRows(
                   checked,
-                  tableData.map((row) => row.id)
+                  tableData ? tableData.map((row) => row.id) : []
                 )
               }
               action={
@@ -360,13 +351,13 @@ export default function AsssignmentsListPage() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={tableData.length}
+                  rowCount={tableData?.length ?? 0}
                   numSelected={selected.length}
                   onSort={onSort}
                   onSelectAllRows={(checked) =>
                     onSelectAllRows(
                       checked,
-                      tableData.map((row) => row.id)
+                      tableData ? tableData.map((row) => row.id) : []
                     )
                   }
                 />
@@ -388,7 +379,11 @@ export default function AsssignmentsListPage() {
 
                   <TableEmptyRows
                     height={denseHeight}
-                    emptyRows={emptyRows(page, rowsPerPage, tableData.length)}
+                    emptyRows={emptyRows(
+                      page,
+                      rowsPerPage,
+                      tableData?.length ?? 0
+                    )}
                   />
 
                   <TableNoData isNotFound={isNotFound} />
@@ -470,7 +465,7 @@ function applyFilter({
     );
   }
   if (filterType !== "all") {
-    inputData = inputData.filter((assignment) => assignment.type === "course");
+    inputData = inputData.filter((assignment) => assignment?.course);
   }
 
   if (filterStatus !== "all") {
@@ -478,7 +473,7 @@ function applyFilter({
       if (Object.values(Status).includes(filterStatus as unknown as Status)) {
         return assignment.status === filterStatus;
       } else {
-        return assignment.publish === filterStatus;
+        return assignment.active;
       }
     });
   }
@@ -486,8 +481,8 @@ function applyFilter({
   if (filterStartDate && filterEndDate) {
     inputData = inputData.filter(
       (assignment) =>
-        fTimestamp(assignment.start) >= fTimestamp(filterStartDate) &&
-        fTimestamp(assignment.dueDate) <= fTimestamp(filterEndDate)
+        fTimestamp(assignment.start_date) >= fTimestamp(filterStartDate) &&
+        fTimestamp(assignment.end_date) <= fTimestamp(filterEndDate)
     );
   }
 

@@ -14,7 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useFilters } from "@hooks";
 import { BaseResponseInterface } from "@utils";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
-import { useUdpateLessonAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+import { useUpdateLessonAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import { RootState } from "src/redux/store";
 
@@ -34,7 +34,7 @@ export default function LessonController({
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
-  const [updateLesson] = useUdpateLessonAssignmentMutation();
+  const [updateLesson] = useUpdateLessonAssignmentMutation();
   const { data: lessons } = useGetLessonsQuery({ ...filters });
 
   if (!lessons?.data) {

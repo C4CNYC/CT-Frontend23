@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
 
 import { studentApi } from ".";
+import { IAssignment } from "../interfaces/assignment.interface";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({
