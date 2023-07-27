@@ -36,7 +36,7 @@ export default function HomeOverview(): React.ReactElement {
     push(
       `${STUDENT_PATH_DASHBOARD.class.id(
         query.id as string
-      )}?${new URLSearchParams({ schoolId: data.school.id })}`,
+      )}?${new URLSearchParams({ schoolId: data?.school?.id as string })}`,
       undefined,
       { shallow: true }
     );

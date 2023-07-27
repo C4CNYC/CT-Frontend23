@@ -53,12 +53,12 @@ export interface IAssignmentCreate {
   name: string;
   description?: string;
   type?: string;
-  start_date: string;
-  end_date: string;
-  close_date: string;
+  start_date?: string;
+  end_date?: string;
+  close_date?: string;
   classes?: string[];
   students?: string[];
-  active: boolean;
+  active?: boolean;
   meta?: Record<string, any>;
   skills?: ISkill[] | [];
 }

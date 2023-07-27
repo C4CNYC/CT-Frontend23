@@ -61,7 +61,7 @@ export default function PrivateProjects(): React.ReactElement {
             <CustomBreadcrumbs
               heading="Privat projects"
               links={[
-                { name: "Dashboard", href: STUDENT_PATH_MAIN.home },
+                { name: "Dashboard", href: STUDENT_PATH_MAIN.root },
                 { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
                 {
                   name: "Privat",

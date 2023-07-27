@@ -11,7 +11,7 @@ import { FormProvider, RHFTextField } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
+import { useUpdateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;
@@ -37,7 +37,7 @@ export default function AssignmentAssigning({
   schoolId,
   next,
 }: AssignmentStepProps): React.ReactElement | null {
-  const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
+  const [updateAssignment, { isLoading }] = useUpdateAssignmentMutation();
 
   const defaultValues = {
     class: "",

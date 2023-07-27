@@ -3,6 +3,7 @@ import {
   BaseResponseInterface,
   BaseSearchInterface,
 } from "@utils";
+import { ISchool } from "src/redux/slices/global";
 
 import { Role } from "../enums/role.enum";
 
@@ -27,7 +28,7 @@ export interface IUser {
   avatar?: string;
   cover?: string;
   socials?: ISocials[];
-  account: null;
+  account?: null;
 }
 
 export interface StudentSearchParams extends BaseSearchInterface {
@@ -37,7 +38,7 @@ export interface StudentSearchParams extends BaseSearchInterface {
 }
 
 export interface IStudent {
-  id: string;
+  id?: string;
   email: string;
   first_name: string;
   last_name: string;
@@ -56,6 +57,8 @@ export interface IStudent {
   account: IUser;
   username?: string | null;
   socials: ISocials[];
+  school?: ISchool;
+  createdAt?: string;
 }
 
 export interface IMentor {

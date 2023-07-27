@@ -22,7 +22,7 @@ import { useFilters } from "@hooks";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { BaseResponseInterface, voidFunction } from "@utils";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
-import { useGetIntegrationsQuery } from "src/redux/services/manager/integration-manager";
+import { useGetIntegrationsListQuery } from "src/redux/services/manager/integration-manager";
 import {
   useAddIntegrationMutation,
   useGetLessonIntegrationsQuery,
@@ -45,7 +45,7 @@ export function IntegrationsTab({
   const { data, isFetching } = useGetLessonIntegrationsQuery({
     id: contentId,
   });
-  const { data: integrations } = useGetIntegrationsQuery(filters);
+  const { data: integrations } = useGetIntegrationsListQuery(filters);
 
   if (!integrations?.data || !data) {
     return (

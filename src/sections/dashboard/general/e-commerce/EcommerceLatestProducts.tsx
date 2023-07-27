@@ -1,4 +1,3 @@
-// @mui
 import {
   Box,
   Card,
@@ -9,16 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 
-//
 import { ColorPreview, Image, Scrollbar } from "@components";
-// utils
 import { fCurrency } from "@utils";
-
-utils;
-
-//
-
-// ----------------------------------------------------------------------
 
 interface ItemProps {
   id: string;

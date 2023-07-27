@@ -117,6 +117,7 @@ export default function QuestsTable({ data }: Props) {
                 gap: 1,
                 p: isMobile ? 1 : "",
                 minWidth: 0,
+                whiteSpace: "nowrap",
               }}
               variant="outlined"
               color="info"

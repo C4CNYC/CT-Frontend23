@@ -24,7 +24,7 @@ import { BaseResponseInterface, voidFunction } from "@utils";
 import { IClass } from "src/redux/services/interfaces/class.interface";
 import {
   useRemoveClassAssignmentMutation,
-  useUdpateClassAssignmentMutation,
+  useUpdateClassAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
@@ -45,7 +45,7 @@ export default function ClassesCountroller({
 
   const { filters, setFilter } = useFilters({ name: "", schoolId, take: 50 });
 
-  const [addClass] = useUdpateClassAssignmentMutation();
+  const [addClass] = useUpdateClassAssignmentMutation();
   const [removeClass] = useRemoveClassAssignmentMutation();
   const { data: classes } = useGetClassesQuery(
     { ...filters },
