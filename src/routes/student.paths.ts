@@ -30,6 +30,7 @@ export const STUDENT_PATH_DASHBOARD = {
   class: {
     root: "/student/class",
     id: (id: string) => path("/student/class/", `${id}`),
+    invite: (code: string)=> path("/student/class/", `${code}`),
   },
   tribes: {
     root: "/student/tribes",
