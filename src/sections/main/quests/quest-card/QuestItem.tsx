@@ -13,8 +13,6 @@ import { Iconify } from "src/components/iconify";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
-import AddQuestModal from "../add-quest/AddQuestsModal";
-
 interface Props {
   item: IAssignment;
 }
@@ -22,7 +20,6 @@ interface Props {
 export default function QuestItem({ item }: Props): React.ReactElement {
   const { query, push } = useRouter();
   const [updateAssignment] = useUpdateAssignmentMutation();
-
   const pinAssignment = () => {
     if (item?.meta?.pin) {
       updateAssignment({
@@ -41,7 +38,7 @@ export default function QuestItem({ item }: Props): React.ReactElement {
 
   const edit = () => {
     push(
-      `${STUDENT_PATH_DASHBOARD.class.id(
+      `${STUDENT_PATH_DASHBOARD.class.addQuest(
         query.id as string
       )}?${new URLSearchParams({
         schoolId: query.schoolId as string,
@@ -163,11 +160,9 @@ export default function QuestItem({ item }: Props): React.ReactElement {
           <IconButton>
             <Iconify icon="ion:share-outline" width={22} />
           </IconButton>
-          <AddQuestModal>
-            <IconButton onClick={edit}>
-              <Iconify icon="pepicons-pop:dots-y" width={22} />
-            </IconButton>
-          </AddQuestModal>
+          <IconButton onClick={edit}>
+            <Iconify icon="pepicons-pop:dots-y" width={22} />
+          </IconButton>
         </Stack>
       </Stack>
     </Stack>

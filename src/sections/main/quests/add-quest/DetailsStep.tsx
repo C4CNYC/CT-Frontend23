@@ -8,7 +8,7 @@ import { RHFSelect, RHFTextField } from "@components";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 
-import { FormProps } from "./AddQuestsModal";
+import { FormProps } from "./AddQuest";
 import ModalEditor from "./ModalEditor";
 
 interface Props {
