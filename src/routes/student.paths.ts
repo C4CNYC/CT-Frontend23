@@ -33,6 +33,7 @@ export const STUDENT_PATH_DASHBOARD = {
     join: "/student/class/join",
     addQuest: (id: string) => path("/student/class/add-quest/", `${id}`),
     id: (id: string) => path("/student/class/", `${id}`),
+    invite: (code: string)=> path("/student/class/", `${code}`),
   },
   quest: {
     id: (id: string) => path("/student/quest/", `${id}`),
