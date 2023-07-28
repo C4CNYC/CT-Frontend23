@@ -20,8 +20,8 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { Iconify } from "../iconify";
 import ClassroomModal from "../classroom-modal";
+import { Iconify } from "../iconify";
 
 interface Prop {
   children: React.ReactElement;
@@ -39,7 +39,7 @@ export default function ShareGroupModal({
   };
   return (
     <>
-      <div onClick={handleOpen}>{children}</div>
+      <Stack onClick={handleOpen}>{children}</Stack>
       <Dialog
         open={open}
         onClose={handleClose}
