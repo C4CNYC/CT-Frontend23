@@ -3,7 +3,6 @@ import * as React from "react";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useAtom } from "jotai";
 
 import {
   Autocomplete,
@@ -20,9 +19,12 @@ import { CustomAvatar, Iconify } from "@components";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 
-import { addQuestAtom } from "./add-quest-atom";
-
-export default function StudentsAutocomplete(): React.ReactElement {
+interface Props {
+  students?: string[];
+}
+export default function StudentsAutocomplete({
+  students,
+}: Props): React.ReactElement {
   const { query } = useRouter();
 
   const [choosen] = React.useState<IStudent[] | []>([]);
@@ -30,7 +32,6 @@ export default function StudentsAutocomplete(): React.ReactElement {
     { schoolId: query.schoolId as string },
     { skip: !query.schoolId }
   );
-  const [{ students }, setQuestAtom] = useAtom(addQuestAtom);
 
   const getStudents = () => {
     if (!students || !data) return;
@@ -51,6 +52,7 @@ export default function StudentsAutocomplete(): React.ReactElement {
       />
     );
   }
+
   return (
     <Autocomplete
       multiple
@@ -59,12 +61,7 @@ export default function StudentsAutocomplete(): React.ReactElement {
       sx={{ pt: 1 }}
       options={data.data}
       defaultValue={getStudents()}
-      onChange={(e, value) => {
-        setQuestAtom((prev) => ({
-          ...prev,
-          students: value.map((el) => el.id),
-        }));
-      }}
+      onChange={(e, value) => {}}
       getOptionLabel={(option) => option.last_name}
       renderInput={(params) => (
         <TextField {...params} label="Students" placeholder="add more..." />

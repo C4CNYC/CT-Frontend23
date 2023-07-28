@@ -1,4 +1,4 @@
-import nextLink from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -28,6 +28,7 @@ interface Props {
 }
 
 export default function QuestsTable({ data }: Props) {
+  const { push } = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
@@ -46,6 +47,15 @@ export default function QuestsTable({ data }: Props) {
     setOpenPopover(null);
   };
 
+  const redirect = () => {
+    push(
+      `${STUDENT_PATH_DASHBOARD.class.addQuest(
+        data.id as string
+      )}?${new URLSearchParams({
+        schoolId: data.school?.id as string,
+      })}`
+    );
+  };
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack direction="row" alignItems="center" pb={2}>
@@ -146,21 +156,25 @@ export default function QuestsTable({ data }: Props) {
       >
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
           <MenuItem>
-            <AiOutlineFundProjectionScreen size="20px" />
-            Assign Open Project
+            <Button
+              disableRipple
+              sx={{ color: "inherit", "&:hover": { background: "initial" } }}
+            >
+              <AiOutlineFundProjectionScreen size="20px" />
+              Assign Open Project
+            </Button>
           </MenuItem>
         </RoleBasedGuard>
-        <Link
-          component={nextLink}
-          href={STUDENT_PATH_DASHBOARD.class.addQuest(data.id as string)}
-          underline="none"
-          sx={{ color: "inherit" }}
-        >
-          <MenuItem>
+        <MenuItem>
+          <Button
+            onClick={redirect}
+            disableRipple
+            sx={{ color: "inherit", "&:hover": { background: "initial" } }}
+          >
             <SiGoogleclassroom size="20px" />
             Assign Course or Section
-          </MenuItem>
-        </Link>
+          </Button>
+        </MenuItem>
       </MenuPopover>
     </Stack>
   );

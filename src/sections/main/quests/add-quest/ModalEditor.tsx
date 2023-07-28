@@ -31,6 +31,7 @@ export const MenuBtn = styled(Button)({
 const Menu = () => {
   const { toggleBold, toggleItalic, undo, redo, toggleUnderline } =
     useCommands();
+
   return (
     <Stack direction="row" pb={1}>
       <MenuBtn onClick={() => toggleBold()}>
