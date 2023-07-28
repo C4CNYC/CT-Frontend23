@@ -6,7 +6,7 @@ import { Box, Button, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 import { FormProvider, RHFTextField } from "@components";
-import { useUdpateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
   next: () => void;
@@ -26,7 +26,7 @@ export default function AssignmentContent({
   schoolId,
   assignmentId,
 }: AssignmentStepProps): React.ReactElement | null {
-  const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
+  const [updateAssignment, { isLoading }] = useUpdateAssignmentMutation();
 
   const defaultValues = {
     name: "",

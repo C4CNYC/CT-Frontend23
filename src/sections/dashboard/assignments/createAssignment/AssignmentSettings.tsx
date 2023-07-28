@@ -17,7 +17,7 @@ import { RootState } from "src/redux/store";
 
 import {
   useCreateAssignmentMutation,
-  useUdpateAssignmentMutation,
+  useUpdateAssignmentMutation,
 } from "../../../../redux/services/manager/assignments-manager";
 
 interface AssignmentStepProps {
@@ -42,7 +42,7 @@ export default function AssignmentSettings({
   schoolId,
 }: AssignmentStepProps): React.ReactElement | null {
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
-  const [updateAssignment] = useUdpateAssignmentMutation();
+  const [updateAssignment] = useUpdateAssignmentMutation();
   const board = useSelector((state: RootState) => state?.assignments?.board);
   const { enqueueSnackbar } = useSnackbar();
 

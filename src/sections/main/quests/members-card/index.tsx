@@ -31,7 +31,7 @@ import {
 import { PATH_DASHBOARD } from "@routes/paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { _userList } from "src/_mock/arrays";
-import { User } from "src/redux/interfaces/auth.interface";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 import MemberRow from "./MemberRow";
 
@@ -47,11 +47,10 @@ const TABLE_HEAD = [
 ];
 
 interface Props {
-  members: User[] | [];
+  members: IStudent[] | [];
 }
 
 export default function MemberCard({ members }: Props) {
-  console.log(members);
   const {
     dense,
     page,
@@ -144,7 +143,7 @@ export default function MemberCard({ members }: Props) {
 
   const handleDeleteRows = (selectedRows: string[]) => {
     const deleteRows = tableData.filter(
-      (row) => !selectedRows.includes(row.id)
+      (row) => !selectedRows.includes(row.id as string)
     );
     setSelected([]);
     setTableData(deleteRows);
@@ -211,7 +210,7 @@ export default function MemberCard({ members }: Props) {
             onSelectAllRows={(checked) =>
               onSelectAllRows(
                 checked,
-                tableData.map((row) => row.id)
+                tableData.map((row) => row.id as string)
               )
             }
             action={
@@ -235,7 +234,7 @@ export default function MemberCard({ members }: Props) {
                 onSelectAllRows={(checked) =>
                   onSelectAllRows(
                     checked,
-                    tableData.map((row) => row.id)
+                    tableData.map((row) => row.id as string)
                   )
                 }
               />
@@ -247,9 +246,9 @@ export default function MemberCard({ members }: Props) {
                     <MemberRow
                       key={row.id}
                       row={row}
-                      selected={selected.includes(row.id)}
-                      onSelectRow={() => onSelectRow(row.id)}
-                      onDeleteRow={() => handleDeleteRow(row.id)}
+                      selected={selected.includes(row.id as string)}
+                      onSelectRow={() => onSelectRow(row.id as string)}
+                      onDeleteRow={() => handleDeleteRow(row.id as string)}
                       onEditRow={() => handleEditRow(row.last_name)}
                     />
                   ))}
@@ -311,7 +310,7 @@ function applyFilter({
   comparator,
   filterName,
 }: {
-  inputData: User[];
+  inputData: IStudent[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

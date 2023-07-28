@@ -20,8 +20,9 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { Iconify } from "../iconify";
 import ClassroomModal from "../classroom-modal";
+import EmailAddressModal from "../email-address-domain";
+import { Iconify } from "../iconify";
 
 interface Prop {
   children: React.ReactElement;
@@ -240,26 +241,27 @@ export default function ShareGroupModal({
                 <AiOutlineArrowRight />
               </Button>
             </ClassroomModal>
-
-            <Button
-              fullWidth
-              sx={{
-                backgroundColor: "#f9f9f9",
-                color: "#000",
-                justifyContent: "space-between",
-                borderRadius: "8px",
-                p: "18px",
-                "&:hover": {
-                  background: "#bebebe",
-                },
-              }}
-            >
-              <Box display="flex" alignItems="center">
-                <MdOutlineMail size={24} />
-                <Typography ml={2}> Email address or domain</Typography>
-              </Box>
-              <AiOutlineArrowRight />
-            </Button>
+            <EmailAddressModal>
+              <Button
+                fullWidth
+                sx={{
+                  backgroundColor: "#f9f9f9",
+                  color: "#000",
+                  justifyContent: "space-between",
+                  borderRadius: "8px",
+                  p: "18px",
+                  "&:hover": {
+                    background: "#bebebe",
+                  },
+                }}
+              >
+                <Box display="flex" alignItems="center">
+                  <MdOutlineMail size={24} />
+                  <Typography ml={2}> Email address or domain</Typography>
+                </Box>
+                <AiOutlineArrowRight />
+              </Button>
+            </EmailAddressModal>
           </Box>
           {/* <Link href="#" color="inherit">
               By username

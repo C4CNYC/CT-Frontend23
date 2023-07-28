@@ -11,7 +11,7 @@ import { BaseResponseInterface } from "@utils";
 import { AssignmentComplexity } from "src/redux/services/enums/assignment-complexity.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
-import { useUdpateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
+import { useUpdateAssignmentMutation } from "../../../../redux/services/manager/assignments-manager";
 
 const TECH_OPTIONS = ["css", "html", "js"];
 
@@ -37,7 +37,7 @@ export default function AssignmentAbout({
   schoolId,
   assignmentId,
 }: AssignmentStepProps): React.ReactElement | null {
-  const [updateAssignment, { isLoading }] = useUdpateAssignmentMutation();
+  const [updateAssignment, { isLoading }] = useUpdateAssignmentMutation();
 
   const defaultValues = {
     complexity: assignment?.complexity,

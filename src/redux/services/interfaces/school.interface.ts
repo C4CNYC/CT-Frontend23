@@ -10,6 +10,7 @@ export interface ISchool extends BaseResponseInterface {
   country: string;
   type: SchoolType | null;
   zip: string | null;
+  id: string;
 }
 
 export interface ISchoolSearchParams extends BaseSearchInterface {
@@ -40,7 +41,7 @@ export interface ISchoolSummary {
 export interface SchoolProfile {
   email?: string;
   name?: string;
-  schoolId: string;
+  schoolId?: string;
   country?: string;
   address?: string;
   cover?: string;
@@ -51,7 +52,7 @@ export interface SchoolProfile {
   about?: string;
   socials?: [];
   type?: SchoolType;
-  zip: string;
+  zip?: string;
   student_count?: number;
   teacher_count?: number;
 }

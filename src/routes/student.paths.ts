@@ -29,7 +29,14 @@ export const STUDENT_PATH_DASHBOARD = {
   permissionDenied: "/student/permission-denied",
   class: {
     root: "/student/class",
+    createClass: "/student/class/create",
+    join: "/student/class/join",
+    addQuest: (id: string) => path("/student/class/add-quest/", `${id}`),
     id: (id: string) => path("/student/class/", `${id}`),
+    invite: (code: string)=> path("/student/class/", `${code}`),
+  },
+  quest: {
+    id: (id: string) => path("/student/quest/", `${id}`),
   },
   tribes: {
     root: "/student/tribes",

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { useAtom } from "jotai";
 import { MdArrowBackIosNew } from "react-icons/md";
 
 import {
@@ -13,12 +12,17 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 
-import { studentStepperAtom } from "./student-stepper-atom";
-
 const steps = ["1", "2"];
 
-export default function StepperProgres(): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(studentStepperAtom);
+interface Props {
+  prevStep: () => void;
+  activeStep: number;
+}
+
+export default function StepperProgres({
+  prevStep,
+  activeStep,
+}: Props): React.ReactElement {
   const [stepperActive, setStepperActive] = useState(0);
 
   useEffect(() => {
@@ -33,9 +37,7 @@ export default function StepperProgres(): React.ReactElement {
   return (
     <>
       <IconButton
-        onClick={() => {
-          setActiveStep(activeStep - 1);
-        }}
+        onClick={prevStep}
         sx={{ position: "absolute", top: "-22px", left: "-30px" }}
       >
         <MdArrowBackIosNew />

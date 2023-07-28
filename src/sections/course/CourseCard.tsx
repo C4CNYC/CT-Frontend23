@@ -80,7 +80,12 @@ export default function CourseCard({
       >
         <Typography
           variant="h4"
+          noWrap
           sx={(theme) => ({
+            width: "350px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            wordWrap: "break-word",
             [theme.breakpoints.down(400)]: {
               fontSize: "16px",
               pb: 1,
@@ -93,6 +98,7 @@ export default function CourseCard({
           variant="body2"
           height="100px"
           sx={(theme) => ({
+            height: "100px",
             fontSize: "16px",
             textOverflow: "ellipsis",
             overflow: "hidden",

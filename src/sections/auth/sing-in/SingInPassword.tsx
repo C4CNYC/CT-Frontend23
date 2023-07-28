@@ -1,17 +1,10 @@
-import { Dispatch, useState } from "react";
+import { useState } from "react";
 
-import { SetStateAction } from "jotai";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import { LoadingButton } from "@mui/lab";
-import {
-  Button,
-  IconButton,
-  InputAdornment,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
 
@@ -29,13 +22,17 @@ export default function SingInPassword({
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   if (isError) {
-    nextStep?.();
+    if (nextStep) {
+      nextStep();
+    }
   }
   return (
     <>
       <IconButton
         onClick={() => {
-          previousStep?.();
+          if (previousStep) {
+            previousStep();
+          }
         }}
         sx={{ ml: "-30px", mt: "-30px" }}
       >

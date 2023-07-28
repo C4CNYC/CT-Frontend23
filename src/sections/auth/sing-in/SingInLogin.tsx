@@ -21,7 +21,7 @@ import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 export default function SingInLogin({
   nextStep,
   isValid,
-}: Partial<StepWizardChildProps> & { isValid: boolean }): React.ReactElement {
+}: Partial<StepWizardChildProps> & { isValid?: boolean }): React.ReactElement {
   const router = useRouter();
   const { loginWithGoogle } = useAuthContext();
 
@@ -72,7 +72,9 @@ export default function SingInLogin({
                 <IconButton
                   edge="end"
                   onClick={() => {
-                    isValid ? nextStep?.() : null;
+                    if (nextStep) {
+                      isValid ? nextStep() : null;
+                    }
                   }}
                 >
                   <FaArrowRight color={isValid ? "#43D4DD" : ""} />

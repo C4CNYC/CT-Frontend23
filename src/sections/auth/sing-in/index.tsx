@@ -8,7 +8,7 @@ import * as Yup from "yup";
 
 import { Stack } from "@mui/material";
 
-import { FormProvider, useSnackbar } from "@components";
+import { FormProvider } from "@components";
 import { SingLink } from "@sections/on-boarding-register/links";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
@@ -26,7 +26,7 @@ export default function SingInMain(): React.ReactElement {
   const { login } = useAuthContext();
   const [isError, setError] = useState("");
 
-  const CreateEmailSchema = Yup.object().shape({
+  const CreateLoginSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
@@ -34,7 +34,8 @@ export default function SingInMain(): React.ReactElement {
   });
 
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(CreateEmailSchema),
+    resolver: yupResolver(CreateLoginSchema),
+    mode: "all",
   });
 
   const onSubmit = async (data: FormValuesProps) => {
@@ -45,7 +46,6 @@ export default function SingInMain(): React.ReactElement {
       setError(e.message);
     }
   };
-
   return (
     <Stack
       sx={{
@@ -56,7 +56,12 @@ export default function SingInMain(): React.ReactElement {
     >
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <StepWizard transitions={custom}>
-          <SingInLogin isValid={methods.formState.isValid} />
+          <SingInLogin
+            isValid={
+              !methods.formState.errors.email &&
+              methods.formState.dirtyFields.email
+            }
+          />
           <SingInPassword
             isSubmiting={methods.formState.isSubmitting}
             isError={isError}

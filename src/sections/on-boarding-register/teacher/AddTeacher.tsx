@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { useAtom } from "jotai";
-
 import { LoadingButton } from "@mui/lab";
 import {
   Divider,
@@ -13,25 +11,22 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
-import { teacherStepperAtom } from "./teacher-stepper-atom";
-
 interface Props {
-  onSubmit: () => void;
   isSubmiting: boolean;
   isSubmitSuccessful: boolean;
+  nextStep: () => void;
 }
 
 export default function AddTeacher({
-  onSubmit,
   isSubmiting,
   isSubmitSuccessful,
+  nextStep,
 }: Props): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      setActiveStep(activeStep + 1);
+      nextStep();
     }
   }, [isSubmitSuccessful]);
 
@@ -65,7 +60,7 @@ export default function AddTeacher({
           })}
         />
         <RHFTextField
-          name="surname"
+          name="lastName"
           label="Surname"
           sx={(theme) => ({
             "& .MuiInputBase-root": {
@@ -120,9 +115,7 @@ export default function AddTeacher({
         />
       </Stack>
       <LoadingButton
-        onClick={() => {
-          onSubmit();
-        }}
+        type="submit"
         loading={isSubmiting}
         sx={{
           background: "#43D4DD33",

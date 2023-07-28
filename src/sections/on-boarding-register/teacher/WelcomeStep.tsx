@@ -1,13 +1,12 @@
-import { useAtom } from "jotai";
-
 import { Button, Stack, Typography } from "@mui/material";
 
 import { SessionType } from "./SessionType";
-import { teacherStepperAtom } from "./teacher-stepper-atom";
 
-export default function WelcomeStep(): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
-
+export default function WelcomeStep({
+  nextStep,
+}: {
+  nextStep: () => void;
+}): React.ReactElement {
   return (
     <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "60px" }}>
@@ -28,7 +27,7 @@ export default function WelcomeStep(): React.ReactElement {
       </Button>
       <Button
         onClick={() => {
-          setActiveStep(activeStep + 1);
+          nextStep();
         }}
         sx={{ color: "inherit", py: 2, borderRadius: "15px" }}
       >
