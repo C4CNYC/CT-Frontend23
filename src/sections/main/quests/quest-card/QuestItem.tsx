@@ -163,11 +163,9 @@ export default function QuestItem({ item }: Props): React.ReactElement {
           <IconButton>
             <Iconify icon="ion:share-outline" width={22} />
           </IconButton>
-          <AddQuestModal>
-            <IconButton onClick={edit}>
-              <Iconify icon="pepicons-pop:dots-y" width={22} />
-            </IconButton>
-          </AddQuestModal>
+          <IconButton onClick={edit}>
+            <Iconify icon="pepicons-pop:dots-y" width={22} />
+          </IconButton>
         </Stack>
       </Stack>
     </Stack>

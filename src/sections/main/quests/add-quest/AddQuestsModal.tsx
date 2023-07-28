@@ -123,7 +123,6 @@ export default function AddQuestModal(): React.ReactElement {
     }, [defaultValues]),
   });
   const onSubmit = async (formData: FormProps) => {
-    console.log(formData, assingmentSkills, "data");
     const assignmentData: IAssignmentCreate & {
       schoolId: string;
     } = {

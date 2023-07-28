@@ -6,13 +6,11 @@ import {
   UnderlineExtension,
 } from "remirror/extensions";
 
-import { Box, Chip, Stack, Typography } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { Box, Chip, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 import { Image } from "@components";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
-
-import { _socials } from "../../../../../nextjs_TS/src/_mock/arrays";
 
 const StyledTitle = styled("h1")(({ theme }) => ({
   ...theme.typography.h3,
