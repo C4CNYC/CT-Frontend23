@@ -34,8 +34,8 @@ export default function SettingsStep({ control }: Props): React.ReactElement {
     setValue((event.target as HTMLInputElement).value);
   };
   return (
-    <Stack sx={{ gap: 2, px: 10, minHeight: "685px" }}>
-      <Stack direction="row" gap={4}>
+    <Stack sx={{ gap: 2, minHeight: "630px" }}>
+      <Stack direction="row" gap={4} sx={{ flexWrap: { xs: "wrap" } }}>
         <TimeController
           title="Schedule Date:"
           name="startDate"

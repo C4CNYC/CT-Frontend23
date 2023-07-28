@@ -1,22 +1,21 @@
+import { useRouter } from "next/router";
+
 import { LoadingButton } from "@mui/lab";
-import { Button, DialogActions } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
-interface Props {
-  handleCloseDialog: () => void;
-}
-
-export default function ModalActionsBtn({
-  handleCloseDialog,
-}: Props): React.ReactElement {
+export default function ModalActionsBtn(): React.ReactElement {
+  const { back } = useRouter();
   return (
-    <DialogActions
+    <Stack
       sx={{
-        mb: 3,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        mt: 3,
         gap: 3,
       }}
     >
       <Button
-        onClick={handleCloseDialog}
+        onClick={back}
         variant="contained"
         sx={{
           fontSize: "1.1rem",
@@ -58,6 +57,6 @@ export default function ModalActionsBtn({
       >
         launch
       </LoadingButton>
-    </DialogActions>
+    </Stack>
   );
 }
