@@ -14,7 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useFilters } from "@hooks";
 import { BaseResponseInterface } from "@utils";
 import { ITask } from "src/redux/services/interfaces/task.interface";
-import { useUdpateTaskAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+import { useUpdateTaskAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 import { useGetTasksQuery } from "src/redux/services/manager/tasks-manager";
 import { RootState } from "src/redux/store";
 
@@ -34,7 +34,7 @@ export default function TaskController({
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
-  const [updateTask] = useUdpateTaskAssignmentMutation();
+  const [updateTask] = useUpdateTaskAssignmentMutation();
   const { data: tasks } = useGetTasksQuery({ ...filters });
 
   if (!tasks?.data) {

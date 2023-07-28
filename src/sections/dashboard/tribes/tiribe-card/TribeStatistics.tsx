@@ -6,10 +6,10 @@ import { TiLocation } from "react-icons/ti";
 
 import { Box, Typography } from "@mui/material";
 
-import { User } from "src/redux/interfaces/auth.interface";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 interface Props {
-  students: User[];
+  students: IStudent[];
   createdAt: string;
 }
 

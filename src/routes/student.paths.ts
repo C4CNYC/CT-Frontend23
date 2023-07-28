@@ -30,7 +30,12 @@ export const STUDENT_PATH_DASHBOARD = {
   class: {
     root: "/student/class",
     createClass: "/student/class/create",
+    join: "/student/class/join",
+    addQuest: (id: string) => path("/student/class/add-quest/", `${id}`),
     id: (id: string) => path("/student/class/", `${id}`),
+  },
+  quest: {
+    id: (id: string) => path("/student/quest/", `${id}`),
   },
   tribes: {
     root: "/student/tribes",

@@ -16,7 +16,7 @@ import { IAssignmentsCard } from "../../../../@types/assignments";
 import { AssignmentTypes } from "../../../../redux/services/enums/assignment-types.enum";
 import {
   useGetAssignmentQuery,
-  useUdpateAssignmentMutation,
+  useUpdateAssignmentMutation,
 } from "../../../../redux/services/manager/assignments-manager";
 import AssignmentInput from "../AssignmentInput";
 import AssignmentsDetailsPrioritizes from "./AssignmentsDetailsPrioritizes";
@@ -55,7 +55,7 @@ export default function AssignmentsDetails({
 }: Props): React.ReactElement | null {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { enqueueSnackbar } = useSnackbar();
-  const [updateAssignment] = useUdpateAssignmentMutation();
+  const [updateAssignment] = useUpdateAssignmentMutation();
   const { data: assignment } = useGetAssignmentQuery(
     {
       schoolId,

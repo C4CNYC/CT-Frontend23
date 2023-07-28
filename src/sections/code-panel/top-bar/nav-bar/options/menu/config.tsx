@@ -75,7 +75,7 @@ export const anonimUserConfig: IMenuConfigItem[] = [
     title: "I'm brand new",
     subTitle: "Register",
     icon: "icon-park-outline:baby",
-    href: PATH_AUTH.register,
+    href: PATH_AUTH.onBoardingTeacher,
   },
   {
     title: "I've been here before",
