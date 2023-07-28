@@ -1,3 +1,4 @@
+import nextLink from "next/link";
 import { useState } from "react";
 
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -18,7 +19,6 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 
-import AddQuestModal from "./add-quest/AddQuestsModal";
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
@@ -150,12 +150,17 @@ export default function QuestsTable({ data }: Props) {
             Assign Open Project
           </MenuItem>
         </RoleBasedGuard>
-        <AddQuestModal>
+        <Link
+          component={nextLink}
+          href={STUDENT_PATH_DASHBOARD.class.addQuest(data.id as string)}
+          underline="none"
+          sx={{ color: "inherit" }}
+        >
           <MenuItem>
             <SiGoogleclassroom size="20px" />
             Assign Course or Section
           </MenuItem>
-        </AddQuestModal>
+        </Link>
       </MenuPopover>
     </Stack>
   );

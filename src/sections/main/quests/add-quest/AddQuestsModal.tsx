@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { memo, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAtom } from "jotai";
@@ -14,17 +14,7 @@ import {
 } from "unique-names-generator";
 import * as Yup from "yup";
 
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Stack,
-  Tab,
-  Tabs,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Stack, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -43,10 +33,6 @@ import ModalActionsBtn from "./ModalActionsBtn";
 import SettingsStep from "./SettingsStep";
 import { addQuestAtom } from "./add-quest-atom";
 
-interface Props {
-  children: React.ReactElement;
-}
-
 export interface FormProps {
   type: AssignmentTypes;
   course: string;
@@ -60,7 +46,7 @@ export interface FormProps {
   active: boolean;
 }
 
-export default function AddQuestModal({ children }: Props): React.ReactElement {
+export default function AddQuestModal(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
   const nameConfig: Config = {
@@ -69,7 +55,6 @@ export default function AddQuestModal({ children }: Props): React.ReactElement {
     length: 2,
   };
   const [value, setValue] = useState(0);
-  const [open, setOpen] = useState(false);
   const [
     { startDate, closeDate, dueDate, assingmentSkills, students },
     setQuestAtom,
@@ -202,35 +187,17 @@ export default function AddQuestModal({ children }: Props): React.ReactElement {
     }
   };
 
-  const handleCloseDialog = () => {
-    setOpen(false);
-  };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
     <>
-      <Box
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        {children}
-      </Box>
-      <Dialog
-        open={open}
-        onClose={handleCloseDialog}
-        PaperProps={{ sx: { pr: { md: 6 } } }}
-        fullWidth
-        maxWidth={"lg"}
-      >
-        <DialogTitle
+      <Stack>
+        <Stack
           sx={{
-            display: "flex",
+            flexDirection: "row",
             justifyContent: "space-between",
-            alignItems: "center",
-            pb: 0,
           }}
         >
           <Stack>
@@ -244,9 +211,11 @@ export default function AddQuestModal({ children }: Props): React.ReactElement {
               </Typography>
             </Tooltip>
           </Stack>
-          <Typography variant="subtitle2">Type: Course/Module</Typography>
-        </DialogTitle>
-        <DialogContent>
+          <Typography variant="subtitle2" textAlign="left">
+            Type: Course/Module
+          </Typography>
+        </Stack>
+        <Box sx={{ px: { xs: 1, sm: 3, md: 5, lg: 12 } }}>
           <FormProvider
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
@@ -288,10 +257,10 @@ export default function AddQuestModal({ children }: Props): React.ReactElement {
             <CustomTabPanel value={value} index={1}>
               <SettingsStep control={methods.control} />
             </CustomTabPanel>
-            <ModalActionsBtn handleCloseDialog={handleCloseDialog} />
+            <ModalActionsBtn />
           </FormProvider>
-        </DialogContent>
-      </Dialog>
+        </Box>
+      </Stack>
     </>
   );
 }
