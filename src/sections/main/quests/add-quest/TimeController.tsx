@@ -4,22 +4,18 @@ import { TbInfoCircleFilled } from "react-icons/tb";
 import { FormGroup, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 
-import { FormProps } from "./AddQuestsModal";
+import { FormProps } from "./AddQuest";
 
 interface Props {
   name: "startDate" | "dueDate" | "closeDate";
   title: string;
   infoText: string;
-  setDate: (s: string) => void;
-  data: Date | string;
   control: Control<FormProps, any>;
 }
 
 export default function TimeController({
   name,
   title,
-  setDate,
-  data,
   control,
   infoText,
 }: Props): React.ReactElement {
@@ -33,10 +29,9 @@ export default function TimeController({
         control={control}
         render={({ field: { onChange, value, ...restField } }) => (
           <DatePicker
-            value={data}
+            value={value}
             onChange={(event) => {
               onChange(event as string | React.ChangeEvent<Element>);
-              setDate(event as string);
             }}
             renderInput={(params) => (
               <TextField

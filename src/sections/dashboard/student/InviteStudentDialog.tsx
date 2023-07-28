@@ -55,6 +55,7 @@ export default function InviteStudentDialog({
       await inviteStudent({ schoolId, email: data.email }).unwrap();
       enqueueSnackbar("Message was sent successfully");
       methods.reset();
+      handleCloseDialog();
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",

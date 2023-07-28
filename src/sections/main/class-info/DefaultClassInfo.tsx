@@ -21,11 +21,11 @@ import { useCopyToClipboard } from "@hooks";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { getLinearGradient } from "@utils";
+import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
-import ShareGroupModal from "src/components/share-group-modal";
 
 interface Props {
   data: IClass;
@@ -70,32 +70,32 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
               px: 2,
             }}
           >
-            {
-              data?.setting?.share_token_enable ? (
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+            {data?.setting?.share_token_enable ? (
+              <Stack
+                direction="row"
+                alignItems="center"
+                sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+              >
+                <Typography variant="subtitle2">Join-code:</Typography>
+                <Button
+                  onClick={() => {
+                    onCopy(data?.setting?.share_token);
+                  }}
+                  sx={{ gap: 0.5, color: "inherit", p: 0 }}
                 >
-                  <Typography variant="subtitle2">Join-code:</Typography>
-                  <Button
-                    onClick={() => {
-                      onCopy(data?.setting?.share_token);
-                    }}
-                    sx={{ gap: 0.5, color: "inherit", p: 0 }}
-                  >
-                    <Typography variant="subtitle2">{data?.setting?.share_token}</Typography>
-                    <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
-                  </Button>
-                </Stack>
-              ) : null
-            }
+                  <Typography variant="subtitle2">
+                    {data?.setting?.share_token}
+                  </Typography>
+                  <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
+                </Button>
+              </Stack>
+            ) : null}
             <Link
               sx={{
                 color: "inherit",
               }}
               typography="caption"
-              href={PATH_DASHBOARD.tribes.root}
+              href={STUDENT_PATH_DASHBOARD.tribes.root}
               component={nextLink}
             >
               See All Groups
