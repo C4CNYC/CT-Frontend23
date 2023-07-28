@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 import { countries } from "@assets/data";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
@@ -23,8 +22,6 @@ import {
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
 
-import { teacherStepperAtom } from "./teacher-stepper-atom";
-
 interface SchoolFormProps {
   schoolName: string;
   type: SchoolType;
@@ -34,7 +31,6 @@ interface SchoolFormProps {
 }
 
 export default function AddSchool(): React.ReactElement {
-  const [, setActiveStep] = useAtom(teacherStepperAtom);
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { data, isLoading } = useGetMySchoolsQuery({});
@@ -58,6 +54,7 @@ export default function AddSchool(): React.ReactElement {
         zip: data.data[0].zip ?? "",
         country: data.data[0].country ?? "",
       });
+      methods.setFocus("schoolName");
     }
   }, [isLoading]);
 
@@ -77,7 +74,6 @@ export default function AddSchool(): React.ReactElement {
         city: schoolData.city,
       }).unwrap();
       push(PATH_AUTH.singIn);
-      setActiveStep(0);
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
@@ -85,7 +81,7 @@ export default function AddSchool(): React.ReactElement {
 
   return (
     <>
-      <FormProvider methods={methods}>
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}>
           <Typography
             variant="h3"
@@ -214,7 +210,7 @@ export default function AddSchool(): React.ReactElement {
           </RHFSelect>
         </Stack>
         <LoadingButton
-          onClick={methods.handleSubmit(onSubmit)}
+          type="submit"
           sx={{
             background: "#43D4DD33",
             color: "#43D4DD",

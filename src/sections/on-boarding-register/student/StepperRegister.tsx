@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { useAtom } from "jotai";
-
 import { LoadingButton } from "@mui/lab";
 import {
   Divider,
@@ -13,25 +11,22 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
-import { studentStepperAtom } from "./student-stepper-atom";
-
 interface Props {
-  onSubmit: () => void;
+  nextStep: () => void;
   isSubmiting: boolean;
   isSubmitSuccessful: boolean;
 }
 
 export default function StepperRegister({
-  onSubmit,
+  nextStep,
   isSubmiting,
   isSubmitSuccessful,
 }: Props): React.ReactElement {
-  const [aciveStep, setActiveStep] = useAtom(studentStepperAtom);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   useEffect(() => {
     if (isSubmitSuccessful) {
-      setActiveStep(aciveStep + 1);
+      nextStep();
     }
   }, [isSubmitSuccessful]);
 
@@ -56,7 +51,7 @@ export default function StepperRegister({
           })}
         />
         <RHFTextField
-          name="surname"
+          name="lastName"
           label="Surname"
           sx={(theme) => ({
             "& .MuiInputBase-root": {
@@ -105,9 +100,7 @@ export default function StepperRegister({
         />
       </Stack>
       <LoadingButton
-        onClick={() => {
-          onSubmit();
-        }}
+        type="submit"
         loading={isSubmiting}
         sx={{
           background: "#43D4DD33",
