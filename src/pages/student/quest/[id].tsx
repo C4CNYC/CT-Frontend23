@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import { Container, Skeleton, Stack, Typography } from "@mui/material";
+import { Container, Skeleton, Stack } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";

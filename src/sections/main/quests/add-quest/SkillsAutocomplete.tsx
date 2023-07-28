@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useAtom } from "jotai";
 import { TbInfoCircleFilled } from "react-icons/tb";
 
 import { Box, Chip, FormGroup, Skeleton, Typography } from "@mui/material";
@@ -11,10 +10,14 @@ import { RHFAutocomplete } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 
-import { addQuestAtom } from "./add-quest-atom";
-
-export default function SkillsAutocomplete(): React.ReactElement {
-  const [{ assingmentSkills }, setQuestAtom] = useAtom(addQuestAtom);
+interface Props {
+  setAssignmentsSkills: (s: ISkill[]) => void;
+  assignmentsSkills?: ISkill[];
+}
+export default function SkillsAutocomplete({
+  setAssignmentsSkills,
+  assignmentsSkills,
+}: Props): React.ReactElement {
   const { data, isLoading } = useGetSkillQuery({});
   const [choosen] = useState<ISkill[] | []>();
 
@@ -39,12 +42,9 @@ export default function SkillsAutocomplete(): React.ReactElement {
         freeSolo
         options={data.data}
         limitTags={5}
-        defaultValue={assingmentSkills}
+        defaultValue={assignmentsSkills}
         onChange={(e, value) => {
-          setQuestAtom((prev) => ({
-            ...prev,
-            assingmentSkills: value as ISkill[],
-          }));
+          setAssignmentsSkills(value as ISkill[]);
         }}
         renderTags={(tagValue, getTagProps): React.ReactElement[] =>
           tagValue.map((option, index) => (
