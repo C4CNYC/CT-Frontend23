@@ -1,20 +1,20 @@
+import nextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { FaCampground, FaPlus } from "react-icons/fa";
 import { IoPeople } from "react-icons/io5";
 
-import { Button, Divider, MenuItem, Stack } from "@mui/material";
+import { Button, Divider, Link, MenuItem, Stack } from "@mui/material";
 
 import { MenuPopover } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
-import CreateClassModal from "./CreateClassModal";
-import TribeListItem from "./TribesListItem";
-
 import JoinClassModal from "./JoinTribeModal";
+import TribeListItem from "./TribesListItem";
 
 export default function MenuTribesList(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -26,7 +26,6 @@ export default function MenuTribesList(): React.ReactElement {
     event.preventDefault();
     setOpenPopover(event.currentTarget);
   };
-
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
@@ -82,12 +81,18 @@ export default function MenuTribesList(): React.ReactElement {
         transformOrigin={{ vertical: -5, horizontal: "center" }}
       >
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
-          <CreateClassModal>
+          <Link
+            component={nextLink}
+            href={STUDENT_PATH_DASHBOARD.class.createClass}
+            onClick={handleClosePopover}
+            underline="none"
+            sx={{ color: "inherit" }}
+          >
             <MenuItem>
               <IoPeople size="20px" />
               Create a group
             </MenuItem>
-          </CreateClassModal>
+          </Link>
         </RoleBasedGuard>
         <JoinClassModal>
           <MenuItem>

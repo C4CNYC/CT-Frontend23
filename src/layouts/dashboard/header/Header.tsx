@@ -28,7 +28,8 @@ export default function Header({
 
   const isNavHorizontal = themeLayout === "horizontal";
 
-  const isNavMini = themeLayout === "mini";
+  const isNavMini =
+    themeLayout === "mini" || router.pathname.includes("courses/");
 
   const isDesktop = useResponsive("up", "lg");
 
