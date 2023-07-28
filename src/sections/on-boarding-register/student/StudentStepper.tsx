@@ -1,5 +1,6 @@
+import { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
@@ -13,26 +14,33 @@ import SingUp from "../teacher/SingUp";
 import StepperInfo from "./StepperInfo";
 import StepperProgres from "./StepperProgress";
 import StepperRegister from "./StepperRegister";
-import { studentStepperAtom } from "./student-stepper-atom";
 
 interface FormValuesProps {
   email: string;
   firstName: string;
-  surname: string;
+  lastName: string;
   password: string;
 }
 
 export default function StudentStepper(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { register } = useAuthContext();
-  const [activeStep] = useAtom(studentStepperAtom);
+  const [activeStep, setActiveStep] = useState(0);
+
+  const nextStep = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const prevStep = () => {
+    setActiveStep(activeStep - 1);
+  };
 
   const CreateRegisterSchema = Yup.object().shape({
     email: Yup.string()
       .required("Email is required")
       .email("Email must be a valid email address"),
     firstName: Yup.string().required("Enter your name"),
-    surname: Yup.string().required("Enter your surname"),
+    lastName: Yup.string().required("Enter your surname"),
     password: Yup.string()
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
@@ -53,7 +61,7 @@ export default function StudentStepper(): React.ReactElement {
         data.email,
         data.password,
         data.firstName,
-        data.surname
+        data.lastName
       );
     } catch (error) {
       methods.setError("root", {
@@ -76,6 +84,7 @@ export default function StudentStepper(): React.ReactElement {
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         {activeStep === 0 && (
           <SingUp
+            nextStep={nextStep}
             isValid={
               !methods.formState.errors.email &&
               methods.formState.dirtyFields.email
@@ -83,11 +92,13 @@ export default function StudentStepper(): React.ReactElement {
             isTeacher={false}
           />
         )}
-        {(activeStep === 1 || activeStep === 2) && <StepperProgres />}
+        {(activeStep === 1 || activeStep === 2) && (
+          <StepperProgres activeStep={activeStep} prevStep={prevStep} />
+        )}
 
         {activeStep === 1 && (
           <StepperRegister
-            onSubmit={methods.handleSubmit(onSubmit)}
+            nextStep={nextStep}
             isSubmiting={methods.formState.isSubmitting}
             isSubmitSuccessful={methods.formState.isSubmitSuccessful}
           />

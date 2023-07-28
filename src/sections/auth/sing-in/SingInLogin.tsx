@@ -72,8 +72,9 @@ export default function SingInLogin({
                 <IconButton
                   edge="end"
                   onClick={() => {
-                    if (!isValid) return;
-                    isValid ? nextStep?.() : null;
+                    if (nextStep) {
+                      isValid ? nextStep() : null;
+                    }
                   }}
                 >
                   <FaArrowRight color={isValid ? "#43D4DD" : ""} />

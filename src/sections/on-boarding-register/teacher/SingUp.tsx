@@ -1,8 +1,6 @@
-import { useAtom } from "jotai";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { StepWizardChildProps } from "react-step-wizard";
 
 import {
   Button,
@@ -15,31 +13,23 @@ import {
 
 import { RHFTextField } from "@components";
 
-import { studentStepperAtom } from "../student/student-stepper-atom";
-import { teacherStepperAtom } from "./teacher-stepper-atom";
-
 interface Props {
   isValid?: boolean;
   isTeacher: boolean;
+  nextStep: () => void;
+  prevStep?: () => void;
 }
 
 export default function SingUp({
   nextStep,
+  prevStep,
   isValid,
   isTeacher,
-}: Partial<StepWizardChildProps> & Props): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
-  const [activeStepStudent, setActiveStepStudent] = useAtom(studentStepperAtom);
-
+}: Props): React.ReactElement {
   return (
     <>
       {isTeacher && (
-        <IconButton
-          onClick={() => {
-            setActiveStep(activeStep - 1);
-          }}
-          sx={{ ml: "-30px", mt: "-30px" }}
-        >
+        <IconButton onClick={prevStep} sx={{ ml: "-30px", mt: "-30px" }}>
           <MdArrowBackIosNew />
         </IconButton>
       )}
@@ -80,11 +70,7 @@ export default function SingUp({
                   edge="end"
                   onClick={() => {
                     if (!isValid) return;
-                    if (isTeacher) {
-                      setActiveStep(activeStep + 1);
-                    } else {
-                      setActiveStepStudent(activeStepStudent + 1);
-                    }
+                    nextStep();
                   }}
                 >
                   <FaArrowRight color={isValid ? "#43D4DD" : ""} />
