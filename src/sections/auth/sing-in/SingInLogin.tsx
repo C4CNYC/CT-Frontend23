@@ -110,7 +110,7 @@ export default function SingInLogin({
           })}
         >
           <FcGoogle size="50px" />
-          Sing up with Google
+          Sing in with Google
         </Button>
       </Stack>
     </>

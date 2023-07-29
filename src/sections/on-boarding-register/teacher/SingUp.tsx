@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -29,12 +31,14 @@ export default function SingUp({
   isValid,
   isTeacher,
 }: Props): React.ReactElement {
-  const { registerWithGoogle } = useAuthContext();
+  const { push } = useRouter();
+  const { registerWithGoogle, loginWithGoogle } = useAuthContext();
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: ({ access_token: token }) => {
       registerWithGoogle(token);
-      nextStep();
+      loginWithGoogle(token);
+      push(STUDENT_PATH_AFTER_LOGIN);
     },
   });
 
