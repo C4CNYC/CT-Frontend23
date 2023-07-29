@@ -19,9 +19,9 @@ export interface IAssignment {
   type: AssignmentTypes;
   status: string;
   active: boolean;
-  start_date: string;
-  end_date: string;
-  close_date: string;
+  start_date: Date;
+  end_date: Date;
+  close_date: Date;
   complexity: AssignmentComplexity;
   duration?: { hours: string; minutes: string };
   assignee_classes: Array<IClass & BaseResponseInterface>;

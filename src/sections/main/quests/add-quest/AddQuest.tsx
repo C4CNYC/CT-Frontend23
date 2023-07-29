@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { add } from "date-fns";
+import { add, format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbListDetails } from "react-icons/tb";
@@ -101,11 +101,18 @@ export default function AddQuestModal(): React.ReactElement {
           : "",
         type: assignment?.type ?? AssignmentTypes.RESEARCH,
         course: assignment?.course?.id,
-        startDate: assignment?.start_date ?? new Date().toString(),
-        dueDate:
-          assignment?.end_date ?? add(new Date(), { days: 7 }).toString(),
-        closeDate:
-          assignment?.close_date ?? add(new Date(), { days: 10 }).toString(),
+        startDate: format(
+          assignment?.start_date ?? new Date(),
+          "yyyy-MM-dd HH:mm:ss.SSSX"
+        ),
+        dueDate: format(
+          assignment?.end_date ?? add(new Date(), { days: 7 }),
+          "yyyy-MM-dd HH:mm:ss.SSSX"
+        ),
+        closeDate: format(
+          assignment?.close_date ?? add(new Date(), { days: 10 }),
+          "yyyy-MM-dd HH:mm:ss.SSSX"
+        ),
         active: assignment?.active ?? true,
       });
       setAssignmentsSkills(assignment?.skills);
