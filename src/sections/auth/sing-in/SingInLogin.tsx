@@ -1,10 +1,12 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { StepWizardChildProps } from "react-step-wizard";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Divider,
@@ -14,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { RHFTextField } from "@components";
+import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
@@ -22,13 +24,21 @@ export default function SingInLogin({
   nextStep,
   isValid,
 }: Partial<StepWizardChildProps> & { isValid?: boolean }): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { loginWithGoogle } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onLoginWithGoogle = useGoogleLogin({
-    onSuccess: ({ access_token: token }) => {
-      loginWithGoogle(token);
-      router.push(STUDENT_PATH_AFTER_LOGIN);
+    onSuccess: async ({ access_token: token }) => {
+      setIsLoading(true);
+      try {
+        loginWithGoogle(token);
+        router.push(STUDENT_PATH_AFTER_LOGIN);
+      } catch (error) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      }
+      setIsLoading(false);
     },
   });
 
@@ -91,10 +101,11 @@ export default function SingInLogin({
             OR
           </Typography>
         </Divider>
-        <Button
+        <LoadingButton
           onClick={() => {
             onLoginWithGoogle();
           }}
+          loading={isLoading}
           sx={(theme) => ({
             color: theme.palette.grey[600],
             textTransform: "none",
@@ -111,7 +122,7 @@ export default function SingInLogin({
         >
           <FcGoogle size="50px" />
           Sing in with Google
-        </Button>
+        </LoadingButton>
       </Stack>
     </>
   );
