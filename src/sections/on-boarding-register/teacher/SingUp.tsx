@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -14,15 +12,15 @@ import {
   Typography,
 } from "@mui/material";
 
-import { RHFTextField } from "@components";
+import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 interface Props {
   isValid?: boolean;
   isTeacher: boolean;
   nextStep: () => void;
   prevStep?: () => void;
+  goToStep: (s: number) => void;
 }
 
 export default function SingUp({
@@ -30,15 +28,23 @@ export default function SingUp({
   prevStep,
   isValid,
   isTeacher,
+  goToStep,
 }: Props): React.ReactElement {
-  const { push } = useRouter();
-  const { registerWithGoogle, loginWithGoogle } = useAuthContext();
+  const { registerWithGoogle } = useAuthContext();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onRegisterWithGoogle = useGoogleLogin({
-    onSuccess: ({ access_token: token }) => {
-      registerWithGoogle(token);
-      loginWithGoogle(token);
-      push(STUDENT_PATH_AFTER_LOGIN);
+    onSuccess: async ({ access_token: token }) => {
+      try {
+        await registerWithGoogle(token);
+        if (isTeacher) {
+          goToStep(3);
+        } else {
+          goToStep(2);
+        }
+      } catch (error) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      }
     },
   });
 

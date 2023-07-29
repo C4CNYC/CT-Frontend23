@@ -45,9 +45,11 @@ export default function TeacherStepper(): React.ReactElement {
   const nextStep = () => {
     setActiveStep(activeStep + 1);
   };
-
   const prevStep = () => {
     setActiveStep(activeStep - 1);
+  };
+  const goToStep = (step: number) => {
+    setActiveStep(step);
   };
 
   const methods = useForm<FormValuesProps>({
@@ -80,6 +82,7 @@ export default function TeacherStepper(): React.ReactElement {
         {activeStep === 0 && <WelcomeStep nextStep={nextStep} />}
         {activeStep === 1 && (
           <SingUp
+            goToStep={goToStep}
             nextStep={nextStep}
             prevStep={prevStep}
             isValid={
