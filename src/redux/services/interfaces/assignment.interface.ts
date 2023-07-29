@@ -40,8 +40,8 @@ export interface IAssignmentUpdate {
   type?: string;
   status?: AssignmentStatuses;
   active?: boolean;
-  start_date?: string;
-  end_date?: string;
+  start_date?: string | Date;
+  end_date?: string | Date;
   close_date?: string;
   complexity?: AssignmentComplexity;
   duration?: string;
