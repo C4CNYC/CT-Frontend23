@@ -225,6 +225,24 @@ export function AuthProvider({
     });
   }, []);
 
+  // Register WITH GOOGLE
+  const registerWithGoogle = useCallback(async (token: string) => {
+    const { data } = await axios.post<any, any>("auth/google-signup", {
+      auth_token: token,
+    });
+
+    const { access_token: accessToken, user } = data;
+    reduxDispatch(setUser(user));
+    setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
+
+    dispatch({
+      type: Types.LOGIN,
+      payload: {
+        user,
+      },
+    });
+  }, []);
+
   // REGISTER
   const register = useCallback(
     async (
@@ -309,6 +327,7 @@ export function AuthProvider({
       login,
       authenticate,
       loginWithGoogle,
+      registerWithGoogle,
       loginWithGithub: voidFunction,
       loginWithTwitter: voidFunction,
       register,
@@ -319,6 +338,7 @@ export function AuthProvider({
       state.isAuthenticated,
       state.isInitialized,
       state.user,
+      registerWithGoogle,
       loginWithGoogle,
       authenticate,
       login,

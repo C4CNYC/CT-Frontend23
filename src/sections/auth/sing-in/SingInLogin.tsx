@@ -72,8 +72,8 @@ export default function SingInLogin({
                 <IconButton
                   edge="end"
                   onClick={() => {
-                    if (nextStep) {
-                      isValid ? nextStep() : null;
+                    if (nextStep && isValid) {
+                      nextStep();
                     }
                   }}
                 >

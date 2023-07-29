@@ -1,3 +1,4 @@
+import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdArrowBackIosNew } from "react-icons/md";
@@ -12,6 +13,8 @@ import {
 } from "@mui/material";
 
 import { RHFTextField } from "@components";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 interface Props {
   isValid?: boolean;
@@ -26,6 +29,15 @@ export default function SingUp({
   isValid,
   isTeacher,
 }: Props): React.ReactElement {
+  const { registerWithGoogle } = useAuthContext();
+
+  const onRegisterWithGoogle = useGoogleLogin({
+    onSuccess: ({ access_token: token }) => {
+      registerWithGoogle(token);
+      nextStep();
+    },
+  });
+
   return (
     <>
       {isTeacher && (
@@ -88,6 +100,9 @@ export default function SingUp({
           </Typography>
         </Divider>
         <Button
+          onClick={() => {
+            onRegisterWithGoogle();
+          }}
           sx={(theme) => ({
             color: theme.palette.grey[600],
             textTransform: "none",
