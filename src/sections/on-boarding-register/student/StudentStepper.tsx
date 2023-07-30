@@ -30,9 +30,11 @@ export default function StudentStepper(): React.ReactElement {
   const nextStep = () => {
     setActiveStep(activeStep + 1);
   };
-
   const prevStep = () => {
     setActiveStep(activeStep - 1);
+  };
+  const goToStep = (step: number) => {
+    setActiveStep(step);
   };
 
   const CreateRegisterSchema = Yup.object().shape({
@@ -84,6 +86,7 @@ export default function StudentStepper(): React.ReactElement {
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         {activeStep === 0 && (
           <SingUp
+            goToStep={goToStep}
             nextStep={nextStep}
             isValid={
               !methods.formState.errors.email &&
