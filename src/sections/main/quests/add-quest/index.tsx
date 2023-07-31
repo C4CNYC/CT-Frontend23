@@ -1,0 +1,255 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import { add, format } from "date-fns";
+import { useForm } from "react-hook-form";
+import { IoSettingsOutline } from "react-icons/io5";
+import { TbListDetails } from "react-icons/tb";
+import { animals, colors, uniqueNamesGenerator } from "unique-names-generator";
+
+import LoadingButton from "@mui/lab/LoadingButton";
+import {
+  Box,
+  Button,
+  Stack,
+  Tab,
+  Tabs,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+
+import { FormProvider, useSnackbar } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import CustomTabPanel, {
+  customTabProps,
+} from "src/components/custom-tab-panel";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import {
+  useCreateAssignmentMutation,
+  useUpdateAssignmentMutation,
+  useUpdateCourseAssignmentMutation,
+} from "src/redux/services/manager/assignments-manager";
+import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+
+import DetailsStep from "./DetailsStep";
+import SettingsStep from "./SettingsStep";
+import { CreateQuestSchema } from "./helpers/create-quest.schema";
+import { FormQuestProps, IAddQuest } from "./helpers/quest.interface";
+
+const RANDOM_NAME = uniqueNamesGenerator({
+  dictionaries: [colors, animals],
+  separator: "_",
+  length: 2,
+});
+
+const DATE_PARSER = (date?: Date, increment: number = 0) =>
+  date ? new Date(date) : add(new Date(), { days: increment });
+const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
+const DAYS_TO_END = 7;
+const DAYS_TO_CLOSE = 10;
+
+export default function AddQuest({
+  assignment,
+}: IAddQuest): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
+  const { query, push } = useRouter();
+
+  const [assignmentsSkills, setAssignmentsSkills] = useState<string[]>();
+  const [students, setStudents] = useState<string[]>();
+  const [value, setValue] = useState(0);
+
+  const [createAssignment] = useCreateAssignmentMutation();
+  const [updateAssignment] = useUpdateAssignmentMutation();
+  const [addAssignmentsToClass] = useUpdateCourseAssignmentMutation();
+
+  const { data } = useGetClassQuery(
+    { id: query.id as string },
+    { skip: !query.id }
+  );
+
+  useEffect(() => {
+    if (assignment) {
+      setAssignmentsSkills(assignment?.tags);
+      setStudents(assignment?.students ? assignment.students : []);
+    }
+  }, [assignment]);
+
+  const methods = useForm<FormQuestProps>({
+    resolver: yupResolver(CreateQuestSchema),
+    mode: "all",
+    defaultValues: {
+      name: assignment?.name ?? RANDOM_NAME,
+      description: JSON.parse(assignment?.description ?? "{}"),
+      type: assignment?.type ?? AssignmentTypes.RESEARCH,
+      course: assignment?.course?.id,
+      startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
+      dueDate: format(
+        DATE_PARSER(assignment?.end_date, DAYS_TO_END),
+        DATE_FORMAT
+      ),
+      closeDate: format(
+        DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE),
+        DATE_FORMAT
+      ),
+      active: assignment?.active ?? true,
+    },
+  });
+
+  const onSubmit = async (formData: FormQuestProps) => {
+    if (assignment) {
+      try {
+        updateAssignment({
+          schoolId: query.schoolId as string,
+          assignmentId: query.assignmentId as string,
+          name: formData.name,
+          description: JSON.stringify(formData.description ?? {}),
+          start_date: formData.startDate,
+          end_date: formData.dueDate,
+          close_date: formData.closeDate,
+          active: Boolean(formData.active),
+          tags: assignmentsSkills,
+        }).unwrap();
+
+        enqueueSnackbar("Assignment updated successfuly!");
+      } catch (error: any) {
+        enqueueSnackbar("Something went wrong when updating", {
+          variant: "error",
+        });
+      }
+    } else {
+      try {
+        const newAssignment = await createAssignment({
+          schoolId: query.schoolId as string,
+          name: formData.name,
+          description: JSON.stringify(formData.description),
+          type: formData.type,
+          start_date: formData.startDate,
+          end_date: formData.dueDate,
+          close_date: formData.closeDate,
+          active: Boolean(formData.active),
+          tags: assignmentsSkills,
+          ...(students?.length
+            ? { students }
+            : { classes: [query.id as string] }),
+        }).unwrap();
+
+        await addAssignmentsToClass({
+          assignmentId: newAssignment.id,
+          schoolId: query.schoolId as string,
+          course_id: query.id as string,
+        }).unwrap();
+
+        push(
+          STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
+            schoolId: query.schoolId as string,
+            assignmentId: newAssignment.id,
+          })
+        );
+
+        enqueueSnackbar("Assignment created successfuly!");
+      } catch (error: any) {
+        enqueueSnackbar("Something went wrong when creating", {
+          variant: "error",
+        });
+      }
+    }
+  };
+
+  return (
+    <>
+      <Stack>
+        <Stack
+          sx={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Stack>
+            <Typography variant="h4">Add Quest</Typography>
+            <Tooltip title="this is .....">
+              <Typography
+                variant="caption"
+                sx={{ textDecoration: "underline" }}
+              >
+                What`s a quest?
+              </Typography>
+            </Tooltip>
+          </Stack>
+          <Typography variant="subtitle2" textAlign="left">
+            Type: Course/Module
+          </Typography>
+        </Stack>
+        <Box sx={{ px: { xs: 1, sm: 3, md: 5, lg: 12 } }}>
+          <FormProvider
+            methods={methods}
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <Tabs
+              onChange={(_: any, newValue: number) => {
+                setValue(newValue);
+              }}
+              value={value}
+              scrollButtons={false}
+              sx={{
+                pb: 2,
+                "& .MuiTabs-indicator": {
+                  backgroundColor: "#43D4DD",
+                },
+                "& .MuiTabs-flexContainer": {
+                  justifyContent: "flex-end",
+                },
+              }}
+            >
+              <Tab
+                label={"Details"}
+                icon={<TbListDetails size={20} />}
+                sx={{ fontSize: "1.1rem" }}
+                {...customTabProps(0)}
+              />
+              <Tab
+                label={"Settings"}
+                icon={<IoSettingsOutline size={20} />}
+                sx={{ fontSize: "1.1rem" }}
+                {...customTabProps(0)}
+              />
+            </Tabs>
+
+            <CustomTabPanel value={value} index={0}>
+              <DetailsStep courses={data?.courses ?? []} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              <SettingsStep
+                students={students}
+                control={methods.control}
+                setAssignmentsSkills={(s: string[]) => {
+                  setAssignmentsSkills(s);
+                }}
+                assignmentsSkills={assignmentsSkills}
+              />
+            </CustomTabPanel>
+            <Stack mt={3} gap={3} flexDirection="row" justifyContent="flex-end">
+              <Button
+                onClick={() => {
+                  push(STUDENT_PATH_DASHBOARD.class.id(query.id as string));
+                }}
+                variant="soft"
+                color="error"
+              >
+                CANCEL
+              </Button>
+              <LoadingButton
+                type="submit"
+                color="success"
+                variant="contained"
+                loading={false}
+              >
+                LAUNCH
+              </LoadingButton>
+            </Stack>
+          </FormProvider>
+        </Box>
+      </Stack>
+    </>
+  );
+}

@@ -4,7 +4,7 @@ import { TbInfoCircleFilled } from "react-icons/tb";
 import { FormGroup, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 
-import { FormProps } from "./AddQuest";
+import { FormProps } from "..";
 
 interface Props {
   name: "startDate" | "dueDate" | "closeDate";
@@ -27,7 +27,7 @@ export default function TimeController({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onChange, value, ...restField } }) => (
+        render={({ field: { onChange, value } }) => (
           <DatePicker
             value={value}
             onChange={(event) => {

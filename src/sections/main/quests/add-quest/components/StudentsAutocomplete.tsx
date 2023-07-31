@@ -41,7 +41,6 @@ export default function StudentsAutocomplete({
         return res.concat(cur);
       }, []);
   };
-  getStudents();
 
   if (!data || isLoading) {
     return (

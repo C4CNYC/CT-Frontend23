@@ -1,25 +1,17 @@
 import { useState } from "react";
 
-import { Control, Controller } from "react-hook-form";
-
 import { Avatar, FormGroup, Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
+import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 
-import { FormProps } from "./AddQuest";
-import ModalEditor from "./ModalEditor";
-
 interface Props {
   courses: ICourseElement[] | [];
-  control: Control<FormProps, any>;
 }
 
-export default function DetailsStep({
-  courses,
-  control,
-}: Props): React.ReactElement {
+export default function DetailsStep({ courses }: Props): React.ReactElement {
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.RESEARCH);
 
   const onChange = (event: any): void => {
@@ -166,13 +158,7 @@ export default function DetailsStep({
         <Typography variant="h5" gutterBottom>
           Description (Optional)
         </Typography>
-        <Controller
-          name="description"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <ModalEditor editorValue={value} setEditorValue={onChange} />
-          )}
-        />
+        <RHFRemirror name="description" />
       </FormGroup>
     </Stack>
   );
