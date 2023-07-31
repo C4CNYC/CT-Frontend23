@@ -22,8 +22,8 @@ import { FormQuestProps } from "./helpers/quest.interface";
 
 interface Props {
   students?: string[];
-  setAssignmentsSkills: (s: ISkill[]) => void;
-  assignmentsSkills?: ISkill[];
+  setAssignmentsSkills: (s: string[]) => void;
+  assignmentsSkills?: string[];
   control: Control<FormQuestProps, any>;
 }
 
@@ -89,7 +89,7 @@ export default function SettingsStep({
       </FormGroup>
 
       <SkillsAutocomplete
-        setAssignmentsSkills={(s: ISkill[]) => {
+        setAssignmentsSkills={(s: string[]) => {
           setAssignmentsSkills(s);
         }}
         assignmentsSkills={assignmentsSkills}

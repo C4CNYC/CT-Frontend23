@@ -7,19 +7,27 @@ import { TbInfoCircleFilled } from "react-icons/tb";
 import { Box, Chip, FormGroup, Skeleton, Typography } from "@mui/material";
 
 import { RHFAutocomplete } from "@components";
-import { ISkill } from "src/redux/interfaces/content.interface";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 
 interface Props {
-  setAssignmentsSkills: (s: ISkill[]) => void;
-  assignmentsSkills?: ISkill[];
+  setAssignmentsSkills: (s: string[]) => void;
+  assignmentsSkills?: string[];
 }
 export default function SkillsAutocomplete({
   setAssignmentsSkills,
   assignmentsSkills,
 }: Props): React.ReactElement {
   const { data, isLoading } = useGetSkillQuery({});
-  const [choosen] = useState<ISkill[] | []>();
+  const [choosen] = useState<string[] | []>();
+
+  const getSkills = () => {
+    if (!data?.data || !assignmentsSkills) return;
+    return assignmentsSkills
+      .map((id) => data.data.filter((skill) => skill.id === id))
+      .reduce((res, cur) => {
+        return res.concat(cur);
+      }, []);
+  };
 
   if (isLoading || !data) {
     return (
@@ -42,9 +50,10 @@ export default function SkillsAutocomplete({
         freeSolo
         options={data.data}
         limitTags={5}
-        defaultValue={assignmentsSkills}
+        defaultValue={getSkills()}
         onChange={(e, value) => {
-          setAssignmentsSkills(value as ISkill[]);
+          console.log(value, "value");
+          setAssignmentsSkills(value.map((el: any) => el.id));
         }}
         renderTags={(tagValue, getTagProps): React.ReactElement[] =>
           tagValue.map((option, index) => (
@@ -67,7 +76,7 @@ export default function SkillsAutocomplete({
           const { name } = recipient;
           const matches = match(name, inputValue);
           const parts = parse(name, matches);
-          const selected = choosen?.find((c) => c.name === name);
+          const selected = choosen?.find((c: any) => c.name === name);
           return (
             <Box
               component="li"
