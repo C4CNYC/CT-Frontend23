@@ -18,7 +18,6 @@ import {
 
 import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
-import { PATH_DASHBOARD } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { getLinearGradient } from "@utils";
 import ShareGroupModal from "src/components/share-group-modal";
@@ -27,11 +26,13 @@ import { IClass } from "src/redux/interfaces/class.interface";
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
 
-interface Props {
-  data: IClass;
+interface IDefaultClassInfoProps {
+  classData: IClass;
 }
 
-export default function DefaultClassInfo({ data }: Props): React.ReactElement {
+export default function DefaultClassInfo({
+  classData,
+}: IDefaultClassInfoProps): React.ReactElement {
   const { copy } = useCopyToClipboard();
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -54,7 +55,7 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
         <ClassInfoToggle />
         <Stack
           sx={{
-            background: getLinearGradient(data?.cover ?? "#75CF6D"),
+            background: getLinearGradient(classData?.cover ?? "#75CF6D"),
             borderBottomRightRadius: "20px",
             borderBottomLeftRadius: "20px",
             color: "#fff",
@@ -70,7 +71,7 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
               px: 2,
             }}
           >
-            {data?.setting?.share_token_enable ? (
+            {classData?.setting?.share_token_enable ? (
               <Stack
                 direction="row"
                 alignItems="center"
@@ -79,12 +80,12 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
                 <Typography variant="subtitle2">Join-code:</Typography>
                 <Button
                   onClick={() => {
-                    onCopy(data?.setting?.share_token);
+                    onCopy(classData?.setting?.share_token);
                   }}
                   sx={{ gap: 0.5, color: "inherit", p: 0 }}
                 >
                   <Typography variant="subtitle2">
-                    {data?.setting?.share_token}
+                    {classData?.setting?.share_token}
                   </Typography>
                   <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
                 </Button>
@@ -112,7 +113,7 @@ export default function DefaultClassInfo({ data }: Props): React.ReactElement {
               flexWrap: "wrap",
             }}
           >
-            <ClassInfoMain data={data} />
+            <ClassInfoMain classData={classData} />
             <Stack
               direction="row"
               alignItems="center"

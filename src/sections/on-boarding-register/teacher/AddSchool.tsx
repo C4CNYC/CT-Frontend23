@@ -15,7 +15,6 @@ import {
   RHFTextField,
   useSnackbar,
 } from "@components";
-import { PATH_AUTH } from "@routes/paths";
 import { SchoolType } from "src/redux/services/enums/school-type.enum";
 import {
   useGetMySchoolsQuery,
@@ -31,7 +30,7 @@ interface SchoolFormProps {
 }
 
 export default function AddSchool(): React.ReactElement {
-  const { push } = useRouter();
+  const { reload } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { data, isLoading } = useGetMySchoolsQuery({});
   const [updateSchool, { isLoading: isUpdating }] =
@@ -54,7 +53,6 @@ export default function AddSchool(): React.ReactElement {
         zip: data.data[0].zip ?? "",
         country: data.data[0].country ?? "",
       });
-      methods.setFocus("schoolName");
     }
   }, [isLoading]);
 
@@ -73,7 +71,8 @@ export default function AddSchool(): React.ReactElement {
         country: schoolData.country,
         city: schoolData.city,
       }).unwrap();
-      push(PATH_AUTH.singIn);
+
+      reload();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
