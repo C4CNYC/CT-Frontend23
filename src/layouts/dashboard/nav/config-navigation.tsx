@@ -156,7 +156,6 @@ export const apps = {
     {
       title: "Goals",
       path: STUDENT_PATH_DASHBOARD.goals,
-      disabled: true,
       icon: <BsFlagFill size={20} />,
     },
   ],
