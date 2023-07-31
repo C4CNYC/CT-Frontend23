@@ -12,27 +12,27 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { Iconify } from "src/components/iconify";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+import { useSnackbar } from "notistack";
 
 interface Props {
-  item: IAssignment;
+  assignment: IAssignment;
 }
 
-export default function QuestItem({ item }: Props): React.ReactElement {
+export default function QuestItem({ assignment }: Props): React.ReactElement {
   const { query, push } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const [updateAssignment] = useUpdateAssignmentMutation();
-  const pinAssignment = () => {
-    if (item?.meta?.pin) {
-      updateAssignment({
+
+  const pinTomblerAssignment = async () => {
+    try {
+      await updateAssignment({
         schoolId: query.schoolId as string,
-        assignmentId: item.id,
-        meta: { ...item.meta, pin: false },
-      });
-    } else {
-      updateAssignment({
-        schoolId: query.schoolId as string,
-        assignmentId: item.id,
-        meta: { ...item.meta, pin: true },
-      });
+        assignmentId: assignment.id,
+        meta: { ...assignment.meta, pin: !assignment?.meta?.pin },
+      }).unwrap();
+      enqueueSnackbar("assignment pined");
+    } catch (e) {
+      enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
 
@@ -42,11 +42,17 @@ export default function QuestItem({ item }: Props): React.ReactElement {
         query.id as string
       )}?${new URLSearchParams({
         schoolId: query.schoolId as string,
-      })}&${new URLSearchParams({ assignmentId: item.id })}`,
+        assignmentId: assignment.id
+      })}`,
       undefined,
       { shallow: true }
     );
   };
+
+  const assignmentPath = STUDENT_PATH_DASHBOARD.quest.id(
+    assignment.id,
+    { schoolId: query.schoolId as string }
+  );
 
   return (
     <Stack
@@ -61,7 +67,7 @@ export default function QuestItem({ item }: Props): React.ReactElement {
       <Stack sx={{ width: "100%", gap: 2 }}>
         <Stack direction="row" justifyContent="space-between">
           <Stack gap={2} sx={{ flexDirection: { sm: "row" } }}>
-            {item.active && (
+            {assignment?.active && (
               <Typography
                 sx={{ color: "#0198ED", display: "inline-flex" }}
                 variant="subtitle2"
@@ -74,19 +80,19 @@ export default function QuestItem({ item }: Props): React.ReactElement {
               </Typography>
             )}
             <Typography variant="body2">
-              {formatDistanceToNow(new Date(item.createdAt), {
+              {formatDistanceToNow(new Date(assignment.createdAt), {
                 addSuffix: true,
               })}
             </Typography>
             <Typography variant="body2">
-              Due: {format(new Date(item.end_date), "MM.dd.yyyy")}
+              Due: {format(new Date(assignment.end_date), "MM.dd.yyyy")}
             </Typography>
           </Stack>
-          <Typography>{item?.course?.name}</Typography>
+          <Typography>{assignment?.course?.name}</Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="h5" color="#364954">
-            {item.name}
+            {assignment.name}
           </Typography>
           <Box display="flex" gap={1} alignItems="center">
             <Iconify icon="bx:award" sx={{ color: "#EE467A" }} />
@@ -116,9 +122,7 @@ export default function QuestItem({ item }: Props): React.ReactElement {
           </Link>
           <Link
             component={NextLink}
-            href={`${STUDENT_PATH_DASHBOARD.quest.id(
-              item.id
-            )}?${new URLSearchParams({ schoolId: query.schoolId as string })}`}
+            href={assignmentPath}
             underline="none"
             sx={(theme) => ({
               display: "inline-flex",
@@ -149,8 +153,8 @@ export default function QuestItem({ item }: Props): React.ReactElement {
           flexDirection: { xs: "row", sm: "row", md: "column" },
         })}
       >
-        <IconButton sx={{ alignSelf: "flex-end" }} onClick={pinAssignment}>
-          {item?.meta?.pin ? (
+        <IconButton sx={{ alignSelf: "flex-end" }} onClick={pinTomblerAssignment}>
+          {assignment?.meta?.pin ? (
             <Iconify icon="bi:pin-fill" width={22} />
           ) : (
             <Iconify icon="bi:pin" width={22} />

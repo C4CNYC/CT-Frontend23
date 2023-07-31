@@ -15,7 +15,7 @@ import {
 import { Button } from "@mui/material";
 import { Stack, styled } from "@mui/system";
 
-interface Props {
+interface IQuestDescriptionField {
   editorValue?: string;
   setEditorValue: (value: string) => void;
 }
@@ -34,29 +34,29 @@ const Menu = () => {
 
   return (
     <Stack direction="row" pb={1}>
-      <MenuBtn onClick={() => toggleBold()}>
+      <MenuBtn onClick={() => { toggleBold() }}>
         <FaBold size={20} />
       </MenuBtn>
-      <MenuBtn onClick={() => toggleItalic()}>
+      <MenuBtn onClick={() => { toggleItalic() }}>
         <FaItalic size={20} />
       </MenuBtn>
-      <MenuBtn onClick={() => toggleUnderline()}>
+      <MenuBtn onClick={() => { toggleUnderline() }}>
         <FaUnderline size={20} />
       </MenuBtn>
-      <MenuBtn onClick={() => undo()}>
+      <MenuBtn onClick={() => { undo() }}>
         <IoIosUndo size={20} />
       </MenuBtn>
-      <MenuBtn onClick={() => redo()}>
+      <MenuBtn onClick={() => { redo() }}>
         <IoIosRedo size={20} />
       </MenuBtn>
     </Stack>
   );
 };
 
-export default function ModalEditor({
+export default function QuestDescriptionField({
   editorValue = "",
   setEditorValue,
-}: Props): React.ReactElement {
+}: IQuestDescriptionField): React.ReactElement {
   const { manager, state } = useRemirror({
     extensions: () => [
       new BoldExtension(),
@@ -69,11 +69,14 @@ export default function ModalEditor({
 
   return (
     <>
-      <style>{`.remirror-editor-wrapper { padding: 0; }
-        .remirror-theme .ProseMirror{
-            max-height: 100px
-        }
-      `}</style>
+      <style>
+        {`
+          .remirror-editor-wrapper { padding: 0; }
+          .remirror-theme .ProseMirror{
+              max-height: 100px
+          }
+        `}
+      </style>
       <div className="remirror-theme">
         <Remirror
           manager={manager}

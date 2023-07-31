@@ -2,74 +2,46 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { add, format } from "date-fns";
+import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbListDetails } from "react-icons/tb";
 import {
-  Config,
   animals,
   colors,
   uniqueNamesGenerator,
 } from "unique-names-generator";
-import * as Yup from "yup";
 
-import { Box, Stack, Tab, Tabs, Tooltip, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Box, Button, Stack, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ISkill } from "src/redux/interfaces/content.interface";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
-import { IAssignmentCreate } from "src/redux/services/interfaces/assignment.interface";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useCreateAssignmentMutation,
-  useGetAssignmentQuery,
   useUpdateAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import DetailsStep from "./DetailsStep";
-import ModalActionsBtn from "./ModalActionsBtn";
 import SettingsStep from "./SettingsStep";
+import { CreateQuestSchema } from "./helpers/create-quest.schema";
+import { FormQuestProps, IAddQuest } from "./helpers/quest.interface";
 
-const nameConfig: Config = {
+const RANDOM_NAME = uniqueNamesGenerator({
   dictionaries: [colors, animals],
   separator: "_",
   length: 2,
-};
-
-const CreateSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  type: Yup.mixed<AssignmentTypes>()
-    .oneOf(Object.values(AssignmentTypes))
-    .required("Select type"),
-  course: Yup.string().when("type", {
-    is: AssignmentTypes.RESEARCH,
-    then: Yup.string().required("Select course"),
-    otherwise: Yup.string(),
-  }),
-  startDate: Yup.string(),
-  dueDate: Yup.string(),
-  closeDate: Yup.string(),
-  active: Yup.boolean().required("Choose status"),
 });
 
-export interface FormProps {
-  type: AssignmentTypes;
-  course: string;
-  classes?: string[] | [];
-  students?: string[] | [];
-  name: string;
-  description?: string;
-  startDate: string;
-  dueDate: string;
-  closeDate: string;
-  active: boolean;
-}
+const DATE_PARSER = (date?: Date, defaultDate?: Date) =>
+  date ? new Date(date) : (defaultDate ?? new Date());
+const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
 
-export default function AddQuestModal(): React.ReactElement {
+export default function AddQuest({ assignment }: IAddQuest): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
 
@@ -80,77 +52,42 @@ export default function AddQuestModal(): React.ReactElement {
   const [createAssignment] = useCreateAssignmentMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
   const [addAssignmrntsToClass] = useUpdateCourseAssignmentMutation();
+
   const { data } = useGetClassQuery(
     { id: query.id as string },
     { skip: !query.id }
   );
-  const { data: assignment, isLoading } = useGetAssignmentQuery(
-    {
-      schoolId: query.schoolId as string,
-      assignmentId: query.assignmentId as string,
-    },
-    { skip: !query.assignmentId && !query.scholId }
-  );
 
   useEffect(() => {
-    if (!isLoading) {
-      methods.reset({
-        name: assignment?.name ?? uniqueNamesGenerator(nameConfig),
-        description: assignment?.description
-          ? JSON.parse(assignment?.description)
-          : "",
-        type: assignment?.type ?? AssignmentTypes.RESEARCH,
-        course: assignment?.course?.id,
-        startDate: format(
-          assignment?.start_date ?? new Date(),
-          "yyyy-MM-dd HH:mm:ss.SSSX"
-        ),
-        dueDate: format(
-          assignment?.end_date ?? add(new Date(), { days: 7 }),
-          "yyyy-MM-dd HH:mm:ss.SSSX"
-        ),
-        closeDate: format(
-          assignment?.close_date ?? add(new Date(), { days: 10 }),
-          "yyyy-MM-dd HH:mm:ss.SSSX"
-        ),
-        active: assignment?.active ?? true,
-      });
+    if (assignment) {
       setAssignmentsSkills(assignment?.skills);
       setStudents(assignment?.students ? assignment.students : []);
     }
-  }, [isLoading]);
+  }, [assignment]);
 
-  const methods = useForm<FormProps>({
-    resolver: yupResolver(CreateSchema),
+  const methods = useForm<FormQuestProps>({
+    resolver: yupResolver(CreateQuestSchema),
     mode: "all",
+    defaultValues: {
+        name: assignment?.name ?? RANDOM_NAME,
+        description: JSON.parse(assignment?.description ?? "{}"),
+        type: assignment?.type ?? AssignmentTypes.RESEARCH,
+        course: assignment?.course?.id,
+        startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
+        dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
+        closeDate: format(DATE_PARSER(assignment?.close_date), DATE_FORMAT),
+        active: assignment?.active ?? true,
+    }
   });
 
-  const onSubmit = async (formData: FormProps) => {
-    const assignmentData: IAssignmentCreate & {
-      schoolId: string;
-    } = {
-      schoolId: query.schoolId as string,
-      name: formData.name,
-      description: JSON.stringify(formData.description),
-      type: formData.type,
-      start_date: formData.startDate,
-      end_date: formData.dueDate,
-      close_date: formData.closeDate,
-      active: Boolean(formData.active),
-      skills: assignmentsSkills,
-    };
-    if (students?.length) {
-      assignmentData.students = students;
-    } else {
-      assignmentData.classes = [query.id as string];
-    }
+  const onSubmit = async (formData: FormQuestProps) => {
     if (assignment) {
       try {
         updateAssignment({
           schoolId: query.schoolId as string,
           assignmentId: query.assignmentId as string,
           name: formData.name,
-          description: JSON.stringify(formData.description),
+          description: JSON.stringify(formData.description ?? {}),
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
@@ -165,18 +102,36 @@ export default function AddQuestModal(): React.ReactElement {
       }
     } else {
       try {
-        const newAssignment = await createAssignment(assignmentData).unwrap();
-        addAssignmrntsToClass({
+        const newAssignment = await createAssignment({
+          schoolId: query.schoolId as string,
+          name: formData.name,
+          description: JSON.stringify(formData.description),
+          type: formData.type,
+          start_date: formData.startDate,
+          end_date: formData.dueDate,
+          close_date: formData.closeDate,
+          active: Boolean(formData.active),
+          skills: assignmentsSkills,
+          ...(
+            students?.length
+              ? { students }
+              : { classes: [query.id as string] }
+            )
+        }).unwrap();
+
+        await addAssignmrntsToClass({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
           course_id: query.id as string,
-        });
+        }).unwrap();
+
         push(
           `${STUDENT_PATH_DASHBOARD.class.id(
             query.id as string
           )}?${new URLSearchParams({
             schoolId: query.schoolId as string,
-          })}&${new URLSearchParams({ assignmentId: newAssignment.id })}`,
+            assignmentId: newAssignment.id
+          })}`,
           undefined,
           { shallow: true }
         );
@@ -187,10 +142,6 @@ export default function AddQuestModal(): React.ReactElement {
         });
       }
     }
-  };
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
   };
 
   return (
@@ -223,7 +174,7 @@ export default function AddQuestModal(): React.ReactElement {
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <Tabs
-              onChange={handleChange}
+              onChange={(_: any, newValue: number) => { setValue(newValue) }}
               value={value}
               scrollButtons={false}
               sx={{
@@ -266,7 +217,28 @@ export default function AddQuestModal(): React.ReactElement {
                 assignmentsSkills={assignmentsSkills}
               />
             </CustomTabPanel>
-            <ModalActionsBtn />
+            <Stack
+              mt={3}
+              gap={3}
+              flexDirection="row"
+              justifyContent="flex-end"
+            >
+              <Button
+                onClick={() => {
+                  push(STUDENT_PATH_DASHBOARD.class.id(query.id as string));
+                }}
+                variant="contained"
+              >
+                CANCEL
+              </Button>
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={false}
+              >
+                LAUNCH
+              </LoadingButton>
+            </Stack>
           </FormProvider>
         </Box>
       </Stack>

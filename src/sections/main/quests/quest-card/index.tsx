@@ -11,18 +11,20 @@ export default function QuestsTab() {
   const { data, isLoading } = useGetAssignmentListQuery({
     schoolId: query.schoolId as string,
   });
+
   if (!data || isLoading) {
     return <Skeleton />;
   }
+
   const arr = [
-    ...[...data].filter((el) => el?.meta?.pin).reverse(),
-    ...[...data].filter((el) => !el?.meta?.pin),
+    ...data.filter((el) => el?.meta?.pin).reverse(),
+    ...data.filter((el) => !el?.meta?.pin),
   ];
 
   return (
     <Stack gap={2}>
       {arr.map((el) => (
-        <QuestItem key={el.id} item={el} />
+        <QuestItem key={el.id} assignment={el} />
       ))}
     </Stack>
   );

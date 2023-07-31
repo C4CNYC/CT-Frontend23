@@ -15,16 +15,16 @@ import {
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
 
-import { FormProps } from "./AddQuest";
-import SkillsAutocomplete from "./SkillsAutocomplete";
-import StudentsAutocomplete from "./StudentsAutocomplete";
-import TimeController from "./TimeController";
+import SkillsAutocomplete from "./components/SkillsAutocomplete";
+import StudentsAutocomplete from "./components/StudentsAutocomplete";
+import TimeController from "./components/TimeController";
+import { FormQuestProps } from "./helpers/quest.interface";
 
 interface Props {
   students?: string[];
   setAssignmentsSkills: (s: ISkill[]) => void;
   assignmentsSkills?: ISkill[];
-  control: Control<FormProps, any>;
+  control: Control<FormQuestProps, any>;
 }
 
 export default function SettingsStep({
