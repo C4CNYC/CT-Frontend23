@@ -2,22 +2,28 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { format } from "date-fns";
+import { add, format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbListDetails } from "react-icons/tb";
-import {
-  animals,
-  colors,
-  uniqueNamesGenerator,
-} from "unique-names-generator";
+import { animals, colors, uniqueNamesGenerator } from "unique-names-generator";
 
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, Button, Stack, Tab, Tabs, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Stack,
+  Tab,
+  Tabs,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { ISkill } from "src/redux/interfaces/content.interface";
+import CustomTabPanel, {
+  customTabProps,
+} from "src/components/custom-tab-panel";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 import {
   useCreateAssignmentMutation,
@@ -37,21 +43,27 @@ const RANDOM_NAME = uniqueNamesGenerator({
   length: 2,
 });
 
-const DATE_PARSER = (date?: Date, defaultDate?: Date) =>
-  date ? new Date(date) : (defaultDate ?? new Date());
+const DATE_PARSER = (date?: Date, increment: number = 0) =>
+  date ? new Date(date) : add(new Date(), { days: increment });
 const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
+const DAYS_TO_END = 7;
+const DAYS_TO_CLOSE = 10;
 
-export default function AddQuest({ assignment }: IAddQuest): React.ReactElement {
+export default function AddQuest({
+  assignment,
+}: IAddQuest): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
 
-  const [assignmentsSkills, setAssignmentsSkills] = useState<ISkill[]>();
+  const [assignmentsSkills, setAssignmentsSkills] = useState<string[]>();
   const [students, setStudents] = useState<string[]>();
   const [value, setValue] = useState(0);
 
-  const [createAssignment] = useCreateAssignmentMutation();
-  const [updateAssignment] = useUpdateAssignmentMutation();
-  const [addAssignmrntsToClass] = useUpdateCourseAssignmentMutation();
+  const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
+  const [updateAssignment, { isLoading: isUpdating }] =
+    useUpdateAssignmentMutation();
+  const [addAssignmentsToClass, { isLoading: isAddingToClass }] =
+    useUpdateCourseAssignmentMutation();
 
   const { data } = useGetClassQuery(
     { id: query.id as string },
@@ -60,7 +72,7 @@ export default function AddQuest({ assignment }: IAddQuest): React.ReactElement 
 
   useEffect(() => {
     if (assignment) {
-      setAssignmentsSkills(assignment?.skills);
+      setAssignmentsSkills(assignment?.tags);
       setStudents(assignment?.students ? assignment.students : []);
     }
   }, [assignment]);
@@ -69,15 +81,21 @@ export default function AddQuest({ assignment }: IAddQuest): React.ReactElement 
     resolver: yupResolver(CreateQuestSchema),
     mode: "all",
     defaultValues: {
-        name: assignment?.name ?? RANDOM_NAME,
-        description: JSON.parse(assignment?.description ?? "{}"),
-        type: assignment?.type ?? AssignmentTypes.RESEARCH,
-        course: assignment?.course?.id,
-        startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
-        dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
-        closeDate: format(DATE_PARSER(assignment?.close_date), DATE_FORMAT),
-        active: assignment?.active ?? true,
-    }
+      name: assignment?.name ?? RANDOM_NAME,
+      description: JSON.parse(assignment?.description ?? "{}"),
+      type: assignment?.type ?? AssignmentTypes.RESEARCH,
+      course: assignment?.course?.id,
+      startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
+      dueDate: format(
+        DATE_PARSER(assignment?.end_date, DAYS_TO_END),
+        DATE_FORMAT
+      ),
+      closeDate: format(
+        DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE),
+        DATE_FORMAT
+      ),
+      active: assignment?.active ?? true,
+    },
   });
 
   const onSubmit = async (formData: FormQuestProps) => {
@@ -92,7 +110,7 @@ export default function AddQuest({ assignment }: IAddQuest): React.ReactElement 
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-          // skills: assingmentSkills,
+          tags: assignmentsSkills,
         }).unwrap();
         enqueueSnackbar("Assignment updated successfuly!");
       } catch (error: any) {
@@ -111,30 +129,25 @@ export default function AddQuest({ assignment }: IAddQuest): React.ReactElement 
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-          skills: assignmentsSkills,
-          ...(
-            students?.length
-              ? { students }
-              : { classes: [query.id as string] }
-            )
+          tags: assignmentsSkills,
+          ...(students?.length
+            ? { students }
+            : { classes: [query.id as string] }),
         }).unwrap();
 
-        await addAssignmrntsToClass({
+        await addAssignmentsToClass({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
           course_id: query.id as string,
         }).unwrap();
 
         push(
-          `${STUDENT_PATH_DASHBOARD.class.id(
-            query.id as string
-          )}?${new URLSearchParams({
+          STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
-            assignmentId: newAssignment.id
-          })}`,
-          undefined,
-          { shallow: true }
+            assignmentId: newAssignment.id,
+          })
         );
+
         enqueueSnackbar("Assignment created successfuly!");
       } catch (error: any) {
         enqueueSnackbar("Something went wrong when creating", {
@@ -174,7 +187,9 @@ export default function AddQuest({ assignment }: IAddQuest): React.ReactElement 
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <Tabs
-              onChange={(_: any, newValue: number) => { setValue(newValue) }}
+              onChange={(_: any, newValue: number) => {
+                setValue(newValue);
+              }}
               value={value}
               scrollButtons={false}
               sx={{
@@ -191,86 +206,52 @@ export default function AddQuest({ assignment }: IAddQuest): React.ReactElement 
                 label={"Details"}
                 icon={<TbListDetails size={20} />}
                 sx={{ fontSize: "1.1rem" }}
-                {...a11yProps(0)}
+                {...customTabProps(0)}
               />
               <Tab
                 label={"Settings"}
                 icon={<IoSettingsOutline size={20} />}
                 sx={{ fontSize: "1.1rem" }}
-                {...a11yProps(0)}
+                {...customTabProps(0)}
               />
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep
-                control={methods.control}
-                courses={data?.courses ?? []}
-              />
+              <DetailsStep courses={data?.courses ?? []} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
                 students={students}
+                setStudents={setStudents}
                 control={methods.control}
-                setAssignmentsSkills={(s: ISkill[]) => {
+                setAssignmentsSkills={(s: string[]) => {
                   setAssignmentsSkills(s);
                 }}
                 assignmentsSkills={assignmentsSkills}
               />
             </CustomTabPanel>
-            <Stack
-              mt={3}
-              gap={3}
-              flexDirection="row"
-              justifyContent="flex-end"
-            >
+            <Stack mt={3} gap={3} flexDirection="row" justifyContent="flex-end">
               <Button
                 onClick={() => {
                   push(STUDENT_PATH_DASHBOARD.class.id(query.id as string));
                 }}
-                variant="contained"
+                variant="soft"
+                color="error"
               >
                 CANCEL
               </Button>
               <LoadingButton
                 type="submit"
+                color="success"
                 variant="contained"
-                loading={false}
+                loading={isLoading || isUpdating || isAddingToClass}
               >
-                LAUNCH
+                {assignment ? "EDIT" : "LAUNCH"}
               </LoadingButton>
             </Stack>
           </FormProvider>
         </Box>
       </Stack>
     </>
-  );
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {children}
-    </div>
   );
 }

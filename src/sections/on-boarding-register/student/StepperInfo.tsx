@@ -10,7 +10,6 @@ import { Divider, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 
 import { FormProvider, RHFSelect, useSnackbar } from "@components";
-import { PATH_AUTH } from "@routes/paths";
 import { useUpdateStudentProfileMutation } from "src/redux/services/auth";
 
 interface FormValueProps {
@@ -19,7 +18,7 @@ interface FormValueProps {
 }
 
 export default function StepperInfo(): React.ReactElement {
-  const { push } = useRouter();
+  const { reload } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [updateUser] = useUpdateStudentProfileMutation();
 
@@ -40,7 +39,8 @@ export default function StepperInfo(): React.ReactElement {
         country: data.country?.toLowerCase(),
         // birthDate: data.birthDate,
       }).unwrap();
-      push(PATH_AUTH.singIn);
+
+      reload();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }

@@ -10,16 +10,12 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
 import Notes from "@sections/main/main-notes/Notes";
-import QuestsTable from "@sections/main/quests/QuestsTable";
+import ClassInfoTable from "@sections/main/quests/ClassInfoTable";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
-
-// ----------------------------------------------------------------------
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
@@ -34,13 +30,12 @@ export default function HomeOverview(): React.ReactElement {
       return;
     }
     push(
-      `${STUDENT_PATH_DASHBOARD.class.id(
-        query.id as string
-      )}?${new URLSearchParams({ schoolId: data?.school?.id as string })}`,
-      undefined,
-      { shallow: true }
+      STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
+        schoolId: data?.school?.id as string,
+      })
     );
   }, [data]);
+
   if (isLoading || !data) {
     return (
       <Skeleton
@@ -50,19 +45,20 @@ export default function HomeOverview(): React.ReactElement {
       />
     );
   }
+
   return (
     <>
       <Head>
         <title>Home Overview | Code Tribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-        <DefaultClassInfo data={data} />
+        <DefaultClassInfo classData={data} />
         <Stack
           sx={{
             flexDirection: { lg: "row" },
           }}
         >
-          <QuestsTable data={data} />
+          <ClassInfoTable classData={data} />
           <Notes />
         </Stack>
       </Container>

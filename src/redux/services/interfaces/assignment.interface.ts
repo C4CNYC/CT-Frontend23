@@ -1,6 +1,5 @@
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
-import { ISkill } from "src/redux/interfaces/content.interface";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 
 import { AssignmentComplexity } from "../enums/assignment-complexity.enum";
@@ -27,7 +26,7 @@ export interface IAssignment {
   assignee_classes: Array<IClass & BaseResponseInterface>;
   lesson: ILesson & BaseResponseInterface;
   code_assignment: ITask & BaseResponseInterface;
-  skills?: ISkill[];
+  tags?: string[];
   students?: string[];
   meta: Record<string, any>;
 }
@@ -46,7 +45,7 @@ export interface IAssignmentUpdate {
   complexity?: AssignmentComplexity;
   duration?: string;
   meta?: Record<string, any>;
-  skills?: ISkill[] | [];
+  tags?: string[] | [];
 }
 
 export interface IAssignmentCreate {
@@ -60,5 +59,5 @@ export interface IAssignmentCreate {
   students?: string[];
   active?: boolean;
   meta?: Record<string, any>;
-  skills?: ISkill[] | [];
+  tags?: string[] | [];
 }
