@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, CircularProgress, Dialog, IconButton, Typography } from "@mui/material";
 
 import { Iconify } from "../iconify";
@@ -11,21 +12,22 @@ import { useRouter } from "next/router";
 import { GoogleBtn } from "./GoogleBtn";
 import { GoogleClassesList } from "./GoogleClassesList";
 
-interface Prop {
+interface IClassroomModal {
   children: React.ReactElement;
+  schoolId: string;
 }
 
-export default function ClassroomModal({ children }: Prop) {
+export default function ClassroomModal({ children, schoolId }: IClassroomModal) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [token, setToken] = useState("");
   const [classId, setClassId] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
-  const [migrate] = useMigrateGoogleClassesStudentsMutation();
+  const [migrate, { isLoading }] = useMigrateGoogleClassesStudentsMutation();
 
   const { data, isFetching } = useGetGoogleClassesQuery({
-    schoolId: "some",
+    schoolId,
     classId: router.query.id as string,
     access_token: token
   }, { skip: !token });
@@ -38,7 +40,7 @@ export default function ClassroomModal({ children }: Prop) {
   const onMigrateStudents = async () => {
     try {
       await migrate({
-        schoolId: "some",
+        schoolId,
         classId: router.query.id as string,
         access_token: token,
         google_class_id: classId
@@ -114,7 +116,8 @@ export default function ClassroomModal({ children }: Prop) {
                 : null
             }
           </Box>
-          <Button
+          <LoadingButton
+            loading={isLoading}
             sx={{ height: 50 }}
             variant="contained"
             disabled={!classId}
@@ -122,7 +125,7 @@ export default function ClassroomModal({ children }: Prop) {
             fullWidth
           >
             Migrate
-          </Button>
+          </LoadingButton>
         </Box>
       </Dialog>
     </>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -13,7 +12,6 @@ import {
   FormControl,
   FormControlLabel,
   IconButton,
-  Link,
   Radio,
   RadioGroup,
   Typography,
@@ -23,21 +21,26 @@ import { Stack } from "@mui/system";
 import ClassroomModal from "../classroom-modal";
 import EmailAddressModal from "../email-address-domain";
 import { Iconify } from "../iconify";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
 
 interface Prop {
   children: React.ReactElement;
+  schoolClass: IClass & BaseResponseInterface;
 }
 export default function ShareGroupModal({
   children,
+  schoolClass
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => { setOpen(true); };
+  const handleClose = () => { setOpen(false); };
   const [value, setValue] = useState("anyone");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
+
   return (
     <>
       <div onClick={handleOpen}>{children}</div>
@@ -219,7 +222,7 @@ export default function ShareGroupModal({
             >
               Other ways to add students:
             </Typography>
-            <ClassroomModal>
+            <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
               <Button
                 fullWidth
                 sx={{
