@@ -52,7 +52,6 @@ export default function SkillsAutocomplete({
         limitTags={5}
         defaultValue={getSkills()}
         onChange={(e, value) => {
-          console.log(value, "value");
           setAssignmentsSkills(value.map((el: any) => el.id));
         }}
         renderTags={(tagValue, getTagProps): React.ReactElement[] =>

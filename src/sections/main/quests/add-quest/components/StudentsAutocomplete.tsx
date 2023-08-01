@@ -21,9 +21,11 @@ import { useGetStudentsQuery } from "src/redux/services/manager/students-manager
 
 interface Props {
   students?: string[];
+  setStudents: (s: string[]) => void;
 }
 export default function StudentsAutocomplete({
   students,
+  setStudents,
 }: Props): React.ReactElement {
   const { query } = useRouter();
 
@@ -60,7 +62,9 @@ export default function StudentsAutocomplete({
       sx={{ pt: 1 }}
       options={data.data}
       defaultValue={getStudents()}
-      onChange={(e, value) => {}}
+      onChange={(e, value) => {
+        setStudents(value.map((el: any) => el.id));
+      }}
       getOptionLabel={(option) => option.last_name}
       renderInput={(params) => (
         <TextField {...params} label="Students" placeholder="add more..." />
