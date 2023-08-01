@@ -59,9 +59,11 @@ export default function AddQuest({
   const [students, setStudents] = useState<string[]>();
   const [value, setValue] = useState(0);
 
-  const [createAssignment] = useCreateAssignmentMutation();
-  const [updateAssignment] = useUpdateAssignmentMutation();
-  const [addAssignmentsToClass] = useUpdateCourseAssignmentMutation();
+  const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
+  const [updateAssignment, { isLoading: isUpdating }] =
+    useUpdateAssignmentMutation();
+  const [addAssignmentsToClass, { isLoading: isAddingToClass }] =
+    useUpdateCourseAssignmentMutation();
 
   const { data } = useGetClassQuery(
     { id: query.id as string },
@@ -110,7 +112,6 @@ export default function AddQuest({
           active: Boolean(formData.active),
           tags: assignmentsSkills,
         }).unwrap();
-
         enqueueSnackbar("Assignment updated successfuly!");
       } catch (error: any) {
         enqueueSnackbar("Something went wrong when updating", {
@@ -221,6 +222,7 @@ export default function AddQuest({
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
                 students={students}
+                setStudents={setStudents}
                 control={methods.control}
                 setAssignmentsSkills={(s: string[]) => {
                   setAssignmentsSkills(s);
@@ -242,9 +244,9 @@ export default function AddQuest({
                 type="submit"
                 color="success"
                 variant="contained"
-                loading={false}
+                loading={isLoading || isUpdating || isAddingToClass}
               >
-                LAUNCH
+                {assignment ? "EDIT" : "LAUNCH"}
               </LoadingButton>
             </Stack>
           </FormProvider>

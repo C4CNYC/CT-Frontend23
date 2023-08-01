@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 
 import { RHFSelect } from "@components";
-import { ISkill } from "src/redux/interfaces/content.interface";
 
 import SkillsAutocomplete from "./components/SkillsAutocomplete";
 import StudentsAutocomplete from "./components/StudentsAutocomplete";
@@ -22,6 +21,7 @@ import { FormQuestProps } from "./helpers/quest.interface";
 
 interface Props {
   students?: string[];
+  setStudents: (s: string[]) => void;
   setAssignmentsSkills: (s: string[]) => void;
   assignmentsSkills?: string[];
   control: Control<FormQuestProps, any>;
@@ -31,6 +31,7 @@ export default function SettingsStep({
   students,
   control,
   setAssignmentsSkills,
+  setStudents,
   assignmentsSkills,
 }: Props): React.ReactElement {
   const [value, setValue] = useState("class");
@@ -134,7 +135,9 @@ export default function SettingsStep({
             label={<Typography variant="subtitle2">Students</Typography>}
           />
         </RadioGroup>
-        {value === "students" && <StudentsAutocomplete students={students} />}
+        {value === "students" && (
+          <StudentsAutocomplete students={students} setStudents={setStudents} />
+        )}
       </FormControl>
     </Stack>
   );
