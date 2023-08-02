@@ -9,7 +9,9 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
+import QuestRating from "@sections/quest/QuestRating";
 import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
+import QuestResours from "@sections/quest/QuestResours";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -36,7 +38,7 @@ export default function Quest({ schoolId }: Props): React.ReactElement {
       </Head>
       <Container
         maxWidth={themeStretch ? false : "lg"}
-        sx={{ borderRadius: 1, background: "#F6F9FC", pt: 2 }}
+        sx={{ borderRadius: 1, background: "#F6F9FC", pt: 2, pb: 2 }}
       >
         <CustomBreadcrumbs
           heading="Quest"
@@ -49,6 +51,8 @@ export default function Quest({ schoolId }: Props): React.ReactElement {
         <QuestHeader />
         <QuestMain />
         <QuestDescription />
+        <QuestRating />
+        <QuestResours />
       </Container>
     </>
   );
