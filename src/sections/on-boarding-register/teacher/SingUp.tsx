@@ -1,9 +1,11 @@
-import { useAtom } from "jotai";
+import { useState } from "react";
+
+import { useGoogleLogin } from "@react-oauth/google";
 import { FaArrowRight } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { StepWizardChildProps } from "react-step-wizard";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Divider,
@@ -13,33 +15,49 @@ import {
   Typography,
 } from "@mui/material";
 
-import { RHFTextField } from "@components";
-
-import { studentStepperAtom } from "../student/student-stepper-atom";
-import { teacherStepperAtom } from "./teacher-stepper-atom";
+import { RHFTextField, useSnackbar } from "@components";
+import { useAuthContext } from "src/auth/useAuthContext";
 
 interface Props {
   isValid?: boolean;
   isTeacher: boolean;
+  nextStep: () => void;
+  prevStep?: () => void;
+  goToStep: (s: number) => void;
 }
 
 export default function SingUp({
   nextStep,
+  prevStep,
   isValid,
   isTeacher,
-}: Partial<StepWizardChildProps> & Props): React.ReactElement {
-  const [activeStep, setActiveStep] = useAtom(teacherStepperAtom);
-  const [activeStepStudent, setActiveStepStudent] = useAtom(studentStepperAtom);
+  goToStep,
+}: Props): React.ReactElement {
+  const { registerWithGoogle } = useAuthContext();
+  const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onRegisterWithGoogle = useGoogleLogin({
+    onSuccess: async ({ access_token: token }) => {
+      setIsLoading(true);
+      try {
+        await registerWithGoogle(token);
+        if (isTeacher) {
+          goToStep(3);
+        } else {
+          goToStep(2);
+        }
+      } catch (error) {
+        enqueueSnackbar(error.message, { variant: "error" });
+      }
+      setIsLoading(false);
+    },
+  });
 
   return (
     <>
       {isTeacher && (
-        <IconButton
-          onClick={() => {
-            setActiveStep(activeStep - 1);
-          }}
-          sx={{ ml: "-30px", mt: "-30px" }}
-        >
+        <IconButton onClick={prevStep} sx={{ ml: "-30px", mt: "-30px" }}>
           <MdArrowBackIosNew />
         </IconButton>
       )}
@@ -80,11 +98,7 @@ export default function SingUp({
                   edge="end"
                   onClick={() => {
                     if (!isValid) return;
-                    if (isTeacher) {
-                      setActiveStep(activeStep + 1);
-                    } else {
-                      setActiveStepStudent(activeStepStudent + 1);
-                    }
+                    nextStep();
                   }}
                 >
                   <FaArrowRight color={isValid ? "#43D4DD" : ""} />
@@ -101,7 +115,11 @@ export default function SingUp({
             OR
           </Typography>
         </Divider>
-        <Button
+        <LoadingButton
+          onClick={() => {
+            onRegisterWithGoogle();
+          }}
+          loading={isLoading}
           sx={(theme) => ({
             color: theme.palette.grey[600],
             textTransform: "none",
@@ -118,7 +136,7 @@ export default function SingUp({
         >
           <FcGoogle size="50px" />
           Sing up with Google
-        </Button>
+        </LoadingButton>
       </Stack>
     </>
   );

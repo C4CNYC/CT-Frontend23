@@ -1,17 +1,55 @@
 import { useState } from "react";
 
-import { FcGoogle } from "react-icons/fc";
-
-import { Box, Button, Dialog, IconButton, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Box, Button, CircularProgress, Dialog, IconButton, Typography } from "@mui/material";
 
 import { Iconify } from "../iconify";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useSnackbar } from "../snackbar";
+import { useGetGoogleClassesQuery, useMigrateGoogleClassesStudentsMutation } from "src/redux/services/manager/students-manager";
+import { useRouter } from "next/router";
 
-interface Prop {
+import { GoogleBtn } from "./GoogleBtn";
+import { GoogleClassesList } from "./GoogleClassesList";
+
+interface IClassroomModal {
   children: React.ReactElement;
+  schoolId: string;
 }
 
-export default function ClassroomModal({ children }: Prop) {
+export default function ClassroomModal({ children, schoolId }: IClassroomModal) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [token, setToken] = useState("");
+  const [classId, setClassId] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [migrate, { isLoading }] = useMigrateGoogleClassesStudentsMutation();
+
+  const { data, isFetching } = useGetGoogleClassesQuery({
+    schoolId,
+    classId: router.query.id as string,
+    access_token: token
+  }, { skip: !token });
+
+  const onLoginWithGoogle = useGoogleLogin({
+    scope: "https://www.googleapis.com/auth/classroom.courses.readonly",
+    onSuccess: async ({ access_token }) => { setToken(access_token) },
+  });
+
+  const onMigrateStudents = async () => {
+    try {
+      await migrate({
+        schoolId,
+        classId: router.query.id as string,
+        access_token: token,
+        google_class_id: classId
+      }).unwrap()
+    } catch (e) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
+  }
+
   return (
     <>
       <Box
@@ -41,7 +79,7 @@ export default function ClassroomModal({ children }: Prop) {
               icon="ep:close"
               width={24}
               height={24}
-              onClick={() => setOpen(false)}
+              onClick={() => { setOpen(false); }}
             />
           </IconButton>
         </Box>
@@ -62,47 +100,32 @@ export default function ClassroomModal({ children }: Prop) {
                 icon="iconamoon:arrow-left-2-bold"
                 width={28}
                 height={28}
-                onClick={() => setOpen(false)}
+                onClick={() => { setOpen(false); }}
               />
             </Button>
             <Typography variant="h4" ml="-10px">
               Google Classroom
             </Typography>
           </Box>
-          <Box mt="32px">
-            <Button
-              sx={{
-                background: "#f0f0f0",
-                color: "#4f4f4f",
-                height: "54px",
-                p: "8px 28px",
-                "&:hover": {
-                  background: "#e3e3e3",
-                  boxShadow: "none",
-                },
-              }}
-            >
-              <FcGoogle size="30px" style={{ marginLeft: "10px" }} />
-              <Typography variant="h6" ml="10px">
-                Continue with Google
-              </Typography>
-            </Button>
+          <Box mt="32px" mb="32px">
+            {isFetching ? <CircularProgress/> : null}
+            {!token ? <GoogleBtn onClick={ () => { onLoginWithGoogle() }}/> : null}
+            {
+              data?.length && !isFetching
+                ? <GoogleClassesList classes={data ?? []} onSelectClass={setClassId}/>
+                : null
+            }
           </Box>
-          <Button
+          <LoadingButton
+            loading={isLoading}
+            sx={{ height: 50 }}
+            variant="contained"
+            disabled={!classId}
+            onClick={onMigrateStudents}
             fullWidth
-            sx={{
-              mt: "32px",
-              background: "#f1c1e2",
-              color: "white",
-              height: "54px",
-              fontSize: "20px",
-              "&:hover": {
-                background: "#f1c1e2",
-              },
-            }}
           >
-            Done
-          </Button>
+            Migrate
+          </LoadingButton>
         </Box>
       </Dialog>
     </>

@@ -17,7 +17,8 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
   ({ item, depth, open, active, isExternalLink, ...other }, ref) => {
     const { translate } = useLocales();
 
-    const { title, path, icon, children, disabled, caption, roles } = item;
+    const { title, path, icon, children, disabled, caption, roles, component } =
+      item;
 
     const subItem = depth !== 1;
 
@@ -91,6 +92,9 @@ const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
         );
       }
 
+      if (component) {
+        return component(renderContent);
+      }
       // Default
       return (
         <Link component={NextLink} href={path} underline="none">

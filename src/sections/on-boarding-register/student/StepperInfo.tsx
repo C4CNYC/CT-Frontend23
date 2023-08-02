@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 
 import { countries } from "@assets/data";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAtom } from "jotai";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 
@@ -11,10 +10,7 @@ import { Divider, Stack, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 
 import { FormProvider, RHFSelect, useSnackbar } from "@components";
-import { PATH_AUTH } from "@routes/paths";
 import { useUpdateStudentProfileMutation } from "src/redux/services/auth";
-
-import { studentStepperAtom } from "./student-stepper-atom";
 
 interface FormValueProps {
   country: string;
@@ -22,9 +18,8 @@ interface FormValueProps {
 }
 
 export default function StepperInfo(): React.ReactElement {
-  const { push } = useRouter();
+  const { reload } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [, setActiveStep] = useAtom(studentStepperAtom);
   const [updateUser] = useUpdateStudentProfileMutation();
 
   const CreateInfoSchema = Yup.object().shape({
@@ -39,14 +34,13 @@ export default function StepperInfo(): React.ReactElement {
   });
 
   const onSubmit = async (data: FormValueProps) => {
-    console.log(data.country);
     try {
       await updateUser({
-        country: data.country.toLowerCase(),
+        country: data.country?.toLowerCase(),
         // birthDate: data.birthDate,
       }).unwrap();
-      push(PATH_AUTH.singIn);
-      setActiveStep(0);
+
+      reload();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }

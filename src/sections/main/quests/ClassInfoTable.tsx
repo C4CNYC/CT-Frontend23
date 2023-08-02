@@ -1,3 +1,4 @@
+import NextLink from "next/link";
 import { useState } from "react";
 
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
@@ -15,27 +16,26 @@ import { useTheme } from "@mui/system";
 import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import CustomTabPanel, {
+  customTabProps,
+} from "src/components/custom-tab-panel";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 
-import AddQuestModal from "./add-quest/AddQuestsModal";
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
 
-interface Props {
-  data: IClass;
+interface IClassInfoTable {
+  classData: IClass;
 }
 
-export default function QuestsTable({ data }: Props) {
+export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
     event.preventDefault();
@@ -46,12 +46,19 @@ export default function QuestsTable({ data }: Props) {
     setOpenPopover(null);
   };
 
+  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(
+    classData.id as string,
+    { schoolId: classData.school?.id as string }
+  );
+
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
       <Stack direction="row" alignItems="center" pb={2}>
         <Tabs
           value={value}
-          onChange={handleChange}
+          onChange={(_: any, newValue: number) => {
+            setValue(newValue);
+          }}
           scrollButtons={false}
           sx={{
             "& .MuiTabs-indicator": {
@@ -62,20 +69,20 @@ export default function QuestsTable({ data }: Props) {
           <Tab
             label={!isMobile && "Quests"}
             icon={<CiMountain1 size={20} />}
-            {...a11yProps(0)}
+            {...customTabProps(0)}
             sx={{ fontSize: "1.1rem" }}
           />
           <Tab
             label={!isMobile && "Members"}
             icon={<IoPeopleOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
-            {...a11yProps(1)}
+            {...customTabProps(1)}
           />
           <Tab
             label={!isMobile && "Details"}
             icon={<IoSettingsOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
-            {...a11yProps(2)}
+            {...customTabProps(2)}
           />
         </Tabs>
         <Stack
@@ -132,7 +139,7 @@ export default function QuestsTable({ data }: Props) {
         <QuestsTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard members={data?.students ?? []} />
+        <MemberCard members={classData?.students ?? []} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />
@@ -150,42 +157,18 @@ export default function QuestsTable({ data }: Props) {
             Assign Open Project
           </MenuItem>
         </RoleBasedGuard>
-        <AddQuestModal>
+        <Link
+          component={NextLink}
+          href={addQuestPagePath}
+          underline="none"
+          color="initial"
+        >
           <MenuItem>
             <SiGoogleclassroom size="20px" />
             Assign Course or Section
           </MenuItem>
-        </AddQuestModal>
+        </Link>
       </MenuPopover>
     </Stack>
   );
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && children}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
 }

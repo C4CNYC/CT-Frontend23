@@ -23,8 +23,8 @@ interface AssignmentStepProps {
 
 interface FormValuesProps {
   class: string;
-  end_date: string;
-  start_date: string;
+  end_date?: string | Date;
+  start_date?: string | Date;
   notes: string;
   graded: boolean;
   points: string;

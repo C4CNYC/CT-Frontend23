@@ -66,7 +66,7 @@ export default function AssignmentsDetails({
 
   const updateField = async (
     fieldName: keyof IAssignment,
-    value: string | number | null
+    value: string | number | null | Date
   ): Promise<void> => {
     try {
       if (!assignment || assignment[fieldName] === value) return;
@@ -154,7 +154,7 @@ export default function AssignmentsDetails({
             <DateTimePicker
               value={assignment?.start_date}
               onChange={async (newValue) => {
-                await updateField("start_date", newValue as string);
+                await updateField("start_date", newValue);
               }}
               renderInput={(params) => (
                 <TextField

@@ -1,6 +1,5 @@
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
-import { ISkill } from "src/redux/interfaces/content.interface";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 
 import { AssignmentComplexity } from "../enums/assignment-complexity.enum";
@@ -19,15 +18,15 @@ export interface IAssignment {
   type: AssignmentTypes;
   status: string;
   active: boolean;
-  start_date: string;
-  end_date: string;
-  close_date: string;
+  start_date: Date;
+  end_date: Date;
+  close_date: Date;
   complexity: AssignmentComplexity;
   duration?: { hours: string; minutes: string };
   assignee_classes: Array<IClass & BaseResponseInterface>;
   lesson: ILesson & BaseResponseInterface;
   code_assignment: ITask & BaseResponseInterface;
-  skills?: ISkill[];
+  tags?: string[];
   students?: string[];
   meta: Record<string, any>;
 }
@@ -40,13 +39,13 @@ export interface IAssignmentUpdate {
   type?: string;
   status?: AssignmentStatuses;
   active?: boolean;
-  start_date?: string;
-  end_date?: string;
+  start_date?: string | Date;
+  end_date?: string | Date;
   close_date?: string;
   complexity?: AssignmentComplexity;
   duration?: string;
   meta?: Record<string, any>;
-  skills?: ISkill[] | [];
+  tags?: string[] | [];
 }
 
 export interface IAssignmentCreate {
@@ -60,5 +59,5 @@ export interface IAssignmentCreate {
   students?: string[];
   active?: boolean;
   meta?: Record<string, any>;
-  skills?: ISkill[] | [];
+  tags?: string[] | [];
 }

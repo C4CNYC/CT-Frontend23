@@ -3,7 +3,6 @@ import * as React from "react";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { useAtom } from "jotai";
 
 import {
   Autocomplete,
@@ -20,9 +19,14 @@ import { CustomAvatar, Iconify } from "@components";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 
-import { addQuestAtom } from "./add-quest-atom";
-
-export default function StudentsAutocomplete(): React.ReactElement {
+interface Props {
+  students?: string[];
+  setStudents: (s: string[]) => void;
+}
+export default function StudentsAutocomplete({
+  students,
+  setStudents,
+}: Props): React.ReactElement {
   const { query } = useRouter();
 
   const [choosen] = React.useState<IStudent[] | []>([]);
@@ -30,7 +34,6 @@ export default function StudentsAutocomplete(): React.ReactElement {
     { schoolId: query.schoolId as string },
     { skip: !query.schoolId }
   );
-  const [{ students }, setQuestAtom] = useAtom(addQuestAtom);
 
   const getStudents = () => {
     if (!students || !data) return;
@@ -40,7 +43,6 @@ export default function StudentsAutocomplete(): React.ReactElement {
         return res.concat(cur);
       }, []);
   };
-  getStudents();
 
   if (!data || isLoading) {
     return (
@@ -51,6 +53,7 @@ export default function StudentsAutocomplete(): React.ReactElement {
       />
     );
   }
+
   return (
     <Autocomplete
       multiple
@@ -60,10 +63,7 @@ export default function StudentsAutocomplete(): React.ReactElement {
       options={data.data}
       defaultValue={getStudents()}
       onChange={(e, value) => {
-        setQuestAtom((prev) => ({
-          ...prev,
-          students: value.map((el) => el.id),
-        }));
+        setStudents(value.map((el: any) => el.id));
       }}
       getOptionLabel={(option) => option.last_name}
       renderInput={(params) => (

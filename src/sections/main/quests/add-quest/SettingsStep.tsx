@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { useAtom } from "jotai";
 import { Control } from "react-hook-form";
 
 import {
@@ -15,50 +14,44 @@ import {
 
 import { RHFSelect } from "@components";
 
-import { FormProps } from "./AddQuestsModal";
-import SkillsAutocomplete from "./SkillsAutocomplete";
-import StudentsAutocomplete from "./StudentsAutocomplete";
-import TimeController from "./TimeController";
-import { addQuestAtom } from "./add-quest-atom";
+import SkillsAutocomplete from "./components/SkillsAutocomplete";
+import StudentsAutocomplete from "./components/StudentsAutocomplete";
+import TimeController from "./components/TimeController";
+import { FormQuestProps } from "./helpers/quest.interface";
 
 interface Props {
-  control: Control<FormProps, any>;
+  students?: string[];
+  setStudents: (s: string[]) => void;
+  setAssignmentsSkills: (s: string[]) => void;
+  assignmentsSkills?: string[];
+  control: Control<FormQuestProps, any>;
 }
 
-export default function SettingsStep({ control }: Props): React.ReactElement {
+export default function SettingsStep({
+  students,
+  control,
+  setAssignmentsSkills,
+  setStudents,
+  assignmentsSkills,
+}: Props): React.ReactElement {
   const [value, setValue] = useState("class");
-  const [{ startDate, closeDate, dueDate, assignmentId }, setQuestAtom] =
-    useAtom(addQuestAtom);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
+
   return (
-    <Stack sx={{ gap: 2, px: 10, minHeight: "685px" }}>
-      <Stack direction="row" gap={4}>
+    <Stack sx={{ gap: 2, minHeight: "630px" }}>
+      <Stack direction="row" gap={4} sx={{ flexWrap: { xs: "wrap" } }}>
         <TimeController
           title="Schedule Date:"
           name="startDate"
-          data={startDate}
-          setDate={(date) =>
-            setQuestAtom((prev) => ({
-              ...prev,
-              startDate: date,
-            }))
-          }
           control={control}
           infoText="Starting date if not date of creation."
         />
         <TimeController
           title="Due Date"
           name="dueDate"
-          data={dueDate}
-          setDate={(date) =>
-            setQuestAtom((prev) => ({
-              ...prev,
-              dueDate: date,
-            }))
-          }
           control={control}
           infoText="This is the date that this Quest should be completed by."
         />
@@ -66,13 +59,6 @@ export default function SettingsStep({ control }: Props): React.ReactElement {
       <TimeController
         title="Close Date:"
         name="closeDate"
-        data={closeDate}
-        setDate={(date) =>
-          setQuestAtom((prev) => ({
-            ...prev,
-            closeDate: date,
-          }))
-        }
         control={control}
         infoText="After this submissions are no longer received. The
             default is 3 days after the “Due date.”"
@@ -103,9 +89,14 @@ export default function SettingsStep({ control }: Props): React.ReactElement {
         </RHFSelect>
       </FormGroup>
 
-      <SkillsAutocomplete />
+      <SkillsAutocomplete
+        setAssignmentsSkills={(s: string[]) => {
+          setAssignmentsSkills(s);
+        }}
+        assignmentsSkills={assignmentsSkills}
+      />
 
-      <FormControl disabled={Boolean(assignmentId)}>
+      <FormControl disabled={false}>
         <Typography variant="h5" gutterBottom>
           Assign to:
         </Typography>
@@ -144,7 +135,9 @@ export default function SettingsStep({ control }: Props): React.ReactElement {
             label={<Typography variant="subtitle2">Students</Typography>}
           />
         </RadioGroup>
-        {value === "students" && <StudentsAutocomplete />}
+        {value === "students" && (
+          <StudentsAutocomplete students={students} setStudents={setStudents} />
+        )}
       </FormControl>
     </Stack>
   );

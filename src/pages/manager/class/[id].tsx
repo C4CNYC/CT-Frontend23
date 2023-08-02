@@ -7,7 +7,7 @@ import { Container } from "@mui/system";
 import { useSettingsContext } from "@components";
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
-import QuestsTable from "@sections/main/quests/QuestsTable";
+import QuestsTable from "@sections/main/quests/ClassInfoTable";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 HomeOverview.getLayout = (page: React.ReactElement) => (

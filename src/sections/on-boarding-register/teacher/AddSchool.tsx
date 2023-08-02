@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 import { countries } from "@assets/data";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
@@ -16,14 +15,11 @@ import {
   RHFTextField,
   useSnackbar,
 } from "@components";
-import { PATH_AUTH } from "@routes/paths";
 import { SchoolType } from "src/redux/services/enums/school-type.enum";
 import {
   useGetMySchoolsQuery,
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
-
-import { teacherStepperAtom } from "./teacher-stepper-atom";
 
 interface SchoolFormProps {
   schoolName: string;
@@ -34,8 +30,7 @@ interface SchoolFormProps {
 }
 
 export default function AddSchool(): React.ReactElement {
-  const [, setActiveStep] = useAtom(teacherStepperAtom);
-  const { push } = useRouter();
+  const { reload } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { data, isLoading } = useGetMySchoolsQuery({});
   const [updateSchool, { isLoading: isUpdating }] =
@@ -76,8 +71,8 @@ export default function AddSchool(): React.ReactElement {
         country: schoolData.country,
         city: schoolData.city,
       }).unwrap();
-      push(PATH_AUTH.singIn);
-      setActiveStep(0);
+
+      reload();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
@@ -85,7 +80,7 @@ export default function AddSchool(): React.ReactElement {
 
   return (
     <>
-      <FormProvider methods={methods}>
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}>
           <Typography
             variant="h3"
@@ -214,7 +209,7 @@ export default function AddSchool(): React.ReactElement {
           </RHFSelect>
         </Stack>
         <LoadingButton
-          onClick={methods.handleSubmit(onSubmit)}
+          type="submit"
           sx={{
             background: "#43D4DD33",
             color: "#43D4DD",

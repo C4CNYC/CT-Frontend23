@@ -1,22 +1,25 @@
+import nextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { FaCampground, FaPlus } from "react-icons/fa";
 import { IoPeople } from "react-icons/io5";
 
-import { Button, Divider, MenuItem, Stack } from "@mui/material";
+import { Button, Divider, Link, MenuItem, Stack } from "@mui/material";
 
-import { MenuPopover } from "@components";
+import { MenuPopover, useSettingsContext } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
 
-import CreateClassModal from "./CreateClassModal";
+import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";
 
-import JoinClassModal from "./JoinTribeModal";
-
 export default function MenuTribesList(): React.ReactElement {
+  const { themeLayout } = useSettingsContext();
+  const isNavMini = themeLayout === "mini";
+
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const { data } = useGetClassesQuery({});
   const { query } = useRouter();
@@ -26,19 +29,28 @@ export default function MenuTribesList(): React.ReactElement {
     event.preventDefault();
     setOpenPopover(event.currentTarget);
   };
-
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
   return (
     <Stack>
-      <Divider sx={{ borderBottomWidth: "4px", mb: 2, mt: 1, ml: 2 }} />
+      {!isNavMini && (
+        <Divider
+          sx={{
+            borderBottomWidth: "4px",
+            mb: 2,
+            mt: 1,
+            ml: 2,
+          }}
+        />
+      )}
       <Stack
         sx={{
           gap: 1,
           maxHeight: "185px",
           overflowY: "auto",
           scrollbarWidth: "none",
+          mr: isNavMini ? 2 : 0,
           "&::-webkit-scrollbar": {
             width: 0,
           },
@@ -74,7 +86,11 @@ export default function MenuTribesList(): React.ReactElement {
           })}
         </Stack>
       </Stack>
-      <Divider sx={{ borderBottomWidth: "4px", mt: 2, ml: 2, mb: 1.5 }} />
+      {isNavMini ? (
+        <Divider sx={{ margin: "16px auto 8px", width: "24px" }} />
+      ) : (
+        <Divider sx={{ borderBottomWidth: "4px", mt: 2, ml: 2, mb: 1.5 }} />
+      )}
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}
@@ -82,12 +98,18 @@ export default function MenuTribesList(): React.ReactElement {
         transformOrigin={{ vertical: -5, horizontal: "center" }}
       >
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
-          <CreateClassModal>
+          <Link
+            component={nextLink}
+            href={STUDENT_PATH_DASHBOARD.class.createClass}
+            onClick={handleClosePopover}
+            underline="none"
+            sx={{ color: "inherit" }}
+          >
             <MenuItem>
               <IoPeople size="20px" />
               Create a group
             </MenuItem>
-          </CreateClassModal>
+          </Link>
         </RoleBasedGuard>
         <JoinClassModal>
           <MenuItem>

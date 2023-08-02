@@ -27,6 +27,31 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["Students"],
     }),
+    getGoogleClasses: builder.query<
+      any[],
+      { access_token: string; schoolId: string; classId: string }
+    >({
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}/student/google-classes`,
+        method: "POST",
+        body,
+      }),
+    }),
+    migrateGoogleClassesStudents: builder.mutation<
+      any[],
+      {
+        access_token: string;
+        schoolId: string;
+        classId: string;
+        google_class_id: string;
+      }
+    >({
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}/student/migrate/google-classes`,
+        method: "POST",
+        body,
+      }),
+    }),
     createStudent: builder.mutation<
       IStudent & BaseResponseInterface,
       { schoolId: string }
@@ -110,7 +135,9 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useGetStudentQuery,
   useGetStudentsQuery,
+  useGetGoogleClassesQuery,
   // -------------mutation-----------
+  useMigrateGoogleClassesStudentsMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,
   useStudentJoinClassMutation,

@@ -29,11 +29,20 @@ export const STUDENT_PATH_DASHBOARD = {
   permissionDenied: "/student/permission-denied",
   class: {
     root: "/student/class",
+    createClass: "/student/class/create",
     join: "/student/class/join",
-    id: (id: string) => path("/student/class/", `${id}`),
+    addQuest: (id: string, query?: Record<string, string>) =>
+      path("/student/class/add-quest/", `${id}`) +
+      `?${query ? new URLSearchParams(query) : ""}`,
+    id: (id: string, query?: Record<string, string>) =>
+      path("/student/class/", `${id}`) +
+      `?${query ? new URLSearchParams(query) : ""}`,
+    invite: (code: string) => path("/student/class/", `${code}`),
   },
   quest: {
-    id: (id: string) => path("/student/quest/", `${id}`),
+    id: (id: string, query?: Record<string, string>) =>
+      path("/student/quest/", `${id}`) +
+      `?${query ? new URLSearchParams(query) : ""}`,
   },
   tribes: {
     root: "/student/tribes",
