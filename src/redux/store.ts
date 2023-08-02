@@ -15,6 +15,7 @@ import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
+import { publicApi } from "./services/public/tribe-public";
 import { studentApi } from "./services/student";
 import { studentAuthApi } from "./services/student-auth";
 import { studentPublicApi } from "./services/student/public-student";
@@ -37,7 +38,8 @@ const store = configureStore({
       .concat(schoolSettingsApi.middleware)
       .concat(adminApi.middleware)
       .concat(managerApi.middleware)
-      .concat(studentPublicApi.middleware),
+      .concat(studentPublicApi.middleware)
+      .concat(publicApi.middleware),
 });
 
 const persistor = persistStore(store);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
+import { useSnackbar } from "notistack";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -13,12 +13,14 @@ import {
   FormControl,
   FormControlLabel,
   IconButton,
-  Link,
   Radio,
   RadioGroup,
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
+
+import { useCopyToClipboard } from "@hooks";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 import ClassroomModal from "../classroom-modal";
 import EmailAddressModal from "../email-address-domain";
@@ -26,10 +28,14 @@ import { Iconify } from "../iconify";
 
 interface Prop {
   children: React.ReactElement;
+  joinCode: string;
 }
 export default function ShareGroupModal({
   children,
+  joinCode,
 }: Prop): React.ReactElement {
+  const { copy } = useCopyToClipboard();
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -38,6 +44,18 @@ export default function ShareGroupModal({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
+
+  const onCopy = (textToCopy: string) => {
+    if (textToCopy) {
+      copy(textToCopy);
+      enqueueSnackbar("Copied!");
+    }
+  };
+
+  const shareLink = `${
+    process.env.NEXT_PUBLIC_API_URL
+  }${STUDENT_PATH_DASHBOARD.joinTribe.id(joinCode)}`;
+
   return (
     <>
       <div onClick={handleOpen}>{children}</div>
@@ -116,6 +134,7 @@ export default function ShareGroupModal({
                 sx={{
                   background: "#f9f9f9",
                   color: "#000",
+                  pointerEvents: "none",
                   "&:hover": {
                     background: "#bebebe",
                   },
@@ -127,12 +146,24 @@ export default function ShareGroupModal({
                 <Iconify icon="basil:copy-outline" width={16} height={16} />
               </Button>
               <Box ml="10px">
-                <Typography>Invite link Edit</Typography>
-                <Typography>flip.com/906e3999</Typography>
+                <Typography>Invite link:</Typography>
+                <Typography
+                  noWrap
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "300px",
+                  }}
+                >
+                  {shareLink}
+                </Typography>
               </Box>
             </Box>
             <Button
               variant="contained"
+              onClick={() => {
+                onCopy(shareLink);
+              }}
               sx={{
                 background: "#d1329e",
                 "&:hover": {

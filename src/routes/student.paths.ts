@@ -71,4 +71,8 @@ export const STUDENT_PATH_DASHBOARD = {
     publicProject: "/student/gallery/public-projects",
     privateProject: "/student/gallery/private-projects",
   },
+  joinTribe: {
+    root: "/student/join-tribe",
+    id: (id: string) => path("/student/join-tribe/", `${id}`),
+  },
 };
