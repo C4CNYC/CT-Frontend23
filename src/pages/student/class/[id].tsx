@@ -32,7 +32,7 @@ export default function HomeOverview(): React.ReactElement {
     },
     { skip: !query.joinCode }
   );
-  console.log(data);
+
   useEffect(() => {
     if (!data || !isReady) {
       return;
