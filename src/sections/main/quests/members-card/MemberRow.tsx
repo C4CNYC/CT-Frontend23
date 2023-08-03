@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, MenuPopover } from "@components";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { IFriend } from "src/redux/interfaces/friends.interface";
 
 interface Props {
-  row: IStudent;
+  row: IFriend;
   selected: boolean;
   loading?: boolean;
   onEditRow: VoidFunction;
@@ -35,7 +35,7 @@ export default function MemberRow({
     first_name: firstName,
     last_name: lastName,
     avatar,
-    username,
+    usermane,
     city,
   } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -77,7 +77,7 @@ export default function MemberRow({
           {lastName && lastName?.charAt(0).toUpperCase() + lastName?.slice(1)}
         </TableCell>
 
-        <TableCell align="left">{username}</TableCell>
+        <TableCell align="left">{usermane}</TableCell>
         <TableCell align="left">{city ?? "-"}</TableCell>
 
         <TableCell align="right">

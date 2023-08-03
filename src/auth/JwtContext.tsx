@@ -184,25 +184,29 @@ export function AuthProvider({
   // LOGIN
   const login = useCallback(
     async (email: string, password: string, tenantName: string) => {
-      localStorage.setItem("tenantName", tenantName);
-      const { data } = await axios.post<any, any>("auth/signin", {
-        email,
-        password,
-      });
+      try {
+        localStorage.setItem("tenantName", tenantName);
+        const { data } = await axios.post<any, any>("auth/signin", {
+          email,
+          password,
+        });
 
-      const { access_token: accessToken, user } = data;
-      reduxDispatch(setUser(user));
-      setSession(
-        accessToken,
-        localStorage.getItem("tenantName") ?? "codetribe"
-      );
+        const { access_token: accessToken, user } = data;
+        reduxDispatch(setUser(user));
+        setSession(
+          accessToken,
+          localStorage.getItem("tenantName") ?? "codetribe"
+        );
 
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user,
-        },
-      });
+        dispatch({
+          type: Types.LOGIN,
+          payload: {
+            user,
+          },
+        });
+      } catch (error) {
+        throw new Error(error.message);
+      }
     },
     []
   );

@@ -137,7 +137,10 @@ export default function DefaultClassInfo({
                 <FiUser color="#fff" size="18px" />
                 Members
               </Link>
-              <ShareGroupModal schoolClass={classData}>
+              <ShareGroupModal
+                joinCode={classData?.setting?.share_token}
+                schoolClass={classData}
+              >
                 <Button
                   variant="text"
                   disableRipple

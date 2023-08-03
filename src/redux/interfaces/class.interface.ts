@@ -17,6 +17,7 @@ export interface IClass {
   avatar?: string;
   cover?: string;
   id?: string;
+  mentors?: IMentor[];
 }
 
 export interface IClassSetting {
