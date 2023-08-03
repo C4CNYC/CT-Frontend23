@@ -55,7 +55,6 @@ export default function HomeOverview(): React.ReactElement {
         {classInfo && <JoinTribeModal classInfo={classInfo} isSingIn={true} />}
         {!(isLoading || !data) ? (
           <>
-            {" "}
             <DefaultClassInfo classData={data} />
             <Stack
               sx={{
@@ -64,7 +63,7 @@ export default function HomeOverview(): React.ReactElement {
             >
               <ClassInfoTable classData={data} />
               <Notes />
-            </Stack>{" "}
+            </Stack>
           </>
         ) : (
           <Skeleton
