@@ -14,10 +14,11 @@ export default function JoinTribeHeader({
   classInfo,
 }: IJoinTribeHeaderProps): React.ReactElement {
   const theme = useTheme();
+
   return (
     <Stack
       sx={{
-        background: "url(/assets/background/overlay_2.jpg)",
+        background: classInfo.cover,
         py: 2,
         px: 3,
         color: theme.palette.primary.contrastText,
@@ -48,30 +49,40 @@ export default function JoinTribeHeader({
           }}
         >
           <FiUsers size={18} style={{ marginRight: "5px" }} />
-          22
+          {classInfo.students?.length}
         </Typography>
         <Typography variant="h3" mb={2}>
-          CreativeLalaby23
+          {classInfo.name}
         </Typography>
-        <Stack direction="row" justifyContent="space-between">
-          <Stack direction="row">
-            <Avatar
-              sx={{
-                width: "25px",
-                height: "25px",
-                border: "2px solid #AE5EB7",
-                background: "black",
-                mr: 2,
-              }}
-            >
-              🦙
-            </Avatar>
-            <Typography variant="subtitle1">Jonathan T.</Typography>
+        {classInfo.mentors?.length ? (
+          <Stack direction="row" justifyContent="space-between">
+            <Stack direction="row">
+              <Avatar
+                src={classInfo.mentors?.[0].avatar ?? ""}
+                sx={{
+                  width: "25px",
+                  height: "25px",
+                  border: "2px solid #AE5EB7",
+                  background: "black",
+                  mr: 2,
+                }}
+              >
+                🦙
+              </Avatar>
+              <Typography variant="subtitle1">
+                {classInfo.mentors?.[0].first_name}{" "}
+                {classInfo.mentors?.[0].last_name}
+              </Typography>
+            </Stack>
+            {classInfo.school && (
+              <Typography variant="subtitle1">
+                <ImLocation2 /> {classInfo.school.city}
+                {", "}
+                {classInfo.school.country}
+              </Typography>
+            )}
           </Stack>
-          <Typography variant="subtitle1">
-            <ImLocation2 /> Bali, Indonesia
-          </Typography>
-        </Stack>
+        ) : null}
       </Stack>
     </Stack>
   );

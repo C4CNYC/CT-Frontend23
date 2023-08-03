@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { LoadingScreen } from "@components";
-import { StudentDashboardLayout } from "@layouts/dashboard";
 import JoinTribeModal from "@sections/join-tribe/JoinTribeModal";
 import GuestGuard from "src/auth/GuestGuard";
 import { useGetPublicTribeQuery } from "src/redux/services/public/tribe-public";
@@ -17,16 +17,21 @@ export default function JoinTribe(): React.ReactElement {
     { skip: !query.id }
   );
 
-  if (isLoading) {
+  useEffect(() => {
+    if (query.id && data) {
+      localStorage.setItem(
+        "JOIN_TRIBE",
+        JSON.stringify({ joinCode: query.id, classId: data.id })
+      );
+    }
+  }, [query.id, data]);
+
+  if (isLoading || !data) {
     return <LoadingScreen />;
   }
 
   if (user) {
-    return (
-      <StudentDashboardLayout>
-        <JoinTribeModal classInfo={data} isSingIn={true} />
-      </StudentDashboardLayout>
-    );
+    <JoinTribeModal classInfo={data} isSingIn={true} />;
   }
 
   return (

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 
 import { LoadingButton } from "@mui/lab";
-import { IconButton, InputAdornment, Stack } from "@mui/material";
+import { Divider, IconButton, InputAdornment, Stack } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
 
@@ -19,16 +19,38 @@ export default function PasswordStep({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <>
-      <Stack minHeight="210px" minWidth="268px">
-        <IconButton
-          onClick={() => {
-            prevStep();
-          }}
-          sx={{ alignSelf: "flex-start", ml: "-50px" }}
-        >
-          <MdArrowBackIosNew />
-        </IconButton>
+    <Stack sx={{ minHeight: "360px", width: "280px" }}>
+      <IconButton
+        onClick={prevStep}
+        sx={{ alignSelf: "flex-start", ml: "-50px" }}
+      >
+        <MdArrowBackIosNew />
+      </IconButton>
+      <Stack gap={2}>
+        <RHFTextField
+          name="firstName"
+          label="First Name"
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+          })}
+        />
+        <RHFTextField
+          name="lastName"
+          label="Surname"
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+          })}
+        />
+        <Divider sx={{ my: 1 }} />
+
         <RHFTextField
           name="password"
           label="Password"
@@ -45,7 +67,6 @@ export default function PasswordStep({
               transition: "background-color 5000s ease-in-out 0s",
               boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
             },
-            mb: 3,
           })}
           InputProps={{
             endAdornment: (
@@ -65,20 +86,20 @@ export default function PasswordStep({
             ),
           }}
         />
-        <LoadingButton
-          type="submit"
-          loading={isSubmiting}
-          sx={{
-            background: "#43D4DD33",
-            color: "#43D4DD",
-            fontSize: "1.5rem",
-            mt: 1,
-            mb: 2,
-          }}
-        >
-          LET'S GO!
-        </LoadingButton>
       </Stack>
-    </>
+      <LoadingButton
+        type="submit"
+        loading={isSubmiting}
+        sx={{
+          background: "#43D4DD33",
+          color: "#43D4DD",
+          fontSize: "1.5rem",
+          mt: 2,
+          width: "100%",
+        }}
+      >
+        WHOOPIE
+      </LoadingButton>
+    </Stack>
   );
 }

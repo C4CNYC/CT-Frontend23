@@ -36,9 +36,10 @@ export default function EmailStep({
       }
     },
   });
+
   return (
     <>
-      <Stack sx={{ mt: 3, height: "186px" }}>
+      <Stack justifyContent="center" width="280px" pt={2.3}>
         <RHFTextField
           name="email"
           label="Email"

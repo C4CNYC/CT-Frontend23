@@ -6,6 +6,7 @@ import {
   ClassSearchParams,
   IAddCourseToClass,
   IClass,
+  IClassSettings,
   IRemoveCourseFromClass,
 } from "../interfaces/class.interface";
 import { ClassRequest } from "../interfaces/school.interface";
@@ -67,6 +68,14 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Classes"],
     }),
+    updateClassesSettings: builder.mutation<void, IClassSettings>({
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}/setting`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Courses", "Classes"],
+    }),
     addCourseToClass: builder.mutation<void, IAddCourseToClass>({
       query: ({ schoolId, id, ...body }) => ({
         url: `/school/${schoolId}/class/${id}/course`,
@@ -92,6 +101,7 @@ export const {
   // -------------mutation-----------
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
+  useUpdateClassesSettingsMutation,
   useDeleteClassesMutation,
   useUpdateClassesMutation,
   useCreateClassesMutation,
