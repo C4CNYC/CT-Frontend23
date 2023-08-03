@@ -8,7 +8,7 @@ import {
 import { Box } from "@mui/material";
 
 interface Props {
-  description?: string;
+  description: string;
 }
 
 export default function QuestDescription({ description }: Props) {

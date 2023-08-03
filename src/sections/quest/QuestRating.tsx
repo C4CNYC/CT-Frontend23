@@ -14,15 +14,9 @@ import {
 } from "@mui/material";
 
 import { Image } from "@components";
-import { FilterMode, useFilters } from "@hooks";
-import { ICourse } from "@types";
-import { BaseResponseInterface } from "@utils";
-import { ICourseSearchParams } from "src/redux/interfaces/content.interface";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { RootState } from "src/redux/store";
 
 interface Props {
-  name?: string;
+  name: string;
   cover?: string;
 }
 

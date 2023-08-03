@@ -12,6 +12,9 @@ import QuestMain from "@sections/quest/QuestMain";
 import QuestRating from "@sections/quest/QuestRating";
 import QuestResours from "@sections/quest/QuestResours";
 import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
+import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+import { useFilters } from "@hooks";
+import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -28,9 +31,13 @@ export default function Quest({ schoolId }: Props): React.ReactElement {
     { schoolId, assignmentId: query.id as string },
     { skip: !query.id }
   );
-  // if (isLoading || !data) {
-  //   return <Skeleton />;
-  // }
+  if (isLoading || !data) {
+    return <Skeleton />;
+  }
+  const { filters, setFilter } = useFilters<IAuthorSearchParams>({
+    email: "",
+  });
+  const {data: author} = useGetAuthorsQuery(filters)
   return (
     <>
       <Head>
@@ -50,8 +57,8 @@ export default function Quest({ schoolId }: Props): React.ReactElement {
 
         <QuestHeader />
         <QuestMain />
-        <QuestDescription />
-        <QuestRating />
+        <QuestDescription description={data?.description}/>
+        <QuestRating name={data?.name} />
         <QuestResours />
       </Container>
     </>
