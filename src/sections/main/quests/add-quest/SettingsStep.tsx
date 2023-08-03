@@ -74,7 +74,7 @@ export default function SettingsStep({
           defaultValue={true as any}
           sx={{
             maxWidth: "300px",
-            background: "#F7F7FC",
+            background: "#fff",
             outline: "none",
             borderRadius: 1,
             "& fieldset": { border: "none" },

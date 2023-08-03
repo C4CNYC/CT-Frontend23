@@ -83,7 +83,7 @@ export default function AddQuest({
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? "{}"),
-      type: assignment?.type ?? AssignmentTypes.RESEARCH,
+      type: assignment?.type ?? AssignmentTypes.COURSE,
       course: assignment?.course?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(
@@ -114,7 +114,7 @@ export default function AddQuest({
         }).unwrap();
         enqueueSnackbar("Assignment updated successfuly!");
       } catch (error: any) {
-        enqueueSnackbar("Something went wrong when updating", {
+        enqueueSnackbar(error.data.message, {
           variant: "error",
         });
       }
@@ -150,7 +150,7 @@ export default function AddQuest({
 
         enqueueSnackbar("Assignment created successfuly!");
       } catch (error: any) {
-        enqueueSnackbar("Something went wrong when creating", {
+        enqueueSnackbar(error.data.message, {
           variant: "error",
         });
       }
@@ -159,15 +159,17 @@ export default function AddQuest({
 
   return (
     <>
-      <Stack>
+      <Stack sx={{ px: 5, py: 8, background: "#f3f3f3", borderRadius: 3 }}>
         <Stack
           sx={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
           }}
         >
           <Stack>
-            <Typography variant="h4">Add Quest</Typography>
+            <Typography variant="h2">Add Quest</Typography>
             <Tooltip title="this is .....">
               <Typography
                 variant="caption"

@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
   Button,
@@ -45,6 +46,7 @@ interface Props {
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
   updateResult: boolean;
+  isDeleting: boolean;
 }
 
 export default function ClassesTableRow({
@@ -54,6 +56,7 @@ export default function ClassesTableRow({
   onSelectRow,
   onDeleteRow,
   updateResult,
+  isDeleting,
 }: Props): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
@@ -80,6 +83,11 @@ export default function ClassesTableRow({
     }
   };
 
+  useEffect(() => {
+    if (!isDeleting && openConfirm) {
+      setOpenConfirm(false);
+    }
+  }, [isDeleting]);
   return (
     <>
       <TableRow hover selected={selected}>
@@ -201,9 +209,14 @@ export default function ClassesTableRow({
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDeleteRow}>
+          <LoadingButton
+            loading={isDeleting}
+            variant="contained"
+            color="error"
+            onClick={onDeleteRow}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

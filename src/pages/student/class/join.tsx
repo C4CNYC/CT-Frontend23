@@ -43,6 +43,7 @@ export default function JoinClass(): React.ReactElement {
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateClassSchema),
   });
+
   const onSubmit = async ({ code }: FormValueProps) => {
     try {
       const { status, tribe } = await joinClass({ share_token: code }).unwrap();
@@ -53,6 +54,7 @@ export default function JoinClass(): React.ReactElement {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
+
   return (
     <Container maxWidth={themeStretch ? false : "lg"}>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>

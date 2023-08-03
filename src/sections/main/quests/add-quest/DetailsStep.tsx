@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default function DetailsStep({ courses }: Props): React.ReactElement {
-  const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.RESEARCH);
+  const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
 
   const onChange = (event: any): void => {
     setType(event.target.value);
@@ -37,7 +37,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
               borderRadius: 1,
               "& fieldset": { border: "none" },
               "& .MuiInputBase-root": {
-                background: "#F7F7FC",
+                background: "#fff",
               },
             }}
           >
@@ -52,7 +52,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
             ))}
           </RHFSelect>
         </FormGroup>
-        {type === AssignmentTypes.RESEARCH && (
+        {type === AssignmentTypes.COURSE && (
           <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
             <Typography variant="h5" gutterBottom pl={2}>
               Select course
@@ -67,7 +67,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
                 borderRadius: 1,
                 "& fieldset": { border: "none" },
                 "& .MuiInputBase-root": {
-                  background: "#F7F7FC",
+                  background: "#fff",
                 },
               }}
             >
@@ -90,11 +90,11 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
           name="module"
           size="small"
           sx={{
-            background: "#F7F7FC",
+            background: "#fff",
             borderRadius: 1,
             "& fieldset": { border: "none" },
             "& .MuiInputBase-root": {
-              background: "#F7F7FC",
+              background: "#fff",
             },
           }}
         >
@@ -127,7 +127,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
         </Avatar>
         <RHFTextField
           sx={{
-            background: "#F7F7FC",
+            background: "#fff",
             pt: 4,
             pb: 3,
             px: { xs: 0, sm: 3 },

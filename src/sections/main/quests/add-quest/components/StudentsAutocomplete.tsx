@@ -59,7 +59,12 @@ export default function StudentsAutocomplete({
       multiple
       limitTags={2}
       id="multiple-limit-tags"
-      sx={{ pt: 1 }}
+      sx={{
+        pt: 1,
+        "& .MuiOutlinedInput-root": {
+          background: "#fff",
+        },
+      }}
       options={data.data}
       defaultValue={getStudents()}
       onChange={(e, value) => {
