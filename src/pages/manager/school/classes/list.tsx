@@ -5,6 +5,7 @@ import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Card,
@@ -101,7 +102,7 @@ export default function UserListPage(): React.ReactElement {
   const [createClassByManager, { isLoading: createClassLoading }] =
     useCreateClassesMutation();
   const [updateClassAvatar] = useUpdateClassesAvatarMutation();
-  const [deleteCasses] = useDeleteClassesMutation();
+  const [deleteCasses, { isLoading: isDeleting }] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { schoolId, ...filters },
     { skip: !schoolId }
@@ -297,6 +298,7 @@ export default function UserListPage(): React.ReactElement {
                             onDeleteRow={() => {
                               handleDeleteRow(row.id);
                             }}
+                            isDeleting={isDeleting}
                             onEditRow={handleEditRow}
                             updateResult={updateResult}
                           />
@@ -348,16 +350,17 @@ export default function UserListPage(): React.ReactElement {
           </>
         }
         action={
-          <Button
+          <LoadingButton
             variant="contained"
             color="error"
+            loading={isDeleting}
             onClick={() => {
               handleDeleteRows(selected);
               setOpenConfirm(false);
             }}
           >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

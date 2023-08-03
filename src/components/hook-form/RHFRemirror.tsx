@@ -56,7 +56,8 @@ export function RHFRemirror({
         {`
           .remirror-editor-wrapper { padding: 0; }
           .remirror-theme .ProseMirror{
-              max-height: 100px
+              max-height: 100px;
+              background: #fff;
           }
         `}
       </style>

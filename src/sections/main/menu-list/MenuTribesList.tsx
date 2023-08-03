@@ -29,15 +29,16 @@ export default function MenuTribesList(): React.ReactElement {
     event.preventDefault();
     setOpenPopover(event.currentTarget);
   };
+
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
+
   return (
     <Stack>
       {!isNavMini && (
         <Divider
           sx={{
-            borderBottomWidth: "4px",
             mb: 2,
             mt: 1,
             ml: 2,
@@ -89,7 +90,7 @@ export default function MenuTribesList(): React.ReactElement {
       {isNavMini ? (
         <Divider sx={{ margin: "16px auto 8px", width: "24px" }} />
       ) : (
-        <Divider sx={{ borderBottomWidth: "4px", mt: 2, ml: 2, mb: 1.5 }} />
+        <Divider sx={{ mt: 2, ml: 2, mb: 1.5 }} />
       )}
       <MenuPopover
         open={openPopover}

@@ -65,6 +65,9 @@ export default function SkillsAutocomplete({
         }
         ChipProps={{ size: "medium" }}
         sx={{
+          "& .MuiOutlinedInput-root": {
+            background: "#fff",
+          },
           "& .MuiAutocomplete-tag": {
             background: "#FBDD3F",
             textTransform: "uppercase",

@@ -1,5 +1,5 @@
 import { BaseResponseInterface } from "@utils";
-import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
 export interface FormQuestProps {
