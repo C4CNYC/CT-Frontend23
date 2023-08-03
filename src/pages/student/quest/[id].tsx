@@ -10,8 +10,8 @@ import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
 import QuestRating from "@sections/quest/QuestRating";
-import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
 import QuestResours from "@sections/quest/QuestResours";
+import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

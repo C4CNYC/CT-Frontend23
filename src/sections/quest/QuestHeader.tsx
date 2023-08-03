@@ -12,7 +12,7 @@ export default function QuestHeader(): React.ReactElement {
         <MdOutlineArrowBackIosNew size={30} />
       </IconButton>
       <Stack sx={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-        <ShareGroupModal>
+        <ShareGroupModal schoolClass={undefined}>
           <Button
             variant="text"
             disableRipple

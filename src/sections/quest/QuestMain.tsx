@@ -1,6 +1,20 @@
-import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  CircularProgress,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 
-export default function QuestMain(): React.ReactElement {
+import { useFilters } from "@hooks";
+import AuthorsCard from "@sections/dashboard/courses/authors-tab/AuthorsCard";
+import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
+import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+
+interface Prop {
+  author?: string;
+}
+export default function QuestMain({ author }: Prop): React.ReactElement {
   return (
     <Stack sx={{ mt: 3 }}>
       <Stack sx={{ gap: 3, alignItems: "center", flexDirection: "row", mb: 1 }}>
@@ -25,7 +39,8 @@ export default function QuestMain(): React.ReactElement {
         >
           🦙
         </Avatar>
-        <Typography variant="h5">Author name</Typography>
+
+        <Typography variant="h5">{author}</Typography>
       </Stack>
     </Stack>
   );
