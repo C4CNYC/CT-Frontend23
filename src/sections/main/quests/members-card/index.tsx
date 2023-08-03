@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Button,
   Card,
   Divider,
   IconButton,
+  Skeleton,
   Tab,
   Table,
   TableBody,
@@ -31,7 +32,9 @@ import {
 import { PATH_DASHBOARD } from "@routes/paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { _userList } from "src/_mock/arrays";
+import { IFriend } from "src/redux/interfaces/friends.interface";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
 
 import MemberRow from "./MemberRow";
 
@@ -46,11 +49,9 @@ const TABLE_HEAD = [
   { id: "", label: "", align: "left" },
 ];
 
-interface Props {
-  members: IStudent[] | [];
-}
+export default function MemberCard() {
+  const { data: members, isLoading } = useGetFriendsContentQuery({});
 
-export default function MemberCard({ members }: Props) {
   const {
     dense,
     page,
@@ -72,7 +73,7 @@ export default function MemberCard({ members }: Props) {
 
   const { push } = useRouter();
 
-  const [tableData, setTableData] = useState(members);
+  const [tableData, setTableData] = useState<IFriend[]>([]);
 
   const [filterName, setFilterName] = useState("");
 
@@ -130,7 +131,7 @@ export default function MemberCard({ members }: Props) {
   };
 
   const handleDeleteRow = (id: string) => {
-    const deleteRow = tableData.filter((row) => row.id !== id);
+    const deleteRow = tableData?.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
 
@@ -142,7 +143,7 @@ export default function MemberCard({ members }: Props) {
   };
 
   const handleDeleteRows = (selectedRows: string[]) => {
-    const deleteRows = tableData.filter(
+    const deleteRows = tableData?.filter(
       (row) => !selectedRows.includes(row.id as string)
     );
     setSelected([]);
@@ -170,6 +171,16 @@ export default function MemberCard({ members }: Props) {
     setFilterRole("all");
     setFilterStatus("all");
   };
+
+  useEffect(() => {
+    if (members) {
+      setTableData(members.data);
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <Skeleton />;
+  }
 
   return (
     <>
@@ -228,13 +239,13 @@ export default function MemberCard({ members }: Props) {
                 order={order}
                 orderBy={orderBy}
                 headLabel={TABLE_HEAD}
-                rowCount={tableData.length}
+                rowCount={tableData?.length}
                 numSelected={selected.length}
                 onSort={onSort}
                 onSelectAllRows={(checked) =>
                   onSelectAllRows(
                     checked,
-                    tableData.map((row) => row.id as string)
+                    tableData?.map((row) => row.id as string)
                   )
                 }
               />
@@ -255,7 +266,7 @@ export default function MemberCard({ members }: Props) {
 
                 <TableEmptyRows
                   height={denseHeight}
-                  emptyRows={emptyRows(page, rowsPerPage, tableData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, tableData?.length)}
                 />
 
                 <TableNoData isNotFound={isNotFound} />
@@ -310,7 +321,7 @@ function applyFilter({
   comparator,
   filterName,
 }: {
-  inputData: IStudent[];
+  inputData: IFriend[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

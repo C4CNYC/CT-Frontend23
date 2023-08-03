@@ -23,3 +23,11 @@ export interface IRemoveCourseFromClass {
   schoolId: string;
   course_id: string;
 }
+
+export interface IClassSettings {
+  schoolId: string;
+  classId: string;
+  request_join_enable?: boolean;
+  share_token_enable?: boolean;
+  subscribe_enable?: boolean;
+}
