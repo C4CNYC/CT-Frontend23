@@ -19,7 +19,7 @@ import {
 import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { getLinearGradient } from "@utils";
+import { BaseResponseInterface, getLinearGradient } from "@utils";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
 
@@ -27,7 +27,7 @@ import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
 
 interface IDefaultClassInfoProps {
-  classData: IClass;
+  classData: IClass & BaseResponseInterface;
 }
 
 export default function DefaultClassInfo({
@@ -139,7 +139,7 @@ export default function DefaultClassInfo({
               </Link>
               <ShareGroupModal
                 joinCode={classData?.setting?.share_token}
-                className={classData?.name}
+                schoolClass={classData}
               >
                 <Button
                   variant="text"

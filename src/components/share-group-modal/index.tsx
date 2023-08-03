@@ -22,6 +22,8 @@ import { Stack } from "@mui/system";
 
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
 import { useUpdateClassesSettingsMutation } from "src/redux/services/manager/classes-manager";
 
 import ClassroomModal from "../classroom-modal";
@@ -31,13 +33,13 @@ import { Iconify } from "../iconify";
 interface Prop {
   children: React.ReactElement;
   joinCode: string;
-  className: string;
+  schoolClass: IClass & BaseResponseInterface;
 }
 
 export default function ShareGroupModal({
   children,
   joinCode,
-  className,
+  schoolClass,
 }: Prop): React.ReactElement {
   const { query } = useRouter();
   const { copy } = useCopyToClipboard();
@@ -276,7 +278,7 @@ export default function ShareGroupModal({
             >
               Other ways to add students:
             </Typography>
-            <ClassroomModal>
+            <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
               <Button
                 fullWidth
                 sx={{
