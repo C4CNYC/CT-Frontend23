@@ -22,7 +22,7 @@ export default function CoursePage(): React.ReactElement {
     { skip: !router.query.id }
   );
 
-  if (isLoading) return <SkeletonCoursePage />;
+  if (false) return <SkeletonCoursePage />;
   if (!isLoading && _.isEmpty(data) && data !== undefined) {
     return <EmptyContent title="Course doesn`t exist" />;
   }

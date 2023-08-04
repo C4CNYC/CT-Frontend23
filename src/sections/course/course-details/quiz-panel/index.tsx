@@ -1,84 +1,55 @@
 import { BiLockOpenAlt } from "react-icons/bi";
 
 import { Box, Button, Stack, Typography } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { ILesson } from "src/redux/interfaces/content.interface";
 
 import QuizItemsList from "./QuizItemsList";
 
-interface Props {
+interface IQuizPanelProps {
   lessons: ILesson[];
 }
 
-export default function QuizPanel({ lessons }: Props): React.ReactElement {
+export default function QuizPanel({
+  lessons,
+}: IQuizPanelProps): React.ReactElement {
+  const theme = useTheme();
   return (
     <Box>
       <Stack
-        sx={(theme) => ({
+        sx={{
           mt: "68px",
           borderRadius: "20px",
           background: "#364954",
-          p: "11px 12px 25px 28px",
+          px: 2,
+          py: 3,
           color: "#fff",
-          maxWidth: "276px",
-          height: "fit-content",
-          [theme.breakpoints.down(1500)]: {
-            p: "11px 12px 25px 15px",
-            ml: "10px",
-          },
-          [theme.breakpoints.down(715)]: {
+          maxWidth: "300px",
+          [theme.breakpoints.down(1400)]: {
             maxWidth: "none",
-            ml: 0,
+            mt: 3,
           },
-        })}
+        }}
       >
-        <Stack
-          direction="row"
-          sx={{
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={(theme) => ({
-              fontWeight: 400,
-              mr: "85px",
-              [theme.breakpoints.down(1500)]: { fontSize: "20px" },
-              [theme.breakpoints.down(600)]: { fontSize: "16px" },
-            })}
-          >
+        <Stack direction="row" justifyContent="space-between" mb={2}>
+          <Typography variant="h4" fontWeight={400}>
             Skills
           </Typography>
           <Button
             variant="outlined"
-            sx={(theme) => ({
+            sx={{
               color: "#fff",
               border: "1px solid #75CF6D",
               borderRadius: "30px",
               fontWeight: 400,
-              fontSize: "16px",
-              [theme.breakpoints.down(600)]: { fontSize: "12px" },
-            })}
+            }}
           >
             Quiz
-            <Box
-              sx={(theme) => ({
-                height: "20px",
-                width: "20px",
-                ml: "5px",
-                display: "flex",
-
-                [theme.breakpoints.down(600)]: {
-                  height: "15px",
-                  width: "15px",
-                },
-              })}
-            >
-              <BiLockOpenAlt size="100%" />
-            </Box>
+            <BiLockOpenAlt size={18} style={{ marginLeft: "8px" }} />
           </Button>
         </Stack>
-        <Stack spacing={2}>
+        <Stack>
           {lessons.map((lesson) => (
             <QuizItemsList key={lesson.id} lesson={lesson} />
           ))}
