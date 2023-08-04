@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import { Container, Skeleton, Stack } from "@mui/material";
+import { Container, Skeleton } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
@@ -10,34 +10,29 @@ import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
 import QuestRating from "@sections/quest/QuestRating";
-import QuestResours from "@sections/quest/QuestResours";
 import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
-import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
-import { useFilters } from "@hooks";
-import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
+import { useGetMentorsQuery } from "src/redux/services/manager/class-mentor-manager";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
-interface Props {
-  schoolId: string;
-}
-
-export default function Quest({ schoolId }: Props): React.ReactElement {
+export default function Quest(): React.ReactElement | null {
   const { query } = useRouter();
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetAssignmentQuery(
-    { schoolId, assignmentId: query.id as string },
+    { schoolId: query.id as string, assignmentId: query.id as string },
     { skip: !query.id }
   );
+  const { data: mentors } = useGetMentorsQuery(
+    { schoolId: query.id as string, classId: query.id as string },
+    { skip: !query.schoolId || !query.id }
+  );
+
   if (isLoading || !data) {
     return <Skeleton />;
   }
-  const { filters, setFilter } = useFilters<IAuthorSearchParams>({
-    email: "",
-  });
-  const {data: author} = useGetAuthorsQuery(filters)
+
   return (
     <>
       <Head>
@@ -56,10 +51,9 @@ export default function Quest({ schoolId }: Props): React.ReactElement {
         />
 
         <QuestHeader />
-        <QuestMain />
-        <QuestDescription description={data?.description}/>
+        <QuestMain mentor={mentors?.data[0]} questName={data.name} />
+        <QuestDescription description={data?.description} />
         <QuestRating name={data?.name} />
-        <QuestResours />
       </Container>
     </>
   );

@@ -38,7 +38,7 @@ export default function QuestDescription({ description }: Props) {
           <Remirror
             manager={manager}
             editable={false}
-            initialContent={description ? JSON.parse(description) : ""}
+            initialContent={description ? JSON.parse(description).doc : ""}
           >
             <EditorComponent />
           </Remirror>
