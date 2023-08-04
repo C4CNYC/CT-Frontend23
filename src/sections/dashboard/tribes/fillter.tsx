@@ -31,11 +31,7 @@ export default function TribesFillter(): React.ReactElement {
           md: "45px",
         },
         display: "flex",
-        justifyContent: {
-          xs: "flex-start",
-          sm: "space-between",
-          md: "space-between",
-        },
+        justifyContent: "space-between",
         alignItems: "center",
         flexWrap: {
           xs: "wrap",
