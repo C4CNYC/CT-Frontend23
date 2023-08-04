@@ -53,13 +53,6 @@ export default function CourseSummarily({ data }: Props): React.ReactElement {
           +12 Years
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <MdCelebration size="18px" />
-        <Typography
-          variant="body1"
-          sx={{ ml: 1, textTransform: "capitalize" }}
-        ></Typography>
-      </Box>
     </Stack>
   );
 }

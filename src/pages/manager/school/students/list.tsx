@@ -283,15 +283,6 @@ export default function UserListPage(): React.ReactElement {
                       <TableNoData
                         isNotFound={!data?.data.length && !isLoading}
                       />
-
-                      <TableEmptyRows
-                        height={dense ? 52 : 72}
-                        emptyRows={emptyRows(
-                          page,
-                          filters?.take ?? 10,
-                          data?.data.length ?? 0
-                        )}
-                      />
                     </TableBody>
                   </Table>
                 </TabPanel>

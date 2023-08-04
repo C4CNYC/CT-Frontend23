@@ -6,7 +6,7 @@ import { Box, Container, Link, Tab, Tabs } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/";
-import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
@@ -107,6 +107,7 @@ export default function Tribes(): React.ReactElement {
                   "&:hover": {
                     textDecoration: "none",
                   },
+                  width: { xs: "100%", sm: "48%"}
                 }}
               >
                 <TribeItem tribe={tribe} />

@@ -19,7 +19,7 @@ export default function ModuleItem({ data }: any): React.ReactElement {
         flexDirection: "row",
         justifyContent: "space-between",
         borderRadius: "25px",
-        width: { sx: "100%", sm: "100%", md: "48%" },
+        width: { xs: "100%", sm: "100%", md: "48%" },
       }}
     >
       <Stack

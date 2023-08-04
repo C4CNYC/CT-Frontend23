@@ -42,7 +42,12 @@ export default function SettingsStep({
 
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
-      <Stack direction="row" gap={4} sx={{ flexWrap: { xs: "wrap" } }}>
+      <Stack direction="row" gap={4} sx={{ 
+        flexWrap: { xs: "wrap" },
+        '& .MuiInputBase-root': {
+          width: {xs: "100%", sm: "200px", md: "200px"}
+        }
+      }}>
         <TimeController
           title="Schedule Date:"
           name="startDate"
@@ -50,19 +55,19 @@ export default function SettingsStep({
           infoText="Starting date if not date of creation."
         />
         <TimeController
-          title="Due Date"
+          title="Due Date:"
           name="dueDate"
           control={control}
           infoText="This is the date that this Quest should be completed by."
         />
-      </Stack>
-      <TimeController
+        <TimeController
         title="Close Date:"
         name="closeDate"
         control={control}
         infoText="After this submissions are no longer received. The
             default is 3 days after the “Due date.”"
       />
+      </Stack>
       <FormGroup>
         <Typography variant="h5" gutterBottom>
           Status
@@ -73,11 +78,12 @@ export default function SettingsStep({
           size="small"
           defaultValue={true as any}
           sx={{
-            maxWidth: "300px",
+            maxWidth:  {xs: "100%", sm: "300px", md: "300px"},
             background: "#fff",
             outline: "none",
             borderRadius: 1,
             "& fieldset": { border: "none" },
+            width: {xs: "100%", sm: "300px", md: "300px"}
           }}
         >
           <option key="published" value={true as any}>

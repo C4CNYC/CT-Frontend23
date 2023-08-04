@@ -106,62 +106,67 @@ export default function SocialItem({
           onSubmit={methods.handleSubmit(handleEditSocial)}
         >
           <FormGroup row sx={{ mb: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                border: "1px solid #919eab42",
-                borderRight: "none",
-                color: "#627380",
-                borderRadius: "8px",
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-                alignItems: "center",
-                padding: "0 10px",
-                height: "40px",
-                width: "80px",
-                justifyContent: "center",
-              }}
-            >
-              {SOCIAL_ICONS[socialItem.type]}
-            </Box>
-            <RHFTextField
-              size="small"
-              sx={{
-                width: { xs: "150px", sm: "350px" },
-                "& fieldset": {
+            <Box sx={{ 
+              display: "flex",
+              width: { xs: "100%", sm: "350px", md: "max-content" }
+            }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  border: "1px solid #919eab42",
+                  borderRight: "none",
+                  color: "#627380",
+                  borderRadius: "8px",
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
+                  alignItems: "center",
+                  padding: "0 10px",
+                  height: "40px",
+                  width: "80px",
+                  justifyContent: "center",
+                }}
+              >
+                {SOCIAL_ICONS[socialItem.type]}
+              </Box>
+              <RHFTextField
+                size="small"
+                sx={{
+                  width: { xs: "100%", sm: "100%", md: "350px" },
+                  "& fieldset": {
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                    borderTopLeftRadius: 0,
+                    borderBottomLeftRadius: 0,
+                  },
+                }}
+                name="link"
+                label="Link"
+                required
+                disabled={edit}
+              />
+
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                size="small"
+                disabled={edit ?? !isFormEdited}
+                sx={{
                   borderTopLeftRadius: 0,
                   borderBottomLeftRadius: 0,
-                },
-              }}
-              name="link"
-              label="Link"
-              required
-              disabled={edit}
-            />
-
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              size="small"
-              disabled={edit ?? !isFormEdited}
-              sx={{
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
-                textTransform: "lowercase",
-                height: "40px",
-              }}
-            >
-              Save
-            </LoadingButton>
-            <Box sx={{ mt: { xs: 2, sm: 2, md: 0 } }}>
+                  textTransform: "lowercase",
+                  height: "40px",
+                }}
+              >
+                Save
+              </LoadingButton>
+            </Box>
+            <Box sx={{ mt: { xs: 2, sm: 0, md: 0 } }}>
               <LoadingButton
                 variant="outlined"
                 onClick={() => {
                   setEdit(!edit);
                 }}
-                sx={{ ml: { xs: 0, sm: 0, md: 2 }, height: "40px" }}
+                sx={{ ml: { xs: 0, sm: 2, md: 2 }, height: "40px" }}
               >
                 {edit ? "Edit" : "Cancel"}
               </LoadingButton>

@@ -76,7 +76,7 @@ export default function TribesFillter(): React.ReactElement {
           sx={{
             width: 200,
             p: 2,
-            background: { xs: "#fff", sm: "#02D3D714" },
+            background: { xs: "#fff", sm: "#fff" },
           }}
         >
           <Typography>Popover option</Typography>

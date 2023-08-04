@@ -103,12 +103,16 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               alignItems: "center",
               gap: 1,
               color: "inherit",
+              maxWidth: 360,
+              ml: 3.25,
+              width: 48,
+              height: 48,
+              justifyContent: "center",
             }}
           >
             <Iconify
               icon="solar:gallery-wide-broken"
               width={20}
-              sx={{ ml: 5 }}
             />
             {!isMobile && (
               <Typography color="#637381" fontSize="1.1rem" mr="10px">
@@ -139,7 +143,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         <QuestsTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard members={classData?.students ?? []} />
+        <MemberCard />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />
