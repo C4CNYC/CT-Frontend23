@@ -9,6 +9,7 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import { PATH_MAIN } from "@routes/paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { useGetFriendQuery } from "src/redux/services/student/friends-manager";
+import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -22,7 +23,12 @@ export default function FriendProfile(): React.ReactElement {
 
   const { data, isLoading } = useGetFriendQuery({ id: query.id as string });
 
-  if (isLoading || !data) return <Skeleton />;
+  if (isLoading || !data) return <>
+    <SkeletonBreadcrumbs />
+      <Skeleton 
+        sx={{ width: "100%",  height: "280px", mt: -2}}
+      />
+  </>;
   // const TABS = [
   // {
   //   value: "profile",
