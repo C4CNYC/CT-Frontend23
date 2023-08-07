@@ -18,7 +18,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/school/${schoolId}/assignment/${assignmentId}`,
         method: "GET",
       }),
-      providesTags: ["Assignment"],
+      providesTags: ["Assignments", "Assignment"],
     }),
     getAssignmentList: builder.query<
       Array<IAssignment & BaseResponseInterface>,
@@ -28,7 +28,7 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/school/${schoolId}/assignment`,
         method: "GET",
       }),
-      providesTags: ["Assignments"],
+      providesTags: ["Assignments", "Assignment"],
     }),
     createAssignment: builder.mutation<
       IAssignment & BaseResponseInterface,

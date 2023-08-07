@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Card,
@@ -32,6 +33,7 @@ import {
   emptyRows,
   getComparator,
   useSettingsContext,
+  useSnackbar,
   useTable,
 } from "@components";
 import { SchoolDashboardLayout } from "@layouts/dashboard";
@@ -44,7 +46,10 @@ import { _invoices } from "src/_mock/arrays";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
 import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
-import { useGetAssignmentListQuery } from "src/redux/services/manager/assignments-manager";
+import {
+  useDeleteAssignmentMutation,
+  useGetAssignmentListQuery,
+} from "src/redux/services/manager/assignments-manager";
 
 import FilterAssignments from "./filter";
 
@@ -66,6 +71,7 @@ AsssignmentsListPage.getLayout = (page: React.ReactElement) => (
 
 export default function AsssignmentsListPage() {
   const { query } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const {
     dense,
@@ -92,16 +98,18 @@ export default function AsssignmentsListPage() {
   const [filterType, setFilterType] = useState("all");
   const [filterEndDate, setFilterEndDate] = useState<Date | null>(null);
   const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
-  const { data, isLoading } = useGetAssignmentListQuery(
+  const { data, isLoading, isFetching } = useGetAssignmentListQuery(
     { schoolId: query.schoolId as string },
     { skip: !query.schoolId }
   );
+  const [deleteAssignmet, { isLoading: isDeleting }] =
+    useDeleteAssignmentMutation();
 
   useEffect(() => {
     if (data) {
       setTableData(data);
     }
-  }, [isLoading]);
+  }, [isLoading, isFetching]);
 
   const dataFiltered = applyFilter({
     inputData: tableData ?? [],
@@ -206,11 +214,23 @@ export default function AsssignmentsListPage() {
     setFilterType(event.target.value);
   };
 
+  const handleDeleteAssignment = async (assignmentId: string) => {
+    try {
+      await deleteAssignmet({
+        schoolId: query.schoolId as string,
+        assignmentId,
+      });
+      enqueueSnackbar("Assignment deleted!");
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
+  };
+
   const handleDeleteRow = (id: string) => {
     const deleteRow = tableData?.filter((row) => row.id !== id);
     setSelected([]);
     setTableData(deleteRow);
-
+    handleDeleteAssignment(id);
     if (page > 0) {
       if (dataInPage.length < 2) {
         setPage(page - 1);
@@ -219,6 +239,9 @@ export default function AsssignmentsListPage() {
   };
 
   const handleDeleteRows = (selectedRows: string[]) => {
+    for (let i = 0; i < selected.length; i++) {
+      handleDeleteAssignment(selected[i]);
+    }
     const deleteRows = tableData?.filter(
       (row) => !selectedRows.includes(row.id)
     );
@@ -240,10 +263,6 @@ export default function AsssignmentsListPage() {
       }
     }
   };
-
-  const handleEditRow = (id: string) => {};
-
-  const handleViewRow = (id: string) => {};
 
   const handleResetFilter = () => {
     setFilterName("");
@@ -375,8 +394,6 @@ export default function AsssignmentsListPage() {
                           row={row}
                           selected={selected.includes(row.id)}
                           onSelectRow={() => onSelectRow(row.id)}
-                          onViewRow={() => handleViewRow(row.id)}
-                          onEditRow={() => handleEditRow(row.id)}
                           onDeleteRow={() => handleDeleteRow(row.id)}
                         />
                       ))}
@@ -422,7 +439,8 @@ export default function AsssignmentsListPage() {
           </>
         }
         action={
-          <Button
+          <LoadingButton
+            loading={isDeleting}
             variant="contained"
             color="error"
             onClick={() => {
@@ -431,7 +449,7 @@ export default function AsssignmentsListPage() {
             }}
           >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

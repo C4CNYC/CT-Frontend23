@@ -49,7 +49,7 @@ export default function StudentsAutocomplete({
       <Skeleton
         variant="rounded"
         animation="wave"
-        sx={{ width: "100%", height: "56px" }}
+        sx={{ width: "100%", height: "56px", mt: 1 }}
       />
     );
   }

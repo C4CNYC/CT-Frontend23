@@ -22,13 +22,12 @@ import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
 import { fDate } from "../../../../utils/formatTime";
+import AssignmentDrawer from "./AssignmentDrawer";
 
 type Props = {
   row: IAssignment;
   selected: boolean;
   onSelectRow: VoidFunction;
-  onViewRow: VoidFunction;
-  onEditRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
 
@@ -36,32 +35,35 @@ export default function AssignmentsTableRow({
   row,
   selected,
   onSelectRow,
-  onViewRow,
-  onEditRow,
   onDeleteRow,
 }: Props) {
   const { query } = useRouter();
+  const [openDetails, setOpenDetails] = useState(false);
   const { name, type, start_date, end_date, active, id } = row;
-
   const [status, setStatus] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
-
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-
-  const handleClosePopover = () => {
+  const handleClosePopover = (): void => {
     setOpenPopover(null);
+  };
+
+  const onOpenDetails = (): void => {
+    setOpenDetails(true);
+  };
+  const onCloseDetails = (): void => {
+    setOpenDetails(false);
   };
 
   const questPagePath = STUDENT_PATH_DASHBOARD.quest.id(id, {
@@ -110,8 +112,6 @@ export default function AssignmentsTableRow({
 
         <TableCell align="left">{fDate(end_date)}</TableCell>
 
-        {/* <TableCell align="center">{assigned}</TableCell> */}
-
         <TableCell align="center">
           <Label variant="soft" color={(active && "info") || "default"}>
             {active ? "Published" : "Draft"}
@@ -142,7 +142,6 @@ export default function AssignmentsTableRow({
         >
           <MenuItem
             onClick={() => {
-              onViewRow();
               handleClosePopover();
             }}
           >
@@ -152,8 +151,8 @@ export default function AssignmentsTableRow({
         </Link>
         <MenuItem
           onClick={() => {
-            onEditRow();
             handleClosePopover();
+            onOpenDetails();
           }}
         >
           <Iconify icon="eva:edit-fill" />
@@ -184,6 +183,11 @@ export default function AssignmentsTableRow({
             Delete
           </Button>
         }
+      />
+      <AssignmentDrawer
+        onCloseDetails={onCloseDetails}
+        openDetails={openDetails}
+        assignment={row}
       />
     </>
   );
