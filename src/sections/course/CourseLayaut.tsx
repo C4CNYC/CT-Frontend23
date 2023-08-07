@@ -9,38 +9,29 @@ import CourseCard from "./CourseCard";
 import CourseSummarily from "./CourseSummarily";
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
 
-interface Props {
+interface ICourseLayautProps {
   course: ICourseContent;
 }
 
-export default function CourseLayaut({ course }: Props): React.ReactElement {
+export default function CourseLayaut({
+  course,
+}: ICourseLayautProps): React.ReactElement {
   const [active, setActive] = useState(0);
+
   if (!course.units) {
     return <Typography>Course has no units yet</Typography>;
   }
+
   return (
     <Box
-      sx={(theme) => ({
+      sx={{
         mt: "32px",
         display: "flex",
-        [theme.breakpoints.down(1500)]: {
-          justifyContent: "center",
-        },
-      })}
+      }}
     >
       <Box>
         <CourseSummarily data={course} />
-        <Stack
-          spacing="40px"
-          sx={(theme) => ({
-            mt: "80px",
-            ml: "-22px",
-            [theme.breakpoints.down(1500)]: {
-              mt: "40px",
-              ml: 0,
-            },
-          })}
-        >
+        <Stack spacing="40px" mt="40px">
           {course?.units.length ? (
             course?.units.map((unit, index) => (
               <CourseCard

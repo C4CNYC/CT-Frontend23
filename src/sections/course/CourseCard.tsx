@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from "react";
 import {
   Box,
   Button,
-  CircularProgress,
   Stack,
   Typography,
   useMediaQuery,
@@ -14,7 +13,7 @@ import { Unit } from "src/redux/interfaces/challenges.interface";
 
 import CourseInfoDialog from "./CourseInfoDialog";
 
-interface Props {
+interface ICourseCardProps {
   index: number;
   active?: boolean;
   setActive: Dispatch<SetStateAction<number>>;
@@ -28,117 +27,88 @@ export default function CourseCard({
   setActive,
   unit,
   lastItem,
-}: Props): React.ReactElement {
+}: ICourseCardProps): React.ReactElement {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up(850));
 
   if (!unit) {
-    return <CircularProgress />;
+    return <Typography variant="h3">Course is empty</Typography>;
   }
+
   return (
     <Stack
       direction="row"
-      sx={(theme) => ({
+      sx={{
         height: "250px",
         background: "#fff",
-        borderRadius: !active ? "30px" : "30px 0 0 30px",
-        maxWidth: "740px",
+        borderRadius: !active || !isDesktop ? "30px" : "30px 0 0 30px",
+        maxWidth: "645px",
         position: "relative",
         zIndex: 5,
-        [theme.breakpoints.down(1250)]: {
-          borderRadius: "30px",
-        },
         [theme.breakpoints.down(600)]: {
           height: "auto",
         },
-      })}
+      }}
     >
       <Box
-        sx={(theme) => ({
+        sx={{
           background: 'url("/assets/projects/bg1.png") center no-repeat',
           minWidth: "125px",
-          [theme.breakpoints.down(600)]: {
-            minWidth: "auto",
-            background: "none",
+          [theme.breakpoints.down(500)]: {
+            minWidth: "0",
           },
-        })}
+        }}
       />
       <Box
-        sx={(theme) => ({
-          p: "22px 9px 29px 23px",
-          width: "600px",
-          [theme.breakpoints.down(1700)]: {
-            p: "22px 9px 29px 10px",
-            width: "400px",
-          },
-          [theme.breakpoints.down(1250)]: {},
-          [theme.breakpoints.down(500)]: {
-            p: "15px 10px 20px 10px",
-            width: "100%",
-          },
-        })}
+        sx={{
+          p: 2,
+          pr: 3,
+          maxWidth: "600px",
+        }}
       >
         <Typography
           variant="h4"
           noWrap
-          sx={(theme) => ({
+          sx={{
             width: "350px",
             overflow: "hidden",
             textOverflow: "ellipsis",
             wordWrap: "break-word",
-            [theme.breakpoints.down(400)]: {
-              fontSize: "16px",
-              pb: 1,
+            [theme.breakpoints.down(1400)]: {
+              width: "250px",
             },
-          })}
+          }}
         >
           {unit.name}
         </Typography>
         <Typography
-          variant="body2"
+          variant="body1"
           height="100px"
-          sx={(theme) => ({
+          sx={{
             height: "100px",
-            fontSize: "16px",
             textOverflow: "ellipsis",
             overflow: "hidden",
             display: "-webkit-box !important",
             "-webkit-line-clamp": "4",
             "-webkit-box-orient": "vertical",
             whiteSpace: "normal",
-            [theme.breakpoints.down(1700)]: {
-              fontSize: "16px",
-            },
             [theme.breakpoints.down(500)]: {
               "-webkit-line-clamp": "5",
-              fontSize: "13px",
             },
-          })}
+          }}
         >
           {unit.description}
         </Typography>
         <Stack direction="row" sx={{ mt: "25px", alignItems: "center" }}>
           <CourseInfoDialog unit={unit} index={index}>
             <Button
-              sx={(theme) => ({
-                display: active ? "none" : "inline-flex",
+              sx={{
+                display: active && isDesktop ? "none" : "inline-flex",
                 color: "#364954",
                 border: "2px solid #364954",
-                borderRadius: "25px",
-                width: "150px",
-                fontSize: "20px",
-                [theme.breakpoints.down(1700)]: {
-                  fontSize: "15px",
-                  width: "auto",
-                },
-                [theme.breakpoints.down(1000)]: {
-                  fontSize: "12px",
-                  display: active ? "inline-flex" : "",
-                },
-                [theme.breakpoints.down(400)]: {
-                  fontSize: "12px",
-                },
-              })}
+                borderRadius: 3,
+                fontSize: "1.2rem",
+              }}
               variant="outlined"
               onClick={(e) => {
                 if (isDesktop) {
@@ -152,52 +122,51 @@ export default function CourseCard({
           </CourseInfoDialog>
         </Stack>
       </Box>
-      <Box
-        sx={(theme) => ({
-          display: active ? "block" : "none",
-          content: '""',
-          position: "absolute",
-          right: -50,
-          top: -42,
-          height: !lastItem ? "330px" : "292px",
-          background: "#fff",
-          width: "65px",
-          overflow: "hidden",
-          [theme.breakpoints.down(1250)]: {
-            display: "none",
-          },
-        })}
-      >
+      {isDesktop && (
         <Box
           sx={{
-            position: "relative",
-            height: "330px",
+            display: active ? "block" : "none",
+            content: '""',
+            position: "absolute",
+            right: -50,
+            top: -42,
+            height: !lastItem ? "330px" : "292px",
+            background: "#fff",
             width: "65px",
-            "&:before": {
-              content: '""',
-              position: "absolute",
-              top: -148,
-              left: -113,
-              width: "161px",
-              height: "190px",
-              borderRadius: "50px",
-              background: "#ECF4FF",
-            },
-            "&:after": !lastItem
-              ? {
-                  content: '""',
-                  position: "absolute",
-                  bottom: -152,
-                  left: -111,
-                  width: "161px",
-                  height: "190px",
-                  borderRadius: "50px",
-                  background: "#ECF4FF",
-                }
-              : {},
+            overflow: "hidden",
           }}
-        />
-      </Box>
+        >
+          <Box
+            sx={{
+              position: "relative",
+              height: "330px",
+              width: "65px",
+              "&:before": {
+                content: '""',
+                position: "absolute",
+                top: -148,
+                left: -113,
+                width: "161px",
+                height: "190px",
+                borderRadius: "50px",
+                background: "#ECF4FF",
+              },
+              "&:after": !lastItem
+                ? {
+                    content: '""',
+                    position: "absolute",
+                    bottom: -152,
+                    left: -111,
+                    width: "161px",
+                    height: "190px",
+                    borderRadius: "50px",
+                    background: "#ECF4FF",
+                  }
+                : {},
+            }}
+          />
+        </Box>
+      )}
     </Stack>
   );
 }
