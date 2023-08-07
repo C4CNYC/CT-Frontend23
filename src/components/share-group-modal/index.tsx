@@ -86,7 +86,7 @@ export default function ShareGroupModal({
 
   return (
     <>
-      <div onClick={handleOpen}>{children}</div>
+      <Stack onClick={handleOpen}>{children}</Stack>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -115,7 +115,7 @@ export default function ShareGroupModal({
             color="white"
             fontSize="32px"
           >
-            {schoolClass.name}
+            {schoolClass?.name}
           </Typography>
         </Box>
         <Box sx={{ p: { xs: 1, sm: 3 } }}>
