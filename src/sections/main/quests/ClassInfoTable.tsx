@@ -139,7 +139,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         <QuestsTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard members={classData?.students ?? []} />
+        <MemberCard />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />

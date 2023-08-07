@@ -1,7 +1,6 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
-import { add, subDays } from "date-fns";
 
 import {
   Button,
@@ -40,16 +39,16 @@ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import AssignmentsTableRow from "@sections/dashboard/assignments/assignments-table/AssignmentsTableRow";
 import AssignmentsTableToolbar from "@sections/dashboard/assignments/assignments-table/AssignmentsTableToolbar";
 import { fTimestamp } from "@utils";
-import { randomInArray } from "src/_mock";
 import _mock from "src/_mock/_mock";
 import { _invoices } from "src/_mock/arrays";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
+import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { useGetAssignmentListQuery } from "src/redux/services/manager/assignments-manager";
 
 import FilterAssignments from "./filter";
 
-const TYPE_OPTIONS = ["all", "course"];
+const TYPE_OPTIONS = ["all", ...Object.values(AssignmentTypes)];
 
 const TABLE_HEAD = [
   { id: "name", label: "Name & Notes", align: "left" },
@@ -57,8 +56,7 @@ const TABLE_HEAD = [
   { id: "status", label: "Status", align: "left" },
   { id: "starts", label: "Starts at", align: "left", width: 140 },
   { id: "due", label: "Due", align: "left", width: 140 },
-  { id: "assigned", label: "Tribes Assigned", align: "left", width: 140 },
-  { id: "publish", label: "Publist", align: "right" },
+  { id: "publish", label: "Publist", align: "left" },
   { id: "" },
 ];
 
@@ -67,6 +65,7 @@ AsssignmentsListPage.getLayout = (page: React.ReactElement) => (
 );
 
 export default function AsssignmentsListPage() {
+  const { query } = useRouter();
   const { themeStretch } = useSettingsContext();
   const {
     dense,
@@ -86,7 +85,6 @@ export default function AsssignmentsListPage() {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: "createDate" });
-  const [schoolId, setSchoolId] = useState<string | undefined>();
   const [filterName, setFilterName] = useState("");
   const [tableData, setTableData] = useState<IAssignment[] | undefined>();
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -95,15 +93,15 @@ export default function AsssignmentsListPage() {
   const [filterEndDate, setFilterEndDate] = useState<Date | null>(null);
   const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
   const { data, isLoading } = useGetAssignmentListQuery(
-    { schoolId: schoolId as string },
-    { skip: !schoolId }
+    { schoolId: query.schoolId as string },
+    { skip: !query.schoolId }
   );
 
   useEffect(() => {
     if (data) {
       setTableData(data);
     }
-  }, [data]);
+  }, [isLoading]);
 
   const dataFiltered = applyFilter({
     inputData: tableData ?? [],
@@ -278,130 +276,139 @@ export default function AsssignmentsListPage() {
             },
           ]}
         />
-        <FilterAssignments setSchoolId={setSchoolId} />
-        <Card>
-          <Tabs
-            value={filterStatus}
-            onChange={handleFilterStatus}
-            sx={{
-              px: 2,
-              bgcolor: "background.neutral",
-            }}
-          >
-            {TABS.map((tab) => (
-              <Tab
-                iconPosition="end"
-                key={tab.value}
-                value={tab.value}
-                label={tab.label}
-                icon={
-                  <Label color={tab.color} sx={{ mr: 1 }}>
-                    {tab.count}
-                  </Label>
-                }
-              />
-            ))}
-          </Tabs>
-
-          <Divider />
-
-          <AssignmentsTableToolbar
-            isFiltered={isFiltered}
-            filterName={filterName}
-            filterType={filterType}
-            filterEndDate={filterEndDate}
-            onFilterName={handleFilterName}
-            optionsType={TYPE_OPTIONS}
-            onResetFilter={handleResetFilter}
-            filterStartDate={filterStartDate}
-            onFilterService={handleFilterService}
-            onFilterStartDate={(newValue) => {
-              setFilterStartDate(newValue);
-            }}
-            onFilterEndDate={(newValue) => {
-              setFilterEndDate(newValue);
-            }}
-          />
-
-          <TableContainer sx={{ position: "relative", overflow: "unset" }}>
-            <TableSelectedAction
-              dense={dense}
-              numSelected={selected.length}
-              rowCount={tableData?.length ?? 0}
-              onSelectAllRows={(checked) =>
-                onSelectAllRows(
-                  checked,
-                  tableData ? tableData.map((row) => row.id) : []
-                )
-              }
-              action={
-                <Stack direction="row">
-                  <Tooltip title="Delete">
-                    <IconButton color="error" onClick={handleOpenConfirm}>
-                      <Iconify icon="eva:trash-2-outline" />
-                    </IconButton>
-                  </Tooltip>
-                </Stack>
-              }
-            />
-
-            <Scrollbar>
-              <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
-                <TableHeadCustom
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={tableData?.length ?? 0}
-                  numSelected={selected.length}
-                  onSort={onSort}
-                  onSelectAllRows={(checked) =>
-                    onSelectAllRows(
-                      checked,
-                      tableData ? tableData.map((row) => row.id) : []
-                    )
+        <FilterAssignments />
+        {isLoading ? (
+          <Skeleton variant="rounded" width="100%" height="647px" />
+        ) : (
+          <Card>
+            <Tabs
+              value={filterStatus}
+              onChange={handleFilterStatus}
+              sx={{
+                px: 2,
+                bgcolor: "background.neutral",
+              }}
+            >
+              {TABS.map((tab) => (
+                <Tab
+                  iconPosition="end"
+                  key={tab.value}
+                  value={tab.value}
+                  label={tab.label}
+                  icon={
+                    <Label color={tab.color} sx={{ mr: 1 }}>
+                      {tab.count}
+                    </Label>
                   }
                 />
+              ))}
+            </Tabs>
 
-                <TableBody>
-                  {dataFiltered
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => (
-                      <AssignmentsTableRow
-                        key={row.id}
-                        row={row}
-                        selected={selected.includes(row.id)}
-                        onSelectRow={() => onSelectRow(row.id)}
-                        onViewRow={() => handleViewRow(row.id)}
-                        onEditRow={() => handleEditRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                      />
-                    ))}
+            <Divider />
 
-                  <TableEmptyRows
-                    height={denseHeight}
-                    emptyRows={emptyRows(
-                      page,
-                      rowsPerPage,
-                      tableData?.length ?? 0
-                    )}
+            <AssignmentsTableToolbar
+              isFiltered={isFiltered}
+              filterName={filterName}
+              filterType={filterType}
+              filterEndDate={filterEndDate}
+              onFilterName={handleFilterName}
+              optionsType={TYPE_OPTIONS}
+              onResetFilter={handleResetFilter}
+              filterStartDate={filterStartDate}
+              onFilterService={handleFilterService}
+              onFilterStartDate={(newValue) => {
+                setFilterStartDate(newValue);
+              }}
+              onFilterEndDate={(newValue) => {
+                setFilterEndDate(newValue);
+              }}
+            />
+
+            <TableContainer sx={{ position: "relative", overflow: "unset" }}>
+              <TableSelectedAction
+                dense={dense}
+                numSelected={selected.length}
+                rowCount={tableData?.length ?? 0}
+                onSelectAllRows={(checked) =>
+                  onSelectAllRows(
+                    checked,
+                    tableData ? tableData.map((row) => row.id) : []
+                  )
+                }
+                action={
+                  <Stack direction="row">
+                    <Tooltip title="Delete">
+                      <IconButton color="error" onClick={handleOpenConfirm}>
+                        <Iconify icon="eva:trash-2-outline" />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                }
+              />
+
+              <Scrollbar>
+                <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
+                  <TableHeadCustom
+                    order={order}
+                    orderBy={orderBy}
+                    headLabel={TABLE_HEAD}
+                    rowCount={tableData?.length ?? 0}
+                    numSelected={selected.length}
+                    onSort={onSort}
+                    onSelectAllRows={(checked) =>
+                      onSelectAllRows(
+                        checked,
+                        tableData ? tableData.map((row) => row.id) : []
+                      )
+                    }
                   />
 
-                  <TableNoData isNotFound={isNotFound} />
-                </TableBody>
-              </Table>
-            </Scrollbar>
-          </TableContainer>
+                  <TableBody>
+                    {dataFiltered
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row) => (
+                        <AssignmentsTableRow
+                          key={row.id}
+                          row={row}
+                          selected={selected.includes(row.id)}
+                          onSelectRow={() => onSelectRow(row.id)}
+                          onViewRow={() => handleViewRow(row.id)}
+                          onEditRow={() => handleEditRow(row.id)}
+                          onDeleteRow={() => handleDeleteRow(row.id)}
+                        />
+                      ))}
 
-          <TablePaginationCustom
-            count={dataFiltered.length}
-            page={page}
-            rowsPerPage={rowsPerPage}
-            onPageChange={onChangePage}
-            onRowsPerPageChange={onChangeRowsPerPage}
-            dense={dense}
-            onChangeDense={onChangeDense}
-          />
-        </Card>
+                    {!isNotFound ? (
+                      <TableEmptyRows
+                        height={denseHeight}
+                        emptyRows={emptyRows(
+                          page,
+                          rowsPerPage,
+                          tableData?.length ?? 0
+                        )}
+                      />
+                    ) : null}
+
+                    <TableNoData isNotFound={isNotFound} />
+                  </TableBody>
+                </Table>
+              </Scrollbar>
+            </TableContainer>
+
+            <TablePaginationCustom
+              count={dataFiltered.length}
+              page={page}
+              rowsPerPage={rowsPerPage}
+              onPageChange={onChangePage}
+              onRowsPerPageChange={onChangeRowsPerPage}
+              dense={dense}
+              onChangeDense={onChangeDense}
+            />
+          </Card>
+        )}
       </Container>
 
       <ConfirmDialog

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-
-import { differenceInDays } from "date-fns";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 import {
   Avatar,
@@ -8,6 +8,7 @@ import {
   Checkbox,
   Divider,
   IconButton,
+  Link,
   MenuItem,
   Stack,
   TableCell,
@@ -16,6 +17,7 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
@@ -38,7 +40,8 @@ export default function AssignmentsTableRow({
   onEditRow,
   onDeleteRow,
 }: Props) {
-  const { name, type, start_date, end_date, active } = row;
+  const { query } = useRouter();
+  const { name, type, start_date, end_date, active, id } = row;
 
   const [status, setStatus] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -61,12 +64,9 @@ export default function AssignmentsTableRow({
     setOpenPopover(null);
   };
 
-  useEffect(() => {
-    const currentDate = new Date();
-    console.log(differenceInDays(currentDate, new Date(end_date)));
-    if (differenceInDays(currentDate, new Date(end_date))) {
-    }
-  }, []);
+  const questPagePath = STUDENT_PATH_DASHBOARD.quest.id(id, {
+    schoolId: query.schoolId as string,
+  });
 
   return (
     <>
@@ -134,16 +134,22 @@ export default function AssignmentsTableRow({
         arrow="right-top"
         sx={{ width: 160 }}
       >
-        <MenuItem
-          onClick={() => {
-            onViewRow();
-            handleClosePopover();
-          }}
+        <Link
+          component={NextLink}
+          href={questPagePath}
+          underline="none"
+          color="initial"
         >
-          <Iconify icon="eva:eye-fill" />
-          View
-        </MenuItem>
-
+          <MenuItem
+            onClick={() => {
+              onViewRow();
+              handleClosePopover();
+            }}
+          >
+            <Iconify icon="eva:eye-fill" />
+            View
+          </MenuItem>
+        </Link>
         <MenuItem
           onClick={() => {
             onEditRow();

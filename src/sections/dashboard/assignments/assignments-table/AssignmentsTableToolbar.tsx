@@ -51,7 +51,7 @@ export default function AssignmentsTableToolbar({
       <TextField
         fullWidth
         select
-        label="Service type"
+        label="Type"
         value={filterType}
         onChange={onFilterService}
         SelectProps={{
@@ -116,7 +116,7 @@ export default function AssignmentsTableToolbar({
         fullWidth
         value={filterName}
         onChange={onFilterName}
-        placeholder="Search client or invoice number..."
+        placeholder="Search assignment..."
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
