@@ -29,7 +29,7 @@ export function StudentDashboardLayout({
 
   const isNavHorizontal = themeLayout === "horizontal";
 
-  const isNavMini = themeLayout === "mini" || pathname.includes("courses/");
+  const isNavMini = themeLayout === "mini";
 
   const handleOpen = (): void => {
     setOpen(true);

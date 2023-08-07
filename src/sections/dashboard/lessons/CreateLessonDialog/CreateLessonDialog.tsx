@@ -92,9 +92,9 @@ export default function CreateLessonDialog({
   const [open, setOpen] = useState(false);
   const [, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [editLesson] = useUpdateLessonMutation();
-  const [createLesson] = useCreateLessonMutation();
-  const [addLessonToModule] = useAddLessonToModuleMutation();
+  const [editLesson, {isLoading: isLoadingUpdate}] = useUpdateLessonMutation();
+  const [createLesson, {isLoading: isLoadingCreate}] = useCreateLessonMutation();
+  const [addLessonToModule, {isLoading: isLoadingAdd}] = useAddLessonToModuleMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -243,7 +243,7 @@ export default function CreateLessonDialog({
                   <LoadingButton
                     type="submit"
                     variant="contained"
-                    loading={false}
+                    loading={isLoadingAdd || isLoadingCreate || isLoadingUpdate}
                   >
                     Save
                   </LoadingButton>

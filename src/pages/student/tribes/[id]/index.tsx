@@ -10,6 +10,7 @@ import {
   Container,
   Divider,
   Grid,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -19,6 +20,8 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { fNumber } from "@utils";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import SkeletonSchool from "@pages/manager/school/general/skeleton-school";
+import SkeletonTribe from "@sections/skeleton/SekeltonTribe";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -33,7 +36,7 @@ export default function TribeProfilePage(): React.ReactElement {
     { skip: !query.id }
   );
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonTribe />;
 
   return (
     <>

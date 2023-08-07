@@ -1,4 +1,5 @@
 import { Box, Stack } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { Unit } from "src/redux/interfaces/challenges.interface";
 
@@ -6,7 +7,7 @@ import CourseDescription from "./CourseDescription";
 import TrainingsList from "./TrainingsList";
 import QuizPanel from "./quiz-panel";
 
-interface Props {
+interface ICourseDetailsMainProps {
   dataLessons: Unit;
   index: number;
 }
@@ -14,20 +15,22 @@ interface Props {
 export default function CourseDetailsMain({
   dataLessons,
   index,
-}: Props): React.ReactElement {
+}: ICourseDetailsMainProps): React.ReactElement {
+  const theme = useTheme();
+
   return (
     <Box
-      sx={(theme) => ({
+      sx={{
         ml: "33px",
         background: "#fff",
-        borderRadius: "25px",
-        px: "19px",
-        pb: "39px",
-        display: "block",
-        [theme.breakpoints.down(1250)]: {
+        borderRadius: 3,
+        px: 3,
+        pb: 4,
+        pt: 3,
+        [theme.breakpoints.down(850)]: {
           display: "none",
         },
-      })}
+      }}
     >
       <CourseDescription
         name={dataLessons.name}
@@ -35,17 +38,14 @@ export default function CourseDetailsMain({
         index={index}
       />
       <Stack
-        direction="row"
-        spacing={2}
-        sx={(theme) => ({
-          mt: "10px",
+        sx={{
+          gap: 3,
+          flexDirection: "row",
           display: "flex",
-          justifyContent: "space-between",
-          pl: "30px",
-          [theme.breakpoints.down(1650)]: {
-            pl: 0,
+          [theme.breakpoints.down(1400)]: {
+            flexDirection: "column",
           },
-        })}
+        }}
       >
         <TrainingsList lessons={dataLessons.lessons} unitId={dataLessons.id} />
         <QuizPanel lessons={dataLessons.lessons} />

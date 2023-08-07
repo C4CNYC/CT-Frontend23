@@ -5,11 +5,13 @@ import { Box, Stack, Typography } from "@mui/material";
 
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 
-interface Props {
+interface ICourseSummarilyProps {
   data: ICourseContent;
 }
 
-export default function CourseSummarily({ data }: Props): React.ReactElement {
+export default function CourseSummarily({
+  data,
+}: ICourseSummarilyProps): React.ReactElement {
   return (
     <Stack
       sx={(theme) => ({
@@ -29,16 +31,9 @@ export default function CourseSummarily({ data }: Props): React.ReactElement {
         },
       })}
     >
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          textTransform: "capitalize",
-        }}
-      >
-        <AiOutlineClockCircle size="15px" />
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography variant="body1" sx={{ ml: 1 }}>
-          9 Hours
+          <AiOutlineClockCircle size="15px" /> 9 Hours
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -52,13 +47,6 @@ export default function CourseSummarily({ data }: Props): React.ReactElement {
         <Typography variant="body1" sx={{ ml: 1, textTransform: "capitalize" }}>
           +12 Years
         </Typography>
-      </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <MdCelebration size="18px" />
-        <Typography
-          variant="body1"
-          sx={{ ml: 1, textTransform: "capitalize" }}
-        ></Typography>
       </Box>
     </Stack>
   );

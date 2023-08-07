@@ -103,7 +103,7 @@ export default function EmailStep({
           })}
         >
           <FcGoogle size="50px" />
-          Sing up with Google
+          Sign up with Google
         </LoadingButton>
       </Stack>
     </>

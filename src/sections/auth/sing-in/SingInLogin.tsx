@@ -48,7 +48,7 @@ export default function SingInLogin({
         direction="row"
         sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 } }}
       >
-        <Typography variant="h3">Sing in</Typography>
+        <Typography variant="h3">Sign in</Typography>
         <Typography variant="h2" sx={{ ml: 1 }}>
           🫶
         </Typography>
@@ -121,7 +121,7 @@ export default function SingInLogin({
           })}
         >
           <FcGoogle size="50px" />
-          Sing in with Google
+          Sign in with Google
         </LoadingButton>
       </Stack>
     </>

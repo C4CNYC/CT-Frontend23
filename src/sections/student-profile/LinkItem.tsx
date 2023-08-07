@@ -43,8 +43,8 @@ export default function LinkItem({
   socialItem,
 }: Props): React.ReactElement {
   const [edit, setEdit] = useState(true);
-  const [removeSocial] = useRemoveSocialsMutation();
-  const [editSocial] = useUpdateSocialsMutation();
+  const [removeSocial, {isLoading: isRemoveLoading}] = useRemoveSocialsMutation();
+  const [editSocial, {isLoading: isUpdateLoading}] = useUpdateSocialsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {
@@ -157,6 +157,7 @@ export default function LinkItem({
               variant="contained"
               size="small"
               disabled={edit ?? !methods.formState.isDirty}
+              loading={isUpdateLoading}
               sx={{
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
@@ -180,6 +181,7 @@ export default function LinkItem({
                 sx={{ ml: 2, mr: 2, height: "40px" }}
                 variant="outlined"
                 color="error"
+                loading={isRemoveLoading}
                 onClick={async () => {
                   await handleDeleteSocial(socialItem.id ?? "");
                 }}

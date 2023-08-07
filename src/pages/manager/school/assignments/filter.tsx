@@ -58,7 +58,7 @@ export default function FilterCourses(): React.ReactElement {
               { shallow: true }
             );
           }}
-          sx={{ width: 300 }}
+          sx={{ width: { xs: "100%", sm: 300} }}
           renderInput={(params) => <TextField {...params} label="Shcool" />}
         />
       </Stack>
