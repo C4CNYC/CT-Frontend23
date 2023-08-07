@@ -21,7 +21,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
   return (
     <Stack sx={{ gap: 4, minHeight: "630px" }}>
       <Stack direction="row" gap={3} flexWrap="wrap">
-        <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
+        <FormGroup sx={{ maxWidth: { xs: "100%", sm: "100%", md: "300px" }, width: "100%" }}>
           <Typography variant="h5" gutterBottom pl={2}>
             Select type
           </Typography>
@@ -53,7 +53,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
           </RHFSelect>
         </FormGroup>
         {type === AssignmentTypes.COURSE && (
-          <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
+          <FormGroup sx={{ maxWidth: { xs: "100%", sm: "100%", md: "300px" }, width: "100%" }}>
             <Typography variant="h5" gutterBottom pl={2}>
               Select course
             </Typography>
@@ -81,7 +81,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
           </FormGroup>
         )}
       </Stack>
-      <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
+      <FormGroup sx={{ maxWidth: { xs: "100%", sm: "100%", md: "300px" }, width: "100%" }}>
         <Typography variant="h5" gutterBottom pl={2}>
           Select module
         </Typography>

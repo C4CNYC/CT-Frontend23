@@ -33,7 +33,7 @@ export default function FilterCourses({
           onChange={(e, newValue) => {
             setSchoolId(newValue ? newValue.id : "");
           }}
-          sx={{ width: 300 }}
+          sx={{ width: { xs: "100%", sm: 300} }}
           renderInput={(params) => <TextField {...params} label="Shcool" />}
         />
       </Stack>

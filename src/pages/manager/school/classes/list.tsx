@@ -303,16 +303,6 @@ export default function UserListPage(): React.ReactElement {
                             updateResult={updateResult}
                           />
                         ))}
-
-                    <TableEmptyRows
-                      height={dense ? 52 : 72}
-                      emptyRows={emptyRows(
-                        page,
-                        rowsPerPage,
-                        data?.data.length ?? 0
-                      )}
-                    />
-
                     <TableNoData
                       isNotFound={!data?.data.length && !isLoading}
                     />

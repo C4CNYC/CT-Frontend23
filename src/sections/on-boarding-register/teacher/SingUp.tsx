@@ -65,7 +65,7 @@ export default function SingUp({
         direction="row"
         sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: isTeacher ? "50px" : "70px" }}
       >
-        <Typography variant="h3">Sing up</Typography>
+        <Typography variant="h3">Sign up</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           😃
         </Typography>
@@ -135,7 +135,7 @@ export default function SingUp({
           })}
         >
           <FcGoogle size="50px" />
-          Sing up with Google
+          Sign up with Google
         </LoadingButton>
       </Stack>
     </>

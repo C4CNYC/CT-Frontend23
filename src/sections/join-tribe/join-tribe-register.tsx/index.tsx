@@ -74,7 +74,7 @@ export default function JoinTribeRegister({
   return (
     <Stack alignItems="center" position="relative">
       <Typography variant="h4">Join this tribe</Typography>
-      <Typography variant="body1">Sing up to join</Typography>
+      <Typography variant="body1">Sign up to join</Typography>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         {currentStep === 0 && (
           <EmailStep

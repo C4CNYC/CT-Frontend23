@@ -31,11 +31,7 @@ export default function TribesFillter(): React.ReactElement {
           md: "45px",
         },
         display: "flex",
-        justifyContent: {
-          xs: "flex-start",
-          sm: "space-between",
-          md: "space-between",
-        },
+        justifyContent: "space-between",
         alignItems: "center",
         flexWrap: {
           xs: "wrap",
@@ -76,7 +72,7 @@ export default function TribesFillter(): React.ReactElement {
           sx={{
             width: 200,
             p: 2,
-            background: { xs: "#fff", sm: "#02D3D714" },
+            background: { xs: "#fff", sm: "#fff" },
           }}
         >
           <Typography>Popover option</Typography>

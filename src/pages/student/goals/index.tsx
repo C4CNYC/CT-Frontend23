@@ -7,6 +7,7 @@ import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayou
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import GoalsList from "@sections/goals/GoalsList";
 import { useGetGoalsQuery } from "src/redux/services/student/goals-student";
+import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 
 Goals.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -17,7 +18,19 @@ export default function Goals(): React.ReactElement {
 
   const { data, isLoading } = useGetGoalsQuery({});
   if (isLoading || !data) {
-    return <Skeleton />;
+    return <>
+      <Container>
+        <SkeletonBreadcrumbs />
+        <Skeleton
+          animation="wave"
+          variant="rounded"
+          sx={{
+            width: "100%",
+            height: "170px",
+          }}
+        />
+      </Container>
+    </>;
   }
   return (
     <>

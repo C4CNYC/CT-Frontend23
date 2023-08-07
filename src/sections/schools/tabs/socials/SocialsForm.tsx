@@ -77,11 +77,13 @@ export default function SocialsForm({
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Box rowGap={0} columnGap={0} display="flex">
+          <Box rowGap={0} columnGap={0} display="flex" sx={{
+            width: { xs: "100%", sm: "350px", md: "max-content" }
+          }}>
             <RHFSelect
               name="type"
               sx={{
-                width: "80px !important",
+                width: "125px !important",
                 height: "40px !important",
                 borderRight: "none",
                 borderTopRightRadius: 0,
@@ -119,7 +121,7 @@ export default function SocialsForm({
               label="Link"
               size="small"
               sx={{
-                maxWidth: { xs: "150px", sm: "350px", md: "350px" },
+                width: { xs: "100%", sm: "100%", md: "350px" },
                 height: "86px",
                 borderLeft: "none",
                 "& fieldset": {

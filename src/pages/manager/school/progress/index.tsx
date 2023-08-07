@@ -97,7 +97,18 @@ export default function Progress(): React.ReactElement {
         <Stack
           direction="row"
           mb={3}
-          sx={{ flexWrap: { xs: "wrap", sm: "wrap" }, gap: 3 }}
+          sx={{ 
+            flexWrap: { xs: "wrap", sm: "wrap" },
+            gap: 3,
+            '& .MuiStack-root, & .MuiAutocomplete-root': {
+              width: { 
+                xs: "100% !important", 
+                sm: "260px !important", 
+                md: "260px !important", 
+                lg: "260px !important" 
+              },
+            }
+          }}
         >
           <FilterCoursesAutocomplete
             courseId={filters.courseId ?? query.courseId}
