@@ -25,9 +25,10 @@ import { Role } from "src/redux/services/enums/role.enum";
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
+import { BaseResponseInterface } from "@utils";
 
 interface IClassInfoTable {
-  classData: IClass;
+  classData: IClass & BaseResponseInterface;
 }
 
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
@@ -47,7 +48,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   };
 
   const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(
-    classData.id as string,
+    classData.id,
     { schoolId: classData.school?.id as string }
   );
 
@@ -140,7 +141,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab />
+        <QuestsTab schoolId={classData.schoolId ?? ""}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MemberCard />

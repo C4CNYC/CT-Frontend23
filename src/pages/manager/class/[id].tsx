@@ -37,7 +37,7 @@ export default function HomeOverview(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
         <DefaultClassInfo data={data} />
-        <QuestsTable data={data} />
+        <QuestsTable classData={data} />
       </Container>
     </>
   );

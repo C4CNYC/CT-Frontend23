@@ -8,6 +8,7 @@ export interface IClass {
   total_students?: number;
   total_courses?: number;
   description?: string;
+  schoolId?: string;
   name: string;
   active?: boolean;
   students?: IStudent[];

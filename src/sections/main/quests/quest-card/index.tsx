@@ -1,16 +1,18 @@
-import { useRouter } from "next/router";
-
 import { Skeleton, Stack } from "@mui/material";
 
 import { useGetAssignmentListQuery } from "src/redux/services/manager/assignments-manager";
 
 import QuestItem from "./QuestItem";
 
-export default function QuestsTab() {
-  const { query } = useRouter();
-  const { data, isLoading } = useGetAssignmentListQuery({
-    schoolId: query.schoolId as string,
-  });
+interface IQuestsTab {
+  schoolId: string;
+}
+
+export default function QuestsTab({ schoolId }: IQuestsTab) {
+  const { data, isLoading } = useGetAssignmentListQuery(
+    { schoolId },
+    { skip: !schoolId }
+  );
 
   if (!data || isLoading) {
     return <Skeleton />;
