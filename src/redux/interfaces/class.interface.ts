@@ -23,7 +23,6 @@ export interface IClass {
   id: string;
   createdAt: string;
   name: string;
-  description: string;
   avatar: string | null;
   cover: string | null;
   active: boolean;

@@ -15,6 +15,7 @@ import { useTheme } from "@mui/system";
 
 import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import CustomTabPanel, {
   customTabProps,
@@ -27,7 +28,7 @@ import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
 
 interface IClassInfoTable {
-  classData: IClass;
+  classData: IClass & BaseResponseInterface;
 }
 
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
@@ -46,10 +47,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
     setOpenPopover(null);
   };
 
-  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(
-    classData.id as string,
-    { schoolId: classData.school_id as string }
-  );
+  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
+    schoolId: classData.school_id as string,
+  });
 
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
@@ -135,7 +135,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab />
+        <QuestsTab schoolId={classData.school_id ?? ""} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MemberCard
