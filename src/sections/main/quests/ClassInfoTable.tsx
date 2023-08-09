@@ -48,7 +48,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
 
   const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(
     classData.id as string,
-    { schoolId: classData.school?.id as string }
+    { schoolId: classData.school_id as string }
   );
 
   return (
@@ -105,15 +105,10 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               color: "inherit",
               maxWidth: 360,
               ml: 3.25,
-              width: 48,
-              height: 48,
               justifyContent: "center",
             }}
           >
-            <Iconify
-              icon="solar:gallery-wide-broken"
-              width={20}
-            />
+            <Iconify icon="solar:gallery-wide-broken" width={20} />
             {!isMobile && (
               <Typography color="#637381" fontSize="1.1rem" mr="10px">
                 Gallery
@@ -143,7 +138,10 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         <QuestsTab />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard />
+        <MemberCard
+          students={classData.students}
+          pendings={classData.pendings}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />

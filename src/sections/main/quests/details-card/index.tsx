@@ -1,7 +1,11 @@
-import { Card, Link, Stack } from "@mui/material";
-import ProfileCover from "@sections/student-profile/ProfileCover";
 import NextLink from "next/link";
+
 import { FaEdit } from "react-icons/fa";
+
+import { Card, Link, Stack } from "@mui/material";
+
+import ProfileCover from "@sections/student-profile/ProfileCover";
+
 import AboutTribe from "./AboutTribe";
 import GeneralInfo from "./GeneralInfo";
 

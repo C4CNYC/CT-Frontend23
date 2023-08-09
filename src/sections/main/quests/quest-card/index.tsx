@@ -8,11 +8,14 @@ import QuestItem from "./QuestItem";
 
 export default function QuestsTab() {
   const { query } = useRouter();
-  const { data, isLoading } = useGetAssignmentListQuery({
-    schoolId: query.schoolId as string,
-  });
+  const { data, isLoading, isFetching } = useGetAssignmentListQuery(
+    {
+      schoolId: query.schoolId as string,
+    },
+    { skip: !query.schoolId, refetchOnMountOrArgChange: true }
+  );
 
-  if (!data || isLoading) {
+  if (!data || isLoading || isFetching) {
     return <Skeleton />;
   }
 

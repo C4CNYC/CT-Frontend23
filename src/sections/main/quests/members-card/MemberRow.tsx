@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 import { LoadingButton } from "@mui/lab";
 import {
@@ -11,16 +12,18 @@ import {
   TableRow,
 } from "@mui/material";
 
-import { ConfirmDialog, Iconify, MenuPopover } from "@components";
-import { IFriend } from "src/redux/interfaces/friends.interface";
+import { ConfirmDialog, Iconify, MenuPopover, useSnackbar } from "@components";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { useUpdateClassPendingMutation } from "src/redux/services/manager/students-manager";
 
-interface Props {
-  row: IFriend;
+interface IMemberRowProps {
+  row: IStudent;
   selected: boolean;
   loading?: boolean;
   onEditRow: VoidFunction;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  pending: boolean;
 }
 
 export default function MemberRow({
@@ -30,22 +33,38 @@ export default function MemberRow({
   onEditRow,
   onSelectRow,
   onDeleteRow,
-}: Props): React.ReactElement | null {
+  pending,
+}: IMemberRowProps): React.ReactElement | null {
+  const { query } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const {
     first_name: firstName,
     last_name: lastName,
     avatar,
-    usermane,
+    username,
     city,
   } = row;
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
+  const [approvePending, { isLoading }] = useUpdateClassPendingMutation();
+
+  const handleApprovePending = async () => {
+    try {
+      await approvePending({
+        classId: query.id as string,
+        student_id: row.id as string,
+      }).unwrap();
+      enqueueSnackbar("Approved successfully");
+    } catch (error) {
+      enqueueSnackbar(error.data.message, { variant: "error" });
+    }
+  };
+
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
-
   const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
@@ -53,10 +72,15 @@ export default function MemberRow({
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
-
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
+
+  useEffect(() => {
+    if (!loading) {
+      handleCloseConfirm();
+    }
+  }, [loading]);
   return (
     <>
       <TableRow hover selected={selected}>
@@ -77,8 +101,21 @@ export default function MemberRow({
           {lastName && lastName?.charAt(0).toUpperCase() + lastName?.slice(1)}
         </TableCell>
 
-        <TableCell align="left">{usermane}</TableCell>
-        <TableCell align="left">{city ?? "-"}</TableCell>
+        <TableCell align="left">{username}</TableCell>
+
+        {!pending ? (
+          <TableCell align="left">{city ?? "-"}</TableCell>
+        ) : (
+          <TableCell align="left">
+            <LoadingButton
+              onClick={handleApprovePending}
+              loading={isLoading}
+              variant="contained"
+            >
+              Approve
+            </LoadingButton>
+          </TableCell>
+        )}
 
         <TableCell align="right">
           <IconButton

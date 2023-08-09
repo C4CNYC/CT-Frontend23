@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 import {
   Box,
@@ -7,7 +6,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Divider,
   Select,
@@ -16,7 +14,6 @@ import {
 } from "@mui/material";
 
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { setSchoolId } from "src/redux/slices/schoolSettings";
 
 interface Props {
   openDialog: boolean;

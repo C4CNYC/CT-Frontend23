@@ -45,7 +45,9 @@ export default function ShareGroupModal({
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("anyone");
+  const [value, setValue] = useState(
+    schoolClass.setting_request_join_enable ? "" : "approve"
+  );
   const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation();
 
   const handleOpen = () => {
@@ -73,7 +75,6 @@ export default function ShareGroupModal({
         classId: query.id as string,
         request_join_enable: Boolean(value),
       }).unwrap();
-      console.log(Boolean(value));
       enqueueSnackbar("Changes updated!");
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
@@ -81,7 +82,7 @@ export default function ShareGroupModal({
   };
 
   const shareLink = `${
-    process.env.NEXT_PUBLIC_API_URL
+    window.location.origin
   }${STUDENT_PATH_DASHBOARD.joinTribe.id(joinCode)}`;
 
   return (
@@ -216,7 +217,7 @@ export default function ShareGroupModal({
                 }}
               >
                 <FormControlLabel
-                  value="anyone"
+                  value=""
                   sx={{
                     mb: "24px",
                     mt: "10px",
@@ -238,7 +239,7 @@ export default function ShareGroupModal({
                   }
                 />
                 <FormControlLabel
-                  value=""
+                  value="approve"
                   disabled={isLoading}
                   control={
                     <Radio
@@ -278,7 +279,7 @@ export default function ShareGroupModal({
             >
               Other ways to add students:
             </Typography>
-            <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
+            <ClassroomModal schoolId={schoolClass?.school_id ?? ""}>
               <Button
                 fullWidth
                 sx={{

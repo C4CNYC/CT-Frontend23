@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Card,
   Divider,
   IconButton,
@@ -27,18 +27,22 @@ import {
   TableSelectedAction,
   emptyRows,
   getComparator,
+  useSnackbar,
   useTable,
 } from "@components";
 import { PATH_DASHBOARD } from "@routes/paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { _userList } from "src/_mock/arrays";
-import { IFriend } from "src/redux/interfaces/friends.interface";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
-import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
+import {
+  useGetClassPendingQuery,
+  useStudentLeftClassMutation,
+} from "src/redux/services/manager/students-manager";
+import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
 
 import MemberRow from "./MemberRow";
-
-const ROLE_OPTIONS = ["all"];
 
 const TABLE_HEAD = [
   { id: "avatar", label: "Avarat", align: "left" },
@@ -48,9 +52,41 @@ const TABLE_HEAD = [
   { id: "city", label: "City", align: "left" },
   { id: "", label: "", align: "left" },
 ];
+const TABLE_HEAD_PENDINGS = [
+  { id: "avatar", label: "Avarat", align: "left" },
+  { id: "firstName", label: "First name", align: "left" },
+  { id: "lastName", label: "Lastname", align: "left" },
+  { id: "username", label: "username", align: "left" },
+  { id: "approve", label: "Approve", align: "left" },
+  { id: "", label: "", align: "left" },
+];
 
-export default function MemberCard() {
-  const { data: members, isLoading } = useGetFriendsContentQuery({});
+interface IMemberCardProps {
+  pendings: string;
+  students: string;
+}
+
+export default function MemberCard({ pendings, students }: IMemberCardProps) {
+  const { enqueueSnackbar } = useSnackbar();
+  const { user } = useAuthContext();
+  const { query } = useRouter();
+
+  const { data, isLoading, isFetching } = useGetClassStudentsQuery(
+    { id: query.id as string },
+    { skip: !query.id, refetchOnMountOrArgChange: true }
+  );
+
+  const {
+    data: pending,
+    isLoading: isLoadingPending,
+    isFetching: isFetchingPending,
+  } = useGetClassPendingQuery(
+    { classId: query.id as string },
+    { skip: !query.id, refetchOnMountOrArgChange: true }
+  );
+
+  const [deleteFromClass, { isLoading: isDeleting, isSuccess }] =
+    useStudentLeftClassMutation();
 
   const {
     dense,
@@ -73,11 +109,9 @@ export default function MemberCard() {
 
   const { push } = useRouter();
 
-  const [tableData, setTableData] = useState<IFriend[]>([]);
+  const [tableData, setTableData] = useState<IStudent[]>([]);
 
   const [filterName, setFilterName] = useState("");
-
-  const [filterRole, setFilterRole] = useState("all");
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -96,12 +130,8 @@ export default function MemberCard() {
 
   const denseHeight = dense ? 52 : 72;
 
-  const isFiltered =
-    filterName !== "" || filterRole !== "all" || filterStatus !== "all";
-
   const isNotFound =
     (!dataFiltered.length && !!filterName) ||
-    (!dataFiltered.length && !!filterRole) ||
     (!dataFiltered.length && !!filterStatus);
 
   const handleOpenConfirm = () => {
@@ -125,15 +155,21 @@ export default function MemberCard() {
     setFilterName(event.target.value);
   };
 
-  const handleFilterRole = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPage(0);
-    setFilterRole(event.target.value);
+  const handleDeleteStudent = async (studentId: string): Promise<void> => {
+    try {
+      await deleteFromClass({
+        classId: query.id as string,
+        student_id: studentId,
+      }).unwrap();
+    } catch (error) {
+      enqueueSnackbar(error.data.message, { variant: "error" });
+    }
   };
 
   const handleDeleteRow = (id: string) => {
-    const deleteRow = tableData?.filter((row) => row.id !== id);
+    handleDeleteStudent(id);
+    enqueueSnackbar("Student removed from class");
     setSelected([]);
-    setTableData(deleteRow);
 
     if (page > 0) {
       if (dataInPage.length < 2) {
@@ -143,11 +179,11 @@ export default function MemberCard() {
   };
 
   const handleDeleteRows = (selectedRows: string[]) => {
-    const deleteRows = tableData?.filter(
-      (row) => !selectedRows.includes(row.id as string)
-    );
+    for (let i = 0; i < selected.length; i++) {
+      handleDeleteStudent(selected[i]);
+    }
+    enqueueSnackbar("Students removed from class");
     setSelected([]);
-    setTableData(deleteRows);
 
     if (page > 0) {
       if (selectedRows.length === dataInPage.length) {
@@ -168,18 +204,41 @@ export default function MemberCard() {
 
   const handleResetFilter = () => {
     setFilterName("");
-    setFilterRole("all");
     setFilterStatus("all");
   };
 
   useEffect(() => {
-    if (members) {
-      setTableData(members.data);
+    if (filterStatus === "all" && data) {
+      setTableData(data.data ?? []);
     }
-  }, [isLoading]);
+    if (filterStatus === "pending" && pending) {
+      setTableData(pending.data ?? []);
+    }
+  }, [
+    isLoading,
+    isFetching,
+    filterStatus,
+    isLoadingPending,
+    isFetchingPending,
+  ]);
 
-  if (isLoading) {
-    return <Skeleton />;
+  if (isLoading || isFetching || isLoadingPending || isFetchingPending) {
+    return <Skeleton variant="rounded" height="635px" />;
+  }
+
+  const TABS_LIST = [
+    {
+      label: "All",
+      value: "all",
+      icon: <Label>{students ?? 0}</Label>,
+    },
+  ];
+  if (user?.role !== Role.Student) {
+    TABS_LIST.push({
+      label: "Pending",
+      value: "pending",
+      icon: <Label>{pendings ?? 0}</Label>,
+    });
   }
 
   return (
@@ -193,23 +252,22 @@ export default function MemberCard() {
             bgcolor: "background.neutral",
           }}
         >
-          <Tab
-            key={0}
-            label={"All"}
-            value={"all"}
-            icon={<Label>{dataFiltered.length}</Label>}
-            iconPosition="end"
-          />
+          {TABS_LIST.map((el, index) => (
+            <Tab
+              key={index}
+              label={el.label}
+              value={el.value}
+              icon={el.icon}
+              iconPosition="end"
+            />
+          ))}
         </Tabs>
 
         <Divider />
 
         <UserTableToolbar
           filterName={filterName}
-          filterRole={filterRole}
-          optionsRole={ROLE_OPTIONS}
           onFilterName={handleFilterName}
-          onFilterRole={handleFilterRole}
           onResetFilter={handleResetFilter}
         />
 
@@ -238,7 +296,9 @@ export default function MemberCard() {
               <TableHeadCustom
                 order={order}
                 orderBy={orderBy}
-                headLabel={TABLE_HEAD}
+                headLabel={
+                  filterStatus === "all" ? TABLE_HEAD : TABLE_HEAD_PENDINGS
+                }
                 rowCount={tableData?.length}
                 numSelected={selected.length}
                 onSort={onSort}
@@ -261,6 +321,8 @@ export default function MemberCard() {
                       onSelectRow={() => onSelectRow(row.id as string)}
                       onDeleteRow={() => handleDeleteRow(row.id as string)}
                       onEditRow={() => handleEditRow(row.last_name)}
+                      pending={filterStatus === "pending"}
+                      loading={isDeleting}
                     />
                   ))}
 
@@ -298,16 +360,17 @@ export default function MemberCard() {
           </>
         }
         action={
-          <Button
+          <LoadingButton
             variant="contained"
             color="error"
+            loading={isDeleting}
             onClick={() => {
               handleDeleteRows(selected);
               handleCloseConfirm();
             }}
           >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>
@@ -321,7 +384,7 @@ function applyFilter({
   comparator,
   filterName,
 }: {
-  inputData: IFriend[];
+  inputData: IStudent[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

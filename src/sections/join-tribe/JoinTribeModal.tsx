@@ -31,7 +31,16 @@ export default function JoinTribeModal({
   };
 
   return (
-    <Dialog open={modalOpen} fullWidth maxWidth="xs">
+    <Dialog
+      open={modalOpen}
+      fullWidth
+      maxWidth="xs"
+      sx={{
+        "& .MuiDialog-paper": {
+          borderRadius: "18px",
+        },
+      }}
+    >
       <JoinTribeHeader classInfo={classInfo} />
       <Box py={3} px={2}>
         {isSingIn ? (

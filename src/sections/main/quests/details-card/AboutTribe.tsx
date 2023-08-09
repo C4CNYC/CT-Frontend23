@@ -1,8 +1,7 @@
-import { Iconify } from "@components";
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// ----------------------------------------------------------------------
+import { Iconify } from "@components";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -11,8 +10,6 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
   flexShrink: 0,
   marginRight: theme.spacing(2),
 }));
-
-// ----------------------------------------------------------------------
 
 export default function AboutTribe() {
   return (

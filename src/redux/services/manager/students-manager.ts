@@ -27,6 +27,27 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["Students"],
     }),
+    getClassPending: builder.query<
+      BaseListResponseInterface<IStudent & BaseResponseInterface>,
+      { classId: string }
+    >({
+      query: ({ classId }) => ({
+        url: `/school/{schoolId}/class/${classId}/student/pending`,
+        method: "GET",
+      }),
+      providesTags: ["Pendings"],
+    }),
+    updateClassPending: builder.mutation<
+      void,
+      { classId: string; student_id: string }
+    >({
+      query: ({ classId, ...body }) => ({
+        url: `/school/{schoolId}/class/${classId}/student/pending`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Pendings"],
+    }),
     getGoogleClasses: builder.query<
       any[],
       { access_token: string; schoolId: string; classId: string }
@@ -98,10 +119,10 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     studentLeftClass: builder.mutation<
       void,
-      { schoolId: string; classId: string; student_id: string }
+      { classId: string; student_id: string }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}/student`,
+      query: ({ classId, ...body }) => ({
+        url: `/school/{schoolId}/class/${classId}/student`,
         method: "DELETE",
         body,
       }),
@@ -136,7 +157,9 @@ export const {
   useGetStudentQuery,
   useGetStudentsQuery,
   useGetGoogleClassesQuery,
+  useGetClassPendingQuery,
   // -------------mutation-----------
+  useUpdateClassPendingMutation,
   useMigrateGoogleClassesStudentsMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,

@@ -63,7 +63,7 @@ export default function AssignmentsTableRow({
 
   useEffect(() => {
     const currentDate = new Date();
-    console.log(differenceInDays(currentDate, new Date(end_date)));
+
     if (differenceInDays(currentDate, new Date(end_date))) {
     }
   }, []);

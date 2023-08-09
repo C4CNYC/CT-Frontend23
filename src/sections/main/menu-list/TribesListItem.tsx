@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
+import NextLink from "next/link";
 
-import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
+import { Avatar, Box, Link, Tooltip, Typography } from "@mui/material";
 
 import { useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -18,16 +18,18 @@ export default function TribeListItem({
 }: Props): React.ReactElement {
   const { themeLayout } = useSettingsContext();
   const isNavMini = themeLayout === "mini";
-  const { push } = useRouter();
 
   return (
     <Tooltip title={isNavMini ? classItem.name : ""}>
-      <Button
-        variant="text"
-        onClick={() => {
-          push(STUDENT_PATH_DASHBOARD.class.id(classItem.id));
-        }}
+      <Link
+        component={NextLink}
+        underline="none"
+        href={STUDENT_PATH_DASHBOARD.class.id(classItem.id, {
+          schoolId: classItem.school_id as string,
+        })}
         sx={{
+          display: "inline-flex",
+          alignItems: "center",
           p: 0,
           justifyContent: "flex-start",
           minWidth: isNavMini ? "30px" : "50px",
@@ -48,7 +50,7 @@ export default function TribeListItem({
         />
         <Avatar
           variant="rounded"
-          src={classItem.avatar}
+          src={classItem.avatar ?? ""}
           sx={(theme) => ({
             border: `2px solid ${theme.palette.info.light}`,
             width: "30px",
@@ -63,7 +65,7 @@ export default function TribeListItem({
             {classItem.name}
           </Typography>
         )}
-      </Button>
+      </Link>
     </Tooltip>
   );
 }

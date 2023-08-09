@@ -23,18 +23,18 @@ export default function JoinTribeHeader({
         px: 3,
         color: theme.palette.primary.contrastText,
         position: "relative",
-        borderBottomLeftRadius: "16px",
-        borderBottomRightRadius: "16px",
+        borderBottomLeftRadius: "18px",
+        borderBottomRightRadius: "18px",
         "&:before": {
           width: "100%",
           height: "100%",
           position: "absolute",
           top: 0,
           left: 0,
-          content: "''",
-          background: "rgba(0,0,0, .3)",
-          borderBottomLeftRadius: "16px",
-          borderBottomRightRadius: "16px",
+          content: "' '",
+          background: "rgba(0,0,0, .1)",
+          borderBottomLeftRadius: "18px",
+          borderBottomRightRadius: "18px",
         },
       }}
     >
@@ -74,11 +74,12 @@ export default function JoinTribeHeader({
                 {classInfo.mentors?.[0].last_name}
               </Typography>
             </Stack>
-            {classInfo.school && (
+
+            {(classInfo.school_city || classInfo.school_city) && (
               <Typography variant="subtitle1">
-                <ImLocation2 /> {classInfo.school.city}
+                <ImLocation2 /> {classInfo.school_city}
                 {", "}
-                {classInfo.school.country}
+                {classInfo.school_country}
               </Typography>
             )}
           </Stack>

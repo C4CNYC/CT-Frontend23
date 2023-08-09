@@ -21,6 +21,7 @@ export default function HomeOverview(): React.ReactElement {
     { id: query.id as string },
     { skip: !query.id }
   );
+
   if (isLoading || !data) {
     return (
       <Skeleton
@@ -30,14 +31,15 @@ export default function HomeOverview(): React.ReactElement {
       />
     );
   }
+
   return (
     <>
       <Head>
         <title>Home | Code Tribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-        <DefaultClassInfo data={data} />
-        <QuestsTable data={data} />
+        <DefaultClassInfo classData={data} />
+        <QuestsTable classData={data} />
       </Container>
     </>
   );
