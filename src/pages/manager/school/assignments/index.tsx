@@ -38,8 +38,8 @@ import {
 } from "@components";
 import { SchoolDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import AssignmentsTableRow from "@sections/dashboard/assignments/assignments-table/AssignmentsTableRow";
-import AssignmentsTableToolbar from "@sections/dashboard/assignments/assignments-table/AssignmentsTableToolbar";
+import AssignmentsTableRow from "@sections/dashboard/assigments/AssignmentsTableRow";
+import AssignmentsTableToolbar from "@sections/dashboard/assigments/AssignmentsTableToolbar";
 import { fTimestamp } from "@utils";
 import _mock from "src/_mock/_mock";
 import { _invoices } from "src/_mock/arrays";
