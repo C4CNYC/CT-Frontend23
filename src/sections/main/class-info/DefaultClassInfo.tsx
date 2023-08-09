@@ -71,7 +71,7 @@ export default function DefaultClassInfo({
               px: 2,
             }}
           >
-            {classData?.setting?.share_token_enable ? (
+            {classData?.setting_share_token_enable ? (
               <Stack
                 direction="row"
                 alignItems="center"
@@ -80,12 +80,12 @@ export default function DefaultClassInfo({
                 <Typography variant="subtitle2">Join-code:</Typography>
                 <Button
                   onClick={() => {
-                    onCopy(classData?.setting?.share_token);
+                    onCopy(classData?.setting_share_token);
                   }}
                   sx={{ gap: 0.5, color: "inherit", p: 0 }}
                 >
                   <Typography variant="subtitle2">
-                    {classData?.setting?.share_token}
+                    {classData?.setting_share_token}
                   </Typography>
                   <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
                 </Button>
@@ -138,7 +138,7 @@ export default function DefaultClassInfo({
                 Members
               </Link>
               <ShareGroupModal
-                joinCode={classData?.setting?.share_token}
+                joinCode={classData?.setting_share_token}
                 schoolClass={classData}
               >
                 <Button

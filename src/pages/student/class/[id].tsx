@@ -38,7 +38,7 @@ export default function HomeOverview(): React.ReactElement {
       return;
     }
     const queryParams: Record<string, any> = {
-      schoolId: data?.school?.id as string,
+      schoolId: data?.school_id as string,
     };
     if (query.joinCode) {
       queryParams.joinCode = query.joinCode;

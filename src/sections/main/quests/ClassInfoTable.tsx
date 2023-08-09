@@ -15,6 +15,7 @@ import { useTheme } from "@mui/system";
 
 import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import CustomTabPanel, {
   customTabProps,
@@ -27,7 +28,7 @@ import MemberCard from "./members-card";
 import QuestsTab from "./quest-card";
 
 interface IClassInfoTable {
-  classData: IClass;
+  classData: IClass & BaseResponseInterface;
 }
 
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
@@ -46,10 +47,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
     setOpenPopover(null);
   };
 
-  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(
-    classData.id as string,
-    { schoolId: classData.school?.id as string }
-  );
+  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
+    schoolId: classData.school_id as string,
+  });
 
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
@@ -105,15 +105,10 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               color: "inherit",
               maxWidth: 360,
               ml: 3.25,
-              width: 48,
-              height: 48,
               justifyContent: "center",
             }}
           >
-            <Iconify
-              icon="solar:gallery-wide-broken"
-              width={20}
-            />
+            <Iconify icon="solar:gallery-wide-broken" width={20} />
             {!isMobile && (
               <Typography color="#637381" fontSize="1.1rem" mr="10px">
                 Gallery
@@ -140,10 +135,13 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab />
+        <QuestsTab schoolId={classData.school_id ?? ""} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard />
+        <MemberCard
+          students={classData.students}
+          pendings={classData.pendings}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab />

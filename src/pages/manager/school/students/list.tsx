@@ -28,12 +28,10 @@ import {
   CustomBreadcrumbs,
   Iconify,
   Scrollbar,
-  TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  emptyRows,
   useSettingsContext,
   useTable,
 } from "@components";
@@ -64,13 +62,9 @@ const TABLE_HEAD = [
   { id: "" },
 ];
 
-// ----------------------------------------------------------------------
-
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserListPage(): React.ReactElement {
   const {

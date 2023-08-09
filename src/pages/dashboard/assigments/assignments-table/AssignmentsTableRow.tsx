@@ -1,6 +1,6 @@
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { differenceInDays } from "date-fns";
 
 import {
   Avatar,
@@ -8,7 +8,6 @@ import {
   Checkbox,
   Divider,
   IconButton,
-  Link,
   MenuItem,
   Stack,
   TableCell,
@@ -17,17 +16,17 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
 import { fDate } from "../../../../utils/formatTime";
-import AssignmentDrawer from "./AssignmentDrawer";
 
 type Props = {
   row: IAssignment;
   selected: boolean;
   onSelectRow: VoidFunction;
+  onViewRow: VoidFunction;
+  onEditRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
 
@@ -35,40 +34,39 @@ export default function AssignmentsTableRow({
   row,
   selected,
   onSelectRow,
+  onViewRow,
+  onEditRow,
   onDeleteRow,
 }: Props) {
-  const { query } = useRouter();
-  const [openDetails, setOpenDetails] = useState(false);
-  const { name, type, start_date, end_date, active, id } = row;
+  const { name, type, start_date, end_date, active } = row;
+
   const [status, setStatus] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const handleOpenConfirm = (): void => {
+  const handleOpenConfirm = () => {
     setOpenConfirm(true);
   };
-  const handleCloseConfirm = (): void => {
+
+  const handleCloseConfirm = () => {
     setOpenConfirm(false);
   };
 
-  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+  const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpenPopover(event.currentTarget);
   };
-  const handleClosePopover = (): void => {
+
+  const handleClosePopover = () => {
     setOpenPopover(null);
   };
 
-  const onOpenDetails = (): void => {
-    setOpenDetails(true);
-  };
-  const onCloseDetails = (): void => {
-    setOpenDetails(false);
-  };
+  useEffect(() => {
+    const currentDate = new Date();
 
-  const questPagePath = STUDENT_PATH_DASHBOARD.quest.id(id, {
-    schoolId: query.schoolId as string,
-  });
+    if (differenceInDays(currentDate, new Date(end_date))) {
+    }
+  }, []);
 
   return (
     <>
@@ -112,6 +110,8 @@ export default function AssignmentsTableRow({
 
         <TableCell align="left">{fDate(end_date)}</TableCell>
 
+        {/* <TableCell align="center">{assigned}</TableCell> */}
+
         <TableCell align="center">
           <Label variant="soft" color={(active && "info") || "default"}>
             {active ? "Published" : "Draft"}
@@ -134,25 +134,20 @@ export default function AssignmentsTableRow({
         arrow="right-top"
         sx={{ width: 160 }}
       >
-        <Link
-          component={NextLink}
-          href={questPagePath}
-          underline="none"
-          color="initial"
-        >
-          <MenuItem
-            onClick={() => {
-              handleClosePopover();
-            }}
-          >
-            <Iconify icon="eva:eye-fill" />
-            View
-          </MenuItem>
-        </Link>
         <MenuItem
           onClick={() => {
+            onViewRow();
             handleClosePopover();
-            onOpenDetails();
+          }}
+        >
+          <Iconify icon="eva:eye-fill" />
+          View
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            onEditRow();
+            handleClosePopover();
           }}
         >
           <Iconify icon="eva:edit-fill" />
@@ -183,11 +178,6 @@ export default function AssignmentsTableRow({
             Delete
           </Button>
         }
-      />
-      <AssignmentDrawer
-        onCloseDetails={onCloseDetails}
-        openDetails={openDetails}
-        assignment={row}
       />
     </>
   );
