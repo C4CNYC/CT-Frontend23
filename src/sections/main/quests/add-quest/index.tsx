@@ -219,7 +219,7 @@ export default function AddQuest({
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep courses={data?.courses ?? []} />
+              <DetailsStep courses={[]} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep

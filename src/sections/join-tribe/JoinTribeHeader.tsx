@@ -54,11 +54,11 @@ export default function JoinTribeHeader({
         <Typography variant="h3" mb={2}>
           {classInfo.name}
         </Typography>
-        {classInfo.mentors?.length ? (
+        {classInfo.country || classInfo.city ? (
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
               <Avatar
-                src={classInfo.mentors?.[0].avatar ?? ""}
+                src={""}
                 sx={{
                   width: "25px",
                   height: "25px",
@@ -69,10 +69,7 @@ export default function JoinTribeHeader({
               >
                 🦙
               </Avatar>
-              <Typography variant="subtitle1">
-                {classInfo.mentors?.[0].first_name}{" "}
-                {classInfo.mentors?.[0].last_name}
-              </Typography>
+              <Typography variant="subtitle1"></Typography>
             </Stack>
 
             {(classInfo.school_city || classInfo.school_city) && (

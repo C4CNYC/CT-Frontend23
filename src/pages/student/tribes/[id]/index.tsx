@@ -6,22 +6,19 @@ import { format } from "date-fns";
 import {
   Card,
   CardHeader,
-  CircularProgress,
   Container,
   Divider,
   Grid,
-  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
 
 import { Iconify, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
+import SkeletonTribe from "@sections/skeleton/SekeltonTribe";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { fNumber } from "@utils";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
-import SkeletonSchool from "@pages/manager/school/general/skeleton-school";
-import SkeletonTribe from "@sections/skeleton/SekeltonTribe";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -72,7 +69,7 @@ export default function TribeProfilePage(): React.ReactElement {
                 >
                   <Stack width={1} textAlign="center">
                     <Typography variant="h4">
-                      {fNumber(data?.students?.length ?? 0)}
+                      {fNumber(data?.students ?? 0)}
                     </Typography>
 
                     <Typography
@@ -84,9 +81,7 @@ export default function TribeProfilePage(): React.ReactElement {
                   </Stack>
 
                   <Stack width={1} textAlign="center">
-                    <Typography variant="h4">
-                      {fNumber(data?.courses?.length ?? 0)}
-                    </Typography>
+                    <Typography variant="h4">{fNumber(0)}</Typography>
 
                     <Typography
                       variant="body2"
@@ -104,7 +99,7 @@ export default function TribeProfilePage(): React.ReactElement {
                   <Stack direction="row">
                     <Iconify icon="eva:pin-fill" />
                     <Typography ml={1} variant="body2">
-                      {data?.school?.city}, {data?.school?.country}
+                      {data?.school_city}, {data?.school_country}
                     </Typography>
                   </Stack>
                   <Stack direction="row">

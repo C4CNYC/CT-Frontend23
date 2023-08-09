@@ -32,13 +32,11 @@ import { Iconify } from "../iconify";
 
 interface Prop {
   children: React.ReactElement;
-  joinCode: string;
   schoolClass: IClass & BaseResponseInterface;
 }
 
 export default function ShareGroupModal({
   children,
-  joinCode,
   schoolClass,
 }: Prop): React.ReactElement {
   const { query } = useRouter();
@@ -83,7 +81,7 @@ export default function ShareGroupModal({
 
   const shareLink = `${
     window.location.origin
-  }${STUDENT_PATH_DASHBOARD.joinTribe.id(joinCode)}`;
+  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting_share_token)}`;
 
   return (
     <>
