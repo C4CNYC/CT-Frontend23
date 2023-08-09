@@ -19,14 +19,12 @@ import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 
-import { fDate } from "../../../../utils/formatTime";
+import { fDate } from "../../../utils/formatTime";
 
 type Props = {
   row: IAssignment;
   selected: boolean;
   onSelectRow: VoidFunction;
-  onViewRow: VoidFunction;
-  onEditRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
 
@@ -34,8 +32,7 @@ export default function AssignmentsTableRow({
   row,
   selected,
   onSelectRow,
-  onViewRow,
-  onEditRow,
+
   onDeleteRow,
 }: Props) {
   const { name, type, start_date, end_date, active } = row;
@@ -136,7 +133,6 @@ export default function AssignmentsTableRow({
       >
         <MenuItem
           onClick={() => {
-            onViewRow();
             handleClosePopover();
           }}
         >
@@ -146,7 +142,6 @@ export default function AssignmentsTableRow({
 
         <MenuItem
           onClick={() => {
-            onEditRow();
             handleClosePopover();
           }}
         >
