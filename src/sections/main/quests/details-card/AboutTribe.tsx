@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -11,13 +13,26 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
   marginRight: theme.spacing(2),
 }));
 
-export default function AboutTribe() {
+interface IAbourTribeProps {
+  description: string;
+  country: string;
+  city: string;
+  createdAt: string;
+  schoolName: string;
+}
+export default function AboutTribe({
+  description,
+  country,
+  city,
+  createdAt,
+  schoolName,
+}: IAbourTribeProps) {
   return (
     <Card>
       <CardHeader title="About" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">quote</Typography>
+        <Typography variant="body2">{description}</Typography>
 
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
@@ -25,7 +40,7 @@ export default function AboutTribe() {
           <Typography variant="body2">
             Live at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              country
+              {country}, {city}
             </Link>
           </Typography>
         </Stack>
@@ -34,20 +49,20 @@ export default function AboutTribe() {
           <StyledIcon icon="ic:round-business-center" />
 
           <Typography variant="body2">
-            role at &nbsp;
+            Created at: &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              company
+              {format(new Date(createdAt), "dd.mm.yyyy")}
             </Link>
           </Typography>
         </Stack>
 
         <Stack direction="row">
-          <StyledIcon icon="ic:round-business-center" />
+          <StyledIcon icon="fa-solid:school" />
 
           <Typography variant="body2">
-            Studied at &nbsp;
+            School: &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
-              school
+              {schoolName}
             </Link>
           </Typography>
         </Stack>

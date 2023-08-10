@@ -144,7 +144,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <DetailsTab />
+        <DetailsTab classData={classData} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}
