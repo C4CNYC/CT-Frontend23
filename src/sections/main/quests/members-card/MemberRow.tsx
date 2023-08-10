@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, MenuPopover, useSnackbar } from "@components";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { useUpdateClassPendingMutation } from "src/redux/services/manager/students-manager";
 
@@ -118,12 +120,14 @@ export default function MemberRow({
         )}
 
         <TableCell align="right">
-          <IconButton
-            color={openPopover ? "inherit" : "default"}
-            onClick={handleOpenPopover}
-          >
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
+          <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
+            <IconButton
+              color={openPopover ? "inherit" : "default"}
+              onClick={handleOpenPopover}
+            >
+              <Iconify icon="eva:more-vertical-fill" />
+            </IconButton>
+          </RoleBasedGuard>
         </TableCell>
       </TableRow>
 
