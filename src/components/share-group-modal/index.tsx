@@ -30,7 +30,7 @@ import ClassroomModal from "../classroom-modal";
 import EmailAddressModal from "../email-address-domain";
 import { Iconify } from "../iconify";
 
-interface Prop {
+interface IShareGroupModalProps {
   children: React.ReactElement;
   schoolClass: IClass & BaseResponseInterface;
 }
@@ -38,13 +38,13 @@ interface Prop {
 export default function ShareGroupModal({
   children,
   schoolClass,
-}: Prop): React.ReactElement {
+}: IShareGroupModalProps): React.ReactElement {
   const { query } = useRouter();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(
-    schoolClass.setting_request_join_enable ? "" : "approve"
+    schoolClass.setting_request_join_enable ? "true" : "false"
   );
   const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation();
 
@@ -66,12 +66,12 @@ export default function ShareGroupModal({
     }
   };
 
-  const updateClassJoin = async () => {
+  const updateClassJoin = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       await updateClass({
         schoolId: query.schoolId as string,
         classId: query.id as string,
-        request_join_enable: Boolean(value),
+        request_join_enable: (e.target as HTMLInputElement).value === "true",
       }).unwrap();
       enqueueSnackbar("Changes updated!");
     } catch (error) {
@@ -206,7 +206,7 @@ export default function ShareGroupModal({
                 name="controlled-radio-buttons-group"
                 value={value}
                 onChange={(e) => {
-                  updateClassJoin();
+                  updateClassJoin(e);
                   handleChange(e);
                 }}
                 sx={{
@@ -215,7 +215,7 @@ export default function ShareGroupModal({
                 }}
               >
                 <FormControlLabel
-                  value=""
+                  value="true"
                   sx={{
                     mb: "24px",
                     mt: "10px",
@@ -237,7 +237,7 @@ export default function ShareGroupModal({
                   }
                 />
                 <FormControlLabel
-                  value="approve"
+                  value="false"
                   disabled={isLoading}
                   control={
                     <Radio

@@ -37,6 +37,7 @@ export default function JoinTribeContent({
       } else {
         enqueueSnackbar("You send request for join to class!");
         setIsPending(true);
+        cleanJoinTribeStorage();
       }
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });

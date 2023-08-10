@@ -55,10 +55,10 @@ export default function JoinTribeLogin({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
       await login(data.email, data.password, "codetribe");
-      push({
-        href: STUDENT_PATH_DASHBOARD.class.id(classId),
-        query: { joinCode: query.id },
-      });
+      push(
+        `${STUDENT_PATH_DASHBOARD.class.id(classId)}/` +
+          `${new URLSearchParams({ joinCode: query.id as string })}`
+      );
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
