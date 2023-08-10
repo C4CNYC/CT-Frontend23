@@ -14,12 +14,17 @@ export default function TribeHeaderBtn(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation();
+    event.preventDefault();
     setOpenPopover(event.currentTarget);
   };
 
-  const handleClosePopover = (): void => {
+  const handleClosePopover = (event: React.MouseEvent<HTMLElement>): void => {
+    event.stopPropagation();
+    event.preventDefault();
     setOpenPopover(null);
   };
+
   return (
     <Box
       sx={{
