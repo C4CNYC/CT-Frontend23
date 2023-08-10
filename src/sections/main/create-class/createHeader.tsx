@@ -3,13 +3,13 @@ import { useTheme } from "@mui/system";
 
 import { RHFTextField } from "@components";
 
-interface Props {
+interface ICreateHeaderProps {
   choosenColor: string;
 }
 
 export default function CreateHeader({
   choosenColor,
-}: Props): React.ReactElement {
+}: ICreateHeaderProps): React.ReactElement {
   const theme = useTheme();
   return (
     <Stack

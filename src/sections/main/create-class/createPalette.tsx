@@ -4,7 +4,7 @@ import { BsBookmarkCheckFill } from "react-icons/bs";
 
 import { Box, Button, Collapse, Tab, Tabs } from "@mui/material";
 
-interface Props {
+interface ICreatePaletteProps {
   choosenColor: string;
   setChoosenColor: (c: string) => void;
 }
@@ -12,12 +12,13 @@ interface Props {
 export default function CreatePalette({
   choosenColor,
   setChoosenColor,
-}: Props): React.ReactElement {
+}: ICreatePaletteProps): React.ReactElement {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: any, newValue: number) => {
     setValue(newValue);
   };
+
   return (
     <Box sx={{ width: "100%", pt: 2, px: 3 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
