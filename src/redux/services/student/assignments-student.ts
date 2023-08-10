@@ -6,7 +6,7 @@ import { IAssignment } from "../interfaces/assignment.interface";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAssignment: builder.query<
+    getAssignmentStudent: builder.query<
       IAssignment & BaseResponseInterface,
       { assignmentId: string }
     >({
@@ -16,13 +16,14 @@ const extendedApi = studentApi.injectEndpoints({
       }),
       providesTags: ["Assignment"],
     }),
-    getAssignmentList: builder.query<
+    getAssignmentListStudent: builder.query<
       BaseListResponseInterface<IAssignment & BaseResponseInterface>,
-      void
+      { class_id: string }
     >({
-      query: () => ({
+      query: ({ ...params }) => ({
         url: "/assignment",
         method: "GET",
+        params,
       }),
       providesTags: ["Assignments"],
     }),
@@ -31,7 +32,7 @@ const extendedApi = studentApi.injectEndpoints({
 });
 
 export const {
-  useGetAssignmentListQuery,
-  useGetAssignmentQuery,
+  useGetAssignmentListStudentQuery,
+  useGetAssignmentStudentQuery,
   // -------------mutation-----------
 } = extendedApi;
