@@ -1,6 +1,10 @@
 import { Card, Divider, Stack, Typography } from "@mui/material";
 
-export default function GeneralInfo() {
+interface IGeneralInfoProps {
+  students: string;
+}
+
+export default function GeneralInfo({ students }: IGeneralInfoProps) {
   return (
     <Card sx={{ py: 3 }}>
       <Stack
@@ -8,7 +12,7 @@ export default function GeneralInfo() {
         divider={<Divider orientation="vertical" flexItem />}
       >
         <Stack width={1} textAlign="center">
-          <Typography variant="h4">1000</Typography>
+          <Typography variant="h4">{students}</Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Student

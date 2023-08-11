@@ -85,33 +85,17 @@ export default function Tribes(): React.ReactElement {
           </Box>
           <TribesFillter />
           <Box
-            sx={{
-              pt: { xs: "20px", sm: "35px", md: "45px" },
-              m: "0 auto",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: {
-                xs: "center",
-                sm: "flex-start",
-              },
-              gap: { xs: 4, sm: 3, md: 3 },
+            gap={3}
+            display="grid"
+            gridTemplateColumns={{
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
             }}
+            mt={3}
           >
             {data?.data.map((tribe) => (
-              <Link
-                component={NextLink}
-                key={tribe.id}
-                href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
-                sx={{
-                  textDecoration: "none",
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                  width: { xs: "100%", sm: "48%"}
-                }}
-              >
-                <TribeItem tribe={tribe} />
-              </Link>
+              <TribeItem tribe={tribe} />
             ))}
           </Box>
         </Container>

@@ -22,9 +22,9 @@ HomeOverview.getLayout = (page: React.ReactElement) => (
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { query, push, isReady } = useRouter();
-  const { data, isLoading } = useGetClassQuery(
+  const { data, isLoading, isFetching } = useGetClassQuery(
     { id: query.id as string },
-    { skip: !query.id }
+    { skip: !query.id, refetchOnMountOrArgChange: true }
   );
   const { data: classInfo } = useGetPublicTribeQuery(
     {
@@ -44,7 +44,7 @@ export default function HomeOverview(): React.ReactElement {
       queryParams.joinCode = query.joinCode;
     }
     push(STUDENT_PATH_DASHBOARD.class.id(query.id as string, queryParams));
-  }, [data]);
+  }, [isLoading, data, isFetching]);
 
   return (
     <>

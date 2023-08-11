@@ -14,13 +14,13 @@ import {
 import { useSnackbar } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 
-interface Props {
+interface IExitTribeDialogProps {
   children: React.ReactElement;
 }
 
 export default function ExitTribeDialog({
   children,
-}: Props): React.ReactElement {
+}: IExitTribeDialogProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 

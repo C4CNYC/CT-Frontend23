@@ -9,7 +9,7 @@ export default function Index(): null {
   const { replace } = useRouter();
 
   useEffect(() => {
-    replace(MANAGER_PATH_DASHBOARD.organization.root);
+    replace(MANAGER_PATH_DASHBOARD.school.root);
   }, []);
 
   return null;

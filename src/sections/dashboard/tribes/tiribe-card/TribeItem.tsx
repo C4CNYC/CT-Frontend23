@@ -1,3 +1,5 @@
+import NextLink from "next/link";
+
 import {
   Avatar,
   AvatarGroup,
@@ -11,6 +13,7 @@ import {
 } from "@mui/material";
 
 import { Scrollbar, SvgColor } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface, getLinearGradient } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
@@ -19,12 +22,14 @@ import TribeButtons from "./TribeButtons";
 import TribeHeaderBtn from "./TribeHeaderBtn";
 import TribeStatistics from "./TribeStatistics";
 
-interface Props {
+interface ITribeItemProps {
   tribe: IClass & BaseResponseInterface;
 }
 
-export default function TribeItem({ tribe }: Props): React.ReactElement {
-  const { data, isLoading } = useGetClassStudentsQuery({ id: tribe.id });
+export default function TribeItem({
+  tribe,
+}: ITribeItemProps): React.ReactElement {
+  const { data } = useGetClassStudentsQuery({ id: tribe.id });
 
   return (
     <Paper
@@ -32,11 +37,12 @@ export default function TribeItem({ tribe }: Props): React.ReactElement {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minWidth: "344px",
         position: "relative",
         overflow: "hidden",
         borderRadius: "16px",
       }}
+      component={NextLink}
+      href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
     >
       <Box
         sx={{

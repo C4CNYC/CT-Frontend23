@@ -14,13 +14,11 @@ export interface ClassSearchParams {
 
 export interface IAddCourseToClass {
   id: string;
-  schoolId: string;
   course_id: string;
 }
 
 export interface IRemoveCourseFromClass {
   id: string;
-  schoolId: string;
   course_id: string;
 }
 

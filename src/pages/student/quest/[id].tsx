@@ -3,9 +3,8 @@ import { useRouter } from "next/router";
 
 import { Container, Skeleton } from "@mui/material";
 
-import { CustomBreadcrumbs, useSettingsContext } from "@components";
+import { useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
@@ -29,6 +28,7 @@ export default function Quest(): React.ReactElement | null {
     { skip: !query.schoolId || !query.id }
   );
 
+  console.log(data);
   if (isLoading || !data) {
     return <Skeleton />;
   }
@@ -40,20 +40,12 @@ export default function Quest(): React.ReactElement | null {
       </Head>
       <Container
         maxWidth={themeStretch ? false : "lg"}
-        sx={{ borderRadius: 1, background: "#F6F9FC", pt: 2, pb: 2 }}
+        sx={{ borderRadius: 1, background: "#F6F9FC", pt: 2, pb: 8 }}
       >
-        <CustomBreadcrumbs
-          heading="Quest"
-          links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-            { name: "Quest" },
-          ]}
-        />
-
         <QuestHeader />
         <QuestMain mentor={mentors?.data[0]} questName={data.name} />
         <QuestDescription description={data?.description} />
-        <QuestRating name={data?.name} />
+        <QuestRating courseId="" courseName="" />
       </Container>
     </>
   );
