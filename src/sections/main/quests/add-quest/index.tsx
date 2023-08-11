@@ -30,7 +30,6 @@ import {
   useUpdateAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
@@ -56,7 +55,6 @@ export default function AddQuest({
   const { query, push } = useRouter();
 
   const [assignmentsSkills, setAssignmentsSkills] = useState<string[]>();
-  const [students, setStudents] = useState<string[]>();
   const [value, setValue] = useState(0);
 
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
@@ -65,15 +63,9 @@ export default function AddQuest({
   const [addAssignmentsToClass, { isLoading: isAddingToClass }] =
     useUpdateCourseAssignmentMutation();
 
-  const { data } = useGetClassQuery(
-    { id: query.id as string },
-    { skip: !query.id }
-  );
-
   useEffect(() => {
     if (assignment) {
       setAssignmentsSkills(assignment?.tags);
-      setStudents(assignment?.students ? assignment.students : []);
     }
   }, [assignment]);
 
@@ -130,9 +122,7 @@ export default function AddQuest({
           close_date: formData.closeDate,
           active: Boolean(formData.active),
           tags: assignmentsSkills,
-          ...(students?.length
-            ? { students }
-            : { classes: [query.id as string] }),
+          classes: [query.id as string],
         }).unwrap();
 
         await addAssignmentsToClass({
@@ -219,12 +209,10 @@ export default function AddQuest({
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep courses={[]} />
+              <DetailsStep />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
-                students={students}
-                setStudents={setStudents}
                 control={methods.control}
                 setAssignmentsSkills={(s: string[]) => {
                   setAssignmentsSkills(s);

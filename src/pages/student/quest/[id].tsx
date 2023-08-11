@@ -29,6 +29,7 @@ export default function Quest(): React.ReactElement | null {
     { skip: !query.schoolId || !query.id }
   );
 
+  console.log(data);
   if (isLoading || !data) {
     return <Skeleton />;
   }
