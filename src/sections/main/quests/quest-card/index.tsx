@@ -1,18 +1,16 @@
 import { Skeleton, Stack } from "@mui/material";
 
-import { useGetAssignmentListQuery } from "src/redux/services/manager/assignments-manager";
+import { useGetAssignmentListStudentQuery } from "src/redux/services/student/assignments-student";
 
 import QuestItem from "./QuestItem";
 
 interface IQuestTabProps {
-  schoolId: string;
+  classId: string;
 }
 
-export default function QuestsTab({ schoolId }: IQuestTabProps) {
-  const { data, isLoading, isFetching } = useGetAssignmentListQuery(
-    {
-      schoolId: schoolId,
-    },
+export default function QuestsTab({ classId }: IQuestTabProps) {
+  const { data, isLoading, isFetching } = useGetAssignmentListStudentQuery(
+    { class_id: classId },
     { refetchOnMountOrArgChange: true }
   );
 
@@ -20,14 +18,9 @@ export default function QuestsTab({ schoolId }: IQuestTabProps) {
     return <Skeleton />;
   }
 
-  const arr = [
-    ...data.filter((el) => el?.meta?.pin).reverse(),
-    ...data.filter((el) => !el?.meta?.pin),
-  ];
-
   return (
     <Stack gap={2}>
-      {arr.map((el) => (
+      {data.data.map((el) => (
         <QuestItem key={el.id} assignment={el} />
       ))}
     </Stack>
