@@ -42,11 +42,13 @@ interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
 interface Props {
   isEdit?: boolean;
   currentUser?: IStudent & BaseResponseInterface;
+  schoolIdProps?: string;
 }
 
 export default function StudentNewEditForm({
   isEdit = false,
   currentUser,
+  schoolIdProps,
 }: Props): React.ReactElement | null {
   const { push } = useRouter();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
@@ -144,15 +146,17 @@ export default function StudentNewEditForm({
         const { email, password, ...body } = data;
         await updateStudent({
           studentId: currentUser?.id,
-          schoolId,
+          schoolId: schoolIdProps ?? schoolId,
           ...body,
         }).unwrap();
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-        push(MANAGER_PATH_DASHBOARD.school.students);
+        if (!schoolIdProps) {
+          push(MANAGER_PATH_DASHBOARD.school.students);
+        }
       } else {
         const user = await createStudent({
           ...data,
-          schoolId,
+          schoolId: schoolIdProps ?? schoolId,
         }).unwrap();
         if (avatarUrl) {
           await updateAvatar(user.id, avatarUrl);

@@ -5,7 +5,14 @@ import { useState } from "react";
 import { FaCampground, FaPlus } from "react-icons/fa";
 import { IoPeople } from "react-icons/io5";
 
-import { Button, Divider, Link, MenuItem, Stack } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Link,
+  MenuItem,
+  Skeleton,
+  Stack,
+} from "@mui/material";
 
 import { MenuPopover, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -21,7 +28,7 @@ export default function MenuTribesList(): React.ReactElement {
   const isNavMini = themeLayout === "mini";
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const { data } = useGetClassesQuery({});
+  const { data, isLoading } = useGetClassesQuery({});
   const { query } = useRouter();
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
@@ -33,6 +40,10 @@ export default function MenuTribesList(): React.ReactElement {
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
+
+  if (isLoading) {
+    return <Skeleton />;
+  }
 
   return (
     <Stack>

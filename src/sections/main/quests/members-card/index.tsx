@@ -31,6 +31,7 @@ import {
   useTable,
 } from "@components";
 import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { _userList } from "src/_mock/arrays";
 import { useAuthContext } from "src/auth/useAuthContext";
@@ -69,7 +70,7 @@ interface IMemberCardProps {
 export default function MemberCard({ pendings, students }: IMemberCardProps) {
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
-  const { query } = useRouter();
+  const { query, push } = useRouter();
 
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
     { id: query.id as string },
@@ -85,7 +86,7 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     { skip: !query.id, refetchOnMountOrArgChange: true }
   );
 
-  const [deleteFromClass, { isLoading: isDeleting, isSuccess }] =
+  const [deleteFromClass, { isLoading: isDeleting }] =
     useStudentLeftClassMutation();
 
   const {
@@ -106,8 +107,6 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     onChangePage,
     onChangeRowsPerPage,
   } = useTable();
-
-  const { push } = useRouter();
 
   const [tableData, setTableData] = useState<IStudent[]>([]);
 
@@ -134,23 +133,25 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     (!dataFiltered.length && !!filterName) ||
     (!dataFiltered.length && !!filterStatus);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
   const handleFilterStatus = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: string
-  ) => {
+  ): void => {
     setPage(0);
     setFilterStatus(newValue);
   };
 
-  const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setPage(0);
     setFilterName(event.target.value);
   };
@@ -166,7 +167,7 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     }
   };
 
-  const handleDeleteRow = (id: string) => {
+  const handleDeleteRow = (id: string): void => {
     handleDeleteStudent(id);
     enqueueSnackbar("Student removed from class");
     setSelected([]);
@@ -178,7 +179,7 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     }
   };
 
-  const handleDeleteRows = (selectedRows: string[]) => {
+  const handleDeleteRows = (selectedRows: string[]): void => {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteStudent(selected[i]);
     }
@@ -198,11 +199,14 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     }
   };
 
-  const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.root);
+  const handleEditRow = (id: string): void => {
+    push(
+      `${STUDENT_PATH_DASHBOARD.class.editStudent(id)}` +
+        `?${new URLSearchParams({ schoolId: query.schoolId as string })}`
+    );
   };
 
-  const handleResetFilter = () => {
+  const handleResetFilter = (): void => {
     setFilterName("");
     setFilterStatus("all");
   };
@@ -320,7 +324,7 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
                       selected={selected.includes(row.id as string)}
                       onSelectRow={() => onSelectRow(row.id as string)}
                       onDeleteRow={() => handleDeleteRow(row.id as string)}
-                      onEditRow={() => handleEditRow(row.last_name)}
+                      onEditRow={() => handleEditRow(row.id as string)}
                       pending={filterStatus === "pending"}
                       loading={isDeleting}
                     />

@@ -31,6 +31,8 @@ export const STUDENT_PATH_DASHBOARD = {
     root: "/student/class",
     createClass: "/student/class/create",
     join: "/student/class/join",
+    editStudent: (studentId: string) =>
+      path("/student/class/edit-student/", `${studentId}`),
     addQuest: (id: string, query?: Record<string, string>) =>
       path("/student/class/add-quest/", `${id}`) +
       `?${query ? new URLSearchParams(query) : ""}`,
