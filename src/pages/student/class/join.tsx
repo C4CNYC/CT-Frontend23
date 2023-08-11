@@ -28,12 +28,15 @@ import { useJoinClassMutation } from "src/redux/services/student/classes-manager
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
+
 const CreateClassSchema = Yup.object().shape({
   code: Yup.string().required("code is required"),
 });
+
 interface FormValueProps {
   code: string;
 }
+
 export default function JoinClass(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { push } = useRouter();

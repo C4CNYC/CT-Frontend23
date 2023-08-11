@@ -22,11 +22,7 @@ export default function ClassMain(): React.ReactElement {
     );
     push(STUDENT_PATH_DASHBOARD.class.id(classId, { joinCode }));
   } else if (tribes?.data.length) {
-    push(
-      STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id, {
-        schoolId: tribes.data[0].school_id as string,
-      })
-    );
+    push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id));
   } else {
     push(STUDENT_PATH_DASHBOARD.class.join);
   }
