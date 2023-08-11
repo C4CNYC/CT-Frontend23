@@ -1,5 +1,4 @@
 import nextLink from "next/link";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { BsThreeDots } from "react-icons/bs";
@@ -7,14 +6,7 @@ import { FiUser } from "react-icons/fi";
 import { MdCopyAll } from "react-icons/md";
 import { TbShare2 } from "react-icons/tb";
 
-import {
-  Button,
-  Divider,
-  IconButton,
-  Link,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, IconButton, Link, Stack, Typography } from "@mui/material";
 
 import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
@@ -41,7 +33,6 @@ export default function DefaultClassInfo({
   classData,
 }: IDefaultClassInfoProps): React.ReactElement {
   const { copy } = useCopyToClipboard();
-  const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
@@ -123,7 +114,12 @@ export default function DefaultClassInfo({
                   onClick={() => {
                     onCopy(classData?.setting_share_token);
                   }}
-                  sx={{ gap: 0.5, color: "inherit", p: 0 }}
+                  sx={{
+                    gap: 0.5,
+                    color: "inherit",
+                    p: 0,
+                    textTransform: "none",
+                  }}
                 >
                   <Typography variant="subtitle2">
                     {classData?.setting_share_token}
@@ -171,7 +167,7 @@ export default function DefaultClassInfo({
                   color: "#fff",
                   gap: 0.5,
                 }}
-                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${query.id}`}
+                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.class_id}`}
                 component={nextLink}
                 typography="button"
               >
@@ -199,10 +195,7 @@ export default function DefaultClassInfo({
                 </Button>
               </ShareGroupModal>
               <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
-                <IconButton
-                  onClick={handleOpenPopover}
-                  sx={{ ml: "30px", p: 0.7 }}
-                >
+                <IconButton onClick={handleOpenPopover} sx={{ ml: 2, p: 0.7 }}>
                   <BsThreeDots color="#fff" size="24px" />
                 </IconButton>
               </RoleBasedGuard>
