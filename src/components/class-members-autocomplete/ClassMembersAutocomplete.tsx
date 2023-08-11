@@ -12,11 +12,11 @@ import {
   Avatar,
   Box,
   Chip,
+  Skeleton,
   TextField,
   Typography,
   alpha,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
@@ -31,13 +31,15 @@ import { RootState } from "src/redux/store";
 
 type StudentType = IStudent & BaseResponseInterface;
 
-interface Props {
+interface IClassMembersAutocompleteProps {
   classId: string;
+  schoolIdProp?: string;
 }
 
 export default function ClassMembersAutocomplete({
   classId,
-}: Props): React.ReactElement {
+  schoolIdProp,
+}: IClassMembersAutocompleteProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
@@ -46,16 +48,16 @@ export default function ClassMembersAutocomplete({
   const [joinClass] = useStudentJoinClassMutation();
   const [leftClass] = useStudentLeftClassMutation();
   const { data: classMembers } = useGetStudentsQuery(
-    { schoolId, class_id: classId, take: 50 },
-    { skip: !schoolId || !classId }
+    { schoolId: schoolIdProp ?? schoolId, class_id: classId, take: 50 },
+    { skip: schoolId ? !schoolId || !classId : !schoolIdProp || !classId }
   );
   const { data: students } = useGetStudentsQuery(
-    { schoolId, ...filters },
-    { skip: !schoolId || !classId }
+    { schoolId: schoolIdProp ?? schoolId, ...filters },
+    { skip: schoolId ? !schoolId || !classId : !schoolIdProp || !classId }
   );
 
   if (!students?.data || !classMembers?.data) {
-    return <CircularProgress />;
+    return <Skeleton variant="rounded" height="56px" />;
   }
 
   const onChange = async (
@@ -66,7 +68,6 @@ export default function ClassMembersAutocomplete({
   ): Promise<void> => {
     try {
       const payload = {
-        schoolId,
         classId,
         student_id: details?.option.id ?? "",
       };

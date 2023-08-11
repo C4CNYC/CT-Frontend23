@@ -1,53 +1,36 @@
-import { useState } from "react";
-
 import { Control } from "react-hook-form";
 
-import {
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Radio,
-  RadioGroup,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { FormGroup, Stack, Typography } from "@mui/material";
 
 import { RHFSelect } from "@components";
 
 import SkillsAutocomplete from "./components/SkillsAutocomplete";
-import StudentsAutocomplete from "./components/StudentsAutocomplete";
 import TimeController from "./components/TimeController";
 import { FormQuestProps } from "./helpers/quest.interface";
 
-interface Props {
-  students?: string[];
-  setStudents: (s: string[]) => void;
+interface ISettingsStepProps {
   setAssignmentsSkills: (s: string[]) => void;
   assignmentsSkills?: string[];
   control: Control<FormQuestProps, any>;
 }
 
 export default function SettingsStep({
-  students,
   control,
   setAssignmentsSkills,
-  setStudents,
   assignmentsSkills,
-}: Props): React.ReactElement {
-  const [value, setValue] = useState("class");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-
+}: ISettingsStepProps): React.ReactElement {
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
-      <Stack direction="row" gap={4} sx={{ 
-        flexWrap: { xs: "wrap" },
-        '& .MuiInputBase-root': {
-          width: {xs: "100%", sm: "200px", md: "200px"}
-        }
-      }}>
+      <Stack
+        direction="row"
+        gap={4}
+        sx={{
+          flexWrap: { xs: "wrap" },
+          "& .MuiInputBase-root": {
+            width: { xs: "100%", sm: "200px", md: "200px" },
+          },
+        }}
+      >
         <TimeController
           title="Schedule Date:"
           name="startDate"
@@ -61,12 +44,12 @@ export default function SettingsStep({
           infoText="This is the date that this Quest should be completed by."
         />
         <TimeController
-        title="Close Date:"
-        name="closeDate"
-        control={control}
-        infoText="After this submissions are no longer received. The
+          title="Close Date:"
+          name="closeDate"
+          control={control}
+          infoText="After this submissions are no longer received. The
             default is 3 days after the “Due date.”"
-      />
+        />
       </Stack>
       <FormGroup>
         <Typography variant="h5" gutterBottom>
@@ -78,12 +61,12 @@ export default function SettingsStep({
           size="small"
           defaultValue={true as any}
           sx={{
-            maxWidth:  {xs: "100%", sm: "300px", md: "300px"},
+            maxWidth: { xs: "100%", sm: "300px", md: "300px" },
             background: "#fff",
             outline: "none",
             borderRadius: 1,
             "& fieldset": { border: "none" },
-            width: {xs: "100%", sm: "300px", md: "300px"}
+            width: { xs: "100%", sm: "300px", md: "300px" },
           }}
         >
           <option key="published" value={true as any}>
@@ -101,50 +84,6 @@ export default function SettingsStep({
         }}
         assignmentsSkills={assignmentsSkills}
       />
-
-      <FormControl disabled={false}>
-        <Typography variant="h5" gutterBottom>
-          Assign to:
-        </Typography>
-        <RadioGroup
-          aria-labelledby="assign_to"
-          value={value}
-          onChange={handleChange}
-          row
-        >
-          <FormControlLabel
-            value="class"
-            control={
-              <Radio
-                sx={{
-                  color: "#43D4DD",
-                  "&.Mui-checked": {
-                    color: "#43D4DD",
-                  },
-                }}
-              />
-            }
-            label={<Typography variant="subtitle2">Current class</Typography>}
-          />
-          <FormControlLabel
-            value="students"
-            control={
-              <Radio
-                sx={{
-                  color: "#43D4DD",
-                  "&.Mui-checked": {
-                    color: "#43D4DD",
-                  },
-                }}
-              />
-            }
-            label={<Typography variant="subtitle2">Students</Typography>}
-          />
-        </RadioGroup>
-        {value === "students" && (
-          <StudentsAutocomplete students={students} setStudents={setStudents} />
-        )}
-      </FormControl>
     </Stack>
   );
 }

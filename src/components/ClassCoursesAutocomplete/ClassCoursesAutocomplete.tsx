@@ -3,7 +3,6 @@ import * as React from "react";
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import { useSnackbar } from "notistack";
-import { useSelector } from "react-redux";
 
 import {
   Autocomplete,
@@ -11,11 +10,11 @@ import {
   AutocompleteChangeReason,
   Box,
   Chip,
+  Skeleton,
   TextField,
   Typography,
   alpha,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
@@ -26,19 +25,17 @@ import {
   useRemoveCourseFromClassMutation,
 } from "src/redux/services/manager/classes-manager";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { RootState } from "src/redux/store";
 
 type CourseType = ICourse & BaseResponseInterface;
 
-interface Props {
+interface IClassCoursesAutocompleteProps {
   classId: string;
 }
 
 export default function ClassCoursesAutocomplete({
   classId,
-}: Props): React.ReactElement {
+}: IClassCoursesAutocompleteProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
 
@@ -46,15 +43,15 @@ export default function ClassCoursesAutocomplete({
   const [removeCourse] = useRemoveCourseFromClassMutation();
   const { data: classCourses } = useGetCourseQuery(
     { class_id: classId, take: 50 },
-    { skip: !schoolId || !classId }
+    { skip: !classId }
   );
   const { data: courses } = useGetCourseQuery(
     { ...filters },
-    { skip: !schoolId || !classId }
+    { skip: !classId }
   );
 
   if (!courses?.data || !classCourses?.data) {
-    return <CircularProgress />;
+    return <Skeleton variant="rounded" height="56px" />;
   }
 
   const onChange = async (
@@ -65,7 +62,6 @@ export default function ClassCoursesAutocomplete({
   ): Promise<void> => {
     try {
       const payload = {
-        schoolId,
         id: classId,
         course_id: details?.option.id ?? "",
       };
