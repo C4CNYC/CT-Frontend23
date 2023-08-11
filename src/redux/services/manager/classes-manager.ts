@@ -77,16 +77,16 @@ const extendedApi = managerApi.injectEndpoints({
       invalidatesTags: ["Courses", "Classes"],
     }),
     addCourseToClass: builder.mutation<void, IAddCourseToClass>({
-      query: ({ schoolId, id, ...body }) => ({
-        url: `/school/${schoolId}/class/${id}/course`,
+      query: ({ id, ...body }) => ({
+        url: `/school/{schoolId}/class/${id}/course`,
         method: "PATCH",
         body,
       }),
       invalidatesTags: ["Courses", "Classes"],
     }),
     removeCourseFromClass: builder.mutation<void, IRemoveCourseFromClass>({
-      query: ({ schoolId, id, ...body }) => ({
-        url: `/school/${schoolId}/class/${id}/course`,
+      query: ({ id, ...body }) => ({
+        url: `/school/{schoolId}/class/${id}/course`,
         method: "DELETE",
         body,
       }),

@@ -70,7 +70,6 @@ export default function CreateClass(): React.ReactElement {
         }).unwrap();
         enqueueSnackbar("Class created successfully");
         await studentJoin({
-          schoolId,
           classId: classInfo.id,
           student_id: studentId as string,
         }).unwrap();

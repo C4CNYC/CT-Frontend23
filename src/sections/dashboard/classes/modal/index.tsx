@@ -46,6 +46,7 @@ interface Props {
   defaultValues: { name: string; description: string; cover: string };
   rowId: string;
   updateResult: boolean;
+  schoolId?: string;
 }
 
 interface TabPanelProps {
@@ -87,6 +88,7 @@ export default function ClassPreferences({
   defaultValues,
   rowId,
   updateResult,
+  schoolId,
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false);
   const [value, setValue] = useState(0);
@@ -169,14 +171,20 @@ export default function ClassPreferences({
                 />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <ClassMembersAutocomplete classId={rowId} />
+                <ClassMembersAutocomplete
+                  classId={rowId}
+                  schoolIdProp={schoolId}
+                />
               </TabPanel>
               <TabPanel value={value} index={2}>
                 <ClassCoursesAutocomplete classId={rowId} />
               </TabPanel>
               {userRole !== Role.Manager ? (
                 <TabPanel value={value} index={3}>
-                  <ClassMentorsAutocomplete classId={rowId} />
+                  <ClassMentorsAutocomplete
+                    classId={rowId}
+                    schoolIdProp={schoolId}
+                  />
                 </TabPanel>
               ) : null}
             </DialogContent>

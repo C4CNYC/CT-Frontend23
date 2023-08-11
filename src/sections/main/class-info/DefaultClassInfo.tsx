@@ -19,9 +19,16 @@ import {
 import { MenuPopover, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import ClassPreferences from "@sections/dashboard/classes/modal";
 import { BaseResponseInterface, getLinearGradient } from "@utils";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { Role } from "src/redux/services/enums/role.enum";
+import {
+  useUpdateClassesAvatarMutation,
+  useUpdateClassesMutation,
+} from "src/redux/services/manager/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
@@ -46,6 +53,40 @@ export default function DefaultClassInfo({
     if (textToCopy) {
       copy(textToCopy);
       enqueueSnackbar("Copied!");
+    }
+  };
+
+  const [updateClassByManager, { isLoading: updateResult }] =
+    useUpdateClassesMutation();
+  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
+
+  const handleEditClass = async (
+    id: string,
+    name: string,
+    description: string,
+    cover: string,
+    uploadedFile?: File
+  ): Promise<void> => {
+    try {
+      await updateClassByManager({
+        schoolId: classData.school_id,
+        classId: id,
+        name,
+        description,
+        cover,
+      }).unwrap();
+      if (uploadedFile) {
+        const file = new FormData();
+        file.append("file", uploadedFile);
+        await updateClassAvatar({
+          schoolId: classData.school_id,
+          classId: id,
+          file,
+        }).unwrap();
+      }
+      enqueueSnackbar("Class updated successfuly!");
+    } catch (error: any) {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
@@ -157,12 +198,14 @@ export default function DefaultClassInfo({
                   </Typography>
                 </Button>
               </ShareGroupModal>
-              <IconButton
-                onClick={handleOpenPopover}
-                sx={{ ml: "30px", p: 0.7 }}
-              >
-                <BsThreeDots color="#fff" size="24px" />
-              </IconButton>
+              <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
+                <IconButton
+                  onClick={handleOpenPopover}
+                  sx={{ ml: "30px", p: 0.7 }}
+                >
+                  <BsThreeDots color="#fff" size="24px" />
+                </IconButton>
+              </RoleBasedGuard>
               <MenuPopover
                 sx={{
                   p: 2,
@@ -173,35 +216,45 @@ export default function DefaultClassInfo({
                   setOpenPopover(null);
                 }}
               >
-                <Button
-                  sx={{
-                    gap: 1,
-                    width: "100%",
-                    m: "0 auto",
-                    background: "#fff",
-                    color: "#75CF6D",
-                    "&:hover": {
-                      background: "#22A64733",
-                    },
+                <ClassPreferences
+                  updateClass={(
+                    name: string,
+                    description: string,
+                    cover: string,
+                    uploadedFile?: File
+                  ) => {
+                    handleEditClass(
+                      classData.class_id,
+                      name,
+                      description,
+                      cover,
+                      uploadedFile
+                    );
                   }}
-                >
-                  Details
-                </Button>
-                <Divider flexItem sx={{ my: 1 }} />
-                <Button
-                  sx={{
-                    gap: 1,
-                    width: "100%",
-                    m: "0 auto",
-                    background: "#fff",
-                    color: "#75CF6D",
-                    "&:hover": {
-                      background: "#22A64733",
-                    },
+                  defaultValues={{
+                    name: classData.name,
+                    description: classData.description ?? "",
+                    cover: classData.cover ?? "",
                   }}
+                  rowId={classData.class_id}
+                  updateResult={updateResult}
+                  schoolId={classData.school_id}
                 >
-                  Open
-                </Button>
+                  <Button
+                    sx={{
+                      gap: 1,
+                      width: "100%",
+                      m: "0 auto",
+                      background: "#fff",
+                      color: "#75CF6D",
+                      "&:hover": {
+                        background: "#22A64733",
+                      },
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </ClassPreferences>
               </MenuPopover>
             </Stack>
           </Stack>

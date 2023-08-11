@@ -30,9 +30,7 @@ import { RootState } from "src/redux/store";
 
 import ClassPreferences from "../modal";
 
-// ----------------------------------------------------------------------
-
-interface Props {
+interface IClassesTableRowProps {
   row: IClass & BaseResponseInterface;
   selected: boolean;
   onEditRow: (
@@ -56,7 +54,7 @@ export default function ClassesTableRow({
   onDeleteRow,
   updateResult,
   isDeleting,
-}: Props): React.ReactElement | null {
+}: IClassesTableRowProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
@@ -72,7 +70,6 @@ export default function ClassesTableRow({
   const onJoinHandle = async () => {
     try {
       await joinClass({
-        schoolId,
         classId: row.id,
         student_id: myStudentProfileId ?? "",
       }).unwrap();

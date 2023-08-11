@@ -10,7 +10,7 @@ import {
   Avatar,
   Box,
   Chip,
-  CircularProgress,
+  Skeleton,
   TextField,
   Typography,
   alpha,
@@ -31,13 +31,15 @@ import { RootState } from "src/redux/store";
 
 type UserType = IUser & BaseResponseInterface;
 
-interface Props {
+interface IClassMentorsAutocompleteProps {
   classId: string;
+  schoolIdProp?: string;
 }
 
 export default function ClassMentorsAutocomplete({
   classId,
-}: Props): React.ReactElement {
+  schoolIdProp,
+}: IClassMentorsAutocompleteProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
 
@@ -52,11 +54,11 @@ export default function ClassMentorsAutocomplete({
   const { data: managers } = useGetOrgMembersQuery({ ...filters });
 
   const { data: mentors } = useGetMentorsQuery(
-    { schoolId, classId },
-    { skip: !schoolId || !classId }
+    { schoolId: schoolIdProp ?? schoolId, classId },
+    { skip: schoolId ? !schoolId || !classId : !schoolIdProp || !classId }
   );
   if (!managers?.data || !mentors) {
-    return <CircularProgress />;
+    return <Skeleton variant="rounded" height="56px" />;
   }
   const onChange = async (
     _event: React.SyntheticEvent<any>,

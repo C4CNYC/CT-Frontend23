@@ -28,7 +28,6 @@ import {
   useSnackbar,
 } from "@components";
 import SkillsAutocomplete from "@sections/main/quests/add-quest/components/SkillsAutocomplete";
-import StudentsAutocomplete from "@sections/main/quests/add-quest/components/StudentsAutocomplete";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
@@ -247,21 +246,8 @@ export default function AssignmentDrawer({
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
               Assign to:
             </ListItemText>
-            {!assignment.assignee_classes.length ? (
-              <>
-                <Avatar sx={{ width: "25px", height: "25px", mr: 1 }} />
-                <ListItemText>
-                  {assignment.assignee_classes[0].name}
-                </ListItemText>
-              </>
-            ) : (
-              <ListItemText sx={{ minWidth: "252px" }}>
-                <StudentsAutocomplete
-                  students={students}
-                  setStudents={setStudents}
-                />
-              </ListItemText>
-            )}
+            <Avatar sx={{ width: "25px", height: "25px", mr: 1 }} />
+            <ListItemText>{assignment.assignee_classes[0].name}</ListItemText>
           </ListItem>
           <ListItem>
             <LoadingButton
