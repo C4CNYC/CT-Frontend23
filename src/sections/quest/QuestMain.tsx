@@ -1,11 +1,6 @@
-import {
-  Avatar,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { BaseResponseInterface } from "@utils";
+import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 
+import { BaseResponseInterface } from "@utils";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 interface IQuestMainProps {
@@ -18,7 +13,9 @@ export default function QuestMain({
 }: IQuestMainProps): React.ReactElement {
   return (
     <Stack sx={{ mt: 3 }}>
-      <Stack sx={{ gap: 3, alignItems: "center", flexDirection: "row", mb: 1 }}>
+      <Stack
+        sx={{ gap: 1, alignItems: "baseline", flexDirection: "row", mb: 1 }}
+      >
         <Typography variant="h5">Quest</Typography>
         <Tooltip title="this is...">
           <Typography variant="body2" sx={{ textDecoration: "underline" }}>
@@ -26,29 +23,27 @@ export default function QuestMain({
           </Typography>
         </Tooltip>
       </Stack>
-      <Typography variant="h3" sx={{ mb: 1 }}>
-       {questName ?? ""}
-      </Typography>
-      {mentor ? (
-        <Stack sx={{ ml: 1, flexDirection: "row", gap: 1 }}>
-          <Avatar
-            src={mentor.avatar}
-            alt={mentor.first_name}
-            sx={{
-              width: "30px",
-              height: "30px",
-              border: "2px solid #5D6C75",
-              background: "#260236",
-            }}
-          >
-            🦙
-          </Avatar>
+      <Typography variant="h2">{questName}</Typography>
 
-          <Typography variant="h5">
-            {mentor.first_name} {mentor.last_name}
-          </Typography>
-        </Stack>
-      ) : null}
+      <Stack sx={{ ml: 1, mt: 1, flexDirection: "row", gap: 1 }}>
+        <Avatar
+          src={mentor?.avatar ?? ""}
+          alt={mentor?.first_name ?? ""}
+          sx={{
+            width: "30px",
+            height: "30px",
+            border: "2px solid #5D6C75",
+            background: "#260236",
+          }}
+        >
+          🦙
+        </Avatar>
+
+        <Typography variant="h5">
+          {mentor?.first_name} {mentor?.last_name}
+          Admin
+        </Typography>
+      </Stack>
     </Stack>
   );
 }
