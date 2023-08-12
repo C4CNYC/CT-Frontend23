@@ -21,8 +21,8 @@ const StyledInfo = styled("div")(({ theme }) => ({
 
 interface IProfileCoverProps {
   name: string;
-  cover: string;
-  avatar: string;
+  cover?: string;
+  avatar?: string;
 }
 export default function ProfileCover({
   name,
@@ -32,6 +32,7 @@ export default function ProfileCover({
   if (!cover) {
     cover = "#5be49b";
   }
+
   return (
     <Stack
       sx={{

@@ -90,6 +90,7 @@ export interface IStudentProfile {
   cover?: string;
   country?: string;
   birthDate?: string;
+  phone?: string;
 }
 
 export interface ISocials {
