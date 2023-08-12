@@ -64,6 +64,7 @@ export default function Progress(): React.ReactElement {
     },
     FilterMode.global
   );
+
   const { data: students, isLoading } = useGetStudentsQuery(
     {
       schoolId,
@@ -78,6 +79,7 @@ export default function Progress(): React.ReactElement {
   const { data: progress } = useGetProgressQuery({
     id: query.courseId as string,
   });
+
   return (
     <>
       <Head>
@@ -97,17 +99,17 @@ export default function Progress(): React.ReactElement {
         <Stack
           direction="row"
           mb={3}
-          sx={{ 
+          sx={{
             flexWrap: { xs: "wrap", sm: "wrap" },
             gap: 3,
-            '& .MuiStack-root, & .MuiAutocomplete-root': {
-              width: { 
-                xs: "100% !important", 
-                sm: "260px !important", 
-                md: "260px !important", 
-                lg: "260px !important" 
+            "& .MuiStack-root, & .MuiAutocomplete-root": {
+              width: {
+                xs: "100% !important",
+                sm: "260px !important",
+                md: "260px !important",
+                lg: "260px !important",
               },
-            }
+            },
           }}
         >
           <FilterCoursesAutocomplete
@@ -181,9 +183,8 @@ function getProgressData(
     const lesson = contents[findModuleIndex].lessons.find(
       (l) => l.id === lessonId
     );
-
     return students?.map((student) => ({
-      y: student.email,
+      y: student.account.email,
       x: !lesson
         ? []
         : lesson?.chalanges?.map((chalange) => ({
@@ -205,7 +206,7 @@ function getProgressData(
 
   // show progress by course or module level
   const data = students.map((student) => ({
-    y: student.email,
+    y: student.account.email,
     x:
       (moduleId
         ? contents.find((c) => c.id === moduleId)?.lessons

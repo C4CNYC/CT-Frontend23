@@ -24,9 +24,7 @@ export default function TribeListItem({
       <Link
         component={NextLink}
         underline="none"
-        href={STUDENT_PATH_DASHBOARD.class.id(classItem.id, {
-          schoolId: classItem.school_id as string,
-        })}
+        href={STUDENT_PATH_DASHBOARD.class.id(classItem.id)}
         sx={{
           display: "inline-flex",
           alignItems: "center",

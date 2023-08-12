@@ -13,13 +13,13 @@ import ProfileSocialInfo from "./components/ProfileSocialInfo";
 import ProfileUsersInfo from "./components/ProfileUsersInfo";
 import SchoolProfileForm from "./form/SchoolProfileForm";
 
-interface Props {
+interface ISchoolProfileTabProps {
   schoolId: string;
 }
 
 export default function SchoolProfileTab({
   schoolId,
-}: Props): React.ReactElement | null {
+}: ISchoolProfileTabProps): React.ReactElement | null {
   const [imgValue, setImgValue] = useState<File[]>([]);
   const { translate } = useLocales();
   const { data, isLoading } = useGetSchoolProfileQuery(

@@ -57,7 +57,6 @@ export default function ClassesTableRow({
 }: IClassesTableRowProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const myStudentProfileId = useSelector(
     (state: RootState) => state.global.user?.student_profile?.id
   );
@@ -84,6 +83,7 @@ export default function ClassesTableRow({
       setOpenConfirm(false);
     }
   }, [isDeleting]);
+
   return (
     <>
       <TableRow hover selected={selected}>
