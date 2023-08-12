@@ -14,7 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 
-import { MenuPopover, useSettingsContext } from "@components";
+import { MenuPopover, Scrollbar, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -41,10 +41,6 @@ export default function MenuTribesList(): React.ReactElement {
     setOpenPopover(null);
   };
 
-  if (isLoading) {
-    return <Skeleton />;
-  }
-
   return (
     <Stack>
       {!isNavMini && (
@@ -59,44 +55,57 @@ export default function MenuTribesList(): React.ReactElement {
       <Stack
         sx={{
           gap: 1,
-          maxHeight: "185px",
-          overflowY: "auto",
-          scrollbarWidth: "none",
           mr: isNavMini ? 2 : 0,
-          "&::-webkit-scrollbar": {
-            width: 0,
-          },
         }}
       >
-        <Button
-          onClick={handleOpenPopover}
-          sx={(theme) => ({
-            alignSelf: "flex-start",
-            borderRadius: 1,
-            minWidth: "30px",
-            p: 0,
-            ml: 2,
-            minHeight: "30px",
-            height: "30px",
-            color: theme.palette.info.light,
-            border: `2px solid ${theme.palette.info.light}`,
-          })}
-        >
-          <FaPlus size={20} />
-        </Button>
-        <Stack gap={1} ml={2}>
-          {data?.data.map((c, i) => {
-            if (i < 4) {
-              return (
-                <TribeListItem
-                  active={c.id === query.id}
-                  key={c.id}
-                  classItem={c}
-                />
-              );
-            }
-          })}
-        </Stack>
+        {isLoading ? (
+          <Stack gap={1} sx={{ ml: 2, maxWidth: "150px" }}>
+            <Skeleton variant="rounded" height={30} width={30} />
+            {Array.from("1234").map((el) => (
+              <Skeleton variant="rounded" height={32} key={el} />
+            ))}
+          </Stack>
+        ) : (
+          <>
+            <Button
+              onClick={handleOpenPopover}
+              sx={(theme) => ({
+                alignSelf: "flex-start",
+                borderRadius: 1,
+                minWidth: "30px",
+                p: 0,
+                ml: 2,
+                minHeight: "30px",
+                height: "30px",
+                color: theme.palette.info.light,
+                border: `2px solid ${theme.palette.info.light}`,
+              })}
+            >
+              <FaPlus size={20} />
+            </Button>
+            <Stack
+              sx={{
+                gap: 1,
+                ml: 2,
+                height: "150px",
+              }}
+            >
+              <Scrollbar>
+                <Stack gap={1}>
+                  {data?.data.map((c, i) => {
+                    return (
+                      <TribeListItem
+                        active={c.id === query.id}
+                        key={c.id}
+                        classItem={c}
+                      />
+                    );
+                  })}
+                </Stack>
+              </Scrollbar>
+            </Stack>
+          </>
+        )}
       </Stack>
       {isNavMini ? (
         <Divider sx={{ margin: "16px auto 8px", width: "24px" }} />
