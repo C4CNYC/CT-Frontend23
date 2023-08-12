@@ -6,12 +6,13 @@ import QuestItem from "./QuestItem";
 
 interface IQuestTabProps {
   classId: string;
+  activeTab: boolean;
 }
 
-export default function QuestsTab({ classId }: IQuestTabProps) {
+export default function QuestsTab({ classId, activeTab }: IQuestTabProps) {
   const { data, isLoading, isFetching } = useGetAssignmentListStudentQuery(
     { class_id: classId },
-    { refetchOnMountOrArgChange: true }
+    { skip: !activeTab, refetchOnMountOrArgChange: true }
   );
 
   if (!data || isLoading || isFetching) {

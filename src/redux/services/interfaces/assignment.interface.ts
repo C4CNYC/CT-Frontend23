@@ -1,10 +1,10 @@
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
+import { IClass } from "src/redux/interfaces/class.interface";
 
 import { AssignmentComplexity } from "../enums/assignment-complexity.enum";
 import { AssignmentStatuses } from "../enums/assignment-status.enum";
-import { IClass } from "./class.interface";
 import { ILesson } from "./courseUnits.interface";
 import { ITask } from "./task.interface";
 

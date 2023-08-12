@@ -1,14 +1,14 @@
 import * as Yup from "yup";
 
-import { AssigmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 
 export const CreateQuestSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  type: Yup.mixed<AssigmentTypes>()
-    .oneOf(Object.values(AssigmentTypes))
+  type: Yup.mixed<AssignmentTypes>()
+    .oneOf(Object.values(AssignmentTypes))
     .required("Select type"),
   course: Yup.string().when("type", {
-    is: AssigmentTypes.COURSE,
+    is: AssignmentTypes.COURSE,
     then: Yup.string().required("Select course"),
     otherwise: Yup.string(),
   }),

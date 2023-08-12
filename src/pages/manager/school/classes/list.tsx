@@ -39,7 +39,7 @@ import { ClassesTableRow } from "@sections/dashboard/classes/list";
 import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { createRandomAvatar, getRandomColor } from "@utils";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
+import { ClassSearchParams } from "src/redux/interfaces/class.interface";
 import {
   useCreateClassesMutation,
   useDeleteClassesMutation,

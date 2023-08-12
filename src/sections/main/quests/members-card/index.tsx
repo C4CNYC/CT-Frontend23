@@ -63,18 +63,17 @@ const TABLE_HEAD_PENDINGS = [
 ];
 
 interface IMemberCardProps {
-  pendings: string;
-  students: string;
+  activeTab: boolean;
 }
 
-export default function MemberCard({ pendings, students }: IMemberCardProps) {
+export default function MemberCard({ activeTab }: IMemberCardProps) {
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const { query, push } = useRouter();
 
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
     { id: query.id as string },
-    { skip: !query.id, refetchOnMountOrArgChange: true }
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   );
 
   const {
@@ -83,7 +82,7 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     isFetching: isFetchingPending,
   } = useGetClassPendingQuery(
     { classId: query.id as string },
-    { skip: !query.id, refetchOnMountOrArgChange: true }
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   );
 
   const [deleteFromClass, { isLoading: isDeleting }] =
@@ -234,14 +233,14 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     {
       label: "All",
       value: "all",
-      icon: <Label>{students ?? 0}</Label>,
+      icon: <Label>{data?.meta.itemCount ?? 0}</Label>,
     },
   ];
   if (user?.role !== Role.Student) {
     TABS_LIST.push({
       label: "Pending",
       value: "pending",
-      icon: <Label>{pendings ?? 0}</Label>,
+      icon: <Label>{pending?.meta.itemCount ?? 0}</Label>,
     });
   }
 

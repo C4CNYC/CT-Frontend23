@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-
-import { managerApi } from ".";
 import {
   ClassSearchParams,
   IAddCourseToClass,
   IClass,
   IClassSettings,
   IRemoveCourseFromClass,
-} from "../interfaces/class.interface";
+} from "src/redux/interfaces/class.interface";
+
+import { managerApi } from ".";
 import { ClassRequest } from "../interfaces/school.interface";
 
 const extendedApi = managerApi.injectEndpoints({
@@ -68,7 +68,10 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Classes"],
     }),
-    updateClassesSettings: builder.mutation<void, IClassSettings>({
+    updateClassesSettings: builder.mutation<
+      void,
+      { schoolId: string; classId: string; request_join_enable: boolean }
+    >({
       query: ({ schoolId, classId, ...body }) => ({
         url: `/school/${schoolId}/class/${classId}/setting`,
         method: "PATCH",

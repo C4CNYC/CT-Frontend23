@@ -1,7 +1,7 @@
 import { Card, Divider, Stack, Typography } from "@mui/material";
 
 interface IGeneralInfoProps {
-  students: string;
+  students: number;
 }
 
 export default function GeneralInfo({ students }: IGeneralInfoProps) {

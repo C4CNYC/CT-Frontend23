@@ -69,7 +69,7 @@ export default function TribeProfilePage(): React.ReactElement {
                 >
                   <Stack width={1} textAlign="center">
                     <Typography variant="h4">
-                      {fNumber(data?.students ?? 0)}
+                      {fNumber(data?.students?.length ?? 0)}
                     </Typography>
 
                     <Typography
@@ -99,7 +99,7 @@ export default function TribeProfilePage(): React.ReactElement {
                   <Stack direction="row">
                     <Iconify icon="eva:pin-fill" />
                     <Typography ml={1} variant="body2">
-                      {data?.school_city}, {data?.school_country}
+                      {data?.school?.city}, {data?.school?.country}
                     </Typography>
                   </Stack>
                   <Stack direction="row">

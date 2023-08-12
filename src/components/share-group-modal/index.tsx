@@ -44,7 +44,7 @@ export default function ShareGroupModal({
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(
-    schoolClass.setting_request_join_enable ? "true" : "false"
+    schoolClass.setting.request_join_enable ? "true" : "false"
   );
   const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation();
 
@@ -81,7 +81,7 @@ export default function ShareGroupModal({
 
   const shareLink = `${
     window.location.origin
-  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting_share_token)}`;
+  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`;
 
   return (
     <>
@@ -277,7 +277,7 @@ export default function ShareGroupModal({
             >
               Other ways to add students:
             </Typography>
-            <ClassroomModal schoolId={schoolClass?.school_id ?? ""}>
+            <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
               <Button
                 fullWidth
                 sx={{

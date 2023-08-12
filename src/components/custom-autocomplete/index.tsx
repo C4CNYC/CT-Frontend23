@@ -17,7 +17,7 @@ import { BaseResponseInterface } from "@utils";
 import {
   ClassSearchParams,
   IClass,
-} from "src/redux/services/interfaces/class.interface";
+} from "src/redux/interfaces/class.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
 

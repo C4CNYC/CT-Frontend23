@@ -24,7 +24,7 @@ import {
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { BaseResponseInterface } from "@utils";
-import { IClass } from "src/redux/services/interfaces/class.interface";
+import { IClass } from "src/redux/interfaces/class.interface";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 
@@ -175,7 +175,7 @@ export default function ClassesTableRow({
           defaultValues={{
             name: row.name,
             description: row.description ?? "",
-            cover: row.cover,
+            cover: row.cover ?? "",
           }}
           rowId={row.id}
           updateResult={updateResult}
