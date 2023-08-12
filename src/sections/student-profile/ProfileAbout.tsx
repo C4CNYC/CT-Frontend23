@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import { Iconify } from "@components";
 import { fDateTime } from "@utils";
-import { IUser } from "src/redux/interfaces/auth.interface";
+import { IFriend } from "src/redux/interfaces/friends.interface";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
@@ -14,12 +14,13 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
   marginRight: theme.spacing(2),
 }));
 
-interface Props {
-  data: IUser | IStudent;
+interface IProfileAboutProps {
+  data?: IStudent | IFriend;
 }
 
-export default function ProfileAbout({ data }: Props): React.ReactElement {
-  const { phone, school, createdAt, country, post_code: postCode } = data;
+export default function ProfileAbout({
+  data,
+}: IProfileAboutProps): React.ReactElement {
   return (
     <Card>
       <CardHeader title="About" />
@@ -28,30 +29,34 @@ export default function ProfileAbout({ data }: Props): React.ReactElement {
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
 
-          <Typography variant="body2">Live at country {country}</Typography>
+          <Typography variant="body2">
+            Live at country &nbsp;{data?.country ?? "-"}
+          </Typography>
         </Stack>
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
 
-          <Typography variant="body2">Postcode {postCode}</Typography>
+          <Typography variant="body2">
+            Postcode &nbsp;{data?.post_code ?? "-"}
+          </Typography>
         </Stack>
 
         <Stack direction="row">
           <StyledIcon icon="tabler:phone-filled" />
 
-          <Typography variant="body2">{phone}</Typography>
+          <Typography variant="body2">&nbsp;{data?.phone ?? "-"}</Typography>
         </Stack>
         <Stack direction="row">
           <StyledIcon icon="mingcute:school-fill" />
 
-          <Typography variant="body2">{school?.name}</Typography>
+          <Typography variant="body2">&nbsp;{data?.about ?? "-"}</Typography>
         </Stack>
 
         <Stack direction="row">
           <StyledIcon icon="ic:round-more-time" />
 
           <Typography variant="body2">
-            Created at {fDateTime(createdAt ?? "")}
+            Created at &nbsp;{fDateTime(data?.createdAt ?? "")}
           </Typography>
         </Stack>
       </Stack>
