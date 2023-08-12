@@ -54,7 +54,7 @@ export default function JoinTribeHeader({
         <Typography variant="h3" mb={2}>
           {classInfo.name}
         </Typography>
-        {classInfo?.school?.country || classInfo?.school?.city ? (
+        {classInfo.school?.country || classInfo.school?.city ? (
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
               <Avatar
