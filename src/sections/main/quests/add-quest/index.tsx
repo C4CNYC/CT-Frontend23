@@ -24,7 +24,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssigmentTypes } from "src/redux/services/enums/assignment-types.enum";
 import {
   useCreateAssignmentMutation,
   useUpdateAssignmentMutation,
@@ -75,7 +75,7 @@ export default function AddQuest({
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? "{}"),
-      type: assignment?.type ?? AssignmentTypes.COURSE,
+      type: assignment?.type ?? AssigmentTypes.COURSE,
       course: assignment?.course?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(

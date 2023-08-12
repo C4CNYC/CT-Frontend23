@@ -48,7 +48,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   };
 
   const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
-    schoolId: classData.school_id as string,
+    schoolId: classData?.school?.id as string,
   });
 
   return (
@@ -135,7 +135,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab classId={classData.class_id} />
+        <QuestsTab classId={classData.id} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MemberCard

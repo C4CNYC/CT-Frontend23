@@ -1,7 +1,7 @@
-export enum AssignmentTypes {
-  COURSE = "Course",
-  OPEN_PROJECT = "Open Project",
-  GROUP_CODING_PROJECT = "Group Coding Project",
+export enum AssigmentTypes {
+  COURSE = "course",
+  OPEN_PROJECT = "open_project",
+  GROUP_CODING_PROJECT = "group_coding_project",
   REVIEW = "review",
-  EXERSIZE = "Exersize",
+  EXERSIZE = "exersize",
 }

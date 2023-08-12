@@ -1,39 +1,23 @@
 import { BaseSearchInterface } from "@utils";
 
+import { IStudent } from "../services/interfaces/user.interface";
+import { ISchool } from "../slices/global";
+import { ICourseElement } from "./content.interface";
+
 export interface IClass {
-  school_id: string;
-  school_name: string;
-  school_country: string;
-  school_address: string;
-  school_phone: string;
-  school_city: string;
-  school_zip: string | null;
-  school_type: string | null;
-  school_about: string;
-  school_active: boolean;
-  school_avatar: string | null;
-  school_cover: string | null;
-  setting_share_token_enable: boolean;
-  setting_request_join_enable: boolean;
-  setting_subscribe_enable: boolean;
-  setting_share_token: string;
-  students: string;
-  class_id: string;
-  pendings: string;
-  id: string;
-  createdAt: string;
+  total_students?: number;
+  total_courses?: number;
+  description?: string;
   name: string;
-  description: string;
-  avatar: string | null;
-  cover: string | null;
-  active: boolean;
-  country: string;
-  address: string;
-  phone: string;
-  city: string;
-  about: string;
-  zip: string | null;
-  type: string | null;
+  active?: boolean;
+  students?: IStudent[];
+  setting: IClassSetting;
+  school?: ISchool;
+  courses?: ICourseElement[];
+  avatar?: string;
+  cover?: string;
+  id?: string;
+  mentors?: IMentor[];
 }
 
 export interface IClassSetting {
