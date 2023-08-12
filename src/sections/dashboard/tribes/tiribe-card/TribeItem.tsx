@@ -40,6 +40,7 @@ export default function TribeItem({
         position: "relative",
         overflow: "hidden",
         borderRadius: "16px",
+        textDecoration: "none",
       }}
       component={NextLink}
       href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
