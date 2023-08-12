@@ -25,12 +25,10 @@ import {
   CustomBreadcrumbs,
   Iconify,
   Scrollbar,
-  TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  emptyRows,
   useSettingsContext,
   useTable,
 } from "@components";
@@ -51,8 +49,6 @@ import {
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
 
-// ----------------------------------------------------------------------
-
 const STATUS_OPTIONS = ["all"];
 
 const TABLE_HEAD = [
@@ -65,22 +61,15 @@ const TABLE_HEAD = [
   { id: "" },
 ];
 
-// ----------------------------------------------------------------------
-
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-// ----------------------------------------------------------------------
-
 export default function UserListPage(): React.ReactElement {
   const {
     dense,
-    page,
     order,
     orderBy,
-    rowsPerPage,
-    //
     selected,
     onSelectRow,
     onSelectAllRows,

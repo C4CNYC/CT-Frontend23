@@ -86,6 +86,7 @@ export default function UserProfilePage(): React.ReactElement {
       enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };
+
   if (isLoading || isFetching) {
     return (
       <>

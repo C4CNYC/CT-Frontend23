@@ -72,29 +72,31 @@ export default function SchoolProfileForm({
 
   const { handleSubmit } = methods;
 
-  const onSubmit = async (data: FormValuesProps): Promise<void> => {
+  const onSubmit = async (formData: FormValuesProps): Promise<void> => {
+    console.log(formData, "formData");
     try {
       if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
+        const formDataImg = new FormData();
+        formDataImg.append("file", file);
         await updateSchoolAvatar({
           id: schoolId,
-          file: formData,
+          file: formDataImg,
         }).unwrap();
         setImgValue([]);
       }
-      enqueueSnackbar("Update success!");
+      enqueueSnackbar("Cover success!");
       if (methods.formState.isDirty) {
         await updateSchoolProfile({
           schoolId,
-          name: data.name,
-          country: data.country,
-          address: data.address,
-          city: data.city,
-          active: data.active ?? false,
-          about: data.about ?? "",
-          phone: data.phone,
+          name: formData.name,
+          country: formData.country,
+          address: formData.address,
+          city: formData.city,
+          active: formData.active ?? false,
+          about: formData.about ?? "",
+          phone: formData.phone,
         }).unwrap();
+        enqueueSnackbar("Update info success!");
       }
     } catch (error: any) {
       enqueueSnackbar(error.message.text, { variant: "error" });
