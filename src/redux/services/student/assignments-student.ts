@@ -2,7 +2,7 @@
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
 import { studentApi } from ".";
-import { IAssignment } from "../interfaces/assignment.interface";
+import { IAssignment } from "../../interfaces/assignment.interface";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({

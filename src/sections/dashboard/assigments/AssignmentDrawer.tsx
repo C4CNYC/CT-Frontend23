@@ -29,7 +29,7 @@ import {
 } from "@components";
 import SkillsAutocomplete from "@sections/main/quests/add-quest/components/SkillsAutocomplete";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { IAssignment } from "src/redux/interfaces/assignment.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
 interface IAssignmentDarawerProps {
@@ -239,6 +239,7 @@ export default function AssignmentDrawer({
                   setAssignmentsSkills(s);
                 }}
                 assignmentsSkills={assignmentsSkills}
+                skills={[]}
               />
             </ListItemText>
           </ListItem>

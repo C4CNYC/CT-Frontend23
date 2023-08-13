@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Card,
   Container,
   Divider,
@@ -45,7 +44,7 @@ import _mock from "src/_mock/_mock";
 import { _invoices } from "src/_mock/arrays";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { IAssignment } from "src/redux/interfaces/assignment.interface";
 import {
   useDeleteAssignmentMutation,
   useGetAssignmentListQuery,

@@ -17,7 +17,7 @@ import {
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { Status } from "src/redux/enums/assignments.enum";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { IAssignment } from "src/redux/interfaces/assignment.interface";
 
 import { fDate } from "../../../utils/formatTime";
 

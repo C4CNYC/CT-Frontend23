@@ -6,10 +6,15 @@ import QuestItem from "./QuestItem";
 
 interface IQuestTabProps {
   classId: string;
+  schoolId: string;
   activeTab: boolean;
 }
 
-export default function QuestsTab({ classId, activeTab }: IQuestTabProps) {
+export default function QuestsTab({
+  classId,
+  schoolId,
+  activeTab,
+}: IQuestTabProps) {
   const { data, isLoading, isFetching } = useGetAssignmentListStudentQuery(
     { class_id: classId },
     { skip: !activeTab, refetchOnMountOrArgChange: true }
@@ -22,7 +27,7 @@ export default function QuestsTab({ classId, activeTab }: IQuestTabProps) {
   return (
     <Stack gap={2}>
       {data.data.map((el) => (
-        <QuestItem key={el.id} assignment={el} />
+        <QuestItem key={el.id} assignment={el} schoolId={schoolId} />
       ))}
     </Stack>
   );

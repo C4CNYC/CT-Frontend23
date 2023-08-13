@@ -135,7 +135,11 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab classId={classData.id} activeTab={value === 0} />
+        <QuestsTab
+          classId={classData.id}
+          schoolId={classData.school?.id ?? ""}
+          activeTab={value === 0}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <MemberCard activeTab={value === 1} />
