@@ -10,7 +10,6 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import JoinTribeModal from "@sections/join-tribe/JoinTribeModal";
 import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
-import Notes from "@sections/main/main-notes/Notes";
 import ClassInfoTable from "@sections/main/quests/ClassInfoTable";
 import { useGetPublicTribeQuery } from "src/redux/services/public/tribe-public";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
@@ -37,12 +36,15 @@ export default function HomeOverview(): React.ReactElement {
     if (!data || !isReady) {
       return;
     }
-    push(
-      STUDENT_PATH_DASHBOARD.class.id(
-        query.id as string,
-        query.joinCode ? { joinCode: query.joinCode as string } : {}
-      )
-    );
+    if (query.joinCode) {
+      push(
+        STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
+          joinCode: query.joinCode as string,
+        })
+      );
+    } else {
+      push(STUDENT_PATH_DASHBOARD.class.id(query.id as string));
+    }
   }, [data]);
 
   return (
@@ -61,7 +63,6 @@ export default function HomeOverview(): React.ReactElement {
               }}
             >
               <ClassInfoTable classData={data} />
-              <Notes />
             </Stack>
           </>
         ) : (

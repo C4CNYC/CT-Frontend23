@@ -56,7 +56,7 @@ export default function JoinTribeLogin({
     try {
       await login(data.email, data.password, "codetribe");
       push(
-        `${STUDENT_PATH_DASHBOARD.class.id(classId)}/` +
+        `${STUDENT_PATH_DASHBOARD.class.id(classId)}?` +
           `${new URLSearchParams({ joinCode: query.id as string })}`
       );
     } catch (error) {

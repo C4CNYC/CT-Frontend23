@@ -1,5 +1,5 @@
 import { ICourse } from "@types";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface, BaseSearchInterface } from "@utils";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { ISkill } from "src/redux/interfaces/content.interface";
@@ -61,3 +61,5 @@ export interface IAssignmentCreate {
   meta?: Record<string, any>;
   tags?: string[] | [];
 }
+
+export interface IAssignmetsSearchParams extends BaseSearchInterface {}
