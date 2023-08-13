@@ -30,7 +30,7 @@ export default function DetailsTab({
         />
       </Card>
       <Stack gap={2}>
-        <GeneralInfo students={classData.students?.length ?? 0} />
+        <GeneralInfo />
         <AboutTribe
           description={classData.description ?? ""}
           city={classData?.school?.city ?? ""}

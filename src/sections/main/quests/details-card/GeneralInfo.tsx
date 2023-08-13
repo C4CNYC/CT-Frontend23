@@ -1,10 +1,22 @@
-import { Card, Divider, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
-interface IGeneralInfoProps {
-  students: number;
-}
+import { Card, Divider, Skeleton, Stack, Typography } from "@mui/material";
 
-export default function GeneralInfo({ students }: IGeneralInfoProps) {
+import { useGetAssignmentListStudentQuery } from "src/redux/services/student/assignments-student";
+import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
+
+export default function GeneralInfo() {
+  const { query } = useRouter();
+  const { data, isLoading } = useGetClassStudentsQuery(
+    { id: query.id as string },
+    { skip: !query.id }
+  );
+  const { data: quests, isLoading: questsLoading } =
+    useGetAssignmentListStudentQuery(
+      { class_id: query.id as string },
+      { skip: !query.id }
+    );
+
   return (
     <Card sx={{ py: 3 }}>
       <Stack
@@ -12,7 +24,14 @@ export default function GeneralInfo({ students }: IGeneralInfoProps) {
         divider={<Divider orientation="vertical" flexItem />}
       >
         <Stack width={1} textAlign="center">
-          <Typography variant="h4">{students}</Typography>
+          {isLoading ? (
+            <Skeleton
+              variant="rounded"
+              sx={{ height: "36px", width: "40px", m: "0 auto" }}
+            />
+          ) : (
+            <Typography variant="h4">{data?.data.length ?? 0}</Typography>
+          )}
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Student
@@ -20,7 +39,14 @@ export default function GeneralInfo({ students }: IGeneralInfoProps) {
         </Stack>
 
         <Stack width={1} textAlign="center">
-          <Typography variant="h4">2342</Typography>
+          {questsLoading ? (
+            <Skeleton
+              variant="rounded"
+              sx={{ height: "36px", width: "40px", m: "0 auto" }}
+            />
+          ) : (
+            <Typography variant="h4">{quests?.data.length}</Typography>
+          )}
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
             Quests
