@@ -1,30 +1,23 @@
 import React from "react";
 
-import {
-  Box,
-  Card,
-  CircularProgress,
-  Grid,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Card, Grid, Skeleton, Stack, Typography } from "@mui/material";
 
 import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
 
 import LinkForm from "./LinkForm";
 import LinkItem from "./LinkItem";
 
-interface Props {
+interface IProfileLinksProps {
   studentId: string;
 }
 
 export default function ProfileLinks({
   studentId,
-}: Props): React.ReactElement | null {
+}: IProfileLinksProps): React.ReactElement | null {
   const { data, isLoading } = useGetSocialsQuery({ studentId });
 
-  if (!data) return <>No Data</>;
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <Skeleton variant="rounded" height="234px" />;
+
   return (
     <Box
       sx={{
@@ -42,7 +35,7 @@ export default function ProfileLinks({
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your networks
             </Typography>
-            {data.map((item) => (
+            {data?.map((item) => (
               <Stack
                 direction="row"
                 sx={{ wordBreak: "break-all" }}

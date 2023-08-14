@@ -2,27 +2,32 @@
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
 import { studentApi } from ".";
-import { IAssignment } from "../interfaces/assignment.interface";
+import {
+  IAssignment,
+  IAssignmetsSearchParams,
+} from "../../interfaces/assignment.interface";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAssignment: builder.query<
+    getAssignmentStudent: builder.query<
       IAssignment & BaseResponseInterface,
-      { assignmentId: string }
+      { assignmentId: string } & IAssignmetsSearchParams
     >({
-      query: ({ assignmentId }) => ({
+      query: ({ assignmentId, ...params }) => ({
         url: `/assignment/${assignmentId}`,
         method: "GET",
+        params,
       }),
       providesTags: ["Assignment"],
     }),
-    getAssignmentList: builder.query<
+    getAssignmentListStudent: builder.query<
       BaseListResponseInterface<IAssignment & BaseResponseInterface>,
-      void
+      { class_id: string }
     >({
-      query: () => ({
+      query: ({ ...params }) => ({
         url: "/assignment",
         method: "GET",
+        params,
       }),
       providesTags: ["Assignments"],
     }),
@@ -31,7 +36,7 @@ const extendedApi = studentApi.injectEndpoints({
 });
 
 export const {
-  useGetAssignmentListQuery,
-  useGetAssignmentQuery,
+  useGetAssignmentListStudentQuery,
+  useGetAssignmentStudentQuery,
   // -------------mutation-----------
 } = extendedApi;

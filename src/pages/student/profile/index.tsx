@@ -17,24 +17,30 @@ UserProfile.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfile(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const { data: userData, isLoading } = useProfileQuery();
+  const { data, isLoading } = useProfileQuery();
   const [currentTab, setCurrentTab] = useState("profile");
-  if (isLoading || !userData) return <Skeleton />;
-  const data = userData.student_profile;
+
   const TABS = [
     {
       value: "profile",
       label: "Profile",
       icon: <Iconify icon="ic:round-account-box" />,
-      component: <ProfileMain data={data} isFriend={false} />,
+      component: (
+        <ProfileMain
+          data={data?.student_profile}
+          isFriend={false}
+          isLoading={isLoading}
+        />
+      ),
     },
     {
       value: "links",
       label: "Links",
       icon: <Iconify icon="nimbus:planet" />,
-      component: <ProfileLinks studentId={data.id} />,
+      component: <ProfileLinks studentId={data?.id ?? ""} />,
     },
   ];
+
   return (
     <>
       <Head>
@@ -45,7 +51,7 @@ export default function UserProfile(): React.ReactElement {
           heading="Profile"
           links={[
             { name: "Dashboard", href: PATH_MAIN.index },
-            { name: `Profile ${data?.email}` },
+            { name: "Profile" },
           ]}
         />
         <Card
@@ -55,11 +61,15 @@ export default function UserProfile(): React.ReactElement {
             position: "relative",
           }}
         >
-          <ProfileCover
-            name={`${data?.first_name} ${data?.last_name}` ?? ""}
-            avatar={data?.avatar ?? ""}
-            cover={data?.cover ?? ""}
-          />
+          {!isLoading ? (
+            <ProfileCover
+              name={`${data?.first_name} ${data?.last_name}`}
+              avatar={data?.student_profile.avatar}
+              cover={data?.student_profile.cover}
+            />
+          ) : (
+            <Skeleton variant="rounded" height="280px" />
+          )}
 
           <Tabs
             value={currentTab}

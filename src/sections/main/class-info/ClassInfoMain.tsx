@@ -22,8 +22,8 @@ export default function ClassInfoMain({
           fontSize: "40px",
           mt: { xs: 1, sm: 0 },
         }}
-        src={classData?.avatar}
-        alt={classData?.avatar}
+        src={classData.avatar ?? ""}
+        alt={classData.name}
       />
       <Stack>
         <Typography variant="h4" sx={{ color: "#fff" }}>
@@ -52,7 +52,7 @@ export default function ClassInfoMain({
               height: "25px",
               mr: -1,
             }}
-            src={classData?.school?.avatar}
+            src={""}
             alt=""
           >
             &#128540;

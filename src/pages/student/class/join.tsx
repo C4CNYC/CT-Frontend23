@@ -28,12 +28,15 @@ import { useJoinClassMutation } from "src/redux/services/student/classes-manager
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
+
 const CreateClassSchema = Yup.object().shape({
   code: Yup.string().required("code is required"),
 });
+
 interface FormValueProps {
   code: string;
 }
+
 export default function JoinClass(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { push } = useRouter();
@@ -43,6 +46,7 @@ export default function JoinClass(): React.ReactElement {
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateClassSchema),
   });
+
   const onSubmit = async ({ code }: FormValueProps) => {
     try {
       const { status, tribe } = await joinClass({ share_token: code }).unwrap();
@@ -53,6 +57,7 @@ export default function JoinClass(): React.ReactElement {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
+
   return (
     <Container maxWidth={themeStretch ? false : "lg"}>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>

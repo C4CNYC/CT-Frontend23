@@ -8,6 +8,7 @@ import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { PATH_MAIN } from "@routes/paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
+import ProfileMain from "@sections/student-profile/ProfileMain";
 import { useGetFriendQuery } from "src/redux/services/student/friends-manager";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
@@ -22,15 +23,17 @@ export default function FriendProfile(): React.ReactElement {
 
   const { data, isLoading } = useGetFriendQuery({ id: query.id as string });
 
-  if (isLoading || !data) return <Skeleton />;
-  // const TABS = [
-  // {
-  //   value: "profile",
-  //   label: "Profile",
-  //   icon: <Iconify icon="ic:round-account-box" />,
-  //   component: <ProfileMain data={data} isFriend={true} />,
-  // },
-  // ];
+  const TABS = [
+    {
+      value: "profile",
+      label: "Profile",
+      icon: <Iconify icon="ic:round-account-box" />,
+      component: (
+        <ProfileMain data={data} isFriend={true} isLoading={isLoading} />
+      ),
+    },
+  ];
+
   return (
     <>
       <Head>
@@ -41,7 +44,7 @@ export default function FriendProfile(): React.ReactElement {
           heading="Profile"
           links={[
             { name: "Dashboard", href: PATH_MAIN.index },
-            { name: `Profile ${data?.email}` },
+            { name: "Profile" },
           ]}
         />
         <Card
@@ -51,11 +54,15 @@ export default function FriendProfile(): React.ReactElement {
             position: "relative",
           }}
         >
-          <ProfileCover
-            name={`${data?.first_name} ${data?.last_name}` ?? ""}
-            avatar={data?.avatar ?? ""}
-            cover={data?.cover ?? ""}
-          />
+          {!isLoading ? (
+            <ProfileCover
+              name={`${data?.first_name} ${data?.last_name}`}
+              avatar={data?.avatar}
+              cover={data?.cover}
+            />
+          ) : (
+            <Skeleton variant="rounded" height="280px" />
+          )}
 
           <Tabs
             value={currentTab}
@@ -78,24 +85,24 @@ export default function FriendProfile(): React.ReactElement {
               },
             }}
           >
-            {/* {TABS.map((tab) => (
+            {TABS.map((tab) => (
               <Tab
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
                 label={tab.label}
               />
-            ))} */}
+            ))}
           </Tabs>
         </Card>
 
-        {/* {TABS.map((tab) => {
+        {TABS.map((tab) => {
           return (
             tab.value === currentTab && (
               <Box key={tab.value}> {tab.component} </Box>
             )
           );
-        })} */}
+        })}
       </Container>
     </>
   );

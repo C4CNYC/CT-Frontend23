@@ -31,12 +31,17 @@ export const STUDENT_PATH_DASHBOARD = {
     root: "/student/class",
     createClass: "/student/class/create",
     join: "/student/class/join",
+    editStudent: (studentId: string) =>
+      path("/student/class/edit-student/", `${studentId}`),
+
     addQuest: (id: string, query?: Record<string, string>) =>
       path("/student/class/add-quest/", `${id}`) +
-      `?${query ? new URLSearchParams(query) : ""}`,
+      (query ? `?${new URLSearchParams(query)}` : ""),
+
     id: (id: string, query?: Record<string, string>) =>
       path("/student/class/", `${id}`) +
-      `?${query ? new URLSearchParams(query) : ""}`,
+      (query ? `?${new URLSearchParams(query)}` : ""),
+
     invite: (code: string) => path("/student/class/", `${code}`),
   },
   quest: {
@@ -70,5 +75,9 @@ export const STUDENT_PATH_DASHBOARD = {
     root: "/student/gallery",
     publicProject: "/student/gallery/public-projects",
     privateProject: "/student/gallery/private-projects",
+  },
+  joinTribe: {
+    root: "/student/join-tribe",
+    id: (id: string) => path("/student/join-tribe/", `${id}`),
   },
 };

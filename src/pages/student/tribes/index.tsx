@@ -6,7 +6,7 @@ import { Box, Container, Link, Tab, Tabs } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/";
-import { PATH_DASHBOARD, PATH_PAGE } from "@routes/paths";
+import { PATH_DASHBOARD } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
@@ -85,32 +85,17 @@ export default function Tribes(): React.ReactElement {
           </Box>
           <TribesFillter />
           <Box
-            sx={{
-              pt: { xs: "20px", sm: "35px", md: "45px" },
-              m: "0 auto",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: {
-                xs: "center",
-                sm: "flex-start",
-              },
-              gap: { xs: 4, sm: 3, md: 3 },
+            gap={3}
+            display="grid"
+            gridTemplateColumns={{
+              xs: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
             }}
+            mt={3}
           >
             {data?.data.map((tribe) => (
-              <Link
-                component={NextLink}
-                key={tribe.id}
-                href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
-                sx={{
-                  textDecoration: "none",
-                  "&:hover": {
-                    textDecoration: "none",
-                  },
-                }}
-              >
-                <TribeItem tribe={tribe} />
-              </Link>
+              <TribeItem tribe={tribe} />
             ))}
           </Box>
         </Container>

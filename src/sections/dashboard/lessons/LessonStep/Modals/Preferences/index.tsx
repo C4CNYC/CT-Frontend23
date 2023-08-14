@@ -150,7 +150,7 @@ export default function Preferences({
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <Box sx={{ width: "100%" }}>
-            <DialogContent sx={{ p: 0, height: "450px" }}>
+            <DialogContent sx={{ p: 0, height: "470px" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
                 <Tabs
                   value={value}
@@ -200,7 +200,6 @@ export default function Preferences({
                   display: "flex",
                   justifyContent: "flex-end",
                   gap: 2,
-                  mt: 7,
                 }}
               >
                 <Button

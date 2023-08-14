@@ -4,13 +4,13 @@ import { TbInfoCircleFilled } from "react-icons/tb";
 import { FormGroup, TextField, Typography } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 
-import { FormProps } from "..";
+import { FormQuestProps } from "../helpers/quest.interface";
 
 interface Props {
   name: "startDate" | "dueDate" | "closeDate";
   title: string;
   infoText: string;
-  control: Control<FormProps, any>;
+  control: Control<FormQuestProps, any>;
 }
 
 export default function TimeController({
@@ -39,7 +39,7 @@ export default function TimeController({
                   "& fieldset": { border: "none" },
                   "& .MuiInputBase-root": {
                     width: "200px",
-                    background: "#F7F7FC",
+                    background: "#fff",
                   },
                   "& .MuiFormHelperText-root": {
                     ml: 0,

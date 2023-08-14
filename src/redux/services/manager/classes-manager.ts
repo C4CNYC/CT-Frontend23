@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
-
-import { managerApi } from ".";
 import {
   ClassSearchParams,
   IAddCourseToClass,
   IClass,
+  IClassSettings,
   IRemoveCourseFromClass,
-} from "../interfaces/class.interface";
+} from "src/redux/interfaces/class.interface";
+
+import { managerApi } from ".";
 import { ClassRequest } from "../interfaces/school.interface";
 
 const extendedApi = managerApi.injectEndpoints({
@@ -67,17 +68,28 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: ["Classes"],
     }),
+    updateClassesSettings: builder.mutation<
+      void,
+      { schoolId: string; classId: string; request_join_enable: boolean }
+    >({
+      query: ({ schoolId, classId, ...body }) => ({
+        url: `/school/${schoolId}/class/${classId}/setting`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Courses", "Classes"],
+    }),
     addCourseToClass: builder.mutation<void, IAddCourseToClass>({
-      query: ({ schoolId, id, ...body }) => ({
-        url: `/school/${schoolId}/class/${id}/course`,
+      query: ({ id, ...body }) => ({
+        url: `/school/{schoolId}/class/${id}/course`,
         method: "PATCH",
         body,
       }),
       invalidatesTags: ["Courses", "Classes"],
     }),
     removeCourseFromClass: builder.mutation<void, IRemoveCourseFromClass>({
-      query: ({ schoolId, id, ...body }) => ({
-        url: `/school/${schoolId}/class/${id}/course`,
+      query: ({ id, ...body }) => ({
+        url: `/school/{schoolId}/class/${id}/course`,
         method: "DELETE",
         body,
       }),
@@ -92,6 +104,7 @@ export const {
   // -------------mutation-----------
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
+  useUpdateClassesSettingsMutation,
   useDeleteClassesMutation,
   useUpdateClassesMutation,
   useCreateClassesMutation,

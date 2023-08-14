@@ -11,14 +11,14 @@ import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack } from "@mui/material";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
-import { IUser } from "src/redux/interfaces/auth.interface";
+import { BaseResponseInterface } from "@utils";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { IFriend } from "src/redux/interfaces/friends.interface";
 import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
-import { BaseResponseInterface } from "@utils";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
@@ -40,19 +40,19 @@ interface FormValuesProps {
   photoURL: File | null;
 }
 
-interface Props {
-  data: (IUser | IStudent) & BaseResponseInterface;
+interface IProfileInfoFormProps {
+  data: (IStudent | IFriend) & BaseResponseInterface;
 }
 
 export default function ProfileInfoForm({
   data,
-}: Props): React.ReactElement | null {
+}: IProfileInfoFormProps): React.ReactElement | null {
   const {
     first_name: firstName,
     last_name: lastName,
     post_code: postcode,
     about,
-    phone
+    phone,
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
@@ -73,15 +73,16 @@ export default function ProfileInfoForm({
 
   const { setValue, handleSubmit, control } = methods;
 
-  const onSubmit = async (data: FormValuesProps): Promise<void> => {
+  const onSubmit = async (formData: FormValuesProps): Promise<void> => {
+    console.log(formData, "formData");
     try {
       await updateStudent({
-        about: data.about,
+        about: formData.about,
         // phone: data.phone,
-        first_name: data.firstName,
-        last_name: data.lastName,
-        post_code: data.postcode,
-        cover: data.cover,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        post_code: formData.postcode,
+        cover: formData.cover,
       }).unwrap();
       // if (username !== data.username) {
       //   updateStudent({ username: data.username })
@@ -92,9 +93,9 @@ export default function ProfileInfoForm({
       //       });
       //     });
       // }
-      if (data.photoURL) {
+      if (formData.photoURL) {
         const file = new FormData();
-        file.append("file", data.photoURL);
+        file.append("file", formData.photoURL);
         updateStudentAvatar({
           file,
         })
@@ -177,7 +178,6 @@ export default function ProfileInfoForm({
               >
                 <RHFTextField name="firstName" label="Name" />
                 <RHFTextField name="lastName" label="Last name" />
-                {/* <RHFTextField name="username" label="username" /> */}
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>

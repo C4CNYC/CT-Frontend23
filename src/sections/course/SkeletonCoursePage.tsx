@@ -1,23 +1,17 @@
 import { Box, Container, Skeleton } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 export default function SkeletonCoursePage(): React.ReactElement {
+  const theme = useTheme();
   return (
     <Box
-      sx={(theme) => ({
+      sx={{
         minHeight: "100vh",
         width: "100%",
-        [theme.breakpoints.down(1800)]: {
-          pl: "10px",
-          pt: "40px",
-          pr: "10px",
-        },
-        [theme.breakpoints.up(1800)]: {
-          pl: "165px",
-          pt: "139px",
-        },
+        px: "44px",
         pb: "187px",
         background: "#ECF4FF",
-      })}
+      }}
     >
       <Container maxWidth={false} sx={{ maxWidth: "1922px" }}>
         <Skeleton
@@ -60,7 +54,7 @@ export default function SkeletonCoursePage(): React.ReactElement {
               <Skeleton
                 animation="wave"
                 variant="rounded"
-                sx={(theme) => ({
+                sx={{
                   width: "100%",
                   height: "64px",
                   maxWidth: "646px",
@@ -70,17 +64,17 @@ export default function SkeletonCoursePage(): React.ReactElement {
                   [theme.breakpoints.down(500)]: {
                     height: "76px",
                   },
-                })}
+                }}
               />
               <Box
-                sx={(theme) => ({
+                sx={{
                   mt: "80px",
                   ml: "-22px",
                   [theme.breakpoints.down(1250)]: {
                     ml: "0px",
                     mt: "40px",
                   },
-                })}
+                }}
               >
                 <Skeleton
                   animation="wave"
@@ -100,7 +94,6 @@ export default function SkeletonCoursePage(): React.ReactElement {
                   sx={{
                     width: "100%",
                     height: "250px",
-
                     mb: "20px",
                     background: "#fff",
                     borderRadius: "25px",
@@ -111,7 +104,7 @@ export default function SkeletonCoursePage(): React.ReactElement {
             <Skeleton
               animation="wave"
               variant="rounded"
-              sx={(theme) => ({
+              sx={{
                 width: "100%",
                 maxWidth: "821px",
                 height: "1095px",
@@ -120,7 +113,7 @@ export default function SkeletonCoursePage(): React.ReactElement {
                 [theme.breakpoints.down(1250)]: {
                   display: "none",
                 },
-              })}
+              }}
             />
           </Box>
         </Box>

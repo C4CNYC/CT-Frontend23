@@ -1,6 +1,13 @@
-import { useRouter } from "next/router";
+import NextLink from "next/link";
 
-import { Avatar, Box, Button, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Link,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 import { useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -16,25 +23,26 @@ export default function TribeListItem({
   active,
   classItem,
 }: Props): React.ReactElement {
+  const theme = useTheme();
   const { themeLayout } = useSettingsContext();
   const isNavMini = themeLayout === "mini";
-  const { push } = useRouter();
 
   return (
     <Tooltip title={isNavMini ? classItem.name : ""}>
-      <Button
-        variant="text"
-        onClick={() => {
-          push(STUDENT_PATH_DASHBOARD.class.id(classItem.id));
-        }}
+      <Link
+        component={NextLink}
+        underline="none"
+        href={STUDENT_PATH_DASHBOARD.class.id(classItem.id)}
         sx={{
+          display: "inline-flex",
+          alignItems: "center",
           p: 0,
           justifyContent: "flex-start",
-          minWidth: isNavMini ? "30px" : "50px",
+          position: "relative",
         }}
       >
         <Box
-          sx={(theme) => ({
+          sx={{
             position: "absolute",
             top: "5px",
             left: "-12px",
@@ -44,26 +52,26 @@ export default function TribeListItem({
             borderRadius: 2,
             zIndex: 10,
             display: active ? "block" : "none",
-          })}
+          }}
         />
         <Avatar
           variant="rounded"
-          src={classItem.avatar}
-          sx={(theme) => ({
+          src={classItem.avatar ?? ""}
+          sx={{
             border: `2px solid ${theme.palette.info.light}`,
             width: "30px",
             height: "30px",
-          })}
+          }}
         />
         {!isNavMini && (
           <Typography
-            sx={(theme) => ({ ml: 2, color: theme.palette.text.secondary })}
+            sx={{ ml: 2, color: theme.palette.text.secondary }}
             variant="body1"
           >
             {classItem.name}
           </Typography>
         )}
-      </Button>
+      </Link>
     </Tooltip>
   );
 }

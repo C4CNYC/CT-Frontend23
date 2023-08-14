@@ -10,8 +10,8 @@ import {
   useTable,
 } from "@components";
 import { useFilters } from "@hooks";
+import { ClassSearchParams } from "src/redux/interfaces/class.interface";
 import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
 
 import SchoolTableRow from "./SchoolTableRow";
 import SchoolTableToolbar from "./SchoolTableToolbar";

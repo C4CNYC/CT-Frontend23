@@ -1,5 +1,7 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 
+import { useSnackbar } from "notistack";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { MdOutlineMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
@@ -18,36 +20,77 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
+import { useCopyToClipboard } from "@hooks";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
+import { useUpdateClassesSettingsMutation } from "src/redux/services/manager/classes-manager";
+
 import ClassroomModal from "../classroom-modal";
 import EmailAddressModal from "../email-address-domain";
 import { Iconify } from "../iconify";
-import { BaseResponseInterface } from "@utils";
-import { IClass } from "src/redux/interfaces/class.interface";
 
-interface Prop {
+interface IShareGroupModalProps {
   children: React.ReactElement;
   schoolClass: IClass & BaseResponseInterface;
 }
+
 export default function ShareGroupModal({
   children,
-  schoolClass
-}: Prop): React.ReactElement {
+  schoolClass,
+}: IShareGroupModalProps): React.ReactElement {
+  const { query } = useRouter();
+  const { copy } = useCopyToClipboard();
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
-  const handleOpen = () => { setOpen(true); };
-  const handleClose = () => { setOpen(false); };
-  const [value, setValue] = useState("anyone");
+  const [value, setValue] = useState(
+    schoolClass.setting.request_join_enable ? "true" : "false"
+  );
+  const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation();
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
 
+  const onCopy = (textToCopy: string) => {
+    if (textToCopy) {
+      copy(textToCopy);
+      enqueueSnackbar("Copied!");
+    }
+  };
+
+  const updateClassJoin = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      await updateClass({
+        schoolId: query.schoolId as string,
+        classId: query.id as string,
+        request_join_enable: (e.target as HTMLInputElement).value === "true",
+      }).unwrap();
+      enqueueSnackbar("Changes updated!");
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
+  };
+
+  const shareLink = `${
+    window.location.origin
+  }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`;
+
   return (
     <>
-      <div onClick={handleOpen}>{children}</div>
+      <Stack onClick={handleOpen}>{children}</Stack>
       <Dialog
         open={open}
         onClose={handleClose}
-        sx={{ width: "100%" }}
+        fullWidth
+        maxWidth="xs"
         scroll="body"
       >
         <Box
@@ -59,29 +102,22 @@ export default function ShareGroupModal({
           }}
         >
           <Box display="flex" justifyContent="end" alignItems="center">
-            <IconButton
-              sx={{
-                color: "white",
-              }}
-            >
-              <Iconify icon="prime:qrcode" width={24} height={24} />
-            </IconButton>
             <IconButton onClick={handleClose} sx={{ color: "white" }}>
               <Iconify icon="jam:close-rectangle-f" width={24} height={24} />
             </IconButton>
           </Box>
           <Typography
-            mt="55px"
+            mt="35px"
             ml="32px"
             mb="55px"
             variant="h3"
             color="white"
             fontSize="32px"
           >
-            Test
+            {schoolClass?.name}
           </Typography>
         </Box>
-        <Box p="32px">
+        <Box sx={{ p: { xs: 1, sm: 3 } }}>
           <Box>
             <Typography
               fontSize="20px"
@@ -111,7 +147,7 @@ export default function ShareGroupModal({
               alignItems: "center",
               justifyContent: "space-between",
               borderRadius: "10px",
-              p: "0px 5px 0px 15px",
+              px: 1,
             }}
           >
             <Box display="flex" alignItems="center" width="100%">
@@ -119,23 +155,37 @@ export default function ShareGroupModal({
                 sx={{
                   background: "#f9f9f9",
                   color: "#000",
+                  pointerEvents: "none",
                   "&:hover": {
                     background: "#bebebe",
                   },
                   width: "36px",
                   height: "36px",
                   m: "0px 8px",
+                  display: { xs: "none" },
                 }}
               >
-                <Iconify icon="basil:copy-outline" width={16} height={16} />
+                <Iconify icon="basil:copy-outline" width={18} height={18} />
               </Button>
               <Box ml="10px">
-                <Typography>Invite link Edit</Typography>
-                <Typography>flip.com/906e3999</Typography>
+                <Typography>Invite link:</Typography>
+                <Typography
+                  noWrap
+                  sx={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: "180px",
+                  }}
+                >
+                  {shareLink}
+                </Typography>
               </Box>
             </Box>
             <Button
               variant="contained"
+              onClick={() => {
+                onCopy(shareLink);
+              }}
               sx={{
                 background: "#d1329e",
                 "&:hover": {
@@ -155,20 +205,24 @@ export default function ShareGroupModal({
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={value}
-                onChange={handleChange}
+                onChange={(e) => {
+                  updateClassJoin(e);
+                  handleChange(e);
+                }}
                 sx={{
                   fontSize: "24px",
                   mb: "24px",
                 }}
               >
                 <FormControlLabel
-                  value="anyone"
+                  value="true"
                   sx={{
                     mb: "24px",
                     mt: "10px",
                   }}
                   control={
                     <Radio
+                      disabled={isLoading}
                       sx={{
                         "&.Mui-checked": {
                           color: "#d1329e",
@@ -183,7 +237,8 @@ export default function ShareGroupModal({
                   }
                 />
                 <FormControlLabel
-                  value="one"
+                  value="false"
+                  disabled={isLoading}
                   control={
                     <Radio
                       sx={{
@@ -266,9 +321,6 @@ export default function ShareGroupModal({
               </Button>
             </EmailAddressModal>
           </Box>
-          {/* <Link href="#" color="inherit">
-              By username
-            </Link> */}
         </Box>
       </Dialog>
     </>

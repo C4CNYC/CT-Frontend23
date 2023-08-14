@@ -2,7 +2,11 @@
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
 import { managerApi } from ".";
-import { IStudent, StudentSearchParams } from "../interfaces/user.interface";
+import {
+  IStudent,
+  IStudentSearchParams,
+  StudentSearchParams,
+} from "../interfaces/user.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,6 +30,28 @@ const extendedApi = managerApi.injectEndpoints({
         params,
       }),
       providesTags: ["Students"],
+    }),
+    getClassPending: builder.query<
+      BaseListResponseInterface<IStudent & BaseResponseInterface>,
+      { classId: string } & IStudentSearchParams
+    >({
+      query: ({ classId, ...params }) => ({
+        url: `/school/{schoolId}/class/${classId}/student/pending`,
+        method: "GET",
+        params,
+      }),
+      providesTags: ["Pendings"],
+    }),
+    updateClassPending: builder.mutation<
+      void,
+      { classId: string; student_id: string }
+    >({
+      query: ({ classId, ...body }) => ({
+        url: `/school/{schoolId}/class/${classId}/student/pending`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Pendings"],
     }),
     getGoogleClasses: builder.query<
       any[],
@@ -87,10 +113,10 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     studentJoinClass: builder.mutation<
       void,
-      { schoolId: string; classId: string; student_id: string }
+      { classId: string; student_id: string }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}/student`,
+      query: ({ classId, ...body }) => ({
+        url: `/school/{schoolId}/class/${classId}/student`,
         method: "POST",
         body,
       }),
@@ -98,10 +124,10 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     studentLeftClass: builder.mutation<
       void,
-      { schoolId: string; classId: string; student_id: string }
+      { classId: string; student_id: string }
     >({
-      query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}/student`,
+      query: ({ classId, ...body }) => ({
+        url: `/school/{schoolId}/class/${classId}/student`,
         method: "DELETE",
         body,
       }),
@@ -136,7 +162,9 @@ export const {
   useGetStudentQuery,
   useGetStudentsQuery,
   useGetGoogleClassesQuery,
+  useGetClassPendingQuery,
   // -------------mutation-----------
+  useUpdateClassPendingMutation,
   useMigrateGoogleClassesStudentsMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,

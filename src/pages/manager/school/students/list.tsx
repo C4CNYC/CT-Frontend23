@@ -28,12 +28,10 @@ import {
   CustomBreadcrumbs,
   Iconify,
   Scrollbar,
-  TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  emptyRows,
   useSettingsContext,
   useTable,
 } from "@components";
@@ -64,13 +62,9 @@ const TABLE_HEAD = [
   { id: "" },
 ];
 
-// ----------------------------------------------------------------------
-
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserListPage(): React.ReactElement {
   const {
@@ -282,15 +276,6 @@ export default function UserListPage(): React.ReactElement {
                           ))}
                       <TableNoData
                         isNotFound={!data?.data.length && !isLoading}
-                      />
-
-                      <TableEmptyRows
-                        height={dense ? 52 : 72}
-                        emptyRows={emptyRows(
-                          page,
-                          filters?.take ?? 10,
-                          data?.data.length ?? 0
-                        )}
                       />
                     </TableBody>
                   </Table>

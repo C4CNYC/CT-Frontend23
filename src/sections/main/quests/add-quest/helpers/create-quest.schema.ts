@@ -8,7 +8,7 @@ export const CreateQuestSchema = Yup.object().shape({
     .oneOf(Object.values(AssignmentTypes))
     .required("Select type"),
   course: Yup.string().when("type", {
-    is: AssignmentTypes.RESEARCH,
+    is: AssignmentTypes.COURSE,
     then: Yup.string().required("Select course"),
     otherwise: Yup.string(),
   }),

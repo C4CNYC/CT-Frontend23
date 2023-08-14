@@ -15,10 +15,17 @@ export default function ClassMain(): React.ReactElement {
   if (isLoading) {
     return <LoadingScreen />;
   }
-  if (tribes?.data.length) {
+  if (localStorage.getItem("JOIN_TRIBE")) {
+    const { joinCode, classId } = JSON.parse(
+      localStorage.getItem("JOIN_TRIBE") ?? "{}"
+    );
+    push(STUDENT_PATH_DASHBOARD.class.id(classId, joinCode));
+  } else if (tribes?.data.length) {
+    console.log(tribes?.data[0].id);
     push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id));
   } else {
     push(STUDENT_PATH_DASHBOARD.class.join);
   }
+
   return <></>;
 }

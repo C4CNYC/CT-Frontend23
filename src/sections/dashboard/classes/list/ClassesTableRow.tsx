@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Avatar,
-  Button,
   Checkbox,
   IconButton,
   MenuItem,
@@ -24,15 +24,13 @@ import {
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { BaseResponseInterface } from "@utils";
-import { IClass } from "src/redux/services/interfaces/class.interface";
+import { IClass } from "src/redux/interfaces/class.interface";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 
 import ClassPreferences from "../modal";
 
-// ----------------------------------------------------------------------
-
-interface Props {
+interface IClassesTableRowProps {
   row: IClass & BaseResponseInterface;
   selected: boolean;
   onEditRow: (
@@ -45,6 +43,7 @@ interface Props {
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
   updateResult: boolean;
+  isDeleting: boolean;
 }
 
 export default function ClassesTableRow({
@@ -54,10 +53,10 @@ export default function ClassesTableRow({
   onSelectRow,
   onDeleteRow,
   updateResult,
-}: Props): React.ReactElement | null {
+  isDeleting,
+}: IClassesTableRowProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
 
-  const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const myStudentProfileId = useSelector(
     (state: RootState) => state.global.user?.student_profile?.id
   );
@@ -70,7 +69,6 @@ export default function ClassesTableRow({
   const onJoinHandle = async () => {
     try {
       await joinClass({
-        schoolId,
         classId: row.id,
         student_id: myStudentProfileId ?? "",
       }).unwrap();
@@ -79,6 +77,12 @@ export default function ClassesTableRow({
       enqueueSnackbar("you joined to class", { variant: "error" });
     }
   };
+
+  useEffect(() => {
+    if (!isDeleting && openConfirm) {
+      setOpenConfirm(false);
+    }
+  }, [isDeleting]);
 
   return (
     <>
@@ -171,7 +175,7 @@ export default function ClassesTableRow({
           defaultValues={{
             name: row.name,
             description: row.description ?? "",
-            cover: row.cover,
+            cover: row.cover ?? "",
           }}
           rowId={row.id}
           updateResult={updateResult}
@@ -201,9 +205,14 @@ export default function ClassesTableRow({
         title="Delete"
         content="Are you sure want to delete?"
         action={
-          <Button variant="contained" color="error" onClick={onDeleteRow}>
+          <LoadingButton
+            loading={isDeleting}
+            variant="contained"
+            color="error"
+            onClick={onDeleteRow}
+          >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

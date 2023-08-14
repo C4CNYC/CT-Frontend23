@@ -6,7 +6,6 @@ import { format } from "date-fns";
 import {
   Card,
   CardHeader,
-  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -16,6 +15,7 @@ import {
 
 import { Iconify, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
+import SkeletonTribe from "@sections/skeleton/SekeltonTribe";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { fNumber } from "@utils";
 import { useGetClassQuery } from "src/redux/services/student/classes-manager";
@@ -33,7 +33,7 @@ export default function TribeProfilePage(): React.ReactElement {
     { skip: !query.id }
   );
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <SkeletonTribe />;
 
   return (
     <>
@@ -81,9 +81,7 @@ export default function TribeProfilePage(): React.ReactElement {
                   </Stack>
 
                   <Stack width={1} textAlign="center">
-                    <Typography variant="h4">
-                      {fNumber(data?.courses?.length ?? 0)}
-                    </Typography>
+                    <Typography variant="h4">{fNumber(0)}</Typography>
 
                     <Typography
                       variant="body2"

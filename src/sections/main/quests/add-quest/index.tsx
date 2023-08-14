@@ -24,18 +24,19 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import {
   useCreateAssignmentMutation,
   useUpdateAssignmentMutation,
+  useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import { useGetAssignmentStudentQuery } from "src/redux/services/student/assignments-student";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
 import { CreateQuestSchema } from "./helpers/create-quest.schema";
-import { FormQuestProps, IAddQuest } from "./helpers/quest.interface";
+import { FormQuestProps } from "./helpers/quest.interface";
 
 const RANDOM_NAME = uniqueNamesGenerator({
   dictionaries: [colors, animals],
@@ -49,33 +50,45 @@ const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
 const DAYS_TO_END = 7;
 const DAYS_TO_CLOSE = 10;
 
-export default function AddQuest({
-  assignment,
-}: IAddQuest): React.ReactElement {
+export default function AddQuest(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
 
   const [assignmentsSkills, setAssignmentsSkills] = useState<string[]>();
-  const [students, setStudents] = useState<string[]>();
   const [value, setValue] = useState(0);
 
+  const { data: assignment, isLoading: isAssignmentLoading } =
+    useGetAssignmentStudentQuery(
+      { assignmentId: query.assignmentId as string },
+      { skip: !query.assignmentId }
+    );
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
   const [updateAssignment, { isLoading: isUpdating }] =
     useUpdateAssignmentMutation();
-  const [addAssignmentsToClass, { isLoading: isAddingToClass }] =
+  const [addCourseToAssignment, { isLoading: isAddingToClass }] =
     useUpdateCourseAssignmentMutation();
-
-  const { data } = useGetClassQuery(
-    { id: query.id as string },
-    { skip: !query.id }
-  );
+  const [addAssignmentToClass] = useUpdateClassAssignmentMutation();
 
   useEffect(() => {
     if (assignment) {
-      setAssignmentsSkills(assignment?.tags);
-      setStudents(assignment?.students ? assignment.students : []);
+      methods.reset({
+        name: assignment?.name ?? RANDOM_NAME,
+        description: JSON.parse(assignment?.description ?? "{}"),
+        type: assignment?.type ?? AssignmentTypes.COURSE,
+        course: assignment?.course?.id,
+        startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
+        dueDate: format(
+          DATE_PARSER(assignment?.end_date, DAYS_TO_END),
+          DATE_FORMAT
+        ),
+        closeDate: format(
+          DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE),
+          DATE_FORMAT
+        ),
+        active: assignment?.active ?? true,
+      });
     }
-  }, [assignment]);
+  }, [isAssignmentLoading]);
 
   const methods = useForm<FormQuestProps>({
     resolver: yupResolver(CreateQuestSchema),
@@ -83,7 +96,7 @@ export default function AddQuest({
     defaultValues: {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? "{}"),
-      type: assignment?.type ?? AssignmentTypes.RESEARCH,
+      type: assignment?.type ?? AssignmentTypes.COURSE,
       course: assignment?.course?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(
@@ -114,7 +127,7 @@ export default function AddQuest({
         }).unwrap();
         enqueueSnackbar("Assignment updated successfuly!");
       } catch (error: any) {
-        enqueueSnackbar("Something went wrong when updating", {
+        enqueueSnackbar(error.data.message, {
           variant: "error",
         });
       }
@@ -130,17 +143,19 @@ export default function AddQuest({
           close_date: formData.closeDate,
           active: Boolean(formData.active),
           tags: assignmentsSkills,
-          ...(students?.length
-            ? { students }
-            : { classes: [query.id as string] }),
+          classes: [query.id as string],
         }).unwrap();
-
-        await addAssignmentsToClass({
+        await addAssignmentToClass({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
-          course_id: query.id as string,
+          class_id: query.id as string,
         }).unwrap();
 
+        await addCourseToAssignment({
+          assignmentId: newAssignment.id,
+          schoolId: query.schoolId as string,
+          course_id: formData.course,
+        });
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
@@ -150,7 +165,7 @@ export default function AddQuest({
 
         enqueueSnackbar("Assignment created successfuly!");
       } catch (error: any) {
-        enqueueSnackbar("Something went wrong when creating", {
+        enqueueSnackbar(error.data.message, {
           variant: "error",
         });
       }
@@ -159,15 +174,17 @@ export default function AddQuest({
 
   return (
     <>
-      <Stack>
+      <Stack sx={{ px: 5, py: 8, background: "#f3f3f3", borderRadius: 3 }}>
         <Stack
           sx={{
             flexDirection: "row",
             justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
           }}
         >
           <Stack>
-            <Typography variant="h4">Add Quest</Typography>
+            <Typography variant="h2">Add Quest</Typography>
             <Tooltip title="this is .....">
               <Typography
                 variant="caption"
@@ -217,17 +234,16 @@ export default function AddQuest({
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep courses={data?.courses ?? []} />
+              <DetailsStep />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
-                students={students}
-                setStudents={setStudents}
                 control={methods.control}
                 setAssignmentsSkills={(s: string[]) => {
                   setAssignmentsSkills(s);
                 }}
                 assignmentsSkills={assignmentsSkills}
+                skills={assignment?.skill_tags ?? []}
               />
             </CustomTabPanel>
             <Stack mt={3} gap={3} flexDirection="row" justifyContent="flex-end">

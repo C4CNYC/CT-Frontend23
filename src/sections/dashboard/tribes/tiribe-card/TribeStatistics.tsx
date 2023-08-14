@@ -8,7 +8,7 @@ import { Box, Typography } from "@mui/material";
 
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 
-interface Props {
+interface ITribeStatisticsProps {
   students: IStudent[];
   createdAt: string;
 }
@@ -16,7 +16,7 @@ interface Props {
 export default function TribeStatistics({
   students,
   createdAt,
-}: Props): React.ReactElement {
+}: ITribeStatisticsProps): React.ReactElement {
   return (
     <Box
       sx={{

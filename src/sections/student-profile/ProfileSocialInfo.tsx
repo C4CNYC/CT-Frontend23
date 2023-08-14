@@ -1,6 +1,6 @@
 import { SOCIAL_ICONS } from "@assets/data";
 
-import { Card, CardHeader, Link, Skeleton, Stack } from "@mui/material";
+import { Card, CardHeader, Link, Stack } from "@mui/material";
 
 import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
 
@@ -11,16 +11,14 @@ interface Props {
 export default function ProfileSocialInfo({
   studentId,
 }: Props): React.ReactElement {
-  const { data, isLoading } = useGetSocialsQuery({ studentId });
-  if (!data || isLoading) {
-    return <Skeleton />;
-  }
+  const { data } = useGetSocialsQuery({ studentId });
+
   return (
     <Card>
       <CardHeader title="Socials" />
 
       <Stack spacing={2} sx={{ p: 3 }}>
-        {data.map((link) => (
+        {data?.map((link) => (
           <Stack key={link.name} direction="row" sx={{ alignItems: "center" }}>
             {SOCIAL_ICONS[link.type]}
             <Link

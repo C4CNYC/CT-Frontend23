@@ -7,6 +7,7 @@ import {
 } from "src/redux/interfaces/class.interface";
 
 import { studentApi } from ".";
+import { IStudent, IStudentSearchParams } from "../interfaces/user.interface";
 
 const extendedApi = studentApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -48,6 +49,17 @@ const extendedApi = studentApi.injectEndpoints({
       }),
       providesTags: ["Classes"],
     }),
+    getClassStudents: builder.query<
+      BaseListResponseInterface<IStudent & BaseResponseInterface>,
+      { id: string } & IStudentSearchParams
+    >({
+      query: ({ id, ...params }) => ({
+        url: `/class/${id}/students`,
+        method: "GET",
+        params,
+      }),
+      providesTags: ["Classes"],
+    }),
     getClassMentor: builder.query<IMentor[], { id: string }>({
       query: ({ id }) => ({
         url: `/class/${id}/mentor`,
@@ -67,6 +79,7 @@ export const {
   useGetClassesQuery,
   useGetClassQuery,
   useGetClassMentorQuery,
+  useGetClassStudentsQuery,
   // -------------mutation-----------
   useJoinClassMutation,
   useCreateClassMutation,

@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Card,
   Divider,
   IconButton,
+  Skeleton,
   Tab,
   Table,
   TableBody,
@@ -26,16 +27,22 @@ import {
   TableSelectedAction,
   emptyRows,
   getComparator,
+  useSnackbar,
   useTable,
 } from "@components";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { useFilters } from "@hooks";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
-import { _userList } from "src/_mock/arrays";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
+import {
+  useGetClassPendingQuery,
+  useStudentLeftClassMutation,
+} from "src/redux/services/manager/students-manager";
+import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
 
 import MemberRow from "./MemberRow";
-
-const ROLE_OPTIONS = ["all"];
 
 const TABLE_HEAD = [
   { id: "avatar", label: "Avarat", align: "left" },
@@ -45,12 +52,43 @@ const TABLE_HEAD = [
   { id: "city", label: "City", align: "left" },
   { id: "", label: "", align: "left" },
 ];
+const TABLE_HEAD_PENDINGS = [
+  { id: "avatar", label: "Avarat", align: "left" },
+  { id: "firstName", label: "First name", align: "left" },
+  { id: "lastName", label: "Lastname", align: "left" },
+  { id: "username", label: "username", align: "left" },
+  { id: "approve", label: "Approve", align: "left" },
+  { id: "", label: "", align: "left" },
+];
 
-interface Props {
-  members: IStudent[] | [];
+interface IMemberCardProps {
+  activeTab: boolean;
 }
 
-export default function MemberCard({ members }: Props) {
+export default function MemberCard({ activeTab }: IMemberCardProps) {
+  const { enqueueSnackbar } = useSnackbar();
+  const { user } = useAuthContext();
+  const { query, push } = useRouter();
+
+  const { filters, setFilter } = useFilters({});
+
+  const { data, isLoading, isFetching } = useGetClassStudentsQuery(
+    { id: query.id as string, ...filters },
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
+  );
+
+  const {
+    data: pending,
+    isLoading: isLoadingPending,
+    isFetching: isFetchingPending,
+  } = useGetClassPendingQuery(
+    { classId: query.id as string, ...filters },
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
+  );
+
+  const [deleteFromClass, { isLoading: isDeleting }] =
+    useStudentLeftClassMutation();
+
   const {
     dense,
     page,
@@ -66,17 +104,11 @@ export default function MemberCard({ members }: Props) {
     //
     onSort,
     onChangeDense,
-    onChangePage,
-    onChangeRowsPerPage,
   } = useTable();
 
-  const { push } = useRouter();
-
-  const [tableData, setTableData] = useState(members);
+  const [tableData, setTableData] = useState<IStudent[]>([]);
 
   const [filterName, setFilterName] = useState("");
-
-  const [filterRole, setFilterRole] = useState("all");
 
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -95,44 +127,48 @@ export default function MemberCard({ members }: Props) {
 
   const denseHeight = dense ? 52 : 72;
 
-  const isFiltered =
-    filterName !== "" || filterRole !== "all" || filterStatus !== "all";
-
   const isNotFound =
     (!dataFiltered.length && !!filterName) ||
-    (!dataFiltered.length && !!filterRole) ||
     (!dataFiltered.length && !!filterStatus);
 
-  const handleOpenConfirm = () => {
+  const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
   };
 
-  const handleCloseConfirm = () => {
+  const handleCloseConfirm = (): void => {
     setOpenConfirm(false);
   };
 
   const handleFilterStatus = (
     event: React.SyntheticEvent<Element, Event>,
     newValue: string
-  ) => {
+  ): void => {
     setPage(0);
     setFilterStatus(newValue);
   };
 
-  const handleFilterName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterName = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setPage(0);
     setFilterName(event.target.value);
   };
 
-  const handleFilterRole = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPage(0);
-    setFilterRole(event.target.value);
+  const handleDeleteStudent = async (studentId: string): Promise<void> => {
+    try {
+      await deleteFromClass({
+        classId: query.id as string,
+        student_id: studentId,
+      }).unwrap();
+    } catch (error) {
+      enqueueSnackbar(error.data.message, { variant: "error" });
+    }
   };
 
-  const handleDeleteRow = (id: string) => {
-    const deleteRow = tableData.filter((row) => row.id !== id);
+  const handleDeleteRow = (id: string): void => {
+    handleDeleteStudent(id);
+    enqueueSnackbar("Student removed from class");
     setSelected([]);
-    setTableData(deleteRow);
 
     if (page > 0) {
       if (dataInPage.length < 2) {
@@ -141,12 +177,12 @@ export default function MemberCard({ members }: Props) {
     }
   };
 
-  const handleDeleteRows = (selectedRows: string[]) => {
-    const deleteRows = tableData.filter(
-      (row) => !selectedRows.includes(row.id as string)
-    );
+  const handleDeleteRows = (selectedRows: string[]): void => {
+    for (let i = 0; i < selected.length; i++) {
+      handleDeleteStudent(selected[i]);
+    }
+    enqueueSnackbar("Students removed from class");
     setSelected([]);
-    setTableData(deleteRows);
 
     if (page > 0) {
       if (selectedRows.length === dataInPage.length) {
@@ -161,15 +197,51 @@ export default function MemberCard({ members }: Props) {
     }
   };
 
-  const handleEditRow = (id: string) => {
-    push(PATH_DASHBOARD.root);
+  const handleEditRow = (id: string): void => {
+    push(
+      `${STUDENT_PATH_DASHBOARD.class.editStudent(id)}` +
+        `?${new URLSearchParams({ schoolId: query.schoolId as string })}`
+    );
   };
 
-  const handleResetFilter = () => {
+  const handleResetFilter = (): void => {
     setFilterName("");
-    setFilterRole("all");
     setFilterStatus("all");
   };
+
+  useEffect(() => {
+    if (filterStatus === "all" && data) {
+      setTableData(data.data ?? []);
+    }
+    if (filterStatus === "pending" && pending) {
+      setTableData(pending.data ?? []);
+    }
+  }, [
+    isLoading,
+    isFetching,
+    filterStatus,
+    isLoadingPending,
+    isFetchingPending,
+  ]);
+
+  if (isLoading || isFetching || isLoadingPending || isFetchingPending) {
+    return <Skeleton variant="rounded" height="635px" />;
+  }
+
+  const TABS_LIST = [
+    {
+      label: "All",
+      value: "all",
+      icon: <Label>{data?.meta.itemCount ?? 0}</Label>,
+    },
+  ];
+  if (user?.role !== Role.Student) {
+    TABS_LIST.push({
+      label: "Pending",
+      value: "pending",
+      icon: <Label>{pending?.meta.itemCount ?? 0}</Label>,
+    });
+  }
 
   return (
     <>
@@ -182,23 +254,22 @@ export default function MemberCard({ members }: Props) {
             bgcolor: "background.neutral",
           }}
         >
-          <Tab
-            key={0}
-            label={"All"}
-            value={"all"}
-            icon={<Label>{dataFiltered.length}</Label>}
-            iconPosition="end"
-          />
+          {TABS_LIST.map((el, index) => (
+            <Tab
+              key={index}
+              label={el.label}
+              value={el.value}
+              icon={el.icon}
+              iconPosition="end"
+            />
+          ))}
         </Tabs>
 
         <Divider />
 
         <UserTableToolbar
           filterName={filterName}
-          filterRole={filterRole}
-          optionsRole={ROLE_OPTIONS}
           onFilterName={handleFilterName}
-          onFilterRole={handleFilterRole}
           onResetFilter={handleResetFilter}
         />
 
@@ -227,14 +298,16 @@ export default function MemberCard({ members }: Props) {
               <TableHeadCustom
                 order={order}
                 orderBy={orderBy}
-                headLabel={TABLE_HEAD}
-                rowCount={tableData.length}
+                headLabel={
+                  filterStatus === "all" ? TABLE_HEAD : TABLE_HEAD_PENDINGS
+                }
+                rowCount={tableData?.length}
                 numSelected={selected.length}
                 onSort={onSort}
                 onSelectAllRows={(checked) =>
                   onSelectAllRows(
                     checked,
-                    tableData.map((row) => row.id as string)
+                    tableData?.map((row) => row.id as string)
                   )
                 }
               />
@@ -249,13 +322,15 @@ export default function MemberCard({ members }: Props) {
                       selected={selected.includes(row.id as string)}
                       onSelectRow={() => onSelectRow(row.id as string)}
                       onDeleteRow={() => handleDeleteRow(row.id as string)}
-                      onEditRow={() => handleEditRow(row.last_name)}
+                      onEditRow={() => handleEditRow(row.id as string)}
+                      pending={filterStatus === "pending"}
+                      loading={isDeleting}
                     />
                   ))}
 
                 <TableEmptyRows
                   height={denseHeight}
-                  emptyRows={emptyRows(page, rowsPerPage, tableData.length)}
+                  emptyRows={emptyRows(page, rowsPerPage, tableData?.length)}
                 />
 
                 <TableNoData isNotFound={isNotFound} />
@@ -263,14 +338,16 @@ export default function MemberCard({ members }: Props) {
             </Table>
           </Scrollbar>
         </TableContainer>
-
         <TablePaginationCustom
-          count={dataFiltered.length}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={onChangePage}
-          onRowsPerPageChange={onChangeRowsPerPage}
-          //
+          count={data?.meta.itemCount ? data?.meta.itemCount : 0}
+          page={data?.meta.page ? data?.meta.page - 1 : 0}
+          rowsPerPage={data?.meta.take ?? 0}
+          onPageChange={(e, page) => {
+            setFilter("page", page + 1);
+          }}
+          onRowsPerPageChange={(e: any) => {
+            setFilter("take", e.target.value);
+          }}
           dense={dense}
           onChangeDense={onChangeDense}
         />
@@ -287,16 +364,17 @@ export default function MemberCard({ members }: Props) {
           </>
         }
         action={
-          <Button
+          <LoadingButton
             variant="contained"
             color="error"
+            loading={isDeleting}
             onClick={() => {
               handleDeleteRows(selected);
               handleCloseConfirm();
             }}
           >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

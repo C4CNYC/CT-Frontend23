@@ -19,15 +19,20 @@ const StyledInfo = styled("div")(({ theme }) => ({
   },
 }));
 
-interface Props {
+interface IProfileCoverProps {
   name: string;
-  cover: string;
-  avatar: string;
+  cover?: string;
+  avatar?: string;
 }
-export default function ProfileCover({ name, cover, avatar }: Props) {
+export default function ProfileCover({
+  name,
+  cover,
+  avatar,
+}: IProfileCoverProps) {
   if (!cover) {
     cover = "#5be49b";
   }
+
   return (
     <Stack
       sx={{
@@ -60,7 +65,7 @@ export default function ProfileCover({ name, cover, avatar }: Props) {
         >
           <Typography variant="h4">{name}</Typography>
 
-          <Typography sx={{ opacity: 0.72 }}>Student</Typography>
+          <Typography sx={{ opacity: 0.72 }}>Class</Typography>
         </Box>
       </StyledInfo>
     </Stack>

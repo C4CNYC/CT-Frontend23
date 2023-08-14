@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
+import { GiProgression } from "react-icons/gi";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -15,6 +16,7 @@ import { useTheme } from "@mui/system";
 
 import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import CustomTabPanel, {
   customTabProps,
@@ -24,10 +26,11 @@ import { Role } from "src/redux/services/enums/role.enum";
 
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
+import ProgressCard from "./progress-card";
 import QuestsTab from "./quest-card";
 
 interface IClassInfoTable {
-  classData: IClass;
+  classData: IClass & BaseResponseInterface;
 }
 
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
@@ -46,10 +49,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
     setOpenPopover(null);
   };
 
-  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(
-    classData.id as string,
-    { schoolId: classData.school?.id as string }
-  );
+  const addQuestPagePath = STUDENT_PATH_DASHBOARD.class.addQuest(classData.id, {
+    schoolId: classData?.school?.id as string,
+  });
 
   return (
     <Stack sx={{ px: 2, pt: 1, flexGrow: 1 }}>
@@ -84,6 +86,12 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(2)}
           />
+          <Tab
+            label={!isMobile && "Progress"}
+            icon={<GiProgression size={20} />}
+            sx={{ fontSize: "1.1rem" }}
+            {...customTabProps(3)}
+          />
         </Tabs>
         <Stack
           direction="row"
@@ -103,13 +111,12 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               alignItems: "center",
               gap: 1,
               color: "inherit",
+              maxWidth: 360,
+              ml: 3.25,
+              justifyContent: "center",
             }}
           >
-            <Iconify
-              icon="solar:gallery-wide-broken"
-              width={20}
-              sx={{ ml: 5 }}
-            />
+            <Iconify icon="solar:gallery-wide-broken" width={20} />
             {!isMobile && (
               <Typography color="#637381" fontSize="1.1rem" mr="10px">
                 Gallery
@@ -136,13 +143,20 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         </Stack>
       </Stack>
       <CustomTabPanel value={value} index={0}>
-        <QuestsTab />
+        <QuestsTab
+          classId={classData.id}
+          schoolId={classData.school?.id ?? ""}
+          activeTab={value === 0}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <MemberCard members={classData?.students ?? []} />
+        <MemberCard activeTab={value === 1} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <DetailsTab />
+        <DetailsTab classData={classData} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <ProgressCard activeTab={value === 3} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}

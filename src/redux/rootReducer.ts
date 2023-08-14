@@ -5,11 +5,11 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
+import { publicApi } from "./services/public/tribe-public";
 import { studentApi } from "./services/student";
 import { studentAuthApi } from "./services/student-auth";
 import { studentPublicApi } from "./services/student/public-student";
 import { schoolSettingsApi } from "./services/student/school-settings-manager";
-import assignmentsReducer from "./slices/assignments";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
@@ -53,9 +53,9 @@ const rootReducer = combineReducers({
   [studentApi.reducerPath]: studentApi.reducer,
   [schoolSettingsApi.reducerPath]: schoolSettingsApi.reducer,
   [studentPublicApi.reducerPath]: studentPublicApi.reducer,
+  [publicApi.reducerPath]: publicApi.reducer,
   global: globalRducer,
   manager: managerReducer,
-  assignments: assignmentsReducer,
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
 });

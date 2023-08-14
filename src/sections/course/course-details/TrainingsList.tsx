@@ -6,7 +6,7 @@ import { ILesson } from "src/redux/interfaces/content.interface";
 
 import TrainingsItem from "./TrainingsItem";
 
-interface Props {
+interface ITrainingsListProps {
   lessons: Array<ILesson & BaseResponseInterface>;
   unitId: string;
 }
@@ -14,21 +14,16 @@ interface Props {
 export default function TrainingsList({
   lessons,
   unitId,
-}: Props): React.ReactElement {
+}: ITrainingsListProps): React.ReactElement {
   return (
-    <Stack sx={{ width: "100%" }}>
+    <Stack>
       <Typography
         variant="h5"
-        mt={3}
-        mb={2}
-        sx={(theme) => ({
+        sx={{
           color: "#43D4DD",
-          [theme.breakpoints.down(680)]: {
-            mt: 2,
-            mb: 3,
-          },
-        })}
-        gutterBottom
+          mt: 2,
+          mb: 3,
+        }}
       >
         TRAININGS:
       </Typography>

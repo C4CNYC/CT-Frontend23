@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-interface Props {
+interface ITribesCounterProps {
   count: number;
   sx?: Record<string, unknown>;
   sxText?: Record<string, unknown>;
@@ -10,7 +10,7 @@ export default function TribesCounter({
   count,
   sx,
   sxText,
-}: Props): React.ReactElement {
+}: ITribesCounterProps): React.ReactElement {
   return (
     <Box
       sx={{

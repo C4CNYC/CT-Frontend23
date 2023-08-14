@@ -22,7 +22,7 @@ import { Box } from "@mui/system";
 import { ConfirmDialog, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { Iconify } from "src/components/iconify";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { IAssignment } from "src/redux/interfaces/assignment.interface";
 import {
   useDeleteAssignmentMutation,
   useUpdateAssignmentMutation,
@@ -30,10 +30,12 @@ import {
 
 interface IQuestItemProps {
   assignment: IAssignment;
+  schoolId: string;
 }
 
 export default function QuestItem({
   assignment,
+  schoolId,
 }: IQuestItemProps): React.ReactElement {
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -48,7 +50,7 @@ export default function QuestItem({
   const pinTomblerAssignment = async () => {
     try {
       await updateAssignment({
-        schoolId: query.schoolId as string,
+        schoolId,
         assignmentId: assignment.id,
         meta: { ...assignment.meta, pin: !assignment?.meta?.pin },
       }).unwrap();
@@ -61,7 +63,7 @@ export default function QuestItem({
   const onDelete = async () => {
     try {
       await deleteAssignmet({
-        schoolId: query.schoolId as string,
+        schoolId,
         assignmentId: assignment.id,
       }).unwrap();
       enqueueSnackbar("assignment deleted");
@@ -73,10 +75,10 @@ export default function QuestItem({
 
   const editAssignmentPath = STUDENT_PATH_DASHBOARD.class.addQuest(
     query.id as string,
-    { schoolId: query.schoolId as string, assignmentId: assignment.id }
+    { schoolId, assignmentId: assignment.id }
   );
   const assignmentPath = STUDENT_PATH_DASHBOARD.quest.id(assignment.id, {
-    schoolId: query.schoolId as string,
+    schoolId,
   });
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {

@@ -1,19 +1,15 @@
 import { useState } from "react";
 
-import { Avatar, FormGroup, Stack, Typography } from "@mui/material";
+import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { ICourseElement } from "src/redux/interfaces/content.interface";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
-interface Props {
-  courses: ICourseElement[] | [];
-}
-
-export default function DetailsStep({ courses }: Props): React.ReactElement {
-  const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.RESEARCH);
-
+export default function DetailsStep(): React.ReactElement {
+  const { data, isLoading } = useGetCourseQuery({});
+  const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);
   };
@@ -21,7 +17,12 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
   return (
     <Stack sx={{ gap: 4, minHeight: "630px" }}>
       <Stack direction="row" gap={3} flexWrap="wrap">
-        <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
+        <FormGroup
+          sx={{
+            maxWidth: { xs: "100%", sm: "100%", md: "300px" },
+            width: "100%",
+          }}
+        >
           <Typography variant="h5" gutterBottom pl={2}>
             Select type
           </Typography>
@@ -37,7 +38,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
               borderRadius: 1,
               "& fieldset": { border: "none" },
               "& .MuiInputBase-root": {
-                background: "#F7F7FC",
+                background: "#fff",
               },
             }}
           >
@@ -52,36 +53,61 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
             ))}
           </RHFSelect>
         </FormGroup>
-        {type === AssignmentTypes.RESEARCH && (
-          <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
+        {type === AssignmentTypes.COURSE && (
+          <FormGroup
+            sx={{
+              maxWidth: { xs: "100%", sm: "100%", md: "300px" },
+              width: "100%",
+            }}
+          >
             <Typography variant="h5" gutterBottom pl={2}>
               Select course
             </Typography>
-            <RHFSelect
-              native
-              name="course"
-              size="small"
-              sx={{
-                width: "100%",
-                outline: "none",
-                borderRadius: 1,
-                "& fieldset": { border: "none" },
-                "& .MuiInputBase-root": {
-                  background: "#F7F7FC",
-                },
-              }}
-            >
-              <option key="empty" value="empty"></option>
-              {courses.map((course) => (
-                <option key={course.id} value={course.id}>
-                  {course.name}
+            {!isLoading ? (
+              <RHFSelect
+                native
+                name="course"
+                size="small"
+                disabled={!data?.data.length}
+                sx={{
+                  width: "100%",
+                  outline: "none",
+                  borderRadius: 1,
+                  "& fieldset": { border: "none" },
+                  "& .MuiInputBase-root": {
+                    background: "#fff",
+                  },
+                }}
+              >
+                <option key="empty" value="empty">
+                  {!data?.data.length && "You don't have any courses"}
                 </option>
-              ))}
-            </RHFSelect>
+                {data
+                  ? data.data.map((course) => (
+                      <option key={course.id} value={course.id}>
+                        {course.name}
+                      </option>
+                    ))
+                  : null}
+              </RHFSelect>
+            ) : (
+              <Skeleton
+                variant="rounded"
+                sx={(theme) => ({
+                  height: "40px",
+                  background: theme.palette.common.white,
+                })}
+              />
+            )}
           </FormGroup>
         )}
       </Stack>
-      <FormGroup sx={{ maxWidth: "300px", width: "100%" }}>
+      <FormGroup
+        sx={{
+          maxWidth: { xs: "100%", sm: "100%", md: "300px" },
+          width: "100%",
+        }}
+      >
         <Typography variant="h5" gutterBottom pl={2}>
           Select module
         </Typography>
@@ -90,11 +116,11 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
           name="module"
           size="small"
           sx={{
-            background: "#F7F7FC",
+            background: "#fff",
             borderRadius: 1,
             "& fieldset": { border: "none" },
             "& .MuiInputBase-root": {
-              background: "#F7F7FC",
+              background: "#fff",
             },
           }}
         >
@@ -127,7 +153,7 @@ export default function DetailsStep({ courses }: Props): React.ReactElement {
         </Avatar>
         <RHFTextField
           sx={{
-            background: "#F7F7FC",
+            background: "#fff",
             pt: 4,
             pb: 3,
             px: { xs: 0, sm: 3 },

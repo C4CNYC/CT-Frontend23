@@ -1,47 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import { TbInfoCircleFilled } from "react-icons/tb";
 
-import { Box, Chip, FormGroup, Skeleton, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  FormGroup,
+  Skeleton,
+  Stack,
+  Typography,
+  TypographyVariant,
+} from "@mui/material";
 
 import { RHFAutocomplete } from "@components";
+import { ISkill } from "src/redux/interfaces/content.interface";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 
-interface Props {
+interface ISkillsAutocompleteProps {
   setAssignmentsSkills: (s: string[]) => void;
   assignmentsSkills?: string[];
+  labelProps?: TypographyVariant | undefined;
+  skills: ISkill[];
 }
+
 export default function SkillsAutocomplete({
   setAssignmentsSkills,
   assignmentsSkills,
-}: Props): React.ReactElement {
+  labelProps,
+  skills: currentSkills,
+}: ISkillsAutocompleteProps): React.ReactElement {
   const { data, isLoading } = useGetSkillQuery({});
   const [choosen] = useState<string[] | []>();
 
-  const getSkills = () => {
-    if (!data?.data || !assignmentsSkills) return;
-    return assignmentsSkills
-      .map((id) => data.data.filter((skill) => skill.id === id))
-      .reduce((res, cur) => {
-        return res.concat(cur);
-      }, []);
-  };
+  useEffect(() => {
+    if (currentSkills.length) {
+      setAssignmentsSkills(currentSkills.map((el: any) => el.id));
+    }
+  }, [currentSkills]);
 
   if (isLoading || !data) {
     return (
-      <Skeleton
-        variant="rounded"
-        animation="wave"
-        sx={{ width: "100%", height: "56px" }}
-      />
+      <Stack>
+        <Skeleton
+          variant="text"
+          animation="wave"
+          sx={{ width: "30px", height: "28px", mb: 1 }}
+        />
+        <Skeleton
+          variant="rounded"
+          animation="wave"
+          sx={{ width: "100%", height: "56px" }}
+        />
+        <Skeleton
+          variant="rounded"
+          animation="wave"
+          sx={{ width: "100%", height: "27px", mt: 1 }}
+        />
+      </Stack>
     );
   }
 
   return (
     <FormGroup>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant={labelProps ? labelProps : "h5"} gutterBottom>
         Tags:
       </Typography>
       <RHFAutocomplete
@@ -50,7 +73,6 @@ export default function SkillsAutocomplete({
         freeSolo
         options={data.data}
         limitTags={5}
-        defaultValue={getSkills()}
         onChange={(e, value) => {
           setAssignmentsSkills(value.map((el: any) => el.id));
         }}
@@ -65,6 +87,9 @@ export default function SkillsAutocomplete({
         }
         ChipProps={{ size: "medium" }}
         sx={{
+          "& .MuiOutlinedInput-root": {
+            background: "#fff",
+          },
           "& .MuiAutocomplete-tag": {
             background: "#FBDD3F",
             textTransform: "uppercase",

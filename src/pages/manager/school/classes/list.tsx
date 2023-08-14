@@ -5,6 +5,7 @@ import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 
+import { LoadingButton } from "@mui/lab";
 import {
   Button,
   Card,
@@ -24,12 +25,10 @@ import {
   CustomBreadcrumbs,
   Iconify,
   Scrollbar,
-  TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
-  emptyRows,
   useSettingsContext,
   useTable,
 } from "@components";
@@ -40,7 +39,7 @@ import { ClassesTableRow } from "@sections/dashboard/classes/list";
 import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { createRandomAvatar, getRandomColor } from "@utils";
-import { ClassSearchParams } from "src/redux/services/interfaces/class.interface";
+import { ClassSearchParams } from "src/redux/interfaces/class.interface";
 import {
   useCreateClassesMutation,
   useDeleteClassesMutation,
@@ -49,8 +48,6 @@ import {
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-
-// ----------------------------------------------------------------------
 
 const STATUS_OPTIONS = ["all"];
 
@@ -64,22 +61,15 @@ const TABLE_HEAD = [
   { id: "" },
 ];
 
-// ----------------------------------------------------------------------
-
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
 
-// ----------------------------------------------------------------------
-
 export default function UserListPage(): React.ReactElement {
   const {
     dense,
-    page,
     order,
     orderBy,
-    rowsPerPage,
-    //
     selected,
     onSelectRow,
     onSelectAllRows,
@@ -101,7 +91,7 @@ export default function UserListPage(): React.ReactElement {
   const [createClassByManager, { isLoading: createClassLoading }] =
     useCreateClassesMutation();
   const [updateClassAvatar] = useUpdateClassesAvatarMutation();
-  const [deleteCasses] = useDeleteClassesMutation();
+  const [deleteCasses, { isLoading: isDeleting }] = useDeleteClassesMutation();
   const { data, isLoading } = useGetClassesQuery(
     { schoolId, ...filters },
     { skip: !schoolId }
@@ -297,20 +287,11 @@ export default function UserListPage(): React.ReactElement {
                             onDeleteRow={() => {
                               handleDeleteRow(row.id);
                             }}
+                            isDeleting={isDeleting}
                             onEditRow={handleEditRow}
                             updateResult={updateResult}
                           />
                         ))}
-
-                    <TableEmptyRows
-                      height={dense ? 52 : 72}
-                      emptyRows={emptyRows(
-                        page,
-                        rowsPerPage,
-                        data?.data.length ?? 0
-                      )}
-                    />
-
                     <TableNoData
                       isNotFound={!data?.data.length && !isLoading}
                     />
@@ -348,16 +329,17 @@ export default function UserListPage(): React.ReactElement {
           </>
         }
         action={
-          <Button
+          <LoadingButton
             variant="contained"
             color="error"
+            loading={isDeleting}
             onClick={() => {
               handleDeleteRows(selected);
               setOpenConfirm(false);
             }}
           >
             Delete
-          </Button>
+          </LoadingButton>
         }
       />
     </>

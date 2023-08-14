@@ -1,3 +1,5 @@
+import NextLink from "next/link";
+
 import {
   Avatar,
   AvatarGroup,
@@ -11,29 +13,37 @@ import {
 } from "@mui/material";
 
 import { Scrollbar, SvgColor } from "@components";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface, getLinearGradient } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
 
 import TribeButtons from "./TribeButtons";
 import TribeHeaderBtn from "./TribeHeaderBtn";
 import TribeStatistics from "./TribeStatistics";
 
-interface Props {
+interface ITribeItemProps {
   tribe: IClass & BaseResponseInterface;
 }
 
-export default function TribeItem({ tribe }: Props): React.ReactElement {
+export default function TribeItem({
+  tribe,
+}: ITribeItemProps): React.ReactElement {
+  const { data } = useGetClassStudentsQuery({ id: tribe.id });
+
   return (
     <Paper
       elevation={5}
       sx={{
         display: "flex",
         flexDirection: "column",
-        minWidth: "344px",
         position: "relative",
         overflow: "hidden",
         borderRadius: "16px",
+        textDecoration: "none",
       }}
+      component={NextLink}
+      href={STUDENT_PATH_DASHBOARD.tribes.tribe(tribe.id)}
     >
       <Box
         sx={{
@@ -105,14 +115,14 @@ export default function TribeItem({ tribe }: Props): React.ReactElement {
           </Typography>
         </Scrollbar>
         <AvatarGroup max={4} total={tribe.students?.length}>
-          {tribe?.students?.map((student) => (
+          {data?.data.map((student) => (
             <Tooltip key={student.id} title={student.email}>
               <Avatar alt="student.email" src={student.avatar} />
             </Tooltip>
           ))}
         </AvatarGroup>
         <TribeStatistics
-          students={tribe.students ?? []}
+          students={data?.data ?? []}
           createdAt={tribe.createdAt}
         />
       </Stack>
