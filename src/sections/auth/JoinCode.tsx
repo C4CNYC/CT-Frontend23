@@ -1,5 +1,9 @@
-import { FormProvider, RHFCodes } from "@components";
+import React, { useState } from "react";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -11,9 +15,9 @@ import {
   FormHelperText,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
+
+import { FormProvider, RHFCodes } from "@components";
+
 import { useSnackbar } from "../../components/snackbar";
 
 // ----------------------------------------------------------------------
@@ -65,7 +69,6 @@ export default function JoinCode({ children }: Props) {
   const onSubmit = async (data: FormValuesProps) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      console.log("DATA", Object.values(data).join(""));
       enqueueSnackbar("Verify success!");
       setOpen(false);
     } catch (error) {

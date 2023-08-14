@@ -91,7 +91,7 @@ export default function UserListPage(): React.ReactElement {
     name: "",
     class_id: "",
   });
-  const [deleteStudent] = useDeleteStudentMutation();
+  const [deleteStudent, { isLoading: isDeleting }] = useDeleteStudentMutation();
 
   const { data, isLoading } = useGetStudentsQuery(
     { schoolId, ...filters },
@@ -189,7 +189,7 @@ export default function UserListPage(): React.ReactElement {
             }}
           >
             {STATUS_OPTIONS.map((tab, index) => (
-              <Tab key={tab} label={tab} {...a11yProps(index)} />
+              <Tab key={index} label={tab} {...a11yProps(index)} />
             ))}
           </Tabs>
 
@@ -255,11 +255,11 @@ export default function UserListPage(): React.ReactElement {
                     <TableBody sx={{ minHeight: 12 }}>
                       {isLoading
                         ? [...Array(5)].map((item, i) => (
-                            <SkeletonMembers key={i} />
+                            <SkeletonMembers key={item + i} />
                           ))
                         : data?.data.map((row) => (
                             <UserTableRow
-                              loading={isLoading}
+                              loading={isDeleting}
                               key={row.id}
                               row={row}
                               selected={selected.includes(row.id)}

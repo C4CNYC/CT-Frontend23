@@ -73,7 +73,6 @@ export default function SchoolProfileForm({
   const { handleSubmit } = methods;
 
   const onSubmit = async (formData: FormValuesProps): Promise<void> => {
-    console.log(formData, "formData");
     try {
       if (file) {
         const formDataImg = new FormData();

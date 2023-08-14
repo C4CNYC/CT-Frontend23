@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { Box, Container, Skeleton } from "@mui/material";
 
 import {
@@ -18,10 +20,9 @@ import {
   IFriend,
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
-import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
+import { useGetFriendsStudentContentQuery } from "src/redux/services/student/friends-manager";
 
 import FilterFriends from "./filter";
-import { useRouter } from "next/router";
 
 Friends.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -33,57 +34,58 @@ export default function Friends(): React.ReactElement {
   const { filters, setFilter } = useFilters<IFriendsSearchParams>(
     {
       name: "",
-      class_id: query.class_id as string
+      class_id: query.class_id as string,
     },
     FilterMode.global
   );
-  const { data, isLoading, isFetching } = useGetFriendsContentQuery(filters);
+  const { data, isLoading, isFetching } =
+    useGetFriendsStudentContentQuery(filters);
 
   return (
     <>
       <Container maxWidth={themeStretch ? false : "lg"}>
         {isLoading ? (
           <Container>
-          <SkeletonBreadcrumbs /> <SkeletonFilter />
-          <Box 
-            gap={3}
-            display="grid"
-            gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
-            }}
-            sx={{ display: "flex", flexWrap: "wrap" }}
-          >
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              sx={{
-                width: { xs: "100%", sm: "47%", md: "31%"},
-                height: "460px",
-                mb: "18px",
+            <SkeletonBreadcrumbs /> <SkeletonFilter />
+            <Box
+              gap={3}
+              display="grid"
+              gridTemplateColumns={{
+                xs: "repeat(1, 1fr)",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
               }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              sx={{
-                width: { xs: "100%", sm: "47%", md: "31%"},
-                height: "460px",
-                mb: "18px",
-              }}
-            />
-            <Skeleton
-              animation="wave"
-              variant="rounded"
-              sx={{
-                width: { xs: "100%", sm: "47%", md: "31%"},
-                height: "460px",
-                mb: "18px",
-              }}
-            />
-          </Box>
-        </Container>
+              sx={{ display: "flex", flexWrap: "wrap" }}
+            >
+              <Skeleton
+                animation="wave"
+                variant="rounded"
+                sx={{
+                  width: { xs: "100%", sm: "47%", md: "31%" },
+                  height: "460px",
+                  mb: "18px",
+                }}
+              />
+              <Skeleton
+                animation="wave"
+                variant="rounded"
+                sx={{
+                  width: { xs: "100%", sm: "47%", md: "31%" },
+                  height: "460px",
+                  mb: "18px",
+                }}
+              />
+              <Skeleton
+                animation="wave"
+                variant="rounded"
+                sx={{
+                  width: { xs: "100%", sm: "47%", md: "31%" },
+                  height: "460px",
+                  mb: "18px",
+                }}
+              />
+            </Box>
+          </Container>
         ) : (
           <>
             <CustomBreadcrumbs

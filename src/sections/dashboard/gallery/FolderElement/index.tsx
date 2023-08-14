@@ -37,7 +37,7 @@ export default function FolderElement({
           <Stack>
             <Image
               sx={{ ">svg": { fill: "red" } }}
-              src="/assets/gallery/ic_folder.svg"
+              src="/assets/icons/files/ic_folder.svg"
               alt=""
             />
           </Stack>

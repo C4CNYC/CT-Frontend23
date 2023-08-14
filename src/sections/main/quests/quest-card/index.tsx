@@ -58,7 +58,7 @@ export default function QuestsTab({
           {isFetching ? getQuestsSkeletonList() : null}
         </SimpleInfiniteList>
         {!isLoading && !isFetching && !data?.data.length && (
-          <EmptyContent title="Class did`t have any quests" />
+          <EmptyContent title="No data" />
         )}
       </Stack>
       <Notes />

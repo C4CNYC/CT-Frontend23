@@ -58,7 +58,7 @@ export default function MenuTribesList(): React.ReactElement {
         }}
       >
         {isLoading ? (
-          <Stack gap={1} sx={{ maxWidth: "150px" }}>
+          <Stack gap={1} ml={isNavMini ? 0 : 2} sx={{ maxWidth: "150px" }}>
             <Skeleton variant="rounded" height={30} width={30} />
             {Array.from("1234").map((el) => (
               <Skeleton variant="rounded" height={32} key={el} />
