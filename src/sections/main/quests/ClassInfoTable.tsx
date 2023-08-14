@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AiOutlineFundProjectionScreen } from "react-icons/ai";
 import { CiMountain1, CiShare1 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
+import { GiProgression } from "react-icons/gi";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
 
@@ -25,6 +26,7 @@ import { Role } from "src/redux/services/enums/role.enum";
 
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
+import ProgressCard from "./progress-card";
 import QuestsTab from "./quest-card";
 
 interface IClassInfoTable {
@@ -83,6 +85,12 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             icon={<IoSettingsOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(2)}
+          />
+          <Tab
+            label={!isMobile && "Progress"}
+            icon={<GiProgression size={20} />}
+            sx={{ fontSize: "1.1rem" }}
+            {...customTabProps(3)}
           />
         </Tabs>
         <Stack
@@ -146,6 +154,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <DetailsTab classData={classData} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <ProgressCard activeTab={value === 3} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}
