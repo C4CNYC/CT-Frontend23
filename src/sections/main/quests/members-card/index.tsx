@@ -30,10 +30,9 @@ import {
   useSnackbar,
   useTable,
 } from "@components";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { useFilters } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
-import { _userList } from "src/_mock/arrays";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
@@ -71,8 +70,10 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
   const { user } = useAuthContext();
   const { query, push } = useRouter();
 
+  const { filters, setFilter } = useFilters({});
+
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
-    { id: query.id as string },
+    { id: query.id as string, ...filters },
     { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   );
 
@@ -81,7 +82,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
     isLoading: isLoadingPending,
     isFetching: isFetchingPending,
   } = useGetClassPendingQuery(
-    { classId: query.id as string },
+    { classId: query.id as string, ...filters },
     { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   );
 
@@ -103,8 +104,6 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
     //
     onSort,
     onChangeDense,
-    onChangePage,
-    onChangeRowsPerPage,
   } = useTable();
 
   const [tableData, setTableData] = useState<IStudent[]>([]);
@@ -339,14 +338,16 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
             </Table>
           </Scrollbar>
         </TableContainer>
-
         <TablePaginationCustom
-          count={dataFiltered.length}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={onChangePage}
-          onRowsPerPageChange={onChangeRowsPerPage}
-          //
+          count={data?.meta.itemCount ? data?.meta.itemCount : 0}
+          page={data?.meta.page ? data?.meta.page - 1 : 0}
+          rowsPerPage={data?.meta.take ?? 0}
+          onPageChange={(e, page) => {
+            setFilter("page", page + 1);
+          }}
+          onRowsPerPageChange={(e: any) => {
+            setFilter("take", e.target.value);
+          }}
           dense={dense}
           onChangeDense={onChangeDense}
         />

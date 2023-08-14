@@ -73,6 +73,10 @@ export interface MentorSearchParams extends BaseSearchInterface {
   name?: string;
   class_id?: string;
 }
+export interface IStudentSearchParams extends BaseSearchInterface {
+  name?: string;
+  role?: string;
+}
 
 export interface CreateUserRequest extends IUser {}
 
