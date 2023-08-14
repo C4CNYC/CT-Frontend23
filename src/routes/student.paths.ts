@@ -33,12 +33,15 @@ export const STUDENT_PATH_DASHBOARD = {
     join: "/student/class/join",
     editStudent: (studentId: string) =>
       path("/student/class/edit-student/", `${studentId}`),
+
     addQuest: (id: string, query?: Record<string, string>) =>
       path("/student/class/add-quest/", `${id}`) +
-      `?${query ? new URLSearchParams(query) : ""}`,
+      (query ? `?${new URLSearchParams(query)}` : ""),
+
     id: (id: string, query?: Record<string, string>) =>
       path("/student/class/", `${id}`) +
-      `?${query ? new URLSearchParams(query) : ""}`,
+      (query ? `?${new URLSearchParams(query)}` : ""),
+
     invite: (code: string) => path("/student/class/", `${code}`),
   },
   quest: {

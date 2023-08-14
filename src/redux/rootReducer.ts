@@ -10,7 +10,6 @@ import { studentApi } from "./services/student";
 import { studentAuthApi } from "./services/student-auth";
 import { studentPublicApi } from "./services/student/public-student";
 import { schoolSettingsApi } from "./services/student/school-settings-manager";
-import assignmentsReducer from "./slices/assignments";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
@@ -57,7 +56,6 @@ const rootReducer = combineReducers({
   [publicApi.reducerPath]: publicApi.reducer,
   global: globalRducer,
   manager: managerReducer,
-  assignments: assignmentsReducer,
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
 });

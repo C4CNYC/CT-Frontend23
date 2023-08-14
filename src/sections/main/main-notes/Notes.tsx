@@ -9,7 +9,8 @@ export default function Notes() {
     <Stack
       direction="row"
       sx={{
-        mt: { xs: 2, sm: 2, md: 2, lg: "72px" },
+        ml: { lg: 2 },
+        mt: { xs: 2, sm: 2, md: 2, lg: 0 },
         maxWidth: { lg: "300px" },
         px: { sm: 1, md: 1, lg: 0 },
       }}

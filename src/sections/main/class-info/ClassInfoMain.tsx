@@ -44,7 +44,7 @@ export default function ClassInfoMain({
               size="16px"
               style={{ marginRight: "10px" }}
             />
-            {classData?.school_name}
+            {classData?.school?.name}
           </Typography>
           <Avatar
             sx={{

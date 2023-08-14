@@ -3,6 +3,7 @@ import { Control } from "react-hook-form";
 import { FormGroup, Stack, Typography } from "@mui/material";
 
 import { RHFSelect } from "@components";
+import { ISkill } from "src/redux/interfaces/content.interface";
 
 import SkillsAutocomplete from "./components/SkillsAutocomplete";
 import TimeController from "./components/TimeController";
@@ -12,12 +13,14 @@ interface ISettingsStepProps {
   setAssignmentsSkills: (s: string[]) => void;
   assignmentsSkills?: string[];
   control: Control<FormQuestProps, any>;
+  skills: ISkill[];
 }
 
 export default function SettingsStep({
   control,
   setAssignmentsSkills,
   assignmentsSkills,
+  skills,
 }: ISettingsStepProps): React.ReactElement {
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
@@ -83,6 +86,7 @@ export default function SettingsStep({
           setAssignmentsSkills(s);
         }}
         assignmentsSkills={assignmentsSkills}
+        skills={skills}
       />
     </Stack>
   );

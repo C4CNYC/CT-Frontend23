@@ -4,12 +4,12 @@ import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { AssigmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 export default function DetailsStep(): React.ReactElement {
   const { data, isLoading } = useGetCourseQuery({});
-  const [type, setType] = useState<AssigmentTypes>(AssigmentTypes.COURSE);
+  const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);
   };
@@ -43,17 +43,17 @@ export default function DetailsStep(): React.ReactElement {
             }}
           >
             <option key="empty" value="empty"></option>
-            {Object.keys(AssigmentTypes).map((t) => (
+            {Object.keys(AssignmentTypes).map((t) => (
               <option
-                key={AssigmentTypes[t as keyof typeof AssigmentTypes]}
-                value={AssigmentTypes[t as keyof typeof AssigmentTypes]}
+                key={AssignmentTypes[t as keyof typeof AssignmentTypes]}
+                value={AssignmentTypes[t as keyof typeof AssignmentTypes]}
               >
                 {t.split("_").join(" ").toLocaleLowerCase()}
               </option>
             ))}
           </RHFSelect>
         </FormGroup>
-        {type === AssigmentTypes.COURSE && (
+        {type === AssignmentTypes.COURSE && (
           <FormGroup
             sx={{
               maxWidth: { xs: "100%", sm: "100%", md: "300px" },

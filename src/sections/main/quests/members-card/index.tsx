@@ -30,10 +30,9 @@ import {
   useSnackbar,
   useTable,
 } from "@components";
-import { PATH_DASHBOARD } from "@routes/paths";
+import { useFilters } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
-import { _userList } from "src/_mock/arrays";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
@@ -63,18 +62,19 @@ const TABLE_HEAD_PENDINGS = [
 ];
 
 interface IMemberCardProps {
-  pendings: string;
-  students: string;
+  activeTab: boolean;
 }
 
-export default function MemberCard({ pendings, students }: IMemberCardProps) {
+export default function MemberCard({ activeTab }: IMemberCardProps) {
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const { query, push } = useRouter();
 
+  const { filters, setFilter } = useFilters({});
+
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
-    { id: query.id as string },
-    { skip: !query.id, refetchOnMountOrArgChange: true }
+    { id: query.id as string, ...filters },
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   );
 
   const {
@@ -82,8 +82,8 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     isLoading: isLoadingPending,
     isFetching: isFetchingPending,
   } = useGetClassPendingQuery(
-    { classId: query.id as string },
-    { skip: !query.id, refetchOnMountOrArgChange: true }
+    { classId: query.id as string, ...filters },
+    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
   );
 
   const [deleteFromClass, { isLoading: isDeleting }] =
@@ -104,8 +104,6 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     //
     onSort,
     onChangeDense,
-    onChangePage,
-    onChangeRowsPerPage,
   } = useTable();
 
   const [tableData, setTableData] = useState<IStudent[]>([]);
@@ -234,14 +232,14 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
     {
       label: "All",
       value: "all",
-      icon: <Label>{students ?? 0}</Label>,
+      icon: <Label>{data?.meta.itemCount ?? 0}</Label>,
     },
   ];
   if (user?.role !== Role.Student) {
     TABS_LIST.push({
       label: "Pending",
       value: "pending",
-      icon: <Label>{pendings ?? 0}</Label>,
+      icon: <Label>{pending?.meta.itemCount ?? 0}</Label>,
     });
   }
 
@@ -340,14 +338,16 @@ export default function MemberCard({ pendings, students }: IMemberCardProps) {
             </Table>
           </Scrollbar>
         </TableContainer>
-
         <TablePaginationCustom
-          count={dataFiltered.length}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={onChangePage}
-          onRowsPerPageChange={onChangeRowsPerPage}
-          //
+          count={data?.meta.itemCount ? data?.meta.itemCount : 0}
+          page={data?.meta.page ? data?.meta.page - 1 : 0}
+          rowsPerPage={data?.meta.take ?? 0}
+          onPageChange={(e, page) => {
+            setFilter("page", page + 1);
+          }}
+          onRowsPerPageChange={(e: any) => {
+            setFilter("take", e.target.value);
+          }}
           dense={dense}
           onChangeDense={onChangeDense}
         />

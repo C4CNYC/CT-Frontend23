@@ -60,7 +60,7 @@ export default function DefaultClassInfo({
   ): Promise<void> => {
     try {
       await updateClassByManager({
-        schoolId: classData.school_id,
+        schoolId: classData?.school?.id as string,
         classId: id,
         name,
         description,
@@ -70,7 +70,7 @@ export default function DefaultClassInfo({
         const file = new FormData();
         file.append("file", uploadedFile);
         await updateClassAvatar({
-          schoolId: classData.school_id,
+          schoolId: classData?.school?.id as string,
           classId: id,
           file,
         }).unwrap();
@@ -103,31 +103,30 @@ export default function DefaultClassInfo({
               px: 2,
             }}
           >
-            {classData?.setting_share_token_enable ? (
-              <Stack
-                direction="row"
-                alignItems="center"
-                sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+            <Stack
+              direction="row"
+              alignItems="center"
+              sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+            >
+              <Typography variant="subtitle2">Join-code:</Typography>
+              <Button
+                onClick={() => {
+                  onCopy(classData?.setting?.share_token);
+                }}
+                sx={{
+                  gap: 0.5,
+                  color: "inherit",
+                  p: 0,
+                  textTransform: "none",
+                }}
               >
-                <Typography variant="subtitle2">Join-code:</Typography>
-                <Button
-                  onClick={() => {
-                    onCopy(classData?.setting_share_token);
-                  }}
-                  sx={{
-                    gap: 0.5,
-                    color: "inherit",
-                    p: 0,
-                    textTransform: "none",
-                  }}
-                >
-                  <Typography variant="subtitle2">
-                    {classData?.setting_share_token}
-                  </Typography>
-                  <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
-                </Button>
-              </Stack>
-            ) : null}
+                <Typography variant="subtitle2">
+                  {classData?.setting?.share_token}
+                </Typography>
+                <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
+              </Button>
+            </Stack>
+
             <Link
               sx={{
                 color: "inherit",
@@ -167,7 +166,7 @@ export default function DefaultClassInfo({
                   color: "#fff",
                   gap: 0.5,
                 }}
-                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.class_id}`}
+                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
                 component={nextLink}
                 typography="button"
               >
@@ -217,7 +216,7 @@ export default function DefaultClassInfo({
                     uploadedFile?: File
                   ) => {
                     handleEditClass(
-                      classData.class_id,
+                      classData.id,
                       name,
                       description,
                       cover,
@@ -229,9 +228,9 @@ export default function DefaultClassInfo({
                     description: classData.description ?? "",
                     cover: classData.cover ?? "",
                   }}
-                  rowId={classData.class_id}
+                  rowId={classData.id}
                   updateResult={updateResult}
-                  schoolId={classData.school_id}
+                  schoolId={classData?.school?.id}
                 >
                   <Button
                     sx={{

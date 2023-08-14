@@ -1,6 +1,13 @@
 import NextLink from "next/link";
 
-import { Avatar, Box, Link, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Link,
+  Tooltip,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 import { useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -16,6 +23,7 @@ export default function TribeListItem({
   active,
   classItem,
 }: Props): React.ReactElement {
+  const theme = useTheme();
   const { themeLayout } = useSettingsContext();
   const isNavMini = themeLayout === "mini";
 
@@ -30,11 +38,11 @@ export default function TribeListItem({
           alignItems: "center",
           p: 0,
           justifyContent: "flex-start",
-          minWidth: isNavMini ? "30px" : "50px",
+          position: "relative",
         }}
       >
         <Box
-          sx={(theme) => ({
+          sx={{
             position: "absolute",
             top: "5px",
             left: "-12px",
@@ -44,20 +52,20 @@ export default function TribeListItem({
             borderRadius: 2,
             zIndex: 10,
             display: active ? "block" : "none",
-          })}
+          }}
         />
         <Avatar
           variant="rounded"
           src={classItem.avatar ?? ""}
-          sx={(theme) => ({
+          sx={{
             border: `2px solid ${theme.palette.info.light}`,
             width: "30px",
             height: "30px",
-          })}
+          }}
         />
         {!isNavMini && (
           <Typography
-            sx={(theme) => ({ ml: 2, color: theme.palette.text.secondary })}
+            sx={{ ml: 2, color: theme.palette.text.secondary }}
             variant="body1"
           >
             {classItem.name}

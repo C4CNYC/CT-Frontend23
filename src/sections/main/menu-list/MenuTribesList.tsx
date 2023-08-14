@@ -55,11 +55,10 @@ export default function MenuTribesList(): React.ReactElement {
       <Stack
         sx={{
           gap: 1,
-          mr: isNavMini ? 2 : 0,
         }}
       >
         {isLoading ? (
-          <Stack gap={1} sx={{ ml: 2, maxWidth: "150px" }}>
+          <Stack gap={1} sx={{ maxWidth: "150px" }}>
             <Skeleton variant="rounded" height={30} width={30} />
             {Array.from("1234").map((el) => (
               <Skeleton variant="rounded" height={32} key={el} />
@@ -86,12 +85,12 @@ export default function MenuTribesList(): React.ReactElement {
             <Stack
               sx={{
                 gap: 1,
-                ml: 2,
                 height: "150px",
+                width: isNavMini ? "58px" : "auto",
               }}
             >
               <Scrollbar>
-                <Stack gap={1}>
+                <Stack pl={2} gap={1}>
                   {data?.data.map((c, i) => {
                     return (
                       <TribeListItem

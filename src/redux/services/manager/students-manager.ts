@@ -2,7 +2,11 @@
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
 import { managerApi } from ".";
-import { IStudent, StudentSearchParams } from "../interfaces/user.interface";
+import {
+  IStudent,
+  IStudentSearchParams,
+  StudentSearchParams,
+} from "../interfaces/user.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,11 +33,12 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     getClassPending: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
-      { classId: string }
+      { classId: string } & IStudentSearchParams
     >({
-      query: ({ classId }) => ({
+      query: ({ classId, ...params }) => ({
         url: `/school/{schoolId}/class/${classId}/student/pending`,
         method: "GET",
+        params,
       }),
       providesTags: ["Pendings"],
     }),

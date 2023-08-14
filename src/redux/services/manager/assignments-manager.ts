@@ -6,7 +6,7 @@ import {
   IAssignment,
   IAssignmentCreate,
   IAssignmentUpdate,
-} from "../interfaces/assignment.interface";
+} from "../../interfaces/assignment.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({

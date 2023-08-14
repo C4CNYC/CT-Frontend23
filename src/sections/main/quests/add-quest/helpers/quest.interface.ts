@@ -1,6 +1,5 @@
-import { BaseResponseInterface } from "@utils";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
-import { IAssignment } from "src/redux/services/interfaces/assignment.interface";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
+import { ISkill } from "src/redux/services/interfaces/skill.interface";
 
 export interface FormQuestProps {
   type: AssignmentTypes;
@@ -13,8 +12,10 @@ export interface FormQuestProps {
   dueDate: string;
   closeDate: string;
   active: boolean;
+  skill_tags?: ISkill[];
 }
 
 export interface IAddQuest {
-  assignment?: IAssignment & BaseResponseInterface;
+  assignmentId?: string;
+  schoolId: string;
 }

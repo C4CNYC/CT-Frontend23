@@ -1,12 +1,12 @@
 import { ICourse } from "@types";
-import { BaseResponseInterface } from "@utils";
-import { AssignmentTypes } from "src/redux/services/enums/assignment-types.enum";
+import { BaseResponseInterface, BaseSearchInterface } from "@utils";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
+import { IClass } from "src/redux/interfaces/class.interface";
+import { ISkill } from "src/redux/interfaces/content.interface";
 
-import { AssignmentComplexity } from "../enums/assignment-complexity.enum";
-import { AssignmentStatuses } from "../enums/assignment-status.enum";
-import { IClass } from "./class.interface";
-import { ILesson } from "./courseUnits.interface";
-import { ITask } from "./task.interface";
+import { Status } from "../enums/assignments.enum";
+import { ILesson } from "../services/interfaces/courseUnits.interface";
+import { ITask } from "../services/interfaces/task.interface";
 
 export interface IAssignment {
   id: string;
@@ -21,7 +21,6 @@ export interface IAssignment {
   start_date: Date;
   end_date: Date;
   close_date: Date;
-  complexity: AssignmentComplexity;
   duration?: { hours: string; minutes: string };
   assignee_classes: Array<IClass & BaseResponseInterface>;
   lesson: ILesson & BaseResponseInterface;
@@ -29,6 +28,7 @@ export interface IAssignment {
   tags?: string[];
   students?: string[];
   meta: Record<string, any>;
+  skill_tags?: ISkill[];
 }
 
 export interface IAssignmentUpdate {
@@ -37,15 +37,15 @@ export interface IAssignmentUpdate {
   name?: string;
   description?: string;
   type?: string;
-  status?: AssignmentStatuses;
+  status?: Status;
   active?: boolean;
   start_date?: string | Date;
   end_date?: string | Date;
   close_date?: string;
-  complexity?: AssignmentComplexity;
   duration?: string;
   meta?: Record<string, any>;
   tags?: string[] | [];
+  skill_tags?: ISkill[];
 }
 
 export interface IAssignmentCreate {
@@ -61,3 +61,5 @@ export interface IAssignmentCreate {
   meta?: Record<string, any>;
   tags?: string[] | [];
 }
+
+export interface IAssignmetsSearchParams extends BaseSearchInterface {}

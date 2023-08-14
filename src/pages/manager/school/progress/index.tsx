@@ -168,7 +168,7 @@ export default function Progress(): React.ReactElement {
   );
 }
 
-function getProgressData(
+export function getProgressData(
   moduleId: string,
   lessonId: string,
   students: Array<IStudent & BaseResponseInterface>,
@@ -229,7 +229,7 @@ function getProgressData(
   return data;
 }
 
-function getProgress(
+export function getProgress(
   progres?: IProgress & BaseResponseInterface,
   chalanges?: Array<ILessonContent & BaseResponseInterface>
 ): number {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
@@ -15,29 +15,30 @@ import {
 } from "@mui/material";
 
 import { RHFAutocomplete } from "@components";
+import { ISkill } from "src/redux/interfaces/content.interface";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 
 interface ISkillsAutocompleteProps {
   setAssignmentsSkills: (s: string[]) => void;
   assignmentsSkills?: string[];
   labelProps?: TypographyVariant | undefined;
+  skills: ISkill[];
 }
+
 export default function SkillsAutocomplete({
   setAssignmentsSkills,
   assignmentsSkills,
   labelProps,
+  skills: currentSkills,
 }: ISkillsAutocompleteProps): React.ReactElement {
   const { data, isLoading } = useGetSkillQuery({});
   const [choosen] = useState<string[] | []>();
 
-  const getSkills = () => {
-    if (!data?.data || !assignmentsSkills) return;
-    return assignmentsSkills
-      .map((id) => data.data.filter((skill) => skill.id === id))
-      .reduce((res, cur) => {
-        return res.concat(cur);
-      }, []);
-  };
+  useEffect(() => {
+    if (currentSkills.length) {
+      setAssignmentsSkills(currentSkills.map((el: any) => el.id));
+    }
+  }, [currentSkills]);
 
   if (isLoading || !data) {
     return (
@@ -72,7 +73,6 @@ export default function SkillsAutocomplete({
         freeSolo
         options={data.data}
         limitTags={5}
-        defaultValue={getSkills()}
         onChange={(e, value) => {
           setAssignmentsSkills(value.map((el: any) => el.id));
         }}

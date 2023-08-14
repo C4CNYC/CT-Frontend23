@@ -13,13 +13,11 @@ import {
 
 import { Iconify, MenuPopover } from "@components";
 import { BaseResponseInterface } from "@utils";
+import { IClass } from "src/redux/interfaces/class.interface";
 import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
-import { IClass } from "src/redux/services/interfaces/class.interface";
 import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
 
 import AddClassDialog from "./CreateClassDialog";
-
-// ----------------------------------------------------------------------
 
 interface Props {
   classes: IClass & BaseResponseInterface;
