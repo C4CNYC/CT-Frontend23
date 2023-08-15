@@ -145,7 +145,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     inviteStudent: builder.mutation<
       IStudent & BaseResponseInterface,
-      { schoolId: string; email: string; class_id: string }
+      { schoolId: string; email: string; class_id?: string }
     >({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/student/invite`,
