@@ -5,16 +5,16 @@ import {
   IModulesSearchParams,
 } from "src/redux/interfaces/content.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getModuleWithLessons: builder.query<
       IModule & BaseResponseInterface,
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/module/${id}`,
+        url: `/student/module/${id}`,
         method: "GET",
       }),
     }),
@@ -23,7 +23,7 @@ const extendedApi = studentApi.injectEndpoints({
       IModulesSearchParams
     >({
       query: (params) => ({
-        url: "/content/module",
+        url: "/student/content/module",
         method: "GET",
         params,
       }),

@@ -26,7 +26,7 @@ import {
   useGetPublicCourseContentQuery,
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
-} from "src/redux/services/student/public-student";
+} from "src/redux/services/public-student";
 
 const Tour = dynamic(
   async () =>

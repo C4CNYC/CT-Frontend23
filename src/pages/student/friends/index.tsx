@@ -20,7 +20,7 @@ import {
   IFriend,
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
-import { useGetFriendsStudentContentQuery } from "src/redux/services/student/friends-manager";
+import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";
 
 import FilterFriends from "./filter";
 

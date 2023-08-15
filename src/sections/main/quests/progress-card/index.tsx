@@ -23,7 +23,7 @@ import {
   useGetProgressQuery,
 } from "src/redux/services/manager/progress-manager";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
-import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
+import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 
 interface IProgressCardProps {
   activeTab: boolean;

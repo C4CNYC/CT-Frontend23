@@ -9,7 +9,7 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import { PATH_MAIN } from "@routes/paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileMain from "@sections/student-profile/ProfileMain";
-import { useGetFriendQuery } from "src/redux/services/student/friends-manager";
+import { useGetFriendQuery } from "src/redux/services/manager/friends-manager";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

@@ -12,7 +12,7 @@ import {
   useCourseAddLikeMutation,
   useCourseAddRatingMutation,
   useCourseRemoveLikeMutation,
-} from "src/redux/services/student/courses-manager";
+} from "src/redux/services/manager/courses-student";
 
 interface Props {
   course: ICourseElement;

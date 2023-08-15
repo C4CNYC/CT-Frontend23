@@ -7,7 +7,7 @@ import { EmptyContent } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import ProjectMain from "@sections/course";
 import SkeletonCoursePage from "@sections/course/SkeletonCoursePage";
-import { useGetCoursContentQuery } from "src/redux/services/student/courses-manager";
+import { useGetCoursContentQuery } from "src/redux/services/manager/courses-student";
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

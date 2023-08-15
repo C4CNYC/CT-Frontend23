@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 import {
   IAssignment,
   IAssignmetsSearchParams,
 } from "../../interfaces/assignment.interface";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getAssignmentStudent: builder.query<
       IAssignment & BaseResponseInterface,
       { assignmentId: string } & IAssignmetsSearchParams
     >({
       query: ({ assignmentId, ...params }) => ({
-        url: `/assignment/${assignmentId}`,
+        url: `/student/assignment/${assignmentId}`,
         method: "GET",
         params,
       }),
@@ -25,7 +25,7 @@ const extendedApi = studentApi.injectEndpoints({
       { class_id: string }
     >({
       query: ({ ...params }) => ({
-        url: "/assignment",
+        url: "/student/assignment",
         method: "GET",
         params,
       }),

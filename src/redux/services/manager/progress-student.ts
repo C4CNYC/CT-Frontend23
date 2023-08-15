@@ -2,16 +2,16 @@
 import { BaseResponseInterface } from "@utils";
 import { IProgress } from "src/redux/interfaces/progress.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getMyProgressByCourse: builder.query<
       IProgress & BaseResponseInterface,
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/course/${id}/progress`,
+        url: `/student/course/${id}/progress`,
         method: "GET",
       }),
       providesTags: ["Progress"],
@@ -21,7 +21,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string; lesson_content_id: string; module_id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/course/${id}/progress/complete-chalange`,
+        url: `/student/course/${id}/progress/complete-chalange`,
         method: "PATCH",
         body,
       }),

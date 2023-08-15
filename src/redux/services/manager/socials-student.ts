@@ -1,13 +1,13 @@
 import { BaseResponseInterface } from "@utils";
 import { ISocials } from "src/redux/interfaces/socials.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getSocials: builder.query<ISocials[], { studentId: string }>({
       query: ({ studentId }) => ({
-        url: `/${studentId}/social`,
+        url: `/student/${studentId}/social`,
         method: "GET",
       }),
       providesTags: ["Socials"],
@@ -17,7 +17,7 @@ const extendedApi = studentApi.injectEndpoints({
       { studentId: string; link: string; name: string; type: string }
     >({
       query: ({ studentId, ...body }) => ({
-        url: `/${studentId}/social`,
+        url: `/student/${studentId}/social`,
         method: "POST",
         body,
       }),
@@ -31,7 +31,7 @@ const extendedApi = studentApi.injectEndpoints({
       }
     >({
       query: ({ studentId, socialId, ...body }) => ({
-        url: `/${studentId}/social/${socialId}`,
+        url: `/student/${studentId}/social/${socialId}`,
         method: "PATCH",
         body,
       }),
@@ -42,7 +42,7 @@ const extendedApi = studentApi.injectEndpoints({
       { studentId: string; socialId: string }
     >({
       query: ({ studentId, socialId }) => ({
-        url: `/${studentId}/social/${socialId}`,
+        url: `/student/${studentId}/social/${socialId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Socials"],

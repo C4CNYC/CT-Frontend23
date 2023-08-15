@@ -9,8 +9,8 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import JoinTribeModal from "@sections/join-tribe/JoinTribeModal";
 import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
 import ClassInfoTable from "@sections/main/quests/ClassInfoTable";
+import { useGetClassQuery } from "src/redux/services/manager/classes-student";
 import { useGetPublicTribeQuery } from "src/redux/services/public/tribe-public";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -23,6 +23,7 @@ export default function HomeOverview(): React.ReactElement {
     { id: query.id as string },
     { skip: !query.id || !!query.joinCode }
   );
+
   const { data: classInfo } = useGetPublicTribeQuery(
     {
       joinCode: query.joinCode as string,

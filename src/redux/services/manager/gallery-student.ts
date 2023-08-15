@@ -4,16 +4,16 @@ import {
   IGallerySearchParams,
 } from "src/redux/interfaces/gallary.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getProjects: builder.query<
       BaseListResponseInterface<IGallery & BaseResponseInterface>,
       IGallerySearchParams
     >({
       query: (params) => ({
-        url: "/project",
+        url: "/student/project",
         method: "GET",
         params,
       }),
@@ -24,14 +24,14 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/project/${id}`,
+        url: `/student/project/${id}`,
         method: "GET",
       }),
       providesTags: ["Projects"],
     }),
     postProject: builder.mutation<IGallery, IGallery>({
       query: ({ ...body }) => ({
-        url: "/project",
+        url: "/student/project",
         method: "POST",
         body,
       }),
@@ -42,7 +42,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/project/${id}`,
+        url: `/student/project/${id}`,
         method: "PATCH",
         body,
       }),
@@ -50,7 +50,7 @@ const extendedApi = studentApi.injectEndpoints({
     }),
     removeProject: builder.mutation<IGallery, { id: string }>({
       query: ({ id }) => ({
-        url: `/project/${id}`,
+        url: `/student/project/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Projects" }],

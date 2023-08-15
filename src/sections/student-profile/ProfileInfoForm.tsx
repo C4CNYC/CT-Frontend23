@@ -77,33 +77,16 @@ export default function ProfileInfoForm({
     try {
       await updateStudent({
         about: formData.about,
-        // phone: data.phone,
+        phone: data.phone,
         first_name: formData.firstName,
         last_name: formData.lastName,
         post_code: formData.postcode,
         cover: formData.cover,
       }).unwrap();
-      // if (username !== data.username) {
-      //   updateStudent({ username: data.username })
-      //     .unwrap()
-      //     .catch((error) => {
-      //       enqueueSnackbar(error?.data?.message, {
-      //         variant: "error",
-      //       });
-      //     });
-      // }
       if (formData.photoURL) {
         const file = new FormData();
         file.append("file", formData.photoURL);
-        updateStudentAvatar({
-          file,
-        })
-          .unwrap()
-          .catch((error) => {
-            enqueueSnackbar(error?.data?.message, {
-              variant: "error",
-            });
-          });
+        updateStudentAvatar({ file }).unwrap()
       }
       enqueueSnackbar("Update success!");
     } catch (error) {

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { LoadingScreen } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import GuestGuard from "src/auth/GuestGuard";
-import { useGetPublicCourseQuery } from "src/redux/services/student/public-student";
+import { useGetPublicCourseQuery } from "src/redux/services/public-student";
 
 export default function Index(): React.ReactElement {
   const { push } = useRouter();

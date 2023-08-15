@@ -11,7 +11,7 @@ import {
 } from "@routes/student.paths";
 import FolderElement from "@sections/dashboard/gallery/FolderElement";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
-import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
+import { useGetProjectsQuery } from "src/redux/services/manager/gallery-student";
 
 Gallery.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

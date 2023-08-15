@@ -5,10 +5,10 @@ import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 export default function DetailsStep(): React.ReactElement {
-  const { data, isLoading } = useGetCourseQuery({});
+  const { data, isLoading } = useManagerGetCourseQuery({});
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);

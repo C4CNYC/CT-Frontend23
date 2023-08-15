@@ -6,7 +6,7 @@ import { EmptyContent, SimpleInfiniteList } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { getCountTakingElment } from "@utils";
 import { ILessonSearchParams } from "src/redux/interfaces/content.interface";
-import { useGetLessonsListQuery } from "src/redux/services/student/lesson-student";
+import { useGetLessonsListQuery } from "src/redux/services/manager/lesson-student";
 
 import SkeletonLesson from "./lesson-list-item/SkeletonLesson";
 import LessonItem from "./lesson-list-item/lessonItem";

@@ -20,12 +20,9 @@ import CreatePalette, {
 } from "@sections/main/create-class/createPalette";
 import { createRandomAvatar } from "@utils";
 import { randomInArray } from "src/_mock";
-import {
-  useCreateClassesMutation,
-  useUpdateClassesAvatarMutation,
-} from "src/redux/services/manager/classes-manager";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
+import { useCreateClassesMutation, useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
 
 CreateClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -95,9 +92,9 @@ export default function CreateClass(): React.ReactElement {
       <Container maxWidth={false} disableGutters>
         <ChooseShoolModal
           openDialog={openDialog}
-          setOpenDialog={(open: boolean) => setOpenDialog(open)}
+          setOpenDialog={(open: boolean) => { setOpenDialog(open); }}
           schoolId={schoolId}
-          setSchoolId={(id: string) => setSchoolId(id)}
+          setSchoolId={(id: string) => { setSchoolId(id); }}
         />
         <FormProvider
           methods={methods}
@@ -106,7 +103,7 @@ export default function CreateClass(): React.ReactElement {
           <CreateHeader choosenColor={choosenColor} />
           <CreatePalette
             choosenColor={choosenColor}
-            setChoosenColor={(color: string) => setChoosenColor(color)}
+            setChoosenColor={(color: string) => { setChoosenColor(color); }}
           />
           <Stack
             sx={{
@@ -120,7 +117,7 @@ export default function CreateClass(): React.ReactElement {
               size="large"
               variant="soft"
               color="error"
-              onClick={() => push(STUDENT_PATH_DASHBOARD.class.root)}
+              onClick={async () => await push(STUDENT_PATH_DASHBOARD.class.root)}
             >
               Cancel
             </Button>

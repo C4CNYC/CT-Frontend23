@@ -16,15 +16,15 @@ const extendedApi = managerApi.injectEndpoints({
       BaseListResponseInterface<IProgress & BaseResponseInterface>,
       IProgressSearch & { id: string }
     >({
-      query: ({ id, ...params }) => ({
-        url: `course/${id}/progress`,
+      query: ({ id }) => ({
+        url: `/manager/course/${id}/progress`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
     }),
     getProgressContent: builder.query<IProgressChalanges, { id: string }>({
       query: ({ id }) => ({
-        url: `course/${id}/progress/content`,
+        url: `/manager/course/${id}/progress/content`,
         method: "GET",
       }),
       transformResponse: (

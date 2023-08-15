@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 
+// import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
+
 import { Iconify } from "../iconify";
 
 interface Prop {
@@ -20,12 +22,14 @@ interface Prop {
 
 export default function EmailAddressModal({ children }: Prop) {
   const [open, setOpen] = useState(false);
+  // const [inviteStudent, { isLoading }] = useInviteStudentMutation();
+
   return (
     <>
-      <Box onClick={() => setOpen(true)}>{children}</Box>
+      <Box onClick={() => { setOpen(true); }}>{children}</Box>
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => { setOpen(false); }}
         sx={{ minWidth: "70wh" }}
       >
         <Box
@@ -41,7 +45,7 @@ export default function EmailAddressModal({ children }: Prop) {
               icon="ep:close"
               width={24}
               height={24}
-              onClick={() => setOpen(false)}
+              onClick={() => { setOpen(false); }}
             />
           </IconButton>
         </Box>
@@ -62,16 +66,16 @@ export default function EmailAddressModal({ children }: Prop) {
                 icon="iconamoon:arrow-left-2-bold"
                 width={28}
                 height={28}
-                onClick={() => setOpen(false)}
+                onClick={() => { setOpen(false); }}
               />
             </Button>
             <Typography variant="h4" ml="-10px">
-              Email address or domain
+              Email address
             </Typography>
           </Box>
           <TextField
             variant="outlined"
-            placeholder="Type email addresses or a domain"
+            placeholder="Type email"
             multiline
             fullWidth
             InputProps={{
@@ -88,33 +92,21 @@ export default function EmailAddressModal({ children }: Prop) {
               mt: "40px",
             }}
           />
-          <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-between"
-            minHeight="50vh"
-          >
-            <Box mt="20px" maxWidth="400px">
-              <Typography variant="body1" sx={{ color: "#666" }}>
-                Tip: Save time by approving an entire domain (e.g.
-                @edu.example.com) or you can upload a CSV
-              </Typography>
-            </Box>
-            <Button
-              fullWidth
-              sx={{
+          <Button
+            fullWidth
+            sx={{
+              mt: 5,
+              background: "#d1329e",
+              color: "white",
+              "&:hover": {
                 background: "#d1329e",
-                color: "white",
-                "&:hover": {
-                  background: "#d1329e",
-                },
-                height: "54px",
-                fontSize: "20px",
-              }}
-            >
-              Confirm
-            </Button>
-          </Box>
+              },
+              height: "54px",
+              fontSize: "20px",
+            }}
+          >
+            Confirm
+          </Button>
         </Box>
       </Dialog>
     </>

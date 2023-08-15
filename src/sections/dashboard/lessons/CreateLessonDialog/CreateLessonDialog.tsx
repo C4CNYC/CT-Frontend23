@@ -92,9 +92,9 @@ export default function CreateLessonDialog({
   const [open, setOpen] = useState(false);
   const [, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [editLesson, {isLoading: isLoadingUpdate}] = useUpdateLessonMutation();
-  const [createLesson, {isLoading: isLoadingCreate}] = useCreateLessonMutation();
-  const [addLessonToModule, {isLoading: isLoadingAdd}] = useAddLessonToModuleMutation();
+  const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation();
+  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation();
+  const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -198,7 +198,7 @@ export default function CreateLessonDialog({
                     rows={3}
                   />
 
-                  <RHFSwitch name="active" label="Module active" />
+                  <RHFSwitch name="active" label="Lesson active" />
                 </Box>
               </Grid>
             </TabPanel>

@@ -15,7 +15,7 @@ import { IGallery } from "src/redux/interfaces/gallary.interface";
 import {
   useRemoveProjectMutation,
   useUpdateProjectMutation,
-} from "src/redux/services/student/gallery-student";
+} from "src/redux/services/manager/gallery-student";
 import { RootState, useSelector } from "src/redux/store";
 
 import ElementInfo from "../ElementInfo";

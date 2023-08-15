@@ -10,7 +10,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/lesson/${id}/skill`,
+        url: `/manager/lesson/${id}/skill`,
         method: "GET",
       }),
       providesTags: ["LessonSkill"],
@@ -19,7 +19,7 @@ const extendedApi = managerApi.injectEndpoints({
     updateLessonSkill: builder.mutation<void, { id: string; skill_id: string }>(
       {
         query: ({ id, ...body }) => ({
-          url: `lesson/${id}/skill`,
+          url: `/manager/lesson/${id}/skill`,
           method: "PATCH",
           body,
         }),
@@ -30,7 +30,7 @@ const extendedApi = managerApi.injectEndpoints({
     removeLessonSkill: builder.mutation<void, { id: string; skill_id: string }>(
       {
         query: ({ id, ...body }) => ({
-          url: `lesson/${id}/skill`,
+          url: `/managerlesson/${id}/skill`,
           method: "DELETE",
           body,
         }),

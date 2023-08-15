@@ -11,7 +11,7 @@ const extendedApi = managerApi.injectEndpoints({
       IAuthorSearchParams
     >({
       query: (params) => ({
-        url: "/author",
+        url: "/manager/author",
         method: "GET",
         params,
       }),
@@ -23,7 +23,7 @@ const extendedApi = managerApi.injectEndpoints({
       Omit<IAuthor, "avatar" | "email">
     >({
       query: ({ id, ...body }) => ({
-        url: `/author/${id}`,
+        url: `/manager/author/${id}`,
         method: "PATCH",
         body,
       }),
@@ -34,7 +34,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string; file: FormData }
     >({
       query: ({ id, file }) => ({
-        url: `/author/${id}/cover`,
+        url: `/manager/author/${id}/cover`,
         method: "PATCH",
         body: file,
       }),
@@ -45,7 +45,7 @@ const extendedApi = managerApi.injectEndpoints({
       Omit<IAuthor, "avatar" | "id">
     >({
       query: ({ ...body }) => ({
-        url: "/author",
+        url: "/manager/author",
         method: "POST",
         body,
       }),
@@ -56,7 +56,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/author/${id}`,
+        url: `/manager/author/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Author" }],
@@ -66,7 +66,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string; course_id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/author/${id}/course`,
+        url: `/manager/author/${id}/course`,
         method: "PATCH",
         body,
       }),
@@ -77,7 +77,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string; course_id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/author/${id}/course`,
+        url: `/manager/author/${id}/course`,
         method: "DELETE",
         body,
       }),

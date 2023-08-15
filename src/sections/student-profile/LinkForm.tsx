@@ -10,7 +10,7 @@ import { Box, Grid } from "@mui/material";
 
 import { FormProvider, RHFTextField } from "@components";
 import { ISocials } from "src/redux/interfaces/socials.interface";
-import { usePostSocialMutation } from "src/redux/services/student/socials-student";
+import { usePostSocialMutation } from "src/redux/services/manager/socials-student";
 
 import LinkSelect from "./LinkSelect";
 

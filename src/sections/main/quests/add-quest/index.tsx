@@ -31,7 +31,7 @@ import {
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
-import { useGetAssignmentStudentQuery } from "src/redux/services/student/assignments-student";
+import { useGetAssignmentStudentQuery } from "src/redux/services/manager/assignments-student";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";

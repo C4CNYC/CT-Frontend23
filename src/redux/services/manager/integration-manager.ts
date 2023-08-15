@@ -14,7 +14,7 @@ const extendedApi = managerApi.injectEndpoints({
       IIntegrationSearch
     >({
       query: (params) => ({
-        url: "/integration",
+        url: "/manager/integration",
         method: "GET",
         params,
       }),
@@ -22,7 +22,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     createIntegration: builder.mutation<IIntegration, IIntegration>({
       query: ({ ...body }) => ({
-        url: "/integration",
+        url: "/manager/integration",
         method: "POST",
         body,
       }),
@@ -33,7 +33,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string } & IIntegration
     >({
       query: ({ id, ...body }) => ({
-        url: `/integration/${id}`,
+        url: `/manager/integration/${id}`,
         method: "PATCH",
         body,
       }),
@@ -44,7 +44,7 @@ const extendedApi = managerApi.injectEndpoints({
       { integrationId: string }
     >({
       query: ({ integrationId }) => ({
-        url: `/integration/${integrationId}`,
+        url: `/manager/integration/${integrationId}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Integrations" }],

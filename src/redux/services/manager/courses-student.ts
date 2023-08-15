@@ -6,16 +6,16 @@ import {
   ICourseSearchParams,
 } from "src/redux/interfaces/content.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getCourse: builder.query<
       BaseListResponseInterface<ICourseElement & BaseResponseInterface>,
       ICourseSearchParams
     >({
       query: (params) => ({
-        url: "/course",
+        url: "/student/course",
         method: "GET",
         params,
       }),
@@ -27,7 +27,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/course/${id}`,
+        url: `/student/course/${id}`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
@@ -38,7 +38,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/course/${id}/content`,
+        url: `/student/course/${id}/content`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
@@ -49,7 +49,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/course/${id}/like/add`,
+        url: `/student/course/${id}/like/add`,
         method: "PATCH",
         body,
       }),
@@ -59,7 +59,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/course/${id}/like/remove`,
+        url: `/student/course/${id}/like/remove`,
         method: "PATCH",
         body,
       }),
@@ -69,7 +69,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string; rating: number }
     >({
       query: ({ id, ...body }) => ({
-        url: `/course/${id}/rating`,
+        url: `/student/course/${id}/rating`,
         method: "PATCH",
         body,
       }),

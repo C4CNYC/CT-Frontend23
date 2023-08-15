@@ -21,7 +21,7 @@ import {
 
 import { FormProvider, RHFSwitch, RHFTextField } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { useUpdateProjectMutation } from "src/redux/services/student/gallery-student";
+import { useUpdateProjectMutation } from "src/redux/services/manager/gallery-student";
 
 interface Props {
   children: React.ReactElement;

@@ -6,7 +6,7 @@ import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import GoalsList from "@sections/goals/GoalsList";
-import { useGetGoalsQuery } from "src/redux/services/student/goals-student";
+import { useGetGoalsQuery } from "src/redux/services/manager/goals-student";
 import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 
 Goals.getLayout = (page: React.ReactElement) => (

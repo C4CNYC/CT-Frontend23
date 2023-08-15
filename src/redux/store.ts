@@ -15,11 +15,10 @@ import rootReducer, { rootPersistConfig } from "./rootReducer";
 import { adminApi } from "./services/admin";
 import { authApi } from "./services/auth";
 import { managerApi } from "./services/manager";
+import { studentPublicApi } from "./services/public-student";
 import { publicApi } from "./services/public/tribe-public";
-import { studentApi } from "./services/student";
+import { schoolSettingsApi } from "./services/school-settings-manager";
 import { studentAuthApi } from "./services/student-auth";
-import { studentPublicApi } from "./services/student/public-student";
-import { schoolSettingsApi } from "./services/student/school-settings-manager";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -32,7 +31,6 @@ const store = configureStore({
       serializableCheck: false,
       immutableCheck: false,
     })
-      .concat(studentApi.middleware)
       .concat(authApi.middleware)
       .concat(studentAuthApi.middleware)
       .concat(schoolSettingsApi.middleware)

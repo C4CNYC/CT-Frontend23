@@ -5,7 +5,7 @@ import { FilterMode, useFilters } from "@hooks";
 import Notes from "@sections/main/main-notes/Notes";
 import NotesSkeletonList from "@sections/main/main-notes/NotesSkeleton";
 import { IAssignmetsSearchParams } from "src/redux/interfaces/assignment.interface";
-import { useGetAssignmentListStudentQuery } from "src/redux/services/student/assignments-student";
+import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 
 import QuestItem from "./QuestItem";
 
