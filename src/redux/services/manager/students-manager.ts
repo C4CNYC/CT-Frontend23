@@ -145,14 +145,14 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     inviteStudent: builder.mutation<
       IStudent & BaseResponseInterface,
-      { schoolId: string; email: string }
+      { schoolId: string; email: string; class_id: string }
     >({
       query: ({ schoolId, ...body }) => ({
         url: `/manager/school/${schoolId}/student/invite`,
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Students"],
+      invalidatesTags: ["ClassesStudentList"],
     }),
   }),
   overrideExisting: false,

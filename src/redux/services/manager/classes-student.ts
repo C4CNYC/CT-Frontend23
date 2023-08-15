@@ -58,7 +58,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["ClassesStudent"],
+      providesTags: ["ClassesStudentList"],
     }),
     getClassMentor: builder.query<IMentor[], { id: string }>({
       query: ({ id }) => ({
