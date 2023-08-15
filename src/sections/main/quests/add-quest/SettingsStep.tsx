@@ -10,17 +10,17 @@ import TimeController from "./components/TimeController";
 import { FormQuestProps } from "./helpers/quest.interface";
 
 interface ISettingsStepProps {
-  setAssignmentsSkills: (s: string[]) => void;
-  assignmentsSkills?: string[];
+  setAssignmentsSkillsId: (s: string[]) => void;
+  assignmentsSkillsId?: string[];
   control: Control<FormQuestProps, any>;
-  skills: ISkill[];
+  existedSkills: ISkill[];
 }
 
 export default function SettingsStep({
   control,
-  setAssignmentsSkills,
-  assignmentsSkills,
-  skills,
+  setAssignmentsSkillsId,
+  assignmentsSkillsId,
+  existedSkills,
 }: ISettingsStepProps): React.ReactElement {
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
@@ -82,11 +82,11 @@ export default function SettingsStep({
       </FormGroup>
 
       <SkillsAutocomplete
-        setAssignmentsSkills={(s: string[]) => {
-          setAssignmentsSkills(s);
+        setAssignmentsSkillsId={(s: string[]) => {
+          setAssignmentsSkillsId(s);
         }}
-        assignmentsSkills={assignmentsSkills}
-        skills={skills}
+        assignmentsSkillsId={assignmentsSkillsId}
+        existedSkills={existedSkills}
       />
     </Stack>
   );

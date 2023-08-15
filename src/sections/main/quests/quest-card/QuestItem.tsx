@@ -21,8 +21,10 @@ import { Box } from "@mui/system";
 
 import { ConfirmDialog, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Iconify } from "src/components/iconify";
 import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { Role } from "src/redux/services/enums/role.enum";
 import {
   useDeleteAssignmentMutation,
   useUpdateAssignmentMutation,
@@ -143,9 +145,6 @@ export default function QuestItem({
             <Box display="flex" gap={1} alignItems="center">
               <Iconify icon="bx:award" sx={{ color: "#EE467A" }} />
               <Iconify icon="flat-color-icons:ok" sx={{ color: "#75CF6D" }} />
-              <Typography variant="h6" whiteSpace="nowrap">
-                82%
-              </Typography>
             </Box>
           </Stack>
           <Stack direction="row" justifyContent="space-between">
@@ -217,9 +216,13 @@ export default function QuestItem({
             <IconButton>
               <Iconify icon="ion:share-outline" width={22} />
             </IconButton>
-            <IconButton onClick={handleOpenPopover}>
-              <Iconify icon="pepicons-pop:dots-y" width={22} />
-            </IconButton>
+            <RoleBasedGuard
+              roles={[Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
+            >
+              <IconButton onClick={handleOpenPopover}>
+                <Iconify icon="pepicons-pop:dots-y" width={22} />
+              </IconButton>
+            </RoleBasedGuard>
           </Stack>
         </Stack>
       </Stack>

@@ -1,7 +1,7 @@
 import { Control, Controller } from "react-hook-form";
 import { TbInfoCircleFilled } from "react-icons/tb";
 
-import { FormGroup, TextField, Typography } from "@mui/material";
+import { FormGroup, TextField, Typography, useTheme } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 
 import { FormQuestProps } from "../helpers/quest.interface";
@@ -19,6 +19,7 @@ export default function TimeController({
   control,
   infoText,
 }: Props): React.ReactElement {
+  const theme = useTheme();
   return (
     <FormGroup>
       <Typography variant="h5" gutterBottom>
@@ -27,7 +28,7 @@ export default function TimeController({
       <Controller
         name={name}
         control={control}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
           <DatePicker
             value={value}
             onChange={(event) => {
@@ -45,6 +46,7 @@ export default function TimeController({
                     ml: 0,
                   },
                 }}
+                error={!!error}
                 helperText={
                   <Typography
                     variant="caption"
@@ -52,10 +54,17 @@ export default function TimeController({
                       fontStyle: "italic",
                       display: "inline-flex",
                       alignItems: "center",
+                      color: error ? theme.palette.error.main : "error",
                     }}
                   >
-                    <TbInfoCircleFilled color="#D9D9D9" size={22} />
-                    {infoText}
+                    {error ? (
+                      error?.message
+                    ) : (
+                      <>
+                        <TbInfoCircleFilled color="#D9D9D9" size={22} />
+                        {infoText}
+                      </>
+                    )}
                   </Typography>
                 }
                 {...params}
