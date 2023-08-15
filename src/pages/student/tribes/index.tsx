@@ -10,7 +10,7 @@ import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-student";
+import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 
 enum TabType {
   Active = "active",
@@ -25,7 +25,7 @@ export default function Tribes(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const [currentTab, setCurrentTab] = useState(TabType.Active);
 
-  const { data, isLoading } = useGetClassesQuery({});
+  const { data, isLoading } = useGetStudentClassesQuery({});
 
   if (isLoading) return <SkeletonTribes />;
 
