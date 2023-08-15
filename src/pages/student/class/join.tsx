@@ -38,10 +38,11 @@ interface FormValueProps {
 }
 
 export default function JoinClass(): React.ReactElement {
-  const { themeStretch } = useSettingsContext();
   const { push } = useRouter();
-  const [joinClass, { isLoading }] = useJoinClassMutation();
   const { enqueueSnackbar } = useSnackbar();
+
+  const { themeStretch } = useSettingsContext();
+  const [joinClass, { isLoading }] = useJoinClassMutation();
 
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateClassSchema),

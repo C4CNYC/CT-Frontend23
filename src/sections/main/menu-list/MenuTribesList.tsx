@@ -18,17 +18,17 @@ import { MenuPopover, Scrollbar, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-student";
 
 import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";
+import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 
 export default function MenuTribesList(): React.ReactElement {
   const { themeLayout } = useSettingsContext();
   const isNavMini = themeLayout === "mini";
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const { data, isLoading } = useGetClassesQuery({});
+  const { data, isLoading } = useGetStudentClassesQuery({});
   const { query } = useRouter();
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {

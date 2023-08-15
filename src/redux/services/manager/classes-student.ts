@@ -28,9 +28,9 @@ const extendedApi = managerApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ["ClassesStudent"],
     }),
-    getClasses: builder.query<
+    getStudentClasses: builder.query<
       BaseListResponseInterface<IClass & BaseResponseInterface>,
       ClassSearchParams
     >({
@@ -40,14 +40,14 @@ const extendedApi = managerApi.injectEndpoints({
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
     getClass: builder.query<IClass & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/student/class/${id}`,
         method: "GET",
       }),
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
     getClassStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
@@ -58,7 +58,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
     getClassMentor: builder.query<IMentor[], { id: string }>({
       query: ({ id }) => ({
@@ -69,14 +69,14 @@ const extendedApi = managerApi.injectEndpoints({
         const manager = response.filter((el) => el.role === "manager");
         return manager ?? response;
       },
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
   }),
   overrideExisting: false,
 });
 
 export const {
-  useGetClassesQuery,
+  useGetStudentClassesQuery,
   useGetClassQuery,
   useGetClassMentorQuery,
   useGetClassStudentsQuery,

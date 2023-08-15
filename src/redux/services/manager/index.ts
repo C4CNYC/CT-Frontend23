@@ -32,7 +32,7 @@ export const managerApi = createApi({
     "Pendings",
     "School",
     "Students",
-    "Classes",
+    "ClassesStudent",
     "SchoolSettings",
     "SchoolContacts",
     "Assignments",

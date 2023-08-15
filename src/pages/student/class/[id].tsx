@@ -21,10 +21,12 @@ HomeOverview.getLayout = (page: React.ReactElement) => (
 export default function HomeOverview(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { query, push, isReady } = useRouter();
+
   const { data, isLoading } = useGetClassQuery(
     { id: query.id as string },
     { skip: !query.id }
   );
+
   const { data: classInfo } = useGetPublicTribeQuery(
     {
       joinCode: query.joinCode as string,
