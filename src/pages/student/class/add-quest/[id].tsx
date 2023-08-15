@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 import { Container } from "@mui/material";
 
 import { useSettingsContext } from "@components";
