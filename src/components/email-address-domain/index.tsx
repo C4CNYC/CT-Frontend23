@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 
+// import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
+
 import { Iconify } from "../iconify";
 
 interface Prop {
@@ -20,6 +22,8 @@ interface Prop {
 
 export default function EmailAddressModal({ children }: Prop) {
   const [open, setOpen] = useState(false);
+  // const [inviteStudent, { isLoading }] = useInviteStudentMutation();
+
   return (
     <>
       <Box onClick={() => { setOpen(true); }}>{children}</Box>
