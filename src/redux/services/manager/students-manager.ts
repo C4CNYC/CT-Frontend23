@@ -131,7 +131,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "DELETE",
         body,
       }),
-      invalidatesTags: ["Students"],
+      invalidatesTags: ["Students", "ClassesStudent"],
     }),
     deleteStudent: builder.mutation<
       void,
