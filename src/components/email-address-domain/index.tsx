@@ -29,11 +29,13 @@ interface FormValuesProps {
 interface IEmailAddressModalProps {
   children: React.ReactElement;
   schoolId: string;
+  classId: string;
 }
 
 export default function EmailAddressModal({
   children,
   schoolId,
+  classId,
 }: IEmailAddressModalProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
@@ -52,7 +54,7 @@ export default function EmailAddressModal({
 
   const onSubmit = async ({ email }: FormValuesProps) => {
     try {
-      await inviteStudent({ schoolId, email }).unwrap();
+      await inviteStudent({ schoolId, email, class_id: classId }).unwrap();
       enqueueSnackbar("Student invited!");
       methods.reset({ email: "" });
     } catch (error) {

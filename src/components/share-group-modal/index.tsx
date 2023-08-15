@@ -304,7 +304,10 @@ export default function ShareGroupModal({
                   <AiOutlineArrowRight />
                 </Button>
               </ClassroomModal>
-              <EmailAddressModal schoolId={schoolClass?.school?.id ?? ""}>
+              <EmailAddressModal
+                schoolId={schoolClass?.school?.id ?? ""}
+                classId={schoolClass?.id}
+              >
                 <Button
                   fullWidth
                   sx={{
