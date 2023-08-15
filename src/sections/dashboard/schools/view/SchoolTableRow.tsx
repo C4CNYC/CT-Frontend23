@@ -73,7 +73,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
       <TableCell padding="checkbox" align="left">
         {row.name}
       </TableCell>
-      <TableCell align="justify">{row.country}</TableCell>
+      <TableCell align="center">{row.country}</TableCell>
       <TableCell align="left">{row.city}</TableCell>
       <TableCell align="left">{row.phone}</TableCell>
       <TableCell align="left">

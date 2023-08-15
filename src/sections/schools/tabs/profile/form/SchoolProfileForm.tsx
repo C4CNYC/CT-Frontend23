@@ -67,6 +67,7 @@ export default function SchoolProfileForm({
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(UpdateSchoolSchema),
+    mode: "all",
     defaultValues,
   });
 
@@ -82,8 +83,8 @@ export default function SchoolProfileForm({
           file: formDataImg,
         }).unwrap();
         setImgValue([]);
+        enqueueSnackbar("Cover success!");
       }
-      enqueueSnackbar("Cover success!");
       if (methods.formState.isDirty) {
         await updateSchoolProfile({
           schoolId,
@@ -95,6 +96,7 @@ export default function SchoolProfileForm({
           about: formData.about ?? "",
           phone: formData.phone,
         }).unwrap();
+        methods.reset({}, { keepValues: true, keepIsValid: true });
         enqueueSnackbar("Update info success!");
       }
     } catch (error: any) {

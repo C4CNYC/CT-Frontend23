@@ -1,14 +1,26 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 
+import { useGoogleLogin } from "@react-oauth/google";
+
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, CircularProgress, Dialog, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  IconButton,
+  Skeleton,
+  Typography,
+} from "@mui/material";
+
+import {
+  useGetGoogleClassesQuery,
+  useMigrateGoogleClassesStudentsMutation,
+} from "src/redux/services/manager/students-manager";
 
 import { Iconify } from "../iconify";
-import { useGoogleLogin } from "@react-oauth/google";
 import { useSnackbar } from "../snackbar";
-import { useGetGoogleClassesQuery, useMigrateGoogleClassesStudentsMutation } from "src/redux/services/manager/students-manager";
-import { useRouter } from "next/router";
-
 import { GoogleBtn } from "./GoogleBtn";
 import { GoogleClassesList } from "./GoogleClassesList";
 
@@ -17,7 +29,10 @@ interface IClassroomModal {
   schoolId: string;
 }
 
-export default function ClassroomModal({ children, schoolId }: IClassroomModal) {
+export default function ClassroomModal({
+  children,
+  schoolId,
+}: IClassroomModal) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [token, setToken] = useState("");
@@ -26,15 +41,20 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
 
   const [migrate, { isLoading }] = useMigrateGoogleClassesStudentsMutation();
 
-  const { data, isFetching } = useGetGoogleClassesQuery({
-    schoolId,
-    classId: router.query.id as string,
-    access_token: token
-  }, { skip: !token });
+  const { data, isFetching } = useGetGoogleClassesQuery(
+    {
+      schoolId,
+      classId: router.query.id as string,
+      access_token: token,
+    },
+    { skip: !token }
+  );
 
   const onLoginWithGoogle = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/classroom.courses.readonly",
-    onSuccess: async ({ access_token }) => { setToken(access_token) },
+    onSuccess: async ({ access_token }) => {
+      setToken(access_token);
+    },
   });
 
   const onMigrateStudents = async () => {
@@ -43,12 +63,14 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
         schoolId,
         classId: router.query.id as string,
         access_token: token,
-        google_class_id: classId
-      }).unwrap()
+        google_class_id: classId,
+      }).unwrap();
+      enqueueSnackbar("Migrate successfully!");
+      setOpen(false);
     } catch (e) {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
-  }
+  };
 
   return (
     <>
@@ -61,6 +83,7 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
       </Box>
       <Dialog
         fullWidth
+        maxWidth={"xs"}
         open={open}
         onClose={() => {
           setOpen(false);
@@ -79,7 +102,9 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
               icon="ep:close"
               width={24}
               height={24}
-              onClick={() => { setOpen(false); }}
+              onClick={() => {
+                setOpen(false);
+              }}
             />
           </IconButton>
         </Box>
@@ -100,7 +125,9 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
                 icon="iconamoon:arrow-left-2-bold"
                 width={28}
                 height={28}
-                onClick={() => { setOpen(false); }}
+                onClick={() => {
+                  setOpen(false);
+                }}
               />
             </Button>
             <Typography variant="h4" ml="-10px">
@@ -108,13 +135,20 @@ export default function ClassroomModal({ children, schoolId }: IClassroomModal) 
             </Typography>
           </Box>
           <Box mt="32px" mb="32px">
-            {isFetching ? <CircularProgress/> : null}
-            {!token ? <GoogleBtn onClick={ () => { onLoginWithGoogle() }}/> : null}
-            {
-              data?.length && !isFetching
-                ? <GoogleClassesList classes={data ?? []} onSelectClass={setClassId}/>
-                : null
-            }
+            {isFetching ? <Skeleton variant="rounded" height="56px" /> : null}
+            {!token ? (
+              <GoogleBtn
+                onClick={() => {
+                  onLoginWithGoogle();
+                }}
+              />
+            ) : null}
+            {data?.length && !isFetching ? (
+              <GoogleClassesList
+                classes={data ?? []}
+                onSelectClass={setClassId}
+              />
+            ) : null}
           </Box>
           <LoadingButton
             loading={isLoading}

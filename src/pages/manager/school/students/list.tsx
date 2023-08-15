@@ -28,10 +28,12 @@ import {
   CustomBreadcrumbs,
   Iconify,
   Scrollbar,
+  TableEmptyRows,
   TableHeadCustom,
   TableNoData,
   TablePaginationCustom,
   TableSelectedAction,
+  emptyRows,
   useSettingsContext,
   useTable,
 } from "@components";
@@ -46,8 +48,6 @@ import {
   useGetStudentsQuery,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-
-// ----------------------------------------------------------------------
 
 const STATUS_OPTIONS = ["all", "invites"];
 
@@ -73,6 +73,7 @@ export default function UserListPage(): React.ReactElement {
     order,
     orderBy,
     selected,
+    rowsPerPage,
     setSelected,
     onSelectRow,
     onSelectAllRows,
@@ -254,9 +255,11 @@ export default function UserListPage(): React.ReactElement {
                     />
                     <TableBody sx={{ minHeight: 12 }}>
                       {isLoading
-                        ? [...Array(5)].map((item, i) => (
-                            <SkeletonMembers key={item + i} />
-                          ))
+                        ? Array(5)
+                            .fill(null)
+                            .map((item, i) => (
+                              <SkeletonMembers key={item + i} />
+                            ))
                         : data?.data.map((row) => (
                             <UserTableRow
                               loading={isDeleting}
@@ -274,6 +277,16 @@ export default function UserListPage(): React.ReactElement {
                               }}
                             />
                           ))}
+                      {!isLoading && (
+                        <TableEmptyRows
+                          height={dense ? 52 : 72}
+                          emptyRows={emptyRows(
+                            page,
+                            rowsPerPage,
+                            data?.data.length ?? 0
+                          )}
+                        />
+                      )}
                       <TableNoData
                         isNotFound={!data?.data.length && !isLoading}
                       />
@@ -281,17 +294,14 @@ export default function UserListPage(): React.ReactElement {
                   </Table>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                  <Table
-                    size={dense ? "small" : "medium"}
-                    sx={{ minWidth: 800 }}
-                  >
-                    <PendingInvitesTab
-                      onSort={onSort}
-                      order={order}
-                      page={page}
-                      selected={selected}
-                    />
-                  </Table>
+                  <PendingInvitesTab
+                    onSort={onSort}
+                    order={order}
+                    page={page}
+                    selected={selected}
+                    dense={dense}
+                    rowsPerPage={rowsPerPage}
+                  />
                 </TabPanel>
               </Scrollbar>
             </TableContainer>
