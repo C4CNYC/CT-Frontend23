@@ -60,6 +60,7 @@ export interface IAssignmentCreate {
   active?: boolean;
   meta?: Record<string, any>;
   tags?: string[] | [];
+  skill_tags: string[];
 }
 
 export interface IAssignmetsSearchParams extends BaseSearchInterface {}

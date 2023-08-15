@@ -36,11 +36,11 @@ import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 import {
   useGetClassPendingQuery,
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
-import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 
 import MemberRow from "./MemberRow";
 
@@ -279,12 +279,11 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
             numSelected={selected.length}
             rowCount={tableData.length}
             onSelectAllRows={(checked) => {
- onSelectAllRows(
+              onSelectAllRows(
                 checked,
                 tableData.map((row) => row.id as string)
               );
-}
-            }
+            }}
             action={
               <Tooltip title="Delete">
                 <IconButton color="primary" onClick={handleOpenConfirm}>
@@ -306,12 +305,11 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
                 numSelected={selected.length}
                 onSort={onSort}
                 onSelectAllRows={(checked) => {
- onSelectAllRows(
+                  onSelectAllRows(
                     checked,
                     tableData?.map((row) => row.id as string)
                   );
-}
-                }
+                }}
               />
 
               <TableBody>
@@ -322,9 +320,15 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id as string)}
-                      onSelectRow={() => { onSelectRow(row.id as string); }}
-                      onDeleteRow={() => { handleDeleteRow(row.id as string); }}
-                      onEditRow={() => { handleEditRow(row.id as string); }}
+                      onSelectRow={() => {
+                        onSelectRow(row.id as string);
+                      }}
+                      onDeleteRow={() => {
+                        handleDeleteRow(row.id as string);
+                      }}
+                      onEditRow={() => {
+                        handleEditRow(row.id as string);
+                      }}
                       pending={filterStatus === "pending"}
                       loading={isDeleting}
                     />
