@@ -15,7 +15,7 @@ import { ISocials } from "src/redux/interfaces/socials.interface";
 import {
   useRemoveSocialsMutation,
   useUpdateSocialsMutation,
-} from "src/redux/services/student/socials-student";
+} from "src/redux/services/manager/socials-student";
 
 import LinkSelect from "./LinkSelect";
 
@@ -43,8 +43,8 @@ export default function LinkItem({
   socialItem,
 }: Props): React.ReactElement {
   const [edit, setEdit] = useState(true);
-  const [removeSocial, {isLoading: isRemoveLoading}] = useRemoveSocialsMutation();
-  const [editSocial, {isLoading: isUpdateLoading}] = useUpdateSocialsMutation();
+  const [removeSocial, { isLoading: isRemoveLoading }] = useRemoveSocialsMutation();
+  const [editSocial, { isLoading: isUpdateLoading }] = useUpdateSocialsMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   const defaultValues = {

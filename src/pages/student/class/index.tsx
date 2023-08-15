@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { LoadingScreen } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-student";
 
 ClassMain.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

@@ -2,7 +2,7 @@ import { SOCIAL_ICONS } from "@assets/data";
 
 import { Card, CardHeader, Link, Stack } from "@mui/material";
 
-import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
+import { useGetSocialsQuery } from "src/redux/services/manager/socials-student";
 
 interface Props {
   studentId: string;

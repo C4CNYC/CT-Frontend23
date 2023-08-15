@@ -15,7 +15,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; studentId: string }
     >({
       query: ({ schoolId, studentId }) => ({
-        url: `/school/${schoolId}/student/${studentId}`,
+        url: `/manager/school/${schoolId}/student/${studentId}`,
         method: "GET",
       }),
       providesTags: ["Students"],
@@ -25,7 +25,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string } & StudentSearchParams
     >({
       query: ({ schoolId, ...params }) => ({
-        url: `/school/${schoolId}/student`,
+        url: `/manager/school/${schoolId}/student`,
         method: "GET",
         params,
       }),
@@ -36,7 +36,7 @@ const extendedApi = managerApi.injectEndpoints({
       { classId: string } & IStudentSearchParams
     >({
       query: ({ classId, ...params }) => ({
-        url: `/school/{schoolId}/class/${classId}/student/pending`,
+        url: `/manager/school/{schoolId}/class/${classId}/student/pending`,
         method: "GET",
         params,
       }),
@@ -47,7 +47,7 @@ const extendedApi = managerApi.injectEndpoints({
       { classId: string; student_id: string }
     >({
       query: ({ classId, ...body }) => ({
-        url: `/school/{schoolId}/class/${classId}/student/pending`,
+        url: `/manager/school/{schoolId}/class/${classId}/student/pending`,
         method: "POST",
         body,
       }),
@@ -58,7 +58,7 @@ const extendedApi = managerApi.injectEndpoints({
       { access_token: string; schoolId: string; classId: string }
     >({
       query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}/student/google-classes`,
+        url: `/manager/school/${schoolId}/class/${classId}/student/google-classes`,
         method: "POST",
         body,
       }),
@@ -73,7 +73,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}/student/migrate/google-classes`,
+        url: `/manager/school/${schoolId}/class/${classId}/student/migrate/google-classes`,
         method: "POST",
         body,
       }),
@@ -83,7 +83,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string }
     >({
       query: ({ schoolId, ...body }) => ({
-        url: `/school/${schoolId}/student`,
+        url: `/manager/school/${schoolId}/student`,
         method: "POST",
         body,
       }),
@@ -94,7 +94,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; studentId: string } & Omit<IStudent, "email">
     >({
       query: ({ schoolId, studentId, ...body }) => ({
-        url: `/school/${schoolId}/student/${studentId}`,
+        url: `/manager/school/${schoolId}/student/${studentId}`,
         method: "PATCH",
         body,
       }),
@@ -105,7 +105,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; studentId: string; file: FormData }
     >({
       query: ({ schoolId, studentId, file }) => ({
-        url: `/school/${schoolId}/student/${studentId}/avatar`,
+        url: `/manager/school/${schoolId}/student/${studentId}/avatar`,
         method: "PATCH",
         body: file,
       }),
@@ -116,7 +116,7 @@ const extendedApi = managerApi.injectEndpoints({
       { classId: string; student_id: string }
     >({
       query: ({ classId, ...body }) => ({
-        url: `/school/{schoolId}/class/${classId}/student`,
+        url: `/manager/school/{schoolId}/class/${classId}/student`,
         method: "POST",
         body,
       }),
@@ -127,7 +127,7 @@ const extendedApi = managerApi.injectEndpoints({
       { classId: string; student_id: string }
     >({
       query: ({ classId, ...body }) => ({
-        url: `/school/{schoolId}/class/${classId}/student`,
+        url: `/manager/school/{schoolId}/class/${classId}/student`,
         method: "DELETE",
         body,
       }),
@@ -138,7 +138,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; studentId: string }
     >({
       query: ({ schoolId, studentId }) => ({
-        url: `/school/${schoolId}/student/${studentId}`,
+        url: `/manager/school/${schoolId}/student/${studentId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Students"],
@@ -148,7 +148,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; email: string }
     >({
       query: ({ schoolId, ...body }) => ({
-        url: `/school/${schoolId}/student/invite`,
+        url: `/manager/school/${schoolId}/student/invite`,
         method: "POST",
         body,
       }),

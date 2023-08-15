@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Card, Grid, Skeleton, Stack, Typography } from "@mui/material";
 
-import { useGetSocialsQuery } from "src/redux/services/student/socials-student";
+import { useGetSocialsQuery } from "src/redux/services/manager/socials-student";
 
 import LinkForm from "./LinkForm";
 import LinkItem from "./LinkItem";

@@ -12,7 +12,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/content/${id}/validation`,
+        url: `/manager/content/${id}/validation`,
         method: "GET",
       }),
       providesTags: ["LessonsContentValidation"],
@@ -22,7 +22,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string } & ILessonContentValidation
     >({
       query: ({ id, ...body }) => ({
-        url: `/content/${id}/validation`,
+        url: `/manager/content/${id}/validation`,
         method: "POST",
         body,
       }),
@@ -33,7 +33,7 @@ const extendedApi = managerApi.injectEndpoints({
       { contentId: string; id: string } & ILessonContentValidation
     >({
       query: ({ contentId, id, ...body }) => ({
-        url: `/content/${contentId}/validation/${id}`,
+        url: `/manager/content/${contentId}/validation/${id}`,
         method: "PATCH",
         body,
       }),
@@ -44,7 +44,7 @@ const extendedApi = managerApi.injectEndpoints({
       { contentId: string; id: string }
     >({
       query: ({ contentId, id }) => ({
-        url: `/content/${contentId}/validation/${id}`,
+        url: `/manager/content/${contentId}/validation/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "LessonsContentValidation" }],

@@ -23,7 +23,7 @@ import {
 } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useJoinClassMutation } from "src/redux/services/student/classes-manager";
+import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
 
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

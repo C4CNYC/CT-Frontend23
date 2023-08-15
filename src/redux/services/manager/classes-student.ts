@@ -6,14 +6,14 @@ import {
   IMentor,
 } from "src/redux/interfaces/class.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 import { IStudent, IStudentSearchParams } from "../interfaces/user.interface";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     createClass: builder.mutation<void, IClass>({
       query: ({ ...body }) => ({
-        url: "/class",
+        url: "/student/class",
         method: "POST",
         body,
       }),
@@ -24,7 +24,7 @@ const extendedApi = studentApi.injectEndpoints({
       { share_token: string }
     >({
       query: ({ ...body }) => ({
-        url: "/class/join",
+        url: "/student/class/join",
         method: "POST",
         body,
       }),
@@ -35,7 +35,7 @@ const extendedApi = studentApi.injectEndpoints({
       ClassSearchParams
     >({
       query: ({ ...params }) => ({
-        url: "/class",
+        url: "/student/class",
         method: "GET",
         params,
       }),
@@ -44,7 +44,7 @@ const extendedApi = studentApi.injectEndpoints({
     }),
     getClass: builder.query<IClass & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
-        url: `/class/${id}`,
+        url: `/student/class/${id}`,
         method: "GET",
       }),
       providesTags: ["Classes"],
@@ -54,7 +54,7 @@ const extendedApi = studentApi.injectEndpoints({
       { id: string } & IStudentSearchParams
     >({
       query: ({ id, ...params }) => ({
-        url: `/class/${id}/students`,
+        url: `/student/class/${id}/students`,
         method: "GET",
         params,
       }),
@@ -62,7 +62,7 @@ const extendedApi = studentApi.injectEndpoints({
     }),
     getClassMentor: builder.query<IMentor[], { id: string }>({
       query: ({ id }) => ({
-        url: `/class/${id}/mentor`,
+        url: `/student/class/${id}/mentor`,
         method: "GET",
       }),
       transformResponse: (response: IMentor[]) => {

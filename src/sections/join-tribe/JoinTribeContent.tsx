@@ -9,7 +9,7 @@ import { Button, Link, Stack, Typography } from "@mui/material";
 
 import { Image } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useJoinClassMutation } from "src/redux/services/student/classes-manager";
+import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
 
 interface IJoinTribeContentProps {
   classId: string;

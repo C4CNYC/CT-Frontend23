@@ -10,7 +10,7 @@ const extendedApi = managerApi.injectEndpoints({
       ISkillSearch
     >({
       query: (params) => ({
-        url: "/skill",
+        url: "/manager/skill",
         method: "GET",
         params,
       }),
@@ -18,7 +18,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     createSkill: builder.mutation<ISkill, ISkill>({
       query: ({ ...body }) => ({
-        url: "/skill",
+        url: "/manager/skill",
         method: "POST",
         body,
       }),
@@ -29,7 +29,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string; name: string; description: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/skill/${id}`,
+        url: `/manager/skill/${id}`,
         method: "PATCH",
         body,
       }),
@@ -37,7 +37,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     removeSkill: builder.mutation<ISkill, { id: string }>({
       query: ({ id }) => ({
-        url: `/skill/${id}`,
+        url: `/manager/skill/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Skills" }],

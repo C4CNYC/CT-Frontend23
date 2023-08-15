@@ -18,7 +18,7 @@ import {
   IFriend,
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
-import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
+import { useGetFriendsContentQuery } from "src/redux/services/manager/friends-manager";
 
 import FilterFriends from "./filter";
 import { useRouter } from "next/router";
@@ -45,7 +45,7 @@ export default function Friends(): React.ReactElement {
         {isLoading ? (
           <Container>
           <SkeletonBreadcrumbs /> <SkeletonFilter />
-          <Box 
+          <Box
             gap={3}
             display="grid"
             gridTemplateColumns={{
@@ -59,7 +59,7 @@ export default function Friends(): React.ReactElement {
               animation="wave"
               variant="rounded"
               sx={{
-                width: { xs: "100%", sm: "47%", md: "31%"},
+                width: { xs: "100%", sm: "47%", md: "31%" },
                 height: "460px",
                 mb: "18px",
               }}
@@ -68,7 +68,7 @@ export default function Friends(): React.ReactElement {
               animation="wave"
               variant="rounded"
               sx={{
-                width: { xs: "100%", sm: "47%", md: "31%"},
+                width: { xs: "100%", sm: "47%", md: "31%" },
                 height: "460px",
                 mb: "18px",
               }}
@@ -77,7 +77,7 @@ export default function Friends(): React.ReactElement {
               animation="wave"
               variant="rounded"
               sx={{
-                width: { xs: "100%", sm: "47%", md: "31%"},
+                width: { xs: "100%", sm: "47%", md: "31%" },
                 height: "460px",
                 mb: "18px",
               }}

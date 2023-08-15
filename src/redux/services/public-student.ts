@@ -10,7 +10,7 @@ import {
 } from "src/redux/interfaces/content.interface";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
 
-import { baseQueryWrapper } from "../helpers/base_query_wrapper";
+import { baseQueryWrapper } from "./helpers/base_query_wrapper";
 
 export const studentPublicApi = createApi({
   reducerPath: "api/public",

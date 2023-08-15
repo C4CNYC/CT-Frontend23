@@ -5,7 +5,7 @@ import { Firestore } from "firebase/firestore";
 import { Chat } from "@components";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useGetFriendsContentQuery } from "src/redux/services/student/friends-manager";
+import { useGetFriendsContentQuery } from "src/redux/services/manager/friends-manager";
 
 import { IChatMessage, useFirebaseChat } from "./hooks/useFirebaseChat.hook";
 

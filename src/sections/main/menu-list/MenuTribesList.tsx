@@ -18,7 +18,7 @@ import { MenuPopover, Scrollbar, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-student";
 
 import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";

@@ -12,7 +12,7 @@ import JoinTribeModal from "@sections/join-tribe/JoinTribeModal";
 import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
 import ClassInfoTable from "@sections/main/quests/ClassInfoTable";
 import { useGetPublicTribeQuery } from "src/redux/services/public/tribe-public";
-import { useGetClassQuery } from "src/redux/services/student/classes-manager";
+import { useGetClassQuery } from "src/redux/services/manager/classes-student";
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

@@ -12,7 +12,7 @@ import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
-import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-student";
 
 enum TabType {
   Active = "active",

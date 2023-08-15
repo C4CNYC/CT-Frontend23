@@ -6,7 +6,7 @@ import { baseQueryWithAuth } from "../helpers/query_with_auth";
 export const managerApi = createApi({
   reducerPath: "api/manager",
   baseQuery: baseQueryWithAuth(
-    baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}/manager`)
+    baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}`)
   ),
   tagTypes: [
     "School",
@@ -30,6 +30,24 @@ export const managerApi = createApi({
     "Mentors",
     "Author",
     "Pendings",
+    "School",
+    "Students",
+    "Classes",
+    "SchoolSettings",
+    "SchoolContacts",
+    "Assignments",
+    "Assignment",
+    "Modules",
+    "Lessons",
+    "Courses",
+    "Tasks",
+    "Challenges",
+    "Progress",
+    "Friends",
+    "Profile",
+    "Projects",
+    "Socials",
+    "Goal",
   ],
   endpoints: () => ({}),
 });

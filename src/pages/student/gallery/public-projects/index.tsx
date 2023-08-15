@@ -26,7 +26,7 @@ import {
   IGallery,
   IGallerySearchParams,
 } from "src/redux/interfaces/gallary.interface";
-import { useGetProjectsQuery } from "src/redux/services/student/gallery-student";
+import { useGetProjectsQuery } from "src/redux/services/manager/gallery-student";
 
 PublicProjects.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

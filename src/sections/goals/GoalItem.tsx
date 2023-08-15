@@ -8,7 +8,7 @@ import { IconButton, Stack, Typography, alpha } from "@mui/material";
 import { ConfirmDialog, Iconify } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
-import { useRemoveGoalMutation } from "src/redux/services/student/goals-student";
+import { useRemoveGoalMutation } from "src/redux/services/manager/goals-student";
 
 import AddEditGoalDialog from "./AddEditGoalDialog";
 

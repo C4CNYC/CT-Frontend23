@@ -16,7 +16,7 @@ import {
 import { Box, Stack } from "@mui/system";
 
 import { FormProvider, RHFTextField } from "@components";
-import { usePostProjectMutation } from "src/redux/services/student/gallery-student";
+import { usePostProjectMutation } from "src/redux/services/manager/gallery-student";
 
 interface IPublishModal {
   children: React.ReactElement;

@@ -87,7 +87,6 @@ export default function CreateModuleDialog({
 }: Prop): React.ReactElement {
   const { query } = useRouter();
   const [open, setOpen] = useState(false);
-  const [, setLoading] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const [addToCourse, { isLoading: isAddToCourseLoading }] =
@@ -115,7 +114,6 @@ export default function CreateModuleDialog({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    setLoading(true);
     try {
       if (isEdit && id) {
         await editModule({
@@ -123,30 +121,22 @@ export default function CreateModuleDialog({
           ...data,
         }).unwrap();
       } else {
-        const module = await createModule({
-          ...data,
-        }).unwrap();
-        methods.reset();
-        enqueueSnackbar("Create success!");
-        handleClose();
-        if (!query.course_id) {
-          return;
+        const module = await createModule(data).unwrap();
+        if (query.course_id) {
+          await addToCourse({
+            id: query.course_id as string,
+            unit_id: module.id,
+          }).unwrap();
         }
-        await addToCourse({
-          id: query.course_id as string,
-          unit_id: module.id,
-        }).unwrap();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
+      handleClose();
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
-    setLoading(false);
-    // eslint-disable-next-line no-eval
-    handleClose();
   };
   const [value, setValue] = React.useState(0);
 

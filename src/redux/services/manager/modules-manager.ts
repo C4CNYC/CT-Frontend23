@@ -18,7 +18,7 @@ const extendedApi = managerApi.injectEndpoints({
       IModulesSearchParams
     >({
       query: (params) => ({
-        url: "/module",
+        url: "/manager/module",
         method: "GET",
         params,
       }),
@@ -30,7 +30,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/module/${id}`,
+        url: `/manager/module/${id}`,
         method: "PATCH",
         body,
       }),
@@ -41,7 +41,7 @@ const extendedApi = managerApi.injectEndpoints({
       IModuleCreate
     >({
       query: ({ ...body }) => ({
-        url: "/module",
+        url: "/manager/module",
         method: "POST",
         body,
       }),
@@ -52,14 +52,14 @@ const extendedApi = managerApi.injectEndpoints({
       IModuleDelete
     >({
       query: ({ id }) => ({
-        url: `/module/${id}`,
+        url: `/manager/module/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Modules" }],
     }),
     addLessonToModule: builder.mutation<void, IAddLessonToModule>({
       query: ({ id, ...body }) => ({
-        url: `/module/${id}/lesson`,
+        url: `/manager/module/${id}/lesson`,
         method: "PATCH",
         body,
       }),
@@ -67,7 +67,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     removeLessonFromModule: builder.mutation<void, IRemoveLessonFromModule>({
       query: ({ id, ...body }) => ({
-        url: `/module/${id}/lesson`,
+        url: `/manager/module/${id}/lesson`,
         method: "DELETE",
         body,
       }),

@@ -7,7 +7,7 @@ import { Button } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { useGetCourseQuery } from "src/redux/services/student/courses-manager";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
 
 interface Props {
   isMini?: boolean;
