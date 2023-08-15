@@ -9,8 +9,7 @@ import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
 import QuestRating from "@sections/quest/QuestRating";
-import { useGetAssignmentQuery } from "src/redux/services/manager/assignments-manager";
-import { useGetMentorsQuery } from "src/redux/services/manager/class-mentor-manager";
+import { useGetAssignmentStudentQuery } from "src/redux/services/manager/assignments-student";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -19,18 +18,13 @@ Quest.getLayout = (page: React.ReactElement) => (
 export default function Quest(): React.ReactElement | null {
   const { query } = useRouter();
   const { themeStretch } = useSettingsContext();
-  const { data, isLoading } = useGetAssignmentQuery(
-    { schoolId: query.id as string, assignmentId: query.id as string },
+  const { data, isLoading } = useGetAssignmentStudentQuery(
+    { assignmentId: query.id as string },
     { skip: !query.id }
   );
-  const { data: mentors } = useGetMentorsQuery(
-    { schoolId: query.id as string, classId: query.id as string },
-    { skip: !query.schoolId || !query.id }
-  );
 
-  console.log(data);
   if (isLoading || !data) {
-    return <Skeleton />;
+    return <Skeleton variant="rounded" height="600px" />;
   }
 
   return (
@@ -43,7 +37,7 @@ export default function Quest(): React.ReactElement | null {
         sx={{ borderRadius: 1, background: "#F6F9FC", pt: 2, pb: 8 }}
       >
         <QuestHeader />
-        <QuestMain mentor={mentors?.data[0]} questName={data.name} />
+        <QuestMain questName={data.name} />
         <QuestDescription description={data?.description} />
         <QuestRating courseId="" courseName="" />
       </Container>

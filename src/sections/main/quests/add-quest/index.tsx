@@ -12,6 +12,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Button,
+  Skeleton,
   Stack,
   Tab,
   Tabs,
@@ -27,11 +28,11 @@ import CustomTabPanel, {
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import {
   useCreateAssignmentMutation,
+  useGetAssignmentQuery,
   useUpdateAssignmentMutation,
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
-import { useGetAssignmentStudentQuery } from "src/redux/services/manager/assignments-student";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
@@ -54,13 +55,16 @@ export default function AddQuest(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
 
-  const [assignmentsSkills, setAssignmentsSkills] = useState<string[]>();
+  const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<string[]>();
   const [value, setValue] = useState(0);
 
   const { data: assignment, isLoading: isAssignmentLoading } =
-    useGetAssignmentStudentQuery(
-      { assignmentId: query.assignmentId as string },
-      { skip: !query.assignmentId }
+    useGetAssignmentQuery(
+      {
+        schoolId: query.schoolId as string,
+        assignmentId: query.assignmentId as string,
+      },
+      { skip: !query.assignmentId || !query.schoolId }
     );
   const [createAssignment, { isLoading }] = useCreateAssignmentMutation();
   const [updateAssignment, { isLoading: isUpdating }] =
@@ -72,20 +76,14 @@ export default function AddQuest(): React.ReactElement {
   useEffect(() => {
     if (assignment) {
       methods.reset({
-        name: assignment?.name ?? RANDOM_NAME,
+        name: assignment?.name,
         description: JSON.parse(assignment?.description ?? "{}"),
         type: assignment?.type ?? AssignmentTypes.COURSE,
         course: assignment?.course?.id,
         startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
-        dueDate: format(
-          DATE_PARSER(assignment?.end_date, DAYS_TO_END),
-          DATE_FORMAT
-        ),
-        closeDate: format(
-          DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE),
-          DATE_FORMAT
-        ),
-        active: assignment?.active ?? true,
+        dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
+        closeDate: format(DATE_PARSER(assignment?.close_date), DATE_FORMAT),
+        active: assignment?.active,
       });
     }
   }, [isAssignmentLoading]);
@@ -123,7 +121,6 @@ export default function AddQuest(): React.ReactElement {
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-          tags: assignmentsSkills,
         }).unwrap();
         enqueueSnackbar("Assignment updated successfuly!");
       } catch (error: any) {
@@ -142,7 +139,7 @@ export default function AddQuest(): React.ReactElement {
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-          tags: assignmentsSkills,
+          skill_tags: assignmentsSkillsId ?? [],
           classes: [query.id as string],
         }).unwrap();
         await addAssignmentToClass({
@@ -171,6 +168,15 @@ export default function AddQuest(): React.ReactElement {
       }
     }
   };
+
+  if (isAssignmentLoading && query.assignmentId) {
+    return (
+      <Skeleton
+        variant="rounded"
+        sx={{ height: "988px", maxWidth: "1152px", borderRadius: 4 }}
+      />
+    );
+  }
 
   return (
     <>
@@ -239,11 +245,11 @@ export default function AddQuest(): React.ReactElement {
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
                 control={methods.control}
-                setAssignmentsSkills={(s: string[]) => {
-                  setAssignmentsSkills(s);
+                setAssignmentsSkillsId={(s: string[]) => {
+                  setAssignmentsSkillsId(s);
                 }}
-                assignmentsSkills={assignmentsSkills}
-                skills={assignment?.skill_tags ?? []}
+                assignmentsSkillsId={assignmentsSkillsId}
+                existedSkills={assignment?.skill_tags ?? []}
               />
             </CustomTabPanel>
             <Stack mt={3} gap={3} flexDirection="row" justifyContent="flex-end">

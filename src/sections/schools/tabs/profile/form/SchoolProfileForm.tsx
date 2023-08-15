@@ -51,7 +51,8 @@ export default function SchoolProfileForm({
   setImgValue,
 }: SchoolProfileFormProps): React.ReactElement | null {
   const { translate } = useLocales();
-  const [updateSchoolAvatar] = useUpdateSchoolAvatarImgMutation();
+  const [updateSchoolAvatar, { isLoading: isLoadingAvatar }] =
+    useUpdateSchoolAvatarImgMutation();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -72,6 +73,7 @@ export default function SchoolProfileForm({
   });
 
   const { handleSubmit } = methods;
+  console.log(methods.formState.isDirty);
 
   const onSubmit = async (formData: FormValuesProps): Promise<void> => {
     try {
@@ -160,7 +162,7 @@ export default function SchoolProfileForm({
               <LoadingButton
                 type="submit"
                 variant="contained"
-                loading={isLoading}
+                loading={isLoading || isLoadingAvatar}
               >
                 {`${translate("actions_save_changes")}`}
               </LoadingButton>

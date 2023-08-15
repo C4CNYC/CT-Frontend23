@@ -1,44 +1,84 @@
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
 import { TbInfoCircleFilled } from "react-icons/tb";
 
 import {
+  Autocomplete,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
   Box,
   Chip,
   FormGroup,
   Skeleton,
   Stack,
+  TextField,
   Typography,
   TypographyVariant,
 } from "@mui/material";
 
-import { RHFAutocomplete } from "@components";
+import { useSnackbar } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
+import {
+  useRemoveSkillAssignmentMutation,
+  useUpdateSkillAssignmentMutation,
+} from "src/redux/services/manager/assignments-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 
 interface ISkillsAutocompleteProps {
-  setAssignmentsSkills: (s: string[]) => void;
-  assignmentsSkills?: string[];
+  setAssignmentsSkillsId: (s: string[]) => void;
+  assignmentsSkillsId?: string[];
   labelProps?: TypographyVariant | undefined;
-  skills: ISkill[];
+  existedSkills: ISkill[];
 }
 
 export default function SkillsAutocomplete({
-  setAssignmentsSkills,
-  assignmentsSkills,
+  setAssignmentsSkillsId,
+  assignmentsSkillsId,
   labelProps,
-  skills: currentSkills,
+  existedSkills,
 }: ISkillsAutocompleteProps): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
+  const {
+    query: { schoolId, assignmentId },
+  } = useRouter();
   const { data, isLoading } = useGetSkillQuery({});
-  const [choosen] = useState<string[] | []>();
 
-  useEffect(() => {
-    if (currentSkills.length) {
-      setAssignmentsSkills(currentSkills.map((el: any) => el.id));
+  const [addSkill] = useUpdateSkillAssignmentMutation();
+  const [removeSkill] = useRemoveSkillAssignmentMutation();
+
+  const onChange = async (
+    _event: React.SyntheticEvent<any>,
+    _newValue: ISkill[],
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<ISkill>
+  ): Promise<void> => {
+    if (!assignmentId) {
+      setAssignmentsSkillsId(_newValue.map((el: any) => el.id));
+    } else {
+      try {
+        const payload = {
+          schoolId: schoolId as string,
+          assignmentId: assignmentId as string,
+          skill_id: details?.option.id ?? "",
+        };
+        switch (reason) {
+          case "selectOption": {
+            await addSkill(payload).unwrap();
+            enqueueSnackbar(`${details?.option.name ?? ""} added`);
+            return;
+          }
+          case "removeOption": {
+            await removeSkill(payload).unwrap();
+            enqueueSnackbar(`${details?.option.name ?? ""} removed`);
+          }
+        }
+      } catch (error) {
+        enqueueSnackbar(error.data.message, { variant: "error" });
+      }
     }
-  }, [currentSkills]);
+  };
 
   if (isLoading || !data) {
     return (
@@ -67,14 +107,15 @@ export default function SkillsAutocomplete({
       <Typography variant={labelProps ? labelProps : "h5"} gutterBottom>
         Tags:
       </Typography>
-      <RHFAutocomplete
-        name="skills"
+      <Autocomplete<any, true>
         multiple
-        freeSolo
+        value={assignmentId ? existedSkills : []}
         options={data.data}
         limitTags={5}
-        onChange={(e, value) => {
-          setAssignmentsSkills(value.map((el: any) => el.id));
+        getOptionLabel={(option) => option.name}
+        onChange={(e, value, reason, details) => {
+          onChange(e, value, reason, details);
+          setAssignmentsSkillsId(value.map((el: any) => el.id));
         }}
         renderTags={(tagValue, getTagProps): React.ReactElement[] =>
           tagValue.map((option, index) => (
@@ -97,15 +138,17 @@ export default function SkillsAutocomplete({
           },
         }}
         renderOption={(props, recipient, { inputValue }) => {
-          const { name } = recipient;
+          const { id, name } = recipient;
           const matches = match(name, inputValue);
           const parts = parse(name, matches);
-          const selected = choosen?.find((c: any) => c.name === name);
+          const selected = existedSkills.find((c: any) => c.id === id);
+
           return (
             <Box
               component="li"
               sx={{
                 pointerEvents: selected ? "none" : "auto",
+                background: selected ? "rgba(251, 221, 63, .5)" : "",
               }}
               {...props}
             >
@@ -121,19 +164,25 @@ export default function SkillsAutocomplete({
             </Box>
           );
         }}
-        helperText={
-          <Typography
-            variant="caption"
-            sx={{
-              fontStyle: "italic",
-              display: "inline-flex",
-              alignItems: "center",
-            }}
-          >
-            <TbInfoCircleFilled color="#D9D9D9" size={22} />
-            This will help others know what the theme is.
-          </Typography>
-        }
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            placeholder="Tags"
+            helperText={
+              <Typography
+                variant="caption"
+                sx={{
+                  fontStyle: "italic",
+                  display: "inline-flex",
+                  alignItems: "center",
+                }}
+              >
+                <TbInfoCircleFilled color="#D9D9D9" size={22} />
+                This will help others know what the theme is.
+              </Typography>
+            }
+          />
+        )}
       />
     </FormGroup>
   );
