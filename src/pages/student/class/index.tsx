@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { LoadingScreen } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-student";
+import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 import { CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 
@@ -13,7 +13,7 @@ ClassMain.getLayout = (page: React.ReactElement) => (
 
 export default function ClassMain(): React.ReactElement {
   const { push } = useRouter();
-  const { data: tribes, isLoading } = useGetClassesQuery({});
+  const { data: tribes, isLoading } = useGetStudentClassesQuery({});
 
   useEffect(() => {
     if (localStorage.getItem("JOIN_TRIBE")) {

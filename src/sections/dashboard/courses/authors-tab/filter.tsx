@@ -15,7 +15,7 @@ import {
   ICourse,
   ICourseSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 interface Props {
   courseId: string;
@@ -32,7 +32,7 @@ export default function FilterModules({
       name: "",
     });
 
-  const { data: courses, isLoading } = useGetCourseQuery(courseFilters);
+  const { data: courses, isLoading } = useManagerGetCourseQuery(courseFilters);
   const onChangeCourse = (
     event: React.SyntheticEvent<any>,
     newValue: (ICourse & BaseResponseInterface) | null,

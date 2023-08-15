@@ -18,8 +18,8 @@ import SkeletonCourses from "@sections/dashboard/courses/skeletonCourses";
 import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import { getCountTakingElment } from "@utils";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ export default function CoursesListPage(): React.ReactElement {
     },
     FilterMode.global
   );
-  const { data, isLoading, isFetching } = useGetCourseQuery(filters);
+  const { data, isLoading, isFetching } = useManagerGetCourseQuery(filters);
 
   if (isLoading) {
     return (

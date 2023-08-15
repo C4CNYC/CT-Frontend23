@@ -9,6 +9,7 @@ export const managerApi = createApi({
     baseQueryWrapper(`${process.env.NEXT_PUBLIC_API_URL}`)
   ),
   tagTypes: [
+    "CoursesManager",
     "School",
     "Students",
     "Classes",
