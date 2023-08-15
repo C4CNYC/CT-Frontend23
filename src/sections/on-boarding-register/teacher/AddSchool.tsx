@@ -59,6 +59,9 @@ export default function AddSchool(): React.ReactElement {
   const methods = useForm<SchoolFormProps>({
     resolver: yupResolver(CreateSchoolSchema),
     mode: "all",
+    defaultValues: {
+      schoolName: "",
+    },
   });
 
   const onSubmit = async (schoolData: SchoolFormProps) => {

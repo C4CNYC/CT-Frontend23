@@ -5,7 +5,7 @@ import { Firestore } from "firebase/firestore";
 import { Chat } from "@components";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useGetFriendsContentQuery } from "src/redux/services/manager/friends-manager";
+import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";
 
 import { IChatMessage, useFirebaseChat } from "./hooks/useFirebaseChat.hook";
 
@@ -13,7 +13,7 @@ export const CodePanelChat = (): React.ReactElement => {
   const { sendMessage, getMessages } = useFirebaseChat();
   const { user } = useAuthContext();
   const { publicPage } = useContext(CodePanelContext);
-  const { data, isLoading } = useGetFriendsContentQuery(
+  const { data, isLoading } = useGetFriendsStudentContentQuery(
     { take: 50 },
     { skip: publicPage }
   );

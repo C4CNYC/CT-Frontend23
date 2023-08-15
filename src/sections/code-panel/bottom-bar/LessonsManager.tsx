@@ -149,7 +149,14 @@ const LessonManager = (): React.ReactElement => {
                         }}
                         expandIcon={<ExpandMoreIcon />}
                       >
-                        <Typography variant="h6" whiteSpace="nowrap">
+                        <Typography
+                          variant="h6"
+                          noWrap
+                          sx={{
+                            textOverflow: "ellipsis",
+                            width: isMobile ? "220px" : "300px",
+                          }}
+                        >
                           {module.name}
                         </Typography>
                       </AccordionSummary>

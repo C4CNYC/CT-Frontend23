@@ -1,17 +1,13 @@
-// next
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo } from "react";
 
-// form
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
-// @mui
 import { LoadingButton } from "@mui/lab";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 
-// components
 import {
   FormProvider,
   Label,
@@ -22,7 +18,6 @@ import {
   useSnackbar,
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-// utils
 import { BaseResponseInterface, fData } from "@utils";
 import {
   useCreateOrgMemberMutation,
@@ -31,8 +26,6 @@ import {
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-
-// ----------------------------------------------------------------------
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };
@@ -124,15 +117,20 @@ export default function UserNewEditForm({
           user_id: currentUser?.id,
           ...body,
         }).unwrap();
+
+        if (photoURL) {
+          await updateAvatar(currentUser?.id, photoURL);
+        }
+
         enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-        if (!photoURL) return;
-        await updateAvatar(currentUser?.id, photoURL);
+        push(MANAGER_PATH_DASHBOARD.organization.members);
       } else {
         const user = await createUser({
           ...data,
         }).unwrap();
-        if (!photoURL) return;
-        await updateAvatar(user.id, photoURL);
+        if (photoURL) {
+          await updateAvatar(user.id, photoURL);
+        }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(MANAGER_PATH_DASHBOARD.organization.members);

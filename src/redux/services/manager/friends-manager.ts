@@ -9,7 +9,7 @@ import { managerApi } from ".";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getFriendsContent: builder.query<
+    getFriendsStudentContent: builder.query<
       BaseListResponseInterface<IFriend & BaseResponseInterface>,
       IFriendsSearchParams
     >({
@@ -33,7 +33,7 @@ const extendedApi = managerApi.injectEndpoints({
 });
 
 export const {
-  useGetFriendsContentQuery,
+  useGetFriendsStudentContentQuery,
   useGetFriendQuery,
   // -------------mutation-----------
 } = extendedApi;

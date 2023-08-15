@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 import { Logo } from "@components";
 import AccountPopover from "@layouts/dashboard/header/AccountPopover";
@@ -28,7 +28,9 @@ export default function LessonTopBar(): React.ReactElement {
     >
       <Logo />
       <Stack direction="row" gap={2}>
-        <AccountPopover />
+        <Box display="flex" alignItems="center">
+          <AccountPopover />
+        </Box>
         <ViewTumbler
           fullScreenOpen={fullScreenOpen}
           fullScreenClose={fullScreenClose}

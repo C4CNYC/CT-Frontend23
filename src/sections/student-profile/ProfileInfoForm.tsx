@@ -72,7 +72,7 @@ export default function ProfileInfoForm({
   });
 
   const { setValue, handleSubmit, control } = methods;
-
+  console.log(data);
   const onSubmit = async (formData: FormValuesProps): Promise<void> => {
     try {
       await updateStudent({

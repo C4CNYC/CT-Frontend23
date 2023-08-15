@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
 
-import { FormProvider, Iconify, RHFTextField } from "@components";
+import { FormProvider, Iconify, RHFTextField, useSnackbar } from "@components";
 import { useInviteSubmitMutation } from "src/redux/services/admin/invite-admin";
 
 // routes
@@ -26,6 +26,7 @@ interface FormValuesProps {
 }
 
 export default function InviteForm(): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const { id } = router.query;
   const { tenant_name } = router.query;
@@ -40,7 +41,13 @@ export default function InviteForm(): React.ReactElement {
   const inviteId = id as string;
 
   const InviteSchema = Yup.object().shape({
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+        "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
+      )
+      .min(10, "Password must be at least 10 characters long"),
     confirmPwd: Yup.string()
       .required("Password is required")
       .oneOf([Yup.ref("password")], "Passwords does not match"),
@@ -48,13 +55,10 @@ export default function InviteForm(): React.ReactElement {
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(InviteSchema),
+    mode: "all",
   });
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitSuccessful },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -62,12 +66,13 @@ export default function InviteForm(): React.ReactElement {
         password: data.password,
         inviteId,
       }).unwrap();
+      enqueueSnackbar("Submit successfully");
       router.replace({
         pathname: PATH_AUTH.singIn,
         query: { tenant_name },
       });
     } catch (error) {
-      reset();
+      enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };
 
@@ -124,7 +129,7 @@ export default function InviteForm(): React.ReactElement {
         size="large"
         type="submit"
         variant="contained"
-        loading={isSubmitSuccessful || isLoading}
+        loading={isLoading}
         sx={{
           mt: 4,
           boxShadow: "0px 8px 16px rgba(2, 211, 215, 0.24)",
