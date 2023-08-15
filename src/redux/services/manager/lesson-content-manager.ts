@@ -14,7 +14,7 @@ const extendedApi = managerApi.injectEndpoints({
       { lessonId: string }
     >({
       query: ({ lessonId }) => ({
-        url: `/lesson/${lessonId}/content`,
+        url: `/manager/lesson/${lessonId}/content`,
         method: "GET",
       }),
       providesTags: ["LessonsContent"],
@@ -26,7 +26,7 @@ const extendedApi = managerApi.injectEndpoints({
       { lessonId: string; id: string }
     >({
       query: ({ lessonId, id }) => ({
-        url: `/lesson/${lessonId}/content/${id}`,
+        url: `/manager/lesson/${lessonId}/content/${id}`,
         method: "GET",
       }),
       providesTags: ["LessonContentItem"],
@@ -41,7 +41,7 @@ const extendedApi = managerApi.injectEndpoints({
       >
     >({
       query: ({ lessonId, ...body }) => ({
-        url: `/lesson/${lessonId}/content`,
+        url: `/manager/lesson/${lessonId}/content`,
         method: "POST",
         body,
       }),
@@ -52,7 +52,7 @@ const extendedApi = managerApi.injectEndpoints({
       { lessonId: string; id: string } & ILessonContentUpdate
     >({
       query: ({ lessonId, id, ...body }) => ({
-        url: `/lesson/${lessonId}/content/${id}`,
+        url: `/manager/lesson/${lessonId}/content/${id}`,
         method: "PATCH",
         body,
       }),
@@ -64,7 +64,7 @@ const extendedApi = managerApi.injectEndpoints({
       { lessonId: string; id: string }
     >({
       query: ({ lessonId, id }) => ({
-        url: `/lesson/${lessonId}/content/${id}`,
+        url: `/manager/lesson/${lessonId}/content/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "LessonsContent" }],

@@ -1,4 +1,3 @@
-// next
 import Head from "next/head";
 
 import { Container } from "@mui/material";
@@ -8,13 +7,9 @@ import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
 
-// ----------------------------------------------------------------------
-
 UserCreatePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserCreatePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

@@ -23,7 +23,7 @@ import { IGoals } from "src/redux/interfaces/goals.interface";
 import {
   usePostGoalMutation,
   useUpdateGoalMutation,
-} from "src/redux/services/student/goals-student";
+} from "src/redux/services/manager/goals-student";
 
 interface FormValuesProps {
   title: string;

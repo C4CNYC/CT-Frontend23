@@ -15,7 +15,7 @@ const extendedApi = managerApi.injectEndpoints({
       ITaskSearchParams
     >({
       query: (params) => ({
-        url: "/task",
+        url: "/manager/task",
         method: "GET",
         params,
       }),
@@ -26,7 +26,7 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string; body: string; name: string; language: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/task/${id}`,
+        url: `/manager/task/${id}`,
         method: "PATCH",
         body,
       }),
@@ -37,7 +37,7 @@ const extendedApi = managerApi.injectEndpoints({
       ITaskCreate
     >({
       query: ({ ...body }) => ({
-        url: "/task",
+        url: "/manager/task",
         method: "POST",
         body,
       }),
@@ -48,7 +48,7 @@ const extendedApi = managerApi.injectEndpoints({
       ITaskDelete
     >({
       query: ({ id }) => ({
-        url: `/task/${id}`,
+        url: `/manager/task/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Tasks" }],

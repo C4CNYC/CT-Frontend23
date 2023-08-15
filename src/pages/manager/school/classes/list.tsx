@@ -40,14 +40,8 @@ import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialo
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { createRandomAvatar, getRandomColor } from "@utils";
 import { ClassSearchParams } from "src/redux/interfaces/class.interface";
-import {
-  useCreateClassesMutation,
-  useDeleteClassesMutation,
-  useGetClassesQuery,
-  useUpdateClassesAvatarMutation,
-  useUpdateClassesMutation,
-} from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
+import { useUpdateClassesMutation, useCreateClassesMutation, useUpdateClassesAvatarMutation, useDeleteClassesMutation, useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 
 const STATUS_OPTIONS = ["all"];
 

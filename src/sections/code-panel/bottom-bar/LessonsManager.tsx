@@ -27,8 +27,8 @@ import {
   Iconify,
 } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
-import { useGetPublicCourseContentQuery } from "src/redux/services/student/public-student";
+import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
+import { useGetPublicCourseContentQuery } from "src/redux/services/public-student";
 
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { CodePanelContext } from "../context/CodePanel.context";
@@ -149,7 +149,14 @@ const LessonManager = (): React.ReactElement => {
                         }}
                         expandIcon={<ExpandMoreIcon />}
                       >
-                        <Typography variant="h6" whiteSpace="nowrap">
+                        <Typography
+                          variant="h6"
+                          noWrap
+                          sx={{
+                            textOverflow: "ellipsis",
+                            width: isMobile ? "220px" : "300px",
+                          }}
+                        >
                           {module.name}
                         </Typography>
                       </AccordionSummary>

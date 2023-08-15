@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 
 import { Card, Divider, Skeleton, Stack, Typography } from "@mui/material";
 
-import { useGetAssignmentListStudentQuery } from "src/redux/services/student/assignments-student";
-import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
+import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
+import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 
 export default function GeneralInfo() {
   const { query } = useRouter();

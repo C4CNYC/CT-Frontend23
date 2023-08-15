@@ -1,6 +1,6 @@
-import { Checkbox, TableBody, TableCell, TableRow } from "@mui/material";
+import { Checkbox, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
-import { Label, TableHeadCustom } from "@components";
+import { Label, TableEmptyRows, TableHeadCustom, emptyRows } from "@components";
 import { voidFunction } from "@utils";
 
 const TABLE_HEAD = [
@@ -8,11 +8,13 @@ const TABLE_HEAD = [
   { id: "status", label: "Status", align: "left" },
 ];
 
-interface Props {
+interface IPendingInvitesTabProps {
   order: "asc" | "desc" | undefined;
   selected: string[];
   onSort: (id: string) => void;
   page: number;
+  dense: boolean;
+  rowsPerPage: number;
 }
 
 export default function PendingInvitesTab({
@@ -20,9 +22,11 @@ export default function PendingInvitesTab({
   selected,
   onSort,
   page,
-}: Props): React.ReactElement {
+  dense,
+  rowsPerPage,
+}: IPendingInvitesTabProps): React.ReactElement {
   return (
-    <>
+    <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
       <TableHeadCustom
         order={order}
         headLabel={TABLE_HEAD}
@@ -31,6 +35,7 @@ export default function PendingInvitesTab({
         onSelectAllRows={(checked: any) => {
           voidFunction();
         }}
+        rowCount={5}
       />
       <TableBody sx={{ minHeight: 12 }}>
         <PendingUserRow
@@ -41,8 +46,17 @@ export default function PendingInvitesTab({
           onDeleteRow={voidFunction}
           onEditRow={voidFunction}
         />
+        <TableEmptyRows
+          height={dense ? 52 : 72}
+          emptyRows={emptyRows(
+            page,
+            rowsPerPage,
+            1
+            // data?.data.length ?? 0
+          )}
+        />
       </TableBody>
-    </>
+    </Table>
   );
 }
 

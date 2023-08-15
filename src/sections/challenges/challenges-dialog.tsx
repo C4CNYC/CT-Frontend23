@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
+import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
 
 interface Props {
   children: React.ReactElement;

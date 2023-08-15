@@ -4,7 +4,6 @@ import {
   ClassSearchParams,
   IAddCourseToClass,
   IClass,
-  IClassSettings,
   IRemoveCourseFromClass,
 } from "src/redux/interfaces/class.interface";
 
@@ -18,7 +17,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string } & ClassSearchParams
     >({
       query: ({ schoolId, ...params }) => ({
-        url: `/school/${schoolId}/class`,
+        url: `/manager/school/${schoolId}/class`,
         method: "GET",
         params,
       }),
@@ -30,7 +29,7 @@ const extendedApi = managerApi.injectEndpoints({
       Omit<ClassRequest, "classId">
     >({
       query: ({ schoolId, ...body }) => ({
-        url: `/school/${schoolId}/class`,
+        url: `/manager/school/${schoolId}/class`,
         method: "POST",
         body,
       }),
@@ -41,7 +40,7 @@ const extendedApi = managerApi.injectEndpoints({
       ClassRequest
     >({
       query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}`,
+        url: `/manager/school/${schoolId}/class/${classId}`,
         method: "PATCH",
         body,
       }),
@@ -52,7 +51,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; classId: string; file: FormData }
     >({
       query: ({ schoolId, classId, file }) => ({
-        url: `/school/${schoolId}/class/${classId}/avatar`,
+        url: `/manager/school/${schoolId}/class/${classId}/avatar`,
         method: "PATCH",
         body: file,
       }),
@@ -63,7 +62,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; classId: string }
     >({
       query: ({ schoolId, classId }) => ({
-        url: `/school/${schoolId}/class/${classId}`,
+        url: `/manager/school/${schoolId}/class/${classId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Classes"],
@@ -73,7 +72,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; classId: string; request_join_enable: boolean }
     >({
       query: ({ schoolId, classId, ...body }) => ({
-        url: `/school/${schoolId}/class/${classId}/setting`,
+        url: `/manager/school/${schoolId}/class/${classId}/setting`,
         method: "PATCH",
         body,
       }),
@@ -81,7 +80,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     addCourseToClass: builder.mutation<void, IAddCourseToClass>({
       query: ({ id, ...body }) => ({
-        url: `/school/{schoolId}/class/${id}/course`,
+        url: `/manager/school/{schoolId}/class/${id}/course`,
         method: "PATCH",
         body,
       }),
@@ -89,7 +88,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     removeCourseFromClass: builder.mutation<void, IRemoveCourseFromClass>({
       query: ({ id, ...body }) => ({
-        url: `/school/{schoolId}/class/${id}/course`,
+        url: `/manager/school/{schoolId}/class/${id}/course`,
         method: "DELETE",
         body,
       }),

@@ -12,11 +12,8 @@ import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 
 import { NAV } from "../../../config-global";
-import LetsCodeBtn from "./LetsCodeBtn";
 import NavToggleButton from "./NavToggleButton";
 import { menuConfig } from "./config-navigation";
-
-// ----------------------------------------------------------------------
 
 interface INavVertical {
   openNav: boolean;
@@ -67,7 +64,6 @@ export default function NavVertical({
           <Logo />
           <Stack sx={{ mt: "30px" }}></Stack>
           <UserSection />
-          {!isManager && <LetsCodeBtn />}
         </Stack>
 
         <NavSectionVertical data={menu} />

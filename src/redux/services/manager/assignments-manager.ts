@@ -15,7 +15,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; assignmentId: string }
     >({
       query: ({ schoolId, assignmentId }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}`,
         method: "GET",
       }),
       providesTags: ["Assignments", "Assignment"],
@@ -25,7 +25,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string }
     >({
       query: ({ schoolId }) => ({
-        url: `/school/${schoolId}/assignment`,
+        url: `/manager/school/${schoolId}/assignment`,
         method: "GET",
       }),
       providesTags: ["Assignments", "Assignment"],
@@ -37,7 +37,7 @@ const extendedApi = managerApi.injectEndpoints({
       } & IAssignmentCreate
     >({
       query: ({ schoolId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/`,
+        url: `/manager/school/${schoolId}/assignment/`,
         method: "POST",
         body,
       }),
@@ -51,7 +51,7 @@ const extendedApi = managerApi.injectEndpoints({
       } & IAssignmentUpdate
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}`,
         method: "PATCH",
         body,
       }),
@@ -66,7 +66,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/lesson`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/lesson`,
         method: "PATCH",
         body,
       }),
@@ -81,7 +81,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/task`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/task`,
         method: "PATCH",
         body,
       }),
@@ -96,7 +96,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/class`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/class`,
         method: "PATCH",
         body,
       }),
@@ -111,7 +111,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/class`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/class`,
         method: "DELETE",
         body,
       }),
@@ -126,7 +126,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/student`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/student`,
         method: "PATCH",
         body,
       }),
@@ -141,7 +141,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/class`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/class`,
         method: "DELETE",
         body,
       }),
@@ -156,7 +156,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/course`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/course`,
         method: "PATCH",
         body,
       }),
@@ -171,7 +171,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/course`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/course`,
         method: "DELETE",
         body,
       }),
@@ -186,7 +186,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/skill`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/skill`,
         method: "PATCH",
         body,
       }),
@@ -201,7 +201,7 @@ const extendedApi = managerApi.injectEndpoints({
       }
     >({
       query: ({ schoolId, assignmentId, ...body }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}/skill`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}/skill`,
         method: "DELETE",
         body,
       }),
@@ -212,7 +212,7 @@ const extendedApi = managerApi.injectEndpoints({
       { schoolId: string; assignmentId: string }
     >({
       query: ({ schoolId, assignmentId }) => ({
-        url: `/school/${schoolId}/assignment/${assignmentId}`,
+        url: `/manager/school/${schoolId}/assignment/${assignmentId}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Assignments"],

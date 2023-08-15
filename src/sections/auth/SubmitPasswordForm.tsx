@@ -1,13 +1,17 @@
-import { Iconify } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { IconButton, InputAdornment, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import { useState } from "react";
+
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+
+import { LoadingButton } from "@mui/lab";
+import { IconButton, InputAdornment, Stack } from "@mui/material";
+
+import { Iconify } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useSubmitPasswordMutation } from "src/redux/services/auth";
-import * as Yup from "yup";
+
 import { FormProvider, RHFTextField } from "../../components/hook-form";
 import { useSnackbar } from "../../components/snackbar";
 import { PATH_AUTH } from "../../routes/paths";
@@ -23,7 +27,7 @@ export default function SubmitPasswordForm() {
   const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
-  const [submitPassword] = useSubmitPasswordMutation();
+  const [submitPassword, { isLoading }] = useSubmitPasswordMutation();
 
   const VerifyCodeSchema = Yup.object().shape({
     password: Yup.string()
@@ -45,19 +49,18 @@ export default function SubmitPasswordForm() {
     defaultValues,
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      submitPassword({ id: query.id as string, password: data.password });
+      submitPassword({
+        id: query.id as string,
+        password: data.password,
+      }).unwrap();
       enqueueSnackbar("Change password success!");
       push(PATH_AUTH.singIn);
     } catch (error) {
-      const typedError = error as APIError;
-      enqueueSnackbar(typedError.data.message, { variant: "error" });
+      enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };
 
@@ -72,7 +75,9 @@ export default function SubmitPasswordForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => { setShowPassword(!showPassword); }}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify
@@ -92,7 +97,9 @@ export default function SubmitPasswordForm() {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  onClick={() => { setShowPassword(!showPassword); }}
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
                   edge="end"
                 >
                   <Iconify
@@ -109,7 +116,7 @@ export default function SubmitPasswordForm() {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}
+          loading={isLoading}
           sx={{
             mt: 3,
             borderRadius: "100px",

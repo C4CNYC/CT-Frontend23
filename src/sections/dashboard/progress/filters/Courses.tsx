@@ -11,7 +11,7 @@ import { Stack } from "@mui/system";
 
 import { BaseResponseInterface } from "@utils";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 interface IFilterCoursesAutocomplete {
   courseId: string;
@@ -22,7 +22,7 @@ export default function FilterCoursesAutocomplete({
   courseId,
   setCourse,
 }: IFilterCoursesAutocomplete): React.ReactElement {
-  const { data: courses, isLoading } = useGetCourseQuery({ take: 50 });
+  const { data: courses, isLoading } = useManagerGetCourseQuery({ take: 50 });
   const [current, setCurrent] = useState<
     (ICourse & BaseResponseInterface) | undefined
   >();

@@ -6,7 +6,7 @@ import { EmptyContent, SimpleInfiniteList } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { getCountTakingElment } from "@utils";
 import { IModulesSearchParams } from "src/redux/interfaces/content.interface";
-import { useGetModulesListQuery } from "src/redux/services/student/modules-student";
+import { useGetModulesListQuery } from "src/redux/services/manager/modules-student";
 
 import ModuleItem from "./module-list-item/ModuleItem";
 import SkeletonModule from "./module-list-item/SkeletonModule";

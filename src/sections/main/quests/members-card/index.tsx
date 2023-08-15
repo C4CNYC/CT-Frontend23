@@ -40,7 +40,7 @@ import {
   useGetClassPendingQuery,
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
-import { useGetClassStudentsQuery } from "src/redux/services/student/classes-manager";
+import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 
 import MemberRow from "./MemberRow";
 
@@ -278,11 +278,12 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
             dense={dense}
             numSelected={selected.length}
             rowCount={tableData.length}
-            onSelectAllRows={(checked) =>
-              onSelectAllRows(
+            onSelectAllRows={(checked) => {
+ onSelectAllRows(
                 checked,
                 tableData.map((row) => row.id as string)
-              )
+              );
+}
             }
             action={
               <Tooltip title="Delete">
@@ -304,11 +305,12 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
                 rowCount={tableData?.length}
                 numSelected={selected.length}
                 onSort={onSort}
-                onSelectAllRows={(checked) =>
-                  onSelectAllRows(
+                onSelectAllRows={(checked) => {
+ onSelectAllRows(
                     checked,
                     tableData?.map((row) => row.id as string)
-                  )
+                  );
+}
                 }
               />
 
@@ -320,9 +322,9 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
                       key={row.id}
                       row={row}
                       selected={selected.includes(row.id as string)}
-                      onSelectRow={() => onSelectRow(row.id as string)}
-                      onDeleteRow={() => handleDeleteRow(row.id as string)}
-                      onEditRow={() => handleEditRow(row.id as string)}
+                      onSelectRow={() => { onSelectRow(row.id as string); }}
+                      onDeleteRow={() => { handleDeleteRow(row.id as string); }}
+                      onEditRow={() => { handleEditRow(row.id as string); }}
                       pending={filterStatus === "pending"}
                       loading={isDeleting}
                     />
@@ -405,9 +407,8 @@ function applyFilter({
   if (filterName) {
     inputData = inputData.filter(
       (user) =>
-        user.first_name.toLowerCase().indexOf(filterName.toLowerCase()) !==
-          -1 ||
-        user.last_name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        user.first_name.toLowerCase().includes(filterName.toLowerCase()) ||
+        user.last_name.toLowerCase().includes(filterName.toLowerCase())
     );
   }
   return inputData;

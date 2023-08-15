@@ -20,7 +20,7 @@ import SkeletonSchoolRow from "./SkeletonSchoolRow";
 const TABLE_HEAD = [
   { id: "cover", label: "Cover", align: "left" },
   { id: "name", label: "Name", align: "left" },
-  { id: "country", label: "Country", align: "left" },
+  { id: "country", label: "Country", align: "center" },
   { id: "city", label: "City", align: "left" },
   { id: "phone", label: "Phone", align: "left" },
   { id: "active", label: "Active", align: "left" },

@@ -6,16 +6,16 @@ import {
   ILessonSearchParams,
 } from "src/redux/interfaces/content.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getLessonContent: builder.query<
       Array<ILessonContent & BaseResponseInterface>,
       { id: string }
     >({
       query: ({ id }) => ({
-        url: `/lesson/${id}/content`,
+        url: `/student/lesson/${id}/content`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
@@ -24,7 +24,7 @@ const extendedApi = studentApi.injectEndpoints({
     }),
     getLesson: builder.query<ILesson & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
-        url: `/lesson/${id}`,
+        url: `/student/lesson/${id}`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
@@ -34,7 +34,7 @@ const extendedApi = studentApi.injectEndpoints({
       ILessonSearchParams
     >({
       query: (params) => ({
-        url: "/content/lesson",
+        url: "/student/content/lesson",
         method: "GET",
         params,
       }),

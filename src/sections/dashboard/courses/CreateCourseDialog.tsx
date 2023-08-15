@@ -63,9 +63,10 @@ export default function CreateCourseDialog({
   children,
   defaultValues,
 }: Prop): React.ReactElement {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<null | File>(null);
-  const { enqueueSnackbar } = useSnackbar();
+
   const [editCourse, { isLoading: isEditLoading }] = useUpdateCourseMutation();
   const [createCourse, { isLoading: isCreateLoading }] =
     useCreateCourseMutation();
@@ -111,27 +112,28 @@ export default function CreateCourseDialog({
           id,
           ...data,
         }).unwrap();
+
         if (uploadedFile) {
           file.append("file", uploadedFile);
-          await updateCover({ id, file });
+          await updateCover({ id, file }).unwrap();
         }
       } else {
-        const course = await createCourse({
-          ...data,
-        }).unwrap();
-        if (!uploadedFile) return;
-        file.append("file", uploadedFile);
-        await updateCover({ id: course.id, file });
+        const course = await createCourse(data).unwrap();
+
+        if (uploadedFile) {
+          file.append("file", uploadedFile);
+          await updateCover({ id: course.id, file }).unwrap();
+        }
       }
 
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       methods.reset();
+      setOpen(false);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
-    handleClose();
   };
   const clearFileHandler = (): void => {
     setUploadedFile(null);

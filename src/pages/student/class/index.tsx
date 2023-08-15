@@ -1,9 +1,12 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+import { CircularProgress } from "@mui/material";
 
 import { LoadingScreen } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 
 ClassMain.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -11,21 +14,24 @@ ClassMain.getLayout = (page: React.ReactElement) => (
 
 export default function ClassMain(): React.ReactElement {
   const { push } = useRouter();
-  const { data: tribes, isLoading } = useGetClassesQuery({});
+  const { data: tribes, isLoading } = useGetStudentClassesQuery({});
+
+  useEffect(() => {
+    if (localStorage.getItem("JOIN_TRIBE")) {
+      const { joinCode, classId } = JSON.parse(
+        localStorage.getItem("JOIN_TRIBE") ?? "{}"
+      );
+      push(STUDENT_PATH_DASHBOARD.class.id(classId, { joinCode }));
+    } else if (tribes?.data.length) {
+      push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id));
+    } else {
+      push(STUDENT_PATH_DASHBOARD.class.join);
+    }
+  }, [tribes]);
+
   if (isLoading) {
     return <LoadingScreen />;
   }
-  if (localStorage.getItem("JOIN_TRIBE")) {
-    const { joinCode, classId } = JSON.parse(
-      localStorage.getItem("JOIN_TRIBE") ?? "{}"
-    );
-    push(STUDENT_PATH_DASHBOARD.class.id(classId, joinCode));
-  } else if (tribes?.data.length) {
-    console.log(tribes?.data[0].id);
-    push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id));
-  } else {
-    push(STUDENT_PATH_DASHBOARD.class.join);
-  }
 
-  return <></>;
+  return <CircularProgress />;
 }

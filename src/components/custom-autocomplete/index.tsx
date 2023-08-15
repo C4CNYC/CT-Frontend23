@@ -18,8 +18,8 @@ import {
   ClassSearchParams,
   IClass,
 } from "src/redux/interfaces/class.interface";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 
 interface Props {
   filterName: string;

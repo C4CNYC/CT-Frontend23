@@ -6,14 +6,14 @@ import {
   IMentor,
 } from "src/redux/interfaces/class.interface";
 
-import { studentApi } from ".";
+import { managerApi } from ".";
 import { IStudent, IStudentSearchParams } from "../interfaces/user.interface";
 
-const extendedApi = studentApi.injectEndpoints({
+const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     createClass: builder.mutation<void, IClass>({
       query: ({ ...body }) => ({
-        url: "/class",
+        url: "/student/class",
         method: "POST",
         body,
       }),
@@ -24,59 +24,59 @@ const extendedApi = studentApi.injectEndpoints({
       { share_token: string }
     >({
       query: ({ ...body }) => ({
-        url: "/class/join",
+        url: "/student/class/join",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ["ClassesStudent"],
     }),
-    getClasses: builder.query<
+    getStudentClasses: builder.query<
       BaseListResponseInterface<IClass & BaseResponseInterface>,
       ClassSearchParams
     >({
       query: ({ ...params }) => ({
-        url: "/class",
+        url: "/student/class",
         method: "GET",
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
     getClass: builder.query<IClass & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
-        url: `/class/${id}`,
+        url: `/student/class/${id}`,
         method: "GET",
       }),
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
     getClassStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
       { id: string } & IStudentSearchParams
     >({
       query: ({ id, ...params }) => ({
-        url: `/class/${id}/students`,
+        url: `/student/class/${id}/students`,
         method: "GET",
         params,
       }),
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
     getClassMentor: builder.query<IMentor[], { id: string }>({
       query: ({ id }) => ({
-        url: `/class/${id}/mentor`,
+        url: `/student/class/${id}/mentor`,
         method: "GET",
       }),
       transformResponse: (response: IMentor[]) => {
         const manager = response.filter((el) => el.role === "manager");
         return manager ?? response;
       },
-      providesTags: ["Classes"],
+      providesTags: ["ClassesStudent"],
     }),
   }),
   overrideExisting: false,
 });
 
 export const {
-  useGetClassesQuery,
+  useGetStudentClassesQuery,
   useGetClassQuery,
   useGetClassMentorQuery,
   useGetClassStudentsQuery,

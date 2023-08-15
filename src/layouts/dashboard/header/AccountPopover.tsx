@@ -86,9 +86,19 @@ export default function AccountPopover(): React.ReactElement {
         }}
       >
         <CustomAvatar
-          src={profile?.avatar}
-          alt={profile?.first_name}
-          name={profile?.first_name}
+          src={
+            isStudentMode ? profile?.student_profile.avatar : profile?.avatar
+          }
+          alt={
+            isStudentMode
+              ? profile?.student_profile.first_name
+              : profile?.first_name
+          }
+          name={
+            isStudentMode
+              ? profile?.student_profile.first_name
+              : profile?.first_name
+          }
         />
       </IconButtonAnimate>
 
@@ -101,19 +111,25 @@ export default function AccountPopover(): React.ReactElement {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {profile?.first_name}
+            {isStudentMode
+              ? `${profile?.student_profile.first_name} ${profile?.student_profile.last_name}`
+              : `${profile?.first_name} ${profile?.last_name}`}
           </Typography>
           <Tooltip
             title={
               profile?.email && profile?.email.length > 21 ? (
-                <Typography variant="body2">{profile?.email} </Typography>
+                <Typography variant="body2">
+                  {isStudentMode
+                    ? profile?.student_profile.email
+                    : profile?.email}{" "}
+                </Typography>
               ) : (
                 ""
               )
             }
           >
             <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-              {profile?.email}
+              {isStudentMode ? profile?.student_profile.email : profile?.email}
             </Typography>
           </Tooltip>
         </Box>

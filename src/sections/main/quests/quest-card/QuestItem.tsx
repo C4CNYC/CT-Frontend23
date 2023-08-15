@@ -151,7 +151,9 @@ export default function QuestItem({
           <Stack direction="row" justifyContent="space-between">
             <Link
               component={NextLink}
-              href="#"
+              href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+                assignment?.course?.id as string
+              )}
               underline="none"
               sx={{
                 display: "inline-flex",

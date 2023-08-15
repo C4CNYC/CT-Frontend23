@@ -21,11 +21,13 @@ const StyledInfo = styled("div")(({ theme }) => ({
 
 interface IProfileCoverProps {
   name: string;
+  lastName?: string;
   cover?: string;
   avatar?: string;
 }
 export default function ProfileCover({
   name,
+  lastName,
   cover,
   avatar,
 }: IProfileCoverProps) {
@@ -63,7 +65,9 @@ export default function ProfileCover({
             textAlign: { xs: "center", md: "left" },
           }}
         >
-          <Typography variant="h4">{name}</Typography>
+          <Typography variant="h4">
+            {name}&nbsp;{lastName}
+          </Typography>
 
           <Typography sx={{ opacity: 0.72 }}>Class</Typography>
         </Box>

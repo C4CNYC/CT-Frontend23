@@ -20,7 +20,7 @@ import {
   RHFTextField,
   useSnackbar,
 } from "@components";
-import { useJoinClassMutation } from "src/redux/services/student/classes-manager";
+import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
 import { useRouter } from "next/router";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 

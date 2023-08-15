@@ -63,7 +63,8 @@ export default function UserProfile(): React.ReactElement {
         >
           {!isLoading ? (
             <ProfileCover
-              name={`${data?.first_name} ${data?.last_name}`}
+              name={data?.student_profile.first_name ?? ""}
+              lastName={data?.student_profile.last_name ?? ""}
               avatar={data?.student_profile.avatar}
               cover={data?.student_profile.cover}
             />

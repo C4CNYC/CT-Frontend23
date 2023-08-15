@@ -23,12 +23,12 @@ import SkeletonCodePanel, {
 import { getNextLessonId } from "@sections/code-panel/utils/navigation";
 import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useGetChallangesQuery } from "src/redux/services/student/challenges-student";
+import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
 import {
   useGetLessonContentQuery,
   useGetLessonQuery,
-} from "src/redux/services/student/lesson-student";
-import { useCompleteLessonMutation } from "src/redux/services/student/progress-student";
+} from "src/redux/services/manager/lesson-student";
+import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
 
 const Tour = dynamic(
   async () =>

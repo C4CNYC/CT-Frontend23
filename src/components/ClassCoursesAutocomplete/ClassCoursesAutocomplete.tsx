@@ -20,11 +20,8 @@ import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
-import {
-  useAddCourseToClassMutation,
-  useRemoveCourseFromClassMutation,
-} from "src/redux/services/manager/classes-manager";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { useAddCourseToClassMutation, useRemoveCourseFromClassMutation } from "src/redux/services/manager/classes-manager";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
 
 type CourseType = ICourse & BaseResponseInterface;
 

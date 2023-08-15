@@ -23,7 +23,9 @@ import { Stack } from "@mui/system";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
+import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { Role } from "src/redux/services/enums/role.enum";
 import { useUpdateClassesSettingsMutation } from "src/redux/services/manager/classes-manager";
 
 import ClassroomModal from "../classroom-modal";
@@ -199,128 +201,132 @@ export default function ShareGroupModal({
               Copy
             </Button>
           </Box>
-          <Stack mt="20px" ml="15px" gap="20px">
-            <FormControl>
-              <RadioGroup
-                aria-labelledby="demo-controlled-radio-buttons-group"
-                name="controlled-radio-buttons-group"
-                value={value}
-                onChange={(e) => {
-                  updateClassJoin(e);
-                  handleChange(e);
-                }}
-                sx={{
-                  fontSize: "24px",
-                  mb: "24px",
-                }}
-              >
-                <FormControlLabel
-                  value="true"
-                  sx={{
-                    mb: "24px",
-                    mt: "10px",
+          <RoleBasedGuard
+            roles={[Role.Manager, Role.Editor, Role.Owner, Role.Admin]}
+          >
+            <Stack mt="20px" ml="15px" gap="20px">
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={value}
+                  onChange={(e) => {
+                    updateClassJoin(e);
+                    handleChange(e);
                   }}
-                  control={
-                    <Radio
-                      disabled={isLoading}
-                      sx={{
-                        "&.Mui-checked": {
-                          color: "#d1329e",
-                        },
-                      }}
-                    />
-                  }
-                  label={
-                    <Typography color="#292929" variant="h6">
-                      Anyone with the link can join
-                    </Typography>
-                  }
-                />
-                <FormControlLabel
-                  value="false"
-                  disabled={isLoading}
-                  control={
-                    <Radio
-                      sx={{
-                        "&.Mui-checked": {
-                          color: "#d1329e",
-                        },
-                      }}
-                    />
-                  }
-                  label={
-                    <Typography color="#292929" variant="h6">
-                      Only people you approve can join
-                    </Typography>
-                  }
-                />
-              </RadioGroup>
-            </FormControl>
-          </Stack>
-          <Divider
-            variant="middle"
-            orientation="horizontal"
-            sx={{
-              mt: "10px",
-              mb: "10px",
-              background: "#E6F5FD",
-              borderRightWidth: "4px",
-              borderRadius: 2,
-            }}
-          />
-          <Box ml="15px" mt="28px" mb="28px">
-            <Typography
-              variant="h6"
-              fontSize="16px"
-              m="0px 0px 13px"
-              color="#292929"
-            >
-              Other ways to add students:
-            </Typography>
-            <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
-              <Button
-                fullWidth
-                sx={{
-                  background: "#f9f9f9",
-                  color: "#000",
-                  justifyContent: "space-between",
-                  borderRadius: "8px",
-                  mb: "16px",
-                  p: "18px",
-                  "&:hover": {
-                    background: "#bebebe",
-                  },
-                }}
+                  sx={{
+                    fontSize: "24px",
+                    mb: "24px",
+                  }}
+                >
+                  <FormControlLabel
+                    value="true"
+                    sx={{
+                      mb: "24px",
+                      mt: "10px",
+                    }}
+                    control={
+                      <Radio
+                        disabled={isLoading}
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d1329e",
+                          },
+                        }}
+                      />
+                    }
+                    label={
+                      <Typography color="#292929" variant="h6">
+                        Anyone with the link can join
+                      </Typography>
+                    }
+                  />
+                  <FormControlLabel
+                    value="false"
+                    disabled={isLoading}
+                    control={
+                      <Radio
+                        sx={{
+                          "&.Mui-checked": {
+                            color: "#d1329e",
+                          },
+                        }}
+                      />
+                    }
+                    label={
+                      <Typography color="#292929" variant="h6">
+                        Only people you approve can join
+                      </Typography>
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Stack>
+            <Divider
+              variant="middle"
+              orientation="horizontal"
+              sx={{
+                mt: "10px",
+                mb: "10px",
+                background: "#E6F5FD",
+                borderRightWidth: "4px",
+                borderRadius: 2,
+              }}
+            />
+            <Box ml="15px" mt="28px" mb="28px">
+              <Typography
+                variant="h6"
+                fontSize="16px"
+                m="0px 0px 13px"
+                color="#292929"
               >
-                <Box display="flex" alignItems="center">
-                  <SiGoogleclassroom size={24} />
-                  <Typography ml={2}> Google Classroom</Typography>
-                </Box>
-                <AiOutlineArrowRight />
-              </Button>
-            </ClassroomModal>
-            <EmailAddressModal>
-              <Button
-                fullWidth
-                sx={{
-                  backgroundColor: "#f9f9f9",
-                  color: "#000",
-                  justifyContent: "space-between",
-                  borderRadius: "8px",
-                  p: "18px",
-                  "&:hover": {
-                    background: "#bebebe",
-                  },
-                }}
-              >
-                <Box display="flex" alignItems="center">
-                  <MdOutlineMail size={24} />
-                  <Typography ml={2}> Email address or domain</Typography>
-                </Box>
-                <AiOutlineArrowRight />
-              </Button>
-            </EmailAddressModal>
-          </Box>
+                Other ways to add students:
+              </Typography>
+              <ClassroomModal schoolId={schoolClass?.school?.id ?? ""}>
+                <Button
+                  fullWidth
+                  sx={{
+                    background: "#f9f9f9",
+                    color: "#000",
+                    justifyContent: "space-between",
+                    borderRadius: "8px",
+                    mb: "16px",
+                    p: "18px",
+                    "&:hover": {
+                      background: "#bebebe",
+                    },
+                  }}
+                >
+                  <Box display="flex" alignItems="center">
+                    <SiGoogleclassroom size={24} />
+                    <Typography ml={2}> Google Classroom</Typography>
+                  </Box>
+                  <AiOutlineArrowRight />
+                </Button>
+              </ClassroomModal>
+              <EmailAddressModal schoolId={schoolClass?.school?.id ?? ""}>
+                <Button
+                  fullWidth
+                  sx={{
+                    backgroundColor: "#f9f9f9",
+                    color: "#000",
+                    justifyContent: "space-between",
+                    borderRadius: "8px",
+                    p: "18px",
+                    "&:hover": {
+                      background: "#bebebe",
+                    },
+                  }}
+                >
+                  <Box display="flex" alignItems="center">
+                    <MdOutlineMail size={24} />
+                    <Typography ml={2}> Email address or domain</Typography>
+                  </Box>
+                  <AiOutlineArrowRight />
+                </Button>
+              </EmailAddressModal>
+            </Box>
+          </RoleBasedGuard>
         </Box>
       </Dialog>
     </>

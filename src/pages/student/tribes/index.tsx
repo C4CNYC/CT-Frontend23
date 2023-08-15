@@ -1,18 +1,16 @@
 import Head from "next/head";
-import NextLink from "next/link";
 import { useState } from "react";
 
-import { Box, Container, Link, Tab, Tabs } from "@mui/material";
+import { Box, Container, Tab, Tabs } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/";
 import { PATH_DASHBOARD } from "@routes/paths";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
-import { useGetClassesQuery } from "src/redux/services/student/classes-manager";
+import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 
 enum TabType {
   Active = "active",
@@ -27,7 +25,7 @@ export default function Tribes(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const [currentTab, setCurrentTab] = useState(TabType.Active);
 
-  const { data, isLoading } = useGetClassesQuery({});
+  const { data, isLoading } = useGetStudentClassesQuery({});
 
   if (isLoading) return <SkeletonTribes />;
 
