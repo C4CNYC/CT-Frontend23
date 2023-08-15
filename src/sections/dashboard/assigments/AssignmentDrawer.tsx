@@ -235,11 +235,11 @@ export default function AssignmentDrawer({
             <ListItemText>
               <SkillsAutocomplete
                 labelProps="h6"
-                setAssignmentsSkills={(s: string[]) => {
+                setAssignmentsSkillsId={(s: string[]) => {
                   setAssignmentsSkills(s);
                 }}
-                assignmentsSkills={assignmentsSkills}
-                skills={[]}
+                assignmentsSkillsId={assignmentsSkills}
+                existedSkills={[]}
               />
             </ListItemText>
           </ListItem>
