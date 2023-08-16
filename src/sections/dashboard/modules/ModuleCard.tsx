@@ -15,6 +15,7 @@ import {
 import {
   ConfirmDialog,
   Iconify,
+  Label,
   MenuPopover,
   TextMaxLine,
   useSnackbar,
@@ -98,10 +99,24 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
         </Stack>
+        <Label
+          variant="soft"
+          color={module.active ? "success" : "error"}
+          sx={{
+            textTransform: "uppercase",
+            mr: "auto",
+            position: "absolute",
+            top: 10,
+            left: 10,
+          }}
+        >
+          {module.active ? "Active" : "Not Active"}
+        </Label>
+
         <Box
           component="img"
           src="/assets/icons/files/ic_folder.svg"
-          sx={{ width: 40, height: 40 }}
+          sx={{ width: 40, height: 40, mt: 4 }}
         />
 
         <TextMaxLine variant="h6" sx={{ mt: 1, mb: 0.5 }}>

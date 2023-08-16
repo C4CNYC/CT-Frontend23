@@ -50,7 +50,7 @@ export default function CourseDescription({
         <Stack direction="row" alignItems="center">
           <Avatar
             alt="Jason"
-            src="/static/images/avatar/1.jpg"
+            src=""
             sx={{
               width: "60px",
               height: "60px",

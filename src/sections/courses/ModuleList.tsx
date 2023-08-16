@@ -31,9 +31,11 @@ export default function ModuleList({
   useEffect(() => {
     setIsLoading(isLoading);
   }, [isLoading]);
+
   if (data) {
     setCounter(data.data.length);
   }
+
   if (isLoading) {
     <Stack
       direction="row"

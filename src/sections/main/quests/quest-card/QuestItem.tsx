@@ -103,129 +103,145 @@ export default function QuestItem({
 
   return (
     <>
-      <Stack
-        sx={{
-          backgroundColor: "#E6F5FD",
-          borderRadius: "10px",
-          py: 1,
-          px: 2,
-          flexDirection: { md: "row" },
-        }}
+      <Link
+        component={NextLink}
+        href={assignmentPath}
+        underline="none"
+        color="initial"
       >
-        <Stack sx={{ width: "100%", gap: 2 }}>
-          <Stack direction="row" justifyContent="space-between">
-            <Stack gap={2} sx={{ flexDirection: { sm: "row" } }}>
-              {assignment?.active && (
-                <Typography
-                  sx={{ color: "#0198ED", display: "inline-flex" }}
-                  variant="subtitle2"
-                >
-                  Live Now
-                  <HiOutlineStatusOnline
-                    size={20}
-                    style={{ marginLeft: "3px" }}
-                  />
+        <Stack
+          sx={{
+            backgroundColor: "#E6F5FD",
+            borderRadius: "10px",
+            py: 1,
+            px: 2,
+            flexDirection: { md: "row" },
+          }}
+        >
+          <Stack sx={{ width: "100%", gap: 2 }}>
+            <Stack direction="row" justifyContent="space-between">
+              <Stack gap={2} sx={{ flexDirection: { sm: "row" } }}>
+                {assignment?.active && (
+                  <Typography
+                    sx={{ color: "#0198ED", display: "inline-flex" }}
+                    variant="subtitle2"
+                  >
+                    Live Now
+                    <HiOutlineStatusOnline
+                      size={20}
+                      style={{ marginLeft: "3px" }}
+                    />
+                  </Typography>
+                )}
+                <Typography variant="body2">
+                  {formatDistanceToNow(new Date(assignment.createdAt), {
+                    addSuffix: true,
+                  })}
                 </Typography>
-              )}
-              <Typography variant="body2">
-                {formatDistanceToNow(new Date(assignment.createdAt), {
-                  addSuffix: true,
-                })}
-              </Typography>
-              <Typography variant="body2">
-                Due: {format(new Date(assignment.end_date), "MM.dd.yyyy")}
-              </Typography>
+                <Typography variant="body2">
+                  Due: {format(new Date(assignment.end_date), "MM.dd.yyyy")}
+                </Typography>
+              </Stack>
+              <Typography>{assignment?.course?.name}</Typography>
             </Stack>
-            <Typography>{assignment?.course?.name}</Typography>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography variant="h5" color="#364954">
+                {assignment.name}
+              </Typography>
+              <Box display="flex" gap={1} alignItems="center">
+                <Iconify icon="bx:award" sx={{ color: "#EE467A" }} />
+                <Iconify icon="flat-color-icons:ok" sx={{ color: "#75CF6D" }} />
+              </Box>
+            </Stack>
+            <Stack direction="row" justifyContent="space-between">
+              <Link
+                component={NextLink}
+                href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+                  assignment?.course?.id as string
+                )}
+                underline="none"
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  color: "inherit",
+                }}
+              >
+                Keep Coding{" "}
+                <Iconify
+                  icon="maki:arrow"
+                  width={18}
+                  style={{ marginLeft: "3px" }}
+                />
+              </Link>
+              <Link
+                component={NextLink}
+                href={assignmentPath}
+                underline="none"
+                sx={(theme) => ({
+                  display: "inline-flex",
+                  alignItems: "center",
+                  color: theme.palette.grey[500],
+                })}
+              >
+                See more
+                <RiExternalLinkLine size={15} style={{ marginLeft: "3px" }} />
+              </Link>
+            </Stack>
           </Stack>
-          <Stack direction="row" justifyContent="space-between">
-            <Typography variant="h5" color="#364954">
-              {assignment.name}
-            </Typography>
-            <Box display="flex" gap={1} alignItems="center">
-              <Iconify icon="bx:award" sx={{ color: "#EE467A" }} />
-              <Iconify icon="flat-color-icons:ok" sx={{ color: "#75CF6D" }} />
-            </Box>
-          </Stack>
-          <Stack direction="row" justifyContent="space-between">
-            <Link
-              component={NextLink}
-              href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                assignment?.course?.id as string
-              )}
-              underline="none"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                color: "inherit",
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={(theme) => ({
+              ml: 2,
+              mr: 1,
+              borderLeftWidth: "2px",
+              borderColor: theme.palette.grey[500],
+            })}
+          />
+          <Stack
+            alignSelf="flex-end"
+            sx={(theme) => ({
+              color: theme.palette.grey[500],
+              flexDirection: { xs: "row", sm: "row", md: "column" },
+            })}
+          >
+            <IconButton
+              sx={{ alignSelf: "flex-end" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                pinTomblerAssignment();
               }}
             >
-              Keep Coding{" "}
-              <Iconify
-                icon="maki:arrow"
-                width={18}
-                style={{ marginLeft: "3px" }}
-              />
-            </Link>
-            <Link
-              component={NextLink}
-              href={assignmentPath}
-              underline="none"
-              sx={(theme) => ({
-                display: "inline-flex",
-                alignItems: "center",
-                color: theme.palette.grey[500],
-              })}
-            >
-              See more
-              <RiExternalLinkLine size={15} style={{ marginLeft: "3px" }} />
-            </Link>
-          </Stack>
-        </Stack>
-        <Divider
-          orientation="vertical"
-          variant="middle"
-          flexItem
-          sx={(theme) => ({
-            ml: 2,
-            mr: 1,
-            borderLeftWidth: "2px",
-            borderColor: theme.palette.grey[500],
-          })}
-        />
-        <Stack
-          alignSelf="flex-end"
-          sx={(theme) => ({
-            color: theme.palette.grey[500],
-            flexDirection: { xs: "row", sm: "row", md: "column" },
-          })}
-        >
-          <IconButton
-            sx={{ alignSelf: "flex-end" }}
-            onClick={pinTomblerAssignment}
-          >
-            {isLoading ? (
-              <CircularProgress variant="indeterminate" size={20} />
-            ) : assignment?.meta?.pin ? (
-              <Iconify icon="bi:pin-fill" width={22} />
-            ) : (
-              <Iconify icon="bi:pin" width={22} />
-            )}
-          </IconButton>
-          <Stack direction="row">
-            <IconButton>
-              <Iconify icon="ion:share-outline" width={22} />
+              {isLoading ? (
+                <CircularProgress variant="indeterminate" size={20} />
+              ) : assignment?.meta?.pin ? (
+                <Iconify icon="bi:pin-fill" width={22} />
+              ) : (
+                <Iconify icon="bi:pin" width={22} />
+              )}
             </IconButton>
-            <RoleBasedGuard
-              roles={[Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
-            >
-              <IconButton onClick={handleOpenPopover}>
-                <Iconify icon="pepicons-pop:dots-y" width={22} />
+            <Stack direction="row">
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                }}
+              >
+                <Iconify icon="ion:share-outline" width={22} />
               </IconButton>
-            </RoleBasedGuard>
+              <RoleBasedGuard
+                roles={[Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
+              >
+                <IconButton onClick={handleOpenPopover}>
+                  <Iconify icon="pepicons-pop:dots-y" width={22} />
+                </IconButton>
+              </RoleBasedGuard>
+            </Stack>
           </Stack>
         </Stack>
-      </Stack>
+      </Link>
       <MenuPopover
         open={openPopover}
         onClose={handleClosePopover}

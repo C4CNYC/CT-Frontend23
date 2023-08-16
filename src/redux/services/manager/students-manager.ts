@@ -51,7 +51,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Pendings"],
+      invalidatesTags: ["Pendings", "ClassesStudentList"],
     }),
     getGoogleClasses: builder.query<
       any[],

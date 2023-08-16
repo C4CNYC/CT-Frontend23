@@ -82,10 +82,10 @@ export default function CourseList({
           )
         ) : isFetching ? (
           <>{createSkeletonList()}</>
-        ) : data?.data?.length ? (
+        ) : data?.data.length ? (
           data?.data?.map((el) => <CoursesItem course={el} key={el.id} />)
         ) : (
-          <EmptyContent title="You dont have any course" />
+          <EmptyContent title="No Data" />
         )}
       </Stack>
     </SimpleInfiniteList>

@@ -45,7 +45,6 @@ interface FormValuesProps {
   price: string;
   description: string;
   active: boolean;
-  draft: boolean;
   public: boolean;
   skills: [];
 }
@@ -283,7 +282,6 @@ export default function CreateCourseDialog({
                 />
                 <Stack direction="row" justifyContent="space-between">
                   <RHFSwitch name="active" label="Course active" />
-                  <RHFSwitch name="draft" label="Draft" />
                   <RHFSwitch name="public" label="Public" />
                 </Stack>
               </Box>

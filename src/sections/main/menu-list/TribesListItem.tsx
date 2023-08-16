@@ -6,6 +6,7 @@ import {
   Link,
   Tooltip,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 
@@ -25,7 +26,8 @@ export default function TribeListItem({
 }: Props): React.ReactElement {
   const theme = useTheme();
   const { themeLayout } = useSettingsContext();
-  const isNavMini = themeLayout === "mini";
+  const isMobile = useMediaQuery(theme.breakpoints.down(1200));
+  const isNavMini = themeLayout === "mini" && !isMobile;
 
   return (
     <Tooltip title={isNavMini ? classItem.name : ""}>

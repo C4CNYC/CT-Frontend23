@@ -70,7 +70,7 @@ export const STUDENT_PATH_DASHBOARD = {
     root: "/student/friends",
     friend: (id: string) => path("/student/friends/", `${id}`),
   },
-  goals: "/student/goals",
+  myNotes: "/student/my-notes",
   gallery: {
     root: "/student/gallery",
     publicProject: "/student/gallery/public-projects",
