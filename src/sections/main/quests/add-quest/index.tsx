@@ -123,6 +123,12 @@ export default function AddQuest(): React.ReactElement {
           active: Boolean(formData.active),
         }).unwrap();
         enqueueSnackbar("Assignment updated successfuly!");
+        push(
+          STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
+            schoolId: query.schoolId as string,
+            assignmentId: assignment.id,
+          })
+        );
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
           variant: "error",
@@ -268,7 +274,7 @@ export default function AddQuest(): React.ReactElement {
                 variant="contained"
                 loading={isLoading || isUpdating || isAddingToClass}
               >
-                {assignment ? "EDIT" : "LAUNCH"}
+                {assignment ? "UPDATE" : "LAUNCH"}
               </LoadingButton>
             </Stack>
           </FormProvider>

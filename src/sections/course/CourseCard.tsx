@@ -37,6 +37,11 @@ export default function CourseCard({
 
   return (
     <Stack
+      onClick={() => {
+        if (!active) {
+          setActive(index);
+        }
+      }}
       direction="row"
       sx={{
         height: "250px",
@@ -45,6 +50,9 @@ export default function CourseCard({
         maxWidth: "645px",
         position: "relative",
         zIndex: 5,
+        "&:hover": {
+          cursor: active ? "" : "pointer",
+        },
         [theme.breakpoints.down(600)]: {
           height: "auto",
         },
