@@ -2,8 +2,6 @@ import { Skeleton, Stack } from "@mui/material";
 
 import { EmptyContent, SimpleInfiniteList } from "@components";
 import { FilterMode, useFilters } from "@hooks";
-import Notes from "@sections/main/main-notes/Notes";
-import NotesSkeletonList from "@sections/main/main-notes/NotesSkeleton";
 import { IAssignmetsSearchParams } from "src/redux/interfaces/assignment.interface";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 
@@ -35,7 +33,6 @@ export default function QuestsTab({
     return (
       <Stack sx={{ flexDirection: { lg: "row" } }}>
         {getQuestsSkeletonList()}
-        <NotesSkeletonList />
       </Stack>
     );
   }
@@ -61,7 +58,6 @@ export default function QuestsTab({
           <EmptyContent title="No data" />
         )}
       </Stack>
-      <Notes />
     </Stack>
   );
 }

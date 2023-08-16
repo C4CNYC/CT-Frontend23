@@ -10,24 +10,25 @@ import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
 import { useRemoveGoalMutation } from "src/redux/services/manager/goals-student";
 
-import AddEditGoalDialog from "./AddEditGoalDialog";
+import AddEditNoteDialog from "./AddEditGoalDialog";
 
-interface GoalsItemProps {
-  goal: IGoals;
+interface INotesItemProps {
+  note: IGoals;
 }
-export default function GoalsItem({ goal }: GoalsItemProps) {
+export default function NotesItem({ note }: INotesItemProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState<boolean>(false);
-  const [deleteGoal, { isLoading }] = useRemoveGoalMutation();
+  const [deleteNote, { isLoading }] = useRemoveGoalMutation();
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
   };
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
   };
+
   const handleDelete = async () => {
     try {
-      await deleteGoal({ id: goal.id as string }).unwrap();
+      await deleteNote({ id: note.id as string }).unwrap();
       enqueueSnackbar("Deleted!");
     } catch (error) {
       const typedError = error as APIError;
@@ -48,22 +49,22 @@ export default function GoalsItem({ goal }: GoalsItemProps) {
           px: 2,
           py: 2,
           borderRadius: 4,
-          border: `3px solid ${goal.color}`,
-          background: alpha(goal.color, 0.5),
+          border: `3px solid ${note.color}`,
+          background: alpha(note.color, 0.5),
         }}
       >
         <Stack>
           <Typography sx={{ px: 3 }} variant="h6">
-            {goal.title}
+            {note.title}
           </Typography>
 
           <Typography sx={{ px: 3 }} variant="body1">
-            {goal.description}
+            {note.description}
           </Typography>
         </Stack>
 
         <Stack sx={{ flexDirection: { sm: "column", md: "row" }, gap: 1 }}>
-          <AddEditGoalDialog goal={goal}>
+          <AddEditNoteDialog note={note}>
             <IconButton
               sx={{
                 background: "#fff",
@@ -74,7 +75,7 @@ export default function GoalsItem({ goal }: GoalsItemProps) {
             >
               <Iconify icon="eva:edit-fill" width="22px" />
             </IconButton>
-          </AddEditGoalDialog>
+          </AddEditNoteDialog>
           <IconButton
             sx={{
               color: "error.main",

@@ -5,9 +5,9 @@ import { Container, Grid, Skeleton } from "@mui/material";
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import GoalsList from "@sections/goals/GoalsList";
-import { useGetGoalsQuery } from "src/redux/services/manager/goals-student";
 import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
+import NotesList from "@sections/my-notes/NotesList";
+import { useGetGoalsQuery } from "src/redux/services/manager/goals-student";
 
 Goals.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -17,20 +17,23 @@ export default function Goals(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
 
   const { data, isLoading } = useGetGoalsQuery({});
+
   if (isLoading || !data) {
-    return <>
-      <Container>
-        <SkeletonBreadcrumbs />
-        <Skeleton
-          animation="wave"
-          variant="rounded"
-          sx={{
-            width: "100%",
-            height: "170px",
-          }}
-        />
-      </Container>
-    </>;
+    return (
+      <>
+        <Container>
+          <SkeletonBreadcrumbs />
+          <Skeleton
+            animation="wave"
+            variant="rounded"
+            sx={{
+              width: "100%",
+              height: "170px",
+            }}
+          />
+        </Container>
+      </>
+    );
   }
   return (
     <>
@@ -39,14 +42,14 @@ export default function Goals(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Goals"
+          heading="My Notes"
           links={[
             { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
-            { name: "Goals", href: STUDENT_PATH_DASHBOARD.goals },
+            { name: "My Notes", href: STUDENT_PATH_DASHBOARD.myNotes },
           ]}
         />
         <Grid item xs={12} md={6} lg={8}>
-          <GoalsList list={data.data} />
+          <NotesList list={data.data} />
         </Grid>
       </Container>
     </>
