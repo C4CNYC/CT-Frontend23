@@ -11,7 +11,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { EmptyContent } from "@components";
 import { useOnlineConnection, useRealTimeConnection } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { CodePanelChat } from "@sections/chat";
@@ -26,7 +25,7 @@ import { useAuthContext } from "src/auth/useAuthContext";
 import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
 import {
   useGetLessonContentStudentQuery,
-  useGetLessonQuery,
+  useGetLessonStudentQuery,
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
 
@@ -54,12 +53,13 @@ export default function Index(): React.ReactElement | null {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const { enqueueSnackbar } = useSnackbar();
   const handle = useFullScreenHandle();
-  const { push, query } = useRouter();
+  const { push, query, replace } = useRouter();
   const { user } = useAuthContext();
 
   const [confetti, setConfetti] = useState(false);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
     useAtom(globalCodePanelAtom);
@@ -76,7 +76,7 @@ export default function Index(): React.ReactElement | null {
   const { data: courseContent, isLoading: isLoadingCourseContent } =
     useGetChallangesQuery({ id: query.id as string }, { skip: !query.id });
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonQuery(
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     {
       id: query.lessonId as string,
     },
@@ -90,7 +90,7 @@ export default function Index(): React.ReactElement | null {
       unitId,
       lessonId,
     }));
-    push(
+    replace(
       `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
         courseContent?.id as string
       )}?${new URLSearchParams({ unitId })}&${new URLSearchParams({
@@ -176,7 +176,13 @@ export default function Index(): React.ReactElement | null {
     }));
   }, []);
 
-  if (isLoading || isLoadingCourseContent || isLoadingLesson) {
+  useEffect(() => {
+    if (!isLoading && !isLoadingCourseContent && !isLoadingLesson) {
+      setIsLoadingComplete(true);
+    }
+  }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
+
+  if (!isLoadingComplete) {
     return <SkeletonCodePanel />;
   }
 
