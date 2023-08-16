@@ -10,6 +10,7 @@ import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
 import QuestRating from "@sections/quest/QuestRating";
 import { useGetAssignmentStudentQuery } from "src/redux/services/manager/assignments-student";
+import { useGetCoursQuery } from "src/redux/services/manager/courses-student";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -21,6 +22,11 @@ export default function Quest(): React.ReactElement | null {
   const { data, isLoading } = useGetAssignmentStudentQuery(
     { assignmentId: query.id as string },
     { skip: !query.id }
+  );
+
+  const { data: course, isLoading: isLoadingCourse } = useGetCoursQuery(
+    { id: data?.course.id as string },
+    { skip: !data?.course.id }
   );
 
   if (isLoading || !data) {
@@ -39,7 +45,18 @@ export default function Quest(): React.ReactElement | null {
         <QuestHeader />
         <QuestMain questName={data.name} />
         <QuestDescription description={data?.description} />
-        <QuestRating courseId="" courseName="" />
+        {isLoadingCourse ? (
+          <Skeleton
+            variant="rounded"
+            sx={{ height: "98px", mt: 3, background: "#fff", borderRadius: 2 }}
+          />
+        ) : (
+          <QuestRating
+            courseId={course?.id ?? ""}
+            courseName={course?.name ?? ""}
+            progress={course?.progress ?? 0}
+          />
+        )}
       </Container>
     </>
   );
