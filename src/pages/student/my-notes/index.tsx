@@ -38,7 +38,7 @@ export default function Goals(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Goals | CodeTribe</title>
+        <title>My Notes | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
