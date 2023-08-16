@@ -64,7 +64,7 @@ export default function NavVertical({
         >
           <Logo />
           <UserSection />
-          {!isManager && <LetsCodeBtn />}
+          {!isManager ? <LetsCodeBtn /> : null}
         </Stack>
 
         <NavSectionVertical data={menu} />

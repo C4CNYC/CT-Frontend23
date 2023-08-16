@@ -10,7 +10,7 @@ import { managerApi } from ".";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getLessonContent: builder.query<
+    getLessonContentStudent: builder.query<
       Array<ILessonContent & BaseResponseInterface>,
       { id: string }
     >({
@@ -47,7 +47,7 @@ const extendedApi = managerApi.injectEndpoints({
 });
 
 export const {
-  useGetLessonContentQuery,
+  useGetLessonContentStudentQuery,
   useGetLessonQuery,
   useGetLessonsListQuery,
   // -------------mutation-----------
