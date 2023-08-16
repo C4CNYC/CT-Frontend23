@@ -57,7 +57,7 @@ export default function NavVertical({
           sx={{
             pt: 3,
             pb: 2,
-            px: 2.5,
+            px: 1,
             flexShrink: 0,
           }}
         >

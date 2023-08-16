@@ -82,6 +82,7 @@ export const authApi = createApi({
         method: "GET",
       }),
       providesTags: ["ProfileUser"],
+      keepUnusedDataFor: 120,
     }),
     updateStudentProfile: builder.mutation<IStudentProfile, IStudentProfile>({
       query: ({ ...body }) => ({

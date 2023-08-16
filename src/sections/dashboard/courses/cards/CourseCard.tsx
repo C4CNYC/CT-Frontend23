@@ -27,13 +27,13 @@ import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
 
-interface Props {
+interface ICourseCardProps {
   course: ICourse & BaseResponseInterface;
 }
 
 export default function CourseCard({
   course,
-}: Props): React.ReactElement | null {
+}: ICourseCardProps): React.ReactElement | null {
   const { name, level, price, description, active, cover } = course;
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -186,7 +186,6 @@ export default function CourseCard({
             price: course.price.substring(1),
             description: course.description,
             active: course.active,
-            draft: course.draft,
             public: course.public,
             skills: course.skills,
           }}

@@ -15,7 +15,7 @@ interface IQuestTabProps {
   activeTab: boolean;
 }
 
-const DEFAULT_TAKE_PER_PAGE = 15;
+const DEFAULT_TAKE_PER_PAGE = 10;
 
 export default function QuestsTab({
   classId,
@@ -23,7 +23,7 @@ export default function QuestsTab({
   activeTab,
 }: IQuestTabProps) {
   const { filters, setFilter } = useFilters<IAssignmetsSearchParams>(
-    {},
+    { take: 10, page: 1 },
     FilterMode.local
   );
   const { data, isLoading, isFetching } = useGetAssignmentListStudentQuery(

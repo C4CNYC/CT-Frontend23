@@ -9,10 +9,12 @@ import GeneralInfo from "./GeneralInfo";
 
 interface IDetailsTabProps {
   classData: IClass & BaseResponseInterface;
+  activeTab: boolean;
 }
 
 export default function DetailsTab({
   classData,
+  activeTab,
 }: IDetailsTabProps): React.ReactElement {
   return (
     <>
@@ -30,7 +32,7 @@ export default function DetailsTab({
         />
       </Card>
       <Stack gap={2}>
-        <GeneralInfo />
+        <GeneralInfo activeTab={activeTab} />
         <AboutTribe
           description={classData.description ?? ""}
           city={classData?.school?.city ?? ""}

@@ -7,6 +7,7 @@ import {
   Box,
   Divider,
   MenuItem,
+  Skeleton,
   Stack,
   Tooltip,
   Typography,
@@ -32,8 +33,6 @@ import { setStudentMode } from "src/redux/slices/global";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 
-// ----------------------------------------------------------------------
-
 export default function AccountPopover(): React.ReactElement {
   const reduxDispatch = useDispatch();
   const { pathname } = useRouter();
@@ -45,7 +44,7 @@ export default function AccountPopover(): React.ReactElement {
   const { replace, push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  const { data: profile } = useProfileQuery();
+  const { data: profile, isLoading } = useProfileQuery();
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
@@ -110,28 +109,36 @@ export default function AccountPopover(): React.ReactElement {
         sx={{ width: 200, p: 0 }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle2" noWrap>
-            {isStudentMode
-              ? `${profile?.student_profile.first_name} ${profile?.student_profile.last_name}`
-              : `${profile?.first_name} ${profile?.last_name}`}
-          </Typography>
-          <Tooltip
-            title={
-              profile?.email && profile?.email.length > 21 ? (
-                <Typography variant="body2">
-                  {isStudentMode
-                    ? profile?.student_profile.email
-                    : profile?.email}{" "}
-                </Typography>
-              ) : (
-                ""
-              )
-            }
-          >
-            <Typography variant="body2" sx={{ color: "text.secondary" }} noWrap>
-              {isStudentMode ? profile?.student_profile.email : profile?.email}
+          {!isLoading ? (
+            <Typography variant="subtitle2" noWrap>
+              {isStudentMode
+                ? `${profile?.student_profile.first_name} ${profile?.student_profile.last_name}`
+                : `${profile?.first_name} ${profile?.last_name}`}
             </Typography>
-          </Tooltip>
+          ) : (
+            <Skeleton variant="rectangular" height="20px" sx={{ mb: "4px" }} />
+          )}
+          {!isLoading ? (
+            <Tooltip
+              title={
+                profile?.email && profile?.email.length > 21 ? (
+                  <Typography variant="body2">{profile?.email}</Typography>
+                ) : (
+                  ""
+                )
+              }
+            >
+              <Typography
+                variant="body2"
+                sx={{ color: "text.secondary" }}
+                noWrap
+              >
+                {profile?.email}
+              </Typography>
+            </Tooltip>
+          ) : (
+            <Skeleton variant="rectangular" height="20px" />
+          )}
         </Box>
 
         <Divider sx={{ borderStyle: "dashed" }} />

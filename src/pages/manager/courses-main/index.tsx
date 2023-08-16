@@ -10,6 +10,7 @@ import {
   useSettingsContext,
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
+import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { CourseCard } from "@sections/dashboard/courses/cards";
@@ -18,16 +19,11 @@ import SkeletonCourses from "@sections/dashboard/courses/skeletonCourses";
 import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import { getCountTakingElment } from "@utils";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-
-// ----------------------------------------------------------------------
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();

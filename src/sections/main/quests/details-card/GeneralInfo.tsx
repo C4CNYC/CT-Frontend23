@@ -5,16 +5,20 @@ import { Card, Divider, Skeleton, Stack, Typography } from "@mui/material";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 
-export default function GeneralInfo() {
+interface IGeneralInfo {
+  activeTab: boolean;
+}
+
+export default function GeneralInfo({ activeTab }: IGeneralInfo) {
   const { query } = useRouter();
   const { data, isLoading } = useGetClassStudentsQuery(
     { id: query.id as string },
-    { skip: !query.id }
+    { skip: !query.id || !activeTab }
   );
   const { data: quests, isLoading: questsLoading } =
     useGetAssignmentListStudentQuery(
       { class_id: query.id as string },
-      { skip: !query.id }
+      { skip: !query.id || !activeTab }
     );
 
   return (
