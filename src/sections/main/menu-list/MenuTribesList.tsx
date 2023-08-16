@@ -12,7 +12,9 @@ import {
   MenuItem,
   Skeleton,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { MenuPopover, Scrollbar, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -24,8 +26,10 @@ import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";
 
 export default function MenuTribesList(): React.ReactElement {
+  const theme = useTheme();
   const { themeLayout } = useSettingsContext();
-  const isNavMini = themeLayout === "mini";
+  const isMobile = useMediaQuery(theme.breakpoints.down(1200));
+  const isNavMini = themeLayout === "mini" && !isMobile;
 
   const [containerHeignt, setContainerHeignt] = useState("auto");
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -74,7 +78,7 @@ export default function MenuTribesList(): React.ReactElement {
           <>
             <Button
               onClick={handleOpenPopover}
-              sx={(theme) => ({
+              sx={{
                 alignSelf: "flex-start",
                 borderRadius: 1,
                 minWidth: "30px",
@@ -84,7 +88,7 @@ export default function MenuTribesList(): React.ReactElement {
                 height: "30px",
                 color: theme.palette.info.light,
                 border: `2px solid ${theme.palette.info.light}`,
-              })}
+              }}
             >
               <FaPlus size={20} />
             </Button>

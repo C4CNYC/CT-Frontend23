@@ -63,7 +63,6 @@ export default function NavVertical({
           }}
         >
           <Logo />
-          <Stack sx={{ mt: "30px" }}></Stack>
           <UserSection />
           {!isManager && <LetsCodeBtn />}
         </Stack>
