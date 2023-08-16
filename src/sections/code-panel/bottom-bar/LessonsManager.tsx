@@ -149,16 +149,20 @@ const LessonManager = (): React.ReactElement => {
                         }}
                         expandIcon={<ExpandMoreIcon />}
                       >
-                        <Typography
-                          variant="h6"
-                          noWrap
-                          sx={{
-                            textOverflow: "ellipsis",
-                            width: isMobile ? "220px" : "300px",
-                          }}
+                        <Tooltip
+                          title={module.name.length > 39 ? module.name : ""}
                         >
-                          {module.name}
-                        </Typography>
+                          <Typography
+                            variant="h6"
+                            noWrap
+                            sx={{
+                              textOverflow: "ellipsis",
+                              width: isMobile ? "220px" : "300px",
+                            }}
+                          >
+                            {module.name}
+                          </Typography>
+                        </Tooltip>
                       </AccordionSummary>
                       <AccordionDetails sx={{ p: 0 }}>
                         <List sx={{ p: 0, pl: "10px", pr: "10px" }}>
