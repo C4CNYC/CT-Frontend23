@@ -1,6 +1,6 @@
 import nextLink from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FaCampground, FaPlus } from "react-icons/fa";
 import { IoPeople } from "react-icons/io5";
@@ -18,15 +18,16 @@ import { MenuPopover, Scrollbar, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
+import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 
 import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";
-import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 
 export default function MenuTribesList(): React.ReactElement {
   const { themeLayout } = useSettingsContext();
   const isNavMini = themeLayout === "mini";
 
+  const [containerHeignt, setContainerHeignt] = useState("auto");
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const { data, isLoading } = useGetStudentClassesQuery({});
   const { query } = useRouter();
@@ -41,6 +42,11 @@ export default function MenuTribesList(): React.ReactElement {
     setOpenPopover(null);
   };
 
+  useEffect(() => {
+    if (data) {
+      setContainerHeignt(data.data.length < 4 ? "auto" : "150px");
+    }
+  }, [isLoading]);
   return (
     <Stack>
       {!isNavMini && (
@@ -60,7 +66,7 @@ export default function MenuTribesList(): React.ReactElement {
         {isLoading ? (
           <Stack gap={1} ml={isNavMini ? 0 : 2} sx={{ maxWidth: "150px" }}>
             <Skeleton variant="rounded" height={30} width={30} />
-            {Array.from("1234").map((el) => (
+            {Array.from("12").map((el) => (
               <Skeleton variant="rounded" height={32} key={el} />
             ))}
           </Stack>
@@ -85,7 +91,7 @@ export default function MenuTribesList(): React.ReactElement {
             <Stack
               sx={{
                 gap: 1,
-                height: "150px",
+                height: containerHeignt,
                 width: isNavMini ? "58px" : "auto",
               }}
             >

@@ -50,7 +50,7 @@ export default function Skills(): React.ReactElement {
   const onDelete = async (id: string): Promise<void> => {
     try {
       await removeSkill({ id }).unwrap();
-      enqueueSnackbar("skill removed");
+      enqueueSnackbar("Skill removed");
     } catch (e: any) {
       enqueueSnackbar("somethinkg went wrong", { variant: "error" });
     }

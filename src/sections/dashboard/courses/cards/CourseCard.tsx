@@ -154,7 +154,9 @@ export default function CourseCard({
             >
               Level
             </Typography>
-            <Typography variant="subtitle1">{level}</Typography>
+            <Typography variant="subtitle1" textTransform="capitalize">
+              {level}
+            </Typography>
           </div>
 
           <div>
