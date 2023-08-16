@@ -154,8 +154,8 @@ export const apps = {
   subheader: "APPS",
   items: [
     {
-      title: "Goals",
-      path: STUDENT_PATH_DASHBOARD.goals,
+      title: "My Notes",
+      path: STUDENT_PATH_DASHBOARD.myNotes,
       icon: <BsFlagFill size={20} />,
     },
   ],

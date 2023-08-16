@@ -11,18 +11,18 @@ import {
 import { IGoals } from "src/redux/interfaces/goals.interface";
 
 import AddEditGoalDialog from "./AddEditGoalDialog";
-import GoalsItem from "./GoalItem";
+import NotesItem from "./NotesItem";
 
-interface Props extends CardProps {
+interface INotesListProps extends CardProps {
   list: IGoals[];
 }
 
-export default function GoalsList({ list }: Props) {
+export default function NotesList({ list }: INotesListProps) {
   return (
     <Card
       sx={{ display: "flex", flexDirection: "column", px: 3, pb: 3, gap: 2 }}
     >
-      <CardHeader title={<Typography variant="h5">TODOs</Typography>} />
+      <CardHeader title={<Typography variant="h5">My notes</Typography>} />
       <AddEditGoalDialog>
         <IconButton
           sx={{
@@ -37,7 +37,7 @@ export default function GoalsList({ list }: Props) {
         </IconButton>
       </AddEditGoalDialog>
       {list.map((goal) => (
-        <GoalsItem key={goal.id} goal={goal} />
+        <NotesItem key={goal.id} note={goal} />
       ))}
     </Card>
   );

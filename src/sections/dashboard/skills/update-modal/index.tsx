@@ -75,9 +75,9 @@ export default function UpdateModalSkills({
       }
       methods.reset();
       handleClose();
-      enqueueSnackbar(`skill ${id ? "updated" : "created"} successfuly`);
+      enqueueSnackbar(`Skill ${id ? "updated" : "created"} successfully`);
     } catch (e: any) {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 

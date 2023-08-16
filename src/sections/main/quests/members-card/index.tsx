@@ -41,11 +41,12 @@ import {
   useGetClassPendingQuery,
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
+import { useSelector } from "src/redux/store";
 
 import MemberRow from "./MemberRow";
 
 const TABLE_HEAD = [
-  { id: "avatar", label: "Avarat", align: "left" },
+  { id: "avatar", label: "Avatar", align: "left" },
   { id: "firstName", label: "First name", align: "left" },
   { id: "lastName", label: "Lastname", align: "left" },
   { id: "username", label: "username", align: "left" },
@@ -53,11 +54,11 @@ const TABLE_HEAD = [
   { id: "", label: "", align: "left" },
 ];
 const TABLE_HEAD_PENDINGS = [
-  { id: "avatar", label: "Avarat", align: "left" },
+  { id: "avatar", label: "Avatar", align: "left" },
   { id: "firstName", label: "First name", align: "left" },
   { id: "lastName", label: "Lastname", align: "left" },
   { id: "username", label: "username", align: "left" },
-  { id: "approve", label: "Approve", align: "left" },
+  { id: "approve", label: "Action", align: "left" },
   { id: "", label: "", align: "left" },
 ];
 
@@ -70,6 +71,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
   const { user } = useAuthContext();
   const { query, push } = useRouter();
 
+  const role = useSelector((state) => state.global.user?.role);
   const { filters, setFilter } = useFilters({});
 
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
@@ -83,7 +85,10 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
     isFetching: isFetchingPending,
   } = useGetClassPendingQuery(
     { classId: query.id as string, ...filters },
-    { skip: !query.id || !activeTab, refetchOnMountOrArgChange: true }
+    {
+      skip: !query.id || !activeTab || Role.Student === role,
+      refetchOnMountOrArgChange: true,
+    }
   );
 
   const [deleteFromClass, { isLoading: isDeleting }] =

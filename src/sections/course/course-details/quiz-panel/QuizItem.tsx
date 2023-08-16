@@ -19,7 +19,7 @@ export default function QuizItem({
         </Box>
       }
       sx={{ background: "#000" }}
-      placement="right-start"
+      placement="top-end"
     >
       <Chip
         label={name}

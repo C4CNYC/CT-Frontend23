@@ -9,6 +9,7 @@ import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 
 import { NAV } from "../../../config-global";
+import LetsCodeBtn from "./LestCodeBtn";
 import NavToggleButton from "./NavToggleButton";
 import { menuConfig } from "./config-navigation";
 
@@ -54,7 +55,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
           }}
         />
         <UserSection isMini={true} />
-
+        {!isManager ? <LetsCodeBtn isMini /> : null}
         <NavSectionMini data={menu} />
       </Stack>
     </Box>

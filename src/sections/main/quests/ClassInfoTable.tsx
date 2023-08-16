@@ -153,7 +153,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         <MemberCard activeTab={value === 1} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <DetailsTab classData={classData} />
+        <DetailsTab classData={classData} activeTab={value === 2} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
         <ProgressCard activeTab={value === 3} />

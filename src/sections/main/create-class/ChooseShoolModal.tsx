@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import {
   Box,
@@ -35,6 +36,12 @@ export default function ChooseShoolModal({
     setSchoolId(event.target.value as string);
   };
 
+  useEffect(() => {
+    if (data) {
+      setSchoolId(data.data[0].id);
+    }
+  }, [isLoading]);
+
   return (
     <Dialog open={openDialog} maxWidth="xs">
       <DialogTitle textAlign="center">Create a class</DialogTitle>
@@ -60,7 +67,6 @@ export default function ChooseShoolModal({
               onChange={handleChange}
               sx={{ width: "100%", mt: 1, mb: 6 }}
             >
-              <option key="empty" value="none"></option>
               {data?.data ? (
                 <>
                   {data.data.map((el) => (

@@ -32,18 +32,21 @@ interface FormValuesProps {
   id?: string;
 }
 
-interface Props {
+interface IAddEditNotesDialogProps {
   children: React.ReactElement;
-  goal?: IGoals;
+  note?: IGoals;
 }
 
-const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
+const AddEditNotesDialog = ({
+  children,
+  note,
+}: IAddEditNotesDialogProps): React.ReactElement => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [open, setOpen] = useState(false);
 
-  const [postGoal, { isLoading }] = usePostGoalMutation();
-  const [editGoal, { isLoading: isEditing }] = useUpdateGoalMutation();
+  const [postNote, { isLoading }] = usePostGoalMutation();
+  const [editNote, { isLoading: isEditing }] = useUpdateGoalMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -53,9 +56,9 @@ const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
     setOpen(false);
   };
   const defaultValues = {
-    title: goal?.title ?? "",
-    description: goal?.description ?? "",
-    color: goal?.color ?? getRandomColor(),
+    title: note?.title ?? "",
+    description: note?.description ?? "",
+    color: note?.color ?? getRandomColor(),
   };
   const CreateGoalSchema = Yup.object().shape({
     title: Yup.string(),
@@ -70,13 +73,13 @@ const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      if (goal) {
-        await editGoal({ id: goal.id as string, ...data }).unwrap();
+      if (note) {
+        await editNote({ id: note.id as string, ...data }).unwrap();
       } else {
-        await postGoal(data).unwrap();
+        await postNote(data).unwrap();
       }
 
-      enqueueSnackbar(`${goal ? "Edited" : "Added"} successfully!`);
+      enqueueSnackbar(`${note ? "Edited" : "Added"} successfully!`);
       methods.reset();
     } catch (error) {
       const typedError = error as APIError;
@@ -108,7 +111,7 @@ const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
           zIndex: 1101,
         }}
       >
-        <DialogTitle>{goal ? "Edit" : "Create"}</DialogTitle>
+        <DialogTitle>{note ? "Edit" : "Create"}</DialogTitle>
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
@@ -158,4 +161,4 @@ const AddEditGoalDialog = ({ children, goal }: Props): React.ReactElement => {
   );
 };
 
-export default AddEditGoalDialog;
+export default AddEditNotesDialog;

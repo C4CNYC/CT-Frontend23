@@ -18,16 +18,22 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 interface IQuestRatingProps {
   courseName: string;
   courseId: string;
+  progress: number;
 }
 
 export default function QuestRating({
   courseId,
   courseName,
+  progress,
 }: IQuestRatingProps): React.ReactElement {
   return (
     <>
       <Card
-        sx={{ mt: 3, p: { xs: "5px 0px", sm: "15px 20px", md: "15px 20px" } }}
+        sx={{
+          mt: 3,
+          p: { xs: "5px 0px", sm: "15px 20px", md: "15px 20px" },
+          borderRadius: 2,
+        }}
       >
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Stack gap={1}>
@@ -40,10 +46,10 @@ export default function QuestRating({
                 Course <BsFillInfoCircleFill style={{ marginLeft: "5px" }} />
               </Typography>
             </Tooltip>
-            <Typography variant="h4">Course Name</Typography>
+            <Typography variant="h4">{courseName}</Typography>
           </Stack>
           <Stack direction="row" alignItems="center">
-            <Typography variant="h6">82%</Typography>
+            <Typography variant="h6">{progress} %</Typography>
             <Divider
               orientation="vertical"
               flexItem
@@ -51,7 +57,7 @@ export default function QuestRating({
             />
             <Link
               component={NextLink}
-              href={STUDENT_PATH_DASHBOARD.courses.root}
+              href={STUDENT_PATH_DASHBOARD.courses.course(courseId)}
               underline="none"
               typography="h4"
               sx={{
