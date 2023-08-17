@@ -7,6 +7,7 @@ import { IoMdClose } from "react-icons/io";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
@@ -95,29 +96,50 @@ const LessonManager = (): React.ReactElement => {
 
   return (
     <>
-      <Stack className="lessonsTour" direction="row" alignItems="center">
+      <Stack
+        className="lessonsTour"
+        direction="row"
+        alignItems="center"
+        onClick={toggleDrawer(true)}
+      >
         <Tooltip title="LESSONS LIST" placement="top">
-          <IconButton
-            className="lessonsTourMobile"
-            onClick={toggleDrawer(true)}
-            sx={{ mr: "5px" }}
-          >
+          <IconButton className="lessonsTourMobile" sx={{ mr: "5px" }}>
             <Iconify icon="iconoir:page" />
           </IconButton>
         </Tooltip>
-        <Tooltip title={lesson?.name} placement="top">
-          <Typography
-            noWrap
-            width="175px"
-            variant="body2"
+        <Tooltip
+          title={lesson?.name && lesson?.name.length > 24 ? lesson?.name : ""}
+          placement="top"
+        >
+          <Button
+            disableRipple
+            disableFocusRipple
             sx={{
               [theme.breakpoints.down("sm")]: {
                 display: "none",
               },
+              p: 0,
+              color: "initial",
+              fontWeight: "400",
+              "&:hover": {
+                background: "none",
+              },
+              width: "175px",
+              justifyContent: "flex-start",
             }}
           >
-            {lesson?.name}
-          </Typography>
+            <Typography
+              variant="body2"
+              noWrap
+              sx={{
+                textOverflow: "ellipsis",
+                overflow: " hidden",
+                textTransform: "none",
+              }}
+            >
+              {lesson?.name}
+            </Typography>
+          </Button>
         </Tooltip>
       </Stack>
       <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
