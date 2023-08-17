@@ -321,7 +321,7 @@ export default function CreateCourseDialog({
                 width: { xs: "330px", sm: "350px", md: "450px" },
               }}
             >
-              <AuthorsList id={id} />
+              <AuthorsList courseId={id} />
             </Box>
           </TabPanel>
         </Box>

@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import { useState } from "react";
 
 import { useSnackbar } from "notistack";
 import { RxLinkedinLogo } from "react-icons/rx";
@@ -10,7 +9,6 @@ import {
   Box,
   Button,
   Card,
-  Collapse,
   Divider,
   Link,
   Stack,
@@ -24,9 +22,7 @@ import {
   useDeleteAuthorMutation,
 } from "src/redux/services/manager/author-manager";
 
-import AuthorForm from "./AuthorForm";
-
-interface Props {
+interface IAuthorsCardProps {
   author: IAuthor;
   courseId: string;
   addAuthor: boolean;
@@ -36,8 +32,7 @@ export default function AuthorsCard({
   author,
   courseId,
   addAuthor,
-}: Props): React.ReactElement {
-  const [editVisible, setEditVisible] = useState<boolean>(false);
+}: IAuthorsCardProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
   const [addToCourse, { isLoading }] = useAddAuthorToCourseMutation();
@@ -67,6 +62,7 @@ export default function AuthorsCard({
       });
     }
   };
+
   // const removeAuthorFromCourse = (): void => {
   //   try {
   //     if (author.id) {
@@ -188,27 +184,13 @@ export default function AuthorsCard({
               >
                 Delete author
               </LoadingButton>
-              <Button
-                variant="soft"
-                color="success"
-                onClick={() => {
-                  setEditVisible(true);
-                }}
-              >
+              <Button variant="soft" color="success" onClick={() => {}}>
                 Edit
               </Button>
             </>
           )}
         </Box>
       </Card>
-      <Collapse in={editVisible} unmountOnExit>
-        <AuthorForm
-          courseId={courseId}
-          isEdit={true}
-          setFormVisible={setEditVisible}
-          defaultValues={author}
-        />
-      </Collapse>
     </>
   );
 }

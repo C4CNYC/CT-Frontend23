@@ -37,7 +37,7 @@ interface FormValuesProps {
   avatar?: File;
   id?: string;
 }
-interface Props {
+interface IAuthorFormProps {
   isEdit?: boolean;
   courseId: string;
   defaultValues?: Omit<FormValuesProps, "avatar">;
@@ -48,7 +48,7 @@ export default function AuthorForm({
   courseId,
   setFormVisible,
   defaultValues = { name: "", about: "", linkedin: "", email: "" },
-}: Props): React.ReactElement {
+}: IAuthorFormProps): React.ReactElement {
   const [addToCourse, setAddToCourse] = useState<boolean>(true);
   const { enqueueSnackbar } = useSnackbar();
   const [postAuthor, { isLoading }] = useCreateAuthorMutation();

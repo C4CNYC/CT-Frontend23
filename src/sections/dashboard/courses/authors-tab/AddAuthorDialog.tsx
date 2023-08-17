@@ -11,7 +11,7 @@ import {
 
 import AuthorForm from "./AuthorForm";
 
-interface Props {
+interface IAddAuthorDialogProps {
   children: React.ReactElement;
   courseId: string;
 }
@@ -19,7 +19,7 @@ interface Props {
 export default function AddAuthorDialog({
   children,
   courseId,
-}: Props): React.ReactElement {
+}: IAddAuthorDialogProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpenDialog = (): void => {
@@ -31,7 +31,7 @@ export default function AddAuthorDialog({
 
   return (
     <>
-      <Box sx={{ display: "flex", width: "20%" }} onClick={handleOpenDialog}>
+      <Box sx={{ display: "flex" }} onClick={handleOpenDialog}>
         {children}
       </Box>
       <Dialog
@@ -43,7 +43,6 @@ export default function AddAuthorDialog({
             width: { xs: "360px", sm: "400px", md: "500px" },
           },
         }}
-        sx={{}}
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <DialogTitle variant="h5">Create author</DialogTitle>
