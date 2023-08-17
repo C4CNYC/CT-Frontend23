@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { SetStateAction, useState } from "react";
 
 import Hamburger from "hamburger-react";
+import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
 
 import {
@@ -17,6 +18,7 @@ import { Box } from "@mui/system";
 
 import { Iconify, MenuPopover } from "@components";
 import { PATH_AUTH } from "@routes/paths";
+import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
 import { UserType } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 
@@ -28,8 +30,12 @@ const Menu = (): React.ReactElement => {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const { replace } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [openPopover, setOpenPopover] = useState(null);
   const { isAuthenticated, logout } = useAuthContext();
+
+  const [, setStartTour] = useAtom(startTour);
+
+  const [openPopover, setOpenPopover] = useState(null);
+
   const handleLogout = (): void => {
     try {
       logout();
@@ -105,6 +111,11 @@ const Menu = (): React.ReactElement => {
                 <MenuItem
                   key={`${menuItem.title}${i}`}
                   sx={{ pl: "20px!important", height: 59, color: "#212B36" }}
+                  onClick={() => {
+                    if (menuItem.title === "Take the Tour") {
+                      setStartTour({ start: true });
+                    }
+                  }}
                 >
                   <Iconify
                     sx={{ width: "35px!important", height: "35px!important" }}
@@ -114,12 +125,6 @@ const Menu = (): React.ReactElement => {
                     <Typography sx={{ color: "#EE467A" }} variant="button">
                       {menuItem.title}
                     </Typography>
-                    <br />
-                    {menuItem.subTitle ? (
-                      <Typography variant="caption">
-                        {menuItem.subTitle.toUpperCase()}
-                      </Typography>
-                    ) : null}
                   </Box>
                 </MenuItem>
               );
@@ -129,6 +134,7 @@ const Menu = (): React.ReactElement => {
                   key={`${menuItem.title}${i}`}
                   component={NextLink}
                   href={menuItem.href}
+                  target={menuItem.target ? menuItem.target : "_self"}
                   onClick={() => {
                     if (menuItem.href === ILinks.logout) {
                       handleLogout();
