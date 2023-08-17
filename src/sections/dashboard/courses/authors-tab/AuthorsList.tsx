@@ -11,7 +11,6 @@ import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
 import AddAuthorDialog from "./AddAuthorDialog";
 import AuthorForm from "./AuthorForm";
 import AuthorsCard from "./AuthorsCard";
-import FilterAuthors from "./filter";
 
 interface Props {
   id: string;
@@ -23,16 +22,10 @@ export default function AuthorsList({ id }: Props): React.ReactElement {
   });
 
   const [formVisible, setFormVisible] = useState<boolean>(false);
-  const { data, isLoading } = useGetAuthorsQuery(filters);
+  const { data, isLoading } = useGetAuthorsQuery({});
   return (
     <Stack gap={1}>
       <Stack direction="row" mb={1}>
-        <FilterAuthors
-          courseId={filters.course_id ?? ""}
-          setCourse={(courseId: string) => {
-            setFilter("classId", id);
-          }}
-        />
         <AddAuthorDialog courseId={id}>
           <IconButton
             sx={{

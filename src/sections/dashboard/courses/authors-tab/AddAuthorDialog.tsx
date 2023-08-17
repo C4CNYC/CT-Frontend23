@@ -7,15 +7,9 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Skeleton,
 } from "@mui/material";
 
-import { useFilters } from "@hooks";
-import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
-import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
-
-import AuthorsCard from "./AuthorsCard";
-import { FilterAuthor } from "./filter";
+import AuthorForm from "./AuthorForm";
 
 interface Props {
   children: React.ReactElement;
@@ -27,16 +21,14 @@ export default function AddAuthorDialog({
   courseId,
 }: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
-  const { filters, setFilter } = useFilters<IAuthorSearchParams>({
-    email: "",
-  });
-  const { data, isLoading } = useGetAuthorsQuery(filters);
+
   const handleOpenDialog = (): void => {
     setOpen(true);
   };
   const handleCloseDialog = (): void => {
     setOpen(false);
   };
+
   return (
     <>
       <Box sx={{ display: "flex", width: "20%" }} onClick={handleOpenDialog}>
@@ -54,31 +46,13 @@ export default function AddAuthorDialog({
         sx={{}}
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <DialogTitle variant="h5">Add author</DialogTitle>
+          <DialogTitle variant="h5">Create author</DialogTitle>
           <IconButton onClick={handleCloseDialog} sx={{ mr: 2 }}>
             <CloseIcon />
           </IconButton>
         </Box>
         <DialogContent>
-          <FilterAuthor filters={filters} setFilter={setFilter} />
-          {isLoading || !data ? (
-            <Skeleton
-              variant="rounded"
-              animation="wave"
-              sx={{ height: "260px" }}
-            />
-          ) : (
-            data.data.map((author, i) => {
-              return (
-                <AuthorsCard
-                  key={author.id}
-                  author={author}
-                  courseId={courseId}
-                  addAuthor={true}
-                />
-              );
-            })
-          )}
+          <AuthorForm courseId={courseId} setFormVisible={handleCloseDialog} />
         </DialogContent>
       </Dialog>
     </>
