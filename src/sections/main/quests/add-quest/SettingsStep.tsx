@@ -1,6 +1,6 @@
 import { Control } from "react-hook-form";
 
-import { FormGroup, Stack, Typography } from "@mui/material";
+import { Box, FormGroup, Stack, Typography } from "@mui/material";
 
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
@@ -46,16 +46,16 @@ export default function SettingsStep({
           control={control}
           infoText="This is the date that this Quest should be completed by."
         />
-        <TimeController
-          title="Close Date:"
-          name="closeDate"
-          control={control}
-          infoText="After this submissions are no longer received. The
-            default is 3 days after the “Due date.”"
-        />
       </Stack>
+      <TimeController
+        title="Close Date:"
+        name="closeDate"
+        control={control}
+        infoText="After this submissions are no longer received. The
+            default is 3 days after the “Due date.”"
+      />
       <FormGroup>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" mt={2} gutterBottom>
           Status
         </Typography>
         <RHFSelect

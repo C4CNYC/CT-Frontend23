@@ -10,7 +10,7 @@ import { managerApi } from ".";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getLessonContent: builder.query<
+    getLessonContentStudent: builder.query<
       Array<ILessonContent & BaseResponseInterface>,
       { id: string }
     >({
@@ -22,14 +22,17 @@ const extendedApi = managerApi.injectEndpoints({
       transformResponse: (res: Array<ILessonContent & BaseResponseInterface>) =>
         res.sort((a, b) => a.meta.order - b.meta.order),
     }),
-    getLesson: builder.query<ILesson & BaseResponseInterface, { id: string }>({
+    getLessonStudent: builder.query<
+      ILesson & BaseResponseInterface,
+      { id: string }
+    >({
       query: ({ id }) => ({
         url: `/student/lesson/${id}`,
         method: "GET",
       }),
       keepUnusedDataFor: 0,
     }),
-    getLessonsList: builder.query<
+    getLessonsListStudent: builder.query<
       BaseListResponseInterface<ILesson & BaseResponseInterface>,
       ILessonSearchParams
     >({
@@ -47,8 +50,8 @@ const extendedApi = managerApi.injectEndpoints({
 });
 
 export const {
-  useGetLessonContentQuery,
-  useGetLessonQuery,
-  useGetLessonsListQuery,
+  useGetLessonContentStudentQuery,
+  useGetLessonStudentQuery,
+  useGetLessonsListStudentQuery,
   // -------------mutation-----------
 } = extendedApi;

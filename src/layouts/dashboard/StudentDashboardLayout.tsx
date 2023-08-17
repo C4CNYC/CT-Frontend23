@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { Box } from "@mui/material";
@@ -13,15 +12,14 @@ import NavHorizontal from "./nav/NavHorizontal";
 import NavMini from "./nav/NavMini";
 import NavVertical from "./nav/NavVertical";
 
-interface Props {
+interface IStudentDashboardLayoutProps {
   children?: React.ReactNode;
 }
 
 export function StudentDashboardLayout({
   children,
-}: Props): React.ReactElement | null {
+}: IStudentDashboardLayoutProps): React.ReactElement | null {
   const { themeLayout } = useSettingsContext();
-  const { pathname } = useRouter();
 
   const isDesktop = useResponsive("up", "lg");
 
