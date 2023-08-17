@@ -10,8 +10,8 @@ import TimeController from "./components/TimeController";
 import { FormQuestProps } from "./helpers/quest.interface";
 
 interface ISettingsStepProps {
-  setAssignmentsSkillsId: (s: string[]) => void;
-  assignmentsSkillsId?: string[];
+  setAssignmentsSkillsId: (s: ISkill[]) => void;
+  assignmentsSkillsId?: ISkill[];
   control: Control<FormQuestProps, any>;
   existedSkills: ISkill[];
 }
@@ -82,7 +82,7 @@ export default function SettingsStep({
       </FormGroup>
 
       <SkillsAutocomplete
-        setAssignmentsSkillsId={(s: string[]) => {
+        setAssignmentsSkillsId={(s: ISkill[]) => {
           setAssignmentsSkillsId(s);
         }}
         assignmentsSkillsId={assignmentsSkillsId}

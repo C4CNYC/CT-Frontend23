@@ -26,6 +26,7 @@ import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
+import { ISkill } from "src/redux/interfaces/content.interface";
 import {
   useCreateAssignmentMutation,
   useGetAssignmentQuery,
@@ -55,7 +56,7 @@ export default function AddQuest(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
 
-  const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<string[]>();
+  const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<ISkill[]>();
   const [value, setValue] = useState(0);
 
   const { data: assignment, isLoading: isAssignmentLoading } =
@@ -145,7 +146,7 @@ export default function AddQuest(): React.ReactElement {
           end_date: formData.dueDate,
           close_date: formData.closeDate,
           active: Boolean(formData.active),
-          skill_tags: assignmentsSkillsId ?? [],
+          skill_tags: assignmentsSkillsId?.map((el) => el.id) ?? [],
           classes: [query.id as string],
         }).unwrap();
         await addAssignmentToClass({
@@ -153,7 +154,6 @@ export default function AddQuest(): React.ReactElement {
           schoolId: query.schoolId as string,
           class_id: query.id as string,
         }).unwrap();
-
         await addCourseToAssignment({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
@@ -165,7 +165,6 @@ export default function AddQuest(): React.ReactElement {
             assignmentId: newAssignment.id,
           })
         );
-
         enqueueSnackbar("Assignment created successfuly!");
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
@@ -251,7 +250,7 @@ export default function AddQuest(): React.ReactElement {
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
                 control={methods.control}
-                setAssignmentsSkillsId={(s: string[]) => {
+                setAssignmentsSkillsId={(s: ISkill[]) => {
                   setAssignmentsSkillsId(s);
                 }}
                 assignmentsSkillsId={assignmentsSkillsId}
