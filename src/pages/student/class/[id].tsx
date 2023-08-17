@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { Skeleton, Stack } from "@mui/material";
 import { Container } from "@mui/system";
@@ -11,12 +12,15 @@ import DefaultClassInfo from "@sections/main/class-info/DefaultClassInfo";
 import ClassInfoTable from "@sections/main/quests/ClassInfoTable";
 import { useGetClassQuery } from "src/redux/services/manager/classes-student";
 import { useGetPublicTribeQuery } from "src/redux/services/public/tribe-public";
+import { setClass } from "src/redux/slices/code-panel";
+import { useDispatch } from "src/redux/store";
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
 );
 
 export default function HomeOverview(): React.ReactElement {
+  const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();
   const { query } = useRouter();
   const { data, isLoading } = useGetClassQuery(
@@ -30,6 +34,12 @@ export default function HomeOverview(): React.ReactElement {
     },
     { skip: !query.joinCode }
   );
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setClass(data));
+    }
+  }, [isLoading]);
 
   return (
     <>

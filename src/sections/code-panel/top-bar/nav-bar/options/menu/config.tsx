@@ -1,9 +1,5 @@
 import { PATH_AUTH } from "@routes/paths";
-import {
-  STUDENT_PATH_DASHBOARD,
-  STUDENT_PATH_MAIN,
-  STUDENT_PATH_PAGE,
-} from "@routes/student.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { UserType } from "@utils";
 
@@ -15,6 +11,7 @@ interface IMenuConfigItem {
   icon: string;
   href: string | ILinks;
   component?: (children: React.ReactElement) => React.ReactElement;
+  target?: "_self" | "_blank";
 }
 export enum ILinks {
   logout = "logaut",
@@ -23,34 +20,30 @@ export enum ILinks {
 
 export const authorizedUserConfig: IMenuConfigItem[] = [
   {
-    title: "What's poppin'?",
-    subTitle: "Courses Page",
-    icon: "uil:meeting-board",
-    href: STUDENT_PATH_DASHBOARD.courses.root,
+    title: "Home",
+    subTitle: "",
+    icon: "ant-design:home-outlined",
+    href: STUDENT_PATH_DASHBOARD.class.root,
   },
   {
-    title: "Overview",
-    subTitle: "Home",
-    icon: "fluent:top-speed-24-regular",
-    href: STUDENT_PATH_MAIN.index,
+    title: "Take the Tour",
+    subTitle: "",
+    icon: "ph:bus-light",
+    href: ILinks.modal,
+    component: (children: React.ReactElement) => <>{children}</>,
   },
   {
-    title: "Me, me, me",
-    subTitle: "Profile",
-    icon: "tabler:run",
-    href: STUDENT_PATH_PAGE.profile,
+    title: "How-to Video",
+    subTitle: "",
+    icon: "ph:video",
+    href: "https://www.youtube.com/@freecodecamp",
+    target: "_blank",
   },
   {
-    title: "Fun stuff",
-    subTitle: "Gallery",
-    icon: "maki:art-gallery",
+    title: "Gallery",
+    subTitle: "",
+    icon: "solar:gallery-line-duotone",
     href: STUDENT_PATH_DASHBOARD.gallery.root,
-  },
-  {
-    title: "Get me out of here",
-    subTitle: "Log out",
-    icon: "mdi:logout",
-    href: ILinks.logout,
   },
   {
     title: "Need a hug",

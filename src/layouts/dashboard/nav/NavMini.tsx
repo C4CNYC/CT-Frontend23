@@ -51,7 +51,7 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
         <LogoMin
           sx={{
             my: 2,
-            ml: 2.2,
+            ml: 2.6,
           }}
         />
         <UserSection isMini={true} />

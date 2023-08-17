@@ -8,8 +8,8 @@ import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CourseList from "@sections/courses/CourseList";
-import LessonList from "@sections/courses/LessonList";
-import ModuleList from "@sections/courses/ModuleList";
+// import LessonList from "@sections/courses/LessonList";
+// import ModuleList from "@sections/courses/ModuleList";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 
 Courses.getLayout = (page: React.ReactElement) => (
@@ -97,7 +97,7 @@ export default function Courses(): React.ReactElement {
             }
             iconPosition="end"
           />
-          <Tab
+          {/* <Tab
             label="Modules"
             {...a11yProps(1)}
             icon={
@@ -144,18 +144,18 @@ export default function Courses(): React.ReactElement {
               )
             }
             iconPosition="end"
-          />
+          /> */}
         </Tabs>
 
         <TabPanel value={value} index={0}>
           <CourseList setCounter={setCounter} setIsLoading={setIsLoading} />
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        {/* <TabPanel value={value} index={1}>
           <ModuleList setCounter={setCounter} setIsLoading={setIsLoading} />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <LessonList setCounter={setCounter} setIsLoading={setIsLoading} />
-        </TabPanel>
+        </TabPanel> */}
       </Container>
     </>
   );

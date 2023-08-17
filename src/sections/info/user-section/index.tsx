@@ -27,9 +27,19 @@ export default function UserSection({
       bgcolor={!isMini ? "rgba(145, 158, 171, 0.08)" : ""}
       borderRadius="12px"
     >
-      <Stack display="flex" direction="row" alignItems="center" mr="52px">
+      <Stack
+        display="flex"
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        mr={!isMini ? "52px" : 0}
+      >
         <CustomAvatar
-          sx={{ width: "40px", height: "40px", m: "18px 16px 18px 20px" }}
+          sx={{
+            width: "40px",
+            height: "40px",
+            m: !isMini ? "18px 16px 18px 20px" : "16px 0 16px 0px",
+          }}
           src={profile?.avatar}
           name={profile?.first_name}
           role={profile?.role}
