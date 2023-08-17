@@ -11,7 +11,6 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { EmptyContent } from "@components";
 import { useOnlineConnection, useRealTimeConnection } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { CodePanelChat } from "@sections/chat";
@@ -25,8 +24,8 @@ import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
 import {
-  useGetLessonContentQuery,
-  useGetLessonQuery,
+  useGetLessonContentStudentQuery,
+  useGetLessonStudentQuery,
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
 
@@ -50,15 +49,18 @@ const BottomBar = dynamic(
   async () => await import("@sections/code-panel/bottom-bar")
 );
 export default function Index(): React.ReactElement | null {
-  const { push, query } = useRouter();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const { user } = useAuthContext();
-  const handle = useFullScreenHandle();
   const { enqueueSnackbar } = useSnackbar();
+  const handle = useFullScreenHandle();
+  const { push, query, replace } = useRouter();
+  const { user } = useAuthContext();
+
   const [confetti, setConfetti] = useState(false);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
     useAtom(globalCodePanelAtom);
   // ONLY LOGINED USER CAN USE
@@ -67,14 +69,14 @@ export default function Index(): React.ReactElement | null {
 
   const [completeLesson] = useCompleteLessonMutation();
 
-  const { data, isLoading, isFetching } = useGetLessonContentQuery(
+  const { data, isLoading, isFetching } = useGetLessonContentStudentQuery(
     { id: query.lessonId as string },
     { skip: !query.lessonId }
   );
   const { data: courseContent, isLoading: isLoadingCourseContent } =
     useGetChallangesQuery({ id: query.id as string }, { skip: !query.id });
 
-  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonQuery(
+  const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
     {
       id: query.lessonId as string,
     },
@@ -88,7 +90,7 @@ export default function Index(): React.ReactElement | null {
       unitId,
       lessonId,
     }));
-    push(
+    replace(
       `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
         courseContent?.id as string
       )}?${new URLSearchParams({ unitId })}&${new URLSearchParams({
@@ -174,18 +176,14 @@ export default function Index(): React.ReactElement | null {
     }));
   }, []);
 
-  if (
-    !data ||
-    !lesson ||
-    !courseContent ||
-    isLoading ||
-    isLoadingCourseContent ||
-    isLoadingLesson
-  ) {
+  useEffect(() => {
+    if (!isLoading && !isLoadingCourseContent && !isLoadingLesson) {
+      setIsLoadingComplete(true);
+    }
+  }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
+
+  if (!isLoadingComplete) {
     return <SkeletonCodePanel />;
-  }
-  if (!isLoading && _.isEmpty(data) && data !== undefined) {
-    return <EmptyContent title="Course doesn`t exist" />;
   }
 
   return (
@@ -201,7 +199,7 @@ export default function Index(): React.ReactElement | null {
             onSubmitLesson,
             isFetching,
             lesson,
-            data,
+            data: data ?? [],
             user,
             code,
             onChangeCode,

@@ -27,8 +27,8 @@ import {
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
 
 interface ISkillsAutocompleteProps {
-  setAssignmentsSkillsId: (s: string[]) => void;
-  assignmentsSkillsId?: string[];
+  setAssignmentsSkillsId: (s: ISkill[]) => void;
+  assignmentsSkillsId?: ISkill[];
   labelProps?: TypographyVariant | undefined;
   existedSkills: ISkill[];
 }
@@ -55,7 +55,7 @@ export default function SkillsAutocomplete({
     details?: AutocompleteChangeDetails<ISkill>
   ): Promise<void> => {
     if (!assignmentId) {
-      setAssignmentsSkillsId(_newValue.map((el: any) => el.id));
+      setAssignmentsSkillsId(_newValue);
     } else {
       try {
         const payload = {
@@ -109,13 +109,12 @@ export default function SkillsAutocomplete({
       </Typography>
       <Autocomplete<any, true>
         multiple
-        value={assignmentId ? existedSkills : []}
+        value={assignmentId ? existedSkills : assignmentsSkillsId}
         options={data.data}
         limitTags={5}
         getOptionLabel={(option) => option.name}
         onChange={(e, value, reason, details) => {
           onChange(e, value, reason, details);
-          setAssignmentsSkillsId(value.map((el: any) => el.id));
         }}
         renderTags={(tagValue, getTagProps): React.ReactElement[] =>
           tagValue.map((option, index) => (

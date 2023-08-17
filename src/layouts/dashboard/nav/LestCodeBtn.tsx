@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 
 import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
-import { BsChatLeftTextFill } from "react-icons/bs";
+import { BiCodeAlt } from "react-icons/bi";
 
 import { Button } from "@mui/material";
 
+import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
@@ -43,22 +44,33 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
       }}
       variant="contained"
       sx={{
-        borderRadius: !isMini ? "50px" : 1,
-        py: "15px",
-        mt: !isMini ? 4 : 1,
-        mb: 1,
-        fontSize: "1rem",
-        mx: isMini ? 1 : 0,
+        bgcolor: "#43D4DD",
+        "&:hover": {
+          color: "#43D4DD",
+          bgcolor: "rgba(67, 211, 221, .3)",
+          boxShadow:
+            "0px 3px 1px -2px rgba(67, 211, 221, 0.2), 0px 2px 2px 0px rgba(67, 211, 221, 0.14), 0px 1px 5px 0px rgba(67, 211, 221, 0.12)",
+        },
+        ...(isMini
+          ? {
+              borderRadius: "50%",
+              m: "8px auto 16px",
+              width: "35px",
+              height: "35px",
+              minWidth: "0",
+              px: 1,
+            }
+          : {
+              py: 1.5,
+              fontSize: "1rem",
+              borderRadius: "50px",
+              gap: 1,
+            }),
       }}
     >
-      {!isMini ? "Lets Code" : "Code"}
-      {!isMini ? (
-        <BsChatLeftTextFill
-          size="16px"
-          color="#fff"
-          style={{ marginLeft: "10px" }}
-        />
-      ) : null}
+      {!isMini ? "Let's Code" : ""}
+
+      <Iconify icon="mingcute:code-fill" width={25} height={25} />
     </Button>
   );
 }
