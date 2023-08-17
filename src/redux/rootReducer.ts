@@ -9,12 +9,12 @@ import { studentPublicApi } from "./services/public-student";
 import { publicApi } from "./services/public/tribe-public";
 import { schoolSettingsApi } from "./services/school-settings-manager";
 import { studentAuthApi } from "./services/student-auth";
+import codePanelReducer from "./slices/code-panel";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
 import schoolSettingsReducer from "./slices/schoolSettings";
 
-// ----------------------------------------------------------------------
 interface INoopStorage {
   getItem: (_key: string) => Promise<null>;
   setItem: (_key: string, value: any) => Promise<any>;
@@ -56,6 +56,7 @@ const rootReducer = combineReducers({
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
+  codePanel: codePanelReducer,
 });
 
 export default rootReducer;
