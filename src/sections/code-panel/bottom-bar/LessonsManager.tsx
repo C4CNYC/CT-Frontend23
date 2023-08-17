@@ -1,8 +1,10 @@
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
 import { useAtom } from "jotai";
 import { IoMdClose } from "react-icons/io";
+import { RxExternalLink } from "react-icons/rx";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -11,6 +13,7 @@ import {
   Divider,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -144,13 +147,41 @@ const LessonManager = (): React.ReactElement => {
       </Stack>
       <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
         <Stack sx={{ width: isMobile ? "280px" : "350px" }} p="0 0 30px">
-          {isMobile && (
-            <Box sx={{ pl: 1, pt: 1 }}>
-              <IconButton onClick={toggleDrawer(false)}>
+          <Stack
+            direction="row"
+            sx={{
+              bgcolor: "#ECF4FF",
+              borderBottomLeftRadius: "18px",
+              borderBottomRightRadius: "18px",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Link
+              href={
+                publicPage
+                  ? STUDENT_PATH_DASHBOARD.publicCourses
+                  : STUDENT_PATH_DASHBOARD.courses.root
+              }
+              component={NextLink}
+              underline="none"
+              sx={{
+                gap: 1,
+                color: "initial",
+                display: "inline-flex",
+                alignItems: "center",
+                py: 1,
+                pl: 2,
+              }}
+            >
+              Open Full Catalog <RxExternalLink size={18} />
+            </Link>
+            {isMobile && (
+              <IconButton onClick={toggleDrawer(false)} sx={{ mr: 1 }}>
                 <IoMdClose size="20px" />
               </IconButton>
-            </Box>
-          )}
+            )}
+          </Stack>
 
           {publicPage ? (
             publicIsLoading ? (
