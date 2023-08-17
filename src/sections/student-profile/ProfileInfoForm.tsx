@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 
+import { countries } from "@assets/data";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { MuiColorInput } from "mui-color-input";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
@@ -10,7 +11,12 @@ import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import { Card, Grid, Stack } from "@mui/material";
 
-import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
+import {
+  FormProvider,
+  RHFSelect,
+  RHFTextField,
+  RHFUploadAvatar,
+} from "@components";
 import { BaseResponseInterface } from "@utils";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IFriend } from "src/redux/interfaces/friends.interface";
@@ -36,6 +42,7 @@ interface FormValuesProps {
   about: string;
   phone: string;
   postcode: string;
+  country: string;
   cover: string;
   photoURL: File | null;
 }
@@ -53,17 +60,19 @@ export default function ProfileInfoForm({
     post_code: postcode,
     about,
     phone,
+    country,
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
   const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation();
   const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation();
   const defaultValues = {
-    firstName,
-    lastName,
-    about,
-    phone,
-    postcode,
+    firstName: firstName ?? "",
+    lastName: lastName ?? "",
+    about: about ?? "",
+    phone: phone ?? "",
+    postcode: postcode ?? "",
+    country: country ?? "",
     cover,
   };
   const methods = useForm<FormValuesProps>({
@@ -77,16 +86,17 @@ export default function ProfileInfoForm({
     try {
       await updateStudent({
         about: formData.about,
-        phone: data.phone,
+        phone: formData.phone,
         first_name: formData.firstName,
         last_name: formData.lastName,
         post_code: formData.postcode,
+        country: formData.country,
         cover: formData.cover,
       }).unwrap();
       if (formData.photoURL) {
         const file = new FormData();
         file.append("file", formData.photoURL);
-        updateStudentAvatar({ file }).unwrap()
+        updateStudentAvatar({ file }).unwrap();
       }
       enqueueSnackbar("Update success!");
     } catch (error) {
@@ -160,6 +170,17 @@ export default function ProfileInfoForm({
               >
                 <RHFTextField name="firstName" label="Name" />
                 <RHFTextField name="lastName" label="Last name" />
+                <RHFSelect native name="country" label="Country">
+                  <option value="" />
+                  {countries.map((country) => (
+                    <option
+                      key={country.code}
+                      value={country.code.toLowerCase()}
+                    >
+                      {country.label}
+                    </option>
+                  ))}
+                </RHFSelect>
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
