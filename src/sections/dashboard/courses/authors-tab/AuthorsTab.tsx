@@ -13,7 +13,7 @@ interface IAuthorsListProps {
 export default function AuthorsTab({
   courseId,
 }: IAuthorsListProps): React.ReactElement {
-  const { data, isLoading } = useGetAuthorsQuery({});
+  const { data, isLoading } = useGetAuthorsQuery({ course_id: courseId });
 
   return (
     <Stack height="100%">
@@ -25,9 +25,11 @@ export default function AuthorsTab({
       ) : (
         <AuthorsList authors={data?.data ?? []} courseId={courseId} />
       )}
-      <Stack direction="row" justifyContent="flex-end" mt="auto" mb={1}>
+      <Stack direction="row" justifyContent="flex-end" mt="auto">
         <AddAuthorDialog courseId={courseId}>
-          <Button variant="contained">Create author</Button>
+          <Button sx={{ mt: 4, mb: 1 }} variant="contained">
+            Create author
+          </Button>
         </AddAuthorDialog>
       </Stack>
     </Stack>

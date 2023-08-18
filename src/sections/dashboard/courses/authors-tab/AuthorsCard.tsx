@@ -17,10 +17,7 @@ import {
 
 import { SvgColor } from "@components";
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
-import {
-  useAddAuthorToCourseMutation,
-  useDeleteAuthorMutation,
-} from "src/redux/services/manager/author-manager";
+import { useDeleteAuthorMutation } from "src/redux/services/manager/author-manager";
 
 import AddAuthorDialog from "./AddAuthorDialog";
 
@@ -34,8 +31,7 @@ export default function AuthorsCard({
   courseId,
 }: IAuthorsCardProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
-  const [addToCourse, { isLoading }] = useAddAuthorToCourseMutation();
+  const [deleteAuthor, { isLoading }] = useDeleteAuthorMutation();
 
   const handleDeleteAuthor = (): void => {
     try {
@@ -50,31 +46,6 @@ export default function AuthorsCard({
     }
   };
 
-  const addAuthorToCourse = (): void => {
-    try {
-      if (author.id) {
-        addToCourse({ id: author.id, course_id: courseId }).unwrap();
-      }
-      enqueueSnackbar("Added to course successfully!");
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
-    }
-  };
-
-  // const removeAuthorFromCourse = (): void => {
-  //   try {
-  //     if (author.id) {
-  //       removeFromCourse({ id: author.id, course_id: courseId }).unwrap();
-  //     }
-  //     enqueueSnackbar("Deleted from course successfully!");
-  //   } catch (error: any) {
-  //     enqueueSnackbar(error?.data?.message, {
-  //       variant: "error",
-  //     });
-  //   }
-  // };
   return (
     <>
       <Card
@@ -155,7 +126,7 @@ export default function AuthorsCard({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: 2,
             py: 2,
             px: 2,
@@ -165,7 +136,7 @@ export default function AuthorsCard({
             color="error"
             variant="soft"
             sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-            loading={isDeleting}
+            loading={isLoading}
             onClick={handleDeleteAuthor}
           >
             Delete author
@@ -175,15 +146,6 @@ export default function AuthorsCard({
               Edit
             </Button>
           </AddAuthorDialog>
-          <LoadingButton
-            color="info"
-            variant="soft"
-            sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-            loading={isLoading}
-            onClick={addAuthorToCourse}
-          >
-            Add to course
-          </LoadingButton>
         </Box>
       </Card>
     </>

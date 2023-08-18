@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, FormControlLabel, Stack, Switch } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import {
@@ -46,8 +46,6 @@ export default function AuthorForm({
   const [postAuthor, { isLoading }] = useCreateAuthorMutation();
   const [editAuthor, { isLoading: isEditing }] = useUpdateAuthorMutation();
   const [postCover] = useUpdateAuthorCoverMutation();
-  const [addAuthorToCourse] = useAddAuthorToCourseMutation();
-  const [removeAuthorFromCourse] = useRemoveAuthorFromCourseMutation();
 
   const CreateAuthorSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -75,12 +73,6 @@ export default function AuthorForm({
           file.append("file", data.avatar);
           await postCover({ id: defaultValues.id, file }).unwrap();
         }
-        if (!addToCourse) {
-          await removeAuthorFromCourse({
-            id: defaultValues.id,
-            course_id: courseId,
-          }).unwrap();
-        }
       } else {
         const author = await postAuthor({
           name: data.name,
@@ -91,13 +83,7 @@ export default function AuthorForm({
         }).unwrap();
         if (data.avatar) {
           file.append("file", data.avatar);
-          await postCover({ id: author.id, file });
-        }
-        if (addToCourse) {
-          await addAuthorToCourse({
-            id: author.id,
-            course_id: courseId,
-          }).unwrap();
+          await postCover({ id: author.id, file }).unwrap();
         }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -134,18 +120,6 @@ export default function AuthorForm({
           <RHFTextField name="email" label="email" disabled={isEdit} />
           <RHFTextField name="linkedin" label="Linkedin" />
           <RHFTextField name="about" label="About" multiline rows={3} />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={addToCourse}
-                onChange={() => {
-                  setAddToCourse(!addToCourse);
-                }}
-              />
-            }
-            label="Add author to this course"
-          />
         </Stack>
       </FormProvider>
       <Box

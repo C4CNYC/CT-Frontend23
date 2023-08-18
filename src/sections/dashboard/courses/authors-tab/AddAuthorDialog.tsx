@@ -38,7 +38,7 @@ export default function AddAuthorDialog({
         PaperProps={{
           sx: {
             height: "800px",
-            width: { xs: "360px", sm: "400px", md: "500px" },
+            width: { xs: "330px", sm: "350px", md: "450px" },
           },
         }}
       >

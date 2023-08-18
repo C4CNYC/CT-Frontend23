@@ -13,7 +13,7 @@ export default function AuthorsList({
   courseId,
 }: IAuthorsListProps): React.ReactElement {
   return (
-    <Stack>
+    <Stack gap={2}>
       {authors.map((author, i) => {
         return (
           <AuthorsCard key={author.id} author={author} courseId={courseId} />
