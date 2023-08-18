@@ -79,9 +79,7 @@ export const Chat = ({
   isUserListLoading,
 }: IChat): React.ReactElement => {
   const theme = useTheme();
-  const classId = useSelector(
-    (state: RootState) => state.global.user?.classes?.[0]?.id
-  );
+  const tribe = useSelector((state: RootState) => state.codePanel.class);
   const senderId = useSelector((state: RootState) => state.global.user?.id);
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [, setChatVisible] = useAtom(chatHandlerAtom);
@@ -291,11 +289,12 @@ export const Chat = ({
               }}
               getMessages={getMessages}
               user={{
-                first_name: "Group",
-                last_name: "Chat",
+                first_name: tribe?.name ?? "Tribe",
+                last_name: "",
                 avatar:
+                  tribe?.avatar ??
                   "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
-                id: classId as string,
+                id: tribe?.id as string,
               }}
             />
             {users.map((user) => (

@@ -2,12 +2,14 @@ import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
+import _ from "lodash";
 import { SlDirections } from "react-icons/sl";
 import Carousel from "react-slick";
 
 import { useMediaQuery } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
 
+import { EmptyContent } from "@components";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
 import { BaseResponseInterface } from "@utils";
@@ -114,46 +116,52 @@ const SliderBlock = ({
 
   return (
     <BaseBlock title={title} icon={icon}>
-      <Box
-        className="sliderTour"
-        height="100%"
-        sx={{
-          overflowY: "scroll",
-          scrollbarWidth: "none",
-          "&::-webkit-scrollbar": {
-            width: 0,
-          },
-          "& .slick-track": {
-            "& .slick-slide": {
-              "&  div:first-child": {
-                height: isDesktop ? "80vh" : "90vh",
+      {_.isEmpty(data) ? (
+        <EmptyContent title="No Data" />
+      ) : (
+        <>
+          <Box
+            className="sliderTour"
+            height="100%"
+            sx={{
+              overflowY: "scroll",
+              scrollbarWidth: "none",
+              "&::-webkit-scrollbar": {
+                width: 0,
               },
-            },
-          },
-        }}
-      >
-        <LoaderDelay deley={3000} isLoading={!!isFetching} />
-        {!isFetching ? (
-          <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
-            {data.map((step) => (
-              <View
-                key={step.id}
-                type={step.type}
-                body={step.body}
-                connectIntegrations={connectIntegrations}
-              ></View>
-            ))}
-          </Carousel>
-        ) : null}
-      </Box>
-      <Navigation
-        hasPrev={slideIndex > 0}
-        onNext={handleNext}
-        onPrev={handlePrev}
-        stepHasValidation={stepHasValidation}
-        canMoveNext={nextStepAble || !stepHasValidation}
-        hasNextStep={hasNextStep}
-      />
+              "& .slick-track": {
+                "& .slick-slide": {
+                  "&  div:first-child": {
+                    height: isDesktop ? "80vh" : "90vh",
+                  },
+                },
+              },
+            }}
+          >
+            <LoaderDelay deley={3000} isLoading={!!isFetching} />
+            {!isFetching ? (
+              <Carousel {...carouselSettings1} asNavFor={nav2} ref={carousel1}>
+                {data.map((step) => (
+                  <View
+                    key={step.id}
+                    type={step.type}
+                    body={step.body}
+                    connectIntegrations={connectIntegrations}
+                  ></View>
+                ))}
+              </Carousel>
+            ) : null}
+          </Box>
+          <Navigation
+            hasPrev={slideIndex > 0}
+            onNext={handleNext}
+            onPrev={handlePrev}
+            stepHasValidation={stepHasValidation}
+            canMoveNext={nextStepAble || !stepHasValidation}
+            hasNextStep={hasNextStep}
+          />
+        </>
+      )}
     </BaseBlock>
   );
 };

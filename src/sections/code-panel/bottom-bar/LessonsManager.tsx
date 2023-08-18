@@ -1,15 +1,19 @@
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
 import { useAtom } from "jotai";
 import { IoMdClose } from "react-icons/io";
+import { RxExternalLink } from "react-icons/rx";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -95,40 +99,89 @@ const LessonManager = (): React.ReactElement => {
 
   return (
     <>
-      <Stack className="lessonsTour" direction="row" alignItems="center">
+      <Stack
+        className="lessonsTour"
+        direction="row"
+        alignItems="center"
+        onClick={toggleDrawer(true)}
+      >
         <Tooltip title="LESSONS LIST" placement="top">
-          <IconButton
-            className="lessonsTourMobile"
-            onClick={toggleDrawer(true)}
-            sx={{ mr: "5px" }}
-          >
+          <IconButton className="lessonsTourMobile" sx={{ mr: "5px" }}>
             <Iconify icon="iconoir:page" />
           </IconButton>
         </Tooltip>
-        <Tooltip title={lesson?.name} placement="top">
-          <Typography
-            noWrap
-            width="175px"
-            variant="body2"
+        <Tooltip
+          title={lesson?.name && lesson?.name.length > 24 ? lesson?.name : ""}
+          placement="top"
+        >
+          <Button
+            disableRipple
+            disableFocusRipple
             sx={{
               [theme.breakpoints.down("sm")]: {
                 display: "none",
               },
+              p: 0,
+              color: "initial",
+              fontWeight: "400",
+              "&:hover": {
+                background: "none",
+              },
+              width: "175px",
+              justifyContent: "flex-start",
             }}
           >
-            {lesson?.name}
-          </Typography>
+            <Typography
+              variant="body2"
+              noWrap
+              sx={{
+                textOverflow: "ellipsis",
+                overflow: " hidden",
+                textTransform: "none",
+              }}
+            >
+              {lesson?.name}
+            </Typography>
+          </Button>
         </Tooltip>
       </Stack>
       <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
         <Stack sx={{ width: isMobile ? "280px" : "350px" }} p="0 0 30px">
-          {isMobile && (
-            <Box sx={{ pl: 1, pt: 1 }}>
-              <IconButton onClick={toggleDrawer(false)}>
+          <Stack
+            direction="row"
+            sx={{
+              bgcolor: "#ECF4FF",
+              borderBottomLeftRadius: "18px",
+              borderBottomRightRadius: "18px",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Link
+              href={
+                publicPage
+                  ? STUDENT_PATH_DASHBOARD.publicCourses
+                  : STUDENT_PATH_DASHBOARD.courses.root
+              }
+              component={NextLink}
+              underline="none"
+              sx={{
+                gap: 1,
+                color: "initial",
+                display: "inline-flex",
+                alignItems: "center",
+                py: 1,
+                pl: 2,
+              }}
+            >
+              Open Full Catalog <RxExternalLink size={18} />
+            </Link>
+            {isMobile && (
+              <IconButton onClick={toggleDrawer(false)} sx={{ mr: 1 }}>
                 <IoMdClose size="20px" />
               </IconButton>
-            </Box>
-          )}
+            )}
+          </Stack>
 
           {publicPage ? (
             publicIsLoading ? (
@@ -149,16 +202,20 @@ const LessonManager = (): React.ReactElement => {
                         }}
                         expandIcon={<ExpandMoreIcon />}
                       >
-                        <Typography
-                          variant="h6"
-                          noWrap
-                          sx={{
-                            textOverflow: "ellipsis",
-                            width: isMobile ? "220px" : "300px",
-                          }}
+                        <Tooltip
+                          title={module.name.length > 39 ? module.name : ""}
                         >
-                          {module.name}
-                        </Typography>
+                          <Typography
+                            variant="h6"
+                            noWrap
+                            sx={{
+                              textOverflow: "ellipsis",
+                              width: isMobile ? "220px" : "300px",
+                            }}
+                          >
+                            {module.name}
+                          </Typography>
+                        </Tooltip>
                       </AccordionSummary>
                       <AccordionDetails sx={{ p: 0 }}>
                         <List sx={{ p: 0, pl: "10px", pr: "10px" }}>

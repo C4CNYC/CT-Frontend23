@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import { CircularProgress } from "@mui/material";
-
 import { LoadingScreen } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -22,16 +20,16 @@ export default function ClassMain(): React.ReactElement {
         localStorage.getItem("JOIN_TRIBE") ?? "{}"
       );
       push(STUDENT_PATH_DASHBOARD.class.id(classId, { joinCode }));
-    } else if (tribes?.data.length) {
+    } else if (tribes?.meta.itemCount) {
       push(STUDENT_PATH_DASHBOARD.class.id(tribes.data[0].id));
     } else {
       push(STUDENT_PATH_DASHBOARD.class.join);
     }
-  }, [tribes]);
+  }, [isLoading]);
 
   if (isLoading) {
     return <LoadingScreen />;
   }
 
-  return <CircularProgress />;
+  return <LoadingScreen />;
 }

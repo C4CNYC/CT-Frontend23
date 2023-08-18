@@ -1,3 +1,5 @@
+import { countries } from "@assets/data";
+
 import { Card, CardHeader, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -30,7 +32,9 @@ export default function ProfileAbout({
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">
-            Live at country &nbsp;{data?.country ?? "-"}
+            Live at country &nbsp;
+            {countries.find((el) => data?.country === el.code.toLowerCase())
+              ?.label ?? "-"}
           </Typography>
         </Stack>
         <Stack direction="row">

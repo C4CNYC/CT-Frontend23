@@ -1,5 +1,6 @@
+import NextLink from "next/link";
+
 import { MdWifiTethering } from "react-icons/md";
-import { useSelector } from "react-redux";
 
 import {
   Avatar,
@@ -10,27 +11,39 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { RootState } from "src/redux/store";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { useSelector } from "src/redux/store";
 
 export default function GroupHeader(): React.ReactElement {
   const theme = useTheme();
-  const student = useSelector((state: RootState) => state.global.user);
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  const tribe = useSelector((state) => state.codePanel.class);
+
   if (!isDesktop) {
     return <></>;
   }
+
   return (
     <Stack
+      href={tribe ? STUDENT_PATH_DASHBOARD.class.id(tribe.id) : "#"}
+      component={NextLink}
       sx={{
         borderRadius: "35px",
         background: "rgba(1, 152, 237, 0.1)",
         p: "2px",
         alignItems: "center",
         ml: "141px",
+        textDecoration: "none",
+        pointerEvents: tribe ? "all" : "none",
+        "&:hover": {
+          cursor: "pointer",
+        },
       }}
       direction="row"
     >
       <Avatar
+        alt="avatar"
+        src={tribe?.avatar ?? ""}
         sx={{
           border: "2px solid #FBDD3F",
           background: "#0198ED",
@@ -52,11 +65,8 @@ export default function GroupHeader(): React.ReactElement {
         </Typography>
         <Tooltip
           title={
-            student?.classes?.[0]?.name &&
-            student?.classes?.[0]?.name.length > 23 ? (
-              <Typography variant="subtitle2">
-                {student?.classes?.[0]?.name}
-              </Typography>
+            tribe && tribe.name.length > 23 ? (
+              <Typography variant="subtitle2">{tribe.name}</Typography>
             ) : (
               ""
             )
@@ -71,7 +81,7 @@ export default function GroupHeader(): React.ReactElement {
               whiteSpace: "nowrap",
             }}
           >
-            {student?.classes?.[0]?.name}
+            {tribe?.name}
           </Typography>
         </Tooltip>
       </Stack>
