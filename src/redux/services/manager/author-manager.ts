@@ -41,7 +41,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     createAuthor: builder.mutation<
       IAuthor & BaseResponseInterface,
-      Omit<IAuthor, "avatar" | "id">
+      { course_id: string } & Omit<IAuthor, "avatar" | "id">
     >({
       query: ({ ...body }) => ({
         url: "/manager/author",

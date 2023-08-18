@@ -6,15 +6,7 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  Paper,
-  Stack,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Box, Button, FormControlLabel, Stack, Switch } from "@mui/material";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import {
@@ -95,6 +87,7 @@ export default function AuthorForm({
           about: data.about,
           linkedin: data.linkedin,
           email: data.email,
+          course_id: courseId,
         }).unwrap();
         if (data.avatar) {
           file.append("file", data.avatar);
@@ -131,52 +124,56 @@ export default function AuthorForm({
     },
     [methods.setValue]
   );
+
   return (
-    <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-      <Stack direction="column" sx={{ gap: 2, width: "100%" }}>
-        <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
-        <RHFTextField name="name" label="Name" required />
-        <RHFTextField name="email" label="email" disabled={isEdit} />
-        <RHFTextField name="linkedin" label="Linkedin" />
-        <RHFTextField name="about" label="About" multiline rows={3} />
+    <Stack sx={{ py: { xs: 1, sm: 3 }, px: { xs: 2, sm: 3 }, height: "100%" }}>
+      <FormProvider methods={methods}>
+        <Stack direction="column" sx={{ gap: 2, width: "100%" }}>
+          <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
+          <RHFTextField name="name" label="Name" required />
+          <RHFTextField name="email" label="email" disabled={isEdit} />
+          <RHFTextField name="linkedin" label="Linkedin" />
+          <RHFTextField name="about" label="About" multiline rows={3} />
 
-        <FormControlLabel
-          control={
-            <Switch
-              checked={addToCourse}
-              onChange={() => {
-                setAddToCourse(!addToCourse);
-              }}
-            />
-          }
-          label="Add author to this course"
-        />
-
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            mt: { xs: 3, sm: 5 },
-            gap: 2,
+          <FormControlLabel
+            control={
+              <Switch
+                checked={addToCourse}
+                onChange={() => {
+                  setAddToCourse(!addToCourse);
+                }}
+              />
+            }
+            label="Add author to this course"
+          />
+        </Stack>
+      </FormProvider>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 2,
+          mt: "auto",
+          mb: 2,
+        }}
+      >
+        <Button
+          onClick={() => {
+            setFormVisible(false);
           }}
+          color="error"
+          variant="soft"
         >
-          <Button
-            onClick={() => {
-              setFormVisible(false);
-            }}
-            color="error"
-          >
-            Cancel
-          </Button>
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={isEditing || isLoading}
-          >
-            Save
-          </LoadingButton>
-        </Box>
-      </Stack>
-    </FormProvider>
+          Cancel
+        </Button>
+        <LoadingButton
+          onClick={methods.handleSubmit(onSubmit)}
+          variant="contained"
+          loading={isEditing || isLoading}
+        >
+          Save
+        </LoadingButton>
+      </Box>
+    </Stack>
   );
 }

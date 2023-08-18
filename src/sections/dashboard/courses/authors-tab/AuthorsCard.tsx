@@ -22,16 +22,16 @@ import {
   useDeleteAuthorMutation,
 } from "src/redux/services/manager/author-manager";
 
+import AddAuthorDialog from "./AddAuthorDialog";
+
 interface IAuthorsCardProps {
   author: IAuthor;
   courseId: string;
-  addAuthor: boolean;
 }
 
 export default function AuthorsCard({
   author,
   courseId,
-  addAuthor,
 }: IAuthorsCardProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
@@ -155,40 +155,35 @@ export default function AuthorsCard({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: addAuthor
-              ? "repeat(1, 1fr)"
-              : "repeat(2, 1fr)",
+            gridTemplateColumns: "repeat(3, 1fr)",
             gap: 2,
             py: 2,
             px: 2,
           }}
         >
-          {addAuthor ? (
-            <LoadingButton
-              color="success"
-              variant="soft"
-              sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-              loading={isLoading}
-              onClick={addAuthorToCourse}
-            >
-              Add author to course
-            </LoadingButton>
-          ) : (
-            <>
-              <LoadingButton
-                color="error"
-                variant="soft"
-                sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-                loading={isDeleting}
-                onClick={handleDeleteAuthor}
-              >
-                Delete author
-              </LoadingButton>
-              <Button variant="soft" color="success" onClick={() => {}}>
-                Edit
-              </Button>
-            </>
-          )}
+          <LoadingButton
+            color="error"
+            variant="soft"
+            sx={{ whiteSpace: "nowrap", textTransform: "none" }}
+            loading={isDeleting}
+            onClick={handleDeleteAuthor}
+          >
+            Delete author
+          </LoadingButton>
+          <AddAuthorDialog courseId={courseId} defaultValues={author}>
+            <Button variant="soft" color="success" sx={{ width: "100%" }}>
+              Edit
+            </Button>
+          </AddAuthorDialog>
+          <LoadingButton
+            color="info"
+            variant="soft"
+            sx={{ whiteSpace: "nowrap", textTransform: "none" }}
+            loading={isLoading}
+            onClick={addAuthorToCourse}
+          >
+            Add to course
+          </LoadingButton>
         </Box>
       </Card>
     </>

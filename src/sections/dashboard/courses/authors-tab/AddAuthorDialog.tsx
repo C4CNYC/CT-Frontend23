@@ -1,24 +1,22 @@
 import { useState } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-} from "@mui/material";
+import { Box, Dialog, DialogTitle, IconButton } from "@mui/material";
+
+import { IAuthor } from "src/redux/services/interfaces/author.interface";
 
 import AuthorForm from "./AuthorForm";
 
 interface IAddAuthorDialogProps {
   children: React.ReactElement;
   courseId: string;
+  defaultValues?: IAuthor;
 }
 
 export default function AddAuthorDialog({
   children,
   courseId,
+  defaultValues,
 }: IAddAuthorDialogProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -50,9 +48,12 @@ export default function AddAuthorDialog({
             <CloseIcon />
           </IconButton>
         </Box>
-        <DialogContent>
-          <AuthorForm courseId={courseId} setFormVisible={handleCloseDialog} />
-        </DialogContent>
+        <AuthorForm
+          courseId={courseId}
+          setFormVisible={handleCloseDialog}
+          defaultValues={defaultValues}
+          isEdit={Boolean(defaultValues)}
+        />
       </Dialog>
     </>
   );
