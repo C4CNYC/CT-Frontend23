@@ -30,6 +30,7 @@ import {
 import SkillsAutocomplete from "@sections/main/quests/add-quest/components/SkillsAutocomplete";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { ISkill } from "src/redux/interfaces/content.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
 interface IAssignmentDarawerProps {
@@ -47,8 +48,7 @@ export default function AssignmentDrawer({
 }: IAssignmentDarawerProps): React.ReactElement {
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [assignmentsSkills, setAssignmentsSkills] = useState<string[]>();
-  const [students, setStudents] = useState<string[]>();
+  const [assignmentsSkills, setAssignmentsSkills] = useState<ISkill[]>();
 
   const [updateAssignment, { isLoading: isUpdating }] =
     useUpdateAssignmentMutation();
@@ -66,13 +66,6 @@ export default function AssignmentDrawer({
     },
   });
 
-  useEffect(() => {
-    if (assignment) {
-      setAssignmentsSkills(assignment.tags);
-      setStudents(assignment?.students ? assignment.students : []);
-    }
-  }, []);
-
   const onSubmit = async (formData: FormAssignmentProps) => {
     try {
       await updateAssignment({
@@ -83,7 +76,6 @@ export default function AssignmentDrawer({
         close_date: format(DATE_PARSER(formData.closeDate), DATE_FORMAT),
         description: JSON.stringify(formData.description),
         name: formData.name,
-        tags: assignmentsSkills,
       }).unwrap();
       enqueueSnackbar("Assignment updated!");
     } catch (error) {
@@ -235,7 +227,7 @@ export default function AssignmentDrawer({
             <ListItemText>
               <SkillsAutocomplete
                 labelProps="h6"
-                setAssignmentsSkillsId={(s: string[]) => {
+                setAssignmentsSkillsId={(s: ISkill[]) => {
                   setAssignmentsSkills(s);
                 }}
                 assignmentsSkillsId={assignmentsSkills}
