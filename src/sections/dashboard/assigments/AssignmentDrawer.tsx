@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { format } from "date-fns";
@@ -19,6 +19,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/system";
 import { DatePicker } from "@mui/x-date-pickers";
 
 import {
@@ -46,6 +47,7 @@ export default function AssignmentDrawer({
   onCloseDetails,
   assignment,
 }: IAssignmentDarawerProps): React.ReactElement {
+  const theme = useTheme();
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [assignmentsSkills, setAssignmentsSkills] = useState<ISkill[]>();
@@ -76,8 +78,10 @@ export default function AssignmentDrawer({
         close_date: format(DATE_PARSER(formData.closeDate), DATE_FORMAT),
         description: JSON.stringify(formData.description),
         name: formData.name,
+        active: formData.active,
       }).unwrap();
       enqueueSnackbar("Assignment updated!");
+      onCloseDetails();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
@@ -158,13 +162,36 @@ export default function AssignmentDrawer({
             <Controller
               name="startDate"
               control={methods.control}
-              render={({ field: { onChange, value } }) => (
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
                 <DatePicker
                   value={value}
                   onChange={(event) => {
                     onChange(event as string | React.ChangeEvent<Element>);
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField
+                      error={!!error}
+                      helperText={
+                        error ? (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              fontStyle: "italic",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              color: error ? theme.palette.error.main : "error",
+                            }}
+                          >
+                            {error?.message}
+                          </Typography>
+                        ) : null
+                      }
+                      {...params}
+                    />
+                  )}
                 />
               )}
             />
@@ -176,13 +203,36 @@ export default function AssignmentDrawer({
             <Controller
               name="dueDate"
               control={methods.control}
-              render={({ field: { onChange, value } }) => (
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
                 <DatePicker
                   value={value}
                   onChange={(event) => {
                     onChange(event as string | React.ChangeEvent<Element>);
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField
+                      error={!!error}
+                      helperText={
+                        error ? (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              fontStyle: "italic",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              color: error ? theme.palette.error.main : "error",
+                            }}
+                          >
+                            {error?.message}
+                          </Typography>
+                        ) : null
+                      }
+                      {...params}
+                    />
+                  )}
                 />
               )}
             />
@@ -194,13 +244,36 @@ export default function AssignmentDrawer({
             <Controller
               name="closeDate"
               control={methods.control}
-              render={({ field: { onChange, value } }) => (
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
                 <DatePicker
                   value={value}
                   onChange={(event) => {
                     onChange(event as string | React.ChangeEvent<Element>);
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField
+                      error={!!error}
+                      helperText={
+                        error ? (
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              fontStyle: "italic",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              color: error ? theme.palette.error.main : "error",
+                            }}
+                          >
+                            {error?.message}
+                          </Typography>
+                        ) : null
+                      }
+                      {...params}
+                    />
+                  )}
                 />
               )}
             />
@@ -271,8 +344,12 @@ interface FormAssignmentProps {
 
 const UpdateAssignmentSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  startDate: Yup.string(),
-  dueDate: Yup.string(),
-  closeDate: Yup.string(),
+  startDate: Yup.date(),
+  dueDate: Yup.date().when("startDate", (startDate, schema) => {
+    return schema.min(startDate, "Due date must be later than start date");
+  }),
+  closeDate: Yup.date().when("dueDate", (startDate, schema) => {
+    return schema.min(startDate, "Close date must be later than start date");
+  }),
   active: Yup.boolean().required("Choose status"),
 });

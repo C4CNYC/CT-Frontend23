@@ -99,7 +99,7 @@ export default function AsssignmentsListPage() {
   const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
   const { data, isLoading, isFetching } = useGetAssignmentListQuery(
     { schoolId: query.schoolId as string },
-    { skip: !query.schoolId }
+    { skip: !query.schoolId, refetchOnMountOrArgChange: true }
   );
   const [deleteAssignmet, { isLoading: isDeleting }] =
     useDeleteAssignmentMutation();
@@ -218,7 +218,7 @@ export default function AsssignmentsListPage() {
       await deleteAssignmet({
         schoolId: query.schoolId as string,
         assignmentId,
-      });
+      }).unwrap();
       enqueueSnackbar("Assignment deleted!");
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
@@ -274,7 +274,7 @@ export default function AsssignmentsListPage() {
   return (
     <>
       <Head>
-        <title> Assignments| CodeTribe</title>
+        <title> Assignments | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>

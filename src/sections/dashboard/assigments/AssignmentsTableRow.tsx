@@ -20,6 +20,7 @@ import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignment } from "src/redux/interfaces/assignment.interface";
 
 import { fDate } from "../../../utils/formatTime";
+import AssignmentDrawer from "./AssignmentDrawer";
 
 type Props = {
   row: IAssignment;
@@ -32,38 +33,35 @@ export default function AssignmentsTableRow({
   row,
   selected,
   onSelectRow,
-
   onDeleteRow,
 }: Props) {
   const { name, type, start_date, end_date, active } = row;
 
   const [status, setStatus] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
-
+  const [openDetails, setOpenDetails] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
   };
-
   const handleCloseConfirm = () => {
     setOpenConfirm(false);
+  };
+
+  const handleOpenDetails = (): void => {
+    setOpenDetails(true);
+  };
+  const handleCloseDetails = (): void => {
+    setOpenDetails(false);
   };
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>) => {
     setOpenPopover(event.currentTarget);
   };
-
   const handleClosePopover = () => {
     setOpenPopover(null);
   };
-
-  useEffect(() => {
-    const currentDate = new Date();
-
-    if (differenceInDays(currentDate, new Date(end_date))) {
-    }
-  }, []);
 
   return (
     <>
@@ -143,6 +141,7 @@ export default function AssignmentsTableRow({
         <MenuItem
           onClick={() => {
             handleClosePopover();
+            handleOpenDetails();
           }}
         >
           <Iconify icon="eva:edit-fill" />
@@ -162,6 +161,12 @@ export default function AssignmentsTableRow({
           Delete
         </MenuItem>
       </MenuPopover>
+
+      <AssignmentDrawer
+        assignment={row}
+        onCloseDetails={handleCloseDetails}
+        openDetails={openDetails}
+      />
 
       <ConfirmDialog
         open={openConfirm}
