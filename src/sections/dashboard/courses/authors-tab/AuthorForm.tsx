@@ -6,15 +6,7 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  Paper,
-  Stack,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import {
@@ -37,7 +29,7 @@ interface FormValuesProps {
   avatar?: File;
   id?: string;
 }
-interface Props {
+interface IAuthorFormProps {
   isEdit?: boolean;
   courseId: string;
   defaultValues?: Omit<FormValuesProps, "avatar">;
@@ -48,14 +40,12 @@ export default function AuthorForm({
   courseId,
   setFormVisible,
   defaultValues = { name: "", about: "", linkedin: "", email: "" },
-}: Props): React.ReactElement {
+}: IAuthorFormProps): React.ReactElement {
   const [addToCourse, setAddToCourse] = useState<boolean>(true);
   const { enqueueSnackbar } = useSnackbar();
   const [postAuthor, { isLoading }] = useCreateAuthorMutation();
   const [editAuthor, { isLoading: isEditing }] = useUpdateAuthorMutation();
   const [postCover] = useUpdateAuthorCoverMutation();
-  const [addAuthorToCourse] = useAddAuthorToCourseMutation();
-  const [removeAuthorFromCourse] = useRemoveAuthorFromCourseMutation();
 
   const CreateAuthorSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
@@ -81,13 +71,7 @@ export default function AuthorForm({
         }).unwrap();
         if (data.avatar) {
           file.append("file", data.avatar);
-          await postCover({ id: defaultValues.id, file });
-        }
-        if (!addToCourse) {
-          await removeAuthorFromCourse({
-            id: defaultValues.id,
-            course_id: courseId,
-          });
+          await postCover({ id: defaultValues.id, file }).unwrap();
         }
       } else {
         const author = await postAuthor({
@@ -95,16 +79,11 @@ export default function AuthorForm({
           about: data.about,
           linkedin: data.linkedin,
           email: data.email,
+          course_id: courseId,
         }).unwrap();
         if (data.avatar) {
           file.append("file", data.avatar);
-          await postCover({ id: author.id, file });
-        }
-        if (addToCourse) {
-          await addAuthorToCourse({
-            id: author.id,
-            course_id: courseId,
-          }).unwrap();
+          await postCover({ id: author.id, file }).unwrap();
         }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -131,57 +110,44 @@ export default function AuthorForm({
     },
     [methods.setValue]
   );
+
   return (
-    <Paper elevation={5} sx={{ p: 2 }}>
-      <Typography variant="h5">
-        {isEdit ? "Edit author" : "Create Author"}
-      </Typography>
-      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+    <Stack sx={{ py: { xs: 1, sm: 3 }, px: { xs: 2, sm: 3 }, height: "100%" }}>
+      <FormProvider methods={methods}>
         <Stack direction="column" sx={{ gap: 2, width: "100%" }}>
           <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
           <RHFTextField name="name" label="Name" required />
           <RHFTextField name="email" label="email" disabled={isEdit} />
           <RHFTextField name="linkedin" label="Linkedin" />
           <RHFTextField name="about" label="About" multiline rows={3} />
-
-          <FormControlLabel
-            control={
-              <Switch
-                checked={addToCourse}
-                onChange={() => {
-                  setAddToCourse(!addToCourse);
-                }}
-              />
-            }
-            label="Add author to this course"
-          />
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              mt: { xs: 3, sm: 5 },
-              gap: 2,
-            }}
-          >
-            <Button
-              onClick={() => {
-                setFormVisible(false);
-              }}
-              color="error"
-            >
-              Cancel
-            </Button>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isEditing || isLoading}
-            >
-              Save
-            </LoadingButton>
-          </Box>
         </Stack>
       </FormProvider>
-    </Paper>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 2,
+          mt: "auto",
+          mb: 2,
+        }}
+      >
+        <Button
+          onClick={() => {
+            setFormVisible(false);
+          }}
+          color="error"
+          variant="soft"
+        >
+          Cancel
+        </Button>
+        <LoadingButton
+          onClick={methods.handleSubmit(onSubmit)}
+          variant="contained"
+          loading={isEditing || isLoading}
+        >
+          Save
+        </LoadingButton>
+      </Box>
+    </Stack>
   );
 }

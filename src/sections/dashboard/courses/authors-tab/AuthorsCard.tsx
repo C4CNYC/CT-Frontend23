@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import { useState } from "react";
 
 import { useSnackbar } from "notistack";
 import { RxLinkedinLogo } from "react-icons/rx";
@@ -10,7 +9,6 @@ import {
   Box,
   Button,
   Card,
-  Collapse,
   Divider,
   Link,
   Stack,
@@ -19,28 +17,21 @@ import {
 
 import { SvgColor } from "@components";
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
-import {
-  useAddAuthorToCourseMutation,
-  useDeleteAuthorMutation,
-} from "src/redux/services/manager/author-manager";
+import { useDeleteAuthorMutation } from "src/redux/services/manager/author-manager";
 
-import AuthorForm from "./AuthorForm";
+import AddAuthorDialog from "./AddAuthorDialog";
 
-interface Props {
+interface IAuthorsCardProps {
   author: IAuthor;
   courseId: string;
-  addAuthor: boolean;
 }
 
 export default function AuthorsCard({
   author,
   courseId,
-  addAuthor,
-}: Props): React.ReactElement {
-  const [editVisible, setEditVisible] = useState<boolean>(false);
+}: IAuthorsCardProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
-  const [deleteAuthor, { isLoading: isDeleting }] = useDeleteAuthorMutation();
-  const [addToCourse, { isLoading }] = useAddAuthorToCourseMutation();
+  const [deleteAuthor, { isLoading }] = useDeleteAuthorMutation();
 
   const handleDeleteAuthor = (): void => {
     try {
@@ -55,30 +46,6 @@ export default function AuthorsCard({
     }
   };
 
-  const addAuthorToCourse = (): void => {
-    try {
-      if (author.id) {
-        addToCourse({ id: author.id, course_id: courseId }).unwrap();
-      }
-      enqueueSnackbar("Added to course successfully!");
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
-    }
-  };
-  // const removeAuthorFromCourse = (): void => {
-  //   try {
-  //     if (author.id) {
-  //       removeFromCourse({ id: author.id, course_id: courseId }).unwrap();
-  //     }
-  //     enqueueSnackbar("Deleted from course successfully!");
-  //   } catch (error: any) {
-  //     enqueueSnackbar(error?.data?.message, {
-  //       variant: "error",
-  //     });
-  //   }
-  // };
   return (
     <>
       <Card
@@ -159,56 +126,28 @@ export default function AuthorsCard({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: addAuthor
-              ? "repeat(1, 1fr)"
-              : "repeat(2, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: 2,
             py: 2,
             px: 2,
           }}
         >
-          {addAuthor ? (
-            <LoadingButton
-              color="success"
-              variant="soft"
-              sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-              loading={isLoading}
-              onClick={addAuthorToCourse}
-            >
-              Add author to course
-            </LoadingButton>
-          ) : (
-            <>
-              <LoadingButton
-                color="error"
-                variant="soft"
-                sx={{ whiteSpace: "nowrap", textTransform: "none" }}
-                loading={isDeleting}
-                onClick={handleDeleteAuthor}
-              >
-                Delete author
-              </LoadingButton>
-              <Button
-                variant="soft"
-                color="success"
-                onClick={() => {
-                  setEditVisible(true);
-                }}
-              >
-                Edit
-              </Button>
-            </>
-          )}
+          <LoadingButton
+            color="error"
+            variant="soft"
+            sx={{ whiteSpace: "nowrap", textTransform: "none" }}
+            loading={isLoading}
+            onClick={handleDeleteAuthor}
+          >
+            Delete author
+          </LoadingButton>
+          <AddAuthorDialog courseId={courseId} defaultValues={author}>
+            <Button variant="soft" color="success" sx={{ width: "100%" }}>
+              Edit
+            </Button>
+          </AddAuthorDialog>
         </Box>
       </Card>
-      <Collapse in={editVisible} unmountOnExit>
-        <AuthorForm
-          courseId={courseId}
-          isEdit={true}
-          setFormVisible={setEditVisible}
-          defaultValues={author}
-        />
-      </Collapse>
     </>
   );
 }

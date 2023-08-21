@@ -20,20 +20,19 @@ export default function ClassInfoMain({
           border: "2px solid #ED9526",
           background: "#FBDD3F",
           fontSize: "40px",
-          mt: { xs: 1, sm: 0 },
+          mt: { xs: 1, sm: 2 },
         }}
         src={classData.avatar ?? ""}
         alt={classData.name}
       />
       <Stack>
-        <Typography variant="h4" sx={{ color: "#fff" }}>
+        <Typography variant="h2" sx={{ color: "#fff" }}>
           {classData?.name}
         </Typography>
         <Stack
           direction="row"
           sx={{
             flexWrap: "wrap",
-
             gap: 2,
             alignItems: "center",
           }}
@@ -63,9 +62,8 @@ export default function ClassInfoMain({
               color: "#fff",
             }}
           >
-            Teacher:
+            Teacher: Admin
           </Typography>
-          Admin
         </Stack>
       </Stack>
     </Stack>

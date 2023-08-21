@@ -1,45 +1,35 @@
 import { useState } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
-import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Skeleton,
-} from "@mui/material";
+import { Box, Dialog, DialogTitle, IconButton } from "@mui/material";
 
-import { useFilters } from "@hooks";
-import { IAuthorSearchParams } from "src/redux/services/interfaces/author.interface";
-import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
+import { IAuthor } from "src/redux/services/interfaces/author.interface";
 
-import AuthorsCard from "./AuthorsCard";
-import { FilterAuthor } from "./filter";
+import AuthorForm from "./AuthorForm";
 
-interface Props {
+interface IAddAuthorDialogProps {
   children: React.ReactElement;
   courseId: string;
+  defaultValues?: IAuthor;
 }
 
 export default function AddAuthorDialog({
   children,
   courseId,
-}: Props): React.ReactElement {
+  defaultValues,
+}: IAddAuthorDialogProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
-  const { filters, setFilter } = useFilters<IAuthorSearchParams>({
-    email: "",
-  });
-  const { data, isLoading } = useGetAuthorsQuery(filters);
+
   const handleOpenDialog = (): void => {
     setOpen(true);
   };
   const handleCloseDialog = (): void => {
     setOpen(false);
   };
+
   return (
     <>
-      <Box sx={{ display: "flex", width: "20%" }} onClick={handleOpenDialog}>
+      <Box sx={{ display: "flex" }} onClick={handleOpenDialog}>
         {children}
       </Box>
       <Dialog
@@ -48,38 +38,22 @@ export default function AddAuthorDialog({
         PaperProps={{
           sx: {
             height: "800px",
-            width: { xs: "360px", sm: "400px", md: "500px" },
+            width: { xs: "330px", sm: "350px", md: "450px" },
           },
         }}
-        sx={{}}
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <DialogTitle variant="h5">Add author</DialogTitle>
+          <DialogTitle variant="h5">Create author</DialogTitle>
           <IconButton onClick={handleCloseDialog} sx={{ mr: 2 }}>
             <CloseIcon />
           </IconButton>
         </Box>
-        <DialogContent>
-          <FilterAuthor filters={filters} setFilter={setFilter} />
-          {isLoading || !data ? (
-            <Skeleton
-              variant="rounded"
-              animation="wave"
-              sx={{ height: "260px" }}
-            />
-          ) : (
-            data.data.map((author, i) => {
-              return (
-                <AuthorsCard
-                  key={author.id}
-                  author={author}
-                  courseId={courseId}
-                  addAuthor={true}
-                />
-              );
-            })
-          )}
-        </DialogContent>
+        <AuthorForm
+          courseId={courseId}
+          setFormVisible={handleCloseDialog}
+          defaultValues={defaultValues}
+          isEdit={Boolean(defaultValues)}
+        />
       </Dialog>
     </>
   );

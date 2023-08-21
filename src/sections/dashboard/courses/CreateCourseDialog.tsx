@@ -37,7 +37,7 @@ import {
   useUpdateCourseCoverMutation,
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
-import AuthorsList from "./authors-tab/AuthorsList";
+import AuthorsTab from "./authors-tab/AuthorsTab";
 
 interface FormValuesProps {
   name: string;
@@ -280,7 +280,7 @@ export default function CreateCourseDialog({
                   multiline
                   rows={3}
                 />
-                <Stack direction="row" justifyContent="space-between">
+                <Stack direction="row">
                   <RHFSwitch name="active" label="Course active" />
                   <RHFSwitch name="public" label="Public" />
                 </Stack>
@@ -293,7 +293,9 @@ export default function CreateCourseDialog({
                   mt: { xs: 3, sm: 7 },
                 }}
               >
-                <Button onClick={handleClose}>Close</Button>
+                <Button color="error" variant="soft" onClick={handleClose}>
+                  Close
+                </Button>
                 <LoadingButton
                   type="submit"
                   variant="contained"
@@ -305,24 +307,10 @@ export default function CreateCourseDialog({
             </FormProvider>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <Box
-              sx={{
-                minHeight: "550px",
-                width: { xs: "330px", sm: "350px", md: "450px" },
-              }}
-            >
-              <CourseModuleAutocomplete id={id} />
-            </Box>
+            <CourseModuleAutocomplete id={id} />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <Box
-              sx={{
-                minHeight: "550px",
-                width: { xs: "330px", sm: "350px", md: "450px" },
-              }}
-            >
-              <AuthorsList id={id} />
-            </Box>
+            <AuthorsTab courseId={id} />
           </TabPanel>
         </Box>
       </Dialog>
@@ -348,7 +336,15 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: { xs: 2, sm: 3 }, height: "700px", overflowY: "auto" }}>
+        <Box
+          sx={{
+            py: { xs: 1, sm: 3 },
+            px: { xs: 2, sm: 3 },
+            height: "700px",
+            overflowY: "auto",
+            width: { xs: "330px", sm: "350px", md: "450px" },
+          }}
+        >
           {children}
         </Box>
       )}
