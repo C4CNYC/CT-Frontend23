@@ -25,8 +25,11 @@ import {
   Iconify,
   Scrollbar,
   TableNoData,
+  TablePaginationCustom,
   useSettingsContext,
+  useTable,
 } from "@components";
+import { useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
@@ -42,10 +45,14 @@ Skills.getLayout = (page: React.ReactElement) => (
 );
 
 export default function Skills(): React.ReactElement {
-  const { data, isLoading } = useGetSkillQuery({});
-  const [removeSkill] = useRemoveSkillMutation();
-  const { themeStretch } = useSettingsContext();
+  const { dense, onChangeDense } = useTable();
+
   const { enqueueSnackbar } = useSnackbar();
+  const { themeStretch } = useSettingsContext();
+  const { filters, setFilter } = useFilters({ name: "" });
+
+  const { data, isLoading } = useGetSkillQuery({ ...filters });
+  const [removeSkill] = useRemoveSkillMutation();
 
   const onDelete = async (id: string): Promise<void> => {
     try {
@@ -159,6 +166,19 @@ export default function Skills(): React.ReactElement {
                 </Table>
               </Scrollbar>
             </TableContainer>
+            <TablePaginationCustom
+              count={data?.meta.itemCount ? data?.meta.itemCount : 0}
+              page={data?.meta.page ? data?.meta.page - 1 : 0}
+              rowsPerPage={data?.meta.take ?? 0}
+              onPageChange={(e: any, page: number) => {
+                setFilter("page", page + 1);
+              }}
+              onRowsPerPageChange={(e: any) => {
+                setFilter("take", e.target.value);
+              }}
+              dense={dense}
+              onChangeDense={onChangeDense}
+            />
           </Card>
         )}
       </Container>
