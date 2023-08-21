@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 
 import { BaseResponseInterface } from "@utils";
@@ -17,16 +16,6 @@ export default function TrainingsList({
 }: ITrainingsListProps): React.ReactElement {
   return (
     <Stack>
-      <Typography
-        variant="h5"
-        sx={{
-          color: "#43D4DD",
-          mt: 2,
-          mb: 3,
-        }}
-      >
-        TRAININGS:
-      </Typography>
       <Stack spacing={2}>
         {lessons.map((lesson, i) => (
           <TrainingsItem

@@ -1,6 +1,8 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@mui/system";
+
+import { Label } from "@components";
 
 interface ICourseDescriptionProps {
   name: string;
@@ -18,6 +20,7 @@ export default function CourseDescription({
     <Stack
       direction="row"
       sx={{
+        gap: 4,
         justifyContent: "space-between",
         [theme.breakpoints.down(1400)]: {
           flexWrap: "wrap",
@@ -27,52 +30,42 @@ export default function CourseDescription({
     >
       <Box>
         <Typography variant="h3">{name}</Typography>
-        <Typography variant="h5" fontWeight={400} maxWidth={600}>
+        <Typography variant="h5" fontWeight={400} maxWidth={550}>
           {desc}
         </Typography>
-      </Box>
-      <Box
-        sx={{
-          background: "#F0EEEE",
-          borderRadius: 2,
-          boxShadow: "3px 4px 4px 0px #00000026",
-          px: 3,
-          py: 1,
-          height: "fit-content",
-          [theme.breakpoints.down(1400)]: {
-            ml: "auto",
-          },
-        }}
-      >
-        <Typography variant="h6" color="#364954" gutterBottom>
-          AUTHOR
-        </Typography>
-        <Stack direction="row" alignItems="center">
-          <Avatar
-            alt="Jason"
-            src=""
+        <Stack direction="row" gap={2} my={2}>
+          <Chip
+            label="HTML"
             sx={{
-              width: "60px",
-              height: "60px",
-              border: "2px solid #EE467A",
-              mr: 2,
+              background: "transparent",
+              border: "1px solid #919EAB52",
+              borderRadius: 1,
             }}
           />
-          <Box>
-            <Typography
-              noWrap
-              variant="subtitle1"
-              maxWidth="150px"
-              sx={{
-                whiteSpace: "nowrap",
-              }}
-            >
-              Jason Doe
-            </Typography>
-            <Typography noWrap maxWidth="150px" variant="body1">
-              john@gmail.com
-            </Typography>
-          </Box>
+          <Chip
+            label="CSS"
+            sx={{
+              background: "transparent",
+              border: "1px solid #919EAB52",
+              borderRadius: 1,
+            }}
+          />
+          <Chip
+            label="BASICS"
+            sx={{
+              background: "transparent",
+              border: "1px solid #919EAB52",
+              borderRadius: 1,
+            }}
+          />
+          <Chip
+            label="AUTO-CHECKED"
+            sx={{
+              background: "transparent",
+              border: "1px solid #919EAB52",
+              borderRadius: 1,
+            }}
+          />
         </Stack>
       </Box>
     </Stack>

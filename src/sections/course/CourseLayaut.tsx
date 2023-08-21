@@ -6,7 +6,6 @@ import { EmptyContent } from "@components";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 import CourseCard from "./CourseCard";
-import CourseSummarily from "./CourseSummarily";
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
 
 interface ICourseLayautProps {
@@ -30,7 +29,6 @@ export default function CourseLayaut({
       }}
     >
       <Box>
-        <CourseSummarily data={course} />
         <Stack spacing="40px" mt="40px">
           {course?.units.length ? (
             course?.units.map((unit, index) => (
@@ -48,7 +46,11 @@ export default function CourseLayaut({
           )}
         </Stack>
       </Box>
-      <CourseDetailsMain dataLessons={course?.units[active]} index={active} />
+      <CourseDetailsMain
+        unit={course?.units[active]}
+        level={course.level}
+        index={active}
+      />
     </Box>
   );
 }
