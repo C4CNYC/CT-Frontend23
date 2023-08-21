@@ -6,9 +6,18 @@ import { FiUser } from "react-icons/fi";
 import { MdCopyAll } from "react-icons/md";
 import { TbShare2 } from "react-icons/tb";
 
-import { Button, IconButton, Link, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  Link,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@mui/system";
 
-import { MenuPopover, useSnackbar } from "@components";
+import { MenuPopover, useSettingsContext, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ClassPreferences from "@sections/dashboard/classes/modal";
@@ -32,6 +41,9 @@ interface IDefaultClassInfoProps {
 export default function DefaultClassInfo({
   classData,
 }: IDefaultClassInfoProps): React.ReactElement {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { themeStretch } = useSettingsContext();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -83,173 +95,176 @@ export default function DefaultClassInfo({
 
   return (
     <>
-      <Stack>
+      <Stack ml={-2} mr={-2}>
         <ClassInfoToggle />
         <Stack
           sx={{
             background: getLinearGradient(classData?.cover ?? "#75CF6D"),
-            borderBottomRightRadius: "20px",
-            borderBottomLeftRadius: "20px",
             color: "#fff",
           }}
         >
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              pb: "65px",
-              pt: 1,
-              px: 2,
-            }}
-          >
+          <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
             <Stack
               direction="row"
-              alignItems="center"
-              sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                pb: "65px",
+                pt: 1,
+                px: 4,
+              }}
             >
-              <Typography variant="subtitle2">Join-code:</Typography>
-              <Button
-                onClick={() => {
-                  onCopy(classData?.setting?.share_token);
-                }}
-                sx={{
-                  gap: 0.5,
-                  color: "inherit",
-                  p: 0,
-                  textTransform: "none",
-                }}
+              <Stack
+                direction="row"
+                alignItems="center"
+                sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
               >
-                <Typography variant="subtitle2">
-                  {classData?.setting?.share_token}
-                </Typography>
-                <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
-              </Button>
-            </Stack>
+                <Typography variant="subtitle2">Join-code:</Typography>
+                <Button
+                  onClick={() => {
+                    onCopy(classData?.setting?.share_token);
+                  }}
+                  sx={{
+                    gap: 0.5,
+                    color: "inherit",
+                    p: 0,
+                    textTransform: "none",
+                  }}
+                >
+                  <Typography variant="subtitle2">
+                    {classData?.setting?.share_token}
+                  </Typography>
+                  <MdCopyAll size={20} style={{ marginBottom: "2px" }} />
+                </Button>
+              </Stack>
 
-            <Link
-              sx={{
-                color: "inherit",
-              }}
-              typography="caption"
-              href={STUDENT_PATH_DASHBOARD.tribes.root}
-              component={nextLink}
-            >
-              See All Groups
-            </Link>
-          </Stack>
-
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              px: 2,
-              pb: 2,
-              flexWrap: "wrap",
-            }}
-          >
-            <ClassInfoMain classData={classData} />
-            <Stack
-              direction="row"
-              alignItems="center"
-              sx={{
-                maxHeight: "20px",
-                pt: { xs: 2, sm: 0 },
-                m: { xs: "10px auto", sm: 0 },
-              }}
-            >
               <Link
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "#fff",
-                  gap: 0.5,
+                  color: "inherit",
                 }}
-                href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
+                typography="caption"
+                href={STUDENT_PATH_DASHBOARD.tribes.root}
                 component={nextLink}
-                typography="button"
               >
-                <FiUser color="#fff" size="18px" />
-                Members
+                See All Groups
               </Link>
-              <ShareGroupModal schoolClass={classData}>
-                <Button
-                  variant="text"
-                  disableRipple
+            </Stack>
+
+            <Stack
+              direction="row"
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                px: 4,
+                pb: 2,
+                flexWrap: "wrap",
+              }}
+            >
+              <ClassInfoMain classData={classData} />
+              <Stack
+                direction="row"
+                alignItems="center"
+                sx={{
+                  maxHeight: "20px",
+                  pt: { xs: 2, sm: 0 },
+                  m: { xs: "10px auto", sm: 0 },
+                }}
+              >
+                <Link
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     color: "#fff",
-                    ml: 2,
-                    "&:hover": {
-                      background: "none",
-                    },
+                    gap: 0.5,
                   }}
+                  href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
+                  component={nextLink}
+                  typography="button"
                 >
-                  <TbShare2 color="#fff" size="18px" />
-                  <Typography variant="button" sx={{ ml: 0.5 }}>
-                    Share
-                  </Typography>
-                </Button>
-              </ShareGroupModal>
-              <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
-                <IconButton onClick={handleOpenPopover} sx={{ ml: 2, p: 0.7 }}>
-                  <BsThreeDots color="#fff" size="24px" />
-                </IconButton>
-              </RoleBasedGuard>
-              <MenuPopover
-                sx={{
-                  p: 2,
-                  minWidth: "150px",
-                }}
-                open={openPopover}
-                onClose={() => {
-                  setOpenPopover(null);
-                }}
-              >
-                <ClassPreferences
-                  updateClass={(
-                    name: string,
-                    description: string,
-                    cover: string,
-                    uploadedFile?: File
-                  ) => {
-                    handleEditClass(
-                      classData.id,
-                      name,
-                      description,
-                      cover,
-                      uploadedFile
-                    );
-                  }}
-                  defaultValues={{
-                    name: classData.name,
-                    description: classData.description ?? "",
-                    cover: classData.cover ?? "",
-                  }}
-                  rowId={classData.id}
-                  updateResult={updateResult}
-                  schoolId={classData?.school?.id}
-                >
+                  <FiUser color="#fff" size="18px" />
+                  {!isMobile ? "Members" : ""}
+                </Link>
+                <ShareGroupModal schoolClass={classData}>
                   <Button
+                    variant="text"
+                    disableRipple
                     sx={{
-                      gap: 1,
-                      width: "100%",
-                      m: "0 auto",
-                      background: "#fff",
-                      color: "#75CF6D",
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#fff",
+                      ml: 2,
                       "&:hover": {
-                        background: "#22A64733",
+                        background: "none",
                       },
                     }}
                   >
-                    Edit
+                    <TbShare2 color="#fff" size="18px" />
+                    <Typography variant="button" sx={{ ml: 0.5 }}>
+                      {!isMobile ? "Share" : ""}
+                    </Typography>
                   </Button>
-                </ClassPreferences>
-              </MenuPopover>
+                </ShareGroupModal>
+                <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner]}>
+                  <IconButton
+                    onClick={handleOpenPopover}
+                    sx={{ ml: 2, p: 0.7 }}
+                  >
+                    <BsThreeDots color="#fff" size="24px" />
+                  </IconButton>
+                </RoleBasedGuard>
+                <MenuPopover
+                  sx={{
+                    p: 2,
+                    minWidth: "150px",
+                  }}
+                  open={openPopover}
+                  onClose={() => {
+                    setOpenPopover(null);
+                  }}
+                >
+                  <ClassPreferences
+                    updateClass={(
+                      name: string,
+                      description: string,
+                      cover: string,
+                      uploadedFile?: File
+                    ) => {
+                      handleEditClass(
+                        classData.id,
+                        name,
+                        description,
+                        cover,
+                        uploadedFile
+                      );
+                    }}
+                    defaultValues={{
+                      name: classData.name,
+                      description: classData.description ?? "",
+                      cover: classData.cover ?? "",
+                    }}
+                    rowId={classData.id}
+                    updateResult={updateResult}
+                    schoolId={classData?.school?.id}
+                  >
+                    <Button
+                      sx={{
+                        gap: 1,
+                        width: "100%",
+                        m: "0 auto",
+                        background: "#fff",
+                        color: "#75CF6D",
+                        "&:hover": {
+                          background: "#22A64733",
+                        },
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  </ClassPreferences>
+                </MenuPopover>
+              </Stack>
             </Stack>
-          </Stack>
+          </Container>
         </Stack>
       </Stack>
     </>

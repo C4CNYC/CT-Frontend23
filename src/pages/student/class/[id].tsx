@@ -46,27 +46,21 @@ export default function HomeOverview(): React.ReactElement {
       <Head>
         <title>Home Overview | Code Tribe</title>
       </Head>
-      <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-        {classInfo && <JoinTribeModal classInfo={classInfo} isSingIn={true} />}
-        {!(isLoading || !data) ? (
-          <>
-            <DefaultClassInfo classData={data} />
-            <Stack
-              sx={{
-                flexDirection: { lg: "row" },
-              }}
-            >
-              <ClassInfoTable classData={data} />
-            </Stack>
-          </>
-        ) : (
-          <Skeleton
-            sx={{ width: "100%", height: "188px" }}
-            variant="rectangular"
-            animation="wave"
-          />
-        )}
-      </Container>
+      {classInfo && <JoinTribeModal classInfo={classInfo} isSingIn={true} />}
+      {!(isLoading || !data) ? (
+        <>
+          <DefaultClassInfo classData={data} />
+          <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
+            <ClassInfoTable classData={data} />
+          </Container>
+        </>
+      ) : (
+        <Skeleton
+          sx={{ width: "100%", height: "188px" }}
+          variant="rectangular"
+          animation="wave"
+        />
+      )}
     </>
   );
 }

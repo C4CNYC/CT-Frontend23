@@ -18,7 +18,7 @@ export default function ClassInfoToggle(): React.ReactElement {
           color: "#75CF6D",
           justifyContent: "space-between",
           alignItems: "center",
-          px: 2,
+          px: 4,
           py: 0.5,
         }}
       >
