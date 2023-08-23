@@ -1,8 +1,5 @@
 import { Box, Chip, Stack, Typography } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@mui/system";
-
-import { Label } from "@components";
 
 interface ICourseDescriptionProps {
   name: string;

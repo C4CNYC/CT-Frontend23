@@ -15,7 +15,7 @@ export default function AuthorsSection({}: IAuthorsSectionProps): React.ReactEle
         mt: 3,
         minWidth: "250px",
         [theme.breakpoints.down(1400)]: {
-          ml: "auto",
+          ml: "0",
         },
       }}
     >

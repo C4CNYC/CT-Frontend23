@@ -33,11 +33,10 @@ export default function CourseDetailsMain({
   return (
     <Stack
       sx={{
-        ml: "33px",
         background: "#fff",
         borderRadius: 3,
         pb: 4,
-        [theme.breakpoints.down(850)]: {
+        [theme.breakpoints.down(1050)]: {
           display: "none",
         },
       }}
@@ -99,7 +98,15 @@ export default function CourseDetailsMain({
           />
           <TrainingsList lessons={unit.lessons} unitId={unit.id} />
         </Stack>
-        <Stack>
+        <Stack
+          sx={{
+            width: "270px",
+            [theme.breakpoints.down(1400)]: {
+              width: "auto",
+              margin: "0 auto",
+            },
+          }}
+        >
           <AuthorsSection />
           <Link
             component={NextLink}

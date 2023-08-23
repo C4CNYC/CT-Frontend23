@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { BaseResponseInterface } from "@utils";
 import { ILesson } from "src/redux/interfaces/content.interface";
 
-import TrainingsItem from "./TrainingsItem";
+import TrainingsItem from "./training-item";
 
 interface ITrainingsListProps {
   lessons: Array<ILesson & BaseResponseInterface>;
@@ -18,12 +18,7 @@ export default function TrainingsList({
     <Stack>
       <Stack spacing={2}>
         {lessons.map((lesson, i) => (
-          <TrainingsItem
-            key={lesson.id}
-            lesson={lesson}
-            index={i}
-            unitId={unitId}
-          />
+          <TrainingsItem key={lesson.id} lesson={lesson} unitId={unitId} />
         ))}
       </Stack>
     </Stack>

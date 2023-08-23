@@ -5,8 +5,8 @@ import { Box, Stack, Typography } from "@mui/material";
 import { EmptyContent } from "@components";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 
-import CourseCard from "./CourseCard";
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
+import ModuleSection from "./module-section";
 
 interface ICourseLayautProps {
   course: ICourseContent;
@@ -26,13 +26,14 @@ export default function CourseLayaut({
       sx={{
         mt: "32px",
         display: "flex",
+        gap: "50px",
       }}
     >
       <Box>
-        <Stack spacing="40px" mt="40px">
+        <Stack gap={5} mt="60px" pb="60px">
           {course?.units.length ? (
             course?.units.map((unit, index) => (
-              <CourseCard
+              <ModuleSection
                 key={index}
                 index={index}
                 unit={unit}

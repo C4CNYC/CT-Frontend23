@@ -1,6 +1,6 @@
 import { Box, Container } from "@mui/material";
 
-import { CustomBreadcrumbs, Scrollbar } from "@components";
+import { CustomBreadcrumbs } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
