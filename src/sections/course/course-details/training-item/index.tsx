@@ -73,7 +73,7 @@ export default function TrainingsItem({
         alignItems="flex-end"
         gap={2}
       >
-        <Stack direction="row" gap={2}>
+        <Stack direction="row" gap={2} flexWrap="wrap">
           <Typography
             variant="body2"
             sx={{

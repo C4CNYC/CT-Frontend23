@@ -1,16 +1,15 @@
 import { Box, Chip, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 
-interface ICourseDescriptionProps {
+interface IModuleDescriptionProps {
   name: string;
   desc: string;
-  index: number;
 }
 
-export default function CourseDescription({
+export default function ModuleDescription({
   name,
   desc,
-}: ICourseDescriptionProps): React.ReactElement {
+}: IModuleDescriptionProps): React.ReactElement {
   const theme = useTheme();
 
   return (
@@ -30,7 +29,7 @@ export default function CourseDescription({
         <Typography variant="h5" fontWeight={400} maxWidth={550}>
           {desc}
         </Typography>
-        <Stack direction="row" gap={2} my={2}>
+        <Stack direction="row" gap={2} my={2} flexWrap="wrap">
           <Chip
             label="HTML"
             sx={{

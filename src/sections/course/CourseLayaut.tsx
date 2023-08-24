@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import { EmptyContent } from "@components";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
-import ModuleSection from "./module-section";
+import ModuleItem from "./module-item";
 
 interface ICourseLayautProps {
   course: ICourseContent;
@@ -15,6 +15,8 @@ interface ICourseLayautProps {
 export default function CourseLayaut({
   course,
 }: ICourseLayautProps): React.ReactElement {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1050));
   const [active, setActive] = useState(0);
 
   if (!course.units) {
@@ -29,29 +31,22 @@ export default function CourseLayaut({
         gap: "50px",
       }}
     >
-      <Box>
-        <Stack gap={5} mt="60px" pb="60px">
-          {course?.units.length ? (
-            course?.units.map((unit, index) => (
-              <ModuleSection
-                key={index}
-                index={index}
-                unit={unit}
-                active={active === index}
-                setActive={setActive}
-                lastItem={course?.units?.length - 1 === index}
-              />
-            ))
-          ) : (
-            <EmptyContent title="There are no units" />
-          )}
-        </Stack>
-      </Box>
-      <CourseDetailsMain
-        unit={course?.units[active]}
-        level={course.level}
-        index={active}
-      />
+      <Stack gap={5} pb="60px" m={isDesktop ? "60px 0 0 0" : "0 auto"}>
+        {course?.units.length ? (
+          course?.units.map((unit, index) => (
+            <ModuleItem
+              key={index}
+              index={index}
+              unit={unit}
+              active={active === index}
+              setActive={setActive}
+            />
+          ))
+        ) : (
+          <EmptyContent title="There are no units" />
+        )}
+      </Stack>
+      <CourseDetailsMain unit={course?.units[active]} level={course.level} />
     </Box>
   );
 }

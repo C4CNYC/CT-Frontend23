@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { BiShowAlt } from "react-icons/bi";
-import { IoMdClose } from "react-icons/io";
 
 import {
   Box,
@@ -9,7 +8,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  IconButton,
 } from "@mui/material";
 
 import { Image } from "@components";
@@ -25,7 +23,9 @@ export default function ImageLightBox({
 }: IImageLightBoxProps): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const handleOpenDialog = (): void => {
+  const handleOpenDialog = (e: React.SyntheticEvent): void => {
+    e.preventDefault();
+    e.stopPropagation();
     setOpen(true);
   };
   const handleCloseDialog = (): void => {
@@ -35,7 +35,9 @@ export default function ImageLightBox({
   return (
     <>
       <Box
-        onClick={handleOpenDialog}
+        onClick={(e) => {
+          handleOpenDialog(e);
+        }}
         sx={{
           position: "relative",
           zIndex: 1,

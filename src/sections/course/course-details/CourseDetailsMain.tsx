@@ -11,7 +11,7 @@ import { useTheme } from "@mui/system";
 import { Unit } from "src/redux/interfaces/challenges.interface";
 
 import AuthorsSection from "./AuthorsSection";
-import CourseDescription from "./CourseDescription";
+import ModuleDescription from "./ModuleDescription";
 import RankingSection from "./RankingSection";
 import TeacherToolbox from "./TeacherToolbox";
 import TrainingsList from "./TrainingsList";
@@ -20,13 +20,11 @@ import QuizPanel from "./quiz-panel";
 interface ICourseDetailsMainProps {
   unit: Unit;
   level: string;
-  index: number;
 }
 
 export default function CourseDetailsMain({
   unit,
   level,
-  index,
 }: ICourseDetailsMainProps): React.ReactElement {
   const theme = useTheme();
 
@@ -85,17 +83,13 @@ export default function CourseDetailsMain({
           gap: 3,
           flexDirection: "row",
           display: "flex",
-          [theme.breakpoints.down(1400)]: {
+          [theme.breakpoints.down(1550)]: {
             flexDirection: "column",
           },
         }}
       >
         <Stack>
-          <CourseDescription
-            name={unit.name}
-            desc={unit.description ?? ""}
-            index={index}
-          />
+          <ModuleDescription name={unit.name} desc={unit.description ?? ""} />
           <TrainingsList lessons={unit.lessons} unitId={unit.id} />
         </Stack>
         <Stack

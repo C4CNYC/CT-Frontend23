@@ -11,28 +11,25 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { Image } from "@components";
 import { Unit } from "src/redux/interfaces/challenges.interface";
 
-import CourseInfoDialog from "../CourseInfoDialog";
+import ModuleInfoDialog from "../ModuleInfoDialog";
 import ImageLightBox from "./ImageLightBox";
 import ModuleProgress from "./ModuleProgress";
 
-interface IModuleSectionProps {
+interface IModuleItemProps {
   index: number;
   active?: boolean;
   setActive: Dispatch<SetStateAction<number>>;
   unit: Unit;
-  lastItem: boolean;
 }
 
-export default function ModuleSection({
+export default function ModuleItem({
   active = false,
   index,
   setActive,
   unit,
-  lastItem,
-}: IModuleSectionProps): React.ReactElement {
+}: IModuleItemProps): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1050));
 
@@ -58,9 +55,6 @@ export default function ModuleSection({
         "&:hover": {
           cursor: active ? "" : "pointer",
         },
-        [theme.breakpoints.down(600)]: {
-          height: "auto",
-        },
       }}
     >
       <ImageLightBox image={"/assets/projects/bg1.png"}>
@@ -83,59 +77,62 @@ export default function ModuleSection({
           }}
         />
       </ImageLightBox>
-      <Stack
-        sx={{
-          p: 2,
-          pr: 3,
-          maxWidth: "600px",
-          justifyContent: "space-between",
-        }}
-      >
-        <ModuleProgress progress={60} />
-        <Box>
-          <Typography
-            variant="h4"
-            noWrap
-            sx={{
-              width: "350px",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              wordWrap: "break-word",
-              [theme.breakpoints.down(1400)]: {
-                width: "250px",
-              },
-            }}
-          >
-            {unit.name}
-          </Typography>
-          <Typography variant="body1">
-            {unit.description && unit.description?.length > 85
-              ? `${unit.description.slice(0, 80)} ...`
-              : unit.description}
-          </Typography>
-        </Box>
-        <Button
+      <ModuleInfoDialog unit={unit}>
+        <Stack
           sx={{
-            display: "inline-flex",
-            alignSelf: "flex-start",
-            gap: 1,
-            color: "#364954",
-            "&:hover": {
-              background: "none",
-            },
-          }}
-          variant="text"
-          onClick={(e) => {
-            if (isDesktop) {
-              e.stopPropagation();
-            }
-            setActive(index);
+            p: 2,
+            pr: 3,
+            maxWidth: "600px",
+            justifyContent: "space-between",
           }}
         >
-          {active ? "Get Coding" : "Start"}{" "}
-          <HiOutlineArrowNarrowRight size={24} />
-        </Button>
-      </Stack>
+          <ModuleProgress progress={60} />
+          <Box>
+            <Typography
+              variant="h4"
+              noWrap
+              sx={{
+                width: "350px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                wordWrap: "break-word",
+                [theme.breakpoints.down(1400)]: {
+                  width: "250px",
+                },
+              }}
+            >
+              {unit.name}
+            </Typography>
+            <Typography variant="body1">
+              {unit.description && unit.description?.length > 85
+                ? `${unit.description.slice(0, 80)} ...`
+                : unit.description}
+            </Typography>
+          </Box>
+          <Button
+            sx={{
+              display: "inline-flex",
+              alignSelf: "flex-start",
+              gap: 1,
+              color: "#364954",
+              "&:hover": {
+                background: "none",
+              },
+            }}
+            variant="text"
+            onClick={(e) => {
+              if (isDesktop) {
+                e.stopPropagation();
+              }
+              setActive(index);
+            }}
+          >
+            {active ? "Get Coding" : "Start"}{" "}
+            <HiOutlineArrowNarrowRight size={24} />
+          </Button>
+        </Stack>
+      </ModuleInfoDialog>
+
       {isDesktop && (
         <Box
           sx={{
