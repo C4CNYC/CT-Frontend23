@@ -1,0 +1,5 @@
+<svg width="161" height="390" viewBox="0 0 161 390" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M161 47L161 366L70 366C56.1929 366 45 354.807 45 341L45 72C45 58.1929 56.1929 47 70 47L161 47Z" fill="white"/>
+<rect x="161" width="90" height="161" rx="45" transform="rotate(90 161 0)" fill="#ECF4FF"/>
+<rect x="161" y="310" width="80" height="161" rx="40" transform="rotate(90 161 310)" fill="#ECF4FF"/>
+</svg>
