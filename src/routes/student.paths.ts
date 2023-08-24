@@ -59,7 +59,9 @@ export const STUDENT_PATH_DASHBOARD = {
   },
   publicCodePanel: {
     root: "/student/public-code-panel",
-    workSpace: (id: string) => path("/student/public-code-panel/", `${id}`),
+    workSpace: (id: string, query?: Record<string, string>) =>
+      path("/student/public-code-panel/", `${id}`) +
+    `?${query ? new URLSearchParams(query) : ""}`,
   },
   courses: {
     root: "/student/courses",
