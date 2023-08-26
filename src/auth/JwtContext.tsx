@@ -6,7 +6,6 @@ import {
   useReducer,
 } from "react";
 
-import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
 import { axios, localStorageAvailable, voidFunction } from "@utils";
@@ -14,7 +13,6 @@ import { Role } from "src/redux/services/enums/role.enum";
 import {
   cleanUser,
   cleanUserRole,
-  setStudentMode,
   setUser,
 } from "src/redux/slices/global";
 
@@ -25,6 +23,7 @@ import {
   JWTContextType,
 } from "./types";
 import { isValidToken, setSession } from "./utils";
+import { useProfileQuery } from "../redux/services/auth"
 
 // ----------------------------------------------------------------------
 
@@ -121,7 +120,7 @@ export function AuthProvider({
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
   const storageAvailable = localStorageAvailable();
-
+  const { data } = useProfileQuery();
   const initialize = useCallback(async () => {
     try {
       const accessToken = storageAvailable
@@ -133,20 +132,19 @@ export function AuthProvider({
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        const { data } = await axios.get("/auth/profile");
-
-        if (isManagerRoute && data.role === Role.Student) {
+        if (isManagerRoute && data?.role === Role.Student) {
           window.location.pathname = "/permission-denied";
         }
-        reduxDispatch(setUser(data));
-
-        dispatch({
-          type: Types.INITIAL,
-          payload: {
-            isAuthenticated: true,
-            user: data,
-          },
-        });
+        if (data) {
+          reduxDispatch(setUser(data));
+          dispatch({
+            type: Types.INITIAL,
+            payload: {
+              isAuthenticated: true,
+              user: data,
+            },
+          });
+        }
       } else {
         dispatch({
           type: Types.INITIAL,
@@ -171,7 +169,7 @@ export function AuthProvider({
     initialize().catch(() => {
       voidFunction();
     });
-  }, [initialize]);
+  }, [initialize, data]);
 
   // AUTHENTICATE
   const authenticate = (): void => {
