@@ -134,7 +134,7 @@ export default function QuestItem({
                   </Typography>
                 )}
                 <Typography variant="body2">
-                  {formatDistanceToNow(new Date(assignment.createdAt), {
+                  {formatDistanceToNow(new Date(assignment.createdat), {
                     addSuffix: true,
                   })}
                 </Typography>
