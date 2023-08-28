@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { Unit } from "src/redux/interfaces/challenges.interface";
+import { IModuleContent } from "src/redux/interfaces/content.interface";
 
 import ModuleInfoDialog from "../ModuleInfoDialog";
 import ImageLightBox from "./ImageLightBox";
@@ -21,7 +21,7 @@ interface IModuleItemProps {
   index: number;
   active?: boolean;
   setActive: Dispatch<SetStateAction<number>>;
-  unit: Unit;
+  unit: IModuleContent;
 }
 
 export default function ModuleItem({
@@ -32,10 +32,6 @@ export default function ModuleItem({
 }: IModuleItemProps): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1050));
-
-  if (!unit) {
-    return <Typography variant="h3">Course is empty</Typography>;
-  }
 
   return (
     <Stack
@@ -48,7 +44,6 @@ export default function ModuleItem({
       sx={{
         background: "#fff",
         borderRadius: !active || !isDesktop ? "30px" : "30px 0 0 30px",
-        maxWidth: "645px",
         height: "220px",
         position: "relative",
         zIndex: 5,
@@ -57,7 +52,7 @@ export default function ModuleItem({
         },
       }}
     >
-      <ImageLightBox image={"/assets/projects/bg1.png"}>
+      <ImageLightBox image={unit.avatar ?? "/assets/projects/bg1.png"}>
         <Box
           sx={{
             flexShrink: "0",
@@ -65,8 +60,9 @@ export default function ModuleItem({
             overflow: "hidden",
             width: "150px",
             height: "100%",
-            background:
-              'no-repeat url("/assets/projects/bg1.png") center / cover',
+            background: `no-repeat url(${
+              unit.avatar ?? "/assets/projects/bg1.png"
+            }) center / cover`,
             position: "relative",
             [theme.breakpoints.down(1050)]: {
               width: "100px",
@@ -83,10 +79,12 @@ export default function ModuleItem({
             p: 2,
             pr: 3,
             maxWidth: "600px",
+            minWidth: "100%",
+            height: "100%",
             justifyContent: "space-between",
           }}
         >
-          <ModuleProgress progress={60} />
+          <ModuleProgress progress={unit.progress ?? "2"} />
           <Box>
             <Typography
               variant="h4"

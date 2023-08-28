@@ -4,6 +4,8 @@ import {
   ICourseContent,
   ICourseElement,
   ICourseSearchParams,
+  ILesson,
+  IModuleContent,
 } from "src/redux/interfaces/content.interface";
 
 import { managerApi } from ".";
@@ -44,6 +46,24 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["Courses"],
     }),
+    getStudentCourseModules: builder.query<
+      Array<IModuleContent & BaseResponseInterface>,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/student/course/${id}/modules`,
+        method: "GET",
+      }),
+    }),
+    getStudentModulesLessons: builder.query<
+      Array<ILesson & BaseResponseInterface>,
+      { id: string }
+    >({
+      query: ({ id }) => ({
+        url: `/student/modules/${id}/lessons`,
+        method: "GET",
+      }),
+    }),
     courseAddLike: builder.mutation<
       ICourseContent & BaseResponseInterface,
       { id: string }
@@ -83,6 +103,8 @@ export const {
   useGetCourseQuery,
   useGetCoursQuery,
   useGetCoursContentQuery,
+  useGetStudentCourseModulesQuery,
+  useGetStudentModulesLessonsQuery,
   // -------------mutation-----------
   useCourseAddLikeMutation,
   useCourseRemoveLikeMutation,

@@ -18,8 +18,9 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { Scrollbar } from "@components";
-import { Unit } from "src/redux/interfaces/challenges.interface";
+import { EmptyContent, Scrollbar } from "@components";
+import { IModuleContent } from "src/redux/interfaces/content.interface";
+import { useGetStudentModulesLessonsQuery } from "src/redux/services/manager/courses-student";
 
 import AuthorsSection from "./course-details/AuthorsSection";
 import ModuleDescription from "./course-details/ModuleDescription";
@@ -30,7 +31,7 @@ import QuizPanel from "./course-details/quiz-panel";
 
 interface IModuleInfoDialogProps {
   children: React.ReactElement;
-  unit: Unit;
+  unit: IModuleContent;
 }
 export default function ModuleInfoDialog({
   children,
@@ -39,6 +40,11 @@ export default function ModuleInfoDialog({
   const theme = useTheme();
   const isDecktop = useMediaQuery(theme.breakpoints.up(1050));
   const [open, setOpen] = useState(false);
+
+  const { data, isLoading } = useGetStudentModulesLessonsQuery(
+    { id: unit.id },
+    { skip: !unit.id }
+  );
 
   const handleClickOpen = (): void => {
     if (isDecktop) {
@@ -50,6 +56,10 @@ export default function ModuleInfoDialog({
   const handleClose = (): void => {
     setOpen(false);
   };
+
+  if (isLoading) {
+    return <></>;
+  }
 
   return (
     <>
@@ -94,8 +104,13 @@ export default function ModuleInfoDialog({
                 <ModuleDescription
                   name={unit.name}
                   desc={unit.description ?? ""}
+                  isLoading={isLoading}
                 />
-                <TrainingsList lessons={unit.lessons} unitId={unit.id} />
+                {data ? (
+                  <TrainingsList lessons={data} unitId={unit.id} />
+                ) : (
+                  <EmptyContent title="no data" />
+                )}
               </Stack>
               <Stack
                 sx={{
@@ -142,7 +157,11 @@ export default function ModuleInfoDialog({
                   <Typography variant="body1">Sample Certificate</Typography>
                 </Button>
                 <RankingSection />
-                <QuizPanel lessons={unit.lessons} />
+                {data ? (
+                  <QuizPanel lessons={data} />
+                ) : (
+                  <EmptyContent title="no data" />
+                )}
                 <TeacherToolbox />
               </Stack>
             </Stack>
