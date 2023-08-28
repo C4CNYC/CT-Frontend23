@@ -163,6 +163,7 @@ export default function AddQuest(): React.ReactElement {
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
             assignmentId: newAssignment.id,
+            onBoarding: "on-boarding",
           })
         );
         enqueueSnackbar("Assignment created successfuly!");

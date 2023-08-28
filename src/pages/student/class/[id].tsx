@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import { Skeleton, Stack } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { Container } from "@mui/system";
 
 import { useSettingsContext } from "@components";
@@ -46,7 +46,9 @@ export default function HomeOverview(): React.ReactElement {
       <Head>
         <title>Home Overview | Code Tribe</title>
       </Head>
-      {classInfo && <JoinTribeModal classInfo={classInfo} isSingIn={true} />}
+      {classInfo ? (
+        <JoinTribeModal classInfo={classInfo} isSingIn={true} />
+      ) : null}
       {!(isLoading || !data) ? (
         <>
           <DefaultClassInfo classData={data} />
