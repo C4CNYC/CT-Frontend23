@@ -20,6 +20,7 @@ export default function ClassMain(): React.ReactElement {
         pathname: STUDENT_PATH_DASHBOARD.class.createClass,
         query: { onBoarding: "on-boarding" },
       });
+      localStorage.removeItem("ON-BOARDING");
     } else if (localStorage.getItem("JOIN_TRIBE")) {
       const { joinCode, classId } = JSON.parse(
         localStorage.getItem("JOIN_TRIBE") ?? "{}"
