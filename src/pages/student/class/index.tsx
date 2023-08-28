@@ -15,7 +15,12 @@ export default function ClassMain(): React.ReactElement {
   const { data: tribes, isLoading } = useGetStudentClassesQuery({});
 
   useEffect(() => {
-    if (localStorage.getItem("JOIN_TRIBE")) {
+    if (localStorage.getItem("ON-BOARDING") === "on-boarding") {
+      push({
+        pathname: STUDENT_PATH_DASHBOARD.class.createClass,
+        query: { onBoarding: "on-boarding" },
+      });
+    } else if (localStorage.getItem("JOIN_TRIBE")) {
       const { joinCode, classId } = JSON.parse(
         localStorage.getItem("JOIN_TRIBE") ?? "{}"
       );

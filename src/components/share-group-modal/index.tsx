@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useSnackbar } from "notistack";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -41,7 +41,7 @@ export default function ShareGroupModal({
   children,
   schoolClass,
 }: IShareGroupModalProps): React.ReactElement {
-  const { query } = useRouter();
+  const { pathname, query, replace } = useRouter();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
@@ -84,6 +84,12 @@ export default function ShareGroupModal({
   const shareLink = `${
     window.location.origin
   }${STUDENT_PATH_DASHBOARD.joinTribe.id(schoolClass.setting.share_token)}`;
+
+  useEffect(() => {
+    if (query.onBoarding) {
+      handleOpen();
+    }
+  }, []);
 
   return (
     <>

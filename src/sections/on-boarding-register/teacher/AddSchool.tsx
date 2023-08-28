@@ -74,7 +74,7 @@ export default function AddSchool(): React.ReactElement {
         country: schoolData.country,
         city: schoolData.city,
       }).unwrap();
-
+      localStorage.setItem("ON-BOARDING", "on-boarding");
       reload();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });

@@ -37,7 +37,7 @@ interface FormValueProps {
 }
 
 export default function CreateClass(): React.ReactElement {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [openDialog, setOpenDialog] = useState(true);
   const [schoolId, setSchoolId] = useState("");
@@ -81,7 +81,16 @@ export default function CreateClass(): React.ReactElement {
           classId: classInfo.id,
           file,
         }).unwrap();
-        push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id));
+        if (query.onBoarding) {
+          push(
+            STUDENT_PATH_DASHBOARD.class.addQuest(classInfo.id, {
+              schoolId,
+              onBoarding: query.onBoarding as string,
+            })
+          );
+        } else {
+          push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id));
+        }
       }
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
