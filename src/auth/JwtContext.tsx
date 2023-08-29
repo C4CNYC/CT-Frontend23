@@ -163,7 +163,7 @@ export function AuthProvider({
         },
       });
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     initialize().catch(() => {
