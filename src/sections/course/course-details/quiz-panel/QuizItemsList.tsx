@@ -18,7 +18,7 @@ export default function QuizItemsList({
         {lesson.name}
       </Typography>
       <Stack direction="row" sx={{ flexWrap: "wrap", gap: 1, mb: 2 }}>
-        {lesson.skills.map((skill) => (
+        {lesson?.skills?.map((skill) => (
           <QuizItem
             key={skill.id}
             name={skill.name}

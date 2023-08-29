@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 interface IModuleProgressProps {
-  progress: number;
+  progress: string;
 }
 
 export default function ModuleProgress({
@@ -23,7 +23,7 @@ export default function ModuleProgress({
       <Tooltip placement="top" title={`${progress}% Complete`}>
         <LinearProgress
           variant="determinate"
-          value={progress}
+          value={+progress}
           sx={{
             "& .MuiLinearProgress-bar": {
               background: "#454F5B",
