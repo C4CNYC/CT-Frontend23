@@ -66,7 +66,7 @@ const styles = {
     "& .MuiTab-root": {
       minWidth: "0px",
     },
-    "& .MuiTab-labelIcon .MuiTab-wrapper > *:first-child": {
+    "& .MuiTab-labelIcon .MuiTab-wrapper > *:first-of-type": {
       marginBottom: "0px",
     },
     "& .MuiTabs-flexContainer": {

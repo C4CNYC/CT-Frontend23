@@ -79,7 +79,7 @@ export default function SkeletonList({
         {Array(filter)
           .fill(null)
           .map((item, i) => (
-            <SkeletonFilter key={i} />
+            <SkeletonFilter key={i + 10} />
           ))}
       </Stack>
       <Box
@@ -93,7 +93,9 @@ export default function SkeletonList({
       >
         {Array(count)
           .fill(null)
-          .map((e, i) => item)}
+          .map((e, i) => (
+            <Box key={i + 18}>item</Box>
+          ))}
       </Box>
     </Container>
   );
