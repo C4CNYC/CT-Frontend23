@@ -1,24 +1,24 @@
 import { useRouter } from "next/router";
 
-import { useAtom } from "jotai";
-import _ from "lodash";
-
 import { Grid, Stack } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
 
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 
-import { quickRabbitAtom } from "../atoms/quick-rabbit.atom";
 import QuickRabbitsItem from "./quick-rabbits-item";
 import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
+import { RootState, useSelector } from "src/redux/store";
+import { useDispatch } from "react-redux";
+import { removeRabit } from "src/redux/slices/rabits";
 
 export const QuickRabbits = (): React.ReactElement => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const { query, push } = useRouter();
-  const [quickRabits, setQuckRabit] = useAtom(quickRabbitAtom);
+  const rabits = useSelector((state: RootState) => state.rabits.items);
 
   const onClose = (userId: string): void => {
-    setQuckRabit((prev) => _.omit(prev, [userId]));
+    dispatch(removeRabit({ id: userId }))
     if (userId === query.studentId) {
       push(MANAGER_PATH_DASHBOARD.school.controller(query.id as string));
     }
@@ -50,11 +50,12 @@ export const QuickRabbits = (): React.ReactElement => {
           },
         }}
       >
-        {Object.values(quickRabits).map((rabit) => (
-          // Change if it will be necessary
-          // <Grid item xs={4} key={rabit.id}>
-          <QuickRabbitsItem rabit={rabit} key={rabit.id} onClose={onClose} />
-          // </Grid>
+        {Object.values(rabits).map((rabit) => (
+          <QuickRabbitsItem
+            rabit={rabit}
+            key={rabit?.id ?? ""}
+            onClose={onClose}
+          />
         ))}
       </Grid>
       <Box width="0px" position="relative">
