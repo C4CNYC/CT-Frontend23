@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useAtom } from "jotai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import AddIcon from "@mui/icons-material/Add";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -21,12 +21,12 @@ import { CSSObject, Theme, styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 
 import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
-import { quickRabbitAtom } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 
 import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
+import { createRabit } from "src/redux/slices/rabits";
 
 const drawerWidth = 250;
 export const GROUP_CHAT_RABBIT = "Group Chat";
@@ -79,8 +79,8 @@ const Drawer = styled(MuiDrawer, {
 
 export const QuickRabbitsSideList = (): React.ReactElement => {
   const { query } = useRouter();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [, setQuickRabbit] = useAtom(quickRabbitAtom);
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
   const [onlineStudents] = useAtom(onlineStudentsAtom);
 
@@ -183,7 +183,7 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
           : data?.data.map((student, i) => {
               return (
                 <SidebarUser
-                  student={student}
+                  student={student.account}
                   key={i.toString() + student.id}
                   isLoading={isLoading}
                 />
@@ -203,15 +203,12 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
           <IconButton>
             <AddIcon
               onClick={() => {
-                setQuickRabbit((prev) => ({
-                  ...prev,
-                  [classId]: {
-                    id: classId,
+                dispatch(createRabit({
+                  id: classId,
                     email: GROUP_CHAT_RABBIT,
                     avatar:
                       "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
-                  },
-                }));
+                }))
               }}
             />
           </IconButton>

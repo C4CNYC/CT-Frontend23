@@ -13,6 +13,7 @@ import codePanelReducer from "./slices/code-panel";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
+import rabitsReduce from "./slices/rabits";
 import schoolSettingsReducer from "./slices/schoolSettings";
 
 interface INoopStorage {
@@ -57,6 +58,7 @@ const rootReducer = combineReducers({
   lessonSteps: lessonStepsReducer,
   schoolSettings: schoolSettingsReducer,
   codePanel: codePanelReducer,
+  rabits: rabitsReduce,
 });
 
 export default rootReducer;
