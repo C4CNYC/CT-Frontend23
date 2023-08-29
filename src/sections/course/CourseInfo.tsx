@@ -11,7 +11,7 @@ import { Role } from "src/redux/services/enums/role.enum";
 import CourseSummarily from "./CourseSummarily";
 
 interface ICourseInfoProps {
-  cover: string;
+  cover?: string;
   name: string;
   description: string;
   lessonsCount: number;
@@ -125,7 +125,7 @@ export default function CourseInfo({
   );
 }
 
-const RoundedGradientButton = styled(Button)(({ theme }) => ({
+const RoundedGradientButton = styled(Button)(() => ({
   position: "relative",
   border: "3px solid transparent",
   backgroundClip: "padding-box",

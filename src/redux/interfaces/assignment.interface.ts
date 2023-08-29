@@ -10,7 +10,9 @@ import { ITask } from "../services/interfaces/task.interface";
 
 export interface IAssignment {
   id: string;
+  course_progress: null | string;
   createdAt: string;
+  createdat: string;
   updatedAt: string;
   name: string;
   course: ICourse;
