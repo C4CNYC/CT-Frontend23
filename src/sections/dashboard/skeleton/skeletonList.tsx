@@ -94,7 +94,7 @@ export default function SkeletonList({
         {Array(count)
           .fill(null)
           .map((e, i) => (
-            <Box key={i + 18}>item</Box>
+            <Box key={i + 18}>{item}</Box>
           ))}
       </Box>
     </Container>

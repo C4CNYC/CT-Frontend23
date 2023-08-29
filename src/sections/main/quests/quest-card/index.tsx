@@ -21,7 +21,7 @@ export default function QuestsTab({
   activeTab,
 }: IQuestTabProps) {
   const { filters, setFilter } = useFilters<IAssignmetsSearchParams>(
-    { take: 10, page: 1 },
+    {},
     FilterMode.local
   );
   const { data, isLoading, isFetching } = useGetAssignmentListStudentQuery(
