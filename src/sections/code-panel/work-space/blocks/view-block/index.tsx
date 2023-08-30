@@ -1,6 +1,9 @@
+import { useAtom } from "jotai";
 import { CgBrowser } from "react-icons/cg";
 
 import { Typography } from "@mui/material";
+
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 import { SupportedLang } from "../..";
 import BaseBlock from "../BaseBlock";
@@ -15,16 +18,31 @@ interface IVueBlock {
 }
 
 const ViewBlock = ({ code, language }: IVueBlock): React.ReactElement => {
+  const [{ isBrowserHidden }, setGlobalCodePanel] =
+    useAtom(globalCodePanelAtom);
+
   switch (language) {
     case "html": {
-      return (
-        <BaseBlock title={title} icon={icon} className="browserTour">
+      return !isBrowserHidden ? (
+        <BaseBlock
+          title={title}
+          icon={icon}
+          className="browserTour"
+          hideTabsHandler={() => {
+            setGlobalCodePanel((prev) => ({
+              ...prev,
+              isBrowserHidden: true,
+            }));
+          }}
+        >
           <BrowserView value={code} />
         </BaseBlock>
+      ) : (
+        <></>
       );
     }
     default: {
-      return (
+      return !isBrowserHidden ? (
         <BaseBlock title={title} icon={icon}>
           <Typography
             mt="40px"
@@ -36,6 +54,8 @@ const ViewBlock = ({ code, language }: IVueBlock): React.ReactElement => {
             LANGUAGE NOT SUPORTED
           </Typography>
         </BaseBlock>
+      ) : (
+        <></>
       );
     }
   }

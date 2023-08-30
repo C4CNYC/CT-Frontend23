@@ -1,15 +1,12 @@
 /* eslint-disable no-new */
 import React, { useEffect, useRef, useState } from "react";
 
-import { useAtom } from "jotai";
 import { BiCodeAlt } from "react-icons/bi";
 
 import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import { RealTimeEditor } from "@components";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import BrowserTab from "@sections/code-panel/top-bar/nav-bar/options/BrowserTab";
 import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
 import { CodeEditor } from "src/components/real-time-editor/editor";
@@ -18,6 +15,7 @@ import { mapValidations } from "src/utils/validationMaping";
 
 import BaseBlock from "../BaseBlock";
 import { CodingSymbols, CodingTools } from "./CodingControls";
+import HidedTabBtn from "./HidedTabBtn";
 import MumuSpeedDial from "./MumuSpeedDial";
 import Checkers from "./checkers-code-editor";
 
@@ -28,7 +26,6 @@ const DESKTOP_HEIGHT = 145;
 
 interface ICodeEditorBlock {
   user: AuthUserType | null;
-  columns?: 1 | 2;
   code: string;
   onChangeCode: (code: string) => void;
   validations: Array<IValidation & BaseResponseInterface>;
@@ -40,7 +37,6 @@ const icon = <BiCodeAlt size="20px" color="#43D4DD" />;
 
 const CodeEditorBlock = ({
   user,
-  columns = 1,
   validations,
   code,
   onChangeCode,
@@ -51,8 +47,6 @@ const CodeEditorBlock = ({
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true);
   const [typing, setTyping] = useState<boolean | null>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [{ isAllColumnsVisible }, setGlobalCodePanel] =
-    useAtom(globalCodePanelAtom);
   const typingListener = (deley: number, firstLoad: boolean): void => {
     if (!firstLoad) {
       setTyping(false);
@@ -92,28 +86,7 @@ const CodeEditorBlock = ({
          
         `}
       </style>
-      {isDesktop ? (
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          sx={{
-            position: "absolute",
-            top: isDesktop ? 34 : 50,
-            right: 2,
-            zIndex: 100,
-          }}
-        >
-          <BrowserTab
-            allColumnsVisible={isAllColumnsVisible}
-            onChangeColumnVisability={(value) => {
-              setGlobalCodePanel((prev) => ({
-                ...prev,
-                isAllColumnsVisible: value,
-              }));
-            }}
-          />
-        </Box>
-      ) : null}
+      <HidedTabBtn />
       <MumuSpeedDial typing={typing} />
       {validations?.length ? (
         <Checkers checkers={mapValidations(code ?? "", validations)} />

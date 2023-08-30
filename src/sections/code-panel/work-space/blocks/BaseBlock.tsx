@@ -14,6 +14,7 @@ interface IBaseBlock {
   className?: string;
   title: string;
   icon: React.ReactElement;
+  hideTabsHandler?: () => void;
 }
 
 const BaseBlock = ({
@@ -21,6 +22,7 @@ const BaseBlock = ({
   className,
   title,
   icon,
+  hideTabsHandler,
 }: IBaseBlock): React.ReactElement => {
   const theme = useTheme();
   const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000));
@@ -40,7 +42,11 @@ const BaseBlock = ({
         borderRadius: isTabletAndMobile ? "0 0 20px 20px" : 2,
       }}
     >
-      <BaseBlockHeader title={title} icon={icon} />
+      <BaseBlockHeader
+        title={title}
+        icon={icon}
+        hideTabsHandler={hideTabsHandler}
+      />
       {children}
       {isTabletAndMobile && activeTab !== 0 ? (
         <TabChangerBtn orientation="left" />
