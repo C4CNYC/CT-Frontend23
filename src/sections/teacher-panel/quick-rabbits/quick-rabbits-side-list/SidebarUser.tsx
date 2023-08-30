@@ -54,7 +54,7 @@ export const SidebarUser = ({
     active,
     id,
     avatar,
-  } = student;
+  } = student || {};
 
   useEffect(() => {
     getMessages(
