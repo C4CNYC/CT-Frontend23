@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux"
 
 import { Tooltip } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -6,7 +7,7 @@ import Stack from "@mui/system/Stack";
 
 import { CustomAvatar } from "@components";
 import { IUser } from "src/redux/interfaces/auth.interface";
-import { useProfileQuery } from "src/redux/services/auth";
+import { RootState } from "src/redux/store";
 
 interface IUserSectionProps {
   isMini?: boolean;
@@ -16,7 +17,7 @@ export default function UserSection({
   isMini,
 }: IUserSectionProps): React.ReactElement {
   const [, setProfile] = useState<IUser>();
-  const { data: profile } = useProfileQuery();
+  const profile = useSelector((state: RootState) => state.global.user) as IUser;
 
   useEffect(() => {
     setProfile(profile);

@@ -23,7 +23,6 @@ import {
   JWTContextType,
 } from "./types";
 import { isValidToken, setSession } from "./utils";
-import { useProfileQuery } from "../redux/services/auth"
 
 // ----------------------------------------------------------------------
 
@@ -120,7 +119,7 @@ export function AuthProvider({
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
   const storageAvailable = localStorageAvailable();
-  const { data } = useProfileQuery();
+
   const initialize = useCallback(async () => {
     try {
       const accessToken = storageAvailable
@@ -132,19 +131,20 @@ export function AuthProvider({
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken, tenantName);
-        if (isManagerRoute && data?.role === Role.Student) {
+        const { data } = await axios.get("/auth/profile");
+
+        if (isManagerRoute && data.role === Role.Student) {
           window.location.pathname = "/permission-denied";
         }
-        if (data) {
-          reduxDispatch(setUser(data));
-          dispatch({
-            type: Types.INITIAL,
-            payload: {
-              isAuthenticated: true,
-              user: data,
-            },
-          });
-        }
+        reduxDispatch(setUser(data));
+
+        dispatch({
+          type: Types.INITIAL,
+          payload: {
+            isAuthenticated: true,
+            user: data,
+          },
+        });
       } else {
         dispatch({
           type: Types.INITIAL,
@@ -163,13 +163,13 @@ export function AuthProvider({
         },
       });
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     initialize().catch(() => {
       voidFunction();
     });
-  }, [initialize, data]);
+  }, [initialize]);
 
   // AUTHENTICATE
   const authenticate = (): void => {
