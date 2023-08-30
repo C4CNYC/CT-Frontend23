@@ -45,6 +45,16 @@ export interface IModule {
   description?: string;
 }
 
+export interface IModuleContent {
+  active: boolean;
+  avatar: string | null;
+  description: string;
+  id: string;
+  name: string;
+  progress: string | null;
+  duration: string | null;
+}
+
 export interface ILesson {
   active: boolean;
   draft: boolean;

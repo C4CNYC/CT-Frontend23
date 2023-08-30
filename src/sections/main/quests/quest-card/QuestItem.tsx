@@ -134,7 +134,7 @@ export default function QuestItem({
                   </Typography>
                 )}
                 <Typography variant="body2">
-                  {formatDistanceToNow(new Date(assignment.createdAt), {
+                  {formatDistanceToNow(new Date(assignment.createdat), {
                     addSuffix: true,
                   })}
                 </Typography>
@@ -149,6 +149,9 @@ export default function QuestItem({
                 {assignment.name}
               </Typography>
               <Box display="flex" gap={1} alignItems="center">
+                <Typography variant="subtitle1">
+                  {assignment.course_progress ?? "0"} %{" "}
+                </Typography>
                 <Iconify icon="bx:award" sx={{ color: "#EE467A" }} />
                 <Iconify icon="flat-color-icons:ok" sx={{ color: "#75CF6D" }} />
               </Box>

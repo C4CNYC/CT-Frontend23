@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-
+import React, { useEffect } from "react";
 // emotion
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
@@ -16,9 +15,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function ThemeRtlLayout({
-  children,
-}: Props): React.ReactElement | null {
+export default function ThemeRtlLayout({ children }: Props): React.ReactElement | null {
   const theme = useTheme();
 
   useEffect(() => {
@@ -26,9 +23,13 @@ export default function ThemeRtlLayout({
   }, [theme.direction]);
 
   const cacheRtl = createCache({
-    key: theme.direction === "rtl" ? "rtl" : "css",
-    stylisPlugins: theme.direction === "rtl" ? [prefixer, rtlPlugin] : [],
+    key: "rtl",
+    stylisPlugins: [prefixer, rtlPlugin],
   });
 
-  return <CacheProvider value={cacheRtl}>{children}</CacheProvider>;
+  if (theme.direction === "rtl") {
+    return <CacheProvider value={cacheRtl}>{children}</CacheProvider>;
+  }
+
+  return <>{children}</>;
 }

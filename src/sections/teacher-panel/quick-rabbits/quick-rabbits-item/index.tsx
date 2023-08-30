@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { createTheme } from "@uiw/codemirror-themes";
 import CodeMirror from "@uiw/react-codemirror";
-import { useAtom } from "jotai";
 import { useSelector } from "react-redux";
 
 import { IconButton, Tooltip, Typography } from "@mui/material";
@@ -14,8 +13,6 @@ import { Box } from "@mui/system";
 import { Iconify } from "@components";
 import { useRealTimeConnection } from "@hooks";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
-import { IQuickRabbit } from "@sections/teacher-panel/atoms/quick-rabbit.atom";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
@@ -23,7 +20,7 @@ import { RootState } from "src/redux/store";
 import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
 
 interface IQuickRabbitsItem {
-  rabit: IQuickRabbit;
+  rabit: { id: string, email: string, avatar: string };
   onClose: (userId: string) => void;
 }
 
@@ -42,7 +39,6 @@ export default function QuickRabbitsItem({
     rabit.email === GROUP_CHAT_RABBIT ? TabbitView.CHAT : TabbitView.CODE
   );
 
-  const [onlineStudents] = useAtom(onlineStudentsAtom);
   const { data: realTimeData } = useRealTimeConnection(rabit.id);
 
   const { data: students } = useGetStudentsQuery(
@@ -52,11 +48,6 @@ export default function QuickRabbitsItem({
     },
     { skip: !query.id }
   );
-
-  useEffect(() => {
-    if (!onlineStudents || rabit.id === query.id) return;
-    if (!onlineStudents[rabit.id]) onClose(rabit.id);
-  }, [onlineStudents]);
 
   const isRabbitActive = rabit.id === query.studentId;
 

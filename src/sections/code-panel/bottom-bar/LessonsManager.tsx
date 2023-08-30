@@ -1,11 +1,9 @@
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-
+import React, { useContext, useState } from "react";
 import { useAtom } from "jotai";
 import { IoMdClose } from "react-icons/io";
 import { RxExternalLink } from "react-icons/rx";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
@@ -23,12 +21,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Iconify,
+  resetLessonEvent,
 } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
@@ -45,7 +43,7 @@ const LessonManager = (): React.ReactElement => {
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
   const { query, push } = useRouter();
   const { id } = query;
-  const [state, setState] = useState<boolean>(false);
+  const [isOpenDrawer, setIsOpenDrawer] = useState<boolean>(false);
 
   const { data, isLoading } = useGetChallangesQuery(
     { id: id as string },
@@ -66,15 +64,10 @@ const LessonManager = (): React.ReactElement => {
       unitId: moduleId,
       lessonId,
     }));
+    window.dispatchEvent(resetLessonEvent);
     if (publicPage) {
       push(
-        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-          id as string
-        )}?${new URLSearchParams({
-          unitId: moduleId,
-        })}&${new URLSearchParams({
-          lessonId,
-        })}`,
+        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(id as string, { unitId: moduleId, lessonId })}`,
         undefined,
         { shallow: true }
       );
@@ -92,10 +85,6 @@ const LessonManager = (): React.ReactElement => {
       );
     }
   };
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      setState(open);
-    };
 
   return (
     <>
@@ -103,7 +92,7 @@ const LessonManager = (): React.ReactElement => {
         className="lessonsTour"
         direction="row"
         alignItems="center"
-        onClick={toggleDrawer(true)}
+        onClick={() => { setIsOpenDrawer(true) }}
       >
         <Tooltip title="LESSONS LIST" placement="top">
           <IconButton className="lessonsTourMobile" sx={{ mr: "5px" }}>
@@ -145,7 +134,7 @@ const LessonManager = (): React.ReactElement => {
           </Button>
         </Tooltip>
       </Stack>
-      <Drawer anchor="left" open={state} onClose={toggleDrawer(false)}>
+      <Drawer anchor="left" open={isOpenDrawer} onClose={() => { setIsOpenDrawer(false) }}>
         <Stack sx={{ width: isMobile ? "280px" : "350px" }} p="0 0 30px">
           <Stack
             direction="row"
@@ -177,7 +166,7 @@ const LessonManager = (): React.ReactElement => {
               Open Full Catalog <RxExternalLink size={18} />
             </Link>
             {isMobile && (
-              <IconButton onClick={toggleDrawer(false)} sx={{ mr: 1 }}>
+              <IconButton onClick={() => { setIsOpenDrawer(false) }} sx={{ mr: 1 }}>
                 <IoMdClose size="20px" />
               </IconButton>
             )}

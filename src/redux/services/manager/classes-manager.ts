@@ -33,7 +33,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Classes"],
+      invalidatesTags: ["Classes", "ClassesStudent"],
     }),
     updateClasses: builder.mutation<
       IClass & BaseResponseInterface,

@@ -19,11 +19,9 @@ export default function QuizPanel({
     <Box>
       <Stack
         sx={{
-          mt: "68px",
           borderRadius: "20px",
           background: "#364954",
-          px: 2,
-          py: 3,
+          p: 2,
           color: "#fff",
           maxWidth: "300px",
           [theme.breakpoints.down(1400)]: {
@@ -32,22 +30,20 @@ export default function QuizPanel({
           },
         }}
       >
-        <Stack direction="row" justifyContent="space-between" mb={2}>
-          <Typography variant="h4" fontWeight={400}>
-            Skills
-          </Typography>
-          <Button
-            variant="outlined"
-            sx={{
-              color: "#fff",
-              border: "1px solid #75CF6D",
-              borderRadius: "30px",
-              fontWeight: 400,
-            }}
-          >
-            Quiz
-            <BiLockOpenAlt size={18} style={{ marginLeft: "8px" }} />
-          </Button>
+        <Stack
+          direction="row"
+          sx={{
+            border: "1px solid #75CF6D",
+            borderRadius: "30px",
+            justifyContent: "center",
+            px: 1,
+            py: 0.5,
+            width: "110px",
+            mb: 2,
+          }}
+        >
+          <Typography variant="body1"> SKILLS</Typography>
+          <BiLockOpenAlt size={20} style={{ marginLeft: "8px" }} />
         </Stack>
         <Stack>
           {lessons.map((lesson) => (

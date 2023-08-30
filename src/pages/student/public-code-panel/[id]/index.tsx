@@ -66,16 +66,14 @@ export default function Index(): React.ReactElement {
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     push(
       `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-        query?.id as string
-      )}?${new URLSearchParams({ unitId })}&${new URLSearchParams({
-        lessonId,
-      })}`,
+        query?.id as string, { unitId, lessonId }
+      )}`,
       undefined,
       { shallow: true }
     );
   };
 
-  const onSubmitChalange = async (lessonContentId: string): Promise<void> => {
+  const onSubmitChalange = async (): Promise<void> => {
     enqueueSnackbar("Chalange successfuly complete");
   };
 
@@ -93,12 +91,8 @@ export default function Index(): React.ReactElement {
         const pathStr = nextLessonInfo.path.split("/");
         push(
           `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-            courseContent?.id
-          )}?${new URLSearchParams({
-            unitId: pathStr[0],
-          })}&${new URLSearchParams({
-            lessonId: pathStr[1],
-          })}`,
+            courseContent?.id, { unitId: pathStr[0], lessonId: pathStr[1], }
+          )}`,
           undefined,
           { shallow: true }
         ).then(() => {
@@ -134,7 +128,7 @@ export default function Index(): React.ReactElement {
   if (isLoading || isLoadingCourseContent || !data || !courseContent) {
     return <SkeletonCodePanel />;
   }
-  if (!isLoading && _.isEmpty(data) && data !== undefined) {
+  if (!isLoading && _.isEmpty(data)) {
     return <EmptyContent title="Course doesn`t exist" />;
   }
   return (
