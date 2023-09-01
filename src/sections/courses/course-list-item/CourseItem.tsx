@@ -67,16 +67,24 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           >
             {course.name}
           </Typography>
-          <Typography variant="body2" sx={{ pb: "15px" }}>
-            {course.description}
+          <Typography variant="body2" sx={{ pb: !open ? "15px" : "0" }}>
+            {course.description.length > 250
+              ? course.description.slice(0, 250) + (open ? "" : "...")
+              : course.description}
           </Typography>
           <Collapse in={open}>
+            {course.description.length > 250 ? (
+              <Typography variant="body2">
+                {course.description.slice(250)}
+              </Typography>
+            ) : null}
+
             <Stack
               direction="row"
               sx={{
                 gap: "15px",
                 flexWrap: "wrap",
-                mt: "10px",
+                mt: "25px",
                 mb: {
                   xs: "10px",
                   sm: "15px",
