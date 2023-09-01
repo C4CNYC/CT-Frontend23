@@ -116,15 +116,7 @@ export default function CourseDetailsMain({
           />
           <TrainingsList lessons={data} unitId={unit?.id ?? ""} />
         </Stack>
-        <Stack
-          sx={{
-            width: "270px",
-            [theme.breakpoints.down(1400)]: {
-              width: "auto",
-              margin: "0 auto",
-            },
-          }}
-        >
+        <Stack>
           <AuthorsSection />
           <Link
             component={NextLink}
