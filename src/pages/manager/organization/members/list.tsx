@@ -37,6 +37,7 @@ import {
 import { useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { UserTableRow, UserTableToolbar } from "@sections/dashboard/user/list";
 import { useLocales } from "src/locales";
 import {
@@ -47,17 +48,11 @@ import { Role } from "src/redux/services/enums/role.enum";
 
 import SkeletonMembers from "./SkeletonMembers";
 
-// ----------------------------------------------------------------------
-
 const STATUS_OPTIONS = ["all"];
-
-// ----------------------------------------------------------------------
 
 UserListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserListPage(): React.ReactElement {
   const {
@@ -171,12 +166,9 @@ export default function UserListPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="User List"
+          heading=""
           links={[
-            {
-              name: `${translate("organizations.dashboard_title")}`,
-              href: MANAGER_PATH_DASHBOARD.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
               name: `${translate("organizations.members_page.title")}`,
               href: MANAGER_PATH_DASHBOARD.organization.root,

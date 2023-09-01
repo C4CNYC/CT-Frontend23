@@ -40,6 +40,7 @@ import {
 import { useFilters } from "@hooks";
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import InviteStudentDialog from "@sections/dashboard/student/InviteStudentDialog";
 import PendingInvitesTab from "@sections/dashboard/student/PendingInvitesTab";
 import { UserTableRow } from "@sections/dashboard/user/list";
@@ -141,14 +142,13 @@ export default function UserListPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Students"
+          heading=""
           links={[
-            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
               name: "Students",
               href: MANAGER_PATH_DASHBOARD.organization.root,
             },
-            { name: "List" },
           ]}
           action={
             <Box

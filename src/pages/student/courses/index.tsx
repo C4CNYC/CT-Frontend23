@@ -7,6 +7,7 @@ import { Box, Container, Skeleton, Tab, Tabs } from "@mui/material";
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CourseList from "@sections/courses/CourseList";
 // import LessonList from "@sections/courses/LessonList";
 // import ModuleList from "@sections/courses/ModuleList";
@@ -59,9 +60,9 @@ export default function Courses(): React.ReactElement {
       <Container maxWidth={themeStretch ? false : "lg"}>
         <>
           <CustomBreadcrumbs
-            heading="Courses"
+            heading=""
             links={[
-              { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.home },
+              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
               { name: "Courses", href: MANAGER_PATH_DASHBOARD.courses.root },
             ]}
           />
@@ -72,6 +73,7 @@ export default function Courses(): React.ReactElement {
           onChange={handleChange}
           aria-label="basic tabs example"
           allowScrollButtonsMobile={false}
+          sx={{ mt: -2 }}
         >
           <Tab
             label="Courses"

@@ -32,6 +32,7 @@ import {
 import { useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
 import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import UpdateModalSkills from "@sections/dashboard/skills/update-modal";
@@ -71,9 +72,9 @@ export default function Skills(): React.ReactElement {
       <Container maxWidth={themeStretch ? false : "lg"}>
         {!isLoading ? (
           <CustomBreadcrumbs
-            heading="Skills"
+            heading=""
             links={[
-              { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
               { name: "Skills", href: MANAGER_PATH_DASHBOARD.skills.root },
             ]}
             action={
