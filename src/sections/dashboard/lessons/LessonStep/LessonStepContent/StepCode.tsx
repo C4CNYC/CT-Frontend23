@@ -85,17 +85,15 @@ export default function StepCode({
       </Box>
       {isAllColumnsVisible && (
         <Box
-          position="absolute"
-          top="0"
-          left={0}
-          right={0}
-          height="calc(100vh - 96px)"
+          sx={{
+            height: "calc(100vh - 96px)",
+          }}
         >
           <iframe
             style={{
               border: 0,
               width: "100%",
-              height: "90%",
+              height: "100%",
             }}
             src={
               "data:text/html," +
