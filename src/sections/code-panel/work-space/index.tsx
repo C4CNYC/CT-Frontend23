@@ -33,32 +33,28 @@ const WorkSpace = (): React.ReactElement => {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
 
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
-  const [{ isAllColumnsVisible, slideIndex }] = useAtom(globalCodePanelAtom);
+  const [{ isBrowserHidden, isInstructionsHidden, slideIndex }] =
+    useAtom(globalCodePanelAtom);
 
   if (isDesktop) {
     return (
-      <Stack
-        px={1}
-        gap={isAllColumnsVisible ? 1 : 3}
-        display="flex"
-        direction="row"
-        alignItems="stretch"
-      >
-        <SliderBlock
-          onSubmitChalange={onSubmitChalange}
-          onSubmitLesson={onSubmitLesson}
-          data={data}
-          integrations={lesson?.integrations ?? []}
-        />
+      <Stack px={1} gap={1} display="flex" direction="row" alignItems="stretch">
+        {!isInstructionsHidden ? (
+          <SliderBlock
+            onSubmitChalange={onSubmitChalange}
+            onSubmitLesson={onSubmitLesson}
+            data={data}
+            integrations={lesson?.integrations ?? []}
+          />
+        ) : null}
         <CodeEditorBlock
           preloadedCode={data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
           code={code}
           onChangeCode={onChangeCode}
-          columns={isAllColumnsVisible ? 1 : 2}
           user={user}
         />
-        {isAllColumnsVisible ? <ViewBlock {...{ code, language }} /> : null}
+        {!isBrowserHidden ? <ViewBlock {...{ code, language }} /> : null}
       </Stack>
     );
   }

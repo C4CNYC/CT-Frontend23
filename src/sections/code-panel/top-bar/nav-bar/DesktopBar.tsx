@@ -17,7 +17,13 @@ interface IDesktopBar {
 
 const DesktopBar = ({ chatComponent }: IDesktopBar): React.ReactElement => {
   const [
-    { isAllColumnsVisible, isFullScreenView, fullScreenClose, fullScreenOpen },
+    {
+      isBrowserHidden,
+      isInstructionsHidden,
+      isFullScreenView,
+      fullScreenClose,
+      fullScreenOpen,
+    },
     setGlobalCodePanel,
   ] = useAtom(globalCodePanelAtom);
 
@@ -36,11 +42,12 @@ const DesktopBar = ({ chatComponent }: IDesktopBar): React.ReactElement => {
         fullScreenOpen={fullScreenOpen}
         fullScreenClose={fullScreenClose}
         fullScreenView={isFullScreenView}
-        allColumnsVisible={isAllColumnsVisible}
+        isColumnHidden={isBrowserHidden || isInstructionsHidden}
         onChangeColumnVisability={(value) => {
           setGlobalCodePanel((prev) => ({
             ...prev,
-            isAllColumnsVisible: value,
+            isBrowserHidden: value,
+            isInstructionsHidden: value,
           }));
         }}
         onChangeSreenView={(value) => {

@@ -115,7 +115,16 @@ const SliderBlock = ({
   };
 
   return (
-    <BaseBlock title={title} icon={icon}>
+    <BaseBlock
+      title={title}
+      icon={icon}
+      hideTabsHandler={() => {
+        updateGlobalAtom((prev) => ({
+          ...prev,
+          isInstructionsHidden: true,
+        }));
+      }}
+    >
       {_.isEmpty(data) ? (
         <EmptyContent title="No Data" />
       ) : (
