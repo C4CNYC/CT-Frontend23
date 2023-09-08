@@ -30,6 +30,14 @@ export default function CoursePage(): React.ReactElement {
       <Head>
         <title>Course | CodeTribe</title>
       </Head>
+      <Container maxWidth={"xl"}>
+        <CustomBreadcrumbs
+          links={[
+            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
+            { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },
+          ]}
+        />
+      </Container>
       <Box
         sx={{
           position: "relative",
@@ -37,18 +45,13 @@ export default function CoursePage(): React.ReactElement {
           width: "100%",
           borderRadius: 3,
           px: "20px",
-          pt: "35px",
+          pt: { xs: 2, sm: 2, md: "35px" },
           pb: "187px",
           background: "#ECF4FF",
+          mt: -2,
         }}
       >
         <Container maxWidth={"xl"}>
-          <CustomBreadcrumbs
-            links={[
-              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-              { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },
-            ]}
-          />
           {isLoading ? (
             <Stack>
               <Skeleton

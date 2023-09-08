@@ -4,7 +4,6 @@ import _ from "lodash";
 
 import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
 
-import { EmptyContent } from "@components";
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/courses-student";
 

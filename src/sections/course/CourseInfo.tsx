@@ -41,6 +41,7 @@ export default function CourseInfo({
         },
         justifyContent: "space-between",
         pr: { xs: 0, sm: 0, md: "50px", lg: "150px" },
+        gap: 2,
       }}
     >
       <Stack maxWidth="680px">
@@ -119,6 +120,7 @@ export default function CourseInfo({
           width: "250px",
           height: "250px",
           m: "0 auto",
+          borderRadius: "25px",
         }}
       />
     </Stack>
