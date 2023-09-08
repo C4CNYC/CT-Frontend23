@@ -95,6 +95,7 @@
     "hamburger-react": "^2.5.0",
     "highlight.js": "^11.7.0",
     "html-react-parser": "^3.0.12",
+    "html2canvas": "^1.4.1",
     "i18next": "^22.0.6",
     "i18next-browser-languagedetector": "^7.0.1",
     "jotai": "^2.0.4",

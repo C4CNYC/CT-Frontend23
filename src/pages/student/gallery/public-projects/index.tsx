@@ -90,7 +90,7 @@ export default function PublicProjects(): React.ReactElement {
             }}
           >
             {projects.map((item) => (
-              <GalleryItem key={item.description} item={item} />
+              <GalleryItem key={item.id} item={item} />
             ))}
             {isFetching
               ? Array(
