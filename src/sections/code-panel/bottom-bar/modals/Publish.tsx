@@ -16,7 +16,11 @@ import {
 import { Box, Stack } from "@mui/system";
 
 import { FormProvider, RHFTextField } from "@components";
-import { usePostProjectMutation } from "src/redux/services/manager/gallery-student";
+import {
+  usePostProjectMutation,
+  useUpdateProjectCoverMutation,
+} from "src/redux/services/manager/gallery-student";
+import { getImageFromCode } from "src/utils/getImageFromCode";
 
 interface IPublishModal {
   children: React.ReactElement;
@@ -42,7 +46,8 @@ const PublishModal = ({
   const [open, setOpen] = useState(false);
 
   const [postProject, { isLoading }] = usePostProjectMutation();
-
+  const [updateCover, { isLoading: isUpdatingCover }] =
+    useUpdateProjectCoverMutation();
   const handleClickOpen = (): void => {
     setOpen(true);
   };
@@ -69,8 +74,10 @@ const PublishModal = ({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
+    const file = new FormData();
+    const cover = await getImageFromCode(code);
     try {
-      await postProject({
+      const postedProject = await postProject({
         ...data,
         body: JSON.stringify({
           body: {
@@ -79,6 +86,10 @@ const PublishModal = ({
         }),
         language,
       }).unwrap();
+      if (cover) {
+        file.append("file", cover);
+        await updateCover({ id: postedProject.id as string, file }).unwrap();
+      }
       enqueueSnackbar("Added successfully!");
       methods.reset();
     } catch (error: any) {
@@ -131,7 +142,7 @@ const PublishModal = ({
             <LoadingButton
               type="submit"
               variant="contained"
-              loading={isLoading}
+              loading={isLoading || isUpdatingCover}
             >
               SAVE
             </LoadingButton>

@@ -8,7 +8,7 @@ import { FiExternalLink } from "react-icons/fi";
 import { LoadingButton } from "@mui/lab";
 import { Box, IconButton, Link, Paper, Stack } from "@mui/material";
 
-import { ConfirmDialog, Label } from "@components";
+import { ConfirmDialog, Image, Label } from "@components";
 import { PATH_MAIN } from "@routes/paths";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
@@ -28,7 +28,7 @@ interface Props {
 }
 
 export default function GalleryItem({ item }: Props): React.ReactElement {
-  const { body, title, description, language, id } = item;
+  const { body, title, description, language, id, cover } = item;
   const { enqueueSnackbar } = useSnackbar();
   const user = useSelector((state: RootState) => state.global.user);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -144,12 +144,13 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
           border: "1px solid #43D4DD",
         }}
       >
-        <Box
+        <Image
+          src={cover ? cover : "/assets/background/overlay_2.jpg"}
           sx={{
-            height: "262px",
-            background: "url(/assets/gallery/img.jpg) center / cover",
-            boxShadow:
-              "0px 3px 5px -1px rgba(145, 158, 171, 0.2), 0px 5px 8px 0px rgba(145, 158, 171, 0.14), 0px 1px 14px 0px rgba(145, 158, 171, 0.12)",
+            height: "250px",
+            "& .wrapper": {
+              backgroundSize: "contain !important",
+            },
           }}
         />
         <Stack direction="column" sx={{ p: "7px 15px 20px" }}>
