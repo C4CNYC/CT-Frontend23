@@ -5,6 +5,7 @@ import { Box, Button, CircularProgress, Container } from "@mui/material";
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
 import { FilterMode, useFilters } from "@hooks";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
 import TaskCard from "@sections/dashboard/tasks/TaskCard";
@@ -42,9 +43,9 @@ export default function TasksListPage(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Tasks List"
+          heading=""
           links={[
-            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "Tasks", href: MANAGER_PATH_DASHBOARD.lessons.root },
             { name: "List" },
           ]}

@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
 import SchoolTable from "@sections/dashboard/schools/view/SchoolTable";
 import { useLocales } from "src/locales";
@@ -12,8 +12,6 @@ import { useLocales } from "src/locales";
 Index.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function Index(): React.ReactElement {
   const { translate } = useLocales();
@@ -27,12 +25,9 @@ export default function Index(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading={`${translate("organizations.schools_page.title")}`}
+          heading={""}
           links={[
-            {
-              name: `${translate("organizations.schools_page.title")}`,
-              href: MANAGER_PATH_DASHBOARD.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: `${translate("organizations.schools_page.title")}` },
           ]}
           action={<AddSchoolDialog />}

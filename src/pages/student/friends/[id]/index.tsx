@@ -6,7 +6,7 @@ import { Box, Card, Container, Skeleton, Tab, Tabs } from "@mui/material";
 
 import { CustomBreadcrumbs, Iconify, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
-import { PATH_MAIN } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileMain from "@sections/student-profile/ProfileMain";
 import { useGetFriendQuery } from "src/redux/services/manager/friends-manager";
@@ -41,9 +41,9 @@ export default function FriendProfile(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Profile"
+          heading=""
           links={[
-            { name: "Dashboard", href: PATH_MAIN.index },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "Profile" },
           ]}
         />

@@ -23,7 +23,7 @@ export default function TeacherToolbox(): React.ReactElement {
     <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner, Role.Editor]}>
       <Paper
         elevation={5}
-        sx={{ borderRadius: 3, bgcolor: "#F8F8F8", p: 1, mt: 2 }}
+        sx={{ borderRadius: 3, bgcolor: "#F8F8F8", py: 1, px: 2, mt: 2 }}
       >
         <Button
           onClick={() => {
@@ -38,13 +38,13 @@ export default function TeacherToolbox(): React.ReactElement {
             },
           }}
         >
-          <Typography variant="h6" fontWeight={400}>
+          <Typography variant="h6" fontWeight={400} whiteSpace="nowrap">
             TEACHER TOOLBOX
           </Typography>
           <FaChevronDown size={22} />
         </Button>
         <Collapse in={openToolbox}>
-          <Stack pl={1} gap={1}>
+          <Stack pl={2} gap={1}>
             <Link
               href="#"
               component={NextLink}
