@@ -36,9 +36,9 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
               background: "rgba(145, 158, 171, 0.32)",
               maxWidth: "215px",
               fontWeight: 700,
-              fontSize: { md: "25px" },
               color: "#fff",
               mr: 2,
+              height: "auto",
             }}
           />
           <Chip
@@ -49,9 +49,9 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
               background: "#FBDD3F",
               maxWidth: "215px",
               fontWeight: 700,
-              fontSize: { md: "25px" },
               color: "#fff",
               mr: 2,
+              height: "auto",
             }}
           />
         </>
@@ -59,8 +59,8 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
         <>
           <Avatar
             sx={{
-              width: "50px",
-              height: "50px",
+              width: "40px",
+              height: "40px",
               border: "3px solid #C4C4C4",
               background: "#fff",
               color: "#333",
@@ -74,7 +74,7 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
           <LinearProgress
             sx={{
               width: "100%",
-              height: "25px",
+              height: "20px",
               mx: "-5px",
               "& .MuiLinearProgress-bar": {
                 backgroundColor: "#75CF6D",
@@ -86,11 +86,11 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
             value={progress === 0 ? 2 : progress}
           />
           <Typography
-            variant="subtitle1"
+            variant="subtitle2"
             sx={{
               position: "absolute",
               color: "#fff",
-              top: "14px",
+              top: "9px",
               left: "20%",
               textTransform: "uppercase",
             }}
@@ -116,8 +116,8 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
       >
         <Avatar
           sx={{
-            width: "50px",
-            height: "50px",
+            width: "40px",
+            height: "40px",
             border: "3px solid #FBDD3F",
             background: "#fff",
             "&:hover": {
@@ -125,7 +125,7 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
             },
           }}
         >
-          <TbFileCertificate color="#FBDD3F" size="25px" />
+          <TbFileCertificate color="#FBDD3F" size="22px" />
         </Avatar>
       </Tooltip>
     </Box>
