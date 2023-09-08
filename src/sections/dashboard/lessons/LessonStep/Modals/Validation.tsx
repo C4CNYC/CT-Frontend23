@@ -26,8 +26,8 @@ import { Stack } from "@mui/system";
 
 import { Iconify } from "@components";
 import {
-  useGetLessonContentValidationsQuery,
-  useRemoveLessonContentValiationMutation,
+  useGetLessonContentValidationsManagerQuery,
+  useRemoveLessonContentValiationManagerMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
 
 import CreateEditValidation from "./CreateEditValidation";
@@ -50,8 +50,8 @@ export default function Validation({
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpenDialog] = useState<boolean>(false);
 
-  const [removeRule] = useRemoveLessonContentValiationMutation();
-  const { data, isLoading } = useGetLessonContentValidationsQuery({
+  const [removeRule] = useRemoveLessonContentValiationManagerMutation();
+  const { data, isLoading } = useGetLessonContentValidationsManagerQuery({
     id: stepId,
   });
 

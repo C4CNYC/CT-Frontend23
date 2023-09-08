@@ -131,8 +131,8 @@ const SliderBlock = ({
               },
               "& .slick-track": {
                 "& .slick-slide": {
-                  "&  div:first-child": {
-                    height: isDesktop ? "80vh" : "90vh",
+                  "&  div:first-of-type": {
+                    height: isDesktop ? "84vh" : "90vh",
                   },
                 },
               },
