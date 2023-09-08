@@ -7,6 +7,7 @@ import { Container } from "@mui/material";
 // components
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 // sections
 import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayout";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
@@ -25,17 +26,14 @@ export default function UserCreatePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Student: Create a new student | CodeTribe</title>
+        <title> Create a new student | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Create a new student"
+          heading=""
           links={[
-            {
-              name: "School",
-              href: MANAGER_PATH_DASHBOARD.school.general,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
               name: "Students",
               href: MANAGER_PATH_DASHBOARD.school.students,

@@ -10,7 +10,8 @@ export interface IGlobalCodePanelAtom {
   unitId: string;
   courseId: string;
   isFullScreenView: boolean;
-  isAllColumnsVisible: boolean;
+  isInstructionsHidden: boolean;
+  isBrowserHidden: boolean;
   fullScreenOpen: () => void;
   fullScreenClose: () => void;
 }
@@ -24,8 +25,9 @@ export const globalCodePanelAtom = atomWithStorage<IGlobalCodePanelAtom>(
     unitId: "",
     courseId: "",
     nextStepAble: true,
-    isAllColumnsVisible: true,
     isFullScreenView: false,
+    isInstructionsHidden: false,
+    isBrowserHidden: false,
     fullScreenOpen: voidFunction,
     fullScreenClose: voidFunction,
   }

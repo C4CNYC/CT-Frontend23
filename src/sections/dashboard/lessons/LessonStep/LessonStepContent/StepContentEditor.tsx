@@ -14,6 +14,7 @@ import {
 } from "src/redux/services/manager/lesson-content-manager";
 import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
 
+import { LessonContentContext } from "./LessonContent.context";
 import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
@@ -22,7 +23,7 @@ import StepMultimedia from "./StepMultimedia";
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;
   const { enqueueSnackbar } = useSnackbar();
-
+  const [locked, setLocked] = useState(false);
   const [updateContent] = useUpdateLessonContentMutation();
   const { data: integrations, isLoading: isIntegrationLoading } =
     useGetLessonIntegrationsQuery(
@@ -70,65 +71,72 @@ export default function StepContentEditor(): React.ReactElement {
   }
 
   return (
-    <Box
-      sx={{
-        position: "relative",
-        boxSizing: "border-box",
-        backgroundColor: "#FFF",
+    <LessonContentContext.Provider
+      value={{
+        locked,
+        lockedHandler: setLocked,
       }}
     >
       <Box
         sx={{
           position: "relative",
-          height: "48px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          background: "#f4f5f7",
-          px: "15px",
+          boxSizing: "border-box",
+          backgroundColor: "#FFF",
         }}
       >
-        <Tabs
-          value={bodyType}
-          onChange={(event, newValue) => {
-            setBodyType(newValue);
+        <Box
+          sx={{
+            position: "relative",
+            height: "48px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            background: "#f4f5f7",
+            px: "15px",
           }}
         >
-          <Tab
-            value={LessonContentType.Editable}
-            icon={<MdOutlinePermMedia size="20px" />}
-            label="multimedia"
-          />
-          <Tab
-            value={LessonContentType.Code}
-            icon={<BsCodeSlash size="20px" />}
-            label="code"
-          />
-        </Tabs>
+          <Tabs
+            value={bodyType}
+            onChange={(event, newValue) => {
+              setBodyType(newValue);
+            }}
+          >
+            <Tab
+              value={LessonContentType.Editable}
+              icon={<MdOutlinePermMedia size="20px" />}
+              label="multimedia"
+            />
+            <Tab
+              value={LessonContentType.Code}
+              icon={<BsCodeSlash size="20px" />}
+              label="code"
+            />
+          </Tabs>
+        </Box>
+        <Box
+          sx={{
+            position: "relative",
+            height: "calc(100vh - 80px)",
+            overflow: "scroll",
+          }}
+        >
+          {bodyType === LessonContentType.Editable ? (
+            <StepMultimedia
+              content={
+                data?.type === LessonContentType.Editable ? data?.body : ""
+              }
+              onSubmit={onSubmit}
+            />
+          ) : null}
+          {bodyType === LessonContentType.Code ? (
+            <StepCode
+              content={data?.type === LessonContentType.Code ? data?.body : ""}
+              integrations={integrations ?? []}
+              onSubmit={onSubmit}
+            />
+          ) : null}
+        </Box>
       </Box>
-      <Box
-        sx={{
-          position: "relative",
-          height: "calc(100vh - 80px)",
-          overflow: "scroll",
-        }}
-      >
-        {bodyType === LessonContentType.Editable ? (
-          <StepMultimedia
-            content={
-              data?.type === LessonContentType.Editable ? data?.body : ""
-            }
-            onSubmit={onSubmit}
-          />
-        ) : null}
-        {bodyType === LessonContentType.Code ? (
-          <StepCode
-            content={data?.type === LessonContentType.Code ? data?.body : ""}
-            integrations={integrations ?? []}
-            onSubmit={onSubmit}
-          />
-        ) : null}
-      </Box>
-    </Box>
+    </LessonContentContext.Provider>
   );
 }

@@ -11,6 +11,7 @@ import { CustomBreadcrumbs } from "@components";
 import { FilterMode, useFilters } from "@hooks";
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";
 import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Courses";
 import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
@@ -87,12 +88,9 @@ export default function Progress(): React.ReactElement {
       </Head>
       <Container sx={{ ml: 0 }}>
         <CustomBreadcrumbs
-          heading="Progress"
+          heading=""
           links={[
-            {
-              name: "Dashboard",
-              href: MANAGER_PATH_DASHBOARD.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "Progress", href: MANAGER_PATH_DASHBOARD.school.progress },
           ]}
         />

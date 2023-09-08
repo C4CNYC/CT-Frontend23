@@ -35,13 +35,20 @@ import {
 import { useFilters } from "@hooks";
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ClassesTableRow } from "@sections/dashboard/classes/list";
 import AddClassDialog from "@sections/dashboard/schools/classes/CreateClassDialog";
 import { UserTableToolbar } from "@sections/dashboard/user/list";
 import { createRandomAvatar, getRandomColor } from "@utils";
 import { ClassSearchParams } from "src/redux/interfaces/class.interface";
+import {
+  useCreateClassesMutation,
+  useDeleteClassesMutation,
+  useGetClassesQuery,
+  useUpdateClassesAvatarMutation,
+  useUpdateClassesMutation,
+} from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-import { useUpdateClassesMutation, useCreateClassesMutation, useUpdateClassesAvatarMutation, useDeleteClassesMutation, useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 
 const STATUS_OPTIONS = ["all"];
 
@@ -178,11 +185,10 @@ export default function UserListPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Classes List"
+          heading=""
           links={[
-            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "Classes", href: MANAGER_PATH_DASHBOARD.school.classes },
-            { name: "List" },
           ]}
           action={
             <AddClassDialog

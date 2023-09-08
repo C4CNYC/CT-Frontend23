@@ -115,7 +115,16 @@ const SliderBlock = ({
   };
 
   return (
-    <BaseBlock title={title} icon={icon}>
+    <BaseBlock
+      title={title}
+      icon={icon}
+      hideTabsHandler={() => {
+        updateGlobalAtom((prev) => ({
+          ...prev,
+          isInstructionsHidden: true,
+        }));
+      }}
+    >
       {_.isEmpty(data) ? (
         <EmptyContent title="No Data" />
       ) : (
@@ -131,8 +140,8 @@ const SliderBlock = ({
               },
               "& .slick-track": {
                 "& .slick-slide": {
-                  "&  div:first-child": {
-                    height: isDesktop ? "80vh" : "90vh",
+                  "&  div:first-of-type": {
+                    height: isDesktop ? "84vh" : "90vh",
                   },
                 },
               },

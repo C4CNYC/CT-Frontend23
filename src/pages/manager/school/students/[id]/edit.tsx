@@ -5,22 +5,17 @@ import { useSelector } from "react-redux";
 
 import { Container } from "@mui/material";
 
-// @mui
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import SkeletonEditUserForm from "@sections/dashboard/user/skeleton/SkeletonEditUserForm";
 import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayout";
 import { useGetStudentQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
 
-// ----------------------------------------------------------------------
-
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserEditPage(): React.ReactElement {
   const {
@@ -47,12 +42,9 @@ export default function UserEditPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Edit student"
+          heading=""
           links={[
-            {
-              name: "Dashboard",
-              href: MANAGER_PATH_DASHBOARD.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: data?.account?.email },
           ]}
         />

@@ -27,6 +27,8 @@ interface Props {
   course: ICourseElement;
 }
 
+const MAX_DESCRIPTION_LENGTH = 250;
+
 export default function CoursesItem({ course }: Props): React.ReactElement {
   const { push } = useRouter();
   const theme = useTheme();
@@ -67,8 +69,10 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
           >
             {course.name}
           </Typography>
-          <Typography variant="body2" sx={{ pb: "15px" }}>
-            {course.description}
+          <Typography variant="body2" sx={{ pb: !open ? 1 : 0 }}>
+            {course.description.length > MAX_DESCRIPTION_LENGTH && !open
+              ? `${course.description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
+              : course.description}
           </Typography>
           <Collapse in={open}>
             <Stack
@@ -76,7 +80,7 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
               sx={{
                 gap: "15px",
                 flexWrap: "wrap",
-                mt: "10px",
+                mt: "25px",
                 mb: {
                   xs: "10px",
                   sm: "15px",

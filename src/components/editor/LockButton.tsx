@@ -1,24 +1,23 @@
-import { useAtom } from "jotai";
+import { useContext } from "react";
+
 import { AiFillLock, AiFillUnlock } from "react-icons/ai";
-import { FaSave } from "react-icons/fa";
 
 import Button from "@mui/material/Button";
 
-import { multimediaLockedAtom } from "@sections/dashboard/lessons/LessonStep/LessonStepContent/lesson-multimedia-atom";
+import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context";
 
 export function LockButton(): JSX.Element {
-  const [locked, setLocked] = useAtom(multimediaLockedAtom);
+  const { locked, lockedHandler } = useContext(LessonContentContext);
 
   return (
     <Button
       variant="outlined"
       key="left"
       onClick={() => {
-        setLocked(!locked);
+        lockedHandler(!locked);
       }}
       sx={{
         flexShrink: 0,
-        ml: "auto!important",
         maxHeight: "40px",
         borderRadius: "20px",
         border: "2px solid #75CF6D",
@@ -29,7 +28,7 @@ export function LockButton(): JSX.Element {
         },
       }}
     >
-      {locked ? <AiFillLock size={22} /> : <AiFillUnlock size={22} />}
+      {!locked ? <AiFillLock size={22} /> : <AiFillUnlock size={22} />}
     </Button>
   );
 }

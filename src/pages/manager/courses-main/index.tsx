@@ -11,6 +11,7 @@ import {
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { CourseCard } from "@sections/dashboard/courses/cards";
@@ -48,10 +49,10 @@ export default function CoursesListPage(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Courses"
+          heading=""
           links={[
-            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
-            { name: "Courses", href: STUDENT_PATH_DASHBOARD.courses.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            { name: "Courses", href: MANAGER_PATH_DASHBOARD.courses.root },
           ]}
           action={
             <CreateCourseDialog id="">

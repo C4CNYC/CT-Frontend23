@@ -6,6 +6,7 @@ import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { Socket } from "socket.io-client";
+import { dracula } from "thememirror";
 
 import { State } from ".";
 import { peerExtension } from "./extentions/collab";
@@ -38,6 +39,7 @@ export const CodeEditor = ({
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString());
         }),
+        dracula,
         indentUnit.of("\t"),
         basicSetup({
           highlightActiveLineGutter: true,

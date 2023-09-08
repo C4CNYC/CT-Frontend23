@@ -196,7 +196,7 @@ export default function LessonStepList({
                   onRemove={onRemove}
                   onDublicate={onDublicate}
                   lessonId={lessonId}
-                  key={board.cards[el]?.meta?.order}
+                  key={board.cards[el]?.meta?.order + i}
                   step={board.cards[el]}
                   index={i}
                 />

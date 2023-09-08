@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
-import { dracula } from "@uiw/codemirror-theme-dracula";
 import CodeMirror from "@uiw/react-codemirror";
 import { useAtom } from "jotai";
+import { dracula } from "thememirror";
 
 import { Box } from "@mui/system";
 

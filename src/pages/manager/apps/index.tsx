@@ -31,6 +31,7 @@ import {
 import { useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import SkeletonTable from "@sections/dashboard/skeleton/SkeletonTable";
 import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import {
@@ -62,14 +63,14 @@ export default function AppsPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Apps | CodeTribe</title>
+        <title>Integrations | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         {!isLoading ? (
           <CustomBreadcrumbs
-            heading="Integrations"
+            heading=""
             links={[
-              { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
               { name: "Integrations", href: MANAGER_PATH_DASHBOARD.apps.root },
             ]}
             action={
@@ -88,6 +89,7 @@ export default function AppsPage(): React.ReactElement {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
+            mb={2}
           >
             <SkeletonBreadcrumbs />
             <Skeleton
@@ -97,7 +99,6 @@ export default function AppsPage(): React.ReactElement {
                 width: "160px",
                 height: "36px",
                 borderRadius: "8px",
-                mb: "50px",
               }}
             />
           </Stack>

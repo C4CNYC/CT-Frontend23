@@ -6,6 +6,7 @@ import { Box, Container, Tab, Tabs } from "@mui/material";
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/";
 import { PATH_DASHBOARD } from "@routes/paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
@@ -36,10 +37,10 @@ export default function Tribes(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Tribes"
+          heading=""
           links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "Tribes", href: PATH_DASHBOARD.tribes.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            { name: "Tribes", href: STUDENT_PATH_DASHBOARD.tribes.root },
           ]}
         />
         <Container disableGutters>

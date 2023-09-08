@@ -37,6 +37,7 @@ import {
 } from "@components";
 import { SchoolDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import AssignmentsTableRow from "@sections/dashboard/assigments/AssignmentsTableRow";
 import AssignmentsTableToolbar from "@sections/dashboard/assigments/AssignmentsTableToolbar";
 import { fTimestamp } from "@utils";
@@ -279,18 +280,12 @@ export default function AsssignmentsListPage() {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Assignments List"
+          heading=""
           links={[
-            {
-              name: "Dashboard",
-              href: MANAGER_PATH_DASHBOARD.home,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
               name: "Assignments",
               href: MANAGER_PATH_DASHBOARD.school.assignments,
-            },
-            {
-              name: "List",
             },
           ]}
         />

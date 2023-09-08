@@ -7,7 +7,7 @@ import { ILessonContentValidation } from "../interfaces/lessonContentValidation.
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getLessonContentValidations: builder.query<
+    getLessonContentValidationsManager: builder.query<
       Array<ILessonContentValidation & BaseResponseInterface>,
       { id: string }
     >({
@@ -17,7 +17,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["LessonsContentValidation"],
     }),
-    createLessonContentValidation: builder.mutation<
+    createLessonContentValidationManager: builder.mutation<
       ILessonContent,
       { id: string } & ILessonContentValidation
     >({
@@ -28,7 +28,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "LessonsContentValidation" }],
     }),
-    updateLessonContentValidation: builder.mutation<
+    updateLessonContentValidationManager: builder.mutation<
       ILessonContentValidation,
       { contentId: string; id: string } & ILessonContentValidation
     >({
@@ -39,7 +39,7 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "LessonsContentValidation" }],
     }),
-    removeLessonContentValiation: builder.mutation<
+    removeLessonContentValiationManager: builder.mutation<
       ILessonContentValidation,
       { contentId: string; id: string }
     >({
@@ -54,9 +54,9 @@ const extendedApi = managerApi.injectEndpoints({
 });
 
 export const {
-  useGetLessonContentValidationsQuery,
+  useGetLessonContentValidationsManagerQuery,
   // -------------mutation-----------
-  useCreateLessonContentValidationMutation,
-  useRemoveLessonContentValiationMutation,
-  useUpdateLessonContentValidationMutation,
+  useCreateLessonContentValidationManagerMutation,
+  useRemoveLessonContentValiationManagerMutation,
+  useUpdateLessonContentValidationManagerMutation,
 } = extendedApi;
