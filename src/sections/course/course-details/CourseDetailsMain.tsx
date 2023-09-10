@@ -19,7 +19,7 @@ import TrainingsList from "./TrainingsList";
 import QuizPanel from "./quiz-panel";
 
 interface ICourseDetailsMainProps {
-  unit?: IModuleContent;
+  unit?: IModuleContent | null;
   level: string;
 }
 

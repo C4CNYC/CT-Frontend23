@@ -113,3 +113,8 @@ export interface ICourseSearchParams extends BaseSearchInterface {
   school_id?: string;
   name?: string;
 }
+
+export interface LastVisitedData {
+  lastVisitedUnitId: string;
+  lastVisitedLessonId: string;
+}

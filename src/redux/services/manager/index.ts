@@ -50,6 +50,7 @@ export const managerApi = createApi({
     "Projects",
     "Socials",
     "Goal",
+    "LastVisitedUnitAndLesson",
   ],
   endpoints: () => ({}),
 });

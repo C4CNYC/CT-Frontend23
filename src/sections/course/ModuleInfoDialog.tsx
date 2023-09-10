@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import { BiLinkExternal } from "react-icons/bi";
 import { IoChevronBackOutline } from "react-icons/io5";
@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 
 import { EmptyContent, Scrollbar } from "@components";
-import { IModuleContent } from "src/redux/interfaces/content.interface";
+import { IModuleContent, LastVisitedData } from "src/redux/interfaces/content.interface"
 import { useGetStudentModulesLessonsQuery } from "src/redux/services/manager/courses-student";
 
 import AuthorsSection from "./course-details/AuthorsSection";
@@ -32,13 +32,20 @@ import QuizPanel from "./course-details/quiz-panel";
 interface IModuleInfoDialogProps {
   children: React.ReactElement;
   unit: IModuleContent;
+  lastVisitedData?: LastVisitedData;
+  setActive: Dispatch<SetStateAction<number | null>>;
+  index: number;
 }
-export default function ModuleInfoDialog({
+
+export default function ModuleInfoDialog ({
   children,
   unit,
+  lastVisitedData,
+  setActive,
+  index,
 }: IModuleInfoDialogProps): React.ReactElement {
   const theme = useTheme();
-  const isDecktop = useMediaQuery(theme.breakpoints.up(1050));
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1050));
   const [open, setOpen] = useState(false);
 
   const { data, isLoading } = useGetStudentModulesLessonsQuery(
@@ -46,8 +53,19 @@ export default function ModuleInfoDialog({
     { skip: !unit.id }
   );
 
+  useEffect(() => {
+    if (data && lastVisitedData) {
+      const { lastVisitedUnitId, lastVisitedLessonId } = lastVisitedData;
+      data.forEach((lesson) => {
+        if (lesson.id === lastVisitedLessonId && unit.id === lastVisitedUnitId) {
+          setActive(index);
+        }
+      })
+    }
+  }, [data, lastVisitedData]);
+
   const handleClickOpen = (): void => {
-    if (isDecktop) {
+    if (isDesktop) {
       return;
     }
     setOpen(true);

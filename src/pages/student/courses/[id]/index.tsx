@@ -1,15 +1,13 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import _ from "lodash";
-
 import { Box, Container, Skeleton, Stack } from "@mui/material";
 
 import { CustomBreadcrumbs } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CourseInfo from "@sections/course/CourseInfo";
-import CourseLayaut from "@sections/course/CourseLayaut";
+import CourseLayout from "@sections/course/CourseLayout";
 import { useGetCoursContentQuery } from "src/redux/services/manager/courses-student";
 
 CoursePage.getLayout = (page: React.ReactElement) => (
@@ -79,7 +77,7 @@ export default function CoursePage(): React.ReactElement {
             />
           )}
 
-          <CourseLayaut course={data} isLoadingCourse={isLoading} />
+          <CourseLayout course={data} isLoadingCourse={isLoading} />
         </Container>
       </Box>
     </>
