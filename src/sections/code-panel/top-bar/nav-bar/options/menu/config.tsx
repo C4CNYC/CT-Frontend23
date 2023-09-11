@@ -10,7 +10,10 @@ interface IMenuConfigItem {
   subTitle?: string;
   icon: string;
   href: string | ILinks;
-  component?: (children: React.ReactElement) => React.ReactElement;
+  component?: (
+    children: React.ReactElement,
+    key: string | number
+  ) => React.ReactElement;
   target?: "_self" | "_blank";
 }
 export enum ILinks {
@@ -30,7 +33,7 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     subTitle: "",
     icon: "ph:bus-light",
     href: ILinks.modal,
-    component: (children: React.ReactElement) => <>{children}</>,
+    component: (children, key) => <div key={key}>{children}</div>,
   },
   {
     title: "How-to Video",
@@ -49,16 +52,20 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     title: "Need a hug",
     icon: "icon-park-outline:like",
     href: ILinks.modal,
-    component: (children: React.ReactElement) => (
-      <MenuHugDialog>{children}</MenuHugDialog>
+    component: (children, key) => (
+      <div key={key}>
+        <MenuHugDialog>{children}</MenuHugDialog>
+      </div>
     ),
   },
   {
     title: "Invite Friends",
     icon: "ph:mask-happy",
     href: ILinks.modal,
-    component: (children: React.ReactElement) => (
-      <InviteFriendsModal>{children}</InviteFriendsModal>
+    component: (children, key) => (
+      <div key={key}>
+        <InviteFriendsModal>{children}</InviteFriendsModal>
+      </div>
     ),
   },
 ];

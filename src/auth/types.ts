@@ -42,8 +42,6 @@ export interface JWTContextType {
     lastName: string
   ) => Promise<void>;
   logout: () => void;
-  loginWithGoogle: (token: string) => void;
-  registerWithGoogle: (token: string) => void;
-  loginWithGithub?: () => void;
-  loginWithTwitter?: () => void;
+  loginWithGoogle: (token: string) => Promise<void>;
+  registerWithGoogle: (token: string) => Promise<void>;
 }

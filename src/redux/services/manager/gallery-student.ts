@@ -48,6 +48,16 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Projects" }],
     }),
+    updateProjectCover: builder.mutation<
+      IGallery,
+      { id: string; file: FormData }
+    >({
+      query: ({ id, file }) => ({
+        url: `/student/project/${id}/cover`,
+        method: "PATCH",
+        body: file,
+      }),
+    }),
     removeProject: builder.mutation<IGallery, { id: string }>({
       query: ({ id }) => ({
         url: `/student/project/${id}`,
@@ -64,5 +74,6 @@ export const {
   // -------------mutation-----------
   useUpdateProjectMutation,
   useRemoveProjectMutation,
+  useUpdateProjectCoverMutation,
   usePostProjectMutation,
 } = extendedApi;

@@ -107,12 +107,11 @@ export default function ModuleInfoDialog ({
             </IconButton>
             <Stack
               sx={{
-                p: 3,
                 gap: 3,
                 flexDirection: "row",
                 display: "flex",
                 maxWidth: "600px",
-                m: "0 auto",
+                m: "-40px auto 30px",
                 [theme.breakpoints.down(1550)]: {
                   flexDirection: "column",
                 },
@@ -130,15 +129,7 @@ export default function ModuleInfoDialog ({
                   <EmptyContent title="no data" />
                 )}
               </Stack>
-              <Stack
-                sx={{
-                  width: "270px",
-                  [theme.breakpoints.down(1400)]: {
-                    width: "auto",
-                    margin: "0 auto",
-                  },
-                }}
-              >
+              <Stack>
                 <AuthorsSection />
                 <Link
                   component={NextLink}

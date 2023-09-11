@@ -24,6 +24,7 @@ export interface State {
   version?: number;
   doc?: string;
 }
+const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
 const CodeEditorBlock = ({
   columns = 1,
@@ -34,8 +35,6 @@ ICodeEditorBlock): React.ReactElement | null => {
   const { user } = useAuthContext();
   const { query } = useRouter();
   const [code, setCode] = useState<string>("");
-
-  const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
   return (
     <BaseBlock columns={columns}>

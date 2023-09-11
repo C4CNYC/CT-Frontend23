@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useState } from "react";
 import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
+
 import { ICourseContent } from "src/redux/interfaces/content.interface";
 import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/courses-student";
 

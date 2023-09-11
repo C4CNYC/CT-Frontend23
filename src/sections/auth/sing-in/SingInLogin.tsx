@@ -8,7 +8,6 @@ import { StepWizardChildProps } from "react-step-wizard";
 
 import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Divider,
   IconButton,
   InputAdornment,
@@ -33,7 +32,7 @@ export default function SingInLogin({
     onSuccess: async ({ access_token: token }) => {
       setIsLoading(true);
       try {
-        loginWithGoogle(token);
+        await loginWithGoogle(token);
         router.push(STUDENT_PATH_AFTER_LOGIN);
       } catch (error) {
         enqueueSnackbar(error.message, { variant: "error" });

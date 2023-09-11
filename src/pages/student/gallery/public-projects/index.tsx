@@ -59,9 +59,9 @@ export default function PublicProjects(): React.ReactElement {
         ) : (
           <>
             <CustomBreadcrumbs
-              heading="Public projects"
+              heading=""
               links={[
-                { name: "Dashboard", href: STUDENT_PATH_MAIN.index },
+                { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
                 { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
                 {
                   name: "Privat",
@@ -90,7 +90,7 @@ export default function PublicProjects(): React.ReactElement {
             }}
           >
             {projects.map((item) => (
-              <GalleryItem key={item.description} item={item} />
+              <GalleryItem key={item.id} item={item} />
             ))}
             {isFetching
               ? Array(

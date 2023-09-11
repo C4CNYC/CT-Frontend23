@@ -21,6 +21,7 @@ import { PATH_AUTH } from "@routes/paths";
 import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
 import { UserType } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { useSelector } from "src/redux/store";
 
 import MobileHamburger from "./MobileHamburger";
 import config, { ILinks } from "./config";
@@ -31,7 +32,7 @@ const Menu = (): React.ReactElement => {
   const { replace } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { isAuthenticated, logout } = useAuthContext();
-
+  const userName = useSelector((state) => state.global.user?.first_name);
   const [, setStartTour] = useAtom(startTour);
 
   const [openPopover, setOpenPopover] = useState(null);
@@ -100,16 +101,15 @@ const Menu = (): React.ReactElement => {
       >
         {isAuthenticated ? (
           <Typography height="59px" p="16px 20px" variant="h6" component="h2">
-            Hello John
+            Hello {userName ? userName : ""}
           </Typography>
         ) : null}
         <Divider />
         {config[isAuthenticated ? UserType.Authorized : UserType.Anonim].map(
-          (menuItem, i) => {
+          (menuItem) => {
             if (menuItem.href === ILinks.modal) {
               return menuItem.component?.(
                 <MenuItem
-                  key={`${menuItem.title}${i}`}
                   sx={{ pl: "20px!important", height: 59, color: "#212B36" }}
                   onClick={() => {
                     if (menuItem.title === "Take the Tour") {
@@ -126,12 +126,13 @@ const Menu = (): React.ReactElement => {
                       {menuItem.title}
                     </Typography>
                   </Box>
-                </MenuItem>
+                </MenuItem>,
+                menuItem.title
               );
             } else {
               return (
                 <Link
-                  key={`${menuItem.title}${i}`}
+                  key={menuItem.title}
                   component={NextLink}
                   href={menuItem.href}
                   target={menuItem.target ? menuItem.target : "_self"}

@@ -1,9 +1,11 @@
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
+
 import { useAtom } from "jotai";
 import { IoMdClose } from "react-icons/io";
 import { RxExternalLink } from "react-icons/rx";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
@@ -21,6 +23,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+
 import {
   Accordion,
   AccordionDetails,
@@ -67,7 +70,10 @@ const LessonManager = (): React.ReactElement => {
     window.dispatchEvent(resetLessonEvent);
     if (publicPage) {
       push(
-        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(id as string, { unitId: moduleId, lessonId })}`,
+        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(id as string, {
+          unitId: moduleId,
+          lessonId,
+        })}`,
         undefined,
         { shallow: true }
       );
@@ -92,7 +98,9 @@ const LessonManager = (): React.ReactElement => {
         className="lessonsTour"
         direction="row"
         alignItems="center"
-        onClick={() => { setIsOpenDrawer(true) }}
+        onClick={() => {
+          setIsOpenDrawer(true);
+        }}
       >
         <Tooltip title="LESSONS LIST" placement="top">
           <IconButton className="lessonsTourMobile" sx={{ mr: "5px" }}>
@@ -134,7 +142,13 @@ const LessonManager = (): React.ReactElement => {
           </Button>
         </Tooltip>
       </Stack>
-      <Drawer anchor="left" open={isOpenDrawer} onClose={() => { setIsOpenDrawer(false) }}>
+      <Drawer
+        anchor="left"
+        open={isOpenDrawer}
+        onClose={() => {
+          setIsOpenDrawer(false);
+        }}
+      >
         <Stack sx={{ width: isMobile ? "280px" : "350px" }} p="0 0 30px">
           <Stack
             direction="row"
@@ -166,128 +180,123 @@ const LessonManager = (): React.ReactElement => {
               Open Full Catalog <RxExternalLink size={18} />
             </Link>
             {isMobile && (
-              <IconButton onClick={() => { setIsOpenDrawer(false) }} sx={{ mr: 1 }}>
+              <IconButton
+                onClick={() => {
+                  setIsOpenDrawer(false);
+                }}
+                sx={{ mr: 1 }}
+              >
                 <IoMdClose size="20px" />
               </IconButton>
             )}
           </Stack>
 
-          {publicPage ? (
-            publicIsLoading ? (
-              <SkeletonDrawer />
-            ) : isLoading ? (
-              <SkeletonDrawer />
-            ) : null
-          ) : null}
+          {publicIsLoading || isLoading ? <SkeletonDrawer /> : null}
           {!publicPage
             ? !isLoading &&
               data?.units?.map((module) => (
-                <>
-                  <Stack key={module.id}>
-                    <Accordion defaultExpanded>
-                      <AccordionSummary
-                        sx={{
-                          pl: "10px",
-                        }}
-                        expandIcon={<ExpandMoreIcon />}
+                <Stack key={module.id}>
+                  <Accordion defaultExpanded>
+                    <AccordionSummary
+                      sx={{
+                        pl: "10px",
+                      }}
+                      expandIcon={<ExpandMoreIcon />}
+                    >
+                      <Tooltip
+                        title={module.name.length > 39 ? module.name : ""}
                       >
-                        <Tooltip
-                          title={module.name.length > 39 ? module.name : ""}
+                        <Typography
+                          variant="h6"
+                          noWrap
+                          sx={{
+                            textOverflow: "ellipsis",
+                            width: isMobile ? "220px" : "300px",
+                          }}
                         >
-                          <Typography
-                            variant="h6"
-                            noWrap
+                          {module.name}
+                        </Typography>
+                      </Tooltip>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ p: 0 }}>
+                      <List sx={{ p: 0, pl: "10px", pr: "10px" }}>
+                        {!module.lessons.length ? (
+                          <ListItem>No lessons</ListItem>
+                        ) : null}
+                        {module.lessons.map((lesson) => (
+                          <ListItemButton
+                            key={lesson.id}
+                            onClick={() => {
+                              onClick(lesson.id, module.id);
+                            }}
                             sx={{
-                              textOverflow: "ellipsis",
-                              width: isMobile ? "220px" : "300px",
+                              background:
+                                lesson.id === query.lesson_id
+                                  ? "#ebe5e5"
+                                  : "inherit",
+                              cursor: "pointer",
+                              display: "flex",
                             }}
                           >
-                            {module.name}
-                          </Typography>
-                        </Tooltip>
-                      </AccordionSummary>
-                      <AccordionDetails sx={{ p: 0 }}>
-                        <List sx={{ p: 0, pl: "10px", pr: "10px" }}>
-                          {!module.lessons.length ? (
-                            <ListItem>No lessons</ListItem>
-                          ) : null}
-                          {module.lessons.map((lesson) => (
-                            <ListItemButton
-                              key={lesson.id}
-                              onClick={() => {
-                                onClick(lesson.id, module.id);
-                              }}
-                              sx={{
-                                background:
-                                  lesson.id === query.lesson_id
-                                    ? "#ebe5e5"
-                                    : "inherit",
-                                cursor: "pointer",
-                                display: "flex",
-                              }}
-                            >
-                              <Box display="flex">
-                                <Typography ml={2} variant="subtitle2">
-                                  {lesson.name}
-                                </Typography>
-                              </Box>
-                            </ListItemButton>
-                          ))}
-                        </List>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Stack>
+                            <Box display="flex">
+                              <Typography ml={2} variant="subtitle2">
+                                {lesson.name}
+                              </Typography>
+                            </Box>
+                          </ListItemButton>
+                        ))}
+                      </List>
+                    </AccordionDetails>
+                  </Accordion>
                   <Divider sx={{ height: 2 }} />
-                </>
+                </Stack>
               ))
             : !publicIsLoading &&
               publicData?.units?.map((module: Record<string, any>) => (
-                <>
-                  <Stack key={module.id}>
-                    <Accordion defaultExpanded>
-                      <AccordionSummary
-                        sx={{
-                          pl: "10px",
-                        }}
-                        expandIcon={<ExpandMoreIcon />}
-                      >
-                        <Typography variant="h6" whiteSpace="nowrap">
-                          {module.name}
-                        </Typography>
-                      </AccordionSummary>
-                      <AccordionDetails sx={{ p: 0 }}>
-                        <List sx={{ p: 0, pl: "10px", pr: "10px" }}>
-                          {!module.lessons.length ? (
-                            <ListItem>No lessons</ListItem>
-                          ) : null}
-                          {module.lessons.map((lesson: Record<string, any>) => (
-                            <ListItemButton
-                              key={lesson.id}
-                              onClick={() => {
-                                onClick(lesson.id, module.id);
-                              }}
-                              sx={{
-                                background:
-                                  lesson.id === query.lesson_id
-                                    ? "#ebe5e5"
-                                    : "inherit",
-                                cursor: "pointer",
-                                display: "flex",
-                              }}
-                            >
-                              <Box display="flex">
-                                <Typography ml={2} variant="subtitle2">
-                                  {lesson.name}
-                                </Typography>
-                              </Box>
-                            </ListItemButton>
-                          ))}
-                        </List>
-                      </AccordionDetails>
-                    </Accordion>
-                  </Stack>
+                <Stack key={module.id}>
+                  <Accordion defaultExpanded>
+                    <AccordionSummary
+                      sx={{
+                        pl: "10px",
+                      }}
+                      expandIcon={<ExpandMoreIcon />}
+                    >
+                      <Typography variant="h6" whiteSpace="nowrap">
+                        {module.name}
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ p: 0 }}>
+                      <List sx={{ p: 0, pl: "10px", pr: "10px" }}>
+                        {!module.lessons.length ? (
+                          <ListItem>No lessons</ListItem>
+                        ) : null}
+                        {module.lessons.map((lesson: Record<string, any>) => (
+                          <ListItemButton
+                            key={lesson.id}
+                            onClick={() => {
+                              onClick(lesson.id, module.id);
+                            }}
+                            sx={{
+                              background:
+                                lesson.id === query.lesson_id
+                                  ? "#ebe5e5"
+                                  : "inherit",
+                              cursor: "pointer",
+                              display: "flex",
+                            }}
+                          >
+                            <Box display="flex">
+                              <Typography ml={2} variant="subtitle2">
+                                {lesson.name}
+                              </Typography>
+                            </Box>
+                          </ListItemButton>
+                        ))}
+                      </List>
+                    </AccordionDetails>
+                  </Accordion>
                   <Divider sx={{ height: 2 }} />
-                </>
+                </Stack>
               ))}
         </Stack>
       </Drawer>

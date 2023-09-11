@@ -226,7 +226,7 @@ export default function Index(): React.ReactElement | null {
             isFetching,
             lesson,
             data: data ?? [],
-            user,
+            user: user?.student_profile,
             code,
             onChangeCode,
             language,

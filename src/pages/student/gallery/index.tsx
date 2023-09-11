@@ -5,10 +5,7 @@ import { Container, Grid, Link } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
-import {
-  STUDENT_PATH_DASHBOARD,
-  STUDENT_PATH_MAIN,
-} from "@routes/student.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import FolderElement from "@sections/dashboard/gallery/FolderElement";
 import { IGallery } from "src/redux/interfaces/gallary.interface";
 import { useGetProjectsQuery } from "src/redux/services/manager/gallery-student";
@@ -43,14 +40,14 @@ export default function Gallery(): React.ReactElement {
   return (
     <Container maxWidth={themeStretch ? false : "lg"}>
       <CustomBreadcrumbs
-        heading="Gallery"
+        heading=""
         links={[
-          { name: "Dashboard", href: STUDENT_PATH_MAIN.index },
+          { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
           { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
         ]}
       />
 
-      <Grid container spacing={5}>
+      <Grid container spacing={2} mt={2}>
         <Grid item xs={12} md={6}>
           <Link
             component={NextLink}

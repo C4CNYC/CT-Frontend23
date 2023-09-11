@@ -8,7 +8,6 @@ import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
 
 import { Iconify, UploadImageModal, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard";
-// auth
 import ContactsTab from "@sections/dashboard/organization/general/tabs/contacts/contacts";
 import CustomizationTab from "@sections/dashboard/organization/general/tabs/customization/customization";
 import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/profile/SkeletonProfileOrg";
@@ -21,14 +20,9 @@ import {
   useUpdateOrgCoverMutation,
 } from "src/redux/services/admin/organization-admin";
 
-// components
-// ----------------------------------------------------------------------
-
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function UserProfilePage(): React.ReactElement {
   const { translate } = useLocales();

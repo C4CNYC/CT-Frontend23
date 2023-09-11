@@ -20,8 +20,8 @@ import {
 
 import { FormProvider, RHFTextField } from "@components";
 import {
-  useCreateLessonContentValidationMutation,
-  useUpdateLessonContentValidationMutation,
+  useCreateLessonContentValidationManagerMutation,
+  useUpdateLessonContentValidationManagerMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
 
 interface FormValuesProps {
@@ -55,9 +55,9 @@ export default function CreateEditValidation({
 
   const { enqueueSnackbar } = useSnackbar();
   const [updateRule, { isLoading: updageLoading }] =
-    useUpdateLessonContentValidationMutation();
+    useUpdateLessonContentValidationManagerMutation();
   const [createRule, { isLoading: createLoading }] =
-    useCreateLessonContentValidationMutation();
+    useCreateLessonContentValidationManagerMutation();
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateLessonDemonSchema),
     defaultValues,

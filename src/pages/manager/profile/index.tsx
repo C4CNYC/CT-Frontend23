@@ -4,7 +4,7 @@ import { Container } from "@mui/system";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ProfileEditForm from "@sections/profile/ProfileEditForm";
 import { useProfileQuery } from "src/redux/services/auth";
 
@@ -21,9 +21,9 @@ export default function Profile() {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Profile"
+          heading=""
           links={[
-            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: data?.email },
           ]}
         />
