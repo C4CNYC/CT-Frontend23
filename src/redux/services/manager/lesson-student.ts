@@ -3,7 +3,7 @@ import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ILesson,
   ILessonContent,
-  ILessonSearchParams, LastVisitedData,
+  ILessonSearchParams, LastVisitedBody, LastVisitedData,
 } from "src/redux/interfaces/content.interface"
 
 import { managerApi } from ".";
@@ -53,8 +53,15 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["LastVisitedUnitAndLesson"]
     }),
+    updateStudentLastVisitedData: builder.mutation<void, LastVisitedBody>({
+      query: ({ ...body }) => ({
+        url: "/student/lesson/last-visited",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["LastVisitedUnitAndLesson"]
+    }),
   }),
-  // todo - add PATCH /student/lesson/last-visited query and send in onUnmount code panel
 
   overrideExisting: false,
 });
@@ -65,4 +72,5 @@ export const {
   useGetLessonsListStudentQuery,
   useGetStudentLastVisitedUnitAndLessonQuery,
   // -------------mutation-----------
+  useUpdateStudentLastVisitedDataMutation,
 } = extendedApi;

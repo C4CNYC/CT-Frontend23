@@ -118,3 +118,8 @@ export interface LastVisitedData {
   lastVisitedUnitId: string;
   lastVisitedLessonId: string;
 }
+
+export interface LastVisitedBody {
+  unitId: string;
+  lessonId: string;
+}
