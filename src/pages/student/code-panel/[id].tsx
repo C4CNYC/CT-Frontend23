@@ -28,8 +28,8 @@ import {
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
 import { useSearchParams } from "next/navigation";
-import { LastVisitedState } from "@pages/student/code-panel/interfaces";
-import { isValidLastVisitedData } from "@pages/student/code-panel/helpers";
+import { isValidLastVisitedData } from "@sections/code-panel/helpers";
+import { LastVisitedState } from "../../../redux/interfaces/content.interface";
 
 const Tour = dynamic(
   async () =>

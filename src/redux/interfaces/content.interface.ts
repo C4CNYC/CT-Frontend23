@@ -123,3 +123,8 @@ export interface LastVisitedBody {
   unitId: string;
   lessonId: string;
 }
+
+export interface LastVisitedState {
+  unitId: string | null;
+  lessonId: string | null;
+}
