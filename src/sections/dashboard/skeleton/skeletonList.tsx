@@ -2,6 +2,7 @@ import { Box, Container, Skeleton, Stack } from "@mui/material";
 
 import { useSettingsContext } from "@components";
 
+import { SkeletonBreadcrumbs } from "./skeletonBreadcrumbs";
 import SkeletonFilter from "./skeletonFilter";
 
 interface Props {
@@ -33,42 +34,19 @@ export default function SkeletonList({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: "40px",
+          mb: "24px",
         }}
       >
-        <Box>
-          <Skeleton
-            variant="rectangular"
-            animation="wave"
-            sx={{
-              width: "180px",
-              height: "36px",
-              borderRadius: "8px",
-              mb: "8px",
-            }}
-          />
-          <Skeleton
-            variant="rectangular"
-            animation="wave"
-            sx={{
-              mr: "16px",
-              width: "180px",
-              height: "26px",
-              borderRadius: "8px",
-            }}
-          />
-        </Box>
-        <Box>
-          <Skeleton
-            variant="rectangular"
-            animation="wave"
-            sx={{
-              width: "134px",
-              height: "36px",
-              borderRadius: "8px",
-            }}
-          />
-        </Box>
+        <SkeletonBreadcrumbs />
+        <Skeleton
+          variant="rectangular"
+          animation="wave"
+          sx={{
+            width: "134px",
+            height: "36px",
+            borderRadius: "8px",
+          }}
+        />
       </Box>
       <Stack
         direction={{
@@ -79,7 +57,7 @@ export default function SkeletonList({
         {Array(filter)
           .fill(null)
           .map((item, i) => (
-            <SkeletonFilter key={i} />
+            <SkeletonFilter key={i + 10} />
           ))}
       </Stack>
       <Box
@@ -93,7 +71,9 @@ export default function SkeletonList({
       >
         {Array(count)
           .fill(null)
-          .map((e, i) => item)}
+          .map((e, i) => (
+            <Box key={i + 18}>{item}</Box>
+          ))}
       </Box>
     </Container>
   );

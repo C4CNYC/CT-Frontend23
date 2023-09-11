@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { Container, Grid, Skeleton } from "@mui/material";
+import { Box, Container, Grid, Skeleton } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
@@ -22,13 +22,16 @@ export default function Goals(): React.ReactElement {
     return (
       <>
         <Container>
-          <SkeletonBreadcrumbs />
+          <Box maxWidth={"fit-content"}>
+            <SkeletonBreadcrumbs />
+          </Box>
           <Skeleton
             animation="wave"
             variant="rounded"
             sx={{
               width: "100%",
               height: "170px",
+              mt: 2,
             }}
           />
         </Container>
@@ -42,9 +45,9 @@ export default function Goals(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="My Notes"
+          heading=""
           links={[
-            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "My Notes", href: STUDENT_PATH_DASHBOARD.myNotes },
           ]}
         />

@@ -29,7 +29,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <AiOutlineClockCircle size="15px" />
-        <Typography variant="body2" sx={{ ml: 1 }}>
+        <Typography variant="body2" sx={{ ml: 1, textTransform: "capitalize" }}>
           {level}
         </Typography>
       </Box>
@@ -43,7 +43,7 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
         <MdCelebration size="18px" />
         <Typography variant="body2" sx={{ ml: 1 }}>
           {totalLessons}
-          {totalLessons && totalLessons > 1 ? " lessons" : " lesson"}
+          {totalLessons && totalLessons > 1 ? " Lessons" : " Lesson"}
         </Typography>
       </Box>
     </Stack>

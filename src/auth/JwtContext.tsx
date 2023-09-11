@@ -212,32 +212,28 @@ export function AuthProvider({
   );
 
   // LOGIN WITH GOOGLE
-  const loginWithGoogle = useCallback(async (token: string) => {
-    try {
-      const { data } = await axios.post<any, any>("auth/google-signin", {
-        auth_token: token,
-      });
+  const loginWithGoogle = async (token: string) => {
+    const { data } = await axios.post<any, any>("auth/google-signin", {
+      auth_token: token,
+    });
 
-      const { access_token: accessToken, user } = data;
-      reduxDispatch(setUser(user));
-      setSession(
-        accessToken,
-        localStorage.getItem("tenantName") ?? "codetribe"
-      );
+    const { access_token: accessToken, user } = data;
+    reduxDispatch(setUser(user));
+    setSession(
+      accessToken,
+      localStorage.getItem("tenantName") ?? "codetribe"
+    );
 
-      dispatch({
-        type: Types.LOGIN,
-        payload: {
-          user,
-        },
-      });
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  }, []);
+    dispatch({
+      type: Types.LOGIN,
+      payload: {
+        user,
+      },
+    });
+  };
 
   // Register WITH GOOGLE
-  const registerWithGoogle = useCallback(async (token: string) => {
+  const registerWithGoogle = async (token: string) => {
     try {
       const { data } = await axios.post<any, any>("auth/google-signup", {
         auth_token: token,
@@ -259,7 +255,7 @@ export function AuthProvider({
     } catch (error) {
       throw new Error(error.message);
     }
-  }, []);
+  };
 
   // REGISTER
   const register = useCallback(

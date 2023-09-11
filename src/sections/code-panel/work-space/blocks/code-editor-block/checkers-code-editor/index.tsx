@@ -22,8 +22,10 @@ interface ICheckers {
 const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const [{ nextStepAble, isAllColumnsVisible }, setGlobalAtom] =
-    useAtom(globalCodePanelAtom);
+  const [
+    { nextStepAble, isBrowserHidden, isInstructionsHidden },
+    setGlobalAtom,
+  ] = useAtom(globalCodePanelAtom);
   const [{ visible, openText }, setAnimation] = useAtom(checkersAnimationAtom);
   const [timeoutId, setTimeoutId] = useState<TimeoutId | null>(null);
   const handleCollaps = (): void => {
@@ -85,7 +87,7 @@ const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
       <Stack
         sx={{
           top: isDesktop ? "40px" : "20px",
-          right: isAllColumnsVisible ? "15px" : "45px",
+          right: !isBrowserHidden || !isInstructionsHidden ? "15px" : "45px",
           position: "absolute",
           zIndex: 300,
         }}

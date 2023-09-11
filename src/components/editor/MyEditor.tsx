@@ -26,10 +26,12 @@ interface Props {
   multimediaValue: string;
   setMultimediaValue?: (value: string) => void;
   onSubmit?: () => void;
+  locked?: boolean;
 }
 
 function Editor({
   editable = true,
+  locked,
   onSubmit,
   multimediaValue,
   setMultimediaValue,
@@ -131,7 +133,13 @@ function Editor({
           }
         }}
       >
-        {editable ? <EditorToolbar saveContent={saveContent} /> : null}
+        {typeof locked === "undefined" ? (
+          editable ? (
+            <EditorToolbar saveContent={saveContent} />
+          ) : null
+        ) : (
+          <EditorToolbar saveContent={saveContent} />
+        )}
       </Remirror>
     </ThemeProvider>
   );

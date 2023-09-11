@@ -21,6 +21,8 @@ interface IRealTimeEditor {
   code: string;
 }
 
+const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
+
 // eslint-disable-next-line react/display-name
 export const RealTimeEditor = memo(
   ({
@@ -30,8 +32,6 @@ export const RealTimeEditor = memo(
     preloadedCode,
     code,
   }: IRealTimeEditor): React.ReactElement => {
-    const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
-
     const [state, setState] = useState<State>({
       connected: false,
       version: undefined,
@@ -87,6 +87,7 @@ export const RealTimeEditor = memo(
         socket.off("getDocumentResponse");
         socket.close();
       });
+
       return () => {
         socket.emit("deleteRoom", userId);
         socket.off("connect");
@@ -118,7 +119,7 @@ export const RealTimeEditor = memo(
         </style>
         <CodeEditor
           state={state}
-          cursorId={email}
+          cursorId={userId}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}
           socket={socket}

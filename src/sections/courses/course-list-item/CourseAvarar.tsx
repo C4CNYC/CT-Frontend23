@@ -68,7 +68,7 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
             width: "40px",
             height: "40px",
             zIndex: "10",
-            opacity: 0.5,
+            opacity: 0.8,
             background: "rgba(250, 250, 250, .5)",
             "&:hover": { opacity: 1 },
           }}

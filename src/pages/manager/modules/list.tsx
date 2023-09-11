@@ -12,6 +12,7 @@ import {
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
 // import { getCountTakingElment } from "src/utils/countTakingElments";
@@ -23,13 +24,9 @@ import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
 
 import FilterModules from "./filter";
 
-// ----------------------------------------------------------------------
-
 ModulesListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext();
@@ -53,11 +50,10 @@ export default function ModulesListPage(): React.ReactElement | string {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Modules List"
+          heading=""
           links={[
-            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "Modules", href: MANAGER_PATH_DASHBOARD.modules.root },
-            { name: "List" },
           ]}
           action={
             <CreateModuleDialog>

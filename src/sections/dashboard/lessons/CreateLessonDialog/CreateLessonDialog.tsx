@@ -92,9 +92,12 @@ export default function CreateLessonDialog({
   const [open, setOpen] = useState(false);
   const [, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
-  const [editLesson, { isLoading: isLoadingUpdate }] = useUpdateLessonMutation();
-  const [createLesson, { isLoading: isLoadingCreate }] = useCreateLessonMutation();
-  const [addLessonToModule, { isLoading: isLoadingAdd }] = useAddLessonToModuleMutation();
+  const [editLesson, { isLoading: isLoadingUpdate }] =
+    useUpdateLessonMutation();
+  const [createLesson, { isLoading: isLoadingCreate }] =
+    useCreateLessonMutation();
+  const [addLessonToModule, { isLoading: isLoadingAdd }] =
+    useAddLessonToModuleMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -156,9 +159,7 @@ export default function CreateLessonDialog({
 
   return (
     <>
-      <Box sx={{ display: "flex", width: "100%" }} onClick={handleClickOpen}>
-        {children}
-      </Box>
+      <Box onClick={handleClickOpen}>{children}</Box>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{isEdit ? "Edit" : "Create"} Lesson</DialogTitle>
         <DialogContent sx={{ p: 0 }}>

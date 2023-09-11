@@ -5,7 +5,7 @@ import { Iconify } from "@components";
 
 interface ViewToomblerProps {
   fullScreenView: boolean;
-  allColumnsVisible: boolean;
+  isColumnHidden: boolean;
   onChangeSreenView: (value: boolean) => void;
   onChangeColumnVisability: (value: boolean) => void;
   fullScreenOpen: () => void;
@@ -14,15 +14,13 @@ interface ViewToomblerProps {
 
 const ViewTumbler = ({
   fullScreenView,
-  allColumnsVisible,
+  isColumnHidden,
   onChangeSreenView,
   onChangeColumnVisability,
   fullScreenOpen,
   fullScreenClose,
 }: ViewToomblerProps): React.ReactElement => {
-  const columnIcon = allColumnsVisible
-    ? "iconoir:view-columns-3"
-    : "iconoir:view-columns-2";
+  const columnIcon = isColumnHidden ? "tabler:columns-3" : "tabler:columns-1";
   const screenViewIcon = fullScreenView
     ? "la:compress-arrows-alt"
     : "mdi:arrow-expand-all";
@@ -38,7 +36,7 @@ const ViewTumbler = ({
     >
       <IconButton
         onClick={() => {
-          onChangeColumnVisability(!allColumnsVisible);
+          onChangeColumnVisability(!isColumnHidden);
         }}
       >
         <Iconify icon={columnIcon} />

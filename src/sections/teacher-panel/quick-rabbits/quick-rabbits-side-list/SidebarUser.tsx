@@ -54,7 +54,7 @@ export const SidebarUser = ({
     active,
     id,
     avatar,
-  } = student || {};
+  } = student.account || {};
 
   useEffect(() => {
     getMessages(
@@ -69,7 +69,7 @@ export const SidebarUser = ({
   }, []);
 
   const onConnectStudent = (): void => {
-    dispatch(createRabit({ id, email, avatar }));
+    dispatch(createRabit({ id: student.id, email, avatar }));
   };
 
   const getSubText = (): string => {

@@ -11,6 +11,7 @@ import {
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateLesson from "@sections/dashboard/lessons/CreateLessonDialog/CreateLesson";
 import LessonCard from "@sections/dashboard/lessons/LessonCard";
 import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
@@ -24,13 +25,9 @@ import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import FilterLessons from "./filter";
 import SkeletonLesson from "./skeletonLesson";
 
-// ----------------------------------------------------------------------
-
 LessonsListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function LessonsListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
@@ -56,11 +53,10 @@ export default function LessonsListPage(): React.ReactElement {
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
-          heading="Lessons List"
+          heading=""
           links={[
-            { name: "Dashboard", href: MANAGER_PATH_DASHBOARD.root },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             { name: "Lessons", href: MANAGER_PATH_DASHBOARD.lessons.root },
-            { name: "List" },
           ]}
           action={
             <CreateLesson>
@@ -92,8 +88,8 @@ export default function LessonsListPage(): React.ReactElement {
             <SimpleInfiniteList
               hasNextPage={data?.meta.hasNextPage ?? false}
               onLoadMore={() => {
-                // if (data?.meta.take !== filters?.take) return;
-                // setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
+                if (data?.meta.take !== filters?.take) return;
+                setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
               }}
               loading={isLoading ?? isFetching}
             >

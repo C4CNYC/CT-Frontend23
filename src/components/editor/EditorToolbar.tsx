@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import {
   BasicFormattingButtonGroup,
   CommandButtonGroup,
@@ -13,11 +15,10 @@ import {
   ToggleTaskListButton,
   Toolbar,
 } from "@remirror/react";
-import { useAtom } from "jotai";
 
 import { Divider, Stack } from "@mui/material";
 
-import { multimediaLockedAtom } from "@sections/dashboard/lessons/LessonStep/LessonStepContent/lesson-multimedia-atom";
+import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context";
 
 import { LockButton } from "./LockButton";
 import { SaveButton } from "./SaveButton";
@@ -38,7 +39,7 @@ interface Props {
 export default function EditorToolbar({
   saveContent,
 }: Props): React.ReactElement {
-  const [locked] = useAtom(multimediaLockedAtom);
+  const { locked } = useContext(LessonContentContext);
 
   return (
     <>
@@ -94,7 +95,7 @@ export default function EditorToolbar({
             </Stack>
           </>
         ) : (
-          <Stack direction="row" gap={2}>
+          <Stack direction="row" gap={2} ml="auto">
             <LockButton />
             <SaveButton onClick={saveContent} />
           </Stack>
