@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ import { FormProvider, useSnackbar } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ChooseShoolModal from "@sections/main/create-class/ChooseShoolModal";
+import CreateClassSkeleton from "@sections/main/create-class/CreateClassSkeleton";
 import CreateHeader from "@sections/main/create-class/createHeader";
 import CreatePalette, {
   CLASS_PALETTE,
@@ -24,6 +25,7 @@ import {
   useCreateClassesMutation,
   useUpdateClassesAvatarMutation,
 } from "src/redux/services/manager/classes-manager";
+import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
 
@@ -39,18 +41,22 @@ interface FormValueProps {
 export default function CreateClass(): React.ReactElement {
   const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [openDialog, setOpenDialog] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
   const [schoolId, setSchoolId] = useState("");
   const [choosenColor, setChoosenColor] = useState(
     randomInArray(CLASS_PALETTE)
   );
+  const { data, isLoading } = useGetMySchoolsQuery({});
+
   const studentId = useSelector(
     (state) => state.global.user?.student_profile.id
   );
   const [createClassByManager, { isLoading: createClassLoading }] =
     useCreateClassesMutation();
-  const [studentJoin] = useStudentJoinClassMutation();
-  const [updateClassAvatar] = useUpdateClassesAvatarMutation();
+  const [studentJoin, { isLoading: isStudentJoining }] =
+    useStudentJoinClassMutation();
+  const [updateClassAvatar, { isLoading: isUpdatingAvatar }] =
+    useUpdateClassesAvatarMutation();
   const CreateEmailSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     description: Yup.string().required("Description is required"),
@@ -68,7 +74,6 @@ export default function CreateClass(): React.ReactElement {
           description: data.description,
           cover: choosenColor,
         }).unwrap();
-        enqueueSnackbar("Class created successfully");
         await studentJoin({
           classId: classInfo.id,
           student_id: studentId as string,
@@ -81,6 +86,7 @@ export default function CreateClass(): React.ReactElement {
           classId: classInfo.id,
           file,
         }).unwrap();
+        enqueueSnackbar("Class created successfully");
         if (query.onBoarding) {
           push(
             STUDENT_PATH_DASHBOARD.class.addQuest(classInfo.id, {
@@ -96,6 +102,17 @@ export default function CreateClass(): React.ReactElement {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };
+
+  useEffect(() => {
+    if (data?.data && data?.data.length > 1) {
+      setOpenDialog(true);
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <CreateClassSkeleton />;
+  }
+
   return (
     <>
       <Head>
@@ -111,6 +128,7 @@ export default function CreateClass(): React.ReactElement {
           setSchoolId={(id: string) => {
             setSchoolId(id);
           }}
+          schools={data?.data}
         />
         <FormProvider
           methods={methods}
@@ -128,7 +146,8 @@ export default function CreateClass(): React.ReactElement {
               flexDirection: "row",
               justifyContent: "flex-end",
               gap: 3,
-              pr: 6,
+              pr: { xs: 2, sm: 3, lg: 4 },
+              pt: 2,
             }}
           >
             <Button
@@ -146,7 +165,9 @@ export default function CreateClass(): React.ReactElement {
               variant="contained"
               color="secondary"
               type="submit"
-              loading={createClassLoading}
+              loading={
+                createClassLoading || isUpdatingAvatar || isStudentJoining
+              }
             >
               Create
             </LoadingButton>
