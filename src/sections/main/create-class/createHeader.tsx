@@ -17,7 +17,7 @@ export default function CreateHeader({
         borderTopLeftRadius: "16px",
         borderTopRightRadius: "16px",
         background: choosenColor,
-        minHeight: "400px",
+        minHeight: "340px",
         justifyContent: "center",
         px: 8,
       }}
