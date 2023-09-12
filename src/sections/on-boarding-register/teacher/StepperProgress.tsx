@@ -36,14 +36,14 @@ export default function StepperProgress({
 
   return (
     <>
-      {activeStep === 2 && (
+      {
         <IconButton
           onClick={prevStep}
           sx={{ position: "absolute", top: "-22px", left: "-30px" }}
         >
           <MdArrowBackIosNew />
         </IconButton>
-      )}
+      }
       <Stepper
         activeStep={stepperActive}
         sx={(theme) => ({

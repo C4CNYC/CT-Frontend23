@@ -134,11 +134,9 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
-            <option key="empty" value="empty"></option>
-
             {Object.keys(SchoolType).map((c) => (
               <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
-                {c}
+                {c.includes("_") ? c.replace("_", " ") : c}
               </option>
             ))}
           </RHFSelect>
@@ -197,18 +195,15 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
-            <option key="empty" value="empty"></option>
             <option key={"US"} value={"United States"}>
               United States
             </option>
             <option disabled>─────────────────────────</option>
-            {countries
-              .filter((el) => el.code !== "US")
-              .map((country) => (
-                <option key={country.code} value={country.label}>
-                  {country.label}
-                </option>
-              ))}
+            {countries.map((country) => (
+              <option key={country.code} value={country.label}>
+                {country.label}
+              </option>
+            ))}
           </RHFSelect>
         </Stack>
         <LoadingButton
