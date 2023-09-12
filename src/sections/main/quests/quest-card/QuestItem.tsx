@@ -169,7 +169,7 @@ export default function QuestItem({
                   color: "inherit",
                 }}
               >
-                Get Coding Now
+                Keep Coding{" "}
                 <Iconify
                   icon="maki:arrow"
                   width={18}

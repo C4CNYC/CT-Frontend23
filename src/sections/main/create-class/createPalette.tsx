@@ -92,23 +92,24 @@ export default function CreatePalette({
 
 export const CLASS_PALETTE = [
   "#96ceb4",
+  "#ffeead",
+  "#ff6f69",
   "#ffcc5c",
   "#854442",
+  "#fff4e6",
   "#3c2f2f",
+  "#ebf4f6",
+  "#bdeaee",
   "#76b4bd",
-  "#ff6f69",
   "#58668b",
   "#ff77aa",
+  "#ff99cc",
   "#ffbbee",
   "#2e003e",
-  "#FF8D3E",
   "#3d2352",
-  "#ff99cc",
   "#3d1e6d",
-  "#005CCB",
   "#8874a3",
-  "#D53624",
-  "#005B44",
+  "#e4dcf1",
 ];
 
 interface TabPanelProps {
