@@ -197,15 +197,7 @@ export default function AddQuest(): React.ReactElement {
         >
           <Stack>
             <Typography variant="h2">Add Quest</Typography>
-            <Tooltip
-              title={
-                <Typography variant="subtitle2">
-                  A quest is an assignment for a class. You can assign a part of
-                  or a full course, or you can assign any document link or open
-                  project to a class through a quest.
-                </Typography>
-              }
-            >
+            <Tooltip title="this is .....">
               <Typography
                 variant="caption"
                 sx={{ textDecoration: "underline" }}

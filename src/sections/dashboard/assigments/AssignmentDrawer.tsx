@@ -60,11 +60,11 @@ export default function AssignmentDrawer({
     mode: "all",
     defaultValues: {
       name: assignment.name,
-      description: JSON.parse(assignment.description ? assignment?.description: ""),
+      description: JSON.parse(assignment.description),
       startDate: format(DATE_PARSER(assignment.start_date), DATE_FORMAT),
       dueDate: format(DATE_PARSER(assignment.end_date), DATE_FORMAT),
       closeDate: format(DATE_PARSER(assignment.close_date), DATE_FORMAT),
-      active: assignment?.active,
+      active: assignment.active,
     },
   });
 
@@ -313,7 +313,7 @@ export default function AssignmentDrawer({
               Assign to:
             </ListItemText>
             <Avatar sx={{ width: "25px", height: "25px", mr: 1 }} />
-            <ListItemText>{assignment?.assignee_classes?.length ? assignment.assignee_classes[0].name: ""}</ListItemText>
+            <ListItemText>{assignment.assignee_classes[0].name}</ListItemText>
           </ListItem>
           <ListItem>
             <LoadingButton

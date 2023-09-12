@@ -48,14 +48,7 @@ export default function DetailsStep(): React.ReactElement {
                 key={AssignmentTypes[t as keyof typeof AssignmentTypes]}
                 value={AssignmentTypes[t as keyof typeof AssignmentTypes]}
               >
-                {t
-                  .split("_")
-                  .map(
-                    (word) =>
-                      word[0].charAt(0).toUpperCase() +
-                      word.slice(1).toLocaleLowerCase()
-                  )
-                  .join(" ")}
+                {t.split("_").join(" ").toLocaleLowerCase()}
               </option>
             ))}
           </RHFSelect>
@@ -68,7 +61,7 @@ export default function DetailsStep(): React.ReactElement {
             }}
           >
             <Typography variant="h5" gutterBottom pl={2}>
-              Select a course
+              Select course
             </Typography>
             {!isLoading ? (
               <RHFSelect

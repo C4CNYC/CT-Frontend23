@@ -25,8 +25,8 @@ export default function Quest(): React.ReactElement | null {
   );
 
   const { data: course, isLoading: isLoadingCourse } = useGetCoursQuery(
-    { id: data?.course?.id as string },
-    { skip: !data?.course?.id }
+    { id: data?.course.id as string },
+    { skip: !data?.course.id }
   );
 
   if (isLoading || !data) {
@@ -44,7 +44,7 @@ export default function Quest(): React.ReactElement | null {
       >
         <QuestHeader />
         <QuestMain questName={data.name} />
-        <QuestDescription description={data?.description as string} />
+        <QuestDescription description={data?.description} />
         {isLoadingCourse ? (
           <Skeleton
             variant="rounded"

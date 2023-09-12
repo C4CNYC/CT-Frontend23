@@ -30,7 +30,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
           } else {
             push(
               `/${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                data?.data[0]?.course_id as string
+                data?.data[0].course_id as string
               )}`
             );
           }

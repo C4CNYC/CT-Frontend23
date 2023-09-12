@@ -47,11 +47,11 @@ export default function AddSchool(): React.ReactElement {
   useEffect(() => {
     if (!isLoading && data) {
       methods.reset({
-        schoolName: data?.data[0]?.name ?? "",
-        type: data?.data[0]?.type ?? SchoolType.Other,
-        city: data?.data[0]?.city ?? "",
-        zip: data?.data[0]?.zip ?? "",
-        country: data?.data[0]?.country ?? "",
+        schoolName: data.data[0].name ?? "",
+        type: data.data[0].type ?? SchoolType.Other,
+        city: data.data[0].city ?? "",
+        zip: data.data[0].zip ?? "",
+        country: data.data[0].country ?? "",
       });
     }
   }, [isLoading]);
@@ -134,9 +134,11 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
+            <option key="empty" value="empty"></option>
+
             {Object.keys(SchoolType).map((c) => (
               <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
-                {c.includes("_") ? c.replace("_", " ") : c}
+                {c}
               </option>
             ))}
           </RHFSelect>
@@ -195,15 +197,18 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
+            <option key="empty" value="empty"></option>
             <option key={"US"} value={"United States"}>
               United States
             </option>
             <option disabled>─────────────────────────</option>
-            {countries.map((country) => (
-              <option key={country.code} value={country.label}>
-                {country.label}
-              </option>
-            ))}
+            {countries
+              .filter((el) => el.code !== "US")
+              .map((country) => (
+                <option key={country.code} value={country.label}>
+                  {country.label}
+                </option>
+              ))}
           </RHFSelect>
         </Stack>
         <LoadingButton
