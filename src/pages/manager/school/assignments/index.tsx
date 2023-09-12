@@ -145,7 +145,7 @@ export default function AsssignmentsListPage() {
     if (Object.values(Status).includes(status as unknown as Status)) {
       return tableData?.filter((item) => item.status === status)?.length;
     } else {
-      return tableData?.filter((item) => item.active)?.length;
+      return tableData?.filter((item) => item?.active)?.length;
     }
   };
   const TABS = [

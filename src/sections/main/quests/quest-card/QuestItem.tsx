@@ -54,7 +54,7 @@ export default function QuestItem({
       await updateAssignment({
         schoolId,
         assignmentId: assignment.id,
-        meta: { ...assignment.meta, pin: !assignment?.meta?.pin },
+        meta: { ...assignment?.meta, pin: !assignment?.meta?.pin },
       }).unwrap();
       enqueueSnackbar("assignment pined");
     } catch (e) {
@@ -160,7 +160,7 @@ export default function QuestItem({
               <Link
                 component={NextLink}
                 href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                  assignment?.course?.id as string
+                  assignment.courseid as string
                 )}
                 underline="none"
                 sx={{
@@ -169,7 +169,7 @@ export default function QuestItem({
                   color: "inherit",
                 }}
               >
-                Keep Coding{" "}
+                Get Coding Now
                 <Iconify
                   icon="maki:arrow"
                   width={18}

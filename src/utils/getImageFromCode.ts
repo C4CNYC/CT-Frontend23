@@ -19,7 +19,7 @@ export const getImageFromCode = async (code: string) => {
     const blob = await response.blob();
     return new File([blob], "cover.png", { type: "image/png" });
   } catch (error) {
-    console.log(error.data.message);
+    console.log(error?.message);
     return null;
   }
 };
