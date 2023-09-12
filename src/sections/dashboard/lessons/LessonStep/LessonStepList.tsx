@@ -145,6 +145,7 @@ export default function LessonStepList({
   };
 
   if (isLoading || isLessonLoading) return <SkeletonList />;
+
   return (
     <Box sx={{ p: 2 }}>
       <Stack sx={{ gap: 2 }}>
@@ -161,7 +162,10 @@ export default function LessonStepList({
             name: lesson?.name as string,
             description: lesson?.description as string,
             active: lesson?.active as boolean,
+            tips: "",
           }}
+          lessonTips={lesson?.tips ?? []}
+          isEdit
         >
           <Button
             variant="outlined"

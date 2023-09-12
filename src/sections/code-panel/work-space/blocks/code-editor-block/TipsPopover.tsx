@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import {
   Box,
   Button,
+  List,
   Popper,
   Typography,
   useMediaQuery,
@@ -15,12 +16,14 @@ interface Props {
   openPoper: boolean;
   anchorEl: HTMLElement | null;
   setOpenPoper: (open: boolean) => void;
+  tips: string[];
 }
 
 export default function TipsPopover({
   openPoper,
   anchorEl,
   setOpenPoper,
+  tips,
 }: Props): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
@@ -28,6 +31,7 @@ export default function TipsPopover({
   if (!isDesktop && activeTab !== 1) {
     setOpenPoper(false);
   }
+
   return (
     <Popper
       id={"popper"}
@@ -36,7 +40,7 @@ export default function TipsPopover({
       sx={{
         width: isDesktop ? "20%" : "60%",
       }}
-      placement="left"
+      placement="left-end"
       modifiers={[
         {
           name: "offset",
@@ -64,9 +68,14 @@ export default function TipsPopover({
           },
         }}
       >
-        <Typography variant="body1" sx={{ color: "#fff" }}>
-          Remember to use the / back slash when closing a tag.
-        </Typography>
+        <List>
+          {tips.map((t, i) => (
+            <Typography key={t} variant="body1" sx={{ color: "#fff" }}>
+              {i + 1}. {t}
+            </Typography>
+          ))}
+        </List>
+
         <Button
           onClick={() => {
             setOpenPoper(false);

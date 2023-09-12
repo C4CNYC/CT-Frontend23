@@ -2,7 +2,13 @@
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
 import { managerApi } from ".";
-import { ILesson, ILessonCreate, ILessonDelete, ILessonSearchParams } from "../interfaces/courseUnits.interface";
+import {
+  ILesson,
+  ILessonCreate,
+  ILessonDelete,
+  ILessonSearchParams,
+  ILessonUpdate,
+} from "../interfaces/courseUnits.interface";
 import { IIntegration } from "../interfaces/integration.interface";
 
 const extendedApi = managerApi.injectEndpoints({
@@ -29,7 +35,7 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     updateLesson: builder.mutation<
       ILesson & BaseResponseInterface,
-      { id: string }
+      ILessonUpdate
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/lesson/${id}`,

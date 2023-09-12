@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import { useAtom } from "jotai";
 import { AiOutlineCode } from "react-icons/ai";
 import { BsChatText } from "react-icons/bs";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
@@ -13,9 +14,11 @@ import {
   useTheme,
 } from "@mui/material";
 
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import SolutionMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/SolutionMobileDialog";
 import TipsMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/TIpsMobileDialog";
 import UnstuckMobileDialog from "@sections/code-panel/top-bar/nav-bar/options/help-popup/options/UnstuckMobileDialog";
+import { useGetLessonStudentQuery } from "src/redux/services/manager/lesson-student";
 
 import TipsPopover from "./TipsPopover";
 
@@ -39,15 +42,21 @@ export default function MumuSpeedDial({ typing }: Props): React.ReactElement {
   const [openPoper, setOpenPoper] = useState<boolean>(false);
   const [speedDeal, setSpeedDial] = useState<boolean>(false);
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null);
+
+  const [{ lessonId }] = useAtom(globalCodePanelAtom);
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
+
   const openSpeedDial = () => {
     setSpeedDial(true);
   };
   const closeSpeedDial = () => {
     setSpeedDial(false);
   };
+
   const handleCloseDialog = () => {
     setDialogType(null);
   };
+
   useEffect(() => {
     setAnchorEl(popperRef.current);
   }, []);
@@ -71,11 +80,15 @@ export default function MumuSpeedDial({ typing }: Props): React.ReactElement {
 
   return (
     <>
-      <TipsPopover
-        anchorEl={anchorEl}
-        openPoper={openPoper}
-        setOpenPoper={setOpenPoper}
-      />
+      {!isLoading && data?.tips.length ? (
+        <TipsPopover
+          anchorEl={anchorEl}
+          openPoper={openPoper}
+          setOpenPoper={setOpenPoper}
+          tips={data.tips}
+        />
+      ) : null}
+
       <SpeedDial
         ref={popperRef}
         aria-describedby={"popper"}
@@ -147,6 +160,8 @@ export default function MumuSpeedDial({ typing }: Props): React.ReactElement {
       <TipsMobileDialog
         open={dialogType === IActionDialogType.tips}
         onClose={handleCloseDialog}
+        isLoading={isLoading}
+        tips={data?.tips}
       />
       <SolutionMobileDialog
         open={dialogType === IActionDialogType.solution}

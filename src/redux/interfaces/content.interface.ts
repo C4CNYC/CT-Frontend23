@@ -62,6 +62,7 @@ export interface ILesson {
   description: string;
   integrations: Array<IIntegration & BaseResponseInterface>;
   id: string;
+  tips: string[] | [];
   progress?: number;
   skills: ISkill[];
 }
