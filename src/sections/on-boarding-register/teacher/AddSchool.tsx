@@ -47,11 +47,11 @@ export default function AddSchool(): React.ReactElement {
   useEffect(() => {
     if (!isLoading && data) {
       methods.reset({
-        schoolName: data.data[0].name ?? "",
-        type: data.data[0].type ?? SchoolType.Other,
-        city: data.data[0].city ?? "",
-        zip: data.data[0].zip ?? "",
-        country: data.data[0].country ?? "",
+        schoolName: data?.data[0]?.name ?? "",
+        type: data?.data[0]?.type ?? SchoolType.Other,
+        city: data?.data[0]?.city ?? "",
+        zip: data?.data[0]?.zip ?? "",
+        country: data?.data[0]?.country ?? "",
       });
     }
   }, [isLoading]);
