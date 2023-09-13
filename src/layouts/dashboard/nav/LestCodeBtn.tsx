@@ -70,7 +70,11 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
     >
       {!isMini ? "Let's Code" : ""}
 
-      <Iconify icon="mingcute:code-fill" width={25} height={25} />
+      {isMini ? (
+        <Iconify icon="mingcute:code-fill" width={25} height={25} />
+      ) : (
+        <Iconify icon="octicon:chevron-right-12" width={25} height={25} />
+      )}
     </Button>
   );
 }
