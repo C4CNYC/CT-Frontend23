@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react"
 
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 
@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { IModuleContent } from "src/redux/interfaces/content.interface";
+import { IModuleContent, LastVisitedData } from "src/redux/interfaces/content.interface"
 
 import ModuleInfoDialog from "../ModuleInfoDialog";
 import ImageLightBox from "./ImageLightBox";
@@ -20,8 +20,10 @@ import ModuleProgress from "./ModuleProgress";
 interface IModuleItemProps {
   index: number;
   active?: boolean;
-  setActive: Dispatch<SetStateAction<number>>;
+  setActive: Dispatch<SetStateAction<number | null>>;
   unit: IModuleContent;
+  isLoadingLesson: boolean;
+  lastVisitedData?: LastVisitedData;
 }
 
 export default function ModuleItem({
@@ -29,6 +31,8 @@ export default function ModuleItem({
   index,
   setActive,
   unit,
+  isLoadingLesson,
+  lastVisitedData,
 }: IModuleItemProps): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1050));
@@ -36,7 +40,7 @@ export default function ModuleItem({
   return (
     <Stack
       onClick={() => {
-        if (!active) {
+        if (!active && !isLoadingLesson) {
           setActive(index);
         }
       }}
@@ -73,7 +77,7 @@ export default function ModuleItem({
           }}
         />
       </ImageLightBox>
-      <ModuleInfoDialog unit={unit}>
+      <ModuleInfoDialog unit={unit} setActive={setActive} index={index} lastVisitedData={lastVisitedData}>
         <Stack
           sx={{
             p: 2,

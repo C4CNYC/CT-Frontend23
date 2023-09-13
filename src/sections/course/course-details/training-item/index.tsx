@@ -13,10 +13,18 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 
 import TrainingProgress from "./TrainingProgress";
+import { useAtom } from "jotai";
+import { globalCodePanelAtom, IGlobalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 
 interface ITrainingsItemProps {
   lesson: ILessonCurrent;
   unitId: string;
+}
+
+interface IUpdateCodePanelAtom {
+  courseId: string;
+  unitId: string;
+  lessonId: string;
 }
 
 const MAX_DESC = 50;
@@ -26,8 +34,18 @@ export default function TrainingsItem({
   unitId,
 }: ITrainingsItemProps): React.ReactElement {
   const [openDetails, setOpenDetails] = useState(false);
+  const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
 
   const courseId = useRouter().query.id;
+
+  const updateCodePanelAtom = ({ courseId, unitId, lessonId }: IUpdateCodePanelAtom) => {
+    setGlobalCodePanel((prev: IGlobalCodePanelAtom) => ({
+        ...prev,
+        courseId,
+        unitId,
+        lessonId,
+      }));
+  }
 
   return (
     <Stack
@@ -120,6 +138,11 @@ export default function TrainingsItem({
             borderRadius: "50%",
             display: "flex",
             p: 1,
+          }}
+          onClick={() => {
+            updateCodePanelAtom({
+            courseId: courseId as string, unitId, lessonId: lesson.id
+            })
           }}
         >
           {/* <svg width="0" height="0">
