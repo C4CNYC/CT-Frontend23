@@ -1,19 +1,37 @@
-import { Alert } from "@mui/material";
+import { useAtom } from "jotai";
+
+import { Alert, Box, Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
 
-const list = [
-  "The double quotation marks are one character \" and not two single quotation ' marks.",
-  "The double quotation marks are one character \" and not two single quotation ' marks.",
-];
+import { EmptyContent } from "@components";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+import { useGetLessonStudentQuery } from "src/redux/services/manager/lesson-student";
 
 const Tips = (): React.ReactElement => {
+  const [{ lessonId }] = useAtom(globalCodePanelAtom);
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
+
+  if (isLoading) {
+    return (
+      <Stack spacing={2}>
+        <Skeleton variant="rounded" width="100%" height="50px" />
+      </Stack>
+    );
+  }
+
   return (
     <Stack spacing={2}>
-      {list.map((t, i) => (
-        <Alert key={i} severity="info">
-          {t}
-        </Alert>
-      ))}
+      {data?.tips.length ? (
+        data?.tips?.map((t, i) => (
+          <Alert key={i} severity="info">
+            {t}
+          </Alert>
+        ))
+      ) : (
+        <Box sx={{ height: "300px" }}>
+          <EmptyContent title="No data" />
+        </Box>
+      )}
     </Stack>
   );
 };

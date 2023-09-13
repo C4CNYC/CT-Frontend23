@@ -171,7 +171,9 @@ export default function LessonCard({
             name: lesson.name,
             description: lesson.description,
             active: lesson.active,
+            tips: "",
           }}
+          lessonTips={lesson.tips}
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
