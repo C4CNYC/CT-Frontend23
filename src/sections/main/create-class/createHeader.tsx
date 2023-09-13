@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 
 import { RHFTextField } from "@components";
@@ -11,6 +11,7 @@ export default function CreateHeader({
   choosenColor,
 }: ICreateHeaderProps): React.ReactElement {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   return (
     <Stack
       sx={{
@@ -19,7 +20,7 @@ export default function CreateHeader({
         background: choosenColor,
         minHeight: "400px",
         justifyContent: "center",
-        px: 8,
+        px: { xs: 1, sm: 4, md: 8 },
       }}
     >
       <Stack>
@@ -34,15 +35,17 @@ export default function CreateHeader({
             name="name"
             autoComplete="off"
             inputRef={(input) => input && input.focus()}
-            placeholder="Enter a class name here ... "
+            placeholder={
+              isMobile ? "Enter a class name here ... " : "Enter name ..."
+            }
             inputProps={{
               style: {
-                fontSize: "62px",
                 padding: 0,
                 color: theme.palette.primary.contrastText,
                 fontWeight: 700,
               },
               sx: {
+                fontSize: { xs: "42px", sm: "52px", md: "62px" },
                 "&::placeholder": {
                   opacity: 0.4,
                 },
@@ -64,16 +67,15 @@ export default function CreateHeader({
           <RHFTextField
             name="description"
             autoComplete="off"
-            inputRef={(input) => input && input.focus()}
             placeholder="and description here ... "
             inputProps={{
               style: {
-                fontSize: "32px",
                 padding: 0,
                 color: theme.palette.primary.contrastText,
                 fontWeight: 700,
               },
               sx: {
+                fontSize: { xs: "24px", sm: "32px" },
                 "&::placeholder": {
                   opacity: 0.4,
                 },

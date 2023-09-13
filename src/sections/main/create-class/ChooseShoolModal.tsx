@@ -11,17 +11,17 @@ import {
   Divider,
   Select,
   SelectChangeEvent,
-  Skeleton,
   Typography,
 } from "@mui/material";
 
-import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
+import { ISchool } from "src/redux/services/interfaces/school.interface";
 
 interface IChooseShoolModalProps {
   openDialog: boolean;
   setOpenDialog: (open: boolean) => void;
   schoolId: string;
   setSchoolId: (id: string) => void;
+  schools?: ISchool[];
 }
 
 export default function ChooseShoolModal({
@@ -29,18 +29,18 @@ export default function ChooseShoolModal({
   setOpenDialog,
   schoolId,
   setSchoolId,
+  schools,
 }: IChooseShoolModalProps): React.ReactElement {
   const { back } = useRouter();
-  const { data, isLoading } = useGetMySchoolsQuery({});
   const handleChange = (event: SelectChangeEvent) => {
     setSchoolId(event.target.value as string);
   };
 
   useEffect(() => {
-    if (data) {
-      setSchoolId(data.data[0].id);
+    if (schools) {
+      setSchoolId(schools[0].id);
     }
-  }, [isLoading]);
+  }, []);
 
   return (
     <Dialog open={openDialog} maxWidth="xs">
@@ -59,27 +59,23 @@ export default function ChooseShoolModal({
           <Typography variant="h6" sx={{ ml: 1, mt: 3 }}>
             Choose school:
           </Typography>
-          {!isLoading ? (
-            <Select
-              native
-              name="schoolId"
-              value={schoolId}
-              onChange={handleChange}
-              sx={{ width: "100%", mt: 1, mb: 6 }}
-            >
-              {data?.data ? (
-                <>
-                  {data.data.map((el) => (
-                    <option key={el.id} value={el.id}>
-                      {el.name}
-                    </option>
-                  ))}
-                </>
-              ) : null}
-            </Select>
-          ) : (
-            <Skeleton variant="rounded" sx={{ height: "56px", mt: 1, mb: 6 }} />
-          )}
+          <Select
+            native
+            name="schoolId"
+            value={schoolId}
+            onChange={handleChange}
+            sx={{ width: "100%", mt: 1, mb: 6 }}
+          >
+            {schools ? (
+              <>
+                {schools.map((el) => (
+                  <option key={el.id} value={el.id}>
+                    {el.name}
+                  </option>
+                ))}
+              </>
+            ) : null}
+          </Select>
         </Box>
       </DialogContent>
       <DialogActions>
@@ -96,7 +92,6 @@ export default function ChooseShoolModal({
           onClick={() => {
             setOpenDialog(false);
           }}
-          disabled={isLoading}
           variant="contained"
           color="secondary"
         >

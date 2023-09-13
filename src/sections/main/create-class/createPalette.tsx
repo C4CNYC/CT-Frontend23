@@ -2,7 +2,15 @@ import { useState } from "react";
 
 import { BsBookmarkCheckFill } from "react-icons/bs";
 
-import { Box, Button, Collapse, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  Tab,
+  Tabs,
+  alpha,
+  useTheme,
+} from "@mui/material";
 
 interface ICreatePaletteProps {
   choosenColor: string;
@@ -20,7 +28,7 @@ export default function CreatePalette({
   };
 
   return (
-    <Box sx={{ width: "100%", pt: 2, px: 3 }}>
+    <Box sx={{ width: "100%", pt: 2, px: { xs: 1, sm: 2, md: 3 } }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -38,17 +46,19 @@ export default function CreatePalette({
       </Box>
       <CustomTabPanel value={value} index={0}>
         <Box
-          gap={2}
-          p={2}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(3, 1fr)",
-            sm: "repeat(3, 1fr)",
-            md: "repeat(4, 1fr)",
-            lg: "repeat(6, 1fr)",
+          sx={{
+            gap: 2,
+            py: 2,
+            px: 1,
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(3, 1fr)",
+              sm: "repeat(3, 1fr)",
+              md: "repeat(4, 1fr)",
+              lg: "repeat(6, 1fr)",
+            },
           }}
         >
-          {/* change to btn */}
           {CLASS_PALETTE.map((el) => (
             <Button
               onClick={() => {
@@ -62,7 +72,7 @@ export default function CreatePalette({
                     : "none",
                 width: "100%",
                 maxWidth: "250px",
-                height: "130px",
+                height: { xs: "100px", sm: "130px" },
                 position: "relative",
                 background: el,
                 "&:hover": {
@@ -96,7 +106,6 @@ export const CLASS_PALETTE = [
   "#ff6f69",
   "#ffcc5c",
   "#854442",
-  "#fff4e6",
   "#3c2f2f",
   "#ebf4f6",
   "#bdeaee",
@@ -119,6 +128,7 @@ interface TabPanelProps {
 }
 
 function CustomTabPanel(props: TabPanelProps) {
+  const theme = useTheme();
   const { children, value, index, ...other } = props;
 
   return (
@@ -129,7 +139,23 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && children}
+      <Box
+        sx={{
+          maxHeight: "460px",
+          overflowY: "auto",
+          overflowX: "none",
+          scrollbarWidth: "2px",
+          "&::-webkit-scrollbar": {
+            width: "0.3em",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: alpha(theme.palette.grey[600], 0.48),
+            borderRadius: "2px",
+          },
+        }}
+      >
+        {value === index && children}
+      </Box>
     </div>
   );
 }
