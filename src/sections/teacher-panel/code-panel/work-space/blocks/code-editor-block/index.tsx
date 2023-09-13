@@ -52,7 +52,7 @@ ICodeEditorBlock): React.ReactElement | null => {
         socket={socket}
         roomId={query?.id as string}
         colabCursonId={user?.email}
-        colabCursonText={`${user?.first_name} ${user?.last_name}`}
+        colabCursonText={`${user?.first_name}`}
         onChangeCode={(code) => {
           setCode(code);
           onChangeCode(code);
