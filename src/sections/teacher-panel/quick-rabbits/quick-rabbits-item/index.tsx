@@ -35,21 +35,22 @@ export default function QuickRabbitsItem({
 }: IQuickRabbitsItem): React.ReactElement | null {
   const { query } = useRouter();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  
   const [view, setView] = useState<TabbitView>(
     rabit.email === GROUP_CHAT_RABBIT ? TabbitView.CHAT : TabbitView.CODE
   );
 
   const { data: realTimeData } = useRealTimeConnection(rabit.id);
-
+  
   const { data: students } = useGetStudentsQuery(
     {
       schoolId,
-      class_id: query.id as string,
+      class_id: query?.id as string,
     },
-    { skip: !query.id }
+    { skip: !query?.id }
   );
 
-  const isRabbitActive = rabit.id === query.studentId;
+  const isRabbitActive = rabit?.id === query?.id;
 
   if (!rabit) return null;
 

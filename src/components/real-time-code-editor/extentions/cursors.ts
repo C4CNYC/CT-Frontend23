@@ -213,7 +213,7 @@ const cursorBaseTheme = EditorView.baseTheme({
 
 export function cursorExtension(id = ""): any[] {
   return [
-    cursorField(id),
+    // cursorField(""),
     cursorBaseTheme,
     EditorView.updateListener.of((update) => {
       update.transactions.forEach((e) => {
