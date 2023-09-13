@@ -27,7 +27,6 @@ import {
   useGetLessonStudentQuery, useUpdateStudentLastVisitedDataMutation,
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
-import { useSearchParams } from "next/navigation";
 import { isValidLastVisitedData } from "@sections/code-panel/helpers";
 import { LastVisitedState } from "../../../redux/interfaces/content.interface";
 
@@ -57,15 +56,14 @@ export default function Index(): React.ReactElement | null {
   const handle = useFullScreenHandle();
   const { push, query, replace } = useRouter();
   const { user } = useAuthContext();
-  const searchParams = useSearchParams();
 
   const [confetti, setConfetti] = useState(false);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
-  const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({ unitId: null, lessonId: null });
-  const unitId = searchParams.get("unitId");
-  const lessonId = searchParams.get("lessonId");
+  const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>(
+    { unitId: null, lessonId: null, courseId: null }
+  );
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
     useAtom(globalCodePanelAtom);
@@ -196,11 +194,14 @@ export default function Index(): React.ReactElement | null {
   }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
 
   useEffect(() => {
-    setLastVisitedData({
-      unitId,
-      lessonId
-    })
-  }, [unitId, lessonId])
+    if (query.id && query.lessonId && query.unitId) {
+      setLastVisitedData({
+        unitId: query.unitId as string,
+        lessonId: query.lessonId as string,
+        courseId: query.id as string,
+      })
+    }
+  }, [query.id, query.lessonId, query.unitId])
 
   useEffect(() => {
     return () => {

@@ -35,6 +35,7 @@ interface IModuleInfoDialogProps {
   lastVisitedData?: LastVisitedData;
   setActive: Dispatch<SetStateAction<number | null>>;
   index: number;
+  isLoadingLesson: boolean;
 }
 
 export default function ModuleInfoDialog ({
@@ -54,6 +55,10 @@ export default function ModuleInfoDialog ({
   );
 
   useEffect(() => {
+    if (!isLoading && !lastVisitedData) {
+      setActive(0);
+      return;
+    }
     if (data && lastVisitedData) {
       const { lastVisitedUnitId, lastVisitedLessonId } = lastVisitedData;
       data.forEach((lesson) => {
