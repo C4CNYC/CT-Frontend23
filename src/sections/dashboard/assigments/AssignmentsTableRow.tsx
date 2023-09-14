@@ -17,13 +17,13 @@ import {
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { Status } from "src/redux/enums/assignments.enum";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 
 import { fDate } from "../../../utils/formatTime";
 import AssignmentDrawer from "./AssignmentDrawer";
 
 type Props = {
-  row: IAssignment;
+  row: IAssignmentFull;
   selected: boolean;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;

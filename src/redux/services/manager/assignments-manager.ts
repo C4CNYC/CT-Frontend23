@@ -3,15 +3,15 @@ import { BaseResponseInterface } from "@utils";
 
 import { managerApi } from ".";
 import {
-  IAssignment,
   IAssignmentCreate,
+  IAssignmentFull,
   IAssignmentUpdate,
 } from "../../interfaces/assignment.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getAssignment: builder.query<
-      IAssignment & BaseResponseInterface,
+      IAssignmentFull & BaseResponseInterface,
       { schoolId: string; assignmentId: string }
     >({
       query: ({ schoolId, assignmentId }) => ({
@@ -21,7 +21,7 @@ const extendedApi = managerApi.injectEndpoints({
       providesTags: ["Assignments", "Assignment"],
     }),
     getAssignmentList: builder.query<
-      Array<IAssignment & BaseResponseInterface>,
+      Array<IAssignmentFull & BaseResponseInterface>,
       { schoolId: string }
     >({
       query: ({ schoolId }) => ({
@@ -31,7 +31,7 @@ const extendedApi = managerApi.injectEndpoints({
       providesTags: ["Assignments", "Assignment"],
     }),
     createAssignment: builder.mutation<
-      IAssignment & BaseResponseInterface,
+      IAssignmentFull & BaseResponseInterface,
       {
         schoolId: string;
       } & IAssignmentCreate
