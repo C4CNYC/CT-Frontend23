@@ -1,16 +1,14 @@
-import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
 import { MdOutlineTimer } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 
 import {
-  Button,
-  Grid,
   IconButton,
   InputBase,
   Popover,
   PopoverVirtualElement,
+  Stack,
   Typography,
 } from "@mui/material";
 
@@ -158,15 +156,14 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
           classes: { root: classes.paper },
         }}
       >
-        <Grid
-          container
+        <Stack
           direction="column"
           classes={{ root: classes.container }}
           alignItems="center"
           justifyContent="space-around"
         >
           {!start && !finish ? (
-            <Grid container direction="column" alignItems="center">
+            <Stack direction="column" alignItems="center">
               <InputBase
                 type="number"
                 value={minutes}
@@ -174,11 +171,11 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
                 classes={{ root: classes.inputNumber }}
               />
               <Typography variant="body1" classes={{ root: classes.textHint }}>
-                Minutes
+                {String(minutes) === "1" ? "Minute" : "Minutes"}
               </Typography>
-            </Grid>
+            </Stack>
           ) : start && !finish ? (
-            <Grid container direction="column" alignItems="center">
+            <Stack direction="column" alignItems="center">
               <CircularProgressWithLabel
                 width={112}
                 height={112}
@@ -189,12 +186,11 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
                 time={time}
               />
               <Typography variant="body1" classes={{ root: classes.textHint }}>
-                Minutes
+                {String(minutes) === "1" ? "Minute" : "Minutes"}
               </Typography>
-            </Grid>
+            </Stack>
           ) : (
-            <Grid
-              container
+            <Stack
               direction="column"
               alignItems="center"
               justifyContent="space-between"
@@ -203,17 +199,23 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
                 variant="body1"
                 classes={{ root: classes.finishText }}
               >
-                Great Job! High-five...
+                Great Job! High-five!
               </Typography>
-              <Image
+              <img
                 src="https://i.giphy.com/l4HogV6533Je2oG40.gif"
-                className={classes.gif}
-                alt="The timer has ended"
+                width="150px"
+                height="130px"
+                alt="Your GIF"
               />
-            </Grid>
+            </Stack>
           )}
           {!start && !finish ? (
-            <Grid container justifyContent="space-between">
+            <Stack
+              direction="row"
+              gap={2}
+              mt={2}
+              justifyContent="space-between"
+            >
               <TimerButton
                 text="CANCEL"
                 color="#C4C4C4"
@@ -225,9 +227,14 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
                 disabled={minutes < 1}
                 onClick={onStartClick}
               />
-            </Grid>
+            </Stack>
           ) : start && !finish ? (
-            <Grid container justifyContent="space-between">
+            <Stack
+              direction="row"
+              gap={2}
+              mt={2}
+              justifyContent="space-between"
+            >
               {pause ? (
                 <TimerButton
                   text="RESUME"
@@ -246,9 +253,9 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
                 color="#000000"
                 onClick={onKeepCodingClick}
               />
-            </Grid>
+            </Stack>
           ) : (
-            <Grid container justifyContent="space-between">
+            <Stack direction="row" gap={2} justifyContent="space-between">
               <TimerButton
                 text="CLOSE"
                 color="#C4C4C4"
@@ -259,15 +266,15 @@ const Timer = ({ mobile }: Props): React.ReactElement => {
                 color="#43D4DD"
                 onClick={onRestartClick}
               />
-            </Grid>
+            </Stack>
           )}
-        </Grid>
-        <Button
+        </Stack>
+        <IconButton
           className={classes.closeButton}
           onClick={start ? onKeepCodingClick : onCloseClick}
         >
-          <RxCross2 />
-        </Button>
+          <RxCross2 size={25} />
+        </IconButton>
       </Popover>
     </span>
   );
