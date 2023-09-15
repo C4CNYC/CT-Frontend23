@@ -1,11 +1,12 @@
 import { useRouter } from "next/router";
 
-import { AppBar, IconButton, Stack, Toolbar } from "@mui/material";
+import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import { Iconify, Logo, useSettingsContext } from "@components";
 import { useOffSetTop, useResponsive } from "@hooks";
 import { bgBlur } from "@utils";
+import { useSelector } from "src/redux/store";
 
 import { HEADER, NAV } from "../../../config-global";
 import AccountPopover from "./AccountPopover";
@@ -23,6 +24,7 @@ export default function Header({
 }: Props): React.ReactElement | null {
   const theme = useTheme();
   const router = useRouter();
+  const user = useSelector((state) => state.global.user);
 
   const { themeLayout } = useSettingsContext();
 
@@ -47,7 +49,18 @@ export default function Header({
       )}
 
       {isSchoolSection ? <NavAccount /> : null}
-
+      <Typography
+        variant="h4"
+        sx={{
+          color: "rgba(54, 73, 84, 1)",
+          display: "flex",
+          gap: 3,
+          alignItems: "center",
+        }}
+      >
+        Hey {user?.first_name ? user.first_name : "friend"}
+        <Typography variant="h3">👋</Typography>
+      </Typography>
       <Stack
         flexGrow={1}
         direction="row"

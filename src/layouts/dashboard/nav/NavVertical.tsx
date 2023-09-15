@@ -7,7 +7,6 @@ import { Box, Drawer, Stack } from "@mui/material";
 
 import { Logo, NavSectionVertical, Scrollbar } from "@components";
 import { useResponsive } from "@hooks";
-import UserSection from "@sections/info/user-section";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 
@@ -63,7 +62,6 @@ export default function NavVertical({
           }}
         >
           <Logo />
-          <UserSection />
           {!isManager ? <LetsCodeBtn /> : null}
         </Stack>
 
