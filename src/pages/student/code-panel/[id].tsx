@@ -123,6 +123,9 @@ export default function Index(): React.ReactElement | null {
   useEffect(() => {
     if (!courseContent) return;
     if (!atomLessonId && !atomUnitId) {
+      if (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id) {
+        push(STUDENT_PATH_DASHBOARD.page404);
+      }
       onOpenLesson(
         courseContent.units[0].lessons[0].id,
         courseContent.units[0].id
@@ -181,13 +184,18 @@ export default function Index(): React.ReactElement | null {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
+
   useEffect(() => {
     setGlobalCodePanel((prev) => ({
       ...prev,
       isFullScreenView: handle.active,
     }));
   }, [handle.active]);
+
   useEffect(() => {
+    if (!query.id) {
+      push(STUDENT_PATH_DASHBOARD.page404);
+    }
     setGlobalCodePanel((prev) => ({
       ...prev,
       fullScreenOpen: handle.enter,
