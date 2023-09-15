@@ -12,7 +12,6 @@ import {
   updateFontSize,
   updateLineWrap,
 } from "@components";
-// import ChatVisible from "./preferences/ChatVisible";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
 
@@ -29,6 +28,7 @@ const SettingDrawer = (): React.ReactElement => {
   const [, setStartTour] = useAtom(startTour);
 
   const onStartIntro = (): void => {
+    setDrawer(false);
     setStartTour({ start: true });
   };
 
@@ -85,8 +85,6 @@ const SettingDrawer = (): React.ReactElement => {
                 window.dispatchEvent(updateLineWrap({ detail: { wrap } }));
               }}
             />
-            <Typography variant="body1">SHOW OR HIDE:</Typography>
-            {/* <ChatVisible chatVisible onUpdateChatVisible={() => {}} /> */}
             <Typography variant="body1">CUSTOMIZE:</Typography>
             <EditColors
               onUpdateColors={(data) => {
