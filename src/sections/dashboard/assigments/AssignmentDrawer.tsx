@@ -30,14 +30,14 @@ import {
 } from "@components";
 import SkillsAutocomplete from "@sections/main/quests/add-quest/components/SkillsAutocomplete";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 import { ISkill } from "src/redux/interfaces/content.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
 interface IAssignmentDarawerProps {
   openDetails: boolean;
   onCloseDetails: () => void;
-  assignment: IAssignment;
+  assignment: IAssignmentFull;
 }
 const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
 const DATE_PARSER = (data: string | Date) => new Date(data);

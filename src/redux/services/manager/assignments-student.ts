@@ -3,14 +3,15 @@ import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 
 import { managerApi } from ".";
 import {
-  IAssignment,
+  IAssignmentFull,
+  IAssignmentReduced,
   IAssignmetsSearchParams,
 } from "../../interfaces/assignment.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
     getAssignmentStudent: builder.query<
-      IAssignment & BaseResponseInterface,
+      IAssignmentFull & BaseResponseInterface,
       { assignmentId: string } & IAssignmetsSearchParams
     >({
       query: ({ assignmentId, ...params }) => ({
@@ -21,7 +22,7 @@ const extendedApi = managerApi.injectEndpoints({
       providesTags: ["Assignment"],
     }),
     getAssignmentListStudent: builder.query<
-      BaseListResponseInterface<IAssignment & BaseResponseInterface>,
+      BaseListResponseInterface<IAssignmentReduced & BaseResponseInterface>,
       { class_id: string }
     >({
       query: ({ ...params }) => ({
@@ -31,6 +32,30 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["Assignments"],
     }),
+    pinAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+      }
+    >({
+      query: ({ assignmentId }) => ({
+        url: `/student/assignment/${assignmentId}/pin`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Assignments", "Assignment"],
+    }),
+    unpinAssignment: builder.mutation<
+      void,
+      {
+        assignmentId: string;
+      }
+    >({
+      query: ({ assignmentId }) => ({
+        url: `/student/assignment/${assignmentId}/unpin`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Assignments", "Assignment"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -39,4 +64,6 @@ export const {
   useGetAssignmentListStudentQuery,
   useGetAssignmentStudentQuery,
   // -------------mutation-----------
+  usePinAssignmentMutation,
+  useUnpinAssignmentMutation,
 } = extendedApi;
