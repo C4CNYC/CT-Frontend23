@@ -16,11 +16,10 @@ export const QuickRabbits = (): React.ReactElement => {
   const dispatch = useDispatch();
   const { query, push } = useRouter();
   const rabits = useSelector((state: RootState) => state.rabits.items);
-
   const onClose = (userId: string): void => {
     dispatch(removeRabit({ id: userId }))
-    if (userId === query.studentId) {
-      push(MANAGER_PATH_DASHBOARD.school.controller(query.id as string));
+    if (userId === query?.id) {
+      push(MANAGER_PATH_DASHBOARD.school.controller(query?.id as string));
     }
   };
 

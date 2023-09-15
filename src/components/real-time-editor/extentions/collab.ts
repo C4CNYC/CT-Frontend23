@@ -87,7 +87,7 @@ export async function getDocument(
     socket.once("getDocumentResponse", function (version: number, doc: string) {
       resolve({
         version,
-        doc: Text.of(doc?.split("\n") || [""]),
+        doc: Text.of(doc.split("\n")),
       });
     });
   });
