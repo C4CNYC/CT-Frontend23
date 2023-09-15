@@ -30,6 +30,7 @@ const app = initializeApp({
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 });
+
 const db = getFirestore(app);
 
 interface FirebaseChatApi {
@@ -46,10 +47,10 @@ interface FirebaseChatApi {
     limit?: number
   ) => void;
 }
+
 export const useFirebaseChat = (): FirebaseChatApi => {
-  const classId = useSelector(
-    (state: RootState) => state.global?.user?.classes?.[0]?.id
-  );
+  const classId = useSelector((state: RootState) => state.codePanel?.class?.id);
+
   return {
     sendMessage: async (
       message: string,

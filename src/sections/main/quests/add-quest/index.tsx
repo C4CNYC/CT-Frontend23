@@ -46,7 +46,7 @@ const RANDOM_NAME = uniqueNamesGenerator({
   length: 2,
 });
 
-const DATE_PARSER = (date?: Date, increment: number = 0) =>
+const DATE_PARSER = (date?: string, increment: number = 0) =>
   date ? new Date(date) : add(new Date(), { days: increment });
 const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
 const DAYS_TO_END = 7;

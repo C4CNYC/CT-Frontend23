@@ -1,36 +1,44 @@
 import { ICourse } from "@types";
-import { BaseResponseInterface, BaseSearchInterface } from "@utils";
+import { BaseSearchInterface } from "@utils";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { IClass } from "src/redux/interfaces/class.interface";
 import { ISkill } from "src/redux/interfaces/content.interface";
 
 import { Status } from "../enums/assignments.enum";
-import { ILesson } from "../services/interfaces/courseUnits.interface";
-import { ITask } from "../services/interfaces/task.interface";
+import { IClass } from "./class.interface";
 
-export interface IAssignment {
+export interface IAssignmentReduced {
   id: string;
-  course_progress: null | string;
-  createdAt: string;
   createdat: string;
+  name: string;
+  type: AssignmentTypes;
+  status: string;
+  duration: null | string;
+  start_date: string;
+  end_date: string;
+  close_date: string;
+  courseid: string;
+  course_progress: null;
+  pined: string;
+  pined_assignment_id: string;
+}
+
+export interface IAssignmentFull {
+  id: string;
+  createdAt: string;
   updatedAt: string;
   name: string;
-  course: ICourse;
   description: string;
   type: AssignmentTypes;
   status: string;
+  duration: null | string;
   active: boolean;
-  start_date: Date;
-  end_date: Date;
-  close_date: Date;
-  duration?: { hours: string; minutes: string };
-  assignee_classes: Array<IClass & BaseResponseInterface>;
-  lesson: ILesson & BaseResponseInterface;
-  code_assignment: ITask & BaseResponseInterface;
-  tags?: string[];
-  students?: string[];
+  start_date: string;
+  end_date: string;
+  close_date: string;
   meta: Record<string, any>;
-  skill_tags?: ISkill[];
+  course: ICourse;
+  skill_tags: ISkill[];
+  assignee_classes: IClass[];
 }
 
 export interface IAssignmentUpdate {

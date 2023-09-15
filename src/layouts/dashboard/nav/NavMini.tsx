@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { Box, Stack } from "@mui/material";
 
 import { LogoMin, NavSectionMini } from "@components";
-import UserSection from "@sections/info/user-section";
 import { hideScrollbarX } from "@utils";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
@@ -54,7 +53,6 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
             ml: 2.6,
           }}
         />
-        <UserSection isMini={true} />
         {!isManager ? <LetsCodeBtn isMini /> : null}
         <NavSectionMini data={menu} />
       </Stack>

@@ -86,8 +86,8 @@ const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
       <CheckersCompleated />
       <Stack
         sx={{
-          top: isDesktop ? "40px" : "20px",
-          right: !isBrowserHidden || !isInstructionsHidden ? "15px" : "45px",
+          top: isBrowserHidden ? "40px" : "38px",
+          right: isBrowserHidden ? "45px" : "15px",
           position: "absolute",
           zIndex: 300,
         }}

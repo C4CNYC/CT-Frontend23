@@ -8,15 +8,11 @@ import { Box, Button, Typography } from "@mui/material";
 
 import { MotionContainer, varBounce } from "@components";
 import CompactLayout from "@layouts/compact";
-import { PATH_DASHBOARD } from "@routes/paths";
-
-// ----------------------------------------------------------------------
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 Page404.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>
 );
-
-// ----------------------------------------------------------------------
 
 export default function Page404(): React.ReactElement {
   return (
@@ -49,7 +45,7 @@ export default function Page404(): React.ReactElement {
           <Box display="flex" flexDirection="row">
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.root}
+              href={STUDENT_PATH_DASHBOARD.class.root}
               size="large"
               variant="contained"
               fullWidth
@@ -58,7 +54,7 @@ export default function Page404(): React.ReactElement {
             </Button>
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.gallery.root}
+              href={STUDENT_PATH_DASHBOARD.gallery.root}
               size="large"
               variant="contained"
               fullWidth
@@ -71,12 +67,12 @@ export default function Page404(): React.ReactElement {
             </Button>
             <Button
               component={NextLink}
-              href={PATH_DASHBOARD.codePanel.root}
+              href={STUDENT_PATH_DASHBOARD.courses.root}
               size="large"
               variant="contained"
               fullWidth
             >
-              Keep Coding
+              Catalog
             </Button>
           </Box>
         </m.div>

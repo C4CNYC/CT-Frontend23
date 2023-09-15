@@ -24,7 +24,8 @@ import { useAuthContext } from "src/auth/useAuthContext";
 import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
 import {
   useGetLessonContentStudentQuery,
-  useGetLessonStudentQuery, useUpdateStudentLastVisitedDataMutation,
+  useGetLessonStudentQuery,
+  useUpdateStudentLastVisitedDataMutation,
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
 import { isValidLastVisitedData } from "@sections/code-panel/helpers";
@@ -72,7 +73,8 @@ export default function Index(): React.ReactElement | null {
   useRealTimeConnection(user?.id);
 
   const [completeLesson] = useCompleteLessonMutation();
-  const [updateLastVisitedDataTrigger] = useUpdateStudentLastVisitedDataMutation();
+  const [updateLastVisitedDataTrigger] =
+    useUpdateStudentLastVisitedDataMutation();
 
   const { data, isLoading, isFetching } = useGetLessonContentStudentQuery(
     { id: query.lessonId as string },
@@ -108,13 +110,16 @@ export default function Index(): React.ReactElement | null {
 
   const updateLastVisitedData = async () => {
     if (isValidLastVisitedData(lastVisitedData)) {
-      await updateLastVisitedDataTrigger(lastVisitedData).unwrap()
+      await updateLastVisitedDataTrigger(lastVisitedData).unwrap();
     }
-  }
+  };
 
   useEffect(() => {
     if (!courseContent) return;
     if (!atomLessonId && !atomUnitId) {
+      if (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id) {
+        push(STUDENT_PATH_DASHBOARD.page404);
+      }
       onOpenLesson(
         courseContent.units[0].lessons[0].id,
         courseContent.units[0].id
@@ -173,13 +178,18 @@ export default function Index(): React.ReactElement | null {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
+
   useEffect(() => {
     setGlobalCodePanel((prev) => ({
       ...prev,
       isFullScreenView: handle.active,
     }));
   }, [handle.active]);
+
   useEffect(() => {
+    if (!query.id) {
+      push(STUDENT_PATH_DASHBOARD.page404);
+    }
     setGlobalCodePanel((prev) => ({
       ...prev,
       fullScreenOpen: handle.enter,
@@ -199,15 +209,15 @@ export default function Index(): React.ReactElement | null {
         unitId: query.unitId as string,
         lessonId: query.lessonId as string,
         courseId: query.id as string,
-      })
+      });
     }
-  }, [query.id, query.lessonId, query.unitId])
+  }, [query.id, query.lessonId, query.unitId]);
 
   useEffect(() => {
     return () => {
-      updateLastVisitedData()
-    }
-  }, [lastVisitedData])
+      updateLastVisitedData();
+    };
+  }, [lastVisitedData]);
 
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />;

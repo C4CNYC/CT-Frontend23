@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 
 import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
-import { BiCodeAlt } from "react-icons/bi";
 
 import { Button } from "@mui/material";
 
@@ -29,14 +28,14 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
             enqueueSnackbar("No course", { variant: "warning" });
           } else {
             push(
-              `/${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
                 data?.data[0].course_id as string
               )}`
             );
           }
         } else {
           push(
-            `/${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
               courseId
             )}?${unitId}&${lessonId}`
           );
@@ -70,7 +69,11 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
     >
       {!isMini ? "Let's Code" : ""}
 
-      <Iconify icon="mingcute:code-fill" width={25} height={25} />
+      {isMini ? (
+        <Iconify icon="mingcute:code-fill" width={25} height={25} />
+      ) : (
+        <Iconify icon="octicon:chevron-right-12" width={25} height={25} />
+      )}
     </Button>
   );
 }

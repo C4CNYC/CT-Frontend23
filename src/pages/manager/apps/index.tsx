@@ -115,7 +115,7 @@ export default function AppsPage(): React.ReactElement {
                       <TableCell align="left">Title</TableCell>
                       <TableCell align="left">Create</TableCell>
                       <TableCell align="left">Update</TableCell>
-                      <TableCell align="left"></TableCell>
+                      <TableCell align="right"></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -128,8 +128,12 @@ export default function AppsPage(): React.ReactElement {
                         <TableCell align="left">
                           {format(new Date(row.updatedAt), "MM/dd/yyyy")}
                         </TableCell>
-                        <TableCell align="left">
-                          <Stack direction="row" gap={2}>
+                        <TableCell align="right">
+                          <Stack
+                            direction="row"
+                            justifyContent="flex-end"
+                            gap={2}
+                          >
                             <ModalIntegration
                               isEdit
                               id={row.id}
