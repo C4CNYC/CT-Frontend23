@@ -94,7 +94,6 @@ const CodeEditorBlock = ({
       {user?.id ? (
         <RealTimeEditor
           preloadedCode={preloadedCode}
-          email={`${user?.first_name} ${user?.last_name?.[0]}.`}
           onChange={onChangeCode}
           userId={user?.id}
           code={code}

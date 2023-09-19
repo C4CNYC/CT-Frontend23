@@ -39,19 +39,19 @@ export const SymbolBtn = styled(Button)({
 export const CodingSymbols = memo(function CodingSymbols({
   symbolsHandler,
 }: Props): React.ReactElement {
-  const eventHandler = (symbol: string) => {
+  const eventHandler = (symbol: string): void => {
     window.dispatchEvent(pasteSymbolEvent({ detail: { symbol } }));
   };
+
   return (
     <Box
       sx={{
         position: "fixed",
-        bottom: "3px",
+        bottom: "0px",
         background: "rgba(21, 82, 117, 0.8)",
-        borderTopLeftRadius: "15px",
-        borderTopRightRadius: "15px",
-        width: "calc(100% - 7px)",
-        mx: "1px",
+        borderRadius: "20px",
+        width: "calc(100% - 5px)",
+        mx: "2px",
         height: "30px",
         display: "flex",
         justifyContent: "space-between",
@@ -155,7 +155,8 @@ export const CodingSymbols = memo(function CodingSymbols({
           symbolsHandler();
         }}
         sx={{
-          borderTopRightRadius: "15px",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
           background: "rgba(251, 221, 63, .2)",
           "&:hover": {
             background: "rgba(251, 221, 63, .4)",
@@ -172,15 +173,15 @@ export function CodingTools({ symbolsHandler }: Props): React.ReactElement {
     <Box
       sx={{
         position: "fixed",
-        bottom: "3px",
+        bottom: "0px",
         background: "rgba(238, 70, 122, 0.5)",
-        borderTopLeftRadius: "15px",
-        borderTopRightRadius: "15px",
-        width: "calc(100% - 7px)",
+        borderRadius: "20px",
+        width: "calc(100% - 5px)",
         height: "30px",
         display: "flex",
-        mx: "1px",
+        mx: "2px",
         justifyContent: "space-between",
+        overflow: "hidden",
       }}
     >
       <SymbolBtn
@@ -266,7 +267,8 @@ export function CodingTools({ symbolsHandler }: Props): React.ReactElement {
           symbolsHandler();
         }}
         sx={{
-          borderTopRightRadius: "15px",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
           background: "rgba(251, 221, 63, .2)",
           "&:hover": {
             background: "rgba(251, 221, 63, .4)",

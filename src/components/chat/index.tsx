@@ -89,12 +89,12 @@ export const Chat = ({
   const [isTeachersOpen] = useState<boolean>(false);
   const [{ message: helpMsg, sent }, updateAtom] = useAtom(helpMsgAtom);
 
+  console.log({ tribe, senderId, loggedUser, user, messages });
   useEffect(() => {
     if (!user) return;
     setMessages([]);
     getMessages(user.id, (messages, db) => {
       setMessages(messages);
-      console.log(messages);
     });
   }, [user]);
 

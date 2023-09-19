@@ -15,7 +15,6 @@ export interface State {
 
 interface IRealTimeEditor {
   userId: string;
-  email: string;
   preloadedCode: string;
   onChange: (value: string) => void;
   code: string;
@@ -27,7 +26,6 @@ const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 export const RealTimeEditor = memo(
   ({
     userId,
-    email,
     onChange,
     preloadedCode,
     code,
@@ -37,25 +35,30 @@ export const RealTimeEditor = memo(
       version: undefined,
       doc: undefined,
     });
+    const [socketError, setSocketError] = useState(true);
 
     const getStartData = (): void => {
-      getDocument(socket).then(({ version, doc }) => {
-        if (version === undefined || !doc) {
-          setTimeout(() => {
-            socket.emit("create", userId);
-            getStartData();
-          }, 3000);
-          return;
-        }
+      getDocument(socket)
+        .then(({ version, doc }) => {
+          if (version === undefined || !doc) {
+            setTimeout(() => {
+              socket.emit("create", userId);
+              getStartData();
+            }, 3000);
+            return;
+          }
 
-        setState((prev) => ({
-          ...prev,
-          version,
-          connected: true,
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
-          doc: doc?.toString(),
-        }));
-      });
+          setState((prev) => ({
+            ...prev,
+            version,
+            connected: true,
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
+            doc: doc?.toString(),
+          }));
+        })
+        .catch((error) => {
+          setSocketError(true);
+        });
     };
 
     useEffect(() => {
@@ -107,6 +110,18 @@ export const RealTimeEditor = memo(
       return <EditorSkeleton />;
     }
 
+    if (socketError) {
+      return (
+        <CodeEditor
+          state={undefined}
+          preloadedCode={preloadedCode}
+          onChangeCode={onChange}
+          socket={socket}
+          code={code}
+        />
+      );
+    }
+
     return (
       <>
         <style>
@@ -114,12 +129,10 @@ export const RealTimeEditor = memo(
           .cm-editor {
             height: 100vh
           }
-
         `}
         </style>
         <CodeEditor
           state={state}
-          cursorId={userId}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}
           socket={socket}
