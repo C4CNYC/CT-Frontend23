@@ -9,6 +9,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { io } from "socket.io-client";
 
 import {
   IChatMessage,
@@ -69,6 +70,8 @@ export const SidebarUser = ({
   }, []);
 
   const onConnectStudent = (): void => {
+    // This is working, but not very pretty. We should unify all socket connections in a context, so we can access the socket here easily
+    io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" }).open().emit("joinRoom", student.id);
     dispatch(createRabit({ id: student.id, email, avatar }));
   };
 

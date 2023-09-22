@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import React, { memo, useEffect, useState } from "react";
+import React, {memo, useCallback, useEffect, useState} from "react";
 
 import { io } from "socket.io-client";
 
 import EditorSkeleton from "./EditorSkeleton";
 import { CodeEditor } from "./editor";
-import { getDocument } from "./extentions/collab";
+import { getDocument } from "../../codemirror/extensions/collab";
 
 export interface State {
   connected: boolean;
@@ -38,38 +38,52 @@ export const RealTimeEditor = memo(
       doc: undefined,
     });
 
-    const getStartData = (): void => {
-      getDocument(socket).then(({ version, doc }) => {
-        if (version === undefined || !doc) {
-          setTimeout(() => {
-            socket.emit("create", userId);
-            getStartData();
-          }, 3000);
-          return;
-        }
-
+    /**
+     * Gets and sets the initial document data.
+     * If no/invalid data is returned, it tries again every 3 seconds.
+     */
+    async function initializeData() {
+      try {
+        const { version, doc } = await getDocument(socket, userId);
         setState((prev) => ({
           ...prev,
-          version,
-          connected: true,
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
-          doc: doc?.toString(),
+          version: version,
+          doc: doc.toString(),
         }));
-      });
-    };
+      } catch(e) {
+        // If no data is returned, set up data for offline editing
+        setState((prev) => ({
+          ...prev,
+          version: 0,
+          doc: "",
+        }));
+      }
+    }
+
+    const initializeConnection = useCallback(async () => {
+      socket.emit("create", userId);
+      await initializeData();
+    }, [socket, initializeData]);
 
     useEffect(() => {
       if (!userId) return;
       socket.open();
-      socket.emit("create", userId);
-      socket.on("connection", () => {
+
+      void initializeConnection();
+      if(socket.connected) {
+        setState((prev) => ({
+          ...prev,
+          connected: true,
+        }));
+      }
+
+      socket.on("connect", () => {
+        void initializeConnection();
         setState((prev) => ({
           ...prev,
           connected: true,
         }));
       });
-
-      getStartData();
 
       socket.on("disconnect", () => {
         setState((prev) => ({
@@ -82,9 +96,6 @@ export const RealTimeEditor = memo(
         socket.emit("deleteRoom", userId);
         socket.off("connect");
         socket.off("disconnect");
-        socket.off("pullUpdateResponse");
-        socket.off("pushUpdateResponse");
-        socket.off("getDocumentResponse");
         socket.close();
       });
 
@@ -92,17 +103,13 @@ export const RealTimeEditor = memo(
         socket.emit("deleteRoom", userId);
         socket.off("connect");
         socket.off("disconnect");
-        socket.off("pullUpdateResponse");
-        socket.off("pushUpdateResponse");
-        socket.off("getDocumentResponse");
         socket.close();
       };
-    }, []);
+    }, [userId]);
 
     if (
       state?.version === undefined ||
-      state?.doc === undefined ||
-      !state.connected
+      state?.doc === undefined
     ) {
       return <EditorSkeleton />;
     }
@@ -118,6 +125,7 @@ export const RealTimeEditor = memo(
         `}
         </style>
         <CodeEditor
+          roomId={userId}
           state={state}
           cursorId={userId}
           preloadedCode={preloadedCode}

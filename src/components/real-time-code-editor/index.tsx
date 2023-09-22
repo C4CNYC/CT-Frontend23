@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Socket } from "socket.io-client";
 
 import { CodeEditor } from "./editor";
-import { getDocument } from "./extentions/collab";
+import { getDocument } from "../../codemirror/extensions/collab";
 
 interface State {
   connected: boolean;
@@ -34,32 +34,45 @@ export const RealTimeCodeEditor = ({
     doc: undefined,
   });
 
-  const getStartData = (): void => {
-    getDocument(socket).then(({ version, doc }) => {
-      if (version === undefined || !doc) {
-        setTimeout(() => {
-          getStartData();
-        }, 3000);
-        return;
-      }
-
+  /**
+   * Gets and sets the initial document data.
+   */
+  async function initializeData() {
+    try {
+      const { version, doc } = await getDocument(socket, roomId);
       setState((prev) => ({
         ...prev,
         version,
-        connected: true,
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
-        doc: doc?.toString(),
+        doc: doc.toString(),
       }));
-    });
-  };
+    } catch (e) {
+      // If no data is returned, set up data for offline editing
+      setState((prev) => ({
+        ...prev,
+        version: 0,
+        doc: "",
+      }));
+    }
+  }
+
+  const initializeConnection = useCallback(async () => {
+    socket.emit(connectionType === "connect" ? "joinRoom" : "create", roomId);
+    await initializeData();
+  }, [socket, initializeData]);
 
   useEffect(() => {
     socket.open();
-    socket.emit(connectionType === "connect" ? "joinRoom" : "create", roomId);
 
-    getStartData();
+    void initializeConnection();
+    if (socket.connected) {
+      setState((prev) => ({
+        ...prev,
+        connected: true,
+      }));
+    }
 
-    socket.on("connection", () => {
+    socket.on("connect", () => {
+      void initializeConnection();
       setState((prev) => ({
         ...prev,
         connected: true,
@@ -80,9 +93,6 @@ export const RealTimeCodeEditor = ({
       );
       socket.off("connect");
       socket.off("disconnect");
-      socket.off("pullUpdateResponse");
-      socket.off("pushUpdateResponse");
-      socket.off("getDocumentResponse");
       socket.close();
     });
 
@@ -98,13 +108,10 @@ export const RealTimeCodeEditor = ({
       );
       socket.off("connect");
       socket.off("disconnect");
-      socket.off("pullUpdateResponse");
-      socket.off("pushUpdateResponse");
-      socket.off("getDocumentResponse");
       socket.close();
       socket.disconnect();
     };
-  }, []);
+  }, [roomId]);
 
   if (
     state?.version === undefined ||
@@ -124,6 +131,7 @@ export const RealTimeCodeEditor = ({
         `}
       </style>
       <CodeEditor
+        roomId={roomId}
         onChangeCode={onChangeCode}
         state={state}
         cursorId={colabCursonId}

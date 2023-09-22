@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
@@ -62,7 +62,12 @@ export default function Index(): React.ReactElement | null {
   const searchParams = useSearchParams();
 
   const [confetti, setConfetti] = useState(false);
-  const [code, onChangeCode] = useState<string>("");
+  const [code, setCode] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem(`code-${query.id}`) ?? "";
+    }
+    return "";
+  });
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
@@ -71,6 +76,11 @@ export default function Index(): React.ReactElement | null {
   });
   const unitId = searchParams.get("unitId");
   const lessonId = searchParams.get("lessonId");
+
+  const onChangeCode = useCallback((code: string) => {
+    setCode(code);
+    window.localStorage.setItem(`code-${query.id}`, code);
+  }, []);
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
     useAtom(globalCodePanelAtom);

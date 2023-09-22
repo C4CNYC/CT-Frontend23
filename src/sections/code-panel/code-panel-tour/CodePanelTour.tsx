@@ -44,8 +44,10 @@ export default function CodePanelTour(): React.ReactElement {
           setStartTour({ start: false });
         }
       }
-      setStartTour({ start: true });
-      localStorage.setItem("SHOWED_TOUR", "true");
+      setTimeout(() => {
+        setStartTour({ start: true });
+        localStorage.setItem("SHOWED_TOUR", "true");
+      }, 3000);
     }
   }, [userCreated, start]);
 
