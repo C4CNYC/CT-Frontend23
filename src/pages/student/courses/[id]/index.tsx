@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 
 import { Box, Container, Skeleton, Stack } from "@mui/material";
 
-import { CustomBreadcrumbs } from "@components";
+import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CourseInfo from "@sections/course/CourseInfo";
-import CourseLayout from "@sections/course/CourseLayout";
+import CourseSidebar from "@sections/course/course-sidebar";
+import ModulesListBlock from "@sections/course/modules-list";
 import { useGetCoursContentQuery } from "src/redux/services/manager/courses-student";
 
 CoursePage.getLayout = (page: React.ReactElement) => (
@@ -16,6 +17,7 @@ CoursePage.getLayout = (page: React.ReactElement) => (
 
 export default function CoursePage(): React.ReactElement {
   const router = useRouter();
+  const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useGetCoursContentQuery(
     {
       id: router.query.id as string,
@@ -28,28 +30,20 @@ export default function CoursePage(): React.ReactElement {
       <Head>
         <title>Course | CodeTribe</title>
       </Head>
-      <Container maxWidth={"xl"}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <CustomBreadcrumbs
+          sx={{ pl: 10 }}
           links={[
             { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
             { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },
+            { name: `${data?.name}`, href: "" },
           ]}
         />
-      </Container>
-      <Box
-        sx={{
-          position: "relative",
-          minHeight: "100vh",
-          width: "100%",
-          borderRadius: 3,
-          px: "20px",
-          pt: { xs: 2, sm: 2, md: "35px" },
-          pb: "187px",
-          background: "#ECF4FF",
-          mt: -2,
-        }}
-      >
-        <Container maxWidth={"xl"}>
+        <Box
+          sx={{
+            minHeight: "100vh",
+          }}
+        >
           {isLoading ? (
             <Stack>
               <Skeleton
@@ -79,10 +73,28 @@ export default function CoursePage(): React.ReactElement {
               }
             />
           )}
-
-          <CourseLayout course={data} isLoadingCourse={isLoading} />
-        </Container>
-      </Box>
+          <Stack
+            sx={{
+              flexDirection: {
+                xs: "column-reverse",
+                sm: "column-reverse",
+                md: "column-reverse",
+                lg: "column-reverse",
+                xl: "row",
+              },
+              gap: 6,
+            }}
+          >
+            <ModulesListBlock />
+            <CourseSidebar
+              duration={"9"}
+              grade="5th-10th Grade"
+              lessons={data?.total_lessons ?? 0}
+              level={data?.level ?? "-"}
+            />
+          </Stack>
+        </Box>
+      </Container>
     </>
   );
 }

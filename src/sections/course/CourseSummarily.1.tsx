@@ -3,11 +3,7 @@ import { MdCelebration } from "react-icons/md";
 
 import { Box, Stack, Typography } from "@mui/material";
 
-interface ICourseSummarilyProps {
-  duration: string;
-  level: string;
-  lessonsCount: number;
-}
+import { ICourseSummarilyProps } from "./CourseSummarily";
 
 export default function CourseSummarily({
   duration,

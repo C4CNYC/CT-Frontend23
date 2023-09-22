@@ -1,12 +1,12 @@
 import { Box, LinearProgress, Stack } from "@mui/material";
 
-interface ITrainingProgressProps {
+interface ILessonProgressProps {
   progress: number;
 }
 
-export default function TrainingProgress({
+export default function LessonProgress({
   progress,
-}: ITrainingProgressProps): React.ReactElement {
+}: ILessonProgressProps): React.ReactElement {
   return (
     <Stack sx={{ position: "relative", mb: 1 }}>
       <LinearProgress

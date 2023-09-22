@@ -1,14 +1,8 @@
-import { useState } from "react";
-
-import { IoChevronDown, IoChevronForward, IoChevronUp } from "react-icons/io5";
-
-import { Button, Collapse, Stack, Typography, styled } from "@mui/material";
+import { Button, Stack, Typography, styled } from "@mui/material";
 
 import { Image } from "@components";
-import RoleBasedGuard from "src/auth/RoleBasedGuard";
-import { Role } from "src/redux/services/enums/role.enum";
 
-import CourseSummarily from "./CourseSummarily";
+import CourseSummarily from "./CourseSummarily.1";
 
 interface ICourseInfoProps {
   cover?: string;
@@ -19,8 +13,6 @@ interface ICourseInfoProps {
   level: string;
 }
 
-const MAX_DESCRIPTION_LENGTH = 200;
-
 export default function CourseInfo({
   cover,
   name,
@@ -29,8 +21,6 @@ export default function CourseInfo({
   lessonsCount,
   level,
 }: ICourseInfoProps): React.ReactElement {
-  const [openDetails, setOpenDetails] = useState(false);
-
   return (
     <Stack
       sx={{
@@ -40,59 +30,26 @@ export default function CourseInfo({
           md: "row",
         },
         justifyContent: "space-between",
-        pr: { xs: 0, sm: 0, md: "50px", lg: "150px" },
-        gap: 2,
+        px: 8,
+        py: 4,
+        mb: 5,
+        background: "#ECF4FF",
+        borderRadius: 2,
       }}
     >
       <Stack maxWidth="680px">
-        <Typography variant="h4">{name}</Typography>
-        <Typography variant="h6" fontWeight={400} gutterBottom>
-          {description.length > MAX_DESCRIPTION_LENGTH && !openDetails
-            ? `${description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
-            : description}
+        <Typography variant="h3" pb={2}>
+          {name}
         </Typography>
-        <Collapse in={openDetails}>
-          <RoleBasedGuard
-            roles={[Role.Owner, Role.Manager, Role.Admin, Role.Editor]}
-          >
-            <Typography variant="caption" fontStyle="italic">
-              Teachers: Open a module and scroll down to see Teacher Toolbox.
-            </Typography>
-          </RoleBasedGuard>
-          <CourseSummarily
-            duration={duration}
-            lessonsCount={lessonsCount}
-            level={level}
-          />
-        </Collapse>
-        <Button
-          variant="text"
-          onClick={() => {
-            setOpenDetails(!openDetails);
-          }}
-          disableRipple
-          sx={{
-            gap: 2,
-            color: "inherit",
-            alignSelf: "flex-start",
-            p: 0,
-            mb: 4,
-            "&:hover": {
-              background: "none",
-            },
-          }}
-        >
-          <Typography variant="h6" fontWeight={400}>
-            See more
-          </Typography>
-          {!openDetails ? (
-            <IoChevronDown size={22} />
-          ) : (
-            <IoChevronUp size={22} />
-          )}
-        </Button>
-
-        <RoundedGradientButton variant="contained">
+        <Typography variant="subtitle1" fontWeight={400} pb={3}>
+          {description}
+        </Typography>
+        <CourseSummarily
+          duration={duration}
+          lessonsCount={lessonsCount}
+          level={level}
+        />
+        {/* <RoundedGradientButton variant="contained">
           Get Coding
           <svg width="0" height="0">
             <linearGradient
@@ -110,7 +67,7 @@ export default function CourseInfo({
             size={25}
             style={{ stroke: "url(#blue-gradient)" }}
           />
-        </RoundedGradientButton>
+        </RoundedGradientButton> */}
       </Stack>
       <Image
         alt="course cover"

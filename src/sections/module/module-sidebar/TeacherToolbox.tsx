@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { useState } from "react";
 
-import { FaChevronDown } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { GrOverview } from "react-icons/gr";
 
 import {
@@ -31,6 +31,8 @@ export default function TeacherToolbox(): React.ReactElement {
           }}
           disableRipple
           sx={{
+            justifyContent: "space-between",
+            width: "100%",
             color: "inherit",
             gap: 2,
             "&:hover": {
@@ -41,7 +43,11 @@ export default function TeacherToolbox(): React.ReactElement {
           <Typography variant="h6" fontWeight={400} whiteSpace="nowrap">
             TEACHER TOOLBOX
           </Typography>
-          <FaChevronDown size={22} />
+          {openToolbox ? (
+            <FaChevronUp size={22} />
+          ) : (
+            <FaChevronDown size={22} />
+          )}
         </Button>
         <Collapse in={openToolbox}>
           <Stack pl={2} gap={1}>

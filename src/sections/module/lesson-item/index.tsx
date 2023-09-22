@@ -17,9 +17,9 @@ import {
 } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 
-import TrainingProgress from "./TrainingProgress";
+import TrainingProgress from "./LessonProgress";
 
-interface ITrainingsItemProps {
+interface ILessonItemProps {
   lesson: ILessonCurrent;
   unitId: string;
 }
@@ -32,10 +32,10 @@ interface IUpdateCodePanelAtom {
 
 const MAX_DESC = 50;
 
-export default function TrainingsItem({
+export default function LessonItem({
   lesson,
   unitId,
-}: ITrainingsItemProps): React.ReactElement {
+}: ILessonItemProps): React.ReactElement {
   const [openDetails, setOpenDetails] = useState(false);
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
 
@@ -59,80 +59,73 @@ export default function TrainingsItem({
       sx={{
         borderRadius: 2,
         p: 2,
-        bgcolor: "#ECF4FF",
+        pr: 4,
+        bgcolor: "#fff",
         minHeight: "150px",
-        maxWidth: "600px",
       }}
     >
       <TrainingProgress progress={80} />
-      <Typography variant="h4">{lesson.name}</Typography>
-      <Typography variant="body1">
-        {lesson.description.length < MAX_DESC
-          ? lesson.description
-          : `${lesson.description.slice(0, 47)} ${openDetails ? "" : "..."}`}
-      </Typography>
-      {lesson.description.length > MAX_DESC ? (
-        <>
-          <Collapse in={openDetails}>{lesson.description.slice(48)}</Collapse>
-          <Button
-            onClick={() => {
-              setOpenDetails(!openDetails);
-            }}
-            sx={{
-              alignSelf: "flex-start",
-              color: "#454F5B",
-              gap: 1,
-              alignItems: "center",
-              "&:hover": {
-                bgcolor: "transparent",
-              },
-            }}
-          >
-            See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
-          </Button>
-        </>
-      ) : null}
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="flex-end"
-        gap={2}
-      >
-        <Stack direction="row" gap={2} flexWrap="wrap">
-          <Typography
-            variant="body2"
-            sx={{
-              whiteSpace: "nowrap",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            * Required
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack>
+          <Typography variant="h4" mb={2}>
+            {lesson.name}
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              whiteSpace: "nowrap",
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <HiOutlinePuzzlePiece size={20} />
-            Part of Project
+          <Typography variant="body1">
+            {lesson?.description?.length < MAX_DESC
+              ? lesson?.description
+              : `${lesson?.description?.slice(0, 47)} ${
+                  openDetails ? "" : "..."
+                }`}
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              whiteSpace: "nowrap",
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <AiOutlineClockCircle size={20} />
-            20 mins
-          </Typography>
+          {lesson?.description?.length > MAX_DESC ? (
+            <>
+              <Collapse in={openDetails}>
+                {lesson?.description?.slice(47)}
+              </Collapse>
+              <Button
+                onClick={() => {
+                  setOpenDetails(!openDetails);
+                }}
+                sx={{
+                  alignSelf: "flex-start",
+                  color: "#454F5B",
+                  gap: 1,
+                  alignItems: "center",
+                  "&:hover": {
+                    bgcolor: "transparent",
+                  },
+                }}
+              >
+                See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
+              </Button>
+            </>
+          ) : null}
+          <Stack direction="row" gap={2} flexWrap="wrap">
+            <Typography
+              variant="body2"
+              sx={{
+                whiteSpace: "nowrap",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <HiOutlinePuzzlePiece size={20} />
+              Part of Project
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                whiteSpace: "nowrap",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <AiOutlineClockCircle size={20} />
+              20 mins
+            </Typography>
+          </Stack>
         </Stack>
         <Link
           component={NextLink}
@@ -145,6 +138,9 @@ export default function TrainingsItem({
             borderRadius: "50%",
             display: "flex",
             p: 1,
+            mb: 2,
+            boxShadow: 5,
+            alignSelf: "flex-end",
           }}
           onClick={() => {
             updateCodePanelAtom({
