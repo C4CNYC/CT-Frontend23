@@ -103,6 +103,9 @@ export default function ModuleItem({
               gap: 1,
               fontSize: "1.2rem",
               color: "#364954",
+              background: "-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)",
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "transparent",
               "&:hover": {
                 background: "none",
               },
@@ -110,7 +113,22 @@ export default function ModuleItem({
             variant="text"
           >
             Get Coding Again
-            <HiOutlineArrowNarrowRight size={24} />
+            <svg width="0" height="0">
+              <linearGradient
+                id="blue-gradient"
+                x1="100%"
+                y1="100%"
+                x2="0%"
+                y2="0%"
+              >
+                <stop stopColor="#61F3F3" offset="0%" />
+                <stop stopColor="#00B8D9" offset="100%" />
+              </linearGradient>
+            </svg>
+            <HiOutlineArrowNarrowRight
+              size={24}
+              style={{ stroke: "url(#blue-gradient)" }}
+            />
           </Button>
           <Link
             href={STUDENT_PATH_DASHBOARD.courses.unit(

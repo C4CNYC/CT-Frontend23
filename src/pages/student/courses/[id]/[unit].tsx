@@ -6,9 +6,9 @@ import { Container, Stack } from "@mui/material";
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import LessonsList from "@sections/course/module/LessonsList";
-import ModuleHeader from "@sections/course/module/ModuleHeader";
-import ModuleSidebar from "@sections/course/module/module-sidebar";
+import LessonsList from "@sections/module/LessonsList";
+import ModuleHeader from "@sections/module/ModuleHeader";
+import ModuleSidebar from "@sections/module/module-sidebar";
 import { useGetStudentModulesLessonsQuery } from "src/redux/services/manager/courses-student";
 
 ModulePage.getLayout = (page: React.ReactElement) => (
@@ -33,11 +33,11 @@ export default function ModulePage(): React.ReactElement {
           sx={{ pl: 10 }}
           links={[
             { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
-            { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },
+            { name: "Course", href: STUDENT_PATH_DASHBOARD.courses.root },
             // { name: `${data?.name}`, href: "" },
           ]}
         />
-        <Stack direction="row" gap={3}>
+        <Stack direction="row" gap={3} flexWrap="wrap">
           <Stack
             sx={{
               background: "#ECF4FF",

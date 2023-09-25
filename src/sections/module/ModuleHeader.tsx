@@ -1,8 +1,7 @@
 import { Chip, Stack, Typography } from "@mui/material";
 
 import { Image } from "@components";
-
-import ImageLightBox from "../modules-list/module-item/ImageLightBox";
+import ImageLightBox from "@sections/course/modules-list/module-item/ImageLightBox";
 
 export default function ModuleHeader(): React.ReactElement {
   return (

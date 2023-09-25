@@ -21,8 +21,8 @@ export default function ModulesListBlock(): React.ReactElement {
     <Stack
       sx={{
         background: "#ECF4FF",
-        px: 8,
-        py: 6,
+        px: { xs: 1, lg: 8 },
+        py: { xs: 3, lg: 6 },
         borderRadius: 3,
         gap: 3,
         flex: 1,
