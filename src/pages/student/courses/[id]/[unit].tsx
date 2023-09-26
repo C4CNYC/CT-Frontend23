@@ -32,7 +32,7 @@ export default function ModulePage(): React.ReactElement {
         <CustomBreadcrumbs
           sx={{ pl: 10 }}
           links={[
-            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
+            { name: "Courses", href: STUDENT_PATH_DASHBOARD.courses.root },
             { name: "Course", href: STUDENT_PATH_DASHBOARD.courses.root },
             // { name: `${data?.name}`, href: "" },
           ]}
