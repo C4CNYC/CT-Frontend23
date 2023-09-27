@@ -25,8 +25,8 @@ export default function SocialActivity({
         borderTopRightRadius: "24px",
         alignSelf: "flex-end",
         py: 2,
-        px: { xs: 1, sm: 2, md: 3, lg: 4 },
-        gap: { md: 3, lg: 6 },
+        px: { xs: 3, lg: 4 },
+        gap: { xs: 2, md: 3, lg: 6 },
       }}
     >
       <Stack direction="row" gap={1}>

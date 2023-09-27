@@ -6,7 +6,7 @@ import ImageLightBox from "@sections/course/modules-list/module-item/ImageLightB
 export default function ModuleHeader(): React.ReactElement {
   return (
     <>
-      <Stack direction="row" justifyContent="space-between">
+      <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
         <Stack>
           <Typography variant="h4" maxWidth={500} mb={2}>
             My Web Resume

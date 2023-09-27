@@ -34,7 +34,6 @@ export default function ModulePage(): React.ReactElement {
           links={[
             { name: "Courses", href: STUDENT_PATH_DASHBOARD.courses.root },
             { name: "Course", href: STUDENT_PATH_DASHBOARD.courses.root },
-            // { name: `${data?.name}`, href: "" },
           ]}
         />
         <Stack direction="row" gap={3} flexWrap="wrap">
@@ -43,7 +42,7 @@ export default function ModulePage(): React.ReactElement {
               background: "#ECF4FF",
               borderRadius: 2,
               py: 3,
-              px: 5,
+              px: { xs: 2, lg: 5 },
               flex: "1",
             }}
           >

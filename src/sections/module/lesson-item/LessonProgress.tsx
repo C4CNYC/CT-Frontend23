@@ -14,8 +14,8 @@ export default function LessonProgress({
         value={progress}
         sx={{
           "& .MuiLinearProgress-bar": {
-            background: "#454F5B",
-            //background: "linear-gradient(150deg,#61F3F3,#00B8D9)",
+            background:
+              "background: linear-gradient(135deg, #90F361 0%, #00D9CC 100%);",
           },
           position: "relative",
           background: "#fff",
@@ -30,7 +30,7 @@ export default function LessonProgress({
             width: "20px",
             height: "20px",
             backgroundColor: "#FFF",
-            backgroundImage: "url(/assets/code-panel/compleate.svg)",
+            backgroundImage: "url(/assets/courses/compleated.svg)",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundSize: "14px",
