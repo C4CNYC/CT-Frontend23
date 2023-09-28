@@ -17,6 +17,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
@@ -41,7 +42,8 @@ export default function ShareGroupModal({
   children,
   schoolClass,
 }: IShareGroupModalProps): React.ReactElement {
-  const { pathname, query, replace } = useRouter();
+  const theme = useTheme();
+  const { query } = useRouter();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
@@ -115,12 +117,14 @@ export default function ShareGroupModal({
             </IconButton>
           </Box>
           <Typography
-            mt="35px"
-            ml="32px"
-            mb="55px"
+            sx={{
+              mt: "35px",
+              ml: "32px",
+              mb: "55px",
+              fontSize: "32px",
+              color: "#fff",
+            }}
             variant="h3"
-            color="white"
-            fontSize="32px"
           >
             {schoolClass?.name}
           </Typography>
@@ -128,19 +132,29 @@ export default function ShareGroupModal({
         <Box sx={{ p: { xs: 1, sm: 3 } }}>
           <Box>
             <Typography
-              fontSize="20px"
-              color="#292929"
-              variant="h4"
-              textAlign="center"
+              sx={{
+                fontSize: "20px",
+                color:
+                  theme.palette.mode === "light"
+                    ? "#292929"
+                    : theme.palette.primary.contrastText,
+                variant: "h4",
+                textAlign: "center",
+              }}
             >
               Share group
             </Typography>
             <Typography
-              fontSize="16px"
-              color="#4f4f4f"
-              mt="12px"
-              mb="40px"
-              textAlign="center"
+              sx={{
+                fontSize: "16px",
+                color:
+                  theme.palette.mode === "light"
+                    ? "#4f4f4f"
+                    : theme.palette.primary.contrastText,
+                mt: "12px",
+                mb: "40px",
+                textAlign: "center",
+              }}
               variant="body2"
             >
               Send the link below to invite students to the group.
@@ -148,7 +162,7 @@ export default function ShareGroupModal({
           </Box>
           <Box
             sx={{
-              backgroundColor: "#f0f0f0",
+              background: theme.palette.mode === "light" ? "#f0f0f0" : "",
               width: "100%",
               height: "55px",
               display: "flex",
@@ -176,8 +190,9 @@ export default function ShareGroupModal({
                 <Iconify icon="basil:copy-outline" width={18} height={18} />
               </Button>
               <Box ml="10px">
-                <Typography>Invite link:</Typography>
+                <Typography variant="body2">Invite link:</Typography>
                 <Typography
+                  variant="body2"
                   noWrap
                   sx={{
                     overflow: "hidden",
@@ -242,7 +257,7 @@ export default function ShareGroupModal({
                       />
                     }
                     label={
-                      <Typography color="#292929" variant="h6">
+                      <Typography variant="h6">
                         Anyone with the link can join
                       </Typography>
                     }
@@ -260,7 +275,7 @@ export default function ShareGroupModal({
                       />
                     }
                     label={
-                      <Typography color="#292929" variant="h6">
+                      <Typography variant="h6">
                         Only people you approve can join
                       </Typography>
                     }
@@ -282,9 +297,13 @@ export default function ShareGroupModal({
             <Box ml="15px" mt="28px" mb="28px">
               <Typography
                 variant="h6"
-                fontSize="16px"
-                m="0px 0px 13px"
-                color="#292929"
+                sx={{
+                  m: "0px 0px 13px",
+                  color:
+                    theme.palette.mode === "light"
+                      ? "#292929"
+                      : theme.palette.primary.contrastText,
+                }}
               >
                 Other ways to add students:
               </Typography>
