@@ -23,7 +23,7 @@ export default function CourseInfo({
 }: ICourseInfoProps): React.ReactElement {
   return (
     <Stack
-      sx={{
+      sx={(theme) => ({
         flexDirection: {
           xs: "column-reverse",
           sm: "column-reverse",
@@ -35,7 +35,12 @@ export default function CourseInfo({
         mb: 5,
         background: "#ECF4FF",
         borderRadius: 2,
-      }}
+        [theme.breakpoints.down(800)]: {
+          px: 2,
+          py: 3,
+          mb: 3,
+        },
+      })}
     >
       <Stack maxWidth="680px">
         <Typography variant="h3" pb={2}>

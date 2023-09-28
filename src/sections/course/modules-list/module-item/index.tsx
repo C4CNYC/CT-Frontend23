@@ -2,14 +2,17 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { MdIosShare } from "react-icons/md";
 
 import {
   Box,
   Button,
   Divider,
+  IconButton,
   Link,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 
@@ -33,36 +36,47 @@ export default function ModuleItem({
   lastVisitedData,
 }: IModuleItemProps): React.ReactElement {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down(800));
   const { query } = useRouter();
 
   return (
     <Stack
-      direction="row"
+      direction={isMobile ? "column" : "row"}
       sx={{
         background: "#fff",
-        height: "200px",
+        height: isMobile ? "auto" : "200px",
         position: "relative",
         zIndex: 5,
         borderRadius: "25px",
       }}
     >
-      <ImageLightBox image={unit.avatar ?? "/assets/projects/bg1.png"}>
+      {isMobile ? (
+        <IconButton sx={{ alignSelf: "flex-end", mb: -4, mt: 0.5, mr: 0.5 }}>
+          <MdIosShare />
+        </IconButton>
+      ) : null}
+      <ImageLightBox
+        sx={isMobile ? { alignSelf: "center" } : {}}
+        image={unit.avatar ?? "/assets/projects/bg1.png"}
+      >
         <Box
           sx={{
             flexShrink: "0",
             borderRadius: "25px 25px 0 25px",
             overflow: "hidden",
-            width: "150px",
+            width: "200px",
             height: "100%",
             background: `no-repeat url(${
               unit.avatar ?? "/assets/projects/bg1.png"
             }) center / cover`,
             position: "relative",
             [theme.breakpoints.down(1050)]: {
-              width: "100px",
+              width: "150px",
             },
-            [theme.breakpoints.down(450)]: {
-              width: "50px",
+            [theme.breakpoints.down(800)]: {
+              m: 2,
+              width: "200px",
+              minHeight: "200px",
             },
           }}
         />
@@ -95,20 +109,21 @@ export default function ModuleItem({
               : unit.description}
           </Typography>
         </Box>
-        <Stack direction="row" alignItems="center">
+        <Stack
+          direction={isMobile ? "column-reverse" : "row"}
+          alignItems="center"
+        >
           <Button
             sx={{
               display: "inline-flex",
-              alignSelf: "flex-start",
+              alignSelf: isMobile ? "flex-end" : "flex-start",
               gap: 1,
               fontSize: "1.2rem",
               color: "#364954",
               background: "-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)",
               "-webkit-background-clip": "text",
               "-webkit-text-fill-color": "transparent",
-              "&:hover": {
-                background: "none",
-              },
+              "&:hover": {},
             }}
             variant="text"
           >
@@ -136,14 +151,26 @@ export default function ModuleItem({
               unit.id
             )}
             component={NextLink}
-            sx={{ ml: 3, color: "inherit" }}
+            sx={{
+              ml: isMobile ? 0 : 3,
+              mt: isMobile ? 2 : 0,
+              color: "inherit",
+              alignSelf: isMobile ? "flex-start" : "center",
+            }}
           >
             See more
           </Link>
         </Stack>
       </Stack>
-      <Divider orientation="horizontal" sx={{ borderRightWidth: 2, my: 4 }} />
-      <ActionsBlock certificate={2700} likes={12000} rated={4300} />
+      {!isMobile ? (
+        <>
+          <Divider
+            orientation="horizontal"
+            sx={{ borderRightWidth: 2, my: 4 }}
+          />
+          <ActionsBlock certificate={2700} likes={12000} rated={4300} />
+        </>
+      ) : null}
     </Stack>
   );
 }

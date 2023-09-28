@@ -32,7 +32,6 @@ export default function CoursePage(): React.ReactElement {
       </Head>
       <Container maxWidth={themeStretch ? false : "xl"}>
         <CustomBreadcrumbs
-          sx={{ pl: 10 }}
           links={[
             { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
             { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },

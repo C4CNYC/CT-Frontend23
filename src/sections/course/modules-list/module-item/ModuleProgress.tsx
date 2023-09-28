@@ -26,7 +26,8 @@ export default function ModuleProgress({
           value={+progress}
           sx={{
             "& .MuiLinearProgress-bar": {
-              background: "#454F5B",
+              background:
+                "background: linear-gradient(135deg, #90F361 0%, #00D9CC 100%);",
             },
             position: "relative",
             background: "#D9D9E2",
