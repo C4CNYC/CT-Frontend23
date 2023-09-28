@@ -2,6 +2,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
+import { useAtom } from "jotai";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { HiOutlinePuzzlePiece } from "react-icons/hi2";
@@ -10,6 +11,10 @@ import { TbPlayerPlay } from "react-icons/tb";
 import { Button, Collapse, Link, Stack, Typography } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import {
+  IGlobalCodePanelAtom,
+  globalCodePanelAtom,
+} from "@sections/code-panel/atoms/global-code-panel.atom";
 import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 
 import TrainingProgress from "./TrainingProgress";
@@ -19,6 +24,12 @@ interface ITrainingsItemProps {
   unitId: string;
 }
 
+interface IUpdateCodePanelAtom {
+  courseId: string;
+  unitId: string;
+  lessonId: string;
+}
+
 const MAX_DESC = 50;
 
 export default function TrainingsItem({
@@ -26,8 +37,22 @@ export default function TrainingsItem({
   unitId,
 }: ITrainingsItemProps): React.ReactElement {
   const [openDetails, setOpenDetails] = useState(false);
+  const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
 
   const courseId = useRouter().query.id;
+
+  const updateCodePanelAtom = ({
+    courseId,
+    unitId,
+    lessonId,
+  }: IUpdateCodePanelAtom) => {
+    setGlobalCodePanel((prev: IGlobalCodePanelAtom) => ({
+      ...prev,
+      courseId,
+      unitId,
+      lessonId,
+    }));
+  };
 
   return (
     <Stack
@@ -120,6 +145,13 @@ export default function TrainingsItem({
             borderRadius: "50%",
             display: "flex",
             p: 1,
+          }}
+          onClick={() => {
+            updateCodePanelAtom({
+              courseId: courseId as string,
+              unitId,
+              lessonId: lesson.id,
+            });
           }}
         >
           {/* <svg width="0" height="0">

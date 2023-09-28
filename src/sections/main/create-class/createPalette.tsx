@@ -2,7 +2,15 @@ import { useState } from "react";
 
 import { BsBookmarkCheckFill } from "react-icons/bs";
 
-import { Box, Button, Collapse, Tab, Tabs } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  Tab,
+  Tabs,
+  alpha,
+  useTheme,
+} from "@mui/material";
 
 interface ICreatePaletteProps {
   choosenColor: string;
@@ -20,7 +28,7 @@ export default function CreatePalette({
   };
 
   return (
-    <Box sx={{ width: "100%", pt: 2, px: 3 }}>
+    <Box sx={{ width: "100%", pt: 2, px: { xs: 1, sm: 2, md: 3 } }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -38,17 +46,19 @@ export default function CreatePalette({
       </Box>
       <CustomTabPanel value={value} index={0}>
         <Box
-          gap={2}
-          p={2}
-          display="grid"
-          gridTemplateColumns={{
-            xs: "repeat(3, 1fr)",
-            sm: "repeat(3, 1fr)",
-            md: "repeat(4, 1fr)",
-            lg: "repeat(6, 1fr)",
+          sx={{
+            gap: 2,
+            py: 2,
+            px: 1,
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "repeat(3, 1fr)",
+              sm: "repeat(3, 1fr)",
+              md: "repeat(4, 1fr)",
+              lg: "repeat(6, 1fr)",
+            },
           }}
         >
-          {/* change to btn */}
           {CLASS_PALETTE.map((el) => (
             <Button
               onClick={() => {
@@ -62,7 +72,7 @@ export default function CreatePalette({
                     : "none",
                 width: "100%",
                 maxWidth: "250px",
-                height: "130px",
+                height: { xs: "100px", sm: "130px" },
                 position: "relative",
                 background: el,
                 "&:hover": {
@@ -92,23 +102,23 @@ export default function CreatePalette({
 
 export const CLASS_PALETTE = [
   "#96ceb4",
+  "#ffeead",
+  "#ff6f69",
   "#ffcc5c",
   "#854442",
   "#3c2f2f",
+  "#ebf4f6",
+  "#bdeaee",
   "#76b4bd",
-  "#ff6f69",
   "#58668b",
   "#ff77aa",
+  "#ff99cc",
   "#ffbbee",
   "#2e003e",
-  "#FF8D3E",
   "#3d2352",
-  "#ff99cc",
   "#3d1e6d",
-  "#005CCB",
   "#8874a3",
-  "#D53624",
-  "#005B44",
+  "#e4dcf1",
 ];
 
 interface TabPanelProps {
@@ -118,6 +128,7 @@ interface TabPanelProps {
 }
 
 function CustomTabPanel(props: TabPanelProps) {
+  const theme = useTheme();
   const { children, value, index, ...other } = props;
 
   return (
@@ -128,7 +139,23 @@ function CustomTabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && children}
+      <Box
+        sx={{
+          maxHeight: "460px",
+          overflowY: "auto",
+          overflowX: "none",
+          scrollbarWidth: "2px",
+          "&::-webkit-scrollbar": {
+            width: "0.3em",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: alpha(theme.palette.grey[600], 0.48),
+            borderRadius: "2px",
+          },
+        }}
+      >
+        {value === index && children}
+      </Box>
     </div>
   );
 }

@@ -35,7 +35,7 @@ export default function HidedTabBtn() {
             }));
           }}
         >
-          <ImBook size={22} />
+          <ImBook size={20} />
         </Button>
       ) : null}
       {isBrowserHidden ? (
@@ -62,7 +62,7 @@ export default function HidedTabBtn() {
             }));
           }}
         >
-          <LuMonitorUp size={22} />
+          <LuMonitorUp size={20} />
         </Button>
       ) : null}
     </>

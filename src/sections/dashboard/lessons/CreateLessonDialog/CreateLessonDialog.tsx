@@ -12,6 +12,7 @@ import {
   Button,
   DialogActions,
   Grid,
+  Stack,
   Tab,
   Tabs,
   Typography,
@@ -34,52 +35,22 @@ import {
 } from "../../../../redux/services/manager/lessons-manager";
 import { IntegrationsTab } from "../LessonStep/Modals/Preferences/IntegrationsTab";
 import SkillsTab from "./SkillsTab";
+import TipsTab from "./TipsTab";
 
 interface FormValuesProps {
   name: string;
   description: string;
   active: boolean;
+  tips: string;
 }
 
-interface Prop {
+interface ICreateLessonDialogProps {
   defaultValues?: FormValuesProps;
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
   contentId?: string;
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps): React.ReactElement {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: { xs: 2, sm: 3 } }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number): Record<string, string> {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
+  lessonTips: string[];
 }
 
 export default function CreateLessonDialog({
@@ -87,11 +58,14 @@ export default function CreateLessonDialog({
   isEdit,
   children,
   defaultValues,
-}: Prop): React.ReactElement {
+  lessonTips,
+}: ICreateLessonDialogProps): React.ReactElement {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+
+  const [value, setValue] = useState(0);
+  const [open, setOpen] = useState(false);
+
   const [editLesson, { isLoading: isLoadingUpdate }] =
     useUpdateLessonMutation();
   const [createLesson, { isLoading: isLoadingCreate }] =
@@ -118,13 +92,15 @@ export default function CreateLessonDialog({
   });
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
-    setLoading(true);
     try {
       if (isEdit && id) {
         await editLesson({
           id,
           ...data,
+          tips:
+            data.tips.trim() !== "" ? [...lessonTips, data.tips] : lessonTips,
         }).unwrap();
+        methods.resetField("tips");
       } else {
         const lesson = await createLesson({
           ...data,
@@ -135,20 +111,35 @@ export default function CreateLessonDialog({
             lesson_id: lesson.id,
           });
         }
+        methods.reset();
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
-      methods.reset();
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });
     }
-    setLoading(false);
-    // eslint-disable-next-line no-eval
-    handleClose();
+    if (!isEdit) {
+      handleClose();
+    }
   };
 
-  const [value, setValue] = React.useState(0);
+  const deleteTip = async (tips: string[]): Promise<void> => {
+    try {
+      if (isEdit && id) {
+        await editLesson({
+          id,
+          ...methods.getValues(),
+          tips: lessonTips.filter((t) => !tips.includes(t)),
+        }).unwrap();
+        enqueueSnackbar("Tip deleted!");
+      }
+    } catch (error) {
+      enqueueSnackbar(error?.data?.message, {
+        variant: "error",
+      });
+    }
+  };
 
   const handleChange = (
     event: React.SyntheticEvent,
@@ -167,7 +158,7 @@ export default function CreateLessonDialog({
             methods={methods}
             onSubmit={methods.handleSubmit(onSubmit)}
           >
-            <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 2 }}>
               <Tabs
                 value={value}
                 onChange={handleChange}
@@ -176,55 +167,46 @@ export default function CreateLessonDialog({
                 <Tab label="Main" {...a11yProps(0)} />
                 <Tab label="Skills" {...a11yProps(1)} />
                 <Tab label="Integration" {...a11yProps(2)} />
+                {isEdit ? <Tab label="Tips" {...a11yProps(3)} /> : null}
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              <Grid item xs={12} md={12} mt={2}>
-                <Box rowGap={4} display="grid">
-                  <RHFTextField
-                    sx={{
-                      width: { xs: "300px", sm: "350px" },
-                      minWidth: "300px",
-                    }}
-                    name="name"
-                    label="Lesson name"
-                    required
-                  />
+              <Stack gap={2} mt={1}>
+                <RHFTextField name="name" label="Lesson name" required />
 
-                  <RHFTextField
-                    name="description"
-                    label="Lesson description"
-                    required
-                    multiline
-                    rows={3}
-                  />
+                <RHFTextField
+                  name="description"
+                  label="Lesson description"
+                  required
+                  multiline
+                  rows={3}
+                />
 
-                  <RHFSwitch name="active" label="Lesson active" />
-                </Box>
-              </Grid>
+                <RHFTextField
+                  name="tips"
+                  placeholder="Enter tip"
+                  label="Add tip"
+                />
+
+                <RHFSwitch name="active" label="Lesson active" />
+              </Stack>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Box
-                sx={{
-                  width: { xs: "100%", sm: "350px" },
-                  minWidth: "300px",
-                  height: "276px",
-                }}
-              >
-                <SkillsTab lessonId={id as string} />
-              </Box>
+              <SkillsTab lessonId={id as string} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <Box
-                sx={{
-                  width: { xs: "300px", sm: "350px" },
-                  minWidth: "300px",
-                  height: "276px",
-                }}
-              >
-                <IntegrationsTab contentId={id as string} />
-              </Box>
+              <IntegrationsTab contentId={id as string} />
             </TabPanel>
+            {isEdit ? (
+              <TabPanel value={value} index={3}>
+                <TipsTab
+                  tips={lessonTips ?? []}
+                  deleteTip={deleteTip}
+                  isLoading={isLoadingUpdate}
+                />
+              </TabPanel>
+            ) : null}
+
             {value === 0 ? (
               <DialogActions>
                 <Box
@@ -274,4 +256,44 @@ export default function CreateLessonDialog({
       </Dialog>
     </>
   );
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps): React.ReactElement {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box
+          sx={{
+            px: { xs: 2, sm: 3 },
+            pt: 2,
+            width: { xs: "320px", sm: "370px" },
+            height: "320px",
+          }}
+        >
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number): Record<string, string> {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
 }

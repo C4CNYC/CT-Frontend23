@@ -27,6 +27,7 @@ export const STUDENT_PATH_MAIN = {
 export const STUDENT_PATH_DASHBOARD = {
   root: STUDENT_ROOTS_MAIN,
   permissionDenied: "/student/permission-denied",
+  page404: "/student/404",
   class: {
     root: "/student/class",
     createClass: "/student/class/create",
@@ -61,7 +62,7 @@ export const STUDENT_PATH_DASHBOARD = {
     root: "/student/public-code-panel",
     workSpace: (id: string, query?: Record<string, string>) =>
       path("/student/public-code-panel/", `${id}`) +
-    `?${query ? new URLSearchParams(query) : ""}`,
+      `?${query ? new URLSearchParams(query) : ""}`,
   },
   courses: {
     root: "/student/courses",

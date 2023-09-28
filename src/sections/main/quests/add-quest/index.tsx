@@ -46,7 +46,7 @@ const RANDOM_NAME = uniqueNamesGenerator({
   length: 2,
 });
 
-const DATE_PARSER = (date?: Date, increment: number = 0) =>
+const DATE_PARSER = (date?: string, increment: number = 0) =>
   date ? new Date(date) : add(new Date(), { days: increment });
 const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
 const DAYS_TO_END = 7;
@@ -197,15 +197,7 @@ export default function AddQuest(): React.ReactElement {
         >
           <Stack>
             <Typography variant="h2">Add Quest</Typography>
-            <Tooltip
-              title={
-                <Typography variant="subtitle2">
-                  A quest is an assignment for a class. You can assign a part of
-                  or a full course, or you can assign any document link or open
-                  project to a class through a quest.
-                </Typography>
-              }
-            >
+            <Tooltip title="this is .....">
               <Typography
                 variant="caption"
                 sx={{ textDecoration: "underline" }}

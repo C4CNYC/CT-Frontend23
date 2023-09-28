@@ -16,6 +16,7 @@ export interface ILesson {
   active: boolean;
   name: string;
   description: string;
+  tips: string[] | [];
   meta: Record<string, Record<string, any>>;
 }
 
@@ -59,6 +60,14 @@ export interface ILessonContentUpdate {
   tags?: string[];
   meta?: Record<string, any>;
   complexity?: LessonContentComplexity;
+}
+
+export interface ILessonUpdate {
+  id: string;
+  name: string;
+  description: string;
+  active?: boolean;
+  tips?: string[] | [];
 }
 
 export interface IAddLessonToModule {

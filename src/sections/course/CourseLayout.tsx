@@ -1,7 +1,4 @@
 import { useState } from "react";
-
-import _ from "lodash";
-
 import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
 
 import { ICourseContent } from "src/redux/interfaces/content.interface";
@@ -9,23 +6,28 @@ import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/cour
 
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
 import ModuleItem from "./module-item";
+import {
+  useGetStudentLastVisitedUnitAndLessonQuery
+} from "../../redux/services/manager/lesson-student"
+import { isNull } from "lodash"
 
-interface ICourseLayautProps {
+interface ICourseLayoutProps {
   course?: ICourseContent;
   isLoadingCourse: boolean;
 }
 
-export default function CourseLayaut({
+export default function CourseLayout({
   course,
   isLoadingCourse,
-}: ICourseLayautProps): React.ReactElement {
+}: ICourseLayoutProps): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1050));
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState<number | null>(null);
   const { data, isLoading } = useGetStudentCourseModulesQuery(
     { id: course?.id as string },
     { skip: !course?.id }
   );
+  const { data: lastVisitedData, isLoading: isLoadingLesson } = useGetStudentLastVisitedUnitAndLessonQuery();
 
   return (
     <Stack
@@ -45,7 +47,7 @@ export default function CourseLayaut({
         }}
       >
         {isLoading || isLoadingCourse
-          ? [...Array(5)].map((el) => (
+          ? [...Array(5)].map((el, index) => (
               <Skeleton
                 variant="rounded"
                 sx={{
@@ -54,7 +56,7 @@ export default function CourseLayaut({
                   background: "#fff",
                   borderRadius: "30px",
                 }}
-                key={el}
+                key={index}
               />
             ))
           : data?.map((unit, index) => (
@@ -64,10 +66,12 @@ export default function CourseLayaut({
                 unit={unit}
                 active={active === index}
                 setActive={setActive}
+                isLoadingLesson={isLoadingLesson}
+                lastVisitedData={lastVisitedData}
               />
             ))}
       </Stack>
-      <CourseDetailsMain unit={data?.[active]} level={course?.level ?? ""} />
+      <CourseDetailsMain unit={!isNull(active) ? data?.[active] : null} level={course?.level ?? ""} />
     </Stack>
   );
 }

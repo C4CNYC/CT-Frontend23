@@ -45,7 +45,7 @@ import _mock from "src/_mock/_mock";
 import { _invoices } from "src/_mock/arrays";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 import {
   useDeleteAssignmentMutation,
   useGetAssignmentListQuery,
@@ -92,7 +92,7 @@ export default function AsssignmentsListPage() {
     onChangeRowsPerPage,
   } = useTable({ defaultOrderBy: "createDate" });
   const [filterName, setFilterName] = useState("");
-  const [tableData, setTableData] = useState<IAssignment[] | undefined>();
+  const [tableData, setTableData] = useState<IAssignmentFull[] | undefined>();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterType, setFilterType] = useState("all");
@@ -145,7 +145,7 @@ export default function AsssignmentsListPage() {
     if (Object.values(Status).includes(status as unknown as Status)) {
       return tableData?.filter((item) => item.status === status)?.length;
     } else {
-      return tableData?.filter((item) => item?.active)?.length;
+      return tableData?.filter((item) => item.active)?.length;
     }
   };
   const TABS = [
@@ -459,7 +459,7 @@ function applyFilter({
   filterStartDate,
   filterEndDate,
 }: {
-  inputData: IAssignment[];
+  inputData: IAssignmentFull[];
   comparator: (a: any, b: any) => number;
   filterName: string;
   filterStatus: string;

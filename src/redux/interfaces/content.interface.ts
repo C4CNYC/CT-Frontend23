@@ -62,6 +62,7 @@ export interface ILesson {
   description: string;
   integrations: Array<IIntegration & BaseResponseInterface>;
   id: string;
+  tips: string[] | [];
   progress?: number;
   skills: ISkill[];
 }
@@ -112,4 +113,19 @@ export interface ICourseSearchParams extends BaseSearchInterface {
   class_id?: string;
   school_id?: string;
   name?: string;
+}
+
+export interface LastVisitedData {
+  lastVisitedUnitId: string;
+  lastVisitedLessonId: string;
+}
+
+export interface LastVisitedBody {
+  unitId: string;
+  lessonId: string;
+}
+
+export interface LastVisitedState {
+  unitId: string | null;
+  lessonId: string | null;
 }

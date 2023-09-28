@@ -30,14 +30,14 @@ import {
 } from "@components";
 import SkillsAutocomplete from "@sections/main/quests/add-quest/components/SkillsAutocomplete";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 import { ISkill } from "src/redux/interfaces/content.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 
 interface IAssignmentDarawerProps {
   openDetails: boolean;
   onCloseDetails: () => void;
-  assignment: IAssignment;
+  assignment: IAssignmentFull;
 }
 const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
 const DATE_PARSER = (data: string | Date) => new Date(data);
@@ -60,11 +60,11 @@ export default function AssignmentDrawer({
     mode: "all",
     defaultValues: {
       name: assignment.name,
-      description: JSON.parse(assignment.description ? assignment?.description: ""),
+      description: JSON.parse(assignment.description),
       startDate: format(DATE_PARSER(assignment.start_date), DATE_FORMAT),
       dueDate: format(DATE_PARSER(assignment.end_date), DATE_FORMAT),
       closeDate: format(DATE_PARSER(assignment.close_date), DATE_FORMAT),
-      active: assignment?.active,
+      active: assignment.active,
     },
   });
 
@@ -313,7 +313,7 @@ export default function AssignmentDrawer({
               Assign to:
             </ListItemText>
             <Avatar sx={{ width: "25px", height: "25px", mr: 1 }} />
-            <ListItemText>{assignment?.assignee_classes?.length ? assignment.assignee_classes[0].name: ""}</ListItemText>
+            <ListItemText>{assignment.assignee_classes[0].name}</ListItemText>
           </ListItem>
           <ListItem>
             <LoadingButton

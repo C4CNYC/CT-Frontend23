@@ -73,6 +73,8 @@ export default function SchoolProfileForm({
   });
 
   const { handleSubmit } = methods;
+  console.log(methods.formState.isDirty);
+
   const onSubmit = async (formData: FormValuesProps): Promise<void> => {
     try {
       if (file) {

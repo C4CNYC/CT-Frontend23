@@ -5,6 +5,8 @@ import { forwardRef } from "react";
 // @mui
 import { Box, BoxProps, Link } from "@mui/material";
 
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+
 // ----------------------------------------------------------------------
 
 export interface LogoProps extends BoxProps {
@@ -57,7 +59,11 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
     }
 
     return (
-      <Link component={NextLink} href="/" sx={{ display: "contents" }}>
+      <Link
+        component={NextLink}
+        href={STUDENT_PATH_DASHBOARD.class.root}
+        sx={{ display: "contents" }}
+      >
         {logo}
       </Link>
     );

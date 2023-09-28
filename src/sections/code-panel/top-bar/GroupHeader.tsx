@@ -19,7 +19,7 @@ export default function GroupHeader(): React.ReactElement {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const tribe = useSelector((state) => state.codePanel.class);
 
-  if (!isDesktop) {
+  if (!isDesktop || !tribe) {
     return <></>;
   }
 

@@ -4,12 +4,10 @@ import { useState } from "react";
 
 import { format, formatDistanceToNow } from "date-fns";
 import { useSnackbar } from "notistack";
-import { HiOutlineStatusOnline } from "react-icons/hi";
 import { RiExternalLinkLine } from "react-icons/ri";
 
 import { LoadingButton } from "@mui/lab";
 import {
-  CircularProgress,
   Divider,
   IconButton,
   Link,
@@ -23,15 +21,16 @@ import { ConfirmDialog, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Iconify } from "src/components/iconify";
-import { IAssignment } from "src/redux/interfaces/assignment.interface";
+import { IAssignmentReduced } from "src/redux/interfaces/assignment.interface";
 import { Role } from "src/redux/services/enums/role.enum";
+import { useDeleteAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 import {
-  useDeleteAssignmentMutation,
-  useUpdateAssignmentMutation,
-} from "src/redux/services/manager/assignments-manager";
+  usePinAssignmentMutation,
+  useUnpinAssignmentMutation,
+} from "src/redux/services/manager/assignments-student";
 
 interface IQuestItemProps {
-  assignment: IAssignment;
+  assignment: IAssignmentReduced;
   schoolId: string;
 }
 
@@ -45,17 +44,17 @@ export default function QuestItem({
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [updateAssignment, { isLoading }] = useUpdateAssignmentMutation();
+  const [pinAssignment, { isLoading: isLoadingPin }] =
+    usePinAssignmentMutation();
+  const [unpinAssignment, { isLoading: isLoadingUnpin }] =
+    useUnpinAssignmentMutation();
   const [deleteAssignmet, { isLoading: isDeleting }] =
     useDeleteAssignmentMutation();
 
   const pinTomblerAssignment = async () => {
     try {
-      await updateAssignment({
-        schoolId,
-        assignmentId: assignment.id,
-        meta: { ...assignment?.meta, pin: !assignment?.meta?.pin },
-      }).unwrap();
+      await pinAssignment({ assignmentId: assignment.id }).unwrap();
+      // await unpinAssignment({assignmentId: assignment.id}).unwrap();
       enqueueSnackbar("assignment pined");
     } catch (e) {
       enqueueSnackbar("something went wrong", { variant: "error" });
@@ -121,7 +120,7 @@ export default function QuestItem({
           <Stack sx={{ width: "100%", gap: 2 }}>
             <Stack direction="row" justifyContent="space-between">
               <Stack gap={2} sx={{ flexDirection: { sm: "row" } }}>
-                {assignment?.active && (
+                {/* (
                   <Typography
                     sx={{ color: "#0198ED", display: "inline-flex" }}
                     variant="subtitle2"
@@ -132,7 +131,7 @@ export default function QuestItem({
                       style={{ marginLeft: "3px" }}
                     />
                   </Typography>
-                )}
+                ) */}
                 <Typography variant="body2">
                   {formatDistanceToNow(new Date(assignment.createdat), {
                     addSuffix: true,
@@ -142,7 +141,6 @@ export default function QuestItem({
                   Due: {format(new Date(assignment.end_date), "MM.dd.yyyy")}
                 </Typography>
               </Stack>
-              <Typography>{assignment?.course?.name}</Typography>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
               <Typography variant="h5" color="#364954">
@@ -160,7 +158,7 @@ export default function QuestItem({
               <Link
                 component={NextLink}
                 href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                  assignment.courseid as string
+                  assignment?.courseid as string
                 )}
                 underline="none"
                 sx={{
@@ -169,7 +167,7 @@ export default function QuestItem({
                   color: "inherit",
                 }}
               >
-                Get Coding Now
+                Keep Coding{" "}
                 <Iconify
                   icon="maki:arrow"
                   width={18}
@@ -217,13 +215,15 @@ export default function QuestItem({
                 pinTomblerAssignment();
               }}
             >
-              {isLoading ? (
+              {/* uncomment when pin \ unpin will work */}
+              {/* {isLoadingPin || isLoadingUnpin ? (
                 <CircularProgress variant="indeterminate" size={20} />
-              ) : assignment?.meta?.pin ? (
+              ) : !assignment?.pined ? (
                 <Iconify icon="bi:pin-fill" width={22} />
               ) : (
                 <Iconify icon="bi:pin" width={22} />
-              )}
+              )} */}
+              <Iconify icon="bi:pin" width={22} />
             </IconButton>
             <Stack direction="row">
               <IconButton

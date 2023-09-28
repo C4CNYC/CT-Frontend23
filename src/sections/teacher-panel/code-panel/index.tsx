@@ -19,7 +19,7 @@ export const CodePanel = (): React.ReactElement => {
   const [loading, setLoading] = useState(false);
   const [, setGlobal] = useAtom(globalCodePanelAtom);
   const { data: realTimeData } = useRealTimeConnection(
-    query?.studentId as string
+    query?.id as string
   );
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
   const [{ lessonId }] = useAtom(globalCodePanelAtom);
@@ -53,7 +53,7 @@ export const CodePanel = (): React.ReactElement => {
     );
   }
 
-  if (!query?.studentId) {
+  if (!query?.id) {
     return (
       <Box>
         <Typography

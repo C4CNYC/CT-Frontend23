@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
@@ -15,6 +16,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
+import { isValidLastVisitedData } from "@sections/code-panel/helpers";
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-panel/skeleton";
@@ -25,8 +27,11 @@ import { useGetChallangesQuery } from "src/redux/services/manager/challenges-stu
 import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
+  useUpdateStudentLastVisitedDataMutation,
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
+
+import { LastVisitedState } from "../../../redux/interfaces/content.interface";
 
 const Tour = dynamic(
   async () =>
@@ -54,11 +59,28 @@ export default function Index(): React.ReactElement | null {
   const handle = useFullScreenHandle();
   const { push, query, replace } = useRouter();
   const { user } = useAuthContext();
+  const searchParams = useSearchParams();
 
   const [confetti, setConfetti] = useState(false);
-  const [code, onChangeCode] = useState<string>("");
+  const [code, setCode] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem(`code-${query.id}`) ?? "";
+    }
+    return "";
+  });
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+  const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
+    unitId: null,
+    lessonId: null,
+  });
+  const unitId = searchParams.get("unitId");
+  const lessonId = searchParams.get("lessonId");
+
+  const onChangeCode = useCallback((code: string) => {
+    setCode(code);
+    window.localStorage.setItem(`code-${query.id}`, code);
+  }, []);
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
     useAtom(globalCodePanelAtom);
@@ -67,6 +89,8 @@ export default function Index(): React.ReactElement | null {
   useRealTimeConnection(user?.id);
 
   const [completeLesson] = useCompleteLessonMutation();
+  const [updateLastVisitedDataTrigger] =
+    useUpdateStudentLastVisitedDataMutation();
 
   const { data, isLoading, isFetching } = useGetLessonContentStudentQuery(
     { id: query.lessonId as string },
@@ -100,9 +124,18 @@ export default function Index(): React.ReactElement | null {
     );
   };
 
+  const updateLastVisitedData = async () => {
+    if (isValidLastVisitedData(lastVisitedData)) {
+      await updateLastVisitedDataTrigger(lastVisitedData).unwrap();
+    }
+  };
+
   useEffect(() => {
     if (!courseContent) return;
     if (!atomLessonId && !atomUnitId) {
+      if (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id) {
+        push(STUDENT_PATH_DASHBOARD.page404);
+      }
       onOpenLesson(
         courseContent.units[0].lessons[0].id,
         courseContent.units[0].id
@@ -161,13 +194,18 @@ export default function Index(): React.ReactElement | null {
       enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
+
   useEffect(() => {
     setGlobalCodePanel((prev) => ({
       ...prev,
       isFullScreenView: handle.active,
     }));
   }, [handle.active]);
+
   useEffect(() => {
+    if (!query.id) {
+      push(STUDENT_PATH_DASHBOARD.page404);
+    }
     setGlobalCodePanel((prev) => ({
       ...prev,
       fullScreenOpen: handle.enter,
@@ -180,6 +218,19 @@ export default function Index(): React.ReactElement | null {
       setIsLoadingComplete(true);
     }
   }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
+
+  useEffect(() => {
+    setLastVisitedData({
+      unitId,
+      lessonId,
+    });
+  }, [unitId, lessonId]);
+
+  useEffect(() => {
+    return () => {
+      updateLastVisitedData();
+    };
+  }, [lastVisitedData]);
 
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />;
