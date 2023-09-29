@@ -16,16 +16,16 @@ import {
   useTheme,
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
-import { Box, Theme } from "@mui/system";
+import { Box } from "@mui/system";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 import { CodePanelContext } from "../context/CodePanel.context";
 import PublishModal from "./modals/Publish";
 
-const tooltipRewrite = makeStyles<Theme>((theme: Theme) => ({
+const tooltipRewrite = makeStyles(() => ({
   tooltip: {
-    color: theme.palette.mode === "light" ? "#364954" : "",
+    color: "#364954",
     background: "transparent",
   },
 }));
