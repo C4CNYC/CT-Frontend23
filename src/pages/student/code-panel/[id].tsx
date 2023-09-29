@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import {useCallback, useEffect, useState} from "react";
 
@@ -16,7 +15,6 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import { isValidLastVisitedData } from "@sections/code-panel/helpers";
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-panel/skeleton";
@@ -30,7 +28,7 @@ import {
   useUpdateStudentLastVisitedDataMutation,
 } from "src/redux/services/manager/lesson-student";
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
-
+import { isValidLastVisitedData } from "@sections/code-panel/helpers";
 import { LastVisitedState } from "../../../redux/interfaces/content.interface";
 
 const Tour = dynamic(
@@ -59,7 +57,6 @@ export default function Index(): React.ReactElement | null {
   const handle = useFullScreenHandle();
   const { push, query, replace } = useRouter();
   const { user } = useAuthContext();
-  const searchParams = useSearchParams();
 
   const [confetti, setConfetti] = useState(false);
   const [code, setCode] = useState<string>(() => {
@@ -70,12 +67,9 @@ export default function Index(): React.ReactElement | null {
   });
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
-  const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
-    unitId: null,
-    lessonId: null,
-  });
-  const unitId = searchParams.get("unitId");
-  const lessonId = searchParams.get("lessonId");
+  const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>(
+    { unitId: null, lessonId: null, courseId: null }
+  );
 
   const onChangeCode = useCallback((code: string) => {
     setCode(code);
@@ -220,11 +214,14 @@ export default function Index(): React.ReactElement | null {
   }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
 
   useEffect(() => {
-    setLastVisitedData({
-      unitId,
-      lessonId,
-    });
-  }, [unitId, lessonId]);
+    if (query.id && query.lessonId && query.unitId) {
+      setLastVisitedData({
+        unitId: query.unitId as string,
+        lessonId: query.lessonId as string,
+        courseId: query.id as string,
+      });
+    }
+  }, [query.id, query.lessonId, query.unitId]);
 
   useEffect(() => {
     return () => {

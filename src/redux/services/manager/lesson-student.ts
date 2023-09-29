@@ -44,14 +44,14 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["Lessons"],
     }),
-    getStudentLastVisitedUnitAndLesson: builder.query<
-      LastVisitedData, void
+    getStudentLastVisitedData: builder.query<
+      LastVisitedData, { courseId: string }
       >({
-      query: () => ({
-        url: "/student/lesson/last-visited",
+      query: ({ courseId }) => ({
+        url: `/student/lesson/${courseId}/last-visited`,
         method: "GET",
       }),
-      providesTags: ["LastVisitedUnitAndLesson"]
+      providesTags: ["LastVisitedData"]
     }),
     updateStudentLastVisitedData: builder.mutation<void, LastVisitedBody>({
       query: ({ ...body }) => ({
@@ -59,7 +59,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["LastVisitedUnitAndLesson"]
+      invalidatesTags: ["LastVisitedData"]
     }),
   }),
 
@@ -70,7 +70,7 @@ export const {
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
   useGetLessonsListStudentQuery,
-  useGetStudentLastVisitedUnitAndLessonQuery,
+  useGetStudentLastVisitedDataQuery,
   // -------------mutation-----------
   useUpdateStudentLastVisitedDataMutation,
 } = extendedApi;

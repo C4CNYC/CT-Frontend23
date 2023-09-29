@@ -33,11 +33,14 @@ import {
   useCreateModuleMutation,
   useUpdateModuleMutation,
 } from "../../../redux/services/manager/modules-manager";
+import ChooseImage from "@layouts/dashboard/ChooseImage"
 
 interface FormValuesProps {
   name: string;
   description: string;
   active: boolean;
+  duration: string;
+  tips: string[];
 }
 
 interface Prop {
@@ -87,6 +90,7 @@ export default function CreateModuleDialog({
 }: Prop): React.ReactElement {
   const { query } = useRouter();
   const [open, setOpen] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
 
   const { enqueueSnackbar } = useSnackbar();
   const [addToCourse, { isLoading: isAddToCourseLoading }] =
@@ -163,6 +167,7 @@ export default function CreateModuleDialog({
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <Box sx={{ borderBottom: 1, borderColor: "divider", pl: 3 }}>
+              <ChooseImage uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} />
               {isEdit ? (
                 <Tabs
                   value={value}
