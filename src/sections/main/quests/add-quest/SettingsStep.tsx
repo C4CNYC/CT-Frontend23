@@ -1,6 +1,6 @@
 import { Control } from "react-hook-form";
 
-import { Box, FormGroup, Stack, Typography } from "@mui/material";
+import { Box, FormGroup, Stack, Typography, useTheme } from "@mui/material";
 
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
@@ -22,6 +22,8 @@ export default function SettingsStep({
   assignmentsSkillsId,
   existedSkills,
 }: ISettingsStepProps): React.ReactElement {
+  const theme = useTheme();
+
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
       <Stack
@@ -65,7 +67,8 @@ export default function SettingsStep({
           defaultValue={true as any}
           sx={{
             maxWidth: { xs: "100%", sm: "300px", md: "300px" },
-            background: "#fff",
+            background: theme.palette.mode === "light" ? "#fff" : "",
+            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
             outline: "none",
             borderRadius: 1,
             "& fieldset": { border: "none" },
