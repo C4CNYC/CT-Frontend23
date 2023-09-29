@@ -10,6 +10,7 @@ import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
 import { RootState, useSelector } from "src/redux/store";
 import { useDispatch } from "react-redux";
 import { removeRabit } from "src/redux/slices/rabits";
+import { io } from "socket.io-client";
 
 export const QuickRabbits = (): React.ReactElement => {
   const theme = useTheme();
@@ -17,9 +18,11 @@ export const QuickRabbits = (): React.ReactElement => {
   const { query, push } = useRouter();
   const rabits = useSelector((state: RootState) => state.rabits.items);
   const onClose = (userId: string): void => {
+    // This is working, but not very pretty. We should unify all socket connections in a context, so we can access the socket here easily
+    io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" }).open().emit("leaveRoom", userId);
     dispatch(removeRabit({ id: userId }))
     if (userId === query?.id) {
-      push(MANAGER_PATH_DASHBOARD.school.controller(query?.id as string));
+      push(MANAGER_PATH_DASHBOARD.school.controller(query?.id));
     }
   };
 

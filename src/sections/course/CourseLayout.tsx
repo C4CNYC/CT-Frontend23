@@ -7,7 +7,7 @@ import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/cour
 import CourseDetailsMain from "./course-details/CourseDetailsMain";
 import ModuleItem from "./module-item";
 import {
-  useGetStudentLastVisitedUnitAndLessonQuery
+  useGetStudentLastVisitedDataQuery
 } from "../../redux/services/manager/lesson-student"
 import { isNull } from "lodash"
 
@@ -27,7 +27,10 @@ export default function CourseLayout({
     { id: course?.id as string },
     { skip: !course?.id }
   );
-  const { data: lastVisitedData, isLoading: isLoadingLesson } = useGetStudentLastVisitedUnitAndLessonQuery();
+  const { data: lastVisitedData, isLoading: isLoadingLesson } = useGetStudentLastVisitedDataQuery(
+    { courseId: course?.id as string },
+    { skip: !course?.id }
+  );
 
   return (
     <Stack
