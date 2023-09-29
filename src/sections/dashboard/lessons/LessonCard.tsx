@@ -100,7 +100,9 @@ export default function LessonCard({
           maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
-            bgcolor: "grey.100",
+            borderColor: "grey.400",
+            borderWidth: 1,
+            borderStyle: "solid",
           },
         }}
       >
