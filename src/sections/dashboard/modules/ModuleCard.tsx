@@ -10,6 +10,7 @@ import {
   MenuItem,
   Stack,
   Typography,
+  duration,
 } from "@mui/material";
 
 import {
@@ -158,6 +159,8 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             name: module.name,
             description: module.description as string,
             active: module.active as boolean,
+            tips: [],
+            duration: "",
           }}
         >
           <MenuItem>

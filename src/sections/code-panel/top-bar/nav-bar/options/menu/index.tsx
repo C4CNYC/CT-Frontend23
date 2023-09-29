@@ -113,6 +113,7 @@ const Menu = (): React.ReactElement => {
                   sx={{ pl: "20px!important", height: 59, color: "#212B36" }}
                   onClick={() => {
                     if (menuItem.title === "Take the Tour") {
+                      handleClosePopover();
                       setStartTour({ start: true });
                     }
                   }}

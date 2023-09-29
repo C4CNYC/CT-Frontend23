@@ -6,11 +6,10 @@ import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { Socket } from "socket.io-client";
-import { dracula } from "thememirror";
 
-import { State } from ".";
-import { initListeners, removeListeners } from "./listeners";
+import { State, updateColorsEvent } from ".";
 import { peerExtension } from "../../codemirror/extensions/collab";
+import { initListeners, removeListeners } from "./listeners";
 
 interface IEditor {
   roomId?: string;
@@ -41,7 +40,6 @@ export const CodeEditor = ({
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString());
         }),
-        dracula,
         indentUnit.of("\t"),
         basicSetup({
           highlightActiveLineGutter: true,
@@ -90,6 +88,9 @@ export const CodeEditor = ({
           preloadedCode,
         },
         lineWrap
+      );
+      window.dispatchEvent(
+        updateColorsEvent({ background: "#282a36", text: "#f8f8f2" })
       );
     }, 500);
 

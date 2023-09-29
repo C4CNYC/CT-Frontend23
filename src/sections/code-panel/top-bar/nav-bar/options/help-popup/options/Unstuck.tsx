@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useAtom } from "jotai";
+
 import {
   Checkbox,
   Link,
@@ -12,10 +14,13 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+
 import FullCodeSolutionModal from "../modals/FullCodeSolution";
 
 const Unstuck = (): React.ReactElement => {
-  const [checked, setChecked] = useState<string[]>([]);
+  const [{ unstuck }, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
+  const [checked, setChecked] = useState<string[]>(unstuck ?? []);
 
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);
@@ -27,8 +32,13 @@ const Unstuck = (): React.ReactElement => {
       newChecked.splice(currentIndex, 1);
     }
 
+    setGlobalCodePanel((prev) => ({
+      ...prev,
+      unstuck: newChecked,
+    }));
     setChecked(newChecked);
   };
+
   return (
     <>
       <List

@@ -108,20 +108,18 @@ export const TOUR_STEPS_MOBILE = [
     placement: "center" as const,
   },
   {
-    target: ".sliderTour",
-    title: <div>Slider</div>,
-    content: (
-      <div>
-        It's contain information 📖 from the teacher, space for practice and
-        online browser
-      </div>
-    ),
-    disableBeacon: true,
-  },
-  {
     target: ".smallSliderTour",
     title: <div>Navigation</div>,
-    content: <div>Here you can change this tabs</div>,
+    content: (
+      <div>
+        Here you can switch between tabs:
+        <ul style={{ padding: "0 0 0 0px", listStyle: "none" }}>
+          <li>1. Slider with lesson info 📚</li>
+          <li>2. Code editor 💻</li>
+          <li>3. Browser to view your work's results 💪</li>
+        </ul>
+      </div>
+    ),
     disableBeacon: true,
   },
   {

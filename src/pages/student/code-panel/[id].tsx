@@ -55,7 +55,7 @@ export default function Index(): React.ReactElement | null {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const { enqueueSnackbar } = useSnackbar();
   const handle = useFullScreenHandle();
-  const { push, query, replace } = useRouter();
+  const { push, query, replace, isReady } = useRouter();
   const { user } = useAuthContext();
 
   const [confetti, setConfetti] = useState(false);
@@ -127,7 +127,10 @@ export default function Index(): React.ReactElement | null {
   useEffect(() => {
     if (!courseContent) return;
     if (!atomLessonId && !atomUnitId) {
-      if (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id) {
+      if (
+        !isLoadingCourseContent &&
+        (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id)
+      ) {
         push(STUDENT_PATH_DASHBOARD.page404);
       }
       onOpenLesson(
@@ -197,7 +200,7 @@ export default function Index(): React.ReactElement | null {
   }, [handle.active]);
 
   useEffect(() => {
-    if (!query.id) {
+    if (!query.id && isReady) {
       push(STUDENT_PATH_DASHBOARD.page404);
     }
     setGlobalCodePanel((prev) => ({
