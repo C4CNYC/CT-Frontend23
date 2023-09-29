@@ -100,7 +100,13 @@ const Menu = (): React.ReactElement => {
         }
       >
         {isAuthenticated ? (
-          <Typography height="59px" p="16px 20px" variant="h6" component="h2">
+          <Typography
+            height="59px"
+            p="16px 20px"
+            variant="h6"
+            component="h2"
+            color="#212B36"
+          >
             Hello {userName ? userName : ""}
           </Typography>
         ) : null}
