@@ -148,7 +148,6 @@ export default function Index(): React.ReactElement | null {
   const onSubmitChalange = async (lessonContentId: string): Promise<void> => {
     try {
       await completeLesson({
-        id: query.id as string,
         module_id: query.unit_id as string,
         lesson_content_id: lessonContentId,
       }).unwrap();
