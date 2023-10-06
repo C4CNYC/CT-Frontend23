@@ -1,17 +1,11 @@
-// @mui
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// components
 import { CustomAvatar, Image } from "@components";
-// utils
 import { bgBlur } from "@utils";
 import { OrganizationResponce } from "src/redux/services/interfaces/organization.interface";
 
-// auth
 import { useAuthContext } from "../../../../auth/useAuthContext";
-
-// ----------------------------------------------------------------------
 
 const StyledRoot = styled("div")(({ theme }) => ({
   "&:before": {

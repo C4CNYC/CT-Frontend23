@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { IoMdClose } from "react-icons/io";
 import * as Yup from "yup";
 
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,7 +15,6 @@ import {
   Stack,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -27,8 +25,6 @@ import {
   RHFSelect,
   RHFSwitch,
   RHFTextField,
-  RHFUpload,
-  SingleFilePreview,
   useSnackbar,
 } from "@components";
 
@@ -38,6 +34,7 @@ import {
   useUpdateCourseMutation,
 } from "../../../redux/services/manager/courses-manager";
 import AuthorsTab from "./authors-tab/AuthorsTab";
+import ChooseImage from "@layouts/dashboard/ChooseImage"
 
 interface FormValuesProps {
   name: string;
@@ -99,9 +96,6 @@ export default function CreateCourseDialog({
   const handleClose = (): void => {
     setOpen(false);
   };
-  const handleDrop = (files: File[]): void => {
-    setUploadedFile(files[0]);
-  };
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
@@ -133,9 +127,6 @@ export default function CreateCourseDialog({
         variant: "error",
       });
     }
-  };
-  const clearFileHandler = (): void => {
-    setUploadedFile(null);
   };
 
   return (
@@ -182,50 +173,7 @@ export default function CreateCourseDialog({
               onSubmit={methods.handleSubmit(onSubmit)}
             >
               <Box rowGap={3} display="grid">
-                <Box sx={{ position: "relative" }}>
-                  {uploadedFile ? (
-                    <IconButton
-                      sx={{
-                        position: "absolute",
-                        right: "5px",
-                        top: "5px",
-                        zIndex: 10,
-                        width: "20px",
-                        height: "20px",
-                        p: 0,
-                      }}
-                      onClick={clearFileHandler}
-                    >
-                      <IoMdClose size="20px" />
-                    </IconButton>
-                  ) : null}
-                  <RHFUpload
-                    name="course_img"
-                    onDrop={handleDrop}
-                    helperText={
-                      <Typography
-                        variant="caption"
-                        noWrap
-                        width="90px"
-                        sx={{
-                          mt: 1,
-                          mb: -1,
-                          mx: "auto",
-                          display: "block",
-                          textAlign: "center",
-                          color: "text.secondary",
-                        }}
-                      >
-                        {uploadedFile?.name}
-                      </Typography>
-                    }
-                  />
-                  <SingleFilePreview
-                    file={
-                      uploadedFile ? URL.createObjectURL(uploadedFile) : null
-                    }
-                  />
-                </Box>
+                <ChooseImage uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} />
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="name"

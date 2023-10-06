@@ -22,7 +22,7 @@ const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
       <IconButton
         sx={{
           display: isDesktop ? "inline-flex" : "none",
-          background: isChatVisible ? "#c5d6e3" : "#fff",
+          background: isChatVisible ? "#c5d6e3" : "",
           "&:hover": { background: isChatVisible ? "#c5d6e3" : "" },
         }}
         onClick={() => {

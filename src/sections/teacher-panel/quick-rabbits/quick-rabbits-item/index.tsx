@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { createTheme } from "@uiw/codemirror-themes";
@@ -18,6 +18,8 @@ import { useGetStudentsQuery } from "src/redux/services/manager/students-manager
 import { RootState } from "src/redux/store";
 
 import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
+import { getDocument } from "../../../../codemirror/extensions/collab";
+import { io } from "socket.io-client";
 
 interface IQuickRabbitsItem {
   rabit: { id: string, email: string, avatar: string };
@@ -29,19 +31,123 @@ enum TabbitView {
   CODE = "code",
 }
 
+interface State {
+  connected: boolean;
+  version?: number;
+  doc?: string;
+}
+
 export default function QuickRabbitsItem({
   rabit,
   onClose,
 }: IQuickRabbitsItem): React.ReactElement | null {
   const { query } = useRouter();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  
+
   const [view, setView] = useState<TabbitView>(
     rabit.email === GROUP_CHAT_RABBIT ? TabbitView.CHAT : TabbitView.CODE
   );
+  useRealTimeConnection(rabit.id);
 
-  const { data: realTimeData } = useRealTimeConnection(rabit.id);
-  
+  // Realtime code logic
+  const socketIo = useRef(io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" }));
+  const [state, setState] = useState<State>({
+    connected: false,
+    version: undefined,
+    doc: undefined,
+  });
+
+  /**
+   * Gets and sets the initial document data.
+   * If no/invalid data is returned, it tries again every 3 seconds.
+   */
+  async function initializeData() {
+    const { version, doc } = await getDocument(socketIo.current, rabit.id);
+
+    // If no data is returned, try again in 3 seconds
+    if (version === undefined || !doc) {
+      setTimeout(() => {
+        initializeData();
+      }, 3000);
+      return;
+    }
+
+    setState((prev) => ({
+      ...prev,
+      version,
+      // eslint-disable-next-line @typescript-eslint/no-base-to-string
+      doc: doc?.toString(),
+    }));
+  }
+
+  const initializeConnection = useCallback(async () => {
+    socketIo.current.emit("joinRoom", rabit.id);
+    await initializeData();
+  }, [initializeData]);
+
+  useEffect(() => {
+    const socket = socketIo.current;
+    socket.open();
+
+    if (socket.connected) {
+      void initializeConnection();
+    } else {
+      socket.once("connect", initializeConnection);
+    }
+
+    socket.on("connect", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: true,
+      }));
+    });
+
+    socket.on("codeUpdated", (_, version, doc) => {
+      setState((prev) => ({
+        ...prev,
+        version,
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        doc: doc?.toString(),
+      }));
+    })
+
+    socket.on("disconnect", () => {
+      setState((prev) => ({
+        ...prev,
+        connected: false,
+      }));
+    });
+
+    window.addEventListener("beforeunload", () => {
+      socket.emit(
+        "leaveRoom",
+        rabit.id
+      );
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("codeUpdated");
+      socket.close();
+    });
+
+    return () => {
+      setState((prev) => ({
+        ...prev,
+        version: undefined,
+        doc: undefined,
+      }));
+      socket.emit(
+        "leaveRoom",
+        rabit.id
+      );
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("codeUpdated");
+      socket.close();
+      socket.disconnect();
+    };
+  }, [rabit.id]);
+  // Realtime code logic
+
   const { data: students } = useGetStudentsQuery(
     {
       schoolId,
@@ -145,7 +251,7 @@ export default function QuickRabbitsItem({
       ) : (
         <CodeMirror
           editable={false}
-          value={realTimeData?.code}
+          value={state.doc}
           theme={myTheme}
           height="449px"
           style={{ fontSize: 11, overflow: "scroll" }}

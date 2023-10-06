@@ -51,12 +51,15 @@ export default function Header({
       {isSchoolSection ? <NavAccount /> : null}
       <Typography
         variant="h4"
-        sx={{
-          color: "rgba(54, 73, 84, 1)",
+        sx={(theme) => ({
+          color:
+            theme.palette.mode === "light"
+              ? "rgba(54, 73, 84, 1)"
+              : theme.palette.primary.contrastText,
           display: "flex",
           gap: 3,
           alignItems: "center",
-        }}
+        })}
       >
         Hey {user?.first_name ? user.first_name : "friend"}
         <Typography variant="h3">👋</Typography>

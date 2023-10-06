@@ -84,7 +84,11 @@ const extendedApi = managerApi.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["Courses", "Classes"],
+      invalidatesTags: [
+        { type: "CoursesManager" },
+        { type: "Courses" },
+        { type: "Classes" },
+      ],
     }),
     removeCourseFromClass: builder.mutation<void, IRemoveCourseFromClass>({
       query: ({ id, ...body }) => ({
@@ -92,7 +96,11 @@ const extendedApi = managerApi.injectEndpoints({
         method: "DELETE",
         body,
       }),
-      invalidatesTags: ["Courses", "Classes"],
+      invalidatesTags: [
+        { type: "CoursesManager" },
+        { type: "Courses" },
+        { type: "Classes" },
+      ],
     }),
   }),
   overrideExisting: false,

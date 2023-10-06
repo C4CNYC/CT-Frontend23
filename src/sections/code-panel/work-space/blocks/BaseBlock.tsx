@@ -39,6 +39,7 @@ const BaseBlock = ({
         border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
         overflow: "hidden",
         position: "relative",
+        background: "#fff",
         borderRadius: isTabletAndMobile ? "0 0 20px 20px" : 2,
       }}
     >

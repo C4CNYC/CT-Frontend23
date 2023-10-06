@@ -20,8 +20,11 @@ import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
-import { useAddCourseToClassMutation, useRemoveCourseFromClassMutation } from "src/redux/services/manager/classes-manager";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
+import {
+  useAddCourseToClassMutation,
+  useRemoveCourseFromClassMutation,
+} from "src/redux/services/manager/classes-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 type CourseType = ICourse & BaseResponseInterface;
 
@@ -38,11 +41,11 @@ export default function ClassCoursesAutocomplete({
 
   const [addCourse] = useAddCourseToClassMutation();
   const [removeCourse] = useRemoveCourseFromClassMutation();
-  const { data: classCourses } = useGetCourseQuery(
+  const { data: classCourses } = useManagerGetCourseQuery(
     { class_id: classId, take: 50 },
     { skip: !classId }
   );
-  const { data: courses } = useGetCourseQuery(
+  const { data: courses } = useManagerGetCourseQuery(
     { ...filters },
     { skip: !classId }
   );
@@ -96,7 +99,13 @@ export default function ClassCoursesAutocomplete({
       renderTags={(tagValue, getTagProps): React.ReactElement[] =>
         tagValue.map((option, index) => (
           <Chip
-            avatar={<CustomAvatar alt={option.name} src={option.cover} />}
+            avatar={
+              <CustomAvatar
+                alt={option.name}
+                src={option.cover}
+                name={option.name}
+              />
+            }
             label={option.name}
             {...getTagProps({ index })}
             key={option.name}
@@ -106,7 +115,7 @@ export default function ClassCoursesAutocomplete({
       style={{ width: "100%" }}
       renderInput={(params) => <TextField {...params} placeholder="Courses" />}
       renderOption={(props, recipient, { inputValue }) => {
-        const { name } = recipient;
+        const { name, cover } = recipient;
         const matches = match(name, inputValue);
         const parts = parse(name, matches);
 
@@ -131,7 +140,7 @@ export default function ClassCoursesAutocomplete({
                 position: "relative",
               }}
             >
-              <CustomAvatar alt={name} src={recipient.cover} />
+              <CustomAvatar alt={name} src={cover} name={name} />
               <Box
                 sx={{
                   top: 0,

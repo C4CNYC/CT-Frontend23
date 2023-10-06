@@ -6,13 +6,13 @@ import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { Socket } from "socket.io-client";
-import { dracula } from "thememirror";
 
-import { State } from ".";
-import { peerExtension } from "./extentions/collab";
+import { State, updateColorsEvent } from ".";
+import { peerExtension } from "../../codemirror/extensions/collab";
 import { initListeners, removeListeners } from "./listeners";
 
 interface IEditor {
+  roomId?: string;
   state?: State;
   cursorId?: string;
   preloadedCode: string;
@@ -22,6 +22,7 @@ interface IEditor {
 }
 
 export const CodeEditor = ({
+  roomId,
   preloadedCode,
   state,
   cursorId,
@@ -39,7 +40,6 @@ export const CodeEditor = ({
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           onChangeCode(e.state.doc.toString());
         }),
-        dracula,
         indentUnit.of("\t"),
         basicSetup({
           highlightActiveLineGutter: true,
@@ -62,8 +62,8 @@ export const CodeEditor = ({
         }),
         lineWrap.of(EditorView.lineWrapping),
         langs.html(),
-        socket && state && cursorId
-          ? peerExtension(socket, state.version ?? 0, cursorId)
+        socket && state && cursorId && roomId
+          ? peerExtension(socket, state.version ?? 0, cursorId, roomId)
           : [],
       ],
     });
@@ -88,6 +88,9 @@ export const CodeEditor = ({
           preloadedCode,
         },
         lineWrap
+      );
+      window.dispatchEvent(
+        updateColorsEvent({ background: "#282a36", text: "#f8f8f2" })
       );
     }, 500);
 
