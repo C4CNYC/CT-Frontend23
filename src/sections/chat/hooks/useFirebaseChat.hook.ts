@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { Timestamp } from "firebase/firestore";
 import {
   Firestore,
   addDoc,
@@ -19,6 +20,7 @@ export interface IChatMessage {
   text: string;
   sender_id: string;
   uid: string;
+  timestamp?: Timestamp;
 }
 
 const app = initializeApp({
@@ -78,25 +80,31 @@ export const useFirebaseChat = (): FirebaseChatApi => {
       } catch (error: any) {}
     },
     getMessages: async (senderId, reciverId, callback, limit) => {
-      return onSnapshot(
-        query(
-          collection(
-            db,
-            "chat-rooms",
-            classId === reciverId ? reciverId : getRoomId(senderId, reciverId),
-            "messages"
+      try {
+        return onSnapshot(
+          query(
+            collection(
+              db,
+              "chat-rooms",
+              classId === reciverId
+                ? reciverId
+                : getRoomId(senderId, reciverId),
+              "messages"
+            ),
+            limitToLast(limit ?? 50),
+            orderBy("timestamp", "asc")
           ),
-          limitToLast(limit ?? 50),
-          orderBy("timestamp", "asc")
-        ),
-        (querySnapshot) => {
-          const messages = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          })) as IChatMessage[];
-          callback(messages, db);
-        }
-      );
+          (querySnapshot) => {
+            const messages = querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            })) as IChatMessage[];
+            callback(messages, db);
+          }
+        );
+      } catch (error: any) {
+        console.log(error);
+      }
     },
   };
 };
