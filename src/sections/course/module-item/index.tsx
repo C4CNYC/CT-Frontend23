@@ -77,8 +77,7 @@ export default function ModuleItem({
           }}
         />
       </ImageLightBox>
-      <ModuleInfoDialog unit={unit} setActive={setActive} index={index} lastVisitedData={lastVisitedData}
-                        isLoadingLesson={isLoadingLesson}>
+      <ModuleInfoDialog unit={unit} setActive={setActive} index={index} lastVisitedData={lastVisitedData}>
         <Stack
           sx={{
             p: 2,

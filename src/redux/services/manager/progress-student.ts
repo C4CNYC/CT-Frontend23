@@ -18,11 +18,11 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     completeLesson: builder.mutation<
       string,
-      { lesson_content_id: string; module_id: string }
+      { id: string; lesson_content_id: string; module_id: string }
     >({
-      query: ({ ...body }) => ({
-        url: "/student/progress/complete-chalange",
-        method: "POST",
+      query: ({ id, ...body }) => ({
+        url: `/student/course/${id}/progress/complete-chalange`,
+        method: "PATCH",
         body,
       }),
       invalidatesTags: ["Progress"],

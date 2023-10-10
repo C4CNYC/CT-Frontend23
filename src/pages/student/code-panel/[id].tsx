@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 
@@ -56,13 +57,14 @@ export default function Index(): React.ReactElement | null {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const { enqueueSnackbar } = useSnackbar();
   const handle = useFullScreenHandle();
-  const { push, query, replace, isReady } = useRouter();
+  const { push, query, replace } = useRouter();
   const { user } = useAuthContext();
+  const searchParams = useSearchParams();
 
   const [confetti, setConfetti] = useState(false);
   const [code, setCode] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      return window.localStorage.getItem(`code-${query.id}`) ?? "";
+    if (typeof window !== "undefined" && user !== null) {
+      return window.localStorage.getItem(`code-${query.id}-${user.id}`) ?? "";
     }
     return "";
   });
@@ -71,12 +73,14 @@ export default function Index(): React.ReactElement | null {
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
     unitId: null,
     lessonId: null,
-    courseId: null,
   });
+  const unitId = searchParams.get("unitId");
+  const lessonId = searchParams.get("lessonId");
 
   const onChangeCode = useCallback((code: string) => {
     setCode(code);
-    window.localStorage.setItem(`code-${query.id}`, code);
+    if (user === null) return;
+    window.localStorage.setItem(`code-${query.id}-${user.id}`, code);
   }, []);
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
@@ -130,10 +134,7 @@ export default function Index(): React.ReactElement | null {
   useEffect(() => {
     if (!courseContent) return;
     if (!atomLessonId && !atomUnitId) {
-      if (
-        !isLoadingCourseContent &&
-        (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id)
-      ) {
+      if (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id) {
         push(STUDENT_PATH_DASHBOARD.page404);
       }
       onOpenLesson(
@@ -148,6 +149,7 @@ export default function Index(): React.ReactElement | null {
   const onSubmitChalange = async (lessonContentId: string): Promise<void> => {
     try {
       await completeLesson({
+        id: query.id as string,
         module_id: query.unit_id as string,
         lesson_content_id: lessonContentId,
       }).unwrap();
@@ -202,7 +204,7 @@ export default function Index(): React.ReactElement | null {
   }, [handle.active]);
 
   useEffect(() => {
-    if (!query.id && isReady) {
+    if (!query.id) {
       push(STUDENT_PATH_DASHBOARD.page404);
     }
     setGlobalCodePanel((prev) => ({
@@ -219,14 +221,11 @@ export default function Index(): React.ReactElement | null {
   }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
 
   useEffect(() => {
-    if (query.id && query.lessonId && query.unitId) {
-      setLastVisitedData({
-        unitId: query.unitId as string,
-        lessonId: query.lessonId as string,
-        courseId: query.id as string,
-      });
-    }
-  }, [query.id, query.lessonId, query.unitId]);
+    setLastVisitedData({
+      unitId,
+      lessonId,
+    });
+  }, [unitId, lessonId]);
 
   useEffect(() => {
     return () => {
@@ -259,7 +258,10 @@ export default function Index(): React.ReactElement | null {
             onChangeLanguage,
           }}
         >
-          <Box sx={{ position: "relative", overflow: "hidden" }}>
+          <Box
+            bgcolor="white"
+            sx={{ position: "relative", overflow: "hidden" }}
+          >
             <TopPanel chatComponent={<CodePanelChat />} />
             <WorkSpace />
             <BottomBar />
