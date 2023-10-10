@@ -12,7 +12,6 @@ export interface IGlobalCodePanelAtom {
   isFullScreenView: boolean;
   isInstructionsHidden: boolean;
   isBrowserHidden: boolean;
-  unstuck: string[];
   fullScreenOpen: () => void;
   fullScreenClose: () => void;
 }
@@ -29,7 +28,6 @@ export const globalCodePanelAtom = atomWithStorage<IGlobalCodePanelAtom>(
     isFullScreenView: false,
     isInstructionsHidden: false,
     isBrowserHidden: false,
-    unstuck: [],
     fullScreenOpen: voidFunction,
     fullScreenClose: voidFunction,
   }

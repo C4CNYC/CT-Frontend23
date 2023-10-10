@@ -1,13 +1,6 @@
 import { useState } from "react";
 
-import {
-  Avatar,
-  FormGroup,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
@@ -15,7 +8,6 @@ import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 export default function DetailsStep(): React.ReactElement {
-  const theme = useTheme();
   const { data, isLoading } = useManagerGetCourseQuery({});
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
@@ -45,8 +37,9 @@ export default function DetailsStep(): React.ReactElement {
               outline: "none",
               borderRadius: 1,
               "& fieldset": { border: "none" },
-              background: theme.palette.mode === "light" ? "#fff" : "",
-              border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+              "& .MuiInputBase-root": {
+                background: "#fff",
+              },
             }}
           >
             <option key="empty" value="empty"></option>
@@ -81,9 +74,9 @@ export default function DetailsStep(): React.ReactElement {
                   outline: "none",
                   borderRadius: 1,
                   "& fieldset": { border: "none" },
-                  background: theme.palette.mode === "light" ? "#fff" : "",
-                  border:
-                    theme.palette.mode === "light" ? "" : "1px solid #fff",
+                  "& .MuiInputBase-root": {
+                    background: "#fff",
+                  },
                 }}
               >
                 <option key="empty" value="empty">
@@ -123,10 +116,12 @@ export default function DetailsStep(): React.ReactElement {
           name="module"
           size="small"
           sx={{
+            background: "#fff",
             borderRadius: 1,
             "& fieldset": { border: "none" },
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+            "& .MuiInputBase-root": {
+              background: "#fff",
+            },
           }}
         >
           <option key="module" value="all">
@@ -158,8 +153,7 @@ export default function DetailsStep(): React.ReactElement {
         </Avatar>
         <RHFTextField
           sx={{
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+            background: "#fff",
             pt: 4,
             pb: 3,
             px: { xs: 0, sm: 3 },

@@ -100,13 +100,7 @@ const Menu = (): React.ReactElement => {
         }
       >
         {isAuthenticated ? (
-          <Typography
-            height="59px"
-            p="16px 20px"
-            variant="h6"
-            component="h2"
-            color="#212B36"
-          >
+          <Typography height="59px" p="16px 20px" variant="h6" component="h2">
             Hello {userName ? userName : ""}
           </Typography>
         ) : null}
@@ -119,7 +113,6 @@ const Menu = (): React.ReactElement => {
                   sx={{ pl: "20px!important", height: 59, color: "#212B36" }}
                   onClick={() => {
                     if (menuItem.title === "Take the Tour") {
-                      handleClosePopover();
                       setStartTour({ start: true });
                     }
                   }}

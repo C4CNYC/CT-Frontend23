@@ -22,7 +22,6 @@ import {
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { bgBlur } from "@utils";
 import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
@@ -187,20 +186,7 @@ export default function AddQuest(): React.ReactElement {
 
   return (
     <>
-      <Stack
-        sx={(theme) => ({
-          px: 5,
-          py: 8,
-          border: theme.palette.mode === "light" ? "" : "1px solid #fff",
-          ...bgBlur({
-            color:
-              theme.palette.mode === "light"
-                ? "#f3f3f3"
-                : theme.palette.background.default,
-          }),
-          borderRadius: 3,
-        })}
-      >
+      <Stack sx={{ px: 5, py: 8, background: "#f3f3f3", borderRadius: 3 }}>
         <Stack
           sx={{
             flexDirection: "row",

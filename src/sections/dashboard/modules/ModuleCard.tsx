@@ -10,7 +10,6 @@ import {
   MenuItem,
   Stack,
   Typography,
-  duration,
 } from "@mui/material";
 
 import {
@@ -84,9 +83,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           maxWidth: "auto",
           border: (theme) => `solid 1px ${theme.palette.divider}`,
           "&:hover": {
-            borderColor: "grey.400",
-            borderWidth: 1,
-            borderStyle: "solid",
+            bgcolor: "grey.100",
           },
         }}
       >
@@ -159,8 +156,6 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             name: module.name,
             description: module.description as string,
             active: module.active as boolean,
-            tips: [],
-            duration: "",
           }}
         >
           <MenuItem>

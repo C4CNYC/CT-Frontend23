@@ -9,8 +9,8 @@ import { Iconify } from "@components";
 
 import BasePreference from "./BasePreference";
 
-const DEFAULT_BACKGROUDN = "#282a36";
-const DEFAULT_TEXT_COLOR = "#f8f8f2";
+const DEFAULT_BACKGROUDN = "#FFF";
+const DEFAULT_TEXT_COLOR = "#000";
 
 interface IEditColors {
   onUpdateColors: (data: { background: string; text: string }) => void;
@@ -54,7 +54,6 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
               },
             }}
             format="hex"
-            isAlphaHidden={true}
             value={
               matchIsValidColor(colors.background) ? colors.background : ""
             }
@@ -73,7 +72,6 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
                 padding: "8.5px 3px",
               },
             }}
-            isAlphaHidden={true}
             format="hex"
             value={matchIsValidColor(colors.text) ? colors.text : ""}
             onChange={(data) => {

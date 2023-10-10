@@ -13,14 +13,7 @@ const BasePreference = ({
   abandonmentIcon,
 }: IBasePreference): React.ReactElement => {
   return (
-    <Box
-      sx={(theme) => ({
-        p: "25px 30px 30px 30px",
-        bgcolor: theme.palette.mode === "light" ? "#F0EEEE" : "",
-        border: theme.palette.mode === "light" ? "" : "1px solid #F0EEEE",
-        borderRadius: "15px",
-      })}
-    >
+    <Box p="25px 30px 30px 30px" bgcolor="#F0EEEE" borderRadius="15px">
       <Box
         mb="20px"
         display="flex"

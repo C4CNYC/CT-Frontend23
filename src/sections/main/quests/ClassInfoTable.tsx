@@ -175,7 +175,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           component={NextLink}
           href={addQuestPagePath}
           underline="none"
-          color="inherit"
+          color="initial"
         >
           <MenuItem>
             <SiGoogleclassroom size="20px" />

@@ -118,17 +118,14 @@ export interface ICourseSearchParams extends BaseSearchInterface {
 export interface LastVisitedData {
   lastVisitedUnitId: string;
   lastVisitedLessonId: string;
-  lastVisitedCourseId: string;
 }
 
 export interface LastVisitedBody {
   unitId: string;
   lessonId: string;
-  courseId: string;
 }
 
 export interface LastVisitedState {
   unitId: string | null;
   lessonId: string | null;
-  courseId: string | null;
 }

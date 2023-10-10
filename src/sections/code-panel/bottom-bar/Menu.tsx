@@ -118,9 +118,7 @@ const Menu = (): React.ReactElement => {
           FabProps={{
             size: "small",
             sx: {
-              background: speedDial
-                ? "#155275"
-                : theme.palette.background.default,
+              background: speedDial ? "#155275" : "white",
               boxShadow: "none",
               border: !speedDial ? "2px solid #b3b3b3" : "none",
               "&:hover": {

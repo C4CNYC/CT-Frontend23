@@ -115,15 +115,7 @@ export default function UnstuckMobileDialog({
               );
             })}
           </List>
-          <Box
-            sx={(theme) => ({
-              bgcolor: theme.palette.mode === "light" ? "#eee" : "",
-              borderTop: theme.palette.mode === "light" ? "" : "1px solid #fff",
-              borderBottom:
-                theme.palette.mode === "light" ? "" : "1px solid #fff",
-              p: "15px 29px",
-            })}
-          >
+          <Box bgcolor="#eee" p="15px 29px">
             See this training's{" "}
             <FullCodeSolutionModal disabled={checked.length !== 3}>
               <Link href="#">full code solutions.</Link>

@@ -119,7 +119,7 @@ const LessonManager = (): React.ReactElement => {
                 display: "none",
               },
               p: 0,
-              color: theme.palette.mode === "light" ? "initial" : "#fff",
+              color: "initial",
               fontWeight: "400",
               "&:hover": {
                 background: "none",

@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import { useAtom } from "jotai";
-
 import {
   Checkbox,
   Link,
@@ -14,13 +12,10 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-
 import FullCodeSolutionModal from "../modals/FullCodeSolution";
 
 const Unstuck = (): React.ReactElement => {
-  const [{ unstuck }, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
-  const [checked, setChecked] = useState<string[]>(unstuck ?? []);
+  const [checked, setChecked] = useState<string[]>([]);
 
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);
@@ -32,13 +27,8 @@ const Unstuck = (): React.ReactElement => {
       newChecked.splice(currentIndex, 1);
     }
 
-    setGlobalCodePanel((prev) => ({
-      ...prev,
-      unstuck: newChecked,
-    }));
     setChecked(newChecked);
   };
-
   return (
     <>
       <List
@@ -78,14 +68,7 @@ const Unstuck = (): React.ReactElement => {
           );
         })}
       </List>
-      <Box
-        sx={(theme) => ({
-          bgcolor: theme.palette.mode === "light" ? "#eee" : "",
-          borderTop: theme.palette.mode === "light" ? "" : "1px solid #fff",
-          borderBottom: theme.palette.mode === "light" ? "" : "1px solid #fff",
-          p: "15px 29px",
-        })}
-      >
+      <Box bgcolor="#eee" p="15px 29px">
         See this training's{" "}
         <FullCodeSolutionModal disabled={checked.length !== 3}>
           <Link href="#">full code solutions.</Link>

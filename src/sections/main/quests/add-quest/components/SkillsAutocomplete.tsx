@@ -16,7 +16,6 @@ import {
   TextField,
   Typography,
   TypographyVariant,
-  useTheme,
 } from "@mui/material";
 
 import { useSnackbar } from "@components";
@@ -40,7 +39,6 @@ export default function SkillsAutocomplete({
   labelProps,
   existedSkills,
 }: ISkillsAutocompleteProps): React.ReactElement {
-  const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const {
     query: { schoolId, assignmentId },
@@ -124,28 +122,18 @@ export default function SkillsAutocomplete({
               label={option.name}
               {...getTagProps({ index })}
               key={option.id}
-              sx={{
-                "& .MuiChip-deleteIcon": {
-                  color: theme.palette.mode === "light" ? "" : "#333",
-                  "&:hover": {
-                    color: theme.palette.mode === "light" ? "" : "#999797",
-                  },
-                },
-              }}
             />
           ))
         }
         ChipProps={{ size: "medium" }}
         sx={{
           "& .MuiOutlinedInput-root": {
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+            background: "#fff",
           },
           "& .MuiAutocomplete-tag": {
             background: "#FBDD3F",
             textTransform: "uppercase",
             fontSize: "1.0rem",
-            color: theme.palette.mode === "light" ? "" : "#333",
           },
         }}
         renderOption={(props, recipient, { inputValue }) => {

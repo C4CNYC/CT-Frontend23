@@ -37,7 +37,7 @@ const Tour = dynamic(
 );
 
 export default function Index(): React.ReactElement {
-  const { query, push, isReady } = useRouter();
+  const { query, push } = useRouter();
   const publicPage = true;
   const user = null;
   const handle = useFullScreenHandle();
@@ -53,28 +53,21 @@ export default function Index(): React.ReactElement {
       { skip: !query.id }
     );
 
-  const { data, isLoading } = useGetPublicLessonContentQuery(
-    {
-      id: query.id as string,
-      lesson_id: query.lessonId as string,
-    },
-    { skip: !query.lessonId && !query.id }
-  );
+  const { data, isLoading } = useGetPublicLessonContentQuery({
+    id: query.id as string,
+    lesson_id: query.lessonId as string,
+  });
 
-  const { data: lesson } = useGetPublicLessonQuery(
-    {
-      id: query.id as string,
-      lesson_id: query.lessonId as string,
-    },
-    { skip: !query.lessonId && !query.id }
-  );
+  const { data: lesson } = useGetPublicLessonQuery({
+    id: query.id as string,
+    lesson_id: query.lessonId as string,
+  });
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     push(
-      `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(query?.id as string, {
-        unitId,
-        lessonId,
-      })}`,
+      `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
+        query?.id as string, { unitId, lessonId }
+      )}`,
       undefined,
       { shallow: true }
     );
@@ -98,8 +91,7 @@ export default function Index(): React.ReactElement {
         const pathStr = nextLessonInfo.path.split("/");
         push(
           `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-            courseContent?.id,
-            { unitId: pathStr[0], lessonId: pathStr[1] }
+            courseContent?.id, { unitId: pathStr[0], lessonId: pathStr[1], }
           )}`,
           undefined,
           { shallow: true }
@@ -120,12 +112,6 @@ export default function Index(): React.ReactElement {
 
   useEffect(() => {
     if (!courseContent) return;
-    if (
-      !isLoadingCourseContent &&
-      (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id)
-    ) {
-      push(STUDENT_PATH_DASHBOARD.page404);
-    }
     onOpenLesson(
       courseContent.units[0].lessons[0].id,
       courseContent.units[0].id
@@ -133,15 +119,11 @@ export default function Index(): React.ReactElement {
   }, [courseContent]);
 
   useEffect(() => {
-    if (!query.id && isReady) {
-      push(STUDENT_PATH_DASHBOARD.page404);
-    }
     setGlobalCodePanel((prev) => ({
       ...prev,
-      fullScreenOpen: handle.enter,
-      fullScreenClose: handle.exit,
+      isFullScreenView: handle.active,
     }));
-  }, []);
+  }, [handle.active]);
 
   if (isLoading || isLoadingCourseContent || !data || !courseContent) {
     return <SkeletonCodePanel />;
