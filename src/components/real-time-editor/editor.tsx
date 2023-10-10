@@ -11,11 +11,13 @@ import { dracula } from "thememirror";
 import { State } from ".";
 import { initListeners, removeListeners } from "./listeners";
 import { peerExtension } from "../../codemirror/extensions/collab";
+import { cursorExtension } from "../../codemirror/extensions/cursors";
 
 interface IEditor {
   roomId?: string;
   state?: State;
   cursorId?: string;
+  cursorText?: string;
   preloadedCode: string;
   onChangeCode: (code: string) => void;
   socket?: Socket;
@@ -27,6 +29,7 @@ export const CodeEditor = ({
   preloadedCode,
   state,
   cursorId,
+  cursorText,
   onChangeCode,
   socket,
   code,
@@ -64,9 +67,12 @@ export const CodeEditor = ({
         }),
         lineWrap.of(EditorView.lineWrapping),
         langs.html(),
-        socket && state && cursorId && roomId
-          ? peerExtension(socket, state.version ?? 0, cursorId, roomId)
-          : [],
+        ...(socket && state && cursorId && roomId
+        ? [
+          peerExtension(socket, state.version ?? 0, cursorId, roomId),
+          cursorExtension(cursorText ?? cursorId)
+        ]
+        : [])
       ],
     });
 

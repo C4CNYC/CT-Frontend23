@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
@@ -63,8 +63,8 @@ export default function Index(): React.ReactElement | null {
 
   const [confetti, setConfetti] = useState(false);
   const [code, setCode] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      return window.localStorage.getItem(`code-${query.id}`) ?? "";
+    if (typeof window !== "undefined" && user !== null) {
+      return window.localStorage.getItem(`code-${query.id}-${user.id}`) ?? "";
     }
     return "";
   });
@@ -79,7 +79,8 @@ export default function Index(): React.ReactElement | null {
 
   const onChangeCode = useCallback((code: string) => {
     setCode(code);
-    window.localStorage.setItem(`code-${query.id}`, code);
+    if (user === null) return;
+    window.localStorage.setItem(`code-${query.id}-${user.id}`, code);
   }, []);
 
   const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =

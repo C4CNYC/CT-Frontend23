@@ -26,10 +26,10 @@ async function pushUpdates(
   }));
 
   return await new Promise(function (resolve, reject) {
-    socket.timeout(timeout).emit("pushUpdates", roomId, version, JSON.stringify(updates), (err: unknown, status: boolean | unknown , updates: Update[]) => {
-      if(err) return reject(err);
-      if(typeof status !== "boolean") return reject(new Error("No permission to access this document"));
-      return resolve({ status, updates });
+    socket.timeout(timeout).emit("pushUpdates", roomId, version, JSON.stringify(updates), (err: unknown, status: boolean | unknown, updates: Update[]) => {
+      if (err) { reject(err); return; }
+      if (typeof status !== "boolean") { reject(new Error("No permission to access this document")); return; }
+      resolve({ status, updates });
     });
   });
 }
@@ -42,10 +42,10 @@ async function pullUpdates(
 ): Promise<readonly Update[]> {
   return await new Promise(function (resolve, reject) {
     socket.timeout(timeout).emit("pullUpdates", roomId, version, (err: unknown, updates: string) => {
-      if(err) return reject(err);
+      if (err) { reject(err); return; }
       try {
-        return resolve(JSON.parse(updates));
-      } catch(e) {
+        resolve(JSON.parse(updates));
+      } catch (e) {
         reject(new Error("No permission to access this document"));
       }
     });
@@ -55,7 +55,7 @@ async function pullUpdates(
         const effects: Array<StateEffect<any>> = [];
 
         u.effects.forEach((effect: StateEffect<any>) => {
-          if (effect.value?.id && effect.value?.from) {
+          if (effect.value?.id && effect.value?.from !== undefined) {
             const cursor = {
               id: effect.value.id,
               from: effect.value.from,
@@ -64,9 +64,9 @@ async function pullUpdates(
 
             effects.push(addCursor.of(cursor));
           } else if (effect.value?.id) {
-            const cursorId = effect.value.id;
-
-            effects.push(removeCursor.of(cursorId));
+            // We don't want to remove the cursor on disconnect
+            // const cursorId = effect.value.id;
+            // effects.push(removeCursor.of(cursorId));
           }
         });
 
@@ -92,13 +92,13 @@ export async function getDocument(
 ): Promise<{ version: number; doc: Text }> {
   return await new Promise(function (resolve, reject) {
     socket.timeout(timeout).emit("getDocument", roomId, (error: unknown, version: number | unknown, doc: string) => {
-      if(error) {
-        return reject(error);
+      if (error) {
+        reject(error); return;
       }
-      if(typeof version !== "number") {
-        return reject(new Error("No permission to access this document"));
+      if (typeof version !== "number") {
+        reject(new Error("No permission to access this document")); return;
       }
-      return resolve({
+      resolve({
         version,
         doc: Text.of(doc?.length ? doc.split("\n") : [""]),
       });
@@ -116,9 +116,11 @@ export const peerExtension = (
     startVersion,
     clientID: id,
     sharedEffects: (tr) => {
+      console.log(tr.effects)
       const effects = tr.effects.filter((e) => {
         return e.is(addCursor) || e.is(removeCursor);
       });
+      console.log(effects)
 
       return effects;
     },
@@ -142,7 +144,7 @@ export const peerExtension = (
       }
 
       async onCodeUpdated(socketId: string, _version: number, _doc: string) {
-        if(socketId !== socket.id) {
+        if (socketId !== socket.id) {
           await this.pull();
         }
       }
@@ -166,7 +168,7 @@ export const peerExtension = (
           if (sendableUpdates(this.view.state).length) {
             await this.push();
           }
-        } catch(e) {
+        } catch (e) {
           // The push failed - we don't try again. It will automatically push again when the connection is restored
           this.pushing = false;
         }
@@ -183,7 +185,7 @@ export const peerExtension = (
           if (sendableUpdates(this.view.state).length) {
             await this.push();
           }
-        } catch(e) {
+        } catch (e) {
           // The pull failed - we don't try again. It will automatically pull again when the connection is restored
         }
       }

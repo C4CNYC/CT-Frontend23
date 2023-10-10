@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
-import React, {memo, useCallback, useEffect, useState} from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 
 import { io } from "socket.io-client";
 
@@ -16,6 +16,7 @@ export interface State {
 interface IRealTimeEditor {
   userId: string;
   email: string;
+  cursorText: string;
   preloadedCode: string;
   onChange: (value: string) => void;
   code: string;
@@ -28,6 +29,7 @@ export const RealTimeEditor = memo(
   ({
     userId,
     email,
+    cursorText,
     onChange,
     preloadedCode,
     code,
@@ -47,10 +49,10 @@ export const RealTimeEditor = memo(
         const { version, doc } = await getDocument(socket, userId);
         setState((prev) => ({
           ...prev,
-          version: version,
+          version,
           doc: doc.toString(),
         }));
-      } catch(e) {
+      } catch (e) {
         // If no data is returned, set up data for offline editing
         setState((prev) => ({
           ...prev,
@@ -70,7 +72,7 @@ export const RealTimeEditor = memo(
       socket.open();
 
       void initializeConnection();
-      if(socket.connected) {
+      if (socket.connected) {
         setState((prev) => ({
           ...prev,
           connected: true,
@@ -128,6 +130,7 @@ export const RealTimeEditor = memo(
           roomId={userId}
           state={state}
           cursorId={userId}
+          cursorText={cursorText}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}
           socket={socket}
