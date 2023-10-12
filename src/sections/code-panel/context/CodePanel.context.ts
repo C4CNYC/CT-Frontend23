@@ -16,7 +16,7 @@ interface ICodePanelContext {
   data: Array<ILessonContent & BaseResponseInterface>;
   user: AuthUserType | null;
   isFetching?: boolean;
-  publicPage?: boolean;
+  publicPage: boolean;
   code: string;
   language: SupportedLang;
   onChangeLanguage: (lang: SupportedLang) => void;

@@ -30,6 +30,7 @@ interface ICodeEditorBlock {
   onChangeCode: (code: string) => void;
   validations: Array<IValidation & BaseResponseInterface>;
   preloadedCode: string;
+  publicPage: boolean;
 }
 
 const title = "Code Editor";
@@ -41,6 +42,7 @@ const CodeEditorBlock = ({
   code,
   onChangeCode,
   preloadedCode,
+  publicPage,
 }: ICodeEditorBlock): React.ReactElement => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
@@ -87,7 +89,7 @@ const CodeEditorBlock = ({
         `}
       </style>
       <HidedTabBtn />
-      <MumuSpeedDial typing={typing} />
+      <MumuSpeedDial typing={typing} publicPage={publicPage} />
       {validations?.length ? (
         <Checkers checkers={mapValidations(code ?? "", validations)} />
       ) : null}

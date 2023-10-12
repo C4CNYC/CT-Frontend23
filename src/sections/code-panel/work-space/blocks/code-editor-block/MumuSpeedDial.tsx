@@ -30,9 +30,13 @@ const enum IActionDialogType {
 
 interface Props {
   typing: boolean | null;
+  publicPage: boolean;
 }
 
-export default function MumuSpeedDial({ typing }: Props): React.ReactElement {
+export default function MumuSpeedDial({
+  typing,
+  publicPage,
+}: Props): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [actionsList, setActionsList] =
@@ -44,7 +48,10 @@ export default function MumuSpeedDial({ typing }: Props): React.ReactElement {
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null);
 
   const [{ lessonId }] = useAtom(globalCodePanelAtom);
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
+  const { data, isLoading } = useGetLessonStudentQuery(
+    { id: lessonId },
+    { skip: publicPage }
+  );
 
   const openSpeedDial = () => {
     setSpeedDial(true);

@@ -4,24 +4,21 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
-import _ from "lodash";
 import { useSnackbar } from "notistack";
-import Confetti from "react-confetti";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 import { Box } from "@mui/material";
 
-import { EmptyContent } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import BottomBar from "@sections/code-panel/bottom-bar";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import SkeletonCodePanel from "@sections/code-panel/skeleton";
-import TopPanel from "@sections/code-panel/top-bar";
+import SkeletonCodePanel, {
+  CPTopBarSkeleton,
+} from "@sections/code-panel/skeleton";
 import { getNextLessonId } from "@sections/code-panel/utils/navigation";
 import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
 import GuestGuard from "src/auth/GuestGuard";
+import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student";
 import {
   useGetPublicCourseContentQuery,
   useGetPublicLessonContentQuery,
@@ -35,17 +32,27 @@ const Tour = dynamic(
     ssr: false,
   }
 );
-
-export default function Index(): React.ReactElement {
-  const { query, push } = useRouter();
-  const publicPage = true;
-  const user = null;
-  const handle = useFullScreenHandle();
+const TopPanel = dynamic(
+  async () => await import("@sections/code-panel/top-bar"),
+  { loading: () => <CPTopBarSkeleton /> }
+);
+const Confetti = dynamic(async () => await import("react-confetti"));
+const BottomBar = dynamic(
+  async () => await import("@sections/code-panel/bottom-bar")
+);
+export default function Index(): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
+  const handle = useFullScreenHandle();
+  const { push, query, replace } = useRouter();
   const [confetti, setConfetti] = useState(false);
-  const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
-  const [code, onChangeCode] = useState<string>("");
+  const [code, setCode] = useState("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+
+  const [{ unitId: atomUnitId, lessonId: atomLessonId }, setGlobalCodePanel] =
+    useAtom(globalCodePanelAtom);
+
+  const [completeLesson] = useCompleteLessonMutation();
 
   const { data: courseContent, isLoading: isLoadingCourseContent } =
     useGetPublicCourseContentQuery(
@@ -53,28 +60,66 @@ export default function Index(): React.ReactElement {
       { skip: !query.id }
     );
 
-  const { data, isLoading } = useGetPublicLessonContentQuery({
-    id: query.id as string,
-    lesson_id: query.lessonId as string,
-  });
+  const { data, isLoading, isFetching } = useGetPublicLessonContentQuery(
+    {
+      id: query.id as string,
+      lesson_id: query.lessonId as string,
+    },
+    { skip: !query.lessonId || !query.id }
+  );
 
-  const { data: lesson } = useGetPublicLessonQuery({
-    id: query.id as string,
-    lesson_id: query.lessonId as string,
-  });
+  const { data: lesson, isLoading: isLoadingLesson } = useGetPublicLessonQuery(
+    {
+      id: query.id as string,
+      lesson_id: query.lessonId as string,
+    },
+    { skip: !query.lessonId || !query.id }
+  );
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
-    push(
+    setGlobalCodePanel((prev) => ({
+      ...prev,
+      courseId: query.id as string,
+      unitId,
+      lessonId,
+    }));
+    replace(
       `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-        query?.id as string, { unitId, lessonId }
-      )}`,
+        courseContent?.id as string
+      )}?${new URLSearchParams({ unitId })}&${new URLSearchParams({
+        lessonId,
+      })}`,
       undefined,
       { shallow: true }
     );
   };
 
-  const onSubmitChalange = async (): Promise<void> => {
-    enqueueSnackbar("Chalange successfuly complete");
+  useEffect(() => {
+    if (!courseContent) return;
+    if (!atomLessonId && !atomUnitId) {
+      if (!courseContent.units[0].lessons[0].id || !courseContent.units[0].id) {
+        console.log("work");
+        push(STUDENT_PATH_DASHBOARD.page404);
+      }
+      onOpenLesson(
+        courseContent.units[0].lessons[0].id,
+        courseContent.units[0].id
+      );
+    } else {
+      onOpenLesson(atomLessonId, atomUnitId);
+    }
+  }, [courseContent]);
+
+  const onSubmitChalange = async (lessonContentId: string): Promise<void> => {
+    try {
+      await completeLesson({
+        id: query.id as string,
+        module_id: query.unit_id as string,
+        lesson_content_id: lessonContentId,
+      }).unwrap();
+    } catch (e: any) {
+      enqueueSnackbar("something went wrong", { variant: "error" });
+    }
   };
 
   const onSubmitLesson = async (): Promise<void> => {
@@ -91,15 +136,20 @@ export default function Index(): React.ReactElement {
         const pathStr = nextLessonInfo.path.split("/");
         push(
           `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-            courseContent?.id, { unitId: pathStr[0], lessonId: pathStr[1], }
-          )}`,
+            courseContent?.id
+          )}?${new URLSearchParams({
+            unitId: pathStr[0],
+          })}&${new URLSearchParams({
+            lessonId: pathStr[1],
+          })}`,
           undefined,
           { shallow: true }
         ).then(() => {
           setGlobalCodePanel((prev) => ({
             ...prev,
             slideIndex: 0,
-            lessonId: nextLessonInfo.lessonId,
+            unitId: pathStr[0],
+            lessonId: pathStr[1],
           }));
         });
       } else {
@@ -111,26 +161,30 @@ export default function Index(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (!courseContent) return;
-    onOpenLesson(
-      courseContent.units[0].lessons[0].id,
-      courseContent.units[0].id
-    );
-  }, [courseContent]);
-
-  useEffect(() => {
     setGlobalCodePanel((prev) => ({
       ...prev,
       isFullScreenView: handle.active,
     }));
   }, [handle.active]);
 
-  if (isLoading || isLoadingCourseContent || !data || !courseContent) {
+  useEffect(() => {
+    setGlobalCodePanel((prev) => ({
+      ...prev,
+      fullScreenOpen: handle.enter,
+      fullScreenClose: handle.exit,
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && !isLoadingCourseContent && !isLoadingLesson) {
+      setIsLoadingComplete(true);
+    }
+  }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
+
+  if (!isLoadingComplete) {
     return <SkeletonCodePanel />;
   }
-  if (!isLoading && _.isEmpty(data)) {
-    return <EmptyContent title="Course doesn`t exist" />;
-  }
+
   return (
     <GuestGuard>
       <Box>
@@ -143,21 +197,22 @@ export default function Index(): React.ReactElement {
             value={{
               onSubmitChalange,
               onSubmitLesson,
+              isFetching,
               lesson,
-              data,
-              user,
-              publicPage,
+              data: data ?? [],
+              user: null,
               code,
-              onChangeCode,
+              onChangeCode: setCode,
               language,
               onChangeLanguage,
+              publicPage: true,
             }}
           >
             <Box
               bgcolor="white"
               sx={{ position: "relative", overflow: "hidden" }}
             >
-              <TopPanel chatComponent={<CodePanelChat />} />
+              <TopPanel chatComponent={null} />
               <WorkSpace />
               <BottomBar />
             </Box>

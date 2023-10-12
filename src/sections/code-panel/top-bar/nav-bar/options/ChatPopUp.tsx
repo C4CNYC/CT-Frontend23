@@ -10,13 +10,18 @@ import { Iconify } from "@components";
 import { chatHandlerAtom } from "./chatHendlerAtom";
 
 interface IChatPopup {
-  chatComponent: React.ReactElement;
+  chatComponent: React.ReactElement | null;
 }
 
 const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [isChatVisible, setChatVisible] = useAtom(chatHandlerAtom);
+
+  if (!chatComponent) {
+    null;
+  }
+
   return (
     <>
       <IconButton

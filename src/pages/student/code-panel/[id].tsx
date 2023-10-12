@@ -256,6 +256,7 @@ export default function Index(): React.ReactElement | null {
             onChangeCode,
             language,
             onChangeLanguage,
+            publicPage: false,
           }}
         >
           <Box

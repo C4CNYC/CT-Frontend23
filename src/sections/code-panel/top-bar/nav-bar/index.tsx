@@ -5,7 +5,7 @@ import DesktopBar from "./DesktopBar";
 import MobileBar from "./MobileBar";
 
 interface INavBar {
-  chatComponent: React.ReactElement;
+  chatComponent: React.ReactElement | null;
 }
 
 const NavBar = ({ chatComponent }: INavBar): React.ReactElement => {

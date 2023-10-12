@@ -70,8 +70,11 @@ const LessonManager = (): React.ReactElement => {
     window.dispatchEvent(resetLessonEvent);
     if (publicPage) {
       push(
-        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(id as string, {
+        `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
+          id as string
+        )}?${new URLSearchParams({
           unitId: moduleId,
+        })}&${new URLSearchParams({
           lessonId,
         })}`,
         undefined,

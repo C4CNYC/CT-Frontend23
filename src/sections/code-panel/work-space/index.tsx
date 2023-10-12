@@ -28,6 +28,7 @@ const WorkSpace = (): React.ReactElement => {
     code,
     onChangeCode,
     language,
+    publicPage,
   } = useContext(CodePanelContext);
 
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
@@ -53,6 +54,7 @@ const WorkSpace = (): React.ReactElement => {
           code={code}
           onChangeCode={onChangeCode}
           user={user}
+          publicPage={publicPage}
         />
         {!isBrowserHidden ? <ViewBlock {...{ code, language }} /> : null}
       </Stack>
@@ -78,6 +80,7 @@ const WorkSpace = (): React.ReactElement => {
         user={user}
         preloadedCode={data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations}
+        publicPage={publicPage}
       />
       <ViewBlock {...{ code, language }} />
     </SwipeableViews>
