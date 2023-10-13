@@ -101,6 +101,7 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
       {user?.id ? (
         <RealTimeEditor
+          cursorText={user?.first_name}
           preloadedCode={preloadedCode}
           email={`${user?.first_name} ${user?.last_name?.[0]}.`}
           onChange={onChangeCode}
