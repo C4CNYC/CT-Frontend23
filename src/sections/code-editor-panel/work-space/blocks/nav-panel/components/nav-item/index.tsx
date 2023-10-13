@@ -10,7 +10,7 @@ import {
   Avatar
 } from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { getRandomIndex } from "../utils";
+import { getRandomIndex } from "../../hook/utils";
 
 interface NavItemProps {
   onClick?: () => void

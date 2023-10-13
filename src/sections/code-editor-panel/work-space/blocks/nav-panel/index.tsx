@@ -10,10 +10,10 @@ import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
-import NavItem from "./nav-item";
-import HeaderItem from "./header-item";
-import CutomNavItem from "./custom-nav-item";
-import CodeBlock from "./code-block";
+import NavItem from "./components/nav-item";
+import HeaderItem from "./components/header-item";
+import CutomNavItem from "./components/custom-nav-item";
+import CodeBlock from "./components/code-block";
 
 import {
   ICON_SX,
@@ -23,14 +23,14 @@ import {
   LIST_SX,
   getDrawerSx,
   getStackCodeBoxSx
-} from "./constants"
+} from "./styles"
 
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-import SortableItem from "./sortable-item";
-import { useNavPanel } from "./useNavPanel.hook";
-import { MOCK } from "./mock";
+import SortableItem from "./components/sortable-item";
+import { useNavPanel } from "./hook";
+import { MOCK } from "./hook/mock";
 
 const NavPanel: FC = () => {
   const {
@@ -115,7 +115,7 @@ const NavPanel: FC = () => {
               {blocks.map((id) => {
                 return (
                   <SortableItem key={id} id={id}>
-                    <CodeBlock onDelete={onDeleteBlock} id={id} key={id} />
+                    <CodeBlock onClose={() => onDeleteBlock(id)} id={id} key={id} />
                   </SortableItem>
                 )
               })}

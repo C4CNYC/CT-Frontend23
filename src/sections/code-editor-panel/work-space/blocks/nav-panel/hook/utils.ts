@@ -1,4 +1,4 @@
-import { BOX_HEIGHT } from "./code-block/constants";
+import { BOX_HEIGHT } from "../components/code-block/constants";
 
 export const getRandomIndex = (maxInt: number): number => {
   const randomIndex = Math.floor(Math.random() * maxInt + 1)

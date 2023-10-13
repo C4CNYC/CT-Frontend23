@@ -39,3 +39,19 @@ export const MOCK = [
     id: "ole8"
   }
 ];
+
+export const EXAMPLE_CODE = `
+  CSS for boxes appear...
+  CSS for boxes appear...
+  CSS for boxes appear...
+  <CSS for boxes appear...>
+  CSS for boxes appear...CSS for boxes appear...
+  CSS for boxes appear...
+`
+
+export const LOADING_CODE = `
+
+
+
+      Loading.......
+`
