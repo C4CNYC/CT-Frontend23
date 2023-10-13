@@ -17,9 +17,9 @@ import { CodePanelChat } from "@sections/chat";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import BottomBar from "@sections/code-panel/bottom-bar";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import SkeletonCodePanel from "@sections/code-panel/skeleton";
+import SkeletonCodePanel from "@sections/code-editor-panel/skeleton";
 import TopPanel from "@sections/code-panel/top-bar";
-import { getNextLessonId } from "@sections/code-panel/utils/navigation";
+import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
 import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
 import GuestGuard from "src/auth/GuestGuard";
 import {
@@ -46,7 +46,7 @@ export default function Index(): React.ReactElement {
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
-
+  
   const { data: courseContent, isLoading: isLoadingCourseContent } =
     useGetPublicCourseContentQuery(
       { id: query.id as string },

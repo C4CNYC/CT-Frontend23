@@ -114,5 +114,5 @@ export const CodeEditor = ({
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  return <div ref={editor}></div>;
+  return <div className="code-editor-wrapper" ref={editor}></div>;
 };
