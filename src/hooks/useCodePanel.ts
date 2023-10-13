@@ -30,7 +30,6 @@ import {
   setCourseId,
   setSlideIndex,
 } from "src/redux/slices/code-panel-global"
-import { useChat } from "@sections/code-editor-panel/hooks/useChat";
 import { resetLessonEvent } from "@components";
 
 // @types
@@ -51,7 +50,6 @@ interface UseCodePanelReturn {
   isDesktop: boolean
   confetti: boolean
   onConfettiComplete: (confetti?: Confetti) => void
-  codeChatProps: ReturnType<typeof useChat>
 }
 
 const LANGUAGE = 'html'
@@ -75,8 +73,6 @@ export const useCodePanel = (): UseCodePanelReturn => {
     }
     return "";
   });
-
-  const codeChatProps = useChat()
 
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
@@ -267,7 +263,6 @@ export const useCodePanel = (): UseCodePanelReturn => {
       linkHref: STUDENT_PATH_DASHBOARD.courses.root,
       data: courseContent,
       isLoading: isLoadingCourseContent
-    },
-    codeChatProps
+    }
   }
 }
