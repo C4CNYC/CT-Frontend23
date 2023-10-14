@@ -15,7 +15,7 @@ import {
   useGetStudentCourseModulesQuery,
   useGetStudentModulesLessonsQuery,
 } from "src/redux/services/manager/courses-student";
-import { useGetStudentLastVisitedDataQuery } from "src/redux/services/manager/lesson-student";
+import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -34,10 +34,8 @@ export default function ModulePage(): React.ReactElement {
     { id: query?.unit as string },
     { skip: !query?.id }
   );
-  const { data: lastVisitedData } = useGetStudentLastVisitedDataQuery(
-    { courseId: query?.id as string },
-    { skip: !query?.id }
-  );
+  const { data: lastVisitedData } =
+    useGetStudentLastVisitedUnitAndLessonQuery();
 
   useEffect(() => {
     if (modules) {

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Skeleton, Stack } from "@mui/material";
 
 import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/courses-student";
-import { useGetStudentLastVisitedDataQuery } from "src/redux/services/manager/lesson-student";
+import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
 
 import ModuleItem from "./module-item";
 
@@ -13,10 +13,8 @@ export default function ModulesListBlock(): React.ReactElement {
     { id: query?.id as string },
     { skip: !query?.id }
   );
-  const { data: lastVisitedData } = useGetStudentLastVisitedDataQuery(
-    { courseId: query?.id as string },
-    { skip: !query?.id }
-  );
+  const { data: lastVisitedData } =
+    useGetStudentLastVisitedUnitAndLessonQuery();
 
   return (
     <Stack
