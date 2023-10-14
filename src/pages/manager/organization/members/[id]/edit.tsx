@@ -5,7 +5,6 @@ import { Container } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import DashboardLayout from "@layouts/dashboard";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
 import { useGetOrgMemberQuery } from "src/redux/services/admin/members-admin";

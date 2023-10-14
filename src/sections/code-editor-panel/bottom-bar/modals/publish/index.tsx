@@ -151,7 +151,7 @@ const CreateProjectSchema = Yup.object().shape({
 const getDefaultValues = (isPublic: boolean): FormValuesProps => ({
   title: "",
   description: "",
-  isPublic: isPublic,
+  isPublic,
 });
 
 export default PublishModal;

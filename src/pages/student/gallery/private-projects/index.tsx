@@ -10,10 +10,7 @@ import {
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
-import {
-  STUDENT_PATH_DASHBOARD,
-  STUDENT_PATH_MAIN,
-} from "@routes/student.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import GalleryItem from "@sections/dashboard/gallery/GalleryElement";
 import {
   SkeletonGalleryBreadcrumbs,

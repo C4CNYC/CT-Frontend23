@@ -62,6 +62,7 @@ const LessonManagerButton: FC<LessonManagerButtonProps> = ({
       </Button>
     </Tooltip>
   </Stack>
-)}
+)
+}
 
 export default LessonManagerButton;

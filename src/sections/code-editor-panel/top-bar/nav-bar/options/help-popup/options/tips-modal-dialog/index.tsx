@@ -22,7 +22,7 @@ import {
   ICON_BUTTON,
   TYPS_TYP_STYLES,
   getDialogContentStyles
-} from './constants';
+} from "./constants";
 
 interface TipsMobileDialogProps {
   open: boolean;

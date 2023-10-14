@@ -13,7 +13,6 @@ import {
   UnderlineExtension,
 } from "remirror/extensions";
 
-import "@mui/material";
 import { Button, FormHelperText, Stack } from "@mui/material";
 import { styled } from "@mui/system";
 

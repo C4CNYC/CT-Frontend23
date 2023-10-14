@@ -53,7 +53,7 @@ const HelpQuestionModal = ({ children }: IHelpQuestion): React.ReactElement => {
             rows={6}
             placeholder="I have question about ..."
             // TODO-PH add value after creating new chat
-            value={''}
+            value={""}
             onChange={() => {}}
           />
         </DialogContent>

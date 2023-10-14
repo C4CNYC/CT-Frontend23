@@ -8,13 +8,13 @@ import {
 } from "./utils";
 
 interface UseNavPanelReturn {
-  drawerRef:  MutableRefObject<HTMLDivElement | null>
+  drawerRef: MutableRefObject<HTMLDivElement | null>
   isOpen: boolean
   onAddBlock: (block: string) => void
   setBlocks: (blocks: string[]) => void
   setIsOpen: (isOpen: boolean) => void
   onDragEnd: (e: DragEndEvent) => void
-  onDeleteBlock: (id: string) => void 
+  onDeleteBlock: (id: string) => void
   blocks: string[]
   draggableConfig: DraggableBlockConfig | null
 }
@@ -43,7 +43,7 @@ export const useNavPanel = (): UseNavPanelReturn => {
       setBlocks([...blocks, _id]);
     }
   }
-  
+
   const onDeleteBlock = (id: string): void => {
     const index = blocks.findIndex((_id) => _id === id);
 
@@ -55,20 +55,20 @@ export const useNavPanel = (): UseNavPanelReturn => {
   }
 
   const onDragEnd = (event: DragEndEvent) => {
-    const {active, over } = event;
-      
+    const { active, over } = event;
+
       if (over != null && active != null && active.id !== over.id) {
         setBlocks((items) => {
           const oldIndex = items.indexOf(active.id as string);
           const newIndex = items.indexOf(over.id as string);
-          
+
           return arrayMove(items, oldIndex, newIndex);
         });
       }
   }
 
   useEffect(() => {
-    let resizeObserver: ResizeObserver | null = null;
+    const resizeObserver: ResizeObserver | null = null;
 
     if (drawerRef.current != null) {
       const resizeObserver = new ResizeObserver(([el]) => {

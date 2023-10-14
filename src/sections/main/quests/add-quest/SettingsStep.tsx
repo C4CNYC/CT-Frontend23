@@ -1,6 +1,6 @@
 import { Control } from "react-hook-form";
 
-import { Box, FormGroup, Stack, Typography } from "@mui/material";
+import { FormGroup, Stack, Typography } from "@mui/material";
 
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";

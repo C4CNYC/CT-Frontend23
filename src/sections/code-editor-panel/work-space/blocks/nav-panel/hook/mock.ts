@@ -28,7 +28,7 @@ export const MOCK = [
     name: "John Aron4",
     topic: "js",
     id: "ole6"
-  },{
+  }, {
     name: "Ole Lucoe4",
     topic: "Css",
     id: "ole7"

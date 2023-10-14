@@ -1,8 +1,6 @@
 import { Avatar, Paper, Stack, Typography, useTheme } from "@mui/material";
 
-interface IAuthorsSectionProps {}
-
-export default function AuthorsSection({}: IAuthorsSectionProps): React.ReactElement {
+export default function AuthorsSection(): React.ReactElement {
   const theme = useTheme();
   return (
     <Paper

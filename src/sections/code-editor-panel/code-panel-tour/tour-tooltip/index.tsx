@@ -5,7 +5,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button, IconButton, Paper, Typography } from "@mui/material";
 import { BOX_CONTENT_SX, BTN_BACK_SX, ICON_BTN_SX, NEXT_BTN_SX, PAPER_SX, getBoxActionsSx, getBoxSx } from "./constants";
 
-
 const TooltipTourCodePanel: FC<TooltipRenderProps> = ({
   index,
   step,

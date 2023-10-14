@@ -1,4 +1,3 @@
-import { Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
 
 import { BaseResponseInterface } from "@utils";

@@ -1,10 +1,10 @@
-import { type FC, type ReactNode } from 'react'
+import { type FC, type ReactNode } from "react"
 import dynamic from "next/dynamic";
 
 import { Stack } from "@mui/system";
 
 import ProgressBottomBar, { type ProgressBottomBarProps } from "./progress-bottom-bar";
-import type { MenuProps } from './menu';
+import type { MenuProps } from "./menu";
 
 const Menu = dynamic(async () => await import("./menu"));
 

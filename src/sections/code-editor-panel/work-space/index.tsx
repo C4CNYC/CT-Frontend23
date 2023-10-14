@@ -23,7 +23,7 @@ export type SupportedLang = "html" | "javascript";
 export interface WorkSpaceProps {
   isFetching?: boolean
   lesson?: ILesson & BaseResponseInterface
-  data: (ILessonContent & BaseResponseInterface)[],
+  data: Array<ILessonContent & BaseResponseInterface>,
   user: AuthUserType
   code: string
   language: SupportedLang

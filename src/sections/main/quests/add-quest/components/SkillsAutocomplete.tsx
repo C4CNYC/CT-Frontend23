@@ -104,7 +104,7 @@ export default function SkillsAutocomplete({
 
   return (
     <FormGroup>
-      <Typography variant={labelProps ? labelProps : "h5"} gutterBottom>
+      <Typography variant={labelProps ?? "h5"} gutterBottom>
         Tags:
       </Typography>
       <Autocomplete<any, true>
