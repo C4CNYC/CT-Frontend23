@@ -5,10 +5,10 @@ import { useState } from "react";
 import { useAtom } from "jotai";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
-import { HiOutlinePuzzlePiece } from "react-icons/hi2";
+import { HiLockClosed, HiOutlinePuzzlePiece } from "react-icons/hi2";
 import { TbPlayerPlay } from "react-icons/tb";
 
-import { Button, Collapse, Link, Stack, Typography } from "@mui/material";
+import { Box, Button, Collapse, Link, Stack, Typography } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import {
@@ -22,6 +22,8 @@ import TrainingProgress from "./LessonProgress";
 interface ILessonItemProps {
   lesson: ILessonCurrent;
   unitId: string;
+  lastVisitedData: boolean;
+  locked: boolean;
 }
 
 interface IUpdateCodePanelAtom {
@@ -35,6 +37,8 @@ const MAX_DESC = 50;
 export default function LessonItem({
   lesson,
   unitId,
+  lastVisitedData,
+  locked,
 }: ILessonItemProps): React.ReactElement {
   const [openDetails, setOpenDetails] = useState(false);
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
@@ -67,10 +71,13 @@ export default function LessonItem({
       <TrainingProgress progress={80} />
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         <Stack>
-          <Typography variant="h4" mb={2}>
+          <Typography variant="h4" mb={1}>
             {lesson.name}
           </Typography>
-          <Typography variant="body1">
+          <Typography
+            variant="body1"
+            mb={lesson?.description?.length < MAX_DESC ? 3 : 0}
+          >
             {lesson?.description?.length < MAX_DESC
               ? lesson?.description
               : `${lesson?.description?.slice(0, 47)} ${
@@ -90,6 +97,9 @@ export default function LessonItem({
                   alignSelf: "flex-start",
                   color: "#454F5B",
                   gap: 1,
+                  p: 0,
+                  mt: 2,
+                  mb: 3,
                   alignItems: "center",
                   "&:hover": {
                     bgcolor: "transparent",
@@ -127,44 +137,48 @@ export default function LessonItem({
             </Typography>
           </Stack>
         </Stack>
-        <Link
-          component={NextLink}
-          href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-            courseId as string
-          )}?${unitId}&${lesson.id}`}
-          underline="none"
-          sx={{
-            background: "#fff",
-            borderRadius: "50%",
-            display: "flex",
-            p: 1,
-            mb: 2,
-            boxShadow: 5,
-            alignSelf: "flex-end",
-          }}
-          onClick={() => {
-            updateCodePanelAtom({
-              courseId: courseId as string,
-              unitId,
-              lessonId: lesson.id,
-            });
-          }}
-        >
-          {/* <svg width="0" height="0">
-            <linearGradient
-              id="blue-gradient"
-              x1="100%"
-              y1="100%"
-              x2="0%"
-              y2="0%"
-            >
-              <stop stopColor="#61F3F3" offset="0%" />
-              <stop stopColor="#00B8D9" offset="100%" />
-            </linearGradient>
-          </svg> */}
-          {/* stroke: "url(#blue-gradient)" */}
-          <TbPlayerPlay size={50} style={{ color: "#454F5B" }} />
-        </Link>
+        {!locked ? (
+          <Link
+            component={NextLink}
+            href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              courseId as string
+            )}?${unitId}&${lesson.id}`}
+            underline="none"
+            sx={{
+              background: "#fff",
+              borderRadius: "50%",
+              display: "flex",
+              p: 1,
+              mb: 2,
+              boxShadow: 5,
+              alignSelf: "flex-end",
+            }}
+            onClick={() => {
+              updateCodePanelAtom({
+                courseId: courseId as string,
+                unitId,
+                lessonId: lesson.id,
+              });
+            }}
+          >
+            <TbPlayerPlay size={50} style={{ color: "#454F5B" }} />
+          </Link>
+        ) : (
+          <Box
+            sx={{
+              background: "#fff",
+              borderRadius: "50%",
+              display: "flex",
+              p: 1,
+              mb: 2,
+              boxShadow: 5,
+              alignSelf: "flex-end",
+              userSelect: "none",
+            }}
+          >
+            <HiLockClosed size={50} style={{ color: "#454F5B" }} />
+          </Box>
+        )}
       </Stack>
     </Stack>
   );

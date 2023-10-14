@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Skeleton, Stack } from "@mui/material";
 
 import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/courses-student";
-import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
+import { useGetStudentLastVisitedDataQuery } from "src/redux/services/manager/lesson-student";
 
 import ModuleItem from "./module-item";
 
@@ -13,9 +13,10 @@ export default function ModulesListBlock(): React.ReactElement {
     { id: query?.id as string },
     { skip: !query?.id }
   );
-
-  const { data: lastVisitedData, isLoading: isLoadingLesson } =
-    useGetStudentLastVisitedUnitAndLessonQuery();
+  const { data: lastVisitedData } = useGetStudentLastVisitedDataQuery(
+    { courseId: query?.id as string },
+    { skip: !query?.id }
+  );
 
   return (
     <Stack
@@ -28,13 +29,27 @@ export default function ModulesListBlock(): React.ReactElement {
         flex: 1,
       }}
     >
-      {data ? (
-        data.map((m) => (
-          <ModuleItem key={m.id} unit={m} lastVisitedData={lastVisitedData} />
-        ))
-      ) : (
-        <Skeleton />
-      )}
+      {data && !isLoading
+        ? data.map((m) => (
+            <ModuleItem
+              key={m.id}
+              unit={m}
+              lastVisited={m.id === lastVisitedData?.lastVisitedUnitId}
+            />
+          ))
+        : Array.from("12345").map((el) => (
+            <Skeleton
+              key={el}
+              variant="rounded"
+              sx={{
+                width: "100%",
+                height: "200px",
+                mb: "24px",
+                background: "#fff",
+                display: "flex",
+              }}
+            />
+          ))}
     </Stack>
   );
 }

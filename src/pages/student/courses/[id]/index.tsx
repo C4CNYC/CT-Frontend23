@@ -28,14 +28,14 @@ export default function CoursePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Course | CodeTribe</title>
+        <title>{data?.name ?? "Course"} | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "xl"}>
         <CustomBreadcrumbs
           links={[
             { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
             { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },
-            { name: `${data?.name}`, href: "" },
+            { name: data?.name ?? "Course" },
           ]}
         />
         <Box
@@ -48,11 +48,11 @@ export default function CoursePage(): React.ReactElement {
               <Skeleton
                 variant="rounded"
                 sx={{
-                  background: "#fff",
+                  mb: { sx: "24px", sm: "40px" },
                   height: {
-                    xs: "483px",
+                    xs: "954px",
                     sm: "483px",
-                    md: "250px",
+                    md: "400px",
                   },
                   width: "100%",
                 }}

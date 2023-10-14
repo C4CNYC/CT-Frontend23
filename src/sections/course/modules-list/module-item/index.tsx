@@ -17,10 +17,7 @@ import {
 } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import {
-  IModuleContent,
-  LastVisitedData,
-} from "src/redux/interfaces/content.interface";
+import { IModuleContent } from "src/redux/interfaces/content.interface";
 
 import ActionsBlock from "./ActionsBlock";
 import ImageLightBox from "./ImageLightBox";
@@ -28,12 +25,12 @@ import ModuleProgress from "./ModuleProgress";
 
 interface IModuleItemProps {
   unit: IModuleContent;
-  lastVisitedData?: LastVisitedData;
+  lastVisited: boolean;
 }
 
 export default function ModuleItem({
   unit,
-  lastVisitedData,
+  lastVisited,
 }: IModuleItemProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(800));
@@ -114,20 +111,26 @@ export default function ModuleItem({
           alignItems="center"
         >
           <Button
+            component={NextLink}
+            href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              query.id as string
+            )}?${unit.id}`}
             sx={{
               display: "inline-flex",
               alignSelf: isMobile ? "flex-end" : "flex-start",
-              gap: 1,
+              gap: 0.3,
               fontSize: "1.2rem",
               color: "#364954",
-              background: "-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)",
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "transparent",
+              background: lastVisited
+                ? "-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)"
+                : "",
+              "-webkit-background-clip": lastVisited ? "text" : "",
+              "-webkit-text-fill-color": lastVisited ? "transparent" : "",
               "&:hover": {},
             }}
             variant="text"
           >
-            Get Coding Again
+            Get Coding {lastVisited ? "Again" : ""}
             <svg width="0" height="0">
               <linearGradient
                 id="blue-gradient"
@@ -142,7 +145,7 @@ export default function ModuleItem({
             </svg>
             <HiOutlineArrowNarrowRight
               size={24}
-              style={{ stroke: "url(#blue-gradient)" }}
+              style={lastVisited ? { stroke: "url(#blue-gradient)" } : {}}
             />
           </Button>
           <Link
