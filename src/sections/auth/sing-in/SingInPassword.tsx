@@ -7,7 +7,6 @@ import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
-import { styledRegisterInput } from "@sections/on-boarding-register/styles";
 
 interface Props {
   isSubmiting: boolean;
@@ -27,7 +26,6 @@ export default function SingInPassword({
       nextStep();
     }
   }
-
   return (
     <>
       <IconButton
@@ -56,7 +54,18 @@ export default function SingInPassword({
           label="Password"
           type={showPassword ? "text" : "password"}
           sx={(theme) => ({
-            ...styledRegisterInput(theme, { mb: 3 }),
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
+            mb: 3,
           })}
           InputProps={{
             endAdornment: (
@@ -85,9 +94,6 @@ export default function SingInPassword({
             fontSize: "1.5rem",
             mt: 1,
             mb: 2,
-            "&:hover": {
-              background: "#fff",
-            },
           }}
         >
           LET'S GO!

@@ -61,7 +61,7 @@ export default function TribesFillter(): React.ReactElement {
       <Box>
         <Button
           onClick={handleOpenPopover}
-          sx={{ ml: "30px" }}
+          sx={{ color: "#212B36", ml: "30px" }}
           endIcon={<KeyboardArrowDownIcon />}
         >
           Sort by
@@ -72,6 +72,7 @@ export default function TribesFillter(): React.ReactElement {
           sx={{
             width: 200,
             p: 2,
+            background: { xs: "#fff", sm: "#fff" },
           }}
         >
           <Typography>Popover option</Typography>

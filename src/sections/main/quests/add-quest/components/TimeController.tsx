@@ -40,9 +40,7 @@ export default function TimeController({
                   "& fieldset": { border: "none" },
                   "& .MuiInputBase-root": {
                     width: "200px",
-                    background: theme.palette.mode === "light" ? "#fff" : "",
-                    border:
-                      theme.palette.mode === "light" ? "" : "1px solid #fff",
+                    background: "#fff",
                   },
                   "& .MuiFormHelperText-root": {
                     ml: 0,

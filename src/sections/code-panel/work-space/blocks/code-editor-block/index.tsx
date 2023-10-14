@@ -83,7 +83,7 @@ const CodeEditorBlock = ({
           .cm-scroller::-webkit-scrollbar{
             width: 0px;
           }
-         
+
         `}
       </style>
       <HidedTabBtn />
@@ -94,6 +94,8 @@ const CodeEditorBlock = ({
       {user?.id ? (
         <RealTimeEditor
           preloadedCode={preloadedCode}
+          email={`${user?.first_name} ${user?.last_name?.[0]}.`}
+          cursorText={user?.first_name}
           onChange={onChangeCode}
           userId={user?.id}
           code={code}

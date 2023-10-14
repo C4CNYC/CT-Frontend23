@@ -484,15 +484,7 @@ function applyFilter({
     );
   }
   if (filterType !== "all") {
-    inputData = inputData.filter((assignment) => {
-      if (
-        Object.values(AssignmentTypes).includes(
-          filterType as unknown as AssignmentTypes
-        )
-      ) {
-        return assignment.type === filterType;
-      }
-    });
+    inputData = inputData.filter((assignment) => assignment?.course);
   }
 
   if (filterStatus !== "all") {

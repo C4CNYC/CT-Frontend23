@@ -55,6 +55,7 @@ export const addCursor = StateEffect.define<cursor>();
 export const removeCursor = StateEffect.define<string>();
 
 const cursorsItems = new Map<string, number>();
+const cursorUpdates = new Map<string, NodeJS.Timeout>();
 
 const cursorField = (id: string): StateField<DecorationSet> =>
   StateField.define<DecorationSet>({
@@ -100,6 +101,13 @@ const cursorField = (id: string): StateField<DecorationSet> =>
             add: addUpdates,
             filter: (from, to, value) => {
               if (value?.spec?.id === e.value.id) return false;
+              return true;
+            },
+          });
+        } else if (e.is(removeCursor)) {
+          cursorTransacions = cursorTransacions.update({
+            filter: (from, to, value) => {
+              if (value?.spec?.id === e.value) return false;
               return true;
             },
           });
@@ -213,8 +221,23 @@ const cursorBaseTheme = EditorView.baseTheme({
 
 export function cursorExtension(id = ""): any[] {
   return [
-    cursorField(""),
+    cursorField(id),
     cursorBaseTheme,
+    EditorView.updateListener.of((update) => {
+      update.transactions.forEach((e) => {
+        e.effects.filter(e => e.is(addCursor)).forEach((e) => {
+          // Hide cursor again after 5 seconds if no update occurs
+          if (cursorUpdates.has(e.value.id)) {
+            clearTimeout(cursorUpdates.get(e.value.id));
+          }
+          cursorUpdates.set(e.value.id, setTimeout(() => {
+            update.view.dispatch({
+              effects: removeCursor.of(e.value.id)
+            });
+          }, 5000));
+        });
+      });
+    }),
     EditorView.updateListener.of((update) => {
       update.transactions.forEach((e) => {
         if (e.selection) {

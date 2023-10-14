@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 
 import { RHFTextField, useSnackbar } from "@components";
-import { styledRegisterInput } from "@sections/on-boarding-register/styles";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
@@ -63,7 +62,19 @@ export default function SingInLogin({
         <RHFTextField
           name="email"
           label="Email"
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
+          })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -95,21 +106,16 @@ export default function SingInLogin({
           }}
           loading={isLoading}
           sx={(theme) => ({
-            color:
-              theme.palette.mode === "light"
-                ? theme.palette.grey[600]
-                : theme.palette.text.primary,
+            color: theme.palette.grey[600],
             textTransform: "none",
             py: 1.5,
             mb: 1,
             gap: 2,
-            background:
-              theme.palette.mode === "light" ? theme.palette.grey[200] : "",
+            background: theme.palette.grey[200],
             fontWeight: 400,
             fontSize: "1.3em",
             "&:hover": {
               color: theme.palette.grey[900],
-              background: theme.palette.mode === "light" ? "" : "#fff",
             },
           })}
         >

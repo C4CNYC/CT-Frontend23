@@ -3,9 +3,9 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 
 import { io } from "socket.io-client";
 
-import { getDocument } from "../../codemirror/extensions/collab";
 import EditorSkeleton from "./EditorSkeleton";
 import { CodeEditor } from "./editor";
+import { getDocument } from "../../codemirror/extensions/collab";
 
 export interface State {
   connected: boolean;
@@ -15,6 +15,8 @@ export interface State {
 
 interface IRealTimeEditor {
   userId: string;
+  email: string;
+  cursorText: string;
   preloadedCode: string;
   onChange: (value: string) => void;
   code: string;
@@ -26,6 +28,8 @@ const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 export const RealTimeEditor = memo(
   ({
     userId,
+    email,
+    cursorText,
     onChange,
     preloadedCode,
     code,
@@ -35,7 +39,6 @@ export const RealTimeEditor = memo(
       version: undefined,
       doc: undefined,
     });
-    const [socketError, setSocketError] = useState(true);
 
     /**
      * Gets and sets the initial document data.
@@ -46,7 +49,7 @@ export const RealTimeEditor = memo(
         const { version, doc } = await getDocument(socket, userId);
         setState((prev) => ({
           ...prev,
-          version: version,
+          version,
           doc: doc.toString(),
         }));
       } catch (e) {
@@ -106,20 +109,11 @@ export const RealTimeEditor = memo(
       };
     }, [userId]);
 
-    if (state?.version === undefined || state?.doc === undefined) {
+    if (
+      state?.version === undefined ||
+      state?.doc === undefined
+    ) {
       return <EditorSkeleton />;
-    }
-
-    if (socketError) {
-      return (
-        <CodeEditor
-          state={undefined}
-          preloadedCode={preloadedCode}
-          onChangeCode={onChange}
-          socket={socket}
-          code={code}
-        />
-      );
     }
 
     return (
@@ -129,11 +123,14 @@ export const RealTimeEditor = memo(
           .cm-editor {
             height: 100vh
           }
+
         `}
         </style>
         <CodeEditor
           roomId={userId}
           state={state}
+          cursorId={userId}
+          cursorText={cursorText}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}
           socket={socket}

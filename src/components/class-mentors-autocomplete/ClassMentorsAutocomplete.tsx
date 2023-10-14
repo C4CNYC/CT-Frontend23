@@ -68,7 +68,7 @@ export default function ClassMentorsAutocomplete({
   ): Promise<void> => {
     try {
       const payload = {
-        schoolId: schoolIdProp ?? schoolId,
+        schoolId,
         classId,
         userId: details?.option.id ?? "",
       };
