@@ -2,6 +2,7 @@ import { Button, Link, Stack } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { addAlpha } from "@utils";
+import { useRouter } from "next/router"
 
 interface Props {
   redirect: () => void;
@@ -14,12 +15,13 @@ export default function CourseButtons({
   progress,
   courseId,
 }: Props): React.ReactElement {
+  const { push } = useRouter();
   return (
     <Stack direction="row" sx={{ gap: { xs: 1, sm: 3 }, pb: 3, pt: 2 }}>
       {progress && progress > 0 ? (
         <Button
           component={Link}
-          href={`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`}
+          onClick={async () => await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`)}
           variant="outlined"
           sx={{
             p: "5px 15px",
