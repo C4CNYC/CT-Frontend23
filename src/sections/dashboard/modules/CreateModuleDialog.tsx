@@ -139,9 +139,8 @@ export default function CreateModuleDialog({
           id,
           ...data,
           tips: data.tips.trim() !== "" ? [...moduleTips, data.tips] : moduleTips,
-          duration: data.duration.trim(),
+          duration: data.duration?.trim(),
         }).unwrap();
-        methods.resetField("tips");
         if (uploadedFile) {
           file.append("file", uploadedFile);
           await updateAvatar({ id, file }).unwrap();
