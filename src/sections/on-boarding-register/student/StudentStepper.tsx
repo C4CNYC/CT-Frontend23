@@ -14,6 +14,7 @@ import SingUp from "../teacher/SingUp";
 import StepperInfo from "./StepperInfo";
 import StepperProgres from "./StepperProgress";
 import StepperRegister from "./StepperRegister";
+import { Role } from "src/redux/services/enums/role.enum";
 
 interface FormValuesProps {
   email: string;
@@ -59,11 +60,12 @@ export default function StudentStepper(): React.ReactElement {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      const user = await register(
+      await register(
         data.email,
         data.password,
         data.firstName,
-        data.lastName
+        data.lastName,
+        Role.Student
       );
     } catch (error) {
       methods.setError("root", {
