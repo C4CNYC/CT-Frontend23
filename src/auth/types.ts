@@ -46,5 +46,5 @@ export interface JWTContextType {
   ) => Promise<void>;
   logout: () => void;
   loginWithGoogle: (token: string) => Promise<void>;
-  registerWithGoogle: (token: string) => Promise<void>;
+  registerWithGoogle: (token: string, role: Role) => Promise<void>;
 }

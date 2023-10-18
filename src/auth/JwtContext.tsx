@@ -231,10 +231,11 @@ export function AuthProvider({
   };
 
   // Register WITH GOOGLE
-  const registerWithGoogle = async (token: string) => {
+  const registerWithGoogle = async (token: string, role: Role) => {
     try {
       const { data } = await axios.post<any, any>("auth/google-signup", {
         auth_token: token,
+        role
       });
 
       const { access_token: accessToken, user } = data;
