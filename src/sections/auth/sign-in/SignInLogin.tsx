@@ -19,7 +19,7 @@ import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
-export default function SingInLogin({
+export default function SignInLogin({
   nextStep,
   isValid,
 }: Partial<StepWizardChildProps> & { isValid?: boolean }): React.ReactElement {
