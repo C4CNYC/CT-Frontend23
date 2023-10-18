@@ -53,7 +53,7 @@ interface Prop {
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
-  moduleTips: string[] | [];
+  moduleTips?: string[] | [];
 }
 
 interface TabPanelProps {
@@ -138,7 +138,7 @@ export default function CreateModuleDialog({
         await editModule({
           id,
           ...data,
-          tips: data.tips.trim() !== "" ? [...moduleTips, data.tips] : moduleTips,
+          tips: data.tips.trim() !== "" && moduleTips ? [...moduleTips, data.tips] : [],
           duration: data.duration?.trim(),
         }).unwrap();
         if (uploadedFile) {
@@ -184,7 +184,7 @@ export default function CreateModuleDialog({
         await editModule({
           id,
           ...data,
-          tips: moduleTips.filter((t) => !tips.includes(t)),
+          tips: moduleTips ? moduleTips.filter((t) => !tips.includes(t)) : [],
           duration: data.duration.trim(),
         }).unwrap();
         enqueueSnackbar("Tip deleted!");
