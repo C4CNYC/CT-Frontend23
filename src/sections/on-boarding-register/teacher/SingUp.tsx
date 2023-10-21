@@ -61,10 +61,7 @@ export default function SingUp({
           <MdArrowBackIosNew />
         </IconButton>
       )}
-      <Stack
-        direction="row"
-        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: isTeacher ? "50px" : "70px" }}
-      >
+      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "40px" }}>
         <Typography variant="h3">Sign up</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           😃
@@ -81,7 +78,7 @@ export default function SingUp({
           sx={(theme) => ({
             "& .MuiInputBase-root": {
               height: "52px",
-              background: theme.palette.grey[200],
+              background: isValid ? "#75CF6D33" : theme.palette.grey[200],
             },
             "& fieldset": { border: "none" },
             "& input:-webkit-autofill": {
@@ -101,7 +98,7 @@ export default function SingUp({
                     nextStep();
                   }}
                 >
-                  <FaArrowRight color={isValid ? "#43D4DD" : ""} />
+                  <FaArrowRight color={isValid ? "#75CF6D" : ""} />
                 </IconButton>
               </InputAdornment>
             ),
