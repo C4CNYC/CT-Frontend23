@@ -224,10 +224,11 @@ export function AuthProvider({
   };
 
   // Register WITH GOOGLE
-  const registerWithGoogle = async (token: string) => {
+  const registerWithGoogle = async (token: string, role: Role) => {
     try {
       const { data } = await axios.post<any, any>("auth/google-signup", {
         auth_token: token,
+        role
       });
 
       const { access_token: accessToken, user } = data;
@@ -255,6 +256,7 @@ export function AuthProvider({
       password: string,
       firstName: string,
       lastName: string,
+      role: Role,
       tenantName?: string
     ) => {
       if (tenantName) {
@@ -268,6 +270,7 @@ export function AuthProvider({
         password,
         first_name: firstName,
         last_name: lastName,
+        role,
       });
 
       const { access_token: accessToken, user } = data;

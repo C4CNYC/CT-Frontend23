@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import Login from "@pages/auth/singIn";
+import Login from "@pages/auth/signIn";
 
 import { LoadingScreen } from "@components";
 

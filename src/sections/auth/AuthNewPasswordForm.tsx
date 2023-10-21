@@ -62,7 +62,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
         password: data.password,
       }).unwrap();
       enqueueSnackbar("Change password success!");
-      router.push(PATH_AUTH.singIn);
+      router.push(PATH_AUTH.signIn);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",

@@ -14,6 +14,7 @@ import {
 
 import { RHFTextField } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
 
 interface IEmailStepProps {
   nextStep: () => void;
@@ -30,7 +31,7 @@ export default function EmailStep({
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
       try {
-        registerWithGoogle(token);
+        registerWithGoogle(token, Role.Student);
       } catch (error) {
         enqueueSnackbar(error.message, { variant: "error" });
       }

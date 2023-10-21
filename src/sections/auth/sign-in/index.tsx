@@ -14,14 +14,14 @@ import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
 
 import EmailNotFound from "./EmailNotFound";
-import SingInLogin from "./SingInLogin";
-import SingInPassword from "./SingInPassword";
+import SignInLogin from "./SignInLogin";
+import SignInPassword from "./SignInPassword";
 
 interface FormValuesProps {
   email: string;
   password: string;
 }
-export default function SingInMain(): React.ReactElement {
+export default function SignInMain(): React.ReactElement {
   const { replace } = useRouter();
   const { login } = useAuthContext();
   const [isError, setError] = useState("");
@@ -56,13 +56,13 @@ export default function SingInMain(): React.ReactElement {
     >
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <StepWizard transitions={custom}>
-          <SingInLogin
+          <SignInLogin
             isValid={
               !methods.formState.errors.email &&
               methods.formState.dirtyFields.email
             }
           />
-          <SingInPassword
+          <SignInPassword
             isSubmiting={methods.formState.isSubmitting}
             isError={isError}
           />
