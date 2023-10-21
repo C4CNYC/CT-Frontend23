@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 
@@ -12,6 +12,12 @@ export default function DetailsStep(): React.ReactElement {
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);
+  };
+
+  const [course, setCourse] = useState(data?.data[0].id);
+
+  const onCourseChange = (event: any): void => {
+    setCourse(event.target.value);
   };
 
   return (
@@ -69,6 +75,8 @@ export default function DetailsStep(): React.ReactElement {
                 name="course"
                 size="small"
                 disabled={!data?.data.length}
+                onChange={onCourseChange}
+                value={course}
                 sx={{
                   width: "100%",
                   outline: "none",
@@ -79,9 +87,11 @@ export default function DetailsStep(): React.ReactElement {
                   },
                 }}
               >
-                <option key="empty" value="empty">
-                  {!data?.data.length && "You don't have any courses"}
-                </option>
+                {!data?.data.length &&
+                  <option key="empty" value="empty">
+                    You don't have any courses
+                  </option>
+                }
                 {data
                   ? data.data.map((course) => (
                       <option key={course.id} value={course.id}>

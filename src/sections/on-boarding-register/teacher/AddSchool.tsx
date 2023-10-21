@@ -36,6 +36,8 @@ export default function AddSchool(): React.ReactElement {
   const [updateSchool, { isLoading: isUpdating }] =
     useUpdateSchoolProfileMutation();
 
+  const defaultCountry = countries.find((ct) => ct.code === "US") ?? countries[0];
+
   const CreateSchoolSchema = Yup.object().shape({
     schoolName: Yup.string().required("Name is required"),
     type: Yup.string().required("Choose type of school"),
@@ -51,7 +53,7 @@ export default function AddSchool(): React.ReactElement {
         type: data.data[0].type ?? SchoolType.Other,
         city: data.data[0].city ?? "",
         zip: data.data[0].zip ?? "",
-        country: data.data[0].country ?? "",
+        country: data.data[0].country ?? defaultCountry.label,
       });
     }
   }, [isLoading]);
@@ -197,9 +199,8 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
-            <option key="empty" value="empty"></option>
-            <option key={"US"} value={"United States"}>
-              United States
+            <option key={defaultCountry.code} value={defaultCountry.label}>
+              {defaultCountry.label}
             </option>
             <option disabled>─────────────────────────</option>
             {countries
