@@ -63,10 +63,7 @@ export default function SingUp({
           <MdArrowBackIosNew />
         </IconButton>
       )}
-      <Stack
-        direction="row"
-        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: isTeacher ? "50px" : "70px" }}
-      >
+      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "40px" }}>
         <Typography variant="h3">Sign up</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           😃
@@ -91,7 +88,7 @@ export default function SingUp({
                     nextStep();
                   }}
                 >
-                  <FaArrowRight color={isValid ? "#43D4DD" : ""} />
+                  <FaArrowRight color={isValid ? "#75CF6D" : ""} />
                 </IconButton>
               </InputAdornment>
             ),

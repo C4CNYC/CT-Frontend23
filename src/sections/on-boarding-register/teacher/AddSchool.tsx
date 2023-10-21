@@ -84,9 +84,9 @@ export default function AddSchool(): React.ReactElement {
   };
 
   return (
-    <>
+    <Stack minHeight={500}>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-        <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}>
+        <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 } }}>
           <Typography
             variant="h3"
             sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}
@@ -100,7 +100,7 @@ export default function AddSchool(): React.ReactElement {
         <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
           This is the school name students see
         </Typography>
-        <Stack gap={2}>
+        <Stack gap={3}>
           <RHFTextField
             name="schoolName"
             label="School name"
@@ -159,7 +159,7 @@ export default function AddSchool(): React.ReactElement {
             background: "#43D4DD33",
             color: "#43D4DD",
             fontSize: "1.5rem",
-            mt: 1,
+            mt: 3,
             width: "100%",
             "&:hover": {
               background: "#fff",
@@ -170,6 +170,6 @@ export default function AddSchool(): React.ReactElement {
           ALL DONE
         </LoadingButton>
       </FormProvider>
-    </>
+    </Stack>
   );
 }
