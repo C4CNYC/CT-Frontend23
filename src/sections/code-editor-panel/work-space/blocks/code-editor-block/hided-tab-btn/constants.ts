@@ -1,4 +1,4 @@
-const COMMON_BUTTON_SX= {
+const COMMON_BUTTON_SX = {
   position: "absolute",
   top: 40,
   right: 0,

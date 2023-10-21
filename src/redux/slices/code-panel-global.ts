@@ -28,28 +28,28 @@ export const codePanelSlice = createSlice({
   name: "code-panel-global",
   initialState,
   reducers: {
-    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<'slideIndex'>>): void => {
+    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<"slideIndex">>): void => {
       state.slideIndex = payload
     },
-    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<'solutionCode'>>): void => {
+    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<"solutionCode">>): void => {
       state.solutionCode = payload
     },
-    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<'nextStepAble'>>): void => {
+    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<"nextStepAble">>): void => {
       state.nextStepAble = payload
     },
-    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<'unitId'>>): void=> {
+    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<"unitId">>): void => {
       state.unitId = payload
     },
-    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<'courseId'>>): void => {
+    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<"courseId">>): void => {
       state.courseId = payload
     },
-    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'lessonId'>>): void => {
+    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<"lessonId">>): void => {
       state.lessonId = payload
     },
-    toggleInstrations: (state, { payload }: PayloadAction<PickedStoreItem<'isInstructionsHidden'>>): void => {
+    toggleInstrations: (state, { payload }: PayloadAction<PickedStoreItem<"isInstructionsHidden">>): void => {
       state.isInstructionsHidden = payload
     },
-    toggleBrowser: (state, { payload }: PayloadAction<PickedStoreItem<'isBrowserHidden'>>): void => {
+    toggleBrowser: (state, { payload }: PayloadAction<PickedStoreItem<"isBrowserHidden">>): void => {
       state.isBrowserHidden = payload
     }
   },

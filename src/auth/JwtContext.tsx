@@ -6,17 +6,11 @@ import {
   useReducer,
 } from "react";
 
-import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
 import { axios, localStorageAvailable, voidFunction } from "@utils";
 import { Role } from "src/redux/services/enums/role.enum";
-import {
-  cleanUser,
-  cleanUserRole,
-  setStudentMode,
-  setUser,
-} from "src/redux/slices/global";
+import { cleanUser, cleanUserRole, setUser } from "src/redux/slices/global";
 
 import {
   ActionMapType,
@@ -219,10 +213,7 @@ export function AuthProvider({
 
     const { access_token: accessToken, user } = data;
     reduxDispatch(setUser(user));
-    setSession(
-      accessToken,
-      localStorage.getItem("tenantName") ?? "codetribe"
-    );
+    setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
 
     dispatch({
       type: Types.LOGIN,

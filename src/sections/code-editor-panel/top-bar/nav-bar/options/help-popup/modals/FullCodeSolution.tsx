@@ -17,7 +17,7 @@ import {
   CODE_BLOCK_CUSTOM_STYLES,
   DIALOG_ACTIONS_STYLES,
   DIALOG_CONTENT_STYLES
-} from './constants'
+} from "./constants"
 
 interface IFullCodeSolutionModal {
   children: React.ReactElement;
@@ -27,7 +27,7 @@ interface IFullCodeSolutionModal {
 const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
   children,
   disabled
-})=> {
+}) => {
   const [open, setOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
 

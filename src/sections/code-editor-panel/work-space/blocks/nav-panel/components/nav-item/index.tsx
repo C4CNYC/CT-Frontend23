@@ -3,13 +3,13 @@ import { useMemo, type FC } from "react";
 import {
   ListItemButton,
   ListItem,
-  ListItemText, 
+  ListItemText,
   Stack,
   Badge,
   ListItemAvatar,
   Avatar
 } from "@mui/material";
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import { getRandomIndex } from "../../hook/utils";
 
 interface NavItemProps {
@@ -23,7 +23,7 @@ interface NavItemProps {
 const getAvatarLetters = (name: string) => {
   const [firstName, lastName] = name.split(" ")
 
-  return `${(firstName[0] ?? '').toUpperCase()}${(lastName[0] ?? '').toUpperCase()}`
+  return `${(firstName[0] ?? "").toUpperCase()}${(lastName[0] ?? "").toUpperCase()}`
 }
 
 const COLORS = ["#155275", "rgba(120, 56, 121, 0.80)", "#EE467A"]
@@ -40,14 +40,14 @@ const NavItem: FC<NavItemProps> = ({
     <ListItem>
       <Badge
         sx={BADGE_SX}
-        badgeContent={''}
+        badgeContent={""}
         color="secondary"
       >
         <ListItemAvatar onClick={onToggle}>
           <Avatar sx={{ background, color: "white" }}>{getAvatarLetters(name)}</Avatar>
         </ListItemAvatar>
       </Badge>
-      
+
       <ListItemButton onClick={onClick} sx={LIST_ITEM_BUTTON_SX}>
         <Stack sx={STACK_TEXT_SX} direction="column">
           <ListItemText sx={NAME_SX} primary={name} />
@@ -79,7 +79,7 @@ const TOPIC_SX = {
 }
 
 const BADGE_SX = {
-  '& .MuiBadge-badge': {
+  "& .MuiBadge-badge": {
     right: "auto",
     top: 4,
     left: -12,

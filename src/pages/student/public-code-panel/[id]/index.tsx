@@ -46,7 +46,7 @@ export default function Index(): React.ReactElement {
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
-  
+
   const { data: courseContent, isLoading: isLoadingCourseContent } =
     useGetPublicCourseContentQuery(
       { id: query.id as string },

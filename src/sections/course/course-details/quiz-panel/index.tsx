@@ -1,6 +1,6 @@
 import { BiLockOpenAlt } from "react-icons/bi";
 
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 
 import { ILesson } from "src/redux/interfaces/content.interface";

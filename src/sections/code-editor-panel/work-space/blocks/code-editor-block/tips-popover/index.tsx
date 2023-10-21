@@ -19,7 +19,7 @@ import {
   POPPER_OPTIONS,
   DESKTOP_POPPER_WIDTH,
   MOBILE_POPPER_WIDTH
-} from './constants'
+} from "./constants"
 
 interface TipsPopoverProps {
   openPoper: boolean;

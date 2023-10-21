@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC } from "react"
 import { CopyBlock, dracula } from "react-code-blocks";
 
 import { useSelector } from "src/redux/store";

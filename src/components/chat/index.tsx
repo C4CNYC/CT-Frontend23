@@ -96,7 +96,6 @@ export const Chat = ({
     setMessages([]);
     getMessages(user.id, (messages, db) => {
       setMessages(messages);
-      console.log(messages);
     });
   }, [user]);
 

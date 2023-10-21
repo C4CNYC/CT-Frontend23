@@ -59,12 +59,7 @@ export default function StudentStepper(): React.ReactElement {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      const user = await register(
-        data.email,
-        data.password,
-        data.firstName,
-        data.lastName
-      );
+      await register(data.email, data.password, data.firstName, data.lastName);
     } catch (error) {
       methods.setError("root", {
         ...error,

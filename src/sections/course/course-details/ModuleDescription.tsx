@@ -1,4 +1,4 @@
-import { Box, Chip, Skeleton, Stack, Typography } from "@mui/material";
+import { Chip, Skeleton, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 
 interface IModuleDescriptionProps {

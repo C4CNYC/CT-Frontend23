@@ -34,6 +34,7 @@ export default function CreateHeader({
           <RHFTextField
             name="name"
             autoComplete="off"
+            // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
             inputRef={(input) => input && input.focus()}
             placeholder={
               isMobile ? "Enter a class name here ... " : "Enter name ..."
@@ -59,7 +60,7 @@ export default function CreateHeader({
               "& input:-webkit-autofill": {
                 "-webkit-background-clip": "text",
                 transition: "background-color 5000s ease-in-out 0s",
-                boxShadow: `inset 0 0 .1px .1px transparent`,
+                boxShadow: "inset 0 0 .1px .1px transparent",
               },
               "& fieldset": { border: "none" },
             }}
@@ -89,7 +90,7 @@ export default function CreateHeader({
               "& input:-webkit-autofill": {
                 "-webkit-background-clip": "text",
                 transition: "background-color 5000s ease-in-out 0s",
-                boxShadow: `inset 0 0 .1px .1px transparent`,
+                boxShadow: "inset 0 0 .1px .1px transparent",
               },
               "& fieldset": { border: "none" },
             }}

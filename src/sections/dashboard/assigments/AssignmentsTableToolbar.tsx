@@ -11,7 +11,7 @@ import { Iconify } from "@components";
 
 const INPUT_WIDTH = 160;
 
-type Props = {
+interface Props {
   filterName: string;
   isFiltered: boolean;
   filterType: string;
@@ -23,7 +23,7 @@ type Props = {
   onFilterService: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFilterStartDate: (value: Date | null) => void;
   onFilterEndDate: (value: Date | null) => void;
-};
+}
 
 export default function AssignmentsTableToolbar({
   filterName,

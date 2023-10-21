@@ -1,30 +1,30 @@
 import dynamic from "next/dynamic";
-import React, { type FC, useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { SlDirections } from "react-icons/sl";
-import _ from "lodash";
+import React, { type FC, useEffect, useMemo, useRef, useState } from "react";
 
+import _ from "lodash";
+import { SlDirections } from "react-icons/sl";
+import { useDispatch } from "react-redux";
 import Carousel from "react-slick";
 
-import { useMediaQuery, useTheme, Box } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import { EmptyContent } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/interfaces/content.interface";
 import { IIntegration } from "src/redux/interfaces/integration.interface";
-
-import BaseBlock from "../base-block";
-import BrowserView from "../view-block/browser-view";
-import LoaderDelay from "./loader-delay";
-import Navigation from "./navigation";
-import { useSelector } from "src/redux/store";
 import {
   setSlideIndex,
   setSolutionCode,
-  toggleInstrations
+  toggleInstrations,
 } from "src/redux/slices/code-panel-global";
+import { useSelector } from "src/redux/store";
+
+import BaseBlock from "../base-block";
+import BrowserView from "../view-block/browser-view";
 import { getBoxSx, getCarouselSettings } from "./constants";
+import LoaderDelay from "./loader-delay";
+import Navigation from "./navigation";
 
 const ProsaMirrorView = dynamic(
   async () => await import("./prosa-mirror-view"),
@@ -36,7 +36,7 @@ interface ISliderBlock {
   onSubmitLesson: () => void;
   onSubmitChalange: (slideId: string) => void;
   integrations: Array<IIntegration & BaseResponseInterface>;
-  isFetching: boolean
+  isFetching: boolean;
 }
 
 interface IView {
@@ -56,16 +56,18 @@ const SliderBlock: FC<ISliderBlock> = ({
   isFetching,
 }) => {
   const theme = useTheme();
-  const dispatch = useDispatch()
-  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex)
-  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble)
+  const dispatch = useDispatch();
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
+  const nextStepAble = useSelector(
+    (state) => state.codePanelGlobal.nextStepAble
+  );
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
 
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
   const hasNextStep = slideIndex < data.length - 1;
   const stepHasValidation = !!data[slideIndex]?.validations?.length;
-  const boxSx = useMemo(() => getBoxSx(isDesktop), [isDesktop])
+  const boxSx = useMemo(() => getBoxSx(isDesktop), [isDesktop]);
 
   useEffect(() => {
     carousel1.current?.slickGoTo(slideIndex);
@@ -78,12 +80,10 @@ const SliderBlock: FC<ISliderBlock> = ({
   }, [data]);
 
   const handlePrev = (): void => {
-    console.log('hi')
     carousel1.current?.slickPrev();
   };
 
   const handleNext = (skip = false): void => {
-    console.log('hello')
     if (stepHasValidation && !skip) {
       onSubmitChalange(data[slideIndex].id);
     }
@@ -95,8 +95,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   };
 
   const onBeforeChange = (_: number, next: number) => {
-    dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ""))
-    dispatch(setSlideIndex(next))
+    dispatch(setSolutionCode(data[slideIndex]?.solution_body ?? ""));
+    dispatch(setSlideIndex(next));
   };
 
   const connectIntegrations = (body: string): string | undefined => {
@@ -116,22 +116,22 @@ const SliderBlock: FC<ISliderBlock> = ({
       title={title}
       icon={icon}
       hideTabsHandler={() => {
-        dispatch(toggleInstrations(true))
+        dispatch(toggleInstrations(true));
       }}
     >
       {_.isEmpty(data) ? (
         <EmptyContent title="No Data" />
       ) : (
         <>
-          <Box
-            className="sliderTour"
-            height="100%"
-            sx={boxSx}
-          >
+          <Box className="sliderTour" height="100%" sx={boxSx}>
             <LoaderDelay delay={3000} isLoading={!!isFetching} />
 
             {!isFetching ? (
-              <Carousel {...getCarouselSettings(onBeforeChange)} asNavFor={nav2} ref={carousel1}>
+              <Carousel
+                {...getCarouselSettings(onBeforeChange)}
+                asNavFor={nav2}
+                ref={carousel1}
+              >
                 {data.map((step) => (
                   <View
                     key={step.id}
@@ -158,11 +158,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   );
 };
 
-const View: FC<IView> = ({
-  type,
-  body,
-  connectIntegrations,
-}) => {
+const View: FC<IView> = ({ type, body, connectIntegrations }) => {
   switch (type) {
     case "editable":
       return <ProsaMirrorView multimediaValue={body} />;
