@@ -11,6 +11,8 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
+import { styledRegisterInput } from "../styles";
+
 interface Props {
   nextStep: () => void;
   isSubmiting: boolean;
@@ -42,24 +44,12 @@ export default function StepperRegister({
         <RHFTextField
           name="firstName"
           label="First Name"
-          sx={(theme) => ({
-            "& .MuiInputBase-root": {
-              height: "52px",
-              background: theme.palette.grey[200],
-            },
-            "& fieldset": { border: "none" },
-          })}
+          sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <RHFTextField
           name="lastName"
           label="Surname"
-          sx={(theme) => ({
-            "& .MuiInputBase-root": {
-              height: "52px",
-              background: theme.palette.grey[200],
-            },
-            "& fieldset": { border: "none" },
-          })}
+          sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <Divider sx={{ my: 1 }} />
 
@@ -67,19 +57,7 @@ export default function StepperRegister({
           name="password"
           label="Password"
           type={showPassword ? "text" : "password"}
-          sx={(theme) => ({
-            "& .MuiInputBase-root": {
-              height: "52px",
-              background: theme.palette.grey[200],
-            },
-            "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
-          })}
+          sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -108,6 +86,9 @@ export default function StepperRegister({
           fontSize: "1.5rem",
           mt: 2,
           width: "100%",
+          "&:hover": {
+            background: "#fff",
+          },
         }}
       >
         WHOOPIE
