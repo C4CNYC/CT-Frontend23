@@ -5,6 +5,7 @@ import {
   MessageList,
 } from "@chatscope/chat-ui-kit-react";
 
+import { convertTimestamp } from "@sections/chat/helpers";
 import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { BaseResponseInterface } from "@utils";
 import { IFriend } from "src/redux/interfaces/friends.interface";
@@ -29,36 +30,47 @@ export const Messages = ({
   return (
     <>
       <MessageList>
-        {messages.map((message, i) => (
-          <Message
-            key={i}
-            model={{
-              message: message.text,
-              sentTime: "15 mins ago",
-              sender: "Emily",
-              direction:
-                senderId !== message.sender_id ? "incoming" : "outgoing",
-              position: "first",
-            }}
-            avatarSpacer={
-              messages[i - 1]?.sender_id === message.sender_id &&
-              senderId !== message.sender_id
-            }
-          >
-            {senderId !== message.sender_id &&
-            messages[i - 1]?.sender_id !== message.sender_id ? (
-              <Avatar
-                src={
-                  message.sender_id === "SUPPORT"
-                    ? "https://cdn1.iconfinder.com/data/icons/user-pictures/100/supportmale-512.png"
-                    : getUserData(message.sender_id)?.avatar ??
-                      "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
+        {messages.map((message, i) => {
+          return (
+            <>
+              <Message
+                key={i}
+                model={{
+                  message: message.text,
+                  sentTime: "HUS",
+                  sender: "Emily",
+                  direction:
+                    senderId !== message.sender_id ? "incoming" : "outgoing",
+                  position: "single",
+                }}
+                avatarSpacer={
+                  messages[i - 1]?.sender_id === message.sender_id &&
+                  senderId !== message.sender_id
                 }
-                name="Zoe"
-              />
-            ) : null}
-          </Message>
-        ))}
+              >
+                {senderId !== message.sender_id &&
+                messages[i - 1]?.sender_id !== message.sender_id ? (
+                  <Avatar
+                    src={
+                      message.sender_id === "SUPPORT"
+                        ? "https://cdn1.iconfinder.com/data/icons/user-pictures/100/supportmale-512.png"
+                        : getUserData(message.sender_id)?.avatar ??
+                          "https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
+                    }
+                    name={getUserData(message.sender_id)?.first_name}
+                  />
+                ) : null}
+                <Message.Footer
+                  sentTime={convertTimestamp(message.timestamp)}
+                  style={{
+                    fontSize: "11px",
+                    lineHeight: 1,
+                  }}
+                />
+              </Message>
+            </>
+          );
+        })}
       </MessageList>
       <MessageInput
         onSend={onSend}

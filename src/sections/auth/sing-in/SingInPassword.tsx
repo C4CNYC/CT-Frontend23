@@ -7,6 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
+import { styledRegisterInput } from "@sections/on-boarding-register/styles";
 
 interface Props {
   isSubmiting: boolean;
@@ -53,20 +54,7 @@ export default function SingInPassword({
           name="password"
           label="Password"
           type={showPassword ? "text" : "password"}
-          sx={(theme) => ({
-            "& .MuiInputBase-root": {
-              height: "52px",
-              background: theme.palette.grey[200],
-            },
-            "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
-            mb: 3,
-          })}
+          sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -88,13 +76,17 @@ export default function SingInPassword({
         <LoadingButton
           type="submit"
           loading={isSubmiting}
-          sx={{
+          sx={(theme) => ({
             background: "#43D4DD33",
             color: "#43D4DD",
             fontSize: "1.5rem",
-            mt: 1,
+            mt: 4,
             mb: 2,
-          }}
+            "&:hover": {
+              color: theme.palette.grey[900],
+              background: theme.palette.mode === "light" ? "" : "#fff",
+            },
+          })}
         >
           LET'S GO!
         </LoadingButton>

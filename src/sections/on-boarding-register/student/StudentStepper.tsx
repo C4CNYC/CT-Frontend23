@@ -72,7 +72,7 @@ export default function StudentStepper(): React.ReactElement {
   return (
     <Stack
       sx={{
-        minHeight: "550px",
+        minHeight: "460px",
         justifyContent: "center",
         position: "relative",
       }}

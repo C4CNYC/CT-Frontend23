@@ -13,7 +13,9 @@ import {
   UnderlineExtension,
 } from "remirror/extensions";
 
-import { Button, FormHelperText, Stack } from "@mui/material";
+
+import "@mui/material";
+import { Button, FormHelperText, Stack, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const MenuBtn = styled(Button)({
@@ -33,6 +35,7 @@ export function RHFRemirror({
   name,
   helperText,
 }: RHFRemirrorProps): React.ReactElement {
+  const theme = useTheme();
   const { control } = useFormContext();
   const { field } = useController({
     name,
@@ -56,7 +59,8 @@ export function RHFRemirror({
           .remirror-editor-wrapper { padding: 0; }
           .remirror-theme .ProseMirror{
               max-height: 100px;
-              background: #fff;
+              background: ${theme.palette.mode === "light" ? "#fff" : ""} ;
+              border: ${theme.palette.mode === "light" ? "" : "1px solid #fff"};
           }
         `}
       </style>
