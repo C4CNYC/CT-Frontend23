@@ -66,7 +66,11 @@ export function SessionType({
       </Tooltip>
       <Stack sx={{ pl: 2 }}>
         {disabled ? (
-          <Badge badgeContent={"coming soon"} color="success">
+          <Badge
+            sx={{ "& .MuiBadge-anchorOriginTopRight": { top: -10 } }}
+            badgeContent={"coming soon"}
+            color="success"
+          >
             <Typography variant="h4" textAlign="start" gutterBottom>
               {title}
             </Typography>

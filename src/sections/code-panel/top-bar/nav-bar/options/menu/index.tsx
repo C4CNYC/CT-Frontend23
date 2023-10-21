@@ -101,7 +101,7 @@ const Menu = (): React.ReactElement => {
       >
         {isAuthenticated ? (
           <Typography height="59px" p="16px 20px" variant="h6" component="h2">
-            Hello {userName ? userName : ""}
+            Hello {userName ?? ""}
           </Typography>
         ) : null}
         <Divider />

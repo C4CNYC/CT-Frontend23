@@ -1,36 +1,32 @@
 import { type FC, useMemo } from "react";
 
+import { DndContext } from "@dnd-kit/core";
 import {
-  Drawer,
-  List,
-  Divider,
-  Stack
-} from "@mui/material";
-import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
-import NavItem from "./components/nav-item";
-import HeaderItem from "./components/header-item";
-import CutomNavItem from "./components/custom-nav-item";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
+import { Divider, Drawer, List, Stack } from "@mui/material";
+
 import CodeBlock from "./components/code-block";
-
-import {
-  ICON_SX,
-  DIVIDER_SX,
-  STACK_SX,
-  MAIN_LIST,
-  LIST_SX,
-  getDrawerSx,
-  getStackCodeBoxSx
-} from "./styles"
-
-import { DndContext } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
-
+import CutomNavItem from "./components/custom-nav-item";
+import HeaderItem from "./components/header-item";
+import NavItem from "./components/nav-item";
 import SortableItem from "./components/sortable-item";
 import { useNavPanel } from "./hook";
 import { MOCK } from "./hook/mock";
+import {
+  DIVIDER_SX,
+  ICON_SX,
+  LIST_SX,
+  MAIN_LIST,
+  STACK_SX,
+  getDrawerSx,
+  getStackCodeBoxSx,
+} from "./styles";
 
 const NavPanel: FC = () => {
   const {
@@ -42,27 +38,23 @@ const NavPanel: FC = () => {
     onDragEnd,
     onDeleteBlock,
     blocks,
-    draggableConfig
+    draggableConfig,
   } = useNavPanel();
 
   const drawerSx = useMemo(() => getDrawerSx(isOpen), [isOpen]);
   const stackCodeBoxSx = useMemo(() => {
-    return getStackCodeBoxSx(draggableConfig?.height)
+    return getStackCodeBoxSx(draggableConfig?.height);
   }, [draggableConfig?.height]);
 
-  const isBlocksVisible = blocks.length > 0 && isOpen && draggableConfig != null;
+  const isBlocksVisible =
+    blocks.length > 0 && isOpen && draggableConfig != null;
 
   return (
-    <Drawer
-      ref={drawerRef}
-      open={isOpen}
-      variant="permanent"
-      sx={drawerSx}
-    >
+    <Drawer ref={drawerRef} open={isOpen} variant="permanent" sx={drawerSx}>
       <HeaderItem
         onClick={() => {
           setIsOpen(!isOpen);
-          setBlocks([])
+          setBlocks([]);
         }}
       />
 
@@ -72,59 +64,75 @@ const NavPanel: FC = () => {
         <List sx={MAIN_LIST}>
           {MOCK.map((props) => (
             <NavItem
+              // eslint-disable-next-line  react/prop-types
               key={props.name}
               {...props}
-              onToggle={() => setIsOpen(!isOpen)}
-              onClick={() => onAddBlock(props.id)}
+              onToggle={() => {
+                setIsOpen(!isOpen);
+              }}
+              onClick={() => {
+                // eslint-disable-next-line  react/prop-types
+                onAddBlock(props.id);
+              }}
             />
           ))}
         </List>
       </Stack>
 
       <Divider sx={DIVIDER_SX} />
-      
+
       <List sx={LIST_SX}>
         <CutomNavItem
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
           name="Group Chat"
-          onToggle={() => setIsOpen(!isOpen)}
+          onToggle={() => {
+            setIsOpen(!isOpen);
+          }}
         />
 
         <CutomNavItem
           icon={<EventNoteIcon sx={ICON_SX} />}
           name="Notes"
-          onToggle={() => setIsOpen(!isOpen)}
+          onToggle={() => {
+            setIsOpen(!isOpen);
+          }}
         />
 
         <CutomNavItem
           icon={<AssignmentIcon sx={ICON_SX} />}
           name="Sandbox"
-          onToggle={() => setIsOpen(!isOpen)}
+          onToggle={() => {
+            setIsOpen(!isOpen);
+          }}
         />
       </List>
 
       {isBlocksVisible && (
         <Stack sx={stackCodeBoxSx}>
-          <DndContext 
-            onDragEnd={onDragEnd}
-          >
-            <SortableContext 
+          <DndContext onDragEnd={onDragEnd}>
+            <SortableContext
               items={blocks}
               strategy={verticalListSortingStrategy}
             >
               {blocks.map((id) => {
                 return (
                   <SortableItem key={id} id={id}>
-                    <CodeBlock onClose={() => onDeleteBlock(id)} id={id} key={id} />
+                    <CodeBlock
+                      onClose={() => {
+                        onDeleteBlock(id);
+                      }}
+                      id={id}
+                      key={id}
+                    />
                   </SortableItem>
-                )
+                );
               })}
             </SortableContext>
           </DndContext>
         </Stack>
       )}
     </Drawer>
-  )
-}
+  );
+};
 
 export default NavPanel;

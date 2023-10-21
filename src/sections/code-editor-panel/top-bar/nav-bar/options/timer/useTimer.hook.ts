@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { type PopoverVirtualElement } from "@mui/material";
 
-type VoidFunctions = "setFinishTimer" 
+type VoidFunctions = "setFinishTimer"
   | "onResumeClick"
   | "onPauseClick"
   | "onRestartClick"
@@ -126,7 +126,6 @@ export const useTimer = (): UseTimerReturn => {
       setMinutes(number);
     }
   };
-
 
   return {
     onTimeInputChange,

@@ -6,16 +6,16 @@ import { useEffect, useRef } from "react";
 
 import { indentUnit } from "@codemirror/language";
 import { EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
+import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { Socket } from "socket.io-client";
 
 import { voidFunction } from "@utils";
 
-import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
 import { peerExtension } from "../../codemirror/extensions/collab";
 import { cursorExtension } from "../../codemirror/extensions/cursors";
+import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
 
 interface IEditor {
   roomId: string;

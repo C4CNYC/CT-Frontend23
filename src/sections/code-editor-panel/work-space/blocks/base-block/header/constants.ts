@@ -15,7 +15,8 @@ export const getBoxStyles = (isDesktop: boolean): SxProps => ({
 
 export const TYP_SX = {
   color: "#D9D9E2",
-  textTransform: "capitalize", ml: 1
+  textTransform: "capitalize",
+ml: 1
 };
 
 export const BUTTON_SX = {

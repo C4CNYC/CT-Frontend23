@@ -10,7 +10,6 @@ export const CHECKERS_ANIMATION = {
   },
 };
 
-
 export const getStackSx = (isBrowserHidden: boolean): SxProps<Theme> => ({
   top: isBrowserHidden ? "40px" : "38px",
   right: isBrowserHidden ? "45px" : "15px",

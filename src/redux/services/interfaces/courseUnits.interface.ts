@@ -9,6 +9,9 @@ export interface IModule {
   name: string;
   description: string;
   data: [];
+  avatar: string | null;
+  tips: string[] | [];
+  duration: string | null;
 }
 
 export interface ILesson {
@@ -94,6 +97,8 @@ export interface IModuleCreate {
   active: boolean;
   name: string;
   description: string;
+  duration: string;
+  tips: string[] | [];
 }
 
 export interface ILessonCreate {

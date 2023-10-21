@@ -21,6 +21,8 @@ import {
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
 
+import { styledRegisterInput } from "../styles";
+
 interface SchoolFormProps {
   schoolName: string;
   type: SchoolType;
@@ -82,9 +84,9 @@ export default function AddSchool(): React.ReactElement {
   };
 
   return (
-    <>
+    <Stack minHeight={500}>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-        <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}>
+        <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 } }}>
           <Typography
             variant="h3"
             sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}
@@ -98,41 +100,17 @@ export default function AddSchool(): React.ReactElement {
         <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
           This is the school name students see
         </Typography>
-        <Stack gap={2}>
+        <Stack gap={3}>
           <RHFTextField
             name="schoolName"
             label="School name"
-            sx={(theme) => ({
-              "& .MuiInputBase-root": {
-                height: "52px",
-                background: theme.palette.grey[200],
-              },
-              "& fieldset": { border: "none" },
-              "& input:-webkit-autofill": {
-                "-webkit-background-clip": "text",
-                "-webkit-text-fill-color": "#000",
-                transition: "background-color 5000s ease-in-out 0s",
-                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-              },
-            })}
+            sx={(theme) => ({ ...styledRegisterInput(theme) })}
           />
           <RHFSelect
             native
             name="type"
             label="Type of School"
-            sx={(theme) => ({
-              "& .MuiInputBase-root": {
-                height: "52px",
-                background: theme.palette.grey[200],
-              },
-              "& fieldset": { border: "none" },
-              "& input:-webkit-autofill": {
-                "-webkit-background-clip": "text",
-                "-webkit-text-fill-color": "#000",
-                transition: "background-color 5000s ease-in-out 0s",
-                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-              },
-            })}
+            sx={(theme) => ({ ...styledRegisterInput(theme) })}
           >
             <option key="empty" value="empty"></option>
 
@@ -146,56 +124,20 @@ export default function AddSchool(): React.ReactElement {
             <RHFTextField
               name="city"
               label="City"
-              sx={(theme) => ({
-                "& .MuiInputBase-root": {
-                  height: "52px",
-                  background: theme.palette.grey[200],
-                },
-                "& fieldset": { border: "none" },
-                "& input:-webkit-autofill": {
-                  "-webkit-background-clip": "text",
-                  "-webkit-text-fill-color": "#000",
-                  transition: "background-color 5000s ease-in-out 0s",
-                  boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-                },
-              })}
+              sx={(theme) => ({ ...styledRegisterInput(theme) })}
             />
             <RHFTextField
               name="zip"
               label="Zip code"
               type="number"
-              sx={(theme) => ({
-                "& .MuiInputBase-root": {
-                  height: "52px",
-                  background: theme.palette.grey[200],
-                },
-                "& fieldset": { border: "none" },
-                "& input:-webkit-autofill": {
-                  "-webkit-background-clip": "text",
-                  "-webkit-text-fill-color": "#000",
-                  transition: "background-color 5000s ease-in-out 0s",
-                  boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-                },
-              })}
+              sx={(theme) => ({ ...styledRegisterInput(theme) })}
             />
           </Stack>
           <RHFSelect
             native
             name="country"
             label="Country"
-            sx={(theme) => ({
-              "& .MuiInputBase-root": {
-                height: "52px",
-                background: theme.palette.grey[200],
-              },
-              "& fieldset": { border: "none" },
-              "& input:-webkit-autofill": {
-                "-webkit-background-clip": "text",
-                "-webkit-text-fill-color": "#000",
-                transition: "background-color 5000s ease-in-out 0s",
-                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-              },
-            })}
+            sx={(theme) => ({ ...styledRegisterInput(theme) })}
           >
             <option key="empty" value="empty"></option>
             <option key={"US"} value={"United States"}>
@@ -217,14 +159,17 @@ export default function AddSchool(): React.ReactElement {
             background: "#43D4DD33",
             color: "#43D4DD",
             fontSize: "1.5rem",
-            mt: 1,
+            mt: 3,
             width: "100%",
+            "&:hover": {
+              background: "#fff",
+            },
           }}
           loading={isUpdating}
         >
           ALL DONE
         </LoadingButton>
       </FormProvider>
-    </>
+    </Stack>
   );
 }

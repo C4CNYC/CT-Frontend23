@@ -2,7 +2,6 @@ import { type FC, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { BsLightningCharge } from "react-icons/bs";
 
-
 import { Badge, SpeedDial, SpeedDialAction, useTheme } from "@mui/material";
 
 import { useSelector } from "src/redux/store";
@@ -33,7 +32,6 @@ const NavigationSpeedDial: FC<NavigationSpeedDialProps> = ({
   const actions = useMemo(() => getActions(onToggleChat), [onToggleChat]);
   const speedDialFabProps = useMemo(() => getSpeedDialFabProps(stepHasValidation), [stepHasValidation]);
   const speedDialSx = useMemo(() => getSpeedDealSx(theme), [theme])
-
 
   return (
     <SpeedDial

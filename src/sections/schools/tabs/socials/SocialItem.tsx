@@ -106,7 +106,7 @@ export default function SocialItem({
           onSubmit={methods.handleSubmit(handleEditSocial)}
         >
           <FormGroup row sx={{ mb: 4 }}>
-            <Box sx={{ 
+            <Box sx={{
               display: "flex",
               width: { xs: "100%", sm: "350px", md: "max-content" }
             }}>

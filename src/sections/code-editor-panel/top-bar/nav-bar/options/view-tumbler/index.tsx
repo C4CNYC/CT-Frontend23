@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC } from "react"
 
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";

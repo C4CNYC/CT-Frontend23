@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC } from "react"
 import { Stack } from "@mui/system";
 import { useDispatch } from "react-redux";
 
@@ -6,7 +6,7 @@ import Menu from "../options/menu";
 import SmallScreenTabs from "../options/small-screen-tabs";
 
 import { setTab } from "src/redux/slices/mobile-tab-manager";
-import { useSelector } from 'src/redux/store';
+import { useSelector } from "src/redux/store";
 
 const MobileBar: FC = () => {
   const dispatch = useDispatch();

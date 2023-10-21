@@ -13,10 +13,10 @@ export default function JoinLinkModal({ children }: Prop) {
   const [open, setOpen] = useState(false);
   return (
     <>
-      <Box onClick={() => setOpen(true)}>{children}</Box>
+      <Box onClick={() => { setOpen(true); }}>{children}</Box>
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => { setOpen(false); }}
         fullWidth
         sx={{ minHeight: "40vh" }}
       >

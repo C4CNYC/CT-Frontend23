@@ -5,7 +5,6 @@ import { Box, Container, Tab, Tabs } from "@mui/material";
 
 import { CustomBreadcrumbs, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard/";
-import { PATH_DASHBOARD } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import TribesFillter from "@sections/dashboard/tribes/fillter";
 import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
@@ -94,7 +93,7 @@ export default function Tribes(): React.ReactElement {
             mt={3}
           >
             {data?.data.map((tribe) => (
-              <TribeItem tribe={tribe} />
+              <TribeItem key={tribe.id} tribe={tribe} />
             ))}
           </Box>
         </Container>

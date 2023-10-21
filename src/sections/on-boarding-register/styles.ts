@@ -1,6 +1,7 @@
 import { SxProps, Theme } from "@mui/material";
 
 export const styledRegisterInput = (theme: Theme, sx?: SxProps): SxProps => ({
+  color: theme.palette.mode === "light" ? "#000" : "#fff",
   "& .MuiInputBase-root": {
     height: "52px",
     background:
@@ -13,7 +14,11 @@ export const styledRegisterInput = (theme: Theme, sx?: SxProps): SxProps => ({
     "-webkit-background-clip": "text",
     "-webkit-text-fill-color": theme.palette.mode === "light" ? "#000" : "#fff",
     transition: "background-color 5000s ease-in-out 0s",
-    boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+    boxShadow: `inset 0 0 .1px .1px ${
+      theme.palette.mode === "light"
+        ? theme.palette.grey[200]
+        : "rgba(0, 0, 0, 0)"
+    }`,
   },
   ...sx,
 });

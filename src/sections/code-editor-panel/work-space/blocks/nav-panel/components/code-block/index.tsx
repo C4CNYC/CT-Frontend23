@@ -2,7 +2,7 @@ import { useMemo, type FC } from "react";
 
 import { Box, Stack, Avatar, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 import OpenCodeIcon from "src/assets/icons/OpenCodeIcon"
 
@@ -16,7 +16,7 @@ import { EXAMPLE_CODE, LOADING_CODE } from "../../hook/mock";
 interface CodeBlockProps {
   id: string
   onClose: () => void
-  attributes?:  DraggableAttributes
+  attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
 }
 

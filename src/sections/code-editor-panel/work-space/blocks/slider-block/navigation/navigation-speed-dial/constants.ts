@@ -2,7 +2,7 @@ import { type Theme, type FabProps, type SxProps } from "@mui/material";
 
 export const BADGE_SX = { "& .MuiBadge-badge": { top: "-5px" } };
 
-export const SPEED_DIAL_ACTION_FAB_PROPS: Partial<FabProps>  = {
+export const SPEED_DIAL_ACTION_FAB_PROPS: Partial<FabProps> = {
   sx: {
     background: "#364954",
   },
