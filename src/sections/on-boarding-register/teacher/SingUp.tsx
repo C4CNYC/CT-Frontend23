@@ -16,6 +16,7 @@ import {
 
 import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
 
 import { styledRegisterInput } from "../styles";
 
@@ -42,7 +43,8 @@ export default function SingUp({
     onSuccess: async ({ access_token: token }) => {
       setIsLoading(true);
       try {
-        await registerWithGoogle(token);
+        const role = isTeacher ? Role.Manager : Role.Student;
+        await registerWithGoogle(token, role);
         if (isTeacher) {
           goToStep(3);
         } else {

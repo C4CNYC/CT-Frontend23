@@ -53,7 +53,7 @@ export default function Header(): React.ReactElement {
 
           {isDesktop && <NavDesktop isOffset={isOffset} data={navConfig} />}
 
-          <Button variant="contained" rel="noopener" href={PATH_AUTH.singIn}>
+          <Button variant="contained" rel="noopener" href={PATH_AUTH.signIn}>
             Create Tenant
           </Button>
 

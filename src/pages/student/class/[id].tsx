@@ -47,7 +47,7 @@ export default function HomeOverview(): React.ReactElement {
         <title>Home Overview | Code Tribe</title>
       </Head>
       {classInfo ? (
-        <JoinTribeModal classInfo={classInfo} isSingIn={true} />
+        <JoinTribeModal classInfo={classInfo} isSignIn={true} />
       ) : null}
       {!(isLoading || !data) ? (
         <>

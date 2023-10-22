@@ -34,7 +34,7 @@ const Menu = (): React.ReactElement => {
   const handleLogout = (): void => {
     try {
       logout();
-      replace(PATH_AUTH.singIn);
+      replace(PATH_AUTH.signIn);
       handleClosePopover();
     } catch (error: any) {
       enqueueSnackbar("Unable to logout!", { variant: "error" });

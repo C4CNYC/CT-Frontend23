@@ -1,12 +1,12 @@
 import LoginLayout from "@layouts/login/LoginLayout";
-import SingInMain from "@sections/auth/sing-in";
+import SignInMain from "@sections/auth/sign-in";
 import GuestGuard from "src/auth/GuestGuard";
 
-export default function SingIn(): React.ReactElement {
+export default function SignIn(): React.ReactElement {
   return (
     <GuestGuard>
       <LoginLayout>
-        <SingInMain />
+        <SignInMain />
       </LoginLayout>
     </GuestGuard>
   );

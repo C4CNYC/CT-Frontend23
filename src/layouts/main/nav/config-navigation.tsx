@@ -17,7 +17,7 @@ const navConfig = [
   {
     title: "Login",
     icon: <Iconify icon="ic:round-grain" />,
-    path: PATH_AUTH.singIn,
+    path: PATH_AUTH.signIn,
   },
 ];
 
