@@ -10,7 +10,7 @@ export default function SkeletonTribe(): React.ReactElement {
         variant="rectangular"
         animation="wave"
         sx={{
-          width: { xs: "100%", sm: "100%", md: "330px"},
+          width: { xs: "100%", sm: "100%", md: "330px" },
           height: "280px",
           borderRadius: "16px",
           mb: 2,
@@ -20,7 +20,7 @@ export default function SkeletonTribe(): React.ReactElement {
         variant="rectangular"
         animation="wave"
         sx={{
-          width: { xs: "100%", sm: "100%", md: "330px"},
+          width: { xs: "100%", sm: "100%", md: "330px" },
           height: "106px",
           borderRadius: "16px",
           mb: 2,
@@ -30,7 +30,7 @@ export default function SkeletonTribe(): React.ReactElement {
         variant="rectangular"
         animation="wave"
         sx={{
-          width: { xs: "100%", sm: "100%", md: "330px"},
+          width: { xs: "100%", sm: "100%", md: "330px" },
           height: "198px",
           borderRadius: "16px",
           mb: 2,

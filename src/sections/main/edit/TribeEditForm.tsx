@@ -1,33 +1,35 @@
+import { useCallback } from "react";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import { MuiColorInput } from "mui-color-input";
+import { Controller, useForm } from "react-hook-form";
+import * as Yup from "yup";
+
+import { LoadingButton } from "@mui/lab";
+import { Box, Card, Grid, Stack, Typography } from "@mui/material";
+
 import {
   FormProvider,
   RHFSelect,
   RHFSwitch,
   RHFTextField,
-  RHFUploadAvatar,
-  useSnackbar,
+  RHFUploadAvatar, // useSnackbar,
 } from "@components";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 import { BaseResponseInterface, getRandomColor } from "@utils";
-import { MuiColorInput } from "mui-color-input";
-import { useCallback } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { countries } from "src/assets/data";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
-import * as Yup from "yup";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };
 }
 
-interface Props {
-  isEdit?: boolean;
-  currentUser?: IStudent & BaseResponseInterface;
-}
+// interface Props {
+//   isEdit?: boolean;
+//   currentUser?: IStudent & BaseResponseInterface;
+// }
 
-export default function TribeEditForm({}: Props): React.ReactElement | null {
-  const { enqueueSnackbar } = useSnackbar();
+export default function TribeEditForm(): React.ReactElement | null {
+  // const { enqueueSnackbar } = useSnackbar();
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     country: Yup.string(),
@@ -49,29 +51,30 @@ export default function TribeEditForm({}: Props): React.ReactElement | null {
   });
 
   const {
-    reset,
     setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const updateAvatar = async (
-    id: string,
-    photoURL?: File
-  ): Promise<unknown> => {
-    if (!id ?? !photoURL) return;
+  // const updateAvatar = async (
+  //   id: string,
+  //   photoURL?: File
+  // ): Promise<unknown> => {
+  //   if (!id ?? !photoURL) {
+  //     return;
+  //   }
 
-    const file = new FormData();
-    file.append("file", photoURL);
-  };
+  //   const file = new FormData();
+  //   file.append("file", photoURL);
+  // };
 
-  const onSubmit = async ({}: FormValuesProps): Promise<void> => {
-    try {
-    } catch (error: any) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
-    }
+  const onSubmit = async (): Promise<void> => {
+    // try {
+    // } catch (error: any) {
+    //   enqueueSnackbar(error?.data?.message, {
+    //     variant: "error",
+    //   });
+    // }
   };
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {

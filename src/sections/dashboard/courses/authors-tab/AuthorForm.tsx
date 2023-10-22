@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSnackbar } from "notistack";
@@ -10,9 +10,7 @@ import { Box, Button, Stack } from "@mui/material";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
 import {
-  useAddAuthorToCourseMutation,
   useCreateAuthorMutation,
-  useRemoveAuthorFromCourseMutation,
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
 } from "src/redux/services/manager/author-manager";
@@ -41,7 +39,6 @@ export default function AuthorForm({
   setFormVisible,
   defaultValues = { name: "", about: "", linkedin: "", email: "" },
 }: IAuthorFormProps): React.ReactElement {
-  const [addToCourse, setAddToCourse] = useState<boolean>(true);
   const { enqueueSnackbar } = useSnackbar();
   const [postAuthor, { isLoading }] = useCreateAuthorMutation();
   const [editAuthor, { isLoading: isEditing }] = useUpdateAuthorMutation();

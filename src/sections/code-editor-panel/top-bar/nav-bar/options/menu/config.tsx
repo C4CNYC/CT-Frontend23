@@ -81,7 +81,7 @@ export const anonimUserConfig: IMenuConfigItem[] = [
     title: "I've been here before",
     subTitle: "Login",
     icon: "mdi:human-hello",
-    href: PATH_AUTH.singIn,
+    href: PATH_AUTH.signIn,
   },
   {
     title: "Invite Friends",

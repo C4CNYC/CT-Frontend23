@@ -18,13 +18,13 @@ export const chekersAnimationSlice = createSlice({
   name: "checkers-animation",
   initialState,
   reducers: {
-    setIsVisible: (state, { payload }: PayloadAction<PickedSliceItem<'isVisible'>>): void => {
+    setIsVisible: (state, { payload }: PayloadAction<PickedSliceItem<"isVisible">>): void => {
       state.isVisible = payload
     },
-    setIsTextOpened: (state, { payload }: PayloadAction<PickedSliceItem<'isTextOpened'>>): void => {
+    setIsTextOpened: (state, { payload }: PayloadAction<PickedSliceItem<"isTextOpened">>): void => {
       state.isTextOpened = payload
     },
-    setIsActivateCompeated: (state, { payload }: PayloadAction<PickedSliceItem<'isActivateCompeated'>>): void => {
+    setIsActivateCompeated: (state, { payload }: PayloadAction<PickedSliceItem<"isActivateCompeated">>): void => {
       state.isActivateCompeated = payload
     }
   },

@@ -33,7 +33,7 @@ export default function ChooseShoolModal({
 }: IChooseShoolModalProps): React.ReactElement {
   const { back } = useRouter();
   const handleChange = (event: SelectChangeEvent) => {
-    setSchoolId(event.target.value as string);
+    setSchoolId(event.target.value);
   };
 
   useEffect(() => {

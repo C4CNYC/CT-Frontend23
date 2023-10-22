@@ -145,7 +145,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
         }}
       >
         <Image
-          src={cover ? cover : "/assets/background/overlay_2.jpg"}
+          src={cover ?? "/assets/background/overlay_2.jpg"}
           sx={{
             height: "250px",
             "& .wrapper": {

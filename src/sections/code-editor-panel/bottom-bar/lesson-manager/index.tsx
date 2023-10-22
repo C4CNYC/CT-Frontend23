@@ -22,19 +22,19 @@ const LessonManager: FC<LessonManagerProps> = ({
   onChooseLesson,
   linkHref,
   isLoading,
-  data 
-})=> {
+  data
+}) => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   return (
     <>
       <LessonManagerButton
-        onOpen={() => setIsOpenDrawer(true)}
+        onOpen={() => { setIsOpenDrawer(true); }}
         lesson={lesson}
       />
 
       <LessonManagerSideBar
-        onClose={() => setIsOpenDrawer(false)}
+        onClose={() => { setIsOpenDrawer(false); }}
         isOpen={isOpenDrawer}
         linkHref={linkHref}
       >

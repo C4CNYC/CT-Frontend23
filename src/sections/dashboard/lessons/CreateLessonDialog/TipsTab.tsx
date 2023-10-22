@@ -70,13 +70,14 @@ export default function TipsTab({
         </Stack>
       </Collapse>
       <List sx={{ maxHeight: "290px", overflowY: "auto" }}>
-        {tips.map((tip) => (
+        {tips.map((tip, i) => (
           <ListItem
+            key={tip + i}
             secondaryAction={
               <Checkbox
                 edge="end"
                 onChange={handleToggle(tip)}
-                checked={checked.indexOf(tip) !== -1}
+                checked={checked.includes(tip)}
               />
             }
           >

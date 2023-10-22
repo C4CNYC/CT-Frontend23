@@ -13,7 +13,7 @@ export default function HomePage(): React.ReactElement {
     if (isAuthenticated) {
       push(STUDENT_PATH_DASHBOARD.class.root);
     } else {
-      push(PATH_AUTH.singIn);
+      push(PATH_AUTH.signIn);
     }
   }, [isAuthenticated]);
 

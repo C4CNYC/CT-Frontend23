@@ -1,4 +1,4 @@
-import { type FC } from 'react'
+import { type FC } from "react"
 import NextLink from "next/link";
 import { MdWifiTethering } from "react-icons/md";
 
@@ -19,7 +19,7 @@ import {
   AVATAR_STYLES,
   STACK_GROUP_STYLES,
   GROUP_TITLE_STYLES,
-  TRIBE_NAME_STYLES, 
+  TRIBE_NAME_STYLES,
   TEACHING_STYLES
 } from "./styles";
 
@@ -34,9 +34,9 @@ const GroupHeader: FC = () => {
     return null;
   }
 
-  const groupTitle =  tribe && tribe.name.length > MAX_TRIBE_NAME_LENGTH
+  const groupTitle = tribe && tribe.name.length > MAX_TRIBE_NAME_LENGTH
     ? <Typography variant="subtitle2">{tribe.name}</Typography>
-    : ''
+    : ""
 
   return (
     <Stack

@@ -49,8 +49,8 @@ export const getDrawerSx = (isOpen: boolean): SxProps => ({
   width: 60,
   minHeight: "100%",
   position: "relative",
-  '& .MuiDrawer-paper': {
-    transition: 'right .5s',
+  "& .MuiDrawer-paper": {
+    transition: "right .5s",
     width: 280,
     boxSizing: "border-box",
     maxHeight: "100%",

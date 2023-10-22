@@ -52,7 +52,7 @@ export const tokenExpired = (exp: number): void => {
 
     localStorage.removeItem("accessToken");
 
-    window.location.href = PATH_AUTH.singIn;
+    window.location.href = PATH_AUTH.signIn;
   }, timeLeft);
 };
 

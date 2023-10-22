@@ -1,5 +1,7 @@
 // ----------------------------------------------------------------------
 
+import { Role } from "src/redux/services/enums/role.enum";
+
 export type ActionMapType<M extends Record<string, any>> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
@@ -33,6 +35,7 @@ export interface JWTContextType {
     password: string,
     firstName: string,
     lastName: string,
+    role: Role,
     tenantName?: string
   ) => Promise<void>;
   registerToOrganization: (
@@ -43,5 +46,5 @@ export interface JWTContextType {
   ) => Promise<void>;
   logout: () => void;
   loginWithGoogle: (token: string) => Promise<void>;
-  registerWithGoogle: (token: string) => Promise<void>;
+  registerWithGoogle: (token: string, role: Role) => Promise<void>;
 }
