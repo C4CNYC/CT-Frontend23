@@ -87,7 +87,7 @@ export default function SingUp({
                     nextStep();
                   }}
                 >
-                  <FaArrowRight color={isValid ? "#75CF6D" : ""} />
+                  <FaArrowRight color={isValid ? "#43D4DD" : ""} />
                 </IconButton>
               </InputAdornment>
             ),

@@ -50,10 +50,10 @@ export default function AddSchool(): React.ReactElement {
     if (!isLoading && data) {
       methods.reset({
         schoolName: data.data[0].name ?? "",
-        type: data.data[0].type ?? SchoolType.Other,
+        type: data.data[0].type ?? SchoolType.Middle_School,
         city: data.data[0].city ?? "",
         zip: data.data[0].zip ?? "",
-        country: data.data[0].country ?? "",
+        country: data.data[0].country ?? "United States",
       });
     }
   }, [isLoading]);
