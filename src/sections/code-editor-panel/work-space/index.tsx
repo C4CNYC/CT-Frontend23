@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useRef, type FC } from "react";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -68,12 +68,11 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           preloadedCode={data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
           code={code}
-          onChangeCode={onChangeCode}
           user={user}
+          onChangeCode={onChangeCode}
         />
 
         {!isBrowserHidden ? <ViewBlock {...{ code, language }} /> : null}
-
         <NavPanel />
       </Stack>
     );
