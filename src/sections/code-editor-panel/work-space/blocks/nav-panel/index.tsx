@@ -1,138 +1,137 @@
 import { type FC, useMemo } from "react";
+import { DndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-import { DndContext } from "@dnd-kit/core";
 import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+  Drawer,
+  List,
+  Divider,
+  Stack
+} from "@mui/material";
+import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import EventNoteIcon from "@mui/icons-material/EventNote";
-import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
-import { Divider, Drawer, List, Stack } from "@mui/material";
-
-import CodeBlock from "./components/code-block";
-import CutomNavItem from "./components/custom-nav-item";
-import HeaderItem from "./components/header-item";
 import NavItem from "./components/nav-item";
+import HeaderItem from "./components/header-item";
+import CutomNavItem from "./components/custom-nav-item";
+import CodeBlock from "./components/code-block";
 import SortableItem from "./components/sortable-item";
-import { useNavPanel } from "./hook";
-import { MOCK } from "./hook/mock";
+import LoadListSkeleton from "./components/load-list-skeleton";
+
 import {
-  DIVIDER_SX,
   ICON_SX,
-  LIST_SX,
-  MAIN_LIST,
+  DIVIDER_SX,
   STACK_SX,
+  MAIN_LIST,
+  LIST_SX,
   getDrawerSx,
   getStackCodeBoxSx,
-} from "./styles";
+  DIVIDER_SX_BOTTOM
+} from "./styles"
+import { useNavPanel } from "./hook";
 
 const NavPanel: FC = () => {
   const {
     drawerRef,
     isOpen,
     onAddBlock,
-    setBlocks,
     setIsOpen,
     onDragEnd,
-    onDeleteBlock,
-    blocks,
+    onDeletePreviewUser,
     draggableConfig,
+    users,
+    previewdUsers,
+    isCodePreviewVisible,
+    activeUsersAmount,
+    isCodeBlocksVisible,
+    isUsersLoading
   } = useNavPanel();
 
-  const drawerSx = useMemo(() => getDrawerSx(isOpen), [isOpen]);
+  const drawerSx = useMemo(() => getDrawerSx(isOpen, isCodePreviewVisible), [isOpen, isCodePreviewVisible]);
   const stackCodeBoxSx = useMemo(() => {
-    return getStackCodeBoxSx(draggableConfig?.height);
-  }, [draggableConfig?.height]);
-
-  const isBlocksVisible =
-    blocks.length > 0 && isOpen && draggableConfig != null;
+    return getStackCodeBoxSx(draggableConfig?.height, isOpen)
+  }, [draggableConfig?.height, isOpen]);
 
   return (
-    <Drawer ref={drawerRef} open={isOpen} variant="permanent" sx={drawerSx}>
+    <Drawer
+      ref={drawerRef}
+      open={isOpen}
+      variant="permanent"
+      sx={drawerSx}
+    >
       <HeaderItem
-        onClick={() => {
-          setIsOpen(!isOpen);
-          setBlocks([]);
-        }}
+        activeUsers={activeUsersAmount}
+        onClick={() => setIsOpen(!isOpen)}
       />
 
       <Divider sx={DIVIDER_SX} />
 
       <Stack sx={STACK_SX}>
         <List sx={MAIN_LIST}>
-          {MOCK.map((props) => (
-            <NavItem
-              // eslint-disable-next-line  react/prop-types
-              key={props.name}
-              {...props}
-              onToggle={() => {
-                setIsOpen(!isOpen);
-              }}
-              onClick={() => {
-                // eslint-disable-next-line  react/prop-types
-                onAddBlock(props.id);
-              }}
-            />
-          ))}
+          {isUsersLoading
+            ? <LoadListSkeleton />
+            : (
+              <>
+                {users.map((user) => (
+                  <NavItem
+                    key={user.id}
+                    data={user}
+                    onToggle={() => setIsOpen(!isOpen)}
+                    onClick={() => onAddBlock(user)}
+                  />
+                ))}
+              </>
+            )
+          }
         </List>
       </Stack>
 
-      <Divider sx={DIVIDER_SX} />
-
+      <Divider sx={DIVIDER_SX_BOTTOM} />
+      
       <List sx={LIST_SX}>
         <CutomNavItem
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
           name="Group Chat"
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
+          onToggle={() => setIsOpen(!isOpen)}
         />
 
         <CutomNavItem
           icon={<EventNoteIcon sx={ICON_SX} />}
           name="Notes"
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
+          onToggle={() => setIsOpen(!isOpen)}
         />
 
         <CutomNavItem
           icon={<AssignmentIcon sx={ICON_SX} />}
           name="Sandbox"
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
+          onToggle={() => setIsOpen(!isOpen)}
         />
       </List>
 
-      {isBlocksVisible && (
+      {isCodeBlocksVisible && (
         <Stack sx={stackCodeBoxSx}>
           <DndContext onDragEnd={onDragEnd}>
-            <SortableContext
-              items={blocks}
+            <SortableContext 
+              items={previewdUsers}
               strategy={verticalListSortingStrategy}
             >
-              {blocks.map((id) => {
+              {previewdUsers.map((user) => {
                 return (
-                  <SortableItem key={id} id={id}>
+                  <SortableItem key={user.id} id={user.id}>
                     <CodeBlock
-                      onClose={() => {
-                        onDeleteBlock(id);
-                      }}
-                      id={id}
-                      key={id}
+                      onClose={() => onDeletePreviewUser(user.id)}
+                      data={user}
                     />
                   </SortableItem>
-                );
+                )
               })}
             </SortableContext>
           </DndContext>
         </Stack>
       )}
     </Drawer>
-  );
-};
+  )
+}
 
 export default NavPanel;

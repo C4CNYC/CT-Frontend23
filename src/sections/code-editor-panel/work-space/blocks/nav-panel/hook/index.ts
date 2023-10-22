@@ -1,77 +1,97 @@
-import { type MutableRefObject, useEffect, useRef, useState } from "react";
-
+import { type MutableRefObject, useEffect, useRef, useState, useMemo } from "react";
 import { type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-import { type DraggableBlockConfig, getDraggableBlockConfig } from "./utils";
+import {
+  type DraggableBlockConfig,
+  getDraggableBlockConfig
+} from "./utils";
+import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";
+import { IFriend } from "src/redux/interfaces/friends.interface";
+import { BaseResponseInterface } from "@utils";
+import { useSelector } from "src/redux/store";
+
+type FriendUser = IFriend & BaseResponseInterface
 
 interface UseNavPanelReturn {
-  drawerRef: MutableRefObject<HTMLDivElement | null>;
-  isOpen: boolean;
-  onAddBlock: (block: string) => void;
-  setBlocks: (blocks: string[]) => void;
-  setIsOpen: (isOpen: boolean) => void;
-  onDragEnd: (e: DragEndEvent) => void;
-  onDeleteBlock: (id: string) => void;
-  blocks: string[];
-  draggableConfig: DraggableBlockConfig | null;
+  drawerRef:  MutableRefObject<HTMLDivElement | null>
+  isOpen: boolean
+  onAddBlock: (user: FriendUser) => void
+  setIsOpen: (isOpen: boolean) => void
+  onDragEnd: (e: DragEndEvent) => void
+  onDeletePreviewUser: (id: string) => void 
+  previewdUsers: FriendUser[]
+  draggableConfig: DraggableBlockConfig | null
+  users: FriendUser[]
+  isCodePreviewVisible: boolean
+  activeUsersAmount: number
+  isCodeBlocksVisible: boolean
+  isUsersLoading: boolean
 }
 
-export const useNavPanel = (): UseNavPanelReturn => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [blocks, setBlocks] = useState<string[]>([]);
-  const drawerRef = useRef<HTMLDivElement | null>(null);
-  const [draggableConfig, setDraggableConfig] =
-    useState<DraggableBlockConfig | null>(null);
+const DEFAULT_USERS: FriendUser[] = []
 
-  const onAddBlock = (_id: string): void => {
-    const newBlocks = [...blocks];
-    const isMaxBlocksInView = newBlocks.length === draggableConfig?.blockAmount;
+export const useNavPanel = (): UseNavPanelReturn => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [previewdUsers, setPreviewdUsers] = useState<FriendUser[]>([]);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null);
+  const isCodePreviewVisible = useSelector(state => state.codePanelGlobal.isCodePreviewVisible);
+  const [isCodeBlocksVisible, setIsCodeBlocksVisible] = useState(false)
+
+  const { data, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(
+    { take: 50 },
+  );
+
+  const onAddBlock = (user: FriendUser): void => {
+    const newPreviewedUsers = [...previewdUsers];
+    const isMaxBlocksInView = newPreviewedUsers.length === draggableConfig?.blockAmount;
+
+    const isExist = newPreviewedUsers.some(({ id }) => id === user.id)
+
+    if (isExist) {
+      return
+    }
 
     if (isMaxBlocksInView) {
-      newBlocks.pop();
-      newBlocks.push(_id);
-      setBlocks(newBlocks);
+      newPreviewedUsers.splice(newPreviewedUsers.length - 1, 1);
+      setPreviewdUsers([...newPreviewedUsers, user]);
 
       return;
     }
 
-    const isExist = newBlocks.find((id) => id === _id) != null;
-
-    if (!isExist) {
-      setBlocks([...blocks, _id]);
-    }
-  };
-
-  const onDeleteBlock = (id: string): void => {
-    const index = blocks.findIndex((_id) => _id === id);
+    setPreviewdUsers([...newPreviewedUsers, user]);
+  }
+  
+  const onDeletePreviewUser = (_id: string): void => {
+    const index = previewdUsers.findIndex(({ id }) => id === _id);
 
     if (index > -1) {
-      const newBlocks = [...blocks];
-      newBlocks.splice(index, 1);
-      setBlocks(newBlocks);
+      const newPreviewdUsers = [...previewdUsers];
+      newPreviewdUsers.splice(index, 1);
+      setPreviewdUsers(newPreviewdUsers);
     }
-  };
+  }
 
   const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-
-    if (over != null && active != null && active.id !== over.id) {
-      setBlocks((items) => {
-        const oldIndex = items.indexOf(active.id as string);
-        const newIndex = items.indexOf(over.id as string);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
-    }
-  };
+      
+      if (over != null && active != null && active.id !== over.id) {
+        setPreviewdUsers((items) => {
+          const oldIndex = items.findIndex(({ id }) => id === active.id);
+          const newIndex = items.findIndex(({ id }) => id === over.id);
+          
+          return arrayMove(items, oldIndex, newIndex);
+        });
+      }
+  }
 
   useEffect(() => {
-    const resizeObserver: ResizeObserver | null = null;
+    let resizeObserver: ResizeObserver | null = null;
 
     if (drawerRef.current != null) {
       const resizeObserver = new ResizeObserver(([el]) => {
-        const config = getDraggableBlockConfig(el.contentRect.height);
+        const config = getDraggableBlockConfig(el.contentRect.height)
         setDraggableConfig(config);
       });
 
@@ -80,21 +100,57 @@ export const useNavPanel = (): UseNavPanelReturn => {
 
     return () => {
       if (drawerRef.current != null && resizeObserver != null) {
-        // @ts-expect-error @typescript-eslint/ban-ts-comment
         resizeObserver.unobserve(drawerRef.current);
       }
-    };
+    }
   }, []);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (!isCodePreviewVisible) {
+      setIsCodeBlocksVisible(false);
+      setIsOpen(false);
+    } else {
+      timeout = setTimeout(() => {
+        setIsCodeBlocksVisible(true)
+      }, 400);
+    }
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [isCodePreviewVisible])
+
+  const users = data?.data ?? DEFAULT_USERS
+
+  const {
+    activeUsersAmount,
+    sortedUsers
+  } = useMemo(() => {
+    const sortedUsers = [...users]
+    sortedUsers.sort((a, b) => {
+      return Number(b.active) - Number(a.active)
+    })
+
+    return {
+      activeUsersAmount: users.filter(({ active }) => active).length,
+      sortedUsers
+    }
+  }, [users]);
 
   return {
     drawerRef,
     isOpen,
     onAddBlock,
-    setBlocks,
     setIsOpen,
     onDragEnd,
-    onDeleteBlock,
-    blocks,
+    onDeletePreviewUser,
+    previewdUsers,
     draggableConfig,
-  };
-};
+    activeUsersAmount,
+    users: sortedUsers,
+    isCodePreviewVisible,
+    isCodeBlocksVisible,
+    isUsersLoading
+  }
+}

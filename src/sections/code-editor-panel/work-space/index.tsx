@@ -73,6 +73,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         />
 
         {!isBrowserHidden ? <ViewBlock {...{ code, language }} /> : null}
+
         <NavPanel />
       </Stack>
     );

@@ -2,45 +2,36 @@ import { useMemo, type FC } from "react";
 
 import { Box, Stack, Avatar, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+
+import OpenCodeIcon from "src/assets/icons/OpenCodeIcon"
+
 import { type DraggableAttributes } from "@dnd-kit/core";
 import { type SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-
-import OpenCodeIcon from "src/assets/icons/OpenCodeIcon";
-import CodeEditorCollab from "src/components/code-editor-collab";
+import { type IFriend } from "src/redux/interfaces/friends.interface";
+import { type BaseResponseInterface } from "@utils";
 
 import { getRandomIndex } from "../../hook/utils";
+import { BOX_COLORS, HEADER_COLORS } from "./constants"
+import CodeEditorCollab from "src/components/code-editor-collab";
 
 import styles from "./styles"
 import { EditorMode } from "src/components/code-editor-collab/hook";
 
 interface CodeBlockProps {
-  id: string
   onClose: () => void
-  attributes?: DraggableAttributes
+  attributes?:  DraggableAttributes
   listeners?: SyntheticListenerMap
+  data: IFriend & BaseResponseInterface
 }
 
-const HEADER_COLORS = [
-  "rgba(56, 86, 121, 0.80)",
-  "rgba(121, 56, 56, 0.80)",
-  "rgba(120, 56, 121, 0.80)"
-]
-
-const BOX_COLORS = [
-  "#019A77",
-  "#EE467A",
-  "#0F56B3",
-  "#364954"
-]
-
-const CodeBlock: FC<CodeBlockProps> = ({ id, onClose, attributes, listeners }) => {
+const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, data }) => {
   const {
     boxColor,
-    headerColor,
+    headerColor
   } = useMemo(() => ({
     boxColor: BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0],
-    headerColor: HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0],
+    headerColor: HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0]
   }), []);
   const boxSx = useMemo(() => styles.getBoxSx(boxColor), [boxColor]);
   const headerSx = useMemo(() => styles.getHeaderSx(headerColor), [headerColor]);
@@ -54,10 +45,11 @@ const CodeBlock: FC<CodeBlockProps> = ({ id, onClose, attributes, listeners }) =
             {...attributes}
             {...listeners}
           />
-          <Avatar sx={styles.AVATAR_SX}>OF</Avatar>
+
+          <Avatar sx={styles.AVATAR_SX} src={data.avatar} />
 
           <Typography sx={styles.TYP_NAME_SX}>
-            Ole Lukoe
+            {data.first_name} {data.last_name}
           </Typography>
         </Stack>
 
@@ -69,7 +61,7 @@ const CodeBlock: FC<CodeBlockProps> = ({ id, onClose, attributes, listeners }) =
       </Stack>
 
       <CodeEditorCollab
-        roomId={id}
+        roomId={data.id}
         isReadOnly
         mode={EditorMode.Watcher}
       />
