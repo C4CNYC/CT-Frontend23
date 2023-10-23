@@ -12,11 +12,14 @@ import {
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { ICourse } from "@types";
+import { BaseResponseInterface } from "@utils";
 
-export default function DetailsStep(): React.ReactElement {
+export default function DetailsStep(
+  { coursesData }: { coursesData: { data: (ICourse & BaseResponseInterface)[] | undefined, isLoading: boolean } }
+  ): React.ReactElement {
   const theme = useTheme();
-  const { data, isLoading } = useManagerGetCourseQuery({});
+  const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);
@@ -76,7 +79,7 @@ export default function DetailsStep(): React.ReactElement {
                 native
                 name="course"
                 size="small"
-                disabled={!data?.data.length}
+                disabled={!data?.length}
                 sx={{
                   width: "100%",
                   outline: "none",
@@ -88,15 +91,17 @@ export default function DetailsStep(): React.ReactElement {
                   background: theme.palette.mode === "light" ? "#fff" : "",
                 }}
               >
-                <option key="empty" value="empty">
-                  {!data?.data.length && "You don't have any courses"}
-                </option>
+                {!data?.length &&
+                  <option key="empty" value="empty">
+                    You don't have any courses
+                  </option>
+                }
                 {data
-                  ? data.data.map((course) => (
-                      <option key={course.id} value={course.id}>
-                        {course.name}
-                      </option>
-                    ))
+                  ? data.map((course) => (
+                    <option key={course.id} value={course.id}>
+                      {course.name}
+                    </option>
+                  ))
                   : null}
               </RHFSelect>
             ) : (
