@@ -7,19 +7,23 @@ import {
   Badge,
   ListItemIcon,
 } from "@mui/material";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 interface HeaderItemProps {
   onClick: () => void
+  activeUsers: number
+  activeAdmins?: number
 }
 
 const HeaderItem: FC<HeaderItemProps> = ({
-  onClick
+  onClick,
+  activeUsers,
+  activeAdmins = 0
 }) => {
   return (
     <ListItem sx={LIST_ITEM_SX}>
       <ListItemIcon onClick={onClick}>
-        <ExpandLessIcon sx={ARROW_SX} />
+        <ExpandLessIcon sx={ARROW_SX} /> 
       </ListItemIcon>
 
       <Stack sx={STACK_SX}>
@@ -30,21 +34,21 @@ const HeaderItem: FC<HeaderItemProps> = ({
         <Stack direction="row">
           <Badge
             sx={BADGE_SX}
-            badgeContent={""}
+            badgeContent={''}
             color="success"
           >
             <Typography sx={USER_SUBTITLE_SX}>
-              13 live
+              {activeUsers} live
             </Typography>
           </Badge>
 
           <Badge
             sx={BADGE_SX}
-            badgeContent={""}
+            badgeContent={''}
             color="success"
           >
             <Typography sx={SUBTITLE_SX}>
-              1 admin
+              {activeAdmins} admin
             </Typography>
           </Badge>
         </Stack>
@@ -84,7 +88,7 @@ const USER_SUBTITLE_SX = {
 }
 
 const BADGE_SX = {
-  "& .MuiBadge-badge": {
+  '& .MuiBadge-badge': {
     right: "auto",
     top: 8,
     width: 5,

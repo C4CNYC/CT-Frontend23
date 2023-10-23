@@ -9,6 +9,7 @@ export interface IGlobalCodePanel {
   courseId: string;
   isInstructionsHidden: boolean;
   isBrowserHidden: boolean;
+  isCodePreviewVisible: boolean
 }
 
 const initialState: IGlobalCodePanel = {
@@ -20,6 +21,7 @@ const initialState: IGlobalCodePanel = {
   nextStepAble: true,
   isInstructionsHidden: false,
   isBrowserHidden: false,
+  isCodePreviewVisible: false,
 };
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -51,6 +53,9 @@ export const codePanelSlice = createSlice({
     },
     toggleBrowser: (state, { payload }: PayloadAction<PickedStoreItem<"isBrowserHidden">>): void => {
       state.isBrowserHidden = payload
+    },
+    toggleCodePreview: (state, { payload }: PayloadAction<PickedStoreItem<'isCodePreviewVisible'>>) => {
+      state.isCodePreviewVisible = payload;
     }
   },
 });
@@ -63,7 +68,8 @@ export const {
   setCourseId,
   setLessonId,
   toggleInstrations,
-  toggleBrowser
+  toggleBrowser,
+  toggleCodePreview
 } = codePanelSlice.actions;
 
 export default codePanelSlice.reducer;
