@@ -2,9 +2,10 @@
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { type ReactNode, useState } from "react";
-import { useDispatch } from "react-redux";
+
 import Hamburger from "hamburger-react";
 import { useSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
 
 // @mui
 import {
@@ -13,43 +14,41 @@ import {
   MenuItem,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 
 // components
 import { Iconify, MenuPopover } from "@components";
-
-import MobileHamburger from "./MobileHamburger";
-
 // local files
 import { PATH_AUTH } from "@routes/paths";
-import { useAuthContext } from "src/auth/useAuthContext";
-import { useSelector } from "src/redux/store";
-import { setStartTour } from "src/redux/slices/tour";
-
 import { UserType } from "@utils";
+import { useAuthContext } from "src/auth/useAuthContext";
+import { setStartTour } from "src/redux/slices/tour";
+import { useSelector } from "src/redux/store";
+
+import MobileHamburger from "./MobileHamburger";
 import config, { ILinks } from "./config";
 import {
   DESKTOP_ANCHOR_ORIGIN,
-  MOBILE_ANCHOR_ORIGIN,
-  HUMBURGER_SIZE,
-  SNACKBAR_OPTIONS,
-  MENU_ITEM_STYLES,
-  MENU_POPOVER_STYLES,
   GLOBAL_BOX_STYLES,
+  HUMBURGER_SIZE,
   MENU_ICONIFY,
-  MENU_ITEM_TYPOGRAFY
-} from './constants'
+  MENU_ITEM_STYLES,
+  MENU_ITEM_TYPOGRAFY,
+  MENU_POPOVER_STYLES,
+  MOBILE_ANCHOR_ORIGIN,
+  SNACKBAR_OPTIONS,
+} from "./constants";
 
 interface CustomMultiEvent {
-  currentTarget: HTMLElement
+  currentTarget: HTMLElement;
 }
 
 const Menu = (): React.ReactElement => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { replace } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { isAuthenticated, logout } = useAuthContext();
@@ -59,7 +58,7 @@ const Menu = (): React.ReactElement => {
   const handleLogout = (): void => {
     try {
       logout();
-      replace(PATH_AUTH.singIn);
+      replace(PATH_AUTH.signIn);
       handleClosePopover();
     } catch (error: any) {
       enqueueSnackbar("Unable to logout!", SNACKBAR_OPTIONS);
@@ -82,12 +81,12 @@ const Menu = (): React.ReactElement => {
         handleOpenPopover={handleOpenPopover}
         handleClosePopover={handleClosePopover}
       />
-    )
-  }
+    );
+  };
 
   const anchorOriginProps = isDesktop
     ? DESKTOP_ANCHOR_ORIGIN
-    : MOBILE_ANCHOR_ORIGIN
+    : MOBILE_ANCHOR_ORIGIN;
 
   return (
     <Box sx={!isDesktop ? GLOBAL_BOX_STYLES : null}>
@@ -103,10 +102,10 @@ const Menu = (): React.ReactElement => {
       >
         {isAuthenticated && (
           <Typography height="59px" p="16px 20px" variant="h6" component="h2">
-            Hello {userName ? userName : ""}
+            Hello {userName ?? ""}
           </Typography>
         )}
-        
+
         <Divider />
 
         {config[isAuthenticated ? UserType.Authorized : UserType.Anonim].map(
@@ -145,14 +144,8 @@ const Menu = (): React.ReactElement => {
                   }}
                   underline="none"
                 >
-                  <MenuItem
-                    sx={MENU_ITEM_STYLES}
-                    onClick={handleClosePopover}
-                  >
-                    <Iconify
-                      sx={MENU_ICONIFY}
-                      icon={menuItem.icon}
-                    />
+                  <MenuItem sx={MENU_ITEM_STYLES} onClick={handleClosePopover}>
+                    <Iconify sx={MENU_ICONIFY} icon={menuItem.icon} />
 
                     <Box>
                       <Typography sx={MENU_ITEM_TYPOGRAFY} variant="button">

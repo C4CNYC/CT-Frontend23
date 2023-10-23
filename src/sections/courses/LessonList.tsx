@@ -56,7 +56,7 @@ export default function LessonList({
     <SimpleInfiniteList
       hasNextPage={data?.meta.hasNextPage ?? false}
       onLoadMore={() => {
-        if (data?.meta.take !== filters?.take) return;
+        if (data?.meta.take !== Number(filters?.take)) return;
         setFilter("take", Number(filters.take) + 10);
       }}
       loading={isLoading ?? isFetching}

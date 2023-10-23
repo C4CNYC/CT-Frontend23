@@ -33,7 +33,7 @@ const LessonManagerSideBar: FC<LessonManagerSideBarProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1000));
   const baseStackSx = useMemo(() => getBaseStackSx(isMobile), [isMobile])
-  
+
   return (
     <Drawer
       anchor="left"

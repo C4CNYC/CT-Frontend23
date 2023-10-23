@@ -1,6 +1,6 @@
 import { type FC } from 'react'
-import NextLink from "next/link";
-import { MdWifiTethering } from "react-icons/md";
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import {
   Avatar,
@@ -11,8 +11,13 @@ import {
   useTheme,
 } from "@mui/material";
 
+import PersonIcon from '@assets/icons/PersonIcon';
+import CustomSwitch from "./custom-switch";
+
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useSelector } from "src/redux/store";
+
+import { toggleCodePreview } from "src/redux/slices/code-panel-global";
 
 import {
   STACK_STYLES,
@@ -20,28 +25,32 @@ import {
   STACK_GROUP_STYLES,
   GROUP_TITLE_STYLES,
   TRIBE_NAME_STYLES, 
-  TEACHING_STYLES
 } from "./styles";
 
-const MAX_TRIBE_NAME_LENGTH = 23
+const MAX_TRIBE_NAME_LENGTH = 23;
 
 const GroupHeader: FC = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const tribe = useSelector((state) => state.codePanel.class);
+  const dispatch = useDispatch()
+  const isCodePreviewVisible = useSelector((state) => state.codePanelGlobal.isCodePreviewVisible)
+  const { push } = useRouter()
 
-  if (!isDesktop || !tribe) {
+  if (!isDesktop) {
     return null;
   }
 
+  const onChange= () => {
+    dispatch(toggleCodePreview(!isCodePreviewVisible))
+  }
+
   const groupTitle =  tribe && tribe.name.length > MAX_TRIBE_NAME_LENGTH
-    ? <Typography variant="subtitle2">{tribe.name}</Typography>
-    : ''
+  ? <Typography variant="subtitle2">{tribe.name}</Typography>
+  : '';
 
   return (
     <Stack
-      href={STUDENT_PATH_DASHBOARD.class.id(tribe.id)}
-      component={NextLink}
       sx={STACK_STYLES}
       direction="row"
     >
@@ -55,7 +64,7 @@ const GroupHeader: FC = () => {
 
       <Stack sx={STACK_GROUP_STYLES}>
         <Typography variant="caption" sx={GROUP_TITLE_STYLES}>
-          Group
+          GROUP
         </Typography>
 
         <Tooltip title={groupTitle}>
@@ -65,10 +74,18 @@ const GroupHeader: FC = () => {
         </Tooltip>
       </Stack>
 
-      <MdWifiTethering
-        size="20px"
-        color="#A6A6A6"
-        style={TEACHING_STYLES}
+      <PersonIcon
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        onClick={() => {
+          push(STUDENT_PATH_DASHBOARD.class.id(tribe?.id ?? ''))
+        }}
+      />
+
+      <CustomSwitch
+        isActive={isCodePreviewVisible}
+        onChange={onChange}
       />
     </Stack>
   );

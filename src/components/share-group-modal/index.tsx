@@ -41,7 +41,7 @@ export default function ShareGroupModal({
   children,
   schoolClass,
 }: IShareGroupModalProps): React.ReactElement {
-  const { pathname, query, replace } = useRouter();
+  const { query } = useRouter();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);

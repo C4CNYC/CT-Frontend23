@@ -30,8 +30,9 @@ export default function CreateClassSkeleton(): React.ReactElement {
       >
         {Array(18)
           .fill(null)
-          .map(() => (
+          .map((el, i) => (
             <Skeleton
+              key={i + 33}
               variant="rounded"
               sx={{ height: { xs: "100px", sm: "130px" } }}
             />

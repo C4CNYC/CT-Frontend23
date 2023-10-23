@@ -8,7 +8,14 @@ import { GiProgression } from "react-icons/gi";
 import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
 
-import { Button, Link, MenuItem, Stack, useMediaQuery } from "@mui/material";
+import {
+  Badge,
+  Button,
+  Link,
+  MenuItem,
+  Stack,
+  useMediaQuery,
+} from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
@@ -106,15 +113,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             href={STUDENT_PATH_DASHBOARD.gallery.root}
             variant="body2"
             underline="none"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              color: "inherit",
-              maxWidth: 360,
-              ml: 3.25,
-              justifyContent: "center",
-            }}
+            sx={GALLERY_SX}
           >
             <Iconify icon="solar:gallery-wide-broken" width={20} />
             {!isMobile && (
@@ -165,12 +164,6 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: -5, horizontal: 5 }}
       >
-        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
-          <MenuItem>
-            <AiOutlineFundProjectionScreen size="20px" />
-            Assign Open Project
-          </MenuItem>
-        </RoleBasedGuard>
         <Link
           component={NextLink}
           href={addQuestPagePath}
@@ -182,7 +175,43 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             Assign Course or Section
           </MenuItem>
         </Link>
+        <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
+          <MenuItem>
+            <Badge
+              sx={BADGE_SX}
+              badgeContent={
+                <Typography sx={{ fontSize: "11px", fontWeight: 700 }}>
+                  Comming soon
+                </Typography>
+              }
+              color="success"
+            >
+              <AiOutlineFundProjectionScreen size="20px" />
+              Assign Open Project
+            </Badge>
+          </MenuItem>
+        </RoleBasedGuard>
       </MenuPopover>
     </Stack>
   );
 }
+
+const BADGE_SX = {
+  "& .MuiBadge-badge": {
+    left: "45%",
+    top: 26,
+    padding: 0,
+    height: 14,
+    width: "85px",
+  },
+};
+
+const GALLERY_SX = {
+  display: "flex",
+  alignItems: "center",
+  gap: 1,
+  color: "inherit",
+  maxWidth: 360,
+  ml: 3.25,
+  justifyContent: "center",
+};

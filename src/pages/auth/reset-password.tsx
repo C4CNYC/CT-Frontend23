@@ -41,7 +41,7 @@ export default function ResetPasswordPage(): React.ReactElement {
 
       <Link
         component={NextLink}
-        href={PATH_AUTH.singIn}
+        href={PATH_AUTH.signIn}
         color="inherit"
         variant="subtitle2"
         sx={{

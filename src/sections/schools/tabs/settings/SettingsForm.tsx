@@ -182,7 +182,7 @@ export default function SettingsForm({
             label={`${translate(
               "organizations.general_page.tabs.content.settings.def_lang"
             )}`}
-            sx={{ width: { xs: "100%", sm: "320px"} }}
+            sx={{ width: { xs: "100%", sm: "320px" } }}
           >
             <option key="en" value="en">
               English

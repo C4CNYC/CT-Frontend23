@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { Autocomplete, Skeleton, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -58,7 +58,7 @@ export default function FilterCourses(): React.ReactElement {
               { shallow: true }
             );
           }}
-          sx={{ width: { xs: "100%", sm: 300} }}
+          sx={{ width: { xs: "100%", sm: 300 } }}
           renderInput={(params) => <TextField {...params} label="Shcool" />}
         />
       </Stack>

@@ -54,33 +54,36 @@ export default function JoinTribeHeader({
         <Typography variant="h3" mb={2}>
           {classInfo.name}
         </Typography>
-        {classInfo.school?.country || classInfo.school?.city ? (
-          <Stack direction="row" justifyContent="space-between">
-            <Stack direction="row">
-              <Avatar
-                src={""}
-                sx={{
-                  width: "25px",
-                  height: "25px",
-                  border: "2px solid #AE5EB7",
-                  background: "black",
-                  mr: 2,
-                }}
-              >
-                🦙
-              </Avatar>
-              <Typography variant="subtitle1"></Typography>
-            </Stack>
+        {
+          // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          classInfo.school?.country || classInfo.school?.city ? (
+            <Stack direction="row" justifyContent="space-between">
+              <Stack direction="row">
+                <Avatar
+                  src={""}
+                  sx={{
+                    width: "25px",
+                    height: "25px",
+                    border: "2px solid #AE5EB7",
+                    background: "black",
+                    mr: 2,
+                  }}
+                >
+                  🦙
+                </Avatar>
+                <Typography variant="subtitle1"></Typography>
+              </Stack>
 
-            {(classInfo.school?.city || classInfo.school?.city) && (
-              <Typography variant="subtitle1">
-                <ImLocation2 /> {classInfo.school.city}
-                {", "}
-                {classInfo.school.country}
-              </Typography>
-            )}
-          </Stack>
-        ) : null}
+              {(classInfo.school?.city || classInfo.school?.city) && (
+                <Typography variant="subtitle1">
+                  <ImLocation2 /> {classInfo.school.city}
+                  {", "}
+                  {classInfo.school.country}
+                </Typography>
+              )}
+            </Stack>
+          ) : null
+        }
       </Stack>
     </Stack>
   );

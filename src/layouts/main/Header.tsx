@@ -1,32 +1,22 @@
-// @mui
-// hooks
 import {
   AppBar,
   Box,
   BoxProps,
   Button,
   Container,
-  Link,
   Toolbar,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-// components
-import { Label, Logo } from "@components";
+import { Logo } from "@components";
 import { useOffSetTop, useResponsive } from "@hooks";
-// utils
 import { bgBlur } from "@utils";
 
-// config
 import { HEADER } from "../../config-global";
-// routes
 import { PATH_AUTH } from "../../routes/paths";
-//
 import navConfig from "./nav/config-navigation";
 import NavDesktop from "./nav/desktop";
 import NavMobile from "./nav/mobile";
-
-// ----------------------------------------------------------------------
 
 export default function Header(): React.ReactElement {
   const theme = useTheme();
@@ -63,7 +53,7 @@ export default function Header(): React.ReactElement {
 
           {isDesktop && <NavDesktop isOffset={isOffset} data={navConfig} />}
 
-          <Button variant="contained" rel="noopener" href={PATH_AUTH.singIn}>
+          <Button variant="contained" rel="noopener" href={PATH_AUTH.signIn}>
             Create Tenant
           </Button>
 

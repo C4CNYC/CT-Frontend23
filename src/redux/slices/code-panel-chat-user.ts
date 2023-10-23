@@ -11,7 +11,7 @@ export type User =
 
 interface UserSlice {
   user: User | null
-}     
+}
 
 const initialState: UserSlice = {
   user: null

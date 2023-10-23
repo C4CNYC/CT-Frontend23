@@ -1,6 +1,6 @@
 import { type SxProps, type Theme } from "@mui/system"
 
-type StyleCodePanelKeys = "MainBox" 
+type StyleCodePanelKeys = "MainBox"
   | "BoxTop"
   | "BoxBottomMain"
   | "BoxBottom"
@@ -43,7 +43,7 @@ export const getSkeletonCodePanelStyles = (isDesktop: boolean): Record<StyleCode
     },
     height: "calc(100vh - 105px)"
   },
-  SkeletonMedium: { 
+  SkeletonMedium: {
     width: "100%",
     height: "calc(100vh - 105px)"
   },

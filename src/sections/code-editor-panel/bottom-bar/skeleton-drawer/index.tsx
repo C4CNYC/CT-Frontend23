@@ -2,7 +2,7 @@ import { type FC } from "react";
 import {
   Divider,
   List,
-  ListItem, 
+  ListItem,
   Skeleton,
   Stack
 } from "@mui/material";

@@ -1,4 +1,4 @@
-import { type FC, useMemo } from 'react'
+import { type FC, useMemo } from "react"
 
 import {
   Box,
@@ -8,9 +8,9 @@ import {
   SkeletonProps
 } from "@mui/material";
 
-import { getSkeletonCodePanelStyles, getTopBarSkeletonStyles } from './styles'
+import { getSkeletonCodePanelStyles, getTopBarSkeletonStyles } from "./styles"
 
-const  SkeletonCodePanel: FC = () => {
+const SkeletonCodePanel: FC = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const styles = useMemo(() => getSkeletonCodePanelStyles(isDesktop), [isDesktop])

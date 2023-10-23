@@ -7,7 +7,6 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
-  CircularProgress,
   Dialog,
   IconButton,
   Skeleton,
@@ -52,8 +51,8 @@ export default function ClassroomModal({
 
   const onLoginWithGoogle = useGoogleLogin({
     scope: "https://www.googleapis.com/auth/classroom.courses.readonly",
-    onSuccess: async ({ access_token }) => {
-      setToken(access_token);
+    onSuccess: async ({ access_token: accessToken }) => {
+      setToken(accessToken);
     },
   });
 

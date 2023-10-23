@@ -47,4 +47,3 @@ export const getSpeedDealStyles = (isDesktop: boolean): SxProps<Theme> => ({
     gap: 0,
   }
 });
-

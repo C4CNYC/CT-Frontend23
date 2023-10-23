@@ -1,11 +1,11 @@
-import { type FC } from 'react'
+import { type FC } from "react"
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { Iconify } from "@components";
 import { voidFunction } from "@utils";
 
-import { styles } from './styles'
+import { styles } from "./styles"
 
 interface ISmallScreenTabs {
   index: number;

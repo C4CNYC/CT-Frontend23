@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { useRef, type FC } from "react";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -23,7 +23,7 @@ export type SupportedLang = "html" | "javascript";
 export interface WorkSpaceProps {
   isFetching?: boolean
   lesson?: ILesson & BaseResponseInterface
-  data: (ILessonContent & BaseResponseInterface)[],
+  data: Array<ILessonContent & BaseResponseInterface>,
   user: AuthUserType
   code: string
   language: SupportedLang
@@ -68,8 +68,8 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           preloadedCode={data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
           code={code}
-          onChangeCode={onChangeCode}
           user={user}
+          onChangeCode={onChangeCode}
         />
 
         {!isBrowserHidden ? <ViewBlock {...{ code, language }} /> : null}

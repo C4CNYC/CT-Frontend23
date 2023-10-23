@@ -15,7 +15,7 @@ export default function TrainingProgress({
         sx={{
           "& .MuiLinearProgress-bar": {
             background: "#454F5B",
-            //background: "linear-gradient(150deg,#61F3F3,#00B8D9)",
+            // background: "linear-gradient(150deg,#61F3F3,#00B8D9)",
           },
           position: "relative",
           background: "#fff",

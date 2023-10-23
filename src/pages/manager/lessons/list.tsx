@@ -73,44 +73,39 @@ export default function LessonsListPage(): React.ReactElement {
 
         <FilterLessons filters={filters} setFilter={setFilter} />
 
-        {isFetching ? (
-          <SkeletonLesson />
-        ) : (
-          <Box
-            gap={2}
-            display="grid"
-            gridTemplateColumns={{
-              xs: "repeat(1, 1fr)",
-              sm: "repeat(2, 1fr)",
-              md: "repeat(3, 1fr)",
+        <Box
+          gap={2}
+          display="grid"
+          gridTemplateColumns={{
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+          }}
+        >
+          <SimpleInfiniteList
+            hasNextPage={data?.meta.hasNextPage ?? false}
+            onLoadMore={() => {
+              if (data?.meta.take !== Number(filters?.take)) return;
+              setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
             }}
+            loading={isLoading ?? isFetching}
           >
-            <SimpleInfiniteList
-              hasNextPage={data?.meta.hasNextPage ?? false}
-              onLoadMore={() => {
-                if (data?.meta.take !== filters?.take) return;
-                setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
-              }}
-              loading={isLoading ?? isFetching}
-            >
-              {data?.data.map((lesson) => (
-                <LessonCard key={lesson.id} lesson={lesson} />
-              ))}
-              {isFetching
-                ? Array(
-                    getCountTakingElment(
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-expect-error
-                      Number(data?.meta?.itemCount),
-                      Number(filters.take)
-                    )
+            {data?.data.map((lesson) => (
+              <LessonCard key={lesson.id} lesson={lesson} />
+            ))}
+            {isFetching
+              ? Array(
+                  getCountTakingElment(
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    Number(data?.meta?.itemCount),
+                    Number(filters.take)
                   )
-                    .fill(null)
-                    .map((v, i) => <DefaultSkeletonItem key={i} />)
-                : null}
-            </SimpleInfiniteList>
-          </Box>
-        )}
+                )
+                  .fill(null)
+                  .map((v, i) => <DefaultSkeletonItem key={i} />)
+              : null}
+          </SimpleInfiniteList>
+        </Box>
         <LessonStepMain />
       </Container>
     </>

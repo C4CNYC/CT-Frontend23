@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
+import {
+  Avatar,
+  FormGroup,
+  Skeleton,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
@@ -8,7 +15,10 @@ import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
 
-export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse & BaseResponseInterface)[] | undefined , isLoading: boolean}}): React.ReactElement {
+export default function DetailsStep(
+  { coursesData }: { coursesData: { data: (ICourse & BaseResponseInterface)[] | undefined, isLoading: boolean } }
+  ): React.ReactElement {
+  const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
@@ -37,10 +47,10 @@ export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse
               width: "100%",
               outline: "none",
               borderRadius: 1,
-              "& fieldset": { border: "none" },
-              "& .MuiInputBase-root": {
-                background: "#fff",
+              "& fieldset": {
+                border: theme.palette.mode === "light" ? "" : "1px solid #fff",
               },
+              background: theme.palette.mode === "light" ? "#fff" : "",
             }}
           >
             <option key="empty" value="empty"></option>
@@ -74,10 +84,11 @@ export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse
                   width: "100%",
                   outline: "none",
                   borderRadius: 1,
-                  "& fieldset": { border: "none" },
-                  "& .MuiInputBase-root": {
-                    background: "#fff",
+                  "& fieldset": {
+                    border:
+                      theme.palette.mode === "light" ? "" : "1px solid #fff",
                   },
+                  background: theme.palette.mode === "light" ? "#fff" : "",
                 }}
               >
                 {!data?.length &&
@@ -87,10 +98,10 @@ export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse
                 }
                 {data
                   ? data.map((course) => (
-                      <option key={course.id} value={course.id}>
-                        {course.name}
-                      </option>
-                    ))
+                    <option key={course.id} value={course.id}>
+                      {course.name}
+                    </option>
+                  ))
                   : null}
               </RHFSelect>
             ) : (
@@ -119,12 +130,10 @@ export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse
           name="module"
           size="small"
           sx={{
-            background: "#fff",
             borderRadius: 1,
             "& fieldset": { border: "none" },
-            "& .MuiInputBase-root": {
-              background: "#fff",
-            },
+            background: theme.palette.mode === "light" ? "#fff" : "",
+            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
           }}
         >
           <option key="module" value="all">
@@ -156,7 +165,8 @@ export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse
         </Avatar>
         <RHFTextField
           sx={{
-            background: "#fff",
+            background: theme.palette.mode === "light" ? "#fff" : "",
+            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
             pt: 4,
             pb: 3,
             px: { xs: 0, sm: 3 },
