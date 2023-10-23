@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { ICourse } from "@types";
+import { BaseResponseInterface } from "@utils";
 
-export default function DetailsStep(): React.ReactElement {
-  const { data, isLoading } = useManagerGetCourseQuery({});
+export default function DetailsStep({coursesData}: {coursesData: {data: (ICourse & BaseResponseInterface)[] | undefined , isLoading: boolean}}): React.ReactElement {
+  const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);
-  };
-
-  const [course, setCourse] = useState(data?.data[0].id);
-
-  const onCourseChange = (event: any): void => {
-    setCourse(event.target.value);
   };
 
   return (
@@ -74,9 +69,7 @@ export default function DetailsStep(): React.ReactElement {
                 native
                 name="course"
                 size="small"
-                disabled={!data?.data.length}
-                onChange={onCourseChange}
-                value={course}
+                disabled={!data?.length}
                 sx={{
                   width: "100%",
                   outline: "none",
@@ -87,13 +80,13 @@ export default function DetailsStep(): React.ReactElement {
                   },
                 }}
               >
-                {!data?.data.length &&
+                {!data?.length &&
                   <option key="empty" value="empty">
                     You don't have any courses
                   </option>
                 }
                 {data
-                  ? data.data.map((course) => (
+                  ? data.map((course) => (
                       <option key={course.id} value={course.id}>
                         {course.name}
                       </option>

@@ -136,8 +136,6 @@ export default function AddSchool(): React.ReactElement {
               },
             })}
           >
-            <option key="empty" value="empty"></option>
-
             {Object.keys(SchoolType).map((c) => (
               <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
                 {c}
