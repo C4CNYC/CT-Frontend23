@@ -1,6 +1,6 @@
 import { type FC, useEffect, useState, useCallback, useMemo } from "react";
 
-import { Button, Box, useTheme } from "@mui/material";
+import { Button, Box, useTheme } from "@mui/material"
 
 import NavigationElement from "./navigation-element";
 import NavigationSpeedDial from "./navigation-speed-dial";
@@ -32,8 +32,8 @@ const Navigation: FC<INavigation> = ({
   const theme = useTheme();
   const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next);
   const nestedBox = useMemo(() => getNestedBoxSx(theme), [theme]);
-  const stylePrev = useMemo(stylesPrev, []);
-  const styleNext = useMemo(() => stylesNext(btnNext), [btnNext])
+  const stylePrev = useMemo(() => stylesPrev(theme), [theme]);
+  const styleNext = useMemo(() => stylesNext(btnNext, theme), [btnNext, theme])
 
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {

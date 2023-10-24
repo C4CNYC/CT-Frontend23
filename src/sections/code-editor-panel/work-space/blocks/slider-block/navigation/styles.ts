@@ -1,9 +1,8 @@
-import { useTheme } from "@mui/material";
+import { Theme, useTheme } from "@mui/material"
 
 import { BtnType } from ".";
 
-export const stylesPrev = (): Record<string, unknown> => {
-  const theme = useTheme();
+export const stylesPrev = (theme: Theme): Record<string, unknown> => {
   return {
     width: "35%",
     borderRadius: "35px",
@@ -30,8 +29,7 @@ export const stylesPrev = (): Record<string, unknown> => {
   };
 };
 
-export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
-  const theme = useTheme();
+export const stylesNext = (btnNext: BtnType, theme: Theme): Record<string, unknown> => {
   const getBg = (): string => {
     if (btnNext === BtnType.next) {
       return "#43D4DD";
