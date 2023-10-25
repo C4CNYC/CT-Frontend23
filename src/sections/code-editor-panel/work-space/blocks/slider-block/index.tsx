@@ -26,6 +26,7 @@ import BrowserView from "../view-block/browser-view";
 import { getBoxSx, getCarouselSettings } from "./constants";
 import LoaderDelay from "./loader-delay";
 import Navigation from "./navigation";
+import { useLoadIntegration } from "src/hooks/useLoadIntegration";
 
 const ProsaMirrorView = dynamic(
   async () => await import("./prosa-mirror-view"),
@@ -48,8 +49,6 @@ interface IView {
 
 const title = "Instructions";
 const icon = <SlDirections size="20px" color="#43D4DD" />;
-
-const cachedRequests = new Map();
 
 const SliderBlock: FC<ISliderBlock> = ({
   data,
@@ -84,19 +83,6 @@ const SliderBlock: FC<ISliderBlock> = ({
     }
   }, [data]);
 
-  const loadIntegration = async (attrs: Record<string, string>, key: string) => {
-    const href = attrs[key]
-    if (cachedRequests.has(href)) return cachedRequests.get(href)
-    try {
-      const res = await fetch(href)
-      const data = await res.text()
-      cachedRequests.set(href, data)
-      return data
-    } catch (error) {
-      return null
-    }
-  }
-
   useEffect(() => {
     const loadAllIntegrations = async () => {
       if (!integrations) return;
@@ -108,7 +94,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           if (head) {
             const parsedHead = parse(head).querySelectorAll('link');
             const links = await Promise.all(
-              parsedHead.map(async ({ attrs }) => loadIntegration(attrs, 'href'))
+              parsedHead.map(async ({ attrs }) => useLoadIntegration(attrs, 'href'))
             );
             loadedIntegration.head = links
               .filter(Boolean)
@@ -118,7 +104,7 @@ const SliderBlock: FC<ISliderBlock> = ({
           if (scripts) {
             const parseScript = parse(scripts).querySelectorAll('script');
             const allScripts = await Promise.all(
-              parseScript.map(async ({ attrs }) => loadIntegration(attrs, 'src'))
+              parseScript.map(async ({ attrs }) => useLoadIntegration(attrs, 'src'))
             );
             loadedIntegration.script = allScripts
               .filter(Boolean)
