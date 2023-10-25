@@ -5,6 +5,7 @@ import _ from "lodash";
 import { SlDirections } from "react-icons/sl";
 import { useDispatch } from "react-redux";
 import Carousel from "react-slick";
+import { parse } from "node-html-parser";
 
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
@@ -48,6 +49,8 @@ interface IView {
 const title = "Instructions";
 const icon = <SlDirections size="20px" color="#43D4DD" />;
 
+const cachedRequests = new Map();
+
 const SliderBlock: FC<ISliderBlock> = ({
   data,
   onSubmitLesson,
@@ -62,6 +65,8 @@ const SliderBlock: FC<ISliderBlock> = ({
     (state) => state.codePanelGlobal.nextStepAble
   );
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  const [loadingIntegrations, setLoadingIntegrations] = useState<boolean>(true);
+  const [loadedIntegrations, setLoadedIntegrations] = useState<{ head?: string; script?: string }[]>([]);
 
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
@@ -78,6 +83,56 @@ const SliderBlock: FC<ISliderBlock> = ({
       setNav2(carousel1.current);
     }
   }, [data]);
+
+  const loadIntegration = async (attrs: Record<string, string>, key: string) => {
+    const href = attrs[key]
+    if (cachedRequests.has(href)) return cachedRequests.get(href)
+    try {
+      const res = await fetch(href)
+      const data = await res.text()
+      cachedRequests.set(href, data)
+      return data
+    } catch (error) {
+      return null
+    }
+  }
+
+  useEffect(() => {
+    const loadAllIntegrations = async () => {
+      if (!integrations) return;
+      setLoadingIntegrations(true);
+
+      const loadedIntegrations = await Promise.all(
+        integrations.map(async ({ head, scripts }) => {
+          const loadedIntegration = { head: '', script: '' };
+          if (head) {
+            const parsedHead = parse(head).querySelectorAll('link');
+            const links = await Promise.all(
+              parsedHead.map(async ({ attrs }) => loadIntegration(attrs, 'href'))
+            );
+            loadedIntegration.head = links
+              .filter(Boolean)
+              .map((style) => `<style>${style}</style>`)
+              .join('\n');
+          }
+          if (scripts) {
+            const parseScript = parse(scripts).querySelectorAll('script');
+            const allScripts = await Promise.all(
+              parseScript.map(async ({ attrs }) => loadIntegration(attrs, 'src'))
+            );
+            loadedIntegration.script = allScripts
+              .filter(Boolean)
+              .map((script) => `<script>${script}</script>`)
+              .join('\n');
+          }
+          return loadedIntegration;
+        })
+      )
+      setLoadedIntegrations(loadedIntegrations);
+      setLoadingIntegrations(false);
+    }
+    loadAllIntegrations();
+  }, [integrations])
 
   const handlePrev = (): void => {
     carousel1.current?.slickPrev();
@@ -101,11 +156,11 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const connectIntegrations = (body: string): string | undefined => {
     if (integrations) {
-      return `<head>${integrations.reduce(
+      return `<head>${loadedIntegrations.reduce(
         (ac, cur) => ac + cur.head,
         ""
-      )}</head><main>${JSON.parse(body).content}${integrations.reduce(
-        (ac, cur) => ac + cur.scripts,
+      )}</head><main>${JSON.parse(body).content}${loadedIntegrations.reduce(
+        (ac, cur) => ac + cur.script,
         ""
       )}</main>`;
     }
@@ -124,7 +179,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       ) : (
         <>
           <Box className="sliderTour" height="100%" sx={boxSx}>
-            <LoaderDelay delay={3000} isLoading={!!isFetching} />
+            <LoaderDelay delay={3000} isLoading={!!isFetching || !!loadingIntegrations} />
 
             {!isFetching ? (
               <Carousel

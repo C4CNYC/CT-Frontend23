@@ -98,6 +98,7 @@
     "next": "13.4.1",
     "next-s3-upload": "^0.2.10",
     "next-transpile-modules": "^10.0.0",
+    "node-html-parser": "^6.1.10",
     "notistack": "^2.0.8",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",

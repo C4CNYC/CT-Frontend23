@@ -70,8 +70,8 @@ export const useCodeEditorCollab = ({
 	const lineWrapRef = useRef<Compartment | null>(null);
   const socketRef = useRef<Socket>(createSocket());
 
-  // memoized props 
-  // all props which depend on peer extension should be memoized to avoid redundant re-render 
+  // memoized props
+  // all props which depend on peer extension should be memoized to avoid redundant re-render
   // and re-dispatch local state(ui)/collaboration state(on server) to avoid conflict versions
   const cursorTextRef = useRef<string>(cursorText);
 	const withTooltipRef = useRef(withTooltip);
@@ -92,7 +92,7 @@ export const useCodeEditorCollab = ({
 	}: OnInitExtensionsProps): Extension[] => {
 		return [
 			indentUnit.of("\t"),
-			basicSetup(BASIC_SETUP), 
+			basicSetup(BASIC_SETUP),
 			langs.html(),
 			dracula,
 			lineWrap.of(EditorView.lineWrapping),
@@ -126,7 +126,7 @@ export const useCodeEditorCollab = ({
           roomId: roomIdRef.current,
           cursorName: cursorTextRef.current,
         });
-  
+
         // initialize extensions according to getting data from server
         const extensions = onInitExtensions({
           version,
@@ -140,7 +140,7 @@ export const useCodeEditorCollab = ({
         // the first priority is 'code' prop (code saved in local storage)
         // second priority 'preloaded code' prop (strict preload code from API)
         const defaultCode = codeRef.current || preloadedCodeRef.current;
-        // preloaded code should be initialized only for student mode 
+        // preloaded code should be initialized only for student mode
         const isPreloadedCodeExist = modeRef.current !== EditorMode.Watcher && defaultCode !== "";
 
         if (isPreloadedCodeExist) {
