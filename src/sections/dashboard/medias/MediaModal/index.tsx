@@ -1,37 +1,38 @@
 import * as React from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton, Skeleton, TextField, Typography } from "@mui/material";
+import { Divider, IconButton, MenuItem, Paper, Skeleton, TextField, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/system";
 
 import {
   useDeleteMediaMutation,
-  useGetMediasQuery,
+  useGetAllMediaQuery,
   useUpdateMediaMutation,
 } from "src/redux/services/manager/media-manager";
 import { Iconify, Image } from "@components";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { FaSave } from "react-icons/fa";
 import _ from "lodash";
 import { useCommands } from "@remirror/react";
+import CustomPopover, { usePopover } from "src/components/custom-popover";
 
 export interface MediaModalProps {
   children: React.ReactElement;
 }
 
 export function MediaModal({
-  children
+  children,
 }: MediaModalProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
+  const [popoverSelected, setPopoverSelected] = React.useState<null | string>(null);
   const [updating, setUpdating] = React.useState<null | string>(null);
-  const [updatedName, setUpdatedName] = React.useState<string>('');
+  const [updatedName, setUpdatedName] = React.useState<string>("");
+  const popover = usePopover();
 
-  const { data, isLoading, refetch } = useGetMediasQuery(
+  const { data, isLoading, refetch } = useGetAllMediaQuery(
     {},
-    { skip: !open }
-  )
+    { skip: !open },
+  );
   const [updateMedia] = useUpdateMediaMutation();
   const [deleteMedia] = useDeleteMediaMutation();
   const { insertImage } = useCommands();
@@ -58,32 +59,32 @@ export function MediaModal({
     boxShadow: 2,
     borderRadius: "16px",
     p: 4,
-    width: { xs: "90%", sm: "90%", md: "90%"},
+    width: { xs: "90%", sm: "90%", md: "90%" },
   };
 
   const onUpdate = async () => {
-    if (!updating) return
-    const actualMedia = data?.data?.find(media => media.id === updating)
+    if (!updating) return;
+    const actualMedia = data?.data?.find(media => media.id === updating);
     await updateMedia({
-      ..._.pick(actualMedia, ['url', 'active']) as { url: string; active: boolean },
+      ..._.pick(actualMedia, ["url", "active"]) as { url: string; active: boolean },
       id: updating,
-      name: updatedName
+      name: updatedName,
     }).unwrap();
-    setUpdating(null)
-    setUpdatedName('')
-    refetch()
-  }
+    setUpdating(null);
+    setUpdatedName("");
+    refetch();
+  };
 
   const onDelete = async (id: string) => {
-    await deleteMedia({ id })
-    refetch()
-  }
+    await deleteMedia({ id });
+    refetch();
+  };
 
   const onKeyDown = async (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
-      await onUpdate()
+    if (event.key === "Enter") {
+      await onUpdate();
     }
-  }
+  };
 
   return (
     <>
@@ -100,7 +101,7 @@ export function MediaModal({
       >
         <Box sx={style}>
           {isLoading &&
-            <Skeleton variant="rectangular" height="400px" sx={{ mb: "4px" }} />
+            <Skeleton variant="rectangular" height="400px" sx={{ mb: "4px" }}/>
           }
           {!isLoading && (
             <>
@@ -112,51 +113,60 @@ export function MediaModal({
                 mb={3}
               >
                 <Typography variant="h6" fontWeight="700">
-                  Medias
+                  Media
                 </Typography>
                 <IconButton
                   onClick={handleClose}
                   sx={{ width: "35px" }}
                   edge="end"
                 >
-                  <CloseIcon fontSize="small" />
+                  <CloseIcon fontSize="small"/>
                 </IconButton>
               </Stack>
               <Stack
                 display="flex"
                 alignItems="center"
                 direction="row"
-                sx={{ flexWrap: 'wrap', gap: 1 }}
+                sx={{ flexWrap: "wrap", gap: 1 }}
               >
                 {data?.data?.map((media) => (
                   <Stack
                     key={media.id}
                     display="flex"
                     justifyContent="space-between"
-                    sx={{ width: '24%', height: 240 }}
                   >
-                    <Image
-                      src={media.url}
-                      alt={media.name}
-                      sx={{ height: 240, width: 240, mb: 3, cursor: 'pointer' }}
-                      onClick={() => {
-                        insertImage({ src: media.url })
-                        handleClose()
-                      }}
-                    />
                     <Stack
-                      display="flex"
-                      direction="row"
-                      alignItems="center"
-                      justifyContent="space-between"
+                      component={Paper}
+                      variant="outlined"
+                      alignItems="flex-start"
+                      sx={{
+                        pt: 1.5,
+                        pb: 1.5,
+                        pl: 4,
+                        pr: 4,
+                        borderRadius: 2,
+                        bgcolor: "unset",
+                        position: "relative",
+                      }}
                     >
+                      <Box>
+                        <Image
+                          src={media.url}
+                          alt={media.name}
+                          sx={{ height: 200, width: 200, mb: 1.5, cursor: "pointer" }}
+                          onClick={() => {
+                            insertImage({ src: media.url });
+                            handleClose();
+                          }}
+                        />
+                      </Box>
                       {updating !== media.id ? (
                         <Typography
                           variant="body1"
                           sx={{
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
                           }}
                         >{media.name}</Typography>
                       ) : (
@@ -164,44 +174,55 @@ export function MediaModal({
                           placeholder="Name"
                           value={updatedName}
                           size="small"
-                          sx={{ padding: '0 14px' }}
+                          sx={{ padding: "0" }}
                           inputProps={{
                             sx: {
-                               padding: '0.5px 14px',
-                            }
+                              padding: "0.5px 14px",
+                            },
                           }}
                           onChange={(e) => setUpdatedName(e.target.value)}
                           inputRef={updateNameInput}
                           onKeyDown={onKeyDown}
                         />
                       )}
-                      {updating !== media.id ? (
-                        <Stack
-                          display="flex"
-                          direction="row"
-                          sx={{ gap: .1 }}
-                        >
-                          <EditOutlinedIcon
-                            style={{ color: "rgb(161, 167, 172)", width: 18, cursor: 'pointer' }}
-                            onClick={() => {
-                              setUpdating(media.id)
-                              setUpdatedName(media.name)
-                            }}
-                          />
-                          <Iconify
-                            icon="eva:trash-2-outline"
-                            sx={{ color: "rgb(161, 167, 172)", cursor: 'pointer' }}
-                            onClick={() => onDelete(media.id)}
-                          />
-                        </Stack>
-                      ) : (
-                        <FaSave
-                          onClick={onUpdate}
-                          size="18px"
-                          style={{ marginBottom: "3px", color: "#75CF6D", cursor: 'pointer' }}
-                        />
-                      )}
+                      <Stack direction="row" alignItems="center" sx={{ top: 0, right: 0, position: "absolute" }}>
+                        <IconButton color={popover.open ? "inherit" : "default"} onClick={(e) => {
+                          popover.onOpen(e);
+                          setPopoverSelected(media.id);
+                        }}>
+                          <Iconify icon="eva:more-vertical-fill"/>
+                        </IconButton>
+                      </Stack>
                     </Stack>
+                    <CustomPopover
+                      open={popover.open}
+                      onClose={popover.onClose}
+                      arrow="right-top"
+                      sx={{ width: 140 }}
+                    >
+                      <MenuItem
+                        onClick={() => {
+                          popover.onClose();
+                          setUpdating(popoverSelected);
+                          setUpdatedName(
+                            data?.data?.find(data => data.id === popoverSelected)?.name ?? "",
+                          );
+                        }}
+                      >
+                        <Iconify icon="mdi:pencil-outline"/>
+                        Rename
+                      </MenuItem>
+                      <Divider sx={{ borderStyle: "dashed" }}/>
+                      <MenuItem
+                        onClick={() => {
+                          popover.onClose();
+                        }}
+                        sx={{ color: "error.main" }}
+                      >
+                        <Iconify icon="solar:trash-bin-trash-bold"/>
+                        Delete
+                      </MenuItem>
+                    </CustomPopover>
                   </Stack>
                 ))}
               </Stack>
