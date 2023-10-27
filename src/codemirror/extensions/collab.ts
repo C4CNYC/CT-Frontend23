@@ -10,6 +10,7 @@ import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { Socket } from "socket.io-client";
 
 import { addCursor, removeCursor } from "./cursors";
+import { error } from "console";
 
 async function pushUpdates(
   socket: Socket,
@@ -137,7 +138,7 @@ export const peerExtension = (
   socket: Socket,
   startVersion: number,
   id: string,
-  roomId: string
+  roomId: string,
 ): Extension[] => {
   const collabPlugin = collab({
     startVersion,
@@ -184,13 +185,7 @@ export const peerExtension = (
         this.pushing = true;
         const version = getSyncedVersion(this.view.state);
         try {
-          const { updates: pushedUpdates } = await pushUpdates(
-            socket,
-            roomId,
-            version,
-            updates
-          );
-
+          const { updates: pushedUpdates } = await pushUpdates(socket, roomId, version, updates);
           this.view.dispatch(receiveUpdates(this.view.state, pushedUpdates));
 
           this.pushing = false;

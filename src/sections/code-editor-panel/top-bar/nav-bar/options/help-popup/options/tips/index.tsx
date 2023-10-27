@@ -10,7 +10,7 @@ import { useSelector } from "src/redux/store";
 
 const Tips: FC = () => {
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId);
-  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
+  const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId }, { skip: !lessonId });
 
   if (isLoading) {
     return (

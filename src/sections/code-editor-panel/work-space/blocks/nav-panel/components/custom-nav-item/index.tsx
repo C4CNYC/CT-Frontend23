@@ -3,10 +3,10 @@ import { type FC, type ReactNode } from "react";
 import {
   ListItemButton,
   ListItem,
-  ListItemText,
+  ListItemText, 
   ListItemIcon
 } from "@mui/material";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 interface NavItemProps {
   onClick?: () => void
@@ -25,7 +25,7 @@ const CustomNavItem: FC<NavItemProps> = ({
       <ListItemIcon onClick={onToggle}>
         {icon}
       </ListItemIcon>
-
+      
       <ListItemButton sx={LIST_ITEM_BUTTON_SX}>
         <ListItemText sx={NAME_SX} primary={name} />
 
