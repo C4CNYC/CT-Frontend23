@@ -22,6 +22,7 @@ export default {
       overflow: "hidden",
       overflowY: "auto",
       "& .cm-editor": {
+        paddingTop: "26px",
         fontSize: "18px",
         background,
         minHeight: "274px !important",

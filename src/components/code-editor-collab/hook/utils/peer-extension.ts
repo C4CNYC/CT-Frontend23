@@ -9,7 +9,8 @@ const pushUpdates = (
 	socket: Socket,
 	docName: string,
 	version: number,
-	fullUpdates: readonly Update[]
+	fullUpdates: readonly Update[],
+	fileName: string 
 ): Promise<boolean> => {
 	// Strip off transaction data
 	const updates = fullUpdates.map(u => ({
@@ -19,7 +20,7 @@ const pushUpdates = (
 	}))
 
 	return new Promise(function(resolve) {
-		socket.emit('pushUpdates', docName, version, JSON.stringify(updates));
+		socket.emit('pushUpdates', docName, version, JSON.stringify(updates), fileName);
 
 		socket.once('pushUpdateResponse', function(status: boolean) {
 			resolve(status);
@@ -30,10 +31,11 @@ const pushUpdates = (
 const pullUpdates = (
 	socket: Socket,
 	docName: string,
-	version: number
+	version: number,
+	fileName: string
 ): Promise<readonly Update[]> => {
 	return new Promise(function(resolve) {
-		socket.emit('pullUpdates', docName, version);
+		socket.emit('pullUpdates', docName, version, fileName);
 
 		socket.once('pullUpdateResponse', function(updates) {
 			resolve(JSON.parse(updates));
@@ -73,27 +75,43 @@ interface GetDocumentProps {
 	socket: Socket
 	roomId: string
 	cursorName: string
+	fileName?: string
+	preloadedCode?: string
 }
 
 interface GetDocumentReturn {
 	version: number,
 	doc: Text,
 	cursorName: string
+	updates: any
+}
+
+export const getActiveFile = async (roomId: string, socket: Socket): Promise<string | null> => {
+	return new Promise((resolve) => {
+		socket.emit('getActiveFile', roomId)
+
+		socket.once('getActiveFileResponce', (activeFile: string): void => {
+			resolve(activeFile)
+		})
+	})
 }
 
 export const getDocument = ({
 	socket,
 	roomId,
-	cursorName
+	cursorName,
+	fileName,
+	preloadedCode
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
 	return new Promise(function(resolve) {
-		socket.emit('getDocument', roomId, cursorName);
+		socket.emit('getDocument', roomId, cursorName, fileName, preloadedCode);
 
-		socket.once('getDocumentResponse', function(version: number, doc: string, cursorName: string) {
+		socket.once('getDocumentResponse', function(version: number, doc: string, cursorName: string, updates: any) {
 			resolve({
 				version,
 				doc: Text.of(doc.split("\n")),
-				cursorName
+				cursorName,
+				updates
 			});
 		});
 	});
@@ -103,20 +121,21 @@ interface PeerExtensionProps {
 	socket: Socket
 	roomId: string
 	startVersion: number
-	cursorId: string
+	fileName?: string
 }
 
 export const peerExtension = ({
 	socket,
 	roomId,
 	startVersion,
-	cursorId,
+	fileName
 }: PeerExtensionProps) => {
 	const plugin = ViewPlugin.fromClass(class {
 		private pushing = false
 		private done = false
 
 		constructor(private view: EditorView) {
+			// this.view.setState(EditorState.create())
 			this.pull()
 		}
 
@@ -128,6 +147,7 @@ export const peerExtension = ({
 
 		async push() {
 			const updates = sendableUpdates(this.view.state);
+
 			if (this.pushing || !updates.length) {
 				return;
 			}
@@ -135,7 +155,7 @@ export const peerExtension = ({
 			this.pushing = true;
 
 			const version = getSyncedVersion(this.view.state);
-			await pushUpdates(socket, roomId, version, updates);
+			await pushUpdates(socket, roomId, version, updates, fileName ?? '');
 
 			this.pushing = false;
 			// Regardless of whether the push failed or new updates came in
@@ -148,11 +168,14 @@ export const peerExtension = ({
 
 		async pull() {
 			while (!this.done) {
-				const version = getSyncedVersion(this.view.state);
-				const updates = await pullUpdates(socket, roomId, version);
-				const newUpdates = receiveUpdates(this.view.state, updates);
+				try {
+					const version = getSyncedVersion(this.view.state);
+					const updates = await pullUpdates(socket, roomId, version, fileName ?? '');
+					const newUpdates = receiveUpdates(this.view.state, updates);
+					this.view.dispatch(newUpdates)
+				} catch {
 
-				this.view.dispatch(newUpdates)
+				}
 			}
 		}
 
@@ -164,7 +187,7 @@ export const peerExtension = ({
 	return [
 		collab({
 			startVersion,
-			clientID: cursorId,
+			// clientID: cursorId,
 			sharedEffects: tr => 
 				tr.effects.filter(e =>
 					e.is(addCursor))
