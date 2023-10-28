@@ -61,7 +61,7 @@ export default function PrivateProjects(): React.ReactElement {
                 { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
                 { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
                 {
-                  name: "Privat",
+                  name: "Private",
                   href: STUDENT_PATH_DASHBOARD.gallery.privateProject,
                 },
               ]}
