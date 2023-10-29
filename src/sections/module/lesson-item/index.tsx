@@ -8,7 +8,16 @@ import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { HiLockClosed, HiOutlinePuzzlePiece } from "react-icons/hi2";
 import { TbPlayerPlay } from "react-icons/tb";
 
-import { Box, Button, Collapse, Link, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Collapse,
+  Link,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useTheme } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import {
@@ -20,13 +29,13 @@ import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 import TrainingProgress from "./LessonProgress";
 import {
   DURATION_SX,
-  LESSON_CONTENT_SX,
-  LESSON_SX,
   LINK_BTN_SX,
   LOCKED_BTN_CONT_SX,
   LOCKED_BTN_SX,
   MODE_TITLE_SX,
   SEE_MORE_SX,
+  getLessonContentSx,
+  getLessonSx,
 } from "./constants";
 
 interface ILessonItemProps {
@@ -50,6 +59,8 @@ export default function LessonItem({
   lastVisitedData,
   locked,
 }: ILessonItemProps): React.ReactElement {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down(600));
   const [openDetails, setOpenDetails] = useState(false);
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
   const courseId = useRouter().query.id;
@@ -68,9 +79,9 @@ export default function LessonItem({
   };
 
   return (
-    <Stack sx={LESSON_SX}>
+    <Stack sx={getLessonSx(theme)}>
       <TrainingProgress progress={lesson?.progress ?? 0} locked={locked} />
-      <Stack sx={LESSON_CONTENT_SX}>
+      <Stack sx={getLessonContentSx(isMobile)}>
         <Stack>
           <Typography variant="h4" mb={1}>
             {lesson.name}

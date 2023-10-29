@@ -40,7 +40,10 @@ export default function ModuleItem({
     <Stack
       direction={isMobile ? "column" : "row"}
       sx={{
-        background: "#fff",
+        background:
+          theme.palette.mode === "light"
+            ? "#fff"
+            : theme.palette.background.paper,
         height: isMobile ? "auto" : "200px",
         position: "relative",
         zIndex: 5,
@@ -120,7 +123,7 @@ export default function ModuleItem({
               alignSelf: isMobile ? "flex-end" : "flex-start",
               gap: 0.3,
               fontSize: "1.2rem",
-              color: "#364954",
+              color: theme.palette.mode === "light" ? "#364954" : "#fff",
               background: lastVisited
                 ? "-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)"
                 : "",

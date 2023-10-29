@@ -1,15 +1,19 @@
-export const LESSON_SX = {
+import { Theme } from "@mui/material";
+
+export const getLessonSx = (theme: Theme) => ({
   borderRadius: 2,
   p: 2,
   pr: 3,
-  bgcolor: "#fff",
+  bgcolor:
+    theme.palette.mode === "light" ? "#fff" : theme.palette.background.paper,
   minHeight: "150px",
-};
-export const LESSON_CONTENT_SX = {
-  flexDirection: "row",
-  alignItems: "center",
+});
+export const getLessonContentSx = (isMobile: boolean) => ({
+  flexDirection: isMobile ? "column" : "row",
+  alignItems: isMobile ? "flex-start" : "center",
   justifyContent: "space-between",
-};
+  gap: isMobile ? 2 : 0,
+});
 export const SEE_MORE_SX = {
   alignSelf: "flex-start",
   color: "#454F5B",

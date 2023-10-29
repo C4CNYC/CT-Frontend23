@@ -3,7 +3,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MdIosShare } from "react-icons/md";
 import { TbFileCertificate } from "react-icons/tb";
 
-import { IconButton, Stack } from "@mui/material";
+import { IconButton, Stack, useTheme } from "@mui/material";
 
 import { convertNumber } from "@utils";
 
@@ -18,6 +18,8 @@ export default function ActionsBlock({
   likes,
   rated,
 }: IActionBlockProps): React.ReactElement {
+  const theme = useTheme();
+
   return (
     <Stack p={3} gap={1}>
       <Stack
@@ -26,7 +28,10 @@ export default function ActionsBlock({
           gap: 1,
           px: 2,
           py: 1,
-          background: "rgba(248, 248, 248, 1)",
+          background:
+            theme.palette.mode === "light"
+              ? "rgba(248, 248, 248, 1)"
+              : theme.palette.background.neutral,
         }}
       >
         <Stack direction="row" gap={1}>

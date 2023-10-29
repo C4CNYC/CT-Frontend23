@@ -18,7 +18,7 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useTheme } from "@mui/system";
+import { useTheme } from "@mui/material";
 
 interface ICourseSidebarPros {
   duration: string;
@@ -54,7 +54,10 @@ export default function CourseSidebar({
       <Stack
         sx={{
           borderRadius: 1,
-          background: "rgba(248, 248, 248, 1)",
+          background:
+            theme.palette.mode === "light"
+              ? "rgba(248, 248, 248, 1)"
+              : theme.palette.background.neutral,
           p: 2,
           flex: isDesktop ? "0" : "1 0",
         }}
@@ -100,7 +103,10 @@ export default function CourseSidebar({
       <Stack
         sx={{
           borderRadius: 1,
-          background: "rgba(248, 248, 248, 1)",
+          background:
+            theme.palette.mode === "light"
+              ? "rgba(248, 248, 248, 1)"
+              : theme.palette.background.neutral,
           p: 2,
           flex: isDesktop ? "0" : "1 0",
         }}
@@ -134,7 +140,10 @@ export default function CourseSidebar({
       <Stack
         sx={{
           borderRadius: 1,
-          background: "rgba(248, 248, 248, 1)",
+          background:
+            theme.palette.mode === "light"
+              ? "rgba(248, 248, 248, 1)"
+              : theme.palette.background.neutral,
           p: 2,
           flex: isDesktop ? "0 0" : "1 0",
         }}

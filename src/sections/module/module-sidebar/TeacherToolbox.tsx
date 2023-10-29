@@ -2,15 +2,17 @@ import NextLink from "next/link";
 
 import { GrOverview } from "react-icons/gr";
 
-import { Link, Paper, Stack } from "@mui/material";
+import { Link, Paper, Stack, useTheme } from "@mui/material";
 
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 
 export default function TeacherToolbox(): React.ReactElement {
+  const theme = useTheme();
+
   return (
     <RoleBasedGuard roles={[Role.Manager, Role.Admin, Role.Owner, Role.Editor]}>
-      <Paper elevation={5} sx={{ borderRadius: 3, bgcolor: "#F8F8F8" }}>
+      <Paper elevation={5} sx={{ borderRadius: 3, bgcolor: theme.palette.mode === 'light' ? "#F8F8F8" : theme.palette.background.paper }}>
         <Stack p={2} gap={1}>
           <Link
             href="#"

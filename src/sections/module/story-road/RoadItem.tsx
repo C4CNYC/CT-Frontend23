@@ -219,6 +219,8 @@ const RoadItem = ({
               background: "#fff",
               p: 1,
               borderRadius: 2,
+              position: "relative",
+              zIndex: 1,
             }}
           >
             {description}

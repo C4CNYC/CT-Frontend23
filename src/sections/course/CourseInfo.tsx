@@ -33,7 +33,10 @@ export default function CourseInfo({
         px: 8,
         py: 4,
         mb: 5,
-        background: "#ECF4FF",
+        background:
+          theme.palette.mode === "light"
+            ? "#ECF4FF"
+            : theme.palette.background.paper,
         borderRadius: 2,
         [theme.breakpoints.down(800)]: {
           px: 2,

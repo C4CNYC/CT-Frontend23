@@ -40,6 +40,8 @@ export default function ModulePage(): React.ReactElement {
   const { query } = useRouter();
   const [currentModule, setCurrentModule] = useState<IModuleContent>();
 
+  console.log(theme.palette.mode === "light", theme.palette.mode === "dark");
+
   const { data: modules, isLoading: isLoadingModule } =
     useGetStudentCourseModulesQuery(
       { id: query?.id as string },
@@ -72,10 +74,10 @@ export default function ModulePage(): React.ReactElement {
       <Container
         maxWidth={themeStretch ? false : "xl"}
         disableGutters
-        sx={getPageContainerSx(isMobile)}
+        sx={getPageContainerSx(isMobile, theme.palette.mode === "light")}
       >
         <CustomBreadcrumbs
-          sx={getBreadcrumbsSx(isMobile)}
+          sx={getBreadcrumbsSx(isMobile, theme)}
           links={[
             { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {

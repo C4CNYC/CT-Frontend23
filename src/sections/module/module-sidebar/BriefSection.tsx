@@ -10,6 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 interface IBriefSectionProps {
@@ -25,8 +26,18 @@ export default function BriefSection({
   lessons,
   grade,
 }: IBriefSectionProps): React.ReactElement {
+  const theme = useTheme();
   return (
-    <Box sx={{ borderRadius: 3, bgcolor: "#F8F8F8", pb: 2 }}>
+    <Box
+      sx={{
+        borderRadius: 3,
+        bgcolor:
+          theme.palette.mode === "light"
+            ? "#F8F8F8"
+            : theme.palette.background.paper,
+        pb: 2,
+      }}
+    >
       <List>
         <ListItem>
           <ListItemIcon>

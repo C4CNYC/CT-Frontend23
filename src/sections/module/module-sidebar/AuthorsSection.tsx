@@ -16,14 +16,20 @@ export default function AuthorsSection(): React.ReactElement {
   return (
     <Stack
       sx={{
-        background: "#FFF0F3",
+        background:
+          theme.palette.mode === "light"
+            ? "#FFF0F3"
+            : theme.palette.background.paper,
         borderRadius: 3,
       }}
     >
       <Paper
         elevation={8}
         sx={{
-          background: "#F8F8F8",
+          background:
+            theme.palette.mode === "light"
+              ? "#F8F8F8"
+              : theme.palette.background.neutral,
           borderRadius: 3,
           px: 3,
           py: 2,

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Skeleton, Stack } from "@mui/material";
+import { Skeleton, Stack, useTheme } from "@mui/material";
 
 import { useGetStudentCourseModulesQuery } from "src/redux/services/manager/courses-student";
 import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
@@ -8,6 +8,7 @@ import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/m
 import ModuleItem from "./module-item";
 
 export default function ModulesListBlock(): React.ReactElement {
+  const theme = useTheme();
   const { query } = useRouter();
   const { data, isLoading } = useGetStudentCourseModulesQuery(
     { id: query?.id as string },
@@ -19,7 +20,10 @@ export default function ModulesListBlock(): React.ReactElement {
   return (
     <Stack
       sx={{
-        background: "#ECF4FF",
+        background:
+          theme.palette.mode === "light"
+            ? "#ECF4FF"
+            : theme.palette.background.neutral,
         px: { xs: 1, lg: 8 },
         py: { xs: 3, lg: 6 },
         borderRadius: 3,

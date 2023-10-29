@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 
 import { HiMenuAlt2 } from "react-icons/hi";
 
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, useMediaQuery, useTheme } from "@mui/material";
 
 import { BaseResponseInterface } from "@utils";
 import { ILesson } from "src/redux/interfaces/content.interface";
 
-import { LESSON_LIST_SX } from "./constants";
+import { SWITCH_BTN_SX, getLessonListSx } from "./constants";
 import RoadIcon from "./icons/RoadIcon";
 import LessonItem from "./lesson-item";
 import StoryRoad from "./story-road";
@@ -23,6 +23,8 @@ export default function LessonsList({
   unitId,
   lastVisitedData,
 }: ILessonListProps): React.ReactElement {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down(600));
   const [isList, setIsList] = useState(true);
   const [lastActiveIndex, setLastActiveIndex] = useState(0);
 
@@ -38,17 +40,25 @@ export default function LessonsList({
   }, [lessons]);
 
   return (
-    <Stack sx={LESSON_LIST_SX}>
-      <Stack direction="row" alignSelf="flex-end" mr={-4} gap={0.5}>
+    <Stack sx={getLessonListSx(isMobile, theme)}>
+      <Stack
+        direction="row"
+        alignSelf="flex-end"
+        mr={isMobile ? 0 : -4}
+        gap={0.5}
+      >
         <Button
           onClick={() => {
             setIsList(true);
           }}
           sx={{
-            minWidth: "auto",
-            background: "#fff",
+            ...SWITCH_BTN_SX,
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
+            background:
+              theme.palette.mode === "light"
+                ? "#fff"
+                : theme.palette.background.paper,
           }}
         >
           <HiMenuAlt2 size={25} color={isList ? "#EE467A" : "#C4C4C4"} />
@@ -58,10 +68,13 @@ export default function LessonsList({
             setIsList(false);
           }}
           sx={{
-            minWidth: "auto",
-            background: "#fff",
+            ...SWITCH_BTN_SX,
             borderTopLeftRadius: 0,
             borderBottomLeftRadius: 0,
+            background:
+              theme.palette.mode === "light"
+                ? "#fff"
+                : theme.palette.background.paper,
           }}
         >
           <RoadIcon
