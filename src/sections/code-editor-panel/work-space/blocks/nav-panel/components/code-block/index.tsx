@@ -64,6 +64,7 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, data })
         roomId={data.id}
         isReadOnly
         mode={EditorMode.Watcher}
+        withFileManager={false}
       />
     </Box>
   )

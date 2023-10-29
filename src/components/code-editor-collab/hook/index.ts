@@ -8,15 +8,9 @@ import {
 import { Socket, io } from "socket.io-client";
 import { type Extension, Compartment } from '@uiw/react-codemirror';
 import { EditorView } from "@codemirror/view";
-import { langs } from '@uiw/codemirror-extensions-langs';
-import { basicSetup } from '@uiw/codemirror-extensions-basic-setup';
-import { indentUnit } from '@codemirror/language';
-import { dracula } from "thememirror";
 
-import { cursorExtension } from "./utils/cursors";
-import { getDocument, peerExtension } from "./utils/peer-extension";
-import { initListeners, removeListeners } from "../../real-time-editor/listeners";
-import { BASIC_SETUP } from "./constants";
+import { getActiveFile, getDocument } from "./utils/peer-extension";
+import { getExtensions } from "./utils/extensions";
 
 export enum EditorMode {
   Student = "student",
@@ -35,25 +29,26 @@ export interface UseCodeEditorCollabProps {
   code?: string
 	preloadedCode?: string
   mode?: EditorMode
+  activeFile: string
+  onDeleteFile: (fileName: string) => string | null
+  setActiveFile: (fileName: string) => void
 }
 
 interface UseCodeEditorCollabReturn {
   extensions?: Extension[]
-  onCreateEditor: (view: EditorView) => void
   editorRef: RefObject<HTMLDivElement>
   isLoading: boolean
-}
-
-interface OnInitExtensionsProps {
-	version: number
-	uniqCursorId: string
-	lineWrap: Compartment
+  activeFile: string
+  key: number
+  doc: string
+  onDeleteFile: (fileName: string) => void
+  onChangeActiveFile: (fileName: string) => void
 }
 
 const createSocket = (): Socket => {
 	return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
-		path: "/api"
-	});
+    path: "/api",
+  });
 }
 
 export const useCodeEditorCollab = ({
@@ -64,15 +59,18 @@ export const useCodeEditorCollab = ({
 	preloadedCode = "",
   code = "",
   mode = EditorMode.Student,
+  activeFile,
+  onDeleteFile: _onDeleteFile,
+  setActiveFile
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
+  const socketRef = useRef<Socket | null>(null);
+
+  // refs for listeners
   const editorRef = useRef<HTMLDivElement | null>(null);
 	const editorView = useRef<EditorView | null>(null);
 	const lineWrapRef = useRef<Compartment | null>(null);
-  const socketRef = useRef<Socket>(createSocket());
 
   // memoized props
-  // all props which depend on peer extension should be memoized to avoid redundant re-render
-  // and re-dispatch local state(ui)/collaboration state(on server) to avoid conflict versions
   const cursorTextRef = useRef<string>(cursorText);
 	const withTooltipRef = useRef(withTooltip);
 	const roomIdRef = useRef(roomId);
@@ -80,104 +78,91 @@ export const useCodeEditorCollab = ({
 	const onChangeRef = useRef(onChange);
 	const preloadedCodeRef = useRef(preloadedCode);
   const codeRef = useRef(code);
+  const firstInit = useRef(true)
 
-	const [extensions, setExtensions] = useState<Extension[] | undefined>();
+  // state
   const [isLoading, setIsLoading] = useState(true);
+  const [key, setKey] = useState(0);
+  const [extensions, setExtensions] = useState<Extension[] | undefined>();
+  const [doc, setDoc] = useState('');
 
-  // initialize extenstion for collaboration
-	const onInitExtensions = useCallback(({
-		version,
-		uniqCursorId,
-		lineWrap
-	}: OnInitExtensionsProps): Extension[] => {
-		return [
-			indentUnit.of("\t"),
-			basicSetup(BASIC_SETUP),
-			langs.html(),
-			dracula,
-			lineWrap.of(EditorView.lineWrapping),
-			EditorView.updateListener.of((e) => {
-				onChangeRef.current?.(e.state.doc.toString());
-			}),
-			peerExtension({
-				socket: socketRef.current,
-				roomId: roomIdRef.current,
-				startVersion: version,
-				cursorId: uniqCursorId,
-			}),
-			cursorExtension({
-				cursorId: uniqCursorId,
-				tooltipText: cursorTextRef.current,
-				withTooltip: withTooltipRef.current
-			})
-		]
-	}, []);
+  const unsibscribeSocket = useCallback(() => {
+    socketRef.current?.off('pullUpdateResponse');
+    socketRef.current?.off('pushUpdateResponse');
+    socketRef.current?.off('getDocumentResponse');
+    socketRef.current?.off('activeFileChanged');
+  }, [])
 
-	const onCreateEditor = useCallback((view: EditorView) => {
-		editorView.current = view;
+  // initialize code mirror collab
+  const runInitialize = useCallback(async (isFirstInit: boolean) => {
+    unsibscribeSocket()
+    socketRef.current = createSocket();
+    firstInit.current = false
+    lineWrapRef.current = new Compartment();
+    socketRef.current.open();
 
-		const runInit = async () => {
-			lineWrapRef.current = new Compartment();
+    const defaultCode = codeRef.current || preloadedCodeRef.current;
+    const isPreloadedCodeExist = modeRef.current !== EditorMode.Watcher &&
+      defaultCode !== "" &&
+      defaultCode !== null;
+    const isShouldPreloadCode = isPreloadedCodeExist && isFirstInit;
+    const preloadedCode = isShouldPreloadCode ? defaultCode : undefined
 
-      try {
-        // get init data from server
-        const { version, doc, cursorName } = await getDocument({
-          socket: socketRef.current,
-          roomId: roomIdRef.current,
-          cursorName: cursorTextRef.current,
-        });
+    let _activeFile = activeFile;
 
-        // initialize extensions according to getting data from server
-        const extensions = onInitExtensions({
-          version,
-          uniqCursorId: cursorName,
-          lineWrap: lineWrapRef.current
-        });
+    if (modeRef.current === EditorMode.Watcher && roomIdRef.current != null) {
+      const file = await getActiveFile(roomIdRef.current ?? '', socketRef.current);
+      _activeFile = file ?? activeFile;
 
-        setExtensions(extensions);
-
-        // initialize default value for code editor
-        // the first priority is 'code' prop (code saved in local storage)
-        // second priority 'preloaded code' prop (strict preload code from API)
-        const defaultCode = codeRef.current || preloadedCodeRef.current;
-        // preloaded code should be initialized only for student mode
-        const isPreloadedCodeExist = modeRef.current !== EditorMode.Watcher && defaultCode !== "";
-
-        if (isPreloadedCodeExist) {
-          // wait for initialize peer extension to dispatch the preloaded code
-          setTimeout(() => {
-            view.dispatch({
-              changes: [{
-                from: 0,
-                insert: defaultCode
-              }]
-            });
-            setIsLoading(false)
-          }, 500)
-        } else {
-          // set sync collab state(from server) for watcher/teacher
-          view.dispatch({
-            changes: [{
-              from: 0,
-              insert: doc.toString()
-            }]
-          });
-          setIsLoading(false)
+      socketRef.current.on('activeFileChanged', (roomId: string, fileName: string) => {
+        if (roomId === roomIdRef.current) {
+          setActiveFile(fileName);
         }
+      })
+    }
 
-        initListeners(
-          view,
-          editorRef,
-          { preloadedCode: preloadedCodeRef.current },
-          lineWrapRef.current
-        );
-      } catch {
-        setIsLoading(false)
-      }
-		}
+    // get init data from server
+    const { version, doc, cursorName } = await getDocument({
+      socket: socketRef.current,
+      roomId: roomIdRef.current,
+      cursorName: cursorTextRef.current,
+      fileName: _activeFile,
+      preloadedCode
+    });
 
-		void runInit();
-	}, [onInitExtensions]);
+    // initialize extensions according to getting data from server
+    const extensions = getExtensions({
+      socket: socketRef.current,
+      lineWrap: lineWrapRef.current,
+      withTooltip: withTooltipRef.current,
+      tooltipText: cursorTextRef.current,
+      fileName: _activeFile,
+      cursorId: cursorName,
+      onChange: onChangeRef.current,
+      version,
+      roomId
+    });
+
+    setExtensions(extensions);
+    setDoc(doc.toString());
+    setKey((prev) => ++prev);
+    setIsLoading(false);
+  }, [activeFile, unsibscribeSocket]);
+
+  const onChangeActiveFile = (fileName: string) => {
+    setActiveFile(fileName);
+    socketRef.current?.emit("setActiveFile", roomIdRef.current, fileName);
+  }
+
+  const onDeleteFile = (fileName: string) => {
+    const newActiveFile = _onDeleteFile(fileName);
+    socketRef.current?.emit("setActiveFile", roomIdRef.current, newActiveFile);
+    socketRef.current?.emit('deleteFile', roomId, fileName)
+  }
+
+  useEffect(() => {
+    void runInitialize(firstInit.current)
+  }, [runInitialize])
 
 	useEffect(() => {
 		onChangeRef.current = onChange;
@@ -186,30 +171,22 @@ export const useCodeEditorCollab = ({
 	useEffect(() => {
 		return () => {
       if (modeRef.current === EditorMode.Student) {
-        socketRef.current.emit("deleteRoom", roomIdRef.current)
+        socketRef.current?.emit("deleteRoom", roomIdRef.current)
       }
 
-      socketRef.current.off('pullUpdateResponse');
-			socketRef.current.off('pushUpdateResponse');
-			socketRef.current.off('getDocumentResponse');
-
-			if (editorView.current != null && lineWrapRef.current != null) {
-				removeListeners(
-					editorView.current,
-					editorRef,
-					{ preloadedCode: preloadedCodeRef.current },
-					lineWrapRef.current
-				);
-
-				editorView.current.destroy();
-			}
+      unsibscribeSocket()
+      editorView.current?.destroy();
 		}
-	}, []);
+	}, [unsibscribeSocket]);
 
   return {
-    onCreateEditor,
     editorRef,
+    activeFile,
     extensions,
+    doc,
+    key,
     isLoading,
+    onDeleteFile,
+    onChangeActiveFile
   }
 }
