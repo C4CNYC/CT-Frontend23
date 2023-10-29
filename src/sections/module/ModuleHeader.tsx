@@ -3,10 +3,12 @@ import { Chip, Stack, Typography } from "@mui/material";
 import { Image } from "@components";
 import ImageLightBox from "@sections/course/modules-list/module-item/ImageLightBox";
 
+import { CHIP_SX, HEADER_CONTAINER, HEADER_IMG_SX } from "./constants";
+
 interface IModuleHeaderProps {
   name: string;
   description: string;
-  avatar: string;
+  avatar: string | null;
 }
 
 export default function ModuleHeader({
@@ -16,60 +18,26 @@ export default function ModuleHeader({
 }: IModuleHeaderProps): React.ReactElement {
   return (
     <>
-      <Stack direction="row" justifyContent="space-between" flexWrap="wrap">
+      <Stack sx={HEADER_CONTAINER}>
         <Stack>
-          <Typography variant="h4" maxWidth={500} mb={2}>
+          <Typography variant="h4" maxWidth={400} mb={2}>
             {name}
           </Typography>
-          <Typography variant="body2" maxWidth={500} mb={2}>
+          <Typography variant="body1" maxWidth={400} mb={2}>
             {description}
           </Typography>
           <Stack direction="row" gap={2} my={2} flexWrap="wrap">
-            <Chip
-              label="HTML"
-              sx={{
-                background: "transparent",
-                border: "1px solid #919EAB52",
-                borderRadius: 1,
-              }}
-            />
-            <Chip
-              label="CSS"
-              sx={{
-                background: "transparent",
-                border: "1px solid #919EAB52",
-                borderRadius: 1,
-              }}
-            />
-            <Chip
-              label="BASICS"
-              sx={{
-                background: "transparent",
-                border: "1px solid #919EAB52",
-                borderRadius: 1,
-              }}
-            />
-            <Chip
-              label="AUTO-CHECKED"
-              sx={{
-                background: "transparent",
-                border: "1px solid #919EAB52",
-                borderRadius: 1,
-              }}
-            />
+            <Chip label="HTML" sx={CHIP_SX} />
+            <Chip label="CSS" sx={CHIP_SX} />
+            <Chip label="BASICS" sx={CHIP_SX} />
+            <Chip label="AUTO-CHECKED" sx={CHIP_SX} />
           </Stack>
         </Stack>
-        <ImageLightBox image={"/assets/projects/bg1.png"}>
+        <ImageLightBox image={avatar ?? "/assets/courses/courseImg.png"}>
           <Image
             alt="module cover"
             src={avatar ?? "/assets/courses/courseImg.png"}
-            sx={{
-              flexShrink: 0,
-              width: "250px",
-              height: "250px",
-              m: "0 auto",
-              borderRadius: "25px",
-            }}
+            sx={HEADER_IMG_SX}
           />
         </ImageLightBox>
       </Stack>

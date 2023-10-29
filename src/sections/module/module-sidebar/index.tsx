@@ -1,26 +1,40 @@
-import { Stack } from "@mui/material";
+import { Stack, useMediaQuery, useTheme } from "@mui/material";
 
 import AuthorsSection from "./AuthorsSection";
 import BriefSection from "./BriefSection";
-import LinksSection from "./LinksSection";
-import SocialActivity from "./SocialActivity";
 import TeacherToolbox from "./TeacherToolbox";
+import CollasedItem from "./components/CollasedItem";
 import QuizPanel from "./quiz-panel";
 
 export default function ModuleSidebar(): React.ReactElement {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down(1130));
   return (
-    <Stack width={350}>
-      <SocialActivity likes={12000} rated={4300} certificate={2700} />
-      <BriefSection
-        lessons="6 lessons"
-        grade="5th-10th Grade"
-        level="Beginner"
-        duration="3.5 Hr"
-      />
-      <AuthorsSection />
-      <LinksSection />
+    <Stack width={350} gap={2} m={isMobile ? "0 auto" : ""}>
+      <CollasedItem title="Author & Ranking">
+        <AuthorsSection />
+      </CollasedItem>
+      <CollasedItem title="The Brief">
+        <BriefSection
+          lessons="6 lessons"
+          grade="5th-10th Grade"
+          level="Beginner"
+          duration="3.5 Hr"
+        />
+      </CollasedItem>
+      <CollasedItem title="What you’ll build">
+        <></>
+      </CollasedItem>
+      <CollasedItem title="Sample Certificate">
+        <></>
+      </CollasedItem>
+      <CollasedItem title="Who is this for">
+        <></>
+      </CollasedItem>
       <QuizPanel lessons={[]} />
-      <TeacherToolbox />
+      <CollasedItem title="Teacher Toolbox">
+        <TeacherToolbox />
+      </CollasedItem>
     </Stack>
   );
 }

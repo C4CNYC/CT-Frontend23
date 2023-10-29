@@ -18,6 +18,16 @@ import {
 import { ILessonCurrent } from "src/redux/interfaces/content.interface";
 
 import TrainingProgress from "./LessonProgress";
+import {
+  DURATION_SX,
+  LESSON_CONTENT_SX,
+  LESSON_SX,
+  LINK_BTN_SX,
+  LOCKED_BTN_CONT_SX,
+  LOCKED_BTN_SX,
+  MODE_TITLE_SX,
+  SEE_MORE_SX,
+} from "./constants";
 
 interface ILessonItemProps {
   lesson: ILessonCurrent;
@@ -42,7 +52,6 @@ export default function LessonItem({
 }: ILessonItemProps): React.ReactElement {
   const [openDetails, setOpenDetails] = useState(false);
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
-
   const courseId = useRouter().query.id;
 
   const updateCodePanelAtom = ({
@@ -59,17 +68,9 @@ export default function LessonItem({
   };
 
   return (
-    <Stack
-      sx={{
-        borderRadius: 2,
-        p: 2,
-        pr: 4,
-        bgcolor: "#fff",
-        minHeight: "150px",
-      }}
-    >
-      <TrainingProgress progress={80} />
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+    <Stack sx={LESSON_SX}>
+      <TrainingProgress progress={lesson?.progress ?? 0} locked={locked} />
+      <Stack sx={LESSON_CONTENT_SX}>
         <Stack>
           <Typography variant="h4" mb={1}>
             {lesson.name}
@@ -93,45 +94,18 @@ export default function LessonItem({
                 onClick={() => {
                   setOpenDetails(!openDetails);
                 }}
-                sx={{
-                  alignSelf: "flex-start",
-                  color: "#454F5B",
-                  gap: 1,
-                  p: 0,
-                  mt: 2,
-                  mb: 3,
-                  alignItems: "center",
-                  "&:hover": {
-                    bgcolor: "transparent",
-                  },
-                }}
+                sx={SEE_MORE_SX}
               >
                 See more {!openDetails ? <GoTriangleDown /> : <GoTriangleUp />}
               </Button>
             </>
           ) : null}
           <Stack direction="row" gap={2} flexWrap="wrap">
-            <Typography
-              variant="body2"
-              sx={{
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
+            <Typography variant="body2" sx={MODE_TITLE_SX}>
               <HiOutlinePuzzlePiece size={20} />
               Part of Project
             </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
+            <Typography variant="body2" sx={DURATION_SX}>
               <AiOutlineClockCircle size={20} />
               20 mins
             </Typography>
@@ -145,13 +119,16 @@ export default function LessonItem({
             )}?${unitId}&${lesson.id}`}
             underline="none"
             sx={{
-              background: "#fff",
-              borderRadius: "50%",
               display: "flex",
-              p: 1,
-              mb: 2,
-              boxShadow: 5,
-              alignSelf: "flex-end",
+              gap: 3,
+              p: 0.5,
+              pl: 2,
+              alignItems: "center",
+              borderRadius: "80px",
+              mt: "auto",
+              color: "#fff",
+              background:
+                "linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)",
             }}
             onClick={() => {
               updateCodePanelAtom({
@@ -161,22 +138,17 @@ export default function LessonItem({
               });
             }}
           >
-            <TbPlayerPlay size={50} style={{ color: "#454F5B" }} />
+            <Typography variant="h5"> Start </Typography>
+            <Box sx={LINK_BTN_SX}>
+              <TbPlayerPlay size={30} style={{ color: "#364954" }} />
+            </Box>
           </Link>
         ) : (
-          <Box
-            sx={{
-              background: "#fff",
-              borderRadius: "50%",
-              display: "flex",
-              p: 1,
-              mb: 2,
-              boxShadow: 5,
-              alignSelf: "flex-end",
-              userSelect: "none",
-            }}
-          >
-            <HiLockClosed size={50} style={{ color: "#454F5B" }} />
+          <Box sx={LOCKED_BTN_CONT_SX}>
+            <Typography variant="h5"> Start </Typography>
+            <Box sx={LOCKED_BTN_SX}>
+              <HiLockClosed size={30} style={{ color: "#C4CDD5" }} />
+            </Box>
           </Box>
         )}
       </Stack>

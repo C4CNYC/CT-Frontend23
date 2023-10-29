@@ -20,7 +20,6 @@ export default function SocialActivity({
     <Stack
       sx={{
         flexDirection: "row",
-        background: "#FFF0F3",
         borderBottomLeftRadius: "24px",
         borderTopRightRadius: "24px",
         alignSelf: "flex-end",
