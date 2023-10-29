@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import {
   Avatar,
@@ -14,6 +14,7 @@ import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
+import { useManagerGetSingleCourseQuery } from "src/redux/services/manager/courses-manager";
 
 export default function DetailsStep(
   { coursesData }: { coursesData: { data: (ICourse & BaseResponseInterface)[] | undefined, isLoading: boolean } }
@@ -21,9 +22,17 @@ export default function DetailsStep(
   const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
-  const onChange = (event: any): void => {
-    setType(event.target.value);
-  };
+  const [course, setCourse] = useState<string | null>(data?.[0].id ?? null);
+
+  const {
+    data: courseData,
+    isFetching: isCourseFetching,
+    isLoading: isCourseLoading,
+  } = useManagerGetSingleCourseQuery({ id: course ?? "" }, { refetchOnMountOrArgChange: true })
+
+  useEffect(() => {
+    setCourse(data?.[0].id ?? null)
+  }, [data]);
 
   return (
     <Stack sx={{ gap: 4, minHeight: "630px" }}>
@@ -41,7 +50,10 @@ export default function DetailsStep(
             native
             name="type"
             size="small"
-            onChange={onChange}
+            onChange={(event: any) => {
+              setType(event?.target?.value);
+              setCourse(null);
+            }}
             value={type}
             sx={{
               width: "100%",
@@ -79,6 +91,10 @@ export default function DetailsStep(
                 native
                 name="course"
                 size="small"
+                onChange={(event: any) => {
+                  setCourse(event?.target?.value);
+                }}
+                value={course}
                 disabled={!data?.length}
                 sx={{
                   width: "100%",
@@ -125,21 +141,45 @@ export default function DetailsStep(
         <Typography variant="h5" gutterBottom pl={2}>
           Select module
         </Typography>
-        <RHFSelect
-          native
-          name="module"
-          size="small"
-          sx={{
-            borderRadius: 1,
-            "& fieldset": { border: "none" },
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
-          }}
-        >
-          <option key="module" value="all">
-            All modules
-          </option>
-        </RHFSelect>
+        {(!isCourseLoading && !isCourseFetching) ? (
+          <RHFSelect
+            native
+            name="module"
+            size="small"
+            sx={{
+              borderRadius: 1,
+              "& fieldset": { border: "none" },
+              background: theme.palette.mode === "light" ? "#fff" : "",
+              border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+            }}
+          >
+            {!courseData?.units?.length &&
+              <option key="empty" value="empty">
+                You don't have any courses
+              </option>
+            }
+            {courseData?.units
+              ? [
+                <option key="module" value="all">
+                  All modules
+                </option>,
+                ...courseData?.units.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.name}
+                  </option>
+                ))
+              ]
+              : null}
+          </RHFSelect>
+        ) : (
+          <Skeleton
+            variant="rounded"
+            sx={(theme) => ({
+              height: "40px",
+              background: theme.palette.common.white,
+            })}
+          />
+        )}
       </FormGroup>
       <FormGroup sx={{ position: "relative" }}>
         <Typography variant="h5" gutterBottom pl={2}>

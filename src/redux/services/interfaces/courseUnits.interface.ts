@@ -33,6 +33,7 @@ export interface ICourse {
   public: boolean;
   draft: boolean;
   skills: [];
+  units: IModule[];
 }
 
 export interface ILessonContent {
