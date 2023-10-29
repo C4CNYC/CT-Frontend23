@@ -10,6 +10,7 @@ import {
   Collapse,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -40,6 +41,7 @@ const RoadItemMobile = ({
   lessonId,
   firstItem,
 }: RoadItemMobileProps) => {
+  const theme = useTheme();
   const { query, push } = useRouter();
   const [compleatedColor, setCompleatedColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -197,7 +199,7 @@ const RoadItemMobile = ({
           sx={{
             gap: 1,
             alignSelf: "flex-start",
-            color: "#364954",
+            color: theme.palette.mode === "light" ? "#364954" : "#fff",
             fontWeight: 400,
             px: 0,
             "&:hover": {

@@ -18,6 +18,7 @@ import ModuleHeader from "@sections/module/ModuleHeader";
 import {
   CONTAINER_SX,
   getBreadcrumbsSx,
+  getLessonListSx,
   getPageContainerSx,
 } from "@sections/module/constants";
 import ModuleSidebar from "@sections/module/module-sidebar";
@@ -39,8 +40,6 @@ export default function ModulePage(): React.ReactElement {
   const isMobile = useMediaQuery(theme.breakpoints.down(660));
   const { query } = useRouter();
   const [currentModule, setCurrentModule] = useState<IModuleContent>();
-
-  console.log(theme.palette.mode === "light", theme.palette.mode === "dark");
 
   const { data: modules, isLoading: isLoadingModule } =
     useGetStudentCourseModulesQuery(
@@ -102,7 +101,10 @@ export default function ModulePage(): React.ReactElement {
                 avatar={currentModule.avatar}
               />
             ) : (
-              <Skeleton sx={{ mb: "40px", width: "100%", height: "250px" }} />
+              <Skeleton
+                variant="rounded"
+                sx={{ width: "100%", height: "280px", minWidth: "410px" }}
+              />
             )}
             {!isLoading ? (
               <LessonsList
@@ -111,7 +113,16 @@ export default function ModulePage(): React.ReactElement {
                 lastVisitedData={lastVisitedData?.lastVisitedLessonId ?? ""}
               />
             ) : (
-              <Stack gap={2} mt={4}>
+              <Stack sx={getLessonListSx(isMobile, theme)}>
+                <Skeleton
+                  variant="rounded"
+                  sx={{
+                    width: "84px",
+                    height: "37px",
+                    alignSelf: "flex-end",
+                    mr: -3,
+                  }}
+                />
                 {Array.from("12345").map((el) => (
                   <Skeleton
                     key={el + 32}
