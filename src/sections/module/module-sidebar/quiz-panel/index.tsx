@@ -25,7 +25,6 @@ export default function QuizPanel({
           color: "#fff",
           [theme.breakpoints.down(1400)]: {
             maxWidth: "none",
-            mt: 3,
           },
         }}
       >

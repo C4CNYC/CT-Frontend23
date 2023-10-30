@@ -9,6 +9,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 interface IModuleProgressProps {
@@ -18,6 +19,8 @@ interface IModuleProgressProps {
 export default function ModuleProgress({
   progress,
 }: IModuleProgressProps): React.ReactElement {
+  const theme = useTheme();
+
   return (
     <Stack sx={{ position: "relative", my: 1 }}>
       <Tooltip placement="top" title={`${progress}% Complete`}>
@@ -26,7 +29,8 @@ export default function ModuleProgress({
           value={+progress}
           sx={{
             "& .MuiLinearProgress-bar": {
-              background: "#454F5B",
+              background:
+                "background: linear-gradient(135deg, #90F361 0%, #00D9CC 100%);",
             },
             position: "relative",
             background: "#D9D9E2",
@@ -62,12 +66,13 @@ export default function ModuleProgress({
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            color: theme.palette.mode === "light" ? "#000" : "#fff",
             backgroundColor: "#FFF",
             borderRadius: "50%",
             border: "2px solid #D9D9E2",
           }}
         >
-          <TbFileCertificate size={15} />
+          <TbFileCertificate size={15} color={"black"} />
         </Box>
       </Tooltip>
     </Stack>

@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  SxProps,
 } from "@mui/material";
 
 import { Image } from "@components";
@@ -15,11 +16,13 @@ import { Image } from "@components";
 interface IImageLightBoxProps {
   children: React.ReactElement;
   image: string;
+  sx?: SxProps;
 }
 
 export default function ImageLightBox({
   children,
   image,
+  sx,
 }: IImageLightBoxProps): React.ReactElement {
   const [open, setOpen] = useState(false);
 
@@ -39,9 +42,11 @@ export default function ImageLightBox({
           handleOpenDialog(e);
         }}
         sx={{
+          width: "fit-content",
           position: "relative",
           zIndex: 1,
           "&:hover": { "> div": { opacity: 1 } },
+          ...sx,
         }}
       >
         {children}
