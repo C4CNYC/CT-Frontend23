@@ -28,7 +28,7 @@ export default function DetailsStep(
     data: courseData,
     isFetching: isCourseFetching,
     isLoading: isCourseLoading,
-  } = useManagerGetSingleCourseQuery({ id: course ?? "" }, { refetchOnMountOrArgChange: true })
+  } = useManagerGetSingleCourseQuery({ id: course ?? "" }, { refetchOnMountOrArgChange: true, skip: !course })
 
   useEffect(() => {
     setCourse(data?.[0].id ?? null)
