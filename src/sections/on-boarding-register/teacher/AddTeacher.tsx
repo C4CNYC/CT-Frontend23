@@ -11,8 +11,6 @@ import {
 
 import { Iconify, RHFTextField } from "@components";
 
-import { styledRegisterInput } from "../styles";
-
 interface Props {
   isSubmiting: boolean;
   isSubmitSuccessful: boolean;
@@ -33,23 +31,50 @@ export default function AddTeacher({
   }, [isSubmitSuccessful]);
 
   return (
-    <Stack minHeight={450}>
+    <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
         <Typography variant="h3">Register as Teacher</Typography>
       </Stack>
-      <Typography variant="body1" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}>
+      <Typography
+        variant="body1"
+        sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}
+      >
         Get ready for awesome
       </Typography>
       <Stack gap={2}>
         <RHFTextField
           name="firstName"
           label="First Name"
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
+          })}
         />
         <RHFTextField
           name="lastName"
           label="Surname"
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
+          })}
         />
         <Divider sx={{ my: 1 }} />
 
@@ -57,7 +82,19 @@ export default function AddTeacher({
           name="password"
           label="Password"
           type={showPassword ? "text" : "password"}
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+            "& input:-webkit-autofill": {
+              "-webkit-background-clip": "text",
+              "-webkit-text-fill-color": "#000",
+              transition: "background-color 5000s ease-in-out 0s",
+              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+            },
+          })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -86,13 +123,10 @@ export default function AddTeacher({
           fontSize: "1.5rem",
           mt: 2,
           width: "100%",
-          "&:hover": {
-            background: "#fff",
-          },
         }}
       >
         WHOOPIE
       </LoadingButton>
-    </Stack>
+    </>
   );
 }

@@ -21,8 +21,6 @@ import {
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
 
-import { styledRegisterInput } from "../styles";
-
 interface SchoolFormProps {
   schoolName: string;
   type: SchoolType;
@@ -37,8 +35,6 @@ export default function AddSchool(): React.ReactElement {
   const { data, isLoading } = useGetMySchoolsQuery({});
   const [updateSchool, { isLoading: isUpdating }] =
     useUpdateSchoolProfileMutation();
-
-  const defaultCountry = countries.find((ct) => ct.code === "US") ?? countries[0];
 
   const CreateSchoolSchema = Yup.object().shape({
     schoolName: Yup.string().required("Name is required"),
@@ -55,7 +51,7 @@ export default function AddSchool(): React.ReactElement {
         type: data.data[0].type ?? SchoolType.Other,
         city: data.data[0].city ?? "",
         zip: data.data[0].zip ?? "",
-        country: data.data[0].country ?? defaultCountry.label,
+        country: data.data[0].country ?? "",
       });
     }
   }, [isLoading]);
@@ -86,9 +82,9 @@ export default function AddSchool(): React.ReactElement {
   };
 
   return (
-    <Stack minHeight={500}>
+    <>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-        <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 } }}>
+        <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 1 }}>
           <Typography
             variant="h3"
             sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}
@@ -102,18 +98,44 @@ export default function AddSchool(): React.ReactElement {
         <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
           This is the school name students see
         </Typography>
-        <Stack gap={3}>
+        <Stack gap={2}>
           <RHFTextField
             name="schoolName"
             label="School name"
-            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            sx={(theme) => ({
+              "& .MuiInputBase-root": {
+                height: "52px",
+                background: theme.palette.grey[200],
+              },
+              "& fieldset": { border: "none" },
+              "& input:-webkit-autofill": {
+                "-webkit-background-clip": "text",
+                "-webkit-text-fill-color": "#000",
+                transition: "background-color 5000s ease-in-out 0s",
+                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+              },
+            })}
           />
           <RHFSelect
             native
             name="type"
             label="Type of School"
-            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            sx={(theme) => ({
+              "& .MuiInputBase-root": {
+                height: "52px",
+                background: theme.palette.grey[200],
+              },
+              "& fieldset": { border: "none" },
+              "& input:-webkit-autofill": {
+                "-webkit-background-clip": "text",
+                "-webkit-text-fill-color": "#000",
+                transition: "background-color 5000s ease-in-out 0s",
+                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+              },
+            })}
           >
+            <option key="empty" value="empty"></option>
+
             {Object.keys(SchoolType).map((c) => (
               <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
                 {c}
@@ -124,23 +146,60 @@ export default function AddSchool(): React.ReactElement {
             <RHFTextField
               name="city"
               label="City"
-              sx={(theme) => ({ ...styledRegisterInput(theme) })}
+              sx={(theme) => ({
+                "& .MuiInputBase-root": {
+                  height: "52px",
+                  background: theme.palette.grey[200],
+                },
+                "& fieldset": { border: "none" },
+                "& input:-webkit-autofill": {
+                  "-webkit-background-clip": "text",
+                  "-webkit-text-fill-color": "#000",
+                  transition: "background-color 5000s ease-in-out 0s",
+                  boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+                },
+              })}
             />
             <RHFTextField
               name="zip"
               label="Zip code"
               type="number"
-              sx={(theme) => ({ ...styledRegisterInput(theme) })}
+              sx={(theme) => ({
+                "& .MuiInputBase-root": {
+                  height: "52px",
+                  background: theme.palette.grey[200],
+                },
+                "& fieldset": { border: "none" },
+                "& input:-webkit-autofill": {
+                  "-webkit-background-clip": "text",
+                  "-webkit-text-fill-color": "#000",
+                  transition: "background-color 5000s ease-in-out 0s",
+                  boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+                },
+              })}
             />
           </Stack>
           <RHFSelect
             native
             name="country"
             label="Country"
-            sx={(theme) => ({ ...styledRegisterInput(theme) })}
+            sx={(theme) => ({
+              "& .MuiInputBase-root": {
+                height: "52px",
+                background: theme.palette.grey[200],
+              },
+              "& fieldset": { border: "none" },
+              "& input:-webkit-autofill": {
+                "-webkit-background-clip": "text",
+                "-webkit-text-fill-color": "#000",
+                transition: "background-color 5000s ease-in-out 0s",
+                boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
+              },
+            })}
           >
-            <option key={defaultCountry.code} value={defaultCountry.label}>
-              {defaultCountry.label}
+            <option key="empty" value="empty"></option>
+            <option key={"US"} value={"United States"}>
+              United States
             </option>
             <option disabled>─────────────────────────</option>
             {countries
@@ -158,17 +217,14 @@ export default function AddSchool(): React.ReactElement {
             background: "#43D4DD33",
             color: "#43D4DD",
             fontSize: "1.5rem",
-            mt: 3,
+            mt: 1,
             width: "100%",
-            "&:hover": {
-              background: "#fff",
-            },
           }}
           loading={isUpdating}
         >
           ALL DONE
         </LoadingButton>
       </FormProvider>
-    </Stack>
+    </>
   );
 }

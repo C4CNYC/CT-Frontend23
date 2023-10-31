@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
+import { useRouter } from "next/router";
 import React, { memo, useCallback, useEffect, useState } from "react";
 
-import { io } from "socket.io-client";
+import { useSocket } from "@hooks";
 
+import { getDocument } from "../../codemirror/extensions/collab";
 import EditorSkeleton from "./EditorSkeleton";
 import { CodeEditor } from "./editor";
-import { getDocument } from "../../codemirror/extensions/collab";
 
 export interface State {
   connected: boolean;
@@ -22,8 +23,6 @@ interface IRealTimeEditor {
   code: string;
 }
 
-const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
-
 // eslint-disable-next-line react/display-name
 export const RealTimeEditor = memo(
   ({
@@ -34,11 +33,14 @@ export const RealTimeEditor = memo(
     preloadedCode,
     code,
   }: IRealTimeEditor): React.ReactElement => {
+    const { query } = useRouter();
     const [state, setState] = useState<State>({
       connected: false,
       version: undefined,
       doc: undefined,
     });
+
+    const socket = useSocket();
 
     /**
      * Gets and sets the initial document data.
@@ -63,12 +65,17 @@ export const RealTimeEditor = memo(
     }
 
     const initializeConnection = useCallback(async () => {
-      socket.emit("create", userId);
+      socket.emit(
+        "create",
+        userId,
+        query.lessonId,
+        window.localStorage?.getItem(`code-${query.id}-${query.lessonId}`) ?? ""
+      );
       await initializeData();
-    }, [socket, initializeData]);
+    }, [socket, initializeData, query.id, query.lessonId]);
 
     useEffect(() => {
-      if (!userId) return;
+      if (!userId || !query.lessonId) return;
       socket.open();
 
       void initializeConnection();
@@ -107,12 +114,9 @@ export const RealTimeEditor = memo(
         socket.off("disconnect");
         socket.close();
       };
-    }, [userId]);
+    }, [userId, query.lessonId]);
 
-    if (
-      state?.version === undefined ||
-      state?.doc === undefined
-    ) {
+    if (state?.version === undefined || state?.doc === undefined) {
       return <EditorSkeleton />;
     }
 
@@ -130,6 +134,7 @@ export const RealTimeEditor = memo(
           roomId={userId}
           state={state}
           cursorId={userId}
+          userId={userId}
           cursorText={cursorText}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}

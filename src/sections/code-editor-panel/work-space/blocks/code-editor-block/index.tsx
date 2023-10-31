@@ -4,14 +4,14 @@ import {
   useRef,
   useState,
   memo,
-  useCallback,
+  useCallback
 } from "react";
 import { BiCodeAlt } from "react-icons/bi";
 
 import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import CodeEditorCollab from "src/components/code-editor-collab";
+import { RealTimeEditor } from "@components";
 import { CodeEditor } from "src/components/real-time-editor/editor";
 import { CodingSymbols, CodingTools } from "./coding-controls";
 import BaseBlock from "../base-block";
@@ -100,18 +100,20 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       )}
 
       {user?.id ? (
-       <CodeEditorCollab
-        roomId={user.id}
-        cursorText={user.first_name}
-        onChange={onChangeCode}
-        preloadedCode={preloadedCode}
-        code={code}
-      />
+        <RealTimeEditor
+          cursorText={user?.first_name}
+          preloadedCode={preloadedCode}
+          email={`${user?.first_name} ${user?.last_name?.[0]}.`}
+          onChange={onChangeCode}
+          userId={user?.id}
+          code={code}
+        />
       ) : (
         <CodeEditor
           code={code}
           onChangeCode={onChangeCode}
           preloadedCode={preloadedCode}
+          userId={user?.id}
         />
       )}
 
@@ -138,7 +140,7 @@ const getTitleStyles = (isDesktop: boolean): string => {
   .cm-scroller::-webkit-scrollbar{
     width: 0px;
   }
- 
+
 `
 }
 
