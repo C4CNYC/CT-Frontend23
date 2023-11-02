@@ -67,7 +67,7 @@ export const useCodeEditorCollab = ({
   useEffect(() => {
     firstInit.current = true;
     modeRef.current = mode;
-  }, [mode]);
+  }, [mode, roomId]);
 
   const [isLoading, setIsLoading] = useState(true);
   const [key, setKey] = useState(0);
