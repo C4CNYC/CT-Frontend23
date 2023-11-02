@@ -20,6 +20,7 @@ import tourReducer from "./slices/tour"
 import checkersAnimationReducer from "./slices/checkers-animation"
 import mobileTabManagerReducer from "./slices/mobile-tab-manager";
 import chatHandlerReducer from "./slices/chat-handler";
+import codeEditorCollabController from "./slices/code-editor-controller";
 
 interface INoopStorage {
   getItem: (_key: string) => Promise<null>;
@@ -68,7 +69,8 @@ const rootReducer = combineReducers({
   tour: tourReducer,
   checkersAnimation: checkersAnimationReducer,
   mobileTabManager: mobileTabManagerReducer,
-  chatHandler: chatHandlerReducer
+  chatHandler: chatHandlerReducer,
+  codeEditorController: codeEditorCollabController
 });
 
 export default rootReducer;

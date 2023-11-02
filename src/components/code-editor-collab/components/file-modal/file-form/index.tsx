@@ -1,7 +1,6 @@
 import { type FC, useState, useEffect } from "react";
 
 import {
-  OutlinedInput,
   Typography,
   Stack,
   Box,
@@ -11,6 +10,8 @@ import {
 } from "@mui/material";
 import Close from "@mui/icons-material/Close";
 
+import ConfirmModalWrapper from "../confirm-wrapper-modal";
+
 import { validate } from "./validator"
 import { styles } from "./styles"
 
@@ -19,13 +20,15 @@ interface FileFormProps {
   onClose: () => void
   defaultValue?: string
   onSubmit: (fileName: string) => void
+  fileList: string[]
 }
 
 const FileForm: FC<FileFormProps> = ({
   isOpen,
   onClose,
   onSubmit,
-  defaultValue
+  defaultValue,
+  fileList
 }) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -41,8 +44,7 @@ const FileForm: FC<FileFormProps> = ({
   }
 
   const onAdd = () => {
-    const error = validate(value);
-    console.log(error);
+    const error = validate(value, fileList);
     setError(error);
 
     if (error != null) {
@@ -54,45 +56,29 @@ const FileForm: FC<FileFormProps> = ({
   }
 
   return (
-    <Stack
-      onClick={(e) => {
-        _onClose()
-      }}
-      sx={{
-        ...styles.WRAPPER_STACK_SX,
-        ...(isOpen ? styles.WRAPPER_STACK_ACTIVE : {})
-      }}
+    <ConfirmModalWrapper
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Add file"
     >
-      <Box onClick={e => e.stopPropagation()} flexDirection="column" sx={styles.WRAPPER_BOX}>
-        <Stack sx={styles.TITLE}>
-          <Typography variant="h5">
-            Add File
-          </Typography>
+      <TextField
+        variant="outlined"
+        error={error != null}
+        label="File name"
+        sx={styles.INPUT}
+        value={value}
+        onChange={({ target: { value } }) => setValue(value)}
+        helperText={error != null ? error : ""}
+      />
 
-          <IconButton onClick={_onClose}>
-            <Close />
-          </IconButton>
-        </Stack>
-
-        <TextField
-          variant="outlined"
-          error={error != null}
-          label="File name"
-          sx={styles.INPUT}
-          value={value}
-          onChange={({ target: { value } }) => setValue(value)}
-          helperText={error != null ? error : ""}
-        />
-
-        <Button
-          onClick={onAdd}
-          sx={styles.ADD_BUTTON}
-          variant="contained"
-        >
-          Add file
-        </Button>
-      </Box>
-    </Stack>
+      <Button
+        onClick={onAdd}
+        sx={styles.ADD_BUTTON}
+        variant="contained"
+      >
+        Add file
+      </Button>
+    </ConfirmModalWrapper>
   )
 }
 

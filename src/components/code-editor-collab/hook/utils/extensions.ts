@@ -31,7 +31,7 @@ export const getExtensions = ({
   fileName,
   cursorId,
   tooltipText,
-  withTooltip
+  withTooltip,
 }: OnInitExtensionsProps): Extension[] => {
   return [
     indentUnit.of("\t"),
@@ -46,7 +46,7 @@ export const getExtensions = ({
       socket,
       roomId,
       startVersion: version,
-      fileName
+      fileName,
     }),
     cursorExtension({
       cursorId,

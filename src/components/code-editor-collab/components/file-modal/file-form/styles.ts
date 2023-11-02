@@ -42,6 +42,5 @@ export const styles = {
   },
   ADD_BUTTON: {
     background: "#212B36",
-    
   }
 }
