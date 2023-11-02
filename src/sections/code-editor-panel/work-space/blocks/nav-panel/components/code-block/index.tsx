@@ -1,4 +1,5 @@
 import { useMemo, type FC } from "react";
+import { useDispatch } from "react-redux";
 
 import { Box, Stack, Avatar, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,21 +12,23 @@ import { type SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { type IFriend } from "src/redux/interfaces/friends.interface";
 import { type BaseResponseInterface } from "@utils";
 
-import { getRandomIndex } from "../../hook/utils";
-import { BOX_COLORS, HEADER_COLORS } from "./constants"
 import CodeEditorCollab from "src/components/code-editor-collab";
+import { EditorMode } from "src/components/code-editor-collab/hook/constants";
+import { setRoom } from "src/redux/slices/code-editor-controller";
 
+import { BOX_COLORS, HEADER_COLORS } from "./constants"
+import { getRandomIndex } from "../../hook/utils";
 import styles from "./styles"
-import { EditorMode } from "src/components/code-editor-collab/hook";
 
 interface CodeBlockProps {
   onClose: () => void
-  attributes?:  DraggableAttributes
+  attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
   data: IFriend & BaseResponseInterface
 }
 
 const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, data }) => {
+  const dispatch = useDispatch()
   const {
     boxColor,
     headerColor
@@ -35,6 +38,13 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, data })
   }), []);
   const boxSx = useMemo(() => styles.getBoxSx(boxColor), [boxColor]);
   const headerSx = useMemo(() => styles.getHeaderSx(headerColor), [headerColor]);
+  const onOpenCode = () => {
+    dispatch(setRoom({
+      roomId: data.id,
+      cursorText: data.first_name,
+      mode: EditorMode.SubOwner
+    }));
+  }
 
   return (
     <Box sx={boxSx}>
@@ -54,7 +64,7 @@ const CodeBlock: FC<CodeBlockProps> = ({ onClose, attributes, listeners, data })
         </Stack>
 
         <Stack alignItems="center" direction="row" height="100%">
-          <OpenCodeIcon sx={styles.OPEN_CODE_ICON} />
+          <OpenCodeIcon onClick={onOpenCode} sx={styles.OPEN_CODE_ICON} />
 
           <CloseIcon sx={styles.CLOSE_ICON_SX} onClick={onClose} />
         </Stack>

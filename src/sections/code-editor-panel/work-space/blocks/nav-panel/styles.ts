@@ -6,7 +6,7 @@ export const BOTTOM_LIST_HEIGHT = 176;
 
 export const getStackCodeBoxSx = (height: number | null | undefined, isOpen: boolean) => ({
   position: "fixed",
-  height: height == null ? "100%" : height,
+  maxHeight: height == null ? "100%" : height,
   width: "max-content",
   top: 50,
   right: isOpen ? 300 : 85,
