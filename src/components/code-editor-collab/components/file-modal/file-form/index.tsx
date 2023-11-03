@@ -1,14 +1,6 @@
-import { type FC, useState, useEffect } from "react";
+import { type FC, useState, useEffect, useRef, KeyboardEvent } from "react";
 
-import {
-  Typography,
-  Stack,
-  Box,
-  IconButton,
-  Button,
-  TextField
-} from "@mui/material";
-import Close from "@mui/icons-material/Close";
+import { Button, TextField } from "@mui/material";
 
 import ConfirmModalWrapper from "../confirm-wrapper-modal";
 
@@ -23,6 +15,8 @@ interface FileFormProps {
   fileList: string[]
 }
 
+const ENTER_KEY = "Enter";
+
 const FileForm: FC<FileFormProps> = ({
   isOpen,
   onClose,
@@ -30,11 +24,12 @@ const FileForm: FC<FileFormProps> = ({
   defaultValue,
   fileList
 }) => {
-  const [value, setValue] = useState("");
+  const textFieldRef = useRef<HTMLDivElement | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    setValue(defaultValue ?? "")
+    setValue(defaultValue ?? "");
   }, [defaultValue]);
 
   const _onClose = () => {
@@ -52,8 +47,20 @@ const FileForm: FC<FileFormProps> = ({
     }
 
     onSubmit(value);
-    _onClose()
+    _onClose();
   }
+
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === ENTER_KEY) {
+      onAdd();
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      textFieldRef.current?.querySelector('input')?.focus();
+    }
+  }, [isOpen]);
 
   return (
     <ConfirmModalWrapper
@@ -62,11 +69,13 @@ const FileForm: FC<FileFormProps> = ({
       title="Add file"
     >
       <TextField
+        ref={textFieldRef}
         variant="outlined"
         error={error != null}
         label="File name"
         sx={styles.INPUT}
         value={value}
+        onKeyDown={onKeyDown}
         onChange={({ target: { value } }) => setValue(value)}
         helperText={error != null ? error : ""}
       />

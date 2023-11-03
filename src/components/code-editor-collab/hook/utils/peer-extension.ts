@@ -1,7 +1,13 @@
 import { Socket } from "socket.io-client"
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view"
 import { StateEffect, Text, ChangeSet } from "@codemirror/state"
-import { type Update, receiveUpdates, sendableUpdates, collab, getSyncedVersion } from "@codemirror/collab"
+import {
+	type Update,
+	receiveUpdates,
+	sendableUpdates,
+	collab,
+	getSyncedVersion
+} from "@codemirror/collab"
 
 import { type Cursor, addCursor } from "./cursors" 
 import { EmitSocketEvents, SubscribedEvents } from "./socket"
@@ -103,6 +109,16 @@ export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileI
 	})
 }
 
+export const isRoomExist = async (roomId: string, socket: Socket): Promise<boolean> => {
+	return new Promise((resolve) => {
+		socket.emit('isRoomExist', roomId);
+
+		socket.once('isRoomExistResponse' + roomId, (isExist: boolean) => {
+			resolve(isExist);
+		})
+	})
+}
+
 export const getDocument = ({
 	socket,
 	roomId,
@@ -153,8 +169,9 @@ export const peerExtension = ({
 
 		async push() {
 			const updates = sendableUpdates(this.view.state);
+			const isSkipped = this.pushing || !updates.length;
 
-			if (this.pushing || !updates.length) {
+			if (isSkipped) {
 				return;
 			}
 
