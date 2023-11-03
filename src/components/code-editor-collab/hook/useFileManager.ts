@@ -53,8 +53,8 @@ export const useFileManager = ({
     const isActiveFileDeleted = fileName === localActiveFile;
     const newFileList = [...fileList];
     const index = newFileList.findIndex(_fileName => _fileName === fileName);
-
     const addedFileIndex = addedFileList.findIndex((f) => f === fileName);
+
     if (addedFileIndex > -1) {
       const newAddedFileList = [...addedFileList];
       newAddedFileList.splice(addedFileIndex, 1);
@@ -101,27 +101,28 @@ export const useFileManager = ({
       const newAddedFileList = [fileName, ...addedFileList];
 
       setAddedFileList(newAddedFileList);
+
       if (mode === EditorMode.Owner) {
         socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList, socket.id);
       }
     }
 
     _setActiveFile(fileName);
-  }, [addedFileList, socket, mode]);
+  }, [addedFileList, socket, mode, roomId]);
 
   useEffect(() => {
-    deleteFileRef.current = onDeleteFile
-  }, [onDeleteFile])
+    deleteFileRef.current = onDeleteFile;
+  }, [onDeleteFile]);
 
   useEffect(() => {
     socket.on(EmitSocketEvents.AddFileResponse + roomId, (fileName, socketId) => {
       if (socket.id !== socketId) {
-        setFileList((prev) => prev.includes(fileName) ? prev : [...prev, fileName])
+        setFileList((prev) => prev.includes(fileName) ? prev : [...prev, fileName]);
       }
-    })
+    });
 
     return () => {
-      socket.off(EmitSocketEvents.AddFileResponse + roomId)
+      socket.off(EmitSocketEvents.AddFileResponse + roomId);
     }
   }, [roomId, socket])
 
@@ -139,16 +140,16 @@ export const useFileManager = ({
         if (_roomId === roomId) {
           setActiveFile(fileName);
         }
-      })
+      });
     }
 
     return () => {
       if (mode === EditorMode.SubOwner) {
-        socket.off(SubscribedEvents.DeleteResponse)
+        socket.off(SubscribedEvents.DeleteResponse);
       }
 
       if (mode === EditorMode.Watcher) {
-        socket.off(SubscribedEvents.ActiveFileChanged)
+        socket.off(SubscribedEvents.ActiveFileChanged);
       }
     }
   }, [mode, socket, roomId]);

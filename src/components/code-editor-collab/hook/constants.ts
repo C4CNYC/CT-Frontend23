@@ -38,3 +38,9 @@ export enum EditorMode {
   Watcher = "watcher",
   SubOwner = "subOwner"
 }
+
+export enum Extensions {
+  Css = "css",
+  Html = "html",
+  Js = "js"
+}

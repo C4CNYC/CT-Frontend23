@@ -1,14 +1,31 @@
-import { type Socket, io } from "socket.io-client";
+import { type Socket } from "socket.io-client";
 import { type Extension, Compartment } from '@uiw/react-codemirror';
 import { EditorView } from "@codemirror/view";
 import { langs } from '@uiw/codemirror-extensions-langs';
 import { basicSetup } from '@uiw/codemirror-extensions-basic-setup';
-import { indentUnit } from '@codemirror/language';
+import { LanguageSupport, indentUnit } from '@codemirror/language';
 import { dracula } from "thememirror";
 
+import { getExtension } from "../../components/file-modal/utils";
 import { cursorExtension } from "./cursors";
 import { peerExtension } from "./peer-extension";
-import { BASIC_SETUP } from "../constants";
+import { BASIC_SETUP, Extensions } from "../constants";
+
+const langMap = {
+  [Extensions.Css]: () => langs.css(),
+  [Extensions.Html]: () => langs.html(),
+  [Extensions.Js]: () => langs.javascript()
+}
+
+const language = (fileName: string): LanguageSupport[] => {
+  const extension = getExtension(fileName);
+
+  if (extension == null) {
+    return []
+  }
+
+  return [langMap[extension as keyof typeof langMap]()];
+}
 
 interface OnInitExtensionsProps {
 	version: number
@@ -36,7 +53,7 @@ export const getExtensions = ({
   return [
     indentUnit.of("\t"),
     basicSetup(BASIC_SETUP), 
-    langs.html(),
+    ...language(fileName ?? ''),
     dracula,
     lineWrap.of(EditorView.lineWrapping),
     EditorView.updateListener.of((e) => {
