@@ -45,7 +45,7 @@ export const menuItem = (theme: Theme) => ({
     marginBottom: 4,
   },
   [`&.${menuItemClasses.selected}`]: {
-    fontWeight: theme.typography.fontWeightSemiBold,
+    fontWeight: theme.typography.fontWeightBold,
     backgroundColor: theme.palette.action.selected,
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
