@@ -134,7 +134,7 @@ export default function ModulePage(): React.ReactElement {
               </Stack>
             )}
           </Stack>
-          <ModuleSidebar />
+          <ModuleSidebar description={currentModule ? currentModule.description : "Description"}/>
         </Stack>
       </Container>
     </>

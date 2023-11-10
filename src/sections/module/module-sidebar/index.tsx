@@ -1,4 +1,4 @@
-import { Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Stack, useMediaQuery, useTheme, Typography } from "@mui/material";
 
 import AuthorsSection from "./AuthorsSection";
 import BriefSection from "./BriefSection";
@@ -6,7 +6,13 @@ import TeacherToolbox from "./TeacherToolbox";
 import CollasedItem from "./components/CollasedItem";
 import QuizPanel from "./quiz-panel";
 
-export default function ModuleSidebar(): React.ReactElement {
+interface IModuleSidebarProps {
+  description: string;
+}
+
+export default function ModuleSidebar({
+    description
+  }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1130));
   return (
@@ -22,14 +28,22 @@ export default function ModuleSidebar(): React.ReactElement {
           duration="3.5 Hr"
         />
       </CollasedItem>
-      <CollasedItem title="What you’ll build">
+      {/* <CollasedItem title="What you’ll build">
         <></>
-      </CollasedItem>
-      <CollasedItem title="Sample Certificate">
+      </CollasedItem> */}
+      {/* <CollasedItem title="Sample Certificate">
         <></>
-      </CollasedItem>
+      </CollasedItem> */}
       <CollasedItem title="Who is this for">
-        <></>
+        <Typography
+          sx={{
+            p: 2,
+            borderRadius: 3,
+            bgcolor: theme.palette.mode === "light" ? "#F8F8F8" : theme.palette.background.paper
+          }}
+        >
+          {description}
+        </Typography>
       </CollasedItem>
       <QuizPanel lessons={[]} />
       <CollasedItem title="Teacher Toolbox">

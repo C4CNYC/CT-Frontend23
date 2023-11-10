@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { FaArrowRight, FaChevronDown } from "react-icons/fa";
+import { FaArrowRight, FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 import {
   Box,
@@ -17,6 +17,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 import CompleatedIcon from "../icons/CompleatedIcon";
 import RocketIcon from "../icons/RocketIcon";
+import ClockIcon from "../icons/ClockIcon";
 
 interface RoadItemProps {
   compleated: boolean;
@@ -47,6 +48,8 @@ const RoadItem = ({
   const { push, query } = useRouter();
   const [compleatedColor, setCompleatedColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  const projectTime = "20 mins";
 
   const redirectToCodePanel = () => {
     push(
@@ -195,8 +198,10 @@ const RoadItem = ({
           {locked && !lastActive ? "Open" : null}
         </Button>
       </Box>
-      <Stack pl={5} mt={!firstItem && !oddItem ? 5 : 0}>
-        <Typography variant="h5"> {name} </Typography>
+      <Stack pl={lastActive ? 2 : 5} mt={!firstItem && !oddItem ? 5 : 0}>
+        <Typography variant="h5" pl={1}>
+          {name}
+        </Typography>
         <Button
           onClick={() => {
             setIsOpen(!isOpen);
@@ -207,26 +212,58 @@ const RoadItem = ({
             alignSelf: "flex-start",
             color: theme.palette.mode === "light" ? "#364954" : "#fff",
             fontWeight: 400,
-            px: 0,
+            px: 1,
             "&:hover": {
               background: "none",
             },
           }}
         >
-          See more <FaChevronDown size={14} />
+          See more
+          {!isOpen ? <FaChevronDown size={14} /> : <FaChevronUp size={14}/>}
         </Button>
         <Collapse in={isOpen}>
-          <Typography
+          <Box
             sx={{
-              background: "#fff",
+              bgcolor: theme.palette.mode === "light" ? "#FFEDF2" : "#212B36",
               p: 1,
-              borderRadius: 2,
+              borderRadius: 1,
               position: "relative",
               zIndex: 1,
             }}
           >
-            {description}
-          </Typography>
+            <Typography mb={1}>
+              {description}
+            </Typography>
+            <Box sx={{ display: "flex", gap: "20px", }}>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  fontSize: "16px",
+                  color: "#0198ED",
+                  background: "linear-gradient(#7A16C9, #F618D3B5)",
+                  backgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                }}
+              >
+                <RocketIcon width={20} height={20}/>
+                  Part of the project
+                </Typography>
+              <Typography
+                sx={{
+                  color: "current",
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "16px",
+                  gap: "10px",
+                }}
+              >
+                <ClockIcon width={20} height={20}/>
+                {projectTime}
+              </Typography>
+            </Box>
+          </Box>
         </Collapse>
       </Stack>
     </Box>

@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useAtom } from "jotai";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
-import { HiLockClosed, HiOutlinePuzzlePiece } from "react-icons/hi2";
+import { HiLockClosed } from "react-icons/hi2";
+import RocketIcon from "../icons/RocketIcon";
 import { TbPlayerPlay } from "react-icons/tb";
 
 import {
@@ -113,7 +114,7 @@ export default function LessonItem({
           ) : null}
           <Stack direction="row" gap={2} flexWrap="wrap">
             <Typography variant="body2" sx={MODE_TITLE_SX}>
-              <HiOutlinePuzzlePiece size={20} />
+              <RocketIcon width={20} height={20}/>
               Part of Project
             </Typography>
             <Typography variant="body2" sx={DURATION_SX}>
