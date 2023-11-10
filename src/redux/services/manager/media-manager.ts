@@ -5,6 +5,7 @@ import {
   IMedia,
   IMediaCreate,
   IMediaDelete,
+  IMediaPathUpdate,
   IMediaSearchParams,
   IMediaUpdate,
 } from "../interfaces/media.interface";
@@ -42,6 +43,17 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Media" }],
     }),
+    updateMediaPath: builder.mutation<
+      IMedia & BaseResponseInterface,
+      IMediaPathUpdate
+    >({
+      query: (body) => ({
+        url: `/manager/media/path`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Media" }],
+    }),
     createMedia: builder.mutation<
       IMediaCreate & BaseResponseInterface,
       IMediaCreate
@@ -72,6 +84,7 @@ export const {
   useGetMediaQuery,
   // -------------mutation-----------
   useCreateMediaMutation,
+  useUpdateMediaPathMutation,
   useUpdateMediaMutation,
   useDeleteMediaMutation,
 } = extendedApi;

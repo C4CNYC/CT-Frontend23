@@ -1,47 +1,62 @@
 import * as React from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { Divider, IconButton, MenuItem, Paper, Skeleton, TextField, Typography } from "@mui/material";
+import { Collapse, Divider, IconButton, Skeleton, } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/system";
 
 import {
+  useCreateMediaMutation,
   useDeleteMediaMutation,
   useGetAllMediaQuery,
-  useUpdateMediaMutation,
 } from "src/redux/services/manager/media-manager";
-import { Iconify, Image } from "@components";
-import _ from "lodash";
 import { useCommands } from "@remirror/react";
-import CustomPopover, { usePopover } from "src/components/custom-popover";
+
+import FileManagerPanel from "src/components/file-manager/file-manager-panel";
+import FileManagerFolderItem from "src/components/file-manager/file-manager-folder-item";
+import FileManagerNewFolderDialog from "src/components/file-manager/file-manager-new-folder-dialog";
+import { useCallback, useEffect } from "react";
+import FileManagerFileItem from "src/components/file-manager/file-manager-file-item";
+import { CustomBreadcrumbs } from "@components";
+import { IMedia } from "src/redux/services/interfaces/media.interface";
+import { BaseResponseInterface } from "@utils";
 
 export interface MediaModalProps {
   children: React.ReactElement;
 }
-
 export function MediaModal({
   children,
 }: MediaModalProps): React.ReactElement | null {
   const [open, setOpen] = React.useState(false);
-  const [popoverSelected, setPopoverSelected] = React.useState<null | string>(null);
-  const [updating, setUpdating] = React.useState<null | string>(null);
-  const [updatedName, setUpdatedName] = React.useState<string>("");
-  const popover = usePopover();
+
+  const [currentPath, setCurrentPath] = React.useState<string[]>([""]);
+  const [folderCollapse, setFolderCollapse] = React.useState<boolean>(true)
+  const [fileCollapse, setFileCollapse] = React.useState<boolean>(true)
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const [newFolder, setNewFolder] = React.useState<boolean>(false);
+  const [newFolderName, setNewFolderName] = React.useState<string>("");
+  const [currentPathFiles, setCurrentPathFiles] = React.useState<(IMedia & BaseResponseInterface)[]>()
 
   const { data, isLoading, refetch } = useGetAllMediaQuery(
     {},
     { skip: !open },
   );
-  const [updateMedia] = useUpdateMediaMutation();
   const [deleteMedia] = useDeleteMediaMutation();
+  const [createMedia] = useCreateMediaMutation();
   const { insertImage } = useCommands();
 
-  const updateNameInput = React.useCallback((inputElement: HTMLInputElement) => {
-    if (inputElement) {
-      inputElement.focus();
-    }
-  }, []);
+  useEffect(() => {
+    setCurrentPathFiles(
+      data
+        ?.data
+        ?.filter(d => {
+          const path = `/${d.name}`.replace(/\/$/, '').split("/");
+          path.pop()
+          return path.length === currentPath.length && path.every((p, i) => p === currentPath[i])
+        })
+    )
+  }, [data, currentPath]);
 
   const handleOpen = (): void => {
     setOpen(true);
@@ -62,29 +77,27 @@ export function MediaModal({
     width: { xs: "90%", sm: "90%", md: "90%" },
   };
 
-  const onUpdate = async () => {
-    if (!updating) return;
-    const actualMedia = data?.data?.find(media => media.id === updating);
-    await updateMedia({
-      ..._.pick(actualMedia, ["url", "active"]) as { url: string; active: boolean },
-      id: updating,
-      name: updatedName,
-    }).unwrap();
-    setUpdating(null);
-    setUpdatedName("");
-    refetch();
-  };
-
   const onDelete = async (id: string) => {
     await deleteMedia({ id });
     refetch();
   };
 
-  const onKeyDown = async (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter") {
-      await onUpdate();
+  const onSelect = (id: string) => {
+    if (selected.includes(id)) {
+      setSelected(selected.filter(item => item !== id));
+    } else {
+      setSelected([...selected, id])
     }
-  };
+  }
+
+  const handleChangeFolderName = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewFolderName(event.target.value);
+  }, [setNewFolderName]);
+
+  const onBreadcrumbClick = (path: string) => {
+    const index = currentPath.indexOf(path);
+    setCurrentPath(currentPath.slice(0, index + 1));
+  }
 
   return (
     <>
@@ -112,120 +125,158 @@ export function MediaModal({
                 direction="row"
                 mb={3}
               >
-                <Typography variant="h6" fontWeight="700">
-                  Media
-                </Typography>
+                <CustomBreadcrumbs
+                  heading="Media"
+                  links={currentPath.map((p, i) => ({
+                    name: i === 0 ? "/" : p,
+                    onClick: () => onBreadcrumbClick(p)
+                  }))}
+                  sx={{
+                    mb: { xs: 0 },
+                  }}
+                />
                 <IconButton
                   onClick={handleClose}
-                  sx={{ width: "35px" }}
+                  sx={{ width: "35px", alignSelf: 'flex-start' }}
                   edge="end"
                 >
                   <CloseIcon fontSize="small"/>
                 </IconButton>
               </Stack>
-              <Stack
-                display="flex"
-                alignItems="center"
-                direction="row"
-                sx={{ flexWrap: "wrap", gap: 1 }}
+              <Box
+                sx={{
+                  overflowY: 'scroll',
+                  maxHeight: 600
+                }}
               >
-                {data?.data?.map((media) => (
-                  <Stack
-                    key={media.id}
-                    display="flex"
-                    justifyContent="space-between"
+                <FileManagerPanel
+                  title="Folders"
+                  subTitle={`${currentPathFiles?.filter(d => d.type === 'folder').length} folders`}
+                  onOpen={() => setNewFolder(true)}
+                  collapse={folderCollapse}
+                  onCollapse={() => {
+                    setFolderCollapse(!folderCollapse);
+                  }}
+                />
+                <Collapse in={folderCollapse} unmountOnExit>
+                  <Box
+                    gap={3}
+                    display="grid"
+                    gridTemplateColumns={{
+                      xs: 'repeat(2, 1fr)',
+                      sm: 'repeat(3, 1fr)',
+                      md: 'repeat(4, 1fr)',
+                      lg: 'repeat(6, 1fr)',
+                    }}
                   >
-                    <Stack
-                      component={Paper}
-                      variant="outlined"
-                      alignItems="flex-start"
-                      sx={{
-                        pt: 1.5,
-                        pb: 1.5,
-                        pl: 4,
-                        pr: 4,
-                        borderRadius: 2,
-                        bgcolor: "unset",
-                        position: "relative",
-                      }}
-                    >
-                      <Box>
-                        <Image
-                          src={media.url}
-                          alt={media.name}
-                          sx={{ height: 200, width: 200, mb: 1.5, cursor: "pointer" }}
-                          onClick={() => {
-                            insertImage({ src: media.url });
-                            handleClose();
-                          }}
-                        />
-                      </Box>
-                      {updating !== media.id ? (
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >{media.name}</Typography>
-                      ) : (
-                        <TextField
-                          placeholder="Name"
-                          value={updatedName}
-                          size="small"
-                          sx={{ padding: "0" }}
-                          inputProps={{
-                            sx: {
-                              padding: "0.5px 14px",
-                            },
-                          }}
-                          onChange={(e) => setUpdatedName(e.target.value)}
-                          inputRef={updateNameInput}
-                          onKeyDown={onKeyDown}
-                        />
-                      )}
-                      <Stack direction="row" alignItems="center" sx={{ top: 0, right: 0, position: "absolute" }}>
-                        <IconButton color={popover.open ? "inherit" : "default"} onClick={(e) => {
-                          popover.onOpen(e);
-                          setPopoverSelected(media.id);
-                        }}>
-                          <Iconify icon="eva:more-vertical-fill"/>
-                        </IconButton>
-                      </Stack>
-                    </Stack>
-                    <CustomPopover
-                      open={popover.open}
-                      onClose={popover.onClose}
-                      arrow="right-top"
-                      sx={{ width: 140 }}
-                    >
-                      <MenuItem
-                        onClick={() => {
-                          popover.onClose();
-                          setUpdating(popoverSelected);
-                          setUpdatedName(
-                            data?.data?.find(data => data.id === popoverSelected)?.name ?? "",
-                          );
-                        }}
-                      >
-                        <Iconify icon="mdi:pencil-outline"/>
-                        Rename
-                      </MenuItem>
-                      <Divider sx={{ borderStyle: "dashed" }}/>
-                      <MenuItem
-                        onClick={() => {
-                          popover.onClose();
-                        }}
-                        sx={{ color: "error.main" }}
-                      >
-                        <Iconify icon="solar:trash-bin-trash-bold"/>
-                        Delete
-                      </MenuItem>
-                    </CustomPopover>
-                  </Stack>
-                ))}
-              </Stack>
+                    {currentPathFiles
+                      ?.filter(d => d.type === 'folder')
+                      ?.map((file) => {
+                        const path = file.name.replace(/\/$/, '').split("/")
+                        const name = path.pop();
+                        return (
+                          <FileManagerFolderItem
+                            folder={{
+                              id: file.id,
+                              name: name ?? file.name,
+                              path: path.join('/'),
+                              size: 0,
+                              type: "folder",
+                              tags: [],
+                              totalFiles: 0,
+                              acl: file.acl,
+                              url: file.url,
+                              userId: file.userId,
+                              createdAt: file.createdAt,
+                              modifiedAt: file.updatedAt,
+                            }}
+                            onSelect={() => setCurrentPath([...currentPath, name ?? file.name])}
+                            onDelete={() => onDelete(file.id)}
+                            sx={{ maxWidth: 'auto' }}
+                            paths={data?.data?.filter(d => d.type === 'folder').map(f => f.name) ?? ['/']}
+                          />
+                        )
+                      })
+                    }
+                  </Box>
+                </Collapse>
+                <FileManagerNewFolderDialog
+                  open={newFolder}
+                  onClose={() => setNewFolder(false)}
+                  title="New Folder"
+                  onCreate={() => {
+                    createMedia({
+                      url: '',
+                      name: `${currentPath.join('/')}/${newFolderName}/`.replace('/', ''),
+                      size: 0,
+                      type: 'folder',
+                      acl: 'public',
+                    }).unwrap().then(() => {
+                      setNewFolder(false);
+                      setNewFolderName('');
+                      refetch()
+                    })
+                  }}
+                  folderName={newFolderName}
+                  onChangeFolderName={handleChangeFolderName}
+                />
+
+                <Divider sx={{ my: 5, borderStyle: 'dashed' }} />
+
+                <FileManagerPanel
+                  title="Files"
+                  subTitle={`${currentPathFiles?.filter(d => d.type !== 'folder').length} files`}
+                  collapse={fileCollapse}
+                  onCollapse={() => {
+                    setFileCollapse(!fileCollapse);
+                  }}
+                />
+                <Collapse in={fileCollapse} unmountOnExit>
+                  <Box
+                    display="grid"
+                    gridTemplateColumns={{
+                      xs: 'repeat(1, 1fr)',
+                      sm: 'repeat(2, 1fr)',
+                      md: 'repeat(3, 1fr)',
+                      lg: 'repeat(4, 1fr)',
+                    }}
+                    gap={3}
+                  >
+                    {currentPathFiles
+                      ?.filter(d => d.type !== 'folder')
+                      ?.map((file) => {
+                        const path = file.name.replace(/\/$/, '').split("/")
+                        path.pop()
+                        return (
+                          <FileManagerFileItem
+                            key={file.id}
+                            file={{
+                              id: file.id,
+                              name: file.name.replace((currentPath.join('/') + '/').replace('/', ''), ''),
+                              path: path.join('/'),
+                              url: file.url,
+                              size: file.size,
+                              type: "image",
+                              tags: [],
+                              acl: file.acl,
+                              userId: file.userId,
+                              dateCreated: file.createdAt,
+                              dateModified: file.updatedAt,
+                            }}
+                            selected={selected.includes(file.id)}
+                            onSelect={() => onSelect(file.id)}
+                            onDelete={() => onDelete(file.id)}
+                            sx={{ maxWidth: 'auto' }}
+                            insertImage={insertImage}
+                            handleClose={handleClose}
+                            paths={data?.data?.filter(d => d.type === 'folder').map(f => f.name) ?? ['/']}
+                          />
+                        )
+                      }
+                    )}
+                  </Box>
+                </Collapse>
+              </Box>
             </>
           )}
         </Box>
