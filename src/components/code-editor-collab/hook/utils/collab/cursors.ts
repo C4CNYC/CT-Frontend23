@@ -1,7 +1,12 @@
 import { debounce } from "lodash";
-import { StateField, StateEffect } from "@codemirror/state";
+import { StateField, StateEffect, StateEffectType } from "@codemirror/state";
 import { type Extension } from "@uiw/react-codemirror";
-import { type DecorationSet, EditorView, Decoration, WidgetType } from "@codemirror/view";
+import {
+	type DecorationSet,
+	EditorView,
+	Decoration,
+	WidgetType
+} from "@codemirror/view";
 
 import { cursorBaseTheme } from "./cursor-theme"
 
@@ -72,14 +77,15 @@ class TooltipWidget extends WidgetType {
 		return dom
 	}
 
-	ignoreEvent() { return false }
+	ignoreEvent() {
+		return false;
+	}
 }
 
-export const addCursor = StateEffect.define<Cursor>();
+const getCursorField = (addCursor: StateEffectType<Cursor>, withTooltip: boolean) => {
+	const cursorsItems = new Map<string, number>();
 
-const cursorsItems = new Map<string, number>();
-
-const getCursorField = (tooltipText: string, withTooltip: boolean) => StateField.define<DecorationSet>({
+	return StateField.define<DecorationSet>({
 	create() {
 		return Decoration.none
 	},
@@ -122,20 +128,23 @@ const getCursorField = (tooltipText: string, withTooltip: boolean) => StateField
 	},
 	provide: f => EditorView.decorations.from(f)
 })
+}
 
 interface CursorExtentionProps {
 	cursorId: string
 	tooltipText: string
 	withTooltip: boolean
+	addCursor: StateEffectType<Cursor>
 }
 
 export const cursorExtension = ({
 	cursorId,
 	tooltipText,
-	withTooltip
+	withTooltip,
+	addCursor
 }: CursorExtentionProps): Extension[] => {
 	return [
-		getCursorField(tooltipText, withTooltip),
+		getCursorField(addCursor, withTooltip),
 		cursorBaseTheme,
 		EditorView.updateListener.of(update => {
 			update.transactions.forEach(e => { 

@@ -2,6 +2,8 @@ import { type FC } from "react";
 
 import { Stack, Tabs, Tab } from "@mui/material";
 
+import DevIcon from "../dev-icon";
+
 import { styles } from "./styles";
 
  interface FileSwitcherProps {
@@ -26,7 +28,18 @@ const FileSwitcher: FC<FileSwitcherProps> = ({
         aria-label="scrollable prevent tabs example"
       >
         {fileList.map((fileName) =>
-          <Tab sx={styles.TAB} key={fileName} label={fileName} value={fileName} />)}
+          <Tab
+            sx={styles.TAB}
+            key={fileName}
+            label={(
+              <>
+                <DevIcon sx={styles.DEV_ICON} fileName={fileName} />
+
+                {fileName}
+              </>
+            )}
+            value={fileName}
+          />)}
       </Tabs>
     </Stack>
   )

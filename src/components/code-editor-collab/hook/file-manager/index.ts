@@ -1,8 +1,15 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback } from "react";
 import { Socket } from "socket.io-client";
-import { type FileInfo } from "./utils/peer-extension";
-import { EmitSocketEvents, SubscribedEvents } from "./utils/socket";
-import { EditorMode } from "./constants";
+
+import { type FileInfo } from "../utils/collab/requests";
+import { useModeSubscriptions } from "./useModeSubscriptions";
+import { EmitSocketEvents, SubscribedEvents } from "../utils/socket";
+import { EditorMode } from "../constants";
+import {
+  DEFAULT_FILE,
+  MIN_FILE_LIST_LENGTH,
+  getEmptyFileManagement
+} from "../constants"
 
 interface UseFileManagerReturn {
   isOpen: boolean
@@ -16,11 +23,9 @@ interface UseFileManagerReturn {
   setIsFileFormOpen: (isOpen: boolean) => void
   onDeleteFile: (fileName: string) => string | null
   onDeleteFileWithEvents: (fileName: string) => void
-  onResetFileManager: (info: FileInfo) => void
+  onResetFileManager: (info?: FileInfo) => void
   onChangeFileWithEvents: (fileName: string) => void
 }
-
-const DEFAULT_FILE = "index.html";
 
 interface UseFileManagerProps {
   socket: Socket
@@ -34,25 +39,29 @@ export const useFileManager = ({
   mode
 }: UseFileManagerProps): UseFileManagerReturn => {
   const [isOpen, setIsOpen] = useState(false);
-  const [localActiveFile, _setActiveFile] = useState(DEFAULT_FILE);
+  const [activeFile, _setActiveFile] = useState(DEFAULT_FILE);
   const [fileList, setFileList] = useState<string[]>([DEFAULT_FILE]);
   const [addedFileList, setAddedFileList] = useState<string[]>([DEFAULT_FILE]);
   const [isFileFormOpen, setIsFileFormOpen] = useState(false);
-  const deleteFileRef = useRef<((fileName: string) => string | null) | null>(null);
+
+  // ------------------------------------------------------ //
+  //                        Handlers                        //
+  // ------------------------------------------------------ //
 
   const onAddFile = (fileName: string): void => {
-    socket.emit(SubscribedEvents.AddFile, socket.id, roomId, fileName)
+    socket.emit(SubscribedEvents.AddFile, socket.id, roomId, fileName);
     setFileList([...fileList, fileName]);
   }
 
   const onDeleteFile = useCallback((fileName: string): string | null => {
-    if (fileList.length === 1) {
+    console.log(fileName)
+    if (fileList.length === MIN_FILE_LIST_LENGTH) {
       return null;
     }
 
-    const isActiveFileDeleted = fileName === localActiveFile;
+    const isActiveFileDeleted = fileName === activeFile;
     const newFileList = [...fileList];
-    const index = newFileList.findIndex(_fileName => _fileName === fileName);
+    const index = newFileList.findIndex(f => f === fileName);
     const addedFileIndex = addedFileList.findIndex((f) => f === fileName);
 
     if (addedFileIndex > -1) {
@@ -76,8 +85,8 @@ export const useFileManager = ({
     newFileList.splice(index, 1);
     setFileList(newFileList);
 
-    return newActiveFile
-  }, [fileList, addedFileList, localActiveFile, roomId, socket]);
+    return newActiveFile;
+  }, [fileList, addedFileList, activeFile, roomId, socket]);
 
   const onDeleteFileWithEvents = useCallback((fileName: string) => {
     const newActiveFile = onDeleteFile(fileName);
@@ -85,16 +94,13 @@ export const useFileManager = ({
     socket.emit(EmitSocketEvents.DeleteFile, roomId, fileName);
   }, [onDeleteFile, socket]);
 
-  const onChangeFileWithEvents = async (fileName: string) => {
+  const onChangeFileWithEvents = (fileName: string) => {
     setActiveFile(fileName);
-    socket.emit(EmitSocketEvents.SetActiveFile, roomId, fileName);
-  }
 
-  const onResetFileManager = useCallback(({ activeFile, files, filesInLayout }: FileInfo) => {
-    _setActiveFile(activeFile);
-    setFileList(files);
-    setAddedFileList(filesInLayout);
-  }, []);
+    if (mode === EditorMode.Owner) {
+      socket.emit(EmitSocketEvents.SetActiveFile, roomId, fileName);
+    }
+  }
 
   const setActiveFile = useCallback((fileName: string): void => {
     if (!addedFileList.includes(fileName)) {
@@ -102,64 +108,45 @@ export const useFileManager = ({
 
       setAddedFileList(newAddedFileList);
 
-      if (mode === EditorMode.Owner) {
-        socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList, socket.id);
-      }
+      socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList, socket.id);
     }
 
     _setActiveFile(fileName);
   }, [addedFileList, socket, mode, roomId]);
 
-  useEffect(() => {
-    deleteFileRef.current = onDeleteFile;
-  }, [onDeleteFile]);
+  const onResetFileManager = useCallback(({
+    activeFile,
+    files,
+    filesInLayout
+  }: FileInfo = getEmptyFileManagement()) => {
+    _setActiveFile(activeFile);
+    setFileList(files);
+    setAddedFileList(filesInLayout);
+  }, []);
 
-  useEffect(() => {
-    socket.on(EmitSocketEvents.AddFileResponse + roomId, (fileName, socketId) => {
-      if (socket.id !== socketId) {
-        setFileList((prev) => prev.includes(fileName) ? prev : [...prev, fileName]);
-      }
-    });
-
-    return () => {
-      socket.off(EmitSocketEvents.AddFileResponse + roomId);
+  const onUpdateFileList = useCallback((fileName: string, socketId: string) => {
+    if (socket.id !== socketId) {
+      setFileList((prev) => prev.includes(fileName) ? prev : [...prev, fileName]);
     }
-  }, [roomId, socket])
+  }, [socket]);
 
-  useEffect(() => {
-    if (mode === EditorMode.SubOwner) {
-      socket.on(SubscribedEvents.DeleteResponse, (_roomId: string, fileName: string) => {
-        if (_roomId === roomId) {
-          deleteFileRef.current?.(fileName)
-        }
-      });
-    }
+  useModeSubscriptions({
+    roomId,
+    onDeleteFile,
+    setActiveFile,
+    onUpdateFileList,
+    socket,
+    mode,
+  });
 
-    if (mode === EditorMode.Watcher) {
-      socket.on(SubscribedEvents.ActiveFileChanged, (_roomId: string, fileName: string) => {
-        if (_roomId === roomId) {
-          setActiveFile(fileName);
-        }
-      });
-    }
-
-    return () => {
-      if (mode === EditorMode.SubOwner) {
-        socket.off(SubscribedEvents.DeleteResponse);
-      }
-
-      if (mode === EditorMode.Watcher) {
-        socket.off(SubscribedEvents.ActiveFileChanged);
-      }
-    }
-  }, [mode, socket, roomId]);
+   // ------------------------------------------------------ //
 
   return {
     onAddFile,
     isOpen,
     isFileFormOpen,
     fileList,
-    activeFile: localActiveFile,
+    activeFile,
     setActiveFile,
     setIsOpen,
     setIsFileFormOpen,

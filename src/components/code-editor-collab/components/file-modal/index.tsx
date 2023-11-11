@@ -12,6 +12,7 @@ import {
   IconButton
 } from "@mui/material";
 
+import DevIcon from "../dev-icon";
 import ConfirmModalWrapper from "./confirm-wrapper-modal";
 import FileForm from "./file-form";
 
@@ -28,6 +29,7 @@ interface FileModalProps {
   onAddFile: (fileName: string) => void
   onDeleteFile: (fileName: string) => void
   mode: EditorMode
+  isMultipleExtensionFiles: boolean
 }
 
 const FileModal: FC<FileModalProps> = ({
@@ -39,7 +41,8 @@ const FileModal: FC<FileModalProps> = ({
   onAddFile,
   setIsOpen,
   onDeleteFile,
-  mode
+  mode,
+  isMultipleExtensionFiles
 }) => {
   const theme = useTheme();
   const styles = useStyles(theme);
@@ -87,6 +90,8 @@ const FileModal: FC<FileModalProps> = ({
                       key={fileName}
                       variant="text"
                     >
+                      <DevIcon sx={styles.devIcon} fileName={fileName} />
+
                       {fileName}
                     </Button>
 
@@ -106,6 +111,7 @@ const FileModal: FC<FileModalProps> = ({
             onClose={() => setIsFileFormOpen(false)}
             onSubmit={onAddFile}
             fileList={fileList}
+            isMultipleExtensionFiles={isMultipleExtensionFiles}
           />
 
           <ConfirmModalWrapper

@@ -1,4 +1,4 @@
-import { type FC, useMemo } from "react";
+import { type FC, type RefObject, useMemo } from "react";
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
@@ -31,7 +31,12 @@ import {
 } from "./styles"
 import { useNavPanel } from "./hook";
 
-const NavPanel: FC = () => {
+interface NavPanelProps {
+  cursorName?: string
+  wrapperListenerRef: RefObject<HTMLDivElement | null>
+}
+
+const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const {
     drawerRef,
     isOpen,
@@ -46,11 +51,14 @@ const NavPanel: FC = () => {
     activeUsersAmount,
     isCodeBlocksVisible,
     isUsersLoading
-  } = useNavPanel();
+  } = useNavPanel(wrapperListenerRef);
 
-  const drawerSx = useMemo(() => getDrawerSx(isOpen, isCodePreviewVisible), [isOpen, isCodePreviewVisible]);
+  const drawerSx = useMemo(() => {
+    return getDrawerSx(isOpen, isCodePreviewVisible)
+  }, [isOpen, isCodePreviewVisible]);
+
   const stackCodeBoxSx = useMemo(() => {
-    return getStackCodeBoxSx(draggableConfig?.height, isOpen)
+    return getStackCodeBoxSx(draggableConfig?.height, isOpen);
   }, [draggableConfig?.height, isOpen]);
 
   return (
@@ -122,6 +130,7 @@ const NavPanel: FC = () => {
                     <CodeBlock
                       onClose={() => onDeletePreviewUser(user.id)}
                       data={user}
+                      cursorName={cursorName}
                     />
                   </SortableItem>
                 )

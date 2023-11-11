@@ -1,31 +1,30 @@
-import { type FC, memo, useRef } from "react";
-
+import { type FC, memo } from "react";
+import { Socket } from "socket.io-client";
 import CodeMirror from '@uiw/react-codemirror';
 
-import LoadingCodeEditor from "./components/loading-code-editor"
-
-import {
-	type UseCodeEditorCollabProps,
-	useCodeEditorCollab,
-} from "./hook";
-import { EditorMode } from "./hook/constants";
-import { useStyles } from "./styles";
-import { useFileManager } from "./hook/useFileManager";
+import LoadingCodeEditor from "./components/loading-code-editor";
 import FileModal from "./components/file-modal";
 import FileSwitcher from "./components/file-switcher";
-import { createSocket } from "./hook/utils/socket";
+import StatusLabel, { RoomStatus } from "./components/status-label";
 
-interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps,
-	'activeFile' |
+import { type UseCodeEditorCollabProps, useCodeEditorCollab } from "./hook";
+import { EditorMode } from "./hook/constants";
+import { useFileManager } from "./hook/file-manager";
+import { useStyles } from "./styles";
+
+type ReducedFields = 	'activeFile' |
 	'onDeleteFile' |
 	'setActiveFile' |
 	'onResetFileManager' |
 	'socket' |
 	'setLocalActiveFile'
-	> {
+
+interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
 	className?: string
 	isReadOnly?: boolean
 	withFileManager?: boolean
+	socket: Socket
+	isMultipleExtensionFiles?: boolean
 }
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
@@ -34,10 +33,11 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 	mode = EditorMode.Owner,
 	withFileManager = true,
 	roomId,
+	socket,
+	isMultipleExtensionFiles = false,
 	...otherProps
 }) => {
 	const styles = useStyles();
-	const socketRef = useRef(createSocket());
 
 	const {
 		activeFile,
@@ -52,9 +52,9 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 		onChangeFileWithEvents,
 		...collabProps
 	} = useFileManager({
-		socket: socketRef.current,
+		socket,
 		roomId,
-		mode
+		mode,
 	});
 
 	const {
@@ -63,14 +63,15 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 		extensions,
 		doc,
 		key,
-		onCreateEditor
+		onCreateEditor,
+		roomStatus
 	} = useCodeEditorCollab({
 		...otherProps,
 		...collabProps,
 		activeFile,
 		mode,
-		socket: socketRef.current,
-		roomId
+		socket,
+		roomId,
 	});
 
 	return (
@@ -90,6 +91,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 						onAddFile={onAddFile}
 						onDeleteFile={onDeleteFileWithEvents}
 						mode={mode}
+						isMultipleExtensionFiles={isMultipleExtensionFiles}
 					/>
 
 					<FileSwitcher
@@ -99,6 +101,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 					/>
 				</>
 			}
+
+			<StatusLabel status={roomStatus} />
 
 			{isLoading && <LoadingCodeEditor />}
 
@@ -110,7 +114,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 				basicSetup={false}
 				theme="dark"
 				extensions={extensions}
-				readOnly={isReadOnly}
+				readOnly={isReadOnly || (roomStatus === RoomStatus.Inactive)}
 				value={doc}
 			/>
 		</div>

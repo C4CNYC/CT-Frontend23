@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useRef } from "react";
-
-import { type FileInfo } from "./utils/peer-extension";
+import { type FileInfo } from "./utils/collab/requests";
 
 export interface MemoizedProps {
-	cursorText?: string
-	withTooltip?: boolean
-	onChange?: (code: string) => void
   code?: string
+  cursorText?: string
+	withTooltip?: boolean
 	preloadedCode?: string
+	onChange?: (code: Record<string, string>) => void
   setActiveFile: (fileName: string) => void
-  onResetFileManager: (info: FileInfo) => void
+  onResetFileManager: (info?: FileInfo) => void
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
@@ -46,11 +45,11 @@ export const useMemoizedProps = ({
 		onChangeRef.current = onChange;
 	}, [onChange]);
 
-  const _onChange = useCallback((code: string): void => {
+  const _onChange = useCallback((code: Record<string, string>): void => {
     onChangeRef.current?.(code);
   }, []);
 
-  const _onResetFileManager = useCallback((fileInfo: FileInfo) => {
+  const _onResetFileManager = useCallback((fileInfo?: FileInfo) => {
     onResetFileManagerRef.current(fileInfo);
   }, []);
 

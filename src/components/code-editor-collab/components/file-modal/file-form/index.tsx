@@ -13,6 +13,7 @@ interface FileFormProps {
   defaultValue?: string
   onSubmit: (fileName: string) => void
   fileList: string[]
+  isMultipleExtensionFiles: boolean
 }
 
 const ENTER_KEY = "Enter";
@@ -22,7 +23,8 @@ const FileForm: FC<FileFormProps> = ({
   onClose,
   onSubmit,
   defaultValue,
-  fileList
+  fileList,
+  isMultipleExtensionFiles
 }) => {
   const textFieldRef = useRef<HTMLDivElement | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +41,12 @@ const FileForm: FC<FileFormProps> = ({
   }
 
   const onAdd = () => {
-    const error = validate(value, fileList);
+    const error = validate({
+      fileName: value,
+      fileList,
+      isMultipleExtensionFiles
+    });
+    
     setError(error);
 
     if (error != null) {

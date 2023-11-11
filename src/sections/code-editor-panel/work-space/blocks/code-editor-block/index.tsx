@@ -5,7 +5,6 @@ import {
   useState,
   memo,
   useCallback,
-  ReactNode
 } from "react";
 import { BiCodeAlt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
@@ -13,9 +12,7 @@ import { useDispatch } from "react-redux";
 import {
   Box,
   Collapse,
-  Stack,
   useMediaQuery,
-  IconButton
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Close from "@mui/icons-material/Close";
@@ -32,20 +29,19 @@ import { type BaseResponseInterface } from "@utils";
 import { type AuthUserType } from "src/auth/types";
 import { type IValidation } from "src/redux/interfaces/content.interface";
 import { mapValidations } from "src/utils/validationMaping";
-import { CodeEditorControllerRoom, setRoom } from "src/redux/slices/code-editor-controller";
+import { setRoom } from "src/redux/slices/code-editor-controller";
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { useSelector } from "src/redux/store";
 
 interface ICodeEditorBlock {
   user: AuthUserType | null;
   code: string;
-  onChangeCode: (code: string) => void;
+  onChangeCode: (code: Record<string, string>) => void;
   validations: Array<IValidation & BaseResponseInterface>;
   preloadedCode: string;
 }
 
 const icon = <BiCodeAlt size="20px" color="#43D4DD" />;
-const TITLE = "Code Editor";
 const TYPING_DELEY = 20000;
 const FIRST_LOADING_DELEY = 15000;
 const MOBILE_HEIGHT = 80;
