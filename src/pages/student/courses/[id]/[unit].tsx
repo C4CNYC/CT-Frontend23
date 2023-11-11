@@ -50,6 +50,8 @@ export default function ModulePage(): React.ReactElement {
     { id: query?.unit as string },
     { skip: !query?.id }
   );
+  console.log(data);
+  
   const { data: course } = useGetCoursContentQuery(
     {
       id: query.id as string,
@@ -134,7 +136,13 @@ export default function ModulePage(): React.ReactElement {
               </Stack>
             )}
           </Stack>
-          <ModuleSidebar description={currentModule ? currentModule.description : "Description"}/>
+          <ModuleSidebar
+            level="Beginner"
+            grade="6th-10th Grade"
+            duration={ currentModule ? currentModule?.duration : "20 min"}
+            lessonCount={`${data?.length} lessons`}
+            description={currentModule ? currentModule.description : "Description"}
+          />
         </Stack>
       </Container>
     </>

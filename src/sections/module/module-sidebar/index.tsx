@@ -7,11 +7,19 @@ import CollasedItem from "./components/CollasedItem";
 import QuizPanel from "./quiz-panel";
 
 interface IModuleSidebarProps {
-  description: string;
+  description: string,
+  level: string,
+  lessonCount: string,
+  grade: string,
+  duration: string | null,
 }
 
 export default function ModuleSidebar({
-    description
+    description,
+    level,
+    lessonCount,
+    duration,
+    grade,
   }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1130));
@@ -22,10 +30,10 @@ export default function ModuleSidebar({
       </CollasedItem>
       <CollasedItem title="The Brief">
         <BriefSection
-          lessons="6 lessons"
-          grade="5th-10th Grade"
-          level="Beginner"
-          duration="3.5 Hr"
+          lessons={lessonCount}
+          grade={grade}
+          level={level}
+          duration={duration ?? "20 min"}
         />
       </CollasedItem>
       {/* <CollasedItem title="What you’ll build">

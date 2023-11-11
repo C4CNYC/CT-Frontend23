@@ -15,9 +15,15 @@ import {
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
+import {
+  DESCRIPTION_GRADIENT_TEXT_SX,
+  LESSON_TIME_SX,
+  getDescriptionBoxSx
+} from "./constants"
+
 import CompleatedIcon from "../icons/CompleatedIcon";
 import RocketIcon from "../icons/RocketIcon";
-import ClockIcon from "../icons/ClockIcon";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 interface RoadItemProps {
   compleated: boolean;
@@ -223,43 +229,18 @@ const RoadItem = ({
         </Button>
         <Collapse in={isOpen}>
           <Box
-            sx={{
-              bgcolor: theme.palette.mode === "light" ? "#FFEDF2" : "#212B36",
-              p: 1,
-              borderRadius: 1,
-              position: "relative",
-              zIndex: 1,
-            }}
+            sx={getDescriptionBoxSx}
           >
             <Typography mb={1}>
               {description}
             </Typography>
             <Box sx={{ display: "flex", gap: "20px", }}>
-              <Typography
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  fontSize: "16px",
-                  color: "#0198ED",
-                  background: "linear-gradient(#7A16C9, #F618D3B5)",
-                  backgroundClip: "text",
-                  WebkitTextFillColor: "transparent"
-                }}
-              >
+              <Typography sx={DESCRIPTION_GRADIENT_TEXT_SX}>
                 <RocketIcon width={20} height={20}/>
                   Part of the project
                 </Typography>
-              <Typography
-                sx={{
-                  color: "current",
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "16px",
-                  gap: "10px",
-                }}
-              >
-                <ClockIcon width={20} height={20}/>
+              <Typography sx={LESSON_TIME_SX}>
+                <AiOutlineClockCircle size={20}/>
                 {projectTime}
               </Typography>
             </Box>
