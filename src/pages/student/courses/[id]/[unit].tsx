@@ -50,8 +50,6 @@ export default function ModulePage(): React.ReactElement {
     { id: query?.unit as string },
     { skip: !query?.id }
   );
-  console.log(data);
-  
   const { data: course } = useGetCoursContentQuery(
     {
       id: query.id as string,
