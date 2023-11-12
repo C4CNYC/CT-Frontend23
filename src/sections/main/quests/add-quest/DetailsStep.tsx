@@ -194,7 +194,7 @@ export default function DetailsStep(
         </Typography>
       </FormGroup>
       <FormGroup>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" sx={{ fontSize: "12px" }} gutterBottom pl={2}>
           Description (Optional)
         </Typography>
         <RHFRemirror name="description" />

@@ -106,6 +106,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             flexGrow: 1,
             alignItems: "center",
             justifyContent: "space-between",
+            gap: 2
           }}
         >
           <Link
@@ -198,8 +199,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
 
 const BADGE_SX = {
   "& .MuiBadge-badge": {
-    left: "45%",
-    top: 26,
+    left: "85px",
+    rotate: "345deg",
+    top: 20,
     padding: 0,
     height: 14,
     width: "85px",

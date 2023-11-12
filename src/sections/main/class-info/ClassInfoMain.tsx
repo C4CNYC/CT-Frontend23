@@ -1,6 +1,8 @@
 import { FaSchool } from "react-icons/fa";
 
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Avatar, Stack, Typography, useMediaQuery } from "@mui/material";
+
+import { useTheme } from "@mui/system";
 
 import { IClass } from "src/redux/interfaces/class.interface";
 
@@ -11,8 +13,15 @@ interface Props {
 export default function ClassInfoMain({
   classData,
 }: Props): React.ReactElement {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Stack direction="row" gap={2}>
+    <Stack
+      direction={isMobile ? "column" : "row"}
+      alignItems="center"
+      gap={2}
+      >
       <Avatar
         sx={{
           width: 60,
@@ -20,12 +29,11 @@ export default function ClassInfoMain({
           border: "2px solid #ED9526",
           background: "#FBDD3F",
           fontSize: "40px",
-          mt: { xs: 1, sm: 2 },
         }}
         src={classData.avatar ?? ""}
         alt={classData.name}
       />
-      <Stack>
+      <Stack alignItems={ isMobile ? "center" : "start"}>
         <Typography variant="h2" sx={{ color: "#fff" }}>
           {classData?.name}
         </Typography>

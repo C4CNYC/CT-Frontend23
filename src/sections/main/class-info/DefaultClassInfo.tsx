@@ -95,12 +95,13 @@ export default function DefaultClassInfo({
 
   return (
     <>
-      <Stack ml={-2} mr={-2}>
+      <Stack sx={{ mx: { lg: -2 } }}>
         <ClassInfoToggle />
         <Stack
           sx={{
             background: getLinearGradient(classData?.cover ?? "#75CF6D"),
             color: "#fff",
+            px: 4,
           }}
         >
           <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
@@ -109,9 +110,8 @@ export default function DefaultClassInfo({
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                pb: "65px",
+                mb: 5,
                 pt: 1,
-                px: 4,
               }}
             >
               <Stack
@@ -151,13 +151,16 @@ export default function DefaultClassInfo({
             </Stack>
 
             <Stack
-              direction="row"
+              direction={ isMobile ? "column" : "row"}
               sx={{
+                gap: "20px",
                 justifyContent: "space-between",
-                alignItems: "flex-end",
-                px: 4,
-                pb: 2,
+                alignItems: {
+                  xs: "center",
+                  md: "end",
+                },
                 flexWrap: "wrap",
+                pb: 2,
               }}
             >
               <ClassInfoMain classData={classData} />
@@ -166,8 +169,6 @@ export default function DefaultClassInfo({
                 alignItems="center"
                 sx={{
                   maxHeight: "20px",
-                  pt: { xs: 2, sm: 0 },
-                  m: { xs: "10px auto", sm: 0 },
                 }}
               >
                 <Link
@@ -213,10 +214,7 @@ export default function DefaultClassInfo({
                   </IconButton>
                 </RoleBasedGuard>
                 <MenuPopover
-                  sx={{
-                    p: 2,
-                    minWidth: "150px",
-                  }}
+                  sx={{ minWidth: "120px" }}
                   open={openPopover}
                   onClose={() => {
                     setOpenPopover(null);

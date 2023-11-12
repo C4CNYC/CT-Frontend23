@@ -20,6 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 
+import { FORM_HEADER_SX } from "./constants"
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { bgBlur } from "@utils";
@@ -94,7 +95,7 @@ export default function AddQuest(): React.ReactElement {
   }, [isAssignmentLoading]);
 
   useEffect(() => {
-    if(coursesData?.data?.data[0]?.id && !methods.getValues().course) {
+    if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
         methods.setValue("course", coursesData.data?.data[0]?.id);
     }
   }, [coursesData])
@@ -210,15 +211,15 @@ export default function AddQuest(): React.ReactElement {
           borderRadius: 3,
         })}
       >
-        <Stack
-          sx={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 3,
-          }}
-        >
-          <Stack>
+        <Stack sx={FORM_HEADER_SX}>
+          <Stack
+            sx={{
+              alignItems: {
+                xs: "center",
+                md: "start",
+              }
+            }}
+          >
             <Typography variant="h2">Add Quest</Typography>
             <Tooltip title="this is .....">
               <Typography
