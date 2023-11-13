@@ -9,19 +9,40 @@ export default function WelcomeStep({
 }): React.ReactElement {
   return (
     <>
-      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "10px" }}>
+      <Stack
+        direction="row"
+        sx={{
+          ml:
+            { xs: 3, sm: 3, md: 0 },
+          mt: "10px",
+          justifyContent:
+            { xs: "center", md: "start" }
+          }}
+      >
         <Typography variant="h3">Hey, Teachers</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           👋
         </Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+      <Typography
+        variant="body1"
+        sx={{
+          pb: 3,
+          ml: { xs: 3, sm: 3, md: 0 },
+          textAlign: { xs: "center", md: "left" }
+        }}
+      >
         Let’s start a learning adventure
       </Typography>
       <Button
         disabled={true}
         onClick={() => {}}
-        sx={{ py: 2, mb: 1, borderRadius: "15px" }}
+        sx={{
+          py: 2,
+          mb: 1,
+          borderRadius: "15px",
+          width: "100%"
+        }}
       >
         <SessionType {...POPUP_SESSION} disabled={true} />
       </Button>
@@ -29,7 +50,12 @@ export default function WelcomeStep({
         onClick={() => {
           nextStep();
         }}
-        sx={{ color: "inherit", py: 2, borderRadius: "15px" }}
+        sx={{
+          color: "inherit",
+          py: 2,
+          borderRadius: "15px",
+          width: "100%",
+        }}
       >
         <SessionType {...LAUNCH_SESSION} />
       </Button>

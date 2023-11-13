@@ -10,14 +10,19 @@ import {
 } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
-import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
-import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
+import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
+import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 
-export default function DetailsStep(
-  { coursesData }: { coursesData: { data: (ICourse & BaseResponseInterface)[] | undefined, isLoading: boolean } }
-  ): React.ReactElement {
+export default function DetailsStep({
+  coursesData,
+}: {
+  coursesData: {
+    data: (ICourse & BaseResponseInterface)[] | undefined;
+    isLoading: boolean;
+  };
+}): React.ReactElement {
   const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
@@ -91,17 +96,17 @@ export default function DetailsStep(
                   background: theme.palette.mode === "light" ? "#fff" : "",
                 }}
               >
-                {!data?.length &&
+                {!data?.length && (
                   <option key="empty" value="empty">
                     You don't have any courses
                   </option>
-                }
+                )}
                 {data
                   ? data.map((course) => (
-                    <option key={course.id} value={course.id}>
-                      {course.name}
-                    </option>
-                  ))
+                      <option key={course.id} value={course.id}>
+                        {course.name}
+                      </option>
+                    ))
                   : null}
               </RHFSelect>
             ) : (
@@ -194,7 +199,7 @@ export default function DetailsStep(
         </Typography>
       </FormGroup>
       <FormGroup>
-        <Typography variant="h5" sx={{ fontSize: "12px" }} gutterBottom pl={2}>
+        <Typography variant="h5" gutterBottom pl={2}>
           Description (Optional)
         </Typography>
         <RHFRemirror name="description" />
