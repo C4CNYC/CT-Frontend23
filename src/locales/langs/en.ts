@@ -78,6 +78,34 @@ const en = {
   actions_save_changes: "Save Changes",
   actions_clear: "Clear",
 
+  // sidebar menu locales
+  sidebar_menu_code_btn: "Let's code",
+  sidebar_menu_catalog: "Catalog",
+  sidebar_menu_tribes: "Tribes",
+  sidebar_menu_my_notes: "My Notes",
+  sidebar_menu_friends: "Friends",
+  sidebar_menu_gallery: "Gallery",
+  sidebar_menu_invite_friends: "Invite Friends",
+  sidebar_menu_feedback: "Feedback",
+  sidebar_menu_administration: "administration",
+  sidebar_menu_members: "Members",
+  sidebar_menu_schools: "Schools",
+  sidebar_menu_management: "management",
+  sidebar_menu_school: "School",
+  sidebar_menu_students: "Students",
+  sidebar_menu_classes: "Classes",
+  sidebar_menu_assignments: "Assignments",
+  sidebar_menu_progress: "Progress",
+  sidebar_menu_content: "content",
+  sidebar_menu_courses: "Courses",
+  sidebar_menu_modules: "Modules",
+  sidebar_menu_lessons: "Lessons",
+  sidebar_menu_tasks: "Tasks",
+  sidebar_menu_integrations: "Integrations",
+  sidebar_menu_skills: "Skills",
+  sidebar_menu_apps: "APPS",
+  sidebar_menu_socials: "socials",
+
   //
   // organizations
   //

@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+import { useLocales } from "src/locales";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
 
 interface ILetsCodeBtnProps {
@@ -15,6 +16,7 @@ interface ILetsCodeBtnProps {
 }
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
+  const { translate } = useLocales();
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
@@ -67,7 +69,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
             }),
       }}
     >
-      {!isMini ? "Let's Code" : ""}
+      {!isMini ? (translate("sidebar_menu_code_btn") as string) : ""}
 
       {isMini ? (
         <Iconify icon="mingcute:code-fill" width={25} height={25} />
