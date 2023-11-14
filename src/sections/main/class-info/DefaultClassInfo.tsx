@@ -33,6 +33,14 @@ import {
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
+import {
+  JOIN_STACK_SX,
+  MAIN_CLASS_INFO_STACK_SX,
+  MEMBERS_LINK_SX,
+  POPOVER_EDIT_BTN_SX,
+  SHARE_BUTTON_SX,
+  SHARE_TOKEN_BTN_SX,
+} from "./constants";
 
 interface IDefaultClassInfoProps {
   classData: IClass & BaseResponseInterface;
@@ -105,15 +113,7 @@ export default function DefaultClassInfo({
           }}
         >
           <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-            <Stack
-              direction="row"
-              sx={{
-                justifyContent: "space-between",
-                alignItems: "center",
-                mb: 5,
-                pt: 1,
-              }}
-            >
+            <Stack direction="row" sx={JOIN_STACK_SX}>
               <Stack
                 direction="row"
                 alignItems="center"
@@ -124,12 +124,7 @@ export default function DefaultClassInfo({
                   onClick={() => {
                     onCopy(classData?.setting?.share_token);
                   }}
-                  sx={{
-                    gap: 0.5,
-                    color: "inherit",
-                    p: 0,
-                    textTransform: "none",
-                  }}
+                  sx={SHARE_TOKEN_BTN_SX}
                 >
                   <Typography variant="subtitle2">
                     {classData?.setting?.share_token}
@@ -151,17 +146,8 @@ export default function DefaultClassInfo({
             </Stack>
 
             <Stack
-              direction={ isMobile ? "column" : "row"}
-              sx={{
-                gap: "20px",
-                justifyContent: "space-between",
-                alignItems: {
-                  xs: "center",
-                  md: "end",
-                },
-                flexWrap: "wrap",
-                pb: 2,
-              }}
+              direction={isMobile ? "column" : "row"}
+              sx={MAIN_CLASS_INFO_STACK_SX}
             >
               <ClassInfoMain classData={classData} />
               <Stack
@@ -172,12 +158,7 @@ export default function DefaultClassInfo({
                 }}
               >
                 <Link
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#fff",
-                    gap: 0.5,
-                  }}
+                  sx={MEMBERS_LINK_SX}
                   href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
                   component={nextLink}
                   typography="button"
@@ -186,19 +167,7 @@ export default function DefaultClassInfo({
                   {!isMobile ? "Members" : ""}
                 </Link>
                 <ShareGroupModal schoolClass={classData}>
-                  <Button
-                    variant="text"
-                    disableRipple
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      color: "#fff",
-                      ml: 2,
-                      "&:hover": {
-                        background: "none",
-                      },
-                    }}
-                  >
+                  <Button variant="text" disableRipple sx={SHARE_BUTTON_SX}>
                     <TbShare2 color="#fff" size="18px" />
                     <Typography variant="button" sx={{ ml: 0.5 }}>
                       {!isMobile ? "Share" : ""}
@@ -244,20 +213,7 @@ export default function DefaultClassInfo({
                     updateResult={updateResult}
                     schoolId={classData?.school?.id}
                   >
-                    <Button
-                      sx={{
-                        gap: 1,
-                        width: "100%",
-                        m: "0 auto",
-                        background: "#fff",
-                        color: "#75CF6D",
-                        "&:hover": {
-                          background: "#22A64733",
-                        },
-                      }}
-                    >
-                      Edit
-                    </Button>
+                    <Button sx={POPOVER_EDIT_BTN_SX}>Edit</Button>
                   </ClassPreferences>
                 </MenuPopover>
               </Stack>
