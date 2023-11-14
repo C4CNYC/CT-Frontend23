@@ -42,6 +42,7 @@ const ar = {
   analytics: "التحليلات",
   ecommerce: "التجارة الإلكترونية",
   management: "إدارة",
+  organization: "المنظمات",
   menu_level: "مستوى القائمة ",
   menu_level_2a: "مستوى القائمة 2 أ",
   menu_level_2b: "مستوى القائمة 2 ب",
@@ -57,6 +58,40 @@ const ar = {
   other_cases: "حالات اخرى",
   item_by_roles: "عنصر حسب الأدوار",
   only_admin_can_see_this_item: "يمكن للمسؤول فقط رؤية هذا العنصر",
+
+  // action words
+  actions_delete: "يمسح",
+  actions_edit: "يحرر",
+  actions_add: "يضيف",
+  actions_archive: "أرشيف",
+  actions_close: "يغلق",
+  actions_save: "يحفظ",
+  actions_search: "يبحث",
+  actions_save_changes: "حفظ التغييرات",
+  actions_clear: "واضح",
+
+  // general locales
+
+  name: "اسم",
+  country: "دولة",
+  address: "عنوان",
+  city: "مدينة",
+  phone: "هاتف",
+  about: "عن",
+  students: "طلاب",
+  teachers: "معلمون",
+  social: "اجتماعي",
+
+  // avatar upload
+  avatar__upload_text: "حمل الصورة",
+  avatar__update_text: "تحديث الصورة",
+
+  // messages
+  messages_success: "نجاح",
+  messages_update_success: "نجاح التحديث!",
+  messages_error: "هناك خطأ ما",
+  messages_no_data: "لايوجد بيانات",
+  messages_invalid_phone: "الهاتف غير صالح",
 
   // sidebar menu locales
 
@@ -87,15 +122,82 @@ const ar = {
   sidebar_menu_apps: "تطبيقات",
   sidebar_menu_socials: "الاجتماعية",
 
+  //  Members page locales
+
+  members_delete: "يمسح",
+  members_link_home: "بيت",
+  members_link_members: "أعضاء",
+  members_link_list: "قائمة",
+  members_btn_new_user: "مستخدم جديد",
+  members_table_all: "الجميع",
+  members_table_email: "بريد إلكتروني",
+  members_table_first_name: "الاسم الأول",
+  members_table_last_name: "اسم العائلة",
+  members_table_status: "حالة",
+  members_table_role: "دور",
+  members_table_verified: "تم التحقق",
+  members_delete_dialog_content:
+    "هل أنت متأكد أنك تريد حذف {{items}} من العناصر؟",
+
+  // schools page
+
+  schools_organization: "المنظمات",
+  schools_link_home: "بيت",
+  schools_link_schools: "المدارس",
+  schools_table_cover: "غطاء",
+  schools_table_name: "اسم",
+  schools_table_country: "دولة",
+  schools_table_city: "مدينة",
+  schools_table_phone: "هاتف",
+  schools_table_active: "نشيط",
+  schools_add_aschool: "أضف مدرسة",
+  add_school_name: "اسم المدرسة",
+  add_school_country: "دولة",
+  add_school_city: "مدينة",
+  add_school_success_smg: "تم إنشاء المدرسة {{name}} بنجاح!",
+
+  // Management > School locales
+
+  general_tab_general: "عام",
+  general_tab_profile: "حساب تعريفي",
+  general_tab_settings: "إعدادات",
+  general_tab_contacts: "جهات الاتصال",
+  general_tab_socials: "الشبكات الاجتماعية",
+  general_profile_upload_img:
+    "مسموح *{{formats}} شفافة، \n الحد الأقصى لحجم {{size}}",
+  general_profile_live_at: "يعيش في",
+  general_content_settings: "إعدادات المحتوى",
+  general_settings_switcher_market_place_content: "عرض/السماح بمحتوى السوق",
+  general_settings_sso: "SSO",
+  general_settings_allow_sign_in_google: "السماح بتسجيل الدخول باستخدام جوجل",
+  general_settings_allow_sign_in_github: "السماح بتسجيل الدخول باستخدام جيثب",
+  general_settings_sso_note:
+    "ملاحظة: يسمح تسجيل الدخول الموحد بالتفاعل مع: Google Classroom Schoolology \n المزيد حول Edu SSO: ",
+  general_user_settings: "إعدادات المستخدم",
+  general_user_invate_only: "المستخدمين المدعوين فقط",
+  general_user_settings_note:
+    "ملاحظة: السماح للمستخدمين بالتسجيل فقط عند دعوتهم من قبل المعلم",
+  general_lang_settings: "اعدادات اللغة:",
+  general_lang_settings_default: "اللغة الافتراضية:",
+  general_interaction_setting: "إعدادات التفاعل:",
+  general_settings_disable_chat: "تعطيل الدردشة",
+  general_settings_disable_gallery: "تعطيل المعرض",
+  general_settings_disable_global_gallery: "تعطيل المعرض العالمي",
+  general_interaction_note:
+    "ملحوظة: لا يمكن للمستخدمين رؤية المشاريع الخارجية أو التعليق عليها.",
+
   organizations: {
-    dashboard_title: "Dashboard",
-    title: "Organizations",
+    dashboard_title: "حساب تعريفي",
+    title: "المنظمات",
     general_page: {
-      title: "General",
+      title: "عام",
       tabs: {
         labels: {
-          profile: "Profile",
-          settings: "Settings",
+          general: "عام",
+          profile: "حساب تعريفي",
+          settings: "إعدادات",
+          contacts: "جهات الاتصال",
+          social_networks: "الشبكات الاجتماعية",
           customization: "Customization",
         },
         content: {

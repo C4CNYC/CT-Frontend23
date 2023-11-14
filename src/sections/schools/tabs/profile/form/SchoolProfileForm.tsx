@@ -121,9 +121,13 @@ export default function SchoolProfileForm({
                 xs: "repeat(1, 1fr)",
               }}
             >
-              <RHFTextField name="name" label="Name" />
+              <RHFTextField name="name" label={translate("name") as string} />
 
-              <RHFSelect native name="country" label="Country">
+              <RHFSelect
+                native
+                name="country"
+                label={translate("country") as string}
+              >
                 <option value="" />
                 {countries.map((country) => (
                   <option key={country.code} value={country.label}>
@@ -132,9 +136,12 @@ export default function SchoolProfileForm({
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="address" label="Address" />
+              <RHFTextField
+                name="address"
+                label={translate("address") as string}
+              />
 
-              <RHFTextField name="city" label="City" />
+              <RHFTextField name="city" label={translate("city") as string} />
 
               <Controller
                 name="phone"
@@ -142,7 +149,11 @@ export default function SchoolProfileForm({
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    helperText={
+                      fieldState.invalid
+                        ? `${translate("messages_invalid_phone")}`
+                        : ""
+                    }
                     error={fieldState.invalid}
                   />
                 )}
@@ -151,7 +162,7 @@ export default function SchoolProfileForm({
               <RHFTextField
                 fullWidth
                 name="about"
-                label="About"
+                label={translate("about") as string}
                 multiline
                 rows={5}
               />

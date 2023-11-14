@@ -69,13 +69,10 @@ export default function SchoolProfileTab({
                       whiteSpace: "pre-line",
                     }}
                   >
-                    {`${translate(
-                      "organizations.general_page.tabs.content.profile.upload_image",
-                      {
-                        formats: "png",
-                        size: fData(200000),
-                      }
-                    )}`}
+                    {`${translate("general_profile_upload_img", {
+                      formats: "png",
+                      size: fData(200000),
+                    })}`}
                   </Typography>
                 }
               />

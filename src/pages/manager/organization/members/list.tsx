@@ -96,32 +96,32 @@ export default function UserListPage(): React.ReactElement {
     { id: "" },
     {
       id: "email",
-      label: `${translate("organizations.members_page.table.email")}`,
+      label: `${translate("members_table_email")}`,
       align: "left",
     },
     {
       id: "first_name",
-      label: `${translate("organizations.members_page.table.first_name")}`,
+      label: `${translate("members_table_first_name")}`,
       align: "left",
     },
     {
       id: "last_name",
-      label: `${translate("organizations.members_page.table.last_name")}`,
+      label: `${translate("members_table_last_name")}`,
       align: "left",
     },
     {
       id: "role",
-      label: `${translate("organizations.members_page.table.role")}`,
+      label: `${translate("members_table_role")}`,
       align: "left",
     },
     {
       id: "isVerified",
-      label: `${translate("organizations.members_page.table.verified")}`,
+      label: `${translate("members_table_verified")}`,
       align: "center",
     },
     {
       id: "status",
-      label: `${translate("organizations.members_page.table.status")}`,
+      label: `${translate("members_table_status")}`,
       align: "left",
     },
     { id: "" },
@@ -168,12 +168,15 @@ export default function UserListPage(): React.ReactElement {
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: `${translate("organizations.members_page.title")}`,
+              name: `${translate("members_link_home")}`,
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            {
+              name: `${translate("members_link_members")}`,
               href: MANAGER_PATH_DASHBOARD.organization.root,
             },
-            { name: `${translate("organizations.members_page.list_title")}` },
+            { name: `${translate("members_link_list")}` },
           ]}
           action={
             <Button
@@ -182,7 +185,7 @@ export default function UserListPage(): React.ReactElement {
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              {`${translate("organizations.members_page.new_user_btn")}`}
+              {`${translate("members_btn_new_user")}`}
             </Button>
           }
         />
@@ -312,10 +315,10 @@ export default function UserListPage(): React.ReactElement {
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
+        title={translate("members_delete") as string}
         content={
           <>
-            {`${translate("organizations.members_page.delete_dialog.content", {
+            {`${translate("members_delete_dialog_content", {
               items: selected.length,
             })}
            `}
@@ -330,7 +333,7 @@ export default function UserListPage(): React.ReactElement {
               handleCloseConfirm();
             }}
           >
-            {`${translate("actions_delete")}`}
+            {`${translate("members_delete")}`}
           </Button>
         }
       />

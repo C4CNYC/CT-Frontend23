@@ -62,7 +62,7 @@ export default function AddSchoolDialog(): React.ReactElement {
         ...data,
       }).unwrap();
       enqueueSnackbar(
-        `${translate("organizations.schools_page.create_dialog.success_msg", {
+        `${translate("add_school_success_smg", {
           name: data.name,
         })}`
       );
@@ -80,10 +80,10 @@ export default function AddSchoolDialog(): React.ReactElement {
         variant="contained"
         startIcon={<AddIcon />}
       >
-        {`${translate("organizations.schools_page.create_school_btn")}`}
+        {`${translate("schools_add_aschool")}`}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add School</DialogTitle>
+        <DialogTitle>{translate("schools_add_aschool") as string}</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
@@ -95,20 +95,14 @@ export default function AddSchoolDialog(): React.ReactElement {
                   <Box rowGap={3} display="grid">
                     <RHFTextField
                       name="name"
-                      label={`${translate(
-                        "organizations.schools_page.create_dialog.inputs.school_name"
-                      )}`}
+                      label={`${translate("add_school_name")}`}
                       required
                     />
                     <RHFSelect
                       native
                       name="country"
-                      label={`${translate(
-                        "organizations.schools_page.create_dialog.inputs.country"
-                      )}`}
-                      placeholder={`${translate(
-                        "organizations.schools_page.create_dialog.inputs.country"
-                      )}`}
+                      label={`${translate("country")}`}
+                      placeholder={`${translate("country")}`}
                     >
                       <option value="" />
                       {countries.map((country) => (
@@ -119,9 +113,7 @@ export default function AddSchoolDialog(): React.ReactElement {
                     </RHFSelect>
                     <RHFTextField
                       name="city"
-                      label={`${translate(
-                        "organizations.schools_page.create_dialog.inputs.city"
-                      )}`}
+                      label={`${translate("city")}`}
                       required
                     />
                   </Box>

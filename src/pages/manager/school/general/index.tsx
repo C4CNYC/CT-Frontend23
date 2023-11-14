@@ -18,6 +18,7 @@ import {
   SchoolSocialsTab,
 } from "@sections/schools/tabs";
 import SkeletonProfileTab from "@sections/schools/tabs/profile/SkeletomProfileTab";
+import { useLocales } from "src/locales";
 import {
   useGetSchoolProfileQuery,
   useUpdateSchoolCoverImgMutation,
@@ -32,6 +33,7 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfilePage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const { translate } = useLocales();
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
@@ -41,25 +43,25 @@ export default function UserProfilePage(): React.ReactElement {
   const TABS = [
     {
       value: "profile",
-      label: "General",
+      label: `${translate("general_tab_general")}`,
       icon: <Iconify icon="ic:round-account-box" />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: "settings",
-      label: "Settings",
+      label: `${translate("general_tab_settings")}`,
       icon: <Iconify icon="ic:baseline-settings-applications" />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: "contacts",
-      label: "Contacts",
+      label: `${translate("general_tab_contacts")}`,
       icon: <MdContacts />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: "socials",
-      label: "Social Networks",
+      label: `${translate("general_tab_socials")}`,
       icon: <BsPeopleFill />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },

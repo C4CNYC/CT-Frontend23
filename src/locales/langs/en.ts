@@ -42,6 +42,7 @@ const en = {
   analytics: "analytics",
   ecommerce: "e-commerce",
   management: "management",
+  organization: "Organizations",
   menu_level: "menu level",
   menu_level_2a: "menu level 2a",
   menu_level_2b: "menu level 2b",
@@ -57,6 +58,20 @@ const en = {
   other_cases: "other cases",
   item_by_roles: "item by roles",
 
+  // general locales
+  name: "Name",
+  country: "Country",
+  address: "Address",
+  city: "City",
+  phone: "Phone",
+  about: "About",
+  students: "Students",
+  teachers: "Teachers",
+  social: "Social",
+
+  // Links
+  home: "Home",
+
   // avatar upload
   avatar__upload_text: "Upload photo",
   avatar__update_text: "Update photo",
@@ -66,6 +81,7 @@ const en = {
   messages_update_success: "Update success!",
   messages_error: "Something went wrong",
   messages_no_data: "No Data",
+  messages_invalid_phone: "Phone is invalid",
 
   // action words
   actions_delete: "Delete",
@@ -106,9 +122,129 @@ const en = {
   sidebar_menu_apps: "APPS",
   sidebar_menu_socials: "socials",
 
+  // members page
+
+  members_delete: "Delete",
+  members_link_home: "Home",
+  members_link_members: "members",
+  members_link_list: "list",
+  members_btn_new_user: "New User",
+  members_table_all: "All",
+  members_table_email: "email",
+  members_table_first_name: "First name",
+  members_table_last_name: "Last name",
+  members_table_status: "Status",
+  members_table_role: "Role",
+  members_table_verified: "Verified",
+  members_delete_dialog_content: "Are you sure want to delete {{items}} items?",
+
+  //  school page
+
+  schools_organization: "Organizations",
+  schools_link_home: "Home",
+  schools_link_schools: "Schools",
+  schools_table_cover: "Cover",
+  schools_table_name: "Name",
+  schools_table_country: "Country",
+  schools_table_city: "City",
+  schools_table_phone: "Phone",
+  schools_table_active: "Active",
+  schools_add_aschool: "Add School",
+  add_school_name: "School name",
+  add_school_country: "Country",
+  add_school_city: "City",
+  add_school_success_smg: "School {{name}} created successfully!",
+
+  // schools_page: {
+  //   title: "Schools",
+  //   archive_dialog: {
+  //     content: "Are you sure want to archive?",
+  //   },
+  //   create_dialog: {
+  //     success_msg: "School {{name}} created successfully!",
+  //     inputs: {
+  //       country: "Country",
+  //       city: "City",
+  //       school_name: "School name",
+  //     },
+  //   },
+  //   create_school_btn: "Add School",
+  // },
   //
   // organizations
   //
+
+  //  Managemant > School
+
+  // general: "General",
+
+  general_tab_general: "General",
+  general_tab_profile: "Profile",
+  general_tab_settings: "Settings",
+  general_tab_contacts: "Contacts",
+  general_tab_socials: "Social Networks",
+  general_profile_upload_img:
+    "Allowed transparent *{{formats}}, \n max size of {{size}}",
+  general_profile_live_at: "Live at",
+  general_content_settings: "Content Settings",
+  general_settings_switcher_market_place_content:
+    "Show/Allow Marketplace content",
+  general_settings_sso: "SSO",
+  general_settings_allow_sign_in_google: "Allow Sign-in with Google",
+  general_settings_allow_sign_in_github: "Allow Sign-in with Github",
+  general_settings_sso_note:
+    "Note: Single-sign-on allows interfacing with: Google Classroom Schoolology \n More about Edu SSO: ",
+  general_user_settings: "User Settings",
+  general_user_invate_only: "Invite-only users",
+  general_user_settings_note:
+    "Note: Only allow users to sign-up when invited by and teacher",
+  general_lang_settings: "Language Settings:",
+  general_lang_settings_default: "Default Language:",
+  general_interaction_setting: "Interaction Settings:",
+  general_settings_disable_chat: "Disable Chat",
+  general_settings_disable_gallery: "Disable Gallery",
+  general_settings_disable_global_gallery: "Disable Global Gallery",
+  general_interaction_note:
+    "Note: Users can not see or comments on external projects.",
+  // general_page: {
+  //       settings: {
+  //         content_settings: "Content Settings",
+  //         switcher_market_place_content: "Show/Allow Marketplace content",
+  //         sso: "SSO",
+  //         sso_note:
+  //           "Note: Single-sign-on allows interfacing with: Google Classroom Schoolology \n More about Edu SSO: ",
+  //         user_settings: "User Settings",
+  //         user_settings_note:
+  //           "Note: Only allow users to sign-up when invited by and teacher",
+  //         lang_settings: "Language Settings:",
+  //         def_lang: "Default Language:",
+  //         interactions_settings: "Interaction Settings:",
+  //         interactions_settings_note:
+  //           "Note: Users can not see or comments on external projects.",
+  //       },
+  //       customization: {
+  //         invalid_color_msg: "Color is invalid",
+  //         primary_color: "Primary Brand Color",
+  //         secondary_color: "Secondary Brand Color",
+  //         alternative_color: "Alternative Brand Color",
+  //         seo_description: "Short description of platform for SEO",
+  //         seo_description_note:
+  //           "Note: This will be added as the page meta description for the platform. Max 70 characters words - Approximately 10 words.",
+  //         seo_input_label: "Meta description",
+  //         groups_name: "Customized Groups Name",
+  //         groups_input_label: "Customized Groups Name",
+  //         groups_note:
+  //           "Note: Learners are either invited by an admin or auto-added to a Group on registration/signup.\n" +
+  //           "ome ideas, but you can choose your own: Class/esClub/sHub/sHive/sGroup/sAnything else that is fun and engaging.",
+  //         first_slide_text: "Welcome Message of your organization",
+  //         first_slide_input_label: "Welcome Message",
+  //         first_slide_note:
+  //           'Note: Should be about 10-15 words and welcome new users to the platform in your own way. What is this? When you first arrive on the Coding Panel you see an "Intro Guide" with a sequence of explainer modals. Here you can customize the text for the first slide in the sequence.',
+  //       },
+  //     },
+  //   },
+  // },
+
   organizations: {
     dashboard_title: "Dashboard",
     title: "Organizations",

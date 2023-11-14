@@ -21,14 +21,17 @@ export default function Index(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {`${translate("organizations.title")} | CodeTribe`}</title>
+        <title> {`${translate("organization")} | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading={""}
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-            { name: `${translate("organizations.schools_page.title")}` },
+            {
+              name: `${translate("schools_link_home")}`,
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            { name: `${translate("schools_link_schools")}` },
           ]}
           action={<AddSchoolDialog />}
         />

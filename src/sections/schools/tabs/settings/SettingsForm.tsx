@@ -68,7 +68,7 @@ export default function SettingsForm({
         gallery_allowed: data.gallery_allowed,
         global_gallery_allowed: data.global_gallery_allowed,
       }).unwrap();
-      enqueueSnackbar("Update success!");
+      enqueueSnackbar(`${translate("messages_update_success")}`);
       reset({}, { keepValues: true });
     } catch (error: any) {}
   };
@@ -81,16 +81,16 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.content_settings"
-          )}`}
+          {`${translate("general_content_settings")}`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
           <RHFSwitch
             checked={settings?.marketplace_content_allowed}
             key="marketplace_content_allowed"
             name="marketplace_content_allowed"
-            label="Show/Allow Marketplace content"
+            label={`${translate(
+              "general_settings_switcher_market_place_content"
+            )}`}
             sx={{ m: 0 }}
           />
         </Stack>
@@ -101,21 +101,19 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.sso"
-          )}`}
+          {`${translate("general_settings_sso")}`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
           <RHFSwitch
             key="google_login_allowed"
             name="google_login_allowed"
-            label="Allow Sign-in with Google"
+            label={`${translate("general_settings_allow_sign_in_google")}`}
             sx={{ m: 0 }}
           />
           <RHFSwitch
             key="github_login_allowed"
             name="github_login_allowed"
-            label="Allow Sign-in with Github"
+            label={`${translate("general_settings_allow_sign_in_github")}`}
             sx={{ m: 0 }}
           />
           <Typography
@@ -123,9 +121,7 @@ export default function SettingsForm({
             component="div"
             sx={{ color: "text.secondary", whiteSpace: "pre-line" }}
           >
-            {`${translate(
-              "organizations.general_page.tabs.content.settings.sso_note"
-            )}`}
+            {`${translate("general_settings_sso_note")}`}
             <Link
               href="https://ed.link/community/single-sign-on-for-education/"
               target="_blank"
@@ -142,15 +138,13 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.user_settings"
-          )}`}
+          {`${translate("general_user_settings")}`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
           <RHFSwitch
             key="invite_only"
             name="invite_only"
-            label="Invite-only users"
+            label={`${translate("general_user_invate_only")}`}
             sx={{ m: 0 }}
           />
           <Typography
@@ -158,9 +152,7 @@ export default function SettingsForm({
             component="div"
             sx={{ color: "text.secondary" }}
           >
-            {`${translate(
-              "organizations.general_page.tabs.content.settings.user_settings_note"
-            )}`}
+            {`${translate("general_user_settings_note")}`}
           </Typography>
         </Stack>
       </Card>
@@ -171,17 +163,13 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.lang_settings"
-          )}`}
+          {`${translate("general_lang_settings")}`}
         </Typography>
         <Stack alignItems="center" direction="row" spacing={1} sx={{ mt: 2 }}>
           <RHFSelect
             native
             name="language"
-            label={`${translate(
-              "organizations.general_page.tabs.content.settings.def_lang"
-            )}`}
+            label={`${translate("general_lang_settings_default")}`}
             sx={{ width: { xs: "100%", sm: "320px" } }}
           >
             <option key="en" value="en">
@@ -197,27 +185,25 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary" }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.interactions_settings"
-          )}`}
+          {`${translate("general_interaction_setting")}`}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
           <RHFSwitch
             key="chat_allowed"
             name="chat_allowed"
-            label="Disable Chat"
+            label={`${translate("general_settings_disable_chat")}`}
             sx={{ m: 0 }}
           />
           <RHFSwitch
             key="gallery_allowed"
             name="gallery_allowed"
-            label="Disable Gallery"
+            label={`${translate("general_settings_disable_gallery")}`}
             sx={{ m: 0 }}
           />
           <RHFSwitch
             key="global_gallery_allowed"
             name="global_gallery_allowed"
-            label="Disable Global Gallery"
+            label={`${translate("general_settings_disable_global_gallery")}`}
             sx={{ m: 0 }}
           />
         </Stack>
@@ -226,9 +212,7 @@ export default function SettingsForm({
           component="div"
           sx={{ color: "text.secondary", mt: 1 }}
         >
-          {`${translate(
-            "organizations.general_page.tabs.content.settings.interactions_settings_note"
-          )}`}
+          {`${translate("general_interaction_note")}`}
         </Typography>
       </Card>
 
