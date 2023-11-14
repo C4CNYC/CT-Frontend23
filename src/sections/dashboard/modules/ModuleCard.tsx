@@ -68,13 +68,6 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
   const handleClosePopover = (): void => {
     setOpenPopover(null);
   };
-  const getDurationString = (obj: Record<string, number>) => {
-    let str = "";
-    for (const [key, value] of Object.entries(obj)) {
-      str += `${value} ${key} `;
-    }
-    return str;
-  }
 
   return (
     <>
@@ -122,8 +115,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
 
         <Box
           component="img"
-          src={module.avatar ?? "/assets/icons/files/ic_folder.svg"}
-          alt={module.avatar}
+          src="/assets/icons/files/ic_folder.svg"
           sx={{ width: 40, height: 40, mt: 4 }}
         />
 
@@ -164,10 +156,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             name: module.name,
             description: module.description as string,
             active: module.active as boolean,
-            tips: "",
-            duration: module.duration ? getDurationString(module.duration) : "",
           }}
-          moduleTips={module.tips}
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />

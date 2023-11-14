@@ -47,7 +47,7 @@ export default function NewPasswordPage(): React.ReactElement {
 
       <Link
         component={NextLink}
-        href={PATH_AUTH.signIn}
+        href={PATH_AUTH.singIn}
         color="inherit"
         variant="subtitle2"
         sx={{

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { differenceInDays } from "date-fns";
 
 import {
   Avatar,
@@ -20,12 +22,12 @@ import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 import { fDate } from "../../../utils/formatTime";
 import AssignmentDrawer from "./AssignmentDrawer";
 
-interface Props {
+type Props = {
   row: IAssignmentFull;
   selected: boolean;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
-}
+};
 
 export default function AssignmentsTableRow({
   row,
@@ -35,7 +37,7 @@ export default function AssignmentsTableRow({
 }: Props) {
   const { name, type, start_date, end_date, active } = row;
 
-  const [status] = useState(Status.open);
+  const [status, setStatus] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);

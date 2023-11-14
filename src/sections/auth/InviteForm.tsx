@@ -68,7 +68,7 @@ export default function InviteForm(): React.ReactElement {
       }).unwrap();
       enqueueSnackbar("Submit successfully");
       router.replace({
-        pathname: PATH_AUTH.signIn,
+        pathname: PATH_AUTH.singIn,
         query: { tenant_name },
       });
     } catch (error) {

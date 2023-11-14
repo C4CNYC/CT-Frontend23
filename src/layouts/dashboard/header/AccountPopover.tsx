@@ -53,7 +53,7 @@ export default function AccountPopover(): React.ReactElement {
   const handleLogout = (): void => {
     try {
       logout();
-      replace(PATH_AUTH.signIn);
+      replace(PATH_AUTH.singIn);
       setOpenPopover(null);
     } catch (error: any) {
       enqueueSnackbar("Unable to logout!", { variant: "error" });
@@ -86,13 +86,17 @@ export default function AccountPopover(): React.ReactElement {
       >
         <CustomAvatar
           src={
-            profile?.avatar
+            isStudentMode ? profile?.student_profile.avatar : profile?.avatar
           }
           alt={
-            profile?.first_name
+            isStudentMode
+              ? profile?.student_profile.first_name
+              : profile?.first_name
           }
           name={
-            profile?.first_name
+            isStudentMode
+              ? profile?.student_profile.first_name
+              : profile?.first_name
           }
         />
       </IconButtonAnimate>
@@ -107,7 +111,9 @@ export default function AccountPopover(): React.ReactElement {
         <Box sx={{ my: 1.5, px: 2.5 }}>
           {!isLoading ? (
             <Typography variant="subtitle2" noWrap>
-              {`${profile?.first_name} ${profile?.last_name}`}
+              {isStudentMode
+                ? `${profile?.student_profile.first_name} ${profile?.student_profile.last_name}`
+                : `${profile?.first_name} ${profile?.last_name}`}
             </Typography>
           ) : (
             <Skeleton variant="rectangular" height="20px" sx={{ mb: "4px" }} />
@@ -141,7 +147,9 @@ export default function AccountPopover(): React.ReactElement {
           <MenuItem
             onClick={() => {
               handleClickItem(
-                STUDENT_PATH_PAGE.profile
+                isStudentMode
+                  ? STUDENT_PATH_PAGE.profile
+                  : MANAGER_PATH_PAGE.profile
               );
             }}
           >

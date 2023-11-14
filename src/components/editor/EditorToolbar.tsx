@@ -22,7 +22,7 @@ import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/Les
 
 import { LockButton } from "./LockButton";
 import { SaveButton } from "./SaveButton";
-import { ChallengeBtn, MediasBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
+import { ChallengeBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
 import {
   FontFamilyButtons,
   FontSizeButtons,
@@ -82,7 +82,7 @@ export default function EditorToolbar({
               <Stack
                 direction="row"
                 sx={{
-                  maxWidth: "450px",
+                  maxWidth: "400px",
                   gap: 1,
                   flexWrap: "wrap",
                   justifyContent: "space-between",
@@ -91,7 +91,6 @@ export default function EditorToolbar({
                 <TemplateBtn />
                 <ChallengeBtn />
                 <SettingsBtn />
-                <MediasBtn />
               </Stack>
             </Stack>
           </>

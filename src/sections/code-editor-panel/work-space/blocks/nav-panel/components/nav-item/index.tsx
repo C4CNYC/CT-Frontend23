@@ -1,63 +1,70 @@
-import { type FC } from "react";
+import { useMemo, type FC } from "react";
 
 import {
+  ListItemButton,
   ListItem,
-  ListItemText, 
+  ListItemText,
   Stack,
   Badge,
   ListItemAvatar,
-  Avatar,
-  IconButton,
-  Tooltip
+  Avatar
 } from "@mui/material";
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { IFriend } from "src/redux/interfaces/friends.interface";
-import { BaseResponseInterface } from "@utils";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import { getRandomIndex } from "../../hook/utils";
+import { ActivityStatus } from "../../../../../../../types/activity-status";
+import { getActivityColor } from "../../../../../../../utils/activity-color";
 
 interface NavItemProps {
   onClick?: () => void
   onToggle: () => void
-  data: IFriend & BaseResponseInterface
+  status?: ActivityStatus
+  name: string
+  topic: string
+  id: string
 }
 
-const MAX_NAME_LENGTH = 15;
-const MAX_ABOUT_LENGTH = 28;
+const getAvatarLetters = (name: string) => {
+  const [firstName, lastName] = name.split(" ")
+
+  return `${(firstName[0] ?? "").toUpperCase()}${(lastName[0] ?? "").toUpperCase()}`
+}
+
+const COLORS = ["#155275", "rgba(120, 56, 121, 0.80)", "#EE467A"]
 
 const NavItem: FC<NavItemProps> = ({
   onToggle,
-  onClick,
-  data
+  status,
+  name,
+  topic,
+  onClick
 }) => {
-  const name = `${data.first_name} ${data.last_name}`;
-  const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : "";
-  const tooltipAbout = data.about?.length > MAX_ABOUT_LENGTH ? data.about : "";
+  const background = useMemo(() => COLORS[getRandomIndex(COLORS.length)] ?? COLORS[0], []);
+
+  const activityColor = useMemo(() => {
+    return getActivityColor(status);
+  }, [status]);
 
   return (
     <ListItem>
       <Badge
-        sx={BADGE_SX}
-        badgeContent={data.active ? '' : null}
-        color="secondary"
+        overlap="circular"
+        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+        variant="dot"
+        sx={{ "& .MuiBadge-badge": { bgcolor: activityColor } }}
       >
         <ListItemAvatar onClick={onToggle}>
-
-        <Avatar src={data.avatar} />
+          <Avatar sx={{ background, color: "white" }}>{getAvatarLetters(name)}</Avatar>
         </ListItemAvatar>
       </Badge>
 
-      <Stack sx={STACK_TEXT_SX} direction="column">
-        <Tooltip placement="top-start" title={tooltipNameTitle}>
+      <ListItemButton onClick={onClick} sx={LIST_ITEM_BUTTON_SX}>
+        <Stack sx={STACK_TEXT_SX} direction="column">
           <ListItemText sx={NAME_SX} primary={name} />
-        </Tooltip>
-        
-        <Tooltip placement="top-start" title={tooltipAbout}>
-          <ListItemText sx={TOPIC_SX} primary={data.about} />
-        </Tooltip>
-      </Stack>
+          <ListItemText sx={TOPIC_SX} primary={topic} />
+        </Stack>
 
-      <IconButton onClick={onClick} sx={LIST_ITEM_BUTTON_SX}>
         <AddRoundedIcon />
-      </IconButton>
+      </ListItemButton>
     </ListItem>
   )
 }
@@ -69,38 +76,19 @@ const STACK_TEXT_SX = {
 const NAME_SX = {
   "& span": {
     fontSize: "18px",
-    color: "#364954",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "150px"
+    color: "#364954"
   }
 }
 
 const TOPIC_SX = {
   "& span": {
     color: "#616161",
-    fontSize: "11px",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "150px"
-  }
-}
-
-const BADGE_SX = {
-  '& .MuiBadge-badge': {
-    right: "auto",
-    top: 4,
-    left: -12,
-    width: 16,
-    height: 16,
-    minWidth: 16
+    fontSize: "11px"
   }
 }
 
 const LIST_ITEM_BUTTON_SX = {
-
+  paddingLeft: 0
 }
 
 export default NavItem;

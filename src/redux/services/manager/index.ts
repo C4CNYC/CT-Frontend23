@@ -22,6 +22,7 @@ export const managerApi = createApi({
     "Lessons",
     "LessonsContent",
     "Courses",
+    "CoursesList",
     "Tasks",
     "Skills",
     "LessonSkill",
@@ -51,7 +52,6 @@ export const managerApi = createApi({
     "Socials",
     "Goal",
     "LastVisitedUnitAndLesson",
-    "Medias"
   ],
   endpoints: () => ({}),
 });

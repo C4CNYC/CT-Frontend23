@@ -80,9 +80,7 @@ export const Chat = ({
 }: IChat): React.ReactElement => {
   const theme = useTheme();
   const tribe = useSelector((state: RootState) => state.codePanel.class);
-  const senderId = useSelector(
-    (state: RootState) => state.global.user?.student_profile?.id
-  );
+  const senderId = useSelector((state: RootState) => state.global.user?.id);
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [, setChatVisible] = useAtom(chatHandlerAtom);
   const { user: loggedUser } = useAuthContext();
@@ -96,6 +94,7 @@ export const Chat = ({
     setMessages([]);
     getMessages(user.id, (messages, db) => {
       setMessages(messages);
+      console.log(messages);
     });
   }, [user]);
 
@@ -108,13 +107,13 @@ export const Chat = ({
       if (reciverId === "SUPPORT") {
         ChatgptFirebaseOnSendMessage(
           reciverId,
-          loggedUser?.student_profile?.id,
+          loggedUser?.id,
           [
             ...messages,
             {
               id: "_",
               text: messageContent,
-              sender_id: loggedUser?.student_profile?.id,
+              sender_id: loggedUser?.id,
               uid: "_",
             },
           ],
@@ -202,7 +201,7 @@ export const Chat = ({
           onSend={(innerHtml, textContent, innerText) => {
             onSend({
               innerHtml,
-              textContent: innerHtml,
+              textContent,
               innerText,
               reciverId: user.id,
               callback: onSendCallback(user.id, textContent),
@@ -285,22 +284,20 @@ export const Chat = ({
             }}
             loading={isUserListLoading}
           >
-            {tribe ? (
-              <UsersItem
-                onSelecUser={(user: User) => {
-                  updateChat((prev) => ({ ...prev, user }));
-                }}
-                getMessages={getMessages}
-                user={{
-                  first_name: tribe?.name ?? "Tribe",
-                  last_name: "",
-                  avatar:
-                    tribe?.avatar ??
-                    "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
-                  id: tribe?.id as string,
-                }}
-              />
-            ) : null}
+            <UsersItem
+              onSelecUser={(user: User) => {
+                updateChat((prev) => ({ ...prev, user }));
+              }}
+              getMessages={getMessages}
+              user={{
+                first_name: tribe?.name ?? "Tribe",
+                last_name: "",
+                avatar:
+                  tribe?.avatar ??
+                  "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
+                id: tribe?.id as string,
+              }}
+            />
             {users.map((user) => (
               <UsersItem
                 key={user.id}

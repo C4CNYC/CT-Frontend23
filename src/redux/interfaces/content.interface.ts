@@ -74,7 +74,6 @@ export interface ILessonCurrent {
   draft?: boolean;
   id: string;
   lessons?: [];
-  progress?: number | null;
 }
 
 export interface ILessonContent {
@@ -85,7 +84,6 @@ export interface ILessonContent {
   type: LessonContentType;
   meta: Record<string, any>;
   integrations: IIntegration[];
-  progress?: number | null;
 }
 
 export interface ISkill {

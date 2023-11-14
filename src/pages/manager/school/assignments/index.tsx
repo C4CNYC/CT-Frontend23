@@ -41,6 +41,8 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import AssignmentsTableRow from "@sections/dashboard/assigments/AssignmentsTableRow";
 import AssignmentsTableToolbar from "@sections/dashboard/assigments/AssignmentsTableToolbar";
 import { fTimestamp } from "@utils";
+import _mock from "src/_mock/_mock";
+import { _invoices } from "src/_mock/arrays";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { Publish, Status } from "src/redux/enums/assignments.enum";
 import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
@@ -340,12 +342,12 @@ export default function AsssignmentsListPage() {
                 dense={dense}
                 numSelected={selected.length}
                 rowCount={tableData?.length ?? 0}
-                onSelectAllRows={(checked) => {
+                onSelectAllRows={(checked) =>
                   onSelectAllRows(
                     checked,
                     tableData ? tableData.map((row) => row.id) : []
-                  );
-                }}
+                  )
+                }
                 action={
                   <Stack direction="row">
                     <Tooltip title="Delete">
@@ -366,12 +368,12 @@ export default function AsssignmentsListPage() {
                     rowCount={tableData?.length ?? 0}
                     numSelected={selected.length}
                     onSort={onSort}
-                    onSelectAllRows={(checked) => {
+                    onSelectAllRows={(checked) =>
                       onSelectAllRows(
                         checked,
                         tableData ? tableData.map((row) => row.id) : []
-                      );
-                    }}
+                      )
+                    }
                   />
 
                   <TableBody>
@@ -385,12 +387,8 @@ export default function AsssignmentsListPage() {
                           key={row.id}
                           row={row}
                           selected={selected.includes(row.id)}
-                          onSelectRow={() => {
-                            onSelectRow(row.id);
-                          }}
-                          onDeleteRow={() => {
-                            handleDeleteRow(row.id);
-                          }}
+                          onSelectRow={() => onSelectRow(row.id)}
+                          onDeleteRow={() => handleDeleteRow(row.id)}
                         />
                       ))}
 
@@ -480,8 +478,9 @@ function applyFilter({
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
-    inputData = inputData.filter((assignment) =>
-      assignment.name.toLowerCase().includes(filterName.toLowerCase())
+    inputData = inputData.filter(
+      (assignment) =>
+        assignment.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
   if (filterType !== "all") {

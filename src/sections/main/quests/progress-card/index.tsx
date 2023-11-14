@@ -1,28 +1,29 @@
-// import Head from "next/head";
-// import { useRouter } from "next/router";
-// import { getProgressData } from "@pages/manager/school/progress";
-// import _ from "lodash";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
-// import { Container } from "@mui/material";
-// import { Stack } from "@mui/system";
+import { getProgressData } from "@pages/manager/school/progress";
+import _ from "lodash";
 
-// import { CustomBreadcrumbs } from "@components";
-// import { FilterMode, useFilters } from "@hooks";
-// import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-// import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";
-// import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Courses";
-// import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
-// import {
-//   SkeletonProgressTable,
-//   SkeletonProgressTableRow,
-// } from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
-// import { getCountTakingElment } from "@utils";
-// import {
-//   useGetProgressContentQuery,
-//   useGetProgressQuery,
-// } from "src/redux/services/manager/progress-manager";
-// import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
-// import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
+import { Container } from "@mui/material";
+import { Stack } from "@mui/system";
+
+import { CustomBreadcrumbs } from "@components";
+import { FilterMode, useFilters } from "@hooks";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";
+import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Courses";
+import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
+import {
+  SkeletonProgressTable,
+  SkeletonProgressTableRow,
+} from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
+import { getCountTakingElment } from "@utils";
+import {
+  useGetProgressContentQuery,
+  useGetProgressQuery,
+} from "src/redux/services/manager/progress-manager";
+import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
+import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
 
 interface IProgressCardProps {
   activeTab: boolean;

@@ -48,6 +48,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
     return <Box sx={BOX_STYLES}>{chatComponent}</Box>
   }
 
+
   return (
     <>
       <IconButton
@@ -86,7 +87,7 @@ const ICON_BUTTON_STYLES = {
   mb: "2px"
 }
 
-const DRAGGABLE_STYLES: CSSProperties = {
+const DRAGGABLE_STYLES: CSSProperties= {
   position: "absolute",
   height: "500px",
   width: "350px",

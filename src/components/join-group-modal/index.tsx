@@ -5,12 +5,14 @@ import {
   Button,
   Dialog,
   DialogActions,
+  DialogTitle,
   IconButton,
   Typography,
 } from "@mui/material";
 
 import { ClassMembersAutocomplete } from "../class-members-autocomplete";
 import { Iconify } from "../iconify";
+import ShareGroupModal from "../share-group-modal";
 
 interface Props {
   children: React.ReactElement;
@@ -29,9 +31,7 @@ export default function JoinGroupModal({ children, rowId }: Props) {
       </Box>
       <Dialog
         open={open}
-        onClose={() => {
-          setOpenDialog(false);
-        }}
+        onClose={() => setOpenDialog(false)}
         fullWidth
         scroll="body"
       >
@@ -50,9 +50,7 @@ export default function JoinGroupModal({ children, rowId }: Props) {
                   icon="ep:close"
                   width={24}
                   height={24}
-                  onClick={() => {
-                    setOpenDialog(false);
-                  }}
+                  onClick={() => setOpenDialog(false)}
                 />
               </IconButton>
             </Box>

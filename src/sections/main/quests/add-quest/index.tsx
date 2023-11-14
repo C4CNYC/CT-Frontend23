@@ -22,7 +22,6 @@ import {
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { bgBlur } from "@utils";
 import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
@@ -40,7 +39,6 @@ import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
 import { CreateQuestSchema } from "./helpers/create-quest.schema";
 import { FormQuestProps } from "./helpers/quest.interface";
-import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 const RANDOM_NAME = uniqueNamesGenerator({
   dictionaries: [colors, animals],
@@ -76,8 +74,6 @@ export default function AddQuest(): React.ReactElement {
     useUpdateCourseAssignmentMutation();
   const [addAssignmentToClass] = useUpdateClassAssignmentMutation();
 
-  const coursesData = useManagerGetCourseQuery({});
-
   useEffect(() => {
     if (assignment) {
       methods.reset({
@@ -93,12 +89,6 @@ export default function AddQuest(): React.ReactElement {
     }
   }, [isAssignmentLoading]);
 
-  useEffect(() => {
-    if(coursesData?.data?.data[0]?.id && !methods.getValues().course) {
-        methods.setValue("course", coursesData.data?.data[0]?.id);
-    }
-  }, [coursesData])
-
   const methods = useForm<FormQuestProps>({
     resolver: yupResolver(CreateQuestSchema),
     mode: "all",
@@ -106,7 +96,7 @@ export default function AddQuest(): React.ReactElement {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? "{}"),
       type: assignment?.type ?? AssignmentTypes.COURSE,
-      course: assignment?.course?.id ?? coursesData.data?.data[0]?.id,
+      course: assignment?.course?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(
         DATE_PARSER(assignment?.end_date, DAYS_TO_END),
@@ -196,20 +186,7 @@ export default function AddQuest(): React.ReactElement {
 
   return (
     <>
-      <Stack
-        sx={(theme) => ({
-          px: 5,
-          py: 8,
-          border: theme.palette.mode === "light" ? "" : "1px solid #fff",
-          ...bgBlur({
-            color:
-              theme.palette.mode === "light"
-                ? "#f3f3f3"
-                : theme.palette.background.default,
-          }),
-          borderRadius: 3,
-        })}
-      >
+      <Stack sx={{ px: 5, py: 8, background: "#f3f3f3", borderRadius: 3 }}>
         <Stack
           sx={{
             flexDirection: "row",
@@ -269,7 +246,7 @@ export default function AddQuest(): React.ReactElement {
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep coursesData={{ data: coursesData.data?.data, isLoading: coursesData.isLoading }} />
+              <DetailsStep />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep

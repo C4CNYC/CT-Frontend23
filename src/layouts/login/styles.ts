@@ -1,36 +1,42 @@
-import { styled } from "@mui/material/styles";
+// @mui
+import { alpha, styled } from "@mui/material/styles";
 
-import { bgBlur } from "@utils";
+// utils
+import { bgGradient } from "@utils";
 
-export const StyledRoot = styled("main")(({ theme }) => ({
+// ----------------------------------------------------------------------
+
+export const StyledRoot = styled("main")(() => ({
   height: "100%",
   display: "flex",
   position: "relative",
-  backgroundColor:
-    theme.palette.mode === "light" ? "#E6FBFC" : "rgba(54, 73, 84, 1)",
+  backgroundColor: "#E6FBFC",
 }));
 
 export const StyledSection = styled("div")(({ theme }) => ({
   display: "none",
   position: "relative",
-  backgroundColor: "#E6FBFC",
-  ...bgBlur({
-    color:
-      theme.palette.mode === "light"
-        ? "#fff"
-        : theme.palette.background.default,
-  }),
+  backgroundColor: "white",
   margin: 16,
   borderRadius: "8px",
   [theme.breakpoints.up("md")]: {
+    // flexGrow: 1,
     padding: "45px",
     display: "flex",
+    // alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
   },
 }));
 
 export const StyledSectionBg = styled("div")(({ theme }) => ({
+  ...bgGradient({
+    color: alpha(
+      theme.palette.background.default,
+      theme.palette.mode === "light" ? 0.9 : 0.94
+    ),
+    imgUrl: "/assets/background/overlay_2.jpg",
+  }),
   top: 0,
   left: 0,
   zIndex: -1,
@@ -45,9 +51,10 @@ export const StyledContent = styled("div")(({ theme }) => ({
   margin: "auto",
   display: "flex",
   borderRadius: "8px",
+  // minHeight: "100vh",
   justifyContent: "center",
+  backgroundColor: "#fff",
   padding: theme.spacing(5),
-  ...bgBlur({ color: theme.palette.background.default }),
   [theme.breakpoints.up("md")]: {
     flexShrink: 0,
   },

@@ -9,11 +9,14 @@ import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
 
 import { Iconify } from "@components";
+import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { useSubmitPasswordMutation } from "src/redux/services/auth";
 
 import { FormProvider, RHFTextField } from "../../components/hook-form";
 import { useSnackbar } from "../../components/snackbar";
 import { PATH_AUTH } from "../../routes/paths";
+
+// ----------------------------------------------------------------------
 
 interface FormValuesProps {
   password: string;
@@ -55,7 +58,7 @@ export default function SubmitPasswordForm() {
         password: data.password,
       }).unwrap();
       enqueueSnackbar("Change password success!");
-      push(PATH_AUTH.signIn);
+      push(PATH_AUTH.singIn);
     } catch (error) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }

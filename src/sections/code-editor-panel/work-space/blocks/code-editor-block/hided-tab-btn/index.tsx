@@ -42,4 +42,5 @@ const HidedTabBtn: FC = () => {
   );
 }
 
+
 export default HidedTabBtn;

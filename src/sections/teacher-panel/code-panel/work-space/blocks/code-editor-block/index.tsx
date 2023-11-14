@@ -24,7 +24,6 @@ export interface State {
   version?: number;
   doc?: string;
 }
-const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" });
 
 const CodeEditorBlock = ({
   columns = 1,
@@ -49,9 +48,9 @@ ICodeEditorBlock): React.ReactElement | null => {
         <Checkers checkers={mapValidations(code, validations)} />
       ) : null}
       <RealTimeCodeEditor
-        socket={socket}
         roomId={query?.studentId as string ?? user?.id}
         connectionType={query?.studentId !== undefined ? "connect" : "create"}
+        userId={user?.id as string}
         colabCursonId={user?.email}
         colabCursonText={`${user?.first_name}`}
         onChangeCode={(code) => {

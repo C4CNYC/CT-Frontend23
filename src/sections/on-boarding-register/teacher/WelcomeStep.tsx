@@ -9,7 +9,7 @@ export default function WelcomeStep({
 }): React.ReactElement {
   return (
     <>
-      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "10px" }}>
+      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "60px" }}>
         <Typography variant="h3">Hey, Teachers</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           👋

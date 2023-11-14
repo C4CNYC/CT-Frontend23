@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { createTheme } from "@uiw/codemirror-themes";
@@ -11,7 +11,6 @@ import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { Iconify } from "@components";
-import { useRealTimeConnection } from "@hooks";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
@@ -19,7 +18,7 @@ import { RootState } from "src/redux/store";
 
 import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
 import { getDocument } from "../../../../codemirror/extensions/collab";
-import { io } from "socket.io-client";
+import { useSocket } from "@hooks";
 
 interface IQuickRabbitsItem {
   rabit: { id: string, email: string, avatar: string };
@@ -47,10 +46,9 @@ export default function QuickRabbitsItem({
   const [view, setView] = useState<TabbitView>(
     rabit.email === GROUP_CHAT_RABBIT ? TabbitView.CHAT : TabbitView.CODE
   );
-  useRealTimeConnection(rabit.id);
 
   // Realtime code logic
-  const socketIo = useRef(io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/" }));
+  const socket = useSocket();
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,
@@ -62,7 +60,7 @@ export default function QuickRabbitsItem({
    * If no/invalid data is returned, it tries again every 3 seconds.
    */
   async function initializeData() {
-    const { version, doc } = await getDocument(socketIo.current, rabit.id);
+    const { version, doc } = await getDocument(socket, rabit.id);
 
     // If no data is returned, try again in 3 seconds
     if (version === undefined || !doc) {
@@ -81,12 +79,11 @@ export default function QuickRabbitsItem({
   }
 
   const initializeConnection = useCallback(async () => {
-    socketIo.current.emit("joinRoom", rabit.id);
+    socket.emit("joinRoom", rabit.id);
     await initializeData();
   }, [initializeData]);
 
   useEffect(() => {
-    const socket = socketIo.current;
     socket.open();
 
     if (socket.connected) {

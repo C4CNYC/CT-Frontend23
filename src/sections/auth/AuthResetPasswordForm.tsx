@@ -37,7 +37,7 @@ export default function AuthResetPasswordForm(): React.ReactElement {
     try {
       await resetPassword(data).unwrap();
       enqueueSnackbar("The message has been sent to your email");
-      push(PATH_AUTH.signIn);
+      push(PATH_AUTH.singIn);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",

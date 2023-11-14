@@ -20,14 +20,16 @@ import { FormProvider, RHFCodes } from "@components";
 
 import { useSnackbar } from "../../components/snackbar";
 
-interface FormValuesProps {
+// ----------------------------------------------------------------------
+
+type FormValuesProps = {
   code1: string;
   code2: string;
   code3: string;
   code4: string;
   code5: string;
   code6: string;
-}
+};
 interface Props {
   children: React.ReactElement;
 }
@@ -69,7 +71,9 @@ export default function JoinCode({ children }: Props) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Verify success!");
       setOpen(false);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

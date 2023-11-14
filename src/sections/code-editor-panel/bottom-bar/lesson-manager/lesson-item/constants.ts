@@ -14,3 +14,4 @@ export const getTypSx = (isMobile: boolean): SxProps => ({
   textOverflow: "ellipsis",
   width: isMobile ? "220px" : "300px",
 });
+

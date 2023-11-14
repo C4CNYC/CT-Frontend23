@@ -12,12 +12,12 @@ import JoinTribeRegister from "./join-tribe-register.tsx";
 
 interface IJoinTribeModal {
   classInfo: IClass & BaseResponseInterface;
-  isSignIn?: boolean;
+  isSingIn?: boolean;
 }
 
 export default function JoinTribeModal({
   classInfo,
-  isSignIn,
+  isSingIn,
 }: IJoinTribeModal): React.ReactElement {
   const [isLogin, setIsLogin] = useState(true);
   const [modalOpen, setModalOpen] = useState(true);
@@ -43,7 +43,7 @@ export default function JoinTribeModal({
     >
       <JoinTribeHeader classInfo={classInfo} />
       <Box py={3} px={2}>
-        {isSignIn ? (
+        {isSingIn ? (
           <JoinTribeContent
             classId={classInfo.id}
             handleCloseModal={handleCloseModal}

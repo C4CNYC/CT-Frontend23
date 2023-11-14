@@ -12,7 +12,6 @@ import {
   Button,
   DialogActions,
   Grid,
-  IconButton,
   Tab,
   Tabs,
   Typography,
@@ -26,26 +25,19 @@ import {
   ModuleLessonsAutocomplete,
   RHFSwitch,
   RHFTextField,
-  RHFUpload,
-  SingleFilePreview,
   useSnackbar,
 } from "@components";
 import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
 
 import {
   useCreateModuleMutation,
-  useUpdateModuleAvatarMutation,
   useUpdateModuleMutation,
 } from "../../../redux/services/manager/modules-manager";
-import { IoMdClose } from "react-icons/io";
-import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
 
 interface FormValuesProps {
   name: string;
   description: string;
   active: boolean;
-  tips: string;
-  duration: string;
 }
 
 interface Prop {
@@ -53,7 +45,6 @@ interface Prop {
   children: React.ReactElement;
   isEdit?: boolean;
   id?: string;
-  moduleTips?: string[] | [];
 }
 
 interface TabPanelProps {
@@ -74,11 +65,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{
-          p: { xs: 2, sm: 3 },
-          minWidth: { xs: "320px", sm: "370px" },
-          minHeight: "320px",
-        }}>
+        <Box sx={{ p: { xs: 2, sm: 3 } }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -92,14 +79,11 @@ function a11yProps(index: number): Record<string, string> {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const durationRegexp = /^(?!.*(second|minute|hour|day|week|month|year).*\1)\d+\s?(?:second|minute|hour|day|week|month|year)s?(?: ?\d+\s?(?:second|minute|hour|day|week|month|year)s?)*$/gm
-
 export default function CreateModuleDialog({
   id,
   isEdit,
   children,
   defaultValues,
-  moduleTips,
 }: Prop): React.ReactElement {
   const { query } = useRouter();
   const [open, setOpen] = useState(false);
@@ -110,7 +94,6 @@ export default function CreateModuleDialog({
   const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation();
   const [createModule, { isLoading: isCreateLoading }] =
     useCreateModuleMutation();
-  const [updateAvatar] = useUpdateModuleAvatarMutation();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -122,8 +105,7 @@ export default function CreateModuleDialog({
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required") && Yup.string().max(100, "Write less then 100 characters"),
-    duration: Yup.string().trim().nullable().transform((v, o) => (o === "" ? null : v)).matches(durationRegexp, "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes")
+    description: Yup.string().required("Description is required"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -133,29 +115,18 @@ export default function CreateModuleDialog({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      const file = new FormData();
       if (isEdit && id) {
         await editModule({
           id,
           ...data,
-          tips: data.tips.trim() !== "" && moduleTips ? [...moduleTips, data.tips] : [],
-          duration: data.duration?.trim(),
         }).unwrap();
-        if (uploadedFile) {
-          file.append("file", uploadedFile);
-          await updateAvatar({ id, file }).unwrap();
-        }
       } else {
-        const module = await createModule({ ...data, tips: data.tips ? [data.tips] : [], duration: data.duration.trim() }).unwrap();
+        const module = await createModule(data).unwrap();
         if (query.course_id) {
           await addToCourse({
             id: query.course_id as string,
             unit_id: module.id,
           }).unwrap();
-        }
-        if (uploadedFile) {
-          file.append("file", uploadedFile);
-          await updateAvatar({ id: module.id, file }).unwrap();
         }
       }
       enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
@@ -168,7 +139,6 @@ export default function CreateModuleDialog({
     }
   };
   const [value, setValue] = React.useState(0);
-  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
 
   const handleChange = (
     event: React.SyntheticEvent,
@@ -176,26 +146,6 @@ export default function CreateModuleDialog({
   ): void => {
     setValue(newValue);
   };
-
-  const deleteTip = async (tips: string[]): Promise<void> => {
-    try {
-      if (isEdit && id) {
-        const data = methods.getValues();
-        await editModule({
-          id,
-          ...data,
-          tips: moduleTips ? moduleTips.filter((t) => !tips.includes(t)) : [],
-          duration: data.duration.trim(),
-        }).unwrap();
-        enqueueSnackbar("Tip deleted!");
-      }
-    } catch (error) {
-      enqueueSnackbar(error?.data?.message, {
-        variant: "error",
-      });
-    }
-  };
-
   return (
     <>
       <Box
@@ -221,7 +171,6 @@ export default function CreateModuleDialog({
                 >
                   <Tab label="General" {...a11yProps(0)} />
                   <Tab label="Lessons" {...a11yProps(1)} />
-                  {isEdit ? <Tab label="Tips" {...a11yProps(2)} /> : null}
                 </Tabs>
               ) : null}
             </Box>
@@ -229,50 +178,6 @@ export default function CreateModuleDialog({
               <Grid container spacing={3}>
                 <Grid item xs={12} md={12}>
                   <Box rowGap={3} display="grid" mt={2}>
-                    <Box sx={{ position: "relative" }}>
-                      {uploadedFile ? (
-                        <IconButton
-                          sx={{
-                            position: "absolute",
-                            right: "5px",
-                            top: "5px",
-                            zIndex: 10,
-                            width: "20px",
-                            height: "20px",
-                            p: 0,
-                          }}
-                          onClick={() => { setUploadedFile(null) }}
-                        >
-                          <IoMdClose size="20px" />
-                        </IconButton>
-                      ) : null}
-                      <RHFUpload
-                        name="module_img"
-                        onDrop={(files: File[]) => { setUploadedFile(files[0]) }}
-                        helperText={
-                          <Typography
-                            variant="caption"
-                            noWrap
-                            width="90px"
-                            sx={{
-                              mt: 1,
-                              mb: -1,
-                              mx: "auto",
-                              display: "block",
-                              textAlign: "center",
-                              color: "text.secondary",
-                            }}
-                          >
-                            {uploadedFile?.name}
-                          </Typography>
-                        }
-                      />
-                      <SingleFilePreview
-                        file={
-                          uploadedFile ? URL.createObjectURL(uploadedFile) : null
-                        }
-                      />
-                    </Box>
                     <RHFTextField
                       sx={{
                         width: { xs: "100%", sm: "350px" },
@@ -291,21 +196,6 @@ export default function CreateModuleDialog({
                       rows={3}
                     />
 
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="duration"
-                      label="Module duration"
-                    />
-
-                    <RHFTextField
-                      name="tips"
-                      placeholder="Enter tip"
-                      label="Add tip"
-                    />
-
                     <RHFSwitch name="active" label="Module active" />
                   </Box>
                 </Grid>
@@ -322,15 +212,6 @@ export default function CreateModuleDialog({
                 <ModuleLessonsAutocomplete id={id as string} />
               </Box>
             </TabPanel>
-            {isEdit ? (
-              <TabPanel value={value} index={2}>
-                <TipsTab
-                  tips={moduleTips ?? []}
-                  deleteTip={deleteTip}
-                  isLoading={isEditLoading}
-                />
-              </TabPanel>
-            ) : null}
             <DialogActions>
               <Box
                 sx={{

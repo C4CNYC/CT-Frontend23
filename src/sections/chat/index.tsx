@@ -21,18 +21,13 @@ export const CodePanelChat = (): React.ReactElement => {
   return (
     <Chat
       onSend={({ textContent, reciverId, ...rest }) => {
-        sendMessage(
-          textContent,
-          reciverId,
-          user?.student_profile.id,
-          rest.callback
-        );
+        sendMessage(textContent, reciverId, user?.id, rest.callback);
       }}
       getMessages={(
         reciverId: string,
         cb: (messages: IChatMessage[], db: Firestore) => void
       ) => {
-        getMessages(user?.student_profile.id, reciverId, cb);
+        getMessages(user?.id, reciverId, cb);
       }}
       users={data?.data ?? []}
       isUserListLoading={isLoading}

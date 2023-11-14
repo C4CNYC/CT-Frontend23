@@ -32,6 +32,8 @@ export default function UserEditPage(): React.ReactElement {
     { skip: !schoolId || !id }
   );
 
+  console.log(data);
+
   return (
     <>
       <Head>

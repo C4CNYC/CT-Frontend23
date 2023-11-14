@@ -27,23 +27,12 @@ const extendedApi = managerApi.injectEndpoints({
     }),
     updateModule: builder.mutation<
       IModule & BaseResponseInterface,
-      { id: string, tips: string[] | [], duration: string }
+      { id: string }
     >({
       query: ({ id, ...body }) => ({
         url: `/manager/module/${id}`,
         method: "PATCH",
         body,
-      }),
-      invalidatesTags: [{ type: "Modules" }],
-    }),
-    updateModuleAvatar: builder.mutation<
-      IModule & BaseResponseInterface,
-      { id: string, file: FormData }
-    >({
-      query: ({ id, file }) => ({
-        url: `/manager/module/${id}/avatar`,
-        method: "PATCH",
-        body: file,
       }),
       invalidatesTags: [{ type: "Modules" }],
     }),
@@ -96,5 +85,4 @@ export const {
   useCreateModuleMutation,
   useDeleteModuleMutation,
   useUpdateModuleMutation,
-  useUpdateModuleAvatarMutation,
 } = extendedApi;

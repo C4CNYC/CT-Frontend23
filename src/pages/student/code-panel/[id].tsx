@@ -10,6 +10,11 @@ import SkeletonCodePanel, {
 import WorkSpace from "@sections/code-editor-panel/work-space";
 
 import { useCodePanel } from "src/hooks/useCodePanel";
+import { SocketContext } from "../../../context/socket-context";
+import { useCallback, useEffect, useRef } from "react";
+import { io, Socket } from "socket.io-client";
+import { useRouter } from "next/router";
+import { useAuthContext } from "../../../auth/useAuthContext";
 
 const Tour = dynamic(
   async () =>
@@ -55,11 +60,37 @@ export default function Index(): React.ReactElement | null {
     lessonManagerProps
   } = useCodePanel();
 
+  const { user } = useAuthContext();
+
+  const router = useRouter();
+
+  const socket = useRef<Socket | undefined>();
+
+  const getSocket = useCallback(() => {
+    if (socket.current) {
+      return socket.current;
+    }
+    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/", auth: user ? { userId: user.id } : {} })
+    return socket.current;
+  }, [socket]);
+
+  useEffect(() => {
+    if (router.query.lessonId) {
+      getSocket().emit("joinLesson", router.query.lessonId);
+
+      return () => {
+        getSocket().emit("leaveLesson", router.query.lessonId);
+      }
+    }
+    return undefined;
+  }, [router.query.lessonId]);
+
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />;
   }
 
   return (
+    <SocketContext.Provider value={getSocket()}>
     <Box>
       <Head>
         <title> CodePanel: CodeTribe </title>
@@ -93,5 +124,6 @@ export default function Index(): React.ReactElement | null {
         onConfettiComplete={onConfettiComplete}
       />
     </Box>
+    </SocketContext.Provider>
   );
 }

@@ -1,9 +1,10 @@
 export const CODING_SYMBOLS_BOX_SX = {
   position: "fixed",
-  bottom: 0,
+  bottom: "3px",
   background: "rgba(21, 82, 117, 0.8)",
-  borderRadius: 3,
-  width: "calc(100% - 4px)",
+  borderTopLeftRadius: "15px",
+  borderTopRightRadius: "15px",
+  width: "calc(100% - 7px)",
   mx: "1px",
   height: "30px",
   display: "flex",
@@ -17,7 +18,6 @@ export const SYMBOL_BTN_PT = { pt: "10px" };
 export const SYMBOL_BTN_PB = { pb: "10px" };
 export const SYMBOL_BTN_TOOL = {
   borderTopRightRadius: "15px",
-  borderBottomRightRadius: "15px",
   background: "rgba(251, 221, 63, .2)",
   "&:hover": {
     background: "rgba(251, 221, 63, .4)",

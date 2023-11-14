@@ -1,25 +1,14 @@
 import { useState } from "react";
 
-import {
-  Avatar,
-  FormGroup,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Avatar, FormGroup, Skeleton, Stack, Typography } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { ICourse } from "@types";
-import { BaseResponseInterface } from "@utils";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
-export default function DetailsStep(
-  { coursesData }: { coursesData: { data: (ICourse & BaseResponseInterface)[] | undefined, isLoading: boolean } }
-  ): React.ReactElement {
-  const theme = useTheme();
-  const { data, isLoading } = coursesData;
+export default function DetailsStep(): React.ReactElement {
+  const { data, isLoading } = useManagerGetCourseQuery({});
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const onChange = (event: any): void => {
     setType(event.target.value);
@@ -47,10 +36,10 @@ export default function DetailsStep(
               width: "100%",
               outline: "none",
               borderRadius: 1,
-              "& fieldset": {
-                border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+              "& fieldset": { border: "none" },
+              "& .MuiInputBase-root": {
+                background: "#fff",
               },
-              background: theme.palette.mode === "light" ? "#fff" : "",
             }}
           >
             <option key="empty" value="empty"></option>
@@ -79,29 +68,26 @@ export default function DetailsStep(
                 native
                 name="course"
                 size="small"
-                disabled={!data?.length}
+                disabled={!data?.data.length}
                 sx={{
                   width: "100%",
                   outline: "none",
                   borderRadius: 1,
-                  "& fieldset": {
-                    border:
-                      theme.palette.mode === "light" ? "" : "1px solid #fff",
+                  "& fieldset": { border: "none" },
+                  "& .MuiInputBase-root": {
+                    background: "#fff",
                   },
-                  background: theme.palette.mode === "light" ? "#fff" : "",
                 }}
               >
-                {!data?.length &&
-                  <option key="empty" value="empty">
-                    You don't have any courses
-                  </option>
-                }
+                <option key="empty" value="empty">
+                  {!data?.data.length && "You don't have any courses"}
+                </option>
                 {data
-                  ? data.map((course) => (
-                    <option key={course.id} value={course.id}>
-                      {course.name}
-                    </option>
-                  ))
+                  ? data.data.map((course) => (
+                      <option key={course.id} value={course.id}>
+                        {course.name}
+                      </option>
+                    ))
                   : null}
               </RHFSelect>
             ) : (
@@ -130,10 +116,12 @@ export default function DetailsStep(
           name="module"
           size="small"
           sx={{
+            background: "#fff",
             borderRadius: 1,
             "& fieldset": { border: "none" },
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+            "& .MuiInputBase-root": {
+              background: "#fff",
+            },
           }}
         >
           <option key="module" value="all">
@@ -165,8 +153,7 @@ export default function DetailsStep(
         </Avatar>
         <RHFTextField
           sx={{
-            background: theme.palette.mode === "light" ? "#fff" : "",
-            border: theme.palette.mode === "light" ? "" : "1px solid #fff",
+            background: "#fff",
             pt: 4,
             pb: 3,
             px: { xs: 0, sm: 3 },

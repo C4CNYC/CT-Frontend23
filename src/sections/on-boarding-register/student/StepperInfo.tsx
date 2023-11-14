@@ -12,8 +12,6 @@ import { DatePicker } from "@mui/x-date-pickers";
 import { FormProvider, RHFSelect, useSnackbar } from "@components";
 import { useUpdateStudentProfileMutation } from "src/redux/services/auth";
 
-import { styledRegisterInput } from "../styles";
-
 interface FormValueProps {
   country: string;
   birthDate: string;
@@ -76,7 +74,13 @@ export default function StepperInfo(): React.ReactElement {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  sx={(theme) => ({ ...styledRegisterInput(theme) })}
+                  sx={(theme) => ({
+                    "& .MuiInputBase-root": {
+                      height: "52px",
+                      background: theme.palette.grey[200],
+                    },
+                    "& fieldset": { border: "none" },
+                  })}
                   margin="normal"
                   fullWidth
                   style={{ marginRight: "10px" }}
@@ -90,9 +94,16 @@ export default function StepperInfo(): React.ReactElement {
           native
           name="country"
           label="Country"
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          sx={(theme) => ({
+            "& .MuiInputBase-root": {
+              height: "52px",
+              background: theme.palette.grey[200],
+            },
+            "& fieldset": { border: "none" },
+          })}
         >
-          <option key={"US"} value={"US"}>
+          <option value=""></option>
+          <option key={"US"} value={"United States"}>
             United States
           </option>
           <option disabled>─────────────────────────</option>
@@ -113,9 +124,6 @@ export default function StepperInfo(): React.ReactElement {
             fontSize: "1.5rem",
             mt: 2,
             width: "100%",
-            "&:hover": {
-              background: "#fff",
-            },
           }}
         >
           ALL DONE

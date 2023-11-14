@@ -25,7 +25,8 @@ import { IAssignmentReduced } from "src/redux/interfaces/assignment.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useDeleteAssignmentMutation } from "src/redux/services/manager/assignments-manager";
 import {
-  usePinAssignmentMutation, // useUnpinAssignmentMutation,
+  usePinAssignmentMutation,
+  useUnpinAssignmentMutation,
 } from "src/redux/services/manager/assignments-student";
 
 interface IQuestItemProps {
@@ -43,9 +44,10 @@ export default function QuestItem({
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [pinAssignment] = usePinAssignmentMutation();
-  // const [unpinAssignment, { isLoading: isLoadingUnpin }] =
-  //   useUnpinAssignmentMutation();
+  const [pinAssignment, { isLoading: isLoadingPin }] =
+    usePinAssignmentMutation();
+  const [unpinAssignment, { isLoading: isLoadingUnpin }] =
+    useUnpinAssignmentMutation();
   const [deleteAssignmet, { isLoading: isDeleting }] =
     useDeleteAssignmentMutation();
 
@@ -156,7 +158,7 @@ export default function QuestItem({
               <Link
                 component={NextLink}
                 href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                  assignment?.courseid
+                  assignment?.courseid as string
                 )}
                 underline="none"
                 sx={{
