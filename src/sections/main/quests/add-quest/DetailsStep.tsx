@@ -16,7 +16,7 @@ import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
 
 export default function DetailsStep(
-  { coursesData }: { coursesData: { data: (ICourse & BaseResponseInterface)[] | undefined, isLoading: boolean } }
+  { coursesData }: { coursesData: { data: Array<(ICourse & BaseResponseInterface)> | undefined, isLoading: boolean } }
   ): React.ReactElement {
   const theme = useTheme();
   const { data, isLoading } = coursesData;
@@ -59,7 +59,12 @@ export default function DetailsStep(
                 key={AssignmentTypes[t as keyof typeof AssignmentTypes]}
                 value={AssignmentTypes[t as keyof typeof AssignmentTypes]}
               >
-                {t.split("_").join(" ").toLocaleLowerCase()}
+                {
+                t.split("_")
+                .join(" ")
+                .toLocaleLowerCase()
+                .replace(/^\w/, (c) => c.toUpperCase())
+                }
               </option>
             ))}
           </RHFSelect>
