@@ -61,7 +61,7 @@ export default function PublicProjects(): React.ReactElement {
                 { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
                 { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
                 {
-                  name: "Privat",
+                  name: "Public",
                   href: STUDENT_PATH_DASHBOARD.gallery.publicProject,
                 },
               ]}

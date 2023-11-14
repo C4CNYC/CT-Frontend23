@@ -6,7 +6,7 @@ import { BiCodeAlt } from "react-icons/bi";
 import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { RealTimeEditor } from "@components";
+import CodeEditorCollab from "src/components/code-editor-collab";
 import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
 import { CodeEditor } from "src/components/real-time-editor/editor";
@@ -92,12 +92,11 @@ const CodeEditorBlock = ({
         <Checkers checkers={mapValidations(code ?? "", validations)} />
       ) : null}
       {user?.id ? (
-        <RealTimeEditor
+        <CodeEditorCollab
           preloadedCode={preloadedCode}
-          email={`${user?.first_name} ${user?.last_name?.[0]}.`}
-          cursorText={user?.first_name}
+          cursorText={`${user?.first_name} ${user?.last_name?.[0]}.`}
           onChange={onChangeCode}
-          userId={user?.id}
+          roomId={user?.id}
           code={code}
         />
       ) : (

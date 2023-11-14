@@ -92,8 +92,7 @@ export default function StepperInfo(): React.ReactElement {
           label="Country"
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         >
-          <option value=""></option>
-          <option key={"US"} value={"United States"}>
+          <option key={"US"} value={"US"}>
             United States
           </option>
           <option disabled>─────────────────────────</option>

@@ -73,7 +73,6 @@ export const useCodePanel = (): UseCodePanelReturn => {
     return "";
   });
 
-  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
     unitId: null,
     lessonId: null,
@@ -84,7 +83,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
   const onChangeCode = useCallback((code: string) => {
     setCode(code);
     window.localStorage.setItem(`code-${query.id}`, code);
-  }, []);
+  }, [query.id]);
 
   // ONLY LOGINED USER CAN USE
   useOnlineConnection(user?.id);
@@ -98,13 +97,17 @@ export const useCodePanel = (): UseCodePanelReturn => {
     { id: query.lessonId as string },
     { skip: !query.lessonId }
   );
-  const { data: courseContent, isLoading: isLoadingCourseContent } =
-    useGetChallangesQuery({ id: query.id as string }, { skip: !query.id });
+
+  const {
+    data: courseContent,
+    isLoading: isLoadingCourseContent
+  } = useGetChallangesQuery(
+    { id: query.id as string },
+    { skip: !query.id }
+  );
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
-    {
-      id: query.lessonId as string,
-    },
+    { id: query.lessonId as string },
     { skip: !query.lessonId }
   );
 
@@ -209,16 +212,11 @@ export const useCodePanel = (): UseCodePanelReturn => {
   };
 
   useEffect(() => {
-    if (!query.id) {
-      push(STUDENT_PATH_DASHBOARD.page404);
+    if (query.id) {
+      const savedCode = window?.localStorage.getItem(`code-${query.id}`)
+      setCode(savedCode ?? "")
     }
-  }, []);
-
-  useEffect(() => {
-    if (!isLoading && !isLoadingCourseContent && !isLoadingLesson) {
-      setIsLoadingComplete(true);
-    }
-  }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
+  }, [query.id]);
 
   useEffect(() => {
     setLastVisitedData({
@@ -232,6 +230,11 @@ export const useCodePanel = (): UseCodePanelReturn => {
       updateLastVisitedData();
     };
   }, [lastVisitedData]);
+
+  const isLoadingComplete = !isLoading &&
+    !isLoadingCourseContent &&
+    !isLoadingLesson &&
+    query.id != null;
 
   return {
     isLoadingComplete,

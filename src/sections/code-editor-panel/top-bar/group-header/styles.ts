@@ -5,10 +5,7 @@ export const STACK_STYLES = {
   alignItems: "center",
   ml: "141px",
   textDecoration: "none",
-  pointerEvents: "all",
-  "&:hover": {
-    cursor: "pointer",
-  }
+  pointerEvents: "all"
 }
 
 export const AVATAR_STYLES = {
@@ -34,9 +31,4 @@ export const TRIBE_NAME_STYLES = {
   textOverflow: "ellipsis",
   overflow: "hidden",
   whiteSpace: "nowrap",
-}
-
-export const TEACHING_STYLES = {
-  justifySelf: "flex-end",
-  marginRight: "5px"
 }

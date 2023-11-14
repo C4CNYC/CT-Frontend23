@@ -29,11 +29,7 @@ export default function StepMultimedia({
         editable={!locked}
         locked={locked}
       />
-      <Box
-        sx={{
-          visibility: !locked ? "hidden" : "initial",
-        }}
-      >
+      <Box>
         <MyEditor editable={false} multimediaValue={value} />
       </Box>
     </ResizerUi>
