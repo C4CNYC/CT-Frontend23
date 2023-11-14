@@ -7,8 +7,9 @@ interface GetDocumentProps {
 	socket: Socket
 	roomId: string
 	cursorName: string
-	fileName?: string
+	fileName: File
 	preloadedCode?: string
+	defaultFileName: string
 }
 
 interface GetDocumentReturn {
@@ -19,10 +20,39 @@ interface GetDocumentReturn {
 	docInfo: Record<string, string>
 }
 
+export interface File {
+  id: string
+  name: string
+}
+
 export interface FileInfo {
-	activeFile: string
-	files: string[]
-	filesInLayout: string[]
+	activeFile: File
+	files: File[]
+	filesInLayout: File[]
+}
+
+interface CreateFile {
+	socket: Socket
+	fileName: string
+	roomId: string
+}
+
+export const createFile = async ({
+	socket,
+	fileName,
+	roomId
+}: CreateFile): Promise<File> => {
+	return new Promise((res, rej) => {
+		socket.emit(EmitSocketEvents.CreateFile, { roomId, fileName });
+
+		socket.once(`${SubscribedEvents.CreateFileResponse}${roomId}`, (file: File | null) => {
+			if (file != null) {
+				res(file);
+			} else {
+				rej()
+			}
+		})
+	})
 }
 
 export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
@@ -37,9 +67,9 @@ export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileI
 
 export const isRoomExist = async (roomId: string, socket: Socket): Promise<boolean> => {
 	return new Promise((resolve) => {
-		socket.emit('isRoomExist', roomId);
+		socket.emit('isRoomExist', roomId, socket.id);
 
-		socket.once('isRoomExistResponse' + roomId, (isExist: boolean) => {
+		socket.once('isRoomExistResponse' + roomId + socket.id, (isExist: boolean) => {
 			resolve(isExist);
 		})
 	})

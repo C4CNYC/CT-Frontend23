@@ -35,6 +35,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 	roomId,
 	socket,
 	isMultipleExtensionFiles = false,
+	defaultFileName = 'index.html',
 	...otherProps
 }) => {
 	const styles = useStyles();
@@ -72,6 +73,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 		mode,
 		socket,
 		roomId,
+		defaultFileName,
 	});
 
 	return (

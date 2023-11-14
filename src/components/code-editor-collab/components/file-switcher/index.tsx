@@ -4,12 +4,15 @@ import { Stack, Tabs, Tab } from "@mui/material";
 
 import DevIcon from "../dev-icon";
 
+import {
+  type File
+} from "../../hook/utils/collab/requests";
 import { styles } from "./styles";
 
  interface FileSwitcherProps {
-  activeFile: string | null
-  onChange: (fileName: string) => void
-  fileList: string[]
+  activeFile: File | null
+  onChange: (fileName: File) => void
+  fileList: File[]
  }
 
 const FileSwitcher: FC<FileSwitcherProps> = ({
@@ -21,24 +24,27 @@ const FileSwitcher: FC<FileSwitcherProps> = ({
     <Stack sx={styles.WRAPPER_STACK_SX}>
       <Tabs
         sx={styles.TABS}
-        value={activeFile}
-        onChange={(_, fileName) => onChange(fileName)}
+        value={activeFile?.name}
+        onChange={(_, id) => {
+          console.log(id, fileList);
+          onChange(fileList.find(({ id: _id }) => id === _id) as File)}
+        }
         variant="scrollable"
         scrollButtons={false}
         aria-label="scrollable prevent tabs example"
       >
-        {fileList.map((fileName) =>
+        {fileList.map(({ name, id }) =>
           <Tab
             sx={styles.TAB}
-            key={fileName}
+            key={id}
             label={(
               <>
-                <DevIcon sx={styles.DEV_ICON} fileName={fileName} />
+                <DevIcon sx={styles.DEV_ICON} fileName={name} />
 
-                {fileName}
+                {name}
               </>
             )}
-            value={fileName}
+            value={id}
           />)}
       </Tabs>
     </Stack>

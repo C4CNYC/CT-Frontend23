@@ -1,15 +1,16 @@
 import { Socket } from "socket.io-client";
-import { type MutableRefObject, useMemo, useEffect, useRef } from "react";
+import { useMemo, useEffect, useRef } from "react";
 
 import { EmitSocketEvents, SubscribedEvents } from "../utils/socket";
 import { EditorMode } from "../constants";
+import { File } from "../utils/collab/requests";
 
 interface UseModeSubscriotionsProps {
   roomId: string
-  onDeleteFile: (fileName: string) => void
-  setActiveFile: (fileName: string) => void
+  onDeleteFile: (fileName: File) => void
+  setActiveFile: (fileName: File) => void
   socket: Socket
-  onUpdateFileList: (fileName: string, socketId: string) => void
+  onUpdateFileList: (fileName: File, socketId: string) => void
   mode: EditorMode
 }
 
@@ -35,19 +36,19 @@ export const useModeSubscriptions = ({
   const modeSockets = useMemo(() => {
     const deleteEvent = `${SubscribedEvents.DeleteResponse}${roomId}`;
     const fileChangedEvent = `${SubscribedEvents.ActiveFileChanged}${roomId}`;
-    const addFileEvent = `${EmitSocketEvents.AddFileResponse}${roomId}`;
+    const addFileEvent = `${SubscribedEvents.CreateFileResponse}${roomId}`;
 
     return {
       subscribe: {
         [EditorMode.SubOwner]: () => {
-          socket.on(deleteEvent, (fileName: string) => {
-            deleteFileRef.current(fileName)
+          socket.on(deleteEvent, (fileName: File) => {
+            deleteFileRef.current(fileName);
           });
           socket.on(addFileEvent, onUpdateFileList);
         },
         [EditorMode.Watcher]: () => {
-          socket.on(fileChangedEvent, (fileName: string) => {
-            setActiveFileRef.current(fileName)
+          socket.on(fileChangedEvent, (fileName: File) => {
+            setActiveFileRef.current(fileName);
           });
           socket.on(addFileEvent, onUpdateFileList);
         },

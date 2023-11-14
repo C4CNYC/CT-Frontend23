@@ -10,7 +10,7 @@ import { type Extension } from '@uiw/react-codemirror';
 import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
-import { getFileInfo, isRoomExist } from "./utils/collab/requests";
+import { File, getFileInfo, isRoomExist } from "./utils/collab/requests";
 import {
   unsubscribeSocket,
   EmitSocketEvents,
@@ -27,9 +27,9 @@ import { RoomStatus } from "../components/status-label";
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
   mode?: EditorMode
-  activeFile: string
+  activeFile: File
   socket: Socket
-  onRoomStatusChanged?: (roomStatus: RoomStatus) => void 
+  onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
 interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
@@ -63,7 +63,8 @@ export const useCodeEditorCollab = ({
     withTooltip,
     onChange,
     setActiveFile,
-    onResetFileManager
+    onResetFileManager,
+    defaultFileName
   } = useMemoizedProps(propsToMemoize);
 
   // ------------------------------------------------------ //
@@ -93,6 +94,7 @@ export const useCodeEditorCollab = ({
     onChange,
     roomId,
     cursorText,
+    defaultFileName
   })
 
   // ------------------------------------------------------ //
@@ -136,13 +138,14 @@ export const useCodeEditorCollab = ({
 
     const fileInfo = await getFileInfo(roomId, socket);
 
+    console.log(activeFile);
     if (!isFirstInit || fileInfo == null) {
       return await baseInit(activeFile)
     }
 
     onResetFileManager(fileInfo);
 
-    if (fileInfo.activeFile === activeFile) {
+    if (fileInfo.activeFile.id === activeFile.id) {
       await runInitOwner(false)
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
@@ -170,7 +173,7 @@ export const useCodeEditorCollab = ({
 
     if (fileInfo != null) {
       const shouldChangeFile = fileInfo.activeFile != null &&
-        fileInfo.activeFile !== activeFile;
+        fileInfo.activeFile.id !== activeFile.id;
 
       if (shouldChangeFile) {
         setActiveFile(fileInfo.activeFile);

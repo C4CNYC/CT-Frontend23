@@ -1,4 +1,5 @@
 import { Extensions } from "src/components/code-editor-collab/hook/constants";
+import { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
 import { getFileExtension } from "src/utils/getFileExtension";
 
 const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js];
@@ -8,12 +9,12 @@ const FILE_EXIST_ERROR = 'File is already exist'
 
 interface ValidateProps {
   fileName: string
-  fileList: string[]
+  fileList: File[]
   isMultipleExtensionFiles: boolean
 }
 
-const isExtensionExist = (fileList: string[], extension: string) => 
-  fileList.some((name) => getFileExtension(name) === extension)
+const isExtensionExist = (fileList: File[], extension: string) => 
+  fileList.some(({ name }) => getFileExtension(name) === extension)
 
 export const validate = ({
   fileName,
@@ -24,7 +25,8 @@ export const validate = ({
     return EMPTY_ERROR;
   }
 
-  if (fileList.includes(fileName)) {
+  const isExist = fileList.some(({ name }) => name === fileName.trim())
+  if (isExist) {
     return FILE_EXIST_ERROR;
   }
 

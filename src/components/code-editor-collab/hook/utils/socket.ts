@@ -11,7 +11,8 @@ export enum SubscribedEvents {
   AddFile = "addFile",
   RoomExistResponse = "isRoomExistResponse",
   RoomDeleteResponse = "isRoomDeleted",
-  DocUpdated = "docUpdated"
+  DocUpdated = "docUpdated",
+  CreateFileResponse = "createFileResponse"
 }
 
 export enum EmitSocketEvents {
@@ -23,8 +24,9 @@ export enum EmitSocketEvents {
   SetActiveFile = "setActiveFile",
   DeleteFile = "deleteFile",
   GetFileInfo = "getFileInfo",
-  AddFileResponse = "addFileResponse",
-  AddedFileListUpdated = "addedFileListUpdated"
+  // AddFileResponse = "addFileResponse",
+  AddedFileListUpdated = "addedFileListUpdated",
+  CreateFile = "createFile",
 }
 
 export const unsubscribeSocket = (socket: Socket | null): void => {

@@ -4,11 +4,12 @@ import { StateEffect, ChangeSet, StateEffectType } from "@codemirror/state";
 
 import { type Cursor } from "./cursors";
 import { EmitSocketEvents } from "../socket";
+import { File } from "./requests";
 
 interface PullUpdateProps {
 	roomId: string
 	version: number
-	fileName: string
+	fileName: File
 	socket: Socket
 	addCursor: StateEffectType<Cursor>
 }
@@ -28,8 +29,8 @@ export const pullUpdates = ({
       socketId: socket.id
     });
 
-		socket.once(`${EmitSocketEvents.PullResponse}${roomId}${fileName}`, function(updates: string) {
-			resolve(JSON.parse(updates));
+		socket.once(`${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`, function(updates: Update[]) {
+			resolve(updates);
 		});
 	}).then((updates: Update[]) => updates?.map((u: Update) => {
 		if (u.effects?.[0] != null) {

@@ -9,7 +9,7 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import { getFileExtension } from "src/utils/getFileExtension";
 
 import { type Cursor, cursorExtension } from "./utils/collab/cursors";
-import { getDocument } from "./utils/collab/requests";
+import { File, getDocument } from "./utils/collab/requests";
 import { peerExtension } from "./utils/collab/peer-extension";
 import { BASIC_SETUP, Extensions } from "./constants";
 
@@ -19,8 +19,8 @@ const langMap = {
   [Extensions.Js]: () => langs.javascript()
 }
 
-const language = (fileName: string): LanguageSupport[] => {
-  const extension = getFileExtension(fileName);
+const language = ({ name }: File): LanguageSupport[] => {
+  const extension = getFileExtension(name);
 
   return extension != null
     ? [langMap[extension as keyof typeof langMap]()]
@@ -33,6 +33,7 @@ interface UseBaseInit  {
   onChange?: (code: Record<string, string>) => void
   roomId: string
   cursorText: string
+  defaultFileName: string
 }
 
 export interface UseBaseInitReturn {
@@ -40,7 +41,7 @@ export interface UseBaseInitReturn {
   doc: string
   isLoading: boolean
   extensions?: Extension[]
-  baseInit: (fileName: string) => Promise<void>
+  baseInit: (fileName: File) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
 }
 
@@ -50,21 +51,22 @@ export const useInitCodemirror = ({
   onChange,
   roomId,
   cursorText,
+  defaultFileName,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0);
   const [doc, setDoc] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
   
-  const baseInit = useCallback(async (fileName: string) => {
+  const baseInit = useCallback(async (fileName: File) => {
     const lineWrap = new Compartment();
     const addCursor = StateEffect.define<Cursor>();
-    console.log(roomId);
     const { version, doc, cursorName, docInfo } = await getDocument({
       roomId,
       fileName,
       socket,
       cursorName: cursorText,
+      defaultFileName,
     });
 
     setExtensions([
@@ -91,7 +93,14 @@ export const useInitCodemirror = ({
     setDoc(doc.toString());
     setKey((prev) => ++prev);
     setIsLoading(false);
-  }, [roomId, cursorText, withTooltip, socket, onChange]);
+  }, [
+    roomId,
+    cursorText,
+    withTooltip,
+    socket,
+    onChange,
+    defaultFileName
+  ]);
 
   return {
     key,

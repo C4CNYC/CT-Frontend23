@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
-import { type FileInfo } from "./utils/collab/requests";
+import { File, type FileInfo } from "./utils/collab/requests";
 
 export interface MemoizedProps {
   code?: string
@@ -7,8 +7,9 @@ export interface MemoizedProps {
 	withTooltip?: boolean
 	preloadedCode?: string
 	onChange?: (code: Record<string, string>) => void
-  setActiveFile: (fileName: string) => void
+  setActiveFile: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
+  defaultFileName: string
 }
 
 interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
@@ -24,6 +25,7 @@ export const useMemoizedProps = ({
   setActiveFile,
   code,
   preloadedCode,
+  defaultFileName,
 }: MemoizedProps): MemoizedPropsReturn => {
   const codeRef = useRef(code);
   const onChangeRef = useRef(onChange);
@@ -32,6 +34,7 @@ export const useMemoizedProps = ({
   const setActiveFileRef = useRef(setActiveFile);
   const cursorTextRef = useRef<string>(cursorText);
   const onResetFileManagerRef = useRef(onResetFileManager);
+  const defaultFileNameRef = useRef(defaultFileName);
 
   useEffect(() => {
     setActiveFileRef.current = setActiveFile;
@@ -53,7 +56,7 @@ export const useMemoizedProps = ({
     onResetFileManagerRef.current(fileInfo);
   }, []);
 
-  const _setActiveFile = useCallback((fileName: string) => {
+  const _setActiveFile = useCallback((fileName: File) => {
     setActiveFileRef.current(fileName);
   }, []);
 
@@ -64,6 +67,7 @@ export const useMemoizedProps = ({
     cursorText: cursorTextRef.current,
     withTooltip: withTooltipRef.current,
     preloadedCode: preloadedCodeRef.current,
+    defaultFileName: defaultFileNameRef.current,
     code: codeRef.current
   }
 }

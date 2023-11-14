@@ -7,18 +7,18 @@ import {
 	getSyncedVersion
 } from "@codemirror/collab"
 
-// import { addCursor } from "./cursors";
 import { EmitSocketEvents } from "../socket";
 import { pullUpdates } from "./pull-updates";
 import { pushUpdates } from "./push-updates";
 import { StateEffectType } from "@uiw/react-codemirror";
 import { Cursor } from "./cursors";
+import { File } from "./requests";
 
 interface PeerExtensionProps {
 	socket: Socket
 	roomId: string
 	startVersion: number
-	fileName: string
+	fileName: File
 	addCursor: StateEffectType<Cursor>
 }
 
@@ -56,8 +56,7 @@ export const peerExtension = ({
 			const version = getSyncedVersion(this.view.state);
 			await pushUpdates({ socket, roomId, version, updates, fileName });
 			this.pushing = false;
-			// Regardless of whether the push failed or new updates came in
-			// while it was running, try again if there's updates remaining
+
 			if (sendableUpdates(this.view.state).length) {
 				setTimeout(() => {
 					this.push()
@@ -73,7 +72,7 @@ export const peerExtension = ({
 					roomId,
 					version,
 					fileName,
-					addCursor
+					addCursor,
 				});
 
 				const newUpdates = receiveUpdates(this.view.state, updates);
@@ -82,8 +81,7 @@ export const peerExtension = ({
 		}
 
 		destroy() {
-			socket.off(EmitSocketEvents.PullResponse);
-			socket.off(`${EmitSocketEvents.PullResponse}${roomId}${fileName}`);
+			socket.off(`${EmitSocketEvents.PullResponse}${roomId}${fileName.id}`);
 			this.done = true;
 		}
 	})
