@@ -12,8 +12,6 @@ import {
 import { RHFSelect, RHFTextField } from "@components";
 import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
-import { ICourse } from "@types";
-import { BaseResponseInterface } from "@utils";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 
@@ -24,14 +22,6 @@ import {
   selectStyle,
 } from "./constants";
 
-export default function DetailsStep({
-  coursesData,
-}: {
-  coursesData: {
-    data: (ICourse & BaseResponseInterface)[] | undefined;
-    isLoading: boolean;
-  };
-}): React.ReactElement {
 export default function DetailsStep({
   coursesData,
 }: {
