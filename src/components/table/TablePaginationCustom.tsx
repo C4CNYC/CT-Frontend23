@@ -43,7 +43,7 @@ export function TablePaginationCustom({
             py: 1.5,
             top: 0,
             position: {
-              md: "absolute",
+              sm: "absolute",
             },
           }}
         />

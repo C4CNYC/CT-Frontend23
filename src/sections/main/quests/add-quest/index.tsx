@@ -34,9 +34,11 @@ import {
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
+import { FORM_HEADER_SX } from "./constants";
 import {
   CONTAINER_INNER_SX,
   DATE_FORMAT,
@@ -50,7 +52,6 @@ import {
 } from "./constants";
 import { CreateQuestSchema } from "./helpers/create-quest.schema";
 import { FormQuestProps } from "./helpers/quest.interface";
-import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 export default function AddQuest(): React.ReactElement {
   const theme = useTheme();
@@ -93,10 +94,10 @@ export default function AddQuest(): React.ReactElement {
   }, [isAssignmentLoading]);
 
   useEffect(() => {
-    if(coursesData?.data?.data[0]?.id && !methods.getValues().course) {
-        methods.setValue("course", coursesData.data?.data[0]?.id);
+    if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
+      methods.setValue("course", coursesData.data?.data[0]?.id);
     }
-  }, [coursesData])
+  }, [coursesData]);
 
   const methods = useForm<FormQuestProps>({
     resolver: yupResolver(CreateQuestSchema),
@@ -242,7 +243,12 @@ export default function AddQuest(): React.ReactElement {
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep coursesData={{ data: coursesData.data?.data, isLoading: coursesData.isLoading }} />
+              <DetailsStep
+                coursesData={{
+                  data: coursesData.data?.data,
+                  isLoading: coursesData.isLoading,
+                }}
+              />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep
