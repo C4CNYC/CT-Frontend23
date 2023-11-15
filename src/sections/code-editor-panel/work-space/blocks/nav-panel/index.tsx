@@ -8,9 +8,9 @@ import {
   Divider,
   Stack
 } from "@mui/material";
-import SpeakerNotesOutlinedIcon from '@mui/icons-material/SpeakerNotesOutlined';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 import NavItem from "./components/nav-item";
 import HeaderItem from "./components/header-item";
@@ -93,19 +93,19 @@ const NavPanel: FC = () => {
         <CutomNavItem
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
           name="Group Chat"
-          onToggle={() => setIsOpen(!isOpen)}
+          onToggle={() => { setIsOpen(!isOpen); }}
         />
 
         <CutomNavItem
           icon={<EventNoteIcon sx={ICON_SX} />}
           name="Notes"
-          onToggle={() => setIsOpen(!isOpen)}
+          onToggle={() => { setIsOpen(!isOpen); }}
         />
 
         <CutomNavItem
           icon={<AssignmentIcon sx={ICON_SX} />}
           name="Sandbox"
-          onToggle={() => setIsOpen(!isOpen)}
+          onToggle={() => { setIsOpen(!isOpen); }}
         />
       </List>
 
