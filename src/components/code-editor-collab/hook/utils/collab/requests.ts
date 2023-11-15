@@ -57,9 +57,9 @@ export const createFile = async ({
 
 export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
 	return new Promise((resolve) => {
-		socket.emit(EmitSocketEvents.GetFileInfo, roomId);
+		socket.emit(EmitSocketEvents.GetFileInfo, roomId, socket.id);
 
-		socket.once(SubscribedEvents.GetFileInfoResponse, (info: FileInfo) => {
+		socket.once(SubscribedEvents.GetFileInfoResponse + socket.id, (info: FileInfo) => {
 			resolve(info);
 		})
 	})

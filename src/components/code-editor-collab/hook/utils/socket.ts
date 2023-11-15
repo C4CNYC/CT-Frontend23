@@ -24,7 +24,6 @@ export enum EmitSocketEvents {
   SetActiveFile = "setActiveFile",
   DeleteFile = "deleteFile",
   GetFileInfo = "getFileInfo",
-  // AddFileResponse = "addFileResponse",
   AddedFileListUpdated = "addedFileListUpdated",
   CreateFile = "createFile",
 }

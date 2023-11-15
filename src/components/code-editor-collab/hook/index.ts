@@ -71,11 +71,11 @@ export const useCodeEditorCollab = ({
   //                         Handlers                       //
   // ------------------------------------------------------ //
 
-  const onCreateEditor = (view: EditorView) => {
+  const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
   }
 
-  const clearSocketData = useCallback(() => {
+  const clearSocketData = useCallback((): void => {
     if (initRoomDataRef.current.mode === EditorMode.Owner) {
       socket.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId);
     }
@@ -101,7 +101,7 @@ export const useCodeEditorCollab = ({
   //                   Initialize SubOwner                  //
   // ------------------------------------------------------ //
 
-  const runInitSubOwner = useCallback(async (isFirstInit: boolean) => {
+  const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
     firstInit.current = false;
     const isRoom = await isRoomExist(roomId, socket);
 
@@ -138,7 +138,6 @@ export const useCodeEditorCollab = ({
 
     const fileInfo = await getFileInfo(roomId, socket);
 
-    console.log(activeFile);
     if (!isFirstInit || fileInfo == null) {
       return await baseInit(activeFile)
     }
@@ -154,7 +153,7 @@ export const useCodeEditorCollab = ({
   //                   Initialize Watcher                   //
   // ------------------------------------------------------ //
 
-  const runInitWatcher = useCallback(async () => {
+  const runInitWatcher = useCallback(async (): Promise<void> => {
     firstInit.current = false;
     const isRoom = await isRoomExist(roomId, socket);
 
@@ -176,7 +175,7 @@ export const useCodeEditorCollab = ({
         fileInfo.activeFile.id !== activeFile.id;
 
       if (shouldChangeFile) {
-        setActiveFile(fileInfo.activeFile);
+        onResetFileManager(fileInfo);
         return;
       }
 

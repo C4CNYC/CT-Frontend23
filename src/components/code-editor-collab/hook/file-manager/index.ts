@@ -89,11 +89,15 @@ export const useFileManager = ({
 
   const onDeleteFileWithEvents = useCallback((fileName: File) => {
     const newActiveFile = onDeleteFile(fileName);
-    socket.emit(EmitSocketEvents.SetActiveFile, roomId, newActiveFile);
+
+    if (newActiveFile != null) {
+      socket.emit(EmitSocketEvents.SetActiveFile, roomId, newActiveFile);
+    }
+
     socket.emit(EmitSocketEvents.DeleteFile, roomId, fileName);
   }, [onDeleteFile, socket]);
 
-  const onChangeFileWithEvents = (fileName: File) => {
+  const onChangeFileWithEvents = (fileName: File): void => {
     setActiveFile(fileName);
 
     if (mode === EditorMode.Owner) {
@@ -109,7 +113,7 @@ export const useFileManager = ({
 
       setAddedFileList(newAddedFileList);
 
-      socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList, socket.id);
+      socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList);
     }
 
     _setActiveFile(fileName);
