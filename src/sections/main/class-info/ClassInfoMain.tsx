@@ -1,8 +1,15 @@
 import { FaSchool } from "react-icons/fa";
 
-import { Avatar, Stack, Typography } from "@mui/material";
+import { Avatar, Stack, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { IClass } from "src/redux/interfaces/class.interface";
+
+import {
+  CLASS_AVATAR_SX,
+  CLASS_INFO_WRAPPER,
+  TEACHER_EMOJI_SX,
+} from "./constants";
 
 interface Props {
   classData: IClass;
@@ -11,32 +18,21 @@ interface Props {
 export default function ClassInfoMain({
   classData,
 }: Props): React.ReactElement {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Stack direction="row" gap={2}>
+    <Stack direction={isMobile ? "column" : "row"} alignItems="center" gap={2}>
       <Avatar
-        sx={{
-          width: 60,
-          height: 60,
-          border: "2px solid #ED9526",
-          background: "#FBDD3F",
-          fontSize: "40px",
-          mt: { xs: 1, sm: 2 },
-        }}
+        sx={CLASS_AVATAR_SX}
         src={classData.avatar ?? ""}
         alt={classData.name}
       />
-      <Stack>
+      <Stack alignItems={isMobile ? "center" : "start"}>
         <Typography variant="h2" sx={{ color: "#fff" }}>
           {classData?.name}
         </Typography>
-        <Stack
-          direction="row"
-          sx={{
-            flexWrap: "wrap",
-            gap: 2,
-            alignItems: "center",
-          }}
-        >
+        <Stack direction="row" sx={CLASS_INFO_WRAPPER}>
           <Typography variant="subtitle2" sx={{ color: "#fff" }}>
             <FaSchool
               color="#fff"
@@ -45,15 +41,7 @@ export default function ClassInfoMain({
             />
             {classData?.school?.name}
           </Typography>
-          <Avatar
-            sx={{
-              width: "25px",
-              height: "25px",
-              mr: -1,
-            }}
-            src={""}
-            alt=""
-          >
+          <Avatar sx={TEACHER_EMOJI_SX} src={""} alt="">
             &#128540;
           </Avatar>
           <Typography
