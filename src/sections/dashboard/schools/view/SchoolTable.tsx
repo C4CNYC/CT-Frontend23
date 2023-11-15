@@ -10,27 +10,17 @@ import {
   useTable,
 } from "@components";
 import { useFilters } from "@hooks";
-import { useLocales } from "src/locales";
 import { ClassSearchParams } from "src/redux/interfaces/class.interface";
 import { useGetSchoolListQuery } from "src/redux/services/admin/school-amdin";
+import { useTranslate } from "src/utils/translateHelper";
 
 import SchoolTableRow from "./SchoolTableRow";
 import SchoolTableToolbar from "./SchoolTableToolbar";
 import SkeletonSchoolRow from "./SkeletonSchoolRow";
 
-// const TABLE_HEAD = [
-//   { id: "cover", label: `${translate("school_table_cover")}`, align: "left" },
-//   { id: "name", label: "Name", align: "left" },
-//   { id: "country", label: "Country", align: "center" },
-//   { id: "city", label: "City", align: "left" },
-//   { id: "phone", label: "Phone", align: "left" },
-//   { id: "active", label: "Active", align: "left" },
-//   { id: "edit", label: "", align: "left" },
-// ];
-
 export default function SchoolTable(): React.ReactElement {
   const { dense, page, rowsPerPage, onChangeDense } = useTable();
-  const { translate } = useLocales();
+  const translate = useTranslate();
   const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
     name: "",
   });
@@ -41,24 +31,24 @@ export default function SchoolTable(): React.ReactElement {
   const TABLE_HEAD = [
     {
       id: "cover",
-      label: `${translate("schools_table_cover")}`,
+      label: translate("cover"),
       align: "left",
     },
-    { id: "name", label: `${translate("name")}`, align: "left" },
+    { id: "name", label: translate("name"), align: "left" },
     {
       id: "country",
-      label: `${translate("country")}`,
+      label: translate("country"),
       align: "center",
     },
-    { id: "city", label: `${translate("city")}`, align: "left" },
+    { id: "city", label: translate("city"), align: "left" },
     {
       id: "phone",
-      label: `${translate("phone")}`,
+      label: translate("phone"),
       align: "left",
     },
     {
       id: "active",
-      label: `${translate("schools_table_active")}`,
+      label: translate("schools_table_active"),
       align: "left",
     },
     { id: "edit", label: "", align: "left" },

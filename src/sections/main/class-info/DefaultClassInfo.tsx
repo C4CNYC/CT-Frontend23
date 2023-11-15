@@ -30,6 +30,7 @@ import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import ClassInfoMain from "./ClassInfoMain";
 import ClassInfoToggle from "./ClassInfoToggle";
@@ -47,7 +48,7 @@ export default function DefaultClassInfo({
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-
+  const translate = useTranslate();
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
@@ -55,7 +56,7 @@ export default function DefaultClassInfo({
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
       copy(textToCopy);
-      enqueueSnackbar("Copied!");
+      enqueueSnackbar(translate("messages_copied"));
     }
   };
 
@@ -87,9 +88,9 @@ export default function DefaultClassInfo({
           file,
         }).unwrap();
       }
-      enqueueSnackbar("Class updated successfuly!");
+      enqueueSnackbar(translate("classes_class_updeted"));
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -119,7 +120,9 @@ export default function DefaultClassInfo({
                 alignItems="center"
                 sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
               >
-                <Typography variant="subtitle2">Join-code:</Typography>
+                <Typography variant="subtitle2">
+                  {translate("home_join_code")}
+                </Typography>
                 <Button
                   onClick={() => {
                     onCopy(classData?.setting?.share_token);
@@ -146,7 +149,7 @@ export default function DefaultClassInfo({
                 href={STUDENT_PATH_DASHBOARD.tribes.root}
                 component={nextLink}
               >
-                See All Groups
+                {translate("home_see_all_groups")}
               </Link>
             </Stack>
 
@@ -182,7 +185,7 @@ export default function DefaultClassInfo({
                   typography="button"
                 >
                   <FiUser color="#fff" size="18px" />
-                  {!isMobile ? "Members" : ""}
+                  {!isMobile ? translate("members") : ""}
                 </Link>
                 <ShareGroupModal schoolClass={classData}>
                   <Button
@@ -200,7 +203,7 @@ export default function DefaultClassInfo({
                   >
                     <TbShare2 color="#fff" size="18px" />
                     <Typography variant="button" sx={{ ml: 0.5 }}>
-                      {!isMobile ? "Share" : ""}
+                      {!isMobile ? translate("actions_share") : ""}
                     </Typography>
                   </Button>
                 </ShareGroupModal>
@@ -258,7 +261,7 @@ export default function DefaultClassInfo({
                         },
                       }}
                     >
-                      Edit
+                      {translate("actions_edit")}
                     </Button>
                   </ClassPreferences>
                 </MenuPopover>

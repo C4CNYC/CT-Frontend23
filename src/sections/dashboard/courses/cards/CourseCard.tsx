@@ -24,6 +24,7 @@ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
 import { BaseResponseInterface } from "@utils";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
 
@@ -39,6 +40,7 @@ export default function CourseCard({
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteCourse] = useDeleteCourseMutation();
+  const translate = useTranslate();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const handleOpenConfirm = (): void => {
@@ -65,7 +67,7 @@ export default function CourseCard({
       await deleteCourse({ id: course.id }).unwrap();
       setLoading(false);
       setOpenConfirm(false);
-      enqueueSnackbar("Course deleted!");
+      enqueueSnackbar(translate("courses_delete_msg"));
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -129,7 +131,7 @@ export default function CourseCard({
               right: 10,
             }}
           >
-            {active ? "Active" : "Not Active"}
+            {active ? translate("active") : translate("not_active")}
           </Label>
           <Typography variant="subtitle1" sx={{ pt: 6, mb: 0.5 }}>
             {name}
@@ -152,7 +154,7 @@ export default function CourseCard({
               component="div"
               sx={{ mb: 0.75, color: "text.disabled" }}
             >
-              Level
+              {translate("level")}
             </Typography>
             <Typography variant="subtitle1" textTransform="capitalize">
               {level}
@@ -165,7 +167,7 @@ export default function CourseCard({
               component="div"
               sx={{ mb: 0.75, color: "text.disabled" }}
             >
-              Price
+              {translate("price")}
             </Typography>
             <Typography variant="subtitle1">
               {+price.substring(1) === 0 ? "free" : price}
@@ -194,7 +196,7 @@ export default function CourseCard({
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
-            Edit
+            {translate("actions_edit")}
           </MenuItem>
         </CreateCourseDialog>
         <Divider sx={{ borderStyle: "dashed" }} />
@@ -207,14 +209,14 @@ export default function CourseCard({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          {translate("actions_delete")}
         </MenuItem>
       </MenuPopover>
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={translate("actions_delete")}
+        content={translate("messages_delete_question")}
         action={
           <LoadingButton
             variant="contained"
@@ -222,7 +224,7 @@ export default function CourseCard({
             onClick={onDelete}
             loading={loading}
           >
-            Delete
+            {translate("actions_delete")}
           </LoadingButton>
         }
       />

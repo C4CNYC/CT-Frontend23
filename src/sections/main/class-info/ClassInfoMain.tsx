@@ -3,6 +3,7 @@ import { FaSchool } from "react-icons/fa";
 import { Avatar, Stack, Typography } from "@mui/material";
 
 import { IClass } from "src/redux/interfaces/class.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   classData: IClass;
@@ -11,6 +12,8 @@ interface Props {
 export default function ClassInfoMain({
   classData,
 }: Props): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Stack direction="row" gap={2}>
       <Avatar
@@ -62,7 +65,7 @@ export default function ClassInfoMain({
               color: "#fff",
             }}
           >
-            Teacher: Admin
+            {translate("home_teacher_admin")}
           </Typography>
         </Stack>
       </Stack>

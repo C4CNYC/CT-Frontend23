@@ -1,7 +1,7 @@
 import { Card, Divider, Stack, Typography } from "@mui/material";
 
 import { fNumber } from "@utils";
-import { useLocales } from "src/locales";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   studentCount?: number | null;
@@ -12,7 +12,7 @@ export default function ProfileUsersInfo({
   studentCount = 0,
   teacherCount = 0,
 }: Props): React.ReactElement | null {
-  const { translate } = useLocales();
+  const translate = useTranslate();
 
   return (
     <Card sx={{ py: 3 }}>
@@ -24,7 +24,7 @@ export default function ProfileUsersInfo({
           <Typography variant="h4">{fNumber(studentCount)}</Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {translate("students") as string}
+            {translate("students")}
           </Typography>
         </Stack>
 
@@ -32,7 +32,7 @@ export default function ProfileUsersInfo({
           <Typography variant="h4">{fNumber(teacherCount)}</Typography>
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {translate("teachers") as string}
+            {translate("teachers")}
           </Typography>
         </Stack>
       </Stack>

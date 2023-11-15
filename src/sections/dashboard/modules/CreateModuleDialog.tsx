@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { IoMdClose } from "react-icons/io";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";
@@ -30,15 +31,15 @@ import {
   SingleFilePreview,
   useSnackbar,
 } from "@components";
+import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
 import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   useCreateModuleMutation,
   useUpdateModuleAvatarMutation,
   useUpdateModuleMutation,
 } from "../../../redux/services/manager/modules-manager";
-import { IoMdClose } from "react-icons/io";
-import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
 
 interface FormValuesProps {
   name: string;
@@ -74,11 +75,13 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box sx={{
-          p: { xs: 2, sm: 3 },
-          minWidth: { xs: "320px", sm: "370px" },
-          minHeight: "320px",
-        }}>
+        <Box
+          sx={{
+            p: { xs: 2, sm: 3 },
+            minWidth: { xs: "320px", sm: "370px" },
+            minHeight: "320px",
+          }}
+        >
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -92,7 +95,8 @@ function a11yProps(index: number): Record<string, string> {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const durationRegexp = /^(?!.*(second|minute|hour|day|week|month|year).*\1)\d+\s?(?:second|minute|hour|day|week|month|year)s?(?: ?\d+\s?(?:second|minute|hour|day|week|month|year)s?)*$/gm
+const durationRegexp =
+  /^(?!.*(second|minute|hour|day|week|month|year).*\1)\d+\s?(?:second|minute|hour|day|week|month|year)s?(?: ?\d+\s?(?:second|minute|hour|day|week|month|year)s?)*$/gm;
 
 export default function CreateModuleDialog({
   id,
@@ -111,6 +115,7 @@ export default function CreateModuleDialog({
   const [createModule, { isLoading: isCreateLoading }] =
     useCreateModuleMutation();
   const [updateAvatar] = useUpdateModuleAvatarMutation();
+  const translate = useTranslate();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -122,8 +127,17 @@ export default function CreateModuleDialog({
 
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required") && Yup.string().max(100, "Write less then 100 characters"),
-    duration: Yup.string().trim().nullable().transform((v, o) => (o === "" ? null : v)).matches(durationRegexp, "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes")
+    description:
+      Yup.string().required("Description is required") &&
+      Yup.string().max(100, "Write less then 100 characters"),
+    duration: Yup.string()
+      .trim()
+      .nullable()
+      .transform((v, o) => (o === "" ? null : v))
+      .matches(
+        durationRegexp,
+        "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes"
+      ),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -138,7 +152,10 @@ export default function CreateModuleDialog({
         await editModule({
           id,
           ...data,
-          tips: data.tips.trim() !== "" && moduleTips ? [...moduleTips, data.tips] : [],
+          tips:
+            data.tips.trim() !== "" && moduleTips
+              ? [...moduleTips, data.tips]
+              : [],
           duration: data.duration?.trim(),
         }).unwrap();
         if (uploadedFile) {
@@ -146,7 +163,11 @@ export default function CreateModuleDialog({
           await updateAvatar({ id, file }).unwrap();
         }
       } else {
-        const module = await createModule({ ...data, tips: data.tips ? [data.tips] : [], duration: data.duration.trim() }).unwrap();
+        const module = await createModule({
+          ...data,
+          tips: data.tips ? [data.tips] : [],
+          duration: data.duration.trim(),
+        }).unwrap();
         if (query.course_id) {
           await addToCourse({
             id: query.course_id as string,
@@ -158,7 +179,11 @@ export default function CreateModuleDialog({
           await updateAvatar({ id: module.id, file }).unwrap();
         }
       }
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      enqueueSnackbar(
+        !isEdit
+          ? translate("messages_create_success")
+          : translate("messages_update_success")
+      );
       methods.reset();
       handleClose();
     } catch (error: any) {
@@ -206,7 +231,11 @@ export default function CreateModuleDialog({
         {children}
       </Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isEdit ? "Edit" : "Create"} Module</DialogTitle>
+        <DialogTitle>
+          {isEdit
+            ? translate("modules_update_module")
+            : translate("modules_create_module")}
+        </DialogTitle>
         <DialogContent sx={{ p: 0, mt: "-10px" }}>
           <FormProvider
             methods={methods}
@@ -219,9 +248,11 @@ export default function CreateModuleDialog({
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="General" {...a11yProps(0)} />
-                  <Tab label="Lessons" {...a11yProps(1)} />
-                  {isEdit ? <Tab label="Tips" {...a11yProps(2)} /> : null}
+                  <Tab label={translate("general")} {...a11yProps(0)} />
+                  <Tab label={translate("lessons")} {...a11yProps(1)} />
+                  {isEdit ? (
+                    <Tab label={translate("tips")} {...a11yProps(2)} />
+                  ) : null}
                 </Tabs>
               ) : null}
             </Box>
@@ -241,14 +272,18 @@ export default function CreateModuleDialog({
                             height: "20px",
                             p: 0,
                           }}
-                          onClick={() => { setUploadedFile(null) }}
+                          onClick={() => {
+                            setUploadedFile(null);
+                          }}
                         >
                           <IoMdClose size="20px" />
                         </IconButton>
                       ) : null}
                       <RHFUpload
                         name="module_img"
-                        onDrop={(files: File[]) => { setUploadedFile(files[0]) }}
+                        onDrop={(files: File[]) => {
+                          setUploadedFile(files[0]);
+                        }}
                         helperText={
                           <Typography
                             variant="caption"
@@ -269,7 +304,9 @@ export default function CreateModuleDialog({
                       />
                       <SingleFilePreview
                         file={
-                          uploadedFile ? URL.createObjectURL(uploadedFile) : null
+                          uploadedFile
+                            ? URL.createObjectURL(uploadedFile)
+                            : null
                         }
                       />
                     </Box>
@@ -279,13 +316,13 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="name"
-                      label="Module name"
+                      label={translate("modules_module_name")}
                       required
                     />
 
                     <RHFTextField
                       name="description"
-                      label="Module description"
+                      label={translate("modules_module_description")}
                       required
                       multiline
                       rows={3}
@@ -297,16 +334,19 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="duration"
-                      label="Module duration"
+                      label={translate("modules_module_duration")}
                     />
 
                     <RHFTextField
                       name="tips"
-                      placeholder="Enter tip"
-                      label="Add tip"
+                      placeholder={translate("modules_enter_tip")}
+                      label={translate("modules_add_tip")}
                     />
 
-                    <RHFSwitch name="active" label="Module active" />
+                    <RHFSwitch
+                      name="active"
+                      label={translate("modules_module_active")}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -339,7 +379,9 @@ export default function CreateModuleDialog({
                   gap: 2,
                 }}
               >
-                <Button onClick={handleClose}>Close</Button>
+                <Button onClick={handleClose}>
+                  {translate("actions_close")}
+                </Button>
                 <LoadingButton
                   type="submit"
                   variant="contained"
@@ -347,7 +389,7 @@ export default function CreateModuleDialog({
                     isEditLoading || isCreateLoading || isAddToCourseLoading
                   }
                 >
-                  Save
+                  {translate("actions_save")}
                 </LoadingButton>
               </Box>
             </DialogActions>

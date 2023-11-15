@@ -18,12 +18,12 @@ import {
   SchoolSocialsTab,
 } from "@sections/schools/tabs";
 import SkeletonProfileTab from "@sections/schools/tabs/profile/SkeletomProfileTab";
-import { useLocales } from "src/locales";
 import {
   useGetSchoolProfileQuery,
   useUpdateSchoolCoverImgMutation,
 } from "src/redux/services/manager/schools-manager";
 import { RootState } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 import SkeletonSchool from "./skeleton-school";
 
@@ -33,7 +33,7 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfilePage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-  const { translate } = useLocales();
+  const translate = useTranslate();
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
@@ -43,25 +43,25 @@ export default function UserProfilePage(): React.ReactElement {
   const TABS = [
     {
       value: "profile",
-      label: `${translate("general_tab_general")}`,
+      label: translate("general"),
       icon: <Iconify icon="ic:round-account-box" />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: "settings",
-      label: `${translate("general_tab_settings")}`,
+      label: translate("settings"),
       icon: <Iconify icon="ic:baseline-settings-applications" />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: "contacts",
-      label: `${translate("general_tab_contacts")}`,
+      label: translate("contacts"),
       icon: <MdContacts />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: "socials",
-      label: `${translate("general_tab_socials")}`,
+      label: translate("social_networks"),
       icon: <BsPeopleFill />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },
@@ -83,9 +83,11 @@ export default function UserProfilePage(): React.ReactElement {
       } else {
         await updateSchoolCoverImage({ id, file }).unwrap();
       }
-      enqueueSnackbar("Image updated");
+      enqueueSnackbar(translate("messages_img_updated"));
     } catch (error: any) {
-      enqueueSnackbar("Image not updated", { variant: "error" });
+      enqueueSnackbar(translate("messages_img_not_updated"), {
+        variant: "error",
+      });
     }
   };
 
@@ -103,7 +105,7 @@ export default function UserProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Organizations | CodeTribe</title>
+        <title> {translate("organization")} | CodeTribe </title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card

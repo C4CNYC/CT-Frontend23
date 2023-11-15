@@ -16,6 +16,7 @@ import {
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { fDate } from "../../../utils/formatTime";
 import AssignmentDrawer from "./AssignmentDrawer";
@@ -35,6 +36,7 @@ export default function AssignmentsTableRow({
 }: Props) {
   const { name, type, start_date, end_date, active } = row;
 
+  const translate = useTranslate();
   const [status] = useState(Status.open);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
@@ -107,7 +109,7 @@ export default function AssignmentsTableRow({
 
         <TableCell align="center">
           <Label variant="soft" color={(active && "info") || "default"}>
-            {active ? "Published" : "Draft"}
+            {active ? translate("published") : translate("draft")}
           </Label>
         </TableCell>
 
@@ -133,7 +135,7 @@ export default function AssignmentsTableRow({
           }}
         >
           <Iconify icon="eva:eye-fill" />
-          View
+          {translate("actions_view")}
         </MenuItem>
 
         <MenuItem
@@ -143,7 +145,7 @@ export default function AssignmentsTableRow({
           }}
         >
           <Iconify icon="eva:edit-fill" />
-          Edit
+          {translate("actions_edit")}
         </MenuItem>
 
         <Divider sx={{ borderStyle: "dashed" }} />
@@ -156,7 +158,7 @@ export default function AssignmentsTableRow({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          {translate("actions_delete")}
         </MenuItem>
       </MenuPopover>
 
@@ -169,11 +171,11 @@ export default function AssignmentsTableRow({
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={translate("actions_delete")}
+        content={translate("messages_delete_question")}
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            {translate("actions_delete")}
           </Button>
         }
       />

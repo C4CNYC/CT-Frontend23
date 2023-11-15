@@ -2,11 +2,7 @@ import { Checkbox, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 import { Label, TableEmptyRows, TableHeadCustom, emptyRows } from "@components";
 import { voidFunction } from "@utils";
-
-const TABLE_HEAD = [
-  { id: "email", label: "Email", align: "left" },
-  { id: "status", label: "Status", align: "left" },
-];
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IPendingInvitesTabProps {
   order: "asc" | "desc" | undefined;
@@ -25,6 +21,11 @@ export default function PendingInvitesTab({
   dense,
   rowsPerPage,
 }: IPendingInvitesTabProps): React.ReactElement {
+  const translate = useTranslate();
+  const TABLE_HEAD = [
+    { id: "email", label: translate("email"), align: "left" },
+    { id: "status", label: translate("status"), align: "left" },
+  ];
   return (
     <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
       <TableHeadCustom
@@ -72,6 +73,8 @@ export function PendingUserRow({
   onSelectRow,
   row,
 }: RowProps): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <TableRow hover selected={selected}>
       <TableCell padding="checkbox">
@@ -85,7 +88,7 @@ export function PendingUserRow({
             textTransform: "uppercase",
           }}
         >
-          Pending
+          {translate("pending")}
         </Label>
       </TableCell>
     </TableRow>

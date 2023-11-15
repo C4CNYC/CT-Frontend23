@@ -1,6 +1,6 @@
 import { Card, CardHeader, Link, Stack } from "@mui/material";
 
-import { useLocales } from "src/locales";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { SOCIAL_ICONS } from "../../../../../assets/data";
 
@@ -12,11 +12,11 @@ interface Props {
 export default function ProfileSocialInfo({
   socialLinks,
 }: Props): React.ReactElement | null {
-  const { translate } = useLocales();
+  const translate = useTranslate();
 
   return (
     <Card>
-      <CardHeader title={translate("social") as string} />
+      <CardHeader title={translate("social")} />
       <Stack spacing={2} sx={{ p: 3 }}>
         {socialLinks?.map((item: any) => (
           <Stack direction="row" sx={{ wordBreak: "break-all" }} key={item.id}>

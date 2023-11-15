@@ -10,8 +10,7 @@ import {
 
 // components
 import { Iconify } from "@components";
-
-import { useLocales } from "../../../../locales";
+import { useTranslate } from "src/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +31,7 @@ export default function UserTableToolbar({
   onFilterRole,
   onResetFilter,
 }: Props): React.ReactElement | null {
-  const { translate } = useLocales();
+  const translate = useTranslate();
 
   return (
     <Stack
@@ -48,7 +47,7 @@ export default function UserTableToolbar({
         <TextField
           fullWidth
           select
-          label={`${translate("organizations.members_page.role_label")}`}
+          label={translate("role")}
           value={filterRole}
           onChange={onFilterRole}
           SelectProps={{
@@ -86,7 +85,7 @@ export default function UserTableToolbar({
           fullWidth
           value={filterName}
           onChange={onFilterName}
-          placeholder={`${translate("actions_search")}`}
+          placeholder={translate("actions_search")}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -104,7 +103,7 @@ export default function UserTableToolbar({
           onClick={onResetFilter}
           startIcon={<Iconify icon="eva:trash-2-outline" />}
         >
-          {`${translate("actions_clear")}`}
+          {translate("actions_clear")}
         </Button>
       </Box>
     </Stack>

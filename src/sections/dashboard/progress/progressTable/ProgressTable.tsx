@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 interface IProgressTable {
   hasBackLink: boolean;
   hasNextLink: boolean;
@@ -33,6 +35,8 @@ export default function ProgressTable({
   hasNextLink,
   onSelectGroup,
 }: IProgressTable): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -49,7 +53,7 @@ export default function ProgressTable({
                   padding: "10px 10px",
                 }}
               >
-                Name
+                {translate("name")}
               </TableCell>
               {data[0]?.x?.map((el, i) => (
                 <TableCell

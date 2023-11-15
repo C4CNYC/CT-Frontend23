@@ -49,18 +49,7 @@ import {
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-
-const STATUS_OPTIONS = ["all"];
-
-const TABLE_HEAD = [
-  { id: "", label: "Icon" },
-  { id: "name", label: "Name", align: "left" },
-  { id: "total_students", label: "Total (Students)", align: "left" },
-  { id: "total_students", label: "Total (Courses)", align: "left" },
-  { id: "started_id", label: "Start date", align: "left" },
-  { id: "status", label: "Status", align: "left" },
-  { id: "" },
-];
+import { useTranslate } from "src/utils/translateHelper";
 
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
@@ -78,6 +67,28 @@ export default function UserListPage(): React.ReactElement {
     onSort,
     onChangeDense,
   } = useTable();
+
+  const translate = useTranslate();
+
+  const STATUS_OPTIONS = [translate("all")];
+
+  const TABLE_HEAD = [
+    { id: "", label: translate("icon") },
+    { id: "name", label: translate("name"), align: "left" },
+    {
+      id: "total_students",
+      label: translate("classes_total_students"),
+      align: "left",
+    },
+    {
+      id: "total_students",
+      label: translate("classes_total_courses"),
+      align: "left",
+    },
+    { id: "started_id", label: translate("start_date"), align: "left" },
+    { id: "status", label: translate("status"), align: "left" },
+    { id: "" },
+  ];
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -101,7 +112,7 @@ export default function UserListPage(): React.ReactElement {
   const handleDeleteMember = async (classId: string): Promise<void> => {
     try {
       await deleteCasses({ classId, schoolId });
-      enqueueSnackbar("Class deleted");
+      enqueueSnackbar(translate("classes_class_deleted"));
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -117,7 +128,7 @@ export default function UserListPage(): React.ReactElement {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i]);
     }
-    enqueueSnackbar("Classes deleted");
+    enqueueSnackbar(translate("classes_classes_deleted"));
   };
 
   const handleEditRow = async (
@@ -140,9 +151,9 @@ export default function UserListPage(): React.ReactElement {
         file.append("file", uploadedFile);
         await updateClassAvatar({ schoolId, classId: id, file }).unwrap();
       }
-      enqueueSnackbar("Class updated successfuly!");
+      enqueueSnackbar(translate("classes_class_updeted"));
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -171,24 +182,34 @@ export default function UserListPage(): React.ReactElement {
         file.append("file", randomAvatar);
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
-      enqueueSnackbar(`Class ${name} created successfuly!`);
+      enqueueSnackbar(
+        translate("classes_class_created", {
+          name,
+        })
+      );
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
   return (
     <>
       <Head>
-        <title> Classes | CodeTribe</title>
+        <title> {translate("classes")} | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-            { name: "Classes", href: MANAGER_PATH_DASHBOARD.school.classes },
+            {
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            {
+              name: translate("classes"),
+              href: MANAGER_PATH_DASHBOARD.school.classes,
+            },
           ]}
           action={
             <AddClassDialog
@@ -199,7 +220,7 @@ export default function UserListPage(): React.ReactElement {
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                Add Class
+                {translate("classes_add_class")}
               </Button>
             </AddClassDialog>
           }
@@ -321,11 +342,12 @@ export default function UserListPage(): React.ReactElement {
         onClose={() => {
           setOpenConfirm(false);
         }}
-        title="Delete"
+        title={translate("actions_delete")}
         content={
           <>
-            Are you sure want to delete <strong> {selected.length} </strong>{" "}
-            items?
+            {translate("messages_delete_dialog_content", {
+              items: selected.length,
+            })}
           </>
         }
         action={
@@ -338,7 +360,7 @@ export default function UserListPage(): React.ReactElement {
               setOpenConfirm(false);
             }}
           >
-            Delete
+            {translate("actions_delete")}
           </LoadingButton>
         }
       />
