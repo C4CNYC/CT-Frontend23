@@ -6,7 +6,7 @@ import { BiCodeAlt } from "react-icons/bi";
 import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import CodeEditorCollab from "src/components/code-editor-collab";
+import { RealTimeEditor } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
 import { CodeEditor } from "src/components/real-time-editor/editor";
@@ -92,11 +92,12 @@ const CodeEditorBlock = ({
         <Checkers checkers={mapValidations(code ?? "", validations)} />
       ) : null}
       {user?.id ? (
-        <CodeEditorCollab
+        <RealTimeEditor
           preloadedCode={preloadedCode}
-          cursorText={`${user?.first_name} ${user?.last_name?.[0]}.`}
+          email={`${user?.first_name} ${user?.last_name?.[0]}.`}
+          cursorText={user?.first_name}
           onChange={onChangeCode}
-          roomId={user?.id}
+          userId={user?.id}
           code={code}
         />
       ) : (
@@ -104,6 +105,7 @@ const CodeEditorBlock = ({
           code={code}
           onChangeCode={onChangeCode}
           preloadedCode={preloadedCode}
+          userId={user?.id}
         />
       )}
       <Box sx={{ display: isDesktop ? "none" : "block" }}>

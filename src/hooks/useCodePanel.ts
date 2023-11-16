@@ -67,6 +67,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
   const [confetti, setConfetti] = useState(false);
   const [code, setCode] = useState<string>("");
 
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
     unitId: null,
     lessonId: null,
@@ -76,8 +77,8 @@ export const useCodePanel = (): UseCodePanelReturn => {
 
   const onChangeCode = useCallback((code: string) => {
     setCode(code);
-    window.localStorage.setItem(`code-${query.id}`, code);
-  }, [query.id]);
+    window.localStorage.setItem(`code-${query.id}-${query.lessonId}`, code);
+  }, []);
 
   const [completeLesson] = useCompleteLessonMutation();
   const [updateLastVisitedDataTrigger] =
@@ -87,17 +88,13 @@ export const useCodePanel = (): UseCodePanelReturn => {
     { id: query.lessonId as string },
     { skip: !query.lessonId }
   );
-
-  const {
-    data: courseContent,
-    isLoading: isLoadingCourseContent
-  } = useGetChallangesQuery(
-    { id: query.id as string },
-    { skip: !query.id }
-  );
+  const { data: courseContent, isLoading: isLoadingCourseContent } =
+    useGetChallangesQuery({ id: query.id as string }, { skip: !query.id });
 
   const { data: lesson, isLoading: isLoadingLesson } = useGetLessonStudentQuery(
-    { id: query.lessonId as string },
+    {
+      id: query.lessonId as string,
+    },
     { skip: !query.lessonId }
   );
 
@@ -202,11 +199,16 @@ export const useCodePanel = (): UseCodePanelReturn => {
   };
 
   useEffect(() => {
-    if (query.id) {
-      const savedCode = window?.localStorage.getItem(`code-${query.id}`)
-      setCode(savedCode ?? "")
+    if (!query.id) {
+      push(STUDENT_PATH_DASHBOARD.page404);
     }
-  }, [query.id]);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading && !isLoadingCourseContent && !isLoadingLesson) {
+      setIsLoadingComplete(true);
+    }
+  }, [isLoading, isLoadingCourseContent, isLoadingLesson]);
 
   useEffect(() => {
     setLastVisitedData({
@@ -220,11 +222,6 @@ export const useCodePanel = (): UseCodePanelReturn => {
       updateLastVisitedData();
     };
   }, [lastVisitedData]);
-
-  const isLoadingComplete = !isLoading &&
-    !isLoadingCourseContent &&
-    !isLoadingLesson &&
-    query.id != null;
 
   return {
     isLoadingComplete,

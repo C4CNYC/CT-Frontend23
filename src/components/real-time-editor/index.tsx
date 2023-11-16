@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-base-to-string */
+import { useRouter } from "next/router";
 import React, { memo, useCallback, useEffect, useState } from "react";
 
+import { useSocket } from "@hooks";
+
+import { getDocument } from "../../codemirror/extensions/collab";
 import EditorSkeleton from "./EditorSkeleton";
 import { CodeEditor } from "./editor";
-import { getDocument } from "../../codemirror/extensions/collab";
-import { useSocket } from "@hooks";
-import { useRouter } from "next/router";
 
 export interface State {
   connected: boolean;
@@ -64,7 +65,12 @@ export const RealTimeEditor = memo(
     }
 
     const initializeConnection = useCallback(async () => {
-      socket.emit("create", userId, query.lessonId, window.localStorage?.getItem(`code-${query.id}-${query.lessonId}`) ?? "");
+      socket.emit(
+        "create",
+        userId,
+        query.lessonId,
+        window.localStorage?.getItem(`code-${query.id}-${query.lessonId}`) ?? ""
+      );
       await initializeData();
     }, [socket, initializeData, query.id, query.lessonId]);
 
@@ -110,10 +116,7 @@ export const RealTimeEditor = memo(
       };
     }, [userId, query.lessonId]);
 
-    if (
-      state?.version === undefined ||
-      state?.doc === undefined
-    ) {
+    if (state?.version === undefined || state?.doc === undefined) {
       return <EditorSkeleton />;
     }
 
@@ -131,6 +134,7 @@ export const RealTimeEditor = memo(
           roomId={userId}
           state={state}
           cursorId={userId}
+          userId={userId}
           cursorText={cursorText}
           preloadedCode={preloadedCode}
           onChangeCode={onChange}

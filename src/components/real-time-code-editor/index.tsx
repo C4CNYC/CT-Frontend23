@@ -18,10 +18,12 @@ interface IRealTimeCodeEditor {
   colabCursonId: string;
   colabCursonText: string;
   roomId: string;
+  userId: string;
 }
 
 export const RealTimeCodeEditor = ({
   roomId,
+  userId,
   colabCursonId,
   colabCursonText,
   connectionType = "connect",
@@ -136,6 +138,7 @@ export const RealTimeCodeEditor = ({
         state={state}
         cursorId={colabCursonId}
         cursorText={colabCursonText}
+        userId={userId}
         socket={socket}
       />
     </>

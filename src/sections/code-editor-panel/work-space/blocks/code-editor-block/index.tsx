@@ -4,37 +4,25 @@ import {
   useRef,
   useState,
   memo,
-  useCallback,
-  ReactNode
+  useCallback
 } from "react";
 import { BiCodeAlt } from "react-icons/bi";
-import { useDispatch } from "react-redux";
 
-import {
-  Box,
-  Collapse,
-  Stack,
-  useMediaQuery,
-  IconButton
-} from "@mui/material";
+import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Close from "@mui/icons-material/Close";
 
-import CodeEditorController from "../code-editor-controller";
+import { RealTimeEditor } from "@components";
+import { CodeEditor } from "src/components/real-time-editor/editor";
 import { CodingSymbols, CodingTools } from "./coding-controls";
 import BaseBlock from "../base-block";
 import HidedTabBtn from "./hided-tab-btn";
 import MumuSpeedDial from "./mumu-speed-deal";
 import Checkers from "./checkers-code-editor";
-import Title from "./title";
 
 import { type BaseResponseInterface } from "@utils";
 import { type AuthUserType } from "src/auth/types";
 import { type IValidation } from "src/redux/interfaces/content.interface";
 import { mapValidations } from "src/utils/validationMaping";
-import { CodeEditorControllerRoom, setRoom } from "src/redux/slices/code-editor-controller";
-import { EditorMode } from "src/components/code-editor-collab/hook/constants";
-import { useSelector } from "src/redux/store";
 
 interface ICodeEditorBlock {
   user: AuthUserType | null;
@@ -50,7 +38,7 @@ const TYPING_DELEY = 20000;
 const FIRST_LOADING_DELEY = 15000;
 const MOBILE_HEIGHT = 80;
 const DESKTOP_HEIGHT = 145;
-const TIMEOUT = 1000;
+const TIMEOUT = 1000
 
 const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   user,
@@ -60,14 +48,10 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
   preloadedCode,
 }) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [codingSymbols, setCodingSymbols] = useState<boolean>(true);
   const [typing, setTyping] = useState<boolean | null>(null);
-  const room = useSelector(state => state.codeEditorController.room);
   const timer = useRef<NodeJS.Timeout>();
-  const preloadedCodeRef = useRef(preloadedCode);
-  const codeRef= useRef(code);
 
   const typingListener = (deley: number, firstLoad: boolean): void => {
     if (!firstLoad) {
@@ -95,30 +79,11 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
 
   const symbolsHandler = useCallback((): void => {
     setCodingSymbols(!codingSymbols);
-  }, [codingSymbols]);
-
-  const onResetRoom = useCallback(() => {
-    dispatch(setRoom({
-      roomId: user?.id as string,
-      cursorText: user?.first_name as string,
-      preloadedCode: preloadedCodeRef.current,
-      code: codeRef.current,
-      mode: EditorMode.Owner
-    }))
-  }, [user, dispatch]);
-
-  useEffect(() => {
-    onResetRoom();
-  }, [onResetRoom]);
+  }, [codingSymbols])
 
   return (
     <BaseBlock
-      title={(
-        <Title
-          room={room} 
-          onResetRoom={onResetRoom}
-        />
-      )}
+      title={TITLE}
       icon={icon}
       className="codeEditorTour"
     >
@@ -134,7 +99,23 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
         <Checkers checkers={mapValidations(code ?? "", validations)} />
       )}
 
-      <CodeEditorController onChange={onChangeCode} />
+      {user?.id ? (
+        <RealTimeEditor
+          cursorText={user?.first_name}
+          preloadedCode={preloadedCode}
+          email={`${user?.first_name} ${user?.last_name?.[0]}.`}
+          onChange={onChangeCode}
+          userId={user?.id}
+          code={code}
+        />
+      ) : (
+        <CodeEditor
+          code={code}
+          onChangeCode={onChangeCode}
+          preloadedCode={preloadedCode}
+          userId={user?.id}
+        />
+      )}
 
       <Box sx={{ display: isDesktop ? "none" : "block" }}>
         <Collapse in={codingSymbols} timeout={!codingSymbols ? 0 : TIMEOUT}>
@@ -159,7 +140,7 @@ const getTitleStyles = (isDesktop: boolean): string => {
   .cm-scroller::-webkit-scrollbar{
     width: 0px;
   }
- 
+
 `
 }
 
