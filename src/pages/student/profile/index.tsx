@@ -27,7 +27,7 @@ export default function UserProfile(): React.ReactElement {
       icon: <Iconify icon="ic:round-account-box" />,
       component: (
         <ProfileMain
-          data={data?.student_profile}
+          data={data}
           isFriend={false}
           isLoading={isLoading}
         />
@@ -63,9 +63,9 @@ export default function UserProfile(): React.ReactElement {
         >
           {!isLoading ? (
             <ProfileCover
-              name={data?.student_profile.first_name ?? ""}
-              lastName={data?.student_profile.last_name ?? ""}
-              avatar={data?.student_profile.avatar}
+              name={data?.first_name ?? ""}
+              lastName={data?.last_name ?? ""}
+              avatar={data?.avatar}
               cover={data?.student_profile.cover}
             />
           ) : (
