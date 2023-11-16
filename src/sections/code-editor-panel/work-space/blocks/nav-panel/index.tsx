@@ -1,4 +1,6 @@
 import { type FC, useMemo } from "react";
+import { DndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 import {
   Drawer,
@@ -14,6 +16,8 @@ import NavItem from "./components/nav-item";
 import HeaderItem from "./components/header-item";
 import CutomNavItem from "./components/custom-nav-item";
 import CodeBlock from "./components/code-block";
+import SortableItem from "./components/sortable-item";
+import LoadListSkeleton from "./components/load-list-skeleton";
 
 import {
   ICON_SX,
@@ -22,41 +26,32 @@ import {
   MAIN_LIST,
   LIST_SX,
   getDrawerSx,
-  getStackCodeBoxSx
+  getStackCodeBoxSx,
+  DIVIDER_SX_BOTTOM
 } from "./styles"
-
-import { DndContext } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-
-import SortableItem from "./components/sortable-item";
 import { useNavPanel } from "./hook";
-import { MOCK } from "./hook/mock";
-import { useRoomActivity } from "@hooks";
-import { useRouter } from "next/router";
 
 const NavPanel: FC = () => {
   const {
     drawerRef,
     isOpen,
     onAddBlock,
-    setBlocks,
     setIsOpen,
     onDragEnd,
-    onDeleteBlock,
-    blocks,
-    draggableConfig
+    onDeletePreviewUser,
+    draggableConfig,
+    users,
+    previewdUsers,
+    isCodePreviewVisible,
+    activeUsersAmount,
+    isCodeBlocksVisible,
+    isUsersLoading
   } = useNavPanel();
 
-  const { query } = useRouter();
-
-  const drawerSx = useMemo(() => getDrawerSx(isOpen), [isOpen]);
+  const drawerSx = useMemo(() => getDrawerSx(isOpen, isCodePreviewVisible), [isOpen, isCodePreviewVisible]);
   const stackCodeBoxSx = useMemo(() => {
-    return getStackCodeBoxSx(draggableConfig?.height)
-  }, [draggableConfig?.height]);
-
-  const isBlocksVisible = blocks.length > 0 && isOpen && draggableConfig != null;
-
-  const { getActivityStatus } = useRoomActivity(query.lessonId as string | undefined);
+    return getStackCodeBoxSx(draggableConfig?.height, isOpen)
+  }, [draggableConfig?.height, isOpen]);
 
   return (
     <Drawer
@@ -66,30 +61,34 @@ const NavPanel: FC = () => {
       sx={drawerSx}
     >
       <HeaderItem
-        onClick={() => {
-          setIsOpen(!isOpen);
-          setBlocks([])
-        }}
+        activeUsers={activeUsersAmount}
+        onClick={() => setIsOpen(!isOpen)}
       />
 
       <Divider sx={DIVIDER_SX} />
 
       <Stack sx={STACK_SX}>
         <List sx={MAIN_LIST}>
-          {MOCK.map((props) => (
-            <NavItem
-              key={props.name}
-              {...props}
-              status={getActivityStatus(props.id)}
-              onToggle={() => { setIsOpen(!isOpen); }}
-              onClick={() => { onAddBlock(props.id); }}
-            />
-          ))}
+          {isUsersLoading
+            ? <LoadListSkeleton />
+            : (
+              <>
+                {users.map((user) => (
+                  <NavItem
+                    key={user.id}
+                    data={user}
+                    onToggle={() => setIsOpen(!isOpen)}
+                    onClick={() => onAddBlock(user)}
+                  />
+                ))}
+              </>
+            )
+          }
         </List>
       </Stack>
 
-      <Divider sx={DIVIDER_SX} />
-
+      <Divider sx={DIVIDER_SX_BOTTOM} />
+      
       <List sx={LIST_SX}>
         <CutomNavItem
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
@@ -110,19 +109,20 @@ const NavPanel: FC = () => {
         />
       </List>
 
-      {isBlocksVisible && (
+      {isCodeBlocksVisible && (
         <Stack sx={stackCodeBoxSx}>
-          <DndContext
-            onDragEnd={onDragEnd}
-          >
-            <SortableContext
-              items={blocks}
+          <DndContext onDragEnd={onDragEnd}>
+            <SortableContext 
+              items={previewdUsers}
               strategy={verticalListSortingStrategy}
             >
-              {blocks.map((id) => {
+              {previewdUsers.map((user) => {
                 return (
-                  <SortableItem key={id} id={id}>
-                    <CodeBlock onClose={() => { onDeleteBlock(id); }} id={id} key={id} />
+                  <SortableItem key={user.id} id={user.id}>
+                    <CodeBlock
+                      onClose={() => onDeletePreviewUser(user.id)}
+                      data={user}
+                    />
                   </SortableItem>
                 )
               })}

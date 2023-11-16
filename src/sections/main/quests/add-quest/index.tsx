@@ -2,11 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { add, format } from "date-fns";
+import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbListDetails } from "react-icons/tb";
-import { animals, colors, uniqueNamesGenerator } from "unique-names-generator";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
@@ -18,6 +17,7 @@ import {
   Tabs,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
@@ -34,25 +34,27 @@ import {
   useUpdateClassAssignmentMutation,
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
+import { FORM_HEADER_SX } from "./constants";
+import {
+  CONTAINER_INNER_SX,
+  DATE_FORMAT,
+  DATE_PARSER,
+  DAYS_TO_CLOSE,
+  DAYS_TO_END,
+  RANDOM_NAME,
+  TABS_SX,
+  TOOLTIP_TEXT,
+  mainContainerStyles,
+} from "./constants";
 import { CreateQuestSchema } from "./helpers/create-quest.schema";
 import { FormQuestProps } from "./helpers/quest.interface";
 
-const RANDOM_NAME = uniqueNamesGenerator({
-  dictionaries: [colors, animals],
-  separator: "_",
-  length: 2,
-});
-
-const DATE_PARSER = (date?: string, increment: number = 0) =>
-  date ? new Date(date) : add(new Date(), { days: increment });
-const DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSSX";
-const DAYS_TO_END = 7;
-const DAYS_TO_CLOSE = 10;
-
 export default function AddQuest(): React.ReactElement {
+  const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
 
@@ -74,6 +76,8 @@ export default function AddQuest(): React.ReactElement {
     useUpdateCourseAssignmentMutation();
   const [addAssignmentToClass] = useUpdateClassAssignmentMutation();
 
+  const coursesData = useManagerGetCourseQuery({});
+
   useEffect(() => {
     if (assignment) {
       methods.reset({
@@ -89,6 +93,12 @@ export default function AddQuest(): React.ReactElement {
     }
   }, [isAssignmentLoading]);
 
+  useEffect(() => {
+    if (coursesData?.data?.data[0]?.id && !methods.getValues().course) {
+      methods.setValue("course", coursesData.data?.data[0]?.id);
+    }
+  }, [coursesData]);
+
   const methods = useForm<FormQuestProps>({
     resolver: yupResolver(CreateQuestSchema),
     mode: "all",
@@ -96,7 +106,7 @@ export default function AddQuest(): React.ReactElement {
       name: assignment?.name ?? RANDOM_NAME,
       description: JSON.parse(assignment?.description ?? "{}"),
       type: assignment?.type ?? AssignmentTypes.COURSE,
-      course: assignment?.course?.id,
+      course: assignment?.course?.id ?? coursesData.data?.data[0]?.id,
       startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
       dueDate: format(
         DATE_PARSER(assignment?.end_date, DAYS_TO_END),
@@ -186,18 +196,13 @@ export default function AddQuest(): React.ReactElement {
 
   return (
     <>
-      <Stack sx={{ px: 5, py: 8, background: "#f3f3f3", borderRadius: 3 }}>
-        <Stack
-          sx={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mb: 3,
-          }}
-        >
+      <Stack sx={mainContainerStyles(theme)}>
+        <Stack sx={CONTAINER_INNER_SX}>
           <Stack>
             <Typography variant="h2">Add Quest</Typography>
-            <Tooltip title="this is .....">
+            <Tooltip
+              title={<Typography variant="body2">{TOOLTIP_TEXT}</Typography>}
+            >
               <Typography
                 variant="caption"
                 sx={{ textDecoration: "underline" }}
@@ -221,15 +226,7 @@ export default function AddQuest(): React.ReactElement {
               }}
               value={value}
               scrollButtons={false}
-              sx={{
-                pb: 2,
-                "& .MuiTabs-indicator": {
-                  backgroundColor: "#43D4DD",
-                },
-                "& .MuiTabs-flexContainer": {
-                  justifyContent: "flex-end",
-                },
-              }}
+              sx={TABS_SX}
             >
               <Tab
                 label={"Details"}
@@ -246,7 +243,12 @@ export default function AddQuest(): React.ReactElement {
             </Tabs>
 
             <CustomTabPanel value={value} index={0}>
-              <DetailsStep />
+              <DetailsStep
+                coursesData={{
+                  data: coursesData.data?.data,
+                  isLoading: coursesData.isLoading,
+                }}
+              />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
               <SettingsStep

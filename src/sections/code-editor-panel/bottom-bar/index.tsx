@@ -1,31 +1,35 @@
-import { type FC, type ReactNode } from 'react'
 import dynamic from "next/dynamic";
+import { type FC, type ReactNode } from "react";
 
 import { Stack } from "@mui/system";
 
-import ProgressBottomBar, { type ProgressBottomBarProps } from "./progress-bottom-bar";
-import type { MenuProps } from './menu';
+import { useSelector } from "src/redux/store";
+
+import type { MenuProps } from "./menu";
+import ProgressBottomBar, {
+  type ProgressBottomBarProps,
+} from "./progress-bottom-bar";
 
 const Menu = dynamic(async () => await import("./menu"));
 
-export interface BottomBarProps extends ProgressBottomBarProps,
-MenuProps {
-  lessonManagerComponent: ReactNode
+export interface BottomBarProps extends ProgressBottomBarProps, MenuProps {
+  lessonManagerComponent: ReactNode;
 }
 
 const STACK_STYLES = {
   width: "100%",
   justifyContent: "flex-end",
-  alignItems: "center"
-}
+  alignItems: "center",
+};
 
 const BottomBar: FC<BottomBarProps> = ({
   publicPage = false,
   sliderSteps,
   code,
   language,
-  lessonManagerComponent
+  lessonManagerComponent,
 }) => {
+  const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
   return (
     <Stack
       pl="20px"
@@ -38,18 +42,12 @@ const BottomBar: FC<BottomBarProps> = ({
     >
       {lessonManagerComponent}
 
-      <Stack
-        spacing={2}
-        direction="row"
-        sx={STACK_STYLES}
-      >
-        <ProgressBottomBar sliderSteps={sliderSteps} />
+      <Stack spacing={2} direction="row" sx={STACK_STYLES}>
+        {activeTab === 0 ? (
+          <ProgressBottomBar sliderSteps={sliderSteps} />
+        ) : null}
 
-        <Menu
-          code={code}
-          language={language}
-          publicPage={publicPage}
-        />
+        <Menu code={code} language={language} publicPage={publicPage} />
       </Stack>
     </Stack>
   );

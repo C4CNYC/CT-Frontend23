@@ -49,7 +49,7 @@ export function UploadImageModal({
     boxShadow: 2,
     borderRadius: "16px",
     p: 4,
-    width: { xs: "90%", sm: "90%", md: "40%"},
+    width: { xs: "90%", sm: "90%", md: "40%" },
   };
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();

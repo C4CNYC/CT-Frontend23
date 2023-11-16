@@ -6,17 +6,11 @@ import {
   useReducer,
 } from "react";
 
-import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 
 import { axios, localStorageAvailable, voidFunction } from "@utils";
 import { Role } from "src/redux/services/enums/role.enum";
-import {
-  cleanUser,
-  cleanUserRole,
-  setStudentMode,
-  setUser,
-} from "src/redux/slices/global";
+import { cleanUser, cleanUserRole, setUser } from "src/redux/slices/global";
 
 import {
   ActionMapType,
@@ -219,10 +213,7 @@ export function AuthProvider({
 
     const { access_token: accessToken, user } = data;
     reduxDispatch(setUser(user));
-    setSession(
-      accessToken,
-      localStorage.getItem("tenantName") ?? "codetribe"
-    );
+    setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
 
     dispatch({
       type: Types.LOGIN,
@@ -233,10 +224,11 @@ export function AuthProvider({
   };
 
   // Register WITH GOOGLE
-  const registerWithGoogle = async (token: string) => {
+  const registerWithGoogle = async (token: string, role: Role) => {
     try {
       const { data } = await axios.post<any, any>("auth/google-signup", {
         auth_token: token,
+        role
       });
 
       const { access_token: accessToken, user } = data;
@@ -264,6 +256,7 @@ export function AuthProvider({
       password: string,
       firstName: string,
       lastName: string,
+      role: Role,
       tenantName?: string
     ) => {
       if (tenantName) {
@@ -277,6 +270,7 @@ export function AuthProvider({
         password,
         first_name: firstName,
         last_name: lastName,
+        role,
       });
 
       const { access_token: accessToken, user } = data;

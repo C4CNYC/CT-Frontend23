@@ -1,12 +1,13 @@
 import { Control } from "react-hook-form";
 
-import { Box, FormGroup, Stack, Typography } from "@mui/material";
+import { FormGroup, Stack, Typography, useTheme } from "@mui/material";
 
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
 
 import SkillsAutocomplete from "./components/SkillsAutocomplete";
 import TimeController from "./components/TimeController";
+import { statusSelect } from "./constants";
 import { FormQuestProps } from "./helpers/quest.interface";
 
 interface ISettingsStepProps {
@@ -22,6 +23,7 @@ export default function SettingsStep({
   assignmentsSkillsId,
   existedSkills,
 }: ISettingsStepProps): React.ReactElement {
+  const theme = useTheme();
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
       <Stack
@@ -63,14 +65,7 @@ export default function SettingsStep({
           name="active"
           size="small"
           defaultValue={true as any}
-          sx={{
-            maxWidth: { xs: "100%", sm: "300px", md: "300px" },
-            background: "#fff",
-            outline: "none",
-            borderRadius: 1,
-            "& fieldset": { border: "none" },
-            width: { xs: "100%", sm: "300px", md: "300px" },
-          }}
+          sx={statusSelect(theme)}
         >
           <option key="published" value={true as any}>
             Published

@@ -11,10 +11,14 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 interface HeaderItemProps {
   onClick: () => void
+  activeUsers: number
+  activeAdmins?: number
 }
 
 const HeaderItem: FC<HeaderItemProps> = ({
-  onClick
+  onClick,
+  activeUsers,
+  activeAdmins = 0
 }) => {
   return (
     <ListItem sx={LIST_ITEM_SX}>
@@ -34,7 +38,7 @@ const HeaderItem: FC<HeaderItemProps> = ({
             color="success"
           >
             <Typography sx={USER_SUBTITLE_SX}>
-              13 live
+              {activeUsers} live
             </Typography>
           </Badge>
 
@@ -44,7 +48,7 @@ const HeaderItem: FC<HeaderItemProps> = ({
             color="success"
           >
             <Typography sx={SUBTITLE_SX}>
-              1 admin
+              {activeAdmins} admin
             </Typography>
           </Badge>
         </Stack>

@@ -9,6 +9,7 @@ export interface IGlobalCodePanel {
   courseId: string;
   isInstructionsHidden: boolean;
   isBrowserHidden: boolean;
+  isCodePreviewVisible: boolean
 }
 
 const initialState: IGlobalCodePanel = {
@@ -20,6 +21,7 @@ const initialState: IGlobalCodePanel = {
   nextStepAble: true,
   isInstructionsHidden: false,
   isBrowserHidden: false,
+  isCodePreviewVisible: false,
 };
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T]
@@ -28,29 +30,32 @@ export const codePanelSlice = createSlice({
   name: "code-panel-global",
   initialState,
   reducers: {
-    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<'slideIndex'>>): void => {
+    setSlideIndex: (state, { payload }: PayloadAction<PickedStoreItem<"slideIndex">>): void => {
       state.slideIndex = payload
     },
-    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<'solutionCode'>>): void => {
+    setSolutionCode: (state, { payload }: PayloadAction<PickedStoreItem<"solutionCode">>): void => {
       state.solutionCode = payload
     },
-    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<'nextStepAble'>>): void => {
+    setNextStepAble: (state, { payload }: PayloadAction<PickedStoreItem<"nextStepAble">>): void => {
       state.nextStepAble = payload
     },
-    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<'unitId'>>): void=> {
+    setUnitId: (state, { payload }: PayloadAction<PickedStoreItem<"unitId">>): void => {
       state.unitId = payload
     },
-    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<'courseId'>>): void => {
+    setCourseId: (state, { payload }: PayloadAction<PickedStoreItem<"courseId">>): void => {
       state.courseId = payload
     },
-    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<'lessonId'>>): void => {
+    setLessonId: (state, { payload }: PayloadAction<PickedStoreItem<"lessonId">>): void => {
       state.lessonId = payload
     },
-    toggleInstrations: (state, { payload }: PayloadAction<PickedStoreItem<'isInstructionsHidden'>>): void => {
+    toggleInstrations: (state, { payload }: PayloadAction<PickedStoreItem<"isInstructionsHidden">>): void => {
       state.isInstructionsHidden = payload
     },
-    toggleBrowser: (state, { payload }: PayloadAction<PickedStoreItem<'isBrowserHidden'>>): void => {
+    toggleBrowser: (state, { payload }: PayloadAction<PickedStoreItem<"isBrowserHidden">>): void => {
       state.isBrowserHidden = payload
+    },
+    toggleCodePreview: (state, { payload }: PayloadAction<PickedStoreItem<'isCodePreviewVisible'>>) => {
+      state.isCodePreviewVisible = payload;
     }
   },
 });
@@ -63,7 +68,8 @@ export const {
   setCourseId,
   setLessonId,
   toggleInstrations,
-  toggleBrowser
+  toggleBrowser,
+  toggleCodePreview
 } = codePanelSlice.actions;
 
 export default codePanelSlice.reducer;

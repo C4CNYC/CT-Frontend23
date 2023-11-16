@@ -4,7 +4,7 @@ import { TimeoutId } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/type
 import { AnimatePresence, m } from "framer-motion";
 import { useAtom } from "jotai";
 
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
 
 import { Iconify } from "@components";
@@ -20,12 +20,8 @@ interface ICheckers {
 }
 
 const Checkers = ({ checkers }: ICheckers): React.ReactElement => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const [
-    { nextStepAble, isBrowserHidden, isInstructionsHidden },
-    setGlobalAtom,
-  ] = useAtom(globalCodePanelAtom);
+  const [{ nextStepAble, isBrowserHidden }, setGlobalAtom] =
+    useAtom(globalCodePanelAtom);
   const [{ visible, openText }, setAnimation] = useAtom(checkersAnimationAtom);
   const [timeoutId, setTimeoutId] = useState<TimeoutId | null>(null);
   const handleCollaps = (): void => {

@@ -38,7 +38,7 @@ IUserList): React.ReactElement => {
       },
       1
     );
-  });
+  }, []);
 
   return (
     <Conversation
@@ -54,7 +54,11 @@ IUserList): React.ReactElement => {
                 : "Me",
           }
         : {})}
-      info={lastMessage?.text}
+      info={
+        /<br\s*\/?>/.test(lastMessage?.text ?? "")
+          ? lastMessage?.text.replace(/<br\s*\/?>.*/, "...")
+          : lastMessage?.text
+      }
       onClick={() => {
         onSelecUser(user);
       }}

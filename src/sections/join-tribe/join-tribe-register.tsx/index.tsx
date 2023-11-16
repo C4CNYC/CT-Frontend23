@@ -12,6 +12,7 @@ import { useAuthContext } from "src/auth/useAuthContext";
 
 import EmailStep from "./email-step";
 import PasswordStep from "./password-step";
+import { Role } from "src/redux/services/enums/role.enum";
 
 interface FormValuesProps {
   email: string;
@@ -59,7 +60,7 @@ export default function JoinTribeRegister({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await register(data.email, data.password, data.firstName, data.lastName);
+      await register(data.email, data.password, data.firstName, data.lastName, Role.Student);
       await login(data.email, data.password, "codetribe");
       enqueueSnackbar("Registered successfully!");
     } catch (error) {

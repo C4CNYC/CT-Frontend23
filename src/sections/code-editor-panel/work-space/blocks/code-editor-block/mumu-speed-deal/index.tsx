@@ -23,7 +23,7 @@ import {
   getSpeedDealStyles,
   SPEED_DEAL_ACTION_FAB_PROPS,
   BOX_PROPS
-} from './constants'
+} from "./constants"
 
 interface MumuSpeedDialProps {
   typing: boolean | null;

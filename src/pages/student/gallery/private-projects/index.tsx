@@ -10,10 +10,7 @@ import {
 } from "@components";
 import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { StudentDashboardLayout } from "@layouts/dashboard/StudentDashboardLayout";
-import {
-  STUDENT_PATH_DASHBOARD,
-  STUDENT_PATH_MAIN,
-} from "@routes/student.paths";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import GalleryItem from "@sections/dashboard/gallery/GalleryElement";
 import {
   SkeletonGalleryBreadcrumbs,
@@ -64,7 +61,7 @@ export default function PrivateProjects(): React.ReactElement {
                 { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
                 { name: "Gallery", href: STUDENT_PATH_DASHBOARD.gallery.root },
                 {
-                  name: "Privat",
+                  name: "Private",
                   href: STUDENT_PATH_DASHBOARD.gallery.privateProject,
                 },
               ]}
@@ -75,7 +72,7 @@ export default function PrivateProjects(): React.ReactElement {
         <SimpleInfiniteList
           hasNextPage={data?.meta.hasNextPage ?? false}
           onLoadMore={() => {
-            if (data?.meta.take !== filters?.take) return;
+            if (data?.meta.take !== Number(filters?.take)) return;
             setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
           }}
           loading={isLoading ?? isFetching}

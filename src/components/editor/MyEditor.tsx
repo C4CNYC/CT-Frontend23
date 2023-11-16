@@ -9,6 +9,7 @@ import { isJson } from "@utils";
 
 import EditorToolbar from "./EditorToolbar";
 import { extensions } from "./extensions-template";
+import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
 
 interface FileWithProgress {
   file: File;
@@ -37,6 +38,7 @@ function Editor({
   setMultimediaValue,
 }: Props): React.ReactElement {
   const { uploadToS3 } = useS3Upload();
+  const [createMedia] = useCreateMediaMutation();
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
     let completed = 0;
     const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
@@ -46,9 +48,27 @@ function Editor({
         async () =>
           await new Promise<ImageAttributes>((resolve, reject) => {
             completed += 1;
-            uploadToS3(file).then(({ url, key }) => {
+            uploadToS3(file, {
+              endpoint: {
+                request: {
+                  body: {},
+                  headers: {
+                    "x-tenant-id":
+                      localStorage.getItem("tenantName") ?? "codetribe"
+                  }
+                }
+              }
+            }).then(({ url, key }) => {
               progress(completed / files.length);
-              resolve({ src: url, fileName: key });
+              createMedia({
+                url,
+                name: file.name,
+                size: file.size,
+                type: 'image',
+                acl: 'public',
+              }).unwrap().then(() => {
+                resolve({ src: url, fileName: key });
+              })
             });
           })
       );

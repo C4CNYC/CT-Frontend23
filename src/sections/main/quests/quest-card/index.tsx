@@ -43,7 +43,7 @@ export default function QuestsTab({
         <SimpleInfiniteList
           hasNextPage={data?.meta.hasNextPage ?? false}
           onLoadMore={() => {
-            if (data?.meta.take !== filters?.take) return;
+            if (data?.meta.take !== Number(filters?.take)) return;
             setFilter("take", DEFAULT_TAKE_PER_PAGE);
           }}
           loading={isLoading ?? isFetching}

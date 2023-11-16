@@ -33,7 +33,7 @@ interface IPublishModal {
 interface FormValuesProps {
   title: string;
   description: string;
-  isPublic: boolean;
+  public: boolean;
 }
 
 const PublishModal: FC<IPublishModal> = ({
@@ -145,13 +145,13 @@ const PublishModal: FC<IPublishModal> = ({
 const CreateProjectSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   description: Yup.string().required("Description is required"),
-  isPublic: Yup.boolean(),
+  public: Yup.boolean(),
 });
 
 const getDefaultValues = (isPublic: boolean): FormValuesProps => ({
   title: "",
   description: "",
-  isPublic: isPublic,
+  public: isPublic,
 });
 
 export default PublishModal;

@@ -7,7 +7,6 @@ import { MdArrowBackIosNew } from "react-icons/md";
 
 import { LoadingButton } from "@mui/lab";
 import {
-  Button,
   Divider,
   IconButton,
   InputAdornment,
@@ -17,6 +16,9 @@ import {
 
 import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
+
+import { styledRegisterInput } from "../styles";
 
 interface Props {
   isValid?: boolean;
@@ -41,7 +43,8 @@ export default function SingUp({
     onSuccess: async ({ access_token: token }) => {
       setIsLoading(true);
       try {
-        await registerWithGoogle(token);
+        const role = isTeacher ? Role.Manager : Role.Student;
+        await registerWithGoogle(token, role);
         if (isTeacher) {
           goToStep(3);
         } else {
@@ -61,10 +64,7 @@ export default function SingUp({
           <MdArrowBackIosNew />
         </IconButton>
       )}
-      <Stack
-        direction="row"
-        sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: isTeacher ? "50px" : "70px" }}
-      >
+      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "40px" }}>
         <Typography variant="h3">Sign up</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           😃
@@ -78,19 +78,7 @@ export default function SingUp({
           name="email"
           label="Email"
           defaultValue=""
-          sx={(theme) => ({
-            "& .MuiInputBase-root": {
-              height: "52px",
-              background: theme.palette.grey[200],
-            },
-            "& fieldset": { border: "none" },
-            "& input:-webkit-autofill": {
-              "-webkit-background-clip": "text",
-              "-webkit-text-fill-color": "#000",
-              transition: "background-color 5000s ease-in-out 0s",
-              boxShadow: `inset 0 0 .1px .1px ${theme.palette.grey[200]}`,
-            },
-          })}
+          sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -121,16 +109,21 @@ export default function SingUp({
           }}
           loading={isLoading}
           sx={(theme) => ({
-            color: theme.palette.grey[600],
+            color:
+              theme.palette.mode === "light"
+                ? theme.palette.grey[600]
+                : theme.palette.text.primary,
             textTransform: "none",
             py: 1.5,
             mb: 1,
             gap: 2,
-            background: theme.palette.grey[200],
+            background:
+              theme.palette.mode === "light" ? theme.palette.grey[200] : "",
             fontWeight: 400,
             fontSize: "1.3em",
             "&:hover": {
               color: theme.palette.grey[900],
+              background: theme.palette.mode === "light" ? "" : "#fff",
             },
           })}
         >

@@ -13,7 +13,7 @@ export const PATH_AUTH = {
   submitPassword: path(ROOTS_AUTH, "/submit-password"),
   onBoardingTeacher: path(ROOTS_AUTH, "/on-boarding/teacher"),
   onBoardingStudent: path(ROOTS_AUTH, "/on-boarding/student"),
-  singIn: path(ROOTS_AUTH, "/singIn"),
+  signIn: path(ROOTS_AUTH, "/signIn"),
 };
 
 export const PATH_PAGE = {

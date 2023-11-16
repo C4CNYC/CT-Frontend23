@@ -5,7 +5,6 @@ import { Button, type SxProps } from "@mui/material";
 
 import { BtnType } from "..";
 
-
 interface INavigationElement {
   disabled?: boolean;
   direction?: "prev" | "next";

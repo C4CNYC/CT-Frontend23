@@ -31,7 +31,7 @@ export default function JoinTribe(): React.ReactElement {
   }
 
   if (user) {
-    <JoinTribeModal classInfo={data} isSingIn={true} />;
+    <JoinTribeModal classInfo={data} isSignIn={true} />;
   }
 
   return (

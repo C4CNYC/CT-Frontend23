@@ -1,6 +1,12 @@
 import { Button, Stack, Typography } from "@mui/material";
 
 import { SessionType } from "./SessionType";
+import {
+  LAUNCH_SESSION_BTN_SX,
+  POPUP_SESION_BTN_SX,
+  WELCOM_STEP_SUBTITLE_SX,
+  WELCOM_STEP_WRAPPER_SX,
+} from "./constants";
 
 export default function WelcomeStep({
   nextStep,
@@ -9,27 +15,23 @@ export default function WelcomeStep({
 }): React.ReactElement {
   return (
     <>
-      <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "60px" }}>
+      <Stack direction="row" sx={WELCOM_STEP_WRAPPER_SX}>
         <Typography variant="h3">Hey, Teachers</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           👋
         </Typography>
       </Stack>
-      <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
+      <Typography variant="body1" sx={WELCOM_STEP_SUBTITLE_SX}>
         Let’s start a learning adventure
       </Typography>
-      <Button
-        disabled={true}
-        onClick={() => {}}
-        sx={{ py: 2, mb: 1, borderRadius: "15px" }}
-      >
+      <Button disabled={true} onClick={() => {}} sx={POPUP_SESION_BTN_SX}>
         <SessionType {...POPUP_SESSION} disabled={true} />
       </Button>
       <Button
         onClick={() => {
           nextStep();
         }}
-        sx={{ color: "inherit", py: 2, borderRadius: "15px" }}
+        sx={LAUNCH_SESSION_BTN_SX}
       >
         <SessionType {...LAUNCH_SESSION} />
       </Button>

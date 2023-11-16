@@ -8,7 +8,7 @@ import {
 
 import { Box, Slider, useMediaQuery, useTheme } from "@mui/material";
 
-import { useSelector } from 'src/redux/store';
+import { useSelector } from "src/redux/store";
 import {
   SLIDER_STYLE,
   getBoxStyles
