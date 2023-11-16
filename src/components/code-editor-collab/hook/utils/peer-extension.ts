@@ -1,16 +1,23 @@
 import { Socket } from "socket.io-client"
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view"
 import { StateEffect, Text, ChangeSet } from "@codemirror/state"
-import { type Update, receiveUpdates, sendableUpdates, collab, getSyncedVersion } from "@codemirror/collab"
+import {
+	type Update,
+	receiveUpdates,
+	sendableUpdates,
+	collab,
+	getSyncedVersion
+} from "@codemirror/collab"
 
 import { type Cursor, addCursor } from "./cursors" 
+import { EmitSocketEvents, SubscribedEvents } from "./socket"
 
 const pushUpdates = (
 	socket: Socket,
 	docName: string,
 	version: number,
 	fullUpdates: readonly Update[],
-	fileName: string 
+	fileName: string ,
 ): Promise<boolean> => {
 	// Strip off transaction data
 	const updates = fullUpdates.map(u => ({
@@ -20,9 +27,9 @@ const pushUpdates = (
 	}))
 
 	return new Promise(function(resolve) {
-		socket.emit('pushUpdates', docName, version, JSON.stringify(updates), fileName);
+		socket.emit(EmitSocketEvents.Push, docName, version, JSON.stringify(updates), fileName);
 
-		socket.once('pushUpdateResponse', function(status: boolean) {
+		socket.once(SubscribedEvents.PushResponse, function(status: boolean) {
 			resolve(status);
 		});
 	});
@@ -30,17 +37,17 @@ const pushUpdates = (
 
 const pullUpdates = (
 	socket: Socket,
-	docName: string,
+	roomId: string,
 	version: number,
-	fileName: string
+	fileName: string,
 ): Promise<readonly Update[]> => {
 	return new Promise(function(resolve) {
-		socket.emit('pullUpdates', docName, version, fileName);
+		socket.emit(EmitSocketEvents.Pull, roomId, version, fileName, socket.id);
 
-		socket.once('pullUpdateResponse', function(updates) {
+		socket.once(`${EmitSocketEvents.PullResponse}${roomId}${fileName}`, function(updates) {
 			resolve(JSON.parse(updates));
 		});
-	}).then((updates: any) => updates.map((u: any) => {
+	}).then((updates: any) => updates?.map((u: any) => {
 		if (u.effects[0]) {
 			const effects: StateEffect<Cursor>[] = [];
 
@@ -86,12 +93,28 @@ interface GetDocumentReturn {
 	updates: any
 }
 
-export const getActiveFile = async (roomId: string, socket: Socket): Promise<string | null> => {
-	return new Promise((resolve) => {
-		socket.emit('getActiveFile', roomId)
+export interface FileInfo {
+	activeFile: string
+	files: string[]
+	filesInLayout: string[]
+}
 
-		socket.once('getActiveFileResponce', (activeFile: string): void => {
-			resolve(activeFile)
+export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
+	return new Promise((resolve) => {
+		socket.emit(EmitSocketEvents.GetFileInfo, roomId);
+
+		socket.once(SubscribedEvents.GetFileInfoResponse, (info: FileInfo) => {
+			resolve(info);
+		})
+	})
+}
+
+export const isRoomExist = async (roomId: string, socket: Socket): Promise<boolean> => {
+	return new Promise((resolve) => {
+		socket.emit('isRoomExist', roomId);
+
+		socket.once('isRoomExistResponse' + roomId, (isExist: boolean) => {
+			resolve(isExist);
 		})
 	})
 }
@@ -104,9 +127,9 @@ export const getDocument = ({
 	preloadedCode
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
 	return new Promise(function(resolve) {
-		socket.emit('getDocument', roomId, cursorName, fileName, preloadedCode);
+		socket.emit(EmitSocketEvents.GetDoc, roomId, cursorName, fileName, preloadedCode);
 
-		socket.once('getDocumentResponse', function(version: number, doc: string, cursorName: string, updates: any) {
+		socket.once(SubscribedEvents.GetDocResponse,  function(version: number, doc: string, cursorName: string, updates: any) {
 			resolve({
 				version,
 				doc: Text.of(doc.split("\n")),
@@ -128,15 +151,14 @@ export const peerExtension = ({
 	socket,
 	roomId,
 	startVersion,
-	fileName
+	fileName,
 }: PeerExtensionProps) => {
 	const plugin = ViewPlugin.fromClass(class {
 		private pushing = false
 		private done = false
 
 		constructor(private view: EditorView) {
-			// this.view.setState(EditorState.create())
-			this.pull()
+			this.pull();
 		}
 
 		update(update: ViewUpdate) {
@@ -147,8 +169,9 @@ export const peerExtension = ({
 
 		async push() {
 			const updates = sendableUpdates(this.view.state);
+			const isSkipped = this.pushing || !updates.length;
 
-			if (this.pushing || !updates.length) {
+			if (isSkipped) {
 				return;
 			}
 
@@ -156,38 +179,35 @@ export const peerExtension = ({
 
 			const version = getSyncedVersion(this.view.state);
 			await pushUpdates(socket, roomId, version, updates, fileName ?? '');
-
 			this.pushing = false;
 			// Regardless of whether the push failed or new updates came in
 			// while it was running, try again if there's updates remaining
 			if (sendableUpdates(this.view.state).length) {
-				setTimeout(() => this.push(), 100);
+				setTimeout(() => {
+					this.push()
+				}, 100);
 			}
-				
 		}
 
 		async pull() {
 			while (!this.done) {
-				try {
-					const version = getSyncedVersion(this.view.state);
-					const updates = await pullUpdates(socket, roomId, version, fileName ?? '');
-					const newUpdates = receiveUpdates(this.view.state, updates);
-					this.view.dispatch(newUpdates)
-				} catch {
-
-				}
+				const version = getSyncedVersion(this.view.state);
+				const updates = await pullUpdates(socket, roomId, version, fileName ?? '');
+				const newUpdates = receiveUpdates(this.view.state, updates);
+				this.view.dispatch(newUpdates);
 			}
 		}
 
 		destroy() {
-			this.done = true
+			socket.off(EmitSocketEvents.PullResponse);
+			socket.off(`${EmitSocketEvents.PullResponse}${roomId}${fileName}`);
+			this.done = true;
 		}
 	})
 
 	return [
 		collab({
 			startVersion,
-			// clientID: cursorId,
 			sharedEffects: tr => 
 				tr.effects.filter(e =>
 					e.is(addCursor))

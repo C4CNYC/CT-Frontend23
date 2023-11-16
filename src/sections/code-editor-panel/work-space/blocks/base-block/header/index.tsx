@@ -1,4 +1,4 @@
-import { type FC, useMemo } from "react";
+import { type FC,type ReactNode, useMemo } from "react";
 import { TbArrowsMinimize } from "react-icons/tb";
 
 import {
@@ -13,7 +13,7 @@ import {
 import { BUTTON_SX, TYP_SX, getBoxStyles } from "./constants";
 
 interface HeaderProps {
-  title: string;
+  title: ReactNode;
   icon: React.ReactElement;
   hideTabsHandler?: () => void;
 }

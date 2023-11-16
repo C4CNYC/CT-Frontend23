@@ -1,43 +1,68 @@
-import { useEffect, useState } from "react";
+import { useSocket } from "./useSocket";
+import { useCallback, useMemo } from "react";
+import { ActivityStatus } from "../types/activity-status";
+import { PermissionError } from "../types/errors/permission-error";
+import { RoomActivity } from "../types/room-activity";
 
-import { initializeApp } from "firebase/app";
-import { getDatabase, onValue, ref } from "firebase/database";
+export function useRealtimeConnection() {
+  const socket = useSocket();
 
-import { ICodeContent } from "@sections/teacher-panel/code-panel/atoms/code.atom";
-import { IGlobalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
-
-const app = initializeApp({
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-});
-
-const db = getDatabase(app);
-
-type RealTimeConnectionBody = ICodeContent & IGlobalCodePanelAtom;
-
-export const useRealTimeConnection = (
-  userId: string
-): { data?: RealTimeConnectionBody } => {
-  const [data, setData] = useState<RealTimeConnectionBody>();
-
-  const getWorkSpaceState = (userId: string): void => {
-    const starCountRef = ref(db, "/class-streams/" + userId);
-    onValue(starCountRef, (snapshot) => {
-      const data = snapshot.val();
-
-      setData(data);
+  const getOwnActivity = useCallback<() => Promise<ActivityStatus>>(async () => {
+    return await new Promise((resolve) => {
+      socket.emit("getOwnActivityStatus", (activityStatus: ActivityStatus) => {
+        resolve(activityStatus);
+      });
     });
-  };
+  }, [socket]);
 
-  useEffect(() => {
-    if (!userId) return;
-    getWorkSpaceState(userId);
-  }, [userId]);
+  const getActivityOfRoom = useCallback<
+    (roomId: string) => Promise<RoomActivity>
+  >(async (roomId) => {
+    return await new Promise((resolve, reject) => {
+      socket.emit(
+        "getActivityStatus",
+        roomId,
+        (activityStatus: RoomActivity | PermissionError) => {
+          if (!("error" in activityStatus)) {
+            resolve(activityStatus);
+          } else {
+            reject(activityStatus);
+          }
+        },
+      );
+    });
+  }, [socket]);
 
-  return { data };
-};
+  const onActivityStatusAvailable = useCallback<
+    (callback: (roomId: string, roomActivity: RoomActivity) => void) => void
+  >((callback) => {
+    socket.on("activityStatusAvailable", callback);
+  }, [socket]);
+
+  const offActivityStatusAvailable = useCallback<
+    (callback?: (roomId: string, roomActivity: RoomActivity) => void) => void
+  >((callback) => {
+    socket.off("activityStatusAvailable", callback);
+  }, [socket]);
+
+  const onActivityStatusChange = useCallback<
+    (callback: (userId: string, activityStatus: ActivityStatus) => void) => void
+  >((callback) => {
+    socket.on("activityStatus", callback);
+  }, [socket]);
+
+  const offActivityStatusChange = useCallback<
+    (callback?: (userId: string, activityStatus: ActivityStatus) => void) => void
+  >((callback) => {
+    socket.off("activityStatus", callback);
+  }, [socket]);
+
+  return useMemo(() => ({
+    getOwnActivity,
+    getActivityOfRoom,
+    onActivityStatusAvailable,
+    offActivityStatusAvailable,
+    onActivityStatusChange,
+    offActivityStatusChange,
+  }), [getOwnActivity, getActivityOfRoom, onActivityStatusAvailable, offActivityStatusAvailable, onActivityStatusChange, offActivityStatusChange]);
+}

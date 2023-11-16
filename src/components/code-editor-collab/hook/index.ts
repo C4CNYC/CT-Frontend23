@@ -3,35 +3,31 @@ import {
   useEffect,
   useState,
   useRef,
-  useCallback
+  useCallback,
+  useMemo
 } from "react";
-import { Socket, io } from "socket.io-client";
 import { type Extension, Compartment } from '@uiw/react-codemirror';
+import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
-import { getActiveFile, getDocument } from "./utils/peer-extension";
+import { getDocument, getFileInfo } from "./utils/peer-extension";
 import { getExtensions } from "./utils/extensions";
+import {
+  unsubscribeSocket,
+  EmitSocketEvents,
+  SubscribedEvents
+} from "./utils/socket"
+import {
+  type MemoizedProps,
+  useMemoizedProps
+} from "./useMemoizedProps";
+import { EditorMode } from "./constants";
 
-export enum EditorMode {
-  Student = "student",
-  Watcher = "watcher",
-  Teacher = "teacher"
-}
-
-// @params
-// preloadedCode - strict preloaded code from api
-// code - it is a code which was changed by user and saved in local storage to show preview
-export interface UseCodeEditorCollabProps {
+export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
-	cursorText?: string
-	withTooltip?: boolean
-	onChange?: (code: string) => void
-  code?: string
-	preloadedCode?: string
   mode?: EditorMode
   activeFile: string
-  onDeleteFile: (fileName: string) => string | null
-  setActiveFile: (fileName: string) => void
+  socket: Socket
 }
 
 interface UseCodeEditorCollabReturn {
@@ -41,143 +37,184 @@ interface UseCodeEditorCollabReturn {
   activeFile: string
   key: number
   doc: string
-  onDeleteFile: (fileName: string) => void
-  onChangeActiveFile: (fileName: string) => void
-}
-
-const createSocket = (): Socket => {
-	return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
-    path: "/api",
-  });
+  onCreateEditor: (view: EditorView) => void
 }
 
 export const useCodeEditorCollab = ({
 	roomId,
-	cursorText = 'Unknown',
-	withTooltip = true,
-	onChange,
-	preloadedCode = "",
-  code = "",
-  mode = EditorMode.Student,
+  mode = EditorMode.Owner,
   activeFile,
-  onDeleteFile: _onDeleteFile,
-  setActiveFile
+  socket,
+  ...propsToMemoize
 }: UseCodeEditorCollabProps): UseCodeEditorCollabReturn => {
-  const socketRef = useRef<Socket | null>(null);
-
-  // refs for listeners
+  const modeRef = useRef(mode);
+  const firstInit = useRef(true);
+  const socketRef = useRef<Socket>(socket);
+  const initRoomDataRef = useRef({ mode, roomId });
+  const editorView = useRef<EditorView | null>(null);
   const editorRef = useRef<HTMLDivElement | null>(null);
-	const editorView = useRef<EditorView | null>(null);
 	const lineWrapRef = useRef<Compartment | null>(null);
 
-  // memoized props
-  const cursorTextRef = useRef<string>(cursorText);
-	const withTooltipRef = useRef(withTooltip);
-	const roomIdRef = useRef(roomId);
-  const modeRef = useRef(mode);
-	const onChangeRef = useRef(onChange);
-	const preloadedCodeRef = useRef(preloadedCode);
-  const codeRef = useRef(code);
-  const firstInit = useRef(true)
-
-  // state
   const [isLoading, setIsLoading] = useState(true);
   const [key, setKey] = useState(0);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
   const [doc, setDoc] = useState('');
 
-  const unsibscribeSocket = useCallback(() => {
-    socketRef.current?.off('pullUpdateResponse');
-    socketRef.current?.off('pushUpdateResponse');
-    socketRef.current?.off('getDocumentResponse');
-    socketRef.current?.off('activeFileChanged');
-  }, [])
+  const {
+    cursorText,
+    withTooltip,
+    onChange,
+    setActiveFile,
+    onResetFileManager
+  } = useMemoizedProps(propsToMemoize);
 
-  // initialize code mirror collab
-  const runInitialize = useCallback(async (isFirstInit: boolean) => {
-    unsibscribeSocket()
-    socketRef.current = createSocket();
-    firstInit.current = false
-    lineWrapRef.current = new Compartment();
-    socketRef.current.open();
+  // ------------------------------------------------------ //
+  //                         Handlers                       //
+  // ------------------------------------------------------ //
 
-    const defaultCode = codeRef.current || preloadedCodeRef.current;
-    const isPreloadedCodeExist = modeRef.current !== EditorMode.Watcher &&
-      defaultCode !== "" &&
-      defaultCode !== null;
-    const isShouldPreloadCode = isPreloadedCodeExist && isFirstInit;
-    const preloadedCode = isShouldPreloadCode ? defaultCode : undefined
+  const onCreateEditor = (view: EditorView) => {
+    editorView.current = view
+  }
 
-    let _activeFile = activeFile;
-
-    if (modeRef.current === EditorMode.Watcher && roomIdRef.current != null) {
-      const file = await getActiveFile(roomIdRef.current ?? '', socketRef.current);
-      _activeFile = file ?? activeFile;
-
-      socketRef.current.on('activeFileChanged', (roomId: string, fileName: string) => {
-        if (roomId === roomIdRef.current) {
-          setActiveFile(fileName);
-        }
-      })
+  const clearSocketData = useCallback(() => {
+    if (initRoomDataRef.current.mode === EditorMode.Owner) {
+      socketRef.current?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId);
     }
 
-    // get init data from server
+    unsubscribeSocket(socketRef.current);
+    editorView.current?.destroy();
+  }, []);
+
+  // ------------------------------------------------------ //
+  //                     Initialize Base                    //
+  // ------------------------------------------------------ //
+
+  const baseInit = useCallback(async (fileName: string) => {
+    lineWrapRef.current = new Compartment();
+
     const { version, doc, cursorName } = await getDocument({
+      roomId,
+      fileName,
       socket: socketRef.current,
-      roomId: roomIdRef.current,
-      cursorName: cursorTextRef.current,
-      fileName: _activeFile,
-      preloadedCode
+      cursorName: cursorText,
     });
 
-    // initialize extensions according to getting data from server
     const extensions = getExtensions({
       socket: socketRef.current,
       lineWrap: lineWrapRef.current,
-      withTooltip: withTooltipRef.current,
-      tooltipText: cursorTextRef.current,
-      fileName: _activeFile,
+      tooltipText: cursorText,
       cursorId: cursorName,
-      onChange: onChangeRef.current,
+      withTooltip,
+      fileName,
+      onChange,
       version,
-      roomId
+      roomId,
     });
 
     setExtensions(extensions);
     setDoc(doc.toString());
     setKey((prev) => ++prev);
     setIsLoading(false);
-  }, [activeFile, unsibscribeSocket]);
+  }, [roomId, cursorText, onChange, withTooltip]);
 
-  const onChangeActiveFile = (fileName: string) => {
-    setActiveFile(fileName);
-    socketRef.current?.emit("setActiveFile", roomIdRef.current, fileName);
-  }
+  // ------------------------------------------------------ //
+  //                   Initialize SubOwner                  //
+  // ------------------------------------------------------ //
 
-  const onDeleteFile = (fileName: string) => {
-    const newActiveFile = _onDeleteFile(fileName);
-    socketRef.current?.emit("setActiveFile", roomIdRef.current, newActiveFile);
-    socketRef.current?.emit('deleteFile', roomId, fileName)
-  }
+  const runInitSubOwner = useCallback(async (isFirstInit: boolean) => {
+    firstInit.current = false;
 
-  useEffect(() => {
-    void runInitialize(firstInit.current)
-  }, [runInitialize])
+    if (!isFirstInit) {
+      return await baseInit(activeFile);
+    }
 
-	useEffect(() => {
-		onChangeRef.current = onChange;
-	}, [onChange]);
+    const fileInfo = await getFileInfo(roomId, socketRef.current);
 
-	useEffect(() => {
-		return () => {
-      if (modeRef.current === EditorMode.Student) {
-        socketRef.current?.emit("deleteRoom", roomIdRef.current)
+    onResetFileManager(fileInfo);
+
+    if (fileInfo.activeFile === activeFile) {
+      await runInitSubOwner(false);
+    }
+  }, [activeFile, baseInit, onResetFileManager]);
+
+  // ------------------------------------------------------ //
+  //                   Initialize Owner                     //
+  // ------------------------------------------------------ //
+
+  const runInitOwner = useCallback(async (isFirstInit: boolean) => {
+    firstInit.current = false;
+
+    const fileInfo = await getFileInfo(roomId, socketRef.current);
+
+    if (!isFirstInit || fileInfo == null) {
+      return await baseInit(activeFile)
+    }
+
+    onResetFileManager(fileInfo);
+
+    if (fileInfo.activeFile === activeFile) {
+      await runInitOwner(false)
+    }
+  }, [activeFile, baseInit, onResetFileManager]);
+
+  // ------------------------------------------------------ //
+  //                   Initialize Watcher                   //
+  // ------------------------------------------------------ //
+
+  const runInitWatcher = useCallback(async () => {
+    firstInit.current = false;
+
+    let _activeFile = activeFile;
+    const fileInfo = await getFileInfo(roomId, socketRef.current);
+
+    if (fileInfo != null) {
+      const shouldChangeFile = fileInfo.activeFile != null &&
+        fileInfo.activeFile !== activeFile;
+
+      if (shouldChangeFile) {
+        setActiveFile(fileInfo.activeFile);
+        return;
       }
 
-      unsibscribeSocket()
-      editorView.current?.destroy();
-		}
-	}, [unsibscribeSocket]);
+      _activeFile = fileInfo.activeFile ?? activeFile;
+
+      socketRef.current.on(
+        SubscribedEvents.ActiveFileChanged,
+        (_roomId: string, fileName: string) => {
+          if (_roomId === roomId) {
+            setActiveFile(fileName);
+          }
+        }
+      )
+    }
+
+    await baseInit(_activeFile);
+  }, [activeFile, baseInit, setActiveFile]);
+
+  const initialize = useMemo(() => ({
+    [EditorMode.Owner]: runInitOwner,
+    [EditorMode.SubOwner]: runInitSubOwner,
+    [EditorMode.Watcher]: runInitWatcher,
+  }), [runInitWatcher, runInitOwner, runInitSubOwner]);
+
+  // ------------------------------------------------------ //
+  //                       Effects                          //
+  // ------------------------------------------------------ //
+
+  useEffect(() => {
+    firstInit.current = true;
+    modeRef.current = mode;
+  }, [mode, roomId]);
+
+  useEffect(() => {
+    editorView.current?.destroy();
+    initialize[modeRef.current](firstInit.current);
+  }, [initialize]);
+
+	useEffect(() => {
+    window.addEventListener('beforeunload', clearSocketData);
+		return () => clearSocketData();
+	}, [clearSocketData]);
 
   return {
     editorRef,
@@ -186,7 +223,6 @@ export const useCodeEditorCollab = ({
     doc,
     key,
     isLoading,
-    onDeleteFile,
-    onChangeActiveFile
+    onCreateEditor
   }
 }

@@ -15,7 +15,7 @@ import { useSelector } from "src/redux/store";
 interface IBaseBlock {
   children: ReactNode;
   className?: string;
-  title: string;
+  title: ReactNode;
   icon: React.ReactElement;
   hideTabsHandler?: () => void;
 }

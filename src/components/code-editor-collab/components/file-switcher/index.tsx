@@ -5,7 +5,7 @@ import { Stack, Tabs, Tab } from "@mui/material";
 import { styles } from "./styles";
 
  interface FileSwitcherProps {
-  activeFile: string
+  activeFile: string | null
   onChange: (fileName: string) => void
   fileList: string[]
  }

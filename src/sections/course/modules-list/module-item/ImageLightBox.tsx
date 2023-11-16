@@ -45,7 +45,10 @@ export default function ImageLightBox({
           width: "fit-content",
           position: "relative",
           zIndex: 1,
-          "&:hover": { "> div": { opacity: 1 } },
+          "&:hover": {
+            "> div": { opacity: 1 },
+            cursor: "pointer",
+          },
           ...sx,
         }}
       >
@@ -71,7 +74,12 @@ export default function ImageLightBox({
           <BiShowAlt size={40} />
         </Box>
       </Box>
-      <Dialog open={open} onClose={handleCloseDialog}>
+      <Dialog
+        open={open}
+        onClose={handleCloseDialog}
+        fullWidth={true}
+        maxWidth={"md"}
+      >
         <DialogContent sx={{ pt: 3 }}>
           <Image src={image} alt="module image" />
         </DialogContent>

@@ -1,4 +1,4 @@
-import { type FC, memo } from "react";
+import { type FC, memo, useRef } from "react";
 
 import CodeMirror from '@uiw/react-codemirror';
 
@@ -7,14 +7,22 @@ import LoadingCodeEditor from "./components/loading-code-editor"
 import {
 	type UseCodeEditorCollabProps,
 	useCodeEditorCollab,
-	EditorMode
 } from "./hook";
+import { EditorMode } from "./hook/constants";
 import { useStyles } from "./styles";
 import { useFileManager } from "./hook/useFileManager";
 import FileModal from "./components/file-modal";
 import FileSwitcher from "./components/file-switcher";
+import { createSocket } from "./hook/utils/socket";
 
-interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, 'activeFile' | 'onDeleteFile' | 'setActiveFile'> {
+interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps,
+	'activeFile' |
+	'onDeleteFile' |
+	'setActiveFile' |
+	'onResetFileManager' |
+	'socket' |
+	'setLocalActiveFile'
+	> {
 	className?: string
 	isReadOnly?: boolean
 	withFileManager?: boolean
@@ -23,14 +31,16 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, 'activeFi
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 	className,
 	isReadOnly = false,
-	mode,
+	mode = EditorMode.Owner,
 	withFileManager = true,
+	roomId,
 	...otherProps
 }) => {
 	const styles = useStyles();
+	const socketRef = useRef(createSocket());
+
 	const {
 		activeFile,
-		setActiveFile,
 		isFileFormOpen,
 		isOpen,
 		setIsOpen,
@@ -38,8 +48,14 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 		setIsFileFormOpen,
 		onAddFile,
 		addedFileList,
-		onDeleteFile: _onDeleteFile
-	} = useFileManager();
+		onDeleteFileWithEvents,
+		onChangeFileWithEvents,
+		...collabProps
+	} = useFileManager({
+		socket: socketRef.current,
+		roomId,
+		mode
+	});
 
 	const {
 		editorRef,
@@ -47,14 +63,14 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 		extensions,
 		doc,
 		key,
-		onDeleteFile,
-		onChangeActiveFile
+		onCreateEditor
 	} = useCodeEditorCollab({
 		...otherProps,
+		...collabProps,
 		activeFile,
-		onDeleteFile: _onDeleteFile,
-		setActiveFile,
-		mode
+		mode,
+		socket: socketRef.current,
+		roomId
 	});
 
 	return (
@@ -67,18 +83,18 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 					<FileModal
 						isOpen={isOpen}
 						isFileFormOpen={isFileFormOpen}
-						activeFile={activeFile}
-						setActiveFile={onChangeActiveFile}
+						setActiveFile={onChangeFileWithEvents}
 						setIsOpen={setIsOpen}
 						fileList={fileList}
 						setIsFileFormOpen={setIsFileFormOpen}
 						onAddFile={onAddFile}
-						onDeleteFile={onDeleteFile}
+						onDeleteFile={onDeleteFileWithEvents}
+						mode={mode}
 					/>
 
 					<FileSwitcher
 						activeFile={activeFile}
-						onChange={onChangeActiveFile}
+						onChange={onChangeFileWithEvents}
 						fileList={addedFileList}
 					/>
 				</>
@@ -87,6 +103,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 			{isLoading && <LoadingCodeEditor />}
 
 			<CodeMirror
+				onCreateEditor={onCreateEditor}
 				key={key}
 				className={`flex-1 overflow-scroll text-left ${className}`}
 				height="100%"

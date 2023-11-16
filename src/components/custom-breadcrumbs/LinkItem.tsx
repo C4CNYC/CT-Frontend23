@@ -20,12 +20,13 @@ export function LinkItem({
   activeLast,
   disabled,
 }: Props): React.ReactElement | null {
-  const { name, href, icon } = link;
+   const { name, href, icon, onClick } = link;
 
   const styles = {
     display: "inline-flex",
     alignItems: "center",
     color: "text.primary",
+    cursor: onClick ? "pointer" : "default",
     ...(disabled &&
       !activeLast && {
         cursor: "default",
@@ -61,5 +62,5 @@ export function LinkItem({
     );
   }
 
-  return <Box sx={styles}> {renderContent} </Box>;
+  return <Box onClick={onClick ?? (() => {})} sx={styles}> {renderContent} </Box>;
 }

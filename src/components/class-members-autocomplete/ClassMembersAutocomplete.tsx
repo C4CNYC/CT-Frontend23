@@ -142,7 +142,10 @@ export default function ClassMembersAutocomplete({
                 position: "relative",
               }}
             >
-              <Avatar alt={email} src="/assets/images/avatar_2.jpg" />
+              <Avatar
+                alt={email}
+                src={recipient.avatar ?? "/assets/images/avatar_2.jpg"}
+              />
               <Box
                 sx={{
                   top: 0,

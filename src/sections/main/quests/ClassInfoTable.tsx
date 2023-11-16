@@ -106,6 +106,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             flexGrow: 1,
             alignItems: "center",
             justifyContent: "space-between",
+            gap: 2,
           }}
         >
           <Link
@@ -171,12 +172,12 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           color="initial"
         >
           <MenuItem>
-            <SiGoogleclassroom size="20px" />
+            <SiGoogleclassroom size={10} />
             Assign Course or Section
           </MenuItem>
         </Link>
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
-          <MenuItem>
+          <MenuItem sx={{ pl: "5px" }}>
             <Badge
               sx={BADGE_SX}
               badgeContent={
@@ -186,7 +187,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               }
               color="success"
             >
-              <AiOutlineFundProjectionScreen size="20px" />
+              <AiOutlineFundProjectionScreen size={20} />
               Assign Open Project
             </Badge>
           </MenuItem>
@@ -198,8 +199,8 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
 
 const BADGE_SX = {
   "& .MuiBadge-badge": {
-    left: "45%",
-    top: 26,
+    left: 55,
+    top: 25,
     padding: 0,
     height: 14,
     width: "85px",

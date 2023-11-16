@@ -83,7 +83,6 @@ export default function SingInPassword({
             mt: 4,
             mb: 2,
             "&:hover": {
-              color: theme.palette.grey[900],
               background: theme.palette.mode === "light" ? "" : "#fff",
             },
           })}
