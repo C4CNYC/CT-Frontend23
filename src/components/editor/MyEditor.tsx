@@ -6,10 +6,10 @@ import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
 
 import { isJson } from "@utils";
+import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
 
 import EditorToolbar from "./EditorToolbar";
 import { extensions } from "./extensions-template";
-import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
 
 interface FileWithProgress {
   file: File;
@@ -54,21 +54,23 @@ function Editor({
                   body: {},
                   headers: {
                     "x-tenant-id":
-                      localStorage.getItem("tenantName") ?? "codetribe"
-                  }
-                }
-              }
+                      localStorage.getItem("tenantName") ?? "codetribe",
+                  },
+                },
+              },
             }).then(({ url, key }) => {
               progress(completed / files.length);
               createMedia({
                 url,
                 name: file.name,
                 size: file.size,
-                type: 'image',
-                acl: 'public',
-              }).unwrap().then(() => {
-                resolve({ src: url, fileName: key });
+                type: "image",
+                acl: "public",
               })
+                .unwrap()
+                .then(() => {
+                  resolve({ src: url, fileName: key });
+                });
             });
           })
       );

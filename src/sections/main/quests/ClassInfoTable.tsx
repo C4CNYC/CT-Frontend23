@@ -93,23 +93,23 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(2)}
           />
-          <Tab
+          {/* <Tab
             label={!isMobile && "Progress"}
             icon={<GiProgression size={20} />}
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(3)}
-          />
+          /> */}
         </Tabs>
         <Stack
           direction="row"
           sx={{
             flexGrow: 1,
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "end",
             gap: 2,
           }}
         >
-          <Link
+          {/* <Link
             noWrap
             href={STUDENT_PATH_DASHBOARD.gallery.root}
             variant="body2"
@@ -123,7 +123,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
                 <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
               </Typography>
             )}
-          </Link>
+          </Link> */}
           <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
             <Button
               onClick={handleOpenPopover}
@@ -164,6 +164,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         disabledArrow
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: -5, horizontal: 5 }}
+        sx={{ p: 2 }}
       >
         <Link
           component={NextLink}
@@ -182,7 +183,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               sx={BADGE_SX}
               badgeContent={
                 <Typography sx={{ fontSize: "11px", fontWeight: 700 }}>
-                  Comming soon
+                  Coming soon
                 </Typography>
               }
               color="success"
@@ -200,7 +201,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
 const BADGE_SX = {
   "& .MuiBadge-badge": {
     left: 55,
-    top: 25,
+    top: 28,
     padding: 0,
     height: 14,
     width: "85px",
