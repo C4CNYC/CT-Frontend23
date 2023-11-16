@@ -24,8 +24,8 @@ export default function ModulesListBlock(): React.ReactElement {
           theme.palette.mode === "light"
             ? "#ECF4FF"
             : theme.palette.background.neutral,
-        px: { xs: 1, lg: 8 },
-        py: { xs: 3, lg: 6 },
+        px: { xs: 1, lg: 2, xl: 3 },
+        py: 4,
         borderRadius: 3,
         gap: 3,
         flex: 1,
