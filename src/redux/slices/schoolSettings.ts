@@ -6,6 +6,7 @@ export interface ISchoolSettings {
   github_login_allowed: boolean;
   google_login_allowed: boolean;
   invite_only: boolean;
+  last_name_only: boolean;
   chat_allowed: boolean;
   gallery_allowed: boolean;
   global_gallery_allowed: boolean;
@@ -18,6 +19,7 @@ const initialState: ISchoolSettings = {
   github_login_allowed: false,
   google_login_allowed: false,
   invite_only: false,
+  last_name_only: true,
   chat_allowed: true,
   gallery_allowed: true,
   global_gallery_allowed: true,
