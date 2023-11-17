@@ -84,20 +84,20 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
           src={course.cover ?? "/assets/courses/courseImg.png"}
           sx={COURSE_IMG_XS}
         />
-        {/* {course.progress && course.progress > 30 && ( */}
-        <Box sx={COURSE_RATING_WRAPPER_SX}>
-          <Rating
-            onClick={(rating, index, e) => {
-              e?.stopPropagation();
-              e?.preventDefault();
-              handleRating(rating);
-            }}
-            initialValue={course.my_rating ?? 0}
-            transition
-            size={30}
-          />
-        </Box>
-        {/* )} */}
+        {course.progress && course.progress > 30 && (
+          <Box sx={COURSE_RATING_WRAPPER_SX}>
+            <Rating
+              onClick={(rating, index, e) => {
+                e?.stopPropagation();
+                e?.preventDefault();
+                handleRating(rating);
+              }}
+              initialValue={course.my_rating ?? 0}
+              transition
+              size={30}
+            />
+          </Box>
+        )}
       </Box>
     </>
   );
