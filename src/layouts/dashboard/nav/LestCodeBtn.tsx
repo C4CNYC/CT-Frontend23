@@ -13,10 +13,8 @@ interface ILetsCodeBtnProps {
 }
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-
-  const { query } = useRouter();
 
   const { data: assigments } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
@@ -28,7 +26,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
       onClick={() => {
         // Now go to first quest
         if (!assigments?.data[0]) {
-          enqueueSnackbar("No course", { variant: "warning" });
+          enqueueSnackbar("No lesson to code", { variant: "warning" });
         } else {
           push(
             STUDENT_PATH_DASHBOARD.codePanel.workSpace(
