@@ -1,14 +1,12 @@
 import { useRouter } from "next/router";
 
-import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
 
 import { Button } from "@mui/material";
 
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
+import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 
 interface ILetsCodeBtnProps {
   isMini?: boolean;
@@ -17,27 +15,25 @@ interface ILetsCodeBtnProps {
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
-  const { data } = useGetCourseQuery({}, { skip: Boolean(courseId) });
+
+  const { query } = useRouter();
+
+  const { data: assigments } = useGetAssignmentListStudentQuery(
+    { class_id: query.id as string },
+    { skip: !query.id }
+  );
 
   return (
     <Button
       onClick={() => {
-        if (!courseId || !unitId || !lessonId) {
-          if (data?.data.length) {
-            enqueueSnackbar("No course", { variant: "warning" });
-          } else {
-            push(
-              `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                data?.data[0].course_id as string
-              )}`
-            );
-          }
+        // Now go to first quest
+        if (!assigments?.data[0]) {
+          enqueueSnackbar("No course", { variant: "warning" });
         } else {
           push(
-            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-              courseId
-            )}?${unitId}&${lessonId}`
+            STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              assigments?.data[0].courseid
+            )
           );
         }
       }}
