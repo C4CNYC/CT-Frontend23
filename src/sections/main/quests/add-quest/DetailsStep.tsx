@@ -23,13 +23,13 @@ import {
 } from "./constants";
 
 export default function DetailsStep({
-  coursesData,
-}: {
-  coursesData: {
-    data: (ICourse & BaseResponseInterface)[] | undefined;
-    isLoading: boolean;
-  };
-}): React.ReactElement {
+    coursesData,
+  }: {
+    coursesData: {
+      data: Array<(ICourse & BaseResponseInterface)> | undefined,
+      isLoading: boolean
+    }
+  }): React.ReactElement {
   const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);

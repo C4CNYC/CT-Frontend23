@@ -1,15 +1,16 @@
 import { Grid, Skeleton, Stack } from "@mui/material";
 
-import { BaseResponseInterface } from "@utils";
-import { IFriend } from "src/redux/interfaces/friends.interface";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+// import { IFriend } from "src/redux/interfaces/friends.interface";
+// import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 import ProfileAbout from "./ProfileAbout";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileSocialInfo from "./ProfileSocialInfo";
+import { IUser } from "src/redux/interfaces/auth.interface";
+// import { BaseResponseInterface } from "@utils";
 
 interface IProfileMainProps {
-  data?: (IStudent | IFriend) & BaseResponseInterface;
+  data?: IUser;
   isFriend?: boolean;
   isLoading: boolean;
 }
