@@ -8,7 +8,11 @@ export enum SubscribedEvents {
   GetDocResponse = "getDocumentResponse",
   ActiveFileChanged = "activeFileChanged",
   DeleteResponse = "deleteFileResponse",
-  AddFile = "addFile"
+  AddFile = "addFile",
+  RoomExistResponse = "isRoomExistResponse",
+  RoomDeleteResponse = "isRoomDeleted",
+  DocUpdated = "docUpdated",
+  CreateFileResponse = "createFileResponse"
 }
 
 export enum EmitSocketEvents {
@@ -19,16 +23,14 @@ export enum EmitSocketEvents {
   DeleteRoom = "deleteRoom",
   SetActiveFile = "setActiveFile",
   DeleteFile = "deleteFile",
-  GetActiveFile = "getActiveFile",
-  GetActiveFileResponse = "getActiveFileResponce",
   GetFileInfo = "getFileInfo",
-  AddFileResponse = "addFileResponse",
-  AddedFileListUpdated = "addedFileListUpdated"
+  AddedFileListUpdated = "addedFileListUpdated",
+  CreateFile = "createFile",
 }
 
 export const unsubscribeSocket = (socket: Socket | null): void => {
   values(SubscribedEvents).forEach((event) => {
-    socket?.off(event)
+    socket?.off(event);
   });
 
   socket?.disconnect();
@@ -43,7 +45,7 @@ export const createSocket = (): Socket => {
 export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
   return new Promise((resolve) => {
     socket.on(SubscribedEvents.Connect, () => {
-      resolve(true)
+      resolve(true);
     })
   })
 }

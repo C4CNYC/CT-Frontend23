@@ -1,10 +1,11 @@
 import { type SxProps } from "@mui/material"
 
 export const BOX_HEIGHT = 276;
+export const BOX_WIDTH = 355;
 
 export default {
   getBoxSx: (background: string): SxProps => ({
-    width: 355,
+    width: BOX_WIDTH,
     height: BOX_HEIGHT,
     borderRadius: "15px",
     border: "1px solid black",
@@ -21,6 +22,7 @@ export default {
       height: "100%",
       overflow: "hidden",
       overflowY: "auto",
+      background,
       "& .cm-editor": {
         paddingTop: "26px",
         fontSize: "18px",
@@ -75,5 +77,11 @@ export default {
     cursor: "pointer",
     display: "flex",
     alignItems: "center"
+  },
+  OPEN_CODE_DISABLED: {
+    "& path": {
+      fill: "rgba(255, 255, 255, .3)"
+    },
+    cursor: "not-allowed"
   }
 }
