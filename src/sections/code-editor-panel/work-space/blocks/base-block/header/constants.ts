@@ -1,24 +1,3 @@
-import { SxProps } from "@mui/system";
-
-export const getBoxStyles = (isDesktop: boolean, isOpen: boolean): SxProps => ({
-  display: isDesktop ? "flex" : "none",
-  width: "100%",
-  background: "#fff",
-  alignItems: "center",
-  gap: 2,
-  px: 1,
-  py: 0.5,
-  borderBottom: isDesktop ? "2px solid #5FD0D5" : "none",
-  zIndex: 2,
-  position: "relative",
-  transform: `translateY(${isOpen ? "0" : "-35px"})`,
-  // transition: (theme) =>
-  //   theme.transitions.create("all", {
-  //     easing: theme.transitions.easing.easeInOut,
-  //     duration: theme.transitions.duration.shorter,
-  //   }),
-});
-
 export const TYP_SX = {
   color: "#D9D9E2",
   textTransform: "capitalize",
@@ -26,6 +5,8 @@ export const TYP_SX = {
 };
 
 export const BUTTON_SX = {
+  ml: "auto",
+  mr: 3,
   p: 0.2,
   minWidth: "0",
   color: "#5FD0D5",

@@ -1,7 +1,6 @@
-import { type FC, type ReactNode, useMemo, useState } from "react";
+import { type FC, type ReactNode, useState } from "react";
 
 import { IoMdClose } from "react-icons/io";
-import { TbArrowsMinimize } from "react-icons/tb";
 
 import {
   Box,
@@ -12,7 +11,9 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { BUTTON_SX, TYP_SX, getBoxStyles } from "./constants";
+import { localStorageAvailable } from "@utils";
+
+import { BUTTON_SX, TYP_SX } from "./constants";
 
 interface HeaderProps {
   title: ReactNode;
@@ -20,13 +21,42 @@ interface HeaderProps {
   hideTabsHandler?: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ title, icon, hideTabsHandler }) => {
-  const [isOpenHeader, setIsOpenHeader] = useState(true);
+const Header: FC<HeaderProps> = ({ title, icon }) => {
+  const storageAvailable = localStorageAvailable();
+  let savedHeaderPosition = false;
+
+  if (storageAvailable) {
+    savedHeaderPosition = JSON.parse(
+      window.localStorage.getItem(`isClosed${title}Header`) ?? "false"
+    );
+  }
+
+  const [isClosedHeader, setIsClosedHeader] = useState(savedHeaderPosition);
+
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
 
   return (
-    <Box sx={() => ({ ...getBoxStyles(isDesktop, isOpenHeader) })}>
+    <Box
+      sx={{
+        display: isDesktop ? "flex" : "none",
+        width: "100%",
+        background: "#fff",
+        alignItems: "center",
+        gap: 2,
+        px: 1,
+        py: 0.5,
+        borderBottom: isDesktop ? "2px solid #5FD0D5" : "none",
+        zIndex: 2,
+        position: "relative",
+        transform: `translateY(${isClosedHeader ? "-35px" : "0px"})`,
+        transition: (theme) =>
+          theme.transitions.create("all", {
+            easing: theme.transitions.easing.easeInOut,
+            duration: theme.transitions.duration.shorter,
+          }),
+      }}
+    >
       <Stack direction="row">
         {icon}
 
@@ -35,30 +65,18 @@ const Header: FC<HeaderProps> = ({ title, icon, hideTabsHandler }) => {
         </Typography>
       </Stack>
 
-      {/* <Button
+      <Button
         onClick={() => {
-          setIsOpenHeader(false);
+          setIsClosedHeader(true);
+          window.localStorage.setItem(
+            `isClosed${title}Header`,
+            JSON.stringify(true)
+          );
         }}
-        sx={{ ...BUTTON_SX, ml: 0 }}
+        sx={{ ...BUTTON_SX }}
       >
         <IoMdClose size={20} />
-      </Button> */}
-
-      {hideTabsHandler != null && (
-        <Box sx={{ display: "flex", gap: 2, ml: "auto" }}>
-          <Button
-            onClick={() => {
-              setIsOpenHeader(false);
-            }}
-            sx={{ ...BUTTON_SX, ml: 0 }}
-          >
-            <IoMdClose size={20} />
-          </Button>
-          <Button sx={BUTTON_SX} onClick={hideTabsHandler}>
-            <TbArrowsMinimize size={19} />
-          </Button>
-        </Box>
-      )}
+      </Button>
     </Box>
   );
 };
