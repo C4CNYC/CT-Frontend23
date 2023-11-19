@@ -1,6 +1,6 @@
-import { type FC, type ReactNode, useState } from "react";
+import { type FC, type ReactNode } from "react";
 
-import { IoMdClose } from "react-icons/io";
+import { AiOutlineClose } from "react-icons/ai";
 
 import {
   Box,
@@ -11,28 +11,23 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { localStorageAvailable } from "@utils";
-
-import { BUTTON_SX, TYP_SX } from "./constants";
+// import { localStorageAvailable } from "@utils";
+import { TYP_SX, getButtonSx } from "./constants";
 
 interface HeaderProps {
   title: ReactNode;
   icon: React.ReactElement;
+  isCodeBlock?: boolean;
+  closeHandler: () => void;
   hideTabsHandler?: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ title, icon }) => {
-  const storageAvailable = localStorageAvailable();
-  let savedHeaderPosition = false;
-
-  if (storageAvailable) {
-    savedHeaderPosition = JSON.parse(
-      window.localStorage.getItem(`isClosed${title}Header`) ?? "false"
-    );
-  }
-
-  const [isClosedHeader, setIsClosedHeader] = useState(savedHeaderPosition);
-
+const Header: FC<HeaderProps> = ({
+  title,
+  icon,
+  isCodeBlock,
+  closeHandler,
+}) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
 
@@ -49,12 +44,6 @@ const Header: FC<HeaderProps> = ({ title, icon }) => {
         borderBottom: isDesktop ? "2px solid #5FD0D5" : "none",
         zIndex: 2,
         position: "relative",
-        transform: `translateY(${isClosedHeader ? "-35px" : "0px"})`,
-        transition: (theme) =>
-          theme.transitions.create("all", {
-            easing: theme.transitions.easing.easeInOut,
-            duration: theme.transitions.duration.shorter,
-          }),
       }}
     >
       <Stack direction="row">
@@ -67,15 +56,11 @@ const Header: FC<HeaderProps> = ({ title, icon }) => {
 
       <Button
         onClick={() => {
-          setIsClosedHeader(true);
-          window.localStorage.setItem(
-            `isClosed${title}Header`,
-            JSON.stringify(true)
-          );
+          closeHandler();
         }}
-        sx={{ ...BUTTON_SX }}
+        sx={() => ({ ...getButtonSx(isCodeBlock) })}
       >
-        <IoMdClose size={20} />
+        <AiOutlineClose size={20} />
       </Button>
     </Box>
   );

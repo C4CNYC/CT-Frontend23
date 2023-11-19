@@ -160,6 +160,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   return (
     <BaseBlock
+      className="instructions"
       title={title}
       icon={icon}
       hideTabsHandler={() => {
