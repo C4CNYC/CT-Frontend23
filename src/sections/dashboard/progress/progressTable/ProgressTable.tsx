@@ -28,8 +28,7 @@ import { SetFilterType } from "@hooks";
 import { TablePaginationCustom } from "@components";
 import { format } from "date-fns";
 import { LuPencil } from "react-icons/lu";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
+import { RootState, useSelector } from "src/redux/store";
 
 interface IProgressTable {
   filters: BaseSearchInterface & {courseId: string; moduleId: string; lessonId: string};
@@ -219,12 +218,12 @@ export default function ProgressTable({
                     <TableCell
                       size="small"
                     >
-                      {lastNameOnly ? `${el.first_name.substring(0, 1)}.` : el.first_name}
+                      {el.first_name}
                     </TableCell>
                     <TableCell
                       size="small"
                     >
-                      {el.last_name}
+                      {!lastNameOnly ? `${el.last_name.substring(0, 1)}` : el.last_name}
                     </TableCell>
                   </>
                 )}
@@ -244,7 +243,7 @@ export default function ProgressTable({
                   ) : (
                     <TableItemProgress
                       key={item.id}
-                      studentName={`${el.first_name} ${el.last_name}`}
+                      studentName={`${el.first_name} ${!lastNameOnly ? `${el.last_name.substring(0, 1)}` : el.last_name}`}
                       type={levelName}
                       name={item.name}
                       progress={item.progress}
@@ -346,6 +345,9 @@ const TableHeadItem = ({
         active={orderBy === id}
         direction={orderBy === id ? sortDirection : 'asc'}
         onClick={changeSortDirection}
+        sx={{
+          maxWidth: 150
+        }}
       >
         <Tooltip
           title={description}
@@ -355,6 +357,7 @@ const TableHeadItem = ({
             display: 'flex',
             flexDirection: 'column',
             color: '#212B36',
+            overflow: 'hidden',
           }}>
             <span style={{ fontSize: 10, lineHeight: '4px', marginTop: 2, textTransform: 'uppercase' }}>
               {type}
@@ -436,7 +439,7 @@ const TableHeadLesson = ({
         direction={orderBy === id ? sortDirection : 'asc'}
         onClick={changeSortDirection}
       >
-        <Tooltip title={`${name} - ${description}`} placement="top">
+        <Tooltip title={<Typography variant="body2">{name} - {description}</Typography>} placement="top">
           <div style={{
             display: 'flex',
             flexDirection: 'column',
@@ -550,7 +553,7 @@ const TableItemLesson = ({
         onClick={onClick}
       >
         {collapsed ? (
-          <Tooltip title={`${Math.floor(progress)}%`} placement="top">
+          <Tooltip title={<Typography variant="body2">{Math.floor(progress)}%</Typography>} placement="top">
             <LinearProgress
               variant="determinate"
               value={progress}
@@ -566,7 +569,7 @@ const TableItemLesson = ({
             }}
           >
             {items.map((item) => (
-              <Tooltip key={`table-lesson-item-${item.name}`} title={item.name} placement="top">
+              <Tooltip key={`table-lesson-item-${item.name}`} title={<Typography variant="body2">{item.name}</Typography>} placement="top">
                 <LinearProgress
                   variant="determinate"
                   color={item.status === 'in progress' ? 'warning' : 'primary'}

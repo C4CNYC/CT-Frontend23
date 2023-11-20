@@ -9,6 +9,8 @@ import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager/scho
 
 import { useLocales } from "../../../../locales";
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
+import { dispatch } from "src/redux/store";
+import { setSchoolSettings } from "src/redux/slices/schoolSettings";
 
 interface FormValuesProps {
   language: string;
@@ -59,7 +61,7 @@ export default function SettingsForm({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await updateSettings({
+      const updatedData = {
         schoolId,
         language: data.language,
         marketplace_content_allowed: data.marketplace_content_allowed,
@@ -70,7 +72,9 @@ export default function SettingsForm({
         chat_allowed: data.chat_allowed,
         gallery_allowed: data.gallery_allowed,
         global_gallery_allowed: data.global_gallery_allowed,
-      }).unwrap();
+      }
+      await updateSettings(updatedData).unwrap();
+      dispatch(setSchoolSettings(updatedData));
       enqueueSnackbar("Update success!");
       reset({}, { keepValues: true });
     } catch (error: any) {}
@@ -153,7 +157,7 @@ export default function SettingsForm({
           <RHFSwitch
             key="last_name_only"
             name="last_name_only"
-            label="Show students' last name only"
+            label="Show students' full last name"
             sx={{ m: 0 }}
           />
           <RHFSwitch
