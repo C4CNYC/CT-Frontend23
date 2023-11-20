@@ -10,16 +10,10 @@ import { type Extension } from '@uiw/react-codemirror';
 import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
-import { File, getFileInfo, isRoomExist } from "./utils/collab/requests";
-import {
-  unsubscribeSocket,
-  EmitSocketEvents,
-} from "./utils/socket"
-import {
-  type MemoizedProps,
-  useMemoizedProps
-} from "./useMemoizedProps";
+import { type File, getFileInfo, isRoomExist } from "./utils/collab/requests";
+import { type MemoizedProps, useMemoizedProps } from "./useMemoizedProps";
 import { useInitCodemirror, UseBaseInitReturn } from "./useInitCodemirror";
+import { unsubscribeSocket, EmitSocketEvents } from "./utils/socket"
 import { useModeSubscriptions } from "./useModeSubscriotions";
 import { EditorMode } from "./constants";
 import { RoomStatus } from "../components/status-label";
@@ -66,10 +60,6 @@ export const useCodeEditorCollab = ({
     onResetFileManager,
     defaultFileName
   } = useMemoizedProps(propsToMemoize);
-
-  // ------------------------------------------------------ //
-  //                         Handlers                       //
-  // ------------------------------------------------------ //
 
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
