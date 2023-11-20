@@ -15,8 +15,9 @@ You can assign a part of or a full course, or you can assign any document link o
 
 export const RANDOM_NAME = uniqueNamesGenerator({
   dictionaries: [colors, animals],
-  separator: "_",
+  separator: " ",
   length: 2,
+  style: "capital",
 });
 
 export const selectStyle = (theme: Theme) => ({

@@ -60,9 +60,13 @@ export default function TeacherStepper(): React.ReactElement {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      //#TODO update type here
-      //@ts-ignore
-      await register(data.email, data.password, data.firstName, data.lastName, Role.Manager);
+      await register({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: Role.Manager
+      });
     } catch (error) {
       methods.setError("root", {
         ...error,
