@@ -12,7 +12,6 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // local files
-import { useOnlineConnection, useRealTimeConnection } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { isValidLastVisitedData } from "@sections/code-editor-panel/helpers";
 import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
@@ -68,12 +67,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
   const handle = useFullScreenHandle();
 
   const [confetti, setConfetti] = useState(false);
-  const [code, setCode] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      return window.localStorage.getItem(`code-${query.id}`) ?? "";
-    }
-    return "";
-  });
+  const [code, setCode] = useState<string>("");
 
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
     unitId: null,
@@ -87,10 +81,6 @@ export const useCodePanel = (): UseCodePanelReturn => {
     setCode(code);
     window.localStorage.setItem(`code-${query.id}`, code);
   }, [query.id]);
-
-  // ONLY LOGINED USER CAN USE
-  useOnlineConnection(user?.id);
-  useRealTimeConnection(user?.id);
 
   const [completeLesson] = useCompleteLessonMutation();
   const [updateLastVisitedDataTrigger] =

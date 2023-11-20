@@ -4,6 +4,7 @@ import { Socket } from "socket.io-client";
 
 import { CodeEditor } from "./editor";
 import { getDocument } from "../../codemirror/extensions/collab";
+import { useSocket } from "@hooks";
 
 interface State {
   connected: boolean;
@@ -17,17 +18,16 @@ interface IRealTimeCodeEditor {
   colabCursonId: string;
   colabCursonText: string;
   roomId: string;
-  socket: Socket;
 }
 
 export const RealTimeCodeEditor = ({
-  socket,
   roomId,
   colabCursonId,
   colabCursonText,
   connectionType = "connect",
   onChangeCode,
 }: IRealTimeCodeEditor): React.ReactElement | null => {
+  const socket = useSocket();
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,

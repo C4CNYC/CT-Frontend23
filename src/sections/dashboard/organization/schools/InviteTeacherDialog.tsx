@@ -66,6 +66,7 @@ export default function InviteTeacherDialog({
   const onSendInvite = async (): Promise<void> => {
     try {
       const user = await createUser({
+        id: "",
         email: filters.email,
         role: Role.Manager,
         first_name: "",

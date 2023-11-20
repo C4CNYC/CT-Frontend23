@@ -41,7 +41,7 @@ export const createRandomAvatar = async (user?: boolean): Promise<File> => {
   return file;
 };
 
-const generateRandomEmoji = (user?: boolean): string => {
+export const generateRandomEmoji = (user?: boolean): string => {
   const arrayEmoji = user ? USER_EMOJI : EMOJI_ARRAY;
   const emoji = arrayEmoji[Math.floor(Math.random() * arrayEmoji.length)];
   return emoji;

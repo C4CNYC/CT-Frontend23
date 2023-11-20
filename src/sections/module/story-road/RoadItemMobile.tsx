@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { FaArrowRight, FaChevronDown } from "react-icons/fa";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 import {
   Box,
@@ -14,6 +15,12 @@ import {
 } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+
+import {
+  DESCRIPTION_GRADIENT_TEXT_SX,
+  LESSON_TIME_SX,
+  getDescriptionBoxSx,
+} from "./constants";
 
 import CompleatedIcon from "../icons/CompleatedIcon";
 import RocketIcon from "../icons/RocketIcon";
@@ -45,6 +52,8 @@ const RoadItemMobile = ({
   const { query, push } = useRouter();
   const [compleatedColor, setCompleatedColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  const projectTime = "20 mins";
 
   const redirectToCodePanel = () => {
     push(
@@ -189,8 +198,8 @@ const RoadItemMobile = ({
           {locked && !lastActive ? "Open" : null}
         </Button>
       </Box>
-      <Stack sx={{ ml: 2 }}>
-        <Typography variant="h5"> {name} </Typography>
+      <Stack ml={lastActive ? -5 : 1}>
+        <Typography variant="h5" pl={1}> {name} </Typography>
         <Button
           onClick={() => {
             setIsOpen(!isOpen);
@@ -201,7 +210,7 @@ const RoadItemMobile = ({
             alignSelf: "flex-start",
             color: theme.palette.mode === "light" ? "#364954" : "#fff",
             fontWeight: 400,
-            px: 0,
+            px: 1,
             "&:hover": {
               background: "none",
             },
@@ -210,17 +219,21 @@ const RoadItemMobile = ({
           See more <FaChevronDown size={14} />
         </Button>
         <Collapse in={isOpen}>
-          <Typography
-            sx={{
-              background: "#fff",
-              p: 1,
-              borderRadius: 2,
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            {description}
-          </Typography>
+          <Box sx={getDescriptionBoxSx}>
+            <Typography mb={1}>
+              {description}
+            </Typography>
+            <Box sx={{ display: "flex", gap: "20px", }}>
+              <Typography sx={{ ...DESCRIPTION_GRADIENT_TEXT_SX, fontSize: "14px" }}>
+                <RocketIcon width={20} height={20}/>
+                  Part of the project
+              </Typography>
+              <Typography sx={{ ...LESSON_TIME_SX, fontSize: "14px" }}>
+                <AiOutlineClockCircle size={20}/>
+                {projectTime}
+              </Typography>
+            </Box>
+          </Box>
         </Collapse>
       </Stack>
     </Box>

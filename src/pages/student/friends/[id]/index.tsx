@@ -10,6 +10,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileMain from "@sections/student-profile/ProfileMain";
 import { useGetFriendQuery } from "src/redux/services/manager/friends-manager";
+import { IUser } from "src/redux/interfaces/auth.interface";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -29,7 +30,8 @@ export default function FriendProfile(): React.ReactElement {
       label: "Profile",
       icon: <Iconify icon="ic:round-account-box" />,
       component: (
-        <ProfileMain data={data} isFriend={true} isLoading={isLoading} />
+        //#TODO update data type to normall pls
+        <ProfileMain data={data as unknown as IUser} isFriend={true} isLoading={isLoading} />
       ),
     },
   ];

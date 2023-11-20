@@ -31,6 +31,10 @@ export const MODE_TITLE_SX = {
   display: "flex",
   alignItems: "center",
   gap: 1,
+  color: "#0198ED",
+  background: "linear-gradient(#7A16C9, #F618D3B5)",
+  backgroundClip: "text",
+  WebkitTextFillColor: "transparent"
 };
 export const DURATION_SX = {
   whiteSpace: "nowrap",

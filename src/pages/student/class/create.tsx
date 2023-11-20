@@ -143,11 +143,15 @@ export default function CreateClass(): React.ReactElement {
           />
           <Stack
             sx={{
+              position: "sticky",
+              bottom: 0,
               flexDirection: "row",
               justifyContent: "flex-end",
               gap: 3,
               pr: { xs: 2, sm: 3, lg: 4 },
               pt: 2,
+              pb: 2,
+              backgroundColor: "#ffffff"
             }}
           >
             <Button

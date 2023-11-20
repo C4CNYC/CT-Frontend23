@@ -54,11 +54,11 @@ export default function Header({
         sx={{
           color: "rgba(54, 73, 84, 1)",
           display: "flex",
-          gap: 3,
+          gap: 2,
           alignItems: "center",
         }}
       >
-        Hey {user?.first_name ? user.first_name : "friend"}
+        Hey {user?.first_name ? user.first_name : "Friend"}
         <Typography variant="h3">👋</Typography>
       </Typography>
       <Stack

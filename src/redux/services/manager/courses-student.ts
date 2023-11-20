@@ -46,6 +46,20 @@ const extendedApi = managerApi.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["Courses"],
     }),
+    getCourseContentList: builder.query<
+      Array<ICourseContent & BaseResponseInterface>,
+      { ids: string[] }
+    >({
+      queryFn: async ({ ids }, _queryApi, _extraOptions, fetch) => {
+        const promises = ids.map(async (id) => {
+          return (await fetch(`/student/course/${id}/content`)).data as ICourseContent & BaseResponseInterface;
+        });
+        return await Promise.all(promises).then((results) => {
+          return { data: results };
+        });
+      },
+      providesTags: ["CoursesList"],
+    }),
     getStudentCourseModules: builder.query<
       Array<IModuleContent & BaseResponseInterface>,
       { id: string }
@@ -103,6 +117,7 @@ export const {
   useGetCourseQuery,
   useGetCoursQuery,
   useGetCoursContentQuery,
+  useGetCourseContentListQuery,
   useGetStudentCourseModulesQuery,
   useGetStudentModulesLessonsQuery,
   // -------------mutation-----------

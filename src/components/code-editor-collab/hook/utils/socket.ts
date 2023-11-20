@@ -1,5 +1,5 @@
-import { Socket, io } from "socket.io-client";
 import { values } from "lodash";
+import { Socket, io } from "socket.io-client";
 
 export enum SubscribedEvents {
   Connect = "connect",
@@ -26,6 +26,8 @@ export enum EmitSocketEvents {
   GetFileInfo = "getFileInfo",
   AddedFileListUpdated = "addedFileListUpdated",
   CreateFile = "createFile",
+  AddFileResponse = "addFileResponse",
+  AddedFileListUpdated = "addedFileListUpdated",
 }
 
 export const unsubscribeSocket = (socket: Socket | null): void => {
@@ -34,13 +36,13 @@ export const unsubscribeSocket = (socket: Socket | null): void => {
   });
 
   socket?.disconnect();
-}
+};
 
 export const createSocket = (): Socket => {
-	return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
+  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
     path: "/api",
   });
-}
+};
 
 export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
   return new Promise((resolve) => {

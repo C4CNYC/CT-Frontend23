@@ -22,7 +22,7 @@ import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/Les
 
 import { LockButton } from "./LockButton";
 import { SaveButton } from "./SaveButton";
-import { ChallengeBtn, MediasBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
+import { ChallengeBtn, MediaBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
 import {
   FontFamilyButtons,
   FontSizeButtons,
@@ -91,7 +91,7 @@ export default function EditorToolbar({
                 <TemplateBtn />
                 <ChallengeBtn />
                 <SettingsBtn />
-                <MediasBtn />
+                <MediaBtn />
               </Stack>
             </Stack>
           </>
