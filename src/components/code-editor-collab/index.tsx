@@ -17,7 +17,7 @@ type ReducedFields = 	'activeFile' |
 	'setActiveFile' |
 	'onResetFileManager' |
 	'socket' |
-	'setLocalActiveFile' | 
+	'setLocalActiveFile' |
 	'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
@@ -85,7 +85,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 			className={`${styles.wrapper} code-editor-wrapper`}
 			ref={editorRef}
 		>
-			{withFileManager && 
+			{withFileManager &&
 				<>
 					<FileModal
 						isOpen={isOpen}
@@ -120,6 +120,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 				basicSetup={false}
 				theme="dark"
 				extensions={extensions}
+        //@ts-expect-error
 				readOnly={isReadOnly || (roomStatus === RoomStatus.Inactive)}
 				value={doc}
 			/>
