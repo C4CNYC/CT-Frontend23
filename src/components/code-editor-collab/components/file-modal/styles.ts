@@ -54,5 +54,8 @@ export const useStyles = (theme: Theme) => ({
     "& span": {
       fontStyle: "italic"
     }
+  },
+  devIcon: {
+    marginRight: "8px"
   }
 })

@@ -1,5 +1,5 @@
-import { Socket, io } from "socket.io-client";
 import { values } from "lodash";
+import { Socket, io } from "socket.io-client";
 
 export enum SubscribedEvents {
   Connect = "connect",
@@ -8,7 +8,11 @@ export enum SubscribedEvents {
   GetDocResponse = "getDocumentResponse",
   ActiveFileChanged = "activeFileChanged",
   DeleteResponse = "deleteFileResponse",
-  AddFile = "addFile"
+  AddFile = "addFile",
+  RoomExistResponse = "isRoomExistResponse",
+  RoomDeleteResponse = "isRoomDeleted",
+  DocUpdated = "docUpdated",
+  CreateFileResponse = "createFileResponse",
 }
 
 export enum EmitSocketEvents {
@@ -19,31 +23,30 @@ export enum EmitSocketEvents {
   DeleteRoom = "deleteRoom",
   SetActiveFile = "setActiveFile",
   DeleteFile = "deleteFile",
-  GetActiveFile = "getActiveFile",
-  GetActiveFileResponse = "getActiveFileResponce",
   GetFileInfo = "getFileInfo",
+  CreateFile = "createFile",
   AddFileResponse = "addFileResponse",
-  AddedFileListUpdated = "addedFileListUpdated"
+  AddedFileListUpdated = "addedFileListUpdated",
 }
 
 export const unsubscribeSocket = (socket: Socket | null): void => {
   values(SubscribedEvents).forEach((event) => {
-    socket?.off(event)
+    socket?.off(event);
   });
 
   socket?.disconnect();
-}
+};
 
 export const createSocket = (): Socket => {
-	return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
+  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
     path: "/api",
   });
-}
+};
 
 export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
   return new Promise((resolve) => {
     socket.on(SubscribedEvents.Connect, () => {
-      resolve(true)
-    })
-  })
-}
+      resolve(true);
+    });
+  });
+};
