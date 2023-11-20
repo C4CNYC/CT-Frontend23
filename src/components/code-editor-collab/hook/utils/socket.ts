@@ -9,6 +9,10 @@ export enum SubscribedEvents {
   ActiveFileChanged = "activeFileChanged",
   DeleteResponse = "deleteFileResponse",
   AddFile = "addFile",
+  RoomExistResponse = "isRoomExistResponse",
+  RoomDeleteResponse = "isRoomDeleted",
+  DocUpdated = "docUpdated",
+  CreateFileResponse = "createFileResponse"
 }
 
 export enum EmitSocketEvents {
@@ -19,9 +23,9 @@ export enum EmitSocketEvents {
   DeleteRoom = "deleteRoom",
   SetActiveFile = "setActiveFile",
   DeleteFile = "deleteFile",
-  GetActiveFile = "getActiveFile",
-  GetActiveFileResponse = "getActiveFileResponce",
   GetFileInfo = "getFileInfo",
+  AddedFileListUpdated = "addedFileListUpdated",
+  CreateFile = "createFile",
   AddFileResponse = "addFileResponse",
   AddedFileListUpdated = "addedFileListUpdated",
 }
@@ -44,6 +48,6 @@ export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
   return new Promise((resolve) => {
     socket.on(SubscribedEvents.Connect, () => {
       resolve(true);
-    });
-  });
-};
+    })
+  })
+}
