@@ -38,7 +38,6 @@ import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-man
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
-import { FORM_HEADER_SX } from "./constants";
 import {
   CONTAINER_INNER_SX,
   DATE_FORMAT,
