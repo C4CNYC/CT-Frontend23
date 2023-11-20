@@ -1,4 +1,4 @@
-import { BOX_HEIGHT } from "../components/code-block/styles";
+import { BOX_HEIGHT, BOX_WIDTH } from "../components/code-block/styles";
 
 export const getRandomIndex = (maxInt: number): number => {
   const randomIndex = Math.floor(Math.random() * maxInt + 1)
@@ -11,12 +11,14 @@ export interface DraggableBlockConfig {
   blockAmount: number
 }
 
-const DRAGGABLE_BLOCK_COLUMNS = 2;
-const COLUMN_GAP = 12;
+const GAP = 12;
+const DRAWER_WIDTH = 280
 
-export const getDraggableBlockConfig = (height: number): DraggableBlockConfig => {
+export const getDraggableBlockConfig = ({ height, width } : ResizeObserverEntry['contentRect']): DraggableBlockConfig => {
+  const columns = Math.floor((width - DRAWER_WIDTH) / (BOX_WIDTH + GAP));
+
   return {
     height,
-    blockAmount: Math.floor((height - COLUMN_GAP) / (BOX_HEIGHT + COLUMN_GAP)) * DRAGGABLE_BLOCK_COLUMNS
+    blockAmount: Math.floor((height - GAP) / (BOX_HEIGHT + GAP)) * columns
   }
 }

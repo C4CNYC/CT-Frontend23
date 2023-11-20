@@ -12,22 +12,25 @@ import {
   IconButton
 } from "@mui/material";
 
+import DevIcon from "../dev-icon";
 import ConfirmModalWrapper from "./confirm-wrapper-modal";
 import FileForm from "./file-form";
 
 import { EditorMode } from "../../hook/constants";
 import { useStyles } from "./styles";
+import { File } from "../../hook/utils/collab/requests";
 
 interface FileModalProps {
-  setActiveFile: (fileName: string) => void
+  setActiveFile: (fileName: File) => void
   isOpen: boolean
-  fileList: string[]
+  fileList: File[]
   isFileFormOpen: boolean
   setIsFileFormOpen: (fileName: boolean) => void
   setIsOpen: (isOpen: boolean) => void
-  onAddFile: (fileName: string) => void
-  onDeleteFile: (fileName: string) => void
+  onAddFile: (fileName: string) => Promise<void>
+  onDeleteFile: (fileName: File) => void
   mode: EditorMode
+  isMultipleExtensionFiles: boolean
 }
 
 const FileModal: FC<FileModalProps> = ({
@@ -39,11 +42,12 @@ const FileModal: FC<FileModalProps> = ({
   onAddFile,
   setIsOpen,
   onDeleteFile,
-  mode
+  mode,
+  isMultipleExtensionFiles
 }) => {
   const theme = useTheme();
   const styles = useStyles(theme);
-  const [fileToDelete, setFileToDelete] = useState<string | null>(null);
+  const [fileToDelete, setFileToDelete] = useState<File | null>(null);
 
   const onSubmitDelete = () => {
     if (fileToDelete == null) {
@@ -78,20 +82,21 @@ const FileModal: FC<FileModalProps> = ({
             </Typography>
 
             <Stack>
-              {fileList.map((fileName: string) => {
+              {fileList.map(({ id, name }) => {
                 return (
-                  <Stack sx={styles.BUTTON_WRAPPER}>
+                  <Stack key={id} sx={styles.BUTTON_WRAPPER}>
                     <Button
-                      onClick={() => setActiveFile(fileName)}
+                      onClick={() => setActiveFile({ id, name })}
                       sx={styles.BUTTON_FILE_SX}
-                      key={fileName}
                       variant="text"
                     >
-                      {fileName}
+                      <DevIcon sx={styles.devIcon} fileName={name} />
+
+                      {name}
                     </Button>
 
                     {isDeleteExist && (
-                      <IconButton onClick={() => setFileToDelete(fileName)}>
+                      <IconButton onClick={() => setFileToDelete({ id, name })}>
                         <Close  />
                       </IconButton>
                     )}
@@ -106,6 +111,7 @@ const FileModal: FC<FileModalProps> = ({
             onClose={() => setIsFileFormOpen(false)}
             onSubmit={onAddFile}
             fileList={fileList}
+            isMultipleExtensionFiles={isMultipleExtensionFiles}
           />
 
           <ConfirmModalWrapper
@@ -114,7 +120,7 @@ const FileModal: FC<FileModalProps> = ({
             title="Delete file"
           >
             <Stack sx={styles.REMOVE_FILE_CONTENT}>
-              Are you sure you want to delete <span>{fileToDelete}</span> file ?
+              Are you sure you want to delete <span>{fileToDelete?.name}</span> file ?
             </Stack>
 
             <Button
