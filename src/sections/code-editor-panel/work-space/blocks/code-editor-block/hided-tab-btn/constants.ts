@@ -1,6 +1,8 @@
+import { type SxProps } from "@mui/system";
+
 export const HIDE_BUTTON_SX = {
   position: "absolute",
-  top: 40,
+  top: 0,
   color: "#5FD0D5",
   minWidth: 20,
   "&:hover": {
@@ -17,26 +19,15 @@ export const COLLAPSEBAR_TITLE_SX = {
   fontSize: "18px",
 };
 
-const BASE_COLLAPSEBAR_SX = {
-  position: "absolute",
-  top: 0,
+export const getCollapsebarSx = (isTabletAndMobile: boolean): SxProps => ({
   display: "flex",
   alignItems: "start",
   justifyContent: "center",
   width: 30,
-  height: "100%",
   background: "#fff",
-  zIndex: 10,
-};
-
-export const LEFT_BAR_SX = {
-  ...BASE_COLLAPSEBAR_SX,
-  left: 0,
-  borderRight: "3px solid rgb(234, 234, 235)",
-};
-
-export const RIGHT_BAR_SX = {
-  ...BASE_COLLAPSEBAR_SX,
-  right: 0,
-  borderLeft: "3px solid rgb(234, 234, 235)",
-};
+  height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
+  border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
+  overflow: "hidden",
+  position: "relative",
+  borderRadius: isTabletAndMobile ? "0 0 10px 10px" : 1,
+});

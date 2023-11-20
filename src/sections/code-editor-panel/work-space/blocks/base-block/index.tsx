@@ -1,16 +1,11 @@
 import { type FC, type ReactNode, useMemo } from "react";
 
-import {
-  type SxProps,
-  Box,
-  useMediaQuery,
-  useTheme
-} from "@mui/material";
+import { Box, type SxProps, useMediaQuery, useTheme } from "@mui/material";
+
+import { useSelector } from "src/redux/store";
 
 import Header from "./header";
 import TabButton from "./tab-button";
-
-import { useSelector } from "src/redux/store";
 
 interface IBaseBlock {
   children: ReactNode;
@@ -33,7 +28,7 @@ const BaseBlock: FC<IBaseBlock> = ({
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
 
   const isTabLeft = isTabletAndMobile && activeTab !== 0;
-  const isTabRight = isTabletAndMobile && activeTab !== 2
+  const isTabRight = isTabletAndMobile && activeTab !== 2;
 
   return (
     <Box
@@ -42,11 +37,7 @@ const BaseBlock: FC<IBaseBlock> = ({
       position="relative"
       sx={boxStyles}
     >
-      <Header
-        title={title}
-        icon={icon}
-        hideTabsHandler={hideTabsHandler}
-      />
+      <Header title={title} icon={icon} hideTabsHandler={hideTabsHandler} />
       {children}
 
       {isTabLeft && <TabButton orientation="left" />}
@@ -57,13 +48,11 @@ const BaseBlock: FC<IBaseBlock> = ({
 };
 
 const getBoxStyles = (isTabletAndMobile: boolean): SxProps => ({
-  height: isTabletAndMobile
-    ? "calc(100vh - 80px)"
-    : "calc(100vh - 105px)",
+  height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
   border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
   overflow: "hidden",
   position: "relative",
   borderRadius: isTabletAndMobile ? "0 0 20px 20px" : 2,
-})
+});
 
 export default BaseBlock;
