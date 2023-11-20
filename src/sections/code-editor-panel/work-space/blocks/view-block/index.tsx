@@ -10,14 +10,13 @@ import { type RootState } from "src/redux/store";
 
 import { type SupportedLang } from "../..";
 import BaseBlock from "../base-block";
-import BrowserView from "./browser-view";
+import BrowserView, { CodeDocument } from "./browser-view";
 
 interface IVueBlock {
-  code: string;
-  language: SupportedLang;
+  code: CodeDocument | null;
 }
 
-const ViewBlock: FC<IVueBlock> = ({ code, language }) => {
+const ViewBlock: FC<IVueBlock> = ({ code }) => {
   const dispatch = useDispatch();
   const isBrowserHidden = useSelector(
     (state: RootState) => state.codePanelGlobal.isBrowserHidden
@@ -27,32 +26,16 @@ const ViewBlock: FC<IVueBlock> = ({ code, language }) => {
     return null;
   }
 
-  if (language === "html") {
-    return (
-      <BaseBlock
-        title={TITLE}
-        icon={icon}
-        className="browserTour"
-        hideTabsHandler={() => {
-          dispatch(toggleBrowser(true));
-        }}
-      >
-        <BrowserView value={code} />
-      </BaseBlock>
-    );
-  }
-
   return (
-    <BaseBlock title={TITLE} icon={icon} className="browserTour">
-      <Typography
-        mt="40px"
-        textAlign="center"
-        textTransform="uppercase"
-        color="#c4c4c4"
-        variant="h6"
-      >
-        LANGUAGE NOT SUPORTED
-      </Typography>
+    <BaseBlock
+      title={TITLE}
+      icon={icon}
+      className="browserTour"
+      hideTabsHandler={() => {
+        dispatch(toggleBrowser(true));
+      }}
+    >
+      <BrowserView document={code} />
     </BaseBlock>
   );
 };
