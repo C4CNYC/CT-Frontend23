@@ -1,19 +1,38 @@
-import { type FC, type ReactNode, useMemo } from "react";
+import { type FC, type ReactNode, useMemo, useState } from "react";
 
-import { Box, type SxProps, useMediaQuery, useTheme } from "@mui/material";
+import { TbArrowsMinimize } from "react-icons/tb";
 
+import {
+  Box,
+  Button,
+  Collapse,
+  type SxProps,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+
+import { localStorageAvailable } from "@utils";
 import { useSelector } from "src/redux/store";
 
+import { getBoxStyles, getButtonSx, getButtonWrapperSx } from "./constants";
 import Header from "./header";
 import TabButton from "./tab-button";
 
 interface IBaseBlock {
   children: ReactNode;
-  className?: string;
+  className: "instructions" | "codeEditorTour" | "browserTour";
   title: ReactNode;
   icon: React.ReactElement;
   hideTabsHandler?: () => void;
 }
+
+const isClosedHeaders = {
+  instructions: true,
+  codeEditorTour: true,
+  browserTour: true,
+};
+
+const localStorageKey = "HeadersSettings";
 
 const BaseBlock: FC<IBaseBlock> = ({
   children,
@@ -23,12 +42,41 @@ const BaseBlock: FC<IBaseBlock> = ({
   hideTabsHandler,
 }) => {
   const theme = useTheme();
+  const storageAvailable = localStorageAvailable();
   const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000));
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile), [useTheme]);
+  const buttonSx = useMemo(() => getButtonSx(isDesktop), [useTheme]);
+  const buttonWrapperSx = useMemo(
+    () => getButtonWrapperSx(isDesktop),
+    [isDesktop]
+  );
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
+
+  const getHeaderSettings = () => {
+    if (storageAvailable) {
+      const headerSettings = JSON.parse(
+        window.localStorage.getItem(localStorageKey) ??
+          JSON.stringify(isClosedHeaders)
+      );
+      return headerSettings;
+    }
+  };
 
   const isTabLeft = isTabletAndMobile && activeTab !== 0;
   const isTabRight = isTabletAndMobile && activeTab !== 2;
+  const [isClosedHeader, setIsClosedHeader] = useState(() =>
+    getHeaderSettings()
+  );
+
+  const closeHeaderHandler = (): void => {
+    setIsClosedHeader({ ...isClosedHeader, [className]: false });
+
+    window.localStorage.setItem(
+      localStorageKey,
+      JSON.stringify({ ...getHeaderSettings(), [className]: false })
+    );
+  };
 
   return (
     <Box
@@ -37,7 +85,24 @@ const BaseBlock: FC<IBaseBlock> = ({
       position="relative"
       sx={boxStyles}
     >
-      <Header title={title} icon={icon} hideTabsHandler={hideTabsHandler} />
+      <Collapse in={isClosedHeader?.[className]}>
+        <Header
+          title={title}
+          icon={icon}
+          hideTabsHandler={hideTabsHandler}
+          isCodeBlock={!hideTabsHandler}
+          closeHandler={closeHeaderHandler}
+        />
+      </Collapse>
+
+      {hideTabsHandler && (
+        <Box sx={buttonWrapperSx}>
+          <Button sx={buttonSx} onClick={hideTabsHandler}>
+            <TbArrowsMinimize size={19} />
+          </Button>
+        </Box>
+      )}
+
       {children}
 
       {isTabLeft && <TabButton orientation="left" />}
@@ -46,13 +111,5 @@ const BaseBlock: FC<IBaseBlock> = ({
     </Box>
   );
 };
-
-const getBoxStyles = (isTabletAndMobile: boolean): SxProps => ({
-  height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
-  border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
-  overflow: "hidden",
-  position: "relative",
-  borderRadius: isTabletAndMobile ? "0 0 20px 20px" : 2,
-});
 
 export default BaseBlock;
