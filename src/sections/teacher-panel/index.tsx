@@ -22,7 +22,7 @@ export const TeacherPanel = (): React.ReactElement => {
     if (socket.current) {
       return socket.current;
     }
-    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/", auth: user ? { userId: user.id } : {} })
+    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/api", auth: user ? { userId: user.id } : {} })
     return socket.current;
   }, [socket]);
 

@@ -51,18 +51,20 @@ interface UseCodePanelReturn {
 }
 
 const LANGUAGE = "html"
+const DESKTOP_WIDTH = 1000;
 
 export const useCodePanel = (): UseCodePanelReturn => {
   const dispatch = useDispatch()
-  const savedUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
-  const savedLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const savedUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId);
+  const savedLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId);
+
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const { enqueueSnackbar } = useSnackbar();
-  const handle = useFullScreenHandle();
+  const isDesktop = useMediaQuery(theme.breakpoints.up(DESKTOP_WIDTH));
   const { push, query, replace } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const searchParams = useSearchParams();
+  const handle = useFullScreenHandle();
 
   const [confetti, setConfetti] = useState(false);
   const [code, setCode] = useState<string>("");
@@ -71,6 +73,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
     unitId: null,
     lessonId: null,
   });
+
   const unitId = searchParams.get("unitId");
   const lessonId = searchParams.get("lessonId");
 
