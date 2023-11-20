@@ -204,6 +204,7 @@ const View: FC<IView> = ({ type, body, connectIntegrations }) => {
     case "editable":
       return <ProsaMirrorView multimediaValue={body} />;
     case "code":
+      //@ts-expect-error
       return <BrowserView value={connectIntegrations(body) ?? ""} />;
     default:
       return <>CONTENT TYPE NOT SUPPORTED</>;
