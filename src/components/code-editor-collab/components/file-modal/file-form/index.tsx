@@ -1,8 +1,9 @@
 import { type FC, useState, useEffect, useRef, KeyboardEvent } from "react";
 
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, CircularProgress } from "@mui/material";
 
 import ConfirmModalWrapper from "../confirm-wrapper-modal";
+import { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
 
 import { validate } from "./validator"
 import { styles } from "./styles"
@@ -11,8 +12,9 @@ interface FileFormProps {
   isOpen: boolean
   onClose: () => void
   defaultValue?: string
-  onSubmit: (fileName: string) => void
-  fileList: string[]
+  onSubmit: (fileName: string) => Promise<void>
+  fileList: File[]
+  isMultipleExtensionFiles: boolean
 }
 
 const ENTER_KEY = "Enter";
@@ -22,10 +24,12 @@ const FileForm: FC<FileFormProps> = ({
   onClose,
   onSubmit,
   defaultValue,
-  fileList
+  fileList,
+  isMultipleExtensionFiles
 }) => {
   const textFieldRef = useRef<HTMLDivElement | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -38,15 +42,30 @@ const FileForm: FC<FileFormProps> = ({
     setError(null);
   }
 
-  const onAdd = () => {
-    const error = validate(value, fileList);
+  const onAdd = async () => {
+    if (isLoading) {
+      return;
+    }
+
+    const error = validate({
+      fileName: value,
+      fileList,
+      isMultipleExtensionFiles
+    });
+    
     setError(error);
 
     if (error != null) {
       return;
     }
 
-    onSubmit(value);
+    try {
+      setIsLoading(true);
+      await onSubmit(value);
+    } finally {
+      setIsLoading(false);
+    }
+    
     _onClose();
   }
 
@@ -85,7 +104,7 @@ const FileForm: FC<FileFormProps> = ({
         sx={styles.ADD_BUTTON}
         variant="contained"
       >
-        Add file
+        {isLoading ? <CircularProgress size={20} /> : "Add file"}
       </Button>
     </ConfirmModalWrapper>
   )
