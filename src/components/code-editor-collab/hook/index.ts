@@ -84,10 +84,6 @@ export const useCodeEditorCollab = ({
     editorView.current?.destroy();
   }, []);
 
-  // ------------------------------------------------------ //
-  //                     Initialize Base                    //
-  // ------------------------------------------------------ //
-
   const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
@@ -96,10 +92,6 @@ export const useCodeEditorCollab = ({
     cursorText,
     defaultFileName
   })
-
-  // ------------------------------------------------------ //
-  //                   Initialize SubOwner                  //
-  // ------------------------------------------------------ //
 
   const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
     firstInit.current = false;
@@ -128,10 +120,6 @@ export const useCodeEditorCollab = ({
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
 
-  // ------------------------------------------------------ //
-  //                   Initialize Owner                     //
-  // ------------------------------------------------------ //
-
   const runInitOwner = useCallback(async (isFirstInit: boolean) => {
     firstInit.current = false;
     setRoomStatus(RoomStatus.Active);
@@ -148,10 +136,6 @@ export const useCodeEditorCollab = ({
       await runInitOwner(false)
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
-
-  // ------------------------------------------------------ //
-  //                   Initialize Watcher                   //
-  // ------------------------------------------------------ //
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
     firstInit.current = false;
@@ -201,10 +185,6 @@ export const useCodeEditorCollab = ({
     socket,
     onChange
   })
-
-  // ------------------------------------------------------ //
-  //                       Effects                          //
-  // ------------------------------------------------------ //
 
   useEffect(() => {
     onRoomStatusChanged?.(roomStatus)
