@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, useCallback, useState } from "react";
 
 import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 import { useDispatch } from "react-redux";
@@ -26,6 +26,7 @@ import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn";
 import NavPanel from "./blocks/nav-panel";
 import SliderBlock from "./blocks/slider-block";
 import ViewBlock from "./blocks/view-block";
+import { CodeDocument } from "./blocks/view-block/browser-view";
 
 export type SupportedLang = "html" | "javascript";
 
@@ -48,13 +49,13 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   data,
   user,
   code,
-  onChangeCode,
   language,
   isFetching = false,
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const dispatch = useDispatch();
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
   const isBrowserHidden = useSelector(
@@ -63,6 +64,11 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   const isInstructionsHidden = useSelector(
     (state) => state.codePanelGlobal.isInstructionsHidden
   );
+  const [document, setDocument] = useState<CodeDocument | null>(null);
+
+  const onChangeCode = useCallback((doc: Record<string, string>) => {
+    setDocument(doc as CodeDocument);
+  }, []);
 
   const openInstruction = () => {
     dispatch(toggleInstrations(false));
@@ -71,10 +77,9 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   const openPreview = () => {
     dispatch(toggleBrowser(false));
   };
-
   if (isDesktop) {
     return (
-      <Stack {...STACK_PROPS}>
+      <Stack ref={wrapperRef} {...STACK_PROPS}>
         {!isInstructionsHidden ? (
           <SliderBlock
             onSubmitChalange={onSubmitChalange}
@@ -100,7 +105,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         />
 
         {!isBrowserHidden ? (
-          <ViewBlock {...{ code, language }} />
+          <ViewBlock code={document} />
         ) : (
           <HidedTabBtn
             title="Browser Preview"
@@ -109,7 +114,10 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           />
         )}
 
-        <NavPanel />
+        <NavPanel
+          wrapperListenerRef={wrapperRef}
+          cursorName={user?.first_name}
+        />
       </Stack>
     );
   }
@@ -137,7 +145,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         validations={data[slideIndex]?.validations}
       />
 
-      <ViewBlock {...{ code, language }} />
+      <ViewBlock {...{ code: document, language }} />
     </SwipeableViews>
   );
 };

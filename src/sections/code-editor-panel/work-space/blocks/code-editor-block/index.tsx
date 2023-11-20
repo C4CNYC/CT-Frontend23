@@ -36,13 +36,12 @@ import Title from "./title";
 interface ICodeEditorBlock {
   user: AuthUserType | null;
   code: string;
-  onChangeCode: (code: string) => void;
+  onChangeCode: (code: Record<string, string>) => void;
   validations: Array<IValidation & BaseResponseInterface>;
   preloadedCode: string;
 }
 
 const icon = <BiCodeAlt size="20px" color="#43D4DD" />;
-const TITLE = "Code Editor";
 const TYPING_DELEY = 20000;
 const FIRST_LOADING_DELEY = 15000;
 const MOBILE_HEIGHT = 80;

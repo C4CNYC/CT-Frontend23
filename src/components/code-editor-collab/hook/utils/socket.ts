@@ -9,6 +9,10 @@ export enum SubscribedEvents {
   ActiveFileChanged = "activeFileChanged",
   DeleteResponse = "deleteFileResponse",
   AddFile = "addFile",
+  RoomExistResponse = "isRoomExistResponse",
+  RoomDeleteResponse = "isRoomDeleted",
+  DocUpdated = "docUpdated",
+  CreateFileResponse = "createFileResponse",
 }
 
 export enum EmitSocketEvents {
@@ -19,9 +23,8 @@ export enum EmitSocketEvents {
   DeleteRoom = "deleteRoom",
   SetActiveFile = "setActiveFile",
   DeleteFile = "deleteFile",
-  GetActiveFile = "getActiveFile",
-  GetActiveFileResponse = "getActiveFileResponce",
   GetFileInfo = "getFileInfo",
+  CreateFile = "createFile",
   AddFileResponse = "addFileResponse",
   AddedFileListUpdated = "addedFileListUpdated",
 }
