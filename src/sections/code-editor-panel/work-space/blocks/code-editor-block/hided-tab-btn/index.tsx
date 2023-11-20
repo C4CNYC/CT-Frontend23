@@ -1,45 +1,63 @@
-import { type FC } from "react"
+import { type FC } from "react";
+
+import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 import { useDispatch } from "react-redux";
-import { ImBook } from "react-icons/im";
-import { LuMonitorUp } from "react-icons/lu";
 
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
+import {
+  toggleBrowser,
+  toggleInstrations,
+} from "src/redux/slices/code-panel-global";
 import { useSelector } from "src/redux/store";
-import { toggleBrowser, toggleInstrations } from "src/redux/slices/code-panel-global";
 
-import { LEFT_BUTTON_SX, RIGHT_BUTTON_SX } from "./constants"
+import {
+  COLLAPSEBAR_TITLE_SX,
+  HIDE_BUTTON_SX,
+  LEFT_BAR_SX,
+  RIGHT_BAR_SX,
+} from "./constants";
 
 const HidedTabBtn: FC = () => {
-  const dispatch = useDispatch()
-  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
+  const dispatch = useDispatch();
+  const isBrowserHidden = useSelector(
+    (state) => state.codePanelGlobal.isBrowserHidden
+  );
+  const isInstructionsHidden = useSelector(
+    (state) => state.codePanelGlobal.isInstructionsHidden
+  );
 
   return (
     <>
       {isInstructionsHidden && (
-        <Button
-          sx={LEFT_BUTTON_SX}
+        <Box
           onClick={() => {
-            dispatch(toggleInstrations(false))
+            dispatch(toggleInstrations(false));
           }}
+          sx={LEFT_BAR_SX}
         >
-          <ImBook size={20} />
-        </Button>
+          <Button sx={HIDE_BUTTON_SX}>
+            <TbArrowBarToRight size={20} />
+          </Button>
+          <Typography sx={COLLAPSEBAR_TITLE_SX}>Instruction</Typography>
+        </Box>
       )}
 
       {isBrowserHidden && (
-        <Button
-        sx={RIGHT_BUTTON_SX}
-        onClick={() => {
-          dispatch(toggleBrowser(false))
-        }}
-      >
-        <LuMonitorUp size={20} />
-      </Button>
+        <Box
+          onClick={() => {
+            dispatch(toggleBrowser(false));
+          }}
+          sx={RIGHT_BAR_SX}
+        >
+          <Button sx={HIDE_BUTTON_SX}>
+            <TbArrowBarToLeft size={20} />
+          </Button>
+          <Typography sx={COLLAPSEBAR_TITLE_SX}>Browser Preview</Typography>
+        </Box>
       )}
     </>
   );
-}
+};
 
 export default HidedTabBtn;
