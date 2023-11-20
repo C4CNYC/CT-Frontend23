@@ -17,7 +17,8 @@ type ReducedFields = 	'activeFile' |
 	'setActiveFile' |
 	'onResetFileManager' |
 	'socket' |
-	'setLocalActiveFile'
+	'setLocalActiveFile' | 
+	'defaultFileName'
 
 interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFields> {
 	className?: string
@@ -25,11 +26,12 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
 	withFileManager?: boolean
 	socket: Socket
 	isMultipleExtensionFiles?: boolean
+	defaultFileName?: string
 }
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 	className,
-	isReadOnly = false,
+	isReadOnly: _isReadOnly = false,
 	mode = EditorMode.Owner,
 	withFileManager = true,
 	roomId,
@@ -75,6 +77,8 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 		roomId,
 		defaultFileName,
 	});
+
+	const isReadOnly = _isReadOnly || (roomStatus === RoomStatus.Inactive);
 
 	return (
 		<div

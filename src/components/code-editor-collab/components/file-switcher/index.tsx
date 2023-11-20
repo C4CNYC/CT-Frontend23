@@ -26,7 +26,6 @@ const FileSwitcher: FC<FileSwitcherProps> = ({
         sx={styles.TABS}
         value={activeFile?.name}
         onChange={(_, id) => {
-          console.log(id, fileList);
           onChange(fileList.find(({ id: _id }) => id === _id) as File)}
         }
         variant="scrollable"

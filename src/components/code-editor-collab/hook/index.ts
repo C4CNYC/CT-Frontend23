@@ -10,16 +10,11 @@ import { type Extension } from '@uiw/react-codemirror';
 import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
-import { File, getFileInfo, isRoomExist } from "./utils/collab/requests";
-import {
-  unsubscribeSocket,
-  EmitSocketEvents,
-} from "./utils/socket"
-import {
-  type MemoizedProps,
-  useMemoizedProps
-} from "./useMemoizedProps";
+import { type File, getFileInfo, isRoomExist } from "./utils/collab/requests";
+import { type MemoizedProps, useMemoizedProps } from "./useMemoizedProps";
 import { useInitCodemirror, UseBaseInitReturn } from "./useInitCodemirror";
+import { unsubscribeSocket, EmitSocketEvents } from "./utils/socket"
+
 import { useModeSubscriptions } from "./useModeSubscriotions";
 import { EditorMode } from "./constants";
 import { RoomStatus } from "../components/status-label";
@@ -67,10 +62,6 @@ export const useCodeEditorCollab = ({
     defaultFileName
   } = useMemoizedProps(propsToMemoize);
 
-  // ------------------------------------------------------ //
-  //                         Handlers                       //
-  // ------------------------------------------------------ //
-
   const onCreateEditor = (view: EditorView): void => {
     editorView.current = view
   }
@@ -84,10 +75,6 @@ export const useCodeEditorCollab = ({
     editorView.current?.destroy();
   }, []);
 
-  // ------------------------------------------------------ //
-  //                     Initialize Base                    //
-  // ------------------------------------------------------ //
-
   const { baseInit, setIsLoading, ...codeMirrorProps } = useInitCodemirror({
     socket,
     withTooltip,
@@ -96,10 +83,6 @@ export const useCodeEditorCollab = ({
     cursorText,
     defaultFileName
   })
-
-  // ------------------------------------------------------ //
-  //                   Initialize SubOwner                  //
-  // ------------------------------------------------------ //
 
   const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
     firstInit.current = false;
@@ -116,10 +99,10 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active);
 
     if (!isFirstInit) {
-      return await baseInit(activeFile);
+      return await baseInit(activeFile, modeRef.current);
     }
 
-    const fileInfo = await getFileInfo(roomId, socket);
+    const fileInfo = await getFileInfo(roomId, socket, modeRef.current);
 
     onResetFileManager(fileInfo);
 
@@ -128,19 +111,25 @@ export const useCodeEditorCollab = ({
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
 
-  // ------------------------------------------------------ //
-  //                   Initialize Owner                     //
-  // ------------------------------------------------------ //
-
   const runInitOwner = useCallback(async (isFirstInit: boolean) => {
     firstInit.current = false;
     setRoomStatus(RoomStatus.Active);
 
-    const fileInfo = await getFileInfo(roomId, socket);
+    console.log(`run init. Role - ${modeRef.current}, roomId-${roomId}
+    
+    `);
+    const fileInfo = await getFileInfo(roomId, socket, modeRef.current);
 
     if (!isFirstInit || fileInfo == null) {
-      return await baseInit(activeFile)
+      console.log(`before base init. Role - ${modeRef.current}, roomId-${roomId}
+      
+      `);
+      return await baseInit(activeFile,  modeRef.current)
     }
+
+    console.log(`base init skipped, file info is exist. Setting file info to file maneger. Role - ${modeRef.current}, roomId-${roomId}
+
+    `);
 
     onResetFileManager(fileInfo);
 
@@ -148,10 +137,6 @@ export const useCodeEditorCollab = ({
       await runInitOwner(false)
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
-
-  // ------------------------------------------------------ //
-  //                   Initialize Watcher                   //
-  // ------------------------------------------------------ //
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
     firstInit.current = false;
@@ -168,7 +153,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active);
 
     let _activeFile = activeFile;
-    const fileInfo = await getFileInfo(roomId, socket);
+    const fileInfo = await getFileInfo(roomId, socket, modeRef.current);
 
     if (fileInfo != null) {
       const shouldChangeFile = fileInfo.activeFile != null &&
@@ -182,7 +167,7 @@ export const useCodeEditorCollab = ({
       _activeFile = fileInfo.activeFile ?? activeFile;
     }
 
-    await baseInit(_activeFile);
+    await baseInit(_activeFile, modeRef.current);
   }, [activeFile, baseInit, setActiveFile, socket]);
 
   const initialize = useMemo(() => ({
@@ -201,10 +186,6 @@ export const useCodeEditorCollab = ({
     socket,
     onChange
   })
-
-  // ------------------------------------------------------ //
-  //                       Effects                          //
-  // ------------------------------------------------------ //
 
   useEffect(() => {
     onRoomStatusChanged?.(roomStatus)

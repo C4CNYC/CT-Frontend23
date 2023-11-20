@@ -41,7 +41,7 @@ export interface UseBaseInitReturn {
   doc: string
   isLoading: boolean
   extensions?: Extension[]
-  baseInit: (fileName: File) => Promise<void>
+  baseInit: (fileName: File, mode: string) => Promise<void>
   setIsLoading: (isLoading: boolean) => void
 }
 
@@ -58,15 +58,19 @@ export const useInitCodemirror = ({
   const [isLoading, setIsLoading] = useState(true);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
   
-  const baseInit = useCallback(async (fileName: File) => {
+  const baseInit = useCallback(async (fileName: File, mode: string) => {
     const lineWrap = new Compartment();
     const addCursor = StateEffect.define<Cursor>();
+    console.log(`run base init. Role - ${mode}, roomId-${roomId}
+      
+    `);
     const { version, doc, cursorName, docInfo } = await getDocument({
       roomId,
       fileName,
       socket,
       cursorName: cursorText,
       defaultFileName,
+      mode
     });
 
     setExtensions([
