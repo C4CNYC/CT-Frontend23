@@ -1,4 +1,4 @@
-import { type FC, useCallback, useState } from "react";
+import { type FC, useCallback, useRef, useState } from "react";
 
 import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 import { useDispatch } from "react-redux";
