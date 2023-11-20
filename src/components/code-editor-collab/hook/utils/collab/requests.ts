@@ -55,7 +55,6 @@ export const createFile = async ({
 		})
 	})
 }
-
 export const getFileInfo = async (roomId: string, socket: Socket, mode: string): Promise<FileInfo> => {
 	return new Promise((resolve) => {
 		console.log(`file info request sent. Role-${mode} roomId-${roomId}

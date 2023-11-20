@@ -120,7 +120,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 				basicSetup={false}
 				theme="dark"
 				extensions={extensions}
-				readOnly={isReadOnly}
+				readOnly={isReadOnly || (roomStatus === RoomStatus.Inactive)}
 				value={doc}
 			/>
 		</div>
