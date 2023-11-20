@@ -85,7 +85,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           />
         ) : (
           <HidedTabBtn
-            isCollapsedInstructions={isInstructionsHidden}
             title="Instruction"
             icon={<TbArrowBarToRight size={20} />}
             openPanelFnc={openInstruction}
@@ -104,7 +103,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           <ViewBlock {...{ code, language }} />
         ) : (
           <HidedTabBtn
-            isCollapsedPreview={isBrowserHidden}
             title="Browser Preview"
             icon={<TbArrowBarToLeft size={20} />}
             openPanelFnc={openPreview}

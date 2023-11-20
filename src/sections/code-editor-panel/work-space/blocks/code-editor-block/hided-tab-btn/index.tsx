@@ -18,8 +18,6 @@ interface IHidedTabRtn {
   title: string;
   icon: React.ReactElement;
   openPanelFnc: () => void;
-  isCollapsedInstructions?: boolean;
-  isCollapsedPreview?: boolean;
 }
 
 const HidedTabBtn: FC<IHidedTabRtn> = ({ icon, title, openPanelFnc }) => {
