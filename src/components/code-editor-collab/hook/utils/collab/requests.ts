@@ -10,6 +10,7 @@ interface GetDocumentProps {
 	fileName: File
 	preloadedCode?: string
 	defaultFileName: string
+	mode: string
 }
 
 interface GetDocumentReturn {
@@ -55,11 +56,17 @@ export const createFile = async ({
 	})
 }
 
-export const getFileInfo = async (roomId: string, socket: Socket): Promise<FileInfo> => {
+export const getFileInfo = async (roomId: string, socket: Socket, mode: string): Promise<FileInfo> => {
 	return new Promise((resolve) => {
+		console.log(`file info request sent. Role-${mode} roomId-${roomId}
+		
+		`)
 		socket.emit(EmitSocketEvents.GetFileInfo, roomId, socket.id);
 
 		socket.once(SubscribedEvents.GetFileInfoResponse + socket.id, (info: FileInfo) => {
+			console.log(`file info response success. Role-${mode} roomId-${roomId}
+			
+			`);
 			resolve(info);
 		})
 	})
@@ -77,12 +84,20 @@ export const isRoomExist = async (roomId: string, socket: Socket): Promise<boole
 
 export const getDocument = ({
 	socket,
+	mode,
   ...other
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
 	return new Promise(function(resolve) {
+		console.log(`get doc request sent. Role-${mode} roomId-${other.roomId}
+		
+		`);
 		socket.emit(EmitSocketEvents.GetDoc, other);
 
 		socket.once(SubscribedEvents.GetDocResponse,  ({ doc, ...other }) =>  {
+			console.log(`get doc request success. Role-${mode} roomId-${other.roomId}. Props:`, {doc, ...other});
+			console.log(`
+			
+			`);
 			resolve({
 				doc: Text.of(doc.split("\n")),
 				...other
