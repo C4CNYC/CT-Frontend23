@@ -30,7 +30,6 @@ export default function FriendProfile(): React.ReactElement {
       label: "Profile",
       icon: <Iconify icon="ic:round-account-box" />,
       component: (
-        //#TODO update data type to normall pls
         <ProfileMain
           data={data as unknown as IUser}
           isFriend={true}
