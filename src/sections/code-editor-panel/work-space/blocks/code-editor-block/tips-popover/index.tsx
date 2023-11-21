@@ -14,12 +14,12 @@ import { useSelector } from "src/redux/store";
 
 import {
   BOX_STYLES,
-  TYP_COLOR,
   BUTTON_STYLES,
-  POPPER_OPTIONS,
   DESKTOP_POPPER_WIDTH,
-  MOBILE_POPPER_WIDTH
-} from "./constants"
+  MOBILE_POPPER_WIDTH,
+  POPPER_OPTIONS,
+  TYP_COLOR,
+} from "./constants";
 
 interface TipsPopoverProps {
   openPoper: boolean;
@@ -44,9 +44,7 @@ const TipsPopover: FC<TipsPopoverProps> = ({
     }
   }, [isDesktop, activeTab]);
 
-  const popperWidth = isDesktop
-    ? DESKTOP_POPPER_WIDTH
-    : MOBILE_POPPER_WIDTH;
+  const popperWidth = isDesktop ? DESKTOP_POPPER_WIDTH : MOBILE_POPPER_WIDTH;
 
   return (
     <Popper
@@ -77,6 +75,6 @@ const TipsPopover: FC<TipsPopoverProps> = ({
       </Box>
     </Popper>
   );
-}
+};
 
 export default TipsPopover;
