@@ -1,8 +1,14 @@
+import { useRouter } from "next/router";
+
 import { Button, Link, Stack } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { addAlpha } from "@utils";
-import { useRouter } from "next/router"
+
+import {
+  CONTINUE_COURSE_BTN_SX,
+  ENROLL_COURSE_BTN_SX,
+  EXPLORE_COURSE_BTN_SX,
+} from "./constants";
 
 interface Props {
   redirect: () => void;
@@ -21,62 +27,22 @@ export default function CourseButtons({
       {progress && progress > 0 ? (
         <Button
           component={Link}
-          onClick={async () => await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`)}
-          variant="outlined"
-          sx={{
-            p: "5px 15px",
-            borderRadius: "25px",
-            fontSize: "1rem",
-            borderColor: "#D8476A",
-            color: "#D8476A",
-            whiteSpace: "nowrap",
-            borderWidth: "2px",
-            "&:hover": {
-              border: "2px solid #D8476A",
-              backgroundColor: addAlpha("#D8476A", 0.1),
-            },
+          onClick={async (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`);
           }}
+          variant="outlined"
+          sx={CONTINUE_COURSE_BTN_SX}
         >
           Continue 🙌🏾
         </Button>
       ) : (
-        <Button
-          onClick={redirect}
-          variant="outlined"
-          sx={{
-            p: "5px 15px",
-            borderRadius: "25px",
-            fontSize: "1rem",
-            borderColor: "#5ED0D5",
-            color: "#5ED0D5",
-            whiteSpace: "nowrap",
-            borderWidth: "2px",
-            "&:hover": {
-              border: "2px solid #5ED0D5",
-              backgroundColor: addAlpha("#5ED0D5", 0.1),
-            },
-          }}
-        >
+        <Button onClick={redirect} variant="outlined" sx={ENROLL_COURSE_BTN_SX}>
           Enroll Now 👊🏽
         </Button>
       )}
-      <Button
-        onClick={redirect}
-        variant="outlined"
-        sx={{
-          p: "5px 15px",
-          borderRadius: "25px",
-          fontSize: "1rem",
-          borderColor: "#364954",
-          color: "#364954",
-          whiteSpace: "nowrap",
-          borderWidth: "2px",
-          "&:hover": {
-            border: "2px solid #364954",
-            backgroundColor: addAlpha("#364954", 0.1),
-          },
-        }}
-      >
+      <Button onClick={redirect} variant="outlined" sx={EXPLORE_COURSE_BTN_SX}>
         Explore
       </Button>
     </Stack>
