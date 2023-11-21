@@ -15,7 +15,7 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
   return (
     <Link
       component={nextLink}
-      href={isRegister ? PATH_AUTH.onBoardingTeacher : PATH_AUTH.signIn}
+      href={isRegister ? PATH_AUTH.onBoardingStudent : PATH_AUTH.signIn}
       underline="none"
       sx={{
         display: "flex",
