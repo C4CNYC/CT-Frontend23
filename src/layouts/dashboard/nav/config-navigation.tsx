@@ -127,17 +127,17 @@ export const general = {
       icon: <FaUserFriends size={20} />,
       component: () => <MenuTribesList />,
     },
-    {
-      title: "Tribes",
-      path: STUDENT_PATH_DASHBOARD.tribes.root,
-      icon: <Tb3DCubeSphere size={20} />,
-    },
   ],
 };
 
 export const social = {
   subheader: "SOCIAL",
   items: [
+    {
+      title: "Tribes",
+      path: STUDENT_PATH_DASHBOARD.tribes.root,
+      icon: <Tb3DCubeSphere size={20} />,
+    },
     {
       title: "Friends",
       path: STUDENT_PATH_DASHBOARD.friends.root,
@@ -147,6 +147,14 @@ export const social = {
       title: "Gallery",
       path: STUDENT_PATH_DASHBOARD.gallery.root,
       icon: <TbPhoto size={20} />,
+    },
+    {
+      title: "Invite Friends",
+      path: "#",
+      icon: <FaUserFriends size={20} />,
+      component: (children: React.ReactElement) => (
+        <InviteFriendsModal>{children}</InviteFriendsModal>
+      ),
     },
   ],
 };
@@ -158,19 +166,6 @@ export const apps = {
       path: STUDENT_PATH_DASHBOARD.myNotes,
       icon: <BsFlagFill size={20} />,
     },
-  ],
-};
-export const socials = {
-  subheader: "SOCIALS",
-  items: [
-    {
-      title: "Invite Friends",
-      path: "#",
-      icon: <FaUserFriends size={20} />,
-      component: (children: React.ReactElement) => (
-        <InviteFriendsModal>{children}</InviteFriendsModal>
-      ),
-    },
     {
       title: "Feedback",
       path: "#",
@@ -181,11 +176,15 @@ export const socials = {
     },
   ],
 };
+export const socials = {
+  subheader: "SOCIALS",
+  items: [],
+};
 
 export const menuConfig = {
   [Role.Owner]: [admin, managment, content],
   [Role.Admin]: [admin, managment, content],
-  [Role.Student]: [courses, general, apps, social, socials],
+  [Role.Student]: [courses, general, apps],
   [Role.Manager]: [managment, content],
   [Role.Editor]: [content],
 };
