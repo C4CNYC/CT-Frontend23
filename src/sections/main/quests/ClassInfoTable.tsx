@@ -25,6 +25,7 @@ import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { useAuthContext } from "src/auth/useAuthContext";
 import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
@@ -45,6 +46,9 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const { user } = useAuthContext();
+  const isStudent = user?.role === Role.Student;
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
@@ -81,17 +85,19 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             {...customTabProps(0)}
             sx={{ fontSize: "1.1rem" }}
           />
-          <Tab
-            label={!isMobile && "Members"}
-            icon={<IoPeopleOutline size={20} />}
-            sx={{ fontSize: "1.1rem" }}
-            {...customTabProps(1)}
-          />
+          {!isStudent ? (
+            <Tab
+              label={!isMobile && "Members"}
+              icon={<IoPeopleOutline size={20} />}
+              sx={{ fontSize: "1.1rem" }}
+              {...customTabProps(1)}
+            />
+          ) : null}
           <Tab
             label={!isMobile && "Details"}
             icon={<IoSettingsOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
-            {...customTabProps(2)}
+            {...customTabProps(isStudent ? 1 : 2)}
           />
           {/* <Tab
             label={!isMobile && "Progress"}
@@ -149,14 +155,16 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           activeTab={value === 0}
         />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <MemberCard activeTab={value === 1} />
+      {!isStudent ? (
+        <CustomTabPanel value={value} index={1}>
+          <MemberCard activeTab={value === 1} />
+        </CustomTabPanel>
+      ) : null}
+      <CustomTabPanel value={value} index={isStudent ? 1 : 2}>
+        <DetailsTab classData={classData} activeTab={value === 1} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <DetailsTab classData={classData} activeTab={value === 2} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <ProgressCard activeTab={value === 3} />
+      <CustomTabPanel value={value} index={isStudent ? 2 : 3}>
+        <ProgressCard activeTab={value === 2} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}

@@ -1,25 +1,33 @@
-const COMMON_BUTTON_SX = {
+import { type SxProps } from "@mui/system";
+
+export const HIDE_BUTTON_SX = {
   position: "absolute",
-  top: 40,
-  right: 0,
-  minWidth: "0",
-  p: 1,
-  background: "rgba(251, 221, 63, .7)",
-  zIndex: 10,
+  top: 0,
   color: "#5FD0D5",
+  minWidth: 20,
   "&:hover": {
-    background: "rgb(251, 221, 63)",
+    background: "none",
   },
-}
+};
 
-export const LEFT_BUTTON_SX = {
-  ...COMMON_BUTTON_SX,
-  borderTopRightRadius: 0,
-  borderBottomRightRadius: 0,
-}
+export const COLLAPSEBAR_TITLE_SX = {
+  textAlign: "center",
+  minWidth: 150,
+  transform: "rotate(270deg)",
+  marginTop: "170px",
+  color: "#D9D9E2",
+  fontSize: "18px",
+};
 
-export const RIGHT_BUTTON_SX = {
-  ...COMMON_BUTTON_SX,
-  borderTopRightRadius: 0,
-  borderBottomRightRadius: 0,
-}
+export const getCollapsebarSx = (isTabletAndMobile: boolean): SxProps => ({
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "center",
+  width: 30,
+  background: "#fff",
+  height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
+  border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
+  overflow: "hidden",
+  position: "relative",
+  borderRadius: isTabletAndMobile ? "0 0 10px 10px" : 1,
+});

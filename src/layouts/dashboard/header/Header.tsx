@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import { Iconify, Logo, useSettingsContext } from "@components";
 import { useOffSetTop, useResponsive } from "@hooks";
 import { bgBlur } from "@utils";
+import ThemeSwitcher from "src/components/theme-switcher";
 import { useSelector } from "src/redux/store";
 
 import { HEADER, NAV } from "../../../config-global";
@@ -68,6 +69,7 @@ export default function Header({
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
+        <ThemeSwitcher />
         <LanguagePopover />
 
         <AccountPopover />
