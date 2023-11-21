@@ -104,7 +104,7 @@ export default function DefaultClassInfo({
   return (
     <>
       <Stack sx={{ mx: { lg: -2 } }}>
-        <ClassInfoToggle />
+        {/* <ClassInfoToggle /> */}
         <Stack
           sx={{
             background: getLinearGradient(classData?.cover ?? "#75CF6D"),
