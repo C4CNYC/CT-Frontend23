@@ -1,4 +1,4 @@
-import { type FC, useEffect, useRef, useState, useMemo } from "react";
+import { type FC, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   Box,
@@ -12,18 +12,18 @@ import {
 import SolutionMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/solution-mobile-dialog";
 import TipsMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/tips-modal-dialog";
 import UnstuckMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog";
-
-import TipsPopover from "../tips-popover";
-
 import { useGetLessonStudentQuery } from "src/redux/services/manager/lesson-student";
 import { useSelector } from "src/redux/store";
-import { actions, actionsTips, IActionDialogType } from "./config";
+
+import TipsPopover from "../tips-popover";
+import { IActionDialogType, actions, actionsTips } from "./config";
 import {
+  BOX_PROPS,
+  DEFAULT_TIP_ARRAY,
+  SPEED_DEAL_ACTION_FAB_PROPS,
   getSpeedDealFabProps,
   getSpeedDealStyles,
-  SPEED_DEAL_ACTION_FAB_PROPS,
-  BOX_PROPS
-} from "./constants"
+} from "./constants";
 
 interface MumuSpeedDialProps {
   typing: boolean | null;
@@ -40,10 +40,16 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const [speedDeal, setSpeedDial] = useState<boolean>(false);
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null);
 
-  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId)
+  const lessonId = useSelector((state) => state.codePanelGlobal.lessonId);
   const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
-  const speedDealProps = useMemo(() => getSpeedDealFabProps(speedDeal), [speedDeal]);
-  const speedDealStyles = useMemo(() => getSpeedDealStyles(isDesktop), [isDesktop]);
+  const speedDealProps = useMemo(
+    () => getSpeedDealFabProps(speedDeal),
+    [speedDeal]
+  );
+  const speedDealStyles = useMemo(
+    () => getSpeedDealStyles(isDesktop),
+    [isDesktop]
+  );
 
   const openSpeedDial = () => {
     setSpeedDial(true);
@@ -77,7 +83,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
     }
   }, [openPoper]);
 
-  const isTipsPopover = !isLoading && data?.tips.length
+  const isTipsPopover = !isLoading && data?.tips.length;
 
   return (
     <>
@@ -86,7 +92,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           anchorEl={anchorEl}
           openPoper={openPoper}
           setOpenPoper={setOpenPoper}
-          tips={data?.tips ?? []}
+          tips={data?.tips ?? DEFAULT_TIP_ARRAY}
         />
       )}
 
@@ -108,6 +114,9 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
             icon={action.icon}
             onClick={() => {
               setDialogType(action.type);
+              if (action.type === IActionDialogType.tips) {
+                setOpenPoper(true);
+              }
             }}
             tooltipTitle={
               <Typography sx={{ color: action.color, p: "2px" }}>
@@ -118,13 +127,13 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           />
         ))}
       </SpeedDial>
-
-      <TipsMobileDialog
+      {/* commented before V1 release */}
+      {/* <TipsMobileDialog
         open={dialogType === IActionDialogType.tips}
         onClose={handleCloseDialog}
         isLoading={isLoading}
         tips={data?.tips}
-      />
+      /> */}
 
       <SolutionMobileDialog
         open={dialogType === IActionDialogType.solution}
@@ -137,6 +146,6 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
       />
     </>
   );
-}
+};
 
 export default MumuSpeedDial;
