@@ -24,6 +24,7 @@ import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-st
 
 import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";
+import { getAddTribeButtonSx } from "./constants";
 
 export default function MenuTribesList(): React.ReactElement {
   const theme = useTheme();
@@ -78,17 +79,7 @@ export default function MenuTribesList(): React.ReactElement {
           <>
             <Button
               onClick={handleOpenPopover}
-              sx={{
-                alignSelf: "flex-start",
-                borderRadius: 1,
-                minWidth: "30px",
-                p: 0,
-                ml: 2,
-                minHeight: "30px",
-                height: "30px",
-                color: theme.palette.info.light,
-                border: `2px solid ${theme.palette.info.light}`,
-              }}
+              sx={(theme) => ({ ...getAddTribeButtonSx(theme) })}
             >
               <FaPlus size={20} />
             </Button>
