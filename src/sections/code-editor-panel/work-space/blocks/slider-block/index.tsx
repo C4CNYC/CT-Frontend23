@@ -23,7 +23,7 @@ import {
 import { useSelector } from "src/redux/store";
 
 import BaseBlock from "../base-block";
-import BrowserView from "../view-block/browser-view";
+import BrowserView from "src/sections/code-panel/work-space/blocks/view-block/BrowserView";
 import { getBoxSx, getCarouselSettings } from "./constants";
 import LoaderDelay from "./loader-delay";
 import Navigation from "./navigation";
@@ -214,7 +214,6 @@ const View: FC<IView> = ({ type, body, connectIntegrations }) => {
     case "editable":
       return <ProsaMirrorView multimediaValue={body} />;
     case "code":
-      //@ts-expect-error
       return <BrowserView value={connectIntegrations(body) ?? ""} />;
     default:
       return <>CONTENT TYPE NOT SUPPORTED</>;
