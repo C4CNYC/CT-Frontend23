@@ -127,27 +127,9 @@ export default function Progress(): React.ReactElement {
           <SkeletonProgressTable />
         ) : (
           <>
+            {/* @ts-ignore */}
             <ProgressTable
-              goBack={() => {
-                if (filters.moduleId && filters.lessonId) {
-                  setFilter("lessonId", "");
-                } else if (filters.moduleId) {
-                  setFilter("moduleId", "");
-                }
-              }}
-              hasBackLink={!!filters.moduleId || !!filters.lessonId}
-              hasNextLink={!filters.moduleId || !filters.lessonId}
-              data={getProgressData(
-                filters.moduleId,
-                filters.lessonId,
-                students?.data ?? [],
-                progress?.data ?? [],
-                content
-              )}
-              onSelectGroup={(groupId: string) => {
-                if (!filters.moduleId) setFilter("moduleId", groupId);
-                else if (!filters.lessonId) setFilter("lessonId", groupId);
-              }}
+              data={[]}
             />
             {isLoadingContent
               ? Array(
@@ -164,80 +146,4 @@ export default function Progress(): React.ReactElement {
       </Container>
     </>
   );
-}
-
-export function getProgressData(
-  moduleId: string,
-  lessonId: string,
-  students: Array<IStudent & BaseResponseInterface>,
-  progress: Array<IProgress & BaseResponseInterface>,
-  contents?: IProgressChalanges
-): IProgressTableData[] {
-  if (!contents || !progress) return [];
-
-  // show progress by chalanges
-  if (moduleId && lessonId) {
-    const findModuleIndex = contents.findIndex((c) => c.id === moduleId);
-    const lesson = contents[findModuleIndex].lessons.find(
-      (l) => l.id === lessonId
-    );
-    return students?.map((student) => ({
-      y: student.account.email,
-      x: !lesson
-        ? []
-        : lesson?.chalanges?.map((chalange) => ({
-            id: chalange.id,
-            name: chalange.title,
-            type: "chalange",
-            progress: progress
-              .find(
-                (progres) =>
-                  progres.student.id === student.id &&
-                  progres.unit.id === moduleId
-              )
-              ?.completed_chalanges?.find((c) => c.id === chalange.id)
-              ? 100
-              : 0,
-          })),
-    }));
-  }
-
-  // show progress by course or module level
-  const data = students.map((student) => ({
-    y: student.account.email,
-    x:
-      (moduleId
-        ? contents.find((c) => c.id === moduleId)?.lessons
-        : contents
-      )?.map((content) => ({
-        id: content.id,
-        name: content.name,
-        type: content.type,
-        progress: getProgress(
-          progress.find(
-            (progres) =>
-              progres.student.id === student.id &&
-              progres.unit.id === (moduleId || content.id)
-          ),
-          content.chalanges
-        ),
-      })) ?? [],
-  }));
-
-  return data;
-}
-
-export function getProgress(
-  progres?: IProgress & BaseResponseInterface,
-  chalanges?: Array<ILessonContent & BaseResponseInterface>
-): number {
-  if (!progres || !chalanges) return 0;
-  const notReadyChalanges = _.difference(
-    chalanges.map((c) => c.id),
-    progres.completed_chalanges.map((c) => c.id)
-  ).length;
-  const countChalanges = chalanges.length;
-  const readyChalanges = countChalanges - notReadyChalanges;
-
-  return (readyChalanges * 100) / countChalanges;
 }
