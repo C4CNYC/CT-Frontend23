@@ -8,10 +8,10 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import { Socket } from "socket.io-client";
 import { dracula } from "thememirror";
 
-import { State } from ".";
-import { initListeners, removeListeners } from "./listeners";
 import { peerExtension } from "../../codemirror/extensions/collab";
 import { cursorExtension } from "../../codemirror/extensions/cursors";
+import { State } from "./index";
+import { initListeners, removeListeners } from "./listeners";
 
 interface IEditor {
   roomId?: string;
@@ -68,11 +68,11 @@ export const CodeEditor = ({
         lineWrap.of(EditorView.lineWrapping),
         langs.html(),
         ...(socket && state && cursorId && roomId
-        ? [
-          peerExtension(socket, state.version ?? 0, cursorId, roomId),
-          cursorExtension(cursorText ?? cursorId)
-        ]
-        : [])
+          ? [
+              peerExtension(socket, state.version ?? 0, cursorId, roomId),
+              cursorExtension(cursorText ?? cursorId),
+            ]
+          : []),
       ],
     });
 
