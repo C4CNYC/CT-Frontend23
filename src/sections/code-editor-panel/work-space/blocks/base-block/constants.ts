@@ -10,8 +10,8 @@ export const getBoxStyles = (isTabletAndMobile: boolean): SxProps => ({
 
 export const getButtonSx = (isDesktop: boolean): SxProps => ({
   display: isDesktop ? "flex" : "none",
-  width: 20,
-  height: 20,
+  width: 30,
+  height: 30,
   p: 0.2,
   minWidth: "0",
   color: "#5FD0D5",

@@ -1,15 +1,6 @@
 import { type FC, type ReactNode, useMemo, useState } from "react";
 
-import { TbArrowsMinimize } from "react-icons/tb";
-
-import {
-  Box,
-  Button,
-  Collapse,
-  type SxProps,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Collapse, useMediaQuery, useTheme } from "@mui/material";
 
 import { localStorageAvailable } from "@utils";
 import { useSelector } from "src/redux/store";
@@ -23,6 +14,7 @@ interface IBaseBlock {
   className: "instructions" | "codeEditorTour" | "browserTour";
   title: ReactNode;
   icon: React.ReactElement;
+  closeIcon?: React.ReactElement;
   hideTabsHandler?: () => void;
 }
 
@@ -39,6 +31,7 @@ const BaseBlock: FC<IBaseBlock> = ({
   className,
   title,
   icon,
+  closeIcon,
   hideTabsHandler,
 }) => {
   const theme = useTheme();
@@ -98,7 +91,7 @@ const BaseBlock: FC<IBaseBlock> = ({
       {hideTabsHandler && (
         <Box sx={buttonWrapperSx}>
           <Button sx={buttonSx} onClick={hideTabsHandler}>
-            <TbArrowsMinimize size={19} />
+            {closeIcon}
           </Button>
         </Box>
       )}
