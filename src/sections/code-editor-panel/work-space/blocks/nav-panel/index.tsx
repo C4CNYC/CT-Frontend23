@@ -6,11 +6,14 @@ import {
   Drawer,
   List,
   Divider,
-  Stack
+  Stack,
+  CircularProgress
 } from "@mui/material";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+
+import { SimpleInfiniteList } from "@components";
 
 import NavItem from "./components/nav-item";
 import HeaderItem from "./components/header-item";
@@ -36,6 +39,8 @@ interface NavPanelProps {
   wrapperListenerRef: RefObject<HTMLDivElement | null>
 }
 
+const LOADER_SIZE = 20;
+
 const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const {
     drawerRef,
@@ -50,7 +55,9 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
     isCodePreviewVisible,
     activeUsersAmount,
     isCodeBlocksVisible,
-    isUsersLoading
+    isUsersLoading,
+    onLoadMore,
+    hasNextPage
   } = useNavPanel(wrapperListenerRef);
 
   const drawerSx = useMemo(() => {
@@ -80,7 +87,12 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
           {isUsersLoading
             ? <LoadListSkeleton />
             : (
-              <>
+              <SimpleInfiniteList
+                loading={isUsersLoading}
+                hasNextPage={hasNextPage}
+                onLoadMore={onLoadMore}
+                loaderComponent={<CircularProgress color="primary" size={LOADER_SIZE} />}
+              >
                 {users.map((user) => (
                   <NavItem
                     key={user.id}
@@ -89,7 +101,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
                     onClick={() => onAddBlock(user)}
                   />
                 ))}
-              </>
+              </SimpleInfiniteList>
             )
           }
         </List>
