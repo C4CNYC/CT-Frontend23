@@ -99,10 +99,10 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active);
 
     if (!isFirstInit) {
-      return await baseInit(activeFile, modeRef.current);
+      return await baseInit(activeFile);
     }
 
-    const fileInfo = await getFileInfo(roomId, socket, modeRef.current);
+    const fileInfo = await getFileInfo(roomId, socket);
 
     onResetFileManager(fileInfo);
 
@@ -111,30 +111,20 @@ export const useCodeEditorCollab = ({
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
 
-  const runInitOwner = useCallback(async (isFirstInit: boolean) => {
+  const runInitOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
     firstInit.current = false;
     setRoomStatus(RoomStatus.Active);
 
-    console.log(`run init. Role - ${modeRef.current}, roomId-${roomId}
-    
-    `);
-    const fileInfo = await getFileInfo(roomId, socket, modeRef.current);
+    const fileInfo = await getFileInfo(roomId, socket);
 
     if (!isFirstInit || fileInfo == null) {
-      console.log(`before base init. Role - ${modeRef.current}, roomId-${roomId}
-      
-      `);
-      return await baseInit(activeFile,  modeRef.current)
+      return await baseInit(activeFile);
     }
-
-    console.log(`base init skipped, file info is exist. Setting file info to file maneger. Role - ${modeRef.current}, roomId-${roomId}
-
-    `);
 
     onResetFileManager(fileInfo);
 
     if (fileInfo.activeFile.id === activeFile.id) {
-      await runInitOwner(false)
+      await runInitOwner(false);
     }
   }, [activeFile, baseInit, onResetFileManager, socket]);
 
@@ -153,7 +143,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active);
 
     let _activeFile = activeFile;
-    const fileInfo = await getFileInfo(roomId, socket, modeRef.current);
+    const fileInfo = await getFileInfo(roomId, socket);
 
     if (fileInfo != null) {
       const shouldChangeFile = fileInfo.activeFile != null &&
@@ -167,8 +157,8 @@ export const useCodeEditorCollab = ({
       _activeFile = fileInfo.activeFile ?? activeFile;
     }
 
-    await baseInit(_activeFile, modeRef.current);
-  }, [activeFile, baseInit, setActiveFile, socket]);
+    await baseInit(_activeFile);
+  }, [activeFile, baseInit, setActiveFile, socket, onResetFileManager]);
 
   const initialize = useMemo(() => ({
     [EditorMode.Owner]: runInitOwner,
@@ -189,7 +179,7 @@ export const useCodeEditorCollab = ({
 
   useEffect(() => {
     onRoomStatusChanged?.(roomStatus)
-  }, [roomStatus, onRoomStatusChanged])
+  }, [roomStatus, onRoomStatusChanged]);
 
   useEffect(() => {
     initializeBlockedRef.current = false;
