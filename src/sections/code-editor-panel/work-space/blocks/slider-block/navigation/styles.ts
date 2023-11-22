@@ -34,7 +34,7 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
   const theme = useTheme();
   const getBg = (): string => {
     if (btnNext === BtnType.next) {
-      return "#43D4DD";
+      return "#EE467A";
     }
     if (btnNext === BtnType.coding) {
       return "#155275CC";
