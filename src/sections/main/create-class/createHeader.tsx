@@ -46,6 +46,7 @@ export default function CreateHeader({
               },
               sx: {
                 fontSize: { xs: "42px", sm: "52px", md: "62px" },
+                color: "#fff",
                 "&::placeholder": {
                   opacity: 0.7,
                   color: "#fff",
