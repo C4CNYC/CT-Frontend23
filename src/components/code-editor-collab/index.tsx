@@ -120,8 +120,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
 				basicSetup={false}
 				theme="dark"
 				extensions={extensions}
-        //@ts-expect-error
-				readOnly={isReadOnly || (roomStatus === RoomStatus.Inactive)}
+				readOnly={isReadOnly}
 				value={doc}
 			/>
 		</div>
