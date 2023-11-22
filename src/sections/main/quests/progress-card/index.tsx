@@ -1,28 +1,24 @@
-// import Head from "next/head";
-// import { useRouter } from "next/router";
-// import { getProgressData } from "@pages/manager/school/progress";
-// import _ from "lodash";
+import { useRouter } from "next/router";
 
-// import { Container } from "@mui/material";
-// import { Stack } from "@mui/system";
+import {
+  FormControl,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
+import { Stack } from "@mui/system";
 
-// import { CustomBreadcrumbs } from "@components";
-// import { FilterMode, useFilters } from "@hooks";
-// import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-// import FilterClassesAutocomplete from "@sections/dashboard/progress/filters/Classes";
-// import FilterCoursesAutocomplete from "@sections/dashboard/progress/filters/Courses";
-// import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
-// import {
-//   SkeletonProgressTable,
-//   SkeletonProgressTableRow,
-// } from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
-// import { getCountTakingElment } from "@utils";
-// import {
-//   useGetProgressContentQuery,
-//   useGetProgressQuery,
-// } from "src/redux/services/manager/progress-manager";
-// import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
-// import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
+import { useFilters } from "@hooks";
+import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
+import {
+  SkeletonProgressTable,
+} from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
+import { useEffect, useMemo, useState } from "react";
+import { CgArrowUpO } from "react-icons/cg";
+import { HiOutlineLightBulb } from "react-icons/hi2";
+import { useGetClassProgressQuery } from "../../../../redux/services/manager/classes-student";
+import { IClassProgressCourse, IClassProgressModule } from "../../../../redux/interfaces/class.interface";
+import { useAuthContext } from "../../../../auth/useAuthContext";
 
 interface IProgressCardProps {
   activeTab: boolean;
@@ -31,104 +27,190 @@ interface IProgressCardProps {
 export default function ProgressCard({
   activeTab,
 }: IProgressCardProps): React.ReactElement {
-  return <></>;
-  // const { query } = useRouter();
-  // const { filters, setFilter } = useFilters({
-  //   courseId: "",
-  //   classId: "",
-  //   moduleId: "",
-  //   lessonId: "",
-  // });
+  const { query } = useRouter();
+  const { user: loggedUser } = useAuthContext();
 
-  // const { data: students, isLoading } = useGetClassStudentsQuery(
-  //   {
-  //     id: query.id as string,
-  //   },
-  //   { skip: !query.id || !activeTab }
-  // );
-  // const { data: content, isLoading: isLoadingContent } =
-  //   useGetProgressContentQuery(
-  //     {
-  //       id: query.courseId as string,
-  //     },
-  //     { skip: !activeTab }
-  //   );
-  // const { data: progress } = useGetProgressQuery(
-  //   {
-  //     id: query.courseId as string,
-  //   },
-  //   { skip: !activeTab }
-  // );
+  const { filters, setFilter } = useFilters({
+    courseId: "",
+    moduleId: "",
+    lessonId: "",
+  });
 
-  // return (
-  //   <>
-  //     <Stack
-  //       direction="row"
-  //       mb={3}
-  //       sx={{
-  //         flexWrap: { xs: "wrap", sm: "wrap" },
-  //         gap: 3,
-  //         "& .MuiStack-root, & .MuiAutocomplete-root": {
-  //           width: {
-  //             xs: "100% !important",
-  //             sm: "260px !important",
-  //             md: "260px !important",
-  //             lg: "260px !important",
-  //           },
-  //         },
-  //       }}
-  //     >
-  //       <FilterCoursesAutocomplete
-  //         courseId={filters.courseId ?? query.courseId}
-  //         setCourse={(courseId: string) => {
-  //           setFilter("courseId", courseId);
-  //         }}
-  //       />
-  //       <FilterClassesAutocomplete
-  //         classId={filters.classId ?? query.classId}
-  //         setClass={(classId: string) => {
-  //           setFilter("classId", classId);
-  //         }}
-  //       />
-  //     </Stack>
-  //     {isLoading ? (
-  //       <SkeletonProgressTable />
-  //     ) : (
-  //       <>
-  //         <ProgressTable
-  //           goBack={() => {
-  //             if (filters.moduleId && filters.lessonId) {
-  //               setFilter("lessonId", "");
-  //             } else if (filters.moduleId) {
-  //               setFilter("moduleId", "");
-  //             }
-  //           }}
-  //           hasBackLink={!!filters.moduleId || !!filters.lessonId}
-  //           hasNextLink={!filters.moduleId || !filters.lessonId}
-  //           data={getProgressData(
-  //             filters.moduleId,
-  //             filters.lessonId,
-  //             students?.data ?? [],
-  //             progress?.data ?? [],
-  //             content
-  //           )}
-  //           onSelectGroup={(groupId: string) => {
-  //             if (!filters.moduleId) setFilter("moduleId", groupId);
-  //             else if (!filters.lessonId) setFilter("lessonId", groupId);
-  //           }}
-  //         />
-  //         {isLoadingContent
-  //           ? Array(
-  //               getCountTakingElment(
-  //                 Number(students?.meta.itemCount),
-  //                 Number(filters.take)
-  //               )
-  //             )
-  //               .fill(null)
-  //               .map((v, i) => <SkeletonProgressTableRow key={i} />)
-  //           : null}
-  //       </>
-  //     )}
-  //   </>
-  // );
+  const [showTip, setShowTip] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem(`progress-table-tip`) !== "true";
+    }
+    return true;
+  });
+  const hideTip = () => {
+    setShowTip(false)
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(`progress-table-tip`, "true")
+    }
+  }
+
+  useEffect(() => {
+    setFilter(["courseId", "moduleId", "lessonId"], "")
+  }, [query.id]);
+
+  const [viewBy, setViewBy] = useState<{
+    main: "course" | "quest"
+    user: "username" | "name"
+  }>({
+    main: "course",
+    user: "name",
+  });
+
+  const { data: progressData, isLoading } = useGetClassProgressQuery({
+    id: query.id as string,
+  }, {
+    skip: !query.id || !activeTab
+  })
+  const filteredData = loggedUser?.role !== 'student' ? progressData : progressData?.filter((c) => c.id === loggedUser?.student_profile.id)
+
+  const [activeData, setActiveData] = useState<IClassProgressCourse[] | IClassProgressModule[]>([])
+  const [selectedIdx, setSelectedIdx] = useState(0)
+  useEffect(() => {
+    const selectedData = filters.moduleId.length
+      ? filteredData?.[0].courses.find((c) => c.id === filters.courseId)!.modules
+      : filteredData?.[0].courses
+    setActiveData(selectedData!)
+    if (filters.moduleId.length) setSelectedIdx(selectedData!.findIndex((m) => m.id === filters.moduleId) ?? 0)
+    else if (filters.courseId.length) setSelectedIdx(selectedData!.findIndex((c) => c.id === filters.courseId) ?? 0)
+  }, [filters, filteredData]);
+
+  const levelName = useMemo(() => filters.moduleId ? 'lesson' : filters.courseId ? 'module' : 'course', [filters.moduleId, filters.courseId]);
+
+  return (
+    <>
+      <Stack
+        direction="row"
+        alignItems="center"
+        mb={3}
+        sx={{
+          flexWrap: { xs: "wrap", sm: "wrap" },
+          gap: 3,
+          "& .MuiStack-root, & .MuiAutocomplete-root": {
+            width: {
+              xs: "100% !important",
+              sm: "260px !important",
+              md: "260px !important",
+              lg: "260px !important",
+            },
+          },
+        }}
+      >
+        {levelName !== "course" && (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+              onClick={() => {
+                if (
+                  !filters.courseId.length
+                  && !filters.moduleId.length
+                ) return
+                else if (filters.moduleId.length) setFilter(["moduleId", "lessonId"], "")
+                else if (filters.courseId.length) setFilter(["courseId", "lessonId"], "")
+              }}
+            >
+              <CgArrowUpO size={28} color="#EE467A" />
+            </div>
+            <FormControl>
+              <TextField
+                select
+                fullWidth
+                sx={{ width: 250 }}
+                SelectProps={{
+                  native: true,
+                  sx: { textTransform: "capitalize" },
+                }}
+                value={filters.moduleId.length ? filters.moduleId : filters.courseId}
+                onChange={(e) => {
+                  setFilter(filters.moduleId.length ? "moduleId" : "courseId", e.target.value)
+                }}
+              >
+                {
+                  activeData.map((module, idx) => (
+                    <option key={`${module.id}-${idx}`} value={module.id}>
+                      {filters.moduleId.length ? "Module" : "Course"} | {module.name}
+                    </option>
+                  ))
+                }
+              </TextField>
+            </FormControl>
+            <ToggleButtonGroup
+              size="small"
+              value={''}
+              exclusive
+              onChange={(_, value) => {
+                if (value === 'previous') {
+                  console.log(selectedIdx, activeData)
+                  setFilter(filters.moduleId.length ? "moduleId" : "courseId", activeData[selectedIdx - 1].id)
+                } else {
+                  setFilter(filters.moduleId.length ? "moduleId" : "courseId", activeData[selectedIdx + 1].id)
+                }
+              }}
+            >
+              <ToggleButton value="previous" disabled={selectedIdx === 0}>Previous</ToggleButton>
+              <ToggleButton value="next" disabled={selectedIdx + 1 === activeData.length}>Next</ToggleButton>
+            </ToggleButtonGroup>
+          </>
+        )}
+        <ToggleButtonGroup
+          size="small"
+          value={viewBy.user}
+          exclusive
+          onChange={(_, value) => { setViewBy({ ...viewBy, user: value }) }}
+          aria-label="view by username or name"
+        >
+          <ToggleButton value="username" aria-label="Username">Username</ToggleButton>
+          <ToggleButton value="name" aria-label="Name">Name</ToggleButton>
+        </ToggleButtonGroup>
+      </Stack>
+      {isLoading ? (
+        <SkeletonProgressTable />
+      ) : (
+        <>
+          {showTip && <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              fontSize: 10,
+              backgroundColor: 'rgba(238, 70, 122, 0.2)',
+              color: '#EE467A',
+              alignItems: 'center',
+              paddingLeft: 10,
+              fontWeight: 700,
+              justifyContent: 'space-between',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 8,
+              }}
+            >
+              <HiOutlineLightBulb size="10" color="#EE467A" />
+              <span>Click on a column to expand it and see details</span>
+            </div>
+            <div style={{ paddingRight: 10, cursor: 'pointer' }} onClick={() => hideTip()}>X</div>
+          </div>
+          }
+          <ProgressTable
+            filters={filters}
+            setFilter={setFilter}
+            data={filteredData!}
+            viewBy={viewBy}
+            levelName={levelName}
+          />
+        </>
+      )}
+    </>
+  );
 }
