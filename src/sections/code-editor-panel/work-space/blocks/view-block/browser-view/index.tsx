@@ -1,34 +1,36 @@
-import { type FC, useState, useEffect } from "react";
+import { type FC, useEffect, useState } from "react";
 
 import SkeletonViewBlock from "../skeleton-view-box";
 
 export interface CodeDocument {
-  htmlBody?: string[],
-  cssBody?: string[],
-  jsBody?: string[]
+  htmlBody?: string[];
+  cssBody?: string[];
+  jsBody?: string[];
 }
 
 interface BrowserViewProps {
-  document: CodeDocument | null
+  document: CodeDocument | null;
 }
 
 enum TagNames {
   Style = "style",
-  Script = "script"
+  Script = "script",
 }
 
-const getBody = (bodyList: string[], tagName: TagNames): string => 
-  bodyList.reduce((res: string, body: string) => `
+const getBody = (bodyList: string[], tagName: TagNames): string =>
+  bodyList.reduce(
+    (res: string, body: string) => `
     ${res}
 
     <${tagName}>
       ${body}
     </${tagName}>
-  `, '');
-
+  `,
+    ""
+  );
 
 const BrowserView: FC<BrowserViewProps> = ({ document }) => {
-  const [docSrc, setDocSrc] = useState('');
+  const [docSrc, setDocSrc] = useState("");
 
   useEffect(() => {
     if (document == null) {
@@ -43,22 +45,24 @@ const BrowserView: FC<BrowserViewProps> = ({ document }) => {
           ${getBody(cssBody, TagNames.Style)}
         </head>
         <body>
-          ${htmlBody.join('\n')}
+          ${htmlBody.join("\n")}
           ${getBody(jsBody, TagNames.Script)}
         </body>
       </html>
-    `)
-  }, [document])
+    `);
+  }, [document]);
 
-  return document != null
-    ? <iframe srcDoc={docSrc} style={IFRAME_STYLE} />
-    : <SkeletonViewBlock />
+  return document != null ? (
+    <iframe srcDoc={docSrc} style={IFRAME_STYLE} />
+  ) : (
+    <SkeletonViewBlock />
+  );
 };
 
 const IFRAME_STYLE = {
   border: 0,
   width: "100%",
   height: "100%",
-}
+};
 
 export default BrowserView;

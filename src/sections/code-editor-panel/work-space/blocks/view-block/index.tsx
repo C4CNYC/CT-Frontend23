@@ -27,6 +27,7 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToRight size={20} />}
+      isLeftBtn={true}
       title={TITLE}
       icon={icon}
       className="browserTour"
