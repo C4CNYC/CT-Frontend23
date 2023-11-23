@@ -16,7 +16,13 @@ const TimerButton = ({
   ...rest
 }: Props): React.ReactElement => {
   return (
-    <Button {...rest} color={color} variant={variant} onClick={onClick}>
+    <Button
+      {...rest}
+      color={color}
+      variant={variant}
+      onClick={onClick}
+      sx={{ minWidth: 130 }}
+    >
       {text}
     </Button>
   );
