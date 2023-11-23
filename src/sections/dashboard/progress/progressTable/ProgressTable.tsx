@@ -64,13 +64,17 @@ export default function ProgressTable({
 }: IProgressTable): React.ReactElement {
   const lastNameOnly = useSelector((state: RootState) => state.schoolSettings.last_name_only);
 
-  const [orderedData, setOrderedData] = useState(data)
+  const [orderedData, setOrderedData] = useState(data ?? [])
   const [selectedCourseIdx, setSelectedCourseIdx] = useState<number>(0)
   const [selectedModuleIdx, setSelectedModuleIdx] = useState<number>(0)
-  const courses = useMemo(() => _.uniqBy(orderedData[0].courses, "id"), [orderedData]);
+  const courses = useMemo(() => _.uniqBy(orderedData?.[0]?.courses, "id"), [orderedData]);
   const [selectedData, setSelectedData] = useState<DataType>([]);
   const [orderBy, setOrderBy] = useState<string>("")
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc")
+
+  useEffect(() => {
+    setOrderedData(data ?? [])
+  }, [data]);
 
   useEffect(() => {
     const { courseId, moduleId } = filters;
@@ -83,7 +87,7 @@ export default function ProgressTable({
 
   useEffect(() => {
     const newData = _.cloneDeep(data)
-    newData.sort((a, b) => {
+    newData?.sort((a, b) => {
       // @ts-ignore
       const valueA = _.at(a, orderBy)
       // @ts-ignore
@@ -204,7 +208,7 @@ export default function ProgressTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {orderedData.slice(((filters.page ?? 1) - 1) * 20, (filters.page ?? 0) * 20).map((el) => (
+            {orderedData?.slice(((filters.page ?? 1) - 1) * 20, (filters.page ?? 0) * 20)?.map((el) => (
               <TableRow>
                 {viewBy.user === 'username' && (
                   <TableCell
@@ -257,7 +261,7 @@ export default function ProgressTable({
         </Table>
       </TableContainer>
       <TablePaginationCustom
-        count={orderedData.length}
+        count={orderedData?.length ?? 0}
         page={filters.page ? filters.page - 1 : 0}
         rowsPerPage={20}
         rowsPerPageOptions={[]}

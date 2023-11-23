@@ -44,7 +44,7 @@ interface IClassInfoTable {
 export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [value, setValue] = useState(3);
+  const [value, setValue] = useState(0);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
   const { user } = useAuthContext();
@@ -99,12 +99,12 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(isStudent ? 1 : 2)}
           />
-          {/* <Tab
+          <Tab
             label={!isMobile && "Progress"}
             icon={<GiProgression size={20} />}
             sx={{ fontSize: "1.1rem" }}
-            {...customTabProps(3)}
-          /> */}
+            {...customTabProps(isStudent ? 2 : 3)}
+          />
         </Tabs>
         <Stack
           direction="row"
@@ -164,7 +164,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         <DetailsTab classData={classData} activeTab={value === 1} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={isStudent ? 2 : 3}>
-        <ProgressCard activeTab={value === 2} />
+        <ProgressCard activeTab={value === 2 || value === 3} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}
