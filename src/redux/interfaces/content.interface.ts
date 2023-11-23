@@ -53,6 +53,9 @@ export interface IModuleContent {
   name: string;
   progress: string | null;
   duration: string | null;
+  teacher_slides?: string;
+  lesson_plans?: string;
+  teacher_forum?: string;
 }
 
 export interface ILesson {
