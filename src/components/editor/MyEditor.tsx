@@ -6,10 +6,10 @@ import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
 
 import { isJson } from "@utils";
+import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
 
 import EditorToolbar from "./EditorToolbar";
 import { extensions } from "./extensions-template";
-import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
 
 interface FileWithProgress {
   file: File;
@@ -48,14 +48,29 @@ function Editor({
         async () =>
           await new Promise<ImageAttributes>((resolve, reject) => {
             completed += 1;
-            uploadToS3(file).then(({ url, key }) => {
+            uploadToS3(file, {
+              endpoint: {
+                request: {
+                  body: {},
+                  headers: {
+                    "x-tenant-id":
+                      localStorage.getItem("tenantName") ?? "codetribe",
+                  },
+                },
+              },
+            }).then(({ url, key }) => {
               progress(completed / files.length);
               createMedia({
                 url,
-                name: key,
-              }).unwrap().then(() => {
-                resolve({ src: url, fileName: key });
+                name: file.name,
+                size: file.size,
+                type: "image",
+                acl: "public",
               })
+                .unwrap()
+                .then(() => {
+                  resolve({ src: url, fileName: key });
+                });
             });
           })
       );

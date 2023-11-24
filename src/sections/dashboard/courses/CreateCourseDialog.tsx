@@ -42,6 +42,7 @@ import AuthorsTab from "./authors-tab/AuthorsTab";
 
 interface FormValuesProps {
   name: string;
+  content_id: string;
   level: string;
   price: string;
   description: string;
@@ -86,6 +87,7 @@ export default function CreateCourseDialog({
     level: Yup.string().required(translate("required_level")),
     price: Yup.string().required(translate("required_price")),
     description: Yup.string().required(translate("required_description")),
+    content_id: Yup.string().required("Content Id is required"),
     skills: Yup.array(),
   });
 
@@ -238,6 +240,20 @@ export default function CreateCourseDialog({
                   sx={{ width: "100%" }}
                   name="name"
                   label={translate("courses_course_name")}
+                />
+
+                <RHFTextField
+                  sx={{ width: "100%" }}
+                  name="content_id"
+                  label="Course Content Id"
+                  placeholder="W1"
+                />
+
+                <RHFTextField
+                  sx={{ width: "100%" }}
+                  name="content_id"
+                  label="Course Content Id"
+                  placeholder="W1"
                 />
 
                 <RHFSelect

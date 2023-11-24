@@ -116,6 +116,7 @@ export default function UserNewEditForm({
       if (isEdit && currentUser?.id) {
         const { email, ...body } = data;
         await updateUser({
+          id: currentUser?.id,
           user_id: currentUser?.id,
           ...body,
         }).unwrap();
@@ -132,6 +133,7 @@ export default function UserNewEditForm({
         push(MANAGER_PATH_DASHBOARD.organization.members);
       } else {
         const user = await createUser({
+          id: "",
           ...data,
         }).unwrap();
         if (photoURL) {

@@ -13,9 +13,8 @@ import {
   UnderlineExtension,
 } from "remirror/extensions";
 
-
 import "@mui/material";
-import { Button, FormHelperText, Stack, useTheme } from "@mui/material";
+import { Button, FormHelperText, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const MenuBtn = styled(Button)({
@@ -96,6 +95,8 @@ export function RHFRemirror({
 const Menu = () => {
   const { toggleBold, toggleItalic, undo, redo, toggleUnderline } =
     useCommands();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Stack direction="row" pb={1}>
@@ -104,35 +105,35 @@ const Menu = () => {
           toggleBold();
         }}
       >
-        <FaBold size={20} />
+        <FaBold size={isMobile ? 14 : 20} />
       </MenuBtn>
       <MenuBtn
         onClick={() => {
           toggleItalic();
         }}
       >
-        <FaItalic size={20} />
+        <FaItalic size={isMobile ? 14 : 20} />
       </MenuBtn>
       <MenuBtn
         onClick={() => {
           toggleUnderline();
         }}
       >
-        <FaUnderline size={20} />
+        <FaUnderline size={isMobile ? 14 : 20} />
       </MenuBtn>
       <MenuBtn
         onClick={() => {
           undo();
         }}
       >
-        <IoIosUndo size={20} />
+        <IoIosUndo size={isMobile ? 14 : 20} />
       </MenuBtn>
       <MenuBtn
         onClick={() => {
           redo();
         }}
       >
-        <IoIosRedo size={20} />
+        <IoIosRedo size={isMobile ? 14 : 20} />
       </MenuBtn>
     </Stack>
   );

@@ -1,34 +1,58 @@
-import React, { type FC, useState } from "react";
-
-import { useDebounceCallback } from "@hooks";
+import { type FC, useState, useEffect } from "react";
 
 import SkeletonViewBlock from "../skeleton-view-box";
 
-interface IBrowserView {
-  value: string;
+export interface CodeDocument {
+  htmlBody?: string[],
+  cssBody?: string[],
+  jsBody?: string[]
 }
 
-const BrowserView: FC<IBrowserView> = ({ value }) => {
-  const [staticValue, setStaticValue] =
-    useState<string>(value);
-  const handleDebouncedCallback = useDebounceCallback(1500);
+interface BrowserViewProps {
+  document: CodeDocument | null
+}
 
-  handleDebouncedCallback(() => {
-    setStaticValue(value);
-  });
+enum TagNames {
+  Style = "style",
+  Script = "script"
+}
 
-  if (!value) {
-    return (
-      <SkeletonViewBlock />
-    );
-  }
+const getBody = (bodyList: string[], tagName: TagNames): string => 
+  bodyList.reduce((res: string, body: string) => `
+    ${res}
 
-  return (
-    <iframe
-      style={IFRAME_STYLE}
-      src={"data:text/html," + encodeURIComponent(staticValue)}
-    />
-  );
+    <${tagName}>
+      ${body}
+    </${tagName}>
+  `, '');
+
+
+const BrowserView: FC<BrowserViewProps> = ({ document }) => {
+  const [docSrc, setDocSrc] = useState('');
+
+  useEffect(() => {
+    if (document == null) {
+      return;
+    }
+
+    const { htmlBody = [], cssBody = [], jsBody = [] } = document;
+
+    setDocSrc(`
+      <html>
+        <head>
+          ${getBody(cssBody, TagNames.Style)}
+        </head>
+        <body>
+          ${htmlBody.join('\n')}
+          ${getBody(jsBody, TagNames.Script)}
+        </body>
+      </html>
+    `)
+  }, [document])
+
+  return document != null
+    ? <iframe srcDoc={docSrc} style={IFRAME_STYLE} />
+    : <SkeletonViewBlock />
 };
 
 const IFRAME_STYLE = {

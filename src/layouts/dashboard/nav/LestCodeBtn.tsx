@@ -1,15 +1,13 @@
 import { useRouter } from "next/router";
 
-import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
 
 import { Button } from "@mui/material";
 
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { useLocales } from "src/locales";
-import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
+import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 
 interface ILetsCodeBtnProps {
   isMini?: boolean;
@@ -17,40 +15,38 @@ interface ILetsCodeBtnProps {
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
   const { translate } = useLocales();
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
-  const { data } = useGetCourseQuery({}, { skip: Boolean(courseId) });
+
+  const { data: assigments } = useGetAssignmentListStudentQuery(
+    { class_id: query.id as string },
+    { skip: !query.id }
+  );
 
   return (
     <Button
       onClick={() => {
-        if (!courseId || !unitId || !lessonId) {
-          if (data?.data.length) {
-            enqueueSnackbar("No course", { variant: "warning" });
-          } else {
-            push(
-              `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-                data?.data[0].course_id as string
-              )}`
-            );
-          }
+        // Now go to first quest
+        if (!assigments?.data[0]) {
+          enqueueSnackbar("No lesson to code", { variant: "warning" });
         } else {
           push(
-            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-              courseId
-            )}?${unitId}&${lessonId}`
+            STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              assigments?.data[0].courseid
+            )
           );
         }
       }}
       variant="contained"
       sx={{
-        bgcolor: "#43D4DD",
+        mt: "24px",
+        mx: 2,
+        color: "#EE467A",
+        bgcolor: "#FFF",
+        boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
         "&:hover": {
-          color: "#43D4DD",
-          bgcolor: "rgba(67, 211, 221, .3)",
-          boxShadow:
-            "0px 3px 1px -2px rgba(67, 211, 221, 0.2), 0px 2px 2px 0px rgba(67, 211, 221, 0.14), 0px 1px 5px 0px rgba(67, 211, 221, 0.12)",
+          color: "#FFF",
+          bgcolor: "#EE467A",
         },
         ...(isMini
           ? {
@@ -62,14 +58,14 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
               px: 1,
             }
           : {
-              py: 1.5,
-              fontSize: "1rem",
+              py: 1,
+              fontSize: "24px",
               borderRadius: "50px",
               gap: 1,
             }),
       }}
     >
-      {!isMini ? (translate("sidebar_menu_code_btn") as string) : ""}
+      {!isMini ? `👩‍💻 ${translate("sidebar_menu_code_btn")}` : ""}
 
       {isMini ? (
         <Iconify icon="mingcute:code-fill" width={25} height={25} />

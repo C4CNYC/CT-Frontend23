@@ -25,6 +25,7 @@ export interface ILesson {
 
 export interface ICourse {
   name: string;
+  content_id: string;
   level: string;
   price: string;
   description: string;

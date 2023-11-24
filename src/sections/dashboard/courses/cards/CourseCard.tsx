@@ -186,6 +186,7 @@ export default function CourseCard({
           id={course.id}
           defaultValues={{
             name: course.name,
+            content_id: course.content_id === course.name ? "" : course.content_id,
             level: course.level,
             price: course.price.substring(1),
             description: course.description,

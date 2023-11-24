@@ -41,8 +41,8 @@ export const StyledSectionBg = styled("div")(({ theme }) => ({
 }));
 
 export const StyledContent = styled("div")(({ theme }) => ({
-  width: 480,
-  margin: "auto",
+  width: "100%",
+  margin: "auto 20px",
   display: "flex",
   borderRadius: "8px",
   justifyContent: "center",
@@ -50,5 +50,12 @@ export const StyledContent = styled("div")(({ theme }) => ({
   ...bgBlur({ color: theme.palette.background.default }),
   [theme.breakpoints.up("md")]: {
     flexShrink: 0,
+    width: 480,
+    margin: "auto",
   },
+}));
+
+export const StyledSwitcher = styled("div")(() => ({
+  padding: "10px 10px 0 0",
+  alignSelf: "flex-start",
 }));

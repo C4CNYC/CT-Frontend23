@@ -6,6 +6,8 @@ import { Card, Link, Stack, Typography } from "@mui/material";
 
 import { FormProvider, RHFSelect, RHFSwitch } from "@components";
 import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager/schools-manager";
+import { setSchoolSettings } from "src/redux/slices/schoolSettings";
+import { dispatch } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
 
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
@@ -17,6 +19,7 @@ interface FormValuesProps {
   github_login_allowed: boolean;
   google_login_allowed: boolean;
   invite_only: boolean;
+  last_name_only: boolean;
   chat_allowed: boolean;
   gallery_allowed: boolean;
   global_gallery_allowed: boolean;
@@ -43,6 +46,7 @@ export default function SettingsForm({
     github_login_allowed: settings?.github_login_allowed ?? false,
     google_login_allowed: settings?.google_login_allowed ?? false,
     invite_only: settings?.invite_only ?? false,
+    last_name_only: settings?.last_name_only ?? true,
     chat_allowed: settings?.chat_allowed ?? false,
     gallery_allowed: settings?.gallery_allowed ?? false,
     global_gallery_allowed: settings?.global_gallery_allowed ?? false,
@@ -57,17 +61,20 @@ export default function SettingsForm({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await updateSettings({
+      const updatedData = {
         schoolId,
         language: data.language,
         marketplace_content_allowed: data.marketplace_content_allowed,
         github_login_allowed: data.github_login_allowed,
         google_login_allowed: data.google_login_allowed,
         invite_only: data.invite_only,
+        last_name_only: data.last_name_only,
         chat_allowed: data.chat_allowed,
         gallery_allowed: data.gallery_allowed,
         global_gallery_allowed: data.global_gallery_allowed,
-      }).unwrap();
+      };
+      await updateSettings(updatedData).unwrap();
+      dispatch(setSchoolSettings(updatedData));
       enqueueSnackbar(translate("messages_update_success"));
       reset({}, { keepValues: true });
     } catch (error: any) {}
@@ -139,6 +146,12 @@ export default function SettingsForm({
           {translate("general_user_settings")}
         </Typography>
         <Stack alignItems="flex-start" spacing={1} sx={{ mt: 2 }}>
+          <RHFSwitch
+            key="last_name_only"
+            name="last_name_only"
+            label="Show students' full last name"
+            sx={{ m: 0 }}
+          />
           <RHFSwitch
             key="invite_only"
             name="invite_only"

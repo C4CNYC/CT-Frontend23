@@ -17,14 +17,12 @@ import {
   RHFTextField,
   RHFUploadAvatar,
 } from "@components";
-import { BaseResponseInterface } from "@utils";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { IFriend } from "src/redux/interfaces/friends.interface";
 import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { IUser } from "src/redux/interfaces/auth.interface";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
@@ -48,25 +46,29 @@ interface FormValuesProps {
 }
 
 interface IProfileInfoFormProps {
-  data: (IStudent | IFriend) & BaseResponseInterface;
+  data: IUser;
 }
 
 export default function ProfileInfoForm({
   data,
 }: IProfileInfoFormProps): React.ReactElement | null {
   const {
-    first_name: firstName,
-    last_name: lastName,
-    post_code: postcode,
-    about,
-    phone,
-    country,
+    username,
+    student_profile: {
+      first_name: firstName,
+      last_name: lastName,
+      post_code: postcode,
+      about,
+      phone,
+      country,
+    },
   } = data;
   const cover = !data.cover ? "#5be49b" : data.cover;
   const { enqueueSnackbar } = useSnackbar();
   const [updateStudent, { isLoading }] = useUpdateStudentProfileMutation();
   const [updateStudentAvatar] = useUdpateStudentProfileAvatarMutation();
   const defaultValues = {
+    username: username ?? "",
     firstName: firstName ?? "",
     lastName: lastName ?? "",
     about: about ?? "",
@@ -167,6 +169,7 @@ export default function ProfileInfoForm({
                   pt: { xs: 3, sm: 3, md: 1 },
                 }}
               >
+                <RHFTextField name="username" label="Username" disabled />
                 <RHFTextField name="firstName" label="Name" />
                 <RHFTextField name="lastName" label="Last name" />
                 <RHFSelect native name="country" label="Country">

@@ -47,6 +47,9 @@ interface FormValuesProps {
   active: boolean;
   tips: string;
   duration: string;
+  teacher_slides: string;
+  teacher_forum: string;
+  lesson_plans: string;
 }
 
 interface Prop {
@@ -341,6 +344,60 @@ export default function CreateModuleDialog({
                       name="tips"
                       placeholder={translate("modules_enter_tip")}
                       label={translate("modules_add_tip")}
+                    />
+
+                    <RHFTextField
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
+                      name="teacher_slides"
+                      label="Teacher slides link"
+                    />
+
+                    <RHFTextField
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
+                      name="teacher_forum"
+                      label="Teacher forum link"
+                    />
+
+                    <RHFTextField
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
+                      name="lesson_plans"
+                      label="Lesson plans link"
+                    />
+
+                    <RHFTextField
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
+                      name="teacher_slides"
+                      label="Teacher slides link"
+                    />
+
+                    <RHFTextField
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
+                      name="teacher_forum"
+                      label="Teacher forum link"
+                    />
+
+                    <RHFTextField
+                      sx={{
+                        width: { xs: "100%", sm: "350px" },
+                        minWidth: "300px",
+                      }}
+                      name="lesson_plans"
+                      label="Lesson plans link"
                     />
 
                     <RHFSwitch

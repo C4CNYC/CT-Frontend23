@@ -9,6 +9,7 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileMain from "@sections/student-profile/ProfileMain";
+import { IUser } from "src/redux/interfaces/auth.interface";
 import { useGetFriendQuery } from "src/redux/services/manager/friends-manager";
 
 FriendProfile.getLayout = (page: React.ReactElement) => (
@@ -29,7 +30,11 @@ export default function FriendProfile(): React.ReactElement {
       label: "Profile",
       icon: <Iconify icon="ic:round-account-box" />,
       component: (
-        <ProfileMain data={data} isFriend={true} isLoading={isLoading} />
+        <ProfileMain
+          data={data as unknown as IUser}
+          isFriend={true}
+          isLoading={isLoading}
+        />
       ),
     },
   ];

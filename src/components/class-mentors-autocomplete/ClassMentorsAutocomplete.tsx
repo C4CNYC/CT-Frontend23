@@ -120,7 +120,7 @@ export default function ClassMentorsAutocomplete({
       style={{ width: "100%" }}
       renderInput={(params) => <TextField {...params} placeholder="Mentors" />}
       renderOption={(props, recipient, { inputValue }) => {
-        const { email } = recipient;
+        const { email, avatar } = recipient;
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
 
@@ -145,7 +145,10 @@ export default function ClassMentorsAutocomplete({
                 position: "relative",
               }}
             >
-              <Avatar alt={email} src="/assets/images/avatar_2.jpg" />
+              <Avatar
+                alt={email}
+                src={avatar ?? "/assets/images/avatar_2.jpg"}
+              />
               <Box
                 sx={{
                   top: 0,

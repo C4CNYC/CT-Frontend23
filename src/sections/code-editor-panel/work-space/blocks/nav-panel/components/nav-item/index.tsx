@@ -2,7 +2,7 @@ import { type FC } from "react";
 
 import {
   ListItem,
-  ListItemText, 
+  ListItemText,
   Stack,
   Badge,
   ListItemAvatar,

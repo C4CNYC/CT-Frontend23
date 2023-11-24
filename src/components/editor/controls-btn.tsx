@@ -63,7 +63,7 @@ export function SettingsBtn(): React.ReactElement {
     </Button>
   );
 }
-export function MediasBtn(): React.ReactElement {
+export function MediaBtn(): React.ReactElement {
   return (
     <MediaModal>
       <Button
@@ -79,7 +79,7 @@ export function MediasBtn(): React.ReactElement {
           },
         }}
       >
-        Medias <TbPhoto size={20} />
+        Media <TbPhoto size={20} />
       </Button>
     </MediaModal>
   );
