@@ -83,6 +83,7 @@ export interface ILessonCurrent {
 export interface ILessonContent {
   body: string;
   preload_body: string;
+  tips: string;
   solution_body: string;
   validations: Array<IValidation & BaseResponseInterface>;
   type: LessonContentType;

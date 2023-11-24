@@ -37,6 +37,7 @@ export interface ICourse {
 }
 
 export interface ILessonContent {
+  id: string;
   body: string;
   name: string;
   type: LessonContentType;
@@ -47,6 +48,7 @@ export interface ILessonContent {
   draft: boolean;
   tags: string[];
   preload_body: string;
+  tips: string;
   solution_body: string;
   meta: Record<string, any>;
   complexity: LessonContentComplexity;
@@ -57,6 +59,7 @@ export interface ILessonContentUpdate {
   body?: string;
   type?: LessonContentType;
   slug?: string;
+  tips?: string
   title?: string;
   description?: string;
   active?: boolean;
