@@ -46,6 +46,7 @@ const WorkSpace = ({ data, isFetching }: IWorkSpace): React.ReactElement => {
       >
         <SliderBlock data={data} isFetching={isFetching} integrations={[]} />
         <CodeEditorBlock
+          code={code}
           onChangeCode={onChangeCode}
           // preloadedCode={data[slideIndex]?.preload_body}
           validations={data[slideIndex]?.validations ?? []}

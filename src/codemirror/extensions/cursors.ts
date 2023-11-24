@@ -6,14 +6,23 @@ import {
   WidgetType,
 } from "@codemirror/view";
 
-export interface cursor {
+export interface Cursor {
   id: string;
   from: number;
   to: number;
 }
 
+export interface AddCursor extends Cursor {
+  type: "add-cursor";
+}
+
+export interface RemoveCursor {
+  type: "remove-cursor";
+  id: string;
+}
+
 export interface Cursors {
-  cursors: cursor[];
+  cursors: Cursor[];
 }
 
 class TooltipWidget extends WidgetType {
@@ -51,8 +60,8 @@ class TooltipWidget extends WidgetType {
   }
 }
 
-export const addCursor = StateEffect.define<cursor>();
-export const removeCursor = StateEffect.define<string>();
+export const addCursor = StateEffect.define<AddCursor>();
+export const removeCursor = StateEffect.define<RemoveCursor>();
 
 const cursorsItems = new Map<string, number>();
 const cursorUpdates = new Map<string, NodeJS.Timeout>();
@@ -225,23 +234,29 @@ export function cursorExtension(id = ""): any[] {
     cursorBaseTheme,
     EditorView.updateListener.of((update) => {
       update.transactions.forEach((e) => {
-        e.effects.filter(e => e.is(addCursor)).forEach((e) => {
-          // Hide cursor again after 5 seconds if no update occurs
-          if (cursorUpdates.has(e.value.id)) {
-            clearTimeout(cursorUpdates.get(e.value.id));
-          }
-          cursorUpdates.set(e.value.id, setTimeout(() => {
-            update.view.dispatch({
-              effects: removeCursor.of(e.value.id)
-            });
-          }, 5000));
-        });
+        e.effects
+          .filter((e) => e.is(addCursor))
+          .forEach((e) => {
+            // Hide cursor again after 5 seconds if no update occurs
+            if (cursorUpdates.has(e.value.id)) {
+              clearTimeout(cursorUpdates.get(e.value.id));
+            }
+            cursorUpdates.set(
+              e.value.id,
+              setTimeout(() => {
+                update.view.dispatch({
+                  effects: removeCursor.of(e.value.id),
+                });
+              }, 5000)
+            );
+          });
       });
     }),
     EditorView.updateListener.of((update) => {
       update.transactions.forEach((e) => {
         if (e.selection) {
-          const cursor: cursor = {
+          const cursor: AddCursor = {
+            type: "add-cursor",
             id,
             from: e.selection.ranges[0].from,
             to: e.selection.ranges[0].to,

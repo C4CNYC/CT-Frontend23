@@ -11,17 +11,17 @@ import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { Iconify } from "@components";
+import { useSocket } from "@hooks";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 
+import { getDocument } from "../../../../components/code-editor-collab/hook/utils/peer-extension";
 import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
-import { getDocument } from "../../../../codemirror/extensions/collab";
-import { useSocket } from "@hooks";
 
 interface IQuickRabbitsItem {
-  rabit: { id: string, email: string, avatar: string };
+  rabit: { id: string; email: string; avatar: string };
   onClose: (userId: string) => void;
 }
 
@@ -60,7 +60,13 @@ export default function QuickRabbitsItem({
    * If no/invalid data is returned, it tries again every 3 seconds.
    */
   async function initializeData() {
-    const { version, doc } = await getDocument(socket, rabit.id);
+    const { version, doc } = await getDocument({
+      roomId: rabit.id,
+      fileName: "index.html",
+      socket,
+      cursorName: "Teacher",
+    });
+    console.log("init", doc);
 
     // If no data is returned, try again in 3 seconds
     if (version === undefined || !doc) {
@@ -99,14 +105,14 @@ export default function QuickRabbitsItem({
       }));
     });
 
-    socket.on("codeUpdated", (_, version, doc) => {
+    socket.on("codeUpdated", ({ version, doc }) => {
       setState((prev) => ({
         ...prev,
         version,
         // eslint-disable-next-line @typescript-eslint/no-base-to-string
         doc: doc?.toString(),
       }));
-    })
+    });
 
     socket.on("disconnect", () => {
       setState((prev) => ({
@@ -116,10 +122,7 @@ export default function QuickRabbitsItem({
     });
 
     window.addEventListener("beforeunload", () => {
-      socket.emit(
-        "leaveRoom",
-        rabit.id
-      );
+      socket.emit("leaveRoom", rabit.id);
       socket.off("connect");
       socket.off("disconnect");
       socket.off("codeUpdated");
@@ -132,10 +135,7 @@ export default function QuickRabbitsItem({
         version: undefined,
         doc: undefined,
       }));
-      socket.emit(
-        "leaveRoom",
-        rabit.id
-      );
+      socket.emit("leaveRoom", rabit.id);
       socket.off("connect");
       socket.off("disconnect");
       socket.off("codeUpdated");
