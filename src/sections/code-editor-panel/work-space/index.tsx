@@ -94,7 +94,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           />
         ) : (
           <HidedTabBtn
-            title="Instruction"
+            title="Instructions"
             icon={<TbArrowBarToRight size={20} />}
             openPanelFnc={openInstruction}
           />
