@@ -5,7 +5,7 @@ import { PermissionError } from "../types/errors/permission-error";
 import { RoomActivity } from "../types/room-activity";
 import { useSocket } from "./useSocket";
 
-export function useRealtimeConnection() {
+export function useRealTimeConnection() {
   const socket = useSocket();
 
   const getOwnActivity = useCallback<

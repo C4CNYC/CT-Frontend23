@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ActivityStatus } from "../types/activity-status";
-import { useRealtimeConnection } from "./useRealtimeConnection";
+import { useRealTimeConnection } from "./useRealTimeConnection";
 import { RoomActivity } from "../types/room-activity";
 
 export function useRoomActivity(roomId?: string) {
   const [activityStatus, setActivityStatus] = useState<RoomActivity>({});
 
-  const realtimeConnection = useRealtimeConnection();
+  const realtimeConnection = useRealTimeConnection();
 
   useEffect(() => {
     if (roomId) {
