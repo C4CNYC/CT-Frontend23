@@ -30,7 +30,7 @@ export default function CoursePage(): React.ReactElement {
       <Head>
         <title>{data?.name ?? "Course"} | CodeTribe</title>
       </Head>
-      <Container maxWidth={themeStretch ? false : "lg"}>
+      <Container maxWidth={themeStretch ? false : "xl"}>
         <CustomBreadcrumbs
           links={[
             { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
@@ -78,10 +78,10 @@ export default function CoursePage(): React.ReactElement {
                 xs: "column-reverse",
                 sm: "column-reverse",
                 md: "column-reverse",
-                lg: "row",
+                lg: "column-reverse",
                 xl: "row",
               },
-              gap: { xs: 6, lg: 2, xl: 6 },
+              gap: 6,
             }}
           >
             <ModulesListBlock />

@@ -12,9 +12,6 @@ interface IModuleSidebarProps {
   lessonCount: string,
   grade: string,
   duration: string | null,
-  teacherSlides?: string;
-  lessonPlans?: string;
-  teacherForum?: string;
 }
 
 export default function ModuleSidebar({
@@ -23,9 +20,6 @@ export default function ModuleSidebar({
     lessonCount,
     duration,
     grade,
-    teacherSlides,
-    teacherForum,
-    lessonPlans,
   }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1130));
@@ -61,11 +55,7 @@ export default function ModuleSidebar({
       </CollasedItem>
       <QuizPanel lessons={[]} />
       <CollasedItem title="Teacher Toolbox">
-        <TeacherToolbox
-          teacherForum={teacherForum}
-          teacherSlides={teacherSlides}
-          lessonPlans={lessonPlans}
-        />
+        <TeacherToolbox />
       </CollasedItem>
     </Stack>
   );

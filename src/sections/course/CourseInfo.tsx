@@ -1,17 +1,8 @@
-import { useState } from "react";
-
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
-
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { Image } from "@components";
 
 import CourseSummarily from "./CourseSummarily.1";
-import {
-  COURSE_INFO_IMAGE_SX,
-  SEE_MORE_BTN_SX,
-  getCourseInfoWrapperSx,
-} from "./constants";
 
 interface ICourseInfoProps {
   cover?: string;
@@ -22,8 +13,6 @@ interface ICourseInfoProps {
   level: string;
 }
 
-const MAX_DESCRIPTION_LENGTH = 250;
-
 export default function CourseInfo({
   cover,
   name,
@@ -32,31 +21,37 @@ export default function CourseInfo({
   lessonsCount,
   level,
 }: ICourseInfoProps): React.ReactElement {
-  const [open, setOpen] = useState(false);
   return (
-    <Stack sx={(theme) => ({ ...getCourseInfoWrapperSx(theme) })}>
+    <Stack
+      sx={(theme) => ({
+        flexDirection: {
+          xs: "column-reverse",
+          sm: "column-reverse",
+          md: "row",
+        },
+        justifyContent: "space-between",
+        px: 8,
+        py: 4,
+        mb: 5,
+        background:
+          theme.palette.mode === "light"
+            ? "#ECF4FF"
+            : theme.palette.background.paper,
+        borderRadius: 2,
+        [theme.breakpoints.down(800)]: {
+          px: 2,
+          py: 3,
+          mb: 3,
+        },
+      })}
+    >
       <Stack maxWidth="680px">
         <Typography variant="h3" pb={2}>
           {name}
         </Typography>
-        <Typography variant="subtitle1" sx={{ pb: !open ? 1 : 1 }}>
-          {description.length > MAX_DESCRIPTION_LENGTH && !open
-            ? `${description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
-            : description}
+        <Typography variant="subtitle1" fontWeight={400} pb={3}>
+          {description}
         </Typography>
-        <Button
-          sx={SEE_MORE_BTN_SX}
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          {open ? "Show less" : "See more"}
-          {open ? (
-            <SlArrowUp style={{ marginLeft: "10px" }} />
-          ) : (
-            <SlArrowDown style={{ marginLeft: "10px" }} />
-          )}
-        </Button>
         <CourseSummarily
           duration={duration}
           lessonsCount={lessonsCount}
@@ -66,7 +61,13 @@ export default function CourseInfo({
       <Image
         alt="course cover"
         src={cover ?? "/assets/courses/courseImg.png"}
-        sx={COURSE_INFO_IMAGE_SX}
+        sx={{
+          flexShrink: 0,
+          width: "250px",
+          height: "250px",
+          m: "0 auto",
+          borderRadius: "25px",
+        }}
       />
     </Stack>
   );

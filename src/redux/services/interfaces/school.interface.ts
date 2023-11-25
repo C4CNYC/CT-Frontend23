@@ -71,7 +71,6 @@ export interface SchoolSettings {
   github_login_allowed: boolean;
   google_login_allowed: boolean;
   invite_only: boolean;
-  last_name_only: boolean;
   chat_allowed: boolean;
   gallery_allowed: boolean;
   global_gallery_allowed: boolean;

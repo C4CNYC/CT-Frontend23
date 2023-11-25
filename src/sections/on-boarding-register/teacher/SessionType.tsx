@@ -10,8 +10,6 @@ import {
 
 import { Image } from "@components";
 
-import { getImageWrapperSx } from "./constants";
-
 interface Props {
   title: string;
   subtitle: string;
@@ -38,17 +36,30 @@ export function SessionType({
       alignItems="center"
       sx={{ pr: { xs: 0, sm: 0, md: 1 } }}
     >
-      <Tooltip title={<Typography>{info}</Typography>} placement="top-end">
+      <Tooltip title={info} placement="top-end">
         <Badge
           anchorOrigin={{
             vertical: "top",
-            horizontal: "left",
+            horizontal: "right",
           }}
           color="info"
           badgeContent={"i"}
           invisible={isSmall}
         >
-          <Box sx={() => ({ ...getImageWrapperSx(color) })}>
+          <Box
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              background: color,
+              borderRadius: "15px",
+              mr: 1,
+              p: 1.5,
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: "100px",
+              width: "100px",
+              height: "100px",
+            }}
+          >
             <Image src={img} alt="hello step" />
           </Box>
         </Badge>

@@ -44,15 +44,3 @@ export enum Extensions {
   Html = "html",
   Js = "js"
 }
-
-export const DEFAULT_FILE ={
-  id:  "index.html",
-  name: "index.html"
-};
-export const MIN_FILE_LIST_LENGTH = 1;
-
-export const getEmptyFileManagement = () => ({
-  activeFile: DEFAULT_FILE,
-  files: [DEFAULT_FILE],
-  filesInLayout: [DEFAULT_FILE]
-})

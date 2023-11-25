@@ -21,8 +21,8 @@ const extendedApi = managerApi.injectEndpoints({
       { id: string; lesson_content_id: string; module_id: string }
     >({
       query: ({ id, ...body }) => ({
-        url: `/student/progress/complete-chalange`,
-        method: "POST",
+        url: `/student/course/${id}/progress/complete-chalange`,
+        method: "PATCH",
         body,
       }),
       invalidatesTags: ["Progress"],

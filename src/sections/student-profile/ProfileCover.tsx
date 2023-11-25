@@ -54,7 +54,6 @@ export default function ProfileCover({
             borderColor: "common.white",
             width: { xs: 80, md: 128 },
             height: { xs: 80, md: 128 },
-            fontSize: { xs: 32, md: 64 },
           }}
         />
 

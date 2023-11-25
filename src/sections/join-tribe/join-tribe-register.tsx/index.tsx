@@ -60,7 +60,7 @@ export default function JoinTribeRegister({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await register({ email: data.email, password: data.password, firstName: data.firstName, lastName: data.lastName, role: Role.Student });
+      await register(data.email, data.password, data.firstName, data.lastName, Role.Student);
       await login(data.email, data.password, "codetribe");
       enqueueSnackbar("Registered successfully!");
     } catch (error) {

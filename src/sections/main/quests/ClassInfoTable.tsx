@@ -25,7 +25,6 @@ import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
-import { useAuthContext } from "src/auth/useAuthContext";
 import CustomTabPanel, {
   customTabProps,
 } from "src/components/custom-tab-panel";
@@ -46,9 +45,6 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-
-  const { user } = useAuthContext();
-  const isStudent = user?.role === Role.Student;
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
@@ -85,25 +81,23 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             {...customTabProps(0)}
             sx={{ fontSize: "1.1rem" }}
           />
-          {!isStudent ? (
-            <Tab
-              label={!isMobile && "Members"}
-              icon={<IoPeopleOutline size={20} />}
-              sx={{ fontSize: "1.1rem" }}
-              {...customTabProps(1)}
-            />
-          ) : null}
+          <Tab
+            label={!isMobile && "Members"}
+            icon={<IoPeopleOutline size={20} />}
+            sx={{ fontSize: "1.1rem" }}
+            {...customTabProps(1)}
+          />
           <Tab
             label={!isMobile && "Details"}
             icon={<IoSettingsOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
-            {...customTabProps(isStudent ? 1 : 2)}
+            {...customTabProps(2)}
           />
           <Tab
             label={!isMobile && "Progress"}
             icon={<GiProgression size={20} />}
             sx={{ fontSize: "1.1rem" }}
-            {...customTabProps(isStudent ? 2 : 3)}
+            {...customTabProps(3)}
           />
         </Tabs>
         <Stack
@@ -111,11 +105,11 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           sx={{
             flexGrow: 1,
             alignItems: "center",
-            justifyContent: "end",
+            justifyContent: "space-between",
             gap: 2,
           }}
         >
-          {/* <Link
+          <Link
             noWrap
             href={STUDENT_PATH_DASHBOARD.gallery.root}
             variant="body2"
@@ -129,7 +123,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
                 <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
               </Typography>
             )}
-          </Link> */}
+          </Link>
           <RoleBasedGuard roles={[Role.Owner, Role.Admin, Role.Manager]}>
             <Button
               onClick={handleOpenPopover}
@@ -155,16 +149,14 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           activeTab={value === 0}
         />
       </CustomTabPanel>
-      {!isStudent ? (
-        <CustomTabPanel value={value} index={1}>
-          <MemberCard activeTab={value === 1} />
-        </CustomTabPanel>
-      ) : null}
-      <CustomTabPanel value={value} index={isStudent ? 1 : 2}>
-        <DetailsTab classData={classData} activeTab={value === 1} />
+      <CustomTabPanel value={value} index={1}>
+        <MemberCard activeTab={value === 1} />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={isStudent ? 2 : 3}>
-        <ProgressCard activeTab={value === 2 || value === 3} />
+      <CustomTabPanel value={value} index={2}>
+        <DetailsTab classData={classData} activeTab={value === 2} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <ProgressCard activeTab={value === 3} />
       </CustomTabPanel>
       <MenuPopover
         open={openPopover}
@@ -172,7 +164,6 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         disabledArrow
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: -5, horizontal: 5 }}
-        sx={{ p: 2 }}
       >
         <Link
           component={NextLink}
@@ -191,7 +182,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               sx={BADGE_SX}
               badgeContent={
                 <Typography sx={{ fontSize: "11px", fontWeight: 700 }}>
-                  Coming soon
+                  Comming soon
                 </Typography>
               }
               color="success"
@@ -209,7 +200,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
 const BADGE_SX = {
   "& .MuiBadge-badge": {
     left: 55,
-    top: 28,
+    top: 25,
     padding: 0,
     height: 14,
     width: "85px",

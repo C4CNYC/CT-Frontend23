@@ -31,7 +31,6 @@ export function RoleSelector({
     setAnchorEl(null);
     try {
       await updateUser({
-        id: userId,
         user_id: userId,
         role,
         first_name: "",

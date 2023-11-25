@@ -5,7 +5,8 @@ import { styled } from "@mui/material/styles";
 
 import { Iconify } from "@components";
 import { fDateTime } from "@utils";
-import { IUser } from "src/redux/interfaces/auth.interface";
+import { IFriend } from "src/redux/interfaces/friends.interface";
+import { IStudent } from "src/redux/services/interfaces/user.interface";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -16,7 +17,7 @@ const StyledIcon = styled(Iconify)(({ theme }) => ({
 }));
 
 interface IProfileAboutProps {
-  data?: IUser;
+  data?: IStudent | IFriend;
 }
 
 export default function ProfileAbout({
@@ -32,7 +33,7 @@ export default function ProfileAbout({
 
           <Typography variant="body2">
             Live at country &nbsp;
-            {countries.find((el) => data?.student_profile.country === el.code.toLowerCase())
+            {countries.find((el) => data?.country === el.code.toLowerCase())
               ?.label ?? "-"}
           </Typography>
         </Stack>
@@ -40,19 +41,19 @@ export default function ProfileAbout({
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">
-            Postcode &nbsp;{data?.student_profile.post_code ?? "-"}
+            Postcode &nbsp;{data?.post_code ?? "-"}
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <StyledIcon icon="tabler:phone-filled" />
 
-          <Typography variant="body2">&nbsp;{data?.student_profile.phone ?? "-"}</Typography>
+          <Typography variant="body2">&nbsp;{data?.phone ?? "-"}</Typography>
         </Stack>
         <Stack direction="row">
           <StyledIcon icon="mingcute:school-fill" />
 
-          <Typography variant="body2">&nbsp;{data?.student_profile.about ?? "-"}</Typography>
+          <Typography variant="body2">&nbsp;{data?.about ?? "-"}</Typography>
         </Stack>
 
         <Stack direction="row">

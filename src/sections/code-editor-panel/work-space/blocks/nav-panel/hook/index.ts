@@ -1,11 +1,4 @@
-import {
-  type MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-  RefObject
-} from "react";
+import { type MutableRefObject, useEffect, useRef, useState, useMemo } from "react";
 import { type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
@@ -17,7 +10,6 @@ import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/fri
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { BaseResponseInterface } from "@utils";
 import { useSelector } from "src/redux/store";
-import { useFilters } from "@hooks";
 
 type FriendUser = IFriend & BaseResponseInterface
 
@@ -35,40 +27,30 @@ interface UseNavPanelReturn {
   activeUsersAmount: number
   isCodeBlocksVisible: boolean
   isUsersLoading: boolean
-  onLoadMore: () => void
-  hasNextPage: boolean
 }
 
-const DEFAULT_FILTERS = { take: 50, page: 1 };
-const FILTER_NAME = "page";
+const DEFAULT_USERS: FriendUser[] = []
 
-export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>): UseNavPanelReturn => {
-  const drawerRef = useRef<HTMLDivElement | null>(null);
+export const useNavPanel = (): UseNavPanelReturn => {
   const [isOpen, setIsOpen] = useState(false);
   const [previewdUsers, setPreviewdUsers] = useState<FriendUser[]>([]);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null);
   const isCodePreviewVisible = useSelector(state => state.codePanelGlobal.isCodePreviewVisible);
-  const [isCodeBlocksVisible, setIsCodeBlocksVisible] = useState(false);
-  const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
-  const [users, setUsers] = useState<FriendUser[]>([]);
+  const [isCodeBlocksVisible, setIsCodeBlocksVisible] = useState(false)
 
-  const { data, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(filters);
-
-  const onLoadMore = () => {
-    if (data == null || data.meta.hasNextPage === false) {
-      return
-    }
-
-    setFilter(FILTER_NAME, data.meta.page  + 1);
-  }
+  const { data, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(
+    { take: 50 },
+  );
 
   const onAddBlock = (user: FriendUser): void => {
     const newPreviewedUsers = [...previewdUsers];
     const isMaxBlocksInView = newPreviewedUsers.length === draggableConfig?.blockAmount;
+
     const isExist = newPreviewedUsers.some(({ id }) => id === user.id)
 
     if (isExist) {
-      return;
+      return
     }
 
     if (isMaxBlocksInView) {
@@ -107,27 +89,21 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
   useEffect(() => {
     let resizeObserver: ResizeObserver | null = null;
 
-    if (wrapperListenerRef.current != null) {
-      const resizeObserver = new ResizeObserver(([{ contentRect }]) => {
-        const config = getDraggableBlockConfig(contentRect);
-
+    if (drawerRef.current != null) {
+      const resizeObserver = new ResizeObserver(([el]) => {
+        const config = getDraggableBlockConfig(el.contentRect.height)
         setDraggableConfig(config);
-        setPreviewdUsers((prev) =>
-          config.blockAmount < prev.length
-            ? prev.slice(0, config.blockAmount)
-            : prev
-        );
       });
 
-      resizeObserver.observe(wrapperListenerRef.current);
+      resizeObserver.observe(drawerRef.current);
     }
 
     return () => {
-      if (wrapperListenerRef.current != null) {
-        resizeObserver?.unobserve(wrapperListenerRef.current);
+      if (drawerRef.current != null && resizeObserver != null) {
+        resizeObserver.unobserve(drawerRef.current);
       }
     }
-  }, [wrapperListenerRef]);
+  }, []);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -136,27 +112,30 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
       setIsOpen(false);
     } else {
       timeout = setTimeout(() => {
-        setIsCodeBlocksVisible(true);
+        setIsCodeBlocksVisible(true)
       }, 400);
     }
 
     return () => {
-      clearTimeout(timeout);
+      clearTimeout(timeout)
     }
-  }, [isCodePreviewVisible]);
+  }, [isCodePreviewVisible])
 
-  useEffect(() => {
-    if (data?.data != null) {
-      setUsers((prev) => [...prev, ...data.data])
-    }
-  }, [data?.data])
+  const users = data?.data ?? DEFAULT_USERS
 
-  const { activeUsersAmount, sortedUsers } = useMemo(() => {
+  const {
+    activeUsersAmount,
+    sortedUsers
+  } = useMemo(() => {
     const sortedUsers = [...users]
-    const activeUsersAmount = users.filter(({ active }) => active).length;
-    sortedUsers.sort((a, b) => Number(b.active) - Number(a.active));
+    sortedUsers.sort((a, b) => {
+      return Number(b.active) - Number(a.active)
+    })
 
-    return { activeUsersAmount, sortedUsers }
+    return {
+      activeUsersAmount: users.filter(({ active }) => active).length,
+      sortedUsers
+    }
   }, [users]);
 
   return {
@@ -172,8 +151,6 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
     users: sortedUsers,
     isCodePreviewVisible,
     isCodeBlocksVisible,
-    isUsersLoading,
-    onLoadMore,
-    hasNextPage: data?.meta.hasNextPage ?? false
+    isUsersLoading
   }
 }

@@ -32,16 +32,10 @@ export const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
 
     const colr = color ?? colorByName;
 
-    const isEmoji = other.src && !(other.src?.includes("https://") ||
-      other.src?.includes("http://") ||
-      other.src?.includes("data:image"));
-
-    const avatar = isEmoji ? other.src : charAtName;
-
     const renderContent =
       colr === "default" ? (
-        <Avatar ref={ref} sx={sx} src={other.src} {...other}>
-          {name && avatar}
+        <Avatar ref={ref} sx={sx} {...other}>
+          {name && charAtName}
           {children}
         </Avatar>
       ) : (
@@ -57,10 +51,9 @@ export const CustomAvatar = forwardRef<HTMLDivElement, CustomAvatarProps>(
             fontWeight: theme.typography.fontWeightMedium,
             ...sx,
           }}
-          src={other.src}
           {...other}
         >
-          {name && avatar}
+          {name && charAtName}
           {children}
         </Avatar>
       );

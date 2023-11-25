@@ -26,8 +26,5 @@ export const styles = {
     "&[aria-selected=true]": {
       color: "white !important"
     }
-  },
-  DEV_ICON: {
-    marginRight: "8px"
   }
 }

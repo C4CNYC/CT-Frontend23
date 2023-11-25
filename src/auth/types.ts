@@ -30,25 +30,14 @@ export interface JWTContextType {
   user: AuthUserType;
   authenticate: () => void;
   login: (email: string, password: string, tenantName: string) => Promise<void>;
-  register: ({
-    email,
-    password,
-    firstName,
-    lastName,
-    username,
-    emojiAvatar,
-    role,
-    tenantName,
-  }: {
+  register: (
     email: string,
     password: string,
     firstName: string,
     lastName: string,
-    username?: string,
-    emojiAvatar?: string,
     role: Role,
     tenantName?: string
-  }) => Promise<void>;
+  ) => Promise<void>;
   registerToOrganization: (
     email: string,
     password: string,

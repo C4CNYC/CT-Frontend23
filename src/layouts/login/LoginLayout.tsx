@@ -3,7 +3,6 @@ import { Stack, Typography } from "@mui/material";
 
 // components
 import { Image, Logo } from "@components";
-import ThemeSwitcher from "src/components/theme-switcher";
 
 //
 import {
@@ -11,7 +10,6 @@ import {
   StyledRoot,
   StyledSection,
   StyledSectionBg,
-  StyledSwitcher,
 } from "./styles";
 
 // ----------------------------------------------------------------------
@@ -74,9 +72,6 @@ export default function LoginLayout({
       <StyledContent>
         <Stack sx={{ width: 1 }}> {children} </Stack>
       </StyledContent>
-      <StyledSwitcher>
-        <ThemeSwitcher />
-      </StyledSwitcher>
     </StyledRoot>
   );
 }

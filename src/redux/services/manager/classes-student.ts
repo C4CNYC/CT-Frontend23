@@ -3,7 +3,6 @@ import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import {
   ClassSearchParams,
   IClass,
-  IClassProgress,
   IMentor,
 } from "src/redux/interfaces/class.interface";
 
@@ -49,13 +48,6 @@ const extendedApi = managerApi.injectEndpoints({
       }),
       providesTags: ["ClassesStudent"],
     }),
-    getClassProgress: builder.query<IClassProgress[], { id: string }>({
-      query: ({ id }) => ({
-        url: `/student/class/${id}/progress`,
-        method: "GET",
-      }),
-      providesTags: ["ClassesStudentProgress"],
-    }),
     getClassStudents: builder.query<
       BaseListResponseInterface<IStudent & BaseResponseInterface>,
       { id: string } & IStudentSearchParams
@@ -85,7 +77,6 @@ const extendedApi = managerApi.injectEndpoints({
 export const {
   useGetStudentClassesQuery,
   useGetClassQuery,
-  useGetClassProgressQuery,
   useGetClassMentorQuery,
   useGetClassStudentsQuery,
   // -------------mutation-----------

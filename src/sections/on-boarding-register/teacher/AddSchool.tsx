@@ -117,7 +117,7 @@ export default function AddSchool(): React.ReactElement {
           >
             {Object.keys(SchoolType).map((c) => (
               <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
-                {c.replace(/_/g, " ")}
+                {c}
               </option>
             ))}
           </RHFSelect>

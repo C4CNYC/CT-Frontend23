@@ -29,12 +29,11 @@ import {
 interface ILessonItem {
   module: Unit;
   onClick: (lessonId: string, moduleId: string) => void;
-  onClose: () => void;
 }
 
 const MAX_TEXT_LENGTH = 39;
 
-const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
+const LessonItem: FC<ILessonItem> = ({ module, onClick }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1000));
   const { query } = useRouter();
@@ -62,7 +61,6 @@ const LessonItem: FC<ILessonItem> = ({ module, onClick, onClose }) => {
                 key={lesson.id}
                 onClick={() => {
                   onClick(lesson.id, module.id);
-                  onClose();
                 }}
                 sx={getButtonSx(lesson.id === query.lesson_id)}
               >

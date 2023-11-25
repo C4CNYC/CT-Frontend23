@@ -14,12 +14,6 @@ import {
   useCourseRemoveLikeMutation,
 } from "src/redux/services/manager/courses-student";
 
-import {
-  COURSE_IMG_XS,
-  COURSE_RATING_WRAPPER_SX,
-  LIKE_BTN_WRAPPER_SX,
-} from "./constants";
-
 interface Props {
   course: ICourseElement;
 }
@@ -38,8 +32,8 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
         enqueueSnackbar("Like removed!");
       } else {
         addLike({ id: course.id }).unwrap();
-        setLiked(true);
         enqueueSnackbar("Liked!");
+        setLiked(true);
       }
     } catch (error) {
       const typedError = error as APIError;
@@ -64,34 +58,64 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
   return (
     <>
       <Box sx={{ position: "relative", alignSelf: "center" }}>
-        <Box
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
+        <IconButton
+          onClick={likeHandler}
+          disabled={isLoading || isRemoving}
+          sx={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            width: "40px",
+            height: "40px",
+            zIndex: "10",
+            opacity: 0.8,
+            background: "rgba(250, 250, 250, .5)",
+            "&:hover": { opacity: 1 },
           }}
-          sx={LIKE_BTN_WRAPPER_SX}
         >
-          <IconButton onClick={likeHandler} disabled={isLoading || isRemoving}>
-            {!liked ? (
-              <AiOutlineHeart size={26} color="#EE467A" />
-            ) : (
-              <AiFillHeart size={26} color="#EE467A" />
-            )}
-          </IconButton>
-        </Box>
+          {!liked ? (
+            <AiOutlineHeart size={26} color="#EE467A" />
+          ) : (
+            <AiFillHeart size={26} color="#EE467A" />
+          )}
+        </IconButton>
         <Image
           alt="course cover"
           src={course.cover ?? "/assets/courses/courseImg.png"}
-          sx={COURSE_IMG_XS}
+          sx={{
+            objectFit: "contain",
+            borderRadius: "25px",
+            flexShrink: 0,
+            width: {
+              xs: "200px",
+              sm: "180px",
+              md: "250px",
+            },
+            height: {
+              xs: "200px",
+              sm: "180px",
+              md: "250px",
+            },
+          }}
         />
         {course.progress && course.progress > 30 && (
-          <Box sx={COURSE_RATING_WRAPPER_SX}>
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: "0px",
+              left: "calc(50% - 75px)",
+              zIndex: "10",
+              opacity: 0.5,
+              width: {
+                xs: "180px",
+                sm: "160px",
+                md: "125px",
+              },
+              "&:hover": { opacity: 1 },
+            }}
+          >
             <Rating
-              onClick={(rating, index, e) => {
-                e?.stopPropagation();
-                e?.preventDefault();
-                handleRating(rating);
-              }}
+              onClick={handleRating}
               initialValue={course.my_rating ?? 0}
               transition
               size={30}

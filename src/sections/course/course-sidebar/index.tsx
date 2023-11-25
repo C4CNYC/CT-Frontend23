@@ -34,7 +34,7 @@ export default function CourseSidebar({
   grade,
 }: ICourseSidebarPros): React.ReactElement {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("xl"));
 
   return (
     <Stack
@@ -43,13 +43,12 @@ export default function CourseSidebar({
           xs: "column",
           sm: "column",
           md: "row",
-          lg: "column",
+          lg: "row",
           xl: "column",
         },
-        width: { lg: "250px", xl: "300px" },
+        width: { xl: "300px" },
         gap: 3,
         flexShrink: 0,
-        flexGrow: 0,
       }}
     >
       <Stack

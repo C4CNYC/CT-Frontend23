@@ -22,7 +22,7 @@ export default function NotesList({ list }: INotesListProps) {
     <Card
       sx={{ display: "flex", flexDirection: "column", px: 3, pb: 3, gap: 2 }}
     >
-      <CardHeader title={<Typography variant="h5">My Notes</Typography>} />
+      <CardHeader title={<Typography variant="h5">My notes</Typography>} />
       <AddEditGoalDialog>
         <IconButton
           sx={{

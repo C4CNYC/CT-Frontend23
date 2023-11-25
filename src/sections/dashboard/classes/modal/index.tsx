@@ -156,8 +156,8 @@ export default function ClassPreferences({
                   aria-label="basic tabs example"
                 >
                   <Tab label="General" {...a11yProps(0)} />
-                  <Tab label="Students" {...a11yProps(1)} />
-                  {/* <Tab label="Courses" {...a11yProps(2)} /> */}
+                  <Tab label="Mates" {...a11yProps(1)} />
+                  <Tab label="Courses" {...a11yProps(2)} />
 
                   {userRole !== Role.Manager ? (
                     <Tab label="Mentors" {...a11yProps(3)} />

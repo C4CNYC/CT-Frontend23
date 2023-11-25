@@ -251,25 +251,14 @@ export function AuthProvider({
 
   // REGISTER
   const register = useCallback(
-    async ({
-      email,
-      password,
-      firstName,
-      lastName,
-      username,
-      emojiAvatar,
-      role,
-      tenantName,
-    }: {
-      email: string;
-      password: string;
-      firstName: string;
-      lastName: string;
-      username?: string;
-      emojiAvatar?: string;
-      role: Role;
-      tenantName?: string;
-    }) => {
+    async (
+      email: string,
+      password: string,
+      firstName: string,
+      lastName: string,
+      role: Role,
+      tenantName?: string
+    ) => {
       if (tenantName) {
         await axios.post("/tenant", {
           name: tenantName,
@@ -281,9 +270,7 @@ export function AuthProvider({
         password,
         first_name: firstName,
         last_name: lastName,
-        username,
         role,
-        emojiAvatar,
       });
 
       const { access_token: accessToken, user } = data;

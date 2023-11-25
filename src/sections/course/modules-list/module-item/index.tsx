@@ -44,7 +44,7 @@ export default function ModuleItem({
           theme.palette.mode === "light"
             ? "#fff"
             : theme.palette.background.paper,
-        // height: isMobile ? "auto" : "200px",
+        height: isMobile ? "auto" : "200px",
         position: "relative",
         zIndex: 5,
         borderRadius: "25px",
@@ -64,12 +64,15 @@ export default function ModuleItem({
             flexShrink: "0",
             borderRadius: "25px 25px 0 25px",
             overflow: "hidden",
-            width: "150px",
+            width: "200px",
             height: "100%",
             background: `no-repeat url(${
               unit.avatar ?? "/assets/projects/bg1.png"
             }) center / cover`,
             position: "relative",
+            [theme.breakpoints.down(1050)]: {
+              width: "150px",
+            },
             [theme.breakpoints.down(800)]: {
               m: 2,
               width: "200px",
@@ -87,13 +90,12 @@ export default function ModuleItem({
         }}
       >
         <ModuleProgress progress={unit.progress ?? "2"} />
-        <Box>
+        <Box maxWidth={400}>
           <Typography
-            variant="h5"
+            variant="h4"
             noWrap
             gutterBottom
             sx={{
-              maxWidth: { lg: "200px", xl: "300px" },
               overflow: "hidden",
               textOverflow: "ellipsis",
               wordWrap: "break-word",
@@ -120,7 +122,7 @@ export default function ModuleItem({
               display: "inline-flex",
               alignSelf: isMobile ? "flex-end" : "flex-start",
               gap: 0.3,
-              fontSize: "1.0rem",
+              fontSize: "1.2rem",
               color: theme.palette.mode === "light" ? "#364954" : "#fff",
               background: lastVisited
                 ? "-webkit-linear-gradient(150deg,#61F3F3,#00B8D9)"

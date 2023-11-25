@@ -205,33 +205,33 @@ export default function QuestItem({
               flexDirection: { xs: "row", sm: "row", md: "column" },
             })}
           >
-            {/* <IconButton
+            <IconButton
               sx={{ alignSelf: "flex-end" }}
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 pinTomblerAssignment();
               }}
-            > */}
-            {/* uncomment when pin \ unpin will work */}
-            {/* {isLoadingPin || isLoadingUnpin ? (
+            >
+              {/* uncomment when pin \ unpin will work */}
+              {/* {isLoadingPin || isLoadingUnpin ? (
                 <CircularProgress variant="indeterminate" size={20} />
               ) : !assignment?.pined ? (
                 <Iconify icon="bi:pin-fill" width={22} />
               ) : (
                 <Iconify icon="bi:pin" width={22} />
               )} */}
-            {/* <Iconify icon="bi:pin" width={22} />
-            </IconButton> */}
+              <Iconify icon="bi:pin" width={22} />
+            </IconButton>
             <Stack direction="row">
-              {/* <IconButton
+              <IconButton
                 onClick={(e) => {
                   e.stopPropagation();
                   e.preventDefault();
                 }}
               >
                 <Iconify icon="ion:share-outline" width={22} />
-              </IconButton> */}
+              </IconButton>
               <RoleBasedGuard
                 roles={[Role.Admin, Role.Manager, Role.Owner, Role.Editor]}
               >

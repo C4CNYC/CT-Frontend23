@@ -24,7 +24,7 @@ import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useManagerGetCourseQuery } from "../../redux/services/manager/courses-manager";
+import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
 
 type CourseType = ICourse & BaseResponseInterface;
 

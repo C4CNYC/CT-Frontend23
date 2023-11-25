@@ -1,6 +1,5 @@
 import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 
-import { TOOLTIP_TEXT } from "@sections/main/quests/add-quest/constants";
 import { BaseResponseInterface } from "@utils";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 
@@ -18,11 +17,9 @@ export default function QuestMain({
         sx={{ gap: 1, alignItems: "baseline", flexDirection: "row", mb: 1 }}
       >
         <Typography variant="h5">Quest</Typography>
-        <Tooltip
-          title={<Typography variant="body2">{TOOLTIP_TEXT}</Typography>}
-        >
+        <Tooltip title="this is...">
           <Typography variant="body2" sx={{ textDecoration: "underline" }}>
-            What`s a quest?
+            What is quest?
           </Typography>
         </Tooltip>
       </Stack>

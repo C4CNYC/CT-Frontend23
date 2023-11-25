@@ -54,8 +54,3 @@ export const StyledContent = styled("div")(({ theme }) => ({
     margin: "auto",
   },
 }));
-
-export const StyledSwitcher = styled("div")(() => ({
-  padding: "10px 10px 0 0",
-  alignSelf: "flex-start",
-}));

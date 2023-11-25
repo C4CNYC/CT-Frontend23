@@ -1,7 +1,3 @@
-import { SxProps } from "@mui/system";
-
-import { getLinearGradient } from "@utils";
-
 export const JOIN_STACK_SX = {
   justifyContent: "space-between",
   alignItems: "center",
@@ -80,11 +76,3 @@ export const TEACHER_EMOJI_SX = {
   height: "25px",
   mr: -1,
 };
-
-export const getClassInfoWrapperSx = (color: string): SxProps => ({
-  background: getLinearGradient(color),
-  color: "#fff",
-  px: 4,
-  borderBottomLeftRadius: 20,
-  borderBottomRightRadius: 20,
-});

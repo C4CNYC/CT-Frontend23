@@ -66,7 +66,7 @@ export default function TribeHeaderBtn(): React.ReactElement {
       >
         <ExitTribeDialog>
           <Button sx={{ gap: 1 }}>
-            Leave Tribe
+            Left Tribe
             <ImExit size="20px" />
           </Button>
         </ExitTribeDialog>

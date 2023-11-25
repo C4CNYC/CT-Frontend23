@@ -73,7 +73,6 @@ export default function StepperInfo(): React.ReactElement {
               onChange={(event) => {
                 onChange(event as string | React.ChangeEvent<Element>);
               }}
-              views={["year", "month", "day"]}
               renderInput={(params) => (
                 <TextField
                   {...params}

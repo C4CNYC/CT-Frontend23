@@ -18,7 +18,7 @@ export enum FilterMode {
   // use only for page prupose
   global,
 }
-export type SetFilterType = (name: string | string[], value: string | number) => void;
+export type SetFilterType = (name: string, value: string | number) => void;
 
 interface IUseFilter<T> {
   filters: BaseSearchInterface & T;
@@ -53,34 +53,23 @@ export const useFilters = <T>(
         ...filters,
       });
     },
-    setFilter: (name: string | string[], value: string | number) => {
-      if (Array.isArray(name)) {
-        setFilter({
-          ...filter,
-          page: 1,
-          ...name.reduce((acc, cur) => {
-            acc[cur] = value;
-            return acc;
-          }, {} as Record<string, string | number>),
-        });
-      } else {
-        setFilter({
-          ...filter,
-          page: 1,
-          [name]: value,
-        });
-        if (mode === FilterMode.global) {
-          router.push(
-            `${router.pathname}?${new URLSearchParams(
-              _.omitBy(
-                { ...filter, page: 1, [name]: value },
-                (v) => !v
-              ) as Record<string, string>
-            )}`,
-            undefined,
-            { shallow: true }
-          );
-        }
+    setFilter: (name: string, value: string | number) => {
+      setFilter({
+        ...filter,
+        page: 1,
+        [name]: value,
+      });
+      if (mode === FilterMode.global) {
+        router.push(
+          `${router.pathname}?${new URLSearchParams(
+            _.omitBy(
+              { ...filter, page: 1, [name]: value },
+              (v) => !v
+            ) as Record<string, string>
+          )}`,
+          undefined,
+          { shallow: true }
+        );
       }
     },
   };

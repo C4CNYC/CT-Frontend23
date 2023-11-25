@@ -1,50 +1,54 @@
 import { useRouter } from "next/router";
 
+import { useAtom } from "jotai";
 import { useSnackbar } from "notistack";
 
 import { Button } from "@mui/material";
 
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
+import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
+import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
 
 interface ILetsCodeBtnProps {
   isMini?: boolean;
 }
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
-  const { push, query } = useRouter();
+  const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-
-  const { data: assigments } = useGetAssignmentListStudentQuery(
-    { class_id: query.id as string },
-    { skip: !query.id }
-  );
+  const [{ courseId, unitId, lessonId }] = useAtom(globalCodePanelAtom);
+  const { data } = useGetCourseQuery({}, { skip: Boolean(courseId) });
 
   return (
     <Button
       onClick={() => {
-        // Now go to first quest
-        if (!assigments?.data[0]) {
-          enqueueSnackbar("No lesson to code", { variant: "warning" });
+        if (!courseId || !unitId || !lessonId) {
+          if (data?.data.length) {
+            enqueueSnackbar("No course", { variant: "warning" });
+          } else {
+            push(
+              `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+                data?.data[0].course_id as string
+              )}`
+            );
+          }
         } else {
           push(
-            STUDENT_PATH_DASHBOARD.codePanel.workSpace(
-              assigments?.data[0].courseid
-            )
+            `${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+              courseId
+            )}?${unitId}&${lessonId}`
           );
         }
       }}
       variant="contained"
       sx={{
-        mt: "24px",
-        mx: 2,
-        color: "#EE467A",
-        bgcolor: "#FFF",
-        boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+        bgcolor: "#43D4DD",
         "&:hover": {
-          color: "#FFF",
-          bgcolor: "#EE467A",
+          color: "#43D4DD",
+          bgcolor: "rgba(67, 211, 221, .3)",
+          boxShadow:
+            "0px 3px 1px -2px rgba(67, 211, 221, 0.2), 0px 2px 2px 0px rgba(67, 211, 221, 0.14), 0px 1px 5px 0px rgba(67, 211, 221, 0.12)",
         },
         ...(isMini
           ? {
@@ -56,14 +60,14 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
               px: 1,
             }
           : {
-              py: 1,
-              fontSize: "24px",
+              py: 1.5,
+              fontSize: "1rem",
               borderRadius: "50px",
               gap: 1,
             }),
       }}
     >
-      {!isMini ? "👩‍💻 Let's Code" : ""}
+      {!isMini ? "Let's Code" : ""}
 
       {isMini ? (
         <Iconify icon="mingcute:code-fill" width={25} height={25} />

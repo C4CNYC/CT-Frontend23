@@ -85,7 +85,7 @@ export default function InviteFriendsModal({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Invite a Friend
+            Invite friend
           </DialogTitle>
           <IconButton onClick={closeDialog} sx={{ mb: "5px", mr: "14px" }}>
             <CloseIcon />
@@ -103,7 +103,7 @@ export default function InviteFriendsModal({
                     <RHFTextField
                       sx={{ width: { xs: "300px", sm: "350px" } }}
                       name="email"
-                      label="Friend's email"
+                      label="Friend email"
                       required
                     />
                   </Box>

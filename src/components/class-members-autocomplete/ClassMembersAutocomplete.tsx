@@ -113,9 +113,7 @@ export default function ClassMembersAutocomplete({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => (
-        <TextField {...params} placeholder="Add students" />
-      )}
+      renderInput={(params) => <TextField {...params} placeholder="Students" />}
       renderOption={(props, recipient, { inputValue }) => {
         const { email } = recipient.account;
         const matches = match(email, inputValue);

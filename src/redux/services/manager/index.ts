@@ -36,7 +36,6 @@ export const managerApi = createApi({
     "School",
     "Students",
     "ClassesStudent",
-    "ClassesStudentProgress",
     "SchoolSettings",
     "SchoolContacts",
     "Assignments",

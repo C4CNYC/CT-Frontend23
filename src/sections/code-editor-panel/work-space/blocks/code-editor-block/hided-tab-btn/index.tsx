@@ -1,45 +1,45 @@
-import { type FC } from "react";
+import { type FC } from "react"
+import { useDispatch } from "react-redux";
+import { ImBook } from "react-icons/im";
+import { LuMonitorUp } from "react-icons/lu";
 
-import {
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Button } from "@mui/material";
 
-import {
-  COLLAPSEBAR_TITLE_SX,
-  HIDE_BUTTON_SX,
-  getCollapsebarSx,
-} from "./constants";
+import { useSelector } from "src/redux/store";
+import { toggleBrowser, toggleInstrations } from "src/redux/slices/code-panel-global";
 
-interface IHidedTabRtn {
-  title: string;
-  icon: React.ReactElement;
-  openPanelFnc: () => void;
-}
+import { LEFT_BUTTON_SX, RIGHT_BUTTON_SX } from "./constants"
 
-const HidedTabBtn: FC<IHidedTabRtn> = ({ icon, title, openPanelFnc }) => {
-  const theme = useTheme();
-  const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000));
+const HidedTabBtn: FC = () => {
+  const dispatch = useDispatch()
+  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
+  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
 
   return (
     <>
-      <Box
-        position="relative"
+      {isInstructionsHidden && (
+        <Button
+          sx={LEFT_BUTTON_SX}
+          onClick={() => {
+            dispatch(toggleInstrations(false))
+          }}
+        >
+          <ImBook size={20} />
+        </Button>
+      )}
+
+      {isBrowserHidden && (
+        <Button
+        sx={RIGHT_BUTTON_SX}
         onClick={() => {
-          openPanelFnc();
+          dispatch(toggleBrowser(false))
         }}
-        sx={() => ({
-          ...getCollapsebarSx(isTabletAndMobile),
-        })}
       >
-        <Button sx={HIDE_BUTTON_SX}>{icon}</Button>
-        <Typography sx={COLLAPSEBAR_TITLE_SX}>{title}</Typography>
-      </Box>
+        <LuMonitorUp size={20} />
+      </Button>
+      )}
     </>
   );
-};
+}
 
 export default HidedTabBtn;
