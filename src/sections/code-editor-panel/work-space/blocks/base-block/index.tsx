@@ -17,6 +17,7 @@ interface IBaseBlock {
   closeIcon?: React.ReactElement;
   isLeftBtn?: boolean;
   hideTabsHandler?: () => void;
+  isLeftBlock?: boolean;
 }
 
 const isClosedHeaders = {
@@ -34,6 +35,7 @@ const BaseBlock: FC<IBaseBlock> = ({
   icon,
   closeIcon,
   isLeftBtn,
+  isLeftBlock,
   hideTabsHandler,
 }) => {
   const theme = useTheme();
@@ -85,8 +87,9 @@ const BaseBlock: FC<IBaseBlock> = ({
           title={title}
           icon={icon}
           hideTabsHandler={hideTabsHandler}
-          isCodeBlock={!hideTabsHandler}
+          isLeftBtn={isLeftBtn}
           closeHandler={closeHeaderHandler}
+          isLeftBlock={isLeftBlock}
         />
       </Collapse>
 
