@@ -21,7 +21,7 @@ import { MenuPopover, useSettingsContext, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ClassPreferences from "@sections/dashboard/classes/modal";
-import { BaseResponseInterface, getLinearGradient } from "@utils";
+import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
@@ -32,7 +32,8 @@ import {
 } from "src/redux/services/manager/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
-import ClassInfoToggle from "./ClassInfoToggle";
+import OnceOffNotification from "./OnceOffNotification";
+// import ClassInfoToggle from "./ClassInfoToggle";
 import {
   JOIN_STACK_SX,
   MAIN_CLASS_INFO_STACK_SX,
@@ -40,6 +41,7 @@ import {
   POPOVER_EDIT_BTN_SX,
   SHARE_BUTTON_SX,
   SHARE_TOKEN_BTN_SX,
+  getClassInfoWrapperSx,
 } from "./constants";
 
 interface IDefaultClassInfoProps {
@@ -104,13 +106,12 @@ export default function DefaultClassInfo({
   return (
     <>
       <Stack sx={{ mx: { lg: -2 } }}>
-        <ClassInfoToggle />
+        <OnceOffNotification classData={classData} />
+        {/* <ClassInfoToggle /> */}
         <Stack
-          sx={{
-            background: getLinearGradient(classData?.cover ?? "#75CF6D"),
-            color: "#fff",
-            px: 4,
-          }}
+          sx={() => ({
+            ...getClassInfoWrapperSx(classData?.cover ?? "#75CF6D"),
+          })}
         >
           <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
             <Stack direction="row" sx={JOIN_STACK_SX}>

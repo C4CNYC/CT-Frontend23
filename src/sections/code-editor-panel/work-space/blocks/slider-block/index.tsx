@@ -2,15 +2,17 @@ import dynamic from "next/dynamic";
 import React, { type FC, useEffect, useMemo, useRef, useState } from "react";
 
 import _ from "lodash";
+import { parse } from "node-html-parser";
 import { SlDirections } from "react-icons/sl";
+import { TbArrowBarToLeft } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import Carousel from "react-slick";
-import { parse } from "node-html-parser";
 
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import { EmptyContent } from "@components";
 import { BaseResponseInterface } from "@utils";
+import { useLoadIntegration } from "src/hooks/useLoadIntegration";
 import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/interfaces/content.interface";
 import { IIntegration } from "src/redux/interfaces/integration.interface";
@@ -20,13 +22,12 @@ import {
   toggleInstrations,
 } from "src/redux/slices/code-panel-global";
 import { useSelector } from "src/redux/store";
+import BrowserView from "src/sections/code-panel/work-space/blocks/view-block/BrowserView";
 
 import BaseBlock from "../base-block";
-import BrowserView from "../view-block/browser-view";
 import { getBoxSx, getCarouselSettings } from "./constants";
 import LoaderDelay from "./loader-delay";
 import Navigation from "./navigation";
-import { useLoadIntegration } from "src/hooks/useLoadIntegration";
 
 const ProsaMirrorView = dynamic(
   async () => await import("./prosa-mirror-view"),
@@ -65,7 +66,9 @@ const SliderBlock: FC<ISliderBlock> = ({
   );
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [loadingIntegrations, setLoadingIntegrations] = useState<boolean>(true);
-  const [loadedIntegrations, setLoadedIntegrations] = useState<{ head?: string; script?: string }[]>([]);
+  const [loadedIntegrations, setLoadedIntegrations] = useState<
+    { head?: string; script?: string }[]
+  >([]);
 
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
@@ -90,35 +93,39 @@ const SliderBlock: FC<ISliderBlock> = ({
 
       const loadedIntegrations = await Promise.all(
         integrations.map(async ({ head, scripts }) => {
-          const loadedIntegration = { head: '', script: '' };
+          const loadedIntegration = { head: "", script: "" };
           if (head) {
-            const parsedHead = parse(head).querySelectorAll('link');
+            const parsedHead = parse(head).querySelectorAll("link");
             const links = await Promise.all(
-              parsedHead.map(async ({ attrs }) => useLoadIntegration(attrs, 'href'))
+              parsedHead.map(async ({ attrs }) =>
+                useLoadIntegration(attrs, "href")
+              )
             );
             loadedIntegration.head = links
               .filter(Boolean)
               .map((style) => `<style>${style}</style>`)
-              .join('\n');
+              .join("\n");
           }
           if (scripts) {
-            const parseScript = parse(scripts).querySelectorAll('script');
+            const parseScript = parse(scripts).querySelectorAll("script");
             const allScripts = await Promise.all(
-              parseScript.map(async ({ attrs }) => useLoadIntegration(attrs, 'src'))
+              parseScript.map(async ({ attrs }) =>
+                useLoadIntegration(attrs, "src")
+              )
             );
             loadedIntegration.script = allScripts
               .filter(Boolean)
               .map((script) => `<script>${script}</script>`)
-              .join('\n');
+              .join("\n");
           }
           return loadedIntegration;
         })
-      )
+      );
       setLoadedIntegrations(loadedIntegrations);
       setLoadingIntegrations(false);
-    }
+    };
     loadAllIntegrations();
-  }, [integrations])
+  }, [integrations]);
 
   const handlePrev = (): void => {
     carousel1.current?.slickPrev();
@@ -154,6 +161,9 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   return (
     <BaseBlock
+      closeIcon={<TbArrowBarToLeft size={20} />}
+      isLeftBtn={false}
+      className="instructions"
       title={title}
       icon={icon}
       hideTabsHandler={() => {
@@ -165,7 +175,10 @@ const SliderBlock: FC<ISliderBlock> = ({
       ) : (
         <>
           <Box className="sliderTour" height="100%" sx={boxSx}>
-            <LoaderDelay delay={3000} isLoading={!!isFetching || !!loadingIntegrations} />
+            <LoaderDelay
+              delay={3000}
+              isLoading={!!isFetching || !!loadingIntegrations}
+            />
 
             {!isFetching ? (
               <Carousel

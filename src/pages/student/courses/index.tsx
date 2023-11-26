@@ -75,7 +75,7 @@ export default function Courses(): React.ReactElement {
           allowScrollButtonsMobile={false}
           sx={{ mt: -2 }}
         >
-          <Tab
+          {/* <Tab
             label="Courses"
             {...a11yProps(0)}
             icon={
@@ -98,7 +98,7 @@ export default function Courses(): React.ReactElement {
               )
             }
             iconPosition="end"
-          />
+          /> */}
           {/* <Tab
             label="Modules"
             {...a11yProps(1)}

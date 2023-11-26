@@ -1,4 +1,4 @@
-import { type FC, useMemo } from "react";
+import { type FC, type RefObject, useMemo } from "react";
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
@@ -6,11 +6,14 @@ import {
   Drawer,
   List,
   Divider,
-  Stack
+  Stack,
+  CircularProgress
 } from "@mui/material";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+
+import { SimpleInfiniteList } from "@components";
 
 import NavItem from "./components/nav-item";
 import HeaderItem from "./components/header-item";
@@ -31,7 +34,14 @@ import {
 } from "./styles"
 import { useNavPanel } from "./hook";
 
-const NavPanel: FC = () => {
+interface NavPanelProps {
+  cursorName?: string
+  wrapperListenerRef: RefObject<HTMLDivElement | null>
+}
+
+const LOADER_SIZE = 20;
+
+const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const {
     drawerRef,
     isOpen,
@@ -45,12 +55,17 @@ const NavPanel: FC = () => {
     isCodePreviewVisible,
     activeUsersAmount,
     isCodeBlocksVisible,
-    isUsersLoading
-  } = useNavPanel();
+    isUsersLoading,
+    onLoadMore,
+    hasNextPage
+  } = useNavPanel(wrapperListenerRef);
 
-  const drawerSx = useMemo(() => getDrawerSx(isOpen, isCodePreviewVisible), [isOpen, isCodePreviewVisible]);
+  const drawerSx = useMemo(() => {
+    return getDrawerSx(isOpen, isCodePreviewVisible)
+  }, [isOpen, isCodePreviewVisible]);
+
   const stackCodeBoxSx = useMemo(() => {
-    return getStackCodeBoxSx(draggableConfig?.height, isOpen)
+    return getStackCodeBoxSx(draggableConfig?.height, isOpen);
   }, [draggableConfig?.height, isOpen]);
 
   return (
@@ -72,7 +87,12 @@ const NavPanel: FC = () => {
           {isUsersLoading
             ? <LoadListSkeleton />
             : (
-              <>
+              <SimpleInfiniteList
+                loading={isUsersLoading}
+                hasNextPage={hasNextPage}
+                onLoadMore={onLoadMore}
+                loaderComponent={<CircularProgress color="primary" size={LOADER_SIZE} />}
+              >
                 {users.map((user) => (
                   <NavItem
                     key={user.id}
@@ -81,7 +101,7 @@ const NavPanel: FC = () => {
                     onClick={() => onAddBlock(user)}
                   />
                 ))}
-              </>
+              </SimpleInfiniteList>
             )
           }
         </List>
@@ -122,6 +142,7 @@ const NavPanel: FC = () => {
                     <CodeBlock
                       onClose={() => onDeletePreviewUser(user.id)}
                       data={user}
+                      cursorName={cursorName}
                     />
                   </SortableItem>
                 )
