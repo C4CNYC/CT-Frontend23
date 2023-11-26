@@ -33,7 +33,8 @@ import {
 import { useTranslate } from "src/utils/translateHelper";
 
 import ClassInfoMain from "./ClassInfoMain";
-import ClassInfoToggle from "./ClassInfoToggle";
+import OnceOffNotification from "./OnceOffNotification";
+// import ClassInfoToggle from "./ClassInfoToggle";
 import {
   JOIN_STACK_SX,
   MAIN_CLASS_INFO_STACK_SX,
@@ -106,6 +107,7 @@ export default function DefaultClassInfo({
   return (
     <>
       <Stack sx={{ mx: { lg: -2 } }}>
+        <OnceOffNotification classData={classData} />
         {/* <ClassInfoToggle /> */}
         <Stack
           sx={() => ({

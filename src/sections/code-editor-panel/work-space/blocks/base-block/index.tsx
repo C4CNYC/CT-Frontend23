@@ -15,6 +15,7 @@ interface IBaseBlock {
   title: ReactNode;
   icon: React.ReactElement;
   closeIcon?: React.ReactElement;
+  isLeftBtn?: boolean;
   hideTabsHandler?: () => void;
 }
 
@@ -32,6 +33,7 @@ const BaseBlock: FC<IBaseBlock> = ({
   title,
   icon,
   closeIcon,
+  isLeftBtn,
   hideTabsHandler,
 }) => {
   const theme = useTheme();
@@ -41,7 +43,7 @@ const BaseBlock: FC<IBaseBlock> = ({
   const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile), [useTheme]);
   const buttonSx = useMemo(() => getButtonSx(isDesktop), [useTheme]);
   const buttonWrapperSx = useMemo(
-    () => getButtonWrapperSx(isDesktop),
+    () => getButtonWrapperSx(isDesktop, isLeftBtn),
     [isDesktop]
   );
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
