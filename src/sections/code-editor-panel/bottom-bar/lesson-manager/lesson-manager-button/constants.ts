@@ -5,14 +5,14 @@ export const getButtonSx = (theme: Theme): SxProps => ({
     display: "none",
   },
   p: 0,
-  color: "initial",
+  color: theme.palette.mode === "light" ? "initial" : "#fff",
   fontWeight: "400",
   "&:hover": {
     background: "none",
   },
   width: "175px",
   justifyContent: "flex-start",
-})
+});
 
 export const ICON_BTN_SX = { mr: "5px" };
 export const TYP_SX = {
