@@ -65,8 +65,6 @@ export default function ModulePage(): React.ReactElement {
     }
   }, [isLoadingModule]);
 
-  console.log('currentModule', currentModule)
-
   return (
     <>
       <Head>
@@ -142,6 +140,9 @@ export default function ModulePage(): React.ReactElement {
             duration={ currentModule ? currentModule?.duration : "20 min"}
             lessonCount={`${data?.length} lessons`}
             description={currentModule ? currentModule.description : "Description"}
+            certificate={currentModule?.initial_enrolled ?? 0}
+            likes={currentModule?.initial_likes ?? 0}
+            rated={currentModule?.initial_stars ?? 0}
             teacherForum={currentModule?.teacher_forum}
             teacherSlides={currentModule?.teacher_slides}
             lessonPlans={currentModule?.lesson_plans}
