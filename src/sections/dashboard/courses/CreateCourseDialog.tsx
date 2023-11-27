@@ -48,6 +48,9 @@ interface FormValuesProps {
   description: string;
   active: boolean;
   public: boolean;
+  initial_enrolled: number;
+  initial_likes: number;
+  initial_stars: number;
   skills: [];
 }
 
@@ -88,6 +91,9 @@ export default function CreateCourseDialog({
     price: Yup.string().required(translate("required_price")),
     description: Yup.string().required(translate("required_description")),
     content_id: Yup.string().required("Content Id is required"),
+    initial_likes: Yup.number().required("Initial likes is required"),
+    initial_stars: Yup.number().required("Initial stars is required"),
+    initial_enrolled: Yup.number().required("Initial enrolled is required"),
     skills: Yup.array(),
   });
 
@@ -302,6 +308,24 @@ export default function CreateCourseDialog({
                     type="number"
                   />
                 </FormGroup>
+                <RHFTextField
+                  sx={{ width: "100%" }}
+                  name="initial_likes"
+                  label="Initial likes"
+                  type="number"
+                />
+                <RHFTextField
+                  sx={{ width: "100%" }}
+                  name="initial_stars"
+                  label="Initial starts"
+                  type="number"
+                />
+                <RHFTextField
+                  sx={{ width: "100%" }}
+                  name="initial_enrolled"
+                  label="Initial enrolled"
+                  type="number"
+                />
                 <RHFTextField
                   name="description"
                   label={translate("courses_course_description")}
