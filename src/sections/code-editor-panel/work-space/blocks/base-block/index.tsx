@@ -18,6 +18,7 @@ interface IBaseBlock {
   isLeftBtn?: boolean;
   hideTabsHandler?: () => void;
   isLeftBlock?: boolean;
+  takeHeaderSettings?: (isOpen: boolean) => void;
 }
 
 const isClosedHeaders = {
@@ -25,6 +26,12 @@ const isClosedHeaders = {
   codeEditorTour: true,
   browserTour: true,
 };
+
+interface IHeaderSettings {
+  instructions: boolean;
+  codeEditorTour: boolean;
+  browserTour: boolean;
+}
 
 const localStorageKey = "HeadersSettings";
 
@@ -37,6 +44,7 @@ const BaseBlock: FC<IBaseBlock> = ({
   isLeftBtn,
   isLeftBlock,
   hideTabsHandler,
+  takeHeaderSettings,
 }) => {
   const theme = useTheme();
   const storageAvailable = localStorageAvailable();
@@ -62,7 +70,7 @@ const BaseBlock: FC<IBaseBlock> = ({
 
   const isTabLeft = isTabletAndMobile && activeTab !== 0;
   const isTabRight = isTabletAndMobile && activeTab !== 2;
-  const [isClosedHeader, setIsClosedHeader] = useState(() =>
+  const [isClosedHeader, setIsClosedHeader] = useState<IHeaderSettings>(() =>
     getHeaderSettings()
   );
 
@@ -74,6 +82,10 @@ const BaseBlock: FC<IBaseBlock> = ({
       JSON.stringify({ ...getHeaderSettings(), [className]: false })
     );
   };
+
+  if (takeHeaderSettings) {
+    takeHeaderSettings(isClosedHeader?.browserTour);
+  }
 
   return (
     <Box
