@@ -1,37 +1,45 @@
-import { type ReactNode, type FC } from "react";
+import { type FC, type ReactNode } from "react";
+
 import { useDispatch } from "react-redux";
 
 import { Stack } from "@mui/system";
 
+import {
+  toggleBrowser,
+  toggleInstrations,
+} from "src/redux/slices/code-panel-global";
+import { useSelector } from "src/redux/store";
+
 import ChatPopup from "../options/chat-popup";
-import ViewTumbler from "../options/view-tumbler";
-import HelpPopup from "../options/help-popup";
+// import HelpPopup from "../options/help-popup";
 import Menu from "../options/menu";
 import SettingDrawer from "../options/setting-drawer";
 import Timer from "../options/timer";
-
-import { useSelector } from "src/redux/store";
-import { toggleBrowser, toggleInstrations } from "src/redux/slices/code-panel-global";
+import ViewTumbler from "../options/view-tumbler";
 
 interface IDesktopBar {
   chatComponent: ReactNode;
-  onHanldeFullScreen: () => void
-  isFullScreenView: boolean
+  onHanldeFullScreen: () => void;
+  isFullScreenView: boolean;
 }
 
 const DesktopBar: FC<IDesktopBar> = ({
   chatComponent,
   onHanldeFullScreen,
-  isFullScreenView
+  isFullScreenView,
 }) => {
-  const dispatch = useDispatch()
-  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden)
-  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden)
+  const dispatch = useDispatch();
+  const isBrowserHidden = useSelector(
+    (state) => state.codePanelGlobal.isBrowserHidden
+  );
+  const isInstructionsHidden = useSelector(
+    (state) => state.codePanelGlobal.isInstructionsHidden
+  );
 
   const onChangeColumnVisability = (value: boolean) => {
-    dispatch(toggleBrowser(value))
-    dispatch(toggleInstrations(value))
-  }
+    dispatch(toggleBrowser(value));
+    dispatch(toggleInstrations(value));
+  };
 
   return (
     <Stack
@@ -41,8 +49,8 @@ const DesktopBar: FC<IDesktopBar> = ({
       alignItems="center"
     >
       <Timer />
-
-      <HelpPopup />
+      {/* {Hide Help Popover before v1} */}
+      {/* <HelpPopup /> */}
 
       <ChatPopup chatComponent={chatComponent} />
 

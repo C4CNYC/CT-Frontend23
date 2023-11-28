@@ -11,16 +11,24 @@ import {
   STACK_BOTTON_SX,
 } from "./constants";
 
-const SkeletonViewBlock: FC = () => {
+interface ISkeletonProps {
+  isOpenHeader: boolean | undefined;
+}
+
+const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
   return (
-    <Stack sx={PARENT_STACK_SX} width="100%" height="100vh">
+    <Stack
+      sx={PARENT_STACK_SX}
+      width="100%"
+      height={isOpenHeader ? "calc(100% - 34px)" : "100vh"}
+    >
       <Stack
         display="flex"
         direction="row"
         alignItems="center"
         justifyContent="space-between"
         mb="5px"
-        px="30px"
+        pl="30px"
       >
         <Skeleton height="18px" width="192px" sx={SKELETON_SX} />
         <Stack spacing={1} display="flex" direction="row">

@@ -15,7 +15,10 @@ export interface ICourseElement {
   cover: string;
   draft: boolean;
   progress: number | null;
-  likes_count?: number;
+  likes_count?: string;
+  initial_enrolled: number;
+  initial_likes: number;
+  initial_stars: number;
   total_lessons: number;
   liked: boolean;
   my_rating: number | null;
@@ -51,6 +54,9 @@ export interface IModuleContent {
   description: string;
   id: string;
   name: string;
+  initial_enrolled: number;
+  initial_likes: number;
+  initial_stars: number;
   progress: string | null;
   duration: string | null;
   teacher_slides?: string;
@@ -83,6 +89,7 @@ export interface ILessonCurrent {
 export interface ILessonContent {
   body: string;
   preload_body: string;
+  tips: string;
   solution_body: string;
   validations: Array<IValidation & BaseResponseInterface>;
   type: LessonContentType;

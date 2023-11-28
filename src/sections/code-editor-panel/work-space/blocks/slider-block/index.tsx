@@ -162,6 +162,8 @@ const SliderBlock: FC<ISliderBlock> = ({
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToLeft size={20} />}
+      isLeftBtn={false}
+      isLeftBlock={true}
       className="instructions"
       title={title}
       icon={icon}

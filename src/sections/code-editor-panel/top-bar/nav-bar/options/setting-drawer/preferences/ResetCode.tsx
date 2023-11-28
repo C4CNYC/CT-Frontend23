@@ -13,7 +13,7 @@ const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
     <BasePreference title="reset code">
       <Button onClick={onReset} fullWidth variant="contained">
         <Iconify mr="7px" icon="carbon:reset" />
-        Resset Lesson
+        Reset Lesson
       </Button>
     </BasePreference>
   );

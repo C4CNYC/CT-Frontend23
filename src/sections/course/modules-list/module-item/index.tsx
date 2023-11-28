@@ -172,7 +172,7 @@ export default function ModuleItem({
             orientation="horizontal"
             sx={{ borderRightWidth: 2, my: 4 }}
           />
-          <ActionsBlock certificate={2700} likes={12000} rated={4300} />
+          <ActionsBlock certificate={unit.initial_enrolled} likes={unit.initial_likes} rated={unit.initial_stars} />
         </>
       ) : null}
     </Stack>

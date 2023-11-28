@@ -46,6 +46,7 @@ export default function SignInMain(): React.ReactElement {
       setError(e.message);
     }
   };
+
   return (
     <Stack
       sx={{
@@ -61,10 +62,12 @@ export default function SignInMain(): React.ReactElement {
               !methods.formState.errors.email &&
               methods.formState.dirtyFields.email
             }
+            stepName="email"
           />
           <SignInPassword
             isSubmiting={methods.formState.isSubmitting}
             isError={isError}
+            stepName="password"
           />
           <EmailNotFound setError={setError} />
         </StepWizard>
