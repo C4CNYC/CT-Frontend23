@@ -70,7 +70,7 @@ export default function MenuTribesList(): React.ReactElement {
       >
         {isLoading ? (
           <Stack gap={1} ml={isNavMini ? 0 : 2} sx={{ maxWidth: "150px" }}>
-            <Skeleton variant="rounded" height={30} width={30} />
+            <Skeleton variant="rounded" height={40} width={40} />
             {Array.from("12").map((el) => (
               <Skeleton variant="rounded" height={32} key={el} />
             ))}
@@ -79,7 +79,7 @@ export default function MenuTribesList(): React.ReactElement {
           <>
             <Button
               onClick={handleOpenPopover}
-              sx={(theme) => ({ ...getAddTribeButtonSx(theme) })}
+              sx={(theme) => ({ ...getAddTribeButtonSx(theme, isNavMini) })}
             >
               <FaPlus size={20} />
             </Button>
@@ -87,11 +87,15 @@ export default function MenuTribesList(): React.ReactElement {
               sx={{
                 gap: 1,
                 height: containerHeignt,
-                width: isNavMini ? "58px" : "auto",
+                width: "auto",
               }}
             >
-              <Scrollbar>
-                <Stack pl={2} gap={1}>
+              <Scrollbar sx={{ overflowX: "unset" }}>
+                <Stack
+                  pl={isNavMini ? 0 : 2}
+                  gap={1}
+                  alignItems={isNavMini ? "center" : "start"}
+                >
                   {data?.data.map((c, i) => {
                     return (
                       <TribeListItem

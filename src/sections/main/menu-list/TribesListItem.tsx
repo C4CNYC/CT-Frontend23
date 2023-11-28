@@ -48,8 +48,8 @@ export default function TribeListItem({
           variant="rounded"
           src={classItem.avatar ?? ""}
           sx={{
-            width: "45px",
-            height: "45px",
+            width: "40px",
+            height: "40px",
           }}
         />
         {!isNavMini && (

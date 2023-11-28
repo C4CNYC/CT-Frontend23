@@ -1,6 +1,7 @@
 import { SxProps, Theme } from "@mui/system";
 
 export const TRIBE_LINK_SX = {
+  width: "100%",
   display: "inline-flex",
   alignItems: "center",
   p: 0,
@@ -19,7 +20,7 @@ export const getSignOfActiveLink = (
   position: "absolute",
   top: "5px",
   left: "-12px",
-  height: "35px",
+  height: "30px",
   width: "4px",
   background: theme.palette.info.light,
   borderRadius: 2,
@@ -33,14 +34,17 @@ export const getTribeTitleSx = (theme: Theme): SxProps => ({
   fontSize: "18px",
 });
 
-export const getAddTribeButtonSx = (theme: Theme): SxProps => ({
+export const getAddTribeButtonSx = (
+  theme: Theme,
+  isNavMini: boolean
+): SxProps => ({
   alignSelf: "flex-start",
   borderRadius: 1,
-  minWidth: "45px",
+  minWidth: "40px",
   p: 0,
-  ml: 2,
-  minHeight: "45px",
-  height: "45px",
+  ml: isNavMini ? 0 : 2,
+  minHeight: "40px",
+  height: "40px",
   color: theme.palette.info.light,
   border: `2px solid ${theme.palette.info.light}`,
 });
