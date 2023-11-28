@@ -7,7 +7,6 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { RxDragHandleDots2 } from "react-icons/rx";
 
 import {
-  Badge,
   Box,
   IconButton,
   MenuItem,
@@ -23,6 +22,7 @@ import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interf
 
 import Preferences from "./Modals/Preferences";
 import Validation from "./Modals/Validation";
+import { GREEN_DOT_SX, getLessonItemPaperSx } from "./constants";
 
 interface Props {
   lessonId: string;
@@ -88,27 +88,9 @@ export default function LessonListItem({
           ref={provided.innerRef}
           onClick={selectStep}
           elevation={8}
-          sx={{
-            cursor: "pointer!important",
-            display: "flex",
-            p: "15px 10px 15px 5px",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-            position: "relative",
-            border: `2px solid ${chooseBorderColor()}`,
-          }}
+          sx={{ ...getLessonItemPaperSx(chooseBorderColor) }}
         >
-          {router.query.stepId === step.id && (
-            <Badge
-              color="primary"
-              variant="dot"
-              sx={{ position: "absolute", top: "10px", left: "10px" }}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            />
-          )}
+          {router.query.stepId === step.id && <Box sx={GREEN_DOT_SX}></Box>}
 
           <IconButton sx={{ mr: "5px" }} {...provided.dragHandleProps}>
             <RxDragHandleDots2 size="24px" />
@@ -132,6 +114,7 @@ export default function LessonListItem({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     whiteSpace: "nowrap",
+                    mb: 0,
                   }}
                   gutterBottom
                 >

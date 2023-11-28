@@ -73,6 +73,7 @@ export default function StepperInfo(): React.ReactElement {
               onChange={(event) => {
                 onChange(event as string | React.ChangeEvent<Element>);
               }}
+              views={["year", "month", "day"]}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -92,8 +93,7 @@ export default function StepperInfo(): React.ReactElement {
           label="Country"
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         >
-          <option value=""></option>
-          <option key={"US"} value={"United States"}>
+          <option key={"US"} value={"US"}>
             United States
           </option>
           <option disabled>─────────────────────────</option>

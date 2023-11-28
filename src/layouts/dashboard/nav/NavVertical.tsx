@@ -53,7 +53,6 @@ export default function NavVertical({
     >
       <>
         <Stack
-          spacing={3}
           sx={{
             pt: 3,
             pb: 2,

@@ -18,7 +18,7 @@ export default function CreateHeader({
         borderTopLeftRadius: "16px",
         borderTopRightRadius: "16px",
         background: choosenColor,
-        minHeight: "400px",
+        minHeight: "300px",
         justifyContent: "center",
         px: { xs: 1, sm: 4, md: 8 },
       }}
@@ -42,13 +42,14 @@ export default function CreateHeader({
             inputProps={{
               style: {
                 padding: 0,
-                color: theme.palette.primary.contrastText,
                 fontWeight: 700,
               },
               sx: {
                 fontSize: { xs: "42px", sm: "52px", md: "62px" },
+                color: "#fff",
                 "&::placeholder": {
-                  opacity: 0.4,
+                  opacity: 0.7,
+                  color: "#fff",
                 },
               },
             }}
@@ -78,7 +79,8 @@ export default function CreateHeader({
               sx: {
                 fontSize: { xs: "24px", sm: "32px" },
                 "&::placeholder": {
-                  opacity: 0.4,
+                  opacity: 0.7,
+                  color: "#fff",
                 },
               },
             }}

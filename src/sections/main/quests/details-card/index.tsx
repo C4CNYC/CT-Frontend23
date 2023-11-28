@@ -18,7 +18,7 @@ export default function DetailsTab({
 }: IDetailsTabProps): React.ReactElement {
   return (
     <>
-      <Card
+      {/* <Card
         sx={{
           mb: 3,
           height: 280,
@@ -30,7 +30,7 @@ export default function DetailsTab({
           cover={classData.cover ?? ""}
           avatar={classData.avatar ?? ""}
         />
-      </Card>
+      </Card> */}
       <Stack gap={2}>
         <GeneralInfo activeTab={activeTab} />
         <AboutTribe

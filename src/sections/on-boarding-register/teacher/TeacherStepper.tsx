@@ -8,6 +8,7 @@ import { Stack } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { Role } from "src/redux/services/enums/role.enum";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
 import AddSchool from "./AddSchool";
@@ -15,7 +16,6 @@ import AddTeacher from "./AddTeacher";
 import SingUp from "./SingUp";
 import StepperProgress from "./StepperProgress";
 import WelcomeStep from "./WelcomeStep";
-import { Role } from "src/redux/services/enums/role.enum";
 
 interface FormValuesProps {
   email: string;
@@ -60,7 +60,15 @@ export default function TeacherStepper(): React.ReactElement {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await register(data.email, data.password, data.firstName, data.lastName, Role.Manager);
+      //#TODO update type here
+      //@ts-ignore
+      await register({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        role: Role.Manager,
+      });
     } catch (error) {
       methods.setError("root", {
         ...error,

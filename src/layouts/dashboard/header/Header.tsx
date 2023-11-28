@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import { Iconify, Logo, useSettingsContext } from "@components";
 import { useOffSetTop, useResponsive } from "@hooks";
 import { bgBlur } from "@utils";
+import ThemeSwitcher from "src/components/theme-switcher";
 import { useSelector } from "src/redux/store";
 
 import { HEADER, NAV } from "../../../config-global";
@@ -54,11 +55,11 @@ export default function Header({
         sx={{
           color: "rgba(54, 73, 84, 1)",
           display: "flex",
-          gap: 3,
+          gap: 2,
           alignItems: "center",
         }}
       >
-        Hey {user?.first_name ? user.first_name : "friend"}
+        Hey {user?.first_name ? user.first_name : "Friend"}
         <Typography variant="h3">👋</Typography>
       </Typography>
       <Stack
@@ -68,6 +69,7 @@ export default function Header({
         justifyContent="flex-end"
         spacing={{ xs: 0.5, sm: 1.5 }}
       >
+        <ThemeSwitcher />
         <LanguagePopover />
 
         <AccountPopover />

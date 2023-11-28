@@ -21,7 +21,7 @@ import { MenuPopover, useSettingsContext, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ClassPreferences from "@sections/dashboard/classes/modal";
-import { BaseResponseInterface, getLinearGradient } from "@utils";
+import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
@@ -32,7 +32,17 @@ import {
 } from "src/redux/services/manager/classes-manager";
 
 import ClassInfoMain from "./ClassInfoMain";
-import ClassInfoToggle from "./ClassInfoToggle";
+import OnceOffNotification from "./OnceOffNotification";
+// import ClassInfoToggle from "./ClassInfoToggle";
+import {
+  JOIN_STACK_SX,
+  MAIN_CLASS_INFO_STACK_SX,
+  MEMBERS_LINK_SX,
+  POPOVER_EDIT_BTN_SX,
+  SHARE_BUTTON_SX,
+  SHARE_TOKEN_BTN_SX,
+  getClassInfoWrapperSx,
+} from "./constants";
 
 interface IDefaultClassInfoProps {
   classData: IClass & BaseResponseInterface;
@@ -95,25 +105,16 @@ export default function DefaultClassInfo({
 
   return (
     <>
-      <Stack ml={-2} mr={-2}>
-        <ClassInfoToggle />
+      <Stack sx={{ mx: { lg: -2 } }}>
+        <OnceOffNotification classData={classData} />
+        {/* <ClassInfoToggle /> */}
         <Stack
-          sx={{
-            background: getLinearGradient(classData?.cover ?? "#75CF6D"),
-            color: "#fff",
-          }}
+          sx={() => ({
+            ...getClassInfoWrapperSx(classData?.cover ?? "#75CF6D"),
+          })}
         >
           <Container maxWidth={themeStretch ? false : "lg"} disableGutters>
-            <Stack
-              direction="row"
-              sx={{
-                justifyContent: "space-between",
-                alignItems: "center",
-                pb: "65px",
-                pt: 1,
-                px: 4,
-              }}
-            >
+            <Stack direction="row" sx={JOIN_STACK_SX}>
               <Stack
                 direction="row"
                 alignItems="center"
@@ -124,12 +125,7 @@ export default function DefaultClassInfo({
                   onClick={() => {
                     onCopy(classData?.setting?.share_token);
                   }}
-                  sx={{
-                    gap: 0.5,
-                    color: "inherit",
-                    p: 0,
-                    textTransform: "none",
-                  }}
+                  sx={SHARE_TOKEN_BTN_SX}
                 >
                   <Typography variant="subtitle2">
                     {classData?.setting?.share_token}
@@ -151,14 +147,8 @@ export default function DefaultClassInfo({
             </Stack>
 
             <Stack
-              direction="row"
-              sx={{
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                px: 4,
-                pb: 2,
-                flexWrap: "wrap",
-              }}
+              direction={isMobile ? "column" : "row"}
+              sx={MAIN_CLASS_INFO_STACK_SX}
             >
               <ClassInfoMain classData={classData} />
               <Stack
@@ -166,17 +156,10 @@ export default function DefaultClassInfo({
                 alignItems="center"
                 sx={{
                   maxHeight: "20px",
-                  pt: { xs: 2, sm: 0 },
-                  m: { xs: "10px auto", sm: 0 },
                 }}
               >
                 <Link
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#fff",
-                    gap: 0.5,
-                  }}
+                  sx={MEMBERS_LINK_SX}
                   href={`${STUDENT_PATH_DASHBOARD.friends.root}?class_id=${classData.id}`}
                   component={nextLink}
                   typography="button"
@@ -185,19 +168,7 @@ export default function DefaultClassInfo({
                   {!isMobile ? "Members" : ""}
                 </Link>
                 <ShareGroupModal schoolClass={classData}>
-                  <Button
-                    variant="text"
-                    disableRipple
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      color: "#fff",
-                      ml: 2,
-                      "&:hover": {
-                        background: "none",
-                      },
-                    }}
-                  >
+                  <Button variant="text" disableRipple sx={SHARE_BUTTON_SX}>
                     <TbShare2 color="#fff" size="18px" />
                     <Typography variant="button" sx={{ ml: 0.5 }}>
                       {!isMobile ? "Share" : ""}
@@ -213,10 +184,7 @@ export default function DefaultClassInfo({
                   </IconButton>
                 </RoleBasedGuard>
                 <MenuPopover
-                  sx={{
-                    p: 2,
-                    minWidth: "150px",
-                  }}
+                  sx={{ minWidth: "120px" }}
                   open={openPopover}
                   onClose={() => {
                     setOpenPopover(null);
@@ -246,20 +214,7 @@ export default function DefaultClassInfo({
                     updateResult={updateResult}
                     schoolId={classData?.school?.id}
                   >
-                    <Button
-                      sx={{
-                        gap: 1,
-                        width: "100%",
-                        m: "0 auto",
-                        background: "#fff",
-                        color: "#75CF6D",
-                        "&:hover": {
-                          background: "#22A64733",
-                        },
-                      }}
-                    >
-                      Edit
-                    </Button>
+                    <Button sx={POPOVER_EDIT_BTN_SX}>Edit</Button>
                   </ClassPreferences>
                 </MenuPopover>
               </Stack>

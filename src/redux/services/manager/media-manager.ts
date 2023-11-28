@@ -5,13 +5,14 @@ import {
   IMedia,
   IMediaCreate,
   IMediaDelete,
+  IMediaPathUpdate,
   IMediaSearchParams,
   IMediaUpdate,
 } from "../interfaces/media.interface";
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
-    getMedias: builder.query<
+    getAllMedia: builder.query<
       BaseListResponseInterface<IMedia & BaseResponseInterface>,
       IMediaSearchParams
     >({
@@ -21,7 +22,7 @@ const extendedApi = managerApi.injectEndpoints({
         params,
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Medias"],
+      providesTags: ["Media"],
     }),
     getMedia: builder.query<IMedia & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
@@ -29,7 +30,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "GET",
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Medias"],
+      providesTags: ["Media"],
     }),
     updateMedia: builder.mutation<
       IMedia & BaseResponseInterface,
@@ -40,7 +41,18 @@ const extendedApi = managerApi.injectEndpoints({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: [{ type: "Medias" }],
+      invalidatesTags: [{ type: "Media" }],
+    }),
+    updateMediaPath: builder.mutation<
+      IMedia & BaseResponseInterface,
+      IMediaPathUpdate
+    >({
+      query: (body) => ({
+        url: `/manager/media/path`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: [{ type: "Media" }],
     }),
     createMedia: builder.mutation<
       IMediaCreate & BaseResponseInterface,
@@ -51,7 +63,7 @@ const extendedApi = managerApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "Medias" }],
+      invalidatesTags: [{ type: "Media" }],
     }),
     deleteMedia: builder.mutation<
       IMediaDelete & BaseResponseInterface,
@@ -61,17 +73,18 @@ const extendedApi = managerApi.injectEndpoints({
         url: `/manager/media/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Medias" }],
+      invalidatesTags: [{ type: "Media" }],
     }),
   }),
   overrideExisting: false,
 });
 
 export const {
-  useGetMediasQuery,
+  useGetAllMediaQuery,
   useGetMediaQuery,
   // -------------mutation-----------
   useCreateMediaMutation,
+  useUpdateMediaPathMutation,
   useUpdateMediaMutation,
   useDeleteMediaMutation,
 } = extendedApi;

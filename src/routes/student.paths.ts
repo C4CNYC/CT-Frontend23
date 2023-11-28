@@ -67,6 +67,8 @@ export const STUDENT_PATH_DASHBOARD = {
   courses: {
     root: "/student/courses",
     course: (id: string) => path("/student/courses/", `${id}`),
+    unit: (id: string, unit: string) =>
+      path("/student/courses/", `${id}/${unit}`),
   },
   publicCourses: "/student/public-courses",
   friends: {

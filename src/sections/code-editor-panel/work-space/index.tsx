@@ -1,4 +1,6 @@
-import { useRef, type FC } from "react";
+import { type FC, useCallback, useRef, useState } from "react";
+
+import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -6,30 +8,38 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Stack, type StackProps } from "@mui/system";
 
+import { type BaseResponseInterface } from "@utils";
+import { type AuthUserType } from "src/auth/types";
+import {
+  type ILesson,
+  type ILessonContent,
+} from "src/redux/interfaces/content.interface";
+import {
+  toggleBrowser,
+  toggleInstrations,
+} from "src/redux/slices/code-panel-global";
+import { setTab } from "src/redux/slices/mobile-tab-manager";
+import { useSelector } from "src/redux/store";
+
 import CodeEditorBlock from "./blocks/code-editor-block";
+import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn";
+import NavPanel from "./blocks/nav-panel";
 import SliderBlock from "./blocks/slider-block";
 import ViewBlock from "./blocks/view-block";
-import NavPanel from "./blocks/nav-panel"
-
-import { type BaseResponseInterface } from "@utils";
-import { type ILesson, type ILessonContent } from "src/redux/interfaces/content.interface";
-import { type AuthUserType } from "src/auth/types";
-
-import { useSelector } from "src/redux/store";
-import { setTab } from "src/redux/slices/mobile-tab-manager";
+import { CodeDocument } from "./blocks/view-block/browser-view";
 
 export type SupportedLang = "html" | "javascript";
 
 export interface WorkSpaceProps {
-  isFetching?: boolean
-  lesson?: ILesson & BaseResponseInterface
-  data: Array<ILessonContent & BaseResponseInterface>,
-  user: AuthUserType
-  code: string
-  language: SupportedLang
-  onChangeCode: (code: string) => void
-  onSubmitChalange: (lessonContentId: string) => Promise<void>
-  onSubmitLesson: () => Promise<void>
+  isFetching?: boolean;
+  lesson?: ILesson & BaseResponseInterface;
+  data: Array<ILessonContent & BaseResponseInterface>;
+  user: AuthUserType;
+  code: string;
+  language: SupportedLang;
+  onChangeCode: (code: string) => void;
+  onSubmitChalange: (lessonContentId: string) => Promise<void>;
+  onSubmitLesson: () => Promise<void>;
 }
 
 const WorkSpace: FC<WorkSpaceProps> = ({
@@ -39,21 +49,41 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   data,
   user,
   code,
-  onChangeCode,
   language,
-  isFetching = false
+  isFetching = false,
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const dispatch = useDispatch();
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
-  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden);
-  const isInstructionsHidden = useSelector((state) => state.codePanelGlobal.isInstructionsHidden);
+
+  const isBrowserHidden = useSelector(
+    (state) => state.codePanelGlobal.isBrowserHidden
+  );
+
+  const isInstructionsHidden = useSelector(
+    (state) => state.codePanelGlobal.isInstructionsHidden
+  );
+
+  const [document, setDocument] = useState<CodeDocument | null>(null);
+
+  const onChangeCode = useCallback((doc: Record<string, string>) => {
+    setDocument(doc as CodeDocument);
+  }, []);
+
+  const openInstruction = () => {
+    dispatch(toggleInstrations(false));
+  };
+
+  const openPreview = () => {
+    dispatch(toggleBrowser(false));
+  };
 
   if (isDesktop) {
     return (
-      <Stack {...STACK_PROPS}>
+      <Stack ref={wrapperRef} {...STACK_PROPS}>
         {!isInstructionsHidden ? (
           <SliderBlock
             onSubmitChalange={onSubmitChalange}
@@ -62,7 +92,13 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             integrations={lesson?.integrations ?? []}
             isFetching={isFetching}
           />
-        ) : null}
+        ) : (
+          <HidedTabBtn
+            title="Instructions"
+            icon={<TbArrowBarToRight size={20} />}
+            openPanelFnc={openInstruction}
+          />
+        )}
 
         <CodeEditorBlock
           preloadedCode={data[slideIndex]?.preload_body || ""}
@@ -72,9 +108,20 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           onChangeCode={onChangeCode}
         />
 
-        {!isBrowserHidden ? <ViewBlock {...{ code, language }} /> : null}
+        {!isBrowserHidden ? (
+          <ViewBlock code={document} />
+        ) : (
+          <HidedTabBtn
+            title="Browser Preview"
+            icon={<TbArrowBarToLeft size={20} />}
+            openPanelFnc={openPreview}
+          />
+        )}
 
-        <NavPanel />
+        <NavPanel
+          wrapperListenerRef={wrapperRef}
+          cursorName={user?.first_name}
+        />
       </Stack>
     );
   }
@@ -102,7 +149,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         validations={data[slideIndex]?.validations}
       />
 
-      <ViewBlock {...{ code, language }} />
+      <ViewBlock {...{ code: document, language }} />
     </SwipeableViews>
   );
 };
@@ -112,7 +159,7 @@ const STACK_PROPS: StackProps = {
   gap: 1,
   display: "flex",
   direction: "row",
-  alignItems: "stretch"
-}
+  alignItems: "stretch",
+};
 
 export default WorkSpace;

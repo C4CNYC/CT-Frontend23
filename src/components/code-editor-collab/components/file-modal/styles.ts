@@ -1,4 +1,6 @@
-export const styles = {
+import { type Theme, type SxProps } from "@mui/system";
+
+export const useStyles = (theme: Theme) => ({
   BUTTON_FILE_SX: {
     color: "#e0e3ea",
     textTransform: "none",
@@ -42,5 +44,18 @@ export const styles = {
     zIndex: 1,
     opacity: .3,
     color: "rgb(67, 212, 221)"
+  },
+  REMOVE_BUTTON: {
+    background: theme.palette.error.main,
+  },
+  REMOVE_FILE_CONTENT: {
+    padding: "10px 0px 20px",
+    display: "block",
+    "& span": {
+      fontStyle: "italic"
+    }
+  },
+  devIcon: {
+    marginRight: "8px"
   }
-}
+})

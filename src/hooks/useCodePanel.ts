@@ -12,7 +12,6 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // local files
-import { useOnlineConnection, useRealTimeConnection } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { isValidLastVisitedData } from "@sections/code-editor-panel/helpers";
 import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
@@ -52,31 +51,29 @@ interface UseCodePanelReturn {
 }
 
 const LANGUAGE = "html"
+const DESKTOP_WIDTH = 1000;
 
 export const useCodePanel = (): UseCodePanelReturn => {
   const dispatch = useDispatch()
-  const savedUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId)
-  const savedLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId)
+  const savedUnitId = useSelector((state: RootState) => state.codePanelGlobal.unitId);
+  const savedLessonId = useSelector((state: RootState) => state.codePanelGlobal.lessonId);
+
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const { enqueueSnackbar } = useSnackbar();
-  const handle = useFullScreenHandle();
+  const isDesktop = useMediaQuery(theme.breakpoints.up(DESKTOP_WIDTH));
   const { push, query, replace } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const searchParams = useSearchParams();
+  const handle = useFullScreenHandle();
 
   const [confetti, setConfetti] = useState(false);
-  const [code, setCode] = useState<string>(() => {
-    if (typeof window !== "undefined") {
-      return window.localStorage.getItem(`code-${query.id}`) ?? "";
-    }
-    return "";
-  });
+  const [code, setCode] = useState<string>("");
 
   const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
     unitId: null,
     lessonId: null,
   });
+
   const unitId = searchParams.get("unitId");
   const lessonId = searchParams.get("lessonId");
 
@@ -84,10 +81,6 @@ export const useCodePanel = (): UseCodePanelReturn => {
     setCode(code);
     window.localStorage.setItem(`code-${query.id}`, code);
   }, [query.id]);
-
-  // ONLY LOGINED USER CAN USE
-  useOnlineConnection(user?.id);
-  useRealTimeConnection(user?.id);
 
   const [completeLesson] = useCompleteLessonMutation();
   const [updateLastVisitedDataTrigger] =
