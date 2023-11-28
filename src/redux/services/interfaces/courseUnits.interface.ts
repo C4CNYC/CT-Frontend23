@@ -5,6 +5,7 @@ import { LessonContentType } from "../enums/lesson-content-type.enum";
 import { ILessonContentValidation } from "./lessonContentValidation.interface";
 
 export interface IModule {
+  id: string;
   active: boolean;
   name: string;
   description: string;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import {
   Avatar,
@@ -10,9 +10,8 @@ import {
 } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
-import { ICourse } from "@types";
+import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "@utils";
-import { useManagerGetSingleCourseQuery } from "src/redux/services/manager/courses-manager";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 
@@ -35,12 +34,7 @@ export default function DetailsStep({
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
   const [course, setCourse] = useState<string | null>(data?.[0].id ?? null);
-
-  const {
-    data: courseData,
-    isFetching: isCourseFetching,
-    isLoading: isCourseLoading,
-  } = useManagerGetSingleCourseQuery({ id: course ?? "" }, { refetchOnMountOrArgChange: true, skip: !course })
+  const selectedCourse = useMemo(() => data?.find((c) => c.id === course), [data, course]);
 
   useEffect(() => {
     setCourse(data?.[0].id ?? null)
@@ -137,7 +131,7 @@ export default function DetailsStep({
         <Typography variant="h5" gutterBottom pl={2}>
           Select module
         </Typography>
-        {(!isCourseLoading && !isCourseFetching) ? (
+        {!isLoading ? (
           <RHFSelect
             native
             name="module"
@@ -149,19 +143,19 @@ export default function DetailsStep({
               border: theme.palette.mode === "light" ? "" : "1px solid #fff",
             }}
           >
-            {!courseData?.units?.length &&
+            {!selectedCourse?.units?.length &&
               <option key="empty" value="empty">
-                You don't have any courses
+                You don't have any module
               </option>
             }
-            {courseData?.units
+            {selectedCourse?.units
               ? [
                 <option key="module" value="all">
                   All modules
                 </option>,
-                ...courseData?.units.map((course) => (
-                  <option key={course.id} value={course.id}>
-                    {course.name}
+                ...selectedCourse?.units.map((unit) => (
+                  <option key={unit.id} value={unit.id}>
+                    {unit.name}
                   </option>
                 ))
               ]
