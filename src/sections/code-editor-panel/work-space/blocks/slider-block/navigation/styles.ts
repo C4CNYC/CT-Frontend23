@@ -1,4 +1,5 @@
 import { useTheme } from "@mui/material";
+import { SxProps, Theme } from "@mui/system";
 
 import { BtnType } from ".";
 
@@ -30,11 +31,25 @@ export const stylesPrev = (): Record<string, unknown> => {
   };
 };
 
+export const getTooltipWrapperSx = (theme: Theme): SxProps => ({
+  position: "relative",
+  width: "65%",
+  marginLeft: "-45px",
+  [theme.breakpoints.down(450)]: {
+    width: "75%",
+  },
+});
+
+export const TOOLTIP_CONTENT_SX = {
+  fontSize: "12px",
+  textAlign: "center",
+  width: 170,
+};
+
 export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
-  const theme = useTheme();
   const getBg = (): string => {
     if (btnNext === BtnType.next) {
-      return "#43D4DD";
+      return "#EE467A";
     }
     if (btnNext === BtnType.coding) {
       return "#155275CC";
@@ -46,9 +61,9 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
   };
   return {
     borderRadius: "35px",
-    width: "65%",
-    marginLeft: "-45px",
     pl: "30px",
+    width: "100%",
+    height: "100%",
     color: !(btnNext === BtnType.next || btnNext === BtnType.compleated)
       ? "#43D4DD!important"
       : "#fff",
@@ -59,9 +74,6 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
     "&:hover": {
       backgroundColor: getBg(),
       border: "none",
-    },
-    [theme.breakpoints.down(450)]: {
-      width: "75%",
     },
   };
 };
@@ -78,17 +90,18 @@ export const stylesSkip = () => {
     minWidth: "auto",
     position: "absolute",
     top: "-15px",
-    right: "10px",
+    right: "-13px",
     zIndex: 6,
     [theme.breakpoints.down(1100)]: {
-      top: "-20px",
-      right: "0px",
+      top: "-25px",
+      right: "-5px",
     },
     [theme.breakpoints.down(1000)]: {
-      right: "10px",
+      right: "-13px",
+      top: "-20px",
     },
     [theme.breakpoints.down(450)]: {
-      right: "3px",
+      right: "-3px",
       top: "-25px",
     },
     border: "1px solid #fff",

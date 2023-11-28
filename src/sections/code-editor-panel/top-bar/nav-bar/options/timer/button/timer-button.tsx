@@ -1,9 +1,8 @@
 import Button from "@mui/material/Button";
 
-import { useStyles } from "./style";
-
 interface Props {
-  color: string;
+  color: "primary" | "info" | "error" | "success" | "inherit";
+  variant: "contained" | "soft" | "outlined";
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   text: string;
   disabled?: boolean;
@@ -13,11 +12,17 @@ const TimerButton = ({
   color,
   onClick,
   text,
+  variant,
   ...rest
 }: Props): React.ReactElement => {
-  const classes = useStyles({ color });
   return (
-    <Button {...rest} onClick={onClick} classes={{ root: classes.timerButton }}>
+    <Button
+      {...rest}
+      color={color}
+      variant={variant}
+      onClick={onClick}
+      sx={{ minWidth: 130 }}
+    >
       {text}
     </Button>
   );

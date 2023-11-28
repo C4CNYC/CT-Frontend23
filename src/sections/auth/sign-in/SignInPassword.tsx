@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
@@ -19,14 +19,23 @@ export default function SingInPassword({
   nextStep,
   isSubmiting,
   isError,
+  currentStep,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true);
 
   if (isError) {
     if (nextStep) {
       nextStep();
     }
   }
+
+  useEffect(() => {
+    if (currentStep === 2) {
+      setIsDisabletBtn(false);
+    }
+  }, [currentStep]);
+
   return (
     <>
       <IconButton
@@ -41,7 +50,12 @@ export default function SingInPassword({
       </IconButton>
       <Stack
         direction="row"
-        sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 }, mt: 1, mb: 4 }}
+        sx={{
+          alignItems: "center",
+          ml: { xs: 3, sm: 3, md: 0 },
+          mt: 1,
+          mb: 4,
+        }}
       >
         <Typography variant="h3">Sign in with Email</Typography>
         <Typography variant="h2" sx={{ ml: 1 }}>
@@ -75,6 +89,7 @@ export default function SingInPassword({
         />
         <LoadingButton
           type="submit"
+          disabled={isDisabledBtn}
           loading={isSubmiting}
           sx={(theme) => ({
             background: "#43D4DD33",

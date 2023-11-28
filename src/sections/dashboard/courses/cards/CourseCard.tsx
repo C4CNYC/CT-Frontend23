@@ -26,6 +26,7 @@ import { BaseResponseInterface } from "@utils";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
+import * as Yup from "yup";
 
 interface ICourseCardProps {
   course: ICourse & BaseResponseInterface;
@@ -184,12 +185,16 @@ export default function CourseCard({
           id={course.id}
           defaultValues={{
             name: course.name,
+            content_id: course.content_id === course.name ? "" : course.content_id,
             level: course.level,
             price: course.price.substring(1),
             description: course.description,
             active: course.active,
             public: course.public,
             skills: course.skills,
+            initial_likes: course.initial_likes,
+            initial_stars: course.initial_stars,
+            initial_enrolled: course.initial_enrolled,
           }}
         >
           <MenuItem>

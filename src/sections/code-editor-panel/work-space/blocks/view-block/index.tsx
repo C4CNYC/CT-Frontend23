@@ -1,14 +1,12 @@
 import { type FC } from "react";
 
 import { CgBrowser } from "react-icons/cg";
+import { TbArrowBarToRight } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-
-import { Typography } from "@mui/material";
 
 import { toggleBrowser } from "src/redux/slices/code-panel-global";
 import { type RootState } from "src/redux/store";
 
-import { type SupportedLang } from "../..";
 import BaseBlock from "../base-block";
 import BrowserView, { CodeDocument } from "./browser-view";
 
@@ -28,6 +26,8 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
 
   return (
     <BaseBlock
+      closeIcon={<TbArrowBarToRight size={20} />}
+      isLeftBtn={true}
       title={TITLE}
       icon={icon}
       className="browserTour"

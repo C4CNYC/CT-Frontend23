@@ -17,6 +17,7 @@ import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/fri
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { BaseResponseInterface } from "@utils";
 import { useSelector } from "src/redux/store";
+import { useFilters } from "@hooks";
 
 type FriendUser = IFriend & BaseResponseInterface
 
@@ -34,9 +35,12 @@ interface UseNavPanelReturn {
   activeUsersAmount: number
   isCodeBlocksVisible: boolean
   isUsersLoading: boolean
+  onLoadMore: () => void
+  hasNextPage: boolean
 }
 
-const DEFAULT_USERS: FriendUser[] = []
+const DEFAULT_FILTERS = { take: 50, page: 1 };
+const FILTER_NAME = "page";
 
 export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>): UseNavPanelReturn => {
   const drawerRef = useRef<HTMLDivElement | null>(null);
@@ -45,10 +49,18 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null);
   const isCodePreviewVisible = useSelector(state => state.codePanelGlobal.isCodePreviewVisible);
   const [isCodeBlocksVisible, setIsCodeBlocksVisible] = useState(false);
+  const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
+  const [users, setUsers] = useState<FriendUser[]>([]);
 
-  const { data, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(
-    { take: 50 },
-  );
+  const { data, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(filters);
+
+  const onLoadMore = () => {
+    if (data == null || data.meta.hasNextPage === false) {
+      return
+    }
+
+    setFilter(FILTER_NAME, data.meta.page  + 1);
+  }
 
   const onAddBlock = (user: FriendUser): void => {
     const newPreviewedUsers = [...previewdUsers];
@@ -131,9 +143,13 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
     return () => {
       clearTimeout(timeout);
     }
-  }, [isCodePreviewVisible])
+  }, [isCodePreviewVisible]);
 
-  const users = data?.data ?? DEFAULT_USERS;
+  useEffect(() => {
+    if (data?.data != null) {
+      setUsers((prev) => [...prev, ...data.data])
+    }
+  }, [data?.data])
 
   const { activeUsersAmount, sortedUsers } = useMemo(() => {
     const sortedUsers = [...users]
@@ -156,6 +172,8 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
     users: sortedUsers,
     isCodePreviewVisible,
     isCodeBlocksVisible,
-    isUsersLoading
+    isUsersLoading,
+    onLoadMore,
+    hasNextPage: data?.meta.hasNextPage ?? false
   }
 }

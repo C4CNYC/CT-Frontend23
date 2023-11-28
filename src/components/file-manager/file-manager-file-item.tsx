@@ -19,7 +19,7 @@ import { IFileManager } from 'src/@types/file';
 // components
 import { Iconify } from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
-import { ConfirmDialog, Image, TextMaxLine } from "@components";
+import { ConfirmDialog, Image, TextMaxLine, useSnackbar } from "@components";
 import * as React from "react";
 import FileManagerNewFolderDialog from "./file-manager-new-folder-dialog";
 import { useUpdateMediaMutation, useUpdateMediaPathMutation } from "../../redux/services/manager/media-manager";
@@ -28,6 +28,8 @@ import _ from "lodash";
 import FileManagerMoveFolderDialog from "./file-manager-move-folder";
 import { SelectChangeEvent } from "@mui/material";
 import { useProfileQuery } from "../../redux/services/auth";
+import { BiCopy } from "react-icons/bi";
+import { useCopyToClipboard } from "@hooks";
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +54,8 @@ export default function FileManagerFileItem({
   paths,
   ...other
 }: Props) {
+  const { copy } = useCopyToClipboard();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [checkbox, setCheckbox] = useState<boolean>();
   const [confirm, setConfirm] = useState<boolean>(false)
@@ -96,12 +100,42 @@ export default function FileManagerFileItem({
   const renderText = (
     <>
       <TextMaxLine
-        persistent
         variant="subtitle2"
-        sx={{ width: 1, mt: 2, mb: 0.5 }}
+        sx={{ width: 1, mt: 1, mb: 1 }}
       >
         {file.name}
       </TextMaxLine>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          backgroundColor: '#d9d9d9',
+          paddingLeft: 8,
+          paddingRight: 8,
+          borderRadius: 10,
+          marginBottom: 8,
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          copy(file.url)
+          enqueueSnackbar('Copied to clipboard');
+        }}
+      >
+        <div
+          style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            // @ts-ignore
+            textWrap: 'nowrap',
+            maxWidth: 234
+          }}
+        >
+          <span style={{ maxWidth: 250 }}>{filePath}/{file.name}</span>
+        </div>
+        <BiCopy />
+      </div>
 
       <Stack
         direction="row"

@@ -5,7 +5,6 @@ import CodeEditorCollab from "src/components/code-editor-collab";
 import { useSelector } from "src/redux/store";
 import { voidFunction } from "@utils";
 import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket";
-import { CodeDocument } from "../view-block/browser-view";
 
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void

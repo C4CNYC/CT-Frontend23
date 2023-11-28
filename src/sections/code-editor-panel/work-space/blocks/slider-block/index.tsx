@@ -4,6 +4,7 @@ import React, { type FC, useEffect, useMemo, useRef, useState } from "react";
 import _ from "lodash";
 import { parse } from "node-html-parser";
 import { SlDirections } from "react-icons/sl";
+import { TbArrowBarToLeft } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import Carousel from "react-slick";
 
@@ -21,9 +22,9 @@ import {
   toggleInstrations,
 } from "src/redux/slices/code-panel-global";
 import { useSelector } from "src/redux/store";
+import BrowserView from "src/sections/code-panel/work-space/blocks/view-block/BrowserView";
 
 import BaseBlock from "../base-block";
-import BrowserView from "../view-block/browser-view";
 import { getBoxSx, getCarouselSettings } from "./constants";
 import LoaderDelay from "./loader-delay";
 import Navigation from "./navigation";
@@ -160,6 +161,8 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   return (
     <BaseBlock
+      closeIcon={<TbArrowBarToLeft size={20} />}
+      isLeftBtn={false}
       className="instructions"
       title={title}
       icon={icon}
@@ -214,7 +217,6 @@ const View: FC<IView> = ({ type, body, connectIntegrations }) => {
     case "editable":
       return <ProsaMirrorView multimediaValue={body} />;
     case "code":
-      //@ts-expect-error
       return <BrowserView value={connectIntegrations(body) ?? ""} />;
     default:
       return <>CONTENT TYPE NOT SUPPORTED</>;

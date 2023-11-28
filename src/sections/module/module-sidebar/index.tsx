@@ -12,6 +12,12 @@ interface IModuleSidebarProps {
   lessonCount: string,
   grade: string,
   duration: string | null,
+  teacherSlides?: string;
+  lessonPlans?: string;
+  teacherForum?: string;
+  certificate: number,
+  likes: number
+  rated: number
 }
 
 export default function ModuleSidebar({
@@ -20,13 +26,23 @@ export default function ModuleSidebar({
     lessonCount,
     duration,
     grade,
+    certificate,
+    likes,
+    rated,
+    teacherSlides,
+    teacherForum,
+    lessonPlans,
   }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1130));
   return (
     <Stack width={350} gap={2} m={isMobile ? "0 auto" : ""}>
       <CollasedItem title="Author & Ranking">
-        <AuthorsSection />
+        <AuthorsSection
+          certificate={certificate ?? 0}
+          likes={likes ?? 0}
+          rated={rated ?? 0}
+        />
       </CollasedItem>
       <CollasedItem title="The Brief">
         <BriefSection
@@ -55,7 +71,11 @@ export default function ModuleSidebar({
       </CollasedItem>
       <QuizPanel lessons={[]} />
       <CollasedItem title="Teacher Toolbox">
-        <TeacherToolbox />
+        <TeacherToolbox
+          teacherForum={teacherForum}
+          teacherSlides={teacherSlides}
+          lessonPlans={lessonPlans}
+        />
       </CollasedItem>
     </Stack>
   );

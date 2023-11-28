@@ -58,12 +58,15 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
+
   const isBrowserHidden = useSelector(
     (state) => state.codePanelGlobal.isBrowserHidden
   );
+
   const isInstructionsHidden = useSelector(
     (state) => state.codePanelGlobal.isInstructionsHidden
   );
+
   const [document, setDocument] = useState<CodeDocument | null>(null);
 
   const onChangeCode = useCallback((doc: Record<string, string>) => {
@@ -77,6 +80,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   const openPreview = () => {
     dispatch(toggleBrowser(false));
   };
+
   if (isDesktop) {
     return (
       <Stack ref={wrapperRef} {...STACK_PROPS}>
@@ -90,7 +94,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           />
         ) : (
           <HidedTabBtn
-            title="Instruction"
+            title="Instructions"
             icon={<TbArrowBarToRight size={20} />}
             openPanelFnc={openInstruction}
           />

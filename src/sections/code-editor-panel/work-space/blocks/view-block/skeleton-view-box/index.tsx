@@ -20,7 +20,7 @@ const SkeletonViewBlock: FC = () => {
         alignItems="center"
         justifyContent="space-between"
         mb="5px"
-        px="30px"
+        pl="30px"
       >
         <Skeleton height="18px" width="192px" sx={SKELETON_SX} />
         <Stack spacing={1} display="flex" direction="row">
