@@ -169,6 +169,9 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             teacher_slides: module.teacher_slides as string,
             teacher_forum: module.teacher_forum as string,
             lesson_plans: module.lesson_plans as string,
+            initial_likes: module.initial_likes as number,
+            initial_stars: module.initial_stars as number,
+            initial_enrolled: module.initial_enrolled as number,
           }}
           moduleTips={module.tips}
         >

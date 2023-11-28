@@ -15,6 +15,9 @@ interface IModuleSidebarProps {
   teacherSlides?: string;
   lessonPlans?: string;
   teacherForum?: string;
+  certificate: number,
+  likes: number
+  rated: number
 }
 
 export default function ModuleSidebar({
@@ -23,6 +26,9 @@ export default function ModuleSidebar({
     lessonCount,
     duration,
     grade,
+    certificate,
+    likes,
+    rated,
     teacherSlides,
     teacherForum,
     lessonPlans,
@@ -32,7 +38,11 @@ export default function ModuleSidebar({
   return (
     <Stack width={350} gap={2} m={isMobile ? "0 auto" : ""}>
       <CollasedItem title="Author & Ranking">
-        <AuthorsSection />
+        <AuthorsSection
+          certificate={certificate ?? 0}
+          likes={likes ?? 0}
+          rated={rated ?? 0}
+        />
       </CollasedItem>
       <CollasedItem title="The Brief">
         <BriefSection

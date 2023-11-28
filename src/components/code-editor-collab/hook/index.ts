@@ -18,6 +18,7 @@ import { unsubscribeSocket, EmitSocketEvents } from "./utils/socket"
 import { useModeSubscriptions } from "./useModeSubscriotions";
 import { EditorMode } from "./constants";
 import { RoomStatus } from "../components/status-label";
+import { RESET_LESSON_EVENT } from "@components";
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
@@ -165,6 +166,26 @@ export const useCodeEditorCollab = ({
     [EditorMode.SubOwner]: runInitSubOwner,
     [EditorMode.Watcher]: runInitWatcher,
   }), [runInitWatcher, runInitOwner, runInitSubOwner]);
+
+  window.addEventListener(RESET_LESSON_EVENT, () => {
+    editorView.current?.destroy();
+    if (initializeBlockedRef.current) {
+      return;
+    }
+    initialize[modeRef.current](firstInit.current);
+  });
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener(RESET_LESSON_EVENT, () => {
+        editorView.current?.destroy();
+        if (initializeBlockedRef.current) {
+          return;
+        }
+        initialize[modeRef.current](firstInit.current);
+      });
+    }
+  }, []);
 
   useModeSubscriptions({
     roomId,

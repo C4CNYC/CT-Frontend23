@@ -106,7 +106,6 @@ export default function Index(): React.ReactElement | null {
         <Head>
           <title> CodePanel: CodeTribe </title>
         </Head>
-
         <FullScreen handle={handle}>
           <Tour />
 

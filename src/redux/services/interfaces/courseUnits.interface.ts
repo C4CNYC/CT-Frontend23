@@ -29,6 +29,9 @@ export interface ICourse {
   level: string;
   price: string;
   description: string;
+  initial_enrolled: number;
+  initial_likes: number;
+  initial_stars: number;
   active: boolean;
   cover: string;
   public: boolean;
