@@ -114,6 +114,7 @@ export default function LessonListItem({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     whiteSpace: "nowrap",
+                    mb: 0,
                   }}
                   gutterBottom
                 >

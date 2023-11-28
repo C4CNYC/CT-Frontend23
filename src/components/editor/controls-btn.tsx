@@ -1,12 +1,12 @@
-import { CgIfDesign } from "react-icons/cg";
 import { FiSettings } from "react-icons/fi";
 import { TbPhoto } from "react-icons/tb";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 import { Button } from "@mui/material";
 import { MediaModal } from "@sections/dashboard/medias/MediaModal";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
 
-export function TemplateBtn(): React.ReactElement {
+export function TipsBtn(): React.ReactElement {
   return (
     <Button
       sx={{
@@ -21,7 +21,7 @@ export function TemplateBtn(): React.ReactElement {
         },
       }}
     >
-      Template <CgIfDesign size={20} />
+      Tips <MdOutlineTipsAndUpdates size={20} />
     </Button>
   );
 }
