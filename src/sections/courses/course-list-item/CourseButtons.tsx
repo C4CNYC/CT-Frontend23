@@ -28,7 +28,7 @@ export default function CourseButtons({
       {progress && progress > 0 ? (
         <Button
           component={Link}
-          onClick={async (e: MouseEvent<HTMLButtonElement>) => {
+          onClick={async (e) => {
             e.stopPropagation();
             e.preventDefault();
             await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`);
