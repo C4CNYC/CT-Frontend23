@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { MouseEvent } from "react";
 
 import { Button, Link, Stack } from "@mui/material";
 
@@ -27,7 +28,7 @@ export default function CourseButtons({
       {progress && progress > 0 ? (
         <Button
           component={Link}
-          onClick={async (e) => {
+          onClick={async (e: MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
             e.preventDefault();
             await push(`${STUDENT_PATH_DASHBOARD.codePanel.root}/${courseId}`);

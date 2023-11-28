@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Typography, Theme } from "@mui/material";
 
 import { Image } from "@components";
 
@@ -45,7 +45,7 @@ export default function EmailNotFound({
             setError("");
             previousStep?.();
           }}
-          sx={(theme) => ({
+          sx={(theme: Theme) => ({
             background: theme.palette.grey[100],
             color: theme.palette.grey[500],
             fontSize: "1.5rem",
