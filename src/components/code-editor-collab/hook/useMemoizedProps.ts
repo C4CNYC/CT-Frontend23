@@ -12,13 +12,13 @@ export interface MemoizedProps {
   defaultFileName: string
 }
 
-interface MemoizedPropsReturn extends Omit<MemoizedProps, 'cursorText' | 'withTooltip'> {
+interface MemoizedPropsReturn extends Omit<MemoizedProps, "cursorText" | "withTooltip"> {
   cursorText: string
   withTooltip: boolean
 }
 
 export const useMemoizedProps = ({
-  cursorText = 'Unknown',
+  cursorText = "Unknown",
   withTooltip = true,
   onChange,
   onResetFileManager,

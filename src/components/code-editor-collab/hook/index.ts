@@ -6,7 +6,7 @@ import {
   useCallback,
   useMemo
 } from "react";
-import { type Extension } from '@uiw/react-codemirror';
+import { type Extension } from "@uiw/react-codemirror";
 import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
@@ -28,7 +28,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
-interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
+interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, "baseInit" | "setIsLoading"> {
   extensions?: Extension[]
   editorRef: RefObject<HTMLDivElement>
   isLoading: boolean
@@ -39,7 +39,7 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' |
 }
 
 export const useCodeEditorCollab = ({
-	roomId,
+  roomId,
   mode = EditorMode.Owner,
   activeFile,
   socket,
@@ -100,7 +100,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active);
 
     if (!isFirstInit) {
-      return await baseInit(activeFile);
+      await baseInit(activeFile); return;
     }
 
     const fileInfo = await getFileInfo(roomId, socket);
@@ -119,7 +119,7 @@ export const useCodeEditorCollab = ({
     const fileInfo = await getFileInfo(roomId, socket);
 
     if (!isFirstInit || fileInfo == null) {
-      return await baseInit(activeFile);
+      await baseInit(activeFile); return;
     }
 
     onResetFileManager(fileInfo);
@@ -218,10 +218,10 @@ export const useCodeEditorCollab = ({
     initialize[modeRef.current](firstInit.current);
   }, [initialize]);
 
-	useEffect(() => {
-    window.addEventListener('beforeunload', clearSocketData);
-		return () => clearSocketData();
-	}, [clearSocketData]);
+  useEffect(() => {
+    window.addEventListener("beforeunload", clearSocketData);
+    return () => { clearSocketData(); };
+  }, [clearSocketData]);
 
   return {
     editorRef,

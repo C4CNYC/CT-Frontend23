@@ -37,10 +37,10 @@ export const unsubscribeSocket = (socket: Socket | null): void => {
   socket?.disconnect();
 };
 
-export const createSocket = (user: null | Record<string, unknown>): Socket => {
+export const createSocket = (userId?: null | string): Socket => {
   return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
     path: "/api",
-    auth: user ? { userId: user.id } : {}
+    auth: userId ? { userId } : {}
   });
 };
 
