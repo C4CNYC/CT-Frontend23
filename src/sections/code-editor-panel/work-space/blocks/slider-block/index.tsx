@@ -72,11 +72,17 @@ const SliderBlock: FC<ISliderBlock> = ({
     Array<{ head?: string; script?: string }>
   >([]);
 
+  const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true);
+
+  const takeHeaderSettings = (isOpen: boolean) => {
+    setIsOpenHeader(isOpen);
+  };
+
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
   const hasNextStep = slideIndex < data.length - 1;
   const stepHasValidation = !!data[slideIndex]?.validations?.length;
-  const boxSx = useMemo(() => getBoxSx(isDesktop), [isDesktop]);
+  const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop]);
 
   useEffect(() => {
     carousel1.current?.slickGoTo(slideIndex);
@@ -175,6 +181,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       hideTabsHandler={() => {
         dispatch(toggleInstrations(true));
       }}
+      takeHeaderSettings={takeHeaderSettings}
     >
       {_.isEmpty(data) ? (
         <EmptyContent title="No Data" />

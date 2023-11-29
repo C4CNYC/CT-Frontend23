@@ -44,7 +44,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
         <head>
           ${getBody(cssBody, TagNames.Style)}
         </head>
-        <body style="height: 100%">
+        <body style="height: 100%; margin: 0;">
           ${htmlBody.join("\n")}
           ${getBody(jsBody, TagNames.Script)}
         </body>
