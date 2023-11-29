@@ -5,11 +5,12 @@ import { useS3Upload } from "next-s3-upload";
 import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
 
-import { isJson } from "@utils";
+import { BaseResponseInterface, isJson } from "@utils";
 import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
 
 import EditorToolbar from "./EditorToolbar";
 import { extensions } from "./extensions-template";
+import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
 
 interface FileWithProgress {
   file: File;
@@ -28,6 +29,8 @@ interface Props {
   setMultimediaValue?: (value: string) => void;
   onSubmit?: () => void;
   locked?: boolean;
+  data: (ILessonContent & BaseResponseInterface);
+  lessonId: string;
 }
 
 function Editor({
@@ -36,6 +39,8 @@ function Editor({
   onSubmit,
   multimediaValue,
   setMultimediaValue,
+  data,
+  lessonId
 }: Props): React.ReactElement {
   const { uploadToS3 } = useS3Upload();
   const [createMedia] = useCreateMediaMutation();
@@ -144,7 +149,7 @@ function Editor({
         manager={manager}
         state={state}
         // initialContent={state}
-        autoFocus
+        autoFocus={editable}
         autoRender="end"
         onChange={(parameter) => {
           onChange(parameter);
@@ -157,10 +162,10 @@ function Editor({
       >
         {typeof locked === "undefined" ? (
           editable ? (
-            <EditorToolbar saveContent={saveContent} />
+            <EditorToolbar saveContent={saveContent} data={data} lessonId={lessonId} />
           ) : null
         ) : (
-          <EditorToolbar saveContent={saveContent} />
+          <EditorToolbar saveContent={saveContent} data={data} lessonId={lessonId} />
         )}
       </Remirror>
     </ThemeProvider>

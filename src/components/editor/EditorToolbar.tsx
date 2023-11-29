@@ -22,7 +22,6 @@ import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/Les
 
 import { LockButton } from "./LockButton";
 import { SaveButton } from "./SaveButton";
-import { ChallengeBtn, MediaBtn, SettingsBtn, TemplateBtn } from "./controls-btn";
 import {
   FontFamilyButtons,
   FontSizeButtons,
@@ -31,13 +30,20 @@ import {
   TextColorPicker,
 } from "./toolbars";
 import EmojiPickerBtn from "./toolbars/EmojiPicker";
+import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
+import { BaseResponseInterface } from "@utils";
+import MenuItems from "./MenuItems";
 
 interface Props {
   saveContent: () => void;
+  data: (ILessonContent & BaseResponseInterface);
+  lessonId: string;
 }
 
 export default function EditorToolbar({
   saveContent,
+  data,
+  lessonId
 }: Props): React.ReactElement {
   const { locked } = useContext(LessonContentContext);
 
@@ -55,52 +61,32 @@ export default function EditorToolbar({
           borderBottom: "1px solid #cbcbcb",
         }}
       >
-        {!locked ? (
-          <>
-            {" "}
-            <Stack direction="column" sx={{ width: "100%", gap: 1 }}>
-              <Stack direction="row" justifyContent="space-between" gap={1}>
-                <Stack
-                  flexDirection="row"
-                  sx={{ flexWrap: "wrap", gap: 1, alignItems: "center" }}
-                >
-                  <ToggleBoldButton />
-                  <CommandButtonGroup>
-                    <ToggleOrderedListButton />
-                  </CommandButtonGroup>
-                  <TextColorPicker />
-                  <TextBgColorPicker />
-                  <CommandButtonGroup>
-                    <ToggleTaskListButton />
-                  </CommandButtonGroup>
-                  <EmojiPickerBtn />
-                </Stack>
-
-                <LockButton />
-              </Stack>
-
+        <>
+          {" "}
+          <Stack direction="column" sx={{ width: "100%", gap: 1 }}>
+            <Stack direction="row" justifyContent="space-between" gap={1}>
               <Stack
-                direction="row"
-                sx={{
-                  maxWidth: "450px",
-                  gap: 1,
-                  flexWrap: "wrap",
-                  justifyContent: "space-between",
-                }}
+                flexDirection="row"
+                sx={{ flexWrap: "wrap", gap: 1, alignItems: "center" }}
               >
-                <TemplateBtn />
-                <ChallengeBtn />
-                <SettingsBtn />
-                <MediaBtn />
+                <ToggleBoldButton />
+                <CommandButtonGroup>
+                  <ToggleOrderedListButton />
+                </CommandButtonGroup>
+                <TextColorPicker />
+                <TextBgColorPicker />
+                <CommandButtonGroup>
+                  <ToggleTaskListButton />
+                </CommandButtonGroup>
+                <EmojiPickerBtn />
               </Stack>
+
+              <SaveButton onClick={saveContent} />
             </Stack>
-          </>
-        ) : (
-          <Stack direction="row" gap={2} ml="auto">
-            <LockButton />
-            <SaveButton onClick={saveContent} />
+
+            <MenuItems data={data} lessonId={lessonId} />
           </Stack>
-        )}
+        </>
       </Toolbar>
       {!locked ? (
         <FloatingToolbar

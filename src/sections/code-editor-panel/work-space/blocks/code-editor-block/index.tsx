@@ -114,6 +114,8 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       title={<Title room={room} onResetRoom={onResetRoom} />}
       icon={icon}
       className="codeEditorTour"
+      isLeftBlock={true}
+      isLeftBtn={true}
     >
       <style>{getTitleStyles(isDesktop)}</style>
 

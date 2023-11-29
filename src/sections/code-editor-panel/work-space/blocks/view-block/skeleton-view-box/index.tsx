@@ -11,7 +11,11 @@ import {
   getStackBottonSx,
 } from "./constants";
 
-const SkeletonViewBlock: FC = () => {
+interface ISkeletonProps {
+  isOpenHeader: boolean | undefined;
+}
+
+const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
   const theme = useTheme();
   const isLight = theme.palette.mode === "light";
   const skeletonSx = useMemo(() => getSkeletonSx(isLight), [isLight]);
@@ -22,7 +26,11 @@ const SkeletonViewBlock: FC = () => {
   );
 
   return (
-    <Stack sx={parentStackSx} width="100%" height="100vh">
+    <Stack
+      sx={parentStackSx}
+      width="100%"
+      height={isOpenHeader ? "calc(100% - 34px)" : "100vh"}
+    >
       <Stack
         display="flex"
         direction="row"
