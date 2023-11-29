@@ -93,10 +93,10 @@ const CodeContent: FC = () => {
   return (
     <DialogContent sx={DIALOG_CONTENT_STYLES}>
       <Typography mb="30px" variant="h4">
-        TRAINING SOLUTION CODE
+        SOLUTION CODE
       </Typography>
       <CopyBlock
-        text={solutionCode}
+        text={solutionCode || "Not available for this step."}
         language="html"
         theme={dracula}
         wrapLines

@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 import { BsCodeSlash } from "react-icons/bs";
 import { MdOutlinePermMedia } from "react-icons/md";
 
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
@@ -19,6 +19,26 @@ import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
 import StepMultimedia from "./StepMultimedia";
+import { styled } from "@mui/material/styles";
+import { CgScreen } from "react-icons/cg";
+import { IoMdInformationCircleOutline } from "react-icons/io";
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  "& .MuiToggleButton-root": {
+    paddingBottom: 2,
+    paddingTop: 2,
+    "&.Mui-selected": {
+      backgroundColor: "#fff",
+      color: "#4396e6",
+      "&:hover": {
+        backgroundColor: "#fff",
+      },
+    },
+    "&:hover": {
+      backgroundColor: "#fff",
+    },
+  },
+}))
 
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;
@@ -95,23 +115,53 @@ export default function StepContentEditor(): React.ReactElement {
             px: "15px",
           }}
         >
-          <Tabs
-            value={bodyType}
-            onChange={(event, newValue) => {
-              setBodyType(newValue);
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4
             }}
           >
-            <Tab
-              value={LessonContentType.Editable}
-              icon={<MdOutlinePermMedia size="20px" />}
-              label="multimedia"
-            />
-            <Tab
-              value={LessonContentType.Code}
-              icon={<BsCodeSlash size="20px" />}
-              label="code"
-            />
-          </Tabs>
+            <StyledToggleButtonGroup
+              size="small"
+              exclusive
+              value={bodyType}
+              onChange={(_, newValue) => {
+                setBodyType(newValue);
+              }}
+              aria-label="select slide type"
+            >
+              <ToggleButton value={LessonContentType.Editable} aria-label="Standard" sx={{ gap: 1 }}>
+                <MdOutlinePermMedia size="20px" /> Standard
+              </ToggleButton>
+              <ToggleButton value={LessonContentType.Code} aria-label="HTML" sx={{ gap: 1 }}>
+                <BsCodeSlash size="20px" /> HTML
+              </ToggleButton>
+            </StyledToggleButtonGroup>
+            <div
+              style={{
+                lineHeight: 0,
+                gap: 2,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <IoMdInformationCircleOutline size="14px" color="#4396e6" />
+              <span style={{
+                opacity: .6,
+                fontSize: 12,
+              }}>Select slide format</span>
+            </div>
+          </div>
+          <div style={{
+            gap: 16,
+            display: 'flex',
+            alignItems: 'center',
+            opacity: .5,
+          }}>
+            <CgScreen size="30px" />
+            Preview
+          </div>
         </Box>
         <Box
           sx={{
@@ -126,6 +176,8 @@ export default function StepContentEditor(): React.ReactElement {
                 data?.type === LessonContentType.Editable ? data?.body : ""
               }
               onSubmit={onSubmit}
+              data={data!}
+              lessonId={lessonId as string}
             />
           ) : null}
           {bodyType === LessonContentType.Code ? (
@@ -133,6 +185,8 @@ export default function StepContentEditor(): React.ReactElement {
               content={data?.type === LessonContentType.Code ? data?.body : ""}
               integrations={integrations ?? []}
               onSubmit={onSubmit}
+              data={data!}
+              lessonId={lessonId as string}
             />
           ) : null}
         </Box>

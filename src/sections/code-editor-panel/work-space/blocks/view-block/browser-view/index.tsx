@@ -10,6 +10,7 @@ export interface CodeDocument {
 
 interface BrowserViewProps {
   document: CodeDocument | null;
+  isOpenHeader?: boolean;
 }
 
 enum TagNames {
@@ -29,7 +30,7 @@ const getBody = (bodyList: string[], tagName: TagNames): string =>
     ""
   );
 
-const BrowserView: FC<BrowserViewProps> = ({ document }) => {
+const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
   const [docSrc, setDocSrc] = useState("");
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const BrowserView: FC<BrowserViewProps> = ({ document }) => {
   return document != null ? (
     <iframe srcDoc={docSrc} style={IFRAME_STYLE} />
   ) : (
-    <SkeletonViewBlock />
+    <SkeletonViewBlock isOpenHeader={isOpenHeader} />
   );
 };
 

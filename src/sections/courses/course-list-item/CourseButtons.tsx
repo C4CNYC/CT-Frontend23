@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { MouseEvent } from "react";
 
 import { Button, Link, Stack } from "@mui/material";
 

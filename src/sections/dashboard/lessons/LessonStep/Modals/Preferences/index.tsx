@@ -19,7 +19,7 @@ import {
   Tabs,
 } from "@mui/material";
 
-import { FormProvider, ModalCodeFullscreen, RHFCode } from "@components";
+import { FormProvider, ModalCodeFullscreen, RHFCode, RHFTextField } from "@components";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
 
@@ -49,6 +49,7 @@ interface Props {
   lessonId: string;
   contentId: string;
   defaultValues?: FormValuesProps;
+  defaultTab?: number;
 }
 
 interface TabPanelProps {
@@ -94,9 +95,10 @@ export default function Preferences({
     solution_body: "",
     tags: [],
   },
+  defaultTab = 0,
 }: Props): React.ReactElement {
-  const [open, setOpenDialog] = useState<boolean>(false);
-  const [value, setValue] = useState(0);
+  const [open, setOpenDialog] = useState<boolean>( false);
+  const [value, setValue] = useState(defaultTab);
 
   const handleChange = (
     event: React.SyntheticEvent,
@@ -160,6 +162,7 @@ export default function Preferences({
                   <Tab label="General" {...a11yProps(0)} />
                   <Tab label="Solution" {...a11yProps(1)} />
                   <Tab label="Preload" {...a11yProps(2)} />
+                  <Tab label="Tips" {...a11yProps(3)} />
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
@@ -192,6 +195,14 @@ export default function Preferences({
                     extensions={[javascript({ jsx: true })]}
                   />
                 </Box>
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <RHFTextField
+                  multiline
+                  rows={3}
+                  name="tips"
+                  label="Tips"
+                />
               </TabPanel>
             </DialogContent>
             <DialogActions>
