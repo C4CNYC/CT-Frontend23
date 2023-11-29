@@ -9,13 +9,15 @@ export const getBoxSx = (isDesktop: boolean): SxProps => ({
   "& .slick-track": {
     "& .slick-slide": {
       "&  div:first-of-type": {
-        height: isDesktop ? "84vh" : "90vh",
+        height: isDesktop ? "90vh" : "90vh",
       },
     },
   },
 });
 
-export const getCarouselSettings = (onBeforeChange: (_: number, next: number) => void) => ({
+export const getCarouselSettings = (
+  onBeforeChange: (_: number, next: number) => void
+) => ({
   speed: 50,
   dots: false,
   arrows: false,
@@ -23,5 +25,5 @@ export const getCarouselSettings = (onBeforeChange: (_: number, next: number) =>
   draggable: false,
   slidesToScroll: 1,
   className: "innerDiv",
-  beforeChange: onBeforeChange
+  beforeChange: onBeforeChange,
 });
