@@ -6,7 +6,7 @@ export const getBoxSx = (
 ): SxProps => ({
   overflowY: "scroll",
   scrollbarWidth: "none",
-  height: isOpenHeader ? "calc(100vh - 108px)" : "calc(100vh - 140px)",
+  height: isOpenHeader ? "calc(100vh - 80px)" : "calc(100vh - 110px)",
   "&::-webkit-scrollbar": {
     width: 0,
   },
@@ -20,7 +20,7 @@ export const getBoxSx = (
     height: "100%",
     "& .slick-slide": {
       "&  div:first-of-type": {
-        height: isDesktop ? "100%" : "100%",
+        height: "100%",
       },
     },
   },

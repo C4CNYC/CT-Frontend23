@@ -1,5 +1,12 @@
 import dynamic from "next/dynamic";
-import React, { type FC, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  type FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import _ from "lodash";
 import { parse } from "node-html-parser";
@@ -50,6 +57,11 @@ interface IView {
   connectIntegrations: (body: string) => CodeDocument | null;
 }
 
+interface ILoadedIntegrations {
+  head?: string;
+  script?: string;
+}
+
 const title = "Instructions";
 const icon = <SlDirections size="20px" color="#43D4DD" />;
 
@@ -69,20 +81,27 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [loadingIntegrations, setLoadingIntegrations] = useState<boolean>(true);
   const [loadedIntegrations, setLoadedIntegrations] = useState<
-    Array<{ head?: string; script?: string }>
+    ILoadedIntegrations[]
   >([]);
+
+  const takeHeaderSettings = useCallback((isOpen: boolean) => {
+    setIsOpenHeader(isOpen);
+  }, []);
 
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true);
 
-  const takeHeaderSettings = (isOpen: boolean) => {
-    setIsOpenHeader(isOpen);
-  };
+  // const takeHeaderSettings = (isOpen: boolean) => {
+  //   setIsOpenHeader(isOpen);
+  // };
 
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
   const hasNextStep = slideIndex < data.length - 1;
   const stepHasValidation = !!data[slideIndex]?.validations?.length;
-  const boxSx = useMemo(() => getBoxSx(isDesktop, isOpenHeader), [isDesktop]);
+  const boxSx = useMemo(
+    () => getBoxSx(isDesktop, isOpenHeader),
+    [isDesktop, isOpenHeader]
+  );
 
   useEffect(() => {
     carousel1.current?.slickGoTo(slideIndex);
