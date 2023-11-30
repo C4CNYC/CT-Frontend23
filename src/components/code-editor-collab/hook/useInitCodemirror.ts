@@ -34,6 +34,7 @@ interface UseBaseInit  {
   roomId: string
   cursorText: string
   defaultFileName: string
+  preloadedCode?: string
 }
 
 export interface UseBaseInitReturn {
@@ -52,12 +53,13 @@ export const useInitCodemirror = ({
   roomId,
   cursorText,
   defaultFileName,
+  preloadedCode,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0);
   const [doc, setDoc] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
-  
+
   const baseInit = useCallback(async (fileName: File) => {
     const lineWrap = new Compartment();
     const addCursor = StateEffect.define<Cursor>();
@@ -68,11 +70,12 @@ export const useInitCodemirror = ({
       socket,
       cursorName: cursorText,
       defaultFileName,
+      preloadedCode,
     });
 
     setExtensions([
       indentUnit.of("\t"),
-      basicSetup(BASIC_SETUP), 
+      basicSetup(BASIC_SETUP),
       ...language(fileName),
       dracula,
       lineWrap.of(EditorView.lineWrapping),

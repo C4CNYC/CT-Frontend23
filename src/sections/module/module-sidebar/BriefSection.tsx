@@ -12,9 +12,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { convertDuration } from "@utils";
 
 interface IBriefSectionProps {
-  duration: string;
+  duration: {
+    hours: string;
+    minutes: string;
+  };
   level: string;
   lessons: string;
   grade: string;
@@ -43,7 +47,7 @@ export default function BriefSection({
           <ListItemIcon>
             <AiOutlineClockCircle size={20} />
           </ListItemIcon>
-          <ListItemText primary={duration} />
+          <ListItemText primary={convertDuration(duration)} />
         </ListItem>
         <ListItem>
           <ListItemIcon>

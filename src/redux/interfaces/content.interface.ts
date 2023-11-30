@@ -74,6 +74,9 @@ export interface ILesson {
   tips: string[] | [];
   progress?: number;
   skills: ISkill[];
+  independent?: boolean;
+  contents: ILessonContent[]
+  type: 'practical' | 'exercise';
 }
 
 export interface ILessonCurrent {
@@ -86,6 +89,13 @@ export interface ILessonCurrent {
   progress?: number | null;
 }
 
+export interface ILessonContentProgress {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  progress_meta: Record<string, string>;
+}
+
 export interface ILessonContent {
   body: string;
   preload_body: string;
@@ -95,7 +105,7 @@ export interface ILessonContent {
   type: LessonContentType;
   meta: Record<string, any>;
   integrations: IIntegration[];
-  progress?: number | null;
+  progress?: ILessonContentProgress[];
 }
 
 export interface ISkill {
