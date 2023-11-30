@@ -106,7 +106,7 @@ export default function ClassMembersAutocomplete({
         tagValue.map((option, index) => (
           <Chip
             avatar={<CustomAvatar alt={option.email} src={option.avatar} />}
-            label={option.account.email}
+            label={option?.account?.email}
             {...getTagProps({ index })}
             key={option.email}
           />
