@@ -18,7 +18,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { Stack } from "@mui/system";
+import { Stack, useTheme } from "@mui/system";
 
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -49,7 +49,7 @@ export default function ShareGroupModal({
     schoolClass.setting.request_join_enable ? "true" : "false"
   );
   const [updateClass, { isLoading }] = useUpdateClassesSettingsMutation();
-
+  const theme = useTheme();
   const handleOpen = () => {
     setOpen(true);
   };
@@ -129,7 +129,7 @@ export default function ShareGroupModal({
           <Box>
             <Typography
               fontSize="20px"
-              color="#292929"
+              color={theme.palette.text.primary}
               variant="h4"
               textAlign="center"
             >
@@ -137,7 +137,7 @@ export default function ShareGroupModal({
             </Typography>
             <Typography
               fontSize="16px"
-              color="#4f4f4f"
+              color={theme.palette.text.secondary}
               mt="12px"
               mb="40px"
               textAlign="center"
@@ -176,13 +176,14 @@ export default function ShareGroupModal({
                 <Iconify icon="basil:copy-outline" width={18} height={18} />
               </Button>
               <Box ml="10px">
-                <Typography>Invite link:</Typography>
+                <Typography color="#212B36">Invite link:</Typography>
                 <Typography
                   noWrap
                   sx={{
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     maxWidth: "180px",
+                    color: "#212B36",
                   }}
                 >
                   {shareLink}
@@ -242,7 +243,10 @@ export default function ShareGroupModal({
                       />
                     }
                     label={
-                      <Typography color="#292929" variant="h6">
+                      <Typography
+                        color={theme.palette.text.primary}
+                        variant="h6"
+                      >
                         Anyone with the link can join
                       </Typography>
                     }
@@ -260,7 +264,10 @@ export default function ShareGroupModal({
                       />
                     }
                     label={
-                      <Typography color="#292929" variant="h6">
+                      <Typography
+                        color={theme.palette.text.primary}
+                        variant="h6"
+                      >
                         Only people you approve can join
                       </Typography>
                     }
@@ -284,7 +291,7 @@ export default function ShareGroupModal({
                 variant="h6"
                 fontSize="16px"
                 m="0px 0px 13px"
-                color="#292929"
+                color={theme.palette.text.primary}
               >
                 Other ways to add students:
               </Typography>
