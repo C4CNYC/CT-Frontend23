@@ -15,10 +15,7 @@ import {
 import { convertDuration } from "@utils";
 
 interface IBriefSectionProps {
-  duration: {
-    hours: string;
-    minutes: string;
-  };
+  duration: string;
   level: string;
   lessons: string;
   grade: string;
@@ -47,7 +44,7 @@ export default function BriefSection({
           <ListItemIcon>
             <AiOutlineClockCircle size={20} />
           </ListItemIcon>
-          <ListItemText primary={convertDuration(duration)} />
+          <ListItemText primary={duration} />
         </ListItem>
         <ListItem>
           <ListItemIcon>
