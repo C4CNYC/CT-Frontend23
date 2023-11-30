@@ -60,7 +60,8 @@ export const useCodeEditorCollab = ({
     onChange,
     setActiveFile,
     onResetFileManager,
-    defaultFileName
+    defaultFileName,
+    preloadedCode
   } = useMemoizedProps(propsToMemoize);
 
   const onCreateEditor = (view: EditorView): void => {
@@ -82,7 +83,8 @@ export const useCodeEditorCollab = ({
     onChange,
     roomId,
     cursorText,
-    defaultFileName
+    defaultFileName,
+    preloadedCode,
   })
 
   const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {

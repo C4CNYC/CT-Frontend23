@@ -37,9 +37,10 @@ const ProsaMirrorView = dynamic(
 interface ISliderBlock {
   data: Array<ILessonContent & BaseResponseInterface>;
   onSubmitLesson: () => void;
-  onSubmitChalange: (slideId: string) => void;
+  onSubmitChalange: (slideId: string, code?: string) => void;
   integrations: Array<IIntegration & BaseResponseInterface>;
   isFetching: boolean;
+  code: string;
 }
 
 interface IView {
@@ -57,6 +58,7 @@ const SliderBlock: FC<ISliderBlock> = ({
   onSubmitChalange,
   integrations,
   isFetching,
+  code,
 }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -133,7 +135,7 @@ const SliderBlock: FC<ISliderBlock> = ({
 
   const handleNext = (skip = false): void => {
     if (stepHasValidation && !skip) {
-      onSubmitChalange(data[slideIndex].id);
+      onSubmitChalange(data[slideIndex].id, code);
     }
     if (hasNextStep) {
       carousel1.current?.slickNext();
