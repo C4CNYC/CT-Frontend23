@@ -1,11 +1,4 @@
-import {
-  type FC,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type FC, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import { BiCodeAlt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
@@ -17,9 +10,8 @@ import { type BaseResponseInterface } from "@utils";
 import { type AuthUserType } from "src/auth/types";
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { type IValidation } from "src/redux/interfaces/content.interface";
-import {
-  setRoom,
-} from "src/redux/slices/code-editor-controller";
+
+import { setRoom } from "src/redux/slices/code-editor-controller";
 import { useSelector } from "src/redux/store";
 import { mapValidations } from "src/utils/validationMaping";
 
