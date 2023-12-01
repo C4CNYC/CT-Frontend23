@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 
 import { useSnackbar } from "notistack";
 import { BsCodeSlash } from "react-icons/bs";
+import { CgScreen } from "react-icons/cg";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdOutlinePermMedia } from "react-icons/md";
 
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import {
@@ -19,26 +22,23 @@ import SkeletonContentCode from "./SkeletonContentCode";
 import SkeletonContentMulti from "./SkeletonContentMulti";
 import StepCode from "./StepCode";
 import StepMultimedia from "./StepMultimedia";
-import { styled } from "@mui/material/styles";
-import { CgScreen } from "react-icons/cg";
-import { IoMdInformationCircleOutline } from "react-icons/io";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   "& .MuiToggleButton-root": {
     paddingBottom: 2,
     paddingTop: 2,
     "&.Mui-selected": {
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.background.default,
       color: "#4396e6",
       "&:hover": {
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.background.default,
       },
     },
     "&:hover": {
-      backgroundColor: "#fff",
+      backgroundColor: theme.palette.background.default,
     },
   },
-}))
+}));
 
 export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;
@@ -98,28 +98,28 @@ export default function StepContentEditor(): React.ReactElement {
       }}
     >
       <Box
-        sx={{
+        sx={(theme) => ({
           position: "relative",
           boxSizing: "border-box",
-          backgroundColor: "#FFF",
-        }}
+          backgroundColor: theme.palette.background.default,
+        })}
       >
         <Box
-          sx={{
+          sx={(theme) => ({
             position: "relative",
             height: "48px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            background: "#f4f5f7",
+            background: theme.palette.background.default,
             px: "15px",
-          }}
+          })}
         >
           <div
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
             }}
           >
             <StyledToggleButtonGroup
@@ -131,10 +131,18 @@ export default function StepContentEditor(): React.ReactElement {
               }}
               aria-label="select slide type"
             >
-              <ToggleButton value={LessonContentType.Editable} aria-label="Standard" sx={{ gap: 1 }}>
+              <ToggleButton
+                value={LessonContentType.Editable}
+                aria-label="Standard"
+                sx={{ gap: 1 }}
+              >
                 <MdOutlinePermMedia size="20px" /> Standard
               </ToggleButton>
-              <ToggleButton value={LessonContentType.Code} aria-label="HTML" sx={{ gap: 1 }}>
+              <ToggleButton
+                value={LessonContentType.Code}
+                aria-label="HTML"
+                sx={{ gap: 1 }}
+              >
                 <BsCodeSlash size="20px" /> HTML
               </ToggleButton>
             </StyledToggleButtonGroup>
@@ -142,23 +150,29 @@ export default function StepContentEditor(): React.ReactElement {
               style={{
                 lineHeight: 0,
                 gap: 2,
-                display: 'flex',
-                alignItems: 'center',
+                display: "flex",
+                alignItems: "center",
               }}
             >
               <IoMdInformationCircleOutline size="14px" color="#4396e6" />
-              <span style={{
-                opacity: .6,
-                fontSize: 12,
-              }}>Select slide format</span>
+              <span
+                style={{
+                  opacity: 0.6,
+                  fontSize: 12,
+                }}
+              >
+                Select slide format
+              </span>
             </div>
           </div>
-          <div style={{
-            gap: 16,
-            display: 'flex',
-            alignItems: 'center',
-            opacity: .5,
-          }}>
+          <div
+            style={{
+              gap: 16,
+              display: "flex",
+              alignItems: "center",
+              opacity: 0.5,
+            }}
+          >
             <CgScreen size="30px" />
             Preview
           </div>

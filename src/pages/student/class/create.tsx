@@ -151,7 +151,6 @@ export default function CreateClass(): React.ReactElement {
               pr: { xs: 2, sm: 3, lg: 4 },
               pt: 2,
               pb: 2,
-              backgroundColor: "#ffffff"
             }}
           >
             <Button

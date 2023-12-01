@@ -14,6 +14,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import {
   FormProvider,
+  RHFSelect,
   RHFSwitch,
   RHFTextField,
   useSnackbar,
@@ -33,6 +34,8 @@ interface FormValuesProps {
   description: string;
   active: boolean;
   tips: string;
+  independent: boolean;
+  type: 'practical' | 'exercise' | 'quiz';
 }
 
 interface ICreateLessonDialogProps {
@@ -179,7 +182,22 @@ export default function CreateLessonDialog({
                   label="Add tip"
                 />
 
+                <RHFSelect
+                  native
+                  name="type"
+                  size="small"
+                >
+                  <option key="practical" value="practical">
+                    Practical
+                  </option>
+                  <option key="exercise" value="exercise">
+                    Exercise
+                  </option>
+                </RHFSelect>
+
                 <RHFSwitch name="active" label="Lesson active" />
+
+                <RHFSwitch name="independent" label="Independent lesson" />
               </Stack>
             </TabPanel>
             <TabPanel value={value} index={1}>
@@ -202,6 +220,7 @@ export default function CreateLessonDialog({
               <DialogActions>
                 <Box
                   sx={{
+                    mt: 14,
                     display: "flex",
                     justifyContent: "flex-end",
                     gap: 2,

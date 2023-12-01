@@ -40,6 +40,7 @@ export interface WorkSpaceProps {
   onChangeCode: (code: string) => void;
   onSubmitChalange: (lessonContentId: string) => Promise<void>;
   onSubmitLesson: () => Promise<void>;
+  lastLessonCode?: string;
 }
 
 const WorkSpace: FC<WorkSpaceProps> = ({
@@ -51,6 +52,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   code,
   language,
   isFetching = false,
+  lastLessonCode,
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
@@ -91,6 +93,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             data={data}
             integrations={lesson?.integrations ?? []}
             isFetching={isFetching}
+            code={document?.htmlBody?.join('') ?? ""}
           />
         ) : (
           <HidedTabBtn
@@ -101,9 +104,9 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={data[slideIndex]?.preload_body || ""}
+          preloadedCode={lastLessonCode || data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
-          code={code}
+          code={document?.htmlBody?.join('') ?? ""}
           user={user}
           onChangeCode={onChangeCode}
         />
@@ -139,13 +142,14 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         data={data}
         integrations={lesson?.integrations ?? []}
         isFetching={isFetching}
+        code={document?.htmlBody?.join('') ?? ""}
       />
 
       <CodeEditorBlock
-        code={code}
+        code={document?.htmlBody?.join('') ?? ""}
         onChangeCode={onChangeCode}
         user={user}
-        preloadedCode={data[slideIndex]?.preload_body}
+        preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations}
       />
 

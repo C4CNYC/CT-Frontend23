@@ -189,6 +189,8 @@ export default function LessonStepList({
             description: lesson?.description as string,
             active: lesson?.active as boolean,
             tips: "",
+            independent: lesson?.independent ?? false,
+            type: lesson?.type ?? "practical",
           }}
           lessonTips={lesson?.tips ?? []}
           isEdit

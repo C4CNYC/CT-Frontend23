@@ -5,7 +5,6 @@ export const useStyles = makeStyles((theme) => ({
     width: "320px",
     height: "230px",
     padding: "15px 20px",
-    background: "#FFFFFF",
     border: "3px solid #43D4DD",
     borderRadius: "10px",
   },
@@ -45,7 +44,6 @@ export const useStyles = makeStyles((theme) => ({
     right: "5px",
     width: "32px",
     height: "32px",
-    background: "#ffffff",
     color: "#808080",
     // eslint-disable-next-line @typescript-eslint/naming-convention
     "& svg": {

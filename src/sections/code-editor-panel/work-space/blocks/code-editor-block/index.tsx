@@ -1,6 +1,5 @@
 import {
   type FC,
-  ReactNode,
   memo,
   useCallback,
   useEffect,
@@ -11,8 +10,7 @@ import {
 import { BiCodeAlt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 
-import Close from "@mui/icons-material/Close";
-import { Box, Collapse, IconButton, Stack, useMediaQuery } from "@mui/material";
+import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import { type BaseResponseInterface } from "@utils";
@@ -20,7 +18,6 @@ import { type AuthUserType } from "src/auth/types";
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { type IValidation } from "src/redux/interfaces/content.interface";
 import {
-  CodeEditorControllerRoom,
   setRoom,
 } from "src/redux/slices/code-editor-controller";
 import { useSelector } from "src/redux/store";
