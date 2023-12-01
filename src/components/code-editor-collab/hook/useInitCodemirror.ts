@@ -1,9 +1,9 @@
 import { Socket } from "socket.io-client";
 import { useCallback, useState } from "react";
 import { dracula } from "thememirror";
-import { LanguageSupport, indentUnit } from '@codemirror/language';
+import { LanguageSupport, indentUnit } from "@codemirror/language";
 import { Compartment, EditorView, Extension, StateEffect } from "@uiw/react-codemirror";
-import { basicSetup } from '@uiw/codemirror-extensions-basic-setup';
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 
 import { getFileExtension } from "src/utils/getFileExtension";
@@ -27,7 +27,7 @@ const language = ({ name }: File): LanguageSupport[] => {
     : [];
 }
 
-interface UseBaseInit  {
+interface UseBaseInit {
   socket: Socket
   withTooltip: boolean
   onChange?: (code: Record<string, string>) => void
@@ -56,7 +56,7 @@ export const useInitCodemirror = ({
   preloadedCode,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0);
-  const [doc, setDoc] = useState('');
+  const [doc, setDoc] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
 

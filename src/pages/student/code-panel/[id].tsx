@@ -10,6 +10,7 @@ import SkeletonCodePanel, {
 import WorkSpace from "@sections/code-editor-panel/work-space";
 
 import { useCodePanel } from "src/hooks/useCodePanel";
+import SignUpDialog from "./sign-up-dialog";
 
 const Tour = dynamic(
   async () =>
@@ -67,6 +68,8 @@ export default function Index(): React.ReactElement | null {
 
       <FullScreen handle={handle}>
         <Tour />
+
+        <SignUpDialog isSigned={!!workSpaceProps.user} />
 
         <Box {...BOX_PROPS}>
           <TopPanel
