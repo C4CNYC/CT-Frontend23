@@ -1,5 +1,12 @@
 import dynamic from "next/dynamic";
-import React, { type FC, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  type FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import _ from "lodash";
 import { parse } from "node-html-parser";
@@ -22,7 +29,9 @@ import {
   toggleInstrations,
 } from "src/redux/slices/code-panel-global";
 import { useSelector } from "src/redux/store";
-import BrowserView from "src/sections/code-panel/work-space/blocks/view-block/BrowserView";
+import BrowserView, {
+  CodeDocument,
+} from "src/sections/code-editor-panel/work-space/blocks/view-block/browser-view/index";
 
 import BaseBlock from "../base-block";
 import { getBoxSx, getCarouselSettings } from "./constants";
@@ -46,7 +55,12 @@ interface ISliderBlock {
 interface IView {
   type: LessonContentType;
   body: string;
-  connectIntegrations: (body: string) => string | undefined;
+  connectIntegrations: (body: string) => CodeDocument | null;
+}
+
+interface ILoadedIntegrations {
+  head?: string;
+  script?: string;
 }
 
 const title = "Instructions";
@@ -69,14 +83,27 @@ const SliderBlock: FC<ISliderBlock> = ({
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [loadingIntegrations, setLoadingIntegrations] = useState<boolean>(true);
   const [loadedIntegrations, setLoadedIntegrations] = useState<
-    { head?: string; script?: string }[]
+    ILoadedIntegrations[]
   >([]);
+
+  const takeHeaderSettings = useCallback((isOpen: boolean) => {
+    setIsOpenHeader(isOpen);
+  }, []);
+
+  const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true);
+
+  // const takeHeaderSettings = (isOpen: boolean) => {
+  //   setIsOpenHeader(isOpen);
+  // };
 
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
   const hasNextStep = slideIndex < data.length - 1;
   const stepHasValidation = !!data[slideIndex]?.validations?.length;
-  const boxSx = useMemo(() => getBoxSx(isDesktop), [isDesktop]);
+  const boxSx = useMemo(
+    () => getBoxSx(isDesktop, isOpenHeader),
+    [isDesktop, isOpenHeader]
+  );
 
   useEffect(() => {
     carousel1.current?.slickGoTo(slideIndex);
@@ -92,27 +119,29 @@ const SliderBlock: FC<ISliderBlock> = ({
     const loadAllIntegrations = async () => {
       if (!integrations) return;
       setLoadingIntegrations(true);
-
       const loadedIntegrations = await Promise.all(
         integrations.map(async ({ head, scripts }) => {
           const loadedIntegration = { head: "", script: "" };
+
           if (head) {
             const parsedHead = parse(head).querySelectorAll("link");
             const links = await Promise.all(
-              parsedHead.map(async ({ attrs }) =>
-                useLoadIntegration(attrs, "href")
+              parsedHead.map(
+                async ({ attrs }) => await useLoadIntegration(attrs, "href")
               )
             );
+
             loadedIntegration.head = links
               .filter(Boolean)
               .map((style) => `<style>${style}</style>`)
               .join("\n");
           }
+
           if (scripts) {
             const parseScript = parse(scripts).querySelectorAll("script");
             const allScripts = await Promise.all(
-              parseScript.map(async ({ attrs }) =>
-                useLoadIntegration(attrs, "src")
+              parseScript.map(
+                async ({ attrs }) => await useLoadIntegration(attrs, "src")
               )
             );
             loadedIntegration.script = allScripts
@@ -120,9 +149,11 @@ const SliderBlock: FC<ISliderBlock> = ({
               .map((script) => `<script>${script}</script>`)
               .join("\n");
           }
+
           return loadedIntegration;
         })
       );
+
       setLoadedIntegrations(loadedIntegrations);
       setLoadingIntegrations(false);
     };
@@ -149,16 +180,15 @@ const SliderBlock: FC<ISliderBlock> = ({
     dispatch(setSlideIndex(next));
   };
 
-  const connectIntegrations = (body: string): string | undefined => {
+  const connectIntegrations = (body: string): CodeDocument | null => {
     if (integrations) {
-      return `<head>${loadedIntegrations.reduce(
-        (ac, cur) => ac + cur.head,
-        ""
-      )}</head><main>${JSON.parse(body).content}${loadedIntegrations.reduce(
-        (ac, cur) => ac + cur.script,
-        ""
-      )}</main>`;
+      return {
+        htmlBody: [JSON.parse(body).content],
+        cssBody: [integrations.reduce((ac, cur) => ac + cur.head, "")],
+        jsBody: [integrations.reduce((ac, cur) => ac + cur.scripts, "")],
+      };
     }
+    return null;
   };
 
   return (
@@ -172,6 +202,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       hideTabsHandler={() => {
         dispatch(toggleInstrations(true));
       }}
+      takeHeaderSettings={takeHeaderSettings}
     >
       {_.isEmpty(data) ? (
         <EmptyContent title="No Data" />
@@ -189,14 +220,16 @@ const SliderBlock: FC<ISliderBlock> = ({
                 asNavFor={nav2}
                 ref={carousel1}
               >
-                {data.map((step) => (
-                  <View
-                    key={step.id}
-                    type={step.type}
-                    body={step.body}
-                    connectIntegrations={connectIntegrations}
-                  />
-                ))}
+                {data.map((step) => {
+                  return (
+                    <View
+                      key={step.id}
+                      type={step.type}
+                      body={step.body}
+                      connectIntegrations={connectIntegrations}
+                    />
+                  );
+                })}
               </Carousel>
             ) : null}
           </Box>
@@ -220,7 +253,7 @@ const View: FC<IView> = ({ type, body, connectIntegrations }) => {
     case "editable":
       return <ProsaMirrorView multimediaValue={body} />;
     case "code":
-      return <BrowserView value={connectIntegrations(body) ?? ""} />;
+      return <BrowserView document={connectIntegrations(body)} />;
     default:
       return <>CONTENT TYPE NOT SUPPORTED</>;
   }
