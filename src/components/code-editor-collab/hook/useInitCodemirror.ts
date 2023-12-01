@@ -12,6 +12,7 @@ import { type Cursor, cursorExtension } from "./utils/collab/cursors";
 import { File, getDocument } from "./utils/collab/requests";
 import { peerExtension } from "./utils/collab/peer-extension";
 import { BASIC_SETUP, Extensions } from "./constants";
+import { useAuthContext } from "../../../auth/useAuthContext";
 
 const langMap = {
   [Extensions.Css]: () => langs.css(),
@@ -59,6 +60,7 @@ export const useInitCodemirror = ({
   const [doc, setDoc] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
+  const { user } = useAuthContext();
 
   const baseInit = useCallback(async (fileName: File) => {
     const lineWrap = new Compartment();
@@ -68,7 +70,7 @@ export const useInitCodemirror = ({
       roomId,
       fileName,
       socket,
-      cursorName: cursorText,
+      cursorName: user?.id ?? cursorText,
       defaultFileName,
       preloadedCode,
     });
@@ -90,7 +92,8 @@ export const useInitCodemirror = ({
         cursorId: cursorName,
         tooltipText: cursorText,
         withTooltip,
-        addCursor
+        addCursor,
+        userId: user?.id,
       })
     ]);
     onChange?.(docInfo)
