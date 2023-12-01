@@ -48,7 +48,6 @@ export const POPOVER_EDIT_BTN_SX = {
   gap: 1,
   width: "100%",
   m: "0 auto",
-  background: "#fff",
   color: "#75CF6D",
   "&:hover": {
     background: "#22A64733",
