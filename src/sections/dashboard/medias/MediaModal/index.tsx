@@ -21,6 +21,8 @@ import FileManagerFileItem from "src/components/file-manager/file-manager-file-i
 import { CustomBreadcrumbs } from "@components";
 import { IMedia } from "src/redux/services/interfaces/media.interface";
 import { BaseResponseInterface } from "@utils";
+import { useCopyToClipboard } from "@hooks";
+import { useSnackbar } from "notistack";
 
 export interface MediaModalProps {
   children: React.ReactElement;
@@ -28,6 +30,9 @@ export interface MediaModalProps {
 export function MediaModal({
   children,
 }: MediaModalProps): React.ReactElement | null {
+  const { copy } = useCopyToClipboard();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [open, setOpen] = React.useState(false);
 
   const [currentPath, setCurrentPath] = React.useState<string[]>([""]);
@@ -44,7 +49,16 @@ export function MediaModal({
   );
   const [deleteMedia] = useDeleteMediaMutation();
   const [createMedia] = useCreateMediaMutation();
-  const { insertImage } = useCommands();
+  let insertImage: any
+  try {
+    const commands = useCommands();
+    insertImage = commands.insertImage;
+  } catch (e) {
+    insertImage = ({ src }: { src: string }) => {
+      copy(src);
+      enqueueSnackbar("Image URL copied to clipboard");
+    }
+  }
 
   useEffect(() => {
     setCurrentPathFiles(

@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, useState } from "react";
 
 import { CgBrowser } from "react-icons/cg";
 import { TbArrowBarToRight } from "react-icons/tb";
@@ -20,6 +20,12 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
     (state: RootState) => state.codePanelGlobal.isBrowserHidden
   );
 
+  const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true);
+
+  const takeHeaderSettings = (isOpen: boolean) => {
+    setIsOpenHeader(isOpen);
+  };
+
   if (isBrowserHidden) {
     return null;
   }
@@ -30,12 +36,14 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
       isLeftBtn={true}
       title={TITLE}
       icon={icon}
+      isLeftBlock={false}
       className="browserTour"
       hideTabsHandler={() => {
         dispatch(toggleBrowser(true));
       }}
+      takeHeaderSettings={takeHeaderSettings}
     >
-      <BrowserView document={code} />
+      <BrowserView document={code} isOpenHeader={isOpenHeader} />
     </BaseBlock>
   );
 };

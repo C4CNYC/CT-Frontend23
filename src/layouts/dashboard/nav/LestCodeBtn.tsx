@@ -38,7 +38,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
       variant="contained"
       sx={{
         mt: "24px",
-        mx: 2,
+        mx: 1,
         color: "#EE467A",
         bgcolor: "#FFF",
         boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",

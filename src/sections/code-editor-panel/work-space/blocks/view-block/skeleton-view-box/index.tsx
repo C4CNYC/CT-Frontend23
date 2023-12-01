@@ -8,12 +8,20 @@ import {
   CODING_TYP_SX,
   PARENT_STACK_SX,
   SKELETON_SX,
-  STACK_BOTTON_SX,
+  getStackBottomSx,
 } from "./constants";
 
-const SkeletonViewBlock: FC = () => {
+interface ISkeletonProps {
+  isOpenHeader: boolean | undefined;
+}
+
+const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
   return (
-    <Stack sx={PARENT_STACK_SX} width="100%" height="100vh">
+    <Stack
+      sx={PARENT_STACK_SX}
+      width="100%"
+      height={isOpenHeader ? "calc(100% - 34px)" : "100vh"}
+    >
       <Stack
         display="flex"
         direction="row"
@@ -45,7 +53,7 @@ const SkeletonViewBlock: FC = () => {
         </Stack>
       </Stack>
 
-      <Stack sx={STACK_BOTTON_SX}>
+      <Stack sx={(theme) => ({ ...getStackBottomSx(theme) })}>
         <Typography sx={AVAILABLE_TYP_SX} variant="subtitle1">
           No preview available?
         </Typography>

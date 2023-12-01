@@ -1,15 +1,16 @@
+import { type CSSProperties, type FC, type ReactNode } from "react";
+
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import { type ReactNode, type FC, type CSSProperties } from "react";
-import { useDispatch } from "react-redux";
 import Draggable from "react-draggable";
+import { useDispatch } from "react-redux";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { SxProps, Theme } from "@mui/system";
 
 import { Iconify } from "@components";
-
-import { useSelector } from "src/redux/store";
 import { setChatVisible } from "src/redux/slices/chat-handler";
+import { useSelector } from "src/redux/store";
 
 interface IChatPopup {
   chatComponent: ReactNode;
@@ -23,7 +24,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
 
   const getContent = () => {
     if (!isChatVisible) {
-      return
+      return;
     }
 
     if (isDesktop) {
@@ -42,18 +43,20 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
             {chatComponent}
           </div>
         </Draggable>
-      )
+      );
     }
 
-    return <Box sx={BOX_STYLES}>{chatComponent}</Box>
-  }
+    return <Box sx={() => ({ ...getBoxStyles(theme) })}>{chatComponent}</Box>;
+  };
 
   return (
     <>
       <IconButton
         sx={{
           display: isDesktop ? "inline-flex" : "none",
-          background: isChatVisible ? "#c5d6e3" : "#fff",
+          background: isChatVisible
+            ? "#c5d6e3"
+            : theme.palette.background.default,
           "&:hover": { background: isChatVisible ? "#c5d6e3" : "" },
         }}
         onClick={() => {
@@ -68,7 +71,7 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
   );
 };
 
-const BOX_STYLES = {
+const getBoxStyles = (theme: Theme): SxProps => ({
   position: "absolute",
   top: 0,
   left: 0,
@@ -77,14 +80,14 @@ const BOX_STYLES = {
   height: "100vh",
   width: "100vw",
   zIndex: 5000,
-  background: "#fff",
-}
+  background: theme.palette.background.default,
+});
 
 const ICON_BUTTON_STYLES = {
   alignSelf: "flex-end",
   p: "2px",
-  mb: "2px"
-}
+  mb: "2px",
+};
 
 const DRAGGABLE_STYLES: CSSProperties = {
   position: "absolute",
@@ -95,6 +98,6 @@ const DRAGGABLE_STYLES: CSSProperties = {
   zIndex: 5000,
   display: "flex",
   flexDirection: "column",
-}
+};
 
 export default ChatPopup;

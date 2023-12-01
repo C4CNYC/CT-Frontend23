@@ -26,6 +26,8 @@ import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
 import LessonListItem from "./LesonListItem";
 import CreateDemonContent from "./Modals/CreateLessonContent";
 import SkeletonList from "./Modals/SkeletonList";
+import { LoadingButton } from "@mui/lab";
+import { useRouter } from "next/router";
 
 interface Props {
   lessonId: string;
@@ -36,9 +38,10 @@ export default function LessonStepList({
 }: Props): React.ReactElement {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
 
   const [updateLessonContent] = useUpdateLessonContentMutation();
-  const [createLessonContent] = useCreateLessonContentMutation();
+  const [createLessonContent, { isLoading: createLessonLoading }] = useCreateLessonContentMutation();
   const [removeLessonContent] = useRemoveLessonContentMutation();
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
@@ -105,6 +108,29 @@ export default function LessonStepList({
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1;
 
+  const createNewContent = async (): Promise<void> => {
+    try {
+      const { id: stepId } = await createLessonContent({
+        lessonId,
+        title: 'Slide',
+        meta: { order: newContentOrder },
+      }).unwrap();
+      enqueueSnackbar("Step created");
+      router.push(
+        `${router.pathname}?${new URLSearchParams({
+          ...router.query,
+          stepId: stepId,
+        })}`,
+        undefined,
+        { shallow: true }
+      );
+    } catch (e: any) {
+      enqueueSnackbar("Sorry we can't create at this moment", {
+        variant: "error",
+      });
+    }
+  }
+
   const onDublicate = async (
     data: ILessonContent & BaseResponseInterface
   ): Promise<void> => {
@@ -163,6 +189,8 @@ export default function LessonStepList({
             description: lesson?.description as string,
             active: lesson?.active as boolean,
             tips: "",
+            independent: lesson?.independent ?? false,
+            type: lesson?.type ?? "practical",
           }}
           lessonTips={lesson?.tips ?? []}
           isEdit
@@ -183,6 +211,25 @@ export default function LessonStepList({
             LESSON SETUP & SETTINGS
           </Button>
         </CreateLessonDialog>
+
+        <LoadingButton
+          loading={createLessonLoading}
+          variant="outlined"
+          fullWidth
+          sx={{
+            mb: 1,
+            p: 2,
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() => createNewContent()}
+          disabled={createLessonLoading}
+        >
+          <ImPlus size="22px" />
+          <Typography variant="subtitle1">ADD SLIDE</Typography>
+        </LoadingButton>
       </Stack>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -192,8 +239,8 @@ export default function LessonStepList({
               {...provided.droppableProps}
               ref={provided.innerRef}
               direction="column"
-              spacing={3}
-              sx={{ py: 2 }}
+              spacing={1}
+              sx={{ py: 1 }}
             >
               {board.columns.contents?.cardIds.map((el, i) => (
                 <LessonListItem
@@ -210,24 +257,6 @@ export default function LessonStepList({
           )}
         </Droppable>
       </DragDropContext>
-      <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
-        <Button
-          variant="outlined"
-          fullWidth
-          sx={{
-            mt: 2,
-            mb: 1,
-            p: 2,
-            gap: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alighItems: "center",
-          }}
-        >
-          <ImPlus size="22px" />
-          <Typography variant="subtitle1">ADD SLIDE</Typography>
-        </Button>
-      </CreateDemonContent>
       <Stack direction="column" spacing={3} sx={{ p: 2 }}></Stack>
     </Box>
   );

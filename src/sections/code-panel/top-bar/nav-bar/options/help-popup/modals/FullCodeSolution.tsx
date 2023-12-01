@@ -97,10 +97,10 @@ const CodeContent = (): React.ReactElement => {
       }}
     >
       <Typography mb="30px" variant="h4">
-        TRAINING SOLUTION CODE
+        SOLUTION CODE
       </Typography>
       <CopyBlock
-        text={solutionCode}
+        text={solutionCode || "Not available for this step."}
         language="html"
         theme={dracula}
         wrapLines

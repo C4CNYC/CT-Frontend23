@@ -5,7 +5,7 @@ import { type SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 
 import { Box, Stack, Avatar, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 import OpenCodeIcon from "src/assets/icons/OpenCodeIcon";
 import CodeEditorCollab from "src/components/code-editor-collab";
@@ -109,7 +109,6 @@ const CodeBlock: FC<CodeBlockProps> = ({
           <CloseIcon sx={styles.CLOSE_ICON_SX} onClick={onClose} />
         </Stack>
       </Stack>
-
 
       {isConnected && (
         <CodeEditorCollab

@@ -1,6 +1,6 @@
 
 // node modules
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -38,6 +38,7 @@ import type { WorkSpaceProps } from "@sections/code-editor-panel/work-space";
 import type { BottomBarProps } from "@sections/code-editor-panel/bottom-bar";
 import type { RootState } from "src/redux/store";
 import { type LessonManagerProps } from "@sections/code-editor-panel/bottom-bar/lesson-manager";
+import { useGetModuleWithLessonsQuery } from "../redux/services/manager/modules-student";
 
 interface UseCodePanelReturn {
   workSpaceProps: WorkSpaceProps
@@ -104,6 +105,45 @@ export const useCodePanel = (): UseCodePanelReturn => {
     { skip: !query.lessonId }
   );
 
+  const { data: module } = useGetModuleWithLessonsQuery(
+    { id: query.unitId as string },
+    { skip: !query.unitId }
+  )
+
+  const lastLessonCode = useMemo(() =>
+    module
+      ?.lessons
+      .slice(
+        0,
+        module
+          ?.lessons
+          .findIndex(lesson => lesson.id === query.lessonId) + 1
+      )
+      .reverse()
+      .find(
+        lesson => lesson.contents
+          .find(
+            content => content.progress
+              ?.find(
+                progress => progress.progress_meta?.body.length > 0
+              )
+          )
+      )
+      ?.contents
+      .find(
+        content => content.progress
+          ?.find(
+            progress => progress.progress_meta?.body.length > 0
+          )
+      )
+      ?.progress
+      ?.find(
+        progress => progress.progress_meta?.body.length > 0
+      )
+      ?.progress_meta
+      .body
+  , [module, query.lessonId])
+
   const onConfettiComplete = (confetti?: Confetti) => {
     setConfetti(false);
     confetti?.reset();
@@ -156,12 +196,13 @@ export const useCodePanel = (): UseCodePanelReturn => {
     }
   }, [courseContent]);
 
-  const onSubmitChalange = async (lessonContentId: string): Promise<void> => {
+  const onSubmitChalange = async (lessonContentId: string, code?: string): Promise<void> => {
     try {
       await completeLesson({
         id: query.id as string,
         module_id: query.unit_id as string,
         lesson_content_id: lessonContentId,
+        code,
       }).unwrap();
     } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
@@ -197,7 +238,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
           dispatch(setSlideIndex(0))
         });
       } else {
-        enqueueSnackbar("course successfuly complete");
+        enqueueSnackbar("course successfully complete");
       }
     } catch (e: any) {
       enqueueSnackbar("something went wrong", { variant: "error" });
@@ -245,6 +286,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
       onChangeCode,
       onSubmitChalange,
       onSubmitLesson,
+      lastLessonCode,
     },
     bottomBarProps: {
       language: LANGUAGE,

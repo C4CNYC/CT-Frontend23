@@ -24,7 +24,6 @@ export const getCollapsebarSx = (isTabletAndMobile: boolean): SxProps => ({
   alignItems: "start",
   justifyContent: "center",
   width: 30,
-  background: "#fff",
   height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
   border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
   overflow: "hidden",
