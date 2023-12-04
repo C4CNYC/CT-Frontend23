@@ -90,10 +90,12 @@ export default function CreateCourseDialog({
     level: Yup.string().required(translate("required_level")),
     price: Yup.string().required(translate("required_price")),
     description: Yup.string().required(translate("required_description")),
-    content_id: Yup.string().required("Content Id is required"),
-    initial_likes: Yup.number().required("Initial likes is required"),
-    initial_stars: Yup.number().required("Initial stars is required"),
-    initial_enrolled: Yup.number().required("Initial enrolled is required"),
+    content_id: Yup.string().required(translate("required_content_id")),
+    initial_likes: Yup.number().required(translate("required_initial_likes")),
+    initial_stars: Yup.number().required(translate("required_initial_stars")),
+    initial_enrolled: Yup.number().required(
+      translate("required_initial_enrolled")
+    ),
     skills: Yup.array(),
   });
 
@@ -251,14 +253,7 @@ export default function CreateCourseDialog({
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="content_id"
-                  label="Course Content Id"
-                  placeholder="W1"
-                />
-
-                <RHFTextField
-                  sx={{ width: "100%" }}
-                  name="content_id"
-                  label="Course Content Id"
+                  label={translate("courses_content_id")}
                   placeholder="W1"
                 />
 
@@ -311,19 +306,19 @@ export default function CreateCourseDialog({
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="initial_likes"
-                  label="Initial likes"
+                  label={translate("courses_initial_likes")}
                   type="number"
                 />
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="initial_stars"
-                  label="Initial starts"
+                  label={translate("courses_initial_stars")}
                   type="number"
                 />
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="initial_enrolled"
-                  label="Initial enrolled"
+                  label={translate("courses_initial_enrolled")}
                   type="number"
                 />
                 <RHFTextField

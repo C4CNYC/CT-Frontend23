@@ -149,7 +149,7 @@ export default function SettingsForm({
           <RHFSwitch
             key="last_name_only"
             name="last_name_only"
-            label="Show students' full last name"
+            label={translate("general_settings_show_students_name")}
             sx={{ m: 0 }}
           />
           <RHFSwitch

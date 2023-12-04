@@ -126,7 +126,9 @@ export default function CourseModuleAutocomplete({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => <TextField {...params} placeholder="Lessons" />}
+      renderInput={(params) => (
+        <TextField {...params} placeholder={translate("lessons")} />
+      )}
       renderOption={(props, recipient, { inputValue }) => {
         const { id, name } = recipient;
         const matches = match(name, inputValue);

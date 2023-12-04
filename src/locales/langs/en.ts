@@ -30,7 +30,6 @@ const en = {
   kanban: "kanban",
   banking: "banking",
   booking: "booking",
-  profile: "profile",
   account: "account",
   product: "product",
   invoice: "invoice",
@@ -73,12 +72,19 @@ const en = {
   actions_view: "View",
   actions_create: "Create",
   actions_create_authur: "Create author",
+  actions_delete_author: "Delete author",
   actions_add_tip: "Add tip",
   actions_enter_tip: "Enter tip",
   actions_remove_selected: "Remove selected",
   actions_share: "Share",
   actions_add_quest: "Add Quest",
   actions_see_more: "See more",
+  actions_lets_invite: "LET'S INVITE",
+  actions_show_less: "Show less",
+  actions_continue: "Continue",
+  actions_enroll_now: "Enroll Now",
+  actions_explore: "Explore",
+  actions_launch: "LAUNCH",
 
   // general locales
   home: "Home",
@@ -151,11 +157,27 @@ const en = {
   gallery: "Gallery",
   comming_soon: "Comming soon",
   keep_coding: "Keep Coding",
+  invite: "Invite",
+  mentors: "Mentors",
+  tags: "Tags",
+  username: "Username",
+  profile: "Profile",
+  free: "free",
+  dashboard: "Dashboard",
+  grade: "Grade",
+  get_coding: "Get Coding {{time}}",
+  bio: "Bio",
+  quest: "Quest",
+  admin: "Admin",
 
   // avatar upload
   avatar__upload_text: "Upload photo",
   avatar__update_text: "Update photo",
   avatar_upload_cover_img: "Upload Cover Image",
+
+  // image upload
+  image_choose_image: "Choose image",
+  image_drope_file: "Drop files or click here",
 
   // messages
   messages_success: "Success",
@@ -182,6 +204,8 @@ const en = {
   messages_sth_added: "{{name}} added",
   messages_sth_removed: "{{name}} removed",
   messages_copied: "Copied!",
+  messages_invite_sent: "Invite sent",
+  messages_deleted: "Deleted successfully!",
 
   // Validation messages
   required_skill_name: "Skill name is required",
@@ -198,6 +222,14 @@ const en = {
   enter_valide_email: "Pleace, enter a valide email adress",
   required_level: "Level is required",
   required_price: "Price is required",
+  required_content_id: "Content Id is required",
+  required_initial_likes: "Initial likes is required",
+  required_initial_stars: "Initial stars is required",
+  required_initial_enrolled: "Initial enrolled is required",
+  enter_valid_url_msg: "Enter a valid url",
+  write_less_msg: "Write less than 100 characters",
+  use_key_words_msg:
+    "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "Let's code",
@@ -239,12 +271,16 @@ const en = {
   send_verification_email_content:
     "Disabling this will automatically send the user a verification email",
   verified_user_info: "Disabled user dont have access to resorce",
+  members_user_edit_user: "User: Edit user",
 
   //  school page
   schools: "Schools",
   schools_organization: "Organizations",
   schools_table_active: "Active",
   schools_add_aschool: "Add School",
+  schools_school_info: "School Info",
+  schools_teacher_deleted_act: "Teacher deleted",
+  schools_teacher_added_act: "Teacher added",
   add_school_name: "School name",
   add_school_success_smg: "School {{name}} created successfully!",
 
@@ -272,6 +308,7 @@ const en = {
   general_settings_disable_global_gallery: "Disable Global Gallery",
   general_interaction_note:
     "Note: Users can not see or comments on external projects.",
+  general_settings_show_students_name: "Show students' full last name",
 
   // General > Contacts tab
   contacts_tab_technical_contacts: "Technical Contacts",
@@ -288,7 +325,7 @@ const en = {
   members_actions_deleted: "Members deleted",
   members_invate_student: "Invite Student",
   members_add_student: "Add Student",
-  members_send_invite: "Send invite",
+  members_send_invite: "Send Invite",
   students_creatr_new: "Create a new student",
   students_new_student: "New student",
   students_new_avatar_subtitle: "Live empty and we will generate it randomly",
@@ -310,6 +347,12 @@ const en = {
   classes_class_name: "Class name",
   classes_class_description: "Class description",
   classes_msg_joined_to_class: "you joined to class",
+  classes_class_preferences: "Class Preferences",
+  classes_joined_to_class_msg: "{{email}} joined to class",
+  classes_left_class_msg: "{{email}} left class",
+  classes_add_students: "Add students",
+  classes_course_added_msg: "Course added to class",
+  classes_course_removed_msg: "Course removed from class",
 
   // Assignments page
   assignments: "Assignments",
@@ -317,7 +360,13 @@ const en = {
   assignments_delete_msg: "Assignment deleted!",
   assignments_start_date: "Start date",
   assignments_end_date: "End date",
+  assignments_close_date: "Close date",
   assignments_search: "Search assignment...",
+  assignments_updated_msg: "Assignment updated!",
+  assignments_assign_to: "Assign to",
+  assignments_add_tags_info: "This will help others know what the theme is.",
+  assignments_updated_successfuly: "Assignment updated successfuly!",
+  assignments_created_successfuly: "Assignment created successfuly!",
 
   // Progress page
   progress: "Progress",
@@ -337,6 +386,33 @@ const en = {
   courses_delete_msg: "Course deleted!",
   courses_added_to_module: "{{name}} added to module",
   courses_removed_from_module: "{{name}} removed from module",
+  courses_content_id: "Course Content Id",
+  courses_initial_likes: "Initial likes",
+  courses_initial_stars: "Initial stars",
+  courses_initial_enrolled: "Initial enrolled",
+  courses_catalog: "Courses Catalog",
+  courses_empty: "You dont have any course",
+  courses_enroled: "ENROLLED",
+  courses_certificate_tooltip_info:
+    "This course is eligiable for a certificate.",
+  courses_certificate_link: "See sample certificate",
+  courses_course_overview: "Course Overview",
+  courses_course_who_is_this_for: "Who is this for",
+  courses_entery_point: "A fantastic entry-point for understanding....",
+  courses_for_beginners_info:
+    "For curious beginners who want to understand the basics of web dev and who.",
+  courses_semple_cerificate: "Sample Certificate",
+  courses_for_teachers: "For Teachers",
+  courses_for_teachers_info:
+    "A “Teacher Toolbox” is found within each module with all the resources you will need.",
+  courses_pacing_guides_link: "Pacing Guides",
+  courses_standards_alignment_link: "Standards Alignment",
+  courses_author_and_ranking: "Author & Ranking",
+  courses_brief: "The Brief",
+  courses_teacher_toolbox: "Teacher Toolbox",
+  courses_module_slides: "Module Slides",
+  courses_lesson_plans: "Lesson Plans",
+  courses_teachers_forum: "Teachers Forum",
 
   // Modules pages
   modules: "Modules",
@@ -350,6 +426,10 @@ const en = {
   modules_add_tip: "Add tip",
   modules_module_active: "Module active",
   modules_deleted_msg: "Module deleted!",
+  modules_teacher_slides_link: "Teacher slides link",
+  modules_teacher_forum_link: "Teacher forum link",
+  modules_lesson_plans_link: "Lesson plans link",
+  modules_completed: "{{percentage}}% Complete",
 
   // Lessons page
   lessons: "Lessons",
@@ -361,6 +441,9 @@ const en = {
   lessons_description: "Lesson description",
   lessons_active: "Lesson active",
   lessons_deleted_msg: "Lesson deleted!",
+  lessons_practical: "Practical",
+  lessons_exercise: "Exercise",
+  lessons_inependent_lesson: "Independent lesson",
 
   // Integrations page
   integrations: "Integrations",
@@ -403,7 +486,35 @@ const en = {
   home_assign_project: "Assign Open Project",
   home_assignment_pined: "assignment pined",
   home_assignment_deleted: "assignment deleted",
-  //
+
+  // profile
+  profile_live_at_country: "Live at country",
+  profile_postcode: "Postcode",
+  profile_created_at: "Created at",
+  profile_links: "Links",
+  profile_your_networks: "Your networks",
+
+  // quest
+  quest_type: "Type: Course/Module",
+  quest_whats_quest: "What`s a quest?",
+  quest_select_type: "Select type",
+  quest_select_course: "Select a course",
+  auest_select_module: "Select module",
+  quest_you_dont_have_courses_msg: "You don't have any courses",
+  quest_you_dont_have_module_msg: "You don't have any module",
+  quest_all_modules: "All modules",
+  quest_name: "Quest name",
+  quest_edit_name_msg:
+    "You can edit the suggested name that is auto-generated.",
+  quest_description: "Description (Optional)",
+  quest_schedule_date: "Schedule Date:",
+  quest_schedule_date_info: "Starting date if not date of creation.",
+  quest_due_date: "Due Date:",
+  quest_due_date_info:
+    "This is the date that this Quest should be completed by.",
+  quest_close_date: "Close Date:",
+  quest_close_date_info:
+    "After this submissions are no longer received. The default is 3 days after the “Due date.”",
 
   organizations: {
     dashboard_title: "Dashboard",

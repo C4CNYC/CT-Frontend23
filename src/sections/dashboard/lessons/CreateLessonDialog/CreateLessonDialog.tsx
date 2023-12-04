@@ -201,15 +201,18 @@ export default function CreateLessonDialog({
 
                 <RHFSelect native name="type" size="small">
                   <option key="practical" value="practical">
-                    Practical
+                    {translate("lessons_practical")}
                   </option>
                   <option key="exercise" value="exercise">
-                    Exercise
+                    {translate("lessons_exercise")}
                   </option>
                 </RHFSelect>
 
                 <RHFSwitch name="active" label={translate("lessons_active")} />
-                <RHFSwitch name="independent" label="Independent lesson" />
+                <RHFSwitch
+                  name="independent"
+                  label={translate("lessons_inependent_lesson")}
+                />
               </Stack>
             </TabPanel>
             <TabPanel value={value} index={1}>

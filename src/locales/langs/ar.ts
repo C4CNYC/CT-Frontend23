@@ -30,7 +30,6 @@ const ar = {
   kanban: "كانبان",
   banking: "الخدمات المصرفية",
   booking: "الحجز",
-  profile: "الملف الشخصي",
   account: "الحساب",
   product: "المنتوج",
   invoice: "فاتورة",
@@ -75,12 +74,19 @@ const ar = {
   actions_view: "منظر",
   actions_create: "يخلق",
   actions_create_authur: "إنشاء مؤلف",
+  actions_delete_author: "حذف المؤلف",
   actions_add_tip: "أضف نصيحة",
   actions_enter_tip: "أدخل نصيحة",
   actions_remove_selected: "ازل المحدد",
   actions_share: "يشارك",
   actions_add_quest: "أضف مهمة",
   actions_see_more: "شاهد المزيد",
+  actions_lets_invite: "دعونا ندعو",
+  actions_show_less: "عرض أقل",
+  actions_continue: "يكمل",
+  actions_enroll_now: "تسجيل الآن",
+  actions_explore: "يستكشف",
+  actions_launch: "يطلق",
 
   // general locales
   home: "بيت",
@@ -153,11 +159,27 @@ const ar = {
   quests: "أسئلة",
   comming_soon: "قريباً",
   keep_coding: "استمر في الترميز",
+  invite: "يدعو",
+  mentors: "الموجهون",
+  tags: "العلامات",
+  username: "اسم المستخدم",
+  profile: "حساب تعريفي",
+  free: "حر",
+  dashboard: "لوحة القيادة",
+  grade: "درجة",
+  get_coding: "احصل على الترميز {{time}}",
+  bio: "السيرة الذاتية",
+  quest: "بحث",
+  admin: "مسؤل",
 
   // avatar upload
   avatar__upload_text: "حمل الصورة",
   avatar__update_text: "تحديث الصورة",
   avatar_upload_cover_img: "تحميل صورة الغلاف",
+
+  // image upload
+  image_choose_image: "اختر صورة",
+  image_drope_file: "قم بإسقاط الملفات أو انقر هنا",
 
   // messages
   messages_success: "نجاح",
@@ -183,6 +205,8 @@ const ar = {
   messages_sth_added: "تمت إضافة {{name}}",
   messages_sth_removed: "تمت إزالة {{name}}",
   messages_copied: "نسخ!",
+  messages_invite_sent: "أرسلت الدعوة",
+  messages_deleted: "حذف بنجاح!",
 
   // Validation messages
   required_skill_name: "اسم المهارة مطلوب",
@@ -200,6 +224,14 @@ const ar = {
   enter_valide_email: "يرجى إدخال عنوان بريد إلكتروني صالح",
   required_level: "المستوى مطلوب",
   required_price: "السعر مطلوب",
+  required_content_id: "مطلوب معرف المحتوى",
+  required_initial_likes: "الإعجابات الأولية مطلوبة",
+  required_initial_stars: "النجوم الأولية مطلوبة",
+  required_initial_enrolled: "التسجيل الأولي مطلوب",
+  enter_valid_url_msg: "أدخل عنوان URL صالحًا",
+  write_less_msg: "اكتب أقل من 100 حرف",
+  use_key_words_msg:
+    "استخدم الكلمات الأساسية: الثانية، الدقيقة، الساعة، اليوم، الأسبوع، الشهر، السنة. على سبيل المثال: ساعة و 30 دقيقة",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "دعونا رمز",
@@ -242,12 +274,16 @@ const ar = {
   send_verification_email_content:
     "سيؤدي تعطيل هذا إلى إرسال رسالة تحقق للمستخدم تلقائيًا",
   verified_user_info: "المستخدم المعاق ليس لديه حق الوصول إلى الموارد",
+  members_user_edit_user: "المستخدم: تحرير المستخدم",
 
   // schools page
   schools: "المدارس",
   schools_organization: "المنظمات",
   schools_table_active: "نشيط",
   schools_add_aschool: "أضف مدرسة",
+  schools_school_info: "معلومات المدرسة",
+  schools_teacher_deleted_act: "تم حذف المعلم",
+  schools_teacher_added_act: "وأضاف المعلم",
   add_school_name: "اسم المدرسة",
   add_school_success_smg: "تم إنشاء المدرسة {{name}} بنجاح!",
 
@@ -280,6 +316,7 @@ const ar = {
   general_settings_disable_global_gallery: "تعطيل المعرض العالمي",
   general_interaction_note:
     "ملحوظة: لا يمكن للمستخدمين رؤية المشاريع الخارجية أو التعليق عليها.",
+  general_settings_show_students_name: "إظهار الاسم الأخير للطلاب بالكامل",
 
   // General > Contacts tab locales
 
@@ -320,6 +357,12 @@ const ar = {
   classes_class_name: "اسم الفئة",
   classes_class_description: "وصف الطبقة",
   classes_msg_joined_to_class: "لقد انضممت إلى الفصل",
+  classes_class_preferences: "تفضيلات الصف",
+  classes_joined_to_class_msg: "انضم {{email}} إلى الفصل",
+  classes_left_class_msg: "{{email}} غادر الفصل",
+  classes_add_students: "أضف الطلاب",
+  classes_course_added_msg: "تمت إضافة الدورة إلى الفصل",
+  classes_course_removed_msg: "تمت إزالة الدورة من الفصل",
 
   // Assignments page
   assignments: "تعيينات",
@@ -327,7 +370,13 @@ const ar = {
   assignments_delete_msg: "تم حذف المهمة!",
   assignments_start_date: "تاريخ البدء",
   assignments_end_date: "تاريخ الانتهاء",
+  assignments_close_date: "تاريخ قريب",
   assignments_search: "مهمة البحث...",
+  assignments_updated_msg: "تم تحديث المهمة!",
+  assignments_assign_to: "يسند إلى",
+  assignments_add_tags_info: "وهذا سوف يساعد الآخرين على معرفة ما هو الموضوع.",
+  assignments_updated_successfuly: "تم تحديث المهمة بنجاح!",
+  assignments_created_successfuly: "تم إنشاء الواجب بنجاح!",
 
   // Progress page
   progress: "تقدم",
@@ -347,6 +396,32 @@ const ar = {
   courses_delete_msg: "تم حذف الدورة!",
   courses_added_to_module: "تمت إضافة {{name}} إلى الوحدة النمطية",
   courses_removed_from_module: "تمت إزالة {{name}} من الوحدة",
+  courses_content_id: "معرف محتوى الدورة",
+  courses_initial_likes: "الإعجابات الأولية",
+  courses_initial_stars: "النجوم الأولية",
+  courses_initial_enrolled: "تم التسجيل الأولي",
+  courses_catalog: "كتالوج الدورات",
+  courses_empty: "ليس لديك أي دورة",
+  courses_enroled: "المقيدين",
+  courses_certificate_tooltip_info: "هذه الدورة مؤهلة للحصول على شهادة.",
+  courses_certificate_link: "انظر شهادة العينة",
+  courses_course_overview: "نظرة عامة على الدورة",
+  courses_course_who_is_this_for: "لمن هذا",
+  courses_entery_point: "مدخل رائع للفهم....",
+  courses_for_beginners_info:
+    "للمبتدئين الفضوليين الذين يرغبون في فهم أساسيات تطوير الويب ومن.",
+  courses_semple_cerificate: "شهادة عينة",
+  courses_for_teachers: "للمعلمين",
+  courses_for_teachers_info:
+    "يوجد “صندوق أدوات المعل” داخل كل وحدة يحتوي على جميع الموارد التي ستحتاجها.",
+  courses_pacing_guides_link: "أدلة السرعة",
+  courses_standards_alignment_link: "محاذاة المعايير",
+  courses_author_and_ranking: "المؤلف والتصنيف",
+  courses_brief: "الموجز",
+  courses_teacher_toolbox: "صندوق أدوات المعلم",
+  courses_module_slides: "شرائح الوحدة",
+  courses_lesson_plans: "خطط الدرس",
+  courses_teachers_forum: "منتدى المعلمين",
 
   // Modules pages
   modules: "وحدات",
@@ -360,6 +435,10 @@ const ar = {
   modules_add_tip: "أضف نصيحة",
   modules_module_active: "الوحدة نشطة",
   modules_deleted_msg: "تم حذف الوحدة!",
+  modules_teacher_slides_link: "رابط شرائح المعلم",
+  modules_teacher_forum_link: "رابط منتدى المعلم",
+  modules_lesson_plans_link: "رابط خطط الدروس",
+  modules_completed: "{{percentage}}% مكتمل",
 
   // Lessons page
   lessons: "دروس",
@@ -371,6 +450,9 @@ const ar = {
   lessons_description: "وصف الدرس",
   lessons_active: "الدرس فعال",
   lessons_deleted_msg: "تم حذف الدرس!",
+  lessons_practical: "عملي",
+  lessons_exercise: "يمارس",
+  lessons_inependent_lesson: "درس مستقل",
 
   // Integrations page
   integrations: "التكامل",
@@ -412,7 +494,34 @@ const ar = {
   home_assign_project: "تعيين مشروع مفتوح",
   home_assignment_pined: "مهمة الصنوبرية",
   home_assignment_deleted: "تم حذف المهمة",
-  //
+
+  // profile
+
+  profile_live_at_country: "العيش في البلاد",
+  profile_postcode: "شفرة البريد",
+  profile_created_at: "أنشئت في",
+  profile_links: "روابط",
+  profile_your_networks: "شبكاتك",
+
+  // quest
+  quest_type: "النوع: الدورة/الوحدة",
+  quest_whats_quest: "ما هو السعي؟",
+  quest_select_type: "اختر صنف",
+  quest_select_course: "اختر دورة",
+  auest_select_module: "حدد الوحدة النمطية",
+  quest_you_dont_have_courses_msg: "ليس لديك أي دورات",
+  quest_you_dont_have_module_msg: "ليس لديك أي وحدة",
+  quest_all_modules: "جميع الوحدات",
+  quest_name: "اسم المهمة",
+  quest_edit_name_msg: "يمكنك تعديل الاسم المقترح الذي تم إنشاؤه تلقائيًا.",
+  quest_description: "وصف (اختياري)",
+  quest_schedule_date: "تاريخ الجدول الزمني:",
+  quest_schedule_date_info: "تاريخ البدء إن لم يكن تاريخ الإنشاء.",
+  quest_due_date: "تاريخ الاستحقاق:",
+  quest_due_date_info: "هذا هو التاريخ الذي يجب أن تكتمل فيه هذه المهمة.",
+  quest_close_date: "تاريخ قريب:",
+  quest_close_date_info:
+    "بعد هذا لم تعد يتم تلقي التقديمات. الافتراضي هو 3 أيام بعد “تاريخ الاستحقاق”",
 };
 
 export default ar;

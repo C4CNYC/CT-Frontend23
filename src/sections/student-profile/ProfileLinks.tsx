@@ -3,6 +3,7 @@ import React from "react";
 import { Box, Card, Grid, Skeleton, Stack, Typography } from "@mui/material";
 
 import { useGetSocialsQuery } from "src/redux/services/manager/socials-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 import LinkForm from "./LinkForm";
 import LinkItem from "./LinkItem";
@@ -15,6 +16,7 @@ export default function ProfileLinks({
   studentId,
 }: IProfileLinksProps): React.ReactElement | null {
   const { data, isLoading } = useGetSocialsQuery({ studentId });
+  const translate = useTranslate();
 
   if (isLoading) return <Skeleton variant="rounded" height="234px" />;
 
@@ -33,7 +35,7 @@ export default function ProfileLinks({
             <LinkForm studentId={studentId} />
 
             <Typography variant="h6" sx={{ mb: 2 }}>
-              Your networks
+              {translate("profile_your_networks")}
             </Typography>
             {data?.map((item) => (
               <Stack

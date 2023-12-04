@@ -94,7 +94,7 @@ export default function AddSchool(): React.ReactElement {
             variant="h3"
             sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}
           >
-            Add School{" "}
+            Add School{" asdsda"}
             <Typography sx={{ display: "inline-flex" }} variant="h2">
               🏫
             </Typography>

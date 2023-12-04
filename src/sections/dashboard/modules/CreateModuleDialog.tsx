@@ -132,26 +132,23 @@ export default function CreateModuleDialog({
   };
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
+    name: Yup.string().required(translate("required_name")),
     description:
-      Yup.string().required("Description is required") &&
-      Yup.string().max(100, "Write less then 100 characters"),
+      Yup.string().required(translate("required_description")) &&
+      Yup.string().max(100, translate("write_less_msg")),
     duration: Yup.string()
       .trim()
       .nullable()
       .transform((v, o) => (o === "" ? null : v))
-      .matches(
-        durationRegexp,
-        "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes"
-      ),
+      .matches(durationRegexp, translate("use_key_words_msg")),
     initial_likes: Yup.number()
-      .required("Initial likes is required")
+      .required(translate("required_initial_likes"))
       .positive(),
     initial_stars: Yup.number()
-      .required("Initial stars is required")
+      .required(translate("required_initial_stars"))
       .positive(),
     initial_enrolled: Yup.number()
-      .required("Initial enrolled is required")
+      .required(translate("required_initial_enrolled"))
       .positive(),
   });
 
@@ -244,9 +241,9 @@ export default function CreateModuleDialog({
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="General" {...a11yProps(0)} />
-                  <Tab label="Lessons" {...a11yProps(1)} />
-                  <Tab label="Settings" {...a11yProps(2)} />
+                  <Tab label={translate("general")} {...a11yProps(0)} />
+                  <Tab label={translate("lessons")} {...a11yProps(1)} />
+                  <Tab label={translate("settings")} {...a11yProps(2)} />
                 </Tabs>
               ) : null}
             </Box>
@@ -324,11 +321,14 @@ export default function CreateModuleDialog({
 
                     <RHFTextField
                       name="tips"
-                      placeholder="Enter tip"
-                      label="Add tip"
+                      placeholder={translate("actions_enter_tip")}
+                      label={translate("actions_add_tip")}
                     />
 
-                    <RHFSwitch name="active" label="Module active" />
+                    <RHFSwitch
+                      name="active"
+                      label={translate("modules_module_active")}
+                    />
                   </Box>
                 </Grid>
               </Grid>
@@ -362,7 +362,7 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="initial_likes"
-                      label="Initial likes"
+                      label={translate("courses_initial_likes")}
                       type="number"
                     />
                     <RHFTextField
@@ -371,7 +371,7 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="initial_stars"
-                      label="Initial stars"
+                      label={translate("courses_initial_stars")}
                       type="number"
                     />
                     <RHFTextField
@@ -380,7 +380,7 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="initial_enrolled"
-                      label="Initial enrolled"
+                      label={translate("courses_initial_enrolled")}
                       type="number"
                     />
                     <RHFTextField
@@ -389,7 +389,7 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="teacher_slides"
-                      label="Teacher slides link"
+                      label={translate("modules_teacher_slides_link")}
                     />
                     <RHFTextField
                       sx={{
@@ -397,7 +397,7 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="teacher_forum"
-                      label="Teacher forum link"
+                      label={translate("modules_teacher_forum_link")}
                     />
                     <RHFTextField
                       sx={{
@@ -405,7 +405,7 @@ export default function CreateModuleDialog({
                         minWidth: "300px",
                       }}
                       name="lesson_plans"
-                      label="Lesson plans link"
+                      label={translate("modules_lesson_plans_link")}
                     />
                   </Box>
                 </Grid>

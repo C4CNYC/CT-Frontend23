@@ -19,6 +19,7 @@ import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
 } from "src/redux/services/admin/school-amdin";
+import { useTranslate } from "src/utils/translateHelper";
 
 import TeacherItem from "./TeacherItem";
 
@@ -30,6 +31,7 @@ export default function TeacherSection({
   schoolId,
 }: TeacherSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
 
   const [deleteTeacher] = useDeleteTeacherMutation();
   const [open, setOpen] = useState(false);
@@ -49,7 +51,7 @@ export default function TeacherSection({
         user_id: userId,
         schoolId,
       }).unwrap();
-      enqueueSnackbar("Teacher deleted");
+      enqueueSnackbar(translate("schools_teacher_deleted_act"));
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -76,7 +78,7 @@ export default function TeacherSection({
               sx={{ alignItems: "center", display: "flex", cursor: "pointer" }}
               variant="subtitle2"
             >
-              Teachers
+              {translate("teachers")}
               <Iconify
                 icon={open ? "eva:chevron-up-fill" : "eva:chevron-down-fill"}
               />
@@ -125,7 +127,7 @@ export default function TeacherSection({
                     src="/assets/images/happy.png"
                   />
                   <Typography variant="h6" sx={{ ml: 2, mr: 2 }}>
-                    LET'S INVITE
+                    {translate("actions_lets_invite")}
                   </Typography>
                   <Image
                     style={{

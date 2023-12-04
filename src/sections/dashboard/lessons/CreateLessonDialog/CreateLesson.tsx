@@ -62,8 +62,8 @@ export default function CreateLesson({
   };
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required"),
+    name: Yup.string().required(translate("required_name")),
+    description: Yup.string().required(translate("required_description")),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -140,10 +140,10 @@ export default function CreateLesson({
 
                   <RHFSelect native name="type" size="small">
                     <option key="practical" value="practical">
-                      Practical
+                      {translate("lessons_practical")}
                     </option>
                     <option key="exercise" value="exercise">
-                      Exercise
+                      {translate("lessons_exercise")}
                     </option>
                   </RHFSelect>
 
@@ -152,7 +152,10 @@ export default function CreateLesson({
                     label={translate("lessons_active")}
                   />
 
-                  <RHFSwitch name="independent" label="Independent lesson" />
+                  <RHFSwitch
+                    name="independent"
+                    label={translate("lessons_inependent_lesson")}
+                  />
                 </Box>
                 <Box
                   sx={{
