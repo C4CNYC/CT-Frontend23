@@ -1,26 +1,28 @@
-import { type FC, useEffect, useState, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { type FC, useEffect, useMemo } from "react";
+
 import { AnimatePresence, m } from "framer-motion";
+import { useDispatch } from "react-redux";
 
 import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { Iconify } from "@components";
+import { setIsVisible } from "src/redux/slices/checkers-animation";
+import { setNextStepAble } from "src/redux/slices/code-panel-global";
+import { useSelector } from "src/redux/store";
+import { type IValidationMap } from "src/utils/validationMaping";
 
+import { CheckerIcon } from "./CheckersIcon";
 import CheckersCompleated from "./checkers-compleated";
 import CheckersMenu from "./checkers-menu";
-
-import { type IValidationMap } from "src/utils/validationMaping";
-import { useSelector } from "src/redux/store";
-import { setNextStepAble } from "src/redux/slices/code-panel-global";
-import { setIsTextOpened, setIsVisible } from "src/redux/slices/checkers-animation";
-
 import {
   BOX_SX,
-  ICONIFY_SX,
   CHECKERS_ANIMATION,
+  INDICATORS_WRAPPER_SX,
+  M_DIV_STYLE,
+  OPEN_BTN_WRAPPER_SX,
+  OPEN_HANDLER_ANIMATION,
+  getIndicatorSx,
   getStackSx,
-  M_DIV_STYLE
 } from "./constants";
 
 interface ICheckers {
@@ -30,58 +32,76 @@ interface ICheckers {
 const Checkers: FC<ICheckers> = ({ checkers }) => {
   const dispatch = useDispatch();
   const isVisible = useSelector((state) => state.checkersAnimation.isVisible);
-  const isTextOpened = useSelector((state) => state.checkersAnimation.isTextOpened);
-  const isBrowserHidden = useSelector((state) => state.codePanelGlobal.isBrowserHidden);
-  const nextStepAble = useSelector((state) => state.codePanelGlobal.nextStepAble);
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const isBrowserHidden = useSelector(
+    (state) => state.codePanelGlobal.isBrowserHidden
+  );
+  const nextStepAble = useSelector(
+    (state) => state.codePanelGlobal.nextStepAble
+  );
 
   const handleCollaps = (): void => {
     if (isVisible) {
-      if (isTextOpened) {
-        dispatch(setIsTextOpened(false))
-        const id = setTimeout(() => {
-          dispatch(setIsVisible(false))
-        }, 500);
-        setTimeoutId(id);
-      } else {
-        dispatch(setIsVisible(false))
-      }
+      dispatch(setIsVisible(false));
     } else {
-      dispatch(setIsVisible(true))
+      dispatch(setIsVisible(true));
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [timeoutId]);
 
   useEffect(() => {
     const allPased = checkers.reduce((prev, curr) => prev && curr.valid, true);
     if (allPased === nextStepAble) return;
 
-    dispatch(setNextStepAble(allPased))
+    dispatch(setNextStepAble(allPased));
   }, [checkers]);
 
-  const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden])
+  const stackSx = useMemo(() => getStackSx(isBrowserHidden), [isBrowserHidden]);
+
+  const handleIconColor = (checkers: IValidationMap[]): string => {
+    let containsValid = false;
+    let containsInvalid = false;
+
+    checkers.forEach((checker) => {
+      checker.valid ? (containsValid = true) : (containsInvalid = true);
+    });
+
+    if (containsValid && !containsInvalid) {
+      return "#75CF6D";
+    }
+
+    if (containsValid && containsInvalid) {
+      return "#ED9526";
+    }
+
+    return "#C4C4C4";
+  };
 
   return (
     <>
       <CheckersCompleated />
 
+      <AnimatePresence>
+        <m.div
+          initial={false}
+          animate={isVisible ? "closed" : "open"}
+          variants={OPEN_HANDLER_ANIMATION}
+        >
+          <Box sx={OPEN_BTN_WRAPPER_SX}>
+            <Box sx={BOX_SX} onClick={handleCollaps}>
+              <CheckerIcon
+                width={14}
+                height={15}
+                color={handleIconColor(checkers)}
+              />
+            </Box>
+            <Box sx={INDICATORS_WRAPPER_SX}>
+              {checkers.map((checker, i) => (
+                <Box key={i} sx={{ ...getIndicatorSx(checker.valid) }} />
+              ))}
+            </Box>
+          </Box>
+        </m.div>
+      </AnimatePresence>
       <Stack sx={stackSx}>
-        <Box sx={BOX_SX}>
-          <Iconify
-            sx={ICONIFY_SX}
-            icon={isVisible ? "ic:baseline-remove-red-eye" : "mdi:eye-off"}
-            width="22px"
-            onClick={handleCollaps}
-          />
-        </Box>
-
         <AnimatePresence>
           <m.div
             initial={false}
@@ -89,7 +109,7 @@ const Checkers: FC<ICheckers> = ({ checkers }) => {
             variants={CHECKERS_ANIMATION}
             style={M_DIV_STYLE}
           >
-            <CheckersMenu checkers={checkers} />
+            <CheckersMenu checkers={checkers} onClose={handleCollaps} />
           </m.div>
         </AnimatePresence>
       </Stack>

@@ -21,6 +21,7 @@ export interface Cursor {
 	from: number,
 	to: number,
 	tooltipText: string
+  userId?: string
 }
 
 export interface Cursors {
@@ -28,29 +29,37 @@ export interface Cursors {
 }
 
 interface TooltipWidgetProps {
+  id: string
 	name: string
 	color: number
 	pos: number
 	withTooltip: boolean
+  userId?: string
 }
 
 class TooltipWidget extends WidgetType {
+  private id = ""
 	private name = "";
 	private suffix = "";
 	private pos: number = 1;
 	private withTooltip: boolean = true;
+  private userId?: string = ""
 
 	constructor({
+    id,
 		color,
 		name,
 		pos,
-		withTooltip
+		withTooltip,
+    userId
 	}: TooltipWidgetProps) {
 		super();
+    this.id = id;
 		this.suffix = `${color % 8 + 1}`;
 		this.name = name;
 		this.pos = pos;
 		this.withTooltip = withTooltip;
+    this.userId = userId;
 	}
 
 	toDOM(view: EditorView) {
@@ -76,11 +85,15 @@ class TooltipWidget extends WidgetType {
 		cursorTooltip.className = `cm-tooltip-cursor cm-tooltip ${positionClassName} ${rotateClassName} cm-tooltip-${this.suffix}`;
 		cursorTooltip.textContent = this.name;
 
+    const cursorCaret = document.createElement("div");
+    cursorCaret.className = "cm-cursor-caret";
+
 		const tooltipArrow = document.createElement("div");
 		tooltipArrow.className = "cm-tooltip-arrow";
 
 		cursorTooltip.appendChild(tooltipArrow);
 		dom.appendChild(cursorTooltip);
+    if (this.id.split("_")[0] === this.userId) dom.appendChild(cursorCaret);
 
 		debouncedHideTooltip(dom);
 
@@ -117,10 +130,12 @@ const getCursorField = (addCursor: StateEffectType<Cursor>, withTooltip: boolean
 			addUpdates.push(
 				Decoration.widget({
 					widget: new TooltipWidget({
+            id: e.value.id,
 						name: e.value.tooltipText,
 						color: cursorsItems.get(e.value.id)!,
 						pos: e.value.to,
-						withTooltip
+						withTooltip,
+            userId: e.value.userId,
 					}),
 					block: false,
 					id: e.value.id
@@ -145,26 +160,29 @@ interface CursorExtentionProps {
 	tooltipText: string
 	withTooltip: boolean
 	addCursor: StateEffectType<Cursor>
+  userId?: string
 }
 
 export const cursorExtension = ({
 	cursorId,
 	tooltipText,
 	withTooltip,
-	addCursor
+	addCursor,
+  userId
 }: CursorExtentionProps): Extension[] => {
 	return [
 		getCursorField(addCursor, withTooltip),
 		cursorBaseTheme,
 		EditorView.updateListener.of(update => {
-			update.transactions.forEach(e => { 
+			update.transactions.forEach(e => {
 				if (e.selection) {
 					update.view.dispatch({
 						effects: addCursor.of({
 							id: cursorId,
 							from: e.selection.ranges[0].from,
 							to: e.selection.ranges[0].to,
-							tooltipText
+							tooltipText,
+              userId
 						})
 					})
 				}

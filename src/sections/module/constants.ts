@@ -15,7 +15,9 @@ export const getPageContainerSx = (isMobile: boolean, light: boolean) =>
     : { pt: isMobile ? 2 : 10, px: isMobile ? 1 : 8 };
 export const getBreadcrumbsSx = (isMobile: boolean, theme: Theme) => ({
   background:
-    theme.palette.mode === "light" ? "#fff" : theme.palette.background.neutral,
+    theme.palette.mode === "light"
+      ? theme.palette.background.default
+      : theme.palette.background.neutral,
   width: "fit-content",
   py: 1,
   px: isMobile ? 2 : 5,

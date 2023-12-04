@@ -54,6 +54,7 @@ export default function NavItem({
           noWrap: true,
           component: "span",
           variant: active ? "subtitle2" : "body2",
+          fontSize: 18,
         }}
         secondaryTypographyProps={{
           noWrap: true,

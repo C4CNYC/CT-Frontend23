@@ -1,16 +1,14 @@
 import { type FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
+
 import { AnimatePresence, m, useAnimationControls } from "framer-motion";
+import { useDispatch } from "react-redux";
 
 import { alpha } from "@mui/material";
-import { useSelector } from "src/redux/store";
-import { setIsActivateCompeated } from "src/redux/slices/checkers-animation";
 
-import {
-  DRAW,
-  M_DIV_STYLE,
-  VARIANTS
-} from "./constants"
+import { setIsActivateCompeated } from "src/redux/slices/checkers-animation";
+import { useSelector } from "src/redux/store";
+
+import { DRAW, M_DIV_STYLE, VARIANTS } from "./constants";
 
 const CheckersCompleated: FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +22,7 @@ const CheckersCompleated: FC = () => {
     if (isActivateCompeated) {
       controls.start("visible").then(async () => {
         await controls.start("hidden").then(() => {
-          dispatch(setIsActivateCompeated(false))
+          dispatch(setIsActivateCompeated(false));
         });
       });
     }
@@ -74,6 +72,6 @@ const CheckersCompleated: FC = () => {
       </m.div>
     </AnimatePresence>
   );
-}
+};
 
 export default CheckersCompleated;

@@ -1,4 +1,5 @@
-import { type FC } from "react"
+import { type FC } from "react";
+
 import { Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
 
@@ -36,7 +37,7 @@ const STACK_SX = {
   bottom: 0,
   right: 0,
   background: "white",
-  zIndex: 1
-}
+  zIndex: 1,
+};
 
 export default LoadingCodeEditor;

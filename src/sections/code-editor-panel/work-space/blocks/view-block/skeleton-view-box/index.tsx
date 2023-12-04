@@ -8,7 +8,7 @@ import {
   CODING_TYP_SX,
   PARENT_STACK_SX,
   SKELETON_SX,
-  STACK_BOTTON_SX,
+  getStackBottomSx,
 } from "./constants";
 
 interface ISkeletonProps {
@@ -53,7 +53,7 @@ const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
         </Stack>
       </Stack>
 
-      <Stack sx={STACK_BOTTON_SX}>
+      <Stack sx={(theme) => ({ ...getStackBottomSx(theme) })}>
         <Typography sx={AVAILABLE_TYP_SX} variant="subtitle1">
           No preview available?
         </Typography>

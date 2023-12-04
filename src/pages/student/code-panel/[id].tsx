@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
+
 import { FullScreen } from "react-full-screen";
 
 import { Box } from "@mui/material";
@@ -8,12 +9,11 @@ import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-editor-panel/skeleton";
 import WorkSpace from "@sections/code-editor-panel/work-space";
-
 import { useCodePanel } from "src/hooks/useCodePanel";
+import SignUpDialog from "./sign-up-dialog";
 
 const Tour = dynamic(
-  async () =>
-    await import("@sections/code-editor-panel/code-panel-tour"),
+  async () => await import("@sections/code-editor-panel/code-panel-tour"),
   { ssr: false }
 );
 
@@ -26,21 +26,25 @@ const Confetti = dynamic(async () => await import("react-confetti"));
 
 const ChatPopup = dynamic(
   async () =>
-    await import("@sections/code-editor-panel/top-bar/nav-bar/options/chat-popup")
+    await import(
+      "@sections/code-editor-panel/top-bar/nav-bar/options/chat-popup"
+    )
 );
 
 const BottomBar = dynamic(
   async () => await import("@sections/code-editor-panel/bottom-bar")
 );
 
-const LessonsManager = dynamic(async () => await import("@sections/code-editor-panel/bottom-bar/lesson-manager"));
+const LessonsManager = dynamic(
+  async () =>
+    await import("@sections/code-editor-panel/bottom-bar/lesson-manager")
+);
 
 const CONFETI_GRAVITY = 0.25;
 const MAX_NUMBER_OF_PIECES = 500;
 const MIN_NUMBER_OF_PIECES = 0;
 const BOX_PROPS = {
-  bgcolor: "white",
-  sx: { position: "relative", overflow: "hidden" }
+  sx: { position: "relative", overflow: "hidden" },
 };
 
 export default function Index(): React.ReactElement | null {
@@ -52,7 +56,7 @@ export default function Index(): React.ReactElement | null {
     workSpaceProps,
     bottomBarProps,
     isDesktop,
-    lessonManagerProps
+    lessonManagerProps,
   } = useCodePanel();
 
   if (!isLoadingComplete) {
@@ -67,6 +71,8 @@ export default function Index(): React.ReactElement | null {
 
       <FullScreen handle={handle}>
         <Tour />
+
+        <SignUpDialog isSigned={!!workSpaceProps.user} />
 
         <Box {...BOX_PROPS}>
           <TopPanel

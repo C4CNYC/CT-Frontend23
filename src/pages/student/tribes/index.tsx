@@ -73,12 +73,12 @@ export default function Tribes(): React.ReactElement {
                 icon={<TribesCounter count={data?.data.length ?? 0} />}
                 iconPosition="end"
               />
-              <Tab
+              {/* <Tab
                 value={TabType.Pending}
                 label="Pending Tribes"
                 icon={<TribesCounter count={0} />}
                 iconPosition="end"
-              />
+              /> */}
             </Tabs>
           </Box>
           <TribesFillter />

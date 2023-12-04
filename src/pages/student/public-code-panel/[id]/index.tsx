@@ -14,12 +14,12 @@ import { Box } from "@mui/material";
 import { EmptyContent } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { CodePanelChat } from "@sections/chat";
+import SkeletonCodePanel from "@sections/code-editor-panel/skeleton";
+import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import BottomBar from "@sections/code-panel/bottom-bar";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
-import SkeletonCodePanel from "@sections/code-editor-panel/skeleton";
 import TopPanel from "@sections/code-panel/top-bar";
-import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
 import WorkSpace, { SupportedLang } from "@sections/code-panel/work-space";
 import GuestGuard from "src/auth/GuestGuard";
 import {
@@ -65,9 +65,10 @@ export default function Index(): React.ReactElement {
 
   const onOpenLesson = (lessonId: string, unitId: string): void => {
     push(
-      `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-        query?.id as string, { unitId, lessonId }
-      )}`,
+      `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(query?.id as string, {
+        unitId,
+        lessonId,
+      })}`,
       undefined,
       { shallow: true }
     );
@@ -91,7 +92,8 @@ export default function Index(): React.ReactElement {
         const pathStr = nextLessonInfo.path.split("/");
         push(
           `${STUDENT_PATH_DASHBOARD.publicCodePanel.workSpace(
-            courseContent?.id, { unitId: pathStr[0], lessonId: pathStr[1], }
+            courseContent?.id,
+            { unitId: pathStr[0], lessonId: pathStr[1] }
           )}`,
           undefined,
           { shallow: true }
