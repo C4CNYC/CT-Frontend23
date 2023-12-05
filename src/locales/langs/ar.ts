@@ -17,13 +17,13 @@ const ar = {
     documentation: "توثيق",
   },
   app: "تطبيق",
-  user: "المستعمل",
+
   edit: "تعديل",
   shop: "متجر",
   blog: "مقالات",
   post: "بريد",
   mail: "بريد",
-  chat: "دردشة",
+
   cards: "البطاقات",
   posts: "المشاركات",
   create: "يزيد",
@@ -87,8 +87,21 @@ const ar = {
   actions_enroll_now: "تسجيل الآن",
   actions_explore: "يستكشف",
   actions_launch: "يطلق",
+  actions_approve: "يعتمد",
+  actions_previous: "سابق",
+  actions_next: "التالي",
+  actions_send: "يرسل",
+  actions_sort_by: "ترتيب حسب",
+  actions_invite: "يدعو",
+  actions_copy: "ينسخ",
+  actions_migrate: "يهاجر",
+  actions_confirm: "يتأكد",
+  actions_reset: "إعادة ضبط",
 
   // general locales
+  chat: "دردشة",
+  user: "المستعمل",
+  users: "المستخدمين",
   home: "بيت",
   name: "اسم",
   country: "دولة",
@@ -171,6 +184,14 @@ const ar = {
   bio: "السيرة الذاتية",
   quest: "بحث",
   admin: "مسؤل",
+  action: "فعل",
+  student: "طالب",
+  project: "مشروع",
+  featured: "متميز",
+  online: "متصل",
+  manager_account: "حساب المدير",
+  student_account: "حساب الطالب",
+  customization: "التخصيص",
 
   // avatar upload
   avatar__upload_text: "حمل الصورة",
@@ -207,6 +228,14 @@ const ar = {
   messages_copied: "نسخ!",
   messages_invite_sent: "أرسلت الدعوة",
   messages_deleted: "حذف بنجاح!",
+  messages_edited: "تم التعديل بنجاح!",
+  messages_added: "اضيف بنجاح!",
+  messages_thanks: "شكرًا!",
+  messages_class_created: "الفئة تم إنشاؤها بنجاح",
+  messages_changes_updated: "تم تحديث التغييرات!",
+  messages_migrate: "الهجرة بنجاح!",
+  messages_student_invited: "طالب مدعو!",
+  messages_unable_to_logout: "غير قادر على تسجيل الخروج!",
 
   // Validation messages
   required_skill_name: "اسم المهارة مطلوب",
@@ -380,6 +409,7 @@ const ar = {
 
   // Progress page
   progress: "تقدم",
+  progress_tooltip_info: "انقر على أحد الأعمدة لتوسيعه والاطلاع على التفاصيل",
 
   // Courses page
   courses: "الدورات",
@@ -522,6 +552,70 @@ const ar = {
   quest_close_date: "تاريخ قريب:",
   quest_close_date_info:
     "بعد هذا لم تعد يتم تلقي التقديمات. الافتراضي هو 3 أيام بعد “تاريخ الاستحقاق”",
+
+  // profile -> members
+  members_approved_msg: "تمت الموافقة بنجاح",
+  members_student_removed_msg: "تمت إزالة الطالب من الفصل",
+  members_students_removed_msg: "تمت إزالة الطلاب من الفصل",
+
+  // My Notes
+  notes_my: "ملاحظاتي",
+  notes_delete_question: "هل أنت متأكد أنك تريد حذف الهدف؟",
+
+  // Feedback
+  feedback_tel_your_feedback: "أخبرنا بأفكارك وعواطفك وتعليقاتك",
+
+  // Tribes
+  tribe: "قبيلة",
+  tribe_name: "القبيلة {{name}}",
+  tribes_create_group: "إنشاء مجموعة",
+  tribes_join_group: "انضمام مجموعة",
+  tribes_my: "قبائلي",
+  tribes_search: "بحث عن قبيلة...",
+  tribes_information_about_tribe:
+    "ستكون هناك معلومات عن هذه القبيلة عندما يضيفها المعلم",
+  tribes_leave_tribe: "ترك القبيلة",
+
+  // Create class page
+  class_create: "إنشاء فصل دراسي",
+  class_create_class: "إنشاء فئة",
+  class_create_modal_info:
+    "الفصول الدراسية هي المكان الذي يتعلم فيه الجميع معًا في مكان آمن.",
+  class_choose_school: "اختر المدرسة:",
+  class_enter_name: "أدخل الاسم ...",
+  class_enter_class_name: "أدخل اسم الفصل هنا...",
+  class_enter_description: "والوصف هنا...",
+
+  // Share
+  share_group: "مشاركة المجموعة",
+  share_send_link: "أرسل الرابط أدناه لدعوة الطلاب إلى المجموعة.",
+  share_invite_link: "رابط الدعوة:",
+  share_can_join: "يمكن لأي شخص لديه الرابط الانضمام",
+  share_only_people_approve: "يمكن فقط للأشخاص الذين توافق عليهم الانضمام",
+  share_other_ways_to_add: "طرق أخرى لإضافة الطلاب:",
+  share_google_classroom: "جوجل كلاس روم",
+  share_email_address: "عنوان البريد الإلكتروني أو المجال",
+  share_continue_with_google: "تواصل مع جوجل",
+  share_type_email: "اكتب البريد الإلكتروني",
+
+  // Friends page
+  friends: "أصدقاء",
+  friends_no_friends: "ليس لديك أصدقاء بعد",
+
+  // Theme
+  mode: "وضع",
+  contrast: "مقابلة",
+  direction: "اتجاه",
+  layout: "تَخطِيط",
+  stretch: "تمتد",
+  stretch_tooltip: "متوفر فقط بدقة كبيرة> 1600 بكسل (XL)",
+  presets: "الإعدادات المسبقة",
+  fullscreen: "تكبير الشاشة",
+  fullscreen_exit: "الخروج من الشاشة الكاملة",
+
+  // login
+  organization_setting: "إعداد المنظمة",
+  logout: "تسجيل خروج",
 };
 
 export default ar;

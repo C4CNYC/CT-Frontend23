@@ -25,7 +25,7 @@ export default function UserProfile(): React.ReactElement {
   const TABS = [
     {
       value: "profile",
-      label: translate("profile"),
+      label: "profile",
       icon: <Iconify icon="ic:round-account-box" />,
       component: (
         <ProfileMain data={data} isFriend={false} isLoading={isLoading} />
@@ -33,7 +33,7 @@ export default function UserProfile(): React.ReactElement {
     },
     {
       value: "links",
-      label: translate("profile_links"),
+      label: "profile_links",
       icon: <Iconify icon="nimbus:planet" />,
       component: <ProfileLinks studentId={data?.id ?? ""} />,
     },
@@ -99,7 +99,7 @@ export default function UserProfile(): React.ReactElement {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label}
+                label={translate(tab.label)}
               />
             ))}
           </Tabs>

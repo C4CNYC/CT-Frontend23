@@ -137,7 +137,8 @@ export default function QuestItem({
                   })}
                 </Typography>
                 <Typography variant="body2">
-                  Due: {format(new Date(assignment.end_date), "MM.dd.yyyy")}
+                  {translate("due")}:{" "}
+                  {format(new Date(assignment.end_date), "MM.dd.yyyy")}
                 </Typography>
               </Stack>
             </Stack>

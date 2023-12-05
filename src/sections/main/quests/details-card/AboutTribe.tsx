@@ -4,6 +4,7 @@ import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import { Iconify } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -27,9 +28,11 @@ export default function AboutTribe({
   createdAt,
   schoolName,
 }: IAbourTribeProps) {
+  const translate = useTranslate();
+
   return (
     <Card>
-      <CardHeader title="About" />
+      <CardHeader title={translate("about")} />
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Typography variant="body2">{description}</Typography>
@@ -38,7 +41,7 @@ export default function AboutTribe({
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">
-            Live at &nbsp;
+            {translate("general_profile_live_at")} &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {country}, {city}
             </Link>
@@ -49,7 +52,7 @@ export default function AboutTribe({
           <StyledIcon icon="ic:round-business-center" />
 
           <Typography variant="body2">
-            Created at: &nbsp;
+            {translate("profile_created_at")}: &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {format(new Date(createdAt), "dd.mm.yyyy")}
             </Link>
@@ -60,7 +63,7 @@ export default function AboutTribe({
           <StyledIcon icon="fa-solid:school" />
 
           <Typography variant="body2">
-            School: &nbsp;
+            {translate("school")}: &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {schoolName}
             </Link>

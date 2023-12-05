@@ -17,13 +17,12 @@ const en = {
     documentation: "documentation",
   },
   app: "app",
-  user: "user",
   edit: "edit",
   shop: "shop",
   blog: "blog",
   post: "post",
   mail: "mail",
-  chat: "chat",
+
   cards: "cards",
   posts: "posts",
   create: "create",
@@ -85,8 +84,21 @@ const en = {
   actions_enroll_now: "Enroll Now",
   actions_explore: "Explore",
   actions_launch: "LAUNCH",
+  actions_approve: "Approve",
+  actions_previous: "Previous",
+  actions_next: "Next",
+  actions_send: "Send",
+  actions_sort_by: "Sort by",
+  actions_invite: "Invite",
+  actions_copy: "Copy",
+  actions_migrate: "Migrate",
+  actions_confirm: "Confirm",
+  actions_reset: "Reset",
 
   // general locales
+  chat: "Chat",
+  user: "user",
+  users: "users",
   home: "Home",
   name: "Name",
   country: "Country",
@@ -169,6 +181,14 @@ const en = {
   bio: "Bio",
   quest: "Quest",
   admin: "Admin",
+  action: "Action",
+  student: "Student",
+  project: "Project",
+  featured: "Featured",
+  online: "Online",
+  manager_account: "Manager Account",
+  student_account: "Student Account",
+  customization: "Customization",
 
   // avatar upload
   avatar__upload_text: "Upload photo",
@@ -206,6 +226,14 @@ const en = {
   messages_copied: "Copied!",
   messages_invite_sent: "Invite sent",
   messages_deleted: "Deleted successfully!",
+  messages_edited: "Edited successfully!",
+  messages_added: "Added successfully!",
+  messages_thanks: "thanks!",
+  messages_class_created: "Class created successfully",
+  messages_changes_updated: "Changes updated!",
+  messages_migrate: "Migrate successfully!",
+  messages_student_invited: "Student invited!",
+  messages_unable_to_logout: "Unable to logout!",
 
   // Validation messages
   required_skill_name: "Skill name is required",
@@ -370,6 +398,7 @@ const en = {
 
   // Progress page
   progress: "Progress",
+  progress_tooltip_info: "Click on a column to expand it and see details",
 
   // Courses page
   courses: "Courses",
@@ -494,6 +523,11 @@ const en = {
   profile_links: "Links",
   profile_your_networks: "Your networks",
 
+  // profile -> members
+  members_approved_msg: "Approved successfully",
+  members_student_removed_msg: "Student removed from class",
+  members_students_removed_msg: "Students removed from class",
+
   // quest
   quest_type: "Type: Course/Module",
   quest_whats_quest: "What`s a quest?",
@@ -515,6 +549,65 @@ const en = {
   quest_close_date: "Close Date:",
   quest_close_date_info:
     "After this submissions are no longer received. The default is 3 days after the “Due date.”",
+
+  // My Notes
+  notes_my: "My Notes",
+  notes_delete_question: "Are you sure you want to delete the goal?",
+
+  // Feedback
+  feedback_tel_your_feedback: "Tell us your thoughts, emotions, and comments",
+
+  // Tribes
+  tribe: "Tribe",
+  tribe_name: "Tribe {{name}}",
+  tribes_create_group: "Create a group",
+  tribes_join_group: "Join a group",
+  tribes_my: "My Tribes",
+  tribes_search: "Search tribe...",
+  tribes_information_about_tribe:
+    "There will be information about this tribe when the teacher add it",
+  tribes_leave_tribe: "Leave Tribe",
+
+  // Create class page
+  class_create: "Create a class",
+  class_create_class: "Create class",
+  class_create_modal_info:
+    "Classes is the place, where everyone learns together in a safe space.",
+  class_choose_school: "Choose school:",
+  class_enter_name: "Enter name ...",
+  class_enter_class_name: "Enter a class name here ... ",
+  class_enter_description: "and description here ... ",
+
+  // Share
+  share_group: "Share group",
+  share_send_link: "Send the link below to invite students to the group.",
+  share_invite_link: "Invite link:",
+  share_can_join: "Anyone with the link can join",
+  share_only_people_approve: "Only people you approve can join",
+  share_other_ways_to_add: "Other ways to add students:",
+  share_google_classroom: "Google Classroom",
+  share_email_address: "Email address or domain",
+  share_continue_with_google: "Continue with Google",
+  share_type_email: "Type email",
+
+  // Friends page
+  friends: "Friends",
+  friends_no_friends: "You have no friends yet",
+
+  // Theme
+  mode: "Mode",
+  contrast: "Contrast",
+  direction: "Direction",
+  layout: "Layout",
+  stretch: "Stretch",
+  stretch_tooltip: "Only available at large resolutions > 1600px (xl)",
+  presets: "Presets",
+  fullscreen: "Fullscreen",
+  fullscreen_exit: "Exit Fullscreen",
+
+  // login
+  organization_setting: "Organization Setting",
+  logout: "Logout",
 
   organizations: {
     dashboard_title: "Dashboard",

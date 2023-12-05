@@ -21,10 +21,9 @@ export default function PendingInvitesTab({
   dense,
   rowsPerPage,
 }: IPendingInvitesTabProps): React.ReactElement {
-  const translate = useTranslate();
   const TABLE_HEAD = [
-    { id: "email", label: translate("email"), align: "left" },
-    { id: "status", label: translate("status"), align: "left" },
+    { id: "email", label: "email", align: "left" },
+    { id: "status", label: "status", align: "left" },
   ];
   return (
     <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>

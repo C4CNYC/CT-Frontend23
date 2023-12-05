@@ -51,6 +51,19 @@ import {
 import { RootState } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
 
+const STATUS_OPTIONS = ["all", "invites"];
+
+const TABLE_HEAD = [
+  { id: "", label: "avatar" },
+  { id: "email", label: "email", align: "left" },
+  { id: "first_name", label: "first_name", align: "left" },
+  { id: "last_name", label: "last_name", align: "left" },
+  { id: "socials", label: "socials", align: "left" },
+  { id: "isVerified", label: "verified", align: "center" },
+  { id: "status", label: "status", align: "left" },
+  { id: "" },
+];
+
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
@@ -72,19 +85,6 @@ export default function UserListPage(): React.ReactElement {
   } = useTable();
 
   const translate = useTranslate();
-
-  const STATUS_OPTIONS = [translate("all"), translate("invites")];
-
-  const TABLE_HEAD = [
-    { id: "", label: translate("avatar") },
-    { id: "email", label: translate("email"), align: "left" },
-    { id: "first_name", label: translate("first_name"), align: "left" },
-    { id: "last_name", label: translate("last_name"), align: "left" },
-    { id: "socials", label: translate("socials"), align: "left" },
-    { id: "isVerified", label: translate("verified"), align: "center" },
-    { id: "status", label: translate("status"), align: "left" },
-    { id: "" },
-  ];
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [value, setValue] = useState(0);
@@ -196,7 +196,7 @@ export default function UserListPage(): React.ReactElement {
             }}
           >
             {STATUS_OPTIONS.map((tab, index) => (
-              <Tab key={index} label={tab} {...a11yProps(index)} />
+              <Tab key={index} label={translate(tab)} {...a11yProps(index)} />
             ))}
           </Tabs>
 

@@ -51,6 +51,26 @@ import {
 import { RootState } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
 
+const STATUS_OPTIONS = ["all"];
+
+const TABLE_HEAD = [
+  { id: "", label: "icon" },
+  { id: "name", label: "name", align: "left" },
+  {
+    id: "total_students",
+    label: "classes_total_students",
+    align: "left",
+  },
+  {
+    id: "total_students",
+    label: "classes_total_courses",
+    align: "left",
+  },
+  { id: "started_id", label: "start_date", align: "left" },
+  { id: "status", label: "status", align: "left" },
+  { id: "" },
+];
+
 UserListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
@@ -69,26 +89,6 @@ export default function UserListPage(): React.ReactElement {
   } = useTable();
 
   const translate = useTranslate();
-
-  const STATUS_OPTIONS = [translate("all")];
-
-  const TABLE_HEAD = [
-    { id: "", label: translate("icon") },
-    { id: "name", label: translate("name"), align: "left" },
-    {
-      id: "total_students",
-      label: translate("classes_total_students"),
-      align: "left",
-    },
-    {
-      id: "total_students",
-      label: translate("classes_total_courses"),
-      align: "left",
-    },
-    { id: "started_id", label: translate("start_date"), align: "left" },
-    { id: "status", label: translate("status"), align: "left" },
-    { id: "" },
-  ];
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -236,7 +236,7 @@ export default function UserListPage(): React.ReactElement {
             }}
           >
             {STATUS_OPTIONS.map((tab) => (
-              <Tab key={tab} label={tab} value={tab} />
+              <Tab key={tab} label={translate(tab)} value={tab} />
             ))}
           </Tabs>
 

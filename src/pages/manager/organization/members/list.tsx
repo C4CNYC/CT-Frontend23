@@ -48,6 +48,43 @@ import { useTranslate } from "src/utils/translateHelper";
 
 import SkeletonMembers from "./SkeletonMembers";
 
+const STATUS_OPTIONS = ["all"];
+
+const TABLE_HEAD = [
+  { id: "" },
+  {
+    id: "email",
+    label: "email",
+    align: "left",
+  },
+  {
+    id: "first_name",
+    label: "first_name",
+    align: "left",
+  },
+  {
+    id: "last_name",
+    label: "last_name",
+    align: "left",
+  },
+  {
+    id: "role",
+    label: "role",
+    align: "left",
+  },
+  {
+    id: "isVerified",
+    label: "verified",
+    align: "center",
+  },
+  {
+    id: "status",
+    label: "status",
+    align: "left",
+  },
+  { id: "" },
+];
+
 UserListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
@@ -84,48 +121,12 @@ export default function UserListPage(): React.ReactElement {
     }
   };
 
-  const STATUS_OPTIONS = [translate("all")];
-
   const handleDeleteRow = (userId: string): void => {
     useDeleteMember(userId);
     enqueueSnackbar(translate("members_delete_success_msg"));
     setSelected([]);
   };
 
-  const TABLE_HEAD = [
-    { id: "" },
-    {
-      id: "email",
-      label: translate("email"),
-      align: "left",
-    },
-    {
-      id: "first_name",
-      label: translate("first_name"),
-      align: "left",
-    },
-    {
-      id: "last_name",
-      label: translate("last_name"),
-      align: "left",
-    },
-    {
-      id: "role",
-      label: translate("role"),
-      align: "left",
-    },
-    {
-      id: "isVerified",
-      label: translate("verified"),
-      align: "center",
-    },
-    {
-      id: "status",
-      label: translate("status"),
-      align: "left",
-    },
-    { id: "" },
-  ];
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
@@ -200,7 +201,7 @@ export default function UserListPage(): React.ReactElement {
             }}
           >
             {STATUS_OPTIONS.map((tab) => (
-              <Tab key={tab} label={tab} value={tab} />
+              <Tab key={tab} label={translate(tab)} value={tab} />
             ))}
           </Tabs>
 

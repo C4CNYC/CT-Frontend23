@@ -7,6 +7,7 @@ import { TiLocation } from "react-icons/ti";
 import { Box, Typography } from "@mui/material";
 
 import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface ITribeStatisticsProps {
   students: IStudent[];
@@ -17,6 +18,8 @@ export default function TribeStatistics({
   students,
   createdAt,
 }: ITribeStatisticsProps): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Box
       sx={{
@@ -32,7 +35,8 @@ export default function TribeStatistics({
         </Box>
 
         <Typography variant="body2">
-          {students?.length} {students?.length === 1 ? "user" : "users"}
+          {students?.length}{" "}
+          {students?.length === 1 ? translate("user") : translate("users")}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", color: "#919EAB" }}>
@@ -53,7 +57,7 @@ export default function TribeStatistics({
         <Box mr={1}>
           <TiLocation size="20px" color="#919EAB" />
         </Box>
-        <Typography variant="body2">online</Typography>
+        <Typography variant="body2">{translate("online")}</Typography>
       </Box>
     </Box>
   );

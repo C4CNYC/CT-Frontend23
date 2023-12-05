@@ -43,25 +43,25 @@ export default function UserProfilePage(): React.ReactElement {
   const TABS = [
     {
       value: "profile",
-      label: translate("general"),
+      label: "general",
       icon: <Iconify icon="ic:round-account-box" />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: "settings",
-      label: translate("settings"),
+      label: "settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: "contacts",
-      label: translate("contacts"),
+      label: "contacts",
       icon: <MdContacts />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: "socials",
-      label: translate("social_networks"),
+      label: "social_networks",
       icon: <BsPeopleFill />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },
@@ -156,7 +156,7 @@ export default function UserProfilePage(): React.ReactElement {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label}
+                label={translate(tab.label)}
               />
             ))}
           </Tabs>

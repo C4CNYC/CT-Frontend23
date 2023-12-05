@@ -167,7 +167,7 @@ export default function ProgressTable({
                     orderBy={orderBy}
                     setOrderBy={setOrderBy}
                   >
-                    First Name
+                    {translate("first_name")}
                   </TableHeadSort>
                   <TableHeadSort
                     id="last_name"
@@ -176,7 +176,7 @@ export default function ProgressTable({
                     orderBy={orderBy}
                     setOrderBy={setOrderBy}
                   >
-                    Last Name
+                    {translate("last_name")}
                   </TableHeadSort>
                 </>
               )}
@@ -188,7 +188,7 @@ export default function ProgressTable({
                   orderBy={orderBy}
                   setOrderBy={setOrderBy}
                 >
-                  Username
+                  {translate("username")}
                 </TableHeadSort>
               )}
               {selectedData.map((item, idx) =>
@@ -209,7 +209,7 @@ export default function ProgressTable({
                       <>
                         <Typography variant="body2">
                           {levelName.toUpperCase()} <br />
-                          Project{" "}
+                          {translate("project")}{" "}
                           {"content_id" in item
                             ? item.content_id
                             : `${courses[selectedCourseIdx]?.content_id}.${
@@ -232,7 +232,7 @@ export default function ProgressTable({
                           {"due_date" in item && (
                             <>
                               <br />
-                              Due:{" "}
+                              {translate("due")}:{" "}
                               {format(new Date(item?.due_date), "dd LLL, yyyy")}
                             </>
                           )}
@@ -614,17 +614,19 @@ const TableItemProgress = ({
   hasNextLink?: boolean;
   onClick: () => void;
 }) => {
+  const translate = useTranslate();
+
   return (
     <TableCell size="small">
       <Tooltip
         placement="top"
         title={
           <div>
-            Student: {studentName}
+            {translate("student")}: {studentName}
             <br />
             {type}: {name}
             <br />
-            Progress:{" "}
+            {translate("progress")}:{" "}
             {hasNextLink
               ? `${Math.floor(progress)}%`
               : `${progress ? "done" : "not done"}`}

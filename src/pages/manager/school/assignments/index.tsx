@@ -52,6 +52,20 @@ import { useTranslate } from "src/utils/translateHelper";
 
 import FilterAssignments from "./filter";
 
+const TABLE_HEAD = [
+  {
+    id: "name",
+    label: "assignments_name_and_notes",
+    align: "left",
+  },
+  { id: "type", label: "type", align: "left" },
+  { id: "status", label: "status", align: "left" },
+  { id: "starts", label: "starts_at", align: "left", width: 140 },
+  { id: "due", label: "due", align: "left", width: 140 },
+  { id: "publish", label: "published", align: "left" },
+  { id: "" },
+];
+
 AsssignmentsListPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>
 );
@@ -59,20 +73,6 @@ AsssignmentsListPage.getLayout = (page: React.ReactElement) => (
 export default function AsssignmentsListPage() {
   const translate = useTranslate();
   const TYPE_OPTIONS = ["all", ...Object.values(AssignmentTypes)];
-
-  const TABLE_HEAD = [
-    {
-      id: "name",
-      label: translate("assignments_name_and_notes"),
-      align: "left",
-    },
-    { id: "type", label: translate("type"), align: "left" },
-    { id: "status", label: translate("status"), align: "left" },
-    { id: "starts", label: translate("starts_at"), align: "left", width: 140 },
-    { id: "due", label: translate("due"), align: "left", width: 140 },
-    { id: "publish", label: translate("published"), align: "left" },
-    { id: "" },
-  ];
 
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
@@ -155,43 +155,43 @@ export default function AsssignmentsListPage() {
   const TABS = [
     {
       value: "all",
-      label: translate("all"),
+      label: "all",
       color: "info",
       count: tableData?.length,
     },
     {
       value: Status.open,
-      label: translate("open"),
+      label: "open",
       color: "success",
       count: getLengthByStatus(Status.open),
     },
     {
       value: Status.ending,
-      label: translate("ending_soon"),
+      label: "ending_soon",
       color: "warning",
       count: getLengthByStatus(Status.ending),
     },
     {
       value: Status.overdue,
-      label: translate("overdue"),
+      label: "overdue",
       color: "error",
       count: getLengthByStatus(Status.overdue),
     },
     {
       value: Status.closed,
-      label: translate("closed"),
+      label: "closed",
       color: "default",
       count: getLengthByStatus(Status.closed),
     },
     {
       value: Publish.published,
-      label: translate("published"),
+      label: "published",
       color: "info",
       count: getLengthByStatus(Publish.published),
     },
     {
       value: Publish.draft,
-      label: translate("draft"),
+      label: "draft",
       color: "default",
       count: getLengthByStatus(Publish.draft),
     },
@@ -319,7 +319,7 @@ export default function AsssignmentsListPage() {
                   iconPosition="end"
                   key={tab.value}
                   value={tab.value}
-                  label={tab.label}
+                  label={translate(tab.label)}
                   icon={
                     <Label color={tab.color} sx={{ mr: 1 }}>
                       {tab.count}
