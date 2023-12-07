@@ -205,7 +205,7 @@ export default function ClassesTableRow({
           setOpenConfirm(false);
         }}
         title={translate("actions_delete")}
-        content="Are you sure want to delete?"
+        content={translate("messages_delete_question")}
         action={
           <LoadingButton
             loading={isDeleting}

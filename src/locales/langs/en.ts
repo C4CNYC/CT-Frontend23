@@ -22,7 +22,6 @@ const en = {
   blog: "blog",
   post: "post",
   mail: "mail",
-
   cards: "cards",
   posts: "posts",
   create: "create",
@@ -94,6 +93,10 @@ const en = {
   actions_migrate: "Migrate",
   actions_confirm: "Confirm",
   actions_reset: "Reset",
+  actions_confirm_password: "Confirm New Password",
+  actions_update_password: "Update Password",
+  actions_send_request: "Send Request",
+  actions_lets_go: "Let's go",
 
   // general locales
   chat: "Chat",
@@ -167,7 +170,7 @@ const en = {
   quests: "Quests",
   details: "Details",
   gallery: "Gallery",
-  comming_soon: "Comming soon",
+  coming_soon: "Coming soon",
   keep_coding: "Keep Coding",
   invite: "Invite",
   mentors: "Mentors",
@@ -189,6 +192,10 @@ const en = {
   manager_account: "Manager Account",
   student_account: "Student Account",
   customization: "Customization",
+  password: "Password",
+  teacher: "Teacher",
+  surname: "Surname",
+  zip_code: "Zip code",
 
   // avatar upload
   avatar__upload_text: "Upload photo",
@@ -234,6 +241,10 @@ const en = {
   messages_migrate: "Migrate successfully!",
   messages_student_invited: "Student invited!",
   messages_unable_to_logout: "Unable to logout!",
+  messages_change_password: "Change password success!",
+  messages_has_been_sent: "The message has been sent to your email",
+  messages_step_created: "Step created",
+  messages_cant_create_slide: "Sorry we can't create at this moment",
 
   // Validation messages
   required_skill_name: "Skill name is required",
@@ -258,6 +269,21 @@ const en = {
   write_less_msg: "Write less than 100 characters",
   use_key_words_msg:
     "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes",
+  choose_school_type: "Choose type of school",
+  city_your_surname: "City your surname",
+  choose_school_country: "Choose school country",
+  enter_name: "Enter your name",
+  enter_surname: "Enter your surname",
+  enter_username: "Enter your username",
+  required_password_includes:
+    "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit",
+  ruquired_password_lenght: "Password must be at least 10 characters long",
+  required_password_lenght_6: "Password must be at least 6 characters",
+  required_password_number: "Password requires a number",
+  required_password_lowercase: "Password requires a lowercase letter",
+  required_password_uppercase: "Password requires an uppercase letter",
+  required_confirm_password: "Confirm password is required",
+  required_password_match: "Passwords must match",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "Let's code",
@@ -567,6 +593,15 @@ const en = {
   tribes_information_about_tribe:
     "There will be information about this tribe when the teacher add it",
   tribes_leave_tribe: "Leave Tribe",
+  tribes_join_tribe: "Join this tribe",
+  tribes_sign_in_to_join: "Sign in to join",
+  tribes_join_a_tribe: "Join a tribe",
+  tribes_have_you_been_invited:
+    "Have you been invited to a tribe? Then enter your join-code below or follow the join-link. Have fun!",
+  tribes_sign_up_to_join: "Sign up to join",
+  tribes_join_class: "Join Class",
+  tribes_enter_join_code: "Enter your Join Code to find your class",
+  tribes_code_example: "Example: atV1d3Dsd",
 
   // Create class page
   class_create: "Create a class",
@@ -608,6 +643,96 @@ const en = {
   // login
   organization_setting: "Organization Setting",
   logout: "Logout",
+  login_welcome_back: "Welcome back",
+  login_hi: "Hi",
+  sign_in: "Sign in",
+  login_or: "OR",
+  ligin_with_google: "Sign in with Google",
+  login_email_not_found: "Email not found",
+  login_or_wrong_password: "or wrong password",
+  login_try_again: "Please try again or register as a new user",
+  login_go_back: "GO BACK",
+  login_with_email: "Sign in with Email",
+  login_lets_go: "LET'S GO!",
+  login_sign_up: "Sign up",
+  login_my_first_time: "This is my first time here",
+  login_sign_up_with_google: "Sign up with Google",
+  login_register: "REGISTER",
+  login: "LOGIN",
+  login_been_here: "I’ve been here before",
+  login_register_as: "Register as",
+  login_hey_teachers: "Hey, Teachers",
+  login_lets_start_learning: "Let’s start a learning adventure",
+  login_popup_session_title: "Pop-up Session",
+  login_popup_session_subtitle:
+    "Real-time view of all participants while broadcasting code & voice.",
+  login_popup_session_info:
+    "Real-time view of all participants while broadcasting code & voice.",
+  login_launch_session_title: "Launch Course",
+  login_launch_session_subtitle:
+    "Teacher-led or self-paced modules assigned to class or group.",
+  login_launch_session_info:
+    "Real-time view of all participants while broadcasting code & voice.",
+  login_mumu: "Hi, I’m {{name}}",
+  login_mumu_glad: "So glad you’re here!",
+
+  // Register
+  register: "Register",
+  register_as_teacher: "Register as Teacher",
+  register_get_ready: "Get ready for awesome",
+  register_whoopie: "WHOOPIE",
+  register_school_name_see: "This is the school name students see",
+  register_school_type: "Type of School",
+  register_all_done: "ALL DONE",
+  register_name_on_certificate: "This name will be on your certificate",
+  register_birth_date: "Date of Birth",
+  register_help_assign: "This helps us assign you to the right groups",
+  register_successfully: "Registered successfully!",
+
+  // School type
+  primary_school: "Primary School",
+  middle_School: "Middle School",
+  high_School: "High School",
+  technical_School: "Technical School",
+  college: "College",
+  university: "University",
+  other: "Other",
+
+  // 403 Forbidden page
+  forbidden: "403 Forbidden",
+  no_permission: "No permission",
+  page_restricted_access:
+    "The page you’re trying access has restricted access.",
+  refer_to_administrator: "Please refer to your system administrator",
+  go_to_home: "Go to Home",
+
+  // 404 Page Not Found
+  not_found: "404 Page Not Found",
+  sorry_not_found: "Sorry, page not found!",
+  we_messed_up: "Oppsie, it seems like we messed up.",
+  try_going_back: "Try going back or choose one of these pages.",
+
+  // 500 Server Error
+  server_error: "500 Internal Server Error",
+  there_was_an_error: "There was an error, please try again later.",
+
+  // Permission Denied
+  permission_denied: "Permission Denied",
+  permission_denied_info:
+    "Sorry, but you do not have the necessary permissions to access this content. It appears that you have encountered an access restriction. Please ensure that you have the appropriate authorization or contact the system administrator for further assistance. We apologize for any inconvenience this may have caused. If you believe this is an error, please double-check your credentials and try again. Thank you for your understanding.",
+
+  // Create slide
+  slide: "Slide",
+  step_dublicated: "Step {{title}} dublicated",
+  step_cant_dublicated: "Sorry we can't dublicate at this moment",
+  step_copy_slide: "{{title}} (Copy)",
+  step_removed: "Step removed",
+  step_cant_removed: "Sorry we can't remove at this moment",
+  lesson_settup_settings: "LESSON SETUP & SETTINGS",
+  slide_add: "ADD SLIDE",
+  slide_content_updated: "Content updated",
+  slide_standard: "Standard",
+  slide_select_format: "Select slide format",
 
   organizations: {
     dashboard_title: "Dashboard",

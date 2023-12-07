@@ -192,7 +192,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               sx={BADGE_SX}
               badgeContent={
                 <Typography sx={{ fontSize: "11px", fontWeight: 700 }}>
-                  {translate("comming_soon")}
+                  {translate("coming_soon")}
                 </Typography>
               }
               color="success"

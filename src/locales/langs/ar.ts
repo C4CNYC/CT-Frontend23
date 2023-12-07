@@ -17,13 +17,11 @@ const ar = {
     documentation: "توثيق",
   },
   app: "تطبيق",
-
   edit: "تعديل",
   shop: "متجر",
   blog: "مقالات",
   post: "بريد",
   mail: "بريد",
-
   cards: "البطاقات",
   posts: "المشاركات",
   create: "يزيد",
@@ -33,7 +31,6 @@ const ar = {
   account: "الحساب",
   product: "المنتوج",
   invoice: "فاتورة",
-
   checkout: "الدفع",
   calendar: "التقويم",
   analytics: "التحليلات",
@@ -97,6 +94,10 @@ const ar = {
   actions_migrate: "يهاجر",
   actions_confirm: "يتأكد",
   actions_reset: "إعادة ضبط",
+  actions_confirm_password: "تأكيد كلمة المرور الجديدة",
+  actions_update_password: "تطوير كلمة السر",
+  actions_send_request: "ارسل طلب",
+  actions_lets_go: "دعنا نذهب",
 
   // general locales
   chat: "دردشة",
@@ -170,7 +171,7 @@ const ar = {
   details: "تفاصيل",
   gallery: "صالة عرض",
   quests: "أسئلة",
-  comming_soon: "قريباً",
+  coming_soon: "قريباً",
   keep_coding: "استمر في الترميز",
   invite: "يدعو",
   mentors: "الموجهون",
@@ -192,6 +193,10 @@ const ar = {
   manager_account: "حساب المدير",
   student_account: "حساب الطالب",
   customization: "التخصيص",
+  password: "كلمة المرور",
+  teacher: "مدرس",
+  surname: "اسم العائلة",
+  zip_code: "الرمز البريدي",
 
   // avatar upload
   avatar__upload_text: "حمل الصورة",
@@ -208,9 +213,9 @@ const ar = {
   messages_create_success: "تحقيق النجاح!",
   messages_error: "هناك خطأ ما",
   messages_no_data: "لايوجد بيانات",
-  messages_invalid_phone: "الهاتف غير صالح",
   messages_cover_success: "تغطية النجاح!",
   messages_update_info_success: "تحديث المعلومات النجاح!",
+  messages_invalid_phone: "الهاتف غير صالح",
   messages_invalid_color: "اللون غير صالح",
   messages_email_verified: "تم التحقق من البريد الإلكتروني",
   messages_user_verified: "تم التحقق من المستخدم",
@@ -218,6 +223,7 @@ const ar = {
     "هل أنت متأكد أنك تريد حذف {{items}} من العناصر؟",
   messages_updete_avatar_info: "عش فارغًا وسنقوم بإنشائه بشكل عشوائي",
   messages_delete_question: "هل أنت متأكد أنك تريد الحذف؟",
+  messages_tip_deleted: "تم حذف النصيحة!",
   messages_archive_question: "هل أنت متأكد أنك تريد الأرشفة؟",
   messages_img_updated: "تم تحديث الصورة",
   messages_img_not_updated: "لم يتم تحديث الصورة",
@@ -236,6 +242,10 @@ const ar = {
   messages_migrate: "الهجرة بنجاح!",
   messages_student_invited: "طالب مدعو!",
   messages_unable_to_logout: "غير قادر على تسجيل الخروج!",
+  messages_change_password: "تغيير كلمة المرور بنجاح!",
+  messages_has_been_sent: "تم إرسال الرسالة إلى بريدك الإلكتروني",
+  messages_step_created: "تم إنشاء الخطوة",
+  messages_cant_create_slide: "آسف لا يمكننا إنشاء في هذه اللحظة",
 
   // Validation messages
   required_skill_name: "اسم المهارة مطلوب",
@@ -261,6 +271,21 @@ const ar = {
   write_less_msg: "اكتب أقل من 100 حرف",
   use_key_words_msg:
     "استخدم الكلمات الأساسية: الثانية، الدقيقة، الساعة، اليوم، الأسبوع، الشهر، السنة. على سبيل المثال: ساعة و 30 دقيقة",
+  choose_school_type: "اختر نوع المدرسة",
+  city_your_surname: "مدينة اللقب الخاص بك",
+  choose_school_country: "اختر بلد المدرسة",
+  enter_name: "أدخل أسمك",
+  enter_surname: "أدخل اللقب الخاص بك",
+  enter_username: "أدخل اسم المستخدم الخاص بك",
+  required_password_includes:
+    "يجب أن تتضمن كلمة المرور حرفًا كبيرًا واحدًا وحرفًا صغيرًا واحدًا ورقمًا رقميًا واحدًا على الأقل",
+  ruquired_password_lenght: "يجب أن تتكون كلمة المرور من 10 أحرف على الأقل",
+  required_password_lenght_6: "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+  required_password_number: "كلمة المرور تتطلب رقما",
+  required_password_lowercase: "تتطلب كلمة المرور حرفًا صغيرًا",
+  required_password_uppercase: "تتطلب كلمة المرور حرفًا كبيرًا",
+  required_confirm_password: "تأكيد كلمة المرور مطلوب",
+  required_password_match: "يجب أن تتطابق كلمات المرور",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "دعونا رمز",
@@ -316,8 +341,7 @@ const ar = {
   add_school_name: "اسم المدرسة",
   add_school_success_smg: "تم إنشاء المدرسة {{name}} بنجاح!",
 
-  // Management > School locales
-
+  // General page locales
   general_tab_general: "عام",
   general_tab_profile: "حساب تعريفي",
   general_tab_settings: "إعدادات",
@@ -348,7 +372,6 @@ const ar = {
   general_settings_show_students_name: "إظهار الاسم الأخير للطلاب بالكامل",
 
   // General > Contacts tab locales
-
   contacts_tab_technical_contacts: "الاتصالات الفنية",
   contacts_tab_buling_contacts: "اتصالات الفواتير",
 
@@ -526,12 +549,16 @@ const ar = {
   home_assignment_deleted: "تم حذف المهمة",
 
   // profile
-
   profile_live_at_country: "العيش في البلاد",
   profile_postcode: "شفرة البريد",
   profile_created_at: "أنشئت في",
   profile_links: "روابط",
   profile_your_networks: "شبكاتك",
+
+  // profile -> members
+  members_approved_msg: "تمت الموافقة بنجاح",
+  members_student_removed_msg: "تمت إزالة الطالب من الفصل",
+  members_students_removed_msg: "تمت إزالة الطلاب من الفصل",
 
   // quest
   quest_type: "النوع: الدورة/الوحدة",
@@ -553,11 +580,6 @@ const ar = {
   quest_close_date_info:
     "بعد هذا لم تعد يتم تلقي التقديمات. الافتراضي هو 3 أيام بعد “تاريخ الاستحقاق”",
 
-  // profile -> members
-  members_approved_msg: "تمت الموافقة بنجاح",
-  members_student_removed_msg: "تمت إزالة الطالب من الفصل",
-  members_students_removed_msg: "تمت إزالة الطلاب من الفصل",
-
   // My Notes
   notes_my: "ملاحظاتي",
   notes_delete_question: "هل أنت متأكد أنك تريد حذف الهدف؟",
@@ -575,6 +597,16 @@ const ar = {
   tribes_information_about_tribe:
     "ستكون هناك معلومات عن هذه القبيلة عندما يضيفها المعلم",
   tribes_leave_tribe: "ترك القبيلة",
+  tribes_join_tribe: "انضم إلى هذه القبيلة",
+  tribes_sign_in_to_join: "تسجيل الدخول للانضمام",
+  tribes_join_a_tribe: "انضم إلى قبيلة",
+  tribes_have_you_been_invited:
+    "هل تمت دعوتك إلى قبيلة؟ ثم أدخل رمز الانضمام الخاص بك أدناه أو اتبع رابط الانضمام. استمتع!",
+  tribes_sign_up_to_join: "قم بالتسجيل للانضمام",
+  tribes_join_class: "انضم إلى الفصل",
+  tribes_enter_join_code:
+    "أدخل رمز الانضمام الخاص بك للعثور على الفصل الدراسي الخاص بك",
+  tribes_code_example: "مثال: atV1d3Dsd",
 
   // Create class page
   class_create: "إنشاء فصل دراسي",
@@ -616,6 +648,95 @@ const ar = {
   // login
   organization_setting: "إعداد المنظمة",
   logout: "تسجيل خروج",
+  login_welcome_back: "مرحبًا بعودتك",
+  login_hi: "أهلاً",
+  sign_in: "تسجيل الدخول",
+  login_or: "أو",
+  ligin_with_google: "الدخول مع جوجل",
+  login_email_not_found: "البريد الإلكتروني غير موجود",
+  login_or_wrong_password: "أو كلمة مرور خاطئة",
+  login_try_again: "يرجى المحاولة مرة أخرى أو التسجيل كمستخدم جديد",
+  login_go_back: "عُد",
+  login_with_email: "تسجيل الدخول باستخدام البريد الإلكتروني",
+  login_lets_go: "دعنا نذهب!",
+  login_sign_up: "اشتراك",
+  login_my_first_time: "انها المرة الاولى لي هنا",
+  login_sign_up_with_google: "قم بالتسجيل مع جوجل",
+  login_register: "يسجل",
+  login: "تسجيل الدخول",
+  login_been_here: "لقد كنت هنا من قبل",
+  login_register_as: "سجل باسم",
+  login_hey_teachers: "مهلا، المعلمين",
+  login_lets_start_learning: "لنبدأ مغامرة التعلم",
+  login_popup_session_title: "الجلسة المنبثقة",
+  login_popup_session_subtitle:
+    "عرض في الوقت الحقيقي لجميع المشاركين أثناء بث الكود والصوت.",
+  login_popup_session_info:
+    "عرض في الوقت الحقيقي لجميع المشاركين أثناء بث الكود والصوت.",
+  login_launch_session_title: "إطلاق الدورة",
+  login_launch_session_subtitle:
+    "وحدات يقودها المعلم أو ذاتية السرعة مخصصة للفصل أو المجموعة.",
+  login_launch_session_info:
+    "عرض في الوقت الحقيقي لجميع المشاركين أثناء بث الكود والصوت.",
+  login_mumu: "مرحبًا، أنا {{name}}",
+  login_mumu_glad: "سعيدة للغاية لأنك هنا!",
+
+  // Register
+  register: "يسجل",
+  register_as_teacher: "سجل كمدرس",
+  register_get_ready: "استعد للروعة",
+  register_whoopie: "ووبي",
+  register_school_name_see: "هذا هو اسم المدرسة الذي يراه الطلاب",
+  register_school_type: "نوع المدرسة",
+  register_all_done: "كله تمام",
+  register_name_on_certificate: "سيكون هذا الاسم على شهادتك",
+  register_birth_date: "تاريخ الميلاد",
+  register_help_assign: "وهذا يساعدنا على تعيينك في المجموعات المناسبة",
+  register_successfully: "مسجل بنجاح!",
+
+  // School type
+  primary_school: "مدرسة إبتدائية",
+  middle_school: "المدرسة المتوسطة",
+  high_school: "المدرسة الثانوية",
+  technical_school: "مدرسة تقنية",
+  college: "كلية",
+  university: "جامعة",
+  other: "آخر",
+
+  // 403 Forbidden page
+  forbidden: "403 ممنوع",
+  no_permission: "لا يوجد إذن",
+  page_restricted_access: "الصفحة التي تحاول الوصول إليها مقيدة الوصول.",
+  refer_to_administrator: "يرجى الرجوع إلى مسؤول النظام الخاص بك",
+  go_to_home: "اذهب إلى الصفحة الرئيسية",
+
+  // 404 Page Not Found
+  not_found: "404 الصفحة غير موجودة",
+  sorry_not_found: "عذرا، لم يتم العثور على الصفحة!",
+  we_messed_up: "أوبسي، يبدو أننا أخطأنا.",
+  try_going_back: "حاول الرجوع أو اختر إحدى هذه الصفحات.",
+
+  // 500 Server Error
+  server_error: "500 خطأ داخلي في الخادم",
+  there_was_an_error: "كان هناك خطأ، الرجاء المحاولة مجددا لاحقا.",
+
+  // Permission Denied
+  permission_denied: "تم رفض الإذن",
+  permission_denied_info:
+    "عذرًا، لكن ليس لديك الأذونات اللازمة للوصول إلى هذا المحتوى. يبدو أنك واجهت قيودًا على الوصول. يرجى التأكد من حصولك على التفويض المناسب أو الاتصال بمسؤول النظام للحصول على مزيد من المساعدة. نعتذر من اي ازعاج قد يحصل لك. إذا كنت تعتقد أن هذا خطأ، فيرجى التحقق مرة أخرى من بيانات الاعتماد الخاصة بك والمحاولة مرة أخرى. شكرا لتفهمك.",
+
+  // Create slide
+  slide: "الانزلاق",
+  step_dublicated: "الخطوة {{title}} مكررة",
+  step_cant_dublicated: "آسف لا يمكننا تكرار في هذه اللحظة",
+  step_copy_slide: "{{title}} (نسخ)",
+  step_removed: "تمت إزالة الخطوة",
+  step_cant_removed: "آسف لا يمكننا إزالة في هذه اللحظة",
+  lesson_settup_settings: "إعداد الدرس والإعدادات",
+  slide_add: "إضافة شريحة",
+  slide_content_updated: "تم تحديث المحتوى",
+  slide_standard: "معيار",
+  slide_select_format: "حدد تنسيق الشريحة",
 };
 
 export default ar;
