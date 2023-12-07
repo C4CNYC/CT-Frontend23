@@ -98,6 +98,15 @@ const ar = {
   actions_update_password: "تطوير كلمة السر",
   actions_send_request: "ارسل طلب",
   actions_lets_go: "دعنا نذهب",
+  actions_update_rule: "تحديث القاعدة",
+  actions_create_rule: "إنشاء قاعدة",
+  actions_ok: "نعم",
+  actions_yes: "نعم",
+  actions_no: "لا",
+  actions_restart: "إعادة تشغيل",
+  actions_pause: "يوقف",
+  actions_resume: "سيرة ذاتية",
+  actions_start: "يبدأ",
 
   // general locales
   chat: "دردشة",
@@ -197,6 +206,18 @@ const ar = {
   teacher: "مدرس",
   surname: "اسم العائلة",
   zip_code: "الرمز البريدي",
+  media: "وسائط",
+  challenge: "تحدي",
+  preview: "معاينة",
+  overview: "ملخص",
+  hello: "مرحبًا",
+  solution: "حل",
+  preload: "التحميل المسبق",
+  slug: "سبيكة",
+  files: "ملفات",
+  rule: "قاعدة",
+  regex: "التعبير العادي",
+  private: "خاص",
 
   // avatar upload
   avatar__upload_text: "حمل الصورة",
@@ -246,6 +267,9 @@ const ar = {
   messages_has_been_sent: "تم إرسال الرسالة إلى بريدك الإلكتروني",
   messages_step_created: "تم إنشاء الخطوة",
   messages_cant_create_slide: "آسف لا يمكننا إنشاء في هذه اللحظة",
+  messages_content_type_not_supported: "نوع المحتوى غير مدعوم",
+  messages_lesson_complete: "اكتمل الدرس بنجاح",
+  messages_course_complete: "اكتملت الدورة بنجاح",
 
   // Validation messages
   required_skill_name: "اسم المهارة مطلوب",
@@ -286,6 +310,9 @@ const ar = {
   required_password_uppercase: "تتطلب كلمة المرور حرفًا كبيرًا",
   required_confirm_password: "تأكيد كلمة المرور مطلوب",
   required_password_match: "يجب أن تتطابق كلمات المرور",
+  required_slug: "مطلوب سبيكة",
+  required_title: "العنوان مطلوب",
+  required_regex: "ريجكس مطلوب",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "دعونا رمز",
@@ -737,6 +764,122 @@ const ar = {
   slide_content_updated: "تم تحديث المحتوى",
   slide_standard: "معيار",
   slide_select_format: "حدد تنسيق الشريحة",
+
+  // code-panel menu
+  me_me_me: "أنا أنا أنا",
+  get_out: "أخرجني من هنا",
+  close_editor: "إغلاق المحرر",
+  log_out: "تسجيل خروج",
+  step_updated: "تم تحديث خطوتك بنجاح",
+  lesson_step_preferences: "تفضيلات خطوات الدرس",
+  basic_tabs_example: "مثال على علامات التبويب الأساسية",
+  this_code_would_be_hint: "سيكون هذا الرمز بمثابة تلميح للخطوة",
+  code_will_preload: "سيتم تحميل هذا الرمز مسبقًا إلى مساحة العمل",
+  complexity: "تعقيد",
+  new_folder: "ملف جديد",
+  image_url_copied_msg: "تم نسخ عنوان URL للصورة إلى الحافظة",
+  folders: "المجلدات",
+  folder_name: "إسم الملف",
+  validation_removed: "تمت إزالة قاعدة التحقق من الصحة",
+  validation_rules: "قواعد التحقق من الصحة",
+  not_recommend_count_validations:
+    "لا ننصح بوضع أكثر من {{count}} من القواعد لخطوة واحدة.",
+  it_can_make_your_step: "يمكن أن يجعل خطوتك معقدة للغاية ويمكن أن تؤثر",
+  comfort_content: "راحة المستهلكين المحتوى من الهاتف",
+  updated_at: "تم التحديث في",
+  no_rules: "لا قواعد",
+  add_rule: "إضافة قاعدة",
+  validation_rule_updated: "تم تحديث قاعدة التحقق الخاصة بك بنجاح",
+  validation_rule_created: "تم إنشاء قاعدة التحقق الخاصة بك بنجاح",
+  start_type_here: "ابدأ بالكتابة هنا...",
+  take_tour: "خذ الجولة",
+  how_to_video: "فيديو إرشادي",
+  need_hug: "تحتاج إلى عناق",
+  i_brand_new: "أنا جديد تمامًا",
+  invite_friend: "أدع صديقا",
+  friends_email: "البريد الإليكترونى للأصدقاء",
+
+  // code panel blocks
+  no_preview_available: "لا تتوفر معاينة؟",
+  means_time_to_code: "وهذا يعني أن الوقت قد حان للحصول على الترميز.",
+  code_editor: "محرر الكود",
+  browser_preview: "معاينة المتصفح",
+  instructions: "تعليمات",
+  solutions: "حلول",
+  get_unstuck: "احصل على Unstuck",
+  i_need_help: "انا بحاجة الى مساعدة مع",
+  i_um_stuck: "أنا عالقة",
+  full_code_solutions: "حلول التعليمات البرمجية الكاملة.",
+  or_keep_goin_slide:
+    "أو... استمر في التحرك حتى ترى شريحة “نقطة التفتيش”. قد يكون هناك واحد في المستقبل.",
+  see_this_training: "انظر هذا التدريب",
+  ask_for_help_in_tribe: "اطلب المساعدة في دردشة القبيلة",
+  reread_challenge: "أعد قراءة التحدي",
+  review_last_slides: "قم بمراجعة الشرائح القليلة الأخيرة",
+  let_me_try: "دعني احاول مجددا",
+  solution_code: "رمز الحل",
+  full_code_solution: "حل الكود الكامل",
+  are_you_sure_see_solution:
+    "هل أنت متأكد أنك تريد رؤية كود الحل الكامل لهذا الدرس؟",
+  not_available_for_this_step: "غير متاح لهذه الخطوة.",
+  no_solution: "لا حل",
+  coding_editor: "محرر الترميز:",
+  customize: "يعدل أو يكيف:",
+  reset_lesson: "إعادة تعيين الدرس",
+  reset_code: "رمز إعادة الضبط",
+  intro_tour: "جولة تمهيدية",
+  launch_intro_tour: "إطلاق الجولة التعريفية",
+  font_size: "حجم الخط",
+  word_wrap: "التفاف الكلمة",
+  enable: "يُمكَِن:",
+  editor_colors: "ألوان المحرر",
+  bg_color: "لون الخلفية:",
+  text_color: "لون الخط:",
+
+  // Timer
+  timer_minute: "دقيقة",
+  timer_minutes: "دقائق",
+  timer_finish: "عمل عظيم! كفك!",
+
+  // Code-editor tour
+  hi_coder: "مرحبا المبرمج!",
+  step_1: "سأريكم ماذا لدينا هنا. تتكون لوحة الكود من:",
+  slider: "المنزلق",
+  step_2: "تحتوي على معلومات 📖 من المعلم",
+  work_space: "مساحة العمل",
+  step_3: "لديك محرر أكواد جميل يمكنك من خلاله إظهار مهاراتك في البرمجة 💪",
+  browser: "المتصفح",
+  step_4: "هنا سترى نتائج عملك في الوقت الفعلي 🤯",
+  lesson_list: "قائمة الدروس",
+  step_5: "لا تتردد في اختيار الدرس الذي تريد 😉 أو ...",
+  check_progres: "تحقق من تقدم التعلم الخاص بك",
+  save_publish_project: "احفظ مشروعك أو انشره",
+  lets_look_st_this_part: "الآن دعونا نلقي نظرة على هذا الجزء المفيد",
+  step_8:
+    "لدينا هنا مؤقت وأسئلة وإعدادات و... انتظر لحظة... أنت مبرمج، وتعرف كيفية اختبار أشياء جديدة 😌. لا تخجل وانقر على كل منهما!",
+  navigation: "ملاحة",
+  can_change_this_tabs: "هنا يمكنك تغيير علامات التبويب هذه",
+
+  // Hug Dialog
+  big_hug: "BIG, BIIGGGGGGG HUGGG!!!",
+  you_are_loved:
+    "أنت محبوب ومطلوب ومهم. هذا العالم يحتاج إلى المزيد من الأشخاص مثلك تمامًا.",
+  go_and_be_the_best:
+    "اذهب وكن أفضل ما يمكنك أن تكونه 😊. هناك خطة خاصة لحياتك فقط. سيكون الأمر مذهلاً وستحبه. انها عملك لمعرفة ما هي الخطة. الله يحبك وسوف يعتني بك. أعدك.",
+  i_not_sure: "لست متأكد",
+
+  // Code editor chat
+  quick_rabbits: "الأرانب السريعة",
+  live: "يعيش",
+  group_chat: "مجموعة محادثة",
+  notes: "ملحوظات",
+  sandbox: "رمل",
+
+  // Code-editor save
+  publist_to_gallery: "نشر في المعرض",
+  go_to_gallery: "اذهب إلى المعرض",
+  save_to_folder: "حفظ في' مجلدي'",
+  open_folder: "افتح' مجلدي'",
 };
 
 export default ar;

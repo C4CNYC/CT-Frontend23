@@ -97,6 +97,15 @@ const en = {
   actions_update_password: "Update Password",
   actions_send_request: "Send Request",
   actions_lets_go: "Let's go",
+  actions_update_rule: "Update Rule",
+  actions_create_rule: "Create Rule",
+  actions_ok: "Ok",
+  actions_yes: "Yes",
+  actions_no: "No",
+  actions_restart: "Restart",
+  actions_pause: "Pause",
+  actions_resume: "Resume",
+  actions_start: "Start",
 
   // general locales
   chat: "Chat",
@@ -131,7 +140,7 @@ const en = {
   icon: "Icon",
   cover: "Cover",
   selected: "selected",
-  active: "active",
+  active: "Active",
   not_active: "not active",
   settings: "Settings",
   type: "Type",
@@ -196,6 +205,18 @@ const en = {
   teacher: "Teacher",
   surname: "Surname",
   zip_code: "Zip code",
+  media: "Media",
+  challenge: "Challenge",
+  preview: "Preview",
+  overview: "Overview",
+  hello: "Hello",
+  solution: "Solution",
+  preload: "Preload",
+  slug: "Slug",
+  files: "Files",
+  rule: "Rule",
+  regex: "Regex",
+  private: "Private",
 
   // avatar upload
   avatar__upload_text: "Upload photo",
@@ -245,6 +266,9 @@ const en = {
   messages_has_been_sent: "The message has been sent to your email",
   messages_step_created: "Step created",
   messages_cant_create_slide: "Sorry we can't create at this moment",
+  messages_content_type_not_supported: "CONTENT TYPE NOT SUPPORTED",
+  messages_lesson_complete: "lesson successfuly complete",
+  messages_course_complete: "course successfully complete",
 
   // Validation messages
   required_skill_name: "Skill name is required",
@@ -284,6 +308,9 @@ const en = {
   required_password_uppercase: "Password requires an uppercase letter",
   required_confirm_password: "Confirm password is required",
   required_password_match: "Passwords must match",
+  required_slug: "Slug is required",
+  required_title: "Title is required",
+  required_regex: "Regex is required",
 
   // sidebar menu locales
   sidebar_menu_code_btn: "Let's code",
@@ -733,6 +760,124 @@ const en = {
   slide_content_updated: "Content updated",
   slide_standard: "Standard",
   slide_select_format: "Select slide format",
+
+  // code-panel menu
+  me_me_me: "Me, me, me",
+  get_out: "Get me out of here",
+  close_editor: "Close editor",
+  log_out: "Log out",
+  step_updated: "Your step is udpated successfully",
+  lesson_step_preferences: "Lesson Step Preferences",
+  basic_tabs_example: "basic tabs example",
+  this_code_would_be_hint: "This code would be hint for step",
+  code_will_preload: "This code will preload to work space",
+  complexity: "Complexity",
+  new_folder: "New Folder",
+  image_url_copied_msg: "Image URL copied to clipboard",
+  folders: "Folders",
+  folder_name: "Folder name",
+  validation_removed: "validation rule removed",
+  validation_rules: "Validation Rules",
+  not_recommend_count_validations:
+    " We are not recommend put more then {{count}} rules for 1 step.",
+  it_can_make_your_step:
+    "It can make your step a very complicated and can affect",
+  comfort_content: "comfort content consumers from phone",
+  updated_at: "Updated At",
+  no_rules: "NO RULES",
+  add_rule: "ADD RULE",
+  validation_rule_updated: "Your validation rule is update successfully",
+  validation_rule_created: "Your validation rule is created successfully",
+  start_type_here: "Start type here ...",
+  take_tour: "Take the Tour",
+  how_to_video: "How-to Video",
+  need_hug: "Need a hug",
+  i_brand_new: "I'm brand new",
+  invite_friend: "Invite a Friend",
+  friends_email: "Friend's email",
+
+  // code panel blocks
+  no_preview_available: "No preview available?",
+  means_time_to_code: "That means it’s time to get coding.",
+  code_editor: "Code Editor",
+  browser_preview: "Browser Preview",
+  instructions: "Instructions",
+  solutions: "Solutions",
+  get_unstuck: "Get Unstuck",
+  i_need_help: "I need help with",
+  i_um_stuck: "I`m stuck",
+  full_code_solutions: "full code solutions.",
+  or_keep_goin_slide:
+    "Or, ... Keep going till you see a “Checkpoint” slide. There may be one ahead.",
+  see_this_training: "See this training's",
+  ask_for_help_in_tribe: "Ask for help in Tribe chat",
+  reread_challenge: "Re-read the Challenge",
+  review_last_slides: "Review the last few slides",
+  let_me_try: "LET ME TRY AGAIN",
+  solution_code: "SOLUTION CODE",
+  full_code_solution: "FULL CODE SOLUTION",
+  are_you_sure_see_solution:
+    "Are you sure you want to see the full solution code for this lesson?",
+  not_available_for_this_step: "Not available for this step.",
+  no_solution: "NO SOLUTION",
+  coding_editor: "CODING EDITOR:",
+  customize: "CUSTOMIZE:",
+  reset_lesson: "Reset Lesson",
+  reset_code: "reset code",
+  intro_tour: "Intro Tour",
+  launch_intro_tour: "Launch Intro Tour",
+  font_size: "font size",
+  word_wrap: "word-wrap",
+  enable: "Enable:",
+  editor_colors: "editor colors",
+  bg_color: "Background Color:",
+  text_color: "Text Color:",
+
+  // Timer
+  timer_minute: "Minute",
+  timer_minutes: "Minutes",
+  timer_finish: "Great Job! High-five!",
+
+  // Code-editor tour
+  hi_coder: "Hi coder!",
+  step_1: "I'will show you what do we have here. The Code Panel consists of:",
+  slider: "Slider",
+  step_2: "It's contain information 📖 from the teacher",
+  work_space: "Work space",
+  step_3:
+    "You have nice code editor where you could show your coding skills 💪",
+  browser: "Browser",
+  step_4: "Here you will see the results of your work in realtime 🤯",
+  lesson_list: "Lessons list",
+  step_5: "Feel free to choose lesson which you want 😉 or ...",
+  check_progres: "Check your learning progress",
+  save_publish_project: "Save or publish your project",
+  lets_look_st_this_part: "Now let`s look at this usefull part",
+  step_8:
+    "Here we have timer, queston, settings and... wait a minute... you're a coder, you know how to test new things 😌. Don't be shy and click on each!",
+  navigation: "Navigation",
+  can_change_this_tabs: "Here you can change this tabs",
+
+  // Hug Dialog
+  big_hug: "BIG, BIIGGGGGGG HUGGG!!!",
+  you_are_loved:
+    "You are loved, needed and important. This world needs more people exactly like you.",
+  go_and_be_the_best:
+    "Go and be the best YOU you can be 😊. There is a special plan JUST for your life. It’s going to be astounding and you’re going to love it. It's your job to find out what the plan is. God loves you and is going to take care of you. I promise.",
+  i_not_sure: "I`m not sure",
+
+  // Code editor chat
+  quick_rabbits: "The Quick Rabbits",
+  live: "live",
+  group_chat: "Group Chat",
+  notes: "Notes",
+  sandbox: "Sandbox",
+
+  // Code-editor save
+  publist_to_gallery: "Publish to Gallery",
+  go_to_gallery: "Go to Gallery",
+  save_to_folder: "Save to 'My Folder'",
+  open_folder: "Open 'My Folder'",
 
   organizations: {
     dashboard_title: "Dashboard",

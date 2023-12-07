@@ -1,4 +1,4 @@
-export const NO_SOLUTION_TEXT = "NO SOLUTION"
+export const NO_SOLUTION_TEXT = "no_solution";
 
 export const DIALOG_PAPER_PROPS = {
   sx: {
@@ -15,27 +15,27 @@ export const DIALOG_PAPER_PROPS = {
       lg: "450px",
     },
   },
-}
+};
 
 export const DIALOG_TITLE_SX = {
   display: "flex",
   alignItems: "center",
-}
+};
 
 export const DIALOG_TITLE_TYP_SX = {
   flexGrow: 1,
   ml: 1,
-  alignSelf: "flex-end"
-}
+  alignSelf: "flex-end",
+};
 
 export const ICON_BUTTON_SX = {
   selfAlign: "flex-end",
-  mr: "-10px"
-}
+  mr: "-10px",
+};
 
 export const DIALOG_CONTENT_SX = {
-  py: 2
-}
+  py: 2,
+};
 
 export const COPY_BLOCK_CUSTOM_STYLES = {
   height: "100%",
@@ -44,4 +44,4 @@ export const COPY_BLOCK_CUSTOM_STYLES = {
   borderRadius: "0",
   boxShadow: "none",
   fontSize: "0.75rem",
-}
+};

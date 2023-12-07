@@ -104,7 +104,7 @@ export default function SingInPassword({
             },
           })}
         >
-          {translate("register_whoopie")}
+          {translate("login_lets_go")}
         </LoadingButton>
       </Stack>
     </>

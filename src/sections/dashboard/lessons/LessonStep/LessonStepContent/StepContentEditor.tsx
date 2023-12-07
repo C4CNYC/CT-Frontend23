@@ -176,7 +176,7 @@ export default function StepContentEditor(): React.ReactElement {
             }}
           >
             <CgScreen size="30px" />
-            Preview
+            {translate("preview")}
           </div>
         </Box>
         <Box

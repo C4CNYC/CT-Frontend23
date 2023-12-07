@@ -3,6 +3,8 @@ import { type FC } from "react";
 import { Skeleton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 import {
   AVAILABLE_TYP_SX,
   CODING_TYP_SX,
@@ -16,6 +18,7 @@ interface ISkeletonProps {
 }
 
 const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
+  const translate = useTranslate();
   return (
     <Stack
       sx={PARENT_STACK_SX}
@@ -55,10 +58,10 @@ const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
 
       <Stack sx={(theme) => ({ ...getStackBottomSx(theme) })}>
         <Typography sx={AVAILABLE_TYP_SX} variant="subtitle1">
-          No preview available?
+          {translate("no_preview_available")}
         </Typography>
         <Typography variant="subtitle1" sx={CODING_TYP_SX}>
-          That means it’s time to get coding. 🤓
+          {translate("means_time_to_code")} 🤓
         </Typography>
       </Stack>
     </Stack>

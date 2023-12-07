@@ -20,6 +20,7 @@ import {
 } from "src/redux/slices/code-panel-global";
 import { setTab } from "src/redux/slices/mobile-tab-manager";
 import { useSelector } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 import CodeEditorBlock from "./blocks/code-editor-block";
 import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn";
@@ -60,6 +61,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
+  const translate = useTranslate();
 
   const isBrowserHidden = useSelector(
     (state) => state.codePanelGlobal.isBrowserHidden
@@ -93,11 +95,11 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             data={data}
             integrations={lesson?.integrations ?? []}
             isFetching={isFetching}
-            code={document?.htmlBody?.join('') ?? ""}
+            code={document?.htmlBody?.join("") ?? ""}
           />
         ) : (
           <HidedTabBtn
-            title="Instructions"
+            title={translate("instructions")}
             icon={<TbArrowBarToRight size={20} />}
             openPanelFnc={openInstruction}
           />
@@ -106,7 +108,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         <CodeEditorBlock
           preloadedCode={lastLessonCode || data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
-          code={document?.htmlBody?.join('') ?? ""}
+          code={document?.htmlBody?.join("") ?? ""}
           user={user}
           onChangeCode={onChangeCode}
         />
@@ -115,7 +117,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           <ViewBlock code={document} />
         ) : (
           <HidedTabBtn
-            title="Browser Preview"
+            title={translate("browser_preview")}
             icon={<TbArrowBarToLeft size={20} />}
             openPanelFnc={openPreview}
           />
@@ -142,11 +144,11 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         data={data}
         integrations={lesson?.integrations ?? []}
         isFetching={isFetching}
-        code={document?.htmlBody?.join('') ?? ""}
+        code={document?.htmlBody?.join("") ?? ""}
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody?.join('') ?? ""}
+        code={document?.htmlBody?.join("") ?? ""}
         onChangeCode={onChangeCode}
         user={user}
         preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
