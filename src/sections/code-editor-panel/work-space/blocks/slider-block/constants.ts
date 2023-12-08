@@ -27,9 +27,7 @@ export const getBoxSx = (
 });
 
 export const getCarouselSettings = (
-  
   onBeforeChange: (_: number, next: number) => void
-
 ) => ({
   speed: 50,
   dots: false,
@@ -38,5 +36,5 @@ export const getCarouselSettings = (
   draggable: false,
   slidesToScroll: 1,
   className: "innerDiv",
-  beforeChange: onBeforeChange,,
+  beforeChange: onBeforeChange,
 });

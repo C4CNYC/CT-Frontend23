@@ -3,7 +3,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
-
 import { FullScreen } from "react-full-screen";
 import { Socket, io } from "socket.io-client";
 
@@ -14,10 +13,9 @@ import SkeletonCodePanel, {
 } from "@sections/code-editor-panel/skeleton";
 import WorkSpace from "@sections/code-editor-panel/work-space";
 import { useCodePanel } from "src/hooks/useCodePanel";
-import SignUpDialog from "./sign-up-dialog";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
-import { SocketContext } from "../../../context/socket-context";
+import SignUpDialog from "./sign-up-dialog";
 
 const Tour = dynamic(
   async () => await import("@sections/code-editor-panel/code-panel-tour"),
@@ -34,9 +32,7 @@ const Confetti = dynamic(async () => await import("react-confetti"));
 const ChatPopup = dynamic(
   async () =>
     await import(
-      
       "@sections/code-editor-panel/top-bar/nav-bar/options/chat-popup"
-    
     )
 );
 
@@ -115,35 +111,30 @@ export default function Index(): React.ReactElement | null {
 
         <SignUpDialog isSigned={!!workSpaceProps.user} />
 
-          <Box sx={boxProps}>
-            <TopPanel
-              chatComponent={null}
-              onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
-              isFullScreenView={handle.active}
-            />
+        <Box sx={boxProps}>
+          <TopPanel
+            chatComponent={null}
+            onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
+            isFullScreenView={handle.active}
+          />
 
-            <WorkSpace {...workSpaceProps} />
+          <WorkSpace {...workSpaceProps} />
 
-            <BottomBar
-              {...bottomBarProps}
-              lessonManagerComponent={
-                <LessonsManager {...lessonManagerProps} />
-              }
-            />
-          </Box>
+          <BottomBar
+            {...bottomBarProps}
+            lessonManagerComponent={<LessonsManager {...lessonManagerProps} />}
+          />
+        </Box>
 
-          {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
-        </FullScreen>
+        {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
+      </FullScreen>
 
-        <Confetti
-          numberOfPieces={
-            confetti ? MAX_NUMBER_OF_PIECES : MIN_NUMBER_OF_PIECES
-          }
-          recycle={false}
-          gravity={CONFETI_GRAVITY}
-          onConfettiComplete={onConfettiComplete}
-        />
-      </Box>
-    </SocketContext.Provider>
+      <Confetti
+        numberOfPieces={confetti ? MAX_NUMBER_OF_PIECES : MIN_NUMBER_OF_PIECES}
+        recycle={false}
+        gravity={CONFETI_GRAVITY}
+        onConfettiComplete={onConfettiComplete}
+      />
+    </Box>
   );
 }
