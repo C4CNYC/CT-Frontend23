@@ -39,13 +39,12 @@ const BrowserView: FC<BrowserViewProps> = ({ document, isOpenHeader }) => {
     }
 
     const { htmlBody = [], cssBody = [], jsBody = [] } = document;
-
     setDocSrc(`
-      <html>
+      <html style="height: 100%">
         <head>
           ${getBody(cssBody, TagNames.Style)}
         </head>
-        <body>
+        <body style="height: 100%; margin: 0;">
           ${htmlBody.join("\n")}
           ${getBody(jsBody, TagNames.Script)}
         </body>

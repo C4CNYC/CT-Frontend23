@@ -7,7 +7,6 @@ export const getHeaderWrapperSx = (
 ): SxProps => ({
   display: isDesktop ? "flex" : "none",
   width: "100%",
-  background: "#fff",
   alignItems: "center",
   gap: 2,
   pr: isLeftBtn ? 1 : 4,

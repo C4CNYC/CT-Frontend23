@@ -22,6 +22,8 @@ export interface ILesson {
   description: string;
   tips: string[] | [];
   meta: Record<string, Record<string, any>>;
+  independent: boolean;
+  type: 'practical' | 'exercise' | 'quiz';
 }
 
 export interface ICourse {

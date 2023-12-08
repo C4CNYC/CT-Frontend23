@@ -95,7 +95,7 @@ const CodeEditorBlock = ({
         <CodeEditorCollab
           preloadedCode={preloadedCode}
           cursorText={`${user?.first_name} ${user?.last_name?.[0]}.`}
-          //@ts-expect-error
+          // @ts-expect-error
           onChange={onChangeCode}
           roomId={user?.id}
           code={code}

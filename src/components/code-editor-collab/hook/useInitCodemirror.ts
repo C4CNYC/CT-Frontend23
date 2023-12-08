@@ -1,9 +1,9 @@
 import { Socket } from "socket.io-client";
 import { useCallback, useState } from "react";
 import { dracula } from "thememirror";
-import { LanguageSupport, indentUnit } from '@codemirror/language';
+import { LanguageSupport, indentUnit } from "@codemirror/language";
 import { Compartment, EditorView, Extension, StateEffect } from "@uiw/react-codemirror";
-import { basicSetup } from '@uiw/codemirror-extensions-basic-setup';
+import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 
 import { getFileExtension } from "src/utils/getFileExtension";
@@ -12,6 +12,7 @@ import { type Cursor, cursorExtension } from "./utils/collab/cursors";
 import { File, getDocument } from "./utils/collab/requests";
 import { peerExtension } from "./utils/collab/peer-extension";
 import { BASIC_SETUP, Extensions } from "./constants";
+import { useAuthContext } from "../../../auth/useAuthContext";
 
 const langMap = {
   [Extensions.Css]: () => langs.css(),
@@ -27,13 +28,14 @@ const language = ({ name }: File): LanguageSupport[] => {
     : [];
 }
 
-interface UseBaseInit  {
+interface UseBaseInit {
   socket: Socket
   withTooltip: boolean
   onChange?: (code: Record<string, string>) => void
   roomId: string
   cursorText: string
   defaultFileName: string
+  preloadedCode?: string
 }
 
 export interface UseBaseInitReturn {
@@ -52,12 +54,14 @@ export const useInitCodemirror = ({
   roomId,
   cursorText,
   defaultFileName,
+  preloadedCode,
 }: UseBaseInit): UseBaseInitReturn => {
   const [key, setKey] = useState(0);
-  const [doc, setDoc] = useState('');
+  const [doc, setDoc] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [extensions, setExtensions] = useState<Extension[] | undefined>();
-  
+  const { user } = useAuthContext();
+
   const baseInit = useCallback(async (fileName: File) => {
     const lineWrap = new Compartment();
     const addCursor = StateEffect.define<Cursor>();
@@ -66,13 +70,14 @@ export const useInitCodemirror = ({
       roomId,
       fileName,
       socket,
-      cursorName: cursorText,
+      cursorName: user?.id ?? cursorText,
       defaultFileName,
+      preloadedCode,
     });
 
     setExtensions([
       indentUnit.of("\t"),
-      basicSetup(BASIC_SETUP), 
+      basicSetup(BASIC_SETUP),
       ...language(fileName),
       dracula,
       lineWrap.of(EditorView.lineWrapping),
@@ -87,7 +92,8 @@ export const useInitCodemirror = ({
         cursorId: cursorName,
         tooltipText: cursorText,
         withTooltip,
-        addCursor
+        addCursor,
+        userId: user?.id,
       })
     ]);
     onChange?.(docInfo)

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
+
 import { FullScreen } from "react-full-screen";
 import { Socket, io } from "socket.io-client";
 
@@ -13,6 +14,7 @@ import SkeletonCodePanel, {
 } from "@sections/code-editor-panel/skeleton";
 import WorkSpace from "@sections/code-editor-panel/work-space";
 import { useCodePanel } from "src/hooks/useCodePanel";
+import SignUpDialog from "./sign-up-dialog";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 import { SocketContext } from "../../../context/socket-context";
@@ -32,7 +34,9 @@ const Confetti = dynamic(async () => await import("react-confetti"));
 const ChatPopup = dynamic(
   async () =>
     await import(
+      
       "@sections/code-editor-panel/top-bar/nav-bar/options/chat-popup"
+    
     )
 );
 
@@ -101,13 +105,15 @@ export default function Index(): React.ReactElement | null {
   }
 
   return (
-    <SocketContext.Provider value={getSocket()}>
-      <Box>
-        <Head>
-          <title> CodePanel: CodeTribe </title>
-        </Head>
-        <FullScreen handle={handle}>
-          <Tour />
+    <Box>
+      <Head>
+        <title> CodePanel: CodeTribe </title>
+      </Head>
+
+      <FullScreen handle={handle}>
+        <Tour />
+
+        <SignUpDialog isSigned={!!workSpaceProps.user} />
 
           <Box sx={boxProps}>
             <TopPanel

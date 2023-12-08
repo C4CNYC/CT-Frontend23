@@ -12,6 +12,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { convertDuration } from "@utils";
 
 interface IBriefSectionProps {
   duration: string;

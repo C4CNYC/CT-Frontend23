@@ -14,7 +14,7 @@ interface StateControllerProps {
   room: CodeEditorControllerRoom | null
 }
 
-const emptyRoom = { roomId: '' }
+const emptyRoom = { roomId: "" }
 
 const initialState: StateControllerProps = { room: null };
 
