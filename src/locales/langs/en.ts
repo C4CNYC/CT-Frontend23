@@ -795,6 +795,7 @@ const en = {
   i_brand_new: "I'm brand new",
   invite_friend: "Invite a Friend",
   friends_email: "Friend's email",
+  open_full_catalog: "Open Full Catalog",
 
   // code panel blocks
   no_preview_available: "No preview available?",
@@ -832,6 +833,13 @@ const en = {
   editor_colors: "editor colors",
   bg_color: "Background Color:",
   text_color: "Text Color:",
+  btn_group_next: "NEXT 👀",
+  btn_group_you_did_it: "YOU DID IT 🙌",
+  btn_group_lets_coding: "LET’S GET CODING",
+  btn_group_back: "BACK",
+  btn_group_skip: "SKIP",
+  btn_group_tooltip:
+    "Please complete all tasks to continue (or skip, if available.)",
 
   // Timer
   timer_minute: "Minute",

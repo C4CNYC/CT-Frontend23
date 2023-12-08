@@ -798,6 +798,7 @@ const ar = {
   i_brand_new: "أنا جديد تمامًا",
   invite_friend: "أدع صديقا",
   friends_email: "البريد الإليكترونى للأصدقاء",
+  open_full_catalog: "فتح الكتالوج الكامل",
 
   // code panel blocks
   no_preview_available: "لا تتوفر معاينة؟",
@@ -835,6 +836,13 @@ const ar = {
   editor_colors: "ألوان المحرر",
   bg_color: "لون الخلفية:",
   text_color: "لون الخط:",
+  btn_group_next: "التالي 👀",
+  btn_group_you_did_it: "لقد فعلتها 🙌",
+  btn_group_lets_coding: "دعونا نبدأ بالبرمجة",
+  btn_group_back: "خلف",
+  btn_group_skip: "يتخطى",
+  btn_group_tooltip:
+    "يرجى إكمال جميع المهام للمتابعة (أو التخطي، إذا كان ذلك متاحًا.)",
 
   // Timer
   timer_minute: "دقيقة",
