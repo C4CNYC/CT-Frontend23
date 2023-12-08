@@ -1,26 +1,13 @@
 import { type SxProps } from "@mui/system";
 
-const TAB_TITLES = {
-  instructions: "Instructions",
-  browser_preview: "Browser Preview",
-};
-
-export const HIDE_BUTTON_SX = {
-  position: "absolute",
-  top: 0,
-  color: "#5FD0D5",
-  minWidth: 20,
-  "&:hover": {
-    background: "none",
-  },
-};
+import { TAB_TITLES } from "@sections/code-editor-panel/work-space";
 
 export const COLLAPSEBAR_TITLE_SX = {
-  textAlign: "center",
-  minWidth: 150,
-  transform: "rotate(270deg)",
-  marginTop: "170px",
-  color: "#A12E52",
+  position: "absolute",
+  top: "20%",
+  textAlign: "start",
+  minWidth: 190,
+  transform: "rotate(90deg)",
   fontSize: "18px",
 };
 
@@ -31,10 +18,12 @@ export const getCollapsebarSx = (
   display: "flex",
   alignItems: "start",
   justifyContent: "center",
+  pt: "20px",
   width: 30,
   height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
   overflow: "hidden",
   position: "relative",
+  color: title === TAB_TITLES.instructions ? "#A12E52" : "#AD6C1A",
   bgcolor:
     title === TAB_TITLES.instructions
       ? "rgba(161, 46, 82, 0.20)"

@@ -15,9 +15,7 @@ interface IBaseBlock {
   title: ReactNode;
   icon: React.ReactElement;
   closeIcon?: React.ReactElement;
-  isLeftBtn?: boolean;
   hideTabsHandler?: () => void;
-  isLeftBlock?: boolean;
   takeHeaderSettings?: (isOpen: boolean) => void;
 }
 
@@ -41,21 +39,19 @@ const BaseBlock: FC<IBaseBlock> = ({
   title,
   icon,
   closeIcon,
-  isLeftBtn,
-  isLeftBlock,
   hideTabsHandler,
   takeHeaderSettings,
 }) => {
   const theme = useTheme();
   const storageAvailable = localStorageAvailable();
   const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000));
-  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
+  // const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile), [useTheme]);
-  const buttonSx = useMemo(() => getButtonSx(isDesktop), [useTheme]);
-  const buttonWrapperSx = useMemo(
-    () => getButtonWrapperSx(isDesktop, isLeftBtn),
-    [isDesktop]
-  );
+  // const buttonSx = useMemo(() => getButtonSx(isDesktop), [useTheme]);
+  // const buttonWrapperSx = useMemo(
+  //   () => getButtonWrapperSx(isDesktop, isLeftBtn),
+  //   [isDesktop]
+  // );
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
 
   const getHeaderSettings = () => {
@@ -99,19 +95,17 @@ const BaseBlock: FC<IBaseBlock> = ({
           title={title}
           icon={icon}
           hideTabsHandler={hideTabsHandler}
-          isLeftBtn={isLeftBtn}
           closeHandler={closeHeaderHandler}
-          isLeftBlock={isLeftBlock}
         />
       </Collapse>
 
-      {hideTabsHandler && (
+      {/* {hideTabsHandler && (
         <Box sx={buttonWrapperSx}>
           <Button sx={buttonSx} onClick={hideTabsHandler}>
             {closeIcon}
           </Button>
         </Box>
-      )}
+      )} */}
 
       {children}
 

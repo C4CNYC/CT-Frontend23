@@ -1,18 +1,8 @@
 import { type FC } from "react";
 
-import {
-  Box,
-  Button,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 
-import {
-  COLLAPSEBAR_TITLE_SX,
-  HIDE_BUTTON_SX,
-  getCollapsebarSx,
-} from "./constants";
+import { COLLAPSEBAR_TITLE_SX, getCollapsebarSx } from "./constants";
 
 interface IHidedTabRtn {
   title: string;
@@ -28,22 +18,12 @@ const HidedTabBtn: FC<IHidedTabRtn> = ({ icon, title, openPanelFnc }) => {
     <>
       <Box
         position="relative"
-        // onClick={() => {
-        //   openPanelFnc();
-        // }}
         sx={() => ({
           ...getCollapsebarSx(isTabletAndMobile, title),
         })}
       >
-        {/* <Box> */}
-        {/* {icon} */}
-        <Typography sx={COLLAPSEBAR_TITLE_SX}>
-          {icon}
-          {title}
-        </Typography>
-        {/* </Box> */}
-
-        {/* <Button sx={HIDE_BUTTON_SX}>{icon}</Button> */}
+        {icon}
+        <Typography sx={COLLAPSEBAR_TITLE_SX}>{title}</Typography>
       </Box>
     </>
   );
