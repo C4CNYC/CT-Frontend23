@@ -1,5 +1,10 @@
 import { type SxProps } from "@mui/system";
 
+const TAB_TITLES = {
+  instructions: "Instructions",
+  browser_preview: "Browser Preview",
+};
+
 export const HIDE_BUTTON_SX = {
   position: "absolute",
   top: 0,
@@ -15,18 +20,28 @@ export const COLLAPSEBAR_TITLE_SX = {
   minWidth: 150,
   transform: "rotate(270deg)",
   marginTop: "170px",
-  color: "#D9D9E2",
+  color: "#A12E52",
   fontSize: "18px",
 };
 
-export const getCollapsebarSx = (isTabletAndMobile: boolean): SxProps => ({
+export const getCollapsebarSx = (
+  isTabletAndMobile: boolean,
+  title: string
+): SxProps => ({
   display: "flex",
   alignItems: "start",
   justifyContent: "center",
   width: 30,
   height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
-  border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
   overflow: "hidden",
   position: "relative",
-  borderRadius: isTabletAndMobile ? "0 0 10px 10px" : 1,
+  bgcolor:
+    title === TAB_TITLES.instructions
+      ? "rgba(161, 46, 82, 0.20)"
+      : "rgba(173, 108, 26, 0.20)",
+  // borderRadius: isTabletAndMobile ? "0 0 10px 10px" : 1,
+  borderRadius:
+    title === TAB_TITLES.instructions
+      ? "0px 14px 14px 0px"
+      : "14px 0px 0px 14px",
 });
