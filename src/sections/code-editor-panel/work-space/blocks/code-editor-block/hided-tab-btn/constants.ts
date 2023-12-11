@@ -4,7 +4,7 @@ import { TAB_TITLES } from "@sections/code-editor-panel/work-space";
 
 export const COLLAPSEBAR_TITLE_SX = {
   position: "absolute",
-  top: "20%",
+  top: "140px",
   textAlign: "start",
   minWidth: 190,
   transform: "rotate(90deg)",
@@ -29,7 +29,6 @@ export const getCollapsebarSx = (
     title === TAB_TITLES.instructions
       ? "rgba(161, 46, 82, 0.20)"
       : "rgba(173, 108, 26, 0.20)",
-  // borderRadius: isTabletAndMobile ? "0 0 10px 10px" : 1,
   borderRadius:
     title === TAB_TITLES.instructions
       ? "0px 14px 14px 0px"
