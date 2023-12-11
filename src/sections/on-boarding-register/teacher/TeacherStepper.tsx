@@ -42,7 +42,7 @@ export default function TeacherStepper(): React.ReactElement {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
         translate("required_password_includes")
       )
-      .min(10, translate("ruquired_password_lenght")),
+      .min(10, translate("required_password_length")),
   });
 
   const nextStep = () => {

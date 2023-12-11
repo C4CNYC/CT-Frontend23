@@ -51,7 +51,7 @@ export default function UserNewEditForm({
 
   const NewUserSchema = Yup.object().shape({
     first_name: Yup.string().required(translate("required_name")),
-    last_name: Yup.string().required(translate("required_surename")),
+    last_name: Yup.string().required(translate("required_surname")),
     email: Yup.string()
       .required(translate("required_email"))
       .email(translate("must_be_valid_email")),

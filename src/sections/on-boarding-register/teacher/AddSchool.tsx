@@ -46,7 +46,7 @@ export default function AddSchool(): React.ReactElement {
   const CreateSchoolSchema = Yup.object().shape({
     schoolName: Yup.string().required(translate("required_name")),
     type: Yup.string().required(translate("choose_school_type")),
-    city: Yup.string().required(translate("city_your_surname")),
+    city: Yup.string().required(translate("choose_your_city")),
     zip: Yup.string(),
     country: Yup.string().required(translate("choose_school_country")),
   });

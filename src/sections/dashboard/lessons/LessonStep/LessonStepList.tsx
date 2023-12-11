@@ -154,12 +154,12 @@ export default function LessonStepList({
         meta: { order: newContentOrder },
       }).unwrap();
       enqueueSnackbar(
-        translate("step_dublicated", {
+        translate("step_duplicated", {
           title: data.title,
         })
       );
     } catch (e: any) {
-      enqueueSnackbar(translate("step_cant_dublicated"), {
+      enqueueSnackbar(translate("step_cant_duplicated"), {
         variant: "error",
       });
     }

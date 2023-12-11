@@ -242,8 +242,8 @@ const ar = {
   messages_user_verified: "تم التحقق من المستخدم",
   messages_delete_dialog_content:
     "هل أنت متأكد أنك تريد حذف {{items}} من العناصر؟",
-  messages_updete_avatar_info: "عش فارغًا وسنقوم بإنشائه بشكل عشوائي",
-  messages_delete_question: "هل أنت متأكد أنك تريد الحذف؟",
+  messages_updete_avatar_info: "اتركه فارغًا وسنقوم بإنشائه بشكل عشوائي",
+  messages_delete_question: "هل أنت متأكد أنك تريد حذف؟",
   messages_tip_deleted: "تم حذف النصيحة!",
   messages_archive_question: "هل أنت متأكد أنك تريد الأرشفة؟",
   messages_img_updated: "تم تحديث الصورة",
@@ -260,7 +260,7 @@ const ar = {
   messages_thanks: "شكرًا!",
   messages_class_created: "الفئة تم إنشاؤها بنجاح",
   messages_changes_updated: "تم تحديث التغييرات!",
-  messages_migrate: "الهجرة بنجاح!",
+  messages_migrate: "تم الترحيل بنجاح!",
   messages_student_invited: "طالب مدعو!",
   messages_unable_to_logout: "غير قادر على تسجيل الخروج!",
   messages_change_password: "تغيير كلمة المرور بنجاح!",
@@ -268,14 +268,14 @@ const ar = {
   messages_step_created: "تم إنشاء الخطوة",
   messages_cant_create_slide: "آسف لا يمكننا إنشاء في هذه اللحظة",
   messages_content_type_not_supported: "نوع المحتوى غير مدعوم",
-  messages_lesson_complete: "اكتمل الدرس بنجاح",
-  messages_course_complete: "اكتملت الدورة بنجاح",
+  messages_lesson_complete: "تم الانتهاء من الدرس بنجاح",
+  messages_course_complete: "تم إكمال الدورة بنجاح",
 
   // Validation messages
   required_skill_name: "اسم المهارة مطلوب",
   required_description: "الوصف مطلوب",
   required_name: "مطلوب اسم",
-  required_surename: "اللقب مطلوب",
+  required_surname: "اللقب مطلوب",
   required_email: "البريد الالكتروني مطلوب",
   required_password: "كلمة المرور مطلوبة",
   must_be_valid_email:
@@ -284,7 +284,7 @@ const ar = {
   required_country: "الدولة مطلوبة",
   required_city: "المدينة مطلوبة",
   required_field: "هذه الخانة مطلوبه",
-  enter_valide_email: "يرجى إدخال عنوان بريد إلكتروني صالح",
+  enter_valid_email: "يرجى إدخال عنوان بريد إلكتروني صالح",
   required_level: "المستوى مطلوب",
   required_price: "السعر مطلوب",
   required_content_id: "مطلوب معرف المحتوى",
@@ -296,15 +296,15 @@ const ar = {
   use_key_words_msg:
     "استخدم الكلمات الأساسية: الثانية، الدقيقة، الساعة، اليوم، الأسبوع، الشهر، السنة. على سبيل المثال: ساعة و 30 دقيقة",
   choose_school_type: "اختر نوع المدرسة",
-  city_your_surname: "مدينة اللقب الخاص بك",
+  choose_your_city: "اختر المدينة المدرسية",
   choose_school_country: "اختر بلد المدرسة",
   enter_name: "أدخل أسمك",
   enter_surname: "أدخل اللقب الخاص بك",
   enter_username: "أدخل اسم المستخدم الخاص بك",
   required_password_includes:
-    "يجب أن تتضمن كلمة المرور حرفًا كبيرًا واحدًا وحرفًا صغيرًا واحدًا ورقمًا رقميًا واحدًا على الأقل",
-  ruquired_password_lenght: "يجب أن تتكون كلمة المرور من 10 أحرف على الأقل",
-  required_password_lenght_6: "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+    "يجب أن تحتوي كلمة المرور على حرف واحد كبير وحرف صغير ورقم واحد",
+  required_password_length: "يجب أن تتكون كلمة المرور من 10 أحرف على الأقل",
+  required_password_length_6: "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
   required_password_number: "كلمة المرور تتطلب رقما",
   required_password_lowercase: "تتطلب كلمة المرور حرفًا صغيرًا",
   required_password_uppercase: "تتطلب كلمة المرور حرفًا كبيرًا",
@@ -354,7 +354,7 @@ const ar = {
   max_img_size: "الحد الأقصى لحجم {{size}}",
   send_verification_email_content:
     "سيؤدي تعطيل هذا إلى إرسال رسالة تحقق للمستخدم تلقائيًا",
-  verified_user_info: "المستخدم المعاق ليس لديه حق الوصول إلى الموارد",
+  verified_user_info: "لا يستطيع المستخدمون المعوقون الوصول إلى هذا المورد",
   members_user_edit_user: "المستخدم: تحرير المستخدم",
 
   // schools page
@@ -383,7 +383,7 @@ const ar = {
   general_settings_allow_sign_in_google: "السماح بتسجيل الدخول باستخدام جوجل",
   general_settings_allow_sign_in_github: "السماح بتسجيل الدخول باستخدام جيثب",
   general_settings_sso_note:
-    "ملاحظة: يسمح تسجيل الدخول الموحد بالتفاعل مع: Google Classroom Schoolology \n المزيد حول Edu SSO: ",
+    "ملاحظة: يسمح تسجيل الدخول الموحد بالتفاعل مع: Google Classroom وClassLink \n المزيد حول Edu SSO: ",
   general_user_settings: "إعدادات المستخدم",
   general_user_invate_only: "المستخدمين المدعوين فقط",
   general_user_settings_note:
@@ -395,8 +395,8 @@ const ar = {
   general_settings_disable_gallery: "تعطيل المعرض",
   general_settings_disable_global_gallery: "تعطيل المعرض العالمي",
   general_interaction_note:
-    "ملحوظة: لا يمكن للمستخدمين رؤية المشاريع الخارجية أو التعليق عليها.",
-  general_settings_show_students_name: "إظهار الاسم الأخير للطلاب بالكامل",
+    "ملاحظة: لا يمكن للمستخدمين رؤية المشاريع الخارجية أو التعليق عليها.",
+  general_settings_show_students_name: "إظهار الاسم الأخير للطالب بالكامل",
 
   // General > Contacts tab locales
   contacts_tab_technical_contacts: "الاتصالات الفنية",
@@ -421,7 +421,7 @@ const ar = {
   students_new_email_notification:
     "سيؤدي تعطيل هذا إلى إرسال رسالة تحقق للمستخدم تلقائيًا",
   students_new_user_notification:
-    "المستخدم المعاق ليس لديه حق الوصول إلى الموارد",
+    "لا يستطيع المستخدمون المعوقون الوصول إلى هذا المورد",
   students_edite_student: "الطالب: تحرير الطالب",
 
   // Classes page
@@ -481,7 +481,7 @@ const ar = {
   courses_initial_stars: "النجوم الأولية",
   courses_initial_enrolled: "تم التسجيل الأولي",
   courses_catalog: "كتالوج الدورات",
-  courses_empty: "ليس لديك أي دورة",
+  courses_empty: "ليس لديك أي دورات",
   courses_enroled: "المقيدين",
   courses_certificate_tooltip_info: "هذه الدورة مؤهلة للحصول على شهادة.",
   courses_certificate_link: "انظر شهادة العينة",
@@ -545,7 +545,7 @@ const ar = {
   integrations_head_links_plh: "روابط الرأس أو البرامج النصية",
   integrations_body_links_plh: "روابط الجسم أو البرامج النصية",
   integrations_empty: "ليس لديك أي تكاملات.",
-  integrations_lets_create: "دعونا نخلق التكامل",
+  integrations_lets_create: "دعونا إنشاء التكامل",
 
   // Skills page
   skills: "مهارات",
@@ -557,7 +557,7 @@ const ar = {
   // Home Overview
   home_overview: "نظرة عامة على المنزل",
   joined_to_class_msg: "لقد انضممت إلى الفصل!",
-  send_reques_for_join_to_class: "قمت بإرسال طلب للانضمام إلى الفصل!",
+  send_reques_for_join_to_class: "لقد أرسلت طلبًا للانضمام إلى الفصل!",
   home_join_tribe: "انضم إلى هذه القبيلة",
   been_invited_msg: "لقد تمت دعوتك للانضمام إلى هذه القبيلة.",
   home_not_now: "ليس الآن",
@@ -609,7 +609,7 @@ const ar = {
 
   // My Notes
   notes_my: "ملاحظاتي",
-  notes_delete_question: "هل أنت متأكد أنك تريد حذف الهدف؟",
+  notes_delete_question: "هل أنت متأكد أنك تريد حذف الملاحظة؟",
 
   // Feedback
   feedback_tel_your_feedback: "أخبرنا بأفكارك وعواطفك وتعليقاتك",
@@ -633,7 +633,7 @@ const ar = {
   tribes_join_class: "انضم إلى الفصل",
   tribes_enter_join_code:
     "أدخل رمز الانضمام الخاص بك للعثور على الفصل الدراسي الخاص بك",
-  tribes_code_example: "مثال: atV1d3Dsd",
+  tribes_code_example: "مثال: atVID13",
 
   // Create class page
   class_create: "إنشاء فصل دراسي",
@@ -673,7 +673,7 @@ const ar = {
   fullscreen_exit: "الخروج من الشاشة الكاملة",
 
   // login
-  organization_setting: "إعداد المنظمة",
+  organization_setting: "إعدادات المنظمة",
   logout: "تسجيل خروج",
   login_welcome_back: "مرحبًا بعودتك",
   login_hi: "أهلاً",
@@ -754,8 +754,8 @@ const ar = {
 
   // Create slide
   slide: "الانزلاق",
-  step_dublicated: "الخطوة {{title}} مكررة",
-  step_cant_dublicated: "آسف لا يمكننا تكرار في هذه اللحظة",
+  step_duplicated: "الخطوة {{title}} مكررة",
+  step_cant_duplicated: "آسف لا يمكننا تكرار في هذه اللحظة",
   step_copy_slide: "{{title}} (نسخ)",
   step_removed: "تمت إزالة الخطوة",
   step_cant_removed: "آسف لا يمكننا إزالة في هذه اللحظة",
@@ -773,8 +773,8 @@ const ar = {
   step_updated: "تم تحديث خطوتك بنجاح",
   lesson_step_preferences: "تفضيلات خطوات الدرس",
   basic_tabs_example: "مثال على علامات التبويب الأساسية",
-  this_code_would_be_hint: "سيكون هذا الرمز بمثابة تلميح للخطوة",
-  code_will_preload: "سيتم تحميل هذا الرمز مسبقًا إلى مساحة العمل",
+  this_code_would_be_hint: "هذا الرمز هو تلميح لهذه الخطوة",
+  code_will_preload: "سيتم تحميل هذا الرمز مسبقًا إلى مساحة عمل الدرس",
   complexity: "تعقيد",
   new_folder: "ملف جديد",
   image_url_copied_msg: "تم نسخ عنوان URL للصورة إلى الحافظة",
@@ -785,7 +785,7 @@ const ar = {
   not_recommend_count_validations:
     "لا ننصح بوضع أكثر من {{count}} من القواعد لخطوة واحدة.",
   it_can_make_your_step: "يمكن أن يجعل خطوتك معقدة للغاية ويمكن أن تؤثر",
-  comfort_content: "راحة المستهلكين المحتوى من الهاتف",
+  comfort_content: "المتعلمين على الهواتف",
   updated_at: "تم التحديث في",
   no_rules: "لا قواعد",
   add_rule: "إضافة قاعدة",
@@ -851,11 +851,11 @@ const ar = {
 
   // Code-editor tour
   hi_coder: "مرحبا المبرمج!",
-  step_1: "سأريكم ماذا لدينا هنا. تتكون لوحة الكود من:",
+  step_1: "وسوف تظهر لك حول. تتكون لوحة الكود من:",
   slider: "المنزلق",
-  step_2: "تحتوي على معلومات 📖 من المعلم",
+  step_2: "هذه تعليمات📖 من المعلم",
   work_space: "مساحة العمل",
-  step_3: "لديك محرر أكواد جميل يمكنك من خلاله إظهار مهاراتك في البرمجة 💪",
+  step_3: "محرر أكواد جميل يمكنك من خلاله تحسين مهاراتك في البرمجة 💪",
   browser: "المتصفح",
   step_4: "هنا سترى نتائج عملك في الوقت الفعلي 🤯",
   lesson_list: "قائمة الدروس",
@@ -864,7 +864,7 @@ const ar = {
   save_publish_project: "احفظ مشروعك أو انشره",
   lets_look_st_this_part: "الآن دعونا نلقي نظرة على هذا الجزء المفيد",
   step_8:
-    "لدينا هنا مؤقت وأسئلة وإعدادات و... انتظر لحظة... أنت مبرمج، وتعرف كيفية اختبار أشياء جديدة 😌. لا تخجل وانقر على كل منهما!",
+    "لدينا هنا مؤقت وإعدادات و... انتظر لحظة... أنت مبرمج، وتعرف كيفية اختبار أشياء جديدة 😌. لا تخجل وانقر على كل منهما!",
   navigation: "ملاحة",
   can_change_this_tabs: "هنا يمكنك تغيير علامات التبويب هذه",
 

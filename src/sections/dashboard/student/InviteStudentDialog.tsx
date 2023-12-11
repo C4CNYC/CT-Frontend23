@@ -44,7 +44,7 @@ export default function InviteStudentDialog({
 
   const CreateInviteSchema = Yup.object().shape({
     email: Yup.string()
-      .email(translate("enter_valide_email"))
+      .email(translate("enter_valid_email"))
       .required(translate("required_field")),
   });
 
