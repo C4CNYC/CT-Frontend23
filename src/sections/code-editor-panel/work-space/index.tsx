@@ -1,7 +1,6 @@
 import { type FC, useCallback, useRef, useState } from "react";
 
 import { FaDesktop } from "react-icons/fa";
-// import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 import { TiDocumentText } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
