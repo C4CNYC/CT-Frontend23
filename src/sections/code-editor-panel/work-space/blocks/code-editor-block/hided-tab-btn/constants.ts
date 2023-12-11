@@ -23,6 +23,7 @@ export const getCollapsebarSx = (
   height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
   overflow: "hidden",
   position: "relative",
+  cursor: "pointer",
   color: title === TAB_TITLES.instructions ? "#A12E52" : "#AD6C1A",
   bgcolor:
     title === TAB_TITLES.instructions

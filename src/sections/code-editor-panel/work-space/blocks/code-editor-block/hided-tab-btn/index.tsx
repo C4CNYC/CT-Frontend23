@@ -18,6 +18,9 @@ const HidedTabBtn: FC<IHidedTabRtn> = ({ icon, title, openPanelFnc }) => {
     <>
       <Box
         position="relative"
+        onClick={() => {
+          openPanelFnc();
+        }}
         sx={() => ({
           ...getCollapsebarSx(isTabletAndMobile, title),
         })}
