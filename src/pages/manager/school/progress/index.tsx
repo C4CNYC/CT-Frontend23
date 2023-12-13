@@ -62,8 +62,7 @@ export default function Progress(): React.ReactElement {
       classId: "",
       moduleId: "",
       lessonId: "",
-    },
-    FilterMode.global
+    }
   );
 
   const { data: students, isLoading } = useGetStudentsQuery(
@@ -127,9 +126,16 @@ export default function Progress(): React.ReactElement {
           <SkeletonProgressTable />
         ) : (
           <>
-            {/* @ts-ignore */}
+            {/* This page will be implemented later */}
             <ProgressTable
+              filters={filters}
+              setFilter={setFilter}
               data={[]}
+              viewBy={{
+                main: "course",
+                user: "name",
+              }}
+              levelName={"course"}
             />
             {isLoadingContent
               ? Array(
