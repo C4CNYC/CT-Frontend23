@@ -2,7 +2,8 @@ import { Socket } from "socket.io-client";
 import { useCallback, useState } from "react";
 import { dracula } from "thememirror";
 import { LanguageSupport, indentUnit } from "@codemirror/language";
-import { Compartment, EditorView, Extension, StateEffect } from "@uiw/react-codemirror";
+import { Compartment, Extension, StateEffect } from "@codemirror/state";
+import { EditorView } from '@codemirror/view';
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 
