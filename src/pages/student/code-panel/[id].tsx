@@ -15,6 +15,7 @@ import WorkSpace from "@sections/code-editor-panel/work-space";
 import { useCodePanel } from "src/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
+import { SocketContext } from "../../../context/socket-context";
 import SignUpDialog from "./sign-up-dialog";
 
 const Tour = dynamic(
@@ -66,6 +67,7 @@ export default function Index(): React.ReactElement | null {
     isDesktop,
     lessonManagerProps,
   } = useCodePanel();
+
   const theme = useTheme();
   const boxProps = useMemo(() => getBoxProps(theme), [theme]);
   const { user } = useAuthContext();
@@ -79,7 +81,7 @@ export default function Index(): React.ReactElement | null {
       return socket.current;
     }
     socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
-      path: "/api",
+      path: "/api/",
       auth: user ? { userId: user.id } : {},
     });
     return socket.current;
@@ -96,45 +98,61 @@ export default function Index(): React.ReactElement | null {
     return undefined;
   }, [router.query.lessonId]);
 
+  useEffect(() => {
+    if (user) {
+      getSocket().emit("joinRoom", user.student_profile.id);
+      return () => {
+        getSocket().emit("leaveRoom", user.student_profile.id);
+      };
+    }
+    return undefined;
+  }, [user]);
+
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />;
   }
 
   return (
-    <Box>
-      <Head>
-        <title> CodePanel: CodeTribe </title>
-      </Head>
+    <SocketContext.Provider value={getSocket()}>
+      <Box>
+        <Head>
+          <title> CodePanel: CodeTribe </title>
+        </Head>
 
-      <FullScreen handle={handle}>
-        <Tour />
+        <FullScreen handle={handle}>
+          <Tour />
 
-        <SignUpDialog isSigned={!!workSpaceProps.user} />
+          <SignUpDialog isSigned={!!workSpaceProps.user} />
 
-        <Box sx={boxProps}>
-          <TopPanel
-            chatComponent={null}
-            onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
-            isFullScreenView={handle.active}
-          />
+          <Box sx={boxProps}>
+            <TopPanel
+              chatComponent={null}
+              onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
+              isFullScreenView={handle.active}
+            />
 
-          <WorkSpace {...workSpaceProps} />
+            <WorkSpace {...workSpaceProps} />
 
-          <BottomBar
-            {...bottomBarProps}
-            lessonManagerComponent={<LessonsManager {...lessonManagerProps} />}
-          />
-        </Box>
+            <BottomBar
+              {...bottomBarProps}
+              lessonManagerComponent={
+                <LessonsManager {...lessonManagerProps} />
+              }
+            />
+          </Box>
 
-        {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
-      </FullScreen>
+          {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
+        </FullScreen>
 
-      <Confetti
-        numberOfPieces={confetti ? MAX_NUMBER_OF_PIECES : MIN_NUMBER_OF_PIECES}
-        recycle={false}
-        gravity={CONFETI_GRAVITY}
-        onConfettiComplete={onConfettiComplete}
-      />
-    </Box>
+        <Confetti
+          numberOfPieces={
+            confetti ? MAX_NUMBER_OF_PIECES : MIN_NUMBER_OF_PIECES
+          }
+          recycle={false}
+          gravity={CONFETI_GRAVITY}
+          onConfettiComplete={onConfettiComplete}
+        />
+      </Box>
+    </SocketContext.Provider>
   );
 }
