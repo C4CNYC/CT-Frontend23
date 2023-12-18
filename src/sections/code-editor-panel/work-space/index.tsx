@@ -1,6 +1,7 @@
 import { type FC, useCallback, useRef, useState } from "react";
 
-import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
+import { FaDesktop } from "react-icons/fa";
+import { TiDocumentText } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -29,6 +30,11 @@ import ViewBlock from "./blocks/view-block";
 import { CodeDocument } from "./blocks/view-block/browser-view";
 
 export type SupportedLang = "html" | "javascript";
+
+export const TAB_TITLES = {
+  instructions: "Instructions",
+  browser_preview: "Browser Preview",
+};
 
 export interface WorkSpaceProps {
   isFetching?: boolean;
@@ -93,12 +99,12 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             data={data}
             integrations={lesson?.integrations ?? []}
             isFetching={isFetching}
-            code={document?.htmlBody?.join('') ?? ""}
+            code={document?.htmlBody?.join("") ?? ""}
           />
         ) : (
           <HidedTabBtn
-            title="Instructions"
-            icon={<TbArrowBarToRight size={20} />}
+            title={TAB_TITLES.instructions}
+            icon={<TiDocumentText size={20} />}
             openPanelFnc={openInstruction}
           />
         )}
@@ -106,7 +112,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         <CodeEditorBlock
           preloadedCode={lastLessonCode || data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
-          code={document?.htmlBody?.join('') ?? ""}
+          code={document?.htmlBody?.join("") ?? ""}
           user={user}
           onChangeCode={onChangeCode}
         />
@@ -115,8 +121,8 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           <ViewBlock code={document} />
         ) : (
           <HidedTabBtn
-            title="Browser Preview"
-            icon={<TbArrowBarToLeft size={20} />}
+            title={TAB_TITLES.browser_preview}
+            icon={<FaDesktop size={20} />}
             openPanelFnc={openPreview}
           />
         )}
@@ -142,11 +148,11 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         data={data}
         integrations={lesson?.integrations ?? []}
         isFetching={isFetching}
-        code={document?.htmlBody?.join('') ?? ""}
+        code={document?.htmlBody?.join("") ?? ""}
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody?.join('') ?? ""}
+        code={document?.htmlBody?.join("") ?? ""}
         onChangeCode={onChangeCode}
         user={user}
         preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
