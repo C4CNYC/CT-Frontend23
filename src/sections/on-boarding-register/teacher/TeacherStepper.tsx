@@ -31,11 +31,7 @@ const CreateEmailSchema = Yup.object().shape({
   firstName: Yup.string().required("Enter your name"),
   lastName: Yup.string().required("Enter your surname"),
   password: Yup.string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-      "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
-    )
-    .min(10, "Password must be at least 10 characters long"),
+    .min(8, "Password must be at least 8 characters long"),
 });
 
 export default function TeacherStepper(): React.ReactElement {
@@ -60,8 +56,6 @@ export default function TeacherStepper(): React.ReactElement {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      //#TODO update type here
-      //@ts-ignore
       await register({
         email: data.email,
         password: data.password,

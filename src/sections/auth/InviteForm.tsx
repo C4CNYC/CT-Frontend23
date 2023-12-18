@@ -43,11 +43,7 @@ export default function InviteForm(): React.ReactElement {
   const InviteSchema = Yup.object().shape({
     password: Yup.string()
       .required("Password is required")
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-        "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
-      )
-      .min(10, "Password must be at least 10 characters long"),
+      .min(8, "Password must be at least 8 characters long"),
     confirmPwd: Yup.string()
       .required("Password is required")
       .oneOf([Yup.ref("password")], "Passwords does not match"),
