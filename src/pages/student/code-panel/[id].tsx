@@ -49,8 +49,8 @@ const CONFETI_GRAVITY = 0.25;
 const MAX_NUMBER_OF_PIECES = 500;
 const MIN_NUMBER_OF_PIECES = 0;
 const BOX_PROPS = {
-  bgcolor: "white",
-  sx: { position: "relative", overflow: "hidden" },
+  position: "relative",
+  overflow: "hidden",
 };
 
 export default function Index(): React.ReactElement | null {
@@ -75,7 +75,10 @@ export default function Index(): React.ReactElement | null {
     if (socket.current) {
       return socket.current;
     }
-    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/api/", auth: user ? { userId: user.id } : {} })
+    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
+      path: "/api/",
+      auth: user ? { userId: user.id } : {},
+    });
     return socket.current;
   }, [socket]);
 
@@ -114,7 +117,7 @@ export default function Index(): React.ReactElement | null {
         <FullScreen handle={handle}>
           <Tour />
 
-          <Box {...BOX_PROPS}>
+          <Box sx={BOX_PROPS}>
             <TopPanel
               chatComponent={null}
               onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
