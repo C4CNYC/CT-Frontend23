@@ -14,6 +14,7 @@ import {
   MenuItem,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -39,6 +40,8 @@ export default function QuestItem({
   schoolId,
 }: IQuestItemProps): React.ReactElement {
   const { query } = useRouter();
+  const theme = useTheme();
+  const isLight = theme.palette.mode === "light";
   const { enqueueSnackbar } = useSnackbar();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -105,11 +108,13 @@ export default function QuestItem({
         component={NextLink}
         href={assignmentPath}
         underline="none"
-        color="initial"
+        color={isLight ? "initial" : "#E6F5FD"}
       >
         <Stack
           sx={{
-            backgroundColor: "#E6F5FD",
+            backgroundColor: isLight
+              ? "#E6F5FD"
+              : theme.palette.background.paper,
             borderRadius: "10px",
             py: 1,
             px: 2,
@@ -143,7 +148,7 @@ export default function QuestItem({
               </Stack>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h5" color="#364954">
+              <Typography variant="h5" color={isLight ? "#364954" : "#E6F5FD"}>
                 {assignment.name}
               </Typography>
               <Box display="flex" gap={1} alignItems="center">
@@ -207,6 +212,7 @@ export default function QuestItem({
               flexDirection: { xs: "row", sm: "row", md: "column" },
             })}
           >
+            {/* hided before release */}
             {/* <IconButton
               sx={{ alignSelf: "flex-end" }}
               onClick={(e) => {
@@ -256,7 +262,7 @@ export default function QuestItem({
           component={NextLink}
           href={editAssignmentPath}
           underline="none"
-          color="initial"
+          color={isLight ? "initial" : "#E6F5FD"}
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />

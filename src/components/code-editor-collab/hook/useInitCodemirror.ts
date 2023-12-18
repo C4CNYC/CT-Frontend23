@@ -2,13 +2,16 @@ import { Socket } from "socket.io-client";
 import { useCallback, useState } from "react";
 import { dracula } from "thememirror";
 import { LanguageSupport, indentUnit } from "@codemirror/language";
-import { Compartment, EditorView, Extension, StateEffect } from "@uiw/react-codemirror";
+import { Compartment, Extension, StateEffect } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 
 import { getFileExtension } from "src/utils/getFileExtension";
 
 import { type Cursor, cursorExtension } from "./utils/collab/cursors";
+import { contextMenuExtension } from "./utils/collab/context-menu";
+import { commentsExtension } from "./utils/collab/comments";
 import { File, getDocument } from "./utils/collab/requests";
 import { peerExtension } from "./utils/collab/peer-extension";
 import { BASIC_SETUP, Extensions } from "./constants";
@@ -94,7 +97,13 @@ export const useInitCodemirror = ({
         withTooltip,
         addCursor,
         userId: user?.id,
-      })
+      }),
+      contextMenuExtension({
+        userId: user?.id,
+      }),
+      commentsExtension({
+        userId: user?.id,
+      }),
     ]);
     onChange?.(docInfo)
     setDoc(doc.toString());

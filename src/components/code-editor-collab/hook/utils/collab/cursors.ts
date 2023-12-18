@@ -1,6 +1,5 @@
 import { debounce } from "lodash";
-import { StateField, StateEffectType } from "@codemirror/state";
-import { type Extension } from "@uiw/react-codemirror";
+import { type Extension, StateField, StateEffectType } from "@codemirror/state";
 import {
 	type DecorationSet,
 	EditorView,

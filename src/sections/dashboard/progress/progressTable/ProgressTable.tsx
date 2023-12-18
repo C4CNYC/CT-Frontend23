@@ -108,6 +108,7 @@ export default function ProgressTable({
 
   useEffect(() => {
     const { courseId, moduleId } = filters;
+    if (!courses.length) return;
     if (courseId.length)
       setSelectedCourseIdx(
         courses.findIndex((course) => course.id === courseId)!
