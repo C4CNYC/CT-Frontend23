@@ -1,9 +1,14 @@
-import { Theme } from "@mui/system";
+import { Theme } from "@mui/material";
 
-export const PARENT_STACK_SX = { bgcolor: "#F2F2F2", p: 1 };
-export const SKELETON_SX = { bgcolor: "#D9D9D9" };
-export const getStackBottomSx = (theme: Theme) => ({
-  backgroundColor: theme.palette.background.default,
+export const getParentStackSx = (isLight: boolean) => ({
+  bgcolor: isLight ? "#F2F2F2" : "",
+  p: 1,
+});
+export const getSkeletonSx = (isLight: boolean) => ({
+  bgcolor: isLight ? "#D9D9D9" : "",
+});
+export const getStackBottonSx = (isLight: boolean, theme: Theme) => ({
+  backgroundColor: isLight ? "white" : theme.palette.background.neutral,
   width: "100%",
   height: "calc(91vh - 80px)",
   borderRadius: "10px",

@@ -1,14 +1,14 @@
-import { type FC } from "react";
+import { type FC, useMemo } from "react";
 
-import { Skeleton, Typography } from "@mui/material";
+import { Skeleton, Typography, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
 
 import {
   AVAILABLE_TYP_SX,
   CODING_TYP_SX,
-  PARENT_STACK_SX,
-  SKELETON_SX,
-  getStackBottomSx,
+  getParentStackSx,
+  getSkeletonSx,
+  getStackBottonSx,
 } from "./constants";
 
 interface ISkeletonProps {
@@ -16,9 +16,18 @@ interface ISkeletonProps {
 }
 
 const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
+  const theme = useTheme();
+  const isLight = theme.palette.mode === "light";
+  const skeletonSx = useMemo(() => getSkeletonSx(isLight), [isLight]);
+  const parentStackSx = useMemo(() => getParentStackSx(isLight), [isLight]);
+  const bottonStackSx = useMemo(
+    () => getStackBottonSx(isLight, theme),
+    [isLight, theme]
+  );
+
   return (
     <Stack
-      sx={PARENT_STACK_SX}
+      sx={parentStackSx}
       width="100%"
       height={isOpenHeader ? "calc(100% - 34px)" : "100vh"}
     >
@@ -30,30 +39,30 @@ const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
         mb="5px"
         pl="30px"
       >
-        <Skeleton height="18px" width="192px" sx={SKELETON_SX} />
+        <Skeleton height="18px" width="192px" sx={skeletonSx} />
         <Stack spacing={1} display="flex" direction="row">
           <Skeleton
             height="13px"
             width="13px"
             variant="circular"
-            sx={SKELETON_SX}
+            sx={skeletonSx}
           />
           <Skeleton
             height="13px"
             width="13px"
             variant="circular"
-            sx={SKELETON_SX}
+            sx={skeletonSx}
           />
           <Skeleton
             height="13px"
             width="13px"
             variant="circular"
-            sx={SKELETON_SX}
+            sx={skeletonSx}
           />
         </Stack>
       </Stack>
 
-      <Stack sx={(theme) => ({ ...getStackBottomSx(theme) })}>
+      <Stack sx={bottonStackSx}>
         <Typography sx={AVAILABLE_TYP_SX} variant="subtitle1">
           No preview available?
         </Typography>

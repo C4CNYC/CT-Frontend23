@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { FullScreen } from "react-full-screen";
 import { Socket, io } from "socket.io-client";
 
-import { Box } from "@mui/material";
+import { Box, Theme, useTheme } from "@mui/material";
 
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
@@ -16,6 +16,7 @@ import { useCodePanel } from "src/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 import { SocketContext } from "../../../context/socket-context";
+import SignUpDialog from "./sign-up-dialog";
 
 const Tour = dynamic(
   async () => await import("@sections/code-editor-panel/code-panel-tour"),
@@ -48,10 +49,12 @@ const LessonsManager = dynamic(
 const CONFETI_GRAVITY = 0.25;
 const MAX_NUMBER_OF_PIECES = 500;
 const MIN_NUMBER_OF_PIECES = 0;
-const BOX_PROPS = {
-  bgcolor: "white",
-  sx: { position: "relative", overflow: "hidden" },
-};
+const getBoxProps = (theme: Theme) => ({
+  bgcolor:
+    theme.palette.mode === "light" ? "white" : theme.palette.background.neutral,
+  position: "relative",
+  overflow: "hidden",
+});
 
 export default function Index(): React.ReactElement | null {
   const {
@@ -65,6 +68,8 @@ export default function Index(): React.ReactElement | null {
     lessonManagerProps,
   } = useCodePanel();
 
+  const theme = useTheme();
+  const boxProps = useMemo(() => getBoxProps(theme), [theme]);
   const { user } = useAuthContext();
 
   const router = useRouter();
@@ -75,7 +80,10 @@ export default function Index(): React.ReactElement | null {
     if (socket.current) {
       return socket.current;
     }
-    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", { path: "/api/", auth: user ? { userId: user.id } : {} })
+    socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
+      path: "/api/",
+      auth: user ? { userId: user.id } : {},
+    });
     return socket.current;
   }, [socket]);
 
@@ -114,7 +122,9 @@ export default function Index(): React.ReactElement | null {
         <FullScreen handle={handle}>
           <Tour />
 
-          <Box {...BOX_PROPS}>
+          <SignUpDialog isSigned={!!workSpaceProps.user} />
+
+          <Box sx={boxProps}>
             <TopPanel
               chatComponent={null}
               onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
