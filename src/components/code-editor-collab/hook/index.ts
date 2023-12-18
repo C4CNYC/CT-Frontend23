@@ -6,7 +6,7 @@ import {
   useCallback,
   useMemo
 } from "react";
-import { type Extension } from "@uiw/react-codemirror";
+import { type Extension } from "@codemirror/state";
 import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 

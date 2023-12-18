@@ -10,7 +10,7 @@ import {
 import { EmitSocketEvents } from "../socket";
 import { pullUpdates } from "./pull-updates";
 import { pushUpdates } from "./push-updates";
-import { StateEffectType } from "@uiw/react-codemirror";
+import { StateEffectType } from "@codemirror/state";
 import { Cursor } from "./cursors";
 import { File } from "./requests";
 

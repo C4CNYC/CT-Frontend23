@@ -142,7 +142,7 @@ export default function CreateClass(): React.ReactElement {
             }}
           />
           <Stack
-            sx={{
+            sx={(theme) => ({
               position: "sticky",
               bottom: 0,
               flexDirection: "row",
@@ -151,7 +151,9 @@ export default function CreateClass(): React.ReactElement {
               pr: { xs: 2, sm: 3, lg: 4 },
               pt: 2,
               pb: 2,
-            }}
+              backgroundColor:
+                theme.palette.mode === "light" ? "#ffffff" : "initial",
+            })}
           >
             <Button
               size="large"
