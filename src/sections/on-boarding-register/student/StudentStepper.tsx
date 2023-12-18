@@ -15,14 +15,11 @@ import StepperInfo from "./StepperInfo";
 import StepperProgres from "./StepperProgress";
 import StepperRegister from "./StepperRegister";
 import { Role } from "src/redux/services/enums/role.enum";
-import { adjectives, animals, uniqueNamesGenerator } from "unique-names-generator";
-import _ from "lodash";
 import { generateRandomEmoji } from "@utils";
 
 interface FormValuesProps {
   email: string;
   firstName: string;
-  username: string;
   lastName: string;
   password: string;
 }
@@ -42,13 +39,6 @@ export default function StudentStepper(): React.ReactElement {
     setActiveStep(step);
   };
 
-  const randomUserName = `${uniqueNamesGenerator({
-    dictionaries: [adjectives, animals],
-    separator: "",
-    length: 2,
-    style: "capital",
-  })}${_.random(10, 99)}`;
-
   const randomEmoji = generateRandomEmoji(true);
 
   const CreateRegisterSchema = Yup.object().shape({
@@ -57,7 +47,6 @@ export default function StudentStepper(): React.ReactElement {
       .email("Email must be a valid email address"),
     firstName: Yup.string().required("Enter your name"),
     lastName: Yup.string().required("Enter your surname"),
-    username: Yup.string().required("Enter your username"),
     password: Yup.string()
       .min(8, "Password must be at least 8 characters long"),
   });
@@ -65,7 +54,6 @@ export default function StudentStepper(): React.ReactElement {
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateRegisterSchema),
     mode: "all",
-    defaultValues: { username: randomUserName },
   });
 
   const onSubmit = async (data: FormValuesProps) => {
@@ -75,7 +63,6 @@ export default function StudentStepper(): React.ReactElement {
         password: data.password,
         firstName: data.firstName,
         lastName: data.lastName,
-        username: data.username,
         role: Role.Student,
         emojiAvatar: randomEmoji
       });
