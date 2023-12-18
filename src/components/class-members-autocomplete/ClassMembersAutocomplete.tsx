@@ -93,7 +93,7 @@ export default function ClassMembersAutocomplete({
       id="add-user-input"
       value={classMembers.data}
       onChange={onChange}
-      options={students.data}
+      options={students?.data.filter((student) => student.account)}
       popupIcon={null}
       noOptionsText={
         <SearchNotFound sx={{ p: "20px 0" }} query={filters.email} />
@@ -122,7 +122,7 @@ export default function ClassMembersAutocomplete({
         const parts = parse(email, matches);
 
         const selected = classMembers.data.find(
-          (c) => c.account.email === email
+          (c) => c?.account?.email === email
         );
 
         return (
