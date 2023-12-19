@@ -146,8 +146,6 @@ const SliderBlock: FC<ISliderBlock> = ({
       ) : (
         <>
           <Box className="sliderTour" height="100%" sx={boxSx}>
-            {isFetching ? <LoadingScreen sx={LOADER_SCREEN_SX} /> : null}
-
             {!isFetching ? (
               <Carousel
                 {...getCarouselSettings(onBeforeChange)}
@@ -165,7 +163,9 @@ const SliderBlock: FC<ISliderBlock> = ({
                   );
                 })}
               </Carousel>
-            ) : null}
+            ) : (
+              <LoadingScreen sx={LOADER_SCREEN_SX} />
+            )}
           </Box>
 
           <Navigation
