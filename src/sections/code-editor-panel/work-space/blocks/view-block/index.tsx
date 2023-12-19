@@ -37,10 +37,8 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
   return (
     <BaseBlock
       closeIcon={<TbArrowBarToRight size={20} />}
-      isLeftBtn={true}
       title={TITLE}
       icon={icon}
-      isLeftBlock={false}
       className="browserTour"
       hideTabsHandler={() => {
         dispatch(toggleBrowser(true));

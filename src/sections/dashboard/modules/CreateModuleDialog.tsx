@@ -13,7 +13,6 @@ import {
   Button,
   DialogActions,
   Grid,
-  IconButton,
   Tab,
   Tabs,
   Typography,
@@ -25,10 +24,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import {
   FormProvider,
   ModuleLessonsAutocomplete,
-  RHFSwitch,
-  RHFTextField,
-  RHFUpload,
-  SingleFilePreview,
   useSnackbar,
 } from "@components";
 import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
@@ -40,6 +35,9 @@ import {
   useUpdateModuleAvatarMutation,
   useUpdateModuleMutation,
 } from "../../../redux/services/manager/modules-manager";
+import MainTab from "./MainTab";
+import SettingsTab from "./SettingsTab";
+import { DIALOG_ACTIONS_SX, TAB_PANEL_SX, TAB_SX } from "./constants";
 
 interface FormValuesProps {
   name: string;
@@ -81,13 +79,7 @@ function TabPanel(props: TabPanelProps): React.ReactElement {
       {...other}
     >
       {value === index && (
-        <Box
-          sx={{
-            p: { xs: 2, sm: 3 },
-            minWidth: { xs: "320px", sm: "370px" },
-            minHeight: "320px",
-          }}
-        >
+        <Box sx={TAB_SX}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -112,9 +104,12 @@ export default function CreateModuleDialog({
   moduleTips,
 }: Prop): React.ReactElement {
   const { query } = useRouter();
-  const [open, setOpen] = useState(false);
-
   const { enqueueSnackbar } = useSnackbar();
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = React.useState(0);
+  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
+
   const [addToCourse, { isLoading: isAddToCourseLoading }] =
     useAddModuleToCourseMutation();
   const [editModule, { isLoading: isEditLoading }] = useUpdateModuleMutation();
@@ -131,6 +126,10 @@ export default function CreateModuleDialog({
     setOpen(false);
   };
 
+  const handleChange = (_: React.SyntheticEvent, newValue: number): void => {
+    setValue(newValue);
+  };
+
   const CreateCourseSchema = Yup.object().shape({
     name: Yup.string().required(translate("required_name")),
     description:
@@ -141,15 +140,9 @@ export default function CreateModuleDialog({
       .nullable()
       .transform((v, o) => (o === "" ? null : v))
       .matches(durationRegexp, translate("use_key_words_msg")),
-    initial_likes: Yup.number()
-      .required(translate("required_initial_likes"))
-      .positive(),
-    initial_stars: Yup.number()
-      .required(translate("required_initial_stars"))
-      .positive(),
-    initial_enrolled: Yup.number()
-      .required(translate("required_initial_enrolled"))
-      .positive(),
+    initial_likes: Yup.number().positive(),
+    initial_stars: Yup.number().positive(),
+    initial_enrolled: Yup.number().positive(),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -177,8 +170,8 @@ export default function CreateModuleDialog({
       } else {
         const module = await createModule({
           ...data,
-          tips: data.tips ? [data.tips] : [],
-          duration: data.duration.trim(),
+          tips: data?.tips ? [data.tips] : [],
+          duration: data?.duration?.trim() ?? "1 month",
         }).unwrap();
         if (query.course_id) {
           await addToCourse({
@@ -203,15 +196,6 @@ export default function CreateModuleDialog({
         variant: "error",
       });
     }
-  };
-  const [value, setValue] = React.useState(0);
-  const [uploadedFile, setUploadedFile] = useState<null | File>(null);
-
-  const handleChange = (
-    event: React.SyntheticEvent,
-    newValue: number
-  ): void => {
-    setValue(newValue);
   };
 
   return (
@@ -251,96 +235,16 @@ export default function CreateModuleDialog({
               <Grid container spacing={3}>
                 <Grid item xs={12} md={12}>
                   <Box rowGap={3} display="grid" mt={2}>
-                    <Box sx={{ position: "relative" }}>
-                      {uploadedFile ? (
-                        <IconButton
-                          sx={{
-                            position: "absolute",
-                            right: "5px",
-                            top: "5px",
-                            zIndex: 10,
-                            width: "20px",
-                            height: "20px",
-                            p: 0,
-                          }}
-                          onClick={() => {
-                            setUploadedFile(null);
-                          }}
-                        >
-                          <IoMdClose size="20px" />
-                        </IconButton>
-                      ) : null}
-                      <RHFUpload
-                        name="module_img"
-                        onDrop={(files: File[]) => {
-                          setUploadedFile(files[0]);
-                        }}
-                        helperText={
-                          <Typography
-                            variant="caption"
-                            noWrap
-                            width="90px"
-                            sx={{
-                              mt: 1,
-                              mb: -1,
-                              mx: "auto",
-                              display: "block",
-                              textAlign: "center",
-                              color: "text.secondary",
-                            }}
-                          >
-                            {uploadedFile?.name}
-                          </Typography>
-                        }
-                      />
-                      <SingleFilePreview
-                        file={
-                          uploadedFile
-                            ? URL.createObjectURL(uploadedFile)
-                            : null
-                        }
-                      />
-                    </Box>
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="name"
-                      label={translate("modules_module_name")}
-                      required
-                    />
-
-                    <RHFTextField
-                      name="description"
-                      label={translate("modules_module_description")}
-                      required
-                      multiline
-                      rows={3}
-                    />
-
-                    <RHFTextField
-                      name="tips"
-                      placeholder={translate("actions_enter_tip")}
-                      label={translate("actions_add_tip")}
-                    />
-
-                    <RHFSwitch
-                      name="active"
-                      label={translate("modules_module_active")}
+                    <MainTab
+                      uploadedFile={uploadedFile}
+                      setUploadedFile={setUploadedFile}
                     />
                   </Box>
                 </Grid>
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Box
-                sx={{
-                  width: { xs: "300px", sm: "350px" },
-                  minWidth: "300px",
-                  height: "260px",
-                }}
-              >
+              <Box sx={TAB_PANEL_SX}>
                 <ModuleLessonsAutocomplete id={id as string} />
               </Box>
             </TabPanel>
@@ -348,77 +252,13 @@ export default function CreateModuleDialog({
               <Grid container spacing={3}>
                 <Grid item xs={12} md={12}>
                   <Box rowGap={3} display="grid" mt={2}>
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="duration"
-                      label={translate("modules_module_duration")}
-                    />
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="initial_likes"
-                      label={translate("courses_initial_likes")}
-                      type="number"
-                    />
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="initial_stars"
-                      label={translate("courses_initial_stars")}
-                      type="number"
-                    />
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="initial_enrolled"
-                      label={translate("courses_initial_enrolled")}
-                      type="number"
-                    />
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="teacher_slides"
-                      label={translate("modules_teacher_slides_link")}
-                    />
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="teacher_forum"
-                      label={translate("modules_teacher_forum_link")}
-                    />
-                    <RHFTextField
-                      sx={{
-                        width: { xs: "100%", sm: "350px" },
-                        minWidth: "300px",
-                      }}
-                      name="lesson_plans"
-                      label={translate("modules_lesson_plans_link")}
-                    />
+                    <SettingsTab />
                   </Box>
                 </Grid>
               </Grid>
             </TabPanel>
             <DialogActions>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: 2,
-                }}
-              >
+              <Box sx={DIALOG_ACTIONS_SX}>
                 <Button onClick={handleClose}>
                   {translate("actions_close")}
                 </Button>

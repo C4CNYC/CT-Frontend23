@@ -1,6 +1,7 @@
 import { type FC, useCallback, useRef, useState } from "react";
 
-import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
+import { FaDesktop } from "react-icons/fa";
+import { TiDocumentText } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -30,6 +31,11 @@ import ViewBlock from "./blocks/view-block";
 import { CodeDocument } from "./blocks/view-block/browser-view";
 
 export type SupportedLang = "html" | "javascript";
+
+export const TAB_TITLES = {
+  instructions: "Instructions",
+  browser_preview: "Browser Preview",
+};
 
 export interface WorkSpaceProps {
   isFetching?: boolean;
@@ -100,7 +106,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         ) : (
           <HidedTabBtn
             title={translate("instructions")}
-            icon={<TbArrowBarToRight size={20} />}
+            icon={<TiDocumentText size={20} />}
             openPanelFnc={openInstruction}
           />
         )}
@@ -118,7 +124,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         ) : (
           <HidedTabBtn
             title={translate("browser_preview")}
-            icon={<TbArrowBarToLeft size={20} />}
+            icon={<FaDesktop size={20} />}
             openPanelFnc={openPreview}
           />
         )}

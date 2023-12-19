@@ -59,7 +59,7 @@ const DesktopBar: FC<IDesktopBar> = ({
       <ViewTumbler
         onHanldeFullScreen={onHanldeFullScreen}
         isFullScreenView={isFullScreenView}
-        isColumnHidden={isBrowserHidden || isInstructionsHidden}
+        isColumnHidden={isBrowserHidden && isInstructionsHidden}
         onChangeColumnVisability={onChangeColumnVisability}
       />
 
