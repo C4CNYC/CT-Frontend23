@@ -21,6 +21,7 @@ import SkeletonList, {
 } from "@sections/dashboard/skeleton/skeletonList";
 import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import FilterModules from "./filter";
 
@@ -30,6 +31,7 @@ ModulesListPage.getLayout = (page: React.ReactElement) => (
 
 export default function ModulesListPage(): React.ReactElement | string {
   const { themeStretch } = useSettingsContext();
+  const translate = useTranslate();
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
       name: "",
@@ -45,15 +47,21 @@ export default function ModulesListPage(): React.ReactElement | string {
   return (
     <>
       <Head>
-        <title> Modules | CodeTribe</title>
+        <title> {translate("modules")} | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-            { name: "Modules", href: MANAGER_PATH_DASHBOARD.modules.root },
+            {
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            {
+              name: translate("modules"),
+              href: MANAGER_PATH_DASHBOARD.modules.root,
+            },
           ]}
           action={
             <CreateModuleDialog>
@@ -61,7 +69,7 @@ export default function ModulesListPage(): React.ReactElement | string {
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                Create Module
+                {translate("modules_create_module")}
               </Button>
             </CreateModuleDialog>
           }

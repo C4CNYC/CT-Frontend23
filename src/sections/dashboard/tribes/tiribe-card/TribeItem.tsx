@@ -17,6 +17,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface, getLinearGradient } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 import TribeButtons from "./TribeButtons";
 import TribeHeaderBtn from "./TribeHeaderBtn";
@@ -30,6 +31,7 @@ export default function TribeItem({
   tribe,
 }: ITribeItemProps): React.ReactElement {
   const { data } = useGetClassStudentsQuery({ id: tribe.id });
+  const translate = useTranslate();
 
   return (
     <Paper
@@ -55,7 +57,7 @@ export default function TribeItem({
         }}
       >
         <Chip
-          label="Tribe"
+          label={translate("tribe")}
           sx={{
             height: "20px",
             width: "70px",
@@ -65,7 +67,7 @@ export default function TribeItem({
           }}
         />
         <Chip
-          label="Admin"
+          label={translate("admin")}
           sx={{
             height: "20px",
             width: "70px",
@@ -110,8 +112,7 @@ export default function TribeItem({
         </Typography>
         <Scrollbar sx={{ height: "63px" }}>
           <Typography variant="body1">
-            {tribe.description ??
-              "There will be information about this tribe when the teacher add it"}
+            {tribe.description ?? translate("tribes_information_about_tribe")}
           </Typography>
         </Scrollbar>
         <AvatarGroup max={4} total={tribe.students?.length}>

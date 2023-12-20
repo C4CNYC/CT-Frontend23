@@ -11,6 +11,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 // sections
 import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayout";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
+import { useTranslate } from "src/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
@@ -22,23 +23,27 @@ UserCreatePage.getLayout = (page: React.ReactElement) => (
 
 export default function UserCreatePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
+  const translate = useTranslate();
 
   return (
     <>
       <Head>
-        <title> Create a new student | CodeTribe</title>
+        <title> {translate("students_creatr_new")} | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: "Students",
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            {
+              name: translate("students"),
               href: MANAGER_PATH_DASHBOARD.school.students,
             },
-            { name: "New student" },
+            { name: translate("students_new_student") },
           ]}
         />
         <StudentNewEditForm />

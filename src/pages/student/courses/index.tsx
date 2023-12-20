@@ -12,6 +12,7 @@ import CourseList from "@sections/courses/CourseList";
 // import LessonList from "@sections/courses/LessonList";
 // import ModuleList from "@sections/courses/ModuleList";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
+import { useTranslate } from "src/utils/translateHelper";
 
 Courses.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -51,19 +52,26 @@ export default function Courses(): React.ReactElement {
     setValue(newValue);
     router.replace("/student/courses", undefined, { shallow: true });
   };
+  const translate = useTranslate();
 
   return (
     <>
       <Head>
-        <title> Courses Catalog | CodeTribe</title>
+        <title> {translate("courses_catalog")} | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <>
           <CustomBreadcrumbs
             heading=""
             links={[
-              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-              { name: "Courses", href: MANAGER_PATH_DASHBOARD.courses.root },
+              {
+                name: translate("home"),
+                href: STUDENT_PATH_DASHBOARD.class.root,
+              },
+              {
+                name: translate("courses"),
+                href: MANAGER_PATH_DASHBOARD.courses.root,
+              },
             ]}
           />
         </>

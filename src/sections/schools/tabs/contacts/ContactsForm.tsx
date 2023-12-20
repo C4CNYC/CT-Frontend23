@@ -9,6 +9,7 @@ import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 
 import { FormProvider, RHFTextField } from "@components";
 import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
 
@@ -50,6 +51,7 @@ export default function ContactsForm({
 }: ContactsFormProps): React.ReactElement | null {
   const [updateContacts, { isLoading }] = useUpdateSchoolContactsMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
 
   const defaultValues = {
     schoolId,
@@ -84,9 +86,9 @@ export default function ContactsForm({
         billing_name: data.billing_name,
         billing_phone: data.billing_phone,
       }).unwrap();
-      enqueueSnackbar("Update success!");
+      enqueueSnackbar(translate("messages_update_success"));
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -96,7 +98,7 @@ export default function ContactsForm({
         <Grid item xs={12}>
           <Card sx={{ p: 3 }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
-              Contacts
+              {translate("contacts")}
             </Typography>
 
             <Box
@@ -112,9 +114,9 @@ export default function ContactsForm({
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="name" label="Name" />
+              <RHFTextField name="name" label={translate("name")} />
 
-              <RHFTextField name="email" label="Email Address" />
+              <RHFTextField name="email" label={translate("email_address")} />
 
               <Controller
                 name="phone"
@@ -122,16 +124,20 @@ export default function ContactsForm({
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    helperText={
+                      fieldState.invalid
+                        ? translate("messages_invalid_phone")
+                        : ""
+                    }
                     error={fieldState.invalid}
-                    placeholder="Mobile number"
+                    placeholder={translate("mobile_number")}
                   />
                 )}
               />
             </Box>
 
             <Typography variant="h6" sx={{ mb: 2 }}>
-              Technical Contacts
+              {translate("contacts_tab_technical_contacts")}
             </Typography>
 
             <Box
@@ -147,9 +153,12 @@ export default function ContactsForm({
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="technical_name" label="Name" />
+              <RHFTextField name="technical_name" label={translate("name")} />
 
-              <RHFTextField name="technical_email" label="Email Address" />
+              <RHFTextField
+                name="technical_email"
+                label={translate("email_address")}
+              />
 
               <Controller
                 name="technical_phone"
@@ -157,16 +166,20 @@ export default function ContactsForm({
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    helperText={
+                      fieldState.invalid
+                        ? translate("messages_invalid_phone")
+                        : ""
+                    }
                     error={fieldState.invalid}
-                    placeholder="Mobile number"
+                    placeholder={translate("mobile_number")}
                   />
                 )}
               />
             </Box>
 
             <Typography variant="h6" sx={{ mb: 2 }}>
-              Billing Contacts
+              {translate("contacts_tab_buling_contacts")}
             </Typography>
 
             <Box
@@ -182,9 +195,12 @@ export default function ContactsForm({
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="billing_name" label="Name" />
+              <RHFTextField name="billing_name" label={translate("name")} />
 
-              <RHFTextField name="billing_email" label="Email Address" />
+              <RHFTextField
+                name="billing_email"
+                label={translate("email_address")}
+              />
 
               <Controller
                 name="billing_phone"
@@ -192,9 +208,13 @@ export default function ContactsForm({
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    helperText={
+                      fieldState.invalid
+                        ? translate("messages_invalid_phone")
+                        : ""
+                    }
                     error={fieldState.invalid}
-                    placeholder="Mobile number"
+                    placeholder={translate("mobile_number")}
                   />
                 )}
               />
@@ -206,7 +226,7 @@ export default function ContactsForm({
                 variant="contained"
                 loading={isLoading}
               >
-                Save Changes
+                {translate("actions_save_changes")}
               </LoadingButton>
             </Stack>
           </Card>

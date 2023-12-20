@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 import { IGoals } from "src/redux/interfaces/goals.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import AddEditGoalDialog from "./AddEditGoalDialog";
 import NotesItem from "./NotesItem";
@@ -18,11 +19,15 @@ interface INotesListProps extends CardProps {
 }
 
 export default function NotesList({ list }: INotesListProps) {
+  const translate = useTranslate();
+
   return (
     <Card
       sx={{ display: "flex", flexDirection: "column", px: 3, pb: 3, gap: 2 }}
     >
-      <CardHeader title={<Typography variant="h5">My Notes</Typography>} />
+      <CardHeader
+        title={<Typography variant="h5">{translate("notes_my")}</Typography>}
+      />
       <AddEditGoalDialog>
         <IconButton
           sx={{

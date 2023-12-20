@@ -5,6 +5,7 @@ import Stack from "@mui/system/Stack";
 
 import { SetFilterType } from "@hooks";
 import { IFriendsSearchParams } from "src/redux/interfaces/friends.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   filters: IFriendsSearchParams;
@@ -15,6 +16,8 @@ export default function FilterFriends({
   filters,
   setFilter,
 }: Props): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Stack
       spacing={2}
@@ -29,7 +32,7 @@ export default function FilterFriends({
         sx={{
           width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
         }}
-        placeholder="Name"
+        placeholder={translate("name")}
         type="text"
         value={filters?.name}
         onChange={(event) => {

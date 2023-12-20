@@ -4,6 +4,7 @@ import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { Iconify } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import BasePreference from "./BasePreference";
 
@@ -18,13 +19,14 @@ const EditorFontSize = ({
   onUpdateFontSize,
 }: IEditorFontSize): React.ReactElement => {
   const [fontSize, setFontSize] = useState(DEFAULT_MIRROR_SIZE);
+  const translate = useTranslate();
 
   useEffect(() => {
     onUpdateFontSize(fontSize);
   }, [fontSize]);
 
   return (
-    <BasePreference title="font size">
+    <BasePreference title={translate("font_size")}>
       <Box display="flex" alignItems="center" justifyContent="center">
         <IconButton
           sx={{ mr: "20px" }}

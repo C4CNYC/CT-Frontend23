@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 
 import { Iconify } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import BasePreference from "./BasePreference";
 
@@ -9,11 +10,13 @@ interface IResetCode {
 }
 
 const ResetCode = ({ onReset }: IResetCode): React.ReactElement => {
+  const translate = useTranslate();
+
   return (
-    <BasePreference title="reset code">
+    <BasePreference title={translate("reset_lesson")}>
       <Button onClick={onReset} fullWidth variant="contained">
         <Iconify mr="7px" icon="carbon:reset" />
-        Reset Lesson
+        {translate("reset_code")}
       </Button>
     </BasePreference>
   );

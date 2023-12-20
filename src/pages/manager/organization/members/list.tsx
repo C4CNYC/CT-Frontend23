@@ -39,16 +39,51 @@ import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { UserTableRow, UserTableToolbar } from "@sections/dashboard/user/list";
-import { useLocales } from "src/locales";
 import {
   useDeleteOrgMemberMutation,
   useGetOrgMembersQuery,
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
+import { useTranslate } from "src/utils/translateHelper";
 
 import SkeletonMembers from "./SkeletonMembers";
 
 const STATUS_OPTIONS = ["all"];
+
+const TABLE_HEAD = [
+  { id: "" },
+  {
+    id: "email",
+    label: "email",
+    align: "left",
+  },
+  {
+    id: "first_name",
+    label: "first_name",
+    align: "left",
+  },
+  {
+    id: "last_name",
+    label: "last_name",
+    align: "left",
+  },
+  {
+    id: "role",
+    label: "role",
+    align: "left",
+  },
+  {
+    id: "isVerified",
+    label: "verified",
+    align: "center",
+  },
+  {
+    id: "status",
+    label: "status",
+    align: "left",
+  },
+  { id: "" },
+];
 
 UserListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -70,10 +105,10 @@ export default function UserListPage(): React.ReactElement {
     onSort,
     onChangeDense,
   } = useTable();
-  const { translate } = useLocales();
+
   const { enqueueSnackbar } = useSnackbar();
   const [deleteMember, { isLoading: loading }] = useDeleteOrgMemberMutation();
-
+  const translate = useTranslate();
   const useDeleteMember = async (userId: string): Promise<void> => {
     try {
       await deleteMember({
@@ -88,44 +123,10 @@ export default function UserListPage(): React.ReactElement {
 
   const handleDeleteRow = (userId: string): void => {
     useDeleteMember(userId);
-    enqueueSnackbar("Member deleted");
+    enqueueSnackbar(translate("members_delete_success_msg"));
     setSelected([]);
   };
 
-  const TABLE_HEAD = [
-    { id: "" },
-    {
-      id: "email",
-      label: `${translate("organizations.members_page.table.email")}`,
-      align: "left",
-    },
-    {
-      id: "first_name",
-      label: `${translate("organizations.members_page.table.first_name")}`,
-      align: "left",
-    },
-    {
-      id: "last_name",
-      label: `${translate("organizations.members_page.table.last_name")}`,
-      align: "left",
-    },
-    {
-      id: "role",
-      label: `${translate("organizations.members_page.table.role")}`,
-      align: "left",
-    },
-    {
-      id: "isVerified",
-      label: `${translate("organizations.members_page.table.verified")}`,
-      align: "center",
-    },
-    {
-      id: "status",
-      label: `${translate("organizations.members_page.table.status")}`,
-      align: "left",
-    },
-    { id: "" },
-  ];
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter, resetFilters } = useFilters({
     name: "",
@@ -149,7 +150,7 @@ export default function UserListPage(): React.ReactElement {
     for (let i = 0; i < selected.length; i++) {
       useDeleteMember(selected[i]);
     }
-    enqueueSnackbar("Members deleted");
+    enqueueSnackbar(translate("members_delete_success_msg"));
 
     setSelected([]);
   };
@@ -161,19 +162,22 @@ export default function UserListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> Members | CodeTribe</title>
+        <title> {translate("members")} | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: `${translate("organizations.members_page.title")}`,
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            {
+              name: translate("members"),
               href: MANAGER_PATH_DASHBOARD.organization.root,
             },
-            { name: `${translate("organizations.members_page.list_title")}` },
+            { name: translate("list") },
           ]}
           action={
             <Button
@@ -182,14 +186,14 @@ export default function UserListPage(): React.ReactElement {
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
-              {`${translate("organizations.members_page.new_user_btn")}`}
+              {translate("members_btn_new_user")}
             </Button>
           }
         />
 
         <Card>
           <Tabs
-            value={"all"}
+            value={translate("all")}
             onChange={() => ""}
             sx={{
               px: 2,
@@ -197,7 +201,7 @@ export default function UserListPage(): React.ReactElement {
             }}
           >
             {STATUS_OPTIONS.map((tab) => (
-              <Tab key={tab} label={tab} value={tab} />
+              <Tab key={tab} label={translate(tab)} value={tab} />
             ))}
           </Tabs>
 
@@ -228,7 +232,7 @@ export default function UserListPage(): React.ReactElement {
                   );
                 }}
                 action={
-                  <Tooltip title="Delete">
+                  <Tooltip title={translate("actions_delete")}>
                     <IconButton color="primary" onClick={handleOpenConfirm}>
                       <Iconify icon="eva:trash-2-outline" />
                     </IconButton>
@@ -312,13 +316,12 @@ export default function UserListPage(): React.ReactElement {
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
+        title={translate("actions_delete")}
         content={
           <>
-            {`${translate("organizations.members_page.delete_dialog.content", {
+            {translate("members_delete_dialog_content", {
               items: selected.length,
             })}
-           `}
           </>
         }
         action={
@@ -330,7 +333,7 @@ export default function UserListPage(): React.ReactElement {
               handleCloseConfirm();
             }}
           >
-            {`${translate("actions_delete")}`}
+            {translate("actions_delete")}
           </Button>
         }
       />

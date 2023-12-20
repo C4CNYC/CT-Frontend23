@@ -35,6 +35,7 @@ import {
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
@@ -56,6 +57,7 @@ export default function AddQuest(): React.ReactElement {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
   const { query, push } = useRouter();
+  const translate = useTranslate();
 
   const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<ISkill[]>();
   const [value, setValue] = useState(0);
@@ -132,7 +134,7 @@ export default function AddQuest(): React.ReactElement {
           close_date: formData.closeDate,
           active: Boolean(formData.active),
         }).unwrap();
-        enqueueSnackbar("Assignment updated successfuly!");
+        enqueueSnackbar(translate("assignments_updated_successfuly"));
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
@@ -175,7 +177,7 @@ export default function AddQuest(): React.ReactElement {
             ...(query.onBoarding ? { onBoarding: "on-boarding" } : {}),
           })
         );
-        enqueueSnackbar("Assignment created successfuly!");
+        enqueueSnackbar(translate("assignments_created_successfuly"));
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
           variant: "error",
@@ -198,7 +200,9 @@ export default function AddQuest(): React.ReactElement {
       <Stack sx={mainContainerStyles(theme)}>
         <Stack sx={CONTAINER_INNER_SX}>
           <Stack>
-            <Typography variant="h2">Add Quest</Typography>
+            <Typography variant="h2">
+              {translate("actions_add_quest")}
+            </Typography>
             <Tooltip
               title={<Typography variant="body2">{TOOLTIP_TEXT}</Typography>}
             >
@@ -206,12 +210,12 @@ export default function AddQuest(): React.ReactElement {
                 variant="caption"
                 sx={{ textDecoration: "underline" }}
               >
-                What`s a quest?
+                {translate("quest_whats_quest")}
               </Typography>
             </Tooltip>
           </Stack>
           <Typography variant="subtitle2" textAlign="left">
-            Type: Course/Module
+            {translate("quest_type")}
           </Typography>
         </Stack>
         <Box sx={{ px: { xs: 1, sm: 3, md: 5, lg: 12 } }}>
@@ -228,13 +232,13 @@ export default function AddQuest(): React.ReactElement {
               sx={TABS_SX}
             >
               <Tab
-                label={"Details"}
+                label={translate("details")}
                 icon={<TbListDetails size={20} />}
                 sx={{ fontSize: "1.1rem" }}
                 {...customTabProps(0)}
               />
               <Tab
-                label={"Settings"}
+                label={translate("settings")}
                 icon={<IoSettingsOutline size={20} />}
                 sx={{ fontSize: "1.1rem" }}
                 {...customTabProps(0)}
@@ -267,7 +271,7 @@ export default function AddQuest(): React.ReactElement {
                 variant="soft"
                 color="error"
               >
-                CANCEL
+                {translate("actions_cancel")}
               </Button>
               <LoadingButton
                 type="submit"
@@ -275,7 +279,9 @@ export default function AddQuest(): React.ReactElement {
                 variant="contained"
                 loading={isLoading || isUpdating || isAddingToClass}
               >
-                {assignment ? "UPDATE" : "LAUNCH"}
+                {assignment
+                  ? translate("actions_update")
+                  : translate("actions_launch")}
               </LoadingButton>
             </Stack>
           </FormProvider>

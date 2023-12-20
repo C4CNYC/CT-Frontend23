@@ -26,6 +26,7 @@ import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
 } from "src/redux/services/manager/modules-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 type LessonType = ILesson & BaseResponseInterface;
 
@@ -39,6 +40,7 @@ export default function ModuleLessonsAutocomplete({
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
+  const translate = useTranslate();
 
   const [addLesson] = useAddLessonToModuleMutation();
   const [removeLesson] = useRemoveLessonFromModuleMutation();
@@ -72,16 +74,24 @@ export default function ModuleLessonsAutocomplete({
       switch (reason) {
         case "selectOption": {
           await addLesson(payload).unwrap();
-          enqueueSnackbar(`${details?.option.name ?? ""} added to module`);
+          enqueueSnackbar(
+            translate("courses_added_to_module", {
+              name: details?.option.name ?? "",
+            })
+          );
           return;
         }
         case "removeOption": {
           await removeLesson(payload).unwrap();
-          enqueueSnackbar(`${details?.option.name ?? ""} removed from module`);
+          enqueueSnackbar(
+            translate("courses_removed_from_module", {
+              name: details?.option.name ?? "",
+            })
+          );
         }
       }
     } catch {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -117,7 +127,9 @@ export default function ModuleLessonsAutocomplete({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => <TextField {...params} placeholder="Lessons" />}
+      renderInput={(params) => (
+        <TextField {...params} placeholder={translate("lessons")} />
+      )}
       renderOption={(props, recipient, { inputValue }) => {
         const { id, name } = recipient;
         const matches = match(name, inputValue);

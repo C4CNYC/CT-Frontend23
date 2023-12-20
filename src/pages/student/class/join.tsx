@@ -24,6 +24,7 @@ import {
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -40,6 +41,7 @@ interface FormValueProps {
 export default function JoinClass(): React.ReactElement {
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
 
   const { themeStretch } = useSettingsContext();
   const [joinClass, { isLoading }] = useJoinClassMutation();
@@ -55,7 +57,7 @@ export default function JoinClass(): React.ReactElement {
         push(STUDENT_PATH_DASHBOARD.class.id(tribe.id));
       }
     } catch (error) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -71,10 +73,11 @@ export default function JoinClass(): React.ReactElement {
           }}
         >
           <Stack sx={{ pt: 4 }}>
-            <Typography variant="h2">Join a tribe</Typography>
+            <Typography variant="h2">
+              {translate("tribes_join_a_tribe")}
+            </Typography>
             <Typography variant="body1" sx={{ maxWidth: "350px", mt: 3 }}>
-              Have you been invited to a tribe? Then enter your join-code below
-              or follow the join-link. Have fun!
+              {translate("tribes_have_you_been_invited")}
             </Typography>
             <RHFTextField
               required

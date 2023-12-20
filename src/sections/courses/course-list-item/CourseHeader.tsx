@@ -12,11 +12,15 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 interface Props {
   progress: number | null;
 }
 
 export default function CourseHeader({ progress }: Props): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Box
       sx={{
@@ -95,7 +99,7 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
               textTransform: "uppercase",
             }}
           >
-            ENROLLED
+            {translate("courses_enroled")}
           </Typography>{" "}
         </>
       )}
@@ -104,10 +108,10 @@ export default function CourseHeader({ progress }: Props): React.ReactElement {
         title={
           <Box sx={{ width: "200px", p: "8px" }}>
             <Typography variant="body2" sx={{ color: "#fff", mb: "5px" }}>
-              This course is eligiable for a certificate.
+              {translate("courses_certificate_tooltip_info")}
             </Typography>
             <Link component={NextLink} href="/" sx={{ color: "#FBDD3F" }}>
-              See sample certificate
+              {translate("courses_certificate_link")}
             </Link>
           </Box>
         }

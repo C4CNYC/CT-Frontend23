@@ -7,6 +7,7 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { ICourseSearchParams } from "src/redux/interfaces/content.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
 import { useGetPublicCourseQuery } from "src/redux/services/public-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 import CoursesItem from "./course-list-item/CourseItem";
 import SkeletonCourse from "./course-list-item/SkeletonCourse";
@@ -41,6 +42,8 @@ export default function CourseList({
   useEffect(() => {
     setIsLoading?.(publicPage ? publicIsLoading : isLoading);
   }, [isLoading]);
+
+  const translate = useTranslate();
 
   const createSkeletonList = (): React.ReactElement[] => {
     return Array(DEFAULT_TAKE_PER_PAGE)
@@ -78,14 +81,14 @@ export default function CourseList({
               <CoursesItem course={el} key={el.id} />
             ))
           ) : (
-            <EmptyContent title="You dont have any course" />
+            <EmptyContent title={translate("courses_empty")} />
           )
         ) : isFetching ? (
           <>{createSkeletonList()}</>
         ) : data?.data.length ? (
           data?.data?.map((el) => <CoursesItem course={el} key={el.id} />)
         ) : (
-          <EmptyContent title="No Data" />
+          <EmptyContent title={translate("messages_no_data")} />
         )}
       </Stack>
     </SimpleInfiniteList>
