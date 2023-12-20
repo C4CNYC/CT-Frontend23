@@ -208,7 +208,7 @@ export default function UserListPage(): React.ReactElement {
                 setFilter("name", name);
               }}
               onFilterClass={(classId: string) => {
-                setFilter("classId", classId);
+                setFilter("class_id", classId);
               }}
               onResetFilter={resetFilters}
               disableClassFilter={value === 1}
