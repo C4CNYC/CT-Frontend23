@@ -32,27 +32,35 @@ export default function ProfileAbout({
 
           <Typography variant="body2">
             Live at country &nbsp;
-            {countries.find((el) => data?.student_profile.country === el.code.toLowerCase())
-              ?.label ?? "-"}
+            {countries.find(
+              (el) =>
+                data?.student_profile?.country ??
+                data?.country === el.code.toLowerCase()
+            )?.label ?? "-"}
           </Typography>
         </Stack>
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">
-            Postcode &nbsp;{data?.student_profile.post_code ?? "-"}
+            Postcode &nbsp;
+            {data?.student_profile?.post_code ?? data?.post_code ?? "-"}
           </Typography>
         </Stack>
 
         <Stack direction="row">
           <StyledIcon icon="tabler:phone-filled" />
 
-          <Typography variant="body2">&nbsp;{data?.student_profile.phone ?? "-"}</Typography>
+          <Typography variant="body2">
+            &nbsp;{data?.student_profile?.phone ?? data?.phone ?? "-"}
+          </Typography>
         </Stack>
         <Stack direction="row">
           <StyledIcon icon="mingcute:school-fill" />
 
-          <Typography variant="body2">&nbsp;{data?.student_profile.about ?? "-"}</Typography>
+          <Typography variant="body2">
+            &nbsp;{data?.student_profile?.about ?? data?.about ?? "-"}
+          </Typography>
         </Stack>
 
         <Stack direction="row">
