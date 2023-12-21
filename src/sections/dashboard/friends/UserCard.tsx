@@ -16,6 +16,7 @@ import { alpha, styled, useTheme } from "@mui/material/styles";
 import { SvgColor } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { IFriend } from "src/redux/interfaces/friends.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +49,8 @@ export default function UserCard({ user }: Props) {
     cover,
     avatar,
   } = user;
+
+  const translate = useTranslate();
 
   return (
     <Card
@@ -156,7 +159,7 @@ export default function UserCard({ user }: Props) {
             component="div"
             sx={{ mb: 0.75, color: "text.disabled" }}
           >
-            Country
+            {translate("country")}
           </Typography>
           <Typography variant="subtitle1" sx={{ textTransform: "capitalize" }}>
             {country ?? "N/D"}
@@ -169,7 +172,7 @@ export default function UserCard({ user }: Props) {
             component="div"
             sx={{ mb: 0.75, color: "text.disabled" }}
           >
-            City
+            {translate("city")}
           </Typography>
 
           <Typography variant="subtitle1" sx={{ textTransform: "capitalize" }}>
@@ -183,7 +186,7 @@ export default function UserCard({ user }: Props) {
             component="div"
             sx={{ mb: 0.75, color: "text.disabled" }}
           >
-            Post code
+            {translate("profile_postcode")}
           </Typography>
           <Typography variant="subtitle1">{postCode ?? "N/D"}</Typography>
         </div>

@@ -14,6 +14,7 @@ import { IconButton, InputAdornment, Stack } from "@mui/material";
 import { FormProvider, Iconify, RHFTextField, useSnackbar } from "@components";
 // components
 import { useSubmitPasswordMutation } from "src/redux/services/auth";
+import { useTranslate } from "src/utils/translateHelper";
 
 // routes
 import { PATH_AUTH } from "../../routes/paths";
@@ -30,17 +31,18 @@ export default function AuthNewPasswordForm(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
   const [updatePassword, { isLoading }] = useSubmitPasswordMutation();
+  const translate = useTranslate();
 
   const VerifyPasswordSchema = Yup.object().shape({
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required")
-      .matches(/[0-9]/, "Password requires a number")
-      .matches(/[a-z]/, "Password requires a lowercase letter")
-      .matches(/[A-Z]/, "Password requires an uppercase letter"),
+      .min(6, translate("required_password_length_6"))
+      .required(translate("required_password"))
+      .matches(/[0-9]/, translate("required_password_number"))
+      .matches(/[a-z]/, translate("required_password_lowercase"))
+      .matches(/[A-Z]/, translate("required_password_uppercase")),
     confirmPassword: Yup.string()
-      .required("Confirm password is required")
-      .oneOf([Yup.ref("password"), null], "Passwords must match"),
+      .required(translate("required_confirm_password"))
+      .oneOf([Yup.ref("password"), null], translate("required_password_match")),
   });
 
   const defaultValues = {
@@ -61,7 +63,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
         id: router.query.id as string,
         password: data.password,
       }).unwrap();
-      enqueueSnackbar("Change password success!");
+      enqueueSnackbar(translate("messages_change_password"));
       router.push(PATH_AUTH.signIn);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
@@ -75,7 +77,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
       <Stack spacing={3}>
         <RHFTextField
           name="password"
-          label="Password"
+          label={translate("password")}
           type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
@@ -97,7 +99,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
 
         <RHFTextField
           name="confirmPassword"
-          label="Confirm New Password"
+          label={translate("actions_confirm_password")}
           type={showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
@@ -124,7 +126,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
           variant="contained"
           loading={isLoading}
         >
-          Update Password
+          {translate("actions_update_password")}
         </LoadingButton>
       </Stack>
     </FormProvider>

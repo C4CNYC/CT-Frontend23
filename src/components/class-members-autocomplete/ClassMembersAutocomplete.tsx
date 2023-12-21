@@ -28,6 +28,7 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 type StudentType = IStudent & BaseResponseInterface;
 
@@ -42,7 +43,7 @@ export default function ClassMembersAutocomplete({
 }: IClassMembersAutocompleteProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
-
+  const translate = useTranslate();
   const { filters, setFilter } = useFilters({ email: "", take: 50 });
 
   const [joinClass] = useStudentJoinClassMutation();
@@ -74,16 +75,24 @@ export default function ClassMembersAutocomplete({
       switch (reason) {
         case "selectOption": {
           await joinClass(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email ?? ""} joined to class`);
+          enqueueSnackbar(
+            translate("classes_joined_to_class_msg", {
+              email: details?.option.email ?? "",
+            })
+          );
           return;
         }
         case "removeOption": {
           await leftClass(payload).unwrap();
-          enqueueSnackbar(`${details?.option.email ?? ""} left class`);
+          enqueueSnackbar(
+            translate("classes_left_class_msg", {
+              email: details?.option.email ?? "",
+            })
+          );
         }
       }
     } catch {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -106,7 +115,7 @@ export default function ClassMembersAutocomplete({
         tagValue.map((option, index) => (
           <Chip
             avatar={<CustomAvatar alt={option.email} src={option.avatar} />}
-            label={option.account.email}
+            label={option?.account?.email}
             {...getTagProps({ index })}
             key={option.email}
           />
@@ -114,7 +123,10 @@ export default function ClassMembersAutocomplete({
       }
       style={{ width: "100%" }}
       renderInput={(params) => (
-        <TextField {...params} placeholder="Add students" />
+        <TextField
+          {...params}
+          placeholder={translate("classes_add_students")}
+        />
       )}
       renderOption={(props, recipient, { inputValue }) => {
         const { email } = recipient.account;

@@ -40,6 +40,7 @@ import {
   useGetSkillQuery,
   useRemoveSkillMutation,
 } from "src/redux/services/manager/skills-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 Skills.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -51,31 +52,37 @@ export default function Skills(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
   const { filters, setFilter } = useFilters({ name: "" });
-
+  const translate = useTranslate();
   const { data, isLoading } = useGetSkillQuery({ ...filters });
   const [removeSkill] = useRemoveSkillMutation();
 
   const onDelete = async (id: string): Promise<void> => {
     try {
       await removeSkill({ id }).unwrap();
-      enqueueSnackbar("Skill removed");
+      enqueueSnackbar(translate("skills_removed"));
     } catch (e: any) {
-      enqueueSnackbar("somethinkg went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
   return (
     <>
       <Head>
-        <title> Skills | CodeTribe</title>
+        <title> {translate("skills")} | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         {!isLoading ? (
           <CustomBreadcrumbs
             heading=""
             links={[
-              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-              { name: "Skills", href: MANAGER_PATH_DASHBOARD.skills.root },
+              {
+                name: translate("home"),
+                href: STUDENT_PATH_DASHBOARD.class.root,
+              },
+              {
+                name: translate("skills"),
+                href: MANAGER_PATH_DASHBOARD.skills.root,
+              },
             ]}
             action={
               <UpdateModalSkills>
@@ -83,7 +90,7 @@ export default function Skills(): React.ReactElement {
                   variant="contained"
                   startIcon={<Iconify icon="eva:plus-fill" />}
                 >
-                  Skills
+                  {translate("skills")}
                 </Button>
               </UpdateModalSkills>
             }
@@ -116,10 +123,10 @@ export default function Skills(): React.ReactElement {
                 <Table sx={{ minWidth: 800 }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Description</TableCell>
-                      <TableCell>Created</TableCell>
-                      <TableCell>Updated</TableCell>
+                      <TableCell>{translate("name")}</TableCell>
+                      <TableCell>{translate("description")}</TableCell>
+                      <TableCell>{translate("created")}</TableCell>
+                      <TableCell>{translate("updated")}</TableCell>
                       <TableCell></TableCell>
                     </TableRow>
                   </TableHead>

@@ -4,7 +4,11 @@ import { TbBrandWechat } from "react-icons/tb";
 
 import { Box, Button, Stack, Typography } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 export default function TribeButtons(): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Box
       sx={{
@@ -33,7 +37,7 @@ export default function TribeButtons(): React.ReactElement {
           <TbBrandWechat size="30px" />
         </Button>
         <Typography variant="body1" sx={{ textAlign: "center", mt: 1 }}>
-          Chat
+          {translate("chat")}
         </Typography>
       </Stack>
       <Stack alignItems="center">
@@ -55,7 +59,7 @@ export default function TribeButtons(): React.ReactElement {
           <FaChartLine size="23px" />
         </Button>
         <Typography variant="body1" sx={{ textAlign: "center", mt: 1 }}>
-          Progress
+          {translate("progress")}
         </Typography>
       </Stack>
       <Stack alignItems="center">
@@ -77,7 +81,7 @@ export default function TribeButtons(): React.ReactElement {
           <AiOutlineUserAdd size="28px" />
         </Button>
         <Typography variant="body1" sx={{ textAlign: "center", mt: 1 }}>
-          Invite
+          {translate("actions_invite")}
         </Typography>
       </Stack>
     </Box>

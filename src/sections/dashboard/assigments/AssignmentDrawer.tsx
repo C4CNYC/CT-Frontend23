@@ -33,6 +33,7 @@ import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 import { ISkill } from "src/redux/interfaces/content.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IAssignmentDarawerProps {
   openDetails: boolean;
@@ -51,7 +52,7 @@ export default function AssignmentDrawer({
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [assignmentsSkills, setAssignmentsSkills] = useState<ISkill[]>();
-
+  const translate = useTranslate();
   const [updateAssignment, { isLoading: isUpdating }] =
     useUpdateAssignmentMutation();
 
@@ -80,7 +81,7 @@ export default function AssignmentDrawer({
         name: formData.name,
         active: formData.active,
       }).unwrap();
-      enqueueSnackbar("Assignment updated!");
+      enqueueSnackbar(translate("assignments_updated_msg"));
       onCloseDetails();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
@@ -117,7 +118,7 @@ export default function AssignmentDrawer({
           </IconButton>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Type:
+              {translate("type")}:
             </ListItemText>
             <ListItemText
               primaryTypographyProps={{ variant: "button", fontSize: "1.0rem" }}
@@ -128,7 +129,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Course:
+              {translate("course")}:
             </ListItemText>
             <ListItemText sx={{ minWidth: "252px" }}>
               {assignment?.course?.name}
@@ -136,7 +137,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Name:
+              {translate("name")}:
             </ListItemText>
             <RHFTextField name="name" sx={{ maxWidth: "252px" }} />
           </ListItem>
@@ -149,7 +150,7 @@ export default function AssignmentDrawer({
             }}
           >
             <Typography variant="h6" alignSelf="flex-start">
-              Description:
+              {translate("description")}:
             </Typography>
             <Box width="100%">
               <RHFRemirror name="description" />
@@ -157,7 +158,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Start date:
+              {translate("assignments_start_date")}:
             </ListItemText>
             <Controller
               name="startDate"
@@ -198,7 +199,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              End date:
+              {translate("assignments_end_date")}:
             </ListItemText>
             <Controller
               name="dueDate"
@@ -239,7 +240,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Close date:
+              {translate("assignments_close_date")}:
             </ListItemText>
             <Controller
               name="closeDate"
@@ -280,7 +281,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Status:{" "}
+              {translate("status")}:
             </ListItemText>
             <RHFSelect
               native
@@ -289,10 +290,10 @@ export default function AssignmentDrawer({
               defaultValue={true as any}
             >
               <option key="published" value={true as any}>
-                Published
+                {translate("published")}
               </option>
               <option key="draft" value={false as any}>
-                Draft
+                {translate("draft")}
               </option>
             </RHFSelect>
           </ListItem>
@@ -310,7 +311,7 @@ export default function AssignmentDrawer({
           </ListItem>
           <ListItem>
             <ListItemText primaryTypographyProps={{ variant: "h6" }}>
-              Assign to:
+              {translate("assignments_assign_to")}:
             </ListItemText>
             <Avatar sx={{ width: "25px", height: "25px", mr: 1 }} />
             <ListItemText>{assignment.assignee_classes[0].name}</ListItemText>
@@ -322,7 +323,7 @@ export default function AssignmentDrawer({
               variant="contained"
               sx={{ ml: "auto", mr: 1 }}
             >
-              Save
+              {translate("actions_save")}
             </LoadingButton>
           </ListItem>
         </List>

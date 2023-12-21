@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
@@ -7,6 +8,7 @@ import { FiSettings } from "react-icons/fi";
 import { ImPlus } from "react-icons/im";
 import { useSelector } from "react-redux";
 
+import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
 import { BaseResponseInterface } from "@utils";
@@ -21,6 +23,7 @@ import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
 import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
 import { RootState, useDispatch } from "src/redux/store";
 import { getOrder } from "src/utils/getTaskOrder";
+import { useTranslate } from "src/utils/translateHelper";
 
 import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
 import LessonListItem from "./LesonListItem";
@@ -36,9 +39,12 @@ export default function LessonStepList({
 }: Props): React.ReactElement {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+  const translate = useTranslate();
 
   const [updateLessonContent] = useUpdateLessonContentMutation();
-  const [createLessonContent] = useCreateLessonContentMutation();
+  const [createLessonContent, { isLoading: createLessonLoading }] =
+    useCreateLessonContentMutation();
   const [removeLessonContent] = useRemoveLessonContentMutation();
   const { data: lesson, isLoading: isLessonLoading } = useGetLessonQuery(
     { id: lessonId },
@@ -105,6 +111,29 @@ export default function LessonStepList({
     ? parseFloat(board.cards[idCardWithMaxOrder].meta.order as string) + 1
     : 1;
 
+  const createNewContent = async (): Promise<void> => {
+    try {
+      const { id: stepId } = await createLessonContent({
+        lessonId,
+        title: translate("slide"),
+        meta: { order: newContentOrder },
+      }).unwrap();
+      enqueueSnackbar(translate("messages_step_created"));
+      router.push(
+        `${router.pathname}?${new URLSearchParams({
+          ...router.query,
+          stepId: stepId,
+        })}`,
+        undefined,
+        { shallow: true }
+      );
+    } catch (e: any) {
+      enqueueSnackbar(translate("messages_cant_create_slide"), {
+        variant: "error",
+      });
+    }
+  };
+
   const onDublicate = async (
     data: ILessonContent & BaseResponseInterface
   ): Promise<void> => {
@@ -119,12 +148,18 @@ export default function LessonStepList({
           "cover",
           "title",
         ]),
-        title: `${data.title} (Copy)`,
+        title: translate("step_copy_slide", {
+          title: data.title,
+        }),
         meta: { order: newContentOrder },
       }).unwrap();
-      enqueueSnackbar(`Step ${data.title} dublicated`);
+      enqueueSnackbar(
+        translate("step_duplicated", {
+          title: data.title,
+        })
+      );
     } catch (e: any) {
-      enqueueSnackbar("Sorry we can't dublicate at this moment", {
+      enqueueSnackbar(translate("step_cant_duplicated"), {
         variant: "error",
       });
     }
@@ -136,9 +171,9 @@ export default function LessonStepList({
         lessonId,
         id,
       }).unwrap();
-      enqueueSnackbar("Step removed");
+      enqueueSnackbar(translate("step_removed"));
     } catch (e: any) {
-      enqueueSnackbar("Sorry we can't remove at this moment", {
+      enqueueSnackbar(translate("step_cant_removed"), {
         variant: "error",
       });
     }
@@ -163,6 +198,8 @@ export default function LessonStepList({
             description: lesson?.description as string,
             active: lesson?.active as boolean,
             tips: "",
+            independent: lesson?.independent ?? false,
+            type: lesson?.type ?? "practical",
           }}
           lessonTips={lesson?.tips ?? []}
           isEdit
@@ -180,9 +217,28 @@ export default function LessonStepList({
             }}
           >
             <FiSettings size="20px" />
-            LESSON SETUP & SETTINGS
+            {translate("lesson_settup_settings")}
           </Button>
         </CreateLessonDialog>
+
+        <LoadingButton
+          loading={createLessonLoading}
+          variant="outlined"
+          fullWidth
+          sx={{
+            mb: 1,
+            p: 2,
+            gap: 1,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() => createNewContent()}
+          disabled={createLessonLoading}
+        >
+          <ImPlus size="22px" />
+          <Typography variant="subtitle1">{translate("slide_add")}</Typography>
+        </LoadingButton>
       </Stack>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -192,8 +248,8 @@ export default function LessonStepList({
               {...provided.droppableProps}
               ref={provided.innerRef}
               direction="column"
-              spacing={3}
-              sx={{ py: 2 }}
+              spacing={1}
+              sx={{ py: 1 }}
             >
               {board.columns.contents?.cardIds.map((el, i) => (
                 <LessonListItem
@@ -210,24 +266,6 @@ export default function LessonStepList({
           )}
         </Droppable>
       </DragDropContext>
-      <CreateDemonContent lessonId={lessonId} order={newContentOrder}>
-        <Button
-          variant="outlined"
-          fullWidth
-          sx={{
-            mt: 2,
-            mb: 1,
-            p: 2,
-            gap: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alighItems: "center",
-          }}
-        >
-          <ImPlus size="22px" />
-          <Typography variant="subtitle1">ADD SLIDE</Typography>
-        </Button>
-      </CreateDemonContent>
       <Stack direction="column" spacing={3} sx={{ p: 2 }}></Stack>
     </Box>
   );

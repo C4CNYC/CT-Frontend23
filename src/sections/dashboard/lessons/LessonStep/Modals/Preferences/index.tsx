@@ -19,9 +19,15 @@ import {
   Tabs,
 } from "@mui/material";
 
-import { FormProvider, ModalCodeFullscreen, RHFCode } from "@components";
+import {
+  FormProvider,
+  ModalCodeFullscreen,
+  RHFCode,
+  RHFTextField,
+} from "@components";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { GeneralTab } from "./GeneralTab";
 
@@ -37,18 +43,12 @@ interface FormValuesProps {
   solution_body: string;
 }
 
-const CreateLessonDemonSchema = Yup.object().shape({
-  slug: Yup.string().required("Slug is required"),
-  title: Yup.string().required("Title is required"),
-  description: Yup.string().required("Description is required"),
-  skills: Yup.array(),
-});
-
 interface Props {
   children?: React.ReactElement;
   lessonId: string;
   contentId: string;
   defaultValues?: FormValuesProps;
+  defaultTab?: number;
 }
 
 interface TabPanelProps {
@@ -94,9 +94,11 @@ export default function Preferences({
     solution_body: "",
     tags: [],
   },
+  defaultTab = 0,
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(defaultTab);
+  const translate = useTranslate();
 
   const handleChange = (
     event: React.SyntheticEvent,
@@ -104,6 +106,13 @@ export default function Preferences({
   ): void => {
     setValue(newValue);
   };
+
+  const CreateLessonDemonSchema = Yup.object().shape({
+    slug: Yup.string().required(translate("required_slug")),
+    title: Yup.string().required(translate("required_title")),
+    description: Yup.string().required(translate("required_description")),
+    skills: Yup.array(),
+  });
 
   const { enqueueSnackbar } = useSnackbar();
   const [updateLessonContent, { isLoading }] = useUpdateLessonContentMutation();
@@ -119,10 +128,10 @@ export default function Preferences({
         ..._.omit(data, ["createdAt", "updatedAt", "cover"]),
         id: contentId,
       }).unwrap();
-      enqueueSnackbar("Your step is udpated successfully");
+      enqueueSnackbar(translate("step_updated"));
       setOpenDialog(false);
     } catch (e) {
-      enqueueSnackbar("sorry something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -143,7 +152,7 @@ export default function Preferences({
         }}
       >
         <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-          Lesson Step Preferences
+          {translate("lesson_step_preferences")}
         </DialogTitle>
         <FormProvider
           methods={methods}
@@ -157,9 +166,10 @@ export default function Preferences({
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="General" {...a11yProps(0)} />
-                  <Tab label="Solution" {...a11yProps(1)} />
-                  <Tab label="Preload" {...a11yProps(2)} />
+                  <Tab label={translate("general")} {...a11yProps(0)} />
+                  <Tab label={translate("solution")} {...a11yProps(1)} />
+                  <Tab label={translate("preload")} {...a11yProps(2)} />
+                  <Tab label={translate("tips")} {...a11yProps(3)} />
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
@@ -168,11 +178,11 @@ export default function Preferences({
               <TabPanel value={value} index={1}>
                 <Box>
                   <ModalCodeFullscreen
-                    title="This code would be hint for step"
+                    title={translate("this_code_would_be_hint")}
                     name="solution_body"
                   />
                   <RHFCode
-                    placeholder="This code would be hint for step"
+                    placeholder={translate("this_code_would_be_hint")}
                     name="solution_body"
                     height="350px"
                     extensions={[javascript({ jsx: true })]}
@@ -182,16 +192,24 @@ export default function Preferences({
               <TabPanel value={value} index={2}>
                 <Box>
                   <ModalCodeFullscreen
-                    title="This code will preload to work space"
+                    title={translate("code_will_preload")}
                     name="preload_body"
                   />
                   <RHFCode
-                    placeholder="This code will preload to work space"
+                    placeholder={translate("code_will_preload")}
                     name="preload_body"
                     height="350px"
                     extensions={[javascript({ jsx: true })]}
                   />
                 </Box>
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <RHFTextField
+                  multiline
+                  rows={3}
+                  name="tips"
+                  label={translate("tips")}
+                />
               </TabPanel>
             </DialogContent>
             <DialogActions>
@@ -207,14 +225,14 @@ export default function Preferences({
                     setOpenDialog(false);
                   }}
                 >
-                  Close
+                  {translate("actions_close")}
                 </Button>
                 <LoadingButton
                   type="submit"
                   variant="contained"
                   loading={isLoading}
                 >
-                  Save
+                  {translate("actions_save")}
                 </LoadingButton>
               </Box>
             </DialogActions>

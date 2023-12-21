@@ -12,6 +12,8 @@ import {
   useTheme,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 interface IModuleProgressProps {
   progress: string;
 }
@@ -20,10 +22,16 @@ export default function ModuleProgress({
   progress,
 }: IModuleProgressProps): React.ReactElement {
   const theme = useTheme();
+  const translate = useTranslate();
 
   return (
     <Stack sx={{ position: "relative", my: 1 }}>
-      <Tooltip placement="top" title={`${progress}% Complete`}>
+      <Tooltip
+        placement="top"
+        title={translate("modules_completed", {
+          percentage: progress,
+        })}
+      >
         <LinearProgress
           variant="determinate"
           value={+progress}
@@ -42,7 +50,7 @@ export default function ModuleProgress({
         title={
           <Stack maxWidth={200} gap={1} py={1}>
             <Typography variant="caption">
-              This course is eligiable for a certificate.
+              {translate("courses_certificate_tooltip_info")}
             </Typography>
             <Link
               component={NextLink}
@@ -51,7 +59,7 @@ export default function ModuleProgress({
               typography="caption"
               color="#FBDD3F"
             >
-              See sample certificate
+              {translate("courses_certificate_link")}
             </Link>
           </Stack>
         }

@@ -5,9 +5,11 @@ import { useS3Upload } from "next-s3-upload";
 import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
 
-import { isJson } from "@utils";
+import { BaseResponseInterface, isJson } from "@utils";
 import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
+import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
 import EditorToolbar from "./EditorToolbar";
 import { extensions } from "./extensions-template";
 
@@ -28,6 +30,8 @@ interface Props {
   setMultimediaValue?: (value: string) => void;
   onSubmit?: () => void;
   locked?: boolean;
+  data: ILessonContent & BaseResponseInterface;
+  lessonId: string;
 }
 
 function Editor({
@@ -36,9 +40,12 @@ function Editor({
   onSubmit,
   multimediaValue,
   setMultimediaValue,
+  data,
+  lessonId,
 }: Props): React.ReactElement {
   const { uploadToS3 } = useS3Upload();
   const [createMedia] = useCreateMediaMutation();
+  const translate = useTranslate();
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
     let completed = 0;
     const promises: Array<DelayedPromiseCreator<ImageAttributes>> = [];
@@ -140,11 +147,11 @@ function Editor({
       </style>
       <Remirror
         editable={editable}
-        placeholder="Start type here ..."
+        placeholder={translate("start_type_here")}
         manager={manager}
         state={state}
         // initialContent={state}
-        autoFocus
+        autoFocus={editable}
         autoRender="end"
         onChange={(parameter) => {
           onChange(parameter);
@@ -157,10 +164,18 @@ function Editor({
       >
         {typeof locked === "undefined" ? (
           editable ? (
-            <EditorToolbar saveContent={saveContent} />
+            <EditorToolbar
+              saveContent={saveContent}
+              data={data}
+              lessonId={lessonId}
+            />
           ) : null
         ) : (
-          <EditorToolbar saveContent={saveContent} />
+          <EditorToolbar
+            saveContent={saveContent}
+            data={data}
+            lessonId={lessonId}
+          />
         )}
       </Remirror>
     </ThemeProvider>

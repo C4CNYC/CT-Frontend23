@@ -4,6 +4,7 @@ import { MdCelebration } from "react-icons/md";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { ICourse } from "@types";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   course: ICourse;
@@ -11,6 +12,8 @@ interface Props {
 
 export default function CourseInfo({ course }: Props): React.ReactElement {
   const { price, total_lessons: totalLessons, level } = course;
+  const translate = useTranslate();
+
   return (
     <Stack
       sx={{
@@ -36,14 +39,16 @@ export default function CourseInfo({ course }: Props): React.ReactElement {
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <MdCelebration size="18px" />
         <Typography variant="body2" sx={{ ml: 1 }}>
-          {+price.charAt(1) === 0 ? "free" : price}
+          {+price.charAt(1) === 0 ? translate("free") : price}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <MdCelebration size="18px" />
         <Typography variant="body2" sx={{ ml: 1 }}>
           {totalLessons}
-          {totalLessons && totalLessons > 1 ? " Lessons" : " Lesson"}
+          {totalLessons && totalLessons > 1
+            ? translate("lessons")
+            : translate("lesson")}
         </Typography>
       </Box>
     </Stack>

@@ -15,6 +15,12 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 
+import {
+  TRIBE_LINK_SX,
+  getSignOfActiveLink,
+  getTribeTitleSx,
+} from "./constants";
+
 interface Props {
   active: boolean;
   classItem: IClass & BaseResponseInterface;
@@ -35,39 +41,20 @@ export default function TribeListItem({
         component={NextLink}
         underline="none"
         href={STUDENT_PATH_DASHBOARD.class.id(classItem.id)}
-        sx={{
-          display: "inline-flex",
-          alignItems: "center",
-          p: 0,
-          justifyContent: "flex-start",
-          position: "relative",
-        }}
+        sx={TRIBE_LINK_SX}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "5px",
-            left: "-12px",
-            height: "20px",
-            width: "4px",
-            background: theme.palette.info.light,
-            borderRadius: 2,
-            zIndex: 10,
-            display: active ? "block" : "none",
-          }}
-        />
+        <Box sx={(theme) => ({ ...getSignOfActiveLink(theme, active) })} />
         <Avatar
           variant="rounded"
           src={classItem.avatar ?? ""}
           sx={{
-            border: `2px solid ${theme.palette.info.light}`,
-            width: "30px",
-            height: "30px",
+            width: "40px",
+            height: "40px",
           }}
         />
         {!isNavMini && (
           <Typography
-            sx={{ ml: 2, color: theme.palette.text.secondary }}
+            sx={(theme) => ({ ...getTribeTitleSx(theme) })}
             variant="body1"
           >
             {classItem.name}

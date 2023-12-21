@@ -3,6 +3,8 @@ import { MdCelebration } from "react-icons/md";
 
 import { Box, Stack, Typography } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 interface ICourseSummarilyProps {
   duration: string;
   level: string;
@@ -14,6 +16,8 @@ export default function CourseSummarily({
   level,
   lessonsCount,
 }: ICourseSummarilyProps): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Stack
       sx={{
@@ -31,7 +35,7 @@ export default function CourseSummarily({
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <AiOutlineClockCircle size="15px" style={{ marginBottom: "3px" }} />
         <Typography variant="body1" sx={{ ml: 1, textTransform: "capitalize" }}>
-          Grade {level}
+          {translate("grade")} {level}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "center" }}>

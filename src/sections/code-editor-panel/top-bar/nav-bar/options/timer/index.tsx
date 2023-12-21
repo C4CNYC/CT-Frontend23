@@ -1,5 +1,6 @@
 // node modules
 import { type FC } from "react";
+
 import { MdOutlineTimer } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 
@@ -12,24 +13,25 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 // components
 import TimerButton from "./button/timer-button";
-import { CircularProgressWithLabel } from "./progress";
-
 // local files
 import {
   CIRCULAR_PROGRESS_WIDTH,
-  RX_CROSS_SIZE,
   MIN_GAP,
-  POPOVER_TRANSFORM_ORIGIN,
-  POPOVER_ANCHOR_ORIGIN,
-  PROGRESS_LABEL_MOBILE_SIZE,
-  PROGRESS_LABEL_DESKTOP_SIZE,
+  OUTLINE_TIMER_SIZE,
   PAROGRESS_LABEL_FONT_SIZE,
-  OUTLINE_TIMER_SIZE
-} from "./constants"
-import { useTimer, DEFAULT_MINUTES } from "./useTimer.hook";
+  POPOVER_ANCHOR_ORIGIN,
+  POPOVER_TRANSFORM_ORIGIN,
+  PROGRESS_LABEL_DESKTOP_SIZE,
+  PROGRESS_LABEL_MOBILE_SIZE,
+  RX_CROSS_SIZE,
+} from "./constants";
+import { CircularProgressWithLabel } from "./progress";
 import { useStyles } from "./styles";
+import { DEFAULT_MINUTES, useTimer } from "./useTimer.hook";
 
 interface TimerProps {
   mobile?: boolean;
@@ -37,6 +39,7 @@ interface TimerProps {
 
 const Timer: FC<TimerProps> = ({ mobile = false }) => {
   const classes = useStyles({ mobile });
+  const translate = useTranslate();
 
   const {
     onTimeInputChange,
@@ -55,14 +58,17 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
     time,
     start,
     minutes,
-    pause
-  } = useTimer()
+    pause,
+  } = useTimer();
 
-  const isTimerStartButtonDisabled = minutes < DEFAULT_MINUTES
-  const minuteTitle = minutes === DEFAULT_MINUTES ? "Minute" : "Minutes"
+  const isTimerStartButtonDisabled = minutes < DEFAULT_MINUTES;
+  const minuteTitle =
+    minutes === DEFAULT_MINUTES
+      ? translate("timer_minute")
+      : translate("timer_minutes");
   const labelSize = mobile
     ? PROGRESS_LABEL_MOBILE_SIZE
-    : PROGRESS_LABEL_DESKTOP_SIZE
+    : PROGRESS_LABEL_DESKTOP_SIZE;
 
   return (
     <span>
@@ -92,18 +98,21 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
         anchorEl={timerAnchorEl}
         open={openTimer}
         onClose={onCloseClick}
-        PaperProps={{
-          classes: { root: classes.paper },
-        }}
+        sx={{ overflow: "unset", p: 2 }}
       >
         <Stack
           direction="column"
           classes={{ root: classes.container }}
           alignItems="center"
           justifyContent="space-around"
+          sx={{ p: 3 }}
         >
           {!start && !finish ? (
-            <Stack direction="column" alignItems="center">
+            <Stack
+              direction="column"
+              alignItems="center"
+              sx={{ overflow: "unset" }}
+            >
               <InputBase
                 type="number"
                 value={minutes}
@@ -139,7 +148,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
                 variant="body1"
                 classes={{ root: classes.finishText }}
               >
-                Great Job! High-five!
+                {translate("timer_finish")}
               </Typography>
               <img
                 src="https://i.giphy.com/l4HogV6533Je2oG40.gif"
@@ -157,14 +166,16 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
               justifyContent="space-between"
             >
               <TimerButton
-                text="CANCEL"
-                color="#C4C4C4"
+                text={translate("actions_cancel")}
+                color="inherit"
+                variant="soft"
                 onClick={onCloseClick}
               />
 
               <TimerButton
-                text="START"
-                color="#43D4DD"
+                text={translate("actions_start")}
+                color="success"
+                variant="contained"
                 disabled={isTimerStartButtonDisabled}
                 onClick={onStartClick}
               />
@@ -178,33 +189,38 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
             >
               {pause ? (
                 <TimerButton
-                  text="RESUME"
-                  color="#C4C4C4"
+                  text={translate("actions_resume")}
+                  color="info"
+                  variant="soft"
                   onClick={onResumeClick}
                 />
               ) : (
                 <TimerButton
-                  text="PAUSE"
-                  color="#C4C4C4"
+                  text={translate("actions_pause")}
+                  color="info"
+                  variant="soft"
                   onClick={onPauseClick}
                 />
               )}
               <TimerButton
-                text="KEEP CODING"
-                color="#000000"
+                text={translate("keep_coding")}
+                color="success"
+                variant="contained"
                 onClick={onKeepCodingClick}
               />
             </Stack>
           ) : (
             <Stack direction="row" gap={MIN_GAP} justifyContent="space-between">
               <TimerButton
-                text="CLOSE"
-                color="#C4C4C4"
+                text={translate("actions_close")}
+                color="inherit"
+                variant="soft"
                 onClick={onCloseClick}
               />
               <TimerButton
-                text="RESTART"
-                color="#43D4DD"
+                text={translate("actions_restart")}
+                color="info"
+                variant="contained"
                 onClick={onRestartClick}
               />
             </Stack>

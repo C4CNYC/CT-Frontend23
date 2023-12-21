@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
@@ -8,6 +8,7 @@ import { IconButton, InputAdornment, Stack, Typography } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
 import { styledRegisterInput } from "@sections/on-boarding-register/styles";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   isSubmiting: boolean;
@@ -19,14 +20,24 @@ export default function SingInPassword({
   nextStep,
   isSubmiting,
   isError,
+  currentStep,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isDisabledBtn, setIsDisabletBtn] = useState<boolean>(true);
+  const translate = useTranslate();
 
   if (isError) {
     if (nextStep) {
       nextStep();
     }
   }
+
+  useEffect(() => {
+    if (currentStep === 2) {
+      setIsDisabletBtn(false);
+    }
+  }, [currentStep]);
+
   return (
     <>
       <IconButton
@@ -41,9 +52,14 @@ export default function SingInPassword({
       </IconButton>
       <Stack
         direction="row"
-        sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 }, mt: 1, mb: 4 }}
+        sx={{
+          alignItems: "center",
+          ml: { xs: 3, sm: 3, md: 0 },
+          mt: 1,
+          mb: 4,
+        }}
       >
-        <Typography variant="h3">Sign in with Email</Typography>
+        <Typography variant="h3">{translate("login_with_email")}</Typography>
         <Typography variant="h2" sx={{ ml: 1 }}>
           ✉️
         </Typography>
@@ -52,7 +68,7 @@ export default function SingInPassword({
       <Stack sx={{ mt: 2 }}>
         <RHFTextField
           name="password"
-          label="Password"
+          label={translate("password")}
           type={showPassword ? "text" : "password"}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
@@ -75,6 +91,7 @@ export default function SingInPassword({
         />
         <LoadingButton
           type="submit"
+          disabled={isDisabledBtn}
           loading={isSubmiting}
           sx={(theme) => ({
             background: "#43D4DD33",
@@ -87,7 +104,7 @@ export default function SingInPassword({
             },
           })}
         >
-          LET'S GO!
+          {translate("login_lets_go")}
         </LoadingButton>
       </Stack>
     </>

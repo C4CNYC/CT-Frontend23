@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { useLocales } from "src/locales";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 
 interface ILetsCodeBtnProps {
@@ -13,6 +14,7 @@ interface ILetsCodeBtnProps {
 }
 
 export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
+  const { translate } = useLocales();
   const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -38,7 +40,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
       variant="contained"
       sx={{
         mt: "24px",
-        mx: 2,
+        mx: 1,
         color: "#EE467A",
         bgcolor: "#FFF",
         boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
@@ -63,7 +65,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
             }),
       }}
     >
-      {!isMini ? "👩‍💻 Let's Code" : ""}
+      {!isMini ? `👩‍💻 ${translate("sidebar_menu_code_btn")}` : ""}
 
       {isMini ? (
         <Iconify icon="mingcute:code-fill" width={25} height={25} />

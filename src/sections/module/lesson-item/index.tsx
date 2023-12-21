@@ -128,7 +128,7 @@ export default function LessonItem({
             component={NextLink}
             href={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
               courseId as string
-            )}?${unitId}&${lesson.id}`}
+            )}?unitId=${unitId}&lessonId=${lesson.id}`}
             underline="none"
             sx={{
               display: "flex",

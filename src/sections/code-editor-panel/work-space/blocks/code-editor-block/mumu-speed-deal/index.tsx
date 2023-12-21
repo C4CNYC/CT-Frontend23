@@ -10,16 +10,16 @@ import {
 } from "@mui/material";
 
 import SolutionMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/solution-mobile-dialog";
-import TipsMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/tips-modal-dialog";
 import UnstuckMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog";
+import { useCodePanel } from "src/hooks/useCodePanel";
 import { useGetLessonStudentQuery } from "src/redux/services/manager/lesson-student";
 import { useSelector } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 import TipsPopover from "../tips-popover";
 import { IActionDialogType, actions, actionsTips } from "./config";
 import {
   BOX_PROPS,
-  DEFAULT_TIP_ARRAY,
   SPEED_DEAL_ACTION_FAB_PROPS,
   getSpeedDealFabProps,
   getSpeedDealStyles,
@@ -39,9 +39,16 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
   const [openPoper, setOpenPoper] = useState<boolean>(false);
   const [speedDeal, setSpeedDial] = useState<boolean>(false);
   const [dialogType, setDialogType] = useState<IActionDialogType | null>(null);
-
+  const translate = useTranslate();
   const lessonId = useSelector((state) => state.codePanelGlobal.lessonId);
+  const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
+  const {
+    workSpaceProps: { data: workSpaceData },
+  } = useCodePanel();
   const { data, isLoading } = useGetLessonStudentQuery({ id: lessonId });
+
+  const slideTips = (workSpaceData[slideIndex]?.tips ?? "").split("\n");
+
   const speedDealProps = useMemo(
     () => getSpeedDealFabProps(speedDeal),
     [speedDeal]
@@ -92,7 +99,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           anchorEl={anchorEl}
           openPoper={openPoper}
           setOpenPoper={setOpenPoper}
-          tips={data?.tips ?? DEFAULT_TIP_ARRAY}
+          tips={[...(data?.tips ?? []), ...slideTips]}
         />
       )}
 
@@ -120,7 +127,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
             }}
             tooltipTitle={
               <Typography sx={{ color: action.color, p: "2px" }}>
-                {action.name}
+                {translate(action.name)}
               </Typography>
             }
             FabProps={SPEED_DEAL_ACTION_FAB_PROPS}
@@ -132,7 +139,7 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
         open={dialogType === IActionDialogType.tips}
         onClose={handleCloseDialog}
         isLoading={isLoading}
-        tips={data?.tips}
+        tips={[...(data?.tips ?? []), ...slideTips]}
       /> */}
 
       <SolutionMobileDialog

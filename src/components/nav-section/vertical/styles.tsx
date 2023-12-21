@@ -46,6 +46,7 @@ export const StyledItem = styled(ListItemButton, {
     color: theme.palette.text.secondary,
     borderRadius: theme.shape.borderRadius,
     height: NAV.H_DASHBOARD_ITEM,
+    fontSize: 16,
     // Sub item
     ...(subItem && {
       height: NAV.H_DASHBOARD_ITEM_SUB,
@@ -116,7 +117,7 @@ export const StyledDotIcon = styled("span", {
 
 export const StyledSubheader = styled(ListSubheader)(({ theme }) => ({
   ...theme.typography.overline,
-  fontSize: 11,
+  fontSize: 14,
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(1),
   color: theme.palette.text.secondary,

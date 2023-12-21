@@ -8,9 +8,12 @@ import {
   Collapse,
   Tab,
   Tabs,
+  Theme,
   alpha,
   useTheme,
 } from "@mui/material";
+
+import { useTranslate } from "src/utils/translateHelper";
 
 interface ICreatePaletteProps {
   choosenColor: string;
@@ -22,6 +25,7 @@ export default function CreatePalette({
   setChoosenColor,
 }: ICreatePaletteProps): React.ReactElement {
   const [value, setValue] = useState(0);
+  const translate = useTranslate();
 
   const handleChange = (_: any, newValue: number) => {
     setValue(newValue);
@@ -41,7 +45,11 @@ export default function CreatePalette({
             },
           }}
         >
-          <Tab label="Featured" {...a11yProps(0)} sx={{ fontSize: "1.2rem" }} />
+          <Tab
+            label={translate("featured")}
+            {...a11yProps(0)}
+            sx={{ fontSize: "1.2rem" }}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -64,7 +72,7 @@ export default function CreatePalette({
               onClick={() => {
                 setChoosenColor(el);
               }}
-              sx={(theme) => ({
+              sx={(theme: Theme) => ({
                 borderRadius: 2,
                 border:
                   choosenColor === el

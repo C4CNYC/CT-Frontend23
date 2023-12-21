@@ -18,8 +18,9 @@ import {
   ClassSearchParams,
   IClass,
 } from "src/redux/interfaces/class.interface";
-import { RootState, useSelector } from "src/redux/store";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
+import { RootState, useSelector } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   filterName: string;
@@ -46,6 +47,7 @@ export function CustomAutocomplete({
     resetFilters: resetClassFilter,
   } = useFilters<ClassSearchParams>({ name: "" });
 
+  const translate = useTranslate();
   const { data: clases } = useGetClassesQuery(
     { schoolId, ...filters },
     { skip: !schoolId }
@@ -82,7 +84,9 @@ export function CustomAutocomplete({
       {!disableClassFilter && (
         <Autocomplete<ClassType>
           options={clases.data || []}
-          renderInput={(params) => <TextField {...params} label="Class" />}
+          renderInput={(params) => (
+            <TextField {...params} label={translate("class")} />
+          )}
           onInputChange={(e, value) => {
             setFilter("name", value);
           }}
@@ -95,7 +99,7 @@ export function CustomAutocomplete({
 
       <TextField
         fullWidth
-        placeholder="Search"
+        placeholder={translate("actions_search")}
         value={filterName}
         onChange={(e: any) => {
           onFilterName(e.target.value);
@@ -116,7 +120,7 @@ export function CustomAutocomplete({
         onClick={onReset}
         startIcon={<Iconify icon="eva:trash-2-outline" />}
       >
-        Clear
+        {translate("actions_clear")}
       </Button>
     </Stack>
   );

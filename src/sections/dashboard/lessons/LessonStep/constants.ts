@@ -17,7 +17,7 @@ export const getLessonItemPaperSx = (
 ): SxProps => ({
   cursor: "pointer!important",
   display: "flex",
-  p: "15px 10px 15px 5px",
+  p: "10px 10px 10px 5px",
   justifyContent: "flex-start",
   alignItems: "flex-start",
   position: "relative",

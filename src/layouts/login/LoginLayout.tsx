@@ -4,6 +4,7 @@ import { Stack, Typography } from "@mui/material";
 // components
 import { Image, Logo } from "@components";
 import ThemeSwitcher from "src/components/theme-switcher";
+import { useTranslate } from "src/utils/translateHelper";
 
 //
 import {
@@ -29,6 +30,7 @@ export default function LoginLayout({
   title,
   subtitle,
 }: Props): React.ReactElement | null {
+  const translate = useTranslate();
   return (
     <StyledRoot>
       <StyledSection>
@@ -45,7 +47,7 @@ export default function LoginLayout({
           }}
         />
         <Typography variant="h3" sx={{ maxWidth: 480, textAlign: "left" }}>
-          {title ?? "Hi!"}
+          {title ?? translate("login_hi")}
         </Typography>
 
         <Typography
@@ -57,7 +59,7 @@ export default function LoginLayout({
             color: "text.secondary",
           }}
         >
-          {subtitle ?? "Welcome back"}
+          {subtitle ?? translate("login_welcome_back")}
         </Typography>
 
         <Image

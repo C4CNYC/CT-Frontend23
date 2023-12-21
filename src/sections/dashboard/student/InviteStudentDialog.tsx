@@ -17,6 +17,7 @@ import {
 
 import { FormProvider, RHFTextField } from "@components";
 import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValueProps {
   email: string;
@@ -39,11 +40,12 @@ export default function InviteStudentDialog({
   const handleCloseDialog = (): void => {
     setOpenDialog(false);
   };
+  const translate = useTranslate();
 
   const CreateInviteSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Pleace, enter a valide email adress")
-      .required("This field is required"),
+      .email(translate("enter_valid_email"))
+      .required(translate("required_field")),
   });
 
   const methods = useForm<FormValueProps>({
@@ -53,7 +55,7 @@ export default function InviteStudentDialog({
   const onSubmit = async (data: FormValueProps): Promise<void> => {
     try {
       await inviteStudent({ schoolId, email: data.email }).unwrap();
-      enqueueSnackbar("Message was sent successfully");
+      enqueueSnackbar(translate("messages_sent_seccessfully"));
       methods.reset();
       handleCloseDialog();
     } catch (error: any) {
@@ -70,25 +72,25 @@ export default function InviteStudentDialog({
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <DialogTitle>Invite Student</DialogTitle>
+          <DialogTitle>{translate("members_invate_student")}</DialogTitle>
           <DialogContent>
             <RHFTextField
               name="email"
               type="email"
-              label="email:"
+              label={`${translate("email")}:`}
               sx={{ minWidth: { xs: "250xp", sm: "300px" }, my: 1 }}
             />
           </DialogContent>
           <DialogActions>
             <Button color="error" onClick={handleCloseDialog}>
-              Cancel
+              {translate("actions_cancel")}
             </Button>
             <LoadingButton
               variant="contained"
               type="submit"
               loading={isLoading}
             >
-              Send invite
+              {translate("members_send_invite")}
             </LoadingButton>
           </DialogActions>
         </FormProvider>
