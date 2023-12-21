@@ -38,3 +38,17 @@ export const getCarouselSettings = (
   className: "innerDiv",
   beforeChange: onBeforeChange,
 });
+
+export const LOADER_SCREEN_SX = {
+  position: "absolute",
+  zIndex: 1,
+  animation: "1.5s hide 2.5s forwards",
+  "@keyframes hide": {
+    "0%": {
+      opacity: 1,
+    },
+    "100%": {
+      opacity: 0,
+    },
+  },
+};
