@@ -31,6 +31,7 @@ import {
   SingleFilePreview,
   useSnackbar,
 } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   useCreateCourseMutation,
@@ -66,6 +67,7 @@ export default function CreateCourseDialog({
   children,
   defaultValues,
 }: Prop): React.ReactElement {
+  const translate = useTranslate();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<null | File>(null);
@@ -84,14 +86,16 @@ export default function CreateCourseDialog({
   };
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    content_id: Yup.string().required("Content Id is required"),
-    level: Yup.string().required("Level is required"),
-    price: Yup.string().required("Price is required"),
-    description: Yup.string().required("Description is required"),
-    initial_likes: Yup.number().required("Initial likes is required"),
-    initial_stars: Yup.number().required("Initial stars is required"),
-    initial_enrolled: Yup.number().required("Initial enrolled is required"),
+    name: Yup.string().required(translate("required_name")),
+    level: Yup.string().required(translate("required_level")),
+    price: Yup.string().required(translate("required_price")),
+    description: Yup.string().required(translate("required_description")),
+    content_id: Yup.string().required(translate("required_content_id")),
+    initial_likes: Yup.number().required(translate("required_initial_likes")),
+    initial_stars: Yup.number().required(translate("required_initial_stars")),
+    initial_enrolled: Yup.number().required(
+      translate("required_initial_enrolled")
+    ),
     skills: Yup.array(),
   });
 
@@ -133,7 +137,11 @@ export default function CreateCourseDialog({
         }
       }
 
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      enqueueSnackbar(
+        !isEdit
+          ? translate("messages_create_success")
+          : translate("messages_update_success")
+      );
       methods.reset();
       setOpen(false);
     } catch (error: any) {
@@ -162,7 +170,7 @@ export default function CreateCourseDialog({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            {isEdit ? "Edit" : "Create"} Course
+            {isEdit ? translate("actions_edit") : translate("courses_create")}
           </DialogTitle>
           <IconButton onClick={handleClose} sx={{ mb: "5px", mr: "14px" }}>
             <CloseIcon />
@@ -177,10 +185,12 @@ export default function CreateCourseDialog({
                 aria-label="basic tabs example"
                 sx={{ ml: 3 }}
               >
-                <Tab label="General" {...a11yProps(0)} />
+                <Tab label={translate("general")} {...a11yProps(0)} />
 
-                <Tab label="Modules" {...a11yProps(1)} />
-                {isEdit ? <Tab label="authors" {...a11yProps(2)} /> : null}
+                <Tab label={translate("courses_modules")} {...a11yProps(1)} />
+                {isEdit ? (
+                  <Tab label={translate("courses_authors")} {...a11yProps(2)} />
+                ) : null}
               </Tabs>
             ) : null}
           </Box>
@@ -237,28 +247,32 @@ export default function CreateCourseDialog({
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="name"
-                  label="Course name"
+                  label={translate("courses_course_name")}
                 />
 
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="content_id"
-                  label="Course Content Id"
+                  label={translate("courses_content_id")}
                   placeholder="W1"
                 />
 
-                <RHFSelect native name="level" label="Course level">
+                <RHFSelect
+                  native
+                  name="level"
+                  label={translate("courses_course_level")}
+                >
                   <option key="empty" value="empty">
-                    Select Level
+                    {translate("courses_select_level")}
                   </option>
                   <option key="beginner" value="beginner">
-                    Beginner
+                    {translate("beginner")}
                   </option>
                   <option key="intermediate" value="intermediate">
-                    Intermediate
+                    {translate("intermediate")}
                   </option>
                   <option key="advanced" value="advanced">
-                    Advanced
+                    {translate("advanced")}
                   </option>
                 </RHFSelect>
 
@@ -285,37 +299,40 @@ export default function CreateCourseDialog({
                       },
                     }}
                     name="price"
-                    label="Course price"
+                    label={translate("courses_course_price")}
                     type="number"
                   />
                 </FormGroup>
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="initial_likes"
-                  label="Initial likes"
+                  label={translate("courses_initial_likes")}
                   type="number"
                 />
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="initial_stars"
-                  label="Initial starts"
+                  label={translate("courses_initial_stars")}
                   type="number"
                 />
                 <RHFTextField
                   sx={{ width: "100%" }}
                   name="initial_enrolled"
-                  label="Initial enrolled"
+                  label={translate("courses_initial_enrolled")}
                   type="number"
                 />
                 <RHFTextField
                   name="description"
-                  label="Course description"
+                  label={translate("courses_course_description")}
                   multiline
                   rows={3}
                 />
                 <Stack direction="row">
-                  <RHFSwitch name="active" label="Course active" />
-                  <RHFSwitch name="public" label="Public" />
+                  <RHFSwitch
+                    name="active"
+                    label={translate("courses_course_active")}
+                  />
+                  <RHFSwitch name="public" label={translate("public")} />
                 </Stack>
               </Box>
               <Box
@@ -327,14 +344,14 @@ export default function CreateCourseDialog({
                 }}
               >
                 <Button color="error" variant="soft" onClick={handleClose}>
-                  Close
+                  {translate("actions_close")}
                 </Button>
                 <LoadingButton
                   type="submit"
                   variant="contained"
                   loading={isEditLoading || isCreateLoading}
                 >
-                  Save
+                  {translate("actions_save")}
                 </LoadingButton>
               </Box>
             </FormProvider>

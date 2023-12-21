@@ -23,6 +23,7 @@ import {
   useUpdateSchoolCoverImgMutation,
 } from "src/redux/services/manager/schools-manager";
 import { RootState } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 import SkeletonSchool from "./skeleton-school";
 
@@ -32,6 +33,7 @@ UserProfilePage.getLayout = (page: React.ReactElement) => (
 
 export default function UserProfilePage(): React.ReactElement {
   const schoolId = useSelector((state: RootState) => state.manager.schoolId);
+  const translate = useTranslate();
   const [currentTab, setCurrentTab] = useState("profile");
   const { themeStretch } = useSettingsContext();
   const { data, isLoading, isFetching } = useGetSchoolProfileQuery(
@@ -41,25 +43,25 @@ export default function UserProfilePage(): React.ReactElement {
   const TABS = [
     {
       value: "profile",
-      label: "General",
+      label: "general",
       icon: <Iconify icon="ic:round-account-box" />,
       component: <SchoolProfileTab schoolId={schoolId} />,
     },
     {
       value: "settings",
-      label: "Settings",
+      label: "settings",
       icon: <Iconify icon="ic:baseline-settings-applications" />,
       component: <SchoolSettingsTab schoolId={schoolId} />,
     },
     {
       value: "contacts",
-      label: "Contacts",
+      label: "contacts",
       icon: <MdContacts />,
       component: <SchoolContactsTab schoolId={schoolId} />,
     },
     {
       value: "socials",
-      label: "Social Networks",
+      label: "social_networks",
       icon: <BsPeopleFill />,
       component: <SchoolSocialsTab schoolId={schoolId} />,
     },
@@ -81,9 +83,11 @@ export default function UserProfilePage(): React.ReactElement {
       } else {
         await updateSchoolCoverImage({ id, file }).unwrap();
       }
-      enqueueSnackbar("Image updated");
+      enqueueSnackbar(translate("messages_img_updated"));
     } catch (error: any) {
-      enqueueSnackbar("Image not updated", { variant: "error" });
+      enqueueSnackbar(translate("messages_img_not_updated"), {
+        variant: "error",
+      });
     }
   };
 
@@ -101,7 +105,7 @@ export default function UserProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Organizations | CodeTribe</title>
+        <title> {translate("organization")} | CodeTribe </title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card
@@ -152,7 +156,7 @@ export default function UserProfilePage(): React.ReactElement {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label}
+                label={translate(tab.label)}
               />
             ))}
           </Tabs>

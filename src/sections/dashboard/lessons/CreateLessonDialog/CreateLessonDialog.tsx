@@ -20,6 +20,7 @@ import {
   useSnackbar,
 } from "@components";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   useCreateLessonMutation,
@@ -35,7 +36,7 @@ interface FormValuesProps {
   active: boolean;
   tips: string;
   independent: boolean;
-  type: 'practical' | 'exercise' | 'quiz';
+  type: "practical" | "exercise" | "quiz";
 }
 
 interface ICreateLessonDialogProps {
@@ -57,6 +58,8 @@ export default function CreateLessonDialog({
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
+  const translate = useTranslate();
+
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
 
@@ -76,8 +79,8 @@ export default function CreateLessonDialog({
   };
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required"),
+    name: Yup.string().required(translate("required_name")),
+    description: Yup.string().required(translate("required_description")),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -107,7 +110,11 @@ export default function CreateLessonDialog({
         }
         methods.reset();
       }
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      enqueueSnackbar(
+        !isEdit
+          ? translate("messages_create_success")
+          : translate("messages_update_success")
+      );
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
@@ -126,7 +133,7 @@ export default function CreateLessonDialog({
           ...methods.getValues(),
           tips: lessonTips.filter((t) => !tips.includes(t)),
         }).unwrap();
-        enqueueSnackbar("Tip deleted!");
+        enqueueSnackbar(translate("messages_tip_deleted"));
       }
     } catch (error) {
       enqueueSnackbar(error?.data?.message, {
@@ -146,7 +153,11 @@ export default function CreateLessonDialog({
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isEdit ? "Edit" : "Create"} Lesson</DialogTitle>
+        <DialogTitle>
+          {isEdit
+            ? translate("lessons_edit_lesson")
+            : translate("lessons_create_lesson")}
+        </DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
@@ -158,19 +169,25 @@ export default function CreateLessonDialog({
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label="Main" {...a11yProps(0)} />
-                <Tab label="Skills" {...a11yProps(1)} />
-                <Tab label="Integration" {...a11yProps(2)} />
-                {isEdit ? <Tab label="Tips" {...a11yProps(3)} /> : null}
+                <Tab label={translate("main")} {...a11yProps(0)} />
+                <Tab label={translate("skills")} {...a11yProps(1)} />
+                <Tab label={translate("integration")} {...a11yProps(2)} />
+                {isEdit ? (
+                  <Tab label={translate("tips")} {...a11yProps(3)} />
+                ) : null}
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
               <Stack gap={2} mt={1}>
-                <RHFTextField name="name" label="Lesson name" required />
+                <RHFTextField
+                  name="name"
+                  label={translate("lessons_name")}
+                  required
+                />
 
                 <RHFTextField
                   name="description"
-                  label="Lesson description"
+                  label={translate("lessons_description")}
                   required
                   multiline
                   rows={3}
@@ -178,26 +195,24 @@ export default function CreateLessonDialog({
 
                 <RHFTextField
                   name="tips"
-                  placeholder="Enter tip"
-                  label="Add tip"
+                  placeholder={translate("actions_enter_tip")}
+                  label={translate("actions_add_tip")}
                 />
 
-                <RHFSelect
-                  native
-                  name="type"
-                  size="small"
-                >
+                <RHFSelect native name="type" size="small">
                   <option key="practical" value="practical">
-                    Practical
+                    {translate("lessons_practical")}
                   </option>
                   <option key="exercise" value="exercise">
-                    Exercise
+                    {translate("lessons_exercise")}
                   </option>
                 </RHFSelect>
 
-                <RHFSwitch name="active" label="Lesson active" />
-
-                <RHFSwitch name="independent" label="Independent lesson" />
+                <RHFSwitch name="active" label={translate("lessons_active")} />
+                <RHFSwitch
+                  name="independent"
+                  label={translate("lessons_inependent_lesson")}
+                />
               </Stack>
             </TabPanel>
             <TabPanel value={value} index={1}>
@@ -231,14 +246,14 @@ export default function CreateLessonDialog({
                       setOpen(false);
                     }}
                   >
-                    Close
+                    {translate("actions_close")}
                   </Button>
                   <LoadingButton
                     type="submit"
                     variant="contained"
                     loading={isLoadingAdd || isLoadingCreate || isLoadingUpdate}
                   >
-                    Save
+                    {translate("actions_save")}
                   </LoadingButton>
                 </Box>
               </DialogActions>
@@ -256,7 +271,7 @@ export default function CreateLessonDialog({
                       setOpen(false);
                     }}
                   >
-                    Close
+                    {translate("actions_close")}
                   </Button>
                 </Box>
               </DialogActions>

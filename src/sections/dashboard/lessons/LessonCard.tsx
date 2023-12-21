@@ -23,6 +23,7 @@ import {
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog";
 import { BaseResponseInterface } from "@utils";
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager";
 
@@ -41,13 +42,14 @@ export default function LessonCard({
   const [loading, setLoading] = useState(false);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteLesson] = useDeleteLessonMutation();
+  const translate = useTranslate();
 
   const onDelete = async (): Promise<void> => {
     setLoading(true);
     if (lesson.id) {
       try {
         await deleteLesson({ id: lesson.id }).unwrap();
-        enqueueSnackbar("lesson deleted!");
+        enqueueSnackbar(translate("lessons_deleted_msg"));
       } catch (e: any) {
         enqueueSnackbar(e.data.message, {
           variant: "error",
@@ -127,7 +129,7 @@ export default function LessonCard({
             left: 10,
           }}
         >
-          {lesson.active ? "Active" : "Not Active"}
+          {lesson.active ? translate("active") : translate("not_active")}
         </Label>
         <Box
           component="img"
@@ -179,7 +181,7 @@ export default function LessonCard({
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
-            Edit
+            {translate("actions_edit")}
           </MenuItem>
         </CreateLessonDialog>
 
@@ -193,15 +195,15 @@ export default function LessonCard({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          {translate("actions_delete")}
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={translate("actions_delete")}
+        content={translate("messages_delete_question")}
         action={
           <LoadingButton
             variant="contained"
@@ -209,7 +211,7 @@ export default function LessonCard({
             onClick={onDelete}
             loading={loading}
           >
-            Delete
+            {translate("actions_delete")}
           </LoadingButton>
         }
       />

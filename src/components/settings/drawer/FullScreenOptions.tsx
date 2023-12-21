@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 //
 import { SvgColor } from "../../svg-color";
 import { StyledCard } from "../styles";
@@ -8,6 +10,7 @@ import { StyledCard } from "../styles";
 
 export default function FullScreenOptions(): React.ReactElement {
   const [fullscreen, setFullscreen] = useState(false);
+  const translate = useTranslate();
 
   const onToggleFullScreen = async (): Promise<void> => {
     if (!document.fullscreenElement) {
@@ -33,7 +36,7 @@ export default function FullScreenOptions(): React.ReactElement {
         },
       }}
     >
-      {fullscreen ? "Exit Fullscreen" : "Fullscreen"}
+      {fullscreen ? translate("fullscreen_exit") : translate("fullscreen")}
 
       <SvgColor
         src={`/assets/icons/setting/${

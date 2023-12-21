@@ -29,6 +29,7 @@ import {
   useGetLessonContentValidationsManagerQuery,
   useRemoveLessonContentValiationManagerMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import CreateEditValidation from "./CreateEditValidation";
 
@@ -49,6 +50,7 @@ export default function Validation({
 }: Props): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpenDialog] = useState<boolean>(false);
+  const translate = useTranslate();
 
   const [removeRule] = useRemoveLessonContentValiationManagerMutation();
   const { data, isLoading } = useGetLessonContentValidationsManagerQuery({
@@ -58,9 +60,9 @@ export default function Validation({
   const onDeleteRule = async (id: string): Promise<void> => {
     try {
       await removeRule({ contentId: stepId, id }).unwrap();
-      enqueueSnackbar("validation rule removed");
+      enqueueSnackbar(translate("validation_removed"));
     } catch (e: any) {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -92,7 +94,7 @@ export default function Validation({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Validation Rules ({stepTitle})
+            {translate("validation_rules")} ({stepTitle})
           </DialogTitle>
           <IconButton
             onClick={() => {
@@ -106,20 +108,30 @@ export default function Validation({
         <DialogContent sx={{ p: 3 }}>
           {data?.length && data?.length >= RECOMENDED_COUNT_VALIDATION ? (
             <Alert sx={{ mb: "30px" }} severity="warning">
-              We are not recommend put more then {RECOMENDED_COUNT_VALIDATION}{" "}
-              rules for 1 step. <br />
-              It can make your step a very complicated and can affect <br />{" "}
-              comfort content consumers from phone
+              {translate("not_recommend_count_validations", {
+                count: RECOMENDED_COUNT_VALIDATION,
+              })}{" "}
+              <br />
+              {translate("it_can_make_your_step")} <br />
+              {translate("comfort_content")}
             </Alert>
           ) : null}
           <TableContainer component={Paper} sx={{ borderRadius: 0 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="left">Rule</StyledTableCell>
-                  <StyledTableCell align="left">Regex</StyledTableCell>
-                  <StyledTableCell align="left">Created At</StyledTableCell>
-                  <StyledTableCell align="left">Updated At</StyledTableCell>
+                  <StyledTableCell align="left">
+                    {translate("rule")}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {translate("regex")}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {translate("profile_created_at")}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
+                    {translate("updated_at")}
+                  </StyledTableCell>
                   <StyledTableCell align="left"></StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -186,7 +198,7 @@ export default function Validation({
                     ))}
                     {!data?.length ? (
                       <TableRow>
-                        <TableCell>NO RULES</TableCell>
+                        <TableCell>{translate("no_rules")}</TableCell>
                       </TableRow>
                     ) : null}
                   </TableBody>
@@ -196,7 +208,7 @@ export default function Validation({
             <Stack direction="row-reverse" mt="25px">
               <CreateEditValidation stepId={stepId}>
                 <Button sx={{ width: "150px" }} variant="contained">
-                  ADD RULE{" "}
+                  {translate("add_rule")}
                   <Iconify
                     ml="10px"
                     icon="material-symbols:add-circle-outline"

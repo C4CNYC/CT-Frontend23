@@ -5,6 +5,7 @@ import { HiArrowRight } from "react-icons/hi";
 import { Link, Typography } from "@mui/material";
 
 import { PATH_AUTH } from "@routes/paths";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   isRegister?: boolean;
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export function SingLink({ isRegister }: Props): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Link
       component={nextLink}
@@ -29,13 +32,20 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
     >
       {isRegister ? (
         <>
-          <Typography variant="body2">This is my first time</Typography> |{" "}
-          <Typography variant="subtitle2">REGISTER</Typography>
+          <Typography variant="body2">
+            {translate("login_my_first_time")}
+          </Typography>{" "}
+          |{" "}
+          <Typography variant="subtitle2">
+            {translate("login_register")}
+          </Typography>
         </>
       ) : (
         <>
-          <Typography variant="body2">I’ve been here before</Typography> |{" "}
-          <Typography variant="subtitle2">LOGIN</Typography>
+          <Typography variant="body2">
+            {translate("login_been_here")}
+          </Typography>{" "}
+          | <Typography variant="subtitle2">{translate("login")}</Typography>
         </>
       )}
     </Link>
@@ -45,6 +55,8 @@ export function SingLink({ isRegister }: Props): React.ReactElement {
 export function RegisterStudenTeacher({
   isTeacher,
 }: Props): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Link
       component={nextLink}
@@ -63,7 +75,9 @@ export function RegisterStudenTeacher({
         alignItems: "center",
       }}
     >
-      Register as {isTeacher ? "Student" : "Teacher"} <HiArrowRight size={20} />
+      {translate("login_register_as")}{" "}
+      {isTeacher ? translate("student") : translate("teacher")}
+      <HiArrowRight size={20} />
     </Link>
   );
 }

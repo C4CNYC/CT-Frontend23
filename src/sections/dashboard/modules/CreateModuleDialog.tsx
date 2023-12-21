@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { IoMdClose } from "react-icons/io";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";
@@ -25,7 +26,9 @@ import {
   ModuleLessonsAutocomplete,
   useSnackbar,
 } from "@components";
+import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
 import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   useCreateModuleMutation,
@@ -113,6 +116,7 @@ export default function CreateModuleDialog({
   const [createModule, { isLoading: isCreateLoading }] =
     useCreateModuleMutation();
   const [updateAvatar] = useUpdateModuleAvatarMutation();
+  const translate = useTranslate();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -127,18 +131,15 @@ export default function CreateModuleDialog({
   };
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
+    name: Yup.string().required(translate("required_name")),
     description:
-      Yup.string().required("Description is required") &&
-      Yup.string().max(100, "Write less then 100 characters"),
+      Yup.string().required(translate("required_description")) &&
+      Yup.string().max(100, translate("write_less_msg")),
     duration: Yup.string()
       .trim()
       .nullable()
       .transform((v, o) => (o === "" ? null : v))
-      .matches(
-        durationRegexp,
-        "Use key words: second, minute, hour, day, week, month, year. E.g: 1 hour 30 minutes"
-      ),
+      .matches(durationRegexp, translate("use_key_words_msg")),
     initial_likes: Yup.number().positive(),
     initial_stars: Yup.number().positive(),
     initial_enrolled: Yup.number().positive(),
@@ -183,7 +184,11 @@ export default function CreateModuleDialog({
           await updateAvatar({ id: module.id, file }).unwrap();
         }
       }
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      enqueueSnackbar(
+        !isEdit
+          ? translate("messages_create_success")
+          : translate("messages_update_success")
+      );
       methods.reset();
       handleClose();
     } catch (error: any) {
@@ -203,7 +208,11 @@ export default function CreateModuleDialog({
         {children}
       </Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isEdit ? "Edit" : "Create"} Module</DialogTitle>
+        <DialogTitle>
+          {isEdit
+            ? translate("modules_update_module")
+            : translate("modules_create_module")}
+        </DialogTitle>
         <DialogContent sx={{ p: 0, mt: "-10px" }}>
           <FormProvider
             methods={methods}
@@ -216,9 +225,9 @@ export default function CreateModuleDialog({
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="General" {...a11yProps(0)} />
-                  <Tab label="Lessons" {...a11yProps(1)} />
-                  <Tab label="Settings" {...a11yProps(2)} />
+                  <Tab label={translate("general")} {...a11yProps(0)} />
+                  <Tab label={translate("lessons")} {...a11yProps(1)} />
+                  <Tab label={translate("settings")} {...a11yProps(2)} />
                 </Tabs>
               ) : null}
             </Box>
@@ -250,7 +259,9 @@ export default function CreateModuleDialog({
             </TabPanel>
             <DialogActions>
               <Box sx={DIALOG_ACTIONS_SX}>
-                <Button onClick={handleClose}>Close</Button>
+                <Button onClick={handleClose}>
+                  {translate("actions_close")}
+                </Button>
                 <LoadingButton
                   type="submit"
                   variant="contained"
@@ -258,7 +269,7 @@ export default function CreateModuleDialog({
                     isEditLoading || isCreateLoading || isAddToCourseLoading
                   }
                 >
-                  Save
+                  {translate("actions_save")}
                 </LoadingButton>
               </Box>
             </DialogActions>

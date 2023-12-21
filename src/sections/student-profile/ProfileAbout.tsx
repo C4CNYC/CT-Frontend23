@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import { Iconify } from "@components";
 import { fDateTime } from "@utils";
 import { IUser } from "src/redux/interfaces/auth.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,
@@ -22,16 +23,18 @@ interface IProfileAboutProps {
 export default function ProfileAbout({
   data,
 }: IProfileAboutProps): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Card>
-      <CardHeader title="About" />
+      <CardHeader title={translate("about")} />
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">
-            Live at country &nbsp;
+            {translate("profile_live_at_country")} &nbsp;
             {countries.find(
               (el) =>
                 data?.student_profile?.country ??
@@ -43,7 +46,7 @@ export default function ProfileAbout({
           <StyledIcon icon="eva:pin-fill" />
 
           <Typography variant="body2">
-            Postcode &nbsp;
+            {translate("profile_postcode")} &nbsp;
             {data?.student_profile?.post_code ?? data?.post_code ?? "-"}
           </Typography>
         </Stack>
@@ -67,7 +70,8 @@ export default function ProfileAbout({
           <StyledIcon icon="ic:round-more-time" />
 
           <Typography variant="body2">
-            Created at &nbsp;{fDateTime(data?.createdAt ?? "")}
+            {translate("profile_created_at")} &nbsp;
+            {fDateTime(data?.createdAt ?? "")}
           </Typography>
         </Stack>
       </Stack>

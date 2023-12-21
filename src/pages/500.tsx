@@ -13,6 +13,7 @@ import { Button, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 // layouts
 import CompactLayout from "@layouts/compact";
+import { useTranslate } from "src/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
@@ -23,22 +24,24 @@ Page500.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function Page500(): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <>
       <Head>
-        <title> 500 Internal Server Error </title>
+        <title> {translate("server_error")} </title>
       </Head>
 
       <MotionContainer>
         <m.div variants={varBounce().in}>
           <Typography variant="h3" paragraph>
-            500 Internal Server Error
+            {translate("server_error")}
           </Typography>
         </m.div>
 
         <m.div variants={varBounce().in}>
           <Typography sx={{ color: "text.secondary" }}>
-            There was an error, please try again later.
+            {translate("there_was_an_error")}
           </Typography>
         </m.div>
 
@@ -47,7 +50,7 @@ export default function Page500(): React.ReactElement {
         </m.div>
 
         <Button component={NextLink} href="/" size="large" variant="contained">
-          Go to Home
+          {translate("go_to_home")}
         </Button>
       </MotionContainer>
     </>

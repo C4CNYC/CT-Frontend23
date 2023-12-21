@@ -6,6 +6,7 @@ import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { Iconify } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import BasePreference from "./BasePreference";
 
@@ -21,6 +22,7 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
     background: DEFAULT_BACKGROUDN,
     text: DEFAULT_TEXT_COLOR,
   });
+  const translate = useTranslate();
 
   useEffect(() => {
     onUpdateColors(colors);
@@ -28,7 +30,7 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
 
   return (
     <BasePreference
-      title="editor colors"
+      title={translate("editor_colors")}
       abandonmentIcon={
         <IconButton
           onClick={() => {
@@ -44,7 +46,7 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
     >
       <Box display="grid" gap="15px">
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="subtitle1">Background Color:</Typography>
+          <Typography variant="subtitle1">{translate("bg_color")}</Typography>
           <MuiColorInput
             sx={{
               "& .MuiInputBase-input": {
@@ -63,7 +65,7 @@ const EditColors = ({ onUpdateColors }: IEditColors): React.ReactElement => {
           />
         </Box>
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <Typography variant="subtitle1">Text Color:</Typography>
+          <Typography variant="subtitle1">{translate("text_color")}</Typography>
           <MuiColorInput
             sx={{
               "& .MuiInputBase-input": {

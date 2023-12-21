@@ -4,6 +4,7 @@ import { Avatar, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 
 import { IClass } from "src/redux/interfaces/class.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   CLASS_AVATAR_SX,
@@ -18,6 +19,8 @@ interface Props {
 export default function ClassInfoMain({
   classData,
 }: Props): React.ReactElement {
+  const translate = useTranslate();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -50,7 +53,7 @@ export default function ClassInfoMain({
               color: "#fff",
             }}
           >
-            Teacher: Admin
+            {translate("home_teacher_admin")}
           </Typography>
         </Stack>
       </Stack>

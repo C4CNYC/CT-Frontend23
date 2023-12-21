@@ -13,8 +13,8 @@ import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/system";
 
 import { fData } from "@utils";
+import { useTranslate } from "src/utils/translateHelper";
 
-import { useLocales } from "../../locales/useLocales";
 import { FormProvider, RHFUploadAvatar } from "../hook-form";
 
 interface FormValuesProps {
@@ -52,7 +52,7 @@ export function UploadImageModal({
     width: { xs: "90%", sm: "90%", md: "40%" },
   };
   const { enqueueSnackbar } = useSnackbar();
-  const { translate } = useLocales();
+  const translate = useTranslate();
 
   const methods = useForm<FormValuesProps>();
 
@@ -65,7 +65,9 @@ export function UploadImageModal({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     if (!data.cover) {
-      enqueueSnackbar("No image selected", { variant: "error" });
+      enqueueSnackbar(translate("messages_no_image_selected"), {
+        variant: "error",
+      });
       return;
     }
     await onUpload(data.cover, id);
@@ -109,7 +111,7 @@ export function UploadImageModal({
               mb={3}
             >
               <Typography variant="h6" fontWeight="700">
-                Upload Cover Image
+                {translate("avatar_upload_cover_img")}
               </Typography>
               <IconButton
                 onClick={handleClose}
@@ -135,13 +137,10 @@ export function UploadImageModal({
                     whiteSpace: "pre-line",
                   }}
                 >
-                  {`${translate(
-                    "organizations.general_page.tabs.content.profile.upload_image",
-                    {
-                      formats: "png",
-                      size: fData(2000000),
-                    }
-                  )}`}
+                  {translate("general_profile_upload_img", {
+                    formats: "png",
+                    size: fData(2000000),
+                  })}
                 </Typography>
               }
             ></RHFUploadAvatar>
@@ -151,7 +150,7 @@ export function UploadImageModal({
                 variant="contained"
                 loading={isSubmitting}
               >
-                Update
+                {translate("actions_update")}
               </LoadingButton>
             </Stack>
           </Box>

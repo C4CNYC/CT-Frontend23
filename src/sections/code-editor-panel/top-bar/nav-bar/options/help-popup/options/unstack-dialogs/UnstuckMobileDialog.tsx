@@ -18,9 +18,9 @@ import {
 } from "@mui/material";
 
 import { Iconify } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import FullCodeSolutionModal from "../../modals/FullCodeSolution";
-
 import {
   ASK_TEXTS,
   DIALOG_PAPER_PROPS,
@@ -29,8 +29,8 @@ import {
   ICON_BTN_SX,
   LIST_ITEM_BTN_SX,
   LIST_ITEM_ICON_SX,
-  LIST_MOB_SX
-} from "./constants"
+  LIST_MOB_SX,
+} from "./constants";
 
 interface UnstuckMobileDialogProps {
   open: boolean;
@@ -42,7 +42,7 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({
   onClose,
 }) => {
   const [checked, setChecked] = useState<string[]>([]);
-
+  const translate = useTranslate();
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -63,19 +63,14 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({
       scroll="paper"
       PaperProps={DIALOG_PAPER_PROPS}
     >
-      <DialogTitle
-        sx={DIALOG_TITLE_SX}
-      >
+      <DialogTitle sx={DIALOG_TITLE_SX}>
         <BsChatText size="30px" color="#43D4DD" />
 
         <Typography variant="h5" sx={DIALOG_TITLE_TYP_SX}>
-          Get unstuck
+          {translate("get_unstuck")}
         </Typography>
 
-        <IconButton
-          onClick={onClose}
-          sx={ICON_BTN_SX}
-        >
+        <IconButton onClick={onClose} sx={ICON_BTN_SX}>
           <Iconify width="20px" icon="ic:round-close" />
         </IconButton>
       </DialogTitle>
@@ -103,7 +98,7 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({
                     />
                   </ListItemIcon>
 
-                  <ListItemText id={labelId} primary={value} />
+                  <ListItemText id={labelId} primary={translate(value)} />
                 </ListItemButton>
               </ListItem>
             );
@@ -111,20 +106,16 @@ const UnstuckMobileDialog: FC<UnstuckMobileDialogProps> = ({
         </List>
 
         <Box bgcolor="#eee" p="15px 29px">
-          See this training's{" "}
-
+          {translate("see_this_training")}
           <FullCodeSolutionModal disabled={checked.length !== 3}>
-            <Link href="#">full code solutions.</Link>
+            <Link href="#">{translate("full_code_solutions")}</Link>
           </FullCodeSolutionModal>
         </Box>
 
-        <Typography p="15px 29px">
-          Or, ... Keep going till you see a "Checkpoint" slide. There may be
-          one ahead.
-        </Typography>
+        <Typography p="15px 29px">{translate("or_keep_goin_slide")}</Typography>
       </>
     </Dialog>
   );
-}
+};
 
 export default UnstuckMobileDialog;

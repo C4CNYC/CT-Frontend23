@@ -1,10 +1,13 @@
-import { type FC } from "react"
+import { type FC } from "react";
+
 import { CopyBlock, dracula } from "react-code-blocks";
 
 import { useSelector } from "src/redux/store";
 
 const Solution: FC = () => {
-  const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
+  const solutionCode = useSelector(
+    (state) => state.codePanelGlobal.solutionCode
+  );
 
   return (
     <CopyBlock
@@ -25,6 +28,6 @@ const COPY_BLOCK_STYLES = {
   borderRadius: "0",
   boxShadow: "none",
   fontSize: "0.75rem",
-}
+};
 
 export default Solution;

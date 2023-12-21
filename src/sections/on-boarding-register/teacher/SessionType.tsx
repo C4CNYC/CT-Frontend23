@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 
 import { Image } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { getImageWrapperSx } from "./constants";
 
@@ -31,6 +32,7 @@ export function SessionType({
 }: Props): React.ReactElement {
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const translate = useTranslate();
 
   return (
     <Stack
@@ -38,7 +40,10 @@ export function SessionType({
       alignItems="center"
       sx={{ pr: { xs: 0, sm: 0, md: 1 } }}
     >
-      <Tooltip title={<Typography>{info}</Typography>} placement="top-end">
+      <Tooltip
+        title={<Typography>{translate(info)}</Typography>}
+        placement="top-end"
+      >
         <Badge
           anchorOrigin={{
             vertical: "top",
@@ -57,16 +62,16 @@ export function SessionType({
         {disabled ? (
           <Badge
             sx={{ "& .MuiBadge-anchorOriginTopRight": { top: -10 } }}
-            badgeContent={"coming soon"}
+            badgeContent={translate("coming_soon")}
             color="success"
           >
             <Typography variant="h4" textAlign="start" gutterBottom>
-              {title}
+              {translate(title)}
             </Typography>
           </Badge>
         ) : (
           <Typography variant="h4" textAlign="start" gutterBottom>
-            {title}
+            {translate(title)}
           </Typography>
         )}
 
@@ -75,7 +80,7 @@ export function SessionType({
           textAlign="start"
           sx={{ maxWidth: "250px" }}
         >
-          {subtitle}
+          {translate(subtitle)}
         </Typography>
       </Stack>
 

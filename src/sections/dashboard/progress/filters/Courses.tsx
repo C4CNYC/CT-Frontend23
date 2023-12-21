@@ -12,6 +12,7 @@ import { Stack } from "@mui/system";
 import { BaseResponseInterface } from "@utils";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IFilterCoursesAutocomplete {
   courseId: string;
@@ -37,6 +38,8 @@ export default function FilterCoursesAutocomplete({
     }
     setCourse(details?.option.id);
   };
+
+  const translate = useTranslate();
 
   useEffect(() => {
     if (!courses || courseId) {
@@ -75,7 +78,9 @@ export default function FilterCoursesAutocomplete({
           value={current}
           options={courses?.data ?? []}
           onChange={onChangeCourse}
-          renderInput={(params) => <TextField {...params} label="Course" />}
+          renderInput={(params) => (
+            <TextField {...params} label={translate("course")} />
+          )}
           getOptionLabel={(option) => option.name}
           sx={{
             width: { xs: "260px", sm: "260px", md: "260px", lg: "260px" },
