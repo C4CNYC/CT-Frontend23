@@ -9,7 +9,6 @@ import React, {
 } from "react";
 
 import _ from "lodash";
-import { parse } from "node-html-parser";
 import { SlDirections } from "react-icons/sl";
 import { TbArrowBarToLeft } from "react-icons/tb";
 import { useDispatch } from "react-redux";
@@ -17,9 +16,8 @@ import Carousel from "react-slick";
 
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
-import { EmptyContent } from "@components";
+import { EmptyContent, LoadingScreen } from "@components";
 import { BaseResponseInterface } from "@utils";
-import { useLoadIntegration } from "src/hooks/useLoadIntegration";
 import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/interfaces/content.interface";
 import { IIntegration } from "src/redux/interfaces/integration.interface";
@@ -35,8 +33,7 @@ import BrowserView, {
 import { useTranslate } from "src/utils/translateHelper";
 
 import BaseBlock from "../base-block";
-import { getBoxSx, getCarouselSettings } from "./constants";
-import LoaderDelay from "./loader-delay";
+import { LOADER_SCREEN_SX, getBoxSx, getCarouselSettings } from "./constants";
 import Navigation from "./navigation";
 
 const ProsaMirrorView = dynamic(
@@ -59,11 +56,6 @@ interface IView {
   connectIntegrations: (body: string) => CodeDocument | null;
 }
 
-interface ILoadedIntegrations {
-  head?: string;
-  script?: string;
-}
-
 const icon = <SlDirections size="20px" color="#43D4DD" />;
 
 const SliderBlock: FC<ISliderBlock> = ({
@@ -82,22 +74,13 @@ const SliderBlock: FC<ISliderBlock> = ({
   );
   const translate = useTranslate();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const [loadingIntegrations, setLoadingIntegrations] = useState<boolean>(true);
-  const [loadedIntegrations, setLoadedIntegrations] = useState<
-    ILoadedIntegrations[]
-  >([]);
 
   const title = translate("instructions");
-
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen);
   }, []);
 
   const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true);
-
-  // const takeHeaderSettings = (isOpen: boolean) => {
-  //   setIsOpenHeader(isOpen);
-  // };
 
   const carousel1 = useRef<Carousel | null>(null);
   const [nav2, setNav2] = useState<Carousel>();
@@ -117,51 +100,6 @@ const SliderBlock: FC<ISliderBlock> = ({
       setNav2(carousel1.current);
     }
   }, [data]);
-
-  useEffect(() => {
-    const loadAllIntegrations = async () => {
-      if (!integrations) return;
-      setLoadingIntegrations(true);
-      const loadedIntegrations = await Promise.all(
-        integrations.map(async ({ head, scripts }) => {
-          const loadedIntegration = { head: "", script: "" };
-
-          if (head) {
-            const parsedHead = parse(head).querySelectorAll("link");
-            const links = await Promise.all(
-              parsedHead.map(
-                async ({ attrs }) => await useLoadIntegration(attrs, "href")
-              )
-            );
-
-            loadedIntegration.head = links
-              .filter(Boolean)
-              .map((style) => `<style>${style}</style>`)
-              .join("\n");
-          }
-
-          if (scripts) {
-            const parseScript = parse(scripts).querySelectorAll("script");
-            const allScripts = await Promise.all(
-              parseScript.map(
-                async ({ attrs }) => await useLoadIntegration(attrs, "src")
-              )
-            );
-            loadedIntegration.script = allScripts
-              .filter(Boolean)
-              .map((script) => `<script>${script}</script>`)
-              .join("\n");
-          }
-
-          return loadedIntegration;
-        })
-      );
-
-      setLoadedIntegrations(loadedIntegrations);
-      setLoadingIntegrations(false);
-    };
-    loadAllIntegrations();
-  }, [integrations]);
 
   const handlePrev = (): void => {
     carousel1.current?.slickPrev();
@@ -210,11 +148,6 @@ const SliderBlock: FC<ISliderBlock> = ({
       ) : (
         <>
           <Box className="sliderTour" height="100%" sx={boxSx}>
-            <LoaderDelay
-              delay={3000}
-              isLoading={!!isFetching || !!loadingIntegrations}
-            />
-
             {!isFetching ? (
               <Carousel
                 {...getCarouselSettings(onBeforeChange)}
@@ -232,7 +165,9 @@ const SliderBlock: FC<ISliderBlock> = ({
                   );
                 })}
               </Carousel>
-            ) : null}
+            ) : (
+              <LoadingScreen sx={LOADER_SCREEN_SX} />
+            )}
           </Box>
 
           <Navigation
