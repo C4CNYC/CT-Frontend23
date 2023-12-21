@@ -3,6 +3,7 @@ import React from "react";
 import { Box } from "@mui/material";
 
 import { useGetSchoolContactsQuery } from "src/redux/services/manager/schools-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import ContactsForm from "./ContactsForm";
 import SkeletonContactsTab from "./SkeletonContactsTab";
@@ -18,10 +19,11 @@ export default function SchoolContactsTab({
     { schoolId },
     { skip: !schoolId }
   );
+  const translate = useTranslate();
 
   if (isLoading) return <SkeletonContactsTab />;
 
-  if (!data) return <>No Data</>;
+  if (!data) return <>{translate("messages_no_data")}</>;
 
   return (
     <>

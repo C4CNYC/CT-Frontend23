@@ -21,6 +21,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";
@@ -31,6 +32,7 @@ export default function MenuTribesList(): React.ReactElement {
   const { themeLayout } = useSettingsContext();
   const isMobile = useMediaQuery(theme.breakpoints.down(1200));
   const isNavMini = themeLayout === "mini" && !isMobile;
+  const translate = useTranslate();
 
   const [containerHeignt, setContainerHeignt] = useState("auto");
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -132,14 +134,14 @@ export default function MenuTribesList(): React.ReactElement {
           >
             <MenuItem>
               <IoPeople size="20px" />
-              Create a group
+              {translate("tribes_create_group")}
             </MenuItem>
           </Link>
         </RoleBasedGuard>
         <JoinClassModal>
           <MenuItem>
             <FaCampground size="20px" />
-            Join a group
+            {translate("tribes_join_group")}
           </MenuItem>
         </JoinClassModal>
       </MenuPopover>

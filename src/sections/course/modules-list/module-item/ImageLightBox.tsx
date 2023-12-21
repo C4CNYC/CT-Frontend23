@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 
 import { Image } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IImageLightBoxProps {
   children: React.ReactElement;
@@ -25,6 +26,7 @@ export default function ImageLightBox({
   sx,
 }: IImageLightBoxProps): React.ReactElement {
   const [open, setOpen] = useState(false);
+  const translate = useTranslate();
 
   const handleOpenDialog = (e: React.SyntheticEvent): void => {
     e.preventDefault();
@@ -90,7 +92,7 @@ export default function ImageLightBox({
             sx={{ alignSelf: "flex-end" }}
             onClick={handleCloseDialog}
           >
-            Close
+            {translate("actions_close")}
           </Button>
         </DialogActions>
       </Dialog>

@@ -28,6 +28,7 @@ import {
 import { BaseResponseInterface } from "@utils";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +64,7 @@ export default function UserTableRow({
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+  const translate = useTranslate();
 
   const handleOpenConfirm = (): void => {
     setOpenConfirm(true);
@@ -168,7 +170,7 @@ export default function UserTableRow({
             color={active ? "success" : "warning"}
             sx={{ textTransform: "capitalize" }}
           >
-            {active ? "active" : "not active"}
+            {active ? translate("active") : translate("not_active")}
           </Label>
         </TableCell>
 
@@ -196,7 +198,7 @@ export default function UserTableRow({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          {translate("actions_delete")}
         </MenuItem>
 
         <MenuItem
@@ -206,15 +208,15 @@ export default function UserTableRow({
           }}
         >
           <Iconify icon="eva:edit-fill" />
-          Edit
+          {translate("actions_edit")}
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={translate("actions_delete")}
+        content={translate("messages_delete_question")}
         action={
           <LoadingButton
             variant="contained"
@@ -222,7 +224,7 @@ export default function UserTableRow({
             onClick={onDeleteRow}
             loading={loading}
           >
-            Delete
+            {translate("actions_delete")}
           </LoadingButton>
         }
       />

@@ -20,6 +20,7 @@ import {
   useGetMySchoolsQuery,
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -37,16 +38,17 @@ export default function AddSchool(): React.ReactElement {
   const { data, isLoading } = useGetMySchoolsQuery({});
   const [updateSchool, { isLoading: isUpdating }] =
     useUpdateSchoolProfileMutation();
+  const translate = useTranslate();
 
   const defaultCountry =
     countries.find((ct) => ct.code === "US") ?? countries[0];
 
   const CreateSchoolSchema = Yup.object().shape({
-    schoolName: Yup.string().required("Name is required"),
-    type: Yup.string().required("Choose type of school"),
-    city: Yup.string().required("City your surname"),
+    schoolName: Yup.string().required(translate("required_name")),
+    type: Yup.string().required(translate("choose_school_type")),
+    city: Yup.string().required(translate("choose_your_city")),
     zip: Yup.string(),
-    country: Yup.string().required("Choose school country"),
+    country: Yup.string().required(translate("choose_school_country")),
   });
 
   useEffect(() => {
@@ -94,42 +96,42 @@ export default function AddSchool(): React.ReactElement {
             variant="h3"
             sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}
           >
-            Add School{" "}
+            {translate("schools_add_aschool")}
             <Typography sx={{ display: "inline-flex" }} variant="h2">
               🏫
             </Typography>
           </Typography>
         </Stack>
         <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-          This is the school name students see
+          {translate("register_school_name_see")}
         </Typography>
         <Stack gap={3}>
           <RHFTextField
             name="schoolName"
-            label="School name"
+            label={translate("add_school_name")}
             sx={(theme) => ({ ...styledRegisterInput(theme) })}
           />
           <RHFSelect
             native
             name="type"
-            label="Type of School"
+            label={translate("register_school_type")}
             sx={(theme) => ({ ...styledRegisterInput(theme) })}
           >
             {Object.keys(SchoolType).map((c) => (
               <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
-                {c.replace(/_/g, " ")}
+                {translate(SchoolType[c as keyof typeof SchoolType])}
               </option>
             ))}
           </RHFSelect>
           <Stack direction="row" sx={{ gap: 2 }}>
             <RHFTextField
               name="city"
-              label="City"
+              label={translate("city")}
               sx={(theme) => ({ ...styledRegisterInput(theme) })}
             />
             <RHFTextField
               name="zip"
-              label="Zip code"
+              label={translate("zip_code")}
               type="number"
               sx={(theme) => ({ ...styledRegisterInput(theme) })}
             />
@@ -137,7 +139,7 @@ export default function AddSchool(): React.ReactElement {
           <RHFSelect
             native
             name="country"
-            label="Country"
+            label={translate("country")}
             sx={(theme) => ({ ...styledRegisterInput(theme) })}
           >
             <option key={defaultCountry.code} value={defaultCountry.label}>
@@ -167,7 +169,7 @@ export default function AddSchool(): React.ReactElement {
           }}
           loading={isUpdating}
         >
-          ALL DONE
+          {translate("register_all_done")}
         </LoadingButton>
       </FormProvider>
     </Stack>

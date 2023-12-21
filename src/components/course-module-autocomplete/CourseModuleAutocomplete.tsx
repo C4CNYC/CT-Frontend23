@@ -26,6 +26,7 @@ import {
   useRemoveModuleFromCourseMutation,
 } from "src/redux/services/manager/courses-manager";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 type ModuleType = IModule & BaseResponseInterface;
 
@@ -39,7 +40,7 @@ export default function CourseModuleAutocomplete({
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
-
+  const translate = useTranslate();
   const [addModule] = useAddModuleToCourseMutation();
   const [removeModule] = useRemoveModuleFromCourseMutation();
   const { data: addedLessons } = useGetModulesQuery(
@@ -72,16 +73,24 @@ export default function CourseModuleAutocomplete({
       switch (reason) {
         case "selectOption": {
           await addModule(payload).unwrap();
-          enqueueSnackbar(`${details?.option.name ?? ""} added to module`);
+          enqueueSnackbar(
+            translate("courses_added_to_module", {
+              name: details?.option.name ?? "",
+            })
+          );
           return;
         }
         case "removeOption": {
           await removeModule(payload).unwrap();
-          enqueueSnackbar(`${details?.option.name ?? ""} removed from module`);
+          enqueueSnackbar(
+            translate("courses_removed_from_module", {
+              name: details?.option.name ?? "",
+            })
+          );
         }
       }
     } catch {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -117,7 +126,9 @@ export default function CourseModuleAutocomplete({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => <TextField {...params} placeholder="Lessons" />}
+      renderInput={(params) => (
+        <TextField {...params} placeholder={translate("lessons")} />
+      )}
       renderOption={(props, recipient, { inputValue }) => {
         const { id, name } = recipient;
         const matches = match(name, inputValue);

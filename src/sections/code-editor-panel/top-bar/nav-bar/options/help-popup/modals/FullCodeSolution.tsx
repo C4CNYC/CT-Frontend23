@@ -1,4 +1,5 @@
 import { type FC, useState } from "react";
+
 import { CopyBlock, dracula } from "react-code-blocks";
 
 import {
@@ -11,13 +12,14 @@ import {
 import { Stack } from "@mui/system";
 
 import { useSelector } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   BUTTON_STYLES,
   CODE_BLOCK_CUSTOM_STYLES,
   DIALOG_ACTIONS_STYLES,
-  DIALOG_CONTENT_STYLES
-} from "./constants"
+  DIALOG_CONTENT_STYLES,
+} from "./constants";
 
 interface IFullCodeSolutionModal {
   children: React.ReactElement;
@@ -26,10 +28,11 @@ interface IFullCodeSolutionModal {
 
 const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
   children,
-  disabled
+  disabled,
 }) => {
   const [open, setOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const translate = useTranslate();
 
   const handleOpen = (): void => {
     setOpen(true);
@@ -43,11 +46,7 @@ const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
 
   return (
     <>
-      <Button
-        disabled={disabled}
-        onClick={handleOpen}
-        sx={BUTTON_STYLES}
-      >
+      <Button disabled={disabled} onClick={handleOpen} sx={BUTTON_STYLES}>
         {children}
       </Button>
       <Dialog
@@ -59,23 +58,21 @@ const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
       >
         {showContent ? <CodeContent /> : <QuestionContent />}
 
-        <DialogActions
-          sx={DIALOG_ACTIONS_STYLES}
-        >
+        <DialogActions sx={DIALOG_ACTIONS_STYLES}>
           {showContent ? (
             <Button variant="outlined" onClick={handleClose}>
-              OK
+              {translate("actions_ok")}
             </Button>
           ) : (
             <Stack mb="20px" direction="row" spacing={2}>
               <Button variant="outlined" onClick={handleShowContent}>
-                YES
+                {translate("actions_yes")}
               </Button>
               <Button variant="outlined" onClick={handleClose}>
-                NO
+                {translate("actions_no")}
               </Button>
               <Button variant="outlined" onClick={handleClose} autoFocus>
-                LET ME TRY AGAIN
+                {translate("let_me_try")}
               </Button>
             </Stack>
           )}
@@ -86,17 +83,18 @@ const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
 };
 
 const CodeContent: FC = () => {
-  const solutionCode = useSelector((state) => (
-    state.codePanelGlobal.solutionCode
-  ));
+  const translate = useTranslate();
+  const solutionCode = useSelector(
+    (state) => state.codePanelGlobal.solutionCode
+  );
 
   return (
     <DialogContent sx={DIALOG_CONTENT_STYLES}>
       <Typography mb="30px" variant="h4">
-        SOLUTION CODE
+        {translate("solution_code")}
       </Typography>
       <CopyBlock
-        text={solutionCode || "Not available for this step."}
+        text={solutionCode || translate("not_available_for_this_step")}
         language="html"
         theme={dracula}
         wrapLines
@@ -107,15 +105,14 @@ const CodeContent: FC = () => {
 };
 
 const QuestionContent: FC = () => {
+  const translate = useTranslate();
   return (
-    <DialogContent
-      sx={DIALOG_CONTENT_STYLES}
-    >
+    <DialogContent sx={DIALOG_CONTENT_STYLES}>
       <Typography mb="30px" variant="h4">
-        FULL CODE SOLUTION
+        {translate("full_code_solution")}
       </Typography>
       <Typography variant="subtitle2">
-        Are you sure you want to see the full solution code for this lesson?
+        {translate("are_you_sure_see_solution")}
       </Typography>
     </DialogContent>
   );

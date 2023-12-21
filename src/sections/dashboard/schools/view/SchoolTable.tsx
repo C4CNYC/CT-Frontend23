@@ -18,24 +18,40 @@ import SchoolTableToolbar from "./SchoolTableToolbar";
 import SkeletonSchoolRow from "./SkeletonSchoolRow";
 
 const TABLE_HEAD = [
-  { id: "cover", label: "Cover", align: "left" },
-  { id: "name", label: "Name", align: "left" },
-  { id: "country", label: "Country", align: "center" },
-  { id: "city", label: "City", align: "left" },
-  { id: "phone", label: "Phone", align: "left" },
-  { id: "active", label: "Active", align: "left" },
+  {
+    id: "cover",
+    label: "cover",
+    align: "left",
+  },
+  { id: "name", label: "name", align: "left" },
+  {
+    id: "country",
+    label: "country",
+    align: "center",
+  },
+  { id: "city", label: "city", align: "left" },
+  {
+    id: "phone",
+    label: "phone",
+    align: "left",
+  },
+  {
+    id: "active",
+    label: "schools_table_active",
+    align: "left",
+  },
   { id: "edit", label: "", align: "left" },
 ];
 
 export default function SchoolTable(): React.ReactElement {
   const { dense, page, rowsPerPage, onChangeDense } = useTable();
-
   const { filters, setFilter, resetFilters } = useFilters<ClassSearchParams>({
     name: "",
   });
   const { data, isLoading } = useGetSchoolListQuery({
     ...filters,
   });
+
   return (
     <>
       <SchoolTableToolbar

@@ -17,6 +17,7 @@ import {
 import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -38,6 +39,7 @@ export default function SingUp({
   const { registerWithGoogle } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(false);
+  const translate = useTranslate();
 
   const onRegisterWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -65,18 +67,18 @@ export default function SingUp({
         </IconButton>
       )}
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: "40px" }}>
-        <Typography variant="h3">Sign up</Typography>
+        <Typography variant="h3">{translate("login_sign_up")}</Typography>
         <Typography variant="h3" sx={{ ml: 1 }}>
           😃
         </Typography>
       </Stack>
       <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-        This is my first time here
+        {translate("login_my_first_time")}
       </Typography>
       <Stack sx={{ mt: 1 }}>
         <RHFTextField
           name="email"
-          label="Email"
+          label={translate("email")}
           defaultValue=""
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
@@ -100,7 +102,7 @@ export default function SingUp({
             sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
             variant="body1"
           >
-            OR
+            {translate("login_or")}
           </Typography>
         </Divider>
         <LoadingButton
@@ -128,7 +130,7 @@ export default function SingUp({
           })}
         >
           <FcGoogle size="50px" />
-          Sign up with Google
+          {translate("login_sign_up_with_google")}
         </LoadingButton>
       </Stack>
     </>

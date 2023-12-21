@@ -34,6 +34,7 @@ import {
   useUpdateStudentMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };
@@ -56,12 +57,13 @@ export default function StudentNewEditForm({
   const [updateStudent] = useUpdateStudentMutation();
   const [updateStudentAvatar] = useUpdateStudentAvatarMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
   const NewUserSchema = Yup.object().shape({
-    first_name: Yup.string().required("Name is required"),
-    last_name: Yup.string().required("Surename is required"),
+    first_name: Yup.string().required(translate("required_name")),
+    last_name: Yup.string().required(translate("required_surname")),
     email: Yup.string()
-      .required("Email is required")
-      .email("Email must be a valid email address"),
+      .required(translate("required_email"))
+      .email(translate("must_be_valid_email")),
     phone: Yup.string(),
     country: Yup.string(),
     cityp: Yup.string(),
@@ -71,7 +73,7 @@ export default function StudentNewEditForm({
     active: Yup.boolean(),
     cover: Yup.string(),
     password: !isEdit
-      ? Yup.string().required("Password is required")
+      ? Yup.string().required(translate("required_password"))
       : Yup.string(),
   });
 
@@ -79,7 +81,7 @@ export default function StudentNewEditForm({
     () => ({
       first_name: currentUser?.first_name ?? "",
       last_name: currentUser?.last_name ?? "",
-      email: currentUser?.account.email ?? "",
+      email: currentUser?.account?.email ?? "",
       phone: currentUser?.phone ?? "",
       country: currentUser?.country ?? "",
       city: currentUser?.city ?? "",
@@ -149,7 +151,11 @@ export default function StudentNewEditForm({
           schoolId: schoolIdProps ?? schoolId,
           ...body,
         }).unwrap();
-        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+        enqueueSnackbar(
+          !isEdit
+            ? translate("messages_create_success")
+            : translate("messages_update_success")
+        );
         if (!schoolIdProps) {
           push(MANAGER_PATH_DASHBOARD.school.students);
         }
@@ -166,7 +172,11 @@ export default function StudentNewEditForm({
           file.append("file", randomAvatar);
           await updateAvatar(user.id, randomAvatar);
         }
-        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+        enqueueSnackbar(
+          !isEdit
+            ? translate("messages_create_success")
+            : translate("messages_update_success")
+        );
         push(MANAGER_PATH_DASHBOARD.school.students);
       }
     } catch (error: any) {
@@ -205,7 +215,9 @@ export default function StudentNewEditForm({
                   right: 24,
                 }}
               >
-                {currentUser?.active ? "active" : "not active"}
+                {currentUser?.active
+                  ? translate("active")
+                  : translate("not_active")}
               </Label>
             )}
 
@@ -225,14 +237,14 @@ export default function StudentNewEditForm({
                       color: "text.secondary",
                     }}
                   >
-                    {isEdit
-                      ? ""
-                      : "Live empty and we will generate it randomly"}
+                    {isEdit ? "" : translate("students_new_avatar_subtitle")}
                   </Typography>
                 }
               />
               <Stack>
-                <Typography variant="body2">Cover color</Typography>
+                <Typography variant="body2">
+                  {translate("students_new_cover_color")}
+                </Typography>
                 <Controller
                   control={methods.control}
                   name="cover"
@@ -241,7 +253,11 @@ export default function StudentNewEditForm({
                       sx={{ width: "100%", pt: 1 }}
                       {...field}
                       value={field.value}
-                      helperText={fieldState.invalid ? "Color is invalid" : ""}
+                      helperText={
+                        fieldState.invalid
+                          ? translate("messages_invalid_color")
+                          : ""
+                      }
                       error={fieldState.invalid}
                       isAlphaHidden
                       format="hex"
@@ -258,14 +274,13 @@ export default function StudentNewEditForm({
                   label={
                     <>
                       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                        Email Verified
+                        {translate("messages_email_verified")}
                       </Typography>
                       <Typography
                         variant="body2"
                         sx={{ color: "text.secondary" }}
                       >
-                        Disabling this will automatically send the user a
-                        verification email
+                        {translate("students_new_email_notification")}
                       </Typography>
                     </>
                   }
@@ -277,13 +292,13 @@ export default function StudentNewEditForm({
                   label={
                     <>
                       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                        User Verified
+                        {translate("messages_user_verified")}
                       </Typography>
                       <Typography
                         variant="body2"
                         sx={{ color: "text.secondary" }}
                       >
-                        Disabled user dont have access to resorce
+                        {translate("students_new_user_notification")}
                       </Typography>
                     </>
                   }
@@ -305,7 +320,7 @@ export default function StudentNewEditForm({
               sx={{ mb: 3 }}
               disabled={isEdit}
               name="email"
-              label="Email Address"
+              label={translate("email_address")}
             />
             {!isEdit ? (
               <RHFTextField
@@ -313,7 +328,7 @@ export default function StudentNewEditForm({
                 sx={{ mb: 3 }}
                 disabled={isEdit}
                 name="password"
-                label="Generated password"
+                label={translate("generated_passowrd")}
               />
             ) : null}
             <Box
@@ -326,10 +341,10 @@ export default function StudentNewEditForm({
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="first_name" label="First Name" />
-              <RHFTextField name="last_name" label="Last Name" />
-              <RHFTextField name="phone" label="Phone" />
-              <RHFSelect native name="country" label="Country">
+              <RHFTextField name="first_name" label={translate("first_name")} />
+              <RHFTextField name="last_name" label={translate("last_name")} />
+              <RHFTextField name="phone" label={translate("phone")} />
+              <RHFSelect native name="country" label={translate("country")}>
                 <option value="" />
                 {countries.map((country) => (
                   <option key={country.code} value={country.label}>
@@ -337,8 +352,8 @@ export default function StudentNewEditForm({
                   </option>
                 ))}
               </RHFSelect>
-              <RHFTextField name="city" label="City" />
-              <RHFTextField name="post_code" label="Zip" />
+              <RHFTextField name="city" label={translate("city")} />
+              <RHFTextField name="post_code" label={translate("zip")} />
             </Box>
 
             <RHFTextField
@@ -347,7 +362,7 @@ export default function StudentNewEditForm({
               rows={3}
               sx={{ h: 10 }}
               name="about"
-              label="About"
+              label={translate("about")}
             />
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
@@ -356,7 +371,9 @@ export default function StudentNewEditForm({
                 variant="contained"
                 loading={isSubmitting}
               >
-                {!isEdit ? "Create User" : "Save Changes"}
+                {!isEdit
+                  ? translate("actions_create_user")
+                  : translate("actions_save_changes")}
               </LoadingButton>
             </Stack>
           </Card>

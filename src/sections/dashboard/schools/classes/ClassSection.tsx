@@ -22,6 +22,7 @@ import {
   useDeleteClassesMutation,
   useUpdateClassesAvatarMutation,
 } from "src/redux/services/manager/classes-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";
@@ -34,6 +35,7 @@ export default function ClassesSection({
   schoolId,
 }: ClassesSectionProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
   const [createClass] = useCreateClassMutation();
   const [deleteClass] = useDeleteClassesMutation();
   const [updateClassAvatar] = useUpdateClassesAvatarMutation();
@@ -51,7 +53,7 @@ export default function ClassesSection({
         classId,
         schoolId,
       }).unwrap();
-      enqueueSnackbar("Class deleted");
+      enqueueSnackbar(translate("classes_class_deleted"));
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -84,9 +86,13 @@ export default function ClassesSection({
         file.append("file", randomAvatar);
         await updateClassAvatar({ schoolId, classId: data.id, file }).unwrap();
       }
-      enqueueSnackbar(`School ${data.name} created successfuly!`);
+      enqueueSnackbar(
+        translate("add_school_success_smg", {
+          name: data.name,
+        })
+      );
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -105,7 +111,7 @@ export default function ClassesSection({
           sx={{ alignItems: "center", display: "flex", cursor: "pointer" }}
           variant="subtitle2"
         >
-          Classes
+          {translate("classes")}
           <Iconify
             icon={open ? "eva:chevron-up-fill" : "eva:chevron-down-fill"}
           />

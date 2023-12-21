@@ -23,6 +23,7 @@ import {
   useUpdateLessonMutation,
 } from "src/redux/services/manager/lessons-manager";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValuesProps {
   name: string;
@@ -50,6 +51,7 @@ export default function CreateLesson({
   const [editLesson] = useUpdateLessonMutation();
   const [createLesson] = useCreateLessonMutation();
   const [addLessonToModule] = useAddLessonToModuleMutation();
+  const translate = useTranslate();
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -60,8 +62,8 @@ export default function CreateLesson({
   };
 
   const CreateCourseSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    description: Yup.string().required("Description is required"),
+    name: Yup.string().required(translate("required_name")),
+    description: Yup.string().required(translate("required_description")),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -88,7 +90,11 @@ export default function CreateLesson({
           });
         }
       }
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
+      enqueueSnackbar(
+        !isEdit
+          ? translate("messages_create_success")
+          : translate("messages_update_success")
+      );
       methods.reset();
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
@@ -104,7 +110,11 @@ export default function CreateLesson({
     <>
       <Box onClick={handleClickOpen}>{children}</Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isEdit ? "Edit" : "Create"} Lesson</DialogTitle>
+        <DialogTitle>
+          {isEdit
+            ? translate("lessons_edit_lesson")
+            : translate("lessons_create_lesson")}
+        </DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
@@ -116,34 +126,36 @@ export default function CreateLesson({
                   <RHFTextField
                     style={{ width: "350px" }}
                     name="name"
-                    label="Lesson name"
+                    label={translate("lessons_name")}
                     required
                   />
 
                   <RHFTextField
                     name="description"
-                    label="Lesson description"
+                    label={translate("lessons_description")}
                     required
                     multiline
                     rows={3}
                   />
 
-                  <RHFSelect
-                    native
-                    name="type"
-                    size="small"
-                  >
+                  <RHFSelect native name="type" size="small">
                     <option key="practical" value="practical">
-                      Practical
+                      {translate("lessons_practical")}
                     </option>
                     <option key="exercise" value="exercise">
-                      Exercise
+                      {translate("lessons_exercise")}
                     </option>
                   </RHFSelect>
 
-                  <RHFSwitch name="active" label="Lesson active" />
+                  <RHFSwitch
+                    name="active"
+                    label={translate("lessons_active")}
+                  />
 
-                  <RHFSwitch name="independent" label="Independent lesson" />
+                  <RHFSwitch
+                    name="independent"
+                    label={translate("lessons_inependent_lesson")}
+                  />
                 </Box>
                 <Box
                   sx={{
@@ -153,13 +165,15 @@ export default function CreateLesson({
                     mt: 7,
                   }}
                 >
-                  <Button onClick={handleClose}>Close</Button>
+                  <Button onClick={handleClose}>
+                    {translate("actions_close")}
+                  </Button>
                   <LoadingButton
                     type="submit"
                     variant="contained"
                     loading={loading}
                   >
-                    Save
+                    {translate("actions_save")}
                   </LoadingButton>
                 </Box>
               </Card>

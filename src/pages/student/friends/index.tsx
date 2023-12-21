@@ -21,6 +21,7 @@ import {
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import FilterFriends from "./filter";
 
@@ -38,6 +39,7 @@ export default function Friends(): React.ReactElement {
     },
     FilterMode.global
   );
+  const translate = useTranslate();
   const { data, isLoading, isFetching } =
     useGetFriendsStudentContentQuery(filters);
 
@@ -91,8 +93,14 @@ export default function Friends(): React.ReactElement {
             <CustomBreadcrumbs
               heading=""
               links={[
-                { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-                { name: "Friends", href: STUDENT_PATH_DASHBOARD.friends.root },
+                {
+                  name: translate("home"),
+                  href: STUDENT_PATH_DASHBOARD.class.root,
+                },
+                {
+                  name: translate("friends"),
+                  href: STUDENT_PATH_DASHBOARD.friends.root,
+                },
               ]}
             />
             <FilterFriends filters={filters} setFilter={setFilter} />
@@ -132,7 +140,7 @@ export default function Friends(): React.ReactElement {
           </SimpleInfiniteList>
         </Box>
         {!isLoading && !isFetching && !data?.data.length ? (
-          <EmptyContent title="You have no friends yet" />
+          <EmptyContent title={translate("friends_no_friends")} />
         ) : null}
       </Container>
     </>

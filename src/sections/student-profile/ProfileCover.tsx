@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import { CustomAvatar } from "@components";
 import { getLinearGradient } from "@utils";
+import { useTranslate } from "src/utils/translateHelper";
 
 const StyledInfo = styled("div")(({ theme }) => ({
   left: 0,
@@ -34,6 +35,8 @@ export default function ProfileCover({
   if (!cover) {
     cover = "#5be49b";
   }
+
+  const translate = useTranslate();
 
   return (
     <Stack
@@ -70,7 +73,7 @@ export default function ProfileCover({
             {name}&nbsp;{lastName}
           </Typography>
 
-          <Typography sx={{ opacity: 0.72 }}>Class</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{translate("class")}</Typography>
         </Box>
       </StyledInfo>
     </Stack>

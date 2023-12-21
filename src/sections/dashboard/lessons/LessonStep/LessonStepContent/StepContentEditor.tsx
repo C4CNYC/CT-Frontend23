@@ -16,6 +16,7 @@ import {
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
 import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { LessonContentContext } from "./LessonContent.context";
 import SkeletonContentCode from "./SkeletonContentCode";
@@ -44,6 +45,7 @@ export default function StepContentEditor(): React.ReactElement {
   const { lessonId, stepId } = useRouter().query;
   const { enqueueSnackbar } = useSnackbar();
   const [locked, setLocked] = useState(false);
+  const translate = useTranslate();
   const [updateContent] = useUpdateLessonContentMutation();
   const { data: integrations, isLoading: isIntegrationLoading } =
     useGetLessonIntegrationsQuery(
@@ -72,9 +74,9 @@ export default function StepContentEditor(): React.ReactElement {
         type: bodyType,
         body,
       }).unwrap();
-      enqueueSnackbar("Content updated");
+      enqueueSnackbar(translate("slide_content_updated"));
     } catch (e: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -136,7 +138,7 @@ export default function StepContentEditor(): React.ReactElement {
                 aria-label="Standard"
                 sx={{ gap: 1 }}
               >
-                <MdOutlinePermMedia size="20px" /> Standard
+                <MdOutlinePermMedia size="20px" /> {translate("slide_standard")}
               </ToggleButton>
               <ToggleButton
                 value={LessonContentType.Code}
@@ -161,7 +163,7 @@ export default function StepContentEditor(): React.ReactElement {
                   fontSize: 12,
                 }}
               >
-                Select slide format
+                {translate("slide_select_format")}
               </span>
             </div>
           </div>
@@ -174,7 +176,7 @@ export default function StepContentEditor(): React.ReactElement {
             }}
           >
             <CgScreen size="30px" />
-            Preview
+            {translate("preview")}
           </div>
         </Box>
         <Box

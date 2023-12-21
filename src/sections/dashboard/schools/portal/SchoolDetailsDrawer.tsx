@@ -5,6 +5,7 @@ import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
 
 import { Scrollbar } from "@components";
 import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { countries } from "../../../../assets/data";
 import TeacherSection from "../../organization/schools/TeachersSection";
@@ -32,6 +33,8 @@ export default function SchoolDetailsDrawer({
     if (country) return country.label;
     return "";
   }, [item]);
+
+  const translate = useTranslate();
 
   return (
     <>
@@ -64,7 +67,9 @@ export default function SchoolDetailsDrawer({
             justifyContent="space-between"
             sx={{ p: 2.5 }}
           >
-            <Typography variant="h4"> School Info </Typography>
+            <Typography variant="h4">
+              {translate("schools_school_info")}{" "}
+            </Typography>
           </Stack>
 
           <Stack spacing={2.5} justifyContent="center" sx={{ p: 2.5 }}>

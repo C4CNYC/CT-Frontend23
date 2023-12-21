@@ -30,6 +30,7 @@ import { useSelector } from "src/redux/store";
 import BrowserView, {
   CodeDocument,
 } from "src/sections/code-editor-panel/work-space/blocks/view-block/browser-view/index";
+import { useTranslate } from "src/utils/translateHelper";
 
 import BaseBlock from "../base-block";
 import { LOADER_SCREEN_SX, getBoxSx, getCarouselSettings } from "./constants";
@@ -55,7 +56,6 @@ interface IView {
   connectIntegrations: (body: string) => CodeDocument | null;
 }
 
-const title = "Instructions";
 const icon = <SlDirections size="20px" color="#43D4DD" />;
 
 const SliderBlock: FC<ISliderBlock> = ({
@@ -72,8 +72,10 @@ const SliderBlock: FC<ISliderBlock> = ({
   const nextStepAble = useSelector(
     (state) => state.codePanelGlobal.nextStepAble
   );
+  const translate = useTranslate();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
 
+  const title = translate("instructions");
   const takeHeaderSettings = useCallback((isOpen: boolean) => {
     setIsOpenHeader(isOpen);
   }, []);
@@ -142,7 +144,7 @@ const SliderBlock: FC<ISliderBlock> = ({
       takeHeaderSettings={takeHeaderSettings}
     >
       {_.isEmpty(data) ? (
-        <EmptyContent title="No Data" />
+        <EmptyContent title={translate("messages_no_data")} />
       ) : (
         <>
           <Box className="sliderTour" height="100%" sx={boxSx}>
@@ -183,13 +185,15 @@ const SliderBlock: FC<ISliderBlock> = ({
 };
 
 const View: FC<IView> = ({ type, body, connectIntegrations }) => {
+  const translate = useTranslate();
+
   switch (type) {
     case "editable":
       return <ProsaMirrorView multimediaValue={body} />;
     case "code":
       return <BrowserView document={connectIntegrations(body)} />;
     default:
-      return <>CONTENT TYPE NOT SUPPORTED</>;
+      return <>{translate("messages_content_type_not_supported")}</>;
   }
 };
 

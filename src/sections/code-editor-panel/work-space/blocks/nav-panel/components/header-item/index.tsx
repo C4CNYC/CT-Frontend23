@@ -9,6 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 interface HeaderItemProps {
   onClick: () => void;
   activeUsers: number;
@@ -20,6 +22,8 @@ const HeaderItem: FC<HeaderItemProps> = ({
   activeUsers,
   activeAdmins = 0,
 }) => {
+  const translate = useTranslate();
+
   return (
     <ListItem sx={LIST_ITEM_SX}>
       <ListItemIcon onClick={onClick}>
@@ -27,15 +31,19 @@ const HeaderItem: FC<HeaderItemProps> = ({
       </ListItemIcon>
 
       <Stack sx={STACK_SX}>
-        <Typography sx={TITLE_SX}>The Quick Rabbits</Typography>
+        <Typography sx={TITLE_SX}>{translate("quick_rabbits")}</Typography>
 
         <Stack direction="row">
           <Badge sx={BADGE_SX} badgeContent={""} color="success">
-            <Typography sx={USER_SUBTITLE_SX}>{activeUsers} live</Typography>
+            <Typography sx={USER_SUBTITLE_SX}>
+              {activeUsers} {translate("live")}
+            </Typography>
           </Badge>
 
           <Badge sx={BADGE_SX} badgeContent={""} color="success">
-            <Typography sx={SUBTITLE_SX}>{activeAdmins} admin</Typography>
+            <Typography sx={SUBTITLE_SX}>
+              {activeAdmins} {translate("admin")}
+            </Typography>
           </Badge>
         </Stack>
       </Stack>

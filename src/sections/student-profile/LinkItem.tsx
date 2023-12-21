@@ -16,6 +16,7 @@ import {
   useRemoveSocialsMutation,
   useUpdateSocialsMutation,
 } from "src/redux/services/manager/socials-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 import LinkSelect from "./LinkSelect";
 
@@ -43,9 +44,12 @@ export default function LinkItem({
   socialItem,
 }: Props): React.ReactElement {
   const [edit, setEdit] = useState(true);
-  const [removeSocial, { isLoading: isRemoveLoading }] = useRemoveSocialsMutation();
-  const [editSocial, { isLoading: isUpdateLoading }] = useUpdateSocialsMutation();
+  const [removeSocial, { isLoading: isRemoveLoading }] =
+    useRemoveSocialsMutation();
+  const [editSocial, { isLoading: isUpdateLoading }] =
+    useUpdateSocialsMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
 
   const defaultValues = {
     link: socialItem.link,
@@ -65,7 +69,7 @@ export default function LinkItem({
         ...data,
         studentId,
       }).unwrap();
-      enqueueSnackbar("Social link edited");
+      enqueueSnackbar(translate("networks_tab_edited_msg"));
       setEdit(!edit);
     } catch (error) {
       const typedError = error as APIError;
@@ -80,7 +84,7 @@ export default function LinkItem({
         socialId,
         studentId,
       }).unwrap();
-      enqueueSnackbar("Social link deleted");
+      enqueueSnackbar(translate("networks_tab_deleted_msg"));
     } catch (error) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
@@ -109,7 +113,7 @@ export default function LinkItem({
               pb: 2,
             }}
             name="name"
-            label="Name"
+            label={translate("name")}
             disabled={edit}
           />
           <FormGroup row sx={{ mb: 4 }}>
@@ -147,7 +151,7 @@ export default function LinkItem({
                 },
               }}
               name="link"
-              label="Link"
+              label={translate("link")}
               required
               disabled={edit}
             />
@@ -165,7 +169,7 @@ export default function LinkItem({
                 height: "40px",
               }}
             >
-              Save
+              {translate("actions_save")}
             </LoadingButton>
             <Box sx={{ mt: { xs: 2, sm: 2, md: 0 } }}>
               <LoadingButton
@@ -175,7 +179,7 @@ export default function LinkItem({
                 }}
                 sx={{ ml: { xs: 0, sm: 0, md: 2 }, height: "40px" }}
               >
-                {edit ? "Edit" : "Cancel"}
+                {edit ? translate("actions_edit") : translate("actions_cancel")}
               </LoadingButton>
               <LoadingButton
                 sx={{ ml: 2, mr: 2, height: "40px" }}
@@ -186,7 +190,7 @@ export default function LinkItem({
                   await handleDeleteSocial(socialItem.id ?? "");
                 }}
               >
-                Delete
+                {translate("actions_delete")}
               </LoadingButton>
             </Box>
           </FormGroup>

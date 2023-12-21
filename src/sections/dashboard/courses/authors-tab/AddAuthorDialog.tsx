@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box, Dialog, DialogTitle, IconButton } from "@mui/material";
 
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import AuthorForm from "./AuthorForm";
 
@@ -19,6 +20,7 @@ export default function AddAuthorDialog({
   defaultValues,
 }: IAddAuthorDialogProps): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
+  const translate = useTranslate();
 
   const handleOpenDialog = (): void => {
     setOpen(true);
@@ -43,7 +45,9 @@ export default function AddAuthorDialog({
         }}
       >
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <DialogTitle variant="h5">Create author</DialogTitle>
+          <DialogTitle variant="h5">
+            {translate("actions_create_authur")}
+          </DialogTitle>
           <IconButton onClick={handleCloseDialog} sx={{ mr: 2 }}>
             <CloseIcon />
           </IconButton>
