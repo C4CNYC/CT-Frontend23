@@ -24,8 +24,6 @@ import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
-
 import { useManagerGetCourseQuery } from "../../redux/services/manager/courses-manager";
 
 type CourseType = ICourse & BaseResponseInterface;
@@ -40,7 +38,7 @@ export default function ClassCoursesAutocomplete({
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
-  const translate = useTranslate();
+
   const [addCourse] = useAddCourseToClassMutation();
   const [removeCourse] = useRemoveCourseFromClassMutation();
   const { data: classCourses } = useManagerGetCourseQuery(
@@ -70,16 +68,16 @@ export default function ClassCoursesAutocomplete({
       switch (reason) {
         case "selectOption": {
           await addCourse(payload).unwrap();
-          enqueueSnackbar(translate("classes_course_added_msg"));
+          enqueueSnackbar("course added to class");
           return;
         }
         case "removeOption": {
           await removeCourse(payload).unwrap();
-          enqueueSnackbar(translate("classes_course_removed_msg"));
+          enqueueSnackbar("course removed from class");
         }
       }
     } catch {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
 
@@ -115,9 +113,7 @@ export default function ClassCoursesAutocomplete({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => (
-        <TextField {...params} placeholder={translate("courses")} />
-      )}
+      renderInput={(params) => <TextField {...params} placeholder="Courses" />}
       renderOption={(props, recipient, { inputValue }) => {
         const { name, cover } = recipient;
         const matches = match(name, inputValue);

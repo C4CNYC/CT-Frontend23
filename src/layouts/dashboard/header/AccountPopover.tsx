@@ -30,7 +30,6 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { useProfileQuery } from "src/redux/services/auth";
 import { Role } from "src/redux/services/enums/role.enum";
 import { setStudentMode } from "src/redux/slices/global";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 
@@ -44,7 +43,6 @@ export default function AccountPopover(): React.ReactElement {
   const { logout } = useAuthContext();
   const { replace, push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const { data: profile, isLoading } = useProfileQuery();
 
@@ -58,9 +56,7 @@ export default function AccountPopover(): React.ReactElement {
       replace(PATH_AUTH.signIn);
       setOpenPopover(null);
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_unable_to_logout"), {
-        variant: "error",
-      });
+      enqueueSnackbar("Unable to logout!", { variant: "error" });
     }
   };
 
@@ -89,9 +85,15 @@ export default function AccountPopover(): React.ReactElement {
         }}
       >
         <CustomAvatar
-          src={profile?.avatar}
-          alt={profile?.first_name}
-          name={profile?.first_name}
+          src={
+            profile?.avatar
+          }
+          alt={
+            profile?.first_name
+          }
+          name={
+            profile?.first_name
+          }
         />
       </IconButtonAnimate>
 
@@ -138,10 +140,12 @@ export default function AccountPopover(): React.ReactElement {
         <Stack sx={{ p: 1 }}>
           <MenuItem
             onClick={() => {
-              handleClickItem(STUDENT_PATH_PAGE.profile);
+              handleClickItem(
+                STUDENT_PATH_PAGE.profile
+              );
             }}
           >
-            {translate("profile")}
+            Profile
           </MenuItem>
         </Stack>
 
@@ -157,9 +161,7 @@ export default function AccountPopover(): React.ReactElement {
                 reduxDispatch(setStudentMode(!isStudentMode));
               }}
             >
-              {isStudentMode
-                ? translate("manager_account")
-                : translate("student_account")}
+              {isStudentMode ? "Manager Account" : "Student Account"}
             </MenuItem>
           </Stack>
         </RoleBasedGuard>
@@ -171,7 +173,7 @@ export default function AccountPopover(): React.ReactElement {
                 handleClickItem(MANAGER_PATH_DASHBOARD.organization.general);
               }}
             >
-              {translate("organization_setting")}
+              Organization Setting
             </MenuItem>
           </Stack>
         </RoleBasedGuard>
@@ -179,7 +181,7 @@ export default function AccountPopover(): React.ReactElement {
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
-          {translate("logout")}
+          Logout
         </MenuItem>
       </MenuPopover>
     </>

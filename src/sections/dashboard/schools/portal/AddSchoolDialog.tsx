@@ -15,9 +15,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { FormProvider, RHFSelect, RHFTextField } from "@components";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin/school-amdin";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { countries } from "../../../../assets/data";
+import { useLocales } from "../../../../locales";
 
 interface FormValuesProps {
   name: string;
@@ -26,7 +26,7 @@ interface FormValuesProps {
 }
 
 export default function AddSchoolDialog(): React.ReactElement {
-  const translate = useTranslate();
+  const { translate } = useLocales();
 
   const [createSchool, { isLoading }] = useCreateOrganizationSchoolMutation();
   const [open, setOpen] = useState(false);
@@ -40,9 +40,9 @@ export default function AddSchoolDialog(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
 
   const UpdateUserSchema = Yup.object().shape({
-    name: Yup.string().required(translate("required_name")),
-    country: Yup.string().required(translate("required_country")),
-    city: Yup.string().required(translate("required_city")),
+    name: Yup.string().required("Name is required"),
+    country: Yup.string().required("Country is required"),
+    city: Yup.string().required("City is required"),
   });
 
   const defaultValues = {
@@ -62,14 +62,14 @@ export default function AddSchoolDialog(): React.ReactElement {
         ...data,
       }).unwrap();
       enqueueSnackbar(
-        translate("add_school_success_smg", {
+        `${translate("organizations.schools_page.create_dialog.success_msg", {
           name: data.name,
-        })
+        })}`
       );
       handleClose();
       methods.reset();
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar(`${translate("messages_error")}`, { variant: "error" });
     }
   };
 
@@ -80,10 +80,10 @@ export default function AddSchoolDialog(): React.ReactElement {
         variant="contained"
         startIcon={<AddIcon />}
       >
-        {translate("schools_add_aschool")}
+        {`${translate("organizations.schools_page.create_school_btn")}`}
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{translate("schools_add_aschool")}</DialogTitle>
+        <DialogTitle>Add School</DialogTitle>
         <DialogContent sx={{ p: 0 }}>
           <FormProvider
             methods={methods}
@@ -95,14 +95,20 @@ export default function AddSchoolDialog(): React.ReactElement {
                   <Box rowGap={3} display="grid">
                     <RHFTextField
                       name="name"
-                      label={translate("add_school_name")}
+                      label={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.school_name"
+                      )}`}
                       required
                     />
                     <RHFSelect
                       native
                       name="country"
-                      label={translate("country")}
-                      placeholder={translate("country")}
+                      label={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.country"
+                      )}`}
+                      placeholder={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.country"
+                      )}`}
                     >
                       <option value="" />
                       {countries.map((country) => (
@@ -113,7 +119,9 @@ export default function AddSchoolDialog(): React.ReactElement {
                     </RHFSelect>
                     <RHFTextField
                       name="city"
-                      label={translate("city")}
+                      label={`${translate(
+                        "organizations.schools_page.create_dialog.inputs.city"
+                      )}`}
                       required
                     />
                   </Box>
@@ -125,15 +133,15 @@ export default function AddSchoolDialog(): React.ReactElement {
                       mt: 7,
                     }}
                   >
-                    <Button onClick={handleClose}>
-                      {translate("actions_close")}
-                    </Button>
+                    <Button onClick={handleClose}>{`${translate(
+                      "actions_close"
+                    )}`}</Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
                       loading={isLoading}
                     >
-                      {translate("actions_save_changes")}
+                      {`${translate("actions_save_changes")}`}
                     </LoadingButton>
                   </Box>
                 </Card>

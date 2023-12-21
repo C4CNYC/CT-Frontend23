@@ -23,12 +23,16 @@ import {
   useCreateLessonContentValidationManagerMutation,
   useUpdateLessonContentValidationManagerMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValuesProps {
   regex: string;
   name: string;
 }
+
+const CreateLessonDemonSchema = Yup.object().shape({
+  regex: Yup.string().required("Regex is required"),
+  name: Yup.string().required("Name is required"),
+});
 
 interface Props {
   children?: React.ReactElement;
@@ -48,11 +52,6 @@ export default function CreateEditValidation({
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false);
   const isEdit = Boolean(id);
-  const translate = useTranslate();
-  const CreateLessonDemonSchema = Yup.object().shape({
-    regex: Yup.string().required(translate("required_regex")),
-    name: Yup.string().required(translate("required_name")),
-  });
 
   const { enqueueSnackbar } = useSnackbar();
   const [updateRule, { isLoading: updageLoading }] =
@@ -79,13 +78,11 @@ export default function CreateEditValidation({
         }).unwrap();
       }
       enqueueSnackbar(
-        id
-          ? translate("validation_rule_updated")
-          : translate("validation_rule_created")
+        `Your validation rule is ${id ? "update" : "created"} successfully`
       );
       setOpenDialog(false);
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("sorry something went wrong", { variant: "error" });
     }
   };
 
@@ -110,9 +107,7 @@ export default function CreateEditValidation({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            {id
-              ? translate("actions_update_rule")
-              : translate("actions_create_rule")}
+            {id ? "Update " : "Create "} Rule
           </DialogTitle>
           <IconButton
             onClick={() => {
@@ -130,16 +125,8 @@ export default function CreateEditValidation({
           >
             <Grid item xs={12} md={8}>
               <Card sx={{ p: 3 }}>
-                <RHFTextField
-                  sx={{ mb: 3 }}
-                  name="name"
-                  label={translate("name")}
-                />
-                <RHFTextField
-                  sx={{ mb: 3 }}
-                  name="regex"
-                  label={translate("regex")}
-                />
+                <RHFTextField sx={{ mb: 3 }} name="name" label="Name" />
+                <RHFTextField sx={{ mb: 3 }} name="regex" label="Regex" />
                 <Box
                   sx={{
                     display: "flex",
@@ -153,14 +140,14 @@ export default function CreateEditValidation({
                       setOpenDialog(false);
                     }}
                   >
-                    {translate("actions_close")}
+                    Close
                   </Button>
                   <LoadingButton
                     type="submit"
                     variant="contained"
                     loading={updageLoading || createLoading}
                   >
-                    {translate("actions_save")}
+                    Save
                   </LoadingButton>
                 </Box>
               </Card>

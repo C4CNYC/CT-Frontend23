@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
@@ -12,24 +12,17 @@ import { useDebounceCallback } from "@hooks";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
 
 import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";
-import { ILessonContent } from "../../../../../redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
-import MenuItems from "src/components/editor/MenuItems";
 
 interface Props {
   content: string;
   integrations: IIntegration[];
   onSubmit: (value: string) => void;
-  data: (ILessonContent & BaseResponseInterface);
-  lessonId: string;
 }
 
 export default function StepCode({
   content,
   integrations,
   onSubmit,
-  data,
-  lessonId
 }: Props): React.ReactElement {
   const [value, setValue] = useState<string>("");
   const [staticValue, setStaticValue] = useState<string>("");
@@ -61,7 +54,6 @@ export default function StepCode({
       allowResize={false}
     >
       <Box position="relative">
-        <MenuItems data={data} lessonId={lessonId} style={{ mb: 1, mt: 1, ml: 2 }} />
         <CodeMirror
           value={value}
           theme={dracula}
@@ -79,7 +71,7 @@ export default function StepCode({
           }}
           sx={{
             position: "absolute",
-            top: 65,
+            top: 35,
             right: 35,
             color: "#7963d2",
             border: "1px solid rgba(121, 99, 210, 0.5)",

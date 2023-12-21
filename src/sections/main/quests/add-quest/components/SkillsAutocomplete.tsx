@@ -26,7 +26,6 @@ import {
   useUpdateSkillAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface ISkillsAutocompleteProps {
   setAssignmentsSkillsId: (s: ISkill[]) => void;
@@ -47,7 +46,7 @@ export default function SkillsAutocomplete({
     query: { schoolId, assignmentId },
   } = useRouter();
   const { data, isLoading } = useGetSkillQuery({});
-  const translate = useTranslate();
+
   const [addSkill] = useUpdateSkillAssignmentMutation();
   const [removeSkill] = useRemoveSkillAssignmentMutation();
 
@@ -69,20 +68,12 @@ export default function SkillsAutocomplete({
         switch (reason) {
           case "selectOption": {
             await addSkill(payload).unwrap();
-            enqueueSnackbar(
-              translate("messages_sth_added", {
-                name: details?.option.name ?? "",
-              })
-            );
+            enqueueSnackbar(`${details?.option.name ?? ""} added`);
             return;
           }
           case "removeOption": {
             await removeSkill(payload).unwrap();
-            enqueueSnackbar(
-              translate("messages_sth_removed", {
-                name: details?.option.name ?? "",
-              })
-            );
+            enqueueSnackbar(`${details?.option.name ?? ""} removed`);
           }
         }
       } catch (error) {
@@ -116,7 +107,7 @@ export default function SkillsAutocomplete({
   return (
     <FormGroup>
       <Typography variant={labelProps ?? "h5"} gutterBottom>
-        {translate("tags")}:
+        Tags:
       </Typography>
       <Autocomplete<any, true>
         multiple
@@ -187,7 +178,7 @@ export default function SkillsAutocomplete({
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder={translate("tags")}
+            placeholder="Tags"
             helperText={
               <Typography
                 variant="caption"
@@ -198,7 +189,7 @@ export default function SkillsAutocomplete({
                 }}
               >
                 <TbInfoCircleFilled color="#D9D9D9" size={22} />
-                {translate("assignments_add_tags_info")}
+                This will help others know what the theme is.
               </Typography>
             }
           />

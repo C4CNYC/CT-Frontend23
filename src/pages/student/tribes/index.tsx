@@ -11,7 +11,6 @@ import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 enum TabType {
   Active = "active",
@@ -25,7 +24,6 @@ Tribes.getLayout = (page: React.ReactElement) => (
 export default function Tribes(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const [currentTab, setCurrentTab] = useState(TabType.Active);
-  const translate = useTranslate();
 
   const { data, isLoading } = useGetStudentClassesQuery({});
 
@@ -34,20 +32,14 @@ export default function Tribes(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate("sidebar_menu_tribes")} | CodeTribe</title>
+        <title>Tribes | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate("sidebar_menu_tribes"),
-              href: STUDENT_PATH_DASHBOARD.tribes.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            { name: "Tribes", href: STUDENT_PATH_DASHBOARD.tribes.root },
           ]}
         />
         <Container disableGutters>
@@ -77,16 +69,16 @@ export default function Tribes(): React.ReactElement {
             >
               <Tab
                 value={TabType.Active}
-                label={translate("tribes_my")}
+                label="My Tribes"
                 icon={<TribesCounter count={data?.data.length ?? 0} />}
                 iconPosition="end"
               />
-              {/* <Tab
+              <Tab
                 value={TabType.Pending}
                 label="Pending Tribes"
                 icon={<TribesCounter count={0} />}
                 iconPosition="end"
-              /> */}
+              />
             </Tabs>
           </Box>
           <TribesFillter />

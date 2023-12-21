@@ -1,3 +1,4 @@
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -7,6 +8,7 @@ import {
   Box,
   Button,
   Collapse,
+  Link,
   Stack,
   Typography,
   useMediaQuery,
@@ -15,7 +17,6 @@ import {
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 import CourseAvatar from "./CourseAvarar";
 import CourseButtons from "./CourseButtons";
@@ -23,6 +24,7 @@ import CourseChip from "./CourseChip";
 import CourseHeader from "./CourseHeader";
 import CourseInfo from "./CourseInfo";
 import CourseStatistics from "./CourseStatistics";
+import { COURSE_DETAILS_WRAPPER_SX, COURSE_ITEM_WRAPPER_SX } from "./constants";
 
 interface Props {
   course: ICourseElement;
@@ -35,108 +37,93 @@ export default function CoursesItem({ course }: Props): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(false);
-  const translate = useTranslate();
 
   const redirect = (): void => {
     push(`${STUDENT_PATH_DASHBOARD.courses.course(course.id)}`);
   };
+  const coursePath = STUDENT_PATH_DASHBOARD.courses.course(course.id);
+
   return (
-    <Stack
-      sx={{
-        background: "#ECF4FF",
-        borderRadius: "25px",
-        p: {
-          xs: "20px 20px 20px 20px",
-          sm: "30px 20px 20px 20px",
-          md: "30px 55px 37px 40px",
-        },
-      }}
+    <Link
+      component={NextLink}
+      href={coursePath}
+      underline="none"
+      color="initial"
     >
-      <CourseHeader progress={course.progress} />
-      <Box
+      <Stack
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
+          ...COURSE_ITEM_WRAPPER_SX,
+          transition: (theme) => theme.transitions.create("all"),
         }}
       >
+        <CourseHeader progress={course.progress} />
         <Box
           sx={{
-            width: "100%",
-            maxWidth: { xs: "none", sm: "none", md: "600px" },
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          <Typography
-            variant="h4"
-            sx={{ textTransform: "uppercase", pb: "10px" }}
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: { xs: "none", sm: "none", md: "600px" },
+            }}
           >
-            {course.name}
-          </Typography>
-          <Typography variant="body2" sx={{ pb: !open ? 1 : 0 }}>
-            {course.description.length > MAX_DESCRIPTION_LENGTH && !open
-              ? `${course.description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
-              : course.description}
-          </Typography>
-          <Collapse in={open}>
-            <Stack
-              direction="row"
+            <Typography
+              variant="h4"
+              sx={{ textTransform: "uppercase", pb: "10px" }}
+            >
+              {course.name}
+            </Typography>
+            <Typography variant="body2" sx={{ pb: !open ? 1 : 0 }}>
+              {course.description.length > MAX_DESCRIPTION_LENGTH && !open
+                ? `${course.description.slice(0, MAX_DESCRIPTION_LENGTH)}... `
+                : course.description}
+            </Typography>
+            <Collapse in={open}>
+              <Stack direction="row" sx={COURSE_DETAILS_WRAPPER_SX}>
+                {["HTML", "CSS", "BASICS", "AUTO-CHECKED"].map((el) => (
+                  <CourseChip text={el} key={el} />
+                ))}
+              </Stack>
+              <CourseStatistics likesCount={course.likes_count ?? 0} />
+            </Collapse>
+            <Button
               sx={{
-                gap: "15px",
-                flexWrap: "wrap",
-                mt: "25px",
-                mb: {
-                  xs: "10px",
-                  sm: "15px",
-                  md: "15px",
+                fontSize: "1rem",
+                color: "#364954",
+                "&:hover": {
+                  background: "none",
                 },
               }}
+              onClick={(e) => {
+                setOpen(!open);
+                e.stopPropagation();
+                e.preventDefault();
+              }}
             >
-              {["HTML", "CSS", "BASICS", "AUTO-CHECKED"].map((el) => (
-                <CourseChip text={el} key={el} />
-              ))}
-            </Stack>
-            <CourseStatistics
-              likesCount={
-                course.initial_likes + parseInt(course.likes_count ?? "0")
-              }
-              enrolledCount={course.initial_enrolled}
-              starsCount={course.initial_stars}
+              {open ? "Show less" : "See more"}
+              {open ? (
+                <SlArrowUp style={{ marginLeft: "10px" }} />
+              ) : (
+                <SlArrowDown style={{ marginLeft: "10px" }} />
+              )}
+            </Button>
+            <CourseButtons
+              redirect={redirect}
+              progress={course.progress}
+              courseId={course.id}
             />
-          </Collapse>
-          <Button
-            sx={{
-              fontSize: "1rem",
-              color: "#364954",
-              "&:hover": {
-                background: "none",
-              },
-            }}
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            {open
-              ? translate("actions_show_less")
-              : translate("actions_see_more")}
-            {open ? (
-              <SlArrowUp style={{ marginLeft: "10px" }} />
-            ) : (
-              <SlArrowDown style={{ marginLeft: "10px" }} />
+            {isMobile && (
+              <Stack alignItems="center" mb={3} mt={1}>
+                <CourseAvatar course={course} />
+              </Stack>
             )}
-          </Button>
-          <CourseButtons
-            redirect={redirect}
-            progress={course.progress}
-            courseId={course.id}
-          />
-          {isMobile && (
-            <Stack alignItems="center" mb={3} mt={1}>
-              <CourseAvatar course={course} />
-            </Stack>
-          )}
-          <CourseInfo course={course} />
+            <CourseInfo course={course} />
+          </Box>
+          {!isMobile && <CourseAvatar course={course} />}
         </Box>
-        {!isMobile && <CourseAvatar course={course} />}
-      </Box>
-    </Stack>
+      </Stack>
+    </Link>
   );
 }

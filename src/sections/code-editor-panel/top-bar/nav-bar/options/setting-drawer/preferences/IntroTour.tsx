@@ -1,7 +1,5 @@
 import { Button } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 import BasePreference from "./BasePreference";
 
 interface IIntroTour {
@@ -9,12 +7,10 @@ interface IIntroTour {
 }
 
 const IntroTour = ({ onStartIntro }: IIntroTour): React.ReactElement => {
-  const translate = useTranslate();
-
   return (
-    <BasePreference title={translate("intro_tour")}>
+    <BasePreference title="Intro Tour">
       <Button onClick={onStartIntro} fullWidth variant="contained">
-        {translate("launch_intro_tour")}
+        Launch Intro Tour
       </Button>
     </BasePreference>
   );

@@ -48,21 +48,18 @@ import {
   useDeleteAssignmentMutation,
   useGetAssignmentListQuery,
 } from "src/redux/services/manager/assignments-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import FilterAssignments from "./filter";
 
+const TYPE_OPTIONS = ["all", ...Object.values(AssignmentTypes)];
+
 const TABLE_HEAD = [
-  {
-    id: "name",
-    label: "assignments_name_and_notes",
-    align: "left",
-  },
-  { id: "type", label: "type", align: "left" },
-  { id: "status", label: "status", align: "left" },
-  { id: "starts", label: "starts_at", align: "left", width: 140 },
-  { id: "due", label: "due", align: "left", width: 140 },
-  { id: "publish", label: "published", align: "left" },
+  { id: "name", label: "Name & Notes", align: "left" },
+  { id: "type", label: "Type", align: "left" },
+  { id: "status", label: "Status", align: "left" },
+  { id: "starts", label: "Starts at", align: "left", width: 140 },
+  { id: "due", label: "Due", align: "left", width: 140 },
+  { id: "publish", label: "Publist", align: "left" },
   { id: "" },
 ];
 
@@ -71,9 +68,6 @@ AsssignmentsListPage.getLayout = (page: React.ReactElement) => (
 );
 
 export default function AsssignmentsListPage() {
-  const translate = useTranslate();
-  const TYPE_OPTIONS = ["all", ...Object.values(AssignmentTypes)];
-
   const { query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const { themeStretch } = useSettingsContext();
@@ -153,45 +147,40 @@ export default function AsssignmentsListPage() {
     }
   };
   const TABS = [
-    {
-      value: "all",
-      label: "all",
-      color: "info",
-      count: tableData?.length,
-    },
+    { value: "all", label: "All", color: "info", count: tableData?.length },
     {
       value: Status.open,
-      label: "open",
+      label: "Open",
       color: "success",
       count: getLengthByStatus(Status.open),
     },
     {
       value: Status.ending,
-      label: "ending_soon",
+      label: "Ending Soon",
       color: "warning",
       count: getLengthByStatus(Status.ending),
     },
     {
       value: Status.overdue,
-      label: "overdue",
+      label: "Overdue",
       color: "error",
       count: getLengthByStatus(Status.overdue),
     },
     {
       value: Status.closed,
-      label: "closed",
+      label: "Closed",
       color: "default",
       count: getLengthByStatus(Status.closed),
     },
     {
       value: Publish.published,
-      label: "published",
+      label: "Published",
       color: "info",
       count: getLengthByStatus(Publish.published),
     },
     {
       value: Publish.draft,
-      label: "draft",
+      label: "Draft",
       color: "default",
       count: getLengthByStatus(Publish.draft),
     },
@@ -229,7 +218,7 @@ export default function AsssignmentsListPage() {
         schoolId: query.schoolId as string,
         assignmentId,
       }).unwrap();
-      enqueueSnackbar(translate("assignments_delete_msg"));
+      enqueueSnackbar("Assignment deleted!");
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
@@ -284,19 +273,16 @@ export default function AsssignmentsListPage() {
   return (
     <>
       <Head>
-        <title> {translate("assignments")} | CodeTribe</title>
+        <title> Assignments | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate("assignments"),
+              name: "Assignments",
               href: MANAGER_PATH_DASHBOARD.school.assignments,
             },
           ]}
@@ -319,7 +305,7 @@ export default function AsssignmentsListPage() {
                   iconPosition="end"
                   key={tab.value}
                   value={tab.value}
-                  label={translate(tab.label)}
+                  label={tab.label}
                   icon={
                     <Label color={tab.color} sx={{ mr: 1 }}>
                       {tab.count}
@@ -362,7 +348,7 @@ export default function AsssignmentsListPage() {
                 }}
                 action={
                   <Stack direction="row">
-                    <Tooltip title={translate("actions_delete")}>
+                    <Tooltip title="Delete">
                       <IconButton color="error" onClick={handleOpenConfirm}>
                         <Iconify icon="eva:trash-2-outline" />
                       </IconButton>
@@ -441,12 +427,11 @@ export default function AsssignmentsListPage() {
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
+        title="Delete"
         content={
           <>
-            {translate("members_delete_dialog_content", {
-              items: selected.length,
-            })}
+            Are you sure want to delete <strong> {selected.length} </strong>{" "}
+            items?
           </>
         }
         action={
@@ -459,7 +444,7 @@ export default function AsssignmentsListPage() {
               handleCloseConfirm();
             }}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

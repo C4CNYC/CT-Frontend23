@@ -26,7 +26,6 @@ import {
   useUpdateLessonSkillMutation,
 } from "src/redux/services/manager/lesson-skill-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 export default function SkillsTab({
   lessonId,
@@ -36,7 +35,7 @@ export default function SkillsTab({
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
-  const translate = useTranslate();
+
   const [updateLessonSkill, { isLoading: addLoading }] =
     useUpdateLessonSkillMutation();
   const [removeIntegration, { isLoading: removeLoading }] =
@@ -71,26 +70,18 @@ export default function SkillsTab({
       switch (reason) {
         case "selectOption": {
           await updateLessonSkill(payload).unwrap();
-          enqueueSnackbar(
-            translate("messages_sth_added", {
-              name: details?.option.name ?? "",
-            })
-          );
+          enqueueSnackbar(`${details?.option.name ?? ""} added`);
           return;
         }
         case "removeOption": {
           await removeIntegration(payload).unwrap();
-          enqueueSnackbar(
-            translate("messages_sth_removed", {
-              name: details?.option.name ?? "",
-            })
-          );
+          enqueueSnackbar(`${details?.option.name ?? ""} removed`);
           // eslint-disable-next-line no-useless-return
           return;
         }
       }
     } catch {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
 
@@ -120,9 +111,7 @@ export default function SkillsTab({
         ))
       }
       style={{ width: "100%" }}
-      renderInput={(params) => (
-        <TextField {...params} placeholder={translate("skills")} />
-      )}
+      renderInput={(params) => <TextField {...params} placeholder="Skills" />}
       renderOption={(props, recipient, { inputValue }) => {
         const { name } = recipient;
         const matches = match(name, inputValue);

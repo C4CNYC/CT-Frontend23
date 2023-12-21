@@ -13,9 +13,6 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { convertDuration } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
-
 interface IBriefSectionProps {
   duration: string;
   level: string;
@@ -30,8 +27,6 @@ export default function BriefSection({
   grade,
 }: IBriefSectionProps): React.ReactElement {
   const theme = useTheme();
-  const translate = useTranslate();
-
   return (
     <Box
       sx={{
@@ -71,10 +66,11 @@ export default function BriefSection({
       </List>
       <Box sx={{ px: 2 }}>
         <Typography variant="body2">
-          {translate("courses_for_beginners_info")}
+          For curious beginners who want to understand the basics of web dev and
+          who.
         </Typography>
         <Typography variant="body2">
-          {translate("courses_entery_point")}
+          A fantastic entry-point for understanding....
         </Typography>
       </Box>
     </Box>

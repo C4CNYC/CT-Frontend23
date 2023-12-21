@@ -1,5 +1,5 @@
 // node modules
-import { type FC, type SetStateAction, useState } from "react";
+import { type SetStateAction, type FC, useState } from "react";
 
 // @mui
 import { Divider, IconButton, MenuItem } from "@mui/material";
@@ -14,7 +14,6 @@ import {
   Iconify,
   MenuPopover,
 } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 import HelpQuestionModal from "./modals/HelpQuestion";
 import Solution from "./options/solution";
@@ -25,22 +24,20 @@ const MENU_POPOVER_STYLES = {
   width: 350,
   p: 0,
   mr: "30px",
-};
+}
 
 const MENU_ITEM_STYLES = {
-  pl: "22px!important",
-  height: 52,
-};
+  pl: "22px!important", height: 52
+}
 
 const ICONIFY_STYLES = {
   width: "30px!important",
-  height: "30px!important",
-};
+  height: "30px!important"
+}
 
 const HelpPopup: FC = () => {
   const [expanded, setExpanded] = useState<string | false>();
   const [openPopover, setOpenPopover] = useState(null);
-  const translate = useTranslate();
 
   const handleChange =
     (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
@@ -74,7 +71,7 @@ const HelpPopup: FC = () => {
         >
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
             <Iconify width="27px" mr="15px" icon="icons8:idea" />
-            <Typography variant="h6">{translate("tips")}</Typography>
+            <Typography variant="h6">TIPS</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Tips />
@@ -91,7 +88,7 @@ const HelpPopup: FC = () => {
               mr="15px"
               icon="fluent:square-hint-sparkles-16-regular"
             />
-            <Typography variant="h6">{translate("solutions")}</Typography>
+            <Typography variant="h6">SOLUTIONS</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: 0 }}>
             <Solution />
@@ -104,7 +101,7 @@ const HelpPopup: FC = () => {
         >
           <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
             <Iconify width="27px" mr="15px" icon="ion:help-buoy-outline" />
-            <Typography variant="h6">{translate("get_unstuck")}</Typography>
+            <Typography variant="h6">GET UNSTUCK</Typography>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: 0 }}>
             <Unstack />
@@ -113,8 +110,11 @@ const HelpPopup: FC = () => {
         <Divider />
         <HelpQuestionModal>
           <MenuItem sx={MENU_ITEM_STYLES}>
-            <Iconify sx={ICONIFY_STYLES} icon="mdi:chat-outline" />
-            <Typography variant="h6">{translate("i_need_help")}</Typography>
+            <Iconify
+              sx={ICONIFY_STYLES}
+              icon="mdi:chat-outline"
+            />
+            <Typography variant="h6">I NEED HELP WITH</Typography>
           </MenuItem>
         </HelpQuestionModal>
       </MenuPopover>

@@ -7,7 +7,8 @@ import {
 } from "@mui/material";
 
 import { Iconify } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+
+import { useLocales } from "../../../../locales";
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ export default function ClassesTableToolbar({
   onFilterRole,
   onResetFilter,
 }: Props): React.ReactElement | null {
-  const translate = useTranslate();
+  const { translate } = useLocales();
 
   return (
     <Stack
@@ -44,7 +45,7 @@ export default function ClassesTableToolbar({
         <TextField
           fullWidth
           select
-          label={translate("role")}
+          label={`${translate("organizations.members_page.role_label")}`}
           value={filterRole}
           onChange={onFilterRole}
           SelectProps={{
@@ -82,7 +83,7 @@ export default function ClassesTableToolbar({
         fullWidth
         value={filterName}
         onChange={onFilterName}
-        placeholder={translate("actions_search")}
+        placeholder={`${translate("actions_search")}`}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -97,7 +98,7 @@ export default function ClassesTableToolbar({
         onClick={onResetFilter}
         startIcon={<Iconify icon="eva:trash-2-outline" />}
       >
-        {translate("actions_clear")}
+        {`${translate("actions_clear")}`}
       </Button>
     </Stack>
   );

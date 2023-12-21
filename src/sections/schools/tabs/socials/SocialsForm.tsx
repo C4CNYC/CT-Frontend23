@@ -10,7 +10,6 @@ import { Box, Grid, MenuItem } from "@mui/material";
 
 import { FormProvider, RHFSelect, RHFTextField } from "@components";
 import { useCreateSchoolSocialMutation } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { Socials } from "../../../../assets/data";
 import { SchoolSocials } from "../../../../redux/services/interfaces/school.interface";
@@ -44,7 +43,6 @@ export default function SocialsForm({
 }: SocialFormProps): React.ReactElement {
   const [createSocial, { isLoading }] = useCreateSchoolSocialMutation();
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const defaultValues = {
     schoolId,
@@ -68,12 +66,10 @@ export default function SocialsForm({
         name: data?.name,
         type: data?.type,
       }).unwrap();
-      enqueueSnackbar(translate("messages_update_success"));
+      enqueueSnackbar("Update success!");
       methods.reset();
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_error"), {
-        variant: "error",
-      });
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
@@ -81,14 +77,9 @@ export default function SocialsForm({
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Box
-            rowGap={0}
-            columnGap={0}
-            display="flex"
-            sx={{
-              width: { xs: "100%", sm: "350px", md: "max-content" },
-            }}
-          >
+          <Box rowGap={0} columnGap={0} display="flex" sx={{
+            width: { xs: "100%", sm: "350px", md: "max-content" }
+          }}>
             <RHFSelect
               name="type"
               sx={{
@@ -127,7 +118,7 @@ export default function SocialsForm({
             </RHFSelect>
             <RHFTextField
               name="link"
-              label={translate("link")}
+              label="Link"
               size="small"
               sx={{
                 width: { xs: "100%", sm: "100%", md: "350px" },
@@ -155,7 +146,7 @@ export default function SocialsForm({
                 borderBottomLeftRadius: 0,
               }}
             >
-              {translate("actions_add")}
+              Add
             </LoadingButton>
           </Box>
         </Grid>

@@ -1,8 +1,6 @@
 // @mui
 import { Checkbox, Stack, StackProps, Typography } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 // ----------------------------------------------------------------------
 
 interface Props extends StackProps {
@@ -25,8 +23,6 @@ export function TableSelectedAction({
   if (!numSelected) {
     return null;
   }
-
-  const translate = useTranslate();
 
   return (
     <Stack
@@ -68,7 +64,7 @@ export function TableSelectedAction({
           }),
         }}
       >
-        {numSelected} {translate("selected")}
+        {numSelected} selected
       </Typography>
 
       {action && action}

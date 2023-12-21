@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
+import { useLocales } from "src/locales";
 import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 
@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function SchoolTableRow({ row }: Props): React.ReactElement {
-  const translate = useTranslate();
+  const { translate } = useLocales();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
 
@@ -82,7 +82,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           color={row.active ? "success" : "warning"}
           sx={{ textTransform: "capitalize" }}
         >
-          {row.active ? translate("active") : translate("not_active")}
+          {row.active ? "active" : "not active"}
         </Label>
       </TableCell>
       <TableCell padding="checkbox" align="left">
@@ -117,7 +117,7 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_archive")}
+          {`${translate("actions_archive")}`}
         </MenuItem>
       </MenuPopover>
 
@@ -133,11 +133,13 @@ export default function SchoolTableRow({ row }: Props): React.ReactElement {
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_archive")}
-        content={translate("messages_archive_question")}
+        title={`${translate("actions_archive")}`}
+        content={`${translate(
+          "organizations.schools_page.archive_dialog.content"
+        )}`}
         action={
           <Button variant="contained" color="error">
-            {translate("actions_archive")}
+            {`${translate("actions_archive")}`}
           </Button>
         }
       />

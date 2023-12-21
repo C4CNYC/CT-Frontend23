@@ -22,7 +22,6 @@ import {
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
@@ -32,7 +31,6 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const translate = useTranslate();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteModule] = useDeleteModuleMutation();
@@ -42,7 +40,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
     try {
       await deleteModule({ id: module.id }).unwrap();
       handleCloseConfirm();
-      enqueueSnackbar(translate("modules_deleted_msg"));
+      enqueueSnackbar("Module deleted!");
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -76,7 +74,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
       str += `${value} ${key} `;
     }
     return str;
-  };
+  }
 
   return (
     <>
@@ -119,7 +117,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             left: 10,
           }}
         >
-          {module.active ? translate("active") : translate("not_active")}
+          {module.active ? "Active" : "Not Active"}
         </Label>
 
         <Box
@@ -171,15 +169,12 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             teacher_slides: module.teacher_slides as string,
             teacher_forum: module.teacher_forum as string,
             lesson_plans: module.lesson_plans as string,
-            initial_likes: module.initial_likes as number,
-            initial_stars: module.initial_stars as number,
-            initial_enrolled: module.initial_enrolled as number,
           }}
           moduleTips={module.tips}
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
-            {translate("actions_edit")}
+            Edit
           </MenuItem>
         </CreateModuleDialog>
 
@@ -193,15 +188,15 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          Delete
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title="Delete"
+        content="Are you sure want to delete?"
         action={
           <LoadingButton
             variant="contained"
@@ -209,7 +204,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             onClick={onDelete}
             loading={loading}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

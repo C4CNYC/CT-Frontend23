@@ -37,15 +37,14 @@ export const unsubscribeSocket = (socket: Socket | null): void => {
   socket?.disconnect();
 };
 
-export const createSocket = (userId?: null | string): Socket => {
+export const createSocket = (): Socket => {
   return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
     path: "/api",
-    auth: userId ? { userId } : {}
   });
 };
 
 export const waitConnectSocket = async (socket: Socket): Promise<boolean> => {
-  return await new Promise((resolve) => {
+  return new Promise((resolve) => {
     socket.on(SubscribedEvents.Connect, () => {
       resolve(true);
     });

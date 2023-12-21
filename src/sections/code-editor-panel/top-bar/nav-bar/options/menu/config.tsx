@@ -1,9 +1,9 @@
+import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
+import MenuHugDialog from "./MenuHugDialog";
+
 import { PATH_AUTH } from "@routes/paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import InviteFriendsModal from "@sections/invite-friends/InviteFriendsModal";
 import { UserType } from "@utils";
-
-import MenuHugDialog from "./MenuHugDialog";
 
 interface IMenuConfigItem {
   title: string;
@@ -23,33 +23,33 @@ export enum ILinks {
 
 export const authorizedUserConfig: IMenuConfigItem[] = [
   {
-    title: "home",
+    title: "Home",
     subTitle: "",
     icon: "ant-design:home-outlined",
     href: STUDENT_PATH_DASHBOARD.class.root,
   },
   {
-    title: "take_tour",
+    title: "Take the Tour",
     subTitle: "",
     icon: "ph:bus-light",
     href: ILinks.modal,
     component: (children, key) => <div key={key}>{children}</div>,
   },
   {
-    title: "how_to_video",
+    title: "How-to Video",
     subTitle: "",
     icon: "ph:video",
     href: "https://www.youtube.com/@freecodecamp",
     target: "_blank",
   },
   {
-    title: "gallery",
+    title: "Gallery",
     subTitle: "",
     icon: "solar:gallery-line-duotone",
     href: STUDENT_PATH_DASHBOARD.gallery.root,
   },
   {
-    title: "need_hug",
+    title: "Need a hug",
     icon: "icon-park-outline:like",
     href: ILinks.modal,
     component: (children, key) => (
@@ -59,7 +59,7 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
     ),
   },
   {
-    title: "sidebar_menu_invite_friends",
+    title: "Invite Friends",
     icon: "ph:mask-happy",
     href: ILinks.modal,
     component: (children, key) => (
@@ -72,19 +72,19 @@ export const authorizedUserConfig: IMenuConfigItem[] = [
 
 export const anonimUserConfig: IMenuConfigItem[] = [
   {
-    title: "i_brand_new",
-    subTitle: "register",
+    title: "I'm brand new",
+    subTitle: "Register",
     icon: "icon-park-outline:baby",
     href: PATH_AUTH.onBoardingTeacher,
   },
   {
-    title: "login_been_here",
-    subTitle: "login",
+    title: "I've been here before",
+    subTitle: "Login",
     icon: "mdi:human-hello",
     href: PATH_AUTH.signIn,
   },
   {
-    title: "sidebar_menu_invite_friends",
+    title: "Invite Friends",
     icon: "mdi:invite",
     href: "#",
   },

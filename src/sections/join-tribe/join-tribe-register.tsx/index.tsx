@@ -9,11 +9,10 @@ import { Button, Stack, Typography } from "@mui/material";
 
 import { FormProvider } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
 
 import EmailStep from "./email-step";
 import PasswordStep from "./password-step";
+import { Role } from "src/redux/services/enums/role.enum";
 
 interface FormValuesProps {
   email: string;
@@ -21,6 +20,20 @@ interface FormValuesProps {
   lastName: string;
   password: string;
 }
+
+const CreateRegisterSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("Email is required")
+    .email("Email must be a valid email address"),
+  firstName: Yup.string().required("Enter your name"),
+  lastName: Yup.string().required("Enter your surname"),
+  password: Yup.string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+      "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
+    )
+    .min(10, "Password must be at least 10 characters long"),
+});
 
 interface IJoinTribeRegisterProps {
   handleChangeAuthorization: () => void;
@@ -32,21 +45,6 @@ export default function JoinTribeRegister({
   const { register, login } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const [currentStep, setCurrentStep] = useState(0);
-  const translate = useTranslate();
-
-  const CreateRegisterSchema = Yup.object().shape({
-    email: Yup.string()
-      .required(translate("required_email"))
-      .email(translate("must_be_valid_email")),
-    firstName: Yup.string().required(translate("enter_name")),
-    lastName: Yup.string().required(translate("enter_surname")),
-    password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-        translate("required_password_includes")
-      )
-      .min(10, translate("required_password_length")),
-  });
 
   const nextStep = (): void => {
     setCurrentStep(currentStep + 1);
@@ -62,15 +60,9 @@ export default function JoinTribeRegister({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     try {
-      await register({
-        email: data.email,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: Role.Student,
-      });
+      await register({ email: data.email, password: data.password, firstName: data.firstName, lastName: data.lastName, role: Role.Student });
       await login(data.email, data.password, "codetribe");
-      enqueueSnackbar(translate("register_successfully"));
+      enqueueSnackbar("Registered successfully!");
     } catch (error) {
       methods.setError("root", {
         ...error,
@@ -82,10 +74,8 @@ export default function JoinTribeRegister({
 
   return (
     <Stack alignItems="center" position="relative">
-      <Typography variant="h4">{translate("home_join_tribe")}</Typography>
-      <Typography variant="body1">
-        {translate("tribes_sign_up_to_join")}
-      </Typography>
+      <Typography variant="h4">Join this tribe</Typography>
+      <Typography variant="body1">Sign up to join</Typography>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         {currentStep === 0 && (
           <EmailStep
@@ -117,8 +107,8 @@ export default function JoinTribeRegister({
           },
         }}
       >
-        <Typography variant="body1">{translate("login_been_here")}</Typography>|
-        <Typography variant="subtitle1">{translate("login")}</Typography>
+        <Typography variant="body1">I’ve been here before</Typography>|
+        <Typography variant="subtitle1">LOGIN</Typography>
       </Button>
     </Stack>
   );

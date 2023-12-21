@@ -26,7 +26,6 @@ import { UserType } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { setStartTour } from "src/redux/slices/tour";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
 
 import MobileHamburger from "./MobileHamburger";
 import config, { ILinks } from "./config";
@@ -55,14 +54,14 @@ const Menu = (): React.ReactElement => {
   const { isAuthenticated, logout } = useAuthContext();
   const userName = useSelector((state) => state.global.user?.first_name);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+
   const handleLogout = (): void => {
     try {
       logout();
       replace(PATH_AUTH.signIn);
       handleClosePopover();
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_unable_to_logout"), SNACKBAR_OPTIONS);
+      enqueueSnackbar("Unable to logout!", SNACKBAR_OPTIONS);
     }
   };
 
@@ -103,7 +102,7 @@ const Menu = (): React.ReactElement => {
       >
         {isAuthenticated && (
           <Typography height="59px" p="16px 20px" variant="h6" component="h2">
-            {translate("hello")} {userName ?? ""}
+            Hello {userName ?? ""}
           </Typography>
         )}
 
@@ -116,7 +115,7 @@ const Menu = (): React.ReactElement => {
                 <MenuItem
                   sx={MENU_ITEM_STYLES}
                   onClick={() => {
-                    if (menuItem.title === "take_tour") {
+                    if (menuItem.title === "Take the Tour") {
                       dispatch(setStartTour(true));
                     }
                   }}
@@ -125,7 +124,7 @@ const Menu = (): React.ReactElement => {
 
                   <Box>
                     <Typography sx={MENU_ITEM_TYPOGRAFY} variant="button">
-                      {translate(menuItem.title)}
+                      {menuItem.title}
                     </Typography>
                   </Box>
                 </MenuItem>,
@@ -150,14 +149,14 @@ const Menu = (): React.ReactElement => {
 
                     <Box>
                       <Typography sx={MENU_ITEM_TYPOGRAFY} variant="button">
-                        {translate(menuItem.title)}
+                        {menuItem.title}
                       </Typography>
 
                       <br />
 
                       {menuItem.subTitle && (
                         <Typography variant="caption">
-                          {translate(menuItem.subTitle).toUpperCase()}
+                          {menuItem.subTitle.toUpperCase()}
                         </Typography>
                       )}
                     </Box>

@@ -22,7 +22,6 @@ import {
 } from "src/redux/services/admin/members-admin";
 import { useAddTeacherMutation } from "src/redux/services/admin/school-amdin";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
 
 import UserItem from "./UserItem";
 
@@ -51,7 +50,6 @@ export default function InviteTeacherDialog({
     { ...filters },
     { skip: !filters.email }
   );
-  const translate = useTranslate();
 
   const addUserToSchool = async (
     userId: string,
@@ -59,7 +57,7 @@ export default function InviteTeacherDialog({
   ): Promise<void> => {
     try {
       await addTeacher({ user_id: userId, schoolId }).unwrap();
-      enqueueSnackbar(translate("schools_teacher_added_act"));
+      enqueueSnackbar("teacher added");
     } catch (e: any) {
       enqueueSnackbar(e.data.message, { variant: "error" });
     }
@@ -74,7 +72,7 @@ export default function InviteTeacherDialog({
         first_name: "",
         last_name: "",
       }).unwrap();
-      enqueueSnackbar(translate("messages_invite_sent"));
+      enqueueSnackbar("Invite sent");
       await addUserToSchool(user.id, schoolId);
       setFilter("email", "");
       onClose();
@@ -85,7 +83,7 @@ export default function InviteTeacherDialog({
 
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
-      <DialogTitle> {translate("invite")} </DialogTitle>
+      <DialogTitle> Invite </DialogTitle>
       <DialogContent sx={{ overflow: "unset" }}>
         <>
           <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
@@ -93,7 +91,7 @@ export default function InviteTeacherDialog({
               fullWidth
               size="small"
               value={filters.email}
-              placeholder={translate("email")}
+              placeholder="Email"
               onChange={(e: any) => {
                 setFilter("email", e.target.value);
               }}
@@ -104,7 +102,7 @@ export default function InviteTeacherDialog({
               disabled={!!members?.data.length || !filters.email}
               onClick={onSendInvite}
             >
-              {translate("members_send_invite")}
+              Send Invite
             </Button>
           </Stack>
 
@@ -130,7 +128,7 @@ export default function InviteTeacherDialog({
       <DialogActions sx={{ justifyContent: "space-end" }}>
         {onClose && (
           <Button variant="outlined" color="inherit" onClick={onClose}>
-            {translate("actions_close")}
+            Close
           </Button>
         )}
       </DialogActions>

@@ -16,7 +16,6 @@ import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
 import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import AddClassDialog from "./CreateClassDialog";
 
@@ -36,7 +35,6 @@ export default function ClassItem({
   const [updateClass] = useUpdateClassMutation();
   const [updateClassAvatar] = useUpdateClassesAvatarMutation();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
@@ -136,7 +134,7 @@ export default function ClassItem({
           >
             <MenuItem>
               <Iconify icon="eva:edit-fill" />
-              {translate("actions_edit")}
+              Edit
             </MenuItem>
           </AddClassDialog>
           <MenuItem
@@ -147,7 +145,7 @@ export default function ClassItem({
             sx={{ color: "error.main" }}
           >
             <Iconify icon="eva:trash-2-outline" />
-            {translate("actions_remove")}
+            Remove
           </MenuItem>
         </>
       </MenuPopover>

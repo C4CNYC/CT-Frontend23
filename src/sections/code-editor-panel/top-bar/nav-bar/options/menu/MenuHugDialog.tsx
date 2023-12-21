@@ -1,5 +1,4 @@
-import { type FC, ReactNode, useState } from "react";
-
+import { type FC, useState, ReactNode } from "react";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 import Diversity1Icon from "@mui/icons-material/Diversity1";
@@ -14,7 +13,6 @@ import {
 } from "@mui/material";
 
 import { Image } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface MenuHugDialogProps {
   children: ReactNode | ReactNode[];
@@ -26,7 +24,6 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
   const openDialog = (): void => {
     setOpen(true);
   };
-  const translate = useTranslate();
 
   const closeDialog = (): void => {
     setOpen(false);
@@ -48,12 +45,16 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
           <Image src={"/assets/code-panel/hug.png"} alt="code-panel" />
 
           <Typography variant="h5" sx={{ py: 1 }}>
-            {translate("you_are_loved")}
+            You are loved, needed and important. This world needs more people
+            exactly like you.
           </Typography>
 
           <Collapse in={isShown}>
             <Typography variant="subtitle1">
-              {translate("go_and_be_the_best")}
+              Go and be the best YOU you can be 😊. There is a special plan JUST
+              for your life. It’s going to be astounding and you’re going to
+              love it. It's your job to find out what the plan is. God loves you
+              and is going to take care of you. I promise.
             </Typography>
           </Collapse>
 
@@ -64,14 +65,13 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
             }}
           >
             <Typography variant="subtitle1" sx={{ mt: 1 }}>
-              {translate("actions_see_more")}
+              See more
             </Typography>
 
-            {isShown ? (
-              <SlArrowUp style={ARROW_STYLES} />
-            ) : (
-              <SlArrowDown style={ARROW_STYLES} />
-            )}
+            {isShown
+              ? <SlArrowUp style={ARROW_STYLES} />
+              : <SlArrowDown style={ARROW_STYLES} />
+            }
           </Box>
 
           <Box sx={NOT_SURE_BOX_STYLES}>
@@ -82,7 +82,7 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
                 setOpen(false);
               }}
             >
-              {translate("i_not_sure")}
+              I`m not sure
             </Button>
 
             <Button
@@ -99,34 +99,34 @@ const MenuHugDialog: FC<MenuHugDialogProps> = ({ children }) => {
       </Dialog>
     </>
   );
-};
+}
 
 const ARROW_STYLES = {
-  marginBottom: "-10px",
-};
+  marginBottom: "-10px"
+}
 
 const SEE_MORE_BOX_STYLES = {
   display: "flex",
   alignItems: "center",
   gap: 1,
   "&:hover": { cursor: "pointer" },
-};
+}
 
 const NOT_SURE_BOX_STYLES = {
   width: "100%",
   display: "flex",
   justifyContent: "space-around",
   py: 4,
-};
+}
 
 const DIALOG_PROPS = {
   sx: {
     maxWidth: "400px",
   },
-};
+}
 
 const DIVERSITY_BTN_STYLES = {
-  minWidth: "115px",
-};
+  minWidth: "115px"
+}
 
 export default MenuHugDialog;

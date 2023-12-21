@@ -2,18 +2,13 @@ import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
 import { TbFileCertificate } from "react-icons/tb";
 
 import { Box, Typography } from "@mui/material";
-import { convertNumber } from "@utils";
 
 interface ICourseStatistics {
   likesCount: number;
-  starsCount: number;
-  enrolledCount: number;
 }
 
 export default function CourseStatistics({
   likesCount,
-  starsCount,
-  enrolledCount,
 }: ICourseStatistics): React.ReactElement {
   return (
     <Box
@@ -36,7 +31,7 @@ export default function CourseStatistics({
             ml: "10px",
           }}
         >
-          {convertNumber(enrolledCount)}
+          2.7k
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -47,7 +42,7 @@ export default function CourseStatistics({
             ml: "10px",
           }}
         >
-          {convertNumber(likesCount)}
+          {likesCount}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -58,7 +53,7 @@ export default function CourseStatistics({
             ml: "10px",
           }}
         >
-          {convertNumber(starsCount)}
+          8.2k
         </Typography>
       </Box>
     </Box>

@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface IQuestRatingProps {
   courseName: string;
@@ -27,8 +26,6 @@ export default function QuestRating({
   courseName,
   progress,
 }: IQuestRatingProps): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <>
       <Card
@@ -46,8 +43,7 @@ export default function QuestRating({
                 alignItems="center"
                 variant="body1"
               >
-                {translate("course")}{" "}
-                <BsFillInfoCircleFill style={{ marginLeft: "5px" }} />
+                Course <BsFillInfoCircleFill style={{ marginLeft: "5px" }} />
               </Typography>
             </Tooltip>
             <Typography variant="h4">{courseName}</Typography>
@@ -71,7 +67,7 @@ export default function QuestRating({
                 gap: 1,
               }}
             >
-              {translate("open")}
+              Open
               <RiShareBoxFill size={22} />
             </Link>
           </Stack>

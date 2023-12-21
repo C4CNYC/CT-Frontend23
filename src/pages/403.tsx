@@ -13,7 +13,6 @@ import { Button, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 // layouts
 import CompactLayout from "@layouts/compact";
-import { useTranslate } from "src/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
@@ -24,26 +23,24 @@ Page403.getLayout = (page: React.ReactElement) => (
 // ----------------------------------------------------------------------
 
 export default function Page403(): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <>
       <Head>
-        <title> {translate("forbidden")} </title>
+        <title> 403 Forbidden </title>
       </Head>
 
       <MotionContainer>
         <m.div variants={varBounce().in}>
           <Typography variant="h3" paragraph>
-            {translate("no_permission")}
+            No permission
           </Typography>
         </m.div>
 
         <m.div variants={varBounce().in}>
           <Typography sx={{ color: "text.secondary" }}>
-            {translate("page_restricted_access")}
+            The page you&apos;re trying access has restricted access.
             <br />
-            {translate("refer_to_administrator")}
+            Please refer to your system administrator
           </Typography>
         </m.div>
 
@@ -52,7 +49,7 @@ export default function Page403(): React.ReactElement {
         </m.div>
 
         <Button component={NextLink} href="/" size="large" variant="contained">
-          {translate("go_to_home")}
+          Go to Home
         </Button>
       </MotionContainer>
     </>

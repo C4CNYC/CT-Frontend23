@@ -7,31 +7,28 @@ import DashboardLayout from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
 import SchoolTable from "@sections/dashboard/schools/view/SchoolTable";
-import { useTranslate } from "src/utils/translateHelper";
+import { useLocales } from "src/locales";
 
 Index.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
 export default function Index(): React.ReactElement {
-  const translate = useTranslate();
+  const { translate } = useLocales();
 
   const { themeStretch } = useSettingsContext();
 
   return (
     <>
       <Head>
-        <title> {translate("organization")} | CodeTribe</title>
+        <title> {`${translate("organizations.title")} | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading={""}
           links={[
-            {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            { name: translate("schools") },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            { name: `${translate("organizations.schools_page.title")}` },
           ]}
           action={<AddSchoolDialog />}
         />

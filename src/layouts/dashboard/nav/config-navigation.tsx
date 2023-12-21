@@ -24,15 +24,15 @@ import MenuTribesList from "@sections/main/menu-list/MenuTribesList";
 import { Role } from "src/redux/services/enums/role.enum";
 
 export const admin = {
-  subheader: "sidebar_menu_administration",
+  subheader: "administration",
   items: [
     {
-      title: "sidebar_menu_members",
+      title: "Members",
       path: MANAGER_PATH_DASHBOARD.organization.members,
       icon: <FaUserShield />,
     },
     {
-      title: "sidebar_menu_schools",
+      title: "Schools",
       path: MANAGER_PATH_DASHBOARD.organization.schools,
       icon: <RiOrganizationChart />,
     },
@@ -40,30 +40,30 @@ export const admin = {
 };
 
 export const managment = {
-  subheader: "sidebar_menu_management",
+  subheader: "managment",
   items: [
     {
-      title: "sidebar_menu_school",
+      title: "school",
       path: MANAGER_PATH_DASHBOARD.school.general,
       icon: <FaSchool />,
     },
     {
-      title: "sidebar_menu_students",
+      title: "students",
       path: MANAGER_PATH_DASHBOARD.school.students,
       icon: <FaUsers />,
     },
     {
-      title: "sidebar_menu_classes",
+      title: "classes",
       path: MANAGER_PATH_DASHBOARD.school.classes,
       icon: <IoMdSchool />,
     },
     {
-      title: "sidebar_menu_assignments",
+      title: "assignments",
       path: MANAGER_PATH_DASHBOARD.school.assignments,
       icon: <AiOutlineSolution />,
     },
     {
-      title: "sidebar_menu_progress",
+      title: "progress",
       path: MANAGER_PATH_DASHBOARD.school.progress,
       icon: <GiProgression />,
     },
@@ -71,36 +71,36 @@ export const managment = {
 };
 
 export const content = {
-  subheader: "sidebar_menu_content",
+  subheader: "content",
   items: [
     {
-      title: "sidebar_menu_courses",
+      title: "courses",
       path: MANAGER_PATH_DASHBOARD.courses.root,
       icon: <MdPlayLesson />,
     },
     {
-      title: "sidebar_menu_modules",
+      title: "modules",
       path: MANAGER_PATH_DASHBOARD.modules.root,
       icon: <GoFileSubmodule />,
     },
     {
-      title: "sidebar_menu_lessons",
+      title: "lessons",
       path: MANAGER_PATH_DASHBOARD.lessons.root,
       icon: <MdPlayLesson />,
     },
     {
-      title: "sidebar_menu_tasks",
+      title: "tasks",
       path: " ",
       icon: <FaTasks />,
       info: <Label color="success">Coming soon</Label>,
     },
     {
-      title: "sidebar_menu_integrations",
+      title: "integrations",
       path: MANAGER_PATH_DASHBOARD.apps.root,
       icon: <FiSettings />,
     },
     {
-      title: "sidebar_menu_skills",
+      title: "skills",
       path: MANAGER_PATH_DASHBOARD.skills.root,
       icon: <Iconify icon="ion:bulb" />,
     },
@@ -111,7 +111,7 @@ export const courses = {
   subheader: "",
   items: [
     {
-      title: "sidebar_menu_catalog",
+      title: "Catalog",
       path: STUDENT_PATH_DASHBOARD.courses.root,
       icon: <BsFileEarmarkTextFill size={20} />,
     },
@@ -119,7 +119,7 @@ export const courses = {
 };
 
 export const general = {
-  subheader: "sidebar_menu_tribes",
+  subheader: "Tribes",
   items: [
     {
       path: "",
@@ -131,7 +131,7 @@ export const general = {
 };
 
 export const social = {
-  subheader: "sidebar_menu_socials",
+  subheader: "SOCIAL",
   items: [
     {
       title: "Tribes",
@@ -144,7 +144,7 @@ export const social = {
       icon: <FaUserFriends size={20} />,
     },
     {
-      title: "sidebar_menu_gallery",
+      title: "Gallery",
       path: STUDENT_PATH_DASHBOARD.gallery.root,
       icon: <TbPhoto size={20} />,
     },
@@ -159,15 +159,15 @@ export const social = {
   ],
 };
 export const apps = {
-  subheader: "sidebar_menu_apps",
+  subheader: "APPS",
   items: [
     {
-      title: "sidebar_menu_my_notes",
+      title: "My Notes",
       path: STUDENT_PATH_DASHBOARD.myNotes,
       icon: <BsFlagFill size={20} />,
     },
     {
-      title: "sidebar_menu_feedback",
+      title: "Feedback",
       path: "#",
       icon: <RiFeedbackFill size={20} />,
       component: (children: React.ReactElement) => (

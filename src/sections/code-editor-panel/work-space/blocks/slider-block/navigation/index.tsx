@@ -1,24 +1,16 @@
 import { type FC, useCallback, useEffect, useMemo, useState } from "react";
 
-import { Box, Button, Tooltip, Typography, useTheme } from "@mui/material";
-
-import { useTranslate } from "src/utils/translateHelper";
+import { Box, Button, useTheme } from "@mui/material";
 
 import { BOX_SX, getNestedBoxSx } from "./constants";
 import NavigationElement from "./navigation-element";
 import NavigationSpeedDial from "./navigation-speed-dial";
-import {
-  TOOLTIP_CONTENT_SX,
-  getTooltipWrapperSx,
-  stylesNext,
-  stylesPrev,
-  stylesSkip,
-} from "./styles";
+import { stylesNext, stylesPrev, stylesSkip } from "./styles";
 
 export enum BtnType {
-  next = "btn_group_next",
-  compleated = "btn_group_you_did_it",
-  coding = "btn_group_lets_coding",
+  next = "NEXT 👀",
+  compleated = "YOU DID IT 🙌",
+  coding = "LET’S GET CODING",
 }
 
 interface INavigation {
@@ -42,8 +34,6 @@ const Navigation: FC<INavigation> = ({
   const nestedBox = useMemo(() => getNestedBoxSx(theme), [theme]);
   const stylePrev = useMemo(stylesPrev, []);
   const styleNext = useMemo(() => stylesNext(btnNext), [btnNext]);
-  const tooltipWrapperSx = useMemo(() => getTooltipWrapperSx(theme), [theme]);
-  const translate = useTranslate();
 
   const getNextBtnType = useCallback((): void => {
     if (stepHasValidation) {
@@ -73,43 +63,24 @@ const Navigation: FC<INavigation> = ({
 
         <NavigationSpeedDial stepHasValidation={stepHasValidation} />
 
-        <Tooltip
-          title={
-            stepHasValidation && !canMoveNext ? (
-              <Typography sx={TOOLTIP_CONTENT_SX}>
-                {translate("btn_group_tooltip")}
-              </Typography>
-            ) : (
-              ""
-            )
-          }
-          placement="top"
-          sx={{
-            width: 100,
-            textAlign: "center",
+        <NavigationElement
+          sx={styleNext}
+          onClick={() => {
+            onNext();
           }}
+          backType={btnNext}
         >
-          <Box sx={tooltipWrapperSx}>
-            <NavigationElement
-              sx={styleNext}
+          {stepHasValidation && !canMoveNext ? (
+            <Button
               onClick={() => {
-                onNext();
+                onNext(true);
               }}
-              backType={btnNext}
+              sx={stylesSkip()}
             >
-              {stepHasValidation && !canMoveNext ? (
-                <Button
-                  onClick={() => {
-                    onNext(true);
-                  }}
-                  sx={stylesSkip()}
-                >
-                  {translate("btn_group_skip")}
-                </Button>
-              ) : null}
-            </NavigationElement>
-          </Box>
-        </Tooltip>
+              SKIP
+            </Button>
+          ) : null}
+        </NavigationElement>
       </Box>
     </Box>
   );

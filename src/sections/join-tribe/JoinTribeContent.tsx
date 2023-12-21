@@ -10,7 +10,6 @@ import { Button, Link, Stack, Typography } from "@mui/material";
 import { Image } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface IJoinTribeContentProps {
   classId: string;
@@ -24,7 +23,6 @@ export default function JoinTribeContent({
   const { enqueueSnackbar } = useSnackbar();
   const [isPending, setIsPending] = useState(false);
   const [joinClass, { isLoading }] = useJoinClassMutation();
-  const translate = useTranslate();
 
   const handleJoin = async (): Promise<void> => {
     try {
@@ -32,12 +30,12 @@ export default function JoinTribeContent({
         share_token: query.joinCode as string,
       }).unwrap();
       if (response.tribe) {
-        enqueueSnackbar(translate("joined_to_class_msg"));
+        enqueueSnackbar("You joined to class!");
         handleCloseModal();
         push(STUDENT_PATH_DASHBOARD.class.id(classId));
         cleanJoinTribeStorage();
       } else {
-        enqueueSnackbar(translate("send_reques_for_join_to_class"));
+        enqueueSnackbar("You send request for join to class!");
         setIsPending(true);
         cleanJoinTribeStorage();
       }
@@ -56,9 +54,9 @@ export default function JoinTribeContent({
     <>
       {!isPending ? (
         <Stack alignItems="center">
-          <Typography variant="h4">{translate("home_join_tribe")}</Typography>
+          <Typography variant="h4">Join this tribe</Typography>
           <Typography variant="body1">
-            {translate("been_invited_msg")}
+            You’ve been invited to join this tribe.
           </Typography>
           <LoadingButton
             onClick={handleJoin}
@@ -72,7 +70,7 @@ export default function JoinTribeContent({
               minWidth: "300px",
             }}
           >
-            {translate("actions_join")}
+            JOIN
           </LoadingButton>
           <Link
             component={NextLink}
@@ -80,16 +78,16 @@ export default function JoinTribeContent({
             onClick={cleanJoinTribeStorage}
             color="inherit"
           >
-            {translate("home_not_now")}
+            Not now
           </Link>
         </Stack>
       ) : (
         <Stack alignItems="center">
           <Typography variant="h4" gutterBottom>
-            {translate("home_thanks_for_request")}
+            Thanks for sending the request!
           </Typography>
           <Typography variant="body1">
-            {translate("heme_wait_for_approve")}
+            Please wait for the teacher to approve your invitation.
           </Typography>
           <Image
             sx={{
@@ -113,7 +111,7 @@ export default function JoinTribeContent({
               minWidth: "300px",
             }}
           >
-            {translate("home_go_to_main")}
+            GO TO MAIN
           </Button>
         </Stack>
       )}

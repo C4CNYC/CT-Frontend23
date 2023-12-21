@@ -18,7 +18,6 @@ import { Box } from "@mui/system";
 import { Iconify, MenuPopover } from "@components";
 import { PATH_AUTH } from "@routes/paths";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { menuConfig } from "./menu-config";
 
@@ -29,7 +28,6 @@ const Menu = (): React.ReactElement => {
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState(null);
   const { user, logout } = useAuthContext();
-  const translate = useTranslate();
   const onClose = (): void => {
     push(pathname, undefined, { shallow: true });
   };
@@ -84,7 +82,7 @@ const Menu = (): React.ReactElement => {
         }
       >
         <Typography height="59px" p="16px 20px" variant="h6" component="h2">
-          {translate("hello")} {`${user?.first_name}`}
+          Hello {`${user?.first_name}`}
         </Typography>
 
         <Divider />
@@ -118,12 +116,12 @@ const Menu = (): React.ReactElement => {
               />
               <Box>
                 <Typography sx={{ color: "#EE467A" }} variant="button">
-                  {translate(menuItem.title)}
+                  {menuItem.title}
                 </Typography>
                 <br />
                 {menuItem.subTitle ? (
                   <Typography variant="caption">
-                    {translate(menuItem.subTitle).toUpperCase()}
+                    {menuItem.subTitle.toUpperCase()}
                   </Typography>
                 ) : null}
               </Box>

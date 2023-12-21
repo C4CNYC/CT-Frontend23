@@ -17,7 +17,6 @@ import {
   useGetGoogleClassesQuery,
   useMigrateGoogleClassesStudentsMutation,
 } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { Iconify } from "../iconify";
 import { useSnackbar } from "../snackbar";
@@ -38,7 +37,6 @@ export default function ClassroomModal({
   const [token, setToken] = useState("");
   const [classId, setClassId] = useState("");
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const [migrate, { isLoading }] = useMigrateGoogleClassesStudentsMutation();
 
@@ -66,10 +64,10 @@ export default function ClassroomModal({
         access_token: token,
         google_class_id: classId,
       }).unwrap();
-      enqueueSnackbar(translate("messages_migrate"));
+      enqueueSnackbar("Migrate successfully!");
       setOpen(false);
     } catch (e) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
@@ -132,7 +130,7 @@ export default function ClassroomModal({
               />
             </Button>
             <Typography variant="h4" ml="-10px">
-              {translate("share_google_classroom")}
+              Google Classroom
             </Typography>
           </Box>
           <Box mt="32px" mb="32px">
@@ -159,7 +157,7 @@ export default function ClassroomModal({
             onClick={onMigrateStudents}
             fullWidth
           >
-            {translate("actions_migrate")}
+            Migrate
           </LoadingButton>
         </Box>
       </Dialog>

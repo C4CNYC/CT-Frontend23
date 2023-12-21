@@ -14,46 +14,46 @@ import SkeletonProfileOrg from "@sections/dashboard/organization/general/tabs/pr
 import UserProfileTab from "@sections/dashboard/organization/general/tabs/profile/profile";
 import SettingsTab from "@sections/dashboard/organization/general/tabs/settings/settings";
 import { ProfileCover } from "@sections/dashboard/user/profile";
+import { useLocales } from "src/locales";
 import {
   useGetOrganizationQuery,
   useUpdateOrgCoverMutation,
 } from "src/redux/services/admin/organization-admin";
-import { useTranslate } from "src/utils/translateHelper";
-
-const TABS = [
-  {
-    value: "profile",
-    label: "profile",
-    icon: <Iconify icon="ic:round-account-box" />,
-    component: <UserProfileTab />,
-  },
-  {
-    value: "settings",
-    label: "settings",
-    icon: <Iconify icon="ic:baseline-settings-applications" />,
-    component: <SettingsTab />,
-  },
-  {
-    value: "customization",
-    label: "customization",
-    icon: <Iconify icon="ic:round-dashboard-customize" />,
-    component: <CustomizationTab />,
-  },
-  {
-    value: "contacts",
-    label: "Contacts",
-    icon: <Iconify icon="ic:outline-contacts" />,
-    component: <ContactsTab />,
-  },
-];
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
 export default function UserProfilePage(): React.ReactElement {
-  const translate = useTranslate();
-
+  const { translate } = useLocales();
+  const TABS = [
+    {
+      value: "profile",
+      label: translate("organizations.general_page.tabs.labels.profile"),
+      icon: <Iconify icon="ic:round-account-box" />,
+      component: <UserProfileTab />,
+    },
+    {
+      value: "settings",
+      label: translate("organizations.general_page.tabs.labels.settings"),
+      icon: <Iconify icon="ic:baseline-settings-applications" />,
+      component: <SettingsTab />,
+    },
+    {
+      value: "customization",
+      label: `${translate(
+        "organizations.general_page.tabs.labels.customization"
+      )}`,
+      icon: <Iconify icon="ic:round-dashboard-customize" />,
+      component: <CustomizationTab />,
+    },
+    {
+      value: "contacts",
+      label: "Contacts",
+      icon: <Iconify icon="ic:outline-contacts" />,
+      component: <ContactsTab />,
+    },
+  ];
   const { enqueueSnackbar } = useSnackbar();
 
   const [currentTab, setCurrentTab] = useState("profile");
@@ -66,11 +66,9 @@ export default function UserProfilePage(): React.ReactElement {
       const file = new FormData();
       file.append("file", data);
       await uploadCoverOrgImage({ file }).unwrap();
-      enqueueSnackbar(translate("messages_img_updated"));
+      enqueueSnackbar("Image updated");
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_img_not_updated"), {
-        variant: "error",
-      });
+      enqueueSnackbar("Image not updated", { variant: "error" });
     }
   };
   if (isLoading) {
@@ -86,7 +84,7 @@ export default function UserProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate("organization")}| CodeTribe</title>
+        <title>{`${translate("organizations.title")} | CodeTribe`}</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card
@@ -138,7 +136,7 @@ export default function UserProfilePage(): React.ReactElement {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={translate(tab.label)}
+                label={tab.label as string}
               />
             ))}
           </Tabs>

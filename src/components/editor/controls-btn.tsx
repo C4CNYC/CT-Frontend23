@@ -1,16 +1,12 @@
+import { CgIfDesign } from "react-icons/cg";
 import { FiSettings } from "react-icons/fi";
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { TbPhoto } from "react-icons/tb";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 import { Button } from "@mui/material";
-
 import { MediaModal } from "@sections/dashboard/medias/MediaModal";
-import { useTranslate } from "src/utils/translateHelper";
 
-export function TipsBtn(): React.ReactElement {
-  const translate = useTranslate();
-
+export function TemplateBtn(): React.ReactElement {
   return (
     <Button
       sx={{
@@ -25,13 +21,11 @@ export function TipsBtn(): React.ReactElement {
         },
       }}
     >
-      {translate("tips")} <MdOutlineTipsAndUpdates size={20} />
+      Template <CgIfDesign size={20} />
     </Button>
   );
 }
 export function ChallengeBtn(): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <Button
       sx={{
@@ -46,13 +40,11 @@ export function ChallengeBtn(): React.ReactElement {
         },
       }}
     >
-      {translate("challenge")} <IoCheckmarkDoneCircleOutline size={20} />
+      Challenge <IoCheckmarkDoneCircleOutline size={20} />
     </Button>
   );
 }
 export function SettingsBtn(): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <Button
       sx={{
@@ -67,13 +59,11 @@ export function SettingsBtn(): React.ReactElement {
         },
       }}
     >
-      {translate("settings")} <FiSettings size={20} />
+      Settings <FiSettings size={20} />
     </Button>
   );
 }
 export function MediaBtn(): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <MediaModal>
       <Button
@@ -89,7 +79,7 @@ export function MediaBtn(): React.ReactElement {
           },
         }}
       >
-        {translate("media")} <TbPhoto size={20} />
+        Media <TbPhoto size={20} />
       </Button>
     </MediaModal>
   );

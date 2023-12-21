@@ -11,7 +11,6 @@ import { DatePicker } from "@mui/x-date-pickers";
 
 import { FormProvider, RHFSelect, useSnackbar } from "@components";
 import { useUpdateStudentProfileMutation } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -24,7 +23,6 @@ export default function StepperInfo(): React.ReactElement {
   const { reload } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [updateUser] = useUpdateStudentProfileMutation();
-  const translate = useTranslate();
 
   const CreateInfoSchema = Yup.object().shape({
     country: Yup.string(),
@@ -57,15 +55,13 @@ export default function StepperInfo(): React.ReactElement {
           direction="row"
           sx={{ alignItems: "baseline", ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}
         >
-          <Typography variant="h3">
-            {translate("register_birth_date")}
-          </Typography>
+          <Typography variant="h3">Date of Birth</Typography>
           <Typography variant="h2" sx={{ display: "inline-flex", ml: 1 }}>
             🎂
           </Typography>
         </Stack>
         <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-          {translate("register_help_assign")}
+          This helps us assign you to the right groups
         </Typography>
         <Controller
           name="birthDate"
@@ -94,7 +90,7 @@ export default function StepperInfo(): React.ReactElement {
         <RHFSelect
           native
           name="country"
-          label={translate("country")}
+          label="Country"
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         >
           <option key={"US"} value={"US"}>
@@ -123,7 +119,7 @@ export default function StepperInfo(): React.ReactElement {
             },
           }}
         >
-          {translate("register_all_done")}
+          ALL DONE
         </LoadingButton>
       </FormProvider>
     </>

@@ -18,7 +18,6 @@ import {
 import { SvgColor } from "@components";
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
 import { useDeleteAuthorMutation } from "src/redux/services/manager/author-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import AddAuthorDialog from "./AddAuthorDialog";
 
@@ -33,13 +32,12 @@ export default function AuthorsCard({
 }: IAuthorsCardProps): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [deleteAuthor, { isLoading }] = useDeleteAuthorMutation();
-  const translate = useTranslate();
 
   const handleDeleteAuthor = (): void => {
     try {
       if (author.id) {
         deleteAuthor({ id: author.id }).unwrap();
-        enqueueSnackbar(translate("messages_deleted"));
+        enqueueSnackbar("Deleted successfully!");
       }
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
@@ -141,11 +139,11 @@ export default function AuthorsCard({
             loading={isLoading}
             onClick={handleDeleteAuthor}
           >
-            {translate("actions_delete_author")}
+            Delete author
           </LoadingButton>
           <AddAuthorDialog courseId={courseId} defaultValues={author}>
             <Button variant="soft" color="success" sx={{ width: "100%" }}>
-              {translate("actions_edit")}
+              Edit
             </Button>
           </AddAuthorDialog>
         </Box>

@@ -28,7 +28,6 @@ import {
   useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
 } from "src/redux/services/manager/lessons-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 export function IntegrationsTab({
   contentId,
@@ -38,7 +37,7 @@ export function IntegrationsTab({
   const { enqueueSnackbar } = useSnackbar();
 
   const { filters, setFilter } = useFilters({ name: "", take: 50 });
-  const translate = useTranslate();
+
   const [addIntegration, { isLoading: addLoading }] =
     useAddIntegrationMutation();
   const [removeIntegration, { isLoading: removeLoading }] =
@@ -72,38 +71,28 @@ export function IntegrationsTab({
       switch (reason) {
         case "selectOption": {
           await addIntegration(payload).unwrap();
-          enqueueSnackbar(
-            translate("messages_sth_added", {
-              name: details?.option.name ?? "",
-            })
-          );
+          enqueueSnackbar(`${details?.option.name ?? ""} added`);
           return;
         }
         case "removeOption": {
           await removeIntegration(payload).unwrap();
-          enqueueSnackbar(
-            translate("messages_sth_removed", {
-              name: details?.option.name ?? "",
-            })
-          );
+          enqueueSnackbar(`${details?.option.name ?? ""} removed`);
           // eslint-disable-next-line no-useless-return
           return;
         }
       }
     } catch {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("something went wrong", { variant: "error" });
     }
   };
 
   if (!integrations.data.length) {
     return (
       <Box>
-        <Typography>{translate("integrations_empty")}</Typography>
+        <Typography>You don't have any integrations.</Typography>
         <Typography>
-          {translate("integrations_lets_create")}{" "}
-          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>
-            {translate("here")}
-          </Link>
+          Lest's create integration{" "}
+          <Link href={MANAGER_PATH_DASHBOARD.apps.root}>here</Link>
         </Typography>
       </Box>
     );
@@ -136,7 +125,7 @@ export function IntegrationsTab({
       }
       style={{ width: "100%" }}
       renderInput={(params) => (
-        <TextField {...params} placeholder={translate("integrations")} />
+        <TextField {...params} placeholder="Integrations" />
       )}
       renderOption={(props, recipient, { inputValue }) => {
         const { name } = recipient;

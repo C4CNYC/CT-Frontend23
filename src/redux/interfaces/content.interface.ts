@@ -15,10 +15,7 @@ export interface ICourseElement {
   cover: string;
   draft: boolean;
   progress: number | null;
-  likes_count?: string;
-  initial_enrolled: number;
-  initial_likes: number;
-  initial_stars: number;
+  likes_count?: number;
   total_lessons: number;
   liked: boolean;
   my_rating: number | null;
@@ -54,9 +51,6 @@ export interface IModuleContent {
   description: string;
   id: string;
   name: string;
-  initial_enrolled: number;
-  initial_likes: number;
-  initial_stars: number;
   progress: string | null;
   duration: string | null;
   teacher_slides?: string;
@@ -74,9 +68,6 @@ export interface ILesson {
   tips: string[] | [];
   progress?: number;
   skills: ISkill[];
-  independent?: boolean;
-  contents: ILessonContent[]
-  type: 'practical' | 'exercise';
 }
 
 export interface ILessonCurrent {
@@ -89,23 +80,15 @@ export interface ILessonCurrent {
   progress?: number | null;
 }
 
-export interface ILessonContentProgress {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  progress_meta: Record<string, string>;
-}
-
 export interface ILessonContent {
   body: string;
   preload_body: string;
-  tips: string;
   solution_body: string;
   validations: Array<IValidation & BaseResponseInterface>;
   type: LessonContentType;
   meta: Record<string, any>;
   integrations: IIntegration[];
-  progress?: ILessonContentProgress[];
+  progress?: number | null;
 }
 
 export interface ISkill {

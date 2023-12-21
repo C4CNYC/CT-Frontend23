@@ -2,7 +2,6 @@ import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 
 import { RHFTextField } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface ICreateHeaderProps {
   choosenColor: string;
@@ -13,8 +12,6 @@ export default function CreateHeader({
 }: ICreateHeaderProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
-  const translate = useTranslate();
-
   return (
     <Stack
       sx={{
@@ -32,7 +29,7 @@ export default function CreateHeader({
             variant="h3"
             sx={{ color: theme.palette.primary.contrastText }}
           >
-            {translate("class_create_class")}
+            Create class
           </Typography>
           <RHFTextField
             name="name"
@@ -40,9 +37,7 @@ export default function CreateHeader({
             // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
             inputRef={(input) => input && input.focus()}
             placeholder={
-              isMobile
-                ? translate("class_enter_class_name")
-                : translate("class_enter_name")
+              isMobile ? "Enter a class name here ... " : "Enter name ..."
             }
             inputProps={{
               style: {
@@ -51,7 +46,6 @@ export default function CreateHeader({
               },
               sx: {
                 fontSize: { xs: "42px", sm: "52px", md: "62px" },
-                color: "#fff",
                 "&::placeholder": {
                   opacity: 0.7,
                   color: "#fff",
@@ -74,7 +68,7 @@ export default function CreateHeader({
           <RHFTextField
             name="description"
             autoComplete="off"
-            placeholder={translate("class_enter_description")}
+            placeholder="and description here ... "
             inputProps={{
               style: {
                 padding: 0,

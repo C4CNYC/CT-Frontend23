@@ -38,7 +38,6 @@ import {
   useDeleteIntegrationMutation,
   useGetIntegrationsListQuery,
 } from "src/redux/services/manager/integration-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -51,35 +50,28 @@ export default function AppsPage(): React.ReactElement {
   const { filters, setFilter } = useFilters({ name: "" });
   const { data, isLoading } = useGetIntegrationsListQuery({ ...filters });
   const [removeIntegration] = useDeleteIntegrationMutation();
-  const translate = useTranslate();
 
   const onDelete = async (id: string): Promise<void> => {
     try {
       await removeIntegration({ integrationId: id }).unwrap();
-      enqueueSnackbar(translate("integrations_removed_msg"));
+      enqueueSnackbar("integration removed");
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("somethinkg went wrong", { variant: "error" });
     }
   };
 
   return (
     <>
       <Head>
-        <title>{translate("integrations")} | CodeTribe</title>
+        <title>Integrations | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         {!isLoading ? (
           <CustomBreadcrumbs
             heading=""
             links={[
-              {
-                name: translate("home"),
-                href: STUDENT_PATH_DASHBOARD.class.root,
-              },
-              {
-                name: translate("integrations"),
-                href: MANAGER_PATH_DASHBOARD.apps.root,
-              },
+              { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+              { name: "Integrations", href: MANAGER_PATH_DASHBOARD.apps.root },
             ]}
             action={
               <ModalIntegration>
@@ -87,7 +79,7 @@ export default function AppsPage(): React.ReactElement {
                   variant="contained"
                   startIcon={<Iconify icon="eva:plus-fill" />}
                 >
-                  {translate("integrations_add_int")}
+                  Add Integration
                 </Button>
               </ModalIntegration>
             }
@@ -120,13 +112,9 @@ export default function AppsPage(): React.ReactElement {
                 <Table size={dense ? "small" : "medium"} sx={{ minWidth: 800 }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell align="left">{translate("title")}</TableCell>
-                      <TableCell align="left">
-                        {translate("actions_create")}
-                      </TableCell>
-                      <TableCell align="left">
-                        {translate("actions_update")}
-                      </TableCell>
+                      <TableCell align="left">Title</TableCell>
+                      <TableCell align="left">Create</TableCell>
+                      <TableCell align="left">Update</TableCell>
                       <TableCell align="right"></TableCell>
                     </TableRow>
                   </TableHead>

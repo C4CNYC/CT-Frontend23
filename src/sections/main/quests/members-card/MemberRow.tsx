@@ -17,7 +17,6 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { useUpdateClassPendingMutation } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface IMemberRowProps {
   row: IStudent;
@@ -47,7 +46,6 @@ export default function MemberRow({
     username,
     city,
   } = row;
-  const translate = useTranslate();
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
@@ -60,7 +58,7 @@ export default function MemberRow({
         classId: query.id as string,
         student_id: row.id as string,
       }).unwrap();
-      enqueueSnackbar(translate("members_approved_msg"));
+      enqueueSnackbar("Approved successfully");
     } catch (error) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
@@ -116,7 +114,7 @@ export default function MemberRow({
               loading={isLoading}
               variant="contained"
             >
-              {translate("actions_approve")}
+              Approve
             </LoadingButton>
           </TableCell>
         )}
@@ -147,7 +145,7 @@ export default function MemberRow({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          Delete
         </MenuItem>
 
         <MenuItem
@@ -157,15 +155,15 @@ export default function MemberRow({
           }}
         >
           <Iconify icon="eva:edit-fill" />
-          {translate("actions_edit")}
+          Edit
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title="Delete"
+        content="Are you sure want to delete?"
         action={
           <LoadingButton
             variant="contained"
@@ -173,7 +171,7 @@ export default function MemberRow({
             onClick={onDeleteRow}
             loading={loading}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

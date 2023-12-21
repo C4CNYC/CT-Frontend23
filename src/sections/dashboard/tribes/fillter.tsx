@@ -11,11 +11,10 @@ import {
 } from "@mui/material";
 
 import { MenuPopover } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 export default function TribesFillter(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
@@ -47,7 +46,7 @@ export default function TribesFillter(): React.ReactElement {
       }}
     >
       <TextField
-        placeholder={translate("tribes_search")}
+        placeholder="Search tribe..."
         type="text"
         id="search"
         sx={{ "& .MuiInputBase-root": { height: "40px" } }}
@@ -65,7 +64,7 @@ export default function TribesFillter(): React.ReactElement {
           sx={{ color: "#212B36", ml: "30px" }}
           endIcon={<KeyboardArrowDownIcon />}
         >
-          {translate("actions_sort_by")}
+          Sort by
         </Button>
         <MenuPopover
           open={openPopover}

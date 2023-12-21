@@ -21,7 +21,6 @@ import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import { getCountTakingElment } from "@utils";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -29,7 +28,6 @@ CoursesListPage.getLayout = (page: React.ReactElement) => (
 
 export default function CoursesListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const translate = useTranslate();
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
       name: "",
@@ -47,20 +45,14 @@ export default function CoursesListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate("courses")} | CodeTribe</title>
+        <title> Courses | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate("courses"),
-              href: MANAGER_PATH_DASHBOARD.courses.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            { name: "Courses", href: MANAGER_PATH_DASHBOARD.courses.root },
           ]}
           action={
             <CreateCourseDialog id="">
@@ -68,7 +60,7 @@ export default function CoursesListPage(): React.ReactElement {
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                {translate("courses_add")}
+                Add Course
               </Button>
             </CreateCourseDialog>
           }

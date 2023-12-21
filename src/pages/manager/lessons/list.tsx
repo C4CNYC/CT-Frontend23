@@ -21,7 +21,6 @@ import SkeletonList, {
 import { getCountTakingElment } from "@utils";
 import { ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import FilterLessons from "./filter";
 import SkeletonLesson from "./skeletonLesson";
@@ -32,7 +31,6 @@ LessonsListPage.getLayout = (page: React.ReactElement) => (
 
 export default function LessonsListPage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const translate = useTranslate();
   const { filters, setFilter } = useFilters<ILessonSearchParams>(
     {
       module_id: "",
@@ -50,21 +48,15 @@ export default function LessonsListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> {translate("lessons_list")} | CodeTribe</title>
+        <title> Lessons List | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate("lessons"),
-              href: MANAGER_PATH_DASHBOARD.lessons.root,
-            },
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            { name: "Lessons", href: MANAGER_PATH_DASHBOARD.lessons.root },
           ]}
           action={
             <CreateLesson>
@@ -73,7 +65,7 @@ export default function LessonsListPage(): React.ReactElement {
                 startIcon={<Iconify icon="eva:plus-fill" />}
                 sx={{ mr: 2 }}
               >
-                {translate("lessons_create_lesson")}
+                Create Lesson
               </Button>
             </CreateLesson>
           }

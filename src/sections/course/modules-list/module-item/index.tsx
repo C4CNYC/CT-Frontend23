@@ -18,7 +18,6 @@ import {
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { IModuleContent } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 import ActionsBlock from "./ActionsBlock";
 import ImageLightBox from "./ImageLightBox";
@@ -36,7 +35,6 @@ export default function ModuleItem({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(800));
   const { query } = useRouter();
-  const translate = useTranslate();
 
   return (
     <Stack
@@ -133,9 +131,7 @@ export default function ModuleItem({
             }}
             variant="text"
           >
-            {translate("get_coding", {
-              time: lastVisited ? "Again" : "",
-            })}
+            Get Coding {lastVisited ? "Again" : ""}
             <svg width="0" height="0">
               <linearGradient
                 id="blue-gradient"
@@ -166,7 +162,7 @@ export default function ModuleItem({
               alignSelf: isMobile ? "flex-start" : "center",
             }}
           >
-            {translate("actions_see_more")}
+            See more
           </Link>
         </Stack>
       </Stack>
@@ -176,11 +172,7 @@ export default function ModuleItem({
             orientation="horizontal"
             sx={{ borderRightWidth: 2, my: 4 }}
           />
-          <ActionsBlock
-            certificate={unit.initial_enrolled}
-            likes={unit.initial_likes}
-            rated={unit.initial_stars}
-          />
+          <ActionsBlock certificate={2700} likes={12000} rated={4300} />
         </>
       ) : null}
     </Stack>

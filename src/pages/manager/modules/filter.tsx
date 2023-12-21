@@ -13,7 +13,6 @@ import {
   IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   filters: IModulesSearchParams;
@@ -29,7 +28,6 @@ export default function FilterModules({
       take: 50,
       name: "",
     });
-  const translate = useTranslate();
 
   const { data: courses, isLoading } = useManagerGetCourseQuery(courseFilters);
 
@@ -57,7 +55,7 @@ export default function FilterModules({
           sx={{
             width: { xs: "100%", sm: "100%", md: "260px", lg: "260px" },
           }}
-          placeholder={translate("name")}
+          placeholder="Name"
           type="text"
           onChange={(event) => {
             setFilter("name", event.target.value);
@@ -72,9 +70,7 @@ export default function FilterModules({
         ></TextField>
         <Autocomplete<ICourse & BaseResponseInterface>
           options={courses?.data ?? []}
-          renderInput={(params) => (
-            <TextField {...params} label={translate("course")} />
-          )}
+          renderInput={(params) => <TextField {...params} label="Course" />}
           onInputChange={(e, value) => {
             setCourseFilters("name", value);
           }}

@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -26,7 +25,6 @@ export default function AddTeacher({
   nextStep,
 }: Props): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const translate = useTranslate();
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -37,27 +35,27 @@ export default function AddTeacher({
   return (
     <Stack minHeight={450}>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
-        <Typography variant="h3">{translate("register_as_teacher")}</Typography>
+        <Typography variant="h3">Register as Teacher</Typography>
       </Stack>
       <Typography variant="body1" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mb: 4 }}>
-        {translate("register_get_ready")}
+        Get ready for awesome
       </Typography>
       <Stack gap={2}>
         <RHFTextField
           name="firstName"
-          label={translate("first_name")}
+          label="First Name"
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <RHFTextField
           name="lastName"
-          label={translate("surname")}
+          label="Surname"
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <Divider sx={{ my: 1 }} />
 
         <RHFTextField
           name="password"
-          label={translate("password")}
+          label="Password"
           type={showPassword ? "text" : "password"}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
@@ -93,7 +91,7 @@ export default function AddTeacher({
           },
         }}
       >
-        {translate("register_whoopie")}
+        WHOOPIE
       </LoadingButton>
     </Stack>
   );

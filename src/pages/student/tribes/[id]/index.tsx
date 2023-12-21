@@ -19,7 +19,6 @@ import SkeletonTribe from "@sections/skeleton/SekeltonTribe";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { fNumber } from "@utils";
 import { useGetClassQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -28,7 +27,6 @@ TribeProfilePage.getLayout = (page: React.ReactElement) => (
 export default function TribeProfilePage(): React.ReactElement {
   const { query } = useRouter();
   const { themeStretch } = useSettingsContext();
-  const translate = useTranslate();
 
   const { data, isLoading } = useGetClassQuery(
     { id: query.id as string },
@@ -40,9 +38,7 @@ export default function TribeProfilePage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>
-          {translate("tribe_name", { name: data?.name })} | CodeTribe
-        </title>
+        <title>Tribe {`${data?.name}`} | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <Card
@@ -80,7 +76,7 @@ export default function TribeProfilePage(): React.ReactElement {
                       variant="body2"
                       sx={{ color: "text.secondary" }}
                     >
-                      {translate("students")}
+                      Students
                     </Typography>
                   </Stack>
 
@@ -91,13 +87,13 @@ export default function TribeProfilePage(): React.ReactElement {
                       variant="body2"
                       sx={{ color: "text.secondary" }}
                     >
-                      {translate("courses")}
+                      Courses
                     </Typography>
                   </Stack>
                 </Stack>
               </Card>
               <Card>
-                <CardHeader title={translate("about")} />
+                <CardHeader title="About" />
                 <Stack spacing={2} sx={{ p: 3 }}>
                   <Typography variant="body2">{data?.description}</Typography>
                   <Stack direction="row">

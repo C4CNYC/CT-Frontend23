@@ -21,24 +21,19 @@ export const getButtonSx = (isDesktop: boolean): SxProps => ({
   },
 });
 
-export const getButtonWrapperSx = (
-  isDesktop: boolean,
-  isLeft: boolean = false
-): SxProps => ({
+export const getButtonWrapperSx = (isDesktop: boolean): SxProps => ({
   display: isDesktop ? "flex" : "none",
   justifyContent: "center",
   alignItems: "center",
+  ml: 3,
   position: "absolute",
   top: 0,
   right: 0,
-  left: isLeft ? 0 : "none",
   zIndex: 10,
   background: "rgba(238, 70, 122, 0.20)",
   width: 32,
   height: 32,
-  borderBottomLeftRadius: isLeft ? 0 : "50%",
-  borderBottomRightRadius: isLeft ? "50%" : 0,
+  borderBottomLeftRadius: "50%",
   borderBottom: "3px solid rgb(234, 234, 235)",
-  borderRight: isLeft ? "3px solid rgb(234, 234, 235)" : "none",
-  borderLeft: isLeft ? "none" : "3px solid rgb(234, 234, 235)",
+  borderLeft: "3px solid rgb(234, 234, 235)",
 });

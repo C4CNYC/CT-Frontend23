@@ -9,8 +9,6 @@ import {
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 //
 
 // ----------------------------------------------------------------------
@@ -28,8 +26,6 @@ export function TablePaginationCustom({
   sx,
   ...other
 }: Props & TablePaginationProps): React.ReactElement | null {
-  const translate = useTranslate();
-
   return (
     <Box sx={{ position: "relative", ...sx }}>
       <TablePagination
@@ -40,7 +36,7 @@ export function TablePaginationCustom({
 
       {onChangeDense && (
         <FormControlLabel
-          label={translate("dense")}
+          label="Dense"
           control={<Switch checked={dense} onChange={onChangeDense} />}
           sx={{
             pl: 2,

@@ -29,7 +29,6 @@ import {
   useGetStudentModulesLessonsQuery,
 } from "src/redux/services/manager/courses-student";
 import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -41,7 +40,6 @@ export default function ModulePage(): React.ReactElement {
   const isMobile = useMediaQuery(theme.breakpoints.down(660));
   const { query } = useRouter();
   const [currentModule, setCurrentModule] = useState<IModuleContent>();
-  const translate = useTranslate();
 
   const { data: modules, isLoading: isLoadingModule } =
     useGetStudentCourseModulesQuery(
@@ -67,10 +65,12 @@ export default function ModulePage(): React.ReactElement {
     }
   }, [isLoadingModule]);
 
+  console.log('currentModule', currentModule)
+
   return (
     <>
       <Head>
-        <title>{currentModule?.name ?? translate("module")} | CodeTribe</title>
+        <title>{currentModule?.name ?? "Module"} | CodeTribe</title>
       </Head>
       <Container
         maxWidth={themeStretch ? false : "xl"}
@@ -80,20 +80,17 @@ export default function ModulePage(): React.ReactElement {
         <CustomBreadcrumbs
           sx={getBreadcrumbsSx(isMobile, theme)}
           links={[
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate("courses"),
+              name: "Courses",
               href: STUDENT_PATH_DASHBOARD.courses.root,
             },
             {
-              name: course?.name ?? translate("course"),
+              name: course?.name ?? "Course",
               href: STUDENT_PATH_DASHBOARD.courses.course(course?.id as string),
             },
             {
-              name: currentModule?.name ?? translate("module"),
+              name: currentModule?.name ?? "Module",
             },
           ]}
         />
@@ -142,16 +139,9 @@ export default function ModulePage(): React.ReactElement {
           <ModuleSidebar
             level="Beginner"
             grade="6th-10th Grade"
-            duration={currentModule ? currentModule?.duration : "20 min"}
-            lessonCount={`${data?.length} ${translate("lessons")}`}
-            description={
-              currentModule
-                ? currentModule.description
-                : translate("description")
-            }
-            certificate={currentModule?.initial_enrolled ?? 0}
-            likes={currentModule?.initial_likes ?? 0}
-            rated={currentModule?.initial_stars ?? 0}
+            duration={ currentModule ? currentModule?.duration : "20 min"}
+            lessonCount={`${data?.length} lessons`}
+            description={currentModule ? currentModule.description : "Description"}
             teacherForum={currentModule?.teacher_forum}
             teacherSlides={currentModule?.teacher_slides}
             lessonPlans={currentModule?.lesson_plans}

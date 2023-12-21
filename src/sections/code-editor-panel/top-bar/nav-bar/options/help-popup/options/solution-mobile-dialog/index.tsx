@@ -1,5 +1,4 @@
 import { type FC } from "react";
-
 import { CopyBlock, dracula } from "react-code-blocks";
 import { AiOutlineCode } from "react-icons/ai";
 
@@ -13,8 +12,6 @@ import {
 
 import { Iconify } from "@components";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
-
 import {
   COPY_BLOCK_CUSTOM_STYLES,
   DIALOG_CONTENT_SX,
@@ -22,7 +19,7 @@ import {
   DIALOG_TITLE_SX,
   DIALOG_TITLE_TYP_SX,
   ICON_BUTTON_SX,
-  NO_SOLUTION_TEXT,
+  NO_SOLUTION_TEXT
 } from "./constants";
 
 interface SolutionMobileDialogProps {
@@ -34,10 +31,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
   open,
   onClose,
 }) => {
-  const solutionCode = useSelector(
-    (state) => state.codePanelGlobal.solutionCode
-  );
-  const translate = useTranslate();
+  const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
 
   return (
     <>
@@ -51,7 +45,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
           <AiOutlineCode size="30px" color="#EE467A" />
 
           <Typography variant="h5" sx={DIALOG_TITLE_TYP_SX}>
-            {translate("solution")}
+            Solution
           </Typography>
 
           <IconButton onClick={onClose} sx={ICON_BUTTON_SX}>
@@ -61,7 +55,7 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
 
         <DialogContent sx={DIALOG_CONTENT_SX}>
           <CopyBlock
-            text={solutionCode || translate(NO_SOLUTION_TEXT)}
+            text={solutionCode || NO_SOLUTION_TEXT}
             language="html"
             theme={dracula}
             wrapLines
@@ -71,6 +65,6 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
       </Dialog>
     </>
   );
-};
+}
 
-export default SolutionMobileDialog;
+export default SolutionMobileDialog

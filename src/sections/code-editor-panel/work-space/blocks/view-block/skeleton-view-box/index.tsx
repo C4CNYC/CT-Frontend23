@@ -1,76 +1,56 @@
-import { type FC, useMemo } from "react";
+import { type FC } from "react";
 
-import { Skeleton, Typography, useTheme } from "@mui/material";
+import { Skeleton, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-
-import { useTranslate } from "src/utils/translateHelper";
 
 import {
   AVAILABLE_TYP_SX,
   CODING_TYP_SX,
-  getParentStackSx,
-  getSkeletonSx,
-  getStackBottonSx,
+  PARENT_STACK_SX,
+  SKELETON_SX,
+  STACK_BOTTON_SX,
 } from "./constants";
 
-interface ISkeletonProps {
-  isOpenHeader: boolean | undefined;
-}
-
-const SkeletonViewBlock: FC<ISkeletonProps> = ({ isOpenHeader }) => {
-  const translate = useTranslate();
-  const theme = useTheme();
-  const isLight = theme.palette.mode === "light";
-  const skeletonSx = useMemo(() => getSkeletonSx(isLight), [isLight]);
-  const parentStackSx = useMemo(() => getParentStackSx(isLight), [isLight]);
-  const bottonStackSx = useMemo(
-    () => getStackBottonSx(isLight, theme),
-    [isLight, theme]
-  );
-
+const SkeletonViewBlock: FC = () => {
   return (
-    <Stack
-      sx={parentStackSx}
-      width="100%"
-      height={isOpenHeader ? "calc(100% - 34px)" : "100vh"}
-    >
+    <Stack sx={PARENT_STACK_SX} width="100%" height="100vh">
       <Stack
         display="flex"
         direction="row"
         alignItems="center"
         justifyContent="space-between"
         mb="5px"
-        pl="30px"
+        px="30px"
       >
-        <Skeleton height="18px" width="192px" sx={skeletonSx} />
+        <Skeleton height="18px" width="192px" sx={SKELETON_SX} />
         <Stack spacing={1} display="flex" direction="row">
           <Skeleton
             height="13px"
             width="13px"
             variant="circular"
-            sx={skeletonSx}
+            sx={SKELETON_SX}
           />
           <Skeleton
             height="13px"
             width="13px"
             variant="circular"
-            sx={skeletonSx}
+            sx={SKELETON_SX}
           />
           <Skeleton
             height="13px"
             width="13px"
             variant="circular"
-            sx={skeletonSx}
+            sx={SKELETON_SX}
           />
         </Stack>
       </Stack>
 
-      <Stack sx={bottonStackSx}>
+      <Stack sx={STACK_BOTTON_SX}>
         <Typography sx={AVAILABLE_TYP_SX} variant="subtitle1">
-          {translate("no_preview_available")}
+          No preview available?
         </Typography>
         <Typography variant="subtitle1" sx={CODING_TYP_SX}>
-          {translate("means_time_to_code")} 🤓
+          That means it’s time to get coding. 🤓
         </Typography>
       </Stack>
     </Stack>

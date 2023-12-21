@@ -1,40 +1,42 @@
 import { type FC, type RefObject, useMemo } from "react";
+import { DndContext } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
-import { DndContext } from "@dnd-kit/core";
 import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import EventNoteIcon from "@mui/icons-material/EventNote";
+  Drawer,
+  List,
+  Divider,
+  Stack,
+  CircularProgress
+} from "@mui/material";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
-import { CircularProgress, Divider, Drawer, List, Stack } from "@mui/material";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 import { SimpleInfiniteList } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
-import CodeBlock from "./components/code-block";
-import CutomNavItem from "./components/custom-nav-item";
-import HeaderItem from "./components/header-item";
-import LoadListSkeleton from "./components/load-list-skeleton";
 import NavItem from "./components/nav-item";
+import HeaderItem from "./components/header-item";
+import CutomNavItem from "./components/custom-nav-item";
+import CodeBlock from "./components/code-block";
 import SortableItem from "./components/sortable-item";
-import { useNavPanel } from "./hook";
+import LoadListSkeleton from "./components/load-list-skeleton";
+
 import {
-  DIVIDER_SX,
-  DIVIDER_SX_BOTTOM,
   ICON_SX,
-  LIST_SX,
-  MAIN_LIST,
+  DIVIDER_SX,
   STACK_SX,
+  MAIN_LIST,
+  LIST_SX,
   getDrawerSx,
   getStackCodeBoxSx,
-} from "./styles";
+  DIVIDER_SX_BOTTOM
+} from "./styles"
+import { useNavPanel } from "./hook";
 
 interface NavPanelProps {
-  cursorName?: string;
-  wrapperListenerRef: RefObject<HTMLDivElement | null>;
+  cursorName?: string
+  wrapperListenerRef: RefObject<HTMLDivElement | null>
 }
 
 const LOADER_SIZE = 20;
@@ -55,12 +57,11 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
     isCodeBlocksVisible,
     isUsersLoading,
     onLoadMore,
-    hasNextPage,
+    hasNextPage
   } = useNavPanel(wrapperListenerRef);
 
-  const translate = useTranslate();
   const drawerSx = useMemo(() => {
-    return getDrawerSx(isOpen, isCodePreviewVisible);
+    return getDrawerSx(isOpen, isCodePreviewVisible)
   }, [isOpen, isCodePreviewVisible]);
 
   const stackCodeBoxSx = useMemo(() => {
@@ -68,7 +69,12 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   }, [draggableConfig?.height, isOpen]);
 
   return (
-    <Drawer ref={drawerRef} open={isOpen} variant="permanent" sx={drawerSx}>
+    <Drawer
+      ref={drawerRef}
+      open={isOpen}
+      variant="permanent"
+      sx={drawerSx}
+    >
       <HeaderItem
         activeUsers={activeUsersAmount}
         onClick={() => setIsOpen(!isOpen)}
@@ -78,62 +84,55 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
 
       <Stack sx={STACK_SX}>
         <List sx={MAIN_LIST}>
-          {isUsersLoading ? (
-            <LoadListSkeleton />
-          ) : (
-            <SimpleInfiniteList
-              loading={isUsersLoading}
-              hasNextPage={hasNextPage}
-              onLoadMore={onLoadMore}
-              loaderComponent={
-                <CircularProgress color="primary" size={LOADER_SIZE} />
-              }
-            >
-              {users.map((user) => (
-                <NavItem
-                  key={user.id}
-                  data={user}
-                  onToggle={() => setIsOpen(!isOpen)}
-                  onClick={() => onAddBlock(user)}
-                />
-              ))}
-            </SimpleInfiniteList>
-          )}
+          {isUsersLoading
+            ? <LoadListSkeleton />
+            : (
+              <SimpleInfiniteList
+                loading={isUsersLoading}
+                hasNextPage={hasNextPage}
+                onLoadMore={onLoadMore}
+                loaderComponent={<CircularProgress color="primary" size={LOADER_SIZE} />}
+              >
+                {users.map((user) => (
+                  <NavItem
+                    key={user.id}
+                    data={user}
+                    onToggle={() => setIsOpen(!isOpen)}
+                    onClick={() => onAddBlock(user)}
+                  />
+                ))}
+              </SimpleInfiniteList>
+            )
+          }
         </List>
       </Stack>
 
       <Divider sx={DIVIDER_SX_BOTTOM} />
-
+      
       <List sx={LIST_SX}>
         <CutomNavItem
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
-          name={translate("group_chat")}
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
+          name="Group Chat"
+          onToggle={() => { setIsOpen(!isOpen); }}
         />
 
         <CutomNavItem
           icon={<EventNoteIcon sx={ICON_SX} />}
-          name={translate("notes")}
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
+          name="Notes"
+          onToggle={() => { setIsOpen(!isOpen); }}
         />
 
         <CutomNavItem
           icon={<AssignmentIcon sx={ICON_SX} />}
-          name={translate("sandbox")}
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
+          name="Sandbox"
+          onToggle={() => { setIsOpen(!isOpen); }}
         />
       </List>
 
       {isCodeBlocksVisible && (
         <Stack sx={stackCodeBoxSx}>
           <DndContext onDragEnd={onDragEnd}>
-            <SortableContext
+            <SortableContext 
               items={previewdUsers}
               strategy={verticalListSortingStrategy}
             >
@@ -146,14 +145,14 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
                       cursorName={cursorName}
                     />
                   </SortableItem>
-                );
+                )
               })}
             </SortableContext>
           </DndContext>
         </Stack>
       )}
     </Drawer>
-  );
-};
+  )
+}
 
 export default NavPanel;
