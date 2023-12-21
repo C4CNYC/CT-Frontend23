@@ -71,10 +71,10 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
     : PROGRESS_LABEL_DESKTOP_SIZE;
 
   return (
-    <span>
+    <>
       <IconButton
         onClick={timerHandler}
-        classes={{ root: classes.menuButton }}
+        sx={{ p: 1 }}
         aria-label="Timer"
         size="large"
       >
@@ -233,7 +233,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
           <RxCross2 size={RX_CROSS_SIZE} />
         </IconButton>
       </Popover>
-    </span>
+    </>
   );
 };
 
