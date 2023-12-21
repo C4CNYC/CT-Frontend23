@@ -11,15 +11,7 @@ import {
 
 import SocialActivity from "./SocialActivity";
 
-export default function AuthorsSection({
-  certificate,
-  likes,
-  rated,
-}: {
-  certificate: number,
-  likes: number
-  rated: number
-}): React.ReactElement {
+export default function AuthorsSection(): React.ReactElement {
   const theme = useTheme();
   return (
     <Stack
@@ -81,7 +73,7 @@ export default function AuthorsSection({
           </Stack>
         </Stack>
       </Paper>
-      <SocialActivity likes={likes} rated={rated} certificate={certificate} />
+      <SocialActivity likes={12000} rated={4300} certificate={2700} />
     </Stack>
   );
 }

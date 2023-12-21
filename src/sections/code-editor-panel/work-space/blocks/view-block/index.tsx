@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 
 import { CgBrowser } from "react-icons/cg";
 import { TbArrowBarToRight } from "react-icons/tb";
@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { toggleBrowser } from "src/redux/slices/code-panel-global";
 import { type RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
 
 import BaseBlock from "../base-block";
 import BrowserView, { CodeDocument } from "./browser-view";
@@ -20,15 +19,6 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
   const isBrowserHidden = useSelector(
     (state: RootState) => state.codePanelGlobal.isBrowserHidden
   );
-  const translate = useTranslate();
-
-  const TITLE = translate("browser_preview");
-
-  const [isOpenHeader, setIsOpenHeader] = useState<boolean>(true);
-
-  const takeHeaderSettings = (isOpen: boolean) => {
-    setIsOpenHeader(isOpen);
-  };
 
   if (isBrowserHidden) {
     return null;
@@ -43,13 +33,13 @@ const ViewBlock: FC<IVueBlock> = ({ code }) => {
       hideTabsHandler={() => {
         dispatch(toggleBrowser(true));
       }}
-      takeHeaderSettings={takeHeaderSettings}
     >
-      <BrowserView document={code} isOpenHeader={isOpenHeader} />
+      <BrowserView document={code} />
     </BaseBlock>
   );
 };
 
+const TITLE = "Browser Preview";
 const icon = <CgBrowser size="20px" color="#43D4DD" />;
 
 export default ViewBlock;

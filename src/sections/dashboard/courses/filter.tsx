@@ -5,7 +5,6 @@ import Stack from "@mui/system/Stack";
 
 import { SetFilterType } from "@hooks";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   filters: ICourseSearchParams;
@@ -16,7 +15,6 @@ export default function FilterCourses({
   filters,
   setFilter,
 }: Props): React.ReactElement {
-  const translate = useTranslate();
   return (
     <>
       <Stack
@@ -36,7 +34,7 @@ export default function FilterCourses({
           onChange={(event) => {
             setFilter("name", event.target.value);
           }}
-          placeholder={translate("name")}
+          placeholder="Name"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end" sx={{ cursor: "pointer" }}>

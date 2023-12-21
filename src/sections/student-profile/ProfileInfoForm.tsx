@@ -17,13 +17,12 @@ import {
   RHFTextField,
   RHFUploadAvatar,
 } from "@components";
-import { IUser } from "src/redux/interfaces/auth.interface";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { IUser } from "src/redux/interfaces/auth.interface";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
@@ -82,7 +81,6 @@ export default function ProfileInfoForm({
     resolver: yupResolver(UpdateUserSchema),
     defaultValues,
   });
-  const translate = useTranslate();
 
   const { setValue, handleSubmit, control } = methods;
   const onSubmit = async (formData: FormValuesProps): Promise<void> => {
@@ -101,7 +99,7 @@ export default function ProfileInfoForm({
         file.append("file", formData.photoURL);
         updateStudentAvatar({ file }).unwrap();
       }
-      enqueueSnackbar(translate("messages_update_success"));
+      enqueueSnackbar("Update success!");
     } catch (error) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
@@ -155,11 +153,7 @@ export default function ProfileInfoForm({
                     <MuiColorInput
                       {...field}
                       value={field.value}
-                      helperText={
-                        fieldState.invalid
-                          ? translate("messages_invalid_color")
-                          : ""
-                      }
+                      helperText={fieldState.invalid ? "Color is invalid" : ""}
                       error={fieldState.invalid}
                       isAlphaHidden
                       format="hex"
@@ -175,14 +169,10 @@ export default function ProfileInfoForm({
                   pt: { xs: 3, sm: 3, md: 1 },
                 }}
               >
-                <RHFTextField
-                  name="username"
-                  label={translate("username")}
-                  disabled
-                />
-                <RHFTextField name="firstName" label={translate("name")} />
-                <RHFTextField name="lastName" label={translate("last_name")} />
-                <RHFSelect native name="country" label={translate("country")}>
+                <RHFTextField name="username" label="Username" disabled />
+                <RHFTextField name="firstName" label="Name" />
+                <RHFTextField name="lastName" label="Last name" />
+                <RHFSelect native name="country" label="Country">
                   <option value="" />
                   {countries.map((country) => (
                     <option
@@ -196,32 +186,20 @@ export default function ProfileInfoForm({
               </Stack>
             </Stack>
             <Stack sx={{ gap: 3, pt: 3 }}>
-              <RHFTextField
-                name="postcode"
-                label={translate("profile_postcode")}
-              />
+              <RHFTextField name="postcode" label="postcode" />
               <Controller
                 name="phone"
                 rules={{ validate: matchIsValidTel }}
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_phone")
-                        : ""
-                    }
+                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
                     error={fieldState.invalid}
-                    placeholder={translate("mobile_number")}
+                    placeholder="Mobile number"
                   />
                 )}
               />
-              <RHFTextField
-                name="about"
-                label={translate("about")}
-                multiline
-                rows={5}
-              />
+              <RHFTextField name="about" label="about" multiline rows={5} />
             </Stack>
             <LoadingButton
               type="submit"
@@ -229,7 +207,7 @@ export default function ProfileInfoForm({
               loading={isLoading}
               sx={{ alignSelf: "flex-end", mt: 5 }}
             >
-              {translate("actions_save")}
+              Save
             </LoadingButton>
           </Card>
         </Grid>

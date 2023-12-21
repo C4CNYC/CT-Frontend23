@@ -8,7 +8,6 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 
 import { Iconify } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 const INPUT_WIDTH = 160;
 
@@ -39,8 +38,6 @@ export default function AssignmentsTableToolbar({
   onFilterEndDate,
   onFilterStartDate,
 }: Props) {
-  const translate = useTranslate();
-
   return (
     <Stack
       spacing={2}
@@ -54,7 +51,7 @@ export default function AssignmentsTableToolbar({
       <TextField
         fullWidth
         select
-        label={translate("type")}
+        label="Type"
         value={filterType}
         onChange={onFilterService}
         SelectProps={{
@@ -86,7 +83,7 @@ export default function AssignmentsTableToolbar({
       </TextField>
 
       <DatePicker
-        label={translate("assignments_start_date")}
+        label="Start date"
         value={filterStartDate}
         onChange={onFilterStartDate}
         renderInput={(params) => (
@@ -101,7 +98,7 @@ export default function AssignmentsTableToolbar({
       />
 
       <DatePicker
-        label={translate("assignments_end_date")}
+        label="End date"
         value={filterEndDate}
         onChange={onFilterEndDate}
         renderInput={(params) => (
@@ -119,7 +116,7 @@ export default function AssignmentsTableToolbar({
         fullWidth
         value={filterName}
         onChange={onFilterName}
-        placeholder={translate("assignments_search")}
+        placeholder="Search assignment..."
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -136,7 +133,7 @@ export default function AssignmentsTableToolbar({
           onClick={onResetFilter}
           startIcon={<Iconify icon="eva:trash-2-outline" />}
         >
-          {translate("actions_clear")}
+          Clear
         </Button>
       )}
     </Stack>

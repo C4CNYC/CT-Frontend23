@@ -13,7 +13,6 @@ import {
   useDeleteSchoolSocialMutation,
   useUpdateSchoolSocialMutation,
 } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { SOCIAL_ICONS } from "../../../../assets/data";
 
@@ -50,7 +49,6 @@ export default function SocialItem({
   const [deleteSocial] = useDeleteSchoolSocialMutation();
   const [editSocial] = useUpdateSchoolSocialMutation();
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const defaultValues = {
     link: socialItem?.link ?? "",
@@ -72,7 +70,7 @@ export default function SocialItem({
         socialID: socialItem.id,
         link: data?.link,
       }).unwrap();
-      enqueueSnackbar(translate("networks_tab_edited_msg"));
+      enqueueSnackbar("Social link edited");
       setEdit(!edit);
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
@@ -86,7 +84,7 @@ export default function SocialItem({
         schoolId,
         socialID,
       }).unwrap();
-      enqueueSnackbar(translate("networks_tab_deleted_msg"));
+      enqueueSnackbar("Social link deleted");
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -108,12 +106,10 @@ export default function SocialItem({
           onSubmit={methods.handleSubmit(handleEditSocial)}
         >
           <FormGroup row sx={{ mb: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                width: { xs: "100%", sm: "350px", md: "max-content" },
-              }}
-            >
+            <Box sx={{
+              display: "flex",
+              width: { xs: "100%", sm: "350px", md: "max-content" }
+            }}>
               <Box
                 sx={{
                   display: "flex",
@@ -144,7 +140,7 @@ export default function SocialItem({
                   },
                 }}
                 name="link"
-                label={translate("link")}
+                label="Link"
                 required
                 disabled={edit}
               />
@@ -161,7 +157,7 @@ export default function SocialItem({
                   height: "40px",
                 }}
               >
-                {translate("actions_save")}
+                Save
               </LoadingButton>
             </Box>
             <Box sx={{ mt: { xs: 2, sm: 0, md: 0 } }}>
@@ -172,7 +168,7 @@ export default function SocialItem({
                 }}
                 sx={{ ml: { xs: 0, sm: 2, md: 2 }, height: "40px" }}
               >
-                {edit ? translate("actions_edit") : translate("actions_cansel")}
+                {edit ? "Edit" : "Cancel"}
               </LoadingButton>
               <LoadingButton
                 sx={{ ml: 2, mr: 2, height: "40px" }}
@@ -182,7 +178,7 @@ export default function SocialItem({
                   await handleDeleteSocial(socialItem.id);
                 }}
               >
-                {translate("actions_delete")}
+                Delete
               </LoadingButton>
             </Box>
           </FormGroup>

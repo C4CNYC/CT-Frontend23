@@ -1,28 +1,23 @@
 import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import _ from "lodash";
 import { useForm } from "react-hook-form";
-import {
-  adjectives,
-  animals,
-  uniqueNamesGenerator,
-} from "unique-names-generator";
 import * as Yup from "yup";
 
 import { Stack } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
-import { generateRandomEmoji } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
 import SingUp from "../teacher/SingUp";
 import StepperInfo from "./StepperInfo";
 import StepperProgres from "./StepperProgress";
 import StepperRegister from "./StepperRegister";
+import { Role } from "src/redux/services/enums/role.enum";
+import { adjectives, animals, uniqueNamesGenerator } from "unique-names-generator";
+import _ from "lodash";
+import { generateRandomEmoji } from "@utils";
 
 interface FormValuesProps {
   email: string;
@@ -36,7 +31,6 @@ export default function StudentStepper(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const { register } = useAuthContext();
   const [activeStep, setActiveStep] = useState(0);
-  const translate = useTranslate();
 
   const nextStep = () => {
     setActiveStep(activeStep + 1);
@@ -59,17 +53,17 @@ export default function StudentStepper(): React.ReactElement {
 
   const CreateRegisterSchema = Yup.object().shape({
     email: Yup.string()
-      .required(translate("required_email"))
-      .email(translate("must_be_valid_email")),
-    firstName: Yup.string().required(translate("enter_name")),
-    lastName: Yup.string().required(translate("enter_surname")),
-    username: Yup.string().required(translate("enter_username")),
+      .required("Email is required")
+      .email("Email must be a valid email address"),
+    firstName: Yup.string().required("Enter your name"),
+    lastName: Yup.string().required("Enter your surname"),
+    username: Yup.string().required("Enter your username"),
     password: Yup.string()
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-        translate("required_password_includes")
+        "Password must include at least one uppercase letter, one lowercase letter, and one numeric digit"
       )
-      .min(10, translate("required_password_length")),
+      .min(10, "Password must be at least 10 characters long"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -87,7 +81,7 @@ export default function StudentStepper(): React.ReactElement {
         lastName: data.lastName,
         username: data.username,
         role: Role.Student,
-        emojiAvatar: randomEmoji,
+        emojiAvatar: randomEmoji
       });
     } catch (error) {
       methods.setError("root", {

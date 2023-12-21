@@ -15,7 +15,6 @@ import { alpha, useTheme } from "@mui/material/styles";
 
 // utils
 import { bgBlur } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
 
 // config
 import { NAV } from "../../../config-global";
@@ -53,7 +52,6 @@ export default function SettingsDrawer(): React.ReactElement {
   } = useSettingsContext();
 
   const theme = useTheme();
-  const translate = useTranslate();
 
   const [open, setOpen] = useState(false);
 
@@ -114,10 +112,10 @@ export default function SettingsDrawer(): React.ReactElement {
           sx={{ py: 2, pr: 1, pl: SPACING }}
         >
           <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
-            {translate("settings")}
+            Settings
           </Typography>
 
-          <Tooltip title={translate("actions_reset")}>
+          <Tooltip title="Reset">
             <Box sx={{ position: "relative" }}>
               {notDefault && <BadgeDot />}
               <IconButton onClick={onResetSetting}>
@@ -134,30 +132,30 @@ export default function SettingsDrawer(): React.ReactElement {
         <Divider sx={{ borderStyle: "dashed" }} />
 
         <Scrollbar sx={{ p: SPACING, pb: 0 }}>
-          <Block title={translate("mode")}>
+          <Block title="Mode">
             <ModeOptions />
           </Block>
 
-          <Block title={translate("contrast")}>
+          <Block title="Contrast">
             <ContrastOptions />
           </Block>
 
-          <Block title={translate("direction")}>
+          <Block title="Direction">
             <DirectionOptions />
           </Block>
 
-          <Block title={translate("layout")}>
+          <Block title="Layout">
             <LayoutOptions />
           </Block>
 
           <Block
-            title={translate("stretch")}
-            tooltip={translate("stretch_tooltip")}
+            title="Stretch"
+            tooltip="Only available at large resolutions > 1600px (xl)"
           >
             <StretchOptions />
           </Block>
 
-          <Block title={translate("presets")}>
+          <Block title="Presets">
             <ColorPresetsOptions />
           </Block>
         </Scrollbar>

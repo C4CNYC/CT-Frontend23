@@ -6,7 +6,7 @@ import {
   useCallback,
   useMemo
 } from "react";
-import { type Extension } from "@codemirror/state";
+import { type Extension } from '@uiw/react-codemirror';
 import { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
@@ -18,7 +18,6 @@ import { unsubscribeSocket, EmitSocketEvents } from "./utils/socket"
 import { useModeSubscriptions } from "./useModeSubscriotions";
 import { EditorMode } from "./constants";
 import { RoomStatus } from "../components/status-label";
-import { RESET_LESSON_EVENT } from "@components";
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
@@ -28,7 +27,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
-interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, "baseInit" | "setIsLoading"> {
+interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, 'baseInit' | 'setIsLoading'> {
   extensions?: Extension[]
   editorRef: RefObject<HTMLDivElement>
   isLoading: boolean
@@ -39,7 +38,7 @@ interface UseCodeEditorCollabReturn extends Omit<UseBaseInitReturn, "baseInit" |
 }
 
 export const useCodeEditorCollab = ({
-  roomId,
+	roomId,
   mode = EditorMode.Owner,
   activeFile,
   socket,
@@ -60,8 +59,7 @@ export const useCodeEditorCollab = ({
     onChange,
     setActiveFile,
     onResetFileManager,
-    defaultFileName,
-    preloadedCode
+    defaultFileName
   } = useMemoizedProps(propsToMemoize);
 
   const onCreateEditor = (view: EditorView): void => {
@@ -83,8 +81,7 @@ export const useCodeEditorCollab = ({
     onChange,
     roomId,
     cursorText,
-    defaultFileName,
-    preloadedCode,
+    defaultFileName
   })
 
   const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
@@ -102,7 +99,7 @@ export const useCodeEditorCollab = ({
     setRoomStatus(RoomStatus.Active);
 
     if (!isFirstInit) {
-      await baseInit(activeFile); return;
+      return await baseInit(activeFile);
     }
 
     const fileInfo = await getFileInfo(roomId, socket);
@@ -121,7 +118,7 @@ export const useCodeEditorCollab = ({
     const fileInfo = await getFileInfo(roomId, socket);
 
     if (!isFirstInit || fileInfo == null) {
-      await baseInit(activeFile); return;
+      return await baseInit(activeFile);
     }
 
     onResetFileManager(fileInfo);
@@ -169,26 +166,6 @@ export const useCodeEditorCollab = ({
     [EditorMode.Watcher]: runInitWatcher,
   }), [runInitWatcher, runInitOwner, runInitSubOwner]);
 
-  window.addEventListener(RESET_LESSON_EVENT, () => {
-    editorView.current?.destroy();
-    if (initializeBlockedRef.current) {
-      return;
-    }
-    initialize[modeRef.current](firstInit.current);
-  });
-
-  useEffect(() => {
-    return () => {
-      window.removeEventListener(RESET_LESSON_EVENT, () => {
-        editorView.current?.destroy();
-        if (initializeBlockedRef.current) {
-          return;
-        }
-        initialize[modeRef.current](firstInit.current);
-      });
-    }
-  }, []);
-
   useModeSubscriptions({
     roomId,
     roomStatus,
@@ -220,10 +197,10 @@ export const useCodeEditorCollab = ({
     initialize[modeRef.current](firstInit.current);
   }, [initialize]);
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", clearSocketData);
-    return () => { clearSocketData(); };
-  }, [clearSocketData]);
+	useEffect(() => {
+    window.addEventListener('beforeunload', clearSocketData);
+		return () => clearSocketData();
+	}, [clearSocketData]);
 
   return {
     editorRef,

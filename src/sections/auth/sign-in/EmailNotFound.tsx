@@ -3,10 +3,9 @@ import { Dispatch, SetStateAction } from "react";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { StepWizardChildProps } from "react-step-wizard";
 
-import { Button, IconButton, Stack, Theme, Typography } from "@mui/material";
+import { Button, IconButton, Stack, Typography } from "@mui/material";
 
 import { Image } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   setError: Dispatch<SetStateAction<string>>;
@@ -16,8 +15,6 @@ export default function EmailNotFound({
   previousStep,
   setError,
 }: Partial<StepWizardChildProps> & Props): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <>
       <IconButton
@@ -30,11 +27,13 @@ export default function EmailNotFound({
         <MdArrowBackIosNew />
       </IconButton>
 
-      <Typography variant="h4">{translate("login_email_not_found")}</Typography>
+      <Typography variant="h4">Email not found</Typography>
       <Typography variant="h4" gutterBottom>
-        {translate("login_or_wrong_password")}
+        or wrong password
       </Typography>
-      <Typography variant="body1">{translate("login_try_again")}</Typography>
+      <Typography variant="body1">
+        Please try again or register as a new user
+      </Typography>
       <Image
         sx={{ width: "130px", height: "130px", m: "5px auto" }}
         alt="error"
@@ -46,7 +45,7 @@ export default function EmailNotFound({
             setError("");
             previousStep?.();
           }}
-          sx={(theme: Theme) => ({
+          sx={(theme) => ({
             background: theme.palette.grey[100],
             color: theme.palette.grey[500],
             fontSize: "1.5rem",
@@ -56,7 +55,7 @@ export default function EmailNotFound({
             },
           })}
         >
-          {translate("login_go_back")}
+          GO BACK
         </Button>
       </Stack>
     </>

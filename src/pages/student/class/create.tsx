@@ -28,7 +28,6 @@ import {
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
 
 CreateClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -47,7 +46,6 @@ export default function CreateClass(): React.ReactElement {
   const [choosenColor, setChoosenColor] = useState(
     randomInArray(CLASS_PALETTE)
   );
-  const translate = useTranslate();
   const { data, isLoading } = useGetMySchoolsQuery({});
 
   const studentId = useSelector(
@@ -60,8 +58,8 @@ export default function CreateClass(): React.ReactElement {
   const [updateClassAvatar, { isLoading: isUpdatingAvatar }] =
     useUpdateClassesAvatarMutation();
   const CreateEmailSchema = Yup.object().shape({
-    name: Yup.string().required(translate("required_name")),
-    description: Yup.string().required(translate("required_description")),
+    name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Description is required"),
   });
   const methods = useForm<FormValueProps>({
     resolver: yupResolver(CreateEmailSchema),
@@ -88,7 +86,7 @@ export default function CreateClass(): React.ReactElement {
           classId: classInfo.id,
           file,
         }).unwrap();
-        enqueueSnackbar(translate("messages_class_created"));
+        enqueueSnackbar("Class created successfully");
         if (query.onBoarding) {
           push(
             STUDENT_PATH_DASHBOARD.class.addQuest(classInfo.id, {
@@ -118,7 +116,7 @@ export default function CreateClass(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>{translate("class_create_class")} | CodeTribe</title>
+        <title>Create class | CodeTribe</title>
       </Head>
       <Container maxWidth={false} disableGutters>
         <ChooseShoolModal
@@ -144,7 +142,7 @@ export default function CreateClass(): React.ReactElement {
             }}
           />
           <Stack
-            sx={(theme) => ({
+            sx={{
               position: "sticky",
               bottom: 0,
               flexDirection: "row",
@@ -153,9 +151,8 @@ export default function CreateClass(): React.ReactElement {
               pr: { xs: 2, sm: 3, lg: 4 },
               pt: 2,
               pb: 2,
-              backgroundColor:
-                theme.palette.mode === "light" ? "#ffffff" : "initial",
-            })}
+              backgroundColor: "#ffffff"
+            }}
           >
             <Button
               size="large"
@@ -165,7 +162,7 @@ export default function CreateClass(): React.ReactElement {
                 await push(STUDENT_PATH_DASHBOARD.class.root)
               }
             >
-              {translate("actions_cancel")}
+              Cancel
             </Button>
             <LoadingButton
               size="large"
@@ -176,7 +173,7 @@ export default function CreateClass(): React.ReactElement {
                 createClassLoading || isUpdatingAvatar || isStudentJoining
               }
             >
-              {translate("actions_create")}
+              Create
             </LoadingButton>
           </Stack>
         </FormProvider>

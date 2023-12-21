@@ -15,9 +15,8 @@ import { useFilters } from "@hooks";
 import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 
 interface IFilterCoursesAutocomplete {
   classId: string;
@@ -51,7 +50,6 @@ export default function FilterClassesAutocomplete({
     setClass(details?.option.id as string);
   };
 
-  const translate = useTranslate();
   useEffect(() => {
     if (!classes || classId) {
       return;
@@ -85,9 +83,7 @@ export default function FilterClassesAutocomplete({
           }
           options={classes?.data ?? []}
           onChange={onChangeCourse}
-          renderInput={(params) => (
-            <TextField {...params} label={translate("class")} />
-          )}
+          renderInput={(params) => <TextField {...params} label="Class" />}
           onInputChange={(e, value) => {
             if (classes?.data.find((c) => c.id === classId)?.name === value) {
               return;

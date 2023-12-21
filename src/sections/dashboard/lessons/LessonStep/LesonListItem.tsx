@@ -19,7 +19,6 @@ import { Iconify, MenuPopover } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 import Preferences from "./Modals/Preferences";
 import Validation from "./Modals/Validation";
@@ -47,7 +46,6 @@ export default function LessonListItem({
   const router = useRouter();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [hasValidation, setHasValidation] = useState<boolean>(false);
-  const translate = useTranslate();
 
   const handleOpenPopover = async (
     event: React.MouseEvent<HTMLElement>
@@ -116,7 +114,6 @@ export default function LessonListItem({
                     textOverflow: "ellipsis",
                     overflow: "hidden",
                     whiteSpace: "nowrap",
-                    mb: 0,
                   }}
                   gutterBottom
                 >
@@ -195,7 +192,7 @@ export default function LessonListItem({
               }}
             >
               <Iconify icon="eva:trash-2-outline" />
-              {translate("actions_remove")}
+              Remove
             </MenuItem>
           </MenuPopover>
         </Paper>

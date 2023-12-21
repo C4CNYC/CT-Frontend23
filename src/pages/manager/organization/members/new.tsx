@@ -7,7 +7,6 @@ import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
-import { useTranslate } from "src/utils/translateHelper";
 
 UserCreatePage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -15,27 +14,23 @@ UserCreatePage.getLayout = (page: React.ReactElement) => (
 
 export default function UserCreatePage(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
-  const translate = useTranslate();
 
   return (
     <>
       <Head>
-        <title> {translate("create_new_user")} </title>
+        <title> Create a new user </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
+            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: translate("home"),
-              href: STUDENT_PATH_DASHBOARD.class.root,
-            },
-            {
-              name: translate("members"),
+              name: "Members",
               href: MANAGER_PATH_DASHBOARD.organization.members,
             },
-            { name: translate("new_user") },
+            { name: "New user" },
           ]}
         />
         <UserNewEditForm />

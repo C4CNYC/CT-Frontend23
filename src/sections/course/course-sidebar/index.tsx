@@ -20,8 +20,6 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 interface ICourseSidebarPros {
   duration: string;
   level: string;
@@ -37,7 +35,6 @@ export default function CourseSidebar({
 }: ICourseSidebarPros): React.ReactElement {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
-  const translate = useTranslate();
 
   return (
     <Stack
@@ -75,7 +72,7 @@ export default function CourseSidebar({
             gap: 2,
           }}
         >
-          <GrOverview size={25} /> {translate("courses_course_overview")}
+          <GrOverview size={25} /> Course Overview
         </Typography>
         <List>
           <ListItem>
@@ -125,21 +122,20 @@ export default function CourseSidebar({
             gap: 2,
           }}
         >
-          <IoImageOutline size={25} />{" "}
-          {translate("courses_course_who_is_this_for")}
+          <IoImageOutline size={25} /> Who is this for
         </Typography>
         <Typography variant="body1" gutterBottom>
-          {translate("courses_entery_point")}
+          A fantastic entry-point for understanding....
         </Typography>
         <Typography variant="body1">
-          {translate("courses_for_beginners_info")}
+          For curious beginners who want to understand the basics of web dev and
+          who.
         </Typography>
         <Typography
           variant="caption"
           sx={{ display: "flex", alignItems: "center", gap: 1, mt: 3 }}
         >
-          <TbFileCertificate size={20} />{" "}
-          {translate("courses_semple_cerificate")}
+          <TbFileCertificate size={20} /> Sample Certificate
         </Typography>
       </Stack>
       <Stack
@@ -163,16 +159,17 @@ export default function CourseSidebar({
             gap: 2,
           }}
         >
-          <IoImageOutline size={25} /> {translate("courses_for_teachers")}
+          <IoImageOutline size={25} /> For Teachers
         </Typography>
         <Typography variant="body1" mb={3}>
-          {translate("courses_for_teachers_info")}
+          A “Teacher Toolbox” is found within each module with all the resources
+          you will need.
         </Typography>
         <Link href="#" component={NextLink} color="inherit" underline="always">
-          {translate("courses_pacing_guides_link")}
+          Pacing Guides
         </Link>
         <Link href="#" component={NextLink} color="inherit" underline="always">
-          {translate("courses_standards_alignment_link")}
+          Standards Alignment
         </Link>
       </Stack>
     </Stack>

@@ -13,7 +13,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValuesProps {
   name: string;
@@ -51,8 +50,6 @@ export default function AddClassDialog({
 }: Prop): React.ReactElement {
   const [open, setOpen] = useState(false);
 
-  const translate = useTranslate();
-
   const handleClickOpen = (): void => {
     setOpen(true);
   };
@@ -62,8 +59,8 @@ export default function AddClassDialog({
   };
 
   const UpdateUserSchema = Yup.object().shape({
-    name: Yup.string().required(translate("required_name")),
-    description: Yup.string().required(translate("required_description")),
+    name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Name is required"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -111,7 +108,7 @@ export default function AddClassDialog({
       </Box>
       <Dialog open={open} onClose={handleClose}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <DialogTitle>{translate("classes_add_class")}</DialogTitle>
+          <DialogTitle>Add Class</DialogTitle>
           <IconButton onClick={handleClose} sx={{ mr: "14px" }}>
             <CloseIcon />
           </IconButton>
@@ -137,7 +134,9 @@ export default function AddClassDialog({
                         color: "text.secondary",
                       }}
                     >
-                      {isEdit ? "" : translate("messages_updete_avatar_info")}
+                      {isEdit
+                        ? ""
+                        : "Live empty and we will generate it randomly"}
                     </Typography>
                   }
                 />
@@ -149,15 +148,11 @@ export default function AddClassDialog({
                       sx={{ width: "100%", mt: 3 }}
                       {...field}
                       value={field.value}
-                      helperText={
-                        fieldState.invalid
-                          ? translate("messages_invalid_color")
-                          : ""
-                      }
+                      helperText={fieldState.invalid ? "Color is invalid" : ""}
                       error={fieldState.invalid}
                       isAlphaHidden
                       format="hex"
-                      label={translate("cover")}
+                      label="Cover"
                     />
                   )}
                 />
@@ -167,13 +162,13 @@ export default function AddClassDialog({
                   <RHFTextField
                     sx={{ width: { xs: "280px", sm: "350px" } }}
                     name="name"
-                    label={translate("classes_class_name")}
+                    label="Class name"
                     required
                   />
                   <RHFTextField
                     sx={{ width: { xs: "280px", sm: "350px" } }}
                     name="description"
-                    label={translate("classes_class_description")}
+                    label="Class description"
                     required
                     multiline
                     rows={3}
@@ -187,15 +182,13 @@ export default function AddClassDialog({
                     mt: 7,
                   }}
                 >
-                  <Button onClick={handleClose}>
-                    {translate("actions_close")}
-                  </Button>
+                  <Button onClick={handleClose}>Close</Button>
                   <LoadingButton
                     type="submit"
                     variant="contained"
                     loading={createClassLoading}
                   >
-                    {translate("actions_save")}
+                    Save
                   </LoadingButton>
                 </Box>
               </Grid>

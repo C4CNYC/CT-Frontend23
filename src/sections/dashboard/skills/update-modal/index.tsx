@@ -18,11 +18,10 @@ import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
 } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Skill name is required"),
-  description: Yup.string().required("Description is required"),
+  description: Yup.string().required("Description is requires"),
 });
 
 interface Props {
@@ -46,7 +45,6 @@ export default function UpdateModalSkills({
   const [createSkill, { isLoading: creatLoading }] = useCreateSkillMutation();
   const [updateSkill, { isLoading: updateLoading }] = useUpdateSkillMutation();
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const [open, setOpen] = useState(false);
   const handleOpen = (): void => {
@@ -77,11 +75,9 @@ export default function UpdateModalSkills({
       }
       methods.reset();
       handleClose();
-      enqueueSnackbar(
-        id ? translate("skills_updated_msg") : translate("skills_created_msg")
-      );
+      enqueueSnackbar(`Skill ${id ? "updated" : "created"} successfully`);
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
@@ -89,15 +85,15 @@ export default function UpdateModalSkills({
     <>
       <div onClick={handleOpen}>{children}</div>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
-        <DialogTitle sx={{ pb: 3 }}>{translate("skills")}</DialogTitle>
+        <DialogTitle sx={{ pb: 3 }}>Skills</DialogTitle>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ p: 3 }}>
             <Stack spacing={4}>
               <Box display="flex" flexDirection="column" gap={2} mb={3}>
-                <RHFTextField placeholder={translate("name")} name="name" />
+                <RHFTextField placeholder="Name" name="name" />
                 <RHFTextField
                   name="description"
-                  label={translate("skills_description")}
+                  label="Skill description"
                   required
                   multiline
                   rows={3}
@@ -107,7 +103,7 @@ export default function UpdateModalSkills({
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" color="inherit" onClick={handleClose}>
-              {translate("actions_cancel")}
+              Cancel
             </Button>
             <LoadingButton
               type="submit"
@@ -115,7 +111,7 @@ export default function UpdateModalSkills({
               color="primary"
               loading={creatLoading || updateLoading}
             >
-              {translate("actions_save")}
+              Save
             </LoadingButton>
           </DialogActions>
         </FormProvider>

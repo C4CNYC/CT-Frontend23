@@ -1,7 +1,6 @@
 import { type FC, useCallback, useRef, useState } from "react";
 
-import { FaDesktop } from "react-icons/fa";
-import { TiDocumentText } from "react-icons/ti";
+import { TbArrowBarToLeft, TbArrowBarToRight } from "react-icons/tb";
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -21,7 +20,6 @@ import {
 } from "src/redux/slices/code-panel-global";
 import { setTab } from "src/redux/slices/mobile-tab-manager";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
 
 import CodeEditorBlock from "./blocks/code-editor-block";
 import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn";
@@ -31,11 +29,6 @@ import ViewBlock from "./blocks/view-block";
 import { CodeDocument } from "./blocks/view-block/browser-view";
 
 export type SupportedLang = "html" | "javascript";
-
-export const TAB_TITLES = {
-  instructions: "Instructions",
-  browser_preview: "Browser Preview",
-};
 
 export interface WorkSpaceProps {
   isFetching?: boolean;
@@ -47,7 +40,6 @@ export interface WorkSpaceProps {
   onChangeCode: (code: string) => void;
   onSubmitChalange: (lessonContentId: string) => Promise<void>;
   onSubmitLesson: () => Promise<void>;
-  lastLessonCode?: string;
 }
 
 const WorkSpace: FC<WorkSpaceProps> = ({
@@ -59,7 +51,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   code,
   language,
   isFetching = false,
-  lastLessonCode,
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
@@ -67,7 +58,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
   const slideIndex = useSelector((state) => state.codePanelGlobal.slideIndex);
-  const translate = useTranslate();
 
   const isBrowserHidden = useSelector(
     (state) => state.codePanelGlobal.isBrowserHidden
@@ -101,20 +91,19 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             data={data}
             integrations={lesson?.integrations ?? []}
             isFetching={isFetching}
-            code={document?.htmlBody?.join("") ?? ""}
           />
         ) : (
           <HidedTabBtn
-            title={translate("instructions")}
-            icon={<TiDocumentText size={20} />}
+            title="Instruction"
+            icon={<TbArrowBarToRight size={20} />}
             openPanelFnc={openInstruction}
           />
         )}
 
         <CodeEditorBlock
-          preloadedCode={lastLessonCode || data[slideIndex]?.preload_body || ""}
+          preloadedCode={data[slideIndex]?.preload_body || ""}
           validations={data[slideIndex]?.validations || ""}
-          code={document?.htmlBody?.join("") ?? ""}
+          code={code}
           user={user}
           onChangeCode={onChangeCode}
         />
@@ -123,8 +112,8 @@ const WorkSpace: FC<WorkSpaceProps> = ({
           <ViewBlock code={document} />
         ) : (
           <HidedTabBtn
-            title={translate("browser_preview")}
-            icon={<FaDesktop size={20} />}
+            title="Browser Preview"
+            icon={<TbArrowBarToLeft size={20} />}
             openPanelFnc={openPreview}
           />
         )}
@@ -150,14 +139,13 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         data={data}
         integrations={lesson?.integrations ?? []}
         isFetching={isFetching}
-        code={document?.htmlBody?.join("") ?? ""}
       />
 
       <CodeEditorBlock
-        code={document?.htmlBody?.join("") ?? ""}
+        code={code}
         onChangeCode={onChangeCode}
         user={user}
-        preloadedCode={lastLessonCode ?? data[slideIndex]?.preload_body}
+        preloadedCode={data[slideIndex]?.preload_body}
         validations={data[slideIndex]?.validations}
       />
 

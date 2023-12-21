@@ -4,7 +4,6 @@ import { EmptyContent, SimpleInfiniteList } from "@components";
 import { FilterMode, useFilters } from "@hooks";
 import { IAssignmetsSearchParams } from "src/redux/interfaces/assignment.interface";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 import QuestItem from "./QuestItem";
 
@@ -29,8 +28,6 @@ export default function QuestsTab({
     { class_id: classId, ...filters },
     { skip: !activeTab || !classId, refetchOnMountOrArgChange: true }
   );
-
-  const translate = useTranslate();
 
   if (isLoading) {
     return (
@@ -58,7 +55,7 @@ export default function QuestsTab({
           {isFetching ? getQuestsSkeletonList() : null}
         </SimpleInfiniteList>
         {!isLoading && !isFetching && !data?.data.length && (
-          <EmptyContent title={translate("messages_no_data")} />
+          <EmptyContent title="No data" />
         )}
       </Stack>
     </Stack>

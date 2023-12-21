@@ -6,7 +6,6 @@ import { Control, Controller } from "react-hook-form";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { RHFTextField, RHFUploadAvatar } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { FormAddClassProps } from ".";
 
@@ -18,8 +17,6 @@ export default function AddClassTab({
   handleDrop,
   control,
 }: Props): React.ReactElement {
-  const translate = useTranslate();
-
   return (
     <Stack sx={{ flexDirection: { xs: "column", sm: "row" } }}>
       <Box
@@ -31,7 +28,7 @@ export default function AddClassTab({
         <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
         <Box>
           <Typography variant="h6" sx={{ mb: 1, ml: 1, mt: 2.3 }}>
-            {translate("cover")}:
+            Cover:
           </Typography>
           <Controller
             control={control}
@@ -41,9 +38,7 @@ export default function AddClassTab({
                 sx={{ width: "100%" }}
                 {...field}
                 value={field.value}
-                helperText={
-                  fieldState.invalid ? translate("messages_invalid_color") : ""
-                }
+                helperText={fieldState.invalid ? "Color is invalid" : ""}
                 error={fieldState.invalid}
                 isAlphaHidden
                 format="hex"
@@ -56,13 +51,13 @@ export default function AddClassTab({
       <Stack direction="column" sx={{ gap: 3, width: "100%" }}>
         <Box>
           <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
-            {translate("name")}:
+            Name:
           </Typography>
           <RHFTextField name="name" required />
         </Box>
         <Box>
           <Typography variant="h6" sx={{ mb: 1, ml: 1 }}>
-            {translate("description")}:
+            Description:
           </Typography>
           <RHFTextField name="description" required multiline rows={3} />
         </Box>

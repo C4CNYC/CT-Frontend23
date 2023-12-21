@@ -13,7 +13,6 @@ import {
 import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
 import { ITask } from "src/redux/services/interfaces/task.interface";
 import { useDeleteTaskMutation } from "src/redux/services/manager/tasks-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   task: ITask;
@@ -25,7 +24,6 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
   const [isLoading, setIsLoading] = useState(false);
   const [deleteTask] = useDeleteTaskMutation();
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const codeBody = JSON.parse(task.body);
 
@@ -34,7 +32,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
     if (task.id) {
       try {
         await deleteTask({ id: task.id }).unwrap();
-        enqueueSnackbar(translate("messages_deleted"));
+        enqueueSnackbar("Deleted succesfuly!");
       } catch (error: any) {
         enqueueSnackbar(error?.data?.message, {
           variant: "error",
@@ -137,14 +135,14 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          Delete
         </MenuItem>
       </MenuPopover>
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title="Delete"
+        content="Are you sure want to delete?"
         action={
           <LoadingButton
             variant="contained"
@@ -152,7 +150,7 @@ export default function TaskCard({ task }: Props): React.ReactElement | null {
             onClick={onDelete}
             loading={isLoading}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

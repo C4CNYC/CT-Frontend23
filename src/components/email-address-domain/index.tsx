@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 
 import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { FormProvider, RHFTextField } from "../hook-form";
 import { Iconify } from "../iconify";
@@ -41,12 +40,11 @@ export default function EmailAddressModal({
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [inviteStudent, { isLoading }] = useInviteStudentMutation();
-  const translate = useTranslate();
 
   const CreateEmailSchema = Yup.object().shape({
     email: Yup.string()
-      .required(translate("required_email"))
-      .email(translate("must_be_valid_email")),
+      .required("Email is required")
+      .email("Email must be a valid email address"),
   });
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(CreateEmailSchema),
@@ -57,7 +55,7 @@ export default function EmailAddressModal({
   const onSubmit = async ({ email }: FormValuesProps) => {
     try {
       await inviteStudent({ schoolId, email, class_id: classId }).unwrap();
-      enqueueSnackbar(translate("messages_student_invited"));
+      enqueueSnackbar("Student invited!");
       methods.reset({ email: "" });
     } catch (error) {
       enqueueSnackbar(error.data.message, { variant: "error" });
@@ -126,13 +124,13 @@ export default function EmailAddressModal({
                 />
               </Button>
               <Typography variant="h4" ml="-10px">
-                {translate("email_address")}
+                Email address
               </Typography>
             </Box>
             <RHFTextField
               name="email"
               variant="outlined"
-              placeholder={translate("share_type_email")}
+              placeholder="Type email"
               fullWidth
               InputProps={{
                 endAdornment: (
@@ -175,7 +173,7 @@ export default function EmailAddressModal({
                 },
               }}
             >
-              {translate("actions_confirm")}
+              Confirm
             </LoadingButton>
           </Box>
         </FormProvider>

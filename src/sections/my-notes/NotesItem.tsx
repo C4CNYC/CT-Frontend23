@@ -9,7 +9,6 @@ import { ConfirmDialog, Iconify } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
 import { useRemoveGoalMutation } from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 import AddEditNoteDialog from "./AddEditGoalDialog";
 
@@ -20,7 +19,6 @@ export default function NotesItem({ note }: INotesItemProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState<boolean>(false);
   const [deleteNote, { isLoading }] = useRemoveGoalMutation();
-  const translate = useTranslate();
   const handleOpenConfirm = () => {
     setOpenConfirm(true);
   };
@@ -31,7 +29,7 @@ export default function NotesItem({ note }: INotesItemProps) {
   const handleDelete = async () => {
     try {
       await deleteNote({ id: note.id as string }).unwrap();
-      enqueueSnackbar(translate("messages_deleted"));
+      enqueueSnackbar("Deleted!");
     } catch (error) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
@@ -95,8 +93,10 @@ export default function NotesItem({ note }: INotesItemProps) {
       <ConfirmDialog
         onClose={handleCloseConfirm}
         open={openConfirm}
-        title={translate("actions_delete")}
-        content={<Typography>{translate("notes_delete_question")}</Typography>}
+        title="Delete"
+        content={
+          <Typography> Are you sure you want to delete the goal?</Typography>
+        }
         action={
           <LoadingButton
             loading={isLoading}
@@ -104,7 +104,7 @@ export default function NotesItem({ note }: INotesItemProps) {
             color="error"
             onClick={handleDelete}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

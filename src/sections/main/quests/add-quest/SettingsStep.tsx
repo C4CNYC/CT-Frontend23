@@ -4,7 +4,6 @@ import { FormGroup, Stack, Typography, useTheme } from "@mui/material";
 
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 import SkillsAutocomplete from "./components/SkillsAutocomplete";
 import TimeController from "./components/TimeController";
@@ -25,8 +24,6 @@ export default function SettingsStep({
   existedSkills,
 }: ISettingsStepProps): React.ReactElement {
   const theme = useTheme();
-  const translate = useTranslate();
-
   return (
     <Stack sx={{ gap: 2, minHeight: "630px" }}>
       <Stack
@@ -40,27 +37,28 @@ export default function SettingsStep({
         }}
       >
         <TimeController
-          title={translate("quest_schedule_date")}
+          title="Schedule Date:"
           name="startDate"
           control={control}
-          infoText={translate("quest_schedule_date_info")}
+          infoText="Starting date if not date of creation."
         />
         <TimeController
-          title={translate("quest_due_date")}
+          title="Due Date:"
           name="dueDate"
           control={control}
-          infoText={translate("quest_due_date_info")}
+          infoText="This is the date that this Quest should be completed by."
         />
       </Stack>
       <TimeController
-        title={translate("quest_close_date")}
+        title="Close Date:"
         name="closeDate"
         control={control}
-        infoText={translate("quest_close_date_info")}
+        infoText="After this submissions are no longer received. The
+            default is 3 days after the “Due date.”"
       />
       <FormGroup>
         <Typography variant="h5" mt={2} gutterBottom>
-          {translate("status")}
+          Status
         </Typography>
         <RHFSelect
           native
@@ -70,10 +68,10 @@ export default function SettingsStep({
           sx={statusSelect(theme)}
         >
           <option key="published" value={true as any}>
-            {translate("published")}
+            Published
           </option>
           <option key="draft" value={false as any}>
-            {translate("draft")}
+            Draft
           </option>
         </RHFSelect>
       </FormGroup>

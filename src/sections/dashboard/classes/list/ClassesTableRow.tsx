@@ -27,7 +27,6 @@ import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
 
 import ClassPreferences from "../modal";
 
@@ -57,7 +56,6 @@ export default function ClassesTableRow({
   isDeleting,
 }: IClassesTableRowProps): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
 
   const myStudentProfileId = useSelector(
     (state: RootState) => state.global.user?.student_profile?.id
@@ -74,9 +72,9 @@ export default function ClassesTableRow({
         classId: row.id,
         student_id: myStudentProfileId ?? "",
       }).unwrap();
-      enqueueSnackbar(translate("classes_msg_joined_to_class"));
+      enqueueSnackbar("you joined to class");
     } catch (e) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("you joined to class", { variant: "error" });
     }
   };
 
@@ -130,7 +128,7 @@ export default function ClassesTableRow({
             color={row.active ? "success" : "warning"}
             sx={{ textTransform: "capitalize" }}
           >
-            {row.active ? translate("active") : translate("not_active")}
+            {row.active ? "active" : "not active"}
           </Label>
         </TableCell>
 
@@ -156,14 +154,14 @@ export default function ClassesTableRow({
       >
         <MenuItem onClick={onJoinHandle}>
           <Iconify icon="gala:add" />
-          {translate("actions_join")}
+          Join
         </MenuItem>
         <MenuItem
           component={Link}
           href={MANAGER_PATH_DASHBOARD.school.controller(row.id)}
         >
           <Iconify icon="material-symbols:connect-without-contact" />
-          {translate("actions_connect")}
+          Connect
         </MenuItem>
         <ClassPreferences
           updateClass={(
@@ -184,7 +182,7 @@ export default function ClassesTableRow({
         >
           <MenuItem>
             <Iconify icon="ant-design:setting-outlined" />
-            {translate("settings")}
+            Settings
           </MenuItem>
         </ClassPreferences>
         <MenuItem
@@ -195,7 +193,7 @@ export default function ClassesTableRow({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          {translate("actions_delete")}
+          Delete
         </MenuItem>
       </MenuPopover>
 
@@ -204,8 +202,8 @@ export default function ClassesTableRow({
         onClose={() => {
           setOpenConfirm(false);
         }}
-        title={translate("actions_delete")}
-        content={translate("messages_delete_question")}
+        title="Delete"
+        content="Are you sure want to delete?"
         action={
           <LoadingButton
             loading={isDeleting}
@@ -213,7 +211,7 @@ export default function ClassesTableRow({
             color="error"
             onClick={onDeleteRow}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

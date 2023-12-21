@@ -26,7 +26,6 @@ import {
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };
@@ -45,17 +44,16 @@ export default function UserNewEditForm({
   const [createUser] = useCreateOrgMemberMutation();
   const [updateUser] = useUpdateOrgMemberMutation();
   const [updateMemberAvatar] = useUdpateMemberAvatarMutation();
-  const translate = useTranslate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
-    first_name: Yup.string().required(translate("required_name")),
-    last_name: Yup.string().required(translate("required_surname")),
+    first_name: Yup.string().required("Name is required"),
+    last_name: Yup.string().required("Surename is required"),
     email: Yup.string()
-      .required(translate("required_email"))
-      .email(translate("must_be_valid_email")),
-    role: Yup.string().required(translate("required_role")),
+      .required("Email is required")
+      .email("Email must be a valid email address"),
+    role: Yup.string().required("Role is required"),
     verifired: Yup.boolean(),
     active: Yup.boolean(),
   });
@@ -125,11 +123,7 @@ export default function UserNewEditForm({
           await updateAvatar(currentUser?.id, photoURL);
         }
 
-        enqueueSnackbar(
-          !isEdit
-            ? translate("messages_create_success")
-            : translate("messages_update_success")
-        );
+        enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
         push(MANAGER_PATH_DASHBOARD.organization.members);
       } else {
         const user = await createUser({
@@ -140,11 +134,7 @@ export default function UserNewEditForm({
           await updateAvatar(user.id, photoURL);
         }
       }
-      enqueueSnackbar(
-        !isEdit
-          ? translate("messages_create_success")
-          : translate("messages_update_success")
-      );
+      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       push(MANAGER_PATH_DASHBOARD.organization.members);
     } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
@@ -184,9 +174,7 @@ export default function UserNewEditForm({
                   right: 24,
                 }}
               >
-                {currentUser?.active
-                  ? translate("active")
-                  : translate("not_active")}
+                {currentUser?.active ? "active" : "not active"}
               </Label>
             )}
 
@@ -206,11 +194,8 @@ export default function UserNewEditForm({
                       color: "text.secondary",
                     }}
                   >
-                    {translate("allowed_img")}
-                    <br />{" "}
-                    {translate("max_img_size", {
-                      size: fData(3145728),
-                    })}
+                    Allowed *.jpeg, *.jpg, *.png, *.gif
+                    <br /> max size of {fData(3145728)}
                   </Typography>
                 }
               />
@@ -222,10 +207,11 @@ export default function UserNewEditForm({
               label={
                 <>
                   <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    {translate("messages_email_verified")}
+                    Email Verified
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {translate("send_verification_email_content")}
+                    Disabling this will automatically send the user a
+                    verification email
                   </Typography>
                 </>
               }
@@ -237,10 +223,10 @@ export default function UserNewEditForm({
               label={
                 <>
                   <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    {translate("messages_user_verified")}
+                    User Verified
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {translate("verified_user_info")}
+                    Disabled user dont have access to resorce
                   </Typography>
                 </>
               }
@@ -260,20 +246,15 @@ export default function UserNewEditForm({
                 sm: "repeat(2, 1fr)",
               }}
             >
-              <RHFTextField name="first_name" label={translate("first_name")} />
-              <RHFTextField name="last_name" label={translate("last_name")} />
+              <RHFTextField name="first_name" label="First Name" />
+              <RHFTextField name="last_name" label="Last Name" />
               <RHFTextField
                 disabled={isEdit}
                 name="email"
-                label={translate("email_address")}
+                label="Email Address"
               />
 
-              <RHFSelect
-                native
-                name="role"
-                label={translate("role")}
-                placeholder={translate("role")}
-              >
+              <RHFSelect native name="role" label="Role" placeholder="Role">
                 {(Object.keys(Role) as Array<keyof typeof Role>).map((role) =>
                   role === "Owner" ? null : (
                     <option key={Role[role]} value={Role[role]}>
@@ -290,9 +271,7 @@ export default function UserNewEditForm({
                 variant="contained"
                 loading={isSubmitting}
               >
-                {!isEdit
-                  ? translate("actions_create_user")
-                  : translate("actions_save_changes")}
+                {!isEdit ? "Create User" : "Save Changes"}
               </LoadingButton>
             </Stack>
           </Card>

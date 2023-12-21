@@ -1,25 +1,13 @@
 import { EditorView } from "@codemirror/view";
 
 export const cursorBaseTheme = EditorView.baseTheme({
-  ".cm-cursor.cm-cursor-primary": {
-    display: "none !important",
-  },
-  ".cm-cursor-caret": {
-    top: "-15px",
-    position: "relative",
-    height: "19px",
-    borderRight: "1.2px solid #528bff",
-    animation: "steps(1) cm-blink 1.2s infinite",
-    marginLeft: "-0.6px",
-    pointerEvents: "none",
-  },
 	".cm-tooltip.cm-tooltip-cursor": {
 		color: "white",
 		border: "none",
 		padding: "2px 7px",
 		borderRadius: "4px",
 		position: "absolute",
-		marginTop: "-48px",
+		marginTop: "-40px",
 		marginLeft: "-14px",
 		zIndex: "1000000",
 		"& .cm-tooltip-arrow:after": {

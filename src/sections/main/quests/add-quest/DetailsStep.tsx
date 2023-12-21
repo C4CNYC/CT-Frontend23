@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
 import {
   Avatar,
@@ -10,11 +10,10 @@ import {
 } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
+import { ICourse } from "@types";
 import { BaseResponseInterface } from "@utils";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 import {
   AVATAR_SX,
@@ -24,26 +23,19 @@ import {
 } from "./constants";
 
 export default function DetailsStep({
-  coursesData,
-}: {
-  coursesData: {
-    data: Array<ICourse & BaseResponseInterface> | undefined;
-    isLoading: boolean;
-  };
-}): React.ReactElement {
+    coursesData,
+  }: {
+    coursesData: {
+      data: Array<(ICourse & BaseResponseInterface)> | undefined,
+      isLoading: boolean
+    }
+  }): React.ReactElement {
   const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
-  const [course, setCourse] = useState<string | null>(data?.[0].id ?? null);
-  const selectedCourse = useMemo(
-    () => data?.find((c) => c.id === course),
-    [data, course]
-  );
-  const translate = useTranslate();
-
-  useEffect(() => {
-    setCourse(data?.[0].id ?? null);
-  }, [data]);
+  const onChange = (event: any): void => {
+    setType(event.target.value);
+  };
 
   return (
     <Stack sx={{ gap: 4, minHeight: "630px" }}>
@@ -55,16 +47,13 @@ export default function DetailsStep({
           }}
         >
           <Typography variant="h5" gutterBottom pl={2}>
-            {translate("quest_select_type")}
+            Select type
           </Typography>
           <RHFSelect
             native
             name="type"
             size="small"
-            onChange={(event: any) => {
-              setType(event?.target?.value);
-              setCourse(null);
-            }}
+            onChange={onChange}
             value={type}
             sx={{ ...selectStyle(theme), textTransform: "capitalize" }}
           >
@@ -88,23 +77,19 @@ export default function DetailsStep({
             }}
           >
             <Typography variant="h5" gutterBottom pl={2}>
-              {translate("quest_select_course")}
+              Select a course
             </Typography>
             {!isLoading ? (
               <RHFSelect
                 native
                 name="course"
                 size="small"
-                onChange={(event: any) => {
-                  setCourse(event?.target?.value);
-                }}
-                value={course}
                 disabled={!data?.length}
                 sx={selectStyle(theme)}
               >
                 {!data?.length && (
                   <option key="empty" value="empty">
-                    {translate("quest_you_dont_have_courses_msg")}
+                    You don't have any courses
                   </option>
                 )}
                 {data
@@ -134,61 +119,27 @@ export default function DetailsStep({
         }}
       >
         <Typography variant="h5" gutterBottom pl={2}>
-          {translate("auest_select_module")}
+          Select module
         </Typography>
-        {!isLoading ? (
-          <RHFSelect
-            native
-            name="module"
-            size="small"
-            sx={{
-              borderRadius: 1,
-              "& fieldset": { border: "none" },
-              background: theme.palette.mode === "light" ? "#fff" : "",
-              border: theme.palette.mode === "light" ? "" : "1px solid #fff",
-            }}
-          >
-            {!selectedCourse?.units?.length && (
-              <option key="empty" value="empty">
-                {translate("quest_you_dont_have_module_msg")}
-              </option>
-            )}
-            {selectedCourse?.units
-              ? [
-                  <option key="module" value="all">
-                    {translate("quest_all_modules")}
-                  </option>,
-                  ...selectedCourse?.units.map((unit) => (
-                    <option key={unit.id} value={unit.id}>
-                      {unit.name}
-                    </option>
-                  )),
-                ]
-              : null}
-          </RHFSelect>
-        ) : (
-          <Skeleton
-            variant="rounded"
-            sx={(theme) => ({
-              height: "40px",
-              background: theme.palette.common.white,
-            })}
-          />
-        )}
+        <RHFSelect native name="module" size="small" sx={selectStyle(theme)}>
+          <option key="module" value="all">
+            All modules
+          </option>
+        </RHFSelect>
       </FormGroup>
       <FormGroup sx={{ position: "relative" }}>
         <Typography variant="h5" gutterBottom pl={2}>
-          {translate("quest_name")}
+          Quest name
         </Typography>
         <Avatar sx={AVATAR_SX}>🤩</Avatar>
         <RHFTextField sx={inputNameStyles(theme)} name="name" />
         <Typography variant="caption" sx={INPUT_TEXT_SX}>
-          {translate("quest_edit_name_msg")}
+          You can edit the suggested name that is auto-generated.
         </Typography>
       </FormGroup>
       <FormGroup>
         <Typography variant="h5" gutterBottom pl={2}>
-          {translate("quest_description")}
+          Description (Optional)
         </Typography>
         <RHFRemirror name="description" />
       </FormGroup>

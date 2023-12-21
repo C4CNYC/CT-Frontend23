@@ -10,7 +10,6 @@ import CourseInfo from "@sections/course/CourseInfo";
 import CourseSidebar from "@sections/course/course-sidebar";
 import ModulesListBlock from "@sections/course/modules-list";
 import { useGetCoursContentQuery } from "src/redux/services/manager/courses-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -25,22 +24,18 @@ export default function CoursePage(): React.ReactElement {
     },
     { skip: !router.query.id }
   );
-  const translate = useTranslate();
 
   return (
     <>
       <Head>
-        <title>{data?.name ?? translate("course")} | CodeTribe</title>
+        <title>{data?.name ?? "Course"} | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           links={[
-            { name: translate("dashboard"), href: STUDENT_PATH_DASHBOARD.root },
-            {
-              name: translate("sidebar_menu_catalog"),
-              href: STUDENT_PATH_DASHBOARD.courses.root,
-            },
-            { name: data?.name ?? translate("course") },
+            { name: "Dashboard", href: STUDENT_PATH_DASHBOARD.root },
+            { name: "Catalog", href: STUDENT_PATH_DASHBOARD.courses.root },
+            { name: data?.name ?? "Course" },
           ]}
         />
         <Box

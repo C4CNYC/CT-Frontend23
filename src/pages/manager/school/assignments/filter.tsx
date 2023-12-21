@@ -6,12 +6,10 @@ import TextField from "@mui/material/TextField";
 
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 export default function FilterCourses(): React.ReactElement {
   const { push } = useRouter();
   const { data, isLoading } = useGetMySchoolsQuery({});
-  const translate = useTranslate();
 
   useEffect(() => {
     if (data) {
@@ -61,9 +59,7 @@ export default function FilterCourses(): React.ReactElement {
             );
           }}
           sx={{ width: { xs: "100%", sm: 300 } }}
-          renderInput={(params) => (
-            <TextField {...params} label={translate("school")} />
-          )}
+          renderInput={(params) => <TextField {...params} label="Shcool" />}
         />
       </Stack>
     </>

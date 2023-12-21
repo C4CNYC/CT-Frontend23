@@ -31,7 +31,6 @@ import CustomTabPanel, {
 } from "src/components/custom-tab-panel";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
 
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";
@@ -47,7 +46,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [value, setValue] = useState(0);
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+
   const { user } = useAuthContext();
   const isStudent = user?.role === Role.Student;
 
@@ -81,27 +80,27 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
           }}
         >
           <Tab
-            label={!isMobile && translate("quests")}
+            label={!isMobile && "Quests"}
             icon={<CiMountain1 size={20} />}
             {...customTabProps(0)}
             sx={{ fontSize: "1.1rem" }}
           />
           {!isStudent ? (
             <Tab
-              label={!isMobile && translate("members")}
+              label={!isMobile && "Members"}
               icon={<IoPeopleOutline size={20} />}
               sx={{ fontSize: "1.1rem" }}
               {...customTabProps(1)}
             />
           ) : null}
           <Tab
-            label={!isMobile && translate("details")}
+            label={!isMobile && "Details"}
             icon={<IoSettingsOutline size={20} />}
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(isStudent ? 1 : 2)}
           />
           <Tab
-            label={!isMobile && translate("progress")}
+            label={!isMobile && "Progress"}
             icon={<GiProgression size={20} />}
             sx={{ fontSize: "1.1rem" }}
             {...customTabProps(isStudent ? 2 : 3)}
@@ -126,7 +125,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
             <Iconify icon="solar:gallery-wide-broken" width={20} />
             {!isMobile && (
               <Typography color="#637381" fontSize="1.1rem" mr="10px">
-                {translate("gallery")}
+                Gallery
                 <CiShare1 size={15} style={{ margin: "0 0 3px 3px" }} />
               </Typography>
             )}
@@ -144,7 +143,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               color="info"
             >
               <FaPlus size={15} style={{ marginBottom: "2px" }} />
-              {!isMobile && translate("actions_add_quest")}
+              {!isMobile && "Add Quest"}
             </Button>
           </RoleBasedGuard>
         </Stack>
@@ -183,7 +182,7 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
         >
           <MenuItem>
             <SiGoogleclassroom size={10} />
-            {translate("home_assign_course")}
+            Assign Course or Section
           </MenuItem>
         </Link>
         <RoleBasedGuard roles={[Role.Admin, Role.Manager, Role.Owner]}>
@@ -192,13 +191,13 @@ export default function ClassInfoTable({ classData }: IClassInfoTable) {
               sx={BADGE_SX}
               badgeContent={
                 <Typography sx={{ fontSize: "11px", fontWeight: 700 }}>
-                  {translate("coming_soon")}
+                  Coming soon
                 </Typography>
               }
               color="success"
             >
               <AiOutlineFundProjectionScreen size={20} />
-              {translate("home_assign_project")}
+              Assign Open Project
             </Badge>
           </MenuItem>
         </RoleBasedGuard>

@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 
 import { Iconify } from "@components";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
@@ -24,11 +23,9 @@ export default function ProfileAbout({
 }: Props): React.ReactElement | null {
   useGetMySchoolsQuery({});
 
-  const translate = useTranslate();
-
   return (
     <Card>
-      <CardHeader title={translate("about")} />
+      <CardHeader title="About" />
       <Stack spacing={2} sx={{ p: 3 }}>
         {data?.about ? (
           <Typography variant="body2">{data?.about}</Typography>
@@ -38,7 +35,7 @@ export default function ProfileAbout({
         <Stack direction="row">
           <StyledIcon icon="eva:pin-fill" />
           <Typography variant="body2">
-            {translate("general_profile_live_at")} &nbsp;
+            Live at &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {data?.country ?? "N/A"}, {data?.city ?? "N/A"}
             </Link>
@@ -54,7 +51,7 @@ export default function ProfileAbout({
           <StyledIcon icon="ic:baseline-local-phone" />
 
           <Typography variant="body2">
-            {translate("phone")} &nbsp;
+            Phone &nbsp;
             <Link component="span" variant="subtitle2" color="text.primary">
               {data?.phone}
             </Link>

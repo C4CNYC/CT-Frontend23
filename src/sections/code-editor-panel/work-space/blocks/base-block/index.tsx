@@ -1,11 +1,11 @@
 import { type FC, type ReactNode, useMemo, useState } from "react";
 
-import { Box, Collapse, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Collapse, useMediaQuery, useTheme } from "@mui/material";
 
 import { localStorageAvailable } from "@utils";
 import { useSelector } from "src/redux/store";
 
-import { getBoxStyles } from "./constants";
+import { getBoxStyles, getButtonSx, getButtonWrapperSx } from "./constants";
 import Header from "./header";
 import TabButton from "./tab-button";
 
@@ -16,7 +16,6 @@ interface IBaseBlock {
   icon: React.ReactElement;
   closeIcon?: React.ReactElement;
   hideTabsHandler?: () => void;
-  takeHeaderSettings?: (isOpen: boolean) => void;
 }
 
 const isClosedHeaders = {
@@ -24,12 +23,6 @@ const isClosedHeaders = {
   codeEditorTour: true,
   browserTour: true,
 };
-
-interface IHeaderSettings {
-  instructions: boolean;
-  codeEditorTour: boolean;
-  browserTour: boolean;
-}
 
 const localStorageKey = "HeadersSettings";
 
@@ -40,12 +33,17 @@ const BaseBlock: FC<IBaseBlock> = ({
   icon,
   closeIcon,
   hideTabsHandler,
-  takeHeaderSettings,
 }) => {
   const theme = useTheme();
   const storageAvailable = localStorageAvailable();
   const isTabletAndMobile = useMediaQuery(theme.breakpoints.down(1000));
+  const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const boxStyles = useMemo(() => getBoxStyles(isTabletAndMobile), [useTheme]);
+  const buttonSx = useMemo(() => getButtonSx(isDesktop), [useTheme]);
+  const buttonWrapperSx = useMemo(
+    () => getButtonWrapperSx(isDesktop),
+    [isDesktop]
+  );
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
 
   const getHeaderSettings = () => {
@@ -60,7 +58,7 @@ const BaseBlock: FC<IBaseBlock> = ({
 
   const isTabLeft = isTabletAndMobile && activeTab !== 0;
   const isTabRight = isTabletAndMobile && activeTab !== 2;
-  const [isClosedHeader, setIsClosedHeader] = useState<IHeaderSettings>(() =>
+  const [isClosedHeader, setIsClosedHeader] = useState(() =>
     getHeaderSettings()
   );
 
@@ -72,10 +70,6 @@ const BaseBlock: FC<IBaseBlock> = ({
       JSON.stringify({ ...getHeaderSettings(), [className]: false })
     );
   };
-
-  if (takeHeaderSettings) {
-    takeHeaderSettings(isClosedHeader?.browserTour);
-  }
 
   return (
     <Box
@@ -89,9 +83,18 @@ const BaseBlock: FC<IBaseBlock> = ({
           title={title}
           icon={icon}
           hideTabsHandler={hideTabsHandler}
+          isCodeBlock={!hideTabsHandler}
           closeHandler={closeHeaderHandler}
         />
       </Collapse>
+
+      {hideTabsHandler && (
+        <Box sx={buttonWrapperSx}>
+          <Button sx={buttonSx} onClick={hideTabsHandler}>
+            {closeIcon}
+          </Button>
+        </Box>
+      )}
 
       {children}
 

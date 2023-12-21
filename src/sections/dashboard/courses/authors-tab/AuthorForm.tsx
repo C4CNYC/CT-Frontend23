@@ -14,7 +14,6 @@ import {
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
 } from "src/redux/services/manager/author-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 const LINK_URL =
   // eslint-disable-next-line no-useless-escape
@@ -44,13 +43,12 @@ export default function AuthorForm({
   const [postAuthor, { isLoading }] = useCreateAuthorMutation();
   const [editAuthor, { isLoading: isEditing }] = useUpdateAuthorMutation();
   const [postCover] = useUpdateAuthorCoverMutation();
-  const translate = useTranslate();
 
   const CreateAuthorSchema = Yup.object().shape({
-    name: Yup.string().required(translate("required_name")),
+    name: Yup.string().required("Name is required"),
     about: Yup.string(),
-    linkedin: Yup.string().matches(LINK_URL, translate("enter_valid_url_msg")),
-    email: Yup.string().email(translate("must_be_valid_email")),
+    linkedin: Yup.string().matches(LINK_URL, "Enter a valid url"),
+    email: Yup.string().email("Email must be a valid email address"),
     avatar: Yup.mixed(),
   });
   const methods = useForm<FormValuesProps>({
@@ -85,11 +83,7 @@ export default function AuthorForm({
           await postCover({ id: author.id, file }).unwrap();
         }
       }
-      enqueueSnackbar(
-        !isEdit
-          ? translate("messages_create_success")
-          : translate("messages_update_success")
-      );
+      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!");
       setFormVisible(false);
       methods.reset();
     } catch (error: any) {
@@ -119,19 +113,10 @@ export default function AuthorForm({
       <FormProvider methods={methods}>
         <Stack direction="column" sx={{ gap: 2, width: "100%" }}>
           <RHFUploadAvatar name="avatar" onDrop={handleDrop} />
-          <RHFTextField name="name" label={translate("name")} required />
-          <RHFTextField
-            name="email"
-            label={translate("email")}
-            disabled={isEdit}
-          />
+          <RHFTextField name="name" label="Name" required />
+          <RHFTextField name="email" label="email" disabled={isEdit} />
           <RHFTextField name="linkedin" label="Linkedin" />
-          <RHFTextField
-            name="about"
-            label={translate("about")}
-            multiline
-            rows={3}
-          />
+          <RHFTextField name="about" label="About" multiline rows={3} />
         </Stack>
       </FormProvider>
       <Box
@@ -150,14 +135,14 @@ export default function AuthorForm({
           color="error"
           variant="soft"
         >
-          {translate("actions_cancel")}
+          Cancel
         </Button>
         <LoadingButton
           onClick={methods.handleSubmit(onSubmit)}
           variant="contained"
           loading={isEditing || isLoading}
         >
-          {translate("actions_save")}
+          Save
         </LoadingButton>
       </Box>
     </Stack>

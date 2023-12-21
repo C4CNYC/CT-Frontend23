@@ -1,20 +1,20 @@
-import nextLink from "next/link";
 import { type ReactNode } from "react";
-
-import { BsFolder2Open } from "react-icons/bs";
-import { IoSaveOutline } from "react-icons/io5";
-import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+import nextLink from "next/link";
 
 import { Link } from "@mui/material";
+import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+import { IoSaveOutline } from "react-icons/io5";
+import { BsFolder2Open } from "react-icons/bs";
+
+import PublishModal from "../modals/publish";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 import { type SupportedLang } from "../../work-space";
-import PublishModal from "../modals/publish";
 
 interface GetActions {
-  code: string;
-  language: SupportedLang;
+  code: string
+  language: SupportedLang
 }
 
 export interface Action {
@@ -24,14 +24,17 @@ export interface Action {
   isPublic: boolean;
 }
 
-export const getActions = ({ code, language }: GetActions): Action[] => [
+export const getActions = ({
+  code,
+  language
+}: GetActions): Action[] => [
   {
     icon: (
       <PublishModal isPublic={true} code={code} language={language}>
         <MdOutlineUpload size="24px" color="#FBDD3F" />
       </PublishModal>
     ),
-    name: "publist_to_gallery",
+    name: "Publish to Gallery",
     color: "#FBDD3F",
     isPublic: true,
   },
@@ -45,7 +48,7 @@ export const getActions = ({ code, language }: GetActions): Action[] => [
         <MdOutlinePhotoLibrary size="22px" color="#FBDD3F" />
       </Link>
     ),
-    name: "go_to_gallery",
+    name: "Go to Gallery",
     color: "#FBDD3F",
     isPublic: true,
   },
@@ -56,7 +59,7 @@ export const getActions = ({ code, language }: GetActions): Action[] => [
         <IoSaveOutline size="22px" color="#43D4DD" />
       </PublishModal>
     ),
-    name: "save_to_folder",
+    name: "Save to 'My Folder'",
     color: "#43D4DD",
     isPublic: false,
   },
@@ -70,7 +73,7 @@ export const getActions = ({ code, language }: GetActions): Action[] => [
         <BsFolder2Open size="22px" color="#43D4DD" />
       </Link>
     ),
-    name: "open_folder",
+    name: "Open 'My Folder'",
     color: "#43D4DD",
     isPublic: false,
   },

@@ -30,11 +30,9 @@ import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 import ClassInfoMain from "./ClassInfoMain";
-import OnceOffNotification from "./OnceOffNotification";
-// import ClassInfoToggle from "./ClassInfoToggle";
+import ClassInfoToggle from "./ClassInfoToggle";
 import {
   JOIN_STACK_SX,
   MAIN_CLASS_INFO_STACK_SX,
@@ -58,7 +56,7 @@ export default function DefaultClassInfo({
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
-  const translate = useTranslate();
+
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
@@ -66,7 +64,7 @@ export default function DefaultClassInfo({
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
       copy(textToCopy);
-      enqueueSnackbar(translate("messages_copied"));
+      enqueueSnackbar("Copied!");
     }
   };
 
@@ -98,16 +96,15 @@ export default function DefaultClassInfo({
           file,
         }).unwrap();
       }
-      enqueueSnackbar(translate("classes_class_updeted"));
+      enqueueSnackbar("Class updated successfuly!");
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
   return (
     <>
       <Stack sx={{ mx: { lg: -2 } }}>
-        <OnceOffNotification classData={classData} />
         {/* <ClassInfoToggle /> */}
         <Stack
           sx={() => ({
@@ -121,9 +118,7 @@ export default function DefaultClassInfo({
                 alignItems="center"
                 sx={{ gap: 1, flexWrap: { xs: "wrap" } }}
               >
-                <Typography variant="subtitle2">
-                  {translate("home_join_code")}
-                </Typography>
+                <Typography variant="subtitle2">Join-code:</Typography>
                 <Button
                   onClick={() => {
                     onCopy(classData?.setting?.share_token);
@@ -145,7 +140,7 @@ export default function DefaultClassInfo({
                 href={STUDENT_PATH_DASHBOARD.tribes.root}
                 component={nextLink}
               >
-                {translate("home_see_all_groups")}
+                See All Groups
               </Link>
             </Stack>
 
@@ -168,13 +163,13 @@ export default function DefaultClassInfo({
                   typography="button"
                 >
                   <FiUser color="#fff" size="18px" />
-                  {!isMobile ? translate("members") : ""}
+                  {!isMobile ? "Members" : ""}
                 </Link>
                 <ShareGroupModal schoolClass={classData}>
                   <Button variant="text" disableRipple sx={SHARE_BUTTON_SX}>
                     <TbShare2 color="#fff" size="18px" />
                     <Typography variant="button" sx={{ ml: 0.5 }}>
-                      {!isMobile ? translate("actions_share") : ""}
+                      {!isMobile ? "Share" : ""}
                     </Typography>
                   </Button>
                 </ShareGroupModal>
@@ -217,9 +212,7 @@ export default function DefaultClassInfo({
                     updateResult={updateResult}
                     schoolId={classData?.school?.id}
                   >
-                    <Button sx={POPOVER_EDIT_BTN_SX}>
-                      {translate("actions_edit")}
-                    </Button>
+                    <Button sx={POPOVER_EDIT_BTN_SX}>Edit</Button>
                   </ClassPreferences>
                 </MenuPopover>
               </Stack>

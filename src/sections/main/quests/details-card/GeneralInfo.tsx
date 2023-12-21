@@ -4,7 +4,6 @@ import { Card, Divider, Skeleton, Stack, Typography } from "@mui/material";
 
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface IGeneralInfo {
   activeTab: boolean;
@@ -12,7 +11,6 @@ interface IGeneralInfo {
 
 export default function GeneralInfo({ activeTab }: IGeneralInfo) {
   const { query } = useRouter();
-  const translate = useTranslate();
   const { data, isLoading } = useGetClassStudentsQuery(
     { id: query.id as string },
     { skip: !query.id || !activeTab }
@@ -40,7 +38,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
           )}
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {translate("student")}
+            Student
           </Typography>
         </Stack>
 
@@ -55,7 +53,7 @@ export default function GeneralInfo({ activeTab }: IGeneralInfo) {
           )}
 
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {translate("quests")}
+            Quests
           </Typography>
         </Stack>
       </Stack>

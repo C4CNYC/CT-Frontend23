@@ -27,7 +27,6 @@ import {
   useCreateIntegrationMutation,
   useEditIntegrationMutation,
 } from "src/redux/services/manager/integration-manager";
-import { useTranslate } from "src/utils/translateHelper";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Tenant name is required"),
@@ -68,7 +67,6 @@ export function ModalIntegration({
     useCreateIntegrationMutation();
   const [updateIntegration, { isLoading: updateLoading }] =
     useEditIntegrationMutation();
-  const translate = useTranslate();
 
   const methods = useForm<IntegrationForm>({
     resolver: yupResolver(IntegrationSchema),
@@ -79,13 +77,9 @@ export function ModalIntegration({
 
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
-      enqueueSnackbar(
-        id
-          ? translate("integrations_updated_msg")
-          : translate("integrations_created_msg")
-      );
+      enqueueSnackbar(`integration ${id ? "updated" : "created"} successfuly`);
     } catch (e: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("something went wrong", { variant: "error" });
     }
     if (id) {
       await updateIntegration({
@@ -107,23 +101,21 @@ export function ModalIntegration({
     <>
       <div onClick={handleOpen}>{children}</div>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle sx={{ pb: 2 }}>
-          {translate("integrations_create_int")}
-        </DialogTitle>
+        <DialogTitle sx={{ pb: 2 }}>Create Integration</DialogTitle>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             {isEdit ? (
               <Stack gap={2}>
                 <Box>
-                  <RHFTextField placeholder={translate("name")} name="name" />
+                  <RHFTextField placeholder="Name" name="name" />
                 </Box>
                 <Box>
                   <ModalCodeFullscreen
-                    title={translate("integrations_head_links_plh")}
+                    title="Head links or scripts"
                     name="head"
                   />
                   <RHFCode
-                    placeholder={translate("integrations_head_links_plh")}
+                    placeholder="Head links or scripts"
                     name="head"
                     height="180px"
                     extensions={[javascript({ jsx: true })]}
@@ -131,11 +123,11 @@ export function ModalIntegration({
                 </Box>
                 <Box>
                   <ModalCodeFullscreen
-                    title={translate("integrations_body_links_plh")}
+                    title="Body links or scripts"
                     name="scripts"
                   />
                   <RHFCode
-                    placeholder={translate("integrations_body_links_plh")}
+                    placeholder="Body links or scripts"
                     name="scripts"
                     height="180px"
                     extensions={[javascript({ jsx: true })]}
@@ -145,15 +137,15 @@ export function ModalIntegration({
             ) : (
               <Stack gap={2}>
                 <Box>
-                  <RHFTextField placeholder={translate("name")} name="name" />
+                  <RHFTextField placeholder="Name" name="name" />
                 </Box>
                 <Box>
                   <ModalCodeFullscreen
-                    title={translate("integrations_head_links_plh")}
+                    title="Head links or scripts"
                     name="head"
                   />
                   <RHFCode
-                    placeholder={translate("integrations_head_links_plh")}
+                    placeholder="Head links or scripts"
                     name="head"
                     height="180px"
                     extensions={[javascript({ jsx: true })]}
@@ -161,11 +153,11 @@ export function ModalIntegration({
                 </Box>
                 <Box>
                   <ModalCodeFullscreen
-                    title={translate("integrations_body_links_plh")}
+                    title="Body links or scripts"
                     name="scripts"
                   />
                   <RHFCode
-                    placeholder={translate("integrations_body_links_plh")}
+                    placeholder="Body links or scripts"
                     name="scripts"
                     height="180px"
                     extensions={[javascript({ jsx: true })]}
@@ -176,7 +168,7 @@ export function ModalIntegration({
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" color="inherit" onClick={onCancel}>
-              {translate("actions_cancel")}
+              Cancel
             </Button>
             <LoadingButton
               loading={creatLoading || updateLoading}
@@ -184,7 +176,7 @@ export function ModalIntegration({
               color="primary"
               type="submit"
             >
-              {translate("actions_save")}
+              Save
             </LoadingButton>
           </DialogActions>
         </FormProvider>

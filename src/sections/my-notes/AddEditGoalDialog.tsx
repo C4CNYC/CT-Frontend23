@@ -24,7 +24,6 @@ import {
   usePostGoalMutation,
   useUpdateGoalMutation,
 } from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface FormValuesProps {
   title: string;
@@ -43,7 +42,7 @@ const AddEditNotesDialog = ({
   note,
 }: IAddEditNotesDialogProps): React.ReactElement => {
   const { enqueueSnackbar } = useSnackbar();
-  const translate = useTranslate();
+
   const [open, setOpen] = useState(false);
 
   const [postNote, { isLoading }] = usePostGoalMutation();
@@ -80,9 +79,7 @@ const AddEditNotesDialog = ({
         await postNote(data).unwrap();
       }
 
-      enqueueSnackbar(
-        note ? translate("messages_edited") : translate("messages_added")
-      );
+      enqueueSnackbar(`${note ? "Edited" : "Added"} successfully!`);
       methods.reset();
     } catch (error) {
       const typedError = error as APIError;
@@ -114,21 +111,19 @@ const AddEditNotesDialog = ({
           zIndex: 1101,
         }}
       >
-        <DialogTitle>
-          {note ? translate("actions_edit") : translate("actions_create")}
-        </DialogTitle>
+        <DialogTitle>{note ? "Edit" : "Create"}</DialogTitle>
         <FormProvider
           methods={methods}
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <DialogContent>
             <Stack gap={3} p={1}>
-              <RHFTextField name="title" label={translate("title")} />
+              <RHFTextField name="title" label="Title" />
               <RHFTextField
                 multiline
                 rows={3}
                 name="description"
-                label={translate("description")}
+                label="Description"
               />
               <Controller
                 control={methods.control}
@@ -138,11 +133,7 @@ const AddEditNotesDialog = ({
                     sx={{ maxWidth: "250px" }}
                     {...field}
                     value={field.value}
-                    helperText={
-                      fieldState.invalid
-                        ? translate("messages_invalid_color")
-                        : ""
-                    }
+                    helperText={fieldState.invalid ? "Color is invalid" : ""}
                     error={fieldState.invalid}
                     isAlphaHidden
                     format="hex"
@@ -154,14 +145,14 @@ const AddEditNotesDialog = ({
 
           <DialogActions>
             <Button color="error" onClick={handleClose}>
-              {translate("actions_cancel")}
+              CANCEL
             </Button>
             <LoadingButton
               type="submit"
               variant="contained"
               loading={isLoading || isEditing}
             >
-              {translate("actions_save")}
+              SAVE
             </LoadingButton>
           </DialogActions>
         </FormProvider>

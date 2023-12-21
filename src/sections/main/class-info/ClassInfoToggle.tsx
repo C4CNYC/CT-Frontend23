@@ -7,12 +7,8 @@ import { MdOutlineWifiTethering } from "react-icons/md";
 
 import { Collapse, IconButton, Link, Stack, Typography } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 export default function ClassInfoToggle(): React.ReactElement {
   const [openJoin, setOpenJoin] = useState<boolean>(true);
-  const translate = useTranslate();
-
   return (
     <Collapse in={openJoin}>
       <Stack
@@ -35,13 +31,13 @@ export default function ClassInfoToggle(): React.ReactElement {
         >
           <MdOutlineWifiTethering size="20px" color="#75CF6D" />
           <Typography variant="subtitle2" sx={{ mx: 1 }}>
-            {translate("home_toggle_group")}
+            Group HappyDog-Vermont
           </Typography>
           <Typography
             variant="body2"
             sx={{ display: { xs: "none", sm: "inline-flex" } }}
           >
-            {translate("home_is_live")}
+            is live |
           </Typography>
           <Link
             sx={{ display: "flex", alignItems: "center", color: "#75CF6D" }}
@@ -52,7 +48,7 @@ export default function ClassInfoToggle(): React.ReactElement {
               variant="body2"
               sx={{ ml: { xs: "28px", sm: 0.7 }, mr: 1 }}
             >
-              {translate("home_join_now")}
+              Join now
             </Typography>
             <HiArrowNarrowRight size="18px" color="#75CF6D" />
           </Link>

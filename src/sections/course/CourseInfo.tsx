@@ -5,7 +5,6 @@ import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import { Button, Stack, Typography } from "@mui/material";
 
 import { Image } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
 
 import CourseSummarily from "./CourseSummarily.1";
 import {
@@ -34,8 +33,6 @@ export default function CourseInfo({
   level,
 }: ICourseInfoProps): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const translate = useTranslate();
-
   return (
     <Stack sx={(theme) => ({ ...getCourseInfoWrapperSx(theme) })}>
       <Stack maxWidth="680px">
@@ -53,9 +50,7 @@ export default function CourseInfo({
             setOpen(!open);
           }}
         >
-          {open
-            ? translate("actions_show_less")
-            : translate("actions_see_more")}
+          {open ? "Show less" : "See more"}
           {open ? (
             <SlArrowUp style={{ marginLeft: "10px" }} />
           ) : (

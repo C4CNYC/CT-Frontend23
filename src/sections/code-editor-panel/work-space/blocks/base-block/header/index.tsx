@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, useMemo } from "react";
+import { type FC, type ReactNode } from "react";
 
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -12,13 +12,12 @@ import {
 } from "@mui/material";
 
 // import { localStorageAvailable } from "@utils";
-import { BUTTON_SX, TYP_SX, getHeaderWrapperSx } from "./constants";
+import { TYP_SX, getButtonSx } from "./constants";
 
 interface HeaderProps {
   title: ReactNode;
   icon: React.ReactElement;
-  isLeftBtn?: boolean;
-  isLeftBlock?: boolean;
+  isCodeBlock?: boolean;
   closeHandler: () => void;
   hideTabsHandler?: () => void;
 }
@@ -26,16 +25,27 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({
   title,
   icon,
-  isLeftBtn,
+  isCodeBlock,
   closeHandler,
-  isLeftBlock,
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const headerSx = useMemo(() => getHeaderWrapperSx(isDesktop), [isDesktop]);
 
   return (
-    <Box sx={headerSx}>
+    <Box
+      sx={{
+        display: isDesktop ? "flex" : "none",
+        width: "100%",
+        background: "#fff",
+        alignItems: "center",
+        gap: 2,
+        px: 1,
+        py: 0.5,
+        borderBottom: isDesktop ? "2px solid #5FD0D5" : "none",
+        zIndex: 2,
+        position: "relative",
+      }}
+    >
       <Stack direction="row">
         {icon}
 
@@ -48,7 +58,7 @@ const Header: FC<HeaderProps> = ({
         onClick={() => {
           closeHandler();
         }}
-        sx={BUTTON_SX}
+        sx={() => ({ ...getButtonSx(isCodeBlock) })}
       >
         <AiOutlineClose size={20} />
       </Button>

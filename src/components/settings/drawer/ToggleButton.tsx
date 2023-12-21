@@ -6,7 +6,6 @@ import { alpha, useTheme } from "@mui/material/styles";
 
 // utils
 import { bgBlur } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
 
 //
 import { IconButtonAnimate } from "../../animate";
@@ -28,7 +27,6 @@ export default function ToggleButton({
   onToggle,
 }: ToggleButtonProps): React.ReactElement | null {
   const theme = useTheme();
-  const translate = useTranslate();
 
   const [mounted, setMounted] = useState(false);
 
@@ -67,7 +65,7 @@ export default function ToggleButton({
         />
       )}
 
-      <Tooltip title={translate("settings")}>
+      <Tooltip title="Settings">
         <IconButtonAnimate color="primary" onClick={onToggle} sx={{ p: 1.25 }}>
           <SvgColor src="/assets/icons/setting/ic_setting.svg" />
         </IconButtonAnimate>

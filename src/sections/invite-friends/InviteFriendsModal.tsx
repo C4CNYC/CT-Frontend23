@@ -19,7 +19,6 @@ import {
 
 import { FormProvider, RHFTextField, useSnackbar } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   children: React.ReactElement[] | React.ReactElement;
@@ -34,12 +33,11 @@ export default function InviteFriendsModal({
 }: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
-  const translate = useTranslate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const CreateNewUserSchema = Yup.object().shape({
-    email: Yup.string().email().required(translate("required_email")),
+    email: Yup.string().email().required("email is required"),
   });
 
   const methods = useForm<FormValuesProps>({
@@ -57,7 +55,7 @@ export default function InviteFriendsModal({
     setLoading(true);
     try {
       // add friend adding logic
-      enqueueSnackbar(translate("messages_thanks"));
+      enqueueSnackbar("thanks!");
       methods.reset((formValues) => ({
         ...formValues,
         email: "",
@@ -87,7 +85,7 @@ export default function InviteFriendsModal({
           alignItems="flex-end"
         >
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            {translate("invite_friend")}
+            Invite a Friend
           </DialogTitle>
           <IconButton onClick={closeDialog} sx={{ mb: "5px", mr: "14px" }}>
             <CloseIcon />
@@ -105,7 +103,7 @@ export default function InviteFriendsModal({
                     <RHFTextField
                       sx={{ width: { xs: "300px", sm: "350px" } }}
                       name="email"
-                      label={translate("friends_email")}
+                      label="Friend's email"
                       required
                     />
                   </Box>
@@ -117,15 +115,13 @@ export default function InviteFriendsModal({
                       mt: 2,
                     }}
                   >
-                    <Button onClick={closeDialog}>
-                      {translate("actions_close")}
-                    </Button>
+                    <Button onClick={closeDialog}>Close</Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
                       loading={loading}
                     >
-                      {translate("actions_invite")}
+                      Invite
                     </LoadingButton>
                   </Box>
                 </Card>

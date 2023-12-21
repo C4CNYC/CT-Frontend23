@@ -1,9 +1,8 @@
 // @mui
 import { TableCell, TableRow } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 //
+import { useLocales } from "../../locales/useLocales";
 import { EmptyContent } from "../empty-content";
 
 // ----------------------------------------------------------------------
@@ -13,14 +12,14 @@ interface Props {
 }
 
 export function TableNoData({ isNotFound }: Props): React.ReactElement | null {
-  const translate = useTranslate();
+  const { translate } = useLocales();
 
   return (
     <TableRow>
       {isNotFound ? (
         <TableCell colSpan={12}>
           <EmptyContent
-            title={translate("messages_no_data")}
+            title={`${translate("messages_no_data")}`}
             sx={{
               "& span.MuiBox-root": { height: 160 },
             }}

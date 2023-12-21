@@ -1,4 +1,4 @@
-import React, { MouseEvent, MouseEventHandler, useCallback, useState } from "react";
+import React, { MouseEventHandler, useCallback, useState } from "react";
 
 import { useCommands } from "@remirror/react";
 import { useDetectClickOutside } from "react-detect-click-outside";
@@ -99,7 +99,7 @@ export default function TablePicker(): JSX.Element {
             variant="contained"
             color="primary"
             sx={{ ml: 1, mb: "-2px" }}
-            onMouseDown={(event: MouseEvent<HTMLButtonElement>) => {
+            onMouseDown={(event) => {
               event.preventDefault();
             }}
             onClick={handleSubmit}

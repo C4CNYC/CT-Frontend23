@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,10 +15,14 @@ import {
   Typography,
 } from "@mui/material";
 
-import { FormProvider, RHFTextField, useSnackbar } from "@components";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import {
+  FormProvider,
+  RHFTextField,
+  useSnackbar,
+} from "@components";
 import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useRouter } from "next/router";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
 const CreateClassSchema = Yup.object().shape({
   code: Yup.string().required("code is required"),
@@ -35,7 +38,7 @@ interface IJoinClassModal {
 
 enum JoinStatus {
   JOINED = "joined",
-  PENDING = "pending",
+  PENDING = "pending"
 }
 
 export default function JoinClassModal({
@@ -44,14 +47,15 @@ export default function JoinClassModal({
   const { push } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpenDialog] = useState<boolean>(false);
-  const translate = useTranslate();
 
   const [joinClass, { isLoading }] = useJoinClassMutation();
 
   const methods = useForm<FormJoinClassProps>({
     resolver: yupResolver(CreateClassSchema),
   });
-  const onSubmit = async ({ code }: FormJoinClassProps): Promise<void> => {
+  const onSubmit = async ({
+    code,
+  }: FormJoinClassProps): Promise<void> => {
     try {
       const { status, tribe } = await joinClass({ share_token: code }).unwrap();
       if (status === JoinStatus.JOINED) {
@@ -59,7 +63,7 @@ export default function JoinClassModal({
         push(STUDENT_PATH_DASHBOARD.class.id(tribe.id));
       }
     } catch (error: any) {
-      enqueueSnackbar(translate("messages_error"), { variant: "error" });
+      enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   };
 
@@ -80,7 +84,7 @@ export default function JoinClassModal({
         }}
       >
         <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-          {translate("tribes_join_class")}
+          Join Class
         </DialogTitle>
         <FormProvider
           methods={methods}
@@ -88,12 +92,12 @@ export default function JoinClassModal({
         >
           <DialogContent>
             <Typography mb={3} variant="body1">
-              {translate("tribes_enter_join_code")}
+              Enter your Join Code to find your class
             </Typography>
             <RHFTextField
               required
               name="code"
-              placeholder={translate("tribes_code_example")}
+              placeholder="Example: atV1d3Dsd"
             />
           </DialogContent>
           <DialogActions>
@@ -110,14 +114,14 @@ export default function JoinClassModal({
                   setOpenDialog(false);
                 }}
               >
-                {translate("actions_cancel")}
+                Cancel
               </Button>
               <LoadingButton
                 type="submit"
                 variant="contained"
                 loading={isLoading}
               >
-                {translate("actions_lets_go")}
+                Let's go
               </LoadingButton>
             </Box>
           </DialogActions>

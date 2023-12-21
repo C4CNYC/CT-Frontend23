@@ -1,11 +1,17 @@
-import NextLink from "next/link";
 import { forwardRef } from "react";
+import NextLink from "next/link";
 
-import { Box, BoxProps, Link, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  BoxProps,
+  Link,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
-import { icon } from "./icon";
+import { icon } from "./icon"
 
 export interface LogoProps extends BoxProps {
   disabledLink?: boolean;
@@ -14,7 +20,6 @@ export interface LogoProps extends BoxProps {
 // eslint-disable-next-line react/display-name
 const Logo = forwardRef<HTMLDivElement, LogoProps>(
   ({ disabledLink = false, sx, ...other }, ref): React.ReactElement | null => {
-    const theme = useTheme();
     const logo = (
       <Box
         ref={ref}
@@ -25,10 +30,11 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
         }}
         {...other}
       >
-        {icon(theme.palette.mode === "light")}{" "}
+        {icon}{" "}
       </Box>
     );
 
+    const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
     if (!isDesktop) return null;
 

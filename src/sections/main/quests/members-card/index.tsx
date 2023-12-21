@@ -42,24 +42,23 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
 
 import MemberRow from "./MemberRow";
 
 const TABLE_HEAD = [
-  { id: "avatar", label: "avatar", align: "left" },
-  { id: "firstName", label: "first_name", align: "left" },
-  { id: "lastName", label: "last_name", align: "left" },
+  { id: "avatar", label: "Avatar", align: "left" },
+  { id: "firstName", label: "First name", align: "left" },
+  { id: "lastName", label: "Lastname", align: "left" },
   { id: "username", label: "username", align: "left" },
-  { id: "city", label: "city", align: "left" },
+  { id: "city", label: "City", align: "left" },
   { id: "", label: "", align: "left" },
 ];
 const TABLE_HEAD_PENDINGS = [
-  { id: "avatar", label: "avatar", align: "left" },
-  { id: "firstName", label: "first_name", align: "left" },
-  { id: "lastName", label: "last_name", align: "left" },
+  { id: "avatar", label: "Avatar", align: "left" },
+  { id: "firstName", label: "First name", align: "left" },
+  { id: "lastName", label: "Lastname", align: "left" },
   { id: "username", label: "username", align: "left" },
-  { id: "approve", label: "action", align: "left" },
+  { id: "approve", label: "Action", align: "left" },
   { id: "", label: "", align: "left" },
 ];
 
@@ -71,7 +70,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useAuthContext();
   const { query, push } = useRouter();
-  const translate = useTranslate();
+
   const role = useSelector((state) => state.global.user?.role);
   const { filters, setFilter } = useFilters({});
 
@@ -173,7 +172,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
 
   const handleDeleteRow = (id: string): void => {
     handleDeleteStudent(id);
-    enqueueSnackbar(translate("members_student_removed_msg"));
+    enqueueSnackbar("Student removed from class");
     setSelected([]);
 
     if (page > 0) {
@@ -187,7 +186,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteStudent(selected[i]);
     }
-    enqueueSnackbar(translate("members_students_removed_msg"));
+    enqueueSnackbar("Students removed from class");
     setSelected([]);
 
     if (page > 0) {
@@ -236,14 +235,14 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
 
   const TABS_LIST = [
     {
-      label: "all",
+      label: "All",
       value: "all",
       icon: <Label>{data?.meta.itemCount ?? 0}</Label>,
     },
   ];
   if (user?.role !== Role.Student) {
     TABS_LIST.push({
-      label: "pending",
+      label: "Pending",
       value: "pending",
       icon: <Label>{pending?.meta.itemCount ?? 0}</Label>,
     });
@@ -263,7 +262,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
           {TABS_LIST.map((el, index) => (
             <Tab
               key={index}
-              label={translate(el.label)}
+              label={el.label}
               value={el.value}
               icon={el.icon}
               iconPosition="end"
@@ -291,7 +290,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
               );
             }}
             action={
-              <Tooltip title={translate("actions_delete")}>
+              <Tooltip title="Delete">
                 <IconButton color="primary" onClick={handleOpenConfirm}>
                   <Iconify icon="eva:trash-2-outline" />
                 </IconButton>
@@ -368,12 +367,11 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title={translate("actions_delete")}
+        title="Delete"
         content={
           <>
-            {translate("messages_delete_dialog_content", {
-              items: selected.length,
-            })}
+            Are you sure want to delete <strong> {selected.length} </strong>{" "}
+            items?
           </>
         }
         action={
@@ -386,7 +384,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
               handleCloseConfirm();
             }}
           >
-            {translate("actions_delete")}
+            Delete
           </LoadingButton>
         }
       />

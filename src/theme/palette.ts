@@ -59,7 +59,7 @@ const SECONDARY = {
 
 const INFO = {
   lighter: "#CAFDF5",
-  light: "#5ED0D5",
+  light: "#61F3F3",
   main: "#00B8D9",
   dark: "#006C9C",
   darker: "#003768",
@@ -123,7 +123,7 @@ export function palette(themeMode: "light" | "dark"): any {
       secondary: GREY[600],
       disabled: GREY[500],
     },
-    background: { paper: "#F6F9FC", default: "#F6F9FC", neutral: GREY[200] },
+    background: { paper: "#fff", default: "#fff", neutral: GREY[200] },
     action: {
       ...COMMON.action,
       active: GREY[600],

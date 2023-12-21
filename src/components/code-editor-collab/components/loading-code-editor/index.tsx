@@ -1,6 +1,5 @@
-import { type FC, useMemo } from "react";
-
-import { Skeleton, useTheme } from "@mui/material";
+import { type FC } from "react"
+import { Skeleton } from "@mui/material";
 import { Stack } from "@mui/system";
 
 const getRandomNumber = (min: number, max: number): number => {
@@ -8,11 +7,8 @@ const getRandomNumber = (min: number, max: number): number => {
 };
 
 const LoadingCodeEditor: FC = () => {
-  const theme = useTheme();
-  const isLight = theme.palette.mode === "light";
-  const stackSx = useMemo(() => getStackSx(isLight), [isLight]);
   return (
-    <Stack sx={stackSx} direction="row">
+    <Stack sx={STACK_SX} direction="row" flexWrap="wrap" pl="20px" pt="5px">
       {Array(getRandomNumber(60, 200))
         .fill(null)
         .map((el, i) => (
@@ -33,17 +29,14 @@ const LoadingCodeEditor: FC = () => {
   );
 };
 
-const getStackSx = (isLight: boolean) => ({
-  flexWrap: "wrap",
-  pl: "20px",
-  pt: "5px",
+const STACK_SX = {
   position: "absolute",
   top: 0,
   left: 0,
   bottom: 0,
   right: 0,
-  background: isLight ? "white" : "",
-  zIndex: 1,
-});
+  background: "white",
+  zIndex: 1
+}
 
 export default LoadingCodeEditor;
