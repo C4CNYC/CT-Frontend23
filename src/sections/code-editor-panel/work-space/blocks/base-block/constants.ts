@@ -1,8 +1,16 @@
-import { SxProps } from "@mui/system";
+import { SxProps, Theme } from "@mui/system";
 
-export const getBoxStyles = (isTabletAndMobile: boolean): SxProps => ({
+export const getBoxStyles = (
+  isTabletAndMobile: boolean,
+  theme: Theme
+): SxProps => ({
   height: isTabletAndMobile ? "calc(100vh - 80px)" : "calc(100vh - 105px)",
-  border: isTabletAndMobile ? "none" : "3px solid rgb(234, 234, 235)",
+  borderWidth: isTabletAndMobile ? "none" : "3px",
+  borderStyle: isTabletAndMobile ? "none" : "solid",
+  borderColor:
+    theme.palette.mode === "light"
+      ? "rgb(234, 234, 235)"
+      : theme.palette.background.neutral,
   overflow: "hidden",
   position: "relative",
   borderRadius: isTabletAndMobile ? "0 0 20px 20px" : 2,

@@ -8,7 +8,9 @@ export const getSkeletonSx = (isLight: boolean) => ({
   bgcolor: isLight ? "#D9D9D9" : "",
 });
 export const getStackBottonSx = (isLight: boolean, theme: Theme) => ({
-  backgroundColor: isLight ? "white" : theme.palette.background.neutral,
+  backgroundColor: isLight
+    ? theme.palette.background.default
+    : theme.palette.background.neutral,
   width: "100%",
   height: "calc(91vh - 80px)",
   borderRadius: "10px",
