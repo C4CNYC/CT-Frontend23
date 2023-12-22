@@ -24,7 +24,10 @@ export default function QuestMain({
         <Tooltip
           title={<Typography variant="body2">{TOOLTIP_TEXT}</Typography>}
         >
-          <Typography variant="body2" sx={{ textDecoration: "underline" }}>
+          <Typography
+            variant="body2"
+            sx={{ textDecoration: "underline", cursor: "pointer" }}
+          >
             {translate("quest_whats_quest")}
           </Typography>
         </Tooltip>
