@@ -40,13 +40,21 @@ export default function QuestRating({
       >
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Stack gap={1}>
-            <Tooltip title="some">
+            <Tooltip
+              title={
+                <Typography variant="body2">
+                  This content has been linked to this quest and should be
+                  completed.
+                </Typography>
+              }
+            >
               <Typography
                 display="inline-flex"
                 alignItems="center"
                 variant="body1"
+                sx={{ cursor: "pointer" }}
               >
-                {translate("course")}{" "}
+                {translate("course")}
                 <BsFillInfoCircleFill style={{ marginLeft: "5px" }} />
               </Typography>
             </Tooltip>
