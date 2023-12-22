@@ -1,6 +1,8 @@
 import { AiOutlineSolution } from "react-icons/ai";
-import { BsFileEarmarkTextFill, BsFlagFill } from "react-icons/bs";
+import { BiConversation } from "react-icons/bi";
+import { BsFileEarmarkTextFill } from "react-icons/bs";
 import {
+  FaRegStickyNote,
   FaSchool,
   FaTasks,
   FaUserFriends,
@@ -12,7 +14,7 @@ import { GiProgression } from "react-icons/gi";
 import { GoFileSubmodule } from "react-icons/go";
 import { IoMdSchool } from "react-icons/io";
 import { MdPlayLesson } from "react-icons/md";
-import { RiFeedbackFill, RiOrganizationChart } from "react-icons/ri";
+import { RiOrganizationChart } from "react-icons/ri";
 import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
 
 import { Iconify, Label } from "@components";
@@ -164,12 +166,12 @@ export const apps = {
     {
       title: "sidebar_menu_my_notes",
       path: STUDENT_PATH_DASHBOARD.myNotes,
-      icon: <BsFlagFill size={20} />,
+      icon: <FaRegStickyNote size={20} />,
     },
     {
       title: "sidebar_menu_feedback",
       path: "#",
-      icon: <RiFeedbackFill size={20} />,
+      icon: <BiConversation size={20} />,
       component: (children: React.ReactElement) => (
         <FeedbackDialog>{children}</FeedbackDialog>
       ),
