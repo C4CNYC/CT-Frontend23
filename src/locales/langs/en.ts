@@ -606,6 +606,7 @@ const en = {
 
   // My Notes
   notes_my: "My Notes",
+  notes_add: "Add note",
   notes_delete_question: "Are you sure you want to delete the note?",
 
   // Feedback

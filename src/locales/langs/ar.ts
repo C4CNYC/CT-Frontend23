@@ -609,6 +609,7 @@ const ar = {
 
   // My Notes
   notes_my: "ملاحظاتي",
+  notes_add: "اضف ملاحظة",
   notes_delete_question: "هل أنت متأكد أنك تريد حذف الملاحظة؟",
 
   // Feedback
