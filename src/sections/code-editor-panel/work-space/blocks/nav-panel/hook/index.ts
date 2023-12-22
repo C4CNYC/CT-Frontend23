@@ -49,10 +49,15 @@ export const useNavPanel = (wrapperListenerRef: RefObject<HTMLDivElement | null>
   const [draggableConfig, setDraggableConfig] = useState<DraggableBlockConfig | null>(null);
   const isCodePreviewVisible = useSelector(state => state.codePanelGlobal.isCodePreviewVisible);
   const [isCodeBlocksVisible, setIsCodeBlocksVisible] = useState(false);
+  const classId = useSelector(state => state?.codePanel?.class?.id);
   const { filters, setFilter } = useFilters(DEFAULT_FILTERS)
   const [users, setUsers] = useState<FriendUser[]>([]);
 
   const { data, isLoading: isUsersLoading } = useGetFriendsStudentContentQuery(filters);
+
+  useEffect(() => {
+    setFilter("class_id", classId as string)
+  }, [classId])
 
   const onLoadMore = () => {
     if (data == null || data.meta.hasNextPage === false) {
