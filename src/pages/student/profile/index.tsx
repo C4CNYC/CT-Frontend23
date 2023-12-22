@@ -10,6 +10,7 @@ import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileLinks from "@sections/student-profile/ProfileLinks";
 import ProfileMain from "@sections/student-profile/ProfileMain";
 import { useProfileQuery } from "src/redux/services/auth";
+import { useTranslate } from "src/utils/translateHelper";
 
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -19,23 +20,20 @@ export default function UserProfile(): React.ReactElement {
   const { themeStretch } = useSettingsContext();
   const { data, isLoading } = useProfileQuery();
   const [currentTab, setCurrentTab] = useState("profile");
+  const translate = useTranslate();
 
   const TABS = [
     {
       value: "profile",
-      label: "Profile",
+      label: "profile",
       icon: <Iconify icon="ic:round-account-box" />,
       component: (
-        <ProfileMain
-          data={data}
-          isFriend={false}
-          isLoading={isLoading}
-        />
+        <ProfileMain data={data} isFriend={false} isLoading={isLoading} />
       ),
     },
     {
       value: "links",
-      label: "Links",
+      label: "profile_links",
       icon: <Iconify icon="nimbus:planet" />,
       component: <ProfileLinks studentId={data?.id ?? ""} />,
     },
@@ -44,14 +42,17 @@ export default function UserProfile(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Profile | CodeTribe</title>
+        <title>{translate("profile")} | CodeTribe</title>
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
-            { name: "Profile" },
+            {
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            { name: translate("profile") },
           ]}
         />
         <Card
@@ -98,7 +99,7 @@ export default function UserProfile(): React.ReactElement {
                 key={tab.value}
                 value={tab.value}
                 icon={tab.icon}
-                label={tab.label}
+                label={translate(tab.label)}
               />
             ))}
           </Tabs>

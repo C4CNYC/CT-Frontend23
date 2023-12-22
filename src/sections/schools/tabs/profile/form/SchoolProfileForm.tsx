@@ -12,9 +12,9 @@ import {
   useUpdateSchoolAvatarImgMutation,
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { countries } from "../../../../../assets/data";
-import { useLocales } from "../../../../../locales";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 
 const UpdateSchoolSchema = Yup.object().shape({
@@ -50,7 +50,7 @@ export default function SchoolProfileForm({
   file,
   setImgValue,
 }: SchoolProfileFormProps): React.ReactElement | null {
-  const { translate } = useLocales();
+  const translate = useTranslate();
   const [updateSchoolAvatar, { isLoading: isLoadingAvatar }] =
     useUpdateSchoolAvatarImgMutation();
   const [updateSchoolProfile, { isLoading }] = useUpdateSchoolProfileMutation();
@@ -84,7 +84,7 @@ export default function SchoolProfileForm({
           file: formDataImg,
         }).unwrap();
         setImgValue([]);
-        enqueueSnackbar("Cover success!");
+        enqueueSnackbar(translate("messages_cover_success"));
       }
       if (methods.formState.isDirty) {
         await updateSchoolProfile({
@@ -98,7 +98,7 @@ export default function SchoolProfileForm({
           phone: formData.phone,
         }).unwrap();
         methods.reset({}, { keepValues: true, keepIsValid: true });
-        enqueueSnackbar("Update info success!");
+        enqueueSnackbar(translate("messages_update_info_success"));
       }
     } catch (error: any) {
       enqueueSnackbar(error.message.text, { variant: "error" });
@@ -121,9 +121,9 @@ export default function SchoolProfileForm({
                 xs: "repeat(1, 1fr)",
               }}
             >
-              <RHFTextField name="name" label="Name" />
+              <RHFTextField name="name" label={translate("name")} />
 
-              <RHFSelect native name="country" label="Country">
+              <RHFSelect native name="country" label={translate("country")}>
                 <option value="" />
                 {countries.map((country) => (
                   <option key={country.code} value={country.label}>
@@ -132,9 +132,9 @@ export default function SchoolProfileForm({
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="address" label="Address" />
+              <RHFTextField name="address" label={translate("address")} />
 
-              <RHFTextField name="city" label="City" />
+              <RHFTextField name="city" label={translate("city")} />
 
               <Controller
                 name="phone"
@@ -142,7 +142,11 @@ export default function SchoolProfileForm({
                 render={({ field, fieldState }) => (
                   <MuiTelInput
                     {...field}
-                    helperText={fieldState.invalid ? "Phone is invalid" : ""}
+                    helperText={
+                      fieldState.invalid
+                        ? translate("messages_invalid_phone")
+                        : ""
+                    }
                     error={fieldState.invalid}
                   />
                 )}
@@ -151,7 +155,7 @@ export default function SchoolProfileForm({
               <RHFTextField
                 fullWidth
                 name="about"
-                label="About"
+                label={translate("about")}
                 multiline
                 rows={5}
               />
@@ -163,7 +167,7 @@ export default function SchoolProfileForm({
                 variant="contained"
                 loading={isLoading || isLoadingAvatar}
               >
-                {`${translate("actions_save_changes")}`}
+                {translate("actions_save_changes")}
               </LoadingButton>
             </Stack>
           </Card>

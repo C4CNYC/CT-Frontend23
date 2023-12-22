@@ -11,19 +11,19 @@ export enum IActionDialogType {
 export const actions = [
   {
     icon: <MdOutlineTipsAndUpdates size="25px" color="#FBDD3F" />,
-    name: "Tips",
+    name: "tips",
     color: "#FBDD3F",
     type: IActionDialogType.tips,
   },
   {
     icon: <AiOutlineCode size="25px" color="#EE467A" />,
-    name: "Solution",
+    name: "solution",
     color: "#EE467A",
     type: IActionDialogType.solution,
   },
   {
     icon: <BsChatText size="20px" color="#43D4DD" />,
-    name: "I`m stuck",
+    name: "i_um_stuck",
     color: "#43D4DD",
     type: IActionDialogType.stuck,
   },
@@ -32,7 +32,7 @@ export const actions = [
 export const actionsTips = [
   {
     icon: <MdOutlineTipsAndUpdates size="25px" color="#FBDD3F" />,
-    name: "Tips",
+    name: "tips",
     color: "#FBDD3F",
     type: IActionDialogType.tips,
   },

@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 
 import { ISchool } from "src/redux/services/interfaces/school.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IChooseShoolModalProps {
   openDialog: boolean;
@@ -35,6 +36,7 @@ export default function ChooseShoolModal({
   const handleChange = (event: SelectChangeEvent) => {
     setSchoolId(event.target.value);
   };
+  const translate = useTranslate();
 
   useEffect(() => {
     if (schools) {
@@ -44,7 +46,7 @@ export default function ChooseShoolModal({
 
   return (
     <Dialog open={openDialog} maxWidth="xs">
-      <DialogTitle textAlign="center">Create a class</DialogTitle>
+      <DialogTitle textAlign="center">{translate("class_create")}</DialogTitle>
       <DialogContent>
         <Divider flexItem sx={{ mb: 2 }}>
           <Typography variant="h1" sx={{ mt: -2 }}>
@@ -52,12 +54,12 @@ export default function ChooseShoolModal({
           </Typography>
         </Divider>
         <Typography variant="body1" textAlign="center" maxWidth="300px">
-          Classes is the place, where everyone learns together in a safe space.
+          {translate("class_create_modal_info")}
         </Typography>
 
         <Box sx={{ px: 2 }}>
           <Typography variant="h6" sx={{ ml: 1, mt: 3 }}>
-            Choose school:
+            {translate("class_choose_school")}
           </Typography>
           <Select
             native
@@ -86,7 +88,7 @@ export default function ChooseShoolModal({
             back();
           }}
         >
-          Cancel
+          {translate("actions_cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -95,7 +97,7 @@ export default function ChooseShoolModal({
           variant="contained"
           color="secondary"
         >
-          Next
+          {translate("actions_next")}
         </Button>
       </DialogActions>
     </Dialog>

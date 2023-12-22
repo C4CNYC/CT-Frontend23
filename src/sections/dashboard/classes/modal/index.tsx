@@ -25,6 +25,7 @@ import {
 } from "@components";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 import AddClassTab from "./AddClassTab";
 
@@ -92,7 +93,7 @@ export default function ClassPreferences({
 }: Props): React.ReactElement {
   const [open, setOpenDialog] = useState<boolean>(false);
   const [value, setValue] = useState(0);
-
+  const translate = useTranslate();
   const userRole = useSelector((state: RootState) => state.global?.user?.role);
 
   const handleChange = (
@@ -141,7 +142,7 @@ export default function ClassPreferences({
         }}
       >
         <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-          Class Preferences
+          {translate("classes_class_preferences")}
         </DialogTitle>
         <Box sx={{ width: "100%" }}>
           <FormProvider
@@ -155,12 +156,12 @@ export default function ClassPreferences({
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="General" {...a11yProps(0)} />
-                  <Tab label="Students" {...a11yProps(1)} />
+                  <Tab label={translate("general")} {...a11yProps(0)} />
+                  <Tab label={translate("students")} {...a11yProps(1)} />
                   {/* <Tab label="Courses" {...a11yProps(2)} /> */}
 
                   {userRole !== Role.Manager ? (
-                    <Tab label="Mentors" {...a11yProps(3)} />
+                    <Tab label={translate("mentors")} {...a11yProps(3)} />
                   ) : null}
                 </Tabs>
               </Box>
@@ -202,14 +203,14 @@ export default function ClassPreferences({
                       setOpenDialog(false);
                     }}
                   >
-                    Close
+                    {translate("actions_close")}
                   </Button>
                   <LoadingButton
                     type="submit"
                     variant="contained"
                     loading={updateResult}
                   >
-                    Save
+                    {translate("actions_save")}
                   </LoadingButton>
                 </Box>
               </DialogActions>
@@ -227,7 +228,7 @@ export default function ClassPreferences({
                       setOpenDialog(false);
                     }}
                   >
-                    Close
+                    {translate("actions_close")}
                   </Button>
                 </Box>
               </DialogActions>

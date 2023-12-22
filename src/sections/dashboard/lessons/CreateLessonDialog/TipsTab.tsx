@@ -11,6 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 interface ITipsTabProps {
   tips: string[];
   deleteTip: (tip: string[]) => void;
@@ -23,6 +25,7 @@ export default function TipsTab({
   isLoading,
 }: ITipsTabProps): React.ReactElement {
   const [checked, setChecked] = useState<string[]>([]);
+  const translate = useTranslate();
 
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);
@@ -55,7 +58,9 @@ export default function TipsTab({
             borderRadius: 1,
           }}
         >
-          <Typography variant="subtitle1">Remove selected</Typography>
+          <Typography variant="subtitle1">
+            {translate("actions_remove_selected")}
+          </Typography>
           <LoadingButton
             color="error"
             variant="contained"

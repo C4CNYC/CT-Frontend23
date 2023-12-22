@@ -19,6 +19,7 @@ import { RHFTextField, useSnackbar } from "@components";
 import { styledRegisterInput } from "@sections/on-boarding-register/styles";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IProps {
   isValid?: boolean;
@@ -33,6 +34,7 @@ export default function SignInLogin({
   const router = useRouter();
   const { loginWithGoogle } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
+  const translate = useTranslate();
 
   const onLoginWithGoogle = useGoogleLogin({
     onSuccess: async ({ access_token: token }) => {
@@ -53,7 +55,7 @@ export default function SignInLogin({
         direction="row"
         sx={{ alignItems: "center", ml: { xs: 3, sm: 3, md: 0 } }}
       >
-        <Typography variant="h3">Sign in</Typography>
+        <Typography variant="h3">{translate("sign_in")}</Typography>
         <Typography variant="h2" sx={{ ml: 1 }}>
           🫶
         </Typography>
@@ -62,12 +64,12 @@ export default function SignInLogin({
         variant="body1"
         sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 }, mb: 2 }}
       >
-        Welcome back
+        {translate("login_welcome_back")}
       </Typography>
       <Stack sx={{ mt: 1 }}>
         <RHFTextField
           name="email"
-          label="Email"
+          label={translate("email")}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           onKeyDown={(e) => {
             if (goToStep && isValid && e.code === "Enter") {
@@ -96,7 +98,7 @@ export default function SignInLogin({
             sx={(theme) => ({ color: theme.palette.grey[500], mx: 1 })}
             variant="body1"
           >
-            OR
+            {translate("login_or")}
           </Typography>
         </Divider>
         <LoadingButton
@@ -119,7 +121,7 @@ export default function SignInLogin({
           })}
         >
           <FcGoogle size="50px" />
-          Sign in with Google
+          {translate("ligin_with_google")}
         </LoadingButton>
       </Stack>
     </>

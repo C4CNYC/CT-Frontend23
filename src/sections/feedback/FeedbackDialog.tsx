@@ -19,6 +19,7 @@ import {
 
 import { FormProvider, RHFTextField, useSnackbar } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface Props {
   children: React.ReactElement[] | React.ReactElement;
@@ -33,6 +34,7 @@ export default function FeedbackDialog({
 }: Props): React.ReactElement {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+  const translate = useTranslate();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -54,7 +56,7 @@ export default function FeedbackDialog({
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     setLoading(true);
     try {
-      enqueueSnackbar("thanks!");
+      enqueueSnackbar(translate("messages_thanks"));
       methods.reset((formValues) => ({
         ...formValues,
         feedback: "",
@@ -80,7 +82,7 @@ export default function FeedbackDialog({
       <Dialog open={open} onClose={closeDialog}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <DialogTitle variant="h5" sx={{ pb: 1, pt: 2 }}>
-            Feedback
+            {translate("sidebar_menu_feedback")}
           </DialogTitle>
           <IconButton onClick={closeDialog} sx={{ mr: "14px", mt: "5px" }}>
             <CloseIcon />
@@ -101,7 +103,7 @@ export default function FeedbackDialog({
                       multiline
                       name="Feedback"
                       label=""
-                      placeholder="Tell us your thoughts, emotions, and comments"
+                      placeholder={translate("feedback_tel_your_feedback")}
                       required
                     />
                   </Box>
@@ -113,13 +115,15 @@ export default function FeedbackDialog({
                       mt: 2,
                     }}
                   >
-                    <Button onClick={closeDialog}>Close</Button>
+                    <Button onClick={closeDialog}>
+                      {translate("actions_close")}
+                    </Button>
                     <LoadingButton
                       type="submit"
                       variant="contained"
                       loading={loading}
                     >
-                      Send
+                      {translate("actions_send")}
                     </LoadingButton>
                   </Box>
                 </Card>

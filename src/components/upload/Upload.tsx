@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 import { Iconify } from "../iconify";
 import RejectionFiles from "./errors/RejectionFiles";
 import { UploadIllustration } from "./illustrations";
@@ -167,6 +169,7 @@ export function Upload({
 // ----------------------------------------------------------------------
 
 function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
+  const translate = useTranslate();
   return (
     <Stack
       spacing={2}
@@ -191,11 +194,11 @@ function Placeholder({ sx, ...other }: StackProps): React.ReactElement | null {
 
       <div>
         <Typography gutterBottom variant="h5">
-          Choose image
+          {translate("image_choose_image")}
         </Typography>
 
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          Drop files or click here
+          {translate("image_drope_file")}
         </Typography>
       </div>
     </Stack>

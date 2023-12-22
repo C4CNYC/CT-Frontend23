@@ -4,8 +4,8 @@ import { Card, Grid, Stack, Typography } from "@mui/material";
 
 import { UploadAvatar } from "@components";
 import { fData } from "@utils";
-import { useLocales } from "src/locales";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import SkeletonProfileTab from "./SkeletomProfileTab";
 import ProfileAbout from "./components/ProfileAbout";
@@ -21,7 +21,7 @@ export default function SchoolProfileTab({
   schoolId,
 }: ISchoolProfileTabProps): React.ReactElement | null {
   const [imgValue, setImgValue] = useState<File[]>([]);
-  const { translate } = useLocales();
+  const translate = useTranslate();
   const { data, isLoading } = useGetSchoolProfileQuery(
     { schoolId },
     { skip: !schoolId }
@@ -38,7 +38,7 @@ export default function SchoolProfileTab({
 
   if (isLoading) return <SkeletonProfileTab />;
 
-  if (!data) return <>No Data</>;
+  if (!data) return <>{translate("messages_no_data")}</>;
 
   return (
     <>
@@ -69,13 +69,10 @@ export default function SchoolProfileTab({
                       whiteSpace: "pre-line",
                     }}
                   >
-                    {`${translate(
-                      "organizations.general_page.tabs.content.profile.upload_image",
-                      {
-                        formats: "png",
-                        size: fData(200000),
-                      }
-                    )}`}
+                    {translate("general_profile_upload_img", {
+                      formats: "png",
+                      size: fData(200000),
+                    })}
                   </Typography>
                 }
               />

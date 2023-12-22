@@ -1,6 +1,6 @@
-import { type FC } from "react"
+import { type FC } from "react";
 
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import { Iconify } from "@components";
@@ -9,14 +9,14 @@ interface ViewToomblerProps {
   isFullScreenView: boolean;
   isColumnHidden: boolean;
   onChangeColumnVisability: (value: boolean) => void;
-  onHanldeFullScreen: () => void
+  onHanldeFullScreen: () => void;
 }
 
 const ViewTumbler: FC<ViewToomblerProps> = ({
   isFullScreenView,
   isColumnHidden,
   onChangeColumnVisability,
-  onHanldeFullScreen
+  onHanldeFullScreen,
 }) => {
   const columnIcon = isColumnHidden ? "tabler:columns-3" : "tabler:columns-1";
   const screenViewIcon = isFullScreenView
@@ -32,13 +32,24 @@ const ViewTumbler: FC<ViewToomblerProps> = ({
       padding="0 12px"
       height="41px"
     >
-      <IconButton
-        onClick={() => {
-          onChangeColumnVisability(!isColumnHidden);
-        }}
+      <Tooltip
+        title={
+          <>
+            <Typography variant="subtitle2">Focus Mode:</Typography>
+            <Typography variant="inherit" width={170}>
+              More space for the code editor. Compress the slides & browser.
+            </Typography>
+          </>
+        }
       >
-        <Iconify icon={columnIcon} />
-      </IconButton>
+        <IconButton
+          onClick={() => {
+            onChangeColumnVisability(!isColumnHidden);
+          }}
+        >
+          <Iconify icon={columnIcon} />
+        </IconButton>
+      </Tooltip>
 
       <IconButton onClick={onHanldeFullScreen}>
         <Iconify icon={screenViewIcon} />

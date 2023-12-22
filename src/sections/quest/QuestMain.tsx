@@ -3,6 +3,7 @@ import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 import { TOOLTIP_TEXT } from "@sections/main/quests/add-quest/constants";
 import { BaseResponseInterface } from "@utils";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IQuestMainProps {
   mentor?: IStudent & BaseResponseInterface;
@@ -12,17 +13,22 @@ export default function QuestMain({
   mentor,
   questName,
 }: IQuestMainProps): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <Stack sx={{ mt: 3 }}>
       <Stack
         sx={{ gap: 1, alignItems: "baseline", flexDirection: "row", mb: 1 }}
       >
-        <Typography variant="h5">Quest</Typography>
+        <Typography variant="h5">{translate("quest")}</Typography>
         <Tooltip
           title={<Typography variant="body2">{TOOLTIP_TEXT}</Typography>}
         >
-          <Typography variant="body2" sx={{ textDecoration: "underline" }}>
-            What`s a quest?
+          <Typography
+            variant="body2"
+            sx={{ textDecoration: "underline", cursor: "pointer" }}
+          >
+            {translate("quest_whats_quest")}
           </Typography>
         </Tooltip>
       </Stack>
@@ -44,7 +50,7 @@ export default function QuestMain({
 
         <Typography variant="h5">
           {mentor?.first_name} {mentor?.last_name}
-          Admin
+          {translate("admin")}
         </Typography>
       </Stack>
     </Stack>

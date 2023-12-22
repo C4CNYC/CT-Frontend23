@@ -2,13 +2,13 @@ import { type CSSProperties, type FC, type ReactNode } from "react";
 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import Draggable from "react-draggable";
+import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { SxProps, Theme } from "@mui/system";
 
-import { Iconify } from "@components";
 import { setChatVisible } from "src/redux/slices/chat-handler";
 import { useSelector } from "src/redux/store";
 
@@ -57,13 +57,12 @@ const ChatPopup: FC<IChatPopup> = ({ chatComponent }) => {
           background: isChatVisible
             ? "#c5d6e3"
             : theme.palette.background.default,
-          "&:hover": { background: isChatVisible ? "#c5d6e3" : "" },
         }}
         onClick={() => {
           dispatch(setChatVisible(!isChatVisible));
         }}
       >
-        <Iconify icon="ph:chat" />
+        <IoChatboxEllipsesOutline size={20} />
       </IconButton>
 
       {getContent()}

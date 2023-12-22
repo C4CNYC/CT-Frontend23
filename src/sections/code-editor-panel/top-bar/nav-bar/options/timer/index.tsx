@@ -13,6 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 // components
 import TimerButton from "./button/timer-button";
 // local files
@@ -37,6 +39,7 @@ interface TimerProps {
 
 const Timer: FC<TimerProps> = ({ mobile = false }) => {
   const classes = useStyles({ mobile });
+  const translate = useTranslate();
 
   const {
     onTimeInputChange,
@@ -59,16 +62,19 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
   } = useTimer();
 
   const isTimerStartButtonDisabled = minutes < DEFAULT_MINUTES;
-  const minuteTitle = minutes === DEFAULT_MINUTES ? "Minute" : "Minutes";
+  const minuteTitle =
+    minutes === DEFAULT_MINUTES
+      ? translate("timer_minute")
+      : translate("timer_minutes");
   const labelSize = mobile
     ? PROGRESS_LABEL_MOBILE_SIZE
     : PROGRESS_LABEL_DESKTOP_SIZE;
 
   return (
-    <span>
+    <>
       <IconButton
         onClick={timerHandler}
-        classes={{ root: classes.menuButton }}
+        sx={{ p: 1 }}
         aria-label="Timer"
         size="large"
       >
@@ -142,7 +148,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
                 variant="body1"
                 classes={{ root: classes.finishText }}
               >
-                Great Job! High-five!
+                {translate("timer_finish")}
               </Typography>
               <img
                 src="https://i.giphy.com/l4HogV6533Je2oG40.gif"
@@ -160,14 +166,14 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
               justifyContent="space-between"
             >
               <TimerButton
-                text="CANCEL"
+                text={translate("actions_cancel")}
                 color="inherit"
                 variant="soft"
                 onClick={onCloseClick}
               />
 
               <TimerButton
-                text="START"
+                text={translate("actions_start")}
                 color="success"
                 variant="contained"
                 disabled={isTimerStartButtonDisabled}
@@ -183,21 +189,21 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
             >
               {pause ? (
                 <TimerButton
-                  text="RESUME"
+                  text={translate("actions_resume")}
                   color="info"
                   variant="soft"
                   onClick={onResumeClick}
                 />
               ) : (
                 <TimerButton
-                  text="PAUSE"
+                  text={translate("actions_pause")}
                   color="info"
                   variant="soft"
                   onClick={onPauseClick}
                 />
               )}
               <TimerButton
-                text="KEEP CODING"
+                text={translate("keep_coding")}
                 color="success"
                 variant="contained"
                 onClick={onKeepCodingClick}
@@ -206,13 +212,13 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
           ) : (
             <Stack direction="row" gap={MIN_GAP} justifyContent="space-between">
               <TimerButton
-                text="CLOSE"
+                text={translate("actions_close")}
                 color="inherit"
                 variant="soft"
                 onClick={onCloseClick}
               />
               <TimerButton
-                text="RESTART"
+                text={translate("actions_restart")}
                 color="info"
                 variant="contained"
                 onClick={onRestartClick}
@@ -227,7 +233,7 @@ const Timer: FC<TimerProps> = ({ mobile = false }) => {
           <RxCross2 size={RX_CROSS_SIZE} />
         </IconButton>
       </Popover>
-    </span>
+    </>
   );
 };
 
