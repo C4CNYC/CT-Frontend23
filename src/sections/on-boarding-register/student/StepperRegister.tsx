@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -25,6 +26,7 @@ export default function StepperRegister({
   isSubmitSuccessful,
 }: Props): React.ReactElement {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const translate = useTranslate();
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -35,32 +37,32 @@ export default function StepperRegister({
   return (
     <>
       <Stack direction="row" sx={{ ml: { xs: 3, sm: 3, md: 0 }, mt: 3 }}>
-        <Typography variant="h3">Register</Typography>
+        <Typography variant="h3">{translate("register")}</Typography>
       </Stack>
       <Typography variant="body1" sx={{ pb: 3, ml: { xs: 3, sm: 3, md: 0 } }}>
-        This name will be on your certificate
+        {translate("register_name_on_certificate")}
       </Typography>
       <Stack gap={2}>
         <RHFTextField
           name="firstName"
-          label="First Name"
+          label={translate("first_name")}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <RHFTextField
           name="lastName"
-          label="Surname"
+          label={translate("surname")}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <RHFTextField
           name="username"
-          label="Username"
+          label={translate("username")}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
         <Divider sx={{ my: 1 }} />
 
         <RHFTextField
           name="password"
-          label="Password"
+          label={translate("password")}
           type={showPassword ? "text" : "password"}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
           InputProps={{
@@ -96,7 +98,7 @@ export default function StepperRegister({
           },
         }}
       >
-        WHOOPIE
+        {translate("register_whoopie")}
       </LoadingButton>
     </>
   );

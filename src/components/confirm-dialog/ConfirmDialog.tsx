@@ -7,6 +7,8 @@ import {
   DialogTitle,
 } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 //
 import { ConfirmDialogProps } from "./types";
 
@@ -20,6 +22,8 @@ export function ConfirmDialog({
   onClose,
   ...other
 }: ConfirmDialogProps): React.ReactElement | null {
+  const translate = useTranslate();
+
   return (
     <Dialog fullWidth maxWidth="xs" open={open} onClose={onClose} {...other}>
       <DialogTitle sx={{ pb: 2 }}>{title}</DialogTitle>
@@ -32,7 +36,7 @@ export function ConfirmDialog({
         {action}
 
         <Button variant="outlined" color="inherit" onClick={onClose}>
-          Cancel
+          {translate("actions_cancel")}
         </Button>
       </DialogActions>
     </Dialog>

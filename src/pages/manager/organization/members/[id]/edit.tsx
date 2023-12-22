@@ -8,6 +8,7 @@ import DashboardLayout from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
 import { useGetOrgMemberQuery } from "src/redux/services/admin/members-admin";
+import { useTranslate } from "src/utils/translateHelper";
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>
@@ -18,6 +19,7 @@ export default function UserEditPage(): React.ReactElement {
     query: { id },
   } = useRouter();
   const { themeStretch } = useSettingsContext();
+  const translate = useTranslate();
 
   const { data } = useGetOrgMemberQuery({
     user_id: id as string,
@@ -26,14 +28,17 @@ export default function UserEditPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title> User: Edit user </title>
+        <title> {translate("members_user_edit_user")} </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
+            {
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
             { name: data?.email },
           ]}
         />

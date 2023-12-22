@@ -9,6 +9,7 @@ import { Stack } from "@mui/material";
 import { FormProvider, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
 import AddSchool from "./AddSchool";
@@ -24,20 +25,21 @@ interface FormValuesProps {
   password: string;
 }
 
-const CreateEmailSchema = Yup.object().shape({
-  email: Yup.string()
-    .required("Email is required")
-    .email("Email must be a valid email address"),
-  firstName: Yup.string().required("Enter your name"),
-  lastName: Yup.string().required("Enter your surname"),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters long"),
-});
-
 export default function TeacherStepper(): React.ReactElement {
   const { enqueueSnackbar } = useSnackbar();
   const [activeStep, setActiveStep] = useState(0);
   const { register } = useAuthContext();
+  const translate = useTranslate();
+
+  const CreateEmailSchema = Yup.object().shape({
+    email: Yup.string()
+      .required(translate("required_email"))
+      .email(translate("must_be_valid_email")),
+    firstName: Yup.string().required(translate("enter_name")),
+    lastName: Yup.string().required(translate("enter_surname")),
+    password: Yup.string()
+      .min(8, translate("required_password_length")),
+  });
 
   const nextStep = () => {
     setActiveStep(activeStep + 1);

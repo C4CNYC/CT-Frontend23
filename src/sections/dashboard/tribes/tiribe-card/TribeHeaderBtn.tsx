@@ -7,11 +7,14 @@ import { ImExit } from "react-icons/im";
 import { Box, Button, IconButton } from "@mui/material";
 
 import { MenuPopover } from "@components";
+import { useTranslate } from "src/utils/translateHelper";
 
 import ExitTribeDialog from "../exitTribeDialog";
 
 export default function TribeHeaderBtn(): React.ReactElement {
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
+
+  const translate = useTranslate();
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
@@ -66,7 +69,7 @@ export default function TribeHeaderBtn(): React.ReactElement {
       >
         <ExitTribeDialog>
           <Button sx={{ gap: 1 }}>
-            Leave Tribe
+            {translate("tribes_leave_tribe")}
             <ImExit size="20px" />
           </Button>
         </ExitTribeDialog>

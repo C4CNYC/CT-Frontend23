@@ -1,4 +1,4 @@
-import { type FC, useState, useMemo } from "react";
+import { type FC, useMemo, useState } from "react";
 
 import { GiSave } from "react-icons/gi";
 
@@ -13,6 +13,8 @@ import {
 import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 import { SupportedLang } from "../../work-space";
 import { getActions } from "./config";
 import {
@@ -20,13 +22,13 @@ import {
   BOX_SX,
   SPEED_DIAL_SX,
   getChipSx,
-  getSpeedDialFabProps
+  getSpeedDialFabProps,
 } from "./constants";
 
 export interface MenuProps {
-  code: string
-  language: SupportedLang
-  publicPage?: boolean
+  code: string;
+  language: SupportedLang;
+  publicPage?: boolean;
 }
 
 const Menu: FC<MenuProps> = ({ code, language, publicPage }) => {
@@ -43,13 +45,21 @@ const Menu: FC<MenuProps> = ({ code, language, publicPage }) => {
     setSpeedDial(false);
   };
 
-  const speedDialFabProps = useMemo(() => getSpeedDialFabProps(speedDial), [speedDial]);
-  const actions = useMemo(() => getActions({
-    code,
-    language
-  }), [code, language]);
+  const speedDialFabProps = useMemo(
+    () => getSpeedDialFabProps(speedDial),
+    [speedDial]
+  );
+  const actions = useMemo(
+    () =>
+      getActions({
+        code,
+        language,
+      }),
+    [code, language]
+  );
+  const translate = useTranslate();
 
-  const isContentExist = !publicPage && isDesktop
+  const isContentExist = !publicPage && isDesktop;
 
   return (
     <Box
@@ -81,10 +91,16 @@ const Menu: FC<MenuProps> = ({ code, language, publicPage }) => {
               tooltipTitle={
                 <Box sx={BOX_SX}>
                   <Chip
-                    label={action.isPublic ? "Public" : "Private"}
+                    label={
+                      action.isPublic
+                        ? translate("public")
+                        : translate("private")
+                    }
                     sx={getChipSx(action)}
                   />
-                  <Typography variant="subtitle2">{action.name}</Typography>
+                  <Typography variant="subtitle2">
+                    {translate(action.name)}
+                  </Typography>
                 </Box>
               }
               FabProps={ACTION_FAB_PROPS}

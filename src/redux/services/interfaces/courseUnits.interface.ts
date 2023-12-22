@@ -23,7 +23,7 @@ export interface ILesson {
   tips: string[] | [];
   meta: Record<string, Record<string, any>>;
   independent: boolean;
-  type: 'practical' | 'exercise' | 'quiz';
+  type: "practical" | "exercise" | "quiz";
 }
 
 export interface ICourse {
@@ -66,7 +66,7 @@ export interface ILessonContentUpdate {
   body?: string;
   type?: LessonContentType;
   slug?: string;
-  tips?: string
+  tips?: string;
   title?: string;
   description?: string;
   active?: boolean;
@@ -108,8 +108,11 @@ export interface IModuleCreate {
   active: boolean;
   name: string;
   description: string;
-  duration: string;
   tips: string[] | [];
+  initia_likes?: number;
+  initial_start?: number;
+  initial_enrolled?: number;
+  duration?: string;
 }
 
 export interface ILessonCreate {

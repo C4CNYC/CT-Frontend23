@@ -14,6 +14,7 @@ import {
   MenuItem,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -27,6 +28,7 @@ import { useDeleteAssignmentMutation } from "src/redux/services/manager/assignme
 import {
   usePinAssignmentMutation, // useUnpinAssignmentMutation,
 } from "src/redux/services/manager/assignments-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 interface IQuestItemProps {
   assignment: IAssignmentReduced;
@@ -38,11 +40,13 @@ export default function QuestItem({
   schoolId,
 }: IQuestItemProps): React.ReactElement {
   const { query } = useRouter();
+  const theme = useTheme();
+  const isLight = theme.palette.mode === "light";
   const { enqueueSnackbar } = useSnackbar();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
-
+  const translate = useTranslate();
   const [pinAssignment] = usePinAssignmentMutation();
   // const [unpinAssignment, { isLoading: isLoadingUnpin }] =
   //   useUnpinAssignmentMutation();
@@ -53,9 +57,9 @@ export default function QuestItem({
     try {
       await pinAssignment({ assignmentId: assignment.id }).unwrap();
       // await unpinAssignment({assignmentId: assignment.id}).unwrap();
-      enqueueSnackbar("assignment pined");
+      enqueueSnackbar(translate("home_assignment_pined"));
     } catch (e) {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -65,9 +69,9 @@ export default function QuestItem({
         schoolId,
         assignmentId: assignment.id,
       }).unwrap();
-      enqueueSnackbar("assignment deleted");
+      enqueueSnackbar(translate("home_assignment_deleted"));
     } catch (e) {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
     handleCloseConfirm();
   };
@@ -104,11 +108,13 @@ export default function QuestItem({
         component={NextLink}
         href={assignmentPath}
         underline="none"
-        color="initial"
+        color={isLight ? "initial" : "#E6F5FD"}
       >
         <Stack
           sx={{
-            backgroundColor: "#E6F5FD",
+            backgroundColor: isLight
+              ? "#E6F5FD"
+              : theme.palette.background.paper,
             borderRadius: "10px",
             py: 1,
             px: 2,
@@ -136,12 +142,13 @@ export default function QuestItem({
                   })}
                 </Typography>
                 <Typography variant="body2">
-                  Due: {format(new Date(assignment.end_date), "MM.dd.yyyy")}
+                  {translate("due")}:{" "}
+                  {format(new Date(assignment.end_date), "MM.dd.yyyy")}
                 </Typography>
               </Stack>
             </Stack>
             <Stack direction="row" justifyContent="space-between">
-              <Typography variant="h5" color="#364954">
+              <Typography variant="h5" color={isLight ? "#364954" : "#E6F5FD"}>
                 {assignment.name}
               </Typography>
               <Box display="flex" gap={1} alignItems="center">
@@ -165,7 +172,7 @@ export default function QuestItem({
                   color: "inherit",
                 }}
               >
-                Get Coding Now
+                {translate("keep_coding")}
                 <Iconify
                   icon="maki:arrow"
                   width={18}
@@ -182,7 +189,7 @@ export default function QuestItem({
                   color: theme.palette.grey[500],
                 })}
               >
-                See more
+                {translate("actions_see_more")}
                 <RiExternalLinkLine size={15} style={{ marginLeft: "3px" }} />
               </Link>
             </Stack>
@@ -205,6 +212,7 @@ export default function QuestItem({
               flexDirection: { xs: "row", sm: "row", md: "column" },
             })}
           >
+            {/* hided before release */}
             {/* <IconButton
               sx={{ alignSelf: "flex-end" }}
               onClick={(e) => {
@@ -254,11 +262,11 @@ export default function QuestItem({
           component={NextLink}
           href={editAssignmentPath}
           underline="none"
-          color="initial"
+          color={isLight ? "initial" : "#E6F5FD"}
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
-            Edit
+            {translate("actions_edit")}
           </MenuItem>
         </Link>
         <MenuItem
@@ -269,14 +277,14 @@ export default function QuestItem({
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          {translate("actions_delete")}
         </MenuItem>
       </MenuPopover>
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={translate("actions_delete")}
+        content={translate("messages_delete_question")}
         action={
           <LoadingButton
             variant="contained"
@@ -284,7 +292,7 @@ export default function QuestItem({
             onClick={onDelete}
             loading={isDeleting}
           >
-            Delete
+            {translate("actions_delete")}
           </LoadingButton>
         }
       />

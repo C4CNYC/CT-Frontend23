@@ -49,17 +49,18 @@ import {
   useGetStudentsQuery,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
+import { useTranslate } from "src/utils/translateHelper";
 
 const STATUS_OPTIONS = ["all", "invites"];
 
 const TABLE_HEAD = [
-  { id: "", label: "Avatar" },
-  { id: "email", label: "Email", align: "left" },
-  { id: "first_name", label: "first name", align: "left" },
-  { id: "last_name", label: "last name", align: "left" },
-  { id: "socials", label: "Socials", align: "left" },
-  { id: "isVerified", label: "Verified", align: "center" },
-  { id: "status", label: "Status", align: "left" },
+  { id: "", label: "avatar" },
+  { id: "email", label: "email", align: "left" },
+  { id: "first_name", label: "first_name", align: "left" },
+  { id: "last_name", label: "last_name", align: "left" },
+  { id: "socials", label: "socials", align: "left" },
+  { id: "isVerified", label: "verified", align: "center" },
+  { id: "status", label: "status", align: "left" },
   { id: "" },
 ];
 
@@ -82,6 +83,8 @@ export default function UserListPage(): React.ReactElement {
     onSort,
     onChangeDense,
   } = useTable();
+
+  const translate = useTranslate();
 
   const [openConfirm, setOpenConfirm] = useState(false);
   const [value, setValue] = useState(0);
@@ -118,7 +121,7 @@ export default function UserListPage(): React.ReactElement {
 
   const handleDeleteRow = (userId: string): void => {
     handleDeleteMember(userId);
-    enqueueSnackbar("Member deleted");
+    enqueueSnackbar(translate("member_actions_deleted"));
     setSelected([]);
   };
 
@@ -126,7 +129,7 @@ export default function UserListPage(): React.ReactElement {
     for (let i = 0; i < selected.length; i++) {
       handleDeleteMember(selected[i]);
     }
-    enqueueSnackbar("Members deleted");
+    enqueueSnackbar(translate("members_actions_deleted"));
     setSelected([]);
   };
 
@@ -137,16 +140,19 @@ export default function UserListPage(): React.ReactElement {
   return (
     <>
       <Head>
-        <title>Students | CodeTribe</title>
+        <title>{translate("students")} | CodeTribe</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : "lg"}>
         <CustomBreadcrumbs
           heading=""
           links={[
-            { name: "Home", href: STUDENT_PATH_DASHBOARD.class.root },
             {
-              name: "Students",
+              name: translate("home"),
+              href: STUDENT_PATH_DASHBOARD.class.root,
+            },
+            {
+              name: translate("students"),
               href: MANAGER_PATH_DASHBOARD.organization.root,
             },
           ]}
@@ -165,7 +171,7 @@ export default function UserListPage(): React.ReactElement {
                     <Iconify icon="mdi:email-fast-outline" width="23px" />
                   }
                 >
-                  Invite Student
+                  {translate("members_invate_student")}
                 </Button>
               </InviteStudentDialog>
               <Button
@@ -174,7 +180,7 @@ export default function UserListPage(): React.ReactElement {
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                Add Student
+                {translate("members_add_student")}
               </Button>
             </Box>
           }
@@ -190,7 +196,7 @@ export default function UserListPage(): React.ReactElement {
             }}
           >
             {STATUS_OPTIONS.map((tab, index) => (
-              <Tab key={index} label={tab} {...a11yProps(index)} />
+              <Tab key={index} label={translate(tab)} {...a11yProps(index)} />
             ))}
           </Tabs>
 
@@ -202,7 +208,7 @@ export default function UserListPage(): React.ReactElement {
                 setFilter("name", name);
               }}
               onFilterClass={(classId: string) => {
-                setFilter("classId", classId);
+                setFilter("class_id", classId);
               }}
               onResetFilter={resetFilters}
               disableClassFilter={value === 1}
@@ -220,7 +226,7 @@ export default function UserListPage(): React.ReactElement {
                   );
                 }}
                 action={
-                  <Tooltip title="Delete">
+                  <Tooltip title={translate("actions_delete")}>
                     <IconButton
                       color="primary"
                       onClick={() => {
@@ -327,11 +333,12 @@ export default function UserListPage(): React.ReactElement {
         onClose={() => {
           setOpenConfirm(false);
         }}
-        title="Delete"
+        title={translate("actions_delete")}
         content={
           <>
-            Are you sure want to delete <strong> {selected.length} </strong>{" "}
-            items?
+            {translate("members_delete_dialog_content", {
+              items: selected.length,
+            })}
           </>
         }
         action={
@@ -343,7 +350,7 @@ export default function UserListPage(): React.ReactElement {
               setOpenConfirm(false);
             }}
           >
-            Delete
+            {translate("actions_delete")}
           </Button>
         }
       />

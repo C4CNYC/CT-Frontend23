@@ -32,10 +32,7 @@ const Header: FC<HeaderProps> = ({
 }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
-  const headerSx = useMemo(
-    () => getHeaderWrapperSx(isDesktop, isLeftBlock, isLeftBtn),
-    [isDesktop, isLeftBlock, isLeftBtn]
-  );
+  const headerSx = useMemo(() => getHeaderWrapperSx(isDesktop), [isDesktop]);
 
   return (
     <Box sx={headerSx}>

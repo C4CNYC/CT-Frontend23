@@ -12,26 +12,26 @@ interface IMenuConfigItem {
 
 export const menuConfig: IMenuConfigItem[] = [
   {
-    title: "Overview",
-    subTitle: "Home",
+    title: "overview",
+    subTitle: "home",
     icon: "fluent:top-speed-24-regular",
     href: STUDENT_PATH_DASHBOARD.courses.root,
   },
   {
-    title: "Me, me, me",
-    subTitle: "Profile",
+    title: "me_me_me",
+    subTitle: "profile",
     icon: "tabler:run",
     href: STUDENT_PATH_PAGE.profile,
   },
 
   {
-    title: "Get me out of here",
-    subTitle: "Log out",
+    title: "get_out",
+    subTitle: "log_out",
     icon: "mdi:logout",
     href: "",
   },
   {
-    title: "Close editor",
+    title: "close_editor",
     icon: "ic:round-close",
     href: "close",
   },

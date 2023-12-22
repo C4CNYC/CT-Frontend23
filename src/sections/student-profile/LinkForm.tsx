@@ -11,6 +11,7 @@ import { Box, Grid } from "@mui/material";
 import { FormProvider, RHFTextField } from "@components";
 import { ISocials } from "src/redux/interfaces/socials.interface";
 import { usePostSocialMutation } from "src/redux/services/manager/socials-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 import LinkSelect from "./LinkSelect";
 
@@ -39,6 +40,7 @@ interface Props {
 export default function LinkForm({ studentId }: Props): React.ReactElement {
   const [createSocial] = usePostSocialMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const translate = useTranslate();
 
   const defaultValues = {
     studentId,
@@ -61,10 +63,10 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
         name: data?.name,
         type: data?.type,
       }).unwrap();
-      enqueueSnackbar("Update success!");
+      enqueueSnackbar(translate("messages_update_success"));
       methods.reset();
     } catch (error: any) {
-      enqueueSnackbar("Something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -74,7 +76,7 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
         <Grid item xs={12}>
           <RHFTextField
             name="name"
-            label="Name"
+            label={translate("name")}
             size="small"
             sx={{
               pb: 2,
@@ -86,7 +88,7 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
             <LinkSelect />
             <RHFTextField
               name="link"
-              label="Link"
+              label={translate("link")}
               size="small"
               sx={{
                 maxWidth: { xs: "150px", sm: "350px", md: "350px" },
@@ -114,7 +116,7 @@ export default function LinkForm({ studentId }: Props): React.ReactElement {
                 borderBottomLeftRadius: 0,
               }}
             >
-              Add
+              {translate("actions_add")}
             </LoadingButton>
           </Box>
         </Grid>

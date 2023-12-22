@@ -10,7 +10,6 @@ import { type BaseResponseInterface } from "@utils";
 import { type AuthUserType } from "src/auth/types";
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { type IValidation } from "src/redux/interfaces/content.interface";
-
 import { setRoom } from "src/redux/slices/code-editor-controller";
 import { useSelector } from "src/redux/store";
 import { mapValidations } from "src/utils/validationMaping";
@@ -103,8 +102,6 @@ const CodeEditorBlock: FC<ICodeEditorBlock> = ({
       title={<Title room={room} onResetRoom={onResetRoom} />}
       icon={icon}
       className="codeEditorTour"
-      isLeftBlock={true}
-      isLeftBtn={true}
     >
       <style>{getTitleStyles(isDesktop)}</style>
 

@@ -22,6 +22,7 @@ import {
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
+import { useTranslate } from "src/utils/translateHelper";
 
 import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 
@@ -31,6 +32,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
   const { enqueueSnackbar } = useSnackbar();
   const [openConfirm, setOpenConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const translate = useTranslate();
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteModule] = useDeleteModuleMutation();
@@ -40,7 +42,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
     try {
       await deleteModule({ id: module.id }).unwrap();
       handleCloseConfirm();
-      enqueueSnackbar("Module deleted!");
+      enqueueSnackbar(translate("modules_deleted_msg"));
     } catch (e: any) {
       enqueueSnackbar(e.data.message, {
         variant: "error",
@@ -74,7 +76,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
       str += `${value} ${key} `;
     }
     return str;
-  }
+  };
 
   return (
     <>
@@ -117,7 +119,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             left: 10,
           }}
         >
-          {module.active ? "Active" : "Not Active"}
+          {module.active ? translate("active") : translate("not_active")}
         </Label>
 
         <Box
@@ -177,7 +179,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
         >
           <MenuItem>
             <Iconify icon="eva:edit-fill" />
-            Edit
+            {translate("actions_edit")}
           </MenuItem>
         </CreateModuleDialog>
 
@@ -191,15 +193,15 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
           sx={{ color: "error.main" }}
         >
           <Iconify icon="eva:trash-2-outline" />
-          Delete
+          {translate("actions_delete")}
         </MenuItem>
       </MenuPopover>
 
       <ConfirmDialog
         open={openConfirm}
         onClose={handleCloseConfirm}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={translate("actions_delete")}
+        content={translate("messages_delete_question")}
         action={
           <LoadingButton
             variant="contained"
@@ -207,7 +209,7 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             onClick={onDelete}
             loading={loading}
           >
-            Delete
+            {translate("actions_delete")}
           </LoadingButton>
         }
       />

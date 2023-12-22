@@ -3,6 +3,7 @@ import React from "react";
 import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
+import { useTranslate } from "src/utils/translateHelper";
 
 import SkeletonSocialsTab from "./SkeletonSocialsTab";
 import SocialItem from "./SocialItem";
@@ -20,10 +21,11 @@ export default function SchoolSocialsTab({
     { skip: !schoolId }
   );
   const socialLinks = data?.socials;
+  const translate = useTranslate();
 
   if (isLoading) return <SkeletonSocialsTab />;
 
-  if (!data) return <>No Data</>;
+  if (!data) return <>{translate("messages_no_data")}</>;
 
   return (
     <>
@@ -42,7 +44,7 @@ export default function SchoolSocialsTab({
                 <SocialsForm socialLinks={data.socials} schoolId={schoolId} />
               )}
               <Typography variant="h6" sx={{ mb: 2 }}>
-                Your networks
+                {translate("networks_tab_your_networks")}
               </Typography>
               {socialLinks?.map((item: any) => (
                 <Stack

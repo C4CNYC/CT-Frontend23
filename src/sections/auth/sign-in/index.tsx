@@ -12,6 +12,7 @@ import { FormProvider } from "@components";
 import { SingLink } from "@sections/on-boarding-register/links";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
+import { useTranslate } from "src/utils/translateHelper";
 
 import EmailNotFound from "./EmailNotFound";
 import SignInLogin from "./SignInLogin";
@@ -25,12 +26,13 @@ export default function SignInMain(): React.ReactElement {
   const { replace } = useRouter();
   const { login } = useAuthContext();
   const [isError, setError] = useState("");
+  const translate = useTranslate();
 
   const CreateLoginSchema = Yup.object().shape({
     email: Yup.string()
-      .required("Email is required")
-      .email("Email must be a valid email address"),
-    password: Yup.string().required("Password is required"),
+      .required(translate("required_email"))
+      .email(translate("must_be_valid_email")),
+    password: Yup.string().required(translate("required_password")),
   });
 
   const methods = useForm<FormValuesProps>({

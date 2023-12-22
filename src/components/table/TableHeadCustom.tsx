@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 // ----------------------------------------------------------------------
 
 const visuallyHidden = {
@@ -46,6 +48,8 @@ export function TableHeadCustom({
   onSelectAllRows,
   sx,
 }: TableHeadCustomProps): React.ReactElement | null {
+  const translate = useTranslate();
+
   return (
     <TableHead sx={sx}>
       <TableRow>
@@ -78,7 +82,7 @@ export function TableHeadCustom({
                 }}
                 sx={{ textTransform: "capitalize" }}
               >
-                {headCell.label}
+                {translate(headCell.label)}
 
                 {orderBy === headCell.id ? (
                   <Box sx={{ ...visuallyHidden }}>
@@ -89,7 +93,7 @@ export function TableHeadCustom({
                 ) : null}
               </TableSortLabel>
             ) : (
-              headCell.label
+              translate(headCell.label)
             )}
           </TableCell>
         ))}

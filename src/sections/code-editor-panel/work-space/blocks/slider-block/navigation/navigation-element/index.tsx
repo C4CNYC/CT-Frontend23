@@ -3,6 +3,8 @@ import { type FC, useMemo } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Button, type SxProps } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 import { BtnType } from "..";
 
 interface INavigationElement {
@@ -20,18 +22,17 @@ const NavigationElement: FC<INavigationElement> = ({
   sx = {},
   children,
   direction,
-  backType,
+  backType = "",
 }): React.ReactElement => {
-  const buttonSx = useMemo(() => getButtonSx(sx, disabled), [sx, disabled])
+  const buttonSx = useMemo(() => getButtonSx(sx, disabled), [sx, disabled]);
+  const translate = useTranslate();
 
   return (
     <>
-      <Button
-        variant="outlined"
-        sx={buttonSx}
-        onClick={onClick}
-      >
-        {direction === "prev" ? "BACK" : backType}
+      <Button variant="outlined" sx={buttonSx} onClick={onClick}>
+        {direction === "prev"
+          ? translate("btn_group_back")
+          : translate(backType)}
 
         {backType === BtnType.coding && <ArrowForwardIosIcon />}
       </Button>
@@ -56,6 +57,6 @@ const getButtonSx = (sx: SxProps, isDisabled: boolean): SxProps => ({
     opacity: 0.7,
   },
   ...sx,
-})
+});
 
 export default NavigationElement;

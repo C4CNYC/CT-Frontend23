@@ -10,16 +10,10 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useAuthContext } from "src/auth/useAuthContext";
+import { useTranslate } from "src/utils/translateHelper";
 
 import EmailStep from "./email-step";
 import PasswordStep from "./password-step";
-
-const CreateLoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .required("Email is required")
-    .email("Email must be a valid email address"),
-  password: Yup.string().required("Password is required"),
-});
 
 interface FormValuesProps {
   email: string;
@@ -39,6 +33,14 @@ export default function JoinTribeLogin({
   const { login } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const [currentStep, setCurrentStep] = useState(0);
+  const translate = useTranslate();
+
+  const CreateLoginSchema = Yup.object().shape({
+    email: Yup.string()
+      .required(translate("required_email"))
+      .email(translate("must_be_valid_email")),
+    password: Yup.string().required(translate("required_password")),
+  });
 
   const nextStep = (): void => {
     setCurrentStep(currentStep + 1);
@@ -66,8 +68,10 @@ export default function JoinTribeLogin({
 
   return (
     <Stack alignItems="center" position="relative">
-      <Typography variant="h4">Join this tribe</Typography>
-      <Typography variant="body1">Sign in to join</Typography>
+      <Typography variant="h4">{translate("tribes_join_tribe")}</Typography>
+      <Typography variant="body1">
+        {translate("tribes_sign_in_to_join")}
+      </Typography>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         {currentStep === 0 && (
           <EmailStep
@@ -99,8 +103,13 @@ export default function JoinTribeLogin({
           },
         }}
       >
-        <Typography variant="body1">This is my first time</Typography>|
-        <Typography variant="subtitle1">REGISTER</Typography>
+        <Typography variant="body1">
+          {translate("login_my_first_time")}
+        </Typography>
+        |
+        <Typography variant="subtitle1">
+          {translate("login_register")}
+        </Typography>
       </Button>
     </Stack>
   );

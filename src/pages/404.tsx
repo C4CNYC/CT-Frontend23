@@ -9,29 +9,32 @@ import { Box, Button, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 import CompactLayout from "@layouts/compact";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import { useTranslate } from "src/utils/translateHelper";
 
 Page404.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>
 );
 
 export default function Page404(): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <>
       <Head>
-        <title> 404 Page Not Found | CodeTribe</title>
+        <title> {translate("not_found")} | CodeTribe</title>
       </Head>
 
       <MotionContainer>
         <m.div variants={varBounce().in}>
           <Typography variant="h3" paragraph>
-            Sorry, page not found!
+            {translate("sorry_not_found")}
           </Typography>
         </m.div>
 
         <m.div variants={varBounce().in}>
           <Typography sx={{ color: "text.secondary" }}>
-            Oppsie, it seems like we messed up. <br />
-            Try going back or choose one of these pages.
+            {translate("we_messed_up")} <br />
+            {translate("try_going_back")}
           </Typography>
         </m.div>
 
@@ -50,7 +53,7 @@ export default function Page404(): React.ReactElement {
               variant="contained"
               fullWidth
             >
-              Home
+              {translate("home")}
             </Button>
             <Button
               component={NextLink}
@@ -63,7 +66,7 @@ export default function Page404(): React.ReactElement {
                 mr: 2,
               }}
             >
-              Gallery
+              {translate("gallery")}
             </Button>
             <Button
               component={NextLink}
@@ -72,7 +75,7 @@ export default function Page404(): React.ReactElement {
               variant="contained"
               fullWidth
             >
-              Catalog
+              {translate("sidebar_menu_catalog")}
             </Button>
           </Box>
         </m.div>
