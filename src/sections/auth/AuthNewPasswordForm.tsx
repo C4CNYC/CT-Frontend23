@@ -35,7 +35,7 @@ export default function AuthNewPasswordForm(): React.ReactElement {
 
   const VerifyPasswordSchema = Yup.object().shape({
     password: Yup.string()
-      .min(6, translate("required_password_length_6"))
+      .min(8, translate("required_password_length_8"))
       .required(translate("required_password")),
     confirmPassword: Yup.string()
       .required(translate("required_confirm_password"))

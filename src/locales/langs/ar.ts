@@ -304,7 +304,7 @@ const ar = {
   required_password_includes:
     "يجب أن تحتوي كلمة المرور على حرف واحد كبير وحرف صغير ورقم واحد",
   required_password_length: "يجب أن تتكون كلمة المرور من 10 أحرف على الأقل",
-  required_password_length_6: "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+  required_password_length_8: "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
   required_password_number: "كلمة المرور تتطلب رقما",
   required_password_lowercase: "تتطلب كلمة المرور حرفًا صغيرًا",
   required_password_uppercase: "تتطلب كلمة المرور حرفًا كبيرًا",
