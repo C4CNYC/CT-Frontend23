@@ -65,7 +65,9 @@ export default function Quest(): React.ReactElement | null {
 const getContainerSx = (theme: Theme) => ({
   borderRadius: 1,
   background:
-    theme.palette.mode === "light" ? "#F6F9FC" : theme.palette.background.paper,
+    theme.palette.mode === "light"
+      ? "rgba(243, 243, 243, 0.8)"
+      : theme.palette.background.paper,
   pt: 2,
   pb: 8,
 });

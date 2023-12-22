@@ -6,6 +6,7 @@ import {
 } from "remirror/extensions";
 
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 interface Props {
   description: string;
@@ -20,10 +21,13 @@ export default function QuestDescription({ description }: Props) {
     ],
     stringHandler: "html",
   });
+  const theme = useTheme();
+
   return (
     <>
       <style>{`.remirror-editor-wrapper { padding: ; }
         .remirror-theme .ProseMirror{
+          background-color: ${theme.palette.background.default};
         }
         .ProseMirror:focus {
           outline: none!important;

@@ -1,4 +1,5 @@
 import NextLink from "next/link";
+import { useMemo } from "react";
 
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { RiShareBoxFill } from "react-icons/ri";
@@ -12,9 +13,16 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useTranslate } from "src/utils/translateHelper";
+
+import {
+  QUEST_DIVIDER,
+  QUEST_LINK_SX,
+  getQuestCardWraperSx,
+} from "./constants";
 
 interface IQuestRatingProps {
   courseName: string;
@@ -28,16 +36,12 @@ export default function QuestRating({
   progress,
 }: IQuestRatingProps): React.ReactElement {
   const translate = useTranslate();
+  const theme = useTheme();
+  const cardWrapperSx = useMemo(() => getQuestCardWraperSx(theme), [theme]);
 
   return (
     <>
-      <Card
-        sx={{
-          mt: 3,
-          p: { xs: "5px 0px", sm: "15px 20px", md: "15px 20px" },
-          borderRadius: 2,
-        }}
-      >
+      <Card sx={cardWrapperSx}>
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Stack gap={1}>
             <Tooltip
@@ -62,22 +66,13 @@ export default function QuestRating({
           </Stack>
           <Stack direction="row" alignItems="center">
             <Typography variant="h6">{progress} %</Typography>
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ mx: 2, borderStyle: "dashed", borderRightWidth: "2px" }}
-            />
+            <Divider orientation="vertical" flexItem sx={QUEST_DIVIDER} />
             <Link
               component={NextLink}
               href={STUDENT_PATH_DASHBOARD.courses.course(courseId)}
               underline="none"
               typography="h4"
-              sx={{
-                color: "#EE467A",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 1,
-              }}
+              sx={QUEST_LINK_SX}
             >
               {translate("open")}
               <RiShareBoxFill size={22} />
