@@ -72,6 +72,7 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
       <HeaderItem
         activeUsers={activeUsersAmount}
         onClick={() => setIsOpen(!isOpen)}
+        isOpen={isOpen}
       />
 
       <Divider sx={DIVIDER_SX} />
