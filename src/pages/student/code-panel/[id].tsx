@@ -116,28 +116,34 @@ export default function Index(): React.ReactElement | null {
         </Head>
 
         <FullScreen handle={handle}>
-          <Tour />
+          <Box
+            sx={(theme) => ({
+              background: theme.palette.background.default,
+            })}
+          >
+            <Tour />
 
-          <SignUpDialog isSigned={!!workSpaceProps.user} />
+            <SignUpDialog isSigned={!!workSpaceProps.user} />
 
-          <Box sx={BOX_PROPS}>
-            <TopPanel
-              chatComponent={null}
-              onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
-              isFullScreenView={handle.active}
-            />
+            <Box sx={BOX_PROPS}>
+              <TopPanel
+                chatComponent={null}
+                onHanldeFullScreen={handle.active ? handle.exit : handle.enter}
+                isFullScreenView={handle.active}
+              />
 
-            <WorkSpace {...workSpaceProps} />
+              <WorkSpace {...workSpaceProps} />
 
-            <BottomBar
-              {...bottomBarProps}
-              lessonManagerComponent={
-                <LessonsManager {...lessonManagerProps} />
-              }
-            />
+              <BottomBar
+                {...bottomBarProps}
+                lessonManagerComponent={
+                  <LessonsManager {...lessonManagerProps} />
+                }
+              />
+            </Box>
+
+            {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
           </Box>
-
-          {!isDesktop ? <ChatPopup chatComponent={null} /> : null}
         </FullScreen>
 
         <Confetti
