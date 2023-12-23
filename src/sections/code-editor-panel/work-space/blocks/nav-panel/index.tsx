@@ -6,7 +6,6 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import SpeakerNotesOutlinedIcon from "@mui/icons-material/SpeakerNotesOutlined";
 import { CircularProgress, Divider, Drawer, List, Stack } from "@mui/material";
@@ -106,24 +105,17 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
 
       <List sx={LIST_SX}>
         <CutomNavItem
+          isDisabled={true}
           icon={<SpeakerNotesOutlinedIcon sx={ICON_SX} />}
           name={translate("group_chat")}
           onToggle={() => {
             setIsOpen(!isOpen);
           }}
         />
-
         <CutomNavItem
+          isDisabled={true}
           icon={<EventNoteIcon sx={ICON_SX} />}
           name={translate("notes")}
-          onToggle={() => {
-            setIsOpen(!isOpen);
-          }}
-        />
-
-        <CutomNavItem
-          icon={<AssignmentIcon sx={ICON_SX} />}
-          name={translate("sandbox")}
           onToggle={() => {
             setIsOpen(!isOpen);
           }}
