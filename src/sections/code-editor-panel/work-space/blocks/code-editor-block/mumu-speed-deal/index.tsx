@@ -4,6 +4,7 @@ import {
   Box,
   SpeedDial,
   SpeedDialAction,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
@@ -102,38 +103,43 @@ const MumuSpeedDial: FC<MumuSpeedDialProps> = ({ typing }) => {
           tips={[...(data?.tips ?? []), ...slideTips]}
         />
       )}
-
-      <SpeedDial
-        ref={popperRef}
-        aria-describedby={"popper"}
-        ariaLabel="SpeedDial basic example"
-        open={speedDeal}
-        onClose={closeSpeedDial}
-        onOpen={openSpeedDial}
-        FabProps={speedDealProps}
-        sx={speedDealStyles}
-        direction="up"
-        icon={<Box sx={BOX_PROPS} />}
+      <Tooltip
+        title={
+          <Typography>{translate("code_editor_mumu_menu_tooltip")}</Typography>
+        }
       >
-        {actionsList.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            onClick={() => {
-              setDialogType(action.type);
-              if (action.type === IActionDialogType.tips) {
-                setOpenPoper(true);
+        <SpeedDial
+          ref={popperRef}
+          aria-describedby={"popper"}
+          ariaLabel="SpeedDial basic example"
+          open={speedDeal}
+          onClose={closeSpeedDial}
+          onOpen={openSpeedDial}
+          FabProps={speedDealProps}
+          sx={speedDealStyles}
+          direction="up"
+          icon={<Box sx={BOX_PROPS} />}
+        >
+          {actionsList.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              onClick={() => {
+                setDialogType(action.type);
+                if (action.type === IActionDialogType.tips) {
+                  setOpenPoper(true);
+                }
+              }}
+              tooltipTitle={
+                <Typography sx={{ color: action.color, p: "2px" }}>
+                  {translate(action.name)}
+                </Typography>
               }
-            }}
-            tooltipTitle={
-              <Typography sx={{ color: action.color, p: "2px" }}>
-                {translate(action.name)}
-              </Typography>
-            }
-            FabProps={SPEED_DEAL_ACTION_FAB_PROPS}
-          />
-        ))}
-      </SpeedDial>
+              FabProps={SPEED_DEAL_ACTION_FAB_PROPS}
+            />
+          ))}
+        </SpeedDial>
+      </Tooltip>
       {/* commented before V1 release */}
       {/* <TipsMobileDialog
         open={dialogType === IActionDialogType.tips}
