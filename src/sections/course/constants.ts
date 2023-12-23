@@ -1,4 +1,4 @@
-import { SxProps, Theme } from "@mui/material";
+import { Theme } from "@mui/material";
 
 export const SEE_MORE_BTN_SX = {
   width: 130,
@@ -18,12 +18,13 @@ export const COURSE_INFO_IMAGE_SX = {
   borderRadius: "25px",
 };
 
-export const getCourseInfoWrapperSx = (theme: Theme): SxProps => ({
+export const getCourseInfoWrapperSx = (theme: Theme) => ({
   flexDirection: {
     xs: "column-reverse",
-    sm: "column-reverse",
+    sm: "row",
     md: "row",
   },
+  flexWrap: "nowrap",
   justifyContent: "space-between",
   px: 8,
   py: 4,

@@ -36,7 +36,7 @@ export default function ModuleSidebar({
   lessonPlans,
 }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down(1130));
+  const isMobile = useMediaQuery(theme.breakpoints.down(1200));
   const translate = useTranslate();
 
   return (

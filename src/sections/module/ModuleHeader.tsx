@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import {
   Chip,
   Stack,
@@ -23,9 +25,14 @@ export default function ModuleHeader({
   avatar,
 }: IModuleHeaderProps): React.ReactElement {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down(600));
+  const isMobile = useMediaQuery(theme.breakpoints.down(1000));
+
+  const moduleCont = useMemo(
+    () => getHeaderContainerSx(isMobile, theme),
+    [isMobile, theme]
+  );
   return (
-    <Stack sx={getHeaderContainerSx(isMobile, theme)}>
+    <Stack sx={moduleCont}>
       <Stack>
         <Typography variant="h4" maxWidth={400} mb={2}>
           {name}
