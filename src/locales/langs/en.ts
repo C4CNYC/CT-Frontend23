@@ -691,7 +691,7 @@ const en = {
   login_with_email: "Sign in with Email",
   login_lets_go: "LET'S GO!",
   login_sign_up: "Sign up",
-  login_reset_password: "Reset password",
+  login_reset_password: "Forgot password",
   login_my_first_time: "This is my first time here",
   login_sign_up_with_google: "Sign up with Google",
   login_register: "REGISTER",

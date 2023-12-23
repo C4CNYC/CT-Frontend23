@@ -698,7 +698,7 @@ const ar = {
   login_my_first_time: "انها المرة الاولى لي هنا",
   login_sign_up_with_google: "قم بالتسجيل مع جوجل",
   login_register: "يسجل",
-  login_reset_password: "إعادة تعيين كلمة المرور",
+  login_reset_password: "هل نسيت كلمة السر",
   login: "تسجيل الدخول",
   login_been_here: "لقد كنت هنا من قبل",
   login_register_as: "سجل باسم",
