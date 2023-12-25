@@ -113,10 +113,14 @@ export default function MenuTribesList(): React.ReactElement {
           </>
         )}
       </Stack>
-      {isNavMini ? (
-        <Divider sx={{ margin: "16px auto 8px", width: "24px" }} />
-      ) : (
-        <Divider sx={{ mt: 2, ml: 2, mb: 1.5 }} />
+      {!isNavMini && (
+        <Divider
+          sx={{
+            mb: 0,
+            mt: 2,
+            ml: 2,
+          }}
+        />
       )}
       <MenuPopover
         open={openPopover}
