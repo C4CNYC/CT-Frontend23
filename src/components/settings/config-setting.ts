@@ -8,7 +8,7 @@ export const defaultSettings: SettingsValueProps = {
   themeMode: "light",
   themeDirection: "ltr",
   themeContrast: "default",
-  themeLayout: "vertical",
+  themeLayout: "mini",
   themeColorPresets: "default",
   themeStretch: false,
 };
