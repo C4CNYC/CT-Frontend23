@@ -1,6 +1,6 @@
 const pt = {
   demo: {
-    title: "Português",
+    title: "Portuguese",
     introduction:
       "Codetribe.com |A plataforma nº 1 para ensinar codificação baseada em texto em escolas de ensino médio e médio </br> como repl.it, mas para professores.Crie lições, missões ou projetos abertos em um snap.Amigo para dispositivos móveis, colaborativo e incrivelmente divertido.Tente!",
   },

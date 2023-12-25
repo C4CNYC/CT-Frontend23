@@ -1,6 +1,6 @@
 const es = {
   demo: {
-    title: "Español",
+    title: "Spanish",
     introduction:
       "CodeTribe.com | La Plataforma No.1 para enseñar Codificación basada en Texto en Escuelas Medias y Secundarias </br> Como repl.it pero para Profesores. Crea lecciones, búsquedas o proyectos abiertos en un instante. Móvil, colaborativo e increíblemente divertido. ¡Pruébalo!",
   },

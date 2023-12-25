@@ -25,7 +25,7 @@ export const allLangs = [
   },
   {
     label: "Spanish",
-    value: "fr",
+    value: "es",
     systemValue: esES,
     icon: "/assets/icons/flags/ic_flag_es.svg",
   },
