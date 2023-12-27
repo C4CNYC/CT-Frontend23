@@ -42,7 +42,7 @@ export const getAddTribeButtonSx = (
   borderRadius: 1,
   minWidth: "40px",
   p: 0,
-  ml: isNavMini ? 0 : 2,
+  ml: 2,
   minHeight: "40px",
   height: "40px",
   color: theme.palette.info.light,

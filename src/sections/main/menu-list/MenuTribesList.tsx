@@ -55,7 +55,7 @@ export default function MenuTribesList(): React.ReactElement {
     }
   }, [isLoading]);
   return (
-    <Stack>
+    <Stack sx={{ width: "100%" }}>
       {!isNavMini && (
         <Divider
           sx={{
@@ -94,7 +94,7 @@ export default function MenuTribesList(): React.ReactElement {
             >
               <Scrollbar sx={{ overflowX: "unset" }}>
                 <Stack
-                  pl={isNavMini ? 0 : 2}
+                  pl={2}
                   gap={1}
                   alignItems={isNavMini ? "center" : "start"}
                 >
