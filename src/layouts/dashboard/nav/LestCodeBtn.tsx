@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 import { useSnackbar } from "notistack";
 
 import { Button } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { Iconify } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useLocales } from "src/locales";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
+
+import { getLetsCodeBtnSx } from "./constants";
 
 interface ILetsCodeBtnProps {
   isMini?: boolean;
@@ -17,6 +21,11 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
   const { translate } = useLocales();
   const { push, query } = useRouter();
   const { enqueueSnackbar } = useSnackbar();
+  const theme = useTheme();
+  const letsCodeBtnSx = useMemo(
+    () => getLetsCodeBtnSx(theme, isMini),
+    [theme, isMini]
+  );
 
   const { data: assigments } = useGetAssignmentListStudentQuery(
     { class_id: query.id as string },
@@ -38,32 +47,7 @@ export default function LetsCodeBtn({ isMini }: ILetsCodeBtnProps) {
         }
       }}
       variant="contained"
-      sx={{
-        mt: "24px",
-        mx: 1,
-        color: "#EE467A",
-        bgcolor: "#FFF",
-        boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
-        "&:hover": {
-          color: "#FFF",
-          bgcolor: "#EE467A",
-        },
-        ...(isMini
-          ? {
-              borderRadius: "50%",
-              m: "8px auto 16px",
-              width: "35px",
-              height: "35px",
-              minWidth: "0",
-              px: 1,
-            }
-          : {
-              py: 1,
-              fontSize: "24px",
-              borderRadius: "50px",
-              gap: 1,
-            }),
-      }}
+      sx={letsCodeBtnSx}
     >
       {!isMini ? `👩‍💻 ${translate("sidebar_menu_code_btn")}` : ""}
 
