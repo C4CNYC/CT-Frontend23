@@ -47,6 +47,7 @@ const SettingDrawer = (): React.ReactElement => {
         <Iconify icon="ep:setting" />
       </IconButton>
       <SwipeableDrawer
+        swipeAreaWidth={0}
         anchor="right"
         open={openDrawer}
         onClose={() => {
