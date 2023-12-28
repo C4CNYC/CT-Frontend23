@@ -26,7 +26,6 @@ import { IModuleContent } from "src/redux/interfaces/content.interface";
 import {
   useGetCoursContentQuery,
   useGetStudentCourseModulesQuery,
-  useGetStudentModulesLessonsQuery,
 } from "src/redux/services/manager/courses-student";
 import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
 import { useGetModuleWithLessonsQuery } from "src/redux/services/manager/modules-student";
@@ -49,10 +48,6 @@ export default function ModulePage(): React.ReactElement {
       { id: query?.id as string },
       { skip: !query?.id }
     );
-  const { data, isLoading } = useGetStudentModulesLessonsQuery(
-    { id: query?.unit as string },
-    { skip: !query?.id }
-  );
   const { data: course } = useGetCoursContentQuery(
     {
       id: query.id as string,
@@ -122,7 +117,7 @@ export default function ModulePage(): React.ReactElement {
                 sx={{ width: "100%", height: "280px", minWidth: "410px" }}
               />
             )}
-            {!isLoading ? (
+            {!isLoadingModule ? (
               <LessonsList
                 lessons={module?.lessons ?? []}
                 unitId={query?.unit as string}
@@ -154,7 +149,7 @@ export default function ModulePage(): React.ReactElement {
             level="Beginner"
             grade="6th-10th Grade"
             duration={module ? module?.duration : "20 min"}
-            lessonCount={`${data?.length} ${translate("lessons")}`}
+            lessonCount={`${module?.lessons?.length} ${translate("lessons")}`}
             description={
               module?.description
                 ? module.description
