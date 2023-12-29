@@ -18,7 +18,6 @@ interface Props {
 export default function SingInPassword({
   previousStep,
   nextStep,
-  stepName,
   isActive,
   isSubmiting,
   isError,
