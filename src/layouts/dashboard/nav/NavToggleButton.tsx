@@ -11,7 +11,7 @@ export default function NavToggleButton({
 }: IconButtonProps): React.ReactElement | null {
   const { themeLayout, onToggleLayout } = useSettingsContext();
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive("up", "md");
 
   if (!isDesktop) {
     return null;

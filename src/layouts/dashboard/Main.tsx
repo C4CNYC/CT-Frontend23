@@ -24,7 +24,7 @@ export default function Main({
 
   const isNavMini = themeLayout === "mini";
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive("up", "md");
 
   if (isNavHorizontal) {
     return (

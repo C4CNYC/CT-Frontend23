@@ -29,7 +29,7 @@ export default function NavVertical({
   const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive("up", "md");
   const menu = isManager
     ? menuConfig[user?.role as Role]
     : menuConfig[Role.Student];
@@ -73,8 +73,8 @@ export default function NavVertical({
     <Box
       component="nav"
       sx={{
-        flexShrink: { lg: 0 },
-        width: { lg: NAV.W_DASHBOARD },
+        flexShrink: { md: 0 },
+        width: { md: NAV.W_DASHBOARD },
       }}
     >
       <NavToggleButton />
