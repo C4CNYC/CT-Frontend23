@@ -896,6 +896,10 @@ const en = {
   save_to_folder: "Save to 'My Folder'",
   open_folder: "Open 'My Folder'",
 
+  // Code editor MuMu menu
+  code_editor_mumu_menu_tooltip:
+    "Hi, I'm Mumu. I'm here to help when you get stuck.",
+
   organizations: {
     dashboard_title: "Dashboard",
     title: "Organizations",

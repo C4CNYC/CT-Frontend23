@@ -897,6 +897,10 @@ const ar = {
   go_to_gallery: "اذهب إلى المعرض",
   save_to_folder: "حفظ في' مجلدي'",
   open_folder: "افتح' مجلدي'",
+
+  // Code editor MuMu menu
+  code_editor_mumu_menu_tooltip:
+    "مرحبًا، أنا مومو. أنا هنا للمساعدة عندما تتعثر.",
 };
 
 export default ar;
