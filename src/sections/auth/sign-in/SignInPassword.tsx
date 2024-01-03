@@ -29,6 +29,7 @@ interface Props {
 export default function SingInPassword({
   previousStep,
   nextStep,
+  isActive,
   isSubmiting,
   isError,
   currentStep,
@@ -77,6 +78,7 @@ export default function SingInPassword({
           label={translate("password")}
           type={showPassword ? "text" : "password"}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
+          inputRef={(input) => input && isActive && input.focus()}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
