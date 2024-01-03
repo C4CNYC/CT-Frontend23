@@ -256,7 +256,6 @@ export function AuthProvider({
       password,
       firstName,
       lastName,
-      username,
       emojiAvatar,
       role,
       tenantName,
@@ -265,7 +264,6 @@ export function AuthProvider({
       password: string;
       firstName: string;
       lastName: string;
-      username?: string;
       emojiAvatar?: string;
       role: Role;
       tenantName?: string;
@@ -281,7 +279,6 @@ export function AuthProvider({
         password,
         first_name: firstName,
         last_name: lastName,
-        username,
         role,
         emojiAvatar,
       });

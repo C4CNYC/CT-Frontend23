@@ -53,11 +53,6 @@ export default function StepperRegister({
           label={translate("surname")}
           sx={(theme) => ({ ...styledRegisterInput(theme) })}
         />
-        <RHFTextField
-          name="username"
-          label={translate("username")}
-          sx={(theme) => ({ ...styledRegisterInput(theme) })}
-        />
         <Divider sx={{ my: 1 }} />
 
         <RHFTextField
