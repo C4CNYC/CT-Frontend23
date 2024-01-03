@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { Stack } from "@mui/material";
 
 import { EmptyContent, SimpleInfiniteList } from "@components";
@@ -14,15 +12,9 @@ import SkeletonCourse from "./course-list-item/SkeletonCourse";
 
 interface Props {
   publicPage?: boolean;
-  setCounter?: (count: number) => void;
-  setIsLoading?: (loading: boolean) => void;
 }
 
-export default function CourseList({
-  publicPage,
-  setCounter,
-  setIsLoading,
-}: Props): React.ReactElement {
+export default function CourseList({ publicPage }: Props): React.ReactElement {
   const { filters, setFilter } = useFilters<ICourseSearchParams>(
     {
       name: "",
@@ -39,9 +31,6 @@ export default function CourseList({
     isLoading: publicIsLoading,
     isFetching: publicFetching,
   } = useGetPublicCourseQuery(filters, { skip: !publicPage });
-  useEffect(() => {
-    setIsLoading?.(publicPage ? publicIsLoading : isLoading);
-  }, [isLoading]);
 
   const translate = useTranslate();
 
@@ -50,10 +39,6 @@ export default function CourseList({
       .fill(null)
       .map((v, i) => <SkeletonCourse key={i + 14} />);
   };
-
-  if (data) {
-    setCounter?.(data.data.length);
-  }
 
   if ((!publicPage && isLoading) || (publicPage && publicIsLoading)) {
     return (
