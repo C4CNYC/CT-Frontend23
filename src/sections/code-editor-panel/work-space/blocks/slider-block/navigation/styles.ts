@@ -8,11 +8,12 @@ export const stylesPrev = (): Record<string, unknown> => {
   return {
     width: "35%",
     borderRadius: "35px",
-    color: "#000000 !important",
+    color: theme.palette.text.secondary,
     pr: "51px",
     zIndex: 4,
     position: "relative",
     background: "rgba(196, 196, 196, .5)",
+    boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
     "&:hover": {
       background: "rgba(196, 196, 196, .7)",
       border: "none",
@@ -47,9 +48,9 @@ export const TOOLTIP_CONTENT_SX = {
 };
 
 export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
-  const getBg = (): string => {
+  const getBg = (hover?: boolean): string => {
     if (btnNext === BtnType.next) {
-      return "#EE467A";
+      return hover ? "#EE467A" : "#FFF";
     }
     if (btnNext === BtnType.coding) {
       return "#155275CC";
@@ -66,13 +67,15 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
     height: "100%",
     color: !(btnNext === BtnType.next || btnNext === BtnType.compleated)
       ? "#43D4DD!important"
-      : "#fff",
+      : "#EE467A",
     zIndex: 5,
     pointerEvents: btnNext === BtnType.coding ? "none" : "auto",
     position: "relative",
+    boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
     background: getBg(),
     "&:hover": {
-      backgroundColor: getBg(),
+      color: "#FFF",
+      bgcolor: getBg(true),
       border: "none",
     },
   };
