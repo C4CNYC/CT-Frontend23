@@ -26,8 +26,8 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
     <Box
       component="nav"
       sx={{
-        flexShrink: { lg: 0 },
-        width: { lg: NAV.W_DASHBOARD_MINI },
+        flexShrink: { md: 0 },
+        width: { md: NAV.W_DASHBOARD_MINI },
       }}
     >
       <NavToggleButton

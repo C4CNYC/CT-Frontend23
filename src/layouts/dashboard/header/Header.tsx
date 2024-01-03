@@ -33,7 +33,7 @@ export default function Header({
 
   const isNavMini = themeLayout === "mini";
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive("up", "md");
 
   const isSchoolSection = router.pathname.includes("dashboard/school");
 
@@ -110,7 +110,7 @@ export default function Header({
       <Toolbar
         sx={{
           height: 1,
-          px: { lg: 5 },
+          px: { md: 5 },
         }}
       >
         {renderContent}

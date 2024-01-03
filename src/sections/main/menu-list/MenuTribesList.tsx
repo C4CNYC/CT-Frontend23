@@ -30,7 +30,7 @@ import { getAddTribeButtonSx } from "./constants";
 export default function MenuTribesList(): React.ReactElement {
   const theme = useTheme();
   const { themeLayout } = useSettingsContext();
-  const isMobile = useMediaQuery(theme.breakpoints.down(1200));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const isNavMini = themeLayout === "mini" && !isMobile;
   const translate = useTranslate();
 

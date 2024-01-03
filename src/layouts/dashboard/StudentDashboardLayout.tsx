@@ -21,7 +21,7 @@ export function StudentDashboardLayout({
 }: IStudentDashboardLayoutProps): React.ReactElement | null {
   const { themeLayout } = useSettingsContext();
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive("up", "md");
 
   const [open, setOpen] = useState(false);
 
@@ -61,8 +61,8 @@ export function StudentDashboardLayout({
 
           <Box
             sx={{
-              display: { lg: "flex" },
-              minHeight: { lg: 1 },
+              display: { md: "flex" },
+              minHeight: { md: 1 },
             }}
           >
             {isDesktop ? <NavMini /> : renderNavVertical}
@@ -79,8 +79,8 @@ export function StudentDashboardLayout({
 
         <Box
           sx={{
-            display: { lg: "flex" },
-            minHeight: { lg: 1 },
+            display: { md: "flex" },
+            minHeight: { md: 1 },
           }}
         >
           {renderNavVertical}

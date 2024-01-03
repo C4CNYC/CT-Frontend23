@@ -28,7 +28,7 @@ export default function DashboardLayout({
 }: Props): React.ReactElement | null {
   const { themeLayout } = useSettingsContext();
 
-  const isDesktop = useResponsive("up", "lg");
+  const isDesktop = useResponsive("up", "md");
 
   const [open, setOpen] = useState(false);
 
@@ -68,8 +68,8 @@ export default function DashboardLayout({
 
           <Box
             sx={{
-              display: { lg: "flex" },
-              minHeight: { lg: 1 },
+              display: { md: "flex" },
+              minHeight: { md: 1 },
             }}
           >
             {isDesktop ? <NavMini isManager /> : renderNavVertical}
@@ -86,8 +86,8 @@ export default function DashboardLayout({
 
         <Box
           sx={{
-            display: { lg: "flex" },
-            minHeight: { lg: 1 },
+            display: { md: "flex" },
+            minHeight: { md: 1 },
           }}
         >
           {renderNavVertical}
