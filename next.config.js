@@ -4,7 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const nextConfig = {
   i18n: {
-    locales: ["en", "ar"],
+    locales: ["en", "ar", "es", "pt", "fr", "vn"],
     defaultLocale: "en",
   },
   eslint: {

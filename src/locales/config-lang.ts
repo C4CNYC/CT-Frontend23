@@ -1,5 +1,5 @@
 // @mui
-import { arSA, enUS } from "@mui/material/locale";
+import { arEG, enUS, esES, frFR, ptPT } from "@mui/material/locale";
 
 // PLEASE REMOVE `LOCAL STORAGE` WHEN YOU CHANGE SETTINGS.
 // ----------------------------------------------------------------------
@@ -11,28 +11,28 @@ export const allLangs = [
     systemValue: enUS,
     icon: "/assets/icons/flags/ic_flag_en.svg",
   },
-  // {
-  //   label: "French",
-  //   value: "fr",
-  //   systemValue: frFR,
-  //   icon: "/assets/icons/flags/ic_flag_fr.svg",
-  // },
-  // {
-  //   label: "Vietnamese",
-  //   value: "vi",
-  //   systemValue: viVN,
-  //   icon: "/assets/icons/flags/ic_flag_vn.svg",
-  // },
-  // {
-  //   label: "Chinese",
-  //   value: "cn",
-  //   systemValue: zhCN,
-  //   icon: "/assets/icons/flags/ic_flag_cn.svg",
-  // },
   {
-    label: "Arabic (Sudan)",
+    label: "French",
+    value: "fr",
+    systemValue: frFR,
+    icon: "/assets/icons/flags/ic_flag_fr.svg",
+  },
+  {
+    label: "Portuguese",
+    value: "pt",
+    systemValue: ptPT,
+    icon: "/assets/icons/flags/ic_flag_pt.svg",
+  },
+  {
+    label: "Spanish",
+    value: "es",
+    systemValue: esES,
+    icon: "/assets/icons/flags/ic_flag_es.svg",
+  },
+  {
+    label: "Arabic (Egypt)",
     value: "ar",
-    systemValue: arSA,
+    systemValue: arEG,
     icon: "/assets/icons/flags/ic_flag_sa.svg",
   },
 ];
