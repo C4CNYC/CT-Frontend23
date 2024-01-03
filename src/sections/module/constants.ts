@@ -29,7 +29,7 @@ export const CONTAINER_SX = {
 export const getHeaderContainerSx = (isMobile: boolean, theme: Theme) => ({
   flexDirection: "row",
   justifyContent: "space-between",
-  flexWrap: "wrap",
+  flexWrap: isMobile ? "wrap" : "no-wrap",
   background:
     theme.palette.mode === "light"
       ? "#FFEDF2"

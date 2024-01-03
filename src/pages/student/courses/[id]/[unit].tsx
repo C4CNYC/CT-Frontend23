@@ -97,7 +97,17 @@ export default function ModulePage(): React.ReactElement {
             },
           ]}
         />
-        <Stack direction="row" gap={3} flexWrap="wrap">
+        <Stack
+          sx={{
+            gap: 3,
+            flexDirection: {
+              xs: "column",
+              sm: "column",
+              md: "column",
+              lg: "row",
+            },
+          }}
+        >
           <Stack sx={CONTAINER_SX}>
             {!isLoadingModule && currentModule ? (
               <ModuleHeader
