@@ -41,11 +41,7 @@ export default function JoinTribeRegister({
     firstName: Yup.string().required(translate("enter_name")),
     lastName: Yup.string().required(translate("enter_surname")),
     password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-        translate("required_password_includes")
-      )
-      .min(10, translate("required_password_length")),
+      .min(8, translate("required_password_length")),
   });
 
   const nextStep = (): void => {

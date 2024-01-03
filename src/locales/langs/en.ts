@@ -302,7 +302,7 @@ const en = {
   required_password_includes:
     "Password must include one uppercase letter, one lowercase letter and one number",
   required_password_length: "Password must be at least 10 characters long",
-  required_password_length_6: "Password must be at least 6 characters",
+  required_password_length_8: "Password must be at least 6 characters",
   required_password_number: "Password requires a number",
   required_password_lowercase: "Password requires a lowercase letter",
   required_password_uppercase: "Password requires an uppercase letter",

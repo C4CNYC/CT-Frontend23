@@ -65,11 +65,7 @@ export default function StudentStepper(): React.ReactElement {
     lastName: Yup.string().required(translate("enter_surname")),
     username: Yup.string().required(translate("enter_username")),
     password: Yup.string()
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-        translate("required_password_includes")
-      )
-      .min(10, translate("required_password_length")),
+      .min(8, translate("required_password_length")),
   });
 
   const methods = useForm<FormValuesProps>({
