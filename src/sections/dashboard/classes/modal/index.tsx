@@ -161,7 +161,7 @@ export default function ClassPreferences({
                   {/* <Tab label="Courses" {...a11yProps(2)} /> */}
 
                   {userRole !== Role.Manager ? (
-                    <Tab label={translate("mentors")} {...a11yProps(3)} />
+                    <Tab label={translate("mentors")} {...a11yProps(2)} />
                   ) : null}
                 </Tabs>
               </Box>
@@ -177,11 +177,11 @@ export default function ClassPreferences({
                   schoolIdProp={schoolId}
                 />
               </TabPanel>
-              <TabPanel value={value} index={2}>
+              {/* <TabPanel value={value} index={2}>
                 <ClassCoursesAutocomplete classId={rowId} />
-              </TabPanel>
+              </TabPanel> */}
               {userRole !== Role.Manager ? (
-                <TabPanel value={value} index={3}>
+                <TabPanel value={value} index={2}>
                   <ClassMentorsAutocomplete
                     classId={rowId}
                     schoolIdProp={schoolId}
