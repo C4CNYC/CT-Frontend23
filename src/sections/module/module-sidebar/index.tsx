@@ -1,5 +1,7 @@
 import { Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
+import { BaseResponseInterface } from "@utils";
+import { ILesson } from "src/redux/interfaces/content.interface";
 import { useTranslate } from "src/utils/translateHelper";
 
 import AuthorsSection from "./AuthorsSection";
@@ -16,10 +18,11 @@ interface IModuleSidebarProps {
   duration: string | null;
   teacherSlides?: string;
   lessonPlans?: string;
-  teacherForum?: string;
+  teacherForum: string;
   certificate: number;
   likes: number;
   rated: number;
+  lessons?: Array<ILesson & BaseResponseInterface>;
 }
 
 export default function ModuleSidebar({
@@ -34,6 +37,7 @@ export default function ModuleSidebar({
   teacherSlides,
   teacherForum,
   lessonPlans,
+  lessons,
 }: IModuleSidebarProps): React.ReactElement {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1200));
@@ -76,7 +80,7 @@ export default function ModuleSidebar({
           {description}
         </Typography>
       </CollasedItem>
-      <QuizPanel lessons={[]} />
+      <QuizPanel lessons={lessons ?? []} />
       <CollasedItem title={translate("courses_teacher_toolbox")}>
         <TeacherToolbox
           teacherForum={teacherForum}

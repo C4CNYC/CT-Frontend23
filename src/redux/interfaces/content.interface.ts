@@ -40,12 +40,17 @@ export interface ICourseContent {
 export interface IModule {
   active?: boolean;
   key: any;
+  avatar: string | null;
+  duration: string | null;
   name: string;
   type: string;
   progress?: number;
   total_progress?: number;
   lessons: Array<ILesson & BaseResponseInterface>;
   description?: string;
+  initial_enrolled: number;
+  initial_likes: number;
+  initial_stars: number;
 }
 
 export interface IModuleContent {
@@ -75,8 +80,8 @@ export interface ILesson {
   progress?: number;
   skills: ISkill[];
   independent?: boolean;
-  contents: ILessonContent[]
-  type: 'practical' | 'exercise';
+  contents: ILessonContent[];
+  type: "practical" | "exercise";
 }
 
 export interface ILessonCurrent {

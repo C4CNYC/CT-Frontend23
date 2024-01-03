@@ -26,9 +26,9 @@ import { IModuleContent } from "src/redux/interfaces/content.interface";
 import {
   useGetCoursContentQuery,
   useGetStudentCourseModulesQuery,
-  useGetStudentModulesLessonsQuery,
 } from "src/redux/services/manager/courses-student";
 import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
+import { useGetModuleWithLessonsQuery } from "src/redux/services/manager/modules-student";
 import { useTranslate } from "src/utils/translateHelper";
 
 ModulePage.getLayout = (page: React.ReactElement) => (
@@ -43,15 +43,11 @@ export default function ModulePage(): React.ReactElement {
   const [currentModule, setCurrentModule] = useState<IModuleContent>();
   const translate = useTranslate();
 
-  const { data: modules, isLoading: isLoadingModule } =
+  const { data: modules, isLoading: isLoadingModules } =
     useGetStudentCourseModulesQuery(
       { id: query?.id as string },
       { skip: !query?.id }
     );
-  const { data, isLoading } = useGetStudentModulesLessonsQuery(
-    { id: query?.unit as string },
-    { skip: !query?.id }
-  );
   const { data: course } = useGetCoursContentQuery(
     {
       id: query.id as string,
@@ -61,16 +57,22 @@ export default function ModulePage(): React.ReactElement {
   const { data: lastVisitedData } =
     useGetStudentLastVisitedUnitAndLessonQuery();
 
+  const { data: module, isLoading: isLoadingModule } =
+    useGetModuleWithLessonsQuery(
+      { id: query.unit as string },
+      { skip: !query.unit }
+    );
+
   useEffect(() => {
     if (modules) {
       setCurrentModule(modules.filter((m) => m.id === query.unit)[0]);
     }
-  }, [isLoadingModule]);
+  }, [isLoadingModules]);
 
   return (
     <>
       <Head>
-        <title>{currentModule?.name ?? translate("module")} | CodeTribe</title>
+        <title>{module?.name ?? translate("module")} | CodeTribe</title>
       </Head>
       <Container
         maxWidth={themeStretch ? false : "xl"}
@@ -93,7 +95,7 @@ export default function ModulePage(): React.ReactElement {
               href: STUDENT_PATH_DASHBOARD.courses.course(course?.id as string),
             },
             {
-              name: currentModule?.name ?? translate("module"),
+              name: module?.name ?? translate("module"),
             },
           ]}
         />
@@ -109,11 +111,15 @@ export default function ModulePage(): React.ReactElement {
           }}
         >
           <Stack sx={CONTAINER_SX}>
-            {!isLoadingModule && currentModule ? (
+            {!isLoadingModules && !isLoadingModule && module ? (
               <ModuleHeader
-                name={currentModule.name}
-                description={currentModule.description}
-                avatar={currentModule.avatar}
+                name={module.name}
+                description={
+                  module?.description
+                    ? module.description
+                    : translate("description")
+                }
+                avatar={module.avatar}
               />
             ) : (
               <Skeleton
@@ -121,9 +127,9 @@ export default function ModulePage(): React.ReactElement {
                 sx={{ width: "100%", height: "280px", minWidth: "410px" }}
               />
             )}
-            {!isLoading ? (
+            {!isLoadingModule ? (
               <LessonsList
-                lessons={data ?? []}
+                lessons={module?.lessons ?? []}
                 unitId={query?.unit as string}
                 lastVisitedData={lastVisitedData?.lastVisitedLessonId ?? ""}
               />
@@ -152,19 +158,20 @@ export default function ModulePage(): React.ReactElement {
           <ModuleSidebar
             level="Beginner"
             grade="6th-10th Grade"
-            duration={currentModule ? currentModule?.duration : "20 min"}
-            lessonCount={`${data?.length} ${translate("lessons")}`}
+            duration={module ? module?.duration : "20 min"}
+            lessonCount={`${module?.lessons?.length} ${translate("lessons")}`}
             description={
-              currentModule
-                ? currentModule.description
+              module?.description
+                ? module.description
                 : translate("description")
             }
-            certificate={currentModule?.initial_enrolled ?? 0}
-            likes={currentModule?.initial_likes ?? 0}
-            rated={currentModule?.initial_stars ?? 0}
-            teacherForum={currentModule?.teacher_forum}
+            certificate={module?.initial_enrolled ?? 0}
+            likes={module?.initial_likes ?? 0}
+            rated={module?.initial_stars ?? 0}
+            teacherForum={currentModule?.teacher_forum ?? ""}
             teacherSlides={currentModule?.teacher_slides}
             lessonPlans={currentModule?.lesson_plans}
+            lessons={module?.lessons}
           />
         </Stack>
       </Container>
