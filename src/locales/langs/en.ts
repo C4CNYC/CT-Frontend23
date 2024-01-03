@@ -669,6 +669,13 @@ const en = {
   fullscreen: "Fullscreen",
   fullscreen_exit: "Exit Fullscreen",
 
+  // reset_pass
+  reset_pass_page_title: "Reset Password",
+  reset_pass_title: "Forgot your password?",
+  reset_pass_subtitle:
+    "Please enter the email address associated with your account and We will email you a link to reset your password.",
+  reset_pass_return_cta: "Return to sign in",
+
   // login
   organization_setting: "Organization Settings",
   logout: "Logout",
@@ -684,6 +691,7 @@ const en = {
   login_with_email: "Sign in with Email",
   login_lets_go: "LET'S GO!",
   login_sign_up: "Sign up",
+  login_reset_password: "Forgot password",
   login_my_first_time: "This is my first time here",
   login_sign_up_with_google: "Sign up with Google",
   login_register: "REGISTER",

@@ -1,4 +1,3 @@
-// next
 import Head from "next/head";
 import NextLink from "next/link";
 
@@ -10,31 +9,29 @@ import { Iconify } from "@components";
 import CompactLayout from "@layouts/compact";
 import { PATH_AUTH } from "@routes/paths";
 import AuthResetPasswordForm from "@sections/auth/AuthResetPasswordForm";
-
-// ----------------------------------------------------------------------
+import { useTranslate } from "src/utils/translateHelper";
 
 ResetPasswordPage.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>
 );
 
-// ----------------------------------------------------------------------
-
 export default function ResetPasswordPage(): React.ReactElement {
+  const translate = useTranslate();
+
   return (
     <>
       <Head>
-        <title> Reset Password </title>
+        <title>{translate("reset_pass_page_title")}</title>
       </Head>
 
       <PasswordIcon sx={{ mb: 5, height: 96 }} />
 
       <Typography variant="h3" paragraph>
-        Forgot your password?
+        {translate("reset_pass_title")}
       </Typography>
 
       <Typography sx={{ color: "text.secondary", mb: 5 }}>
-        Please enter the email address associated with your account and We will
-        email you a link to reset your password.
+        {translate("reset_pass_subtitle")}
       </Typography>
 
       <AuthResetPasswordForm />
@@ -52,7 +49,7 @@ export default function ResetPasswordPage(): React.ReactElement {
         }}
       >
         <Iconify icon="eva:chevron-left-fill" width={16} />
-        Return to sign in
+        {translate("reset_pass_return_cta")}
       </Link>
     </>
   );
