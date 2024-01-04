@@ -42,20 +42,27 @@ export const StyledSectionBg = styled("div")(({ theme }) => ({
 
 export const StyledContent = styled("div")(({ theme }) => ({
   width: "100%",
-  margin: "auto 20px",
+  margin: "auto",
   display: "flex",
   borderRadius: "8px",
   justifyContent: "center",
-  padding: theme.spacing(5),
+  padding: theme.spacing(3),
   ...bgBlur({ color: theme.palette.background.default }),
+  [theme.breakpoints.up("sm")]: {
+    maxWidth: "460px",
+  },
   [theme.breakpoints.up("md")]: {
+    maxWidth: "none",
     flexShrink: 0,
+    padding: theme.spacing(5),
     width: 480,
-    margin: "auto",
   },
 }));
 
 export const StyledSwitcher = styled("div")(() => ({
+  position: "absolute",
+  top: "0",
+  right: "0",
   padding: "10px 10px 0 0",
   alignSelf: "flex-start",
 }));

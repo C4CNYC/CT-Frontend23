@@ -3,13 +3,13 @@ import { SxProps } from "@mui/system";
 export const WELCOM_STEP_WRAPPER_SX = {
   ml: { xs: 3, sm: 3, md: 0 },
   mt: "10px",
-  justifyContent: { xs: "center", md: "start" },
+  justifyContent: "start",
 };
 
 export const WELCOM_STEP_SUBTITLE_SX = {
   pb: 3,
   ml: { xs: 3, sm: 3, md: 0 },
-  textAlign: { xs: "center", md: "left" },
+  textAlign: "left",
 };
 
 export const POPUP_SESION_BTN_SX = {
