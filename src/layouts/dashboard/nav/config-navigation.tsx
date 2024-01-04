@@ -121,7 +121,7 @@ export const courses = {
 };
 
 export const general = {
-  subheader: "sidebar_menu_tribes",
+  subheader: "",
   items: [
     {
       path: "",
