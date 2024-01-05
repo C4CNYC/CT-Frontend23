@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { Box, Stack } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { LogoMin, NavSectionMini } from "@components";
 import { hideScrollbarX } from "@utils";
@@ -18,6 +19,7 @@ interface INavMini {
 
 export default function NavMini({ isManager }: INavMini): React.ReactElement {
   const user = useSelector((state: RootState) => state.global.user);
+  const theme = useTheme();
   const menu = isManager
     ? menuConfig[user?.role as Role]
     : menuConfig[Role.Student];
@@ -28,6 +30,10 @@ export default function NavMini({ isManager }: INavMini): React.ReactElement {
       sx={{
         flexShrink: { md: 0 },
         width: { md: NAV.W_DASHBOARD_MINI },
+        bgcolor:
+          theme.palette.mode === "light"
+            ? "#E6F5FD"
+            : theme.palette.background.paper,
       }}
     >
       <NavToggleButton
