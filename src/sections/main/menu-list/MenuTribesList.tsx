@@ -2,6 +2,7 @@ import nextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
+import { t } from "i18next";
 import { FaCampground, FaPlus } from "react-icons/fa";
 import { IoPeople } from "react-icons/io5";
 
@@ -12,6 +13,7 @@ import {
   MenuItem,
   Skeleton,
   Stack,
+  Typography,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
@@ -19,6 +21,7 @@ import { useTheme } from "@mui/system";
 import { MenuPopover, Scrollbar, useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
+import { StyledSubheader } from "src/components/nav-section/vertical/styles";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
 import { useTranslate } from "src/utils/translateHelper";
@@ -59,12 +62,11 @@ export default function MenuTribesList(): React.ReactElement {
       {!isNavMini && (
         <Divider
           sx={{
-            mb: 2,
-            mt: 1,
             ml: 2,
           }}
         />
       )}
+      <StyledSubheader>{translate("sidebar_menu_tribes")}</StyledSubheader>
       <Stack
         sx={{
           gap: 1,
