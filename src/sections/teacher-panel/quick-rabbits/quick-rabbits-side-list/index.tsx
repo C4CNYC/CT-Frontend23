@@ -85,6 +85,8 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
 
   const { getActivityStatus } = useRoomActivity("all");
 
+  console.log({ getActivityStatus });
+
   const classId: string = query.id as string;
   const { data, isLoading, isFetching } = useGetClassStudentsQuery(
     { id: query.id as string },
@@ -182,15 +184,15 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
         {isLoading || isFetching
           ? [...Array(3)].map((el, i) => <SkeletonSidebarUser key={i + 5} />)
           : data?.data.map((student, i) => {
-              return (
-                <SidebarUser
-                  status={getActivityStatus(student.account.id)}
-                  student={student}
-                  key={i.toString() + student.id}
-                  isLoading={isLoading}
-                />
-              );
-            })}
+            return (
+              <SidebarUser
+                status={getActivityStatus(student.account.id)}
+                student={student}
+                key={i.toString() + student.id}
+                isLoading={isLoading}
+              />
+            );
+          })}
       </List>
       <Divider
         sx={{ borderColor: "#fff", borderBottomWidth: "2px", width: "235px" }}
@@ -207,9 +209,9 @@ export const QuickRabbitsSideList = (): React.ReactElement => {
               onClick={() => {
                 dispatch(createRabit({
                   id: classId,
-                    email: GROUP_CHAT_RABBIT,
-                    avatar:
-                      "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
+                  email: GROUP_CHAT_RABBIT,
+                  avatar:
+                    "https://cdn3.iconfinder.com/data/icons/communication-media-malibu-vol-1/128/group-chat-1024.png",
                 }))
               }}
             />

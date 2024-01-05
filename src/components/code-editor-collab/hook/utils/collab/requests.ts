@@ -80,9 +80,12 @@ export const getDocument = ({
   ...other
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
 	return new Promise(function(resolve) {
+
+		console.log("getdoc", other);
 		socket.emit(EmitSocketEvents.GetDoc, other);
 
 		socket.once(SubscribedEvents.GetDocResponse,  ({ doc, ...other }) =>  {
+			console.log('getDocumentResponse', Text.of(doc.split("\n")))
 			resolve({
 				doc: Text.of(doc.split("\n")),
 				...other

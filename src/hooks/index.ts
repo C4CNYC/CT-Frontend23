@@ -14,3 +14,4 @@ export * from "./useResponsive";
 export * from "./useWindowDimension";
 export * from "./useSocket";
 export * from "./useRoomActivity";
+export * from "./useLessonStatus";

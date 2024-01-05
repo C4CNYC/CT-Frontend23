@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
 import SwipeableViews from "react-swipeable-views";
@@ -28,6 +28,10 @@ const WorkSpace = ({ data, isFetching }: IWorkSpace): React.ReactElement => {
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
   const [{ activeTab }, setTab] = useAtom(mobileTabManager);
   const [{ slideIndex }] = useAtom(globalCodePanelAtom);
+
+  useEffect(()=>{
+    console.log("onChangeCode2", code);
+  },[code])
 
   return (
     <WorkSpaceContext.Provider

@@ -153,3 +153,8 @@ export interface IUserAccountNotificationSettings {
   applicationProduct: boolean;
   applicationBlog: boolean;
 }
+
+export interface ILessonUserStatus {
+  id: string;
+  status: string;
+}

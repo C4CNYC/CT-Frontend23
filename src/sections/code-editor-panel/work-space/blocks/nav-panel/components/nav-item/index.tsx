@@ -31,17 +31,16 @@ const NavItem: FC<NavItemProps> = ({
   const name = `${data.first_name} ${data.last_name}`;
   const tooltipNameTitle = name.length > MAX_NAME_LENGTH ? name : "";
   const tooltipAbout = data.about?.length > MAX_ABOUT_LENGTH ? data.about : "";
-
   return (
     <ListItem>
       <Badge
         sx={BADGE_SX}
-        badgeContent={data.active ? '' : null}
-        color="secondary"
+        badgeContent=''
+        color={data.status !== 'active' ? `${data.status === 'inactive' ? 'default' : 'warning'}` : `secondary`}
       >
         <ListItemAvatar onClick={onToggle}>
 
-        <Avatar src={data.avatar} />
+          <Avatar src={data.avatar} />
         </ListItemAvatar>
       </Badge>
 
@@ -49,7 +48,7 @@ const NavItem: FC<NavItemProps> = ({
         <Tooltip placement="top-start" title={tooltipNameTitle}>
           <ListItemText sx={NAME_SX} primary={name} />
         </Tooltip>
-        
+
         <Tooltip placement="top-start" title={tooltipAbout}>
           <ListItemText sx={TOPIC_SX} primary={data.about} />
         </Tooltip>

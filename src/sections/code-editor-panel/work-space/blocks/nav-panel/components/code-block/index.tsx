@@ -1,4 +1,5 @@
 import { type FC, useMemo, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { type DraggableAttributes } from "@dnd-kit/core";
 import { type SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
@@ -10,7 +11,7 @@ import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import OpenCodeIcon from "src/assets/icons/OpenCodeIcon";
 import CodeEditorCollab from "src/components/code-editor-collab";
 
-import { type BaseResponseInterface } from "@utils";
+import { voidFunction, type BaseResponseInterface } from "@utils";
 import { type IFriend } from "src/redux/interfaces/friends.interface";
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { setRoom } from "src/redux/slices/code-editor-controller";
@@ -22,12 +23,15 @@ import { getRandomIndex } from "../../hook/utils";
 
 import styles from "./styles"
 
+let previousValue: string | null = null;
+let checkValueTimeout: any | null = null;
 interface CodeBlockProps {
   onClose: () => void
   attributes?: DraggableAttributes
   listeners?: SyntheticListenerMap
   data: IFriend & BaseResponseInterface
   cursorName?: string
+  onChangeUserStatus?: (status: string) => void
 }
 
 const CodeBlock: FC<CodeBlockProps> = ({
@@ -35,11 +39,14 @@ const CodeBlock: FC<CodeBlockProps> = ({
   attributes,
   listeners,
   data,
-  cursorName
+  cursorName,
+  onChangeUserStatus = voidFunction
 }) => {
   const dispatch = useDispatch();
   const [isConnected, setIsConnected] = useState(false);
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive);
+  const route = useRouter();
+  const lesson = route.query.lesson;
 
   const { boxSx, headerSx, socket } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0];
@@ -76,9 +83,29 @@ const CodeBlock: FC<CodeBlockProps> = ({
         void runEffect();
       }
     }
-
     void runEffect()
   }, [socket])
+
+
+  const onChangeCode = (value: string) => {
+    if (checkValueTimeout) {
+      // Clear the previous timeout if the value changes
+      clearTimeout(checkValueTimeout);
+    }
+
+    previousValue = value; // Store the current value
+    onChangeUserStatus('active');
+
+    // Set up the check for 30 seconds later
+    checkValueTimeout = setTimeout(() => {
+      if (value === previousValue) {
+        console.log(`Value after 30 seconds: ${value} (unchanged)`);
+        onChangeUserStatus('idle')
+      } else {
+        console.log('Value has changed');
+      }
+    }, 30000); // 30 seconds
+  }
 
   return (
     <Box sx={boxSx}>
@@ -118,6 +145,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
           cursorText={cursorName}
           onRoomStatusChanged={setEditorStatus}
           socket={socket}
+          onChangeCode={onChangeCode}
         />
       )}
     </Box>
