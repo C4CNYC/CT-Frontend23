@@ -1,11 +1,10 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useSnackbar } from "notistack";
 import { HiArrowUpTray } from "react-icons/hi2";
 import { IoClose } from "react-icons/io5";
 
 import { Box, Collapse, IconButton, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/system";
 
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
@@ -16,7 +15,7 @@ import {
   LINK_TEXT_SX,
   NOTIFICATION_CONTAINER_SX,
   NOTIFICATION_LINK_SX,
-  getNotificationWrapperSx,
+  NOTIFICATION_WRAPPER_SX,
 } from "./constants";
 
 const localStorageKey = "IS_OPEN_NOTIFICATION";
@@ -28,11 +27,6 @@ interface IOnceOffNotificationProps {
 export default function OnceOffNotification({
   classData,
 }: IOnceOffNotificationProps): React.ReactElement {
-  const theme = useTheme();
-  const notificationWrapperSx = useMemo(
-    () => getNotificationWrapperSx(theme),
-    [theme]
-  );
   const storageAvailable = localStorageAvailable();
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
@@ -68,7 +62,7 @@ export default function OnceOffNotification({
 
   return (
     <Collapse in={isOpenNotification}>
-      <Stack direction="row" sx={notificationWrapperSx}>
+      <Stack direction="row" sx={NOTIFICATION_WRAPPER_SX}>
         <Stack direction="row" sx={NOTIFICATION_CONTAINER_SX}>
           <Typography variant="subtitle2" sx={{ mx: 1 }}>
             Add students to your group by sharing the
@@ -79,10 +73,7 @@ export default function OnceOffNotification({
               onCopy(shareLink);
             }}
           >
-            <HiArrowUpTray
-              size="18px"
-              color={theme.palette.mode === "light" ? "#364954" : "#F6F9FC"}
-            />
+            <HiArrowUpTray size="18px" color="#364954" />
             <Typography variant="body2" sx={LINK_TEXT_SX}>
               invite link
             </Typography>
@@ -95,10 +86,7 @@ export default function OnceOffNotification({
           sx={{ p: 0.5 }}
           edge="end"
         >
-          <IoClose
-            size="20px"
-            color={theme.palette.mode === "light" ? "#364954" : "#F6F9FC"}
-          />
+          <IoClose size="20px" color="#364954" />
         </IconButton>
       </Stack>
     </Collapse>
