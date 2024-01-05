@@ -4,7 +4,7 @@ import {
   Box,
   Button,
   List,
-  Popper,
+  Popover,
   Typography,
   useMediaQuery,
   useTheme,
@@ -14,12 +14,11 @@ import { useSelector } from "src/redux/store";
 
 import {
   BOX_STYLES,
-  TYP_COLOR,
   BUTTON_STYLES,
-  POPPER_OPTIONS,
-  DESKTOP_POPPER_WIDTH,
-  MOBILE_POPPER_WIDTH
-} from "./constants"
+  POPOVER_HORIZONTAL,
+  POPOVER_VERTICAL,
+  TYP_COLOR,
+} from "./constants";
 
 interface TipsPopoverProps {
   openPoper: boolean;
@@ -44,18 +43,23 @@ const TipsPopover: FC<TipsPopoverProps> = ({
     }
   }, [isDesktop, activeTab]);
 
-  const popperWidth = isDesktop
-    ? DESKTOP_POPPER_WIDTH
-    : MOBILE_POPPER_WIDTH;
-
   return (
-    <Popper
+    <Popover
       id="popper"
       open={openPoper}
       anchorEl={anchorEl}
-      sx={{ width: popperWidth }}
-      placement="left-end"
-      modifiers={POPPER_OPTIONS}
+      slotProps={{
+        paper: {
+          style: { width: "250px" },
+        },
+      }}
+      onClose={() => {
+        setOpenPoper(false);
+      }}
+      anchorOrigin={{
+        vertical: POPOVER_VERTICAL,
+        horizontal: POPOVER_HORIZONTAL,
+      }}
     >
       <Box sx={BOX_STYLES}>
         <List>
@@ -75,8 +79,8 @@ const TipsPopover: FC<TipsPopoverProps> = ({
           OK
         </Button>
       </Box>
-    </Popper>
+    </Popover>
   );
-}
+};
 
 export default TipsPopover;
