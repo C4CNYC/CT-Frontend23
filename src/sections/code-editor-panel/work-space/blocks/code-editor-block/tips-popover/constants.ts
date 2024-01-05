@@ -11,14 +11,22 @@ export const BOX_STYLES = {
   justifyContent: "space-between",
   py: 1,
   px: 2,
+  height: "230px",
+  overflowY: "auto",
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
   transition: "all .2s ease-in",
   "&:hover": {
     background: "#155275",
     opacity: 1,
   },
-}
+};
 
-export const TYP_COLOR = { color: "#fff" }
+export const POPOVER_VERTICAL = -100;
+export const POPOVER_HORIZONTAL = -260;
+
+export const TYP_COLOR = { color: "#fff" };
 
 export const BUTTON_STYLES = {
   alignSelf: "flex-end",
@@ -29,14 +37,5 @@ export const BUTTON_STYLES = {
   my: 1,
   "&:hover": {
     background: "rgba(0, 0, 0, 0.2)",
-  }
-}
-
-export const POPPER_OPTIONS = [
-  {
-    name: "offset",
-    options: {
-      offset: [0, 10],
-    },
   },
-]
+};
