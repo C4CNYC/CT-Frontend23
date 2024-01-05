@@ -19,6 +19,7 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
 
   const [isConnected, setIsConnected] = useState(false);
   const room = useSelector(state => state.codeEditorController.room);
+  console.log("roomId:", room?.roomId);
 
   const guestUserId = `guest-${randomBytes(20).toString("hex")}`;
 

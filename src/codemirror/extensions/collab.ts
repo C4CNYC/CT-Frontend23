@@ -7,10 +7,10 @@ import {
 } from "@codemirror/collab";
 import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
+import { error } from "console";
 import { Socket } from "socket.io-client";
 
 import { addCursor, removeCursor } from "./cursors";
-import { error } from "console";
 
 async function pushUpdates(
   socket: Socket,
@@ -35,6 +35,7 @@ async function pushUpdates(
         version,
         JSON.stringify(updates),
         (err: unknown, status: boolean | unknown, updates: Update[]) => {
+          console.log("pushUpdates", updates);
           if (err) {
             reject(err);
             return;
@@ -59,6 +60,7 @@ async function pullUpdates(
     socket
       .timeout(timeout)
       .emit("pullUpdates", roomId, version, (err: unknown, updates: string) => {
+        console.log("pullUpdates", updates);
         if (err) {
           reject(err);
           return;
@@ -138,7 +140,7 @@ export const peerExtension = (
   socket: Socket,
   startVersion: number,
   id: string,
-  roomId: string,
+  roomId: string
 ): Extension[] => {
   const collabPlugin = collab({
     startVersion,
@@ -185,7 +187,12 @@ export const peerExtension = (
         this.pushing = true;
         const version = getSyncedVersion(this.view.state);
         try {
-          const { updates: pushedUpdates } = await pushUpdates(socket, roomId, version, updates);
+          const { updates: pushedUpdates } = await pushUpdates(
+            socket,
+            roomId,
+            version,
+            updates
+          );
           this.view.dispatch(receiveUpdates(this.view.state, pushedUpdates));
 
           this.pushing = false;

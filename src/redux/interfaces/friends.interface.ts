@@ -20,6 +20,7 @@ export interface IFriend {
   cover: string;
   usermane: string | null;
   socials: ISocials[];
+  status: string;
 }
 export interface IFriendsSearchParams extends BaseSearchInterface {
   name?: string;

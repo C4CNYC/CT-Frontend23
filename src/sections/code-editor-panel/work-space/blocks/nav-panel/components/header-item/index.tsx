@@ -1,56 +1,44 @@
 import { type FC } from "react";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import {
   Badge,
-  IconButton,
   ListItem,
   ListItemIcon,
   Stack,
   Typography,
 } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
-
 interface HeaderItemProps {
   onClick: () => void;
   activeUsers: number;
-  isOpen: boolean;
   activeAdmins?: number;
 }
 
 const HeaderItem: FC<HeaderItemProps> = ({
   onClick,
   activeUsers,
-  isOpen,
   activeAdmins = 0,
 }) => {
-  const translate = useTranslate();
 
+  console.log({ activeUsers })
+  console.log({ activeAdmins })
   return (
     <ListItem sx={LIST_ITEM_SX}>
-      <ListItemIcon>
-        <IconButton onClick={onClick} sx={ARROW_SX}>
-          {!isOpen ? <FaChevronLeft /> : <FaChevronRight />}
-        </IconButton>
+      <ListItemIcon onClick={onClick}>
+        <ExpandLessIcon sx={ARROW_SX} />
       </ListItemIcon>
 
       <Stack sx={STACK_SX}>
-        <Typography sx={TITLE_SX}>{translate("quick_rabbits")}</Typography>
+        <Typography sx={TITLE_SX}>The Quick Rabbits</Typography>
 
         <Stack direction="row">
           <Badge sx={BADGE_SX} badgeContent={""} color="success">
-            <Typography sx={USER_SUBTITLE_SX}>
-              {activeUsers} {translate("live")}
-            </Typography>
+            <Typography sx={USER_SUBTITLE_SX}>{activeUsers} live</Typography>
           </Badge>
 
           <Badge sx={BADGE_SX} badgeContent={""} color="success">
-            <Typography sx={SUBTITLE_SX}>
-              {activeAdmins} {translate("admin")}
-            </Typography>
+            <Typography sx={SUBTITLE_SX}>{activeAdmins} admin</Typography>
           </Badge>
         </Stack>
       </Stack>
@@ -61,7 +49,9 @@ const HeaderItem: FC<HeaderItemProps> = ({
 const LIST_ITEM_SX = { height: 64 };
 
 const ARROW_SX = {
-  ml: "-3px",
+  marginLeft: "-10px",
+  fontSize: "53px",
+  color: "#C4C4C4",
 };
 
 const STACK_SX = {

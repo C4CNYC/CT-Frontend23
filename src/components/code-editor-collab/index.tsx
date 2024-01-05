@@ -11,6 +11,7 @@ import { type UseCodeEditorCollabProps, useCodeEditorCollab } from "./hook";
 import { EditorMode } from "./hook/constants";
 import { useFileManager } from "./hook/file-manager";
 import { useStyles } from "./styles";
+import { voidFunction } from "@utils";
 
 type ReducedFields = "activeFile" |
   "onDeleteFile" |
@@ -27,6 +28,7 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   socket: Socket
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
+  onChangeCode?:(value: string)=>void
 }
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
@@ -38,6 +40,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
   socket,
   isMultipleExtensionFiles = false,
   defaultFileName = "index.html",
+  onChangeCode = voidFunction,
   ...otherProps
 }) => {
   const styles = useStyles();
@@ -122,6 +125,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
+        onChange={(e) => onChangeCode(e)}
       />
     </div>
   )
