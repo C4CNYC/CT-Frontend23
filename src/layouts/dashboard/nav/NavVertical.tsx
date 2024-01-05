@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { Box, Drawer, Stack } from "@mui/material";
+import { useTheme } from "@mui/system";
 
 import { Logo, NavSectionVertical, Scrollbar } from "@components";
 import { useResponsive } from "@hooks";
@@ -28,6 +29,7 @@ export default function NavVertical({
 }: INavVertical): React.ReactElement | null {
   const user = useSelector((state: RootState) => state.global.user);
   const { pathname } = useRouter();
+  const theme = useTheme();
 
   const isDesktop = useResponsive("up", "md");
   const menu = isManager
@@ -75,6 +77,10 @@ export default function NavVertical({
       sx={{
         flexShrink: { md: 0 },
         width: { md: NAV.W_DASHBOARD },
+        bgcolor:
+          theme.palette.mode === "light"
+            ? "#E6F5FD"
+            : theme.palette.background.paper,
       }}
     >
       <NavToggleButton />
@@ -104,6 +110,10 @@ export default function NavVertical({
           PaperProps={{
             sx: {
               width: NAV.W_DASHBOARD,
+              bgcolor:
+                theme.palette.mode === "light"
+                  ? "#E6F5FD"
+                  : theme.palette.background.paper,
             },
           }}
         >
