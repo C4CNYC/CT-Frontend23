@@ -24,6 +24,10 @@ export default function HomeOverview(): React.ReactElement {
   const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();
   const { query } = useRouter();
+  
+  localStorage.setItem("classId", query.id as string);
+  localStorage.setItem("joinCode", query.joinCode as string);
+
   const { data, isLoading } = useGetClassQuery(
     { id: query.id as string },
     { skip: !query.id || !!query.joinCode }

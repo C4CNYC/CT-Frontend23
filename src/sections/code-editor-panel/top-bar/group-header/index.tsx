@@ -30,11 +30,8 @@ const GroupHeader: FC = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const tribe = useSelector((state) => state.codePanel.class);
-  const dispatch = useDispatch();
-  const isCodePreviewVisible = useSelector(
-    (state) => state.codePanelGlobal.isCodePreviewVisible
-  );
-
+  const dispatch = useDispatch()
+  const isCodePreviewVisible = useSelector((state) => state.codePanelGlobal.isCodePreviewVisible)
   if (!isDesktop) {
     return null;
   }

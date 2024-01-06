@@ -1,6 +1,10 @@
 import { type FC } from "react";
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "src/redux/store";
+
+import { useTranslate } from "src/utils/translateHelper";
 
 import {
   Badge,
@@ -24,6 +28,8 @@ const HeaderItem: FC<HeaderItemProps> = ({
   activeAdmins = 0,
   isOpen,
 }) => {
+  const transalte = useTranslate();
+  const tribe = useSelector((state: RootState) => state.codePanel.class);
   return (
     <ListItem sx={LIST_ITEM_SX}>
       <ListItemIcon>
@@ -33,7 +39,7 @@ const HeaderItem: FC<HeaderItemProps> = ({
       </ListItemIcon>
 
       <Stack sx={STACK_SX}>
-        <Typography sx={TITLE_SX}>The Quick Rabbits</Typography>
+        <Typography sx={TITLE_SX}>{tribe?.name}</Typography>
 
         <Stack direction="row">
           <Badge sx={BADGE_SX} badgeContent={""} color="success">
