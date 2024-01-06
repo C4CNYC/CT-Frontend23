@@ -727,9 +727,9 @@ const es = {
 
   // School type
   primary_school: "Escuela primaria",
-  middle_School: "Secundaria",
-  high_School: "Bachillerato",
-  technical_School: "Escuela Técnica",
+  middle_school: "Secundaria",
+  high_school: "Bachillerato",
+  technical_school: "Escuela Técnica",
   college: "Colegio",
   university: "Universidad",
   other: "Otros",

@@ -728,9 +728,9 @@ const fr = {
 
   // School type
   primary_school: "École primaire",
-  middle_School: "École intermédiaire",
-  high_School: "Lycée",
-  technical_School: "Ecole technique",
+  middle_school: "École intermédiaire",
+  high_school: "Lycée",
+  technical_school: "Ecole technique",
   college: "Collège",
   university: "Université",
   other: "Autre",

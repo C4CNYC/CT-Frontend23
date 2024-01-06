@@ -15,6 +15,7 @@ import {
   RHFTextField,
   useSnackbar,
 } from "@components";
+import { capitalize } from "@utils";
 import { SchoolType } from "src/redux/services/enums/school-type.enum";
 import {
   useGetMySchoolsQuery,
@@ -118,7 +119,7 @@ export default function AddSchool(): React.ReactElement {
             sx={(theme) => ({ ...styledRegisterInput(theme) })}
           >
             {Object.keys(SchoolType).map((c) => (
-              <option key={c} value={SchoolType[c as keyof typeof SchoolType]}>
+              <option key={c} value={capitalize(c)}>
                 {translate(SchoolType[c as keyof typeof SchoolType])}
               </option>
             ))}
