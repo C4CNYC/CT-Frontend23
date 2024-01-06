@@ -1,8 +1,10 @@
 import { type FC } from "react";
 
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
 import {
   Badge,
+  IconButton,
   ListItem,
   ListItemIcon,
   Stack,
@@ -13,20 +15,21 @@ interface HeaderItemProps {
   onClick: () => void;
   activeUsers: number;
   activeAdmins?: number;
+  isOpen: boolean;
 }
 
 const HeaderItem: FC<HeaderItemProps> = ({
   onClick,
   activeUsers,
   activeAdmins = 0,
+  isOpen,
 }) => {
-
-  console.log({ activeUsers })
-  console.log({ activeAdmins })
   return (
     <ListItem sx={LIST_ITEM_SX}>
-      <ListItemIcon onClick={onClick}>
-        <ExpandLessIcon sx={ARROW_SX} />
+      <ListItemIcon>
+        <IconButton onClick={onClick} sx={ARROW_SX}>
+          {!isOpen ? <FaChevronLeft /> : <FaChevronRight />}
+        </IconButton>
       </ListItemIcon>
 
       <Stack sx={STACK_SX}>
@@ -49,9 +52,7 @@ const HeaderItem: FC<HeaderItemProps> = ({
 const LIST_ITEM_SX = { height: 64 };
 
 const ARROW_SX = {
-  marginLeft: "-10px",
-  fontSize: "53px",
-  color: "#C4C4C4",
+  ml: "-3px",
 };
 
 const STACK_SX = {
