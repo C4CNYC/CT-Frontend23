@@ -22,4 +22,4 @@ export * from "./createRandomAvatar";
 export * from "./getLinearGradient";
 export * from "./voidFunction";
 export * from "./validationMaping";
-export * from "./capitalizeSnackeCase";
+export * from "./capitalizeSnakeCase";
