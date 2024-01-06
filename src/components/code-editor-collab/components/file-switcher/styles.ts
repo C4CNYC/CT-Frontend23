@@ -4,8 +4,9 @@ export const styles = {
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    background: "#282c34",
+    background: "#7d7e80",
     borderBottom: "2px solid #abb2bf",
+    pl: 6,
   },
   TABS: {
     padding: 0,
@@ -13,8 +14,8 @@ export const styles = {
     minHeight: "32px",
     "& .MuiTabs-indicator": {
       background: "#282c34",
-      height: "3px"
-    }
+      height: "3px",
+    },
   },
   TAB: {
     marginRight: "0px !important",
@@ -24,10 +25,10 @@ export const styles = {
     minHeight: "32px",
     color: "#abb2bf!important",
     "&[aria-selected=true]": {
-      color: "white !important"
-    }
+      color: "white !important",
+    },
   },
   DEV_ICON: {
-    marginRight: "8px"
-  }
-}
+    marginRight: "8px",
+  },
+};
