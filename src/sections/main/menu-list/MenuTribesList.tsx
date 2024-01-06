@@ -66,7 +66,9 @@ export default function MenuTribesList(): React.ReactElement {
           }}
         />
       )}
-      <StyledSubheader>{translate("sidebar_menu_tribes")}</StyledSubheader>
+      <StyledSubheader sx={{ background: "transparent" }}>
+        {translate("sidebar_menu_tribes")}
+      </StyledSubheader>
       <Stack
         sx={{
           gap: 1,
