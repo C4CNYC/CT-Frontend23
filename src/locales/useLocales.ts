@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 import { useTranslation } from "react-i18next";
 
 import { Localization } from "@mui/material/locale";
@@ -26,7 +24,6 @@ interface IUseLocals {
 // ----------------------------------------------------------------------
 
 export function useLocales(): IUseLocals {
-  const { replace, asPath } = useRouter();
   const { i18n, t: translate } = useTranslation();
 
   const { onChangeDirectionByLang } = useSettingsContext();
@@ -44,7 +41,6 @@ export function useLocales(): IUseLocals {
     try {
       await i18n.changeLanguage(newlang);
       onChangeDirectionByLang(newlang);
-      replace(asPath, asPath, { locale: newlang });
     } catch (e: any) {}
   };
 

@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { type FC, type RefObject, useEffect, useMemo } from "react";
 
+import { useSelector } from "react-redux";
 import { DndContext } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useSelector } from "react-redux";
 
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import EventNoteIcon from "@mui/icons-material/EventNote";
@@ -109,28 +109,8 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
     setUsers(_users);
   }, [usersStatus, users.length]);
 
-  useEffect(() => {
-    console.log("second component:", socket);
-    socket.on("joinLesson_", (data: any) => {
-      console.log("joinLesson_ response");
-      const { lesson, user } = JSON.parse(data);
-      console.log("joinLesson:", { lesson, user });
-    });
-    socket.on("leaveLesson_", (data: any) => {
-      const [lesson, user] = JSON.parse(data);
-      console.log({ lesson, user });
-    });
-    return () => {
-      socket.off("joinLesson_");
-      socket.off("leaveLesson_");
-    };
-  }, []);
-
   const onChangeUserStatus = (status: string = "active") => {
     try {
-      console.log(socket);
-      console.log({ roomId });
-      console.log("onChangeUserStatus", router.query.lessonId);
       // if (socket && socket.connected && router.query.lessonId) {
       socket.emit("changeStatusInLesson", {
         lesson: router.query.lessonId,

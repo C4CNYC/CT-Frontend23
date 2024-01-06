@@ -3,10 +3,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { useTheme } from "@mui/material/styles";
+import { type Theme, type SxProps } from "@mui/system";
+
+import { Box } from "@mui/material";
 import { FullScreen } from "react-full-screen";
 import { Socket, io } from "socket.io-client";
-
-import { Box, Theme, useTheme } from "@mui/material";
 
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
@@ -15,6 +17,9 @@ import WorkSpace from "@sections/code-editor-panel/work-space";
 import { useCodePanel } from "src/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
+import { useGetClassQuery } from "src/redux/services/manager/classes-student";
+import { useDispatch } from "src/redux/store";
+import { setClass } from "src/redux/slices/code-panel";
 import { SocketContext } from "../../../context/socket-context";
 import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
@@ -74,6 +79,8 @@ export default function Index(): React.ReactElement | null {
     isDesktop,
     lessonManagerProps,
   } = useCodePanel();
+
+  const dispatch = useDispatch();
 
   const theme = useTheme();
   const boxProps = useMemo(() => getBoxProps(theme), [theme]);
