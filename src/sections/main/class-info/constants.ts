@@ -1,4 +1,4 @@
-import { SxProps } from "@mui/system";
+import { SxProps, Theme } from "@mui/system";
 
 import { getLinearGradient } from "@utils";
 
@@ -91,25 +91,27 @@ export const getClassInfoWrapperSx = (color: string): SxProps => ({
 export const NOTIFICATION_CONTAINER_SX = {
   alignItems: "center",
   flexWrap: "wrap",
+  color: "inherit",
   justifyContent: {
     xs: "center",
     md: "start",
   },
 };
 
-export const NOTIFICATION_WRAPPER_SX = {
-  background: "#E6F5FD",
-  color: "#364954",
+export const getNotificationWrapperSx = (theme: Theme): SxProps => ({
+  background:
+    theme.palette.mode === "light" ? "#E6F5FD" : theme.palette.background.paper,
+  color: theme.palette.mode === "light" ? "#364954" : "#F6F9FC",
   justifyContent: "space-between",
   alignItems: "center",
   px: 4,
   py: 0.5,
-};
+});
 
 export const NOTIFICATION_LINK_SX = {
   display: "flex",
   alignItems: "center",
-  color: "#364954",
+  color: "inherit",
   cursor: "pointer",
 };
 
