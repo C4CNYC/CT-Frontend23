@@ -2,6 +2,8 @@ import { type FC, useCallback, useEffect, useMemo, useState } from "react";
 
 import { Box, Button, Tooltip, Typography, useTheme } from "@mui/material";
 
+import { useTranslate } from "src/utils/translateHelper";
+
 import { BOX_SX, getNestedBoxSx } from "./constants";
 import NavigationElement from "./navigation-element";
 import NavigationSpeedDial from "./navigation-speed-dial";
@@ -14,9 +16,9 @@ import {
 } from "./styles";
 
 export enum BtnType {
-  next = "NEXT 👀",
-  compleated = "YOU DID IT 🙌",
-  coding = "LET’S GET CODING",
+  next = "btn_group_next",
+  compleated = "btn_group_you_did_it",
+  coding = "btn_group_lets_coding",
 }
 
 interface INavigation {
@@ -37,7 +39,7 @@ const Navigation: FC<INavigation> = ({
 }) => {
   const theme = useTheme();
   const [btnNext, setBtnNext] = useState<BtnType>(BtnType.next);
-
+  const translate = useTranslate();
   const nestedBox = useMemo(() => getNestedBoxSx(theme), [theme]);
   const tooltipWrapperSx = useMemo(() => getTooltipWrapperSx(theme), [theme]);
 
@@ -76,7 +78,7 @@ const Navigation: FC<INavigation> = ({
           title={
             stepHasValidation && !canMoveNext ? (
               <Typography sx={TOOLTIP_CONTENT_SX}>
-                Please complete all tasks to continue (or skip, if available.)
+                {translate("btn_group_tooltip")}
               </Typography>
             ) : (
               ""
@@ -103,7 +105,7 @@ const Navigation: FC<INavigation> = ({
                   }}
                   sx={stylesSkip()}
                 >
-                  SKIP
+                  {translate("btn_group_skip")}
                 </Button>
               ) : null}
             </NavigationElement>
