@@ -17,6 +17,7 @@ export const stylesPrev = (): Record<string, unknown> => {
     "&:hover": {
       background: "rgba(196, 196, 196, .7)",
       border: "none",
+      boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
     },
     [theme.breakpoints.between(1000, 1100)]: {
       width: "45%",
@@ -77,6 +78,7 @@ export const stylesNext = (btnNext: BtnType): Record<string, unknown> => {
       color: "#FFF",
       bgcolor: getBg(true),
       border: "none",
+      boxShadow: " 0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
     },
   };
 };
