@@ -210,6 +210,7 @@ const es = {
   rule: "Regla",
   regex: "Regex",
   private: "Privado",
+  open_catalog: "Abrir catálogo",
 
   // avatar upload
   avatar__upload_text: "Subir foto",
