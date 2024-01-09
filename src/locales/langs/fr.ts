@@ -264,6 +264,8 @@ const fr = {
   messages_content_type_not_supported: "TYPE DE CONTENU NON PRIS EN CHARGE",
   messages_lesson_complete: "Leçon terminée avec succès",
   messages_course_complete: "Cours terminé avec succès",
+  messages_chalage_comleted: "Défi réussi",
+  messages_course_doesnt_exist: "Le cours n'existe pas",
 
   // Validation messages
   required_skill_name: "Le nom de la compétence est requis",

@@ -262,6 +262,8 @@ const es = {
   messages_content_type_not_supported: "TIPO DE CONTENIDO NO ADMITIDO",
   messages_lesson_complete: "Lección finalizada con éxito",
   messages_course_complete: "Curso realizado con éxito",
+  messages_chalage_comleted: "Desafío completado con éxito",
+  messages_course_doesnt_exist: "El curso no existe",
 
   // Validation messages
   required_skill_name: "El nombre de la habilidad es obligatorio",

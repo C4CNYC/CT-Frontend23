@@ -262,6 +262,8 @@ const pt = {
   messages_content_type_not_supported: "Tipo de conteúdo não suportado",
   messages_lesson_complete: "Lição completa com sucessod",
   messages_course_complete: "Curso concluído com sucesso",
+  messages_chalage_comleted: "Desafio concluído com sucesso",
+  messages_course_doesnt_exist: "O curso não existe",
 
   // Validation messages
   required_skill_name: "O nome da habilidade é necessário",
