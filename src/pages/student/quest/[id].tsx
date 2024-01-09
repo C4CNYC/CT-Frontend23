@@ -80,7 +80,7 @@ export default function Quest(): React.ReactElement | null {
   );
 }
 
-export const getContainerSx = (theme: Theme): SxProps => ({
+const getContainerSx = (theme: Theme): SxProps => ({
   borderRadius: 1,
   background:
     theme.palette.mode === "light"
@@ -90,14 +90,14 @@ export const getContainerSx = (theme: Theme): SxProps => ({
   pb: 8,
 });
 
-export const getSkeletonSx = (theme: Theme): SxProps => ({
+const getSkeletonSx = (theme: Theme): SxProps => ({
   height: "98px",
   mt: 3,
   background: theme.palette.mode === "light" ? "#fff" : "initial",
   borderRadius: 2,
 });
 
-export const KEEP_CODING_LINK_SX = {
+const KEEP_CODING_LINK_SX = {
   display: "inline-flex",
   alignItems: "center",
   color: "inherit",
