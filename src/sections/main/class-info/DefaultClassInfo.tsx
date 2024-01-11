@@ -71,9 +71,6 @@ export default function DefaultClassInfo({
     { skip: !classData?.school?.id }
   );
 
-  console.log(classData);
-  console.log("teachers", teachers);
-
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
       copy(textToCopy);
