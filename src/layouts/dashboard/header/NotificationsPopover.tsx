@@ -31,13 +31,11 @@ import {
 // utils
 import { fToNow } from "@utils";
 
-// _mock_
-import { _notifications } from "../../../_mock/arrays";
 
 // ----------------------------------------------------------------------
 
 export default function NotificationsPopover(): React.ReactElement {
-  const [notifications, setNotifications] = useState(_notifications);
+  const [notifications, setNotifications] = useState([]);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
