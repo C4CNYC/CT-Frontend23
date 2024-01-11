@@ -10,6 +10,7 @@ import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
 import QuestRating from "@sections/quest/QuestRating";
+import { useGetTeacherListQuery } from "src/redux/services/admin/school-amdin";
 import { useGetAssignmentStudentQuery } from "src/redux/services/manager/assignments-student";
 import { useGetCoursQuery } from "src/redux/services/manager/courses-student";
 import { useTranslate } from "src/utils/translateHelper";
@@ -35,6 +36,13 @@ export default function Quest(): React.ReactElement | null {
     { skip: !data?.course.id }
   );
 
+  const { data: teachers } = useGetTeacherListQuery(
+    {
+      schoolId: query.schoolId as string,
+    },
+    { skip: !query.schoolId }
+  );
+
   if (isLoading || !data) {
     return <Skeleton variant="rounded" height="600px" />;
   }
@@ -46,7 +54,7 @@ export default function Quest(): React.ReactElement | null {
       </Head>
       <Container maxWidth={themeStretch ? false : "lg"} sx={containerSx}>
         <QuestHeader />
-        <QuestMain questName={data.name} />
+        <QuestMain teachers={teachers} questName={data.name} />
         <QuestDescription description={data?.description} />
         {isLoadingCourse ? (
           <Skeleton variant="rounded" sx={skeletonSx} />
