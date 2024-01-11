@@ -3,7 +3,9 @@ import { FaSchool } from "react-icons/fa";
 import { Avatar, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 
+import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { IUser } from "src/redux/services/interfaces/user.interface";
 import { useTranslate } from "src/utils/translateHelper";
 
 import {
@@ -14,10 +16,12 @@ import {
 
 interface Props {
   classData: IClass;
+  teacher?: IUser & BaseResponseInterface;
 }
 
 export default function ClassInfoMain({
   classData,
+  teacher,
 }: Props): React.ReactElement {
   const translate = useTranslate();
 
@@ -44,7 +48,11 @@ export default function ClassInfoMain({
             />
             {classData?.school?.name}
           </Typography>
-          <Avatar sx={TEACHER_EMOJI_SX} src={""} alt="">
+          <Avatar
+            sx={TEACHER_EMOJI_SX}
+            src={teacher?.avatar ?? ""}
+            alt={teacher?.first_name ?? "Teacher avatar"}
+          >
             &#128540;
           </Avatar>
           <Typography
@@ -53,7 +61,8 @@ export default function ClassInfoMain({
               color: "#fff",
             }}
           >
-            {translate("home_teacher_admin")}
+            {translate("tacher")}: {teacher?.first_name ?? ""}{" "}
+            {teacher?.last_name ?? ""}
           </Typography>
         </Stack>
       </Stack>
