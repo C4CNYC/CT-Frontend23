@@ -1,11 +1,20 @@
 import Head from "next/head";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-import { Container, Skeleton, Theme, useTheme } from "@mui/material";
+import {
+  Container,
+  Link,
+  Skeleton,
+  SxProps,
+  Theme,
+  useTheme,
+} from "@mui/material";
 
-import { useSettingsContext } from "@components";
+import { Iconify, useSettingsContext } from "@components";
 import { StudentDashboardLayout } from "@layouts/dashboard";
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import QuestDescription from "@sections/quest/QuestDescription";
 import QuestHeader from "@sections/quest/QuestHeader";
 import QuestMain from "@sections/quest/QuestMain";
@@ -57,12 +66,21 @@ export default function Quest(): React.ReactElement | null {
             progress={course?.progress ?? 0}
           />
         )}
+        <Link
+          component={NextLink}
+          href={STUDENT_PATH_DASHBOARD.codePanel.workSpace(course?.id ?? "")}
+          underline="none"
+          sx={KEEP_CODING_LINK_SX}
+        >
+          {translate("keep_coding")}
+          <Iconify icon="maki:arrow" width={18} style={{ marginLeft: "3px" }} />
+        </Link>
       </Container>
     </>
   );
 }
 
-const getContainerSx = (theme: Theme) => ({
+const getContainerSx = (theme: Theme): SxProps => ({
   borderRadius: 1,
   background:
     theme.palette.mode === "light"
@@ -72,9 +90,17 @@ const getContainerSx = (theme: Theme) => ({
   pb: 8,
 });
 
-const getSkeletonSx = (theme: Theme) => ({
+const getSkeletonSx = (theme: Theme): SxProps => ({
   height: "98px",
   mt: 3,
   background: theme.palette.mode === "light" ? "#fff" : "initial",
   borderRadius: 2,
 });
+
+const KEEP_CODING_LINK_SX = {
+  display: "inline-flex",
+  alignItems: "center",
+  color: "inherit",
+  mt: 2,
+  pl: 2,
+};

@@ -217,6 +217,7 @@ const en = {
   rule: "Rule",
   regex: "Regex",
   private: "Private",
+  open_catalog: "Open Catalog",
 
   // avatar upload
   avatar__upload_text: "Upload photo",
