@@ -63,5 +63,5 @@ export * from "./slider/CarouselArrows";
 export * from "./slider/CarouselDots";
 export * from "./slider/SliderDemoMui";
 export * from "./slider/Icon";
-export * from "./chat";
+// export * from "./chat";
 export * from "./list-item-course";

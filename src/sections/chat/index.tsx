@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 // import { Firestore } from "firebase/firestore";
 
-import { Chat } from "@components";
+import { Chat } from "src/components/chat";
 import { CodePanelContext } from "@sections/code-panel/context/CodePanel.context";
 // import { useAuthContext } from "src/auth/useAuthContext";
 import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";

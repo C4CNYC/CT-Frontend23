@@ -24,7 +24,7 @@ import { Iconify } from "@components";
 import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
 import { BaseResponseInterface } from "@utils";
-import { useAuthContext } from "src/auth/useAuthContext";
+// import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { RootState } from "src/redux/store";
 
