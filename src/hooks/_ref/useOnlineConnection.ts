@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, remove, set } from "firebase/database";
 
-import { useUserActivity } from "./useUserActivity";
+import { useUserActivity } from "../useUserActivity";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

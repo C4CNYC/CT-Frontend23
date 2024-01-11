@@ -9,12 +9,11 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { io } from "socket.io-client";
 
-import {
-  IChatMessage,
-  useFirebaseChat,
-} from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
+// import {
+//   IChatMessage,
+//   useFirebaseChat,
+// } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
 import { isNull } from "lodash";
 import { useEffect, useMemo, useState } from "react";
@@ -23,6 +22,8 @@ import { createRabit } from "src/redux/slices/rabits";
 import { ActivityStatus } from "../../../../types/activity-status";
 import { getActivityColor } from "../../../../utils/activity-color";
 import { useSocket } from "@hooks";
+
+type IChatMessage = any;
 
 const AvatarSkeleton = (): React.ReactElement => {
   return (
@@ -51,7 +52,7 @@ export const SidebarUser = ({
   const senderId = "SUPPORT";
   const dispatch = useDispatch();
   const [lastMessage, setLastMessage] = useState<IChatMessage>();
-  const { getMessages } = useFirebaseChat();
+  // const { getMessages } = useFirebaseChat();
 
   const {
     first_name: firstName,
@@ -66,17 +67,17 @@ export const SidebarUser = ({
     return getActivityColor(status);
   }, [status]);
 
-  useEffect(() => {
-    getMessages(
-      senderId,
-      id,
-      (data) => {
-        if (!data.length) return;
-        setLastMessage(data[0]);
-      },
-      1
-    );
-  }, []);
+  // useEffect(() => {
+  //   getMessages(
+  //     senderId,
+  //     id,
+  //     (data) => {
+  //       if (!data.length) return;
+  //       setLastMessage(data[0]);
+  //     },
+  //     1
+  //   );
+  // }, []);
 
   const socket = useSocket();
 

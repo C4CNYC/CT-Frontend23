@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 import { initializeApp } from "firebase/app";
 import {
   Firestore,
@@ -12,6 +10,9 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
+import { useSelector } from "react-redux";
+
+import { RootState } from "../../../../redux/store";
 
 export interface IChatMessage {
   id: string;
@@ -29,6 +30,7 @@ const app = initializeApp({
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 });
+
 const db = getFirestore(app);
 
 interface FirebaseChatApi {
@@ -45,10 +47,10 @@ interface FirebaseChatApi {
     limit?: number
   ) => void;
 }
+
 export const useFirebaseChat = (): FirebaseChatApi => {
-  const {
-    query: { id: classId },
-  } = useRouter();
+  const classId = useSelector((state: RootState) => state.codePanel?.class?.id);
+
   return {
     sendMessage: async (
       message: string,

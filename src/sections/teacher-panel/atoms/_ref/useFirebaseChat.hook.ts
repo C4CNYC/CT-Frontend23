@@ -1,26 +1,24 @@
-import { initializeApp } from "firebase/app";
-import { Timestamp } from "firebase/firestore";
+import { useRouter } from "next/router"
+
+import { initializeApp } from "firebase/app"
 import {
-  Firestore,
   addDoc,
   collection,
+  Firestore,
   getFirestore,
   limitToLast,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
-} from "firebase/firestore";
-import { useSelector } from "react-redux";
-
-import { RootState } from "src/redux/store";
+} from "firebase/firestore"
+import { getRoomId } from "@sections/teacher-panel/atoms/getRoomId"
 
 export interface IChatMessage {
   id: string;
   text: string;
   sender_id: string;
   uid: string;
-  timestamp?: Timestamp;
 }
 
 const app = initializeApp({
@@ -32,7 +30,6 @@ const app = initializeApp({
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 });
-
 const db = getFirestore(app);
 
 interface FirebaseChatApi {
@@ -49,10 +46,10 @@ interface FirebaseChatApi {
     limit?: number
   ) => void;
 }
-
 export const useFirebaseChat = (): FirebaseChatApi => {
-  const classId = useSelector((state: RootState) => state.codePanel?.class?.id);
-
+  const {
+    query: { id: classId },
+  } = useRouter();
   return {
     sendMessage: async (
       message: string,
@@ -80,35 +77,26 @@ export const useFirebaseChat = (): FirebaseChatApi => {
       } catch (error: any) {}
     },
     getMessages: async (senderId, reciverId, callback, limit) => {
-      try {
-        return onSnapshot(
-          query(
-            collection(
-              db,
-              "chat-rooms",
-              classId === reciverId
-                ? reciverId
-                : getRoomId(senderId, reciverId),
-              "messages"
-            ),
-            limitToLast(limit ?? 50),
-            orderBy("timestamp", "asc")
+      return onSnapshot(
+        query(
+          collection(
+            db,
+            "chat-rooms",
+            classId === reciverId ? reciverId : getRoomId(senderId, reciverId),
+            "messages"
           ),
-          (querySnapshot) => {
-            const messages = querySnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            })) as IChatMessage[];
-            callback(messages, db);
-          }
-        );
-      } catch (error: any) {
-        console.log(error);
-      }
+          limitToLast(limit ?? 50),
+          orderBy("timestamp", "asc")
+        ),
+        (querySnapshot) => {
+          const messages = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })) as IChatMessage[];
+          callback(messages, db);
+        }
+      );
     },
   };
 };
 
-export function getRoomId(senderId: string, reciverId: string): string {
-  return [senderId, reciverId].sort().join("_");
-}

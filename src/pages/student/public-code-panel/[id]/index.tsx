@@ -13,7 +13,6 @@ import { Box } from "@mui/material";
 
 import { EmptyContent } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { CodePanelChat } from "@sections/chat";
 import SkeletonCodePanel from "@sections/code-editor-panel/skeleton";
 import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
@@ -27,6 +26,8 @@ import {
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
 } from "src/redux/services/public-student";
+
+// import { CodePanelChat } from "@sections/chat";
 
 const Tour = dynamic(
   async () =>
@@ -159,7 +160,10 @@ export default function Index(): React.ReactElement {
               bgcolor="white"
               sx={{ position: "relative", overflow: "hidden" }}
             >
-              <TopPanel chatComponent={<CodePanelChat />} />
+              <TopPanel
+                // chatComponent={<CodePanelChat />}
+                chatComponent={null}
+              />
               <WorkSpace />
               <BottomBar />
             </Box>

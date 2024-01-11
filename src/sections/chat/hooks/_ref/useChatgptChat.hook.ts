@@ -7,12 +7,12 @@ import {
 
 import { aiAssistantId, chatgptTutor } from "@utils";
 
-import { IChatMessage, getRoomId } from "./useFirebaseChat.hook";
+import { getRoomId } from "@sections/chat/hooks/getRoomId"
 
 export const ChatgptFirebaseOnSendMessage = async (
   reciverId: string, // chatgtp is the reciever
   senderId: string,
-  messages: IChatMessage[],
+  messages: any[],
   db: Firestore
 ): Promise<void> => {
   try {

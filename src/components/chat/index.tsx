@@ -7,7 +7,7 @@ import {
   ExpansionPanel,
   MainContainer,
 } from "@chatscope/chat-ui-kit-react";
-import { Firestore } from "firebase/firestore";
+// import { Firestore } from "firebase/firestore";
 import { useAtom } from "jotai";
 import _ from "lodash";
 import { useSelector } from "react-redux";
@@ -21,7 +21,6 @@ import {
 } from "@mui/material";
 
 import { Iconify } from "@components";
-import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
 import { BaseResponseInterface } from "@utils";
@@ -29,7 +28,7 @@ import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { RootState } from "src/redux/store";
 
-import { ChatgptFirebaseOnSendMessage } from "../../sections/chat/hooks/useChatgptChat.hook";
+// import { ChatgptFirebaseOnSendMessage } from "../../sections/chat/hooks/useChatgptChat.hook";
 import { chatAtom } from "./atoms/chat.atom";
 import { Messages } from "./messages";
 import { User, UsersItem } from "./users-item";
@@ -39,14 +38,14 @@ interface IChat {
   isUserListLoading: boolean;
   getMessages: (
     reciverId: string,
-    cb: (messages: IChatMessage[], db: Firestore) => void
+    cb: (messages: any[], db: any) => void
   ) => void;
   onSend: (props: {
     innerHtml: string;
     textContent: string;
     innerText: string;
     reciverId: string;
-    callback?: (db: Firestore) => void;
+    callback?: (db: any) => void;
   }) => void;
 }
 interface ExpandProps {
@@ -85,9 +84,9 @@ export const Chat = ({
   );
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const [, setChatVisible] = useAtom(chatHandlerAtom);
-  const { user: loggedUser } = useAuthContext();
+  // const { user: loggedUser } = useAuthContext();
   const [{ user }, updateChat] = useAtom(chatAtom);
-  const [messages, setMessages] = useState<IChatMessage[]>([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [isTeachersOpen] = useState<boolean>(false);
   const [{ message: helpMsg, sent }, updateAtom] = useAtom(helpMsgAtom);
 
@@ -102,24 +101,24 @@ export const Chat = ({
   type OnSendCallback = (
     reciverId: string,
     messageContent: string
-  ) => (db: Firestore) => void;
+  ) => (db: any) => void;
   const onSendCallback: OnSendCallback =
     (reciverId, messageContent) => (db) => {
       if (reciverId === "SUPPORT") {
-        ChatgptFirebaseOnSendMessage(
-          reciverId,
-          loggedUser?.student_profile?.id,
-          [
-            ...messages,
-            {
-              id: "_",
-              text: messageContent,
-              sender_id: loggedUser?.student_profile?.id,
-              uid: "_",
-            },
-          ],
-          db
-        );
+        // ChatgptFirebaseOnSendMessage(
+        //   reciverId,
+        //   loggedUser?.student_profile?.id,
+        //   [
+        //     ...messages,
+        //     {
+        //       id: "_",
+        //       text: messageContent,
+        //       sender_id: loggedUser?.student_profile?.id,
+        //       uid: "_",
+        //     },
+        //   ],
+        //   db
+        // );
       }
     };
 
