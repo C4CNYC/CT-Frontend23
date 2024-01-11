@@ -210,6 +210,7 @@ const fr = {
   rule: "Règle",
   regex: "Expression régulière",
   private: "Privé",
+  open_catalog: "Ouvrir le catalogue",
 
   // avatar upload
   avatar__upload_text: "Envoyer la photo",

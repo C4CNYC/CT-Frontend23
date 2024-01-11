@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { TbShare2 } from "react-icons/tb";
 
+// import { TbShare2 } from "react-icons/tb"; // Hide share link
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 
 import { useTranslate } from "src/utils/translateHelper";
@@ -17,7 +17,9 @@ export default function QuestHeader(): React.ReactElement {
         <MdOutlineArrowBackIosNew size={30} />
       </IconButton>
       <Stack sx={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-        <Button
+        {/* Hide share link */}
+
+        {/* <Button
           variant="text"
           disableRipple
           sx={{
@@ -33,7 +35,7 @@ export default function QuestHeader(): React.ReactElement {
           <Typography variant="button" sx={{ ml: 0.5 }}>
             {translate("actions_share")}
           </Typography>
-        </Button>
+        </Button> */}
         <Typography variant="button">{translate("quest_type")}</Typography>
       </Stack>
     </Stack>

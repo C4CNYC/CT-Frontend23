@@ -218,6 +218,7 @@ const ar = {
   rule: "قاعدة",
   regex: "التعبير العادي",
   private: "خاص",
+  open_catalog: "افتح الكتالوج",
 
   // avatar upload
   avatar__upload_text: "حمل الصورة",
