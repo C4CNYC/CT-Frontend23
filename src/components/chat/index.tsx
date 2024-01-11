@@ -9,7 +9,7 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 // import { Firestore } from "firebase/firestore";
 import { useAtom } from "jotai";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSelector } from "react-redux";
 
 import {

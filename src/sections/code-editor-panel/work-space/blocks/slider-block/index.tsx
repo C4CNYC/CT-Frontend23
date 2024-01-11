@@ -8,7 +8,7 @@ import React, {
   useState,
 } from "react";
 
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { SlDirections } from "react-icons/sl";
 import { TbArrowBarToLeft } from "react-icons/tb";
 import { useDispatch } from "react-redux";

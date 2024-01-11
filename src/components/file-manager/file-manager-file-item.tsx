@@ -24,7 +24,7 @@ import * as React from "react";
 import FileManagerNewFolderDialog from "./file-manager-new-folder-dialog";
 import { useUpdateMediaMutation, useUpdateMediaPathMutation } from "../../redux/services/manager/media-manager";
 import { IMediaUpdate } from "../../redux/services/interfaces/media.interface";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import FileManagerMoveFolderDialog from "./file-manager-move-folder";
 import { SelectChangeEvent } from "@mui/material";
 import { useProfileQuery } from "../../redux/services/auth";

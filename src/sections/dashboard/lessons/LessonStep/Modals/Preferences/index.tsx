@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { javascript } from "@codemirror/lang-javascript";
 import { yupResolver } from "@hookform/resolvers/yup";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import _ from "lodash";
+import * as _ from "lodash-es";
 
 const initialState: {
   items: Record<string, { id: string; email: string; avatar: string }>;

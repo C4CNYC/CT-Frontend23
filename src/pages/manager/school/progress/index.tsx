@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSelector } from "react-redux";
 
 import { Container } from "@mui/material";

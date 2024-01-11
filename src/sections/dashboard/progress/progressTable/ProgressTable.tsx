@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 
 import { format } from "date-fns";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { HiOutlineLightBulb, HiOutlineSquares2X2 } from "react-icons/hi2";
 import { LuPencil } from "react-icons/lu";
 import {

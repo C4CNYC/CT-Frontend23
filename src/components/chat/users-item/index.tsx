@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Avatar, Conversation } from "@chatscope/chat-ui-kit-react";
-import _ from "lodash";
+import * as _ from "lodash-es";
 
 import { BaseResponseInterface } from "@utils";
 import { IFriend } from "src/redux/interfaces/friends.interface";

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { SlDirections } from "react-icons/sl";
 import Carousel from "react-slick";
 

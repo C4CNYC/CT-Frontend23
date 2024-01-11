@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSnackbar } from "notistack";
 import Confetti from "react-confetti";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";

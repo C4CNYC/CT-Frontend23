@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSnackbar } from "notistack";
 import { FiSettings } from "react-icons/fi";
 import { ImPlus } from "react-icons/im";

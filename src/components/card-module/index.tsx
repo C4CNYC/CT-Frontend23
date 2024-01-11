@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { CgMenuMotion } from "react-icons/cg";
 import { FcInfo } from "react-icons/fc";
 import { MdAddCircleOutline, MdEdit } from "react-icons/md";
