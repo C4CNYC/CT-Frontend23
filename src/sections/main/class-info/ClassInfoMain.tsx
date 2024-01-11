@@ -61,7 +61,7 @@ export default function ClassInfoMain({
               color: "#fff",
             }}
           >
-            {translate("tacher")}: {teacher?.first_name ?? ""}{" "}
+            {translate("teacher")}: {teacher?.first_name ?? ""}{" "}
             {teacher?.last_name ?? ""}
           </Typography>
         </Stack>
