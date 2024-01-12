@@ -9,6 +9,7 @@ import {
   Skeleton,
   SxProps,
   Theme,
+  Typography,
   useTheme,
 } from "@mui/material";
 
@@ -56,6 +57,8 @@ export default function Quest(): React.ReactElement | null {
     return <Skeleton variant="rounded" height="600px" />;
   }
 
+  const content = JSON.parse(data.description).doc.content;
+
   return (
     <>
       <Head>
@@ -64,7 +67,14 @@ export default function Quest(): React.ReactElement | null {
       <Container maxWidth={themeStretch ? false : "lg"} sx={containerSx}>
         <QuestHeader />
         <QuestMain teachers={teachers} questName={data.name} />
-        <QuestDescription description={data?.description} />
+        {content.some((el: any) => el.content) ? (
+          <QuestDescription description={data?.description} />
+        ) : (
+          <Typography variant="h4" pt={3}>
+            {translate("quest_no_descr")}
+          </Typography>
+        )}
+
         {isLoadingCourse ? (
           <Skeleton variant="rounded" sx={skeletonSx} />
         ) : (

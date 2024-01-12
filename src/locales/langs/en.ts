@@ -606,6 +606,7 @@ const en = {
   quest_close_date: "Close Date:",
   quest_close_date_info:
     "After this submissions are no longer received. The default is 3 days after the “Due date.”",
+  quest_no_descr: "No details available for this quest.",
 
   // My Notes
   notes_my: "My Notes",

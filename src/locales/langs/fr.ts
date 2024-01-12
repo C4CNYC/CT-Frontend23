@@ -608,6 +608,7 @@ const fr = {
   quest_close_date: "Date de clôture:",
   quest_close_date_info:
     "Après cela, les soumissions ne sont plus reçues. La valeur par défaut est 3 jours après la «Date d'échéance».",
+  quest_no_descr: "Aucun détail disponible pour cette quête.",
 
   // My Notes
   notes_my: "Mes notes",
