@@ -74,7 +74,7 @@ export default function QuestRating({
               typography="h4"
               sx={QUEST_LINK_SX}
             >
-              {translate("open")}
+              {translate("open_catalog")}
               <RiShareBoxFill size={22} />
             </Link>
           </Stack>

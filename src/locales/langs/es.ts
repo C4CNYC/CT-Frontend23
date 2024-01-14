@@ -210,6 +210,7 @@ const es = {
   rule: "Regla",
   regex: "Regex",
   private: "Privado",
+  open_catalog: "Abrir catálogo",
 
   // avatar upload
   avatar__upload_text: "Subir foto",
@@ -262,6 +263,8 @@ const es = {
   messages_content_type_not_supported: "TIPO DE CONTENIDO NO ADMITIDO",
   messages_lesson_complete: "Lección finalizada con éxito",
   messages_course_complete: "Curso realizado con éxito",
+  messages_chalage_comleted: "Desafío completado con éxito",
+  messages_course_doesnt_exist: "El curso no existe",
 
   // Validation messages
   required_skill_name: "El nombre de la habilidad es obligatorio",

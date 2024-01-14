@@ -26,13 +26,15 @@ const NavigationElement: FC<INavigationElement> = ({
 }): React.ReactElement => {
   const buttonSx = useMemo(() => getButtonSx(sx, disabled), [sx, disabled]);
   const translate = useTranslate();
+  const directionType =
+    direction === "prev" ? translate("btn_group_back") : translate(backType);
 
   return (
     <>
       <Button variant="outlined" sx={buttonSx} onClick={onClick}>
-        {direction === "prev"
-          ? translate("btn_group_back")
-          : translate(backType)}
+        {directionType.split(" ").map((el) => (
+          <span>{el}</span>
+        ))}
 
         {backType === BtnType.coding && <ArrowForwardIosIcon />}
       </Button>
@@ -44,6 +46,7 @@ const NavigationElement: FC<INavigationElement> = ({
 const getButtonSx = (sx: SxProps, isDisabled: boolean): SxProps => ({
   fontSize: "1rem",
   display: "flex",
+  gap: 2,
   textTransform: "capitalize",
   alignItems: "center",
   justifyContent: "center",

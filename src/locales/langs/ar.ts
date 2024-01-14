@@ -218,6 +218,7 @@ const ar = {
   rule: "قاعدة",
   regex: "التعبير العادي",
   private: "خاص",
+  open_catalog: "افتح الكتالوج",
 
   // avatar upload
   avatar__upload_text: "حمل الصورة",
@@ -270,6 +271,8 @@ const ar = {
   messages_content_type_not_supported: "نوع المحتوى غير مدعوم",
   messages_lesson_complete: "تم الانتهاء من الدرس بنجاح",
   messages_course_complete: "تم إكمال الدورة بنجاح",
+  messages_chalage_comleted: "تم إكمال التحدي بنجاح",
+  messages_course_doesnt_exist: "الدورة غير موجودة",
 
   // Validation messages
   required_skill_name: "اسم المهارة مطلوب",

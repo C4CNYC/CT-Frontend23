@@ -217,6 +217,7 @@ const en = {
   rule: "Rule",
   regex: "Regex",
   private: "Private",
+  open_catalog: "Open Catalog",
 
   // avatar upload
   avatar__upload_text: "Upload photo",
@@ -269,6 +270,8 @@ const en = {
   messages_content_type_not_supported: "CONTENT TYPE NOT SUPPORTED",
   messages_lesson_complete: "Lesson successfully completed",
   messages_course_complete: "Course successfully completed",
+  messages_chalage_comleted: "Challange successfully completed",
+  messages_course_doesnt_exist: "Course doesn't exist",
 
   // Validation messages
   required_skill_name: "Skill name is required",

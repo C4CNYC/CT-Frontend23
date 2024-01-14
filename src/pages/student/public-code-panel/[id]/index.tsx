@@ -26,6 +26,7 @@ import {
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
 } from "src/redux/services/public-student";
+import { useTranslate } from "src/utils/translateHelper";
 
 // import { CodePanelChat } from "@sections/chat";
 
@@ -47,6 +48,7 @@ export default function Index(): React.ReactElement {
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
   const [code, onChangeCode] = useState<string>("");
   const [language, onChangeLanguage] = useState<SupportedLang>("html");
+  const translate = useTranslate();
 
   const { data: courseContent, isLoading: isLoadingCourseContent } =
     useGetPublicCourseContentQuery(
@@ -76,13 +78,13 @@ export default function Index(): React.ReactElement {
   };
 
   const onSubmitChalange = async (): Promise<void> => {
-    enqueueSnackbar("Chalange successfuly complete");
+    enqueueSnackbar(translate("messages_chalage_comleted"));
   };
 
   const onSubmitLesson = async (): Promise<void> => {
     setConfetti(true);
     try {
-      enqueueSnackbar("lesson successfuly complete");
+      enqueueSnackbar(translate("messages_lesson_complete"));
       if (!courseContent) return;
       const nextLessonInfo = getNextLessonId(
         courseContent.units,
@@ -106,10 +108,10 @@ export default function Index(): React.ReactElement {
           }));
         });
       } else {
-        enqueueSnackbar("course successfuly complete");
+        enqueueSnackbar(translate("messages_course_complete"));
       }
     } catch (e: any) {
-      enqueueSnackbar("something went wrong", { variant: "error" });
+      enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
 
@@ -132,7 +134,7 @@ export default function Index(): React.ReactElement {
     return <SkeletonCodePanel />;
   }
   if (!isLoading && _.isEmpty(data)) {
-    return <EmptyContent title="Course doesn`t exist" />;
+    return <EmptyContent title={translate("messages_course_doesnt_exist")} />;
   }
   return (
     <GuestGuard>
