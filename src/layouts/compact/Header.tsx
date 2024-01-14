@@ -6,7 +6,7 @@ import { AppBar, Box, BoxProps, Link, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // components
-import { Logo } from "@components";
+import { Logo } from "src/components/logo";
 // utils
 import { bgBlur } from "@utils";
 

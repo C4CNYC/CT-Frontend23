@@ -5,7 +5,7 @@ import { m } from "framer-motion";
 
 import { Button, Typography } from "@mui/material";
 
-import { MotionContainer, varBounce } from "@components";
+import { MotionContainer, varBounce } from "src/components/animate";
 import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
 import { PageNotFoundIllustration } from "src/assets/illustrations";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";

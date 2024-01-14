@@ -24,7 +24,6 @@ import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager";
 import { useTranslate } from "src/utils/translateHelper";
 
 import FilterLessons from "./filter";
-import SkeletonLesson from "./skeletonLesson";
 
 LessonsListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

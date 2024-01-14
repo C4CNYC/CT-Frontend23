@@ -7,7 +7,8 @@ import { dracula } from "thememirror";
 
 import { Box } from "@mui/system";
 
-import { ResizerUi, SaveButton } from "@components";
+import { ResizerUi } from "@components";
+import { SaveButton } from "src/components/editor/SaveButton";
 import { useDebounceCallback } from "@hooks";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
 

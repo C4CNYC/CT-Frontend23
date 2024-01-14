@@ -11,7 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useFilters } from "@hooks";
 import { BaseResponseInterface } from "@utils";
 import {

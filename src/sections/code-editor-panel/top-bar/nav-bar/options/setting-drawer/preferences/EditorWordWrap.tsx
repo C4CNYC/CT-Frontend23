@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Stack, Switch, Typography } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useTranslate } from "src/utils/translateHelper";
 
 import BasePreference from "./BasePreference";

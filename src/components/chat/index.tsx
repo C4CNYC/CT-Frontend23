@@ -20,7 +20,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
 import { BaseResponseInterface } from "@utils";

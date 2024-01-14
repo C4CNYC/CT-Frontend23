@@ -6,7 +6,7 @@ import { useSnackbar } from "notistack";
 import { Button } from "@mui/material";
 import { useTheme } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 import { useTranslate } from "src/utils/translateHelper";

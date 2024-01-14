@@ -7,10 +7,6 @@ import { Box } from "@mui/system";
 
 import {
   Iconify,
-  resetLessonEvent,
-  updateColorsEvent,
-  updateFontSize,
-  updateLineWrap,
 } from "@components";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { startTour } from "@sections/code-panel/code-panel-tour/tour-atom";
@@ -20,6 +16,7 @@ import EditorFontSize from "./preferences/EditorFontSize";
 import EditorWordWrap from "./preferences/EditorWordWrap";
 import IntroTour from "./preferences/IntroTour";
 import ResetCode from "./preferences/ResetCode";
+import { resetLessonEvent, updateColorsEvent, updateFontSize, updateLineWrap } from "src/components/real-time-editor"
 
 const SettingDrawer = (): React.ReactElement => {
   const [openDrawer, setDrawer] = useState<boolean>(false);

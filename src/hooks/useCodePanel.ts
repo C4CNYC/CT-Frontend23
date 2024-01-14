@@ -29,16 +29,16 @@ import {
   setCourseId,
   setSlideIndex,
 } from "src/redux/slices/code-panel-global"
-import { resetLessonEvent } from "@components";
 
 // @types
 import type { LastVisitedState } from "src/redux/interfaces/content.interface";
 import type Confetti from "react-confetti/dist/types/Confetti";
-import type { WorkSpaceProps } from "@sections/code-editor-panel/work-space";
 import type { BottomBarProps } from "@sections/code-editor-panel/bottom-bar";
 import type { RootState } from "src/redux/store";
 import { type LessonManagerProps } from "@sections/code-editor-panel/bottom-bar/lesson-manager";
 import { useGetModuleWithLessonsQuery } from "../redux/services/manager/modules-student";
+import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
+import { resetLessonEvent } from "src/components/real-time-editor"
 
 interface UseCodePanelReturn {
   workSpaceProps: WorkSpaceProps

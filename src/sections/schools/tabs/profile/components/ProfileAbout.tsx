@@ -1,7 +1,7 @@
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { useTranslate } from "src/utils/translateHelper";
 

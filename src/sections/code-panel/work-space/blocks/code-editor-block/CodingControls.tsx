@@ -13,13 +13,12 @@ import { TbBoxMargin } from "@react-icons/all-files/tb/TbBoxMargin";
 import { TbBraces } from "@react-icons/all-files/tb/TbBraces";
 import { TbTool } from "@react-icons/all-files/tb/TbTool";
 
-
 import { Box, Button, Divider } from "@mui/material";
 import { styled } from "@mui/system";
 
-import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from "@components";
 import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
 import { copyPasteEvent } from "src/components/real-time-editor/events/copy-paste";
+import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from "src/components/real-time-editor/events";
 
 export enum ICodingActonsType {
   symbol = "symbol",

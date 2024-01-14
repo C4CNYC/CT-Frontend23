@@ -1,4 +1,4 @@
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { PATH_AUTH, PATH_PAGE } from "@routes/paths";
 
 // ----------------------------------------------------------------------

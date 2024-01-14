@@ -10,8 +10,8 @@ import { Link } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 
-import { type SupportedLang } from "../../work-space";
 import PublishModal from "../modals/publish";
+import { SupportedLang } from "@sections/code-editor-panel/work-space/types"
 
 interface GetActions {
   code: string;
