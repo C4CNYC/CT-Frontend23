@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import SchoolFiltersSkeleton from "@pages/manager/school/students/school-filter-skeleton";
+import SchoolFiltersSkeleton from "@sections/schools/school-filter-skeleton";
 
 import Autocomplete, {
   AutocompleteChangeDetails,

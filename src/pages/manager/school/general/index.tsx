@@ -25,7 +25,7 @@ import {
 import { RootState } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
 
-import SkeletonSchool from "./skeleton-school";
+import SkeletonSchool from "@sections/schools/skeleton-school";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

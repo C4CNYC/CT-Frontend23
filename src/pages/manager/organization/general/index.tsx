@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 
-import SkeletonSchool from "@pages/manager/school/general/skeleton-school";
+import SkeletonSchool from "@sections/schools/skeleton-school";
 import { useSnackbar } from "notistack";
 
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";

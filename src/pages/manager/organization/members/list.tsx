@@ -46,7 +46,7 @@ import {
 import { Role } from "src/redux/services/enums/role.enum";
 import { useTranslate } from "src/utils/translateHelper";
 
-import SkeletonMembers from "./SkeletonMembers";
+import SkeletonMembers from "@sections/schools/SkeletonMembers";
 
 const STATUS_OPTIONS = ["all"];
 
