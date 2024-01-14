@@ -20,9 +20,9 @@ import "simplebar/src/simplebar.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 // lightbox
-import "yet-another-react-lightbox/plugins/captions.css";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
-import "yet-another-react-lightbox/styles.css";
+// import "yet-another-react-lightbox/plugins/captions.css";
+// import "yet-another-react-lightbox/plugins/thumbnails.css";
+// import "yet-another-react-lightbox/styles.css";
 
 // @mui
 import { LocalizationProvider } from "@mui/x-date-pickers";
