@@ -82,12 +82,17 @@ export default function AddSchool(): React.ReactElement {
         country: schoolData.country,
         city: schoolData.city,
       }).unwrap();
-      localStorage.setItem("ON-BOARDING", "on-boarding");
       reload();
     } catch (error) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };
+
+  useEffect(() => {
+    if (!localStorage.getItem("ON-BOARDING")) {
+      localStorage.setItem("ON-BOARDING", "on-boarding");
+    }
+  }, []);
 
   return (
     <Stack minHeight={500}>
