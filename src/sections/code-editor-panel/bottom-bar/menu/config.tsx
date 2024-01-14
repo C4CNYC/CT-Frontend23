@@ -1,9 +1,10 @@
 import nextLink from "next/link";
 import { type ReactNode } from "react";
 
-import { BsFolder2Open } from "react-icons/bs";
-import { IoSaveOutline } from "react-icons/io5";
-import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+import { BsFolder2Open } from "@react-icons/all-files/bs/BsFolder2Open";
+import { IoSaveOutline } from "@react-icons/all-files/io5/IoSaveOutline";
+import { MdOutlinePhotoLibrary } from "@react-icons/all-files/md/MdOutlinePhotoLibrary";
+import { MdOutlineUpload } from "@react-icons/all-files/md/MdOutlineUpload";
 
 import { Link } from "@mui/material";
 

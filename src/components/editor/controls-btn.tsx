@@ -1,7 +1,7 @@
-import { FiSettings } from "react-icons/fi";
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
-import { TbPhoto } from "react-icons/tb";
+import { FiSettings } from "@react-icons/all-files/fi/FiSettings";
+import { IoCheckmarkDoneCircleOutline } from "@react-icons/all-files/io5/IoCheckmarkDoneCircleOutline";
+import { MdOutlineTipsAndUpdates } from "@react-icons/all-files/md/MdOutlineTipsAndUpdates";
+import { TbPhoto } from "@react-icons/all-files/tb/TbPhoto";
 
 import { Button } from "@mui/material";
 

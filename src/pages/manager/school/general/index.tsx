@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useState } from "react";
 
 import { useSnackbar } from "notistack";
-import { BsPeopleFill } from "react-icons/bs";
-import { MdContacts } from "react-icons/md";
+import { BsPeopleFill } from "@react-icons/all-files/bs/BsPeopleFill";
+import { MdContacts } from "@react-icons/all-files/md/MdContacts";
 import { useSelector } from "react-redux";
 
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";

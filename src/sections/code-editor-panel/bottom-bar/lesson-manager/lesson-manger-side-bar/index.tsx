@@ -1,8 +1,8 @@
 import NextLink from "next/link";
 import { type FC, type ReactNode, useMemo } from "react";
 
-import { IoMdClose } from "react-icons/io";
-import { RxExternalLink } from "react-icons/rx";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
+import { RxExternalLink } from "@react-icons/all-files/rx/RxExternalLink";
 
 import {
   Drawer,

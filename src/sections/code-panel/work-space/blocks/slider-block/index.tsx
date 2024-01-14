@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
 import * as _ from "lodash-es";
-import { SlDirections } from "react-icons/sl";
+import { SlDirections } from "@react-icons/all-files/sl/SlDirections";
 import Carousel from "react-slick";
 
 import { useMediaQuery } from "@mui/material";

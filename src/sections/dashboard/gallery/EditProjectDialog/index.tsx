@@ -3,7 +3,7 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { IoClose } from "react-icons/io5";
+import { IoClose } from "@react-icons/all-files/io5/IoClose";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";

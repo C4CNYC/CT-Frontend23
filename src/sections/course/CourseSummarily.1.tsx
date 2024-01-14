@@ -1,5 +1,5 @@
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { MdCelebration } from "react-icons/md";
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
+import { MdCelebration } from "@react-icons/all-files/md/MdCelebration";
 
 import { Box, Stack, Typography } from "@mui/material";
 

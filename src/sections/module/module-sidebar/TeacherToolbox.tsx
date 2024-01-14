@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import { GrOverview } from "react-icons/gr";
+import { GrOverview } from "@react-icons/all-files/gr/GrOverview";
 
 import { Link, Paper, Stack, useTheme } from "@mui/material";
 

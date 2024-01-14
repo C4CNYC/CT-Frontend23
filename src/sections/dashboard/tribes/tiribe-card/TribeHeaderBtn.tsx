@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { CiExport } from "react-icons/ci";
-import { ImExit } from "react-icons/im";
+import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
+import { CiExport } from "@react-icons/all-files/ci/CiExport";
+import { ImExit } from "@react-icons/all-files/im/ImExit";
 
 import { Box, Button, IconButton } from "@mui/material";
 

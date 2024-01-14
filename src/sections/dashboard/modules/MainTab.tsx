@@ -1,4 +1,4 @@
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 
 import { Box, IconButton, Typography } from "@mui/material";
 

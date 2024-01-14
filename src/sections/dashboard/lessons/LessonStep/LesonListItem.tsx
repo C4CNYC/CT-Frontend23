@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import { Draggable } from "@hello-pangea/dnd";
 import * as _ from "lodash-es";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { RxDragHandleDots2 } from "react-icons/rx";
+import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
+import { RxDragHandleDots2 } from "@react-icons/all-files/rx/RxDragHandleDots2";
 
 import {
   Box,

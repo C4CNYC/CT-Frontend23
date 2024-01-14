@@ -5,15 +5,18 @@ import {
   useRemirror,
 } from "@remirror/react";
 import { Controller, useController, useFormContext } from "react-hook-form";
-import { FaBold, FaItalic, FaUnderline } from "react-icons/fa";
-import { IoIosRedo, IoIosUndo } from "react-icons/io";
+import { FaBold } from "@react-icons/all-files/fa/FaBold";
+import { FaItalic } from "@react-icons/all-files/fa/FaItalic";
+import { FaUnderline } from "@react-icons/all-files/fa/FaUnderline";
+
+import { IoIosRedo } from "@react-icons/all-files/io/IoIosRedo";
+import { IoIosUndo } from "@react-icons/all-files/io/IoIosUndo";
 import {
   BoldExtension,
   ItalicExtension,
   UnderlineExtension,
 } from "remirror/extensions";
 
-import "@mui/material";
 import { Button, FormHelperText, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 

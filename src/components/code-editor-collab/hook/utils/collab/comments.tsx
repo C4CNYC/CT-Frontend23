@@ -8,7 +8,10 @@ import {
   WidgetType,
 } from "@codemirror/view";
 import { createRoot } from "react-dom/client";
-import { CgChevronDown, CgChevronUp, CgClose, CgComment } from "react-icons/cg";
+import { CgChevronDown } from "@react-icons/all-files/cg/CgChevronDown";
+import { CgChevronUp } from "@react-icons/all-files/cg/CgChevronUp";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
+import { CgComment } from "@react-icons/all-files/cg/CgComment";
 
 import { Collapse, IconButton } from "@mui/material";
 

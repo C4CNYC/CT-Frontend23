@@ -2,7 +2,7 @@ import React, { MouseEvent, MouseEventHandler, useCallback, useState } from "rea
 
 import { useCommands } from "@remirror/react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiOutlineTable } from "react-icons/ai";
+import { AiOutlineTable } from "@react-icons/all-files/ai/AiOutlineTable";
 
 import { Button, Stack } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";

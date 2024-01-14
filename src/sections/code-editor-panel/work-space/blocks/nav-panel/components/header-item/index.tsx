@@ -1,6 +1,7 @@
 import { type FC } from "react";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft } from "@react-icons/all-files/fa/FaChevronLeft";
+import { FaChevronRight } from "@react-icons/all-files/fa/FaChevronRight";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 

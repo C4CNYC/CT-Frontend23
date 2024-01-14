@@ -3,7 +3,7 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
-import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle } from "@react-icons/all-files/ai/AiFillPlusCircle";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";

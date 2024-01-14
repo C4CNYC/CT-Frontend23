@@ -2,8 +2,8 @@ import NextLink from "next/link";
 import { useEffect, useState } from "react";
 
 import { useSnackbar } from "notistack";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { FiExternalLink } from "react-icons/fi";
+import { BsThreeDotsVertical } from "@react-icons/all-files/bs/BsThreeDotsVertical";
+import { FiExternalLink } from "@react-icons/all-files/fi/FiExternalLink";
 
 import { LoadingButton } from "@mui/lab";
 import { Box, IconButton, Link, Paper, Stack } from "@mui/material";

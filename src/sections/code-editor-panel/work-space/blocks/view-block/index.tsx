@@ -1,7 +1,7 @@
 import { type FC, useState } from "react";
 
-import { CgBrowser } from "react-icons/cg";
-import { TbArrowBarToRight } from "react-icons/tb";
+import { CgBrowser } from "@react-icons/all-files/cg/CgBrowser";
+import { TbArrowBarToRight } from "@react-icons/all-files/tb/TbArrowBarToRight";
 import { useDispatch, useSelector } from "react-redux";
 
 import { toggleBrowser } from "src/redux/slices/code-panel-global";

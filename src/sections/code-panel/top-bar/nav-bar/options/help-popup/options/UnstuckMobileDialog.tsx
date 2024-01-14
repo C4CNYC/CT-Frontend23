@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BsChatText } from "react-icons/bs";
+import { BsChatText } from "@react-icons/all-files/bs/BsChatText";
 
 import {
   Box,

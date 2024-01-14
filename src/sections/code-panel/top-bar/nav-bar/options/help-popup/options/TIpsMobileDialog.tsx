@@ -1,4 +1,4 @@
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { MdOutlineTipsAndUpdates } from "@react-icons/all-files/md/MdOutlineTipsAndUpdates";
 
 import {
   Alert,

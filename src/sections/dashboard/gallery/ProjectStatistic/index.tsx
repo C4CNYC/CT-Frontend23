@@ -1,6 +1,7 @@
-import { AiOutlineHeart } from "react-icons/ai";
-import { BiCommentDetail, BiGitBranch } from "react-icons/bi";
-import { MdOutlineVisibility } from "react-icons/md";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { BiCommentDetail } from "@react-icons/all-files/bi/BiCommentDetail";
+import { BiGitBranch } from "@react-icons/all-files/bi/BiGitBranch";
+import { MdOutlineVisibility } from "@react-icons/all-files/md/MdOutlineVisibility";
 
 import { Box, Stack, Typography } from "@mui/material";
 

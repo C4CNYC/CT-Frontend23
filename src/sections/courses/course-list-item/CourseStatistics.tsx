@@ -1,5 +1,6 @@
-import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
-import { TbFileCertificate } from "react-icons/tb";
+import { AiFillStar } from "@react-icons/all-files/ai/AiFillStar";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { TbFileCertificate } from "@react-icons/all-files/tb/TbFileCertificate";
 
 import { Box, Typography } from "@mui/material";
 import { convertNumber } from "@utils";

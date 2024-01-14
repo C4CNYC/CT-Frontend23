@@ -1,4 +1,4 @@
-import { FcGoogle } from "react-icons/fc";
+import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 
 import { Button, Typography } from "@mui/material";
 

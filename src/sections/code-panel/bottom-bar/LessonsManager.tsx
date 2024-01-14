@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 
 import { useAtom } from "jotai";
-import { IoMdClose } from "react-icons/io";
-import { RxExternalLink } from "react-icons/rx";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
+import { RxExternalLink } from "@react-icons/all-files/rx/RxExternalLink";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {

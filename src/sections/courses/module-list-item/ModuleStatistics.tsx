@@ -1,4 +1,4 @@
-import { GiThreeFriends } from "react-icons/gi";
+import { GiThreeFriends } from "@react-icons/all-files/gi/GiThreeFriends";
 
 import { Box, CircularProgress, Typography } from "@mui/material";
 

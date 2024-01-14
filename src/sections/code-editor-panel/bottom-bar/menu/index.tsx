@@ -1,6 +1,6 @@
 import { type FC, useMemo, useState } from "react";
 
-import { GiSave } from "react-icons/gi";
+import { GiSave } from "@react-icons/all-files/gi/GiSave";
 
 import {
   Chip,

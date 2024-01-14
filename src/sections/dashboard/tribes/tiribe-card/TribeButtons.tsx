@@ -1,6 +1,6 @@
-import { AiOutlineUserAdd } from "react-icons/ai";
-import { FaChartLine } from "react-icons/fa";
-import { TbBrandWechat } from "react-icons/tb";
+import { AiOutlineUserAdd } from "@react-icons/all-files/ai/AiOutlineUserAdd";
+import { FaChartLine } from "@react-icons/all-files/fa/FaChartLine";
+import { TbBrandWechat } from "@react-icons/all-files/tb/TbBrandWechat";
 
 import { Box, Button, Stack, Typography } from "@mui/material";
 

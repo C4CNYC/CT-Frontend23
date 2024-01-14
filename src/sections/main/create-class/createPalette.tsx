@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BsBookmarkCheckFill } from "react-icons/bs";
+import { BsBookmarkCheckFill } from "@react-icons/all-files/bs/BsBookmarkCheckFill";
 
 import {
   Box,

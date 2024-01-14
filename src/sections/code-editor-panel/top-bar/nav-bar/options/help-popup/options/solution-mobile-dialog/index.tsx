@@ -1,7 +1,7 @@
 import { type FC } from "react";
 
 import { CopyBlock, dracula } from "react-code-blocks";
-import { AiOutlineCode } from "react-icons/ai";
+import { AiOutlineCode } from "@react-icons/all-files/ai/AiOutlineCode";
 
 import {
   Dialog,

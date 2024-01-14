@@ -3,7 +3,7 @@ import React, { MouseEventHandler, useCallback, useState } from "react";
 import { useCommands } from "@remirror/react";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import { BsEmojiSmile } from "react-icons/bs";
+import { BsEmojiSmile } from "@react-icons/all-files/bs/BsEmojiSmile";
 import "remirror/styles/all.css";
 
 import { Box, Stack } from "@mui/material";

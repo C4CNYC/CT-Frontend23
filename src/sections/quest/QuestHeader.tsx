@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { TbShare2 } from "react-icons/tb";
+import { MdOutlineArrowBackIosNew } from "@react-icons/all-files/md/MdOutlineArrowBackIosNew";
+import { TbShare2 } from "@react-icons/all-files/tb/TbShare2";
 
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 

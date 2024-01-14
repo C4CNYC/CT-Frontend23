@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 
-import { TbFileCertificate } from "react-icons/tb";
+import { TbFileCertificate } from "@react-icons/all-files/tb/TbFileCertificate";
 
 import {
   Avatar,

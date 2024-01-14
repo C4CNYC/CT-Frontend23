@@ -3,9 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 import * as _ from "lodash-es";
-import { CgMenuMotion } from "react-icons/cg";
-import { FcInfo } from "react-icons/fc";
-import { MdAddCircleOutline, MdEdit } from "react-icons/md";
+import { CgMenuMotion } from "@react-icons/all-files/cg/CgMenuMotion";
+import { FcInfo } from "@react-icons/all-files/fc/FcInfo";
+import { MdAddCircleOutline } from "@react-icons/all-files/md/MdAddCircleOutline";
+import { MdEdit } from "@react-icons/all-files/md/MdEdit";
 
 // icons
 import VisibilityIcon from "@mui/icons-material/Visibility";

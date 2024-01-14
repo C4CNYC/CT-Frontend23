@@ -1,6 +1,6 @@
 import { type FC, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { BsLightningCharge } from "react-icons/bs";
+import { BsLightningCharge } from "@react-icons/all-files/bs/BsLightningCharge";
 
 import { Badge, SpeedDial, SpeedDialAction, useTheme } from "@mui/material";
 

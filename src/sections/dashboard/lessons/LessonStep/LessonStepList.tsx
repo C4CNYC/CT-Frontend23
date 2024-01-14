@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import { DragDropContext, DropResult, Droppable } from "@hello-pangea/dnd";
 import * as _ from "lodash-es";
 import { useSnackbar } from "notistack";
-import { FiSettings } from "react-icons/fi";
-import { ImPlus } from "react-icons/im";
+import { FiSettings } from "@react-icons/all-files/fi/FiSettings";
+import { ImPlus } from "@react-icons/all-files/im/ImPlus";
 import { useSelector } from "react-redux";
 
 import { LoadingButton } from "@mui/lab";

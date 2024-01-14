@@ -1,7 +1,7 @@
 import { type FC, useCallback, useRef, useState } from "react";
 
-import { FaDesktop } from "react-icons/fa";
-import { TiDocumentText } from "react-icons/ti";
+import { FaDesktop } from "@react-icons/all-files/fa/FaDesktop";
+import { TiDocumentText } from "@react-icons/all-files/ti/TiDocumentText";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import SwipeableViews from "react-swipeable-views";
