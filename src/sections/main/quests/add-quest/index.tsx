@@ -247,6 +247,7 @@ export default function AddQuest(): React.ReactElement {
 
             <CustomTabPanel value={value} index={0}>
               <DetailsStep
+                methods={methods}
                 coursesData={{
                   data: coursesData.data?.data,
                   isLoading: coursesData.isLoading,
