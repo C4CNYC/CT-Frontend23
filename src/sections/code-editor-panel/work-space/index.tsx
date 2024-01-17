@@ -1,15 +1,16 @@
-import { type FC, useCallback, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { type FC, useRef, useState } from "react";
 
 import { FaDesktop } from "react-icons/fa";
 import { TiDocumentText } from "react-icons/ti";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import SwipeableViews from "react-swipeable-views";
 
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Stack, type StackProps } from "@mui/system";
 
+import { useSocket } from "@hooks";
 import { type BaseResponseInterface } from "@utils";
 import { type AuthUserType } from "src/auth/types";
 import {
@@ -17,11 +18,10 @@ import {
   type ILessonContent,
 } from "src/redux/interfaces/content.interface";
 import {
+  setCode,
   toggleBrowser,
   toggleInstrations,
 } from "src/redux/slices/code-panel-global";
-import { useSocket } from "@hooks";
-import { useAuthContext } from "src/auth/useAuthContext";
 import { setTab } from "src/redux/slices/mobile-tab-manager";
 import { useSelector } from "src/redux/store";
 
@@ -44,7 +44,6 @@ export interface WorkSpaceProps {
   lesson?: ILesson & BaseResponseInterface;
   data: Array<ILessonContent & BaseResponseInterface>;
   user: AuthUserType;
-  code: string;
   language: SupportedLang;
   onChangeCode: (code: string) => void;
   onSubmitChalange: (lessonContentId: string) => Promise<void>;
@@ -61,7 +60,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   onSubmitLesson,
   data,
   user,
-  code,
   language,
   isFetching = false,
   lastLessonCode,
@@ -87,11 +85,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
   const onChangeCode = (doc: Record<string, string>) => {
     try {
-      console.log("onchangetext1", doc);
-      console.log("onchangetext1 infomation", user);
-      console.log("onchangetext1_:", user?.id);
-      console.log("onchangetext1__:", router?.query?.lessonId);
-
       if (checkValueTimeout) {
         // Clear the previous timeout if the value changes
         clearTimeout(checkValueTimeout);
@@ -99,19 +92,27 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
       previousLength = doc?.htmlBody?.length; // Store the current value
       if (router.query.lessonId && user)
-        socket.emit('changeStatusInLesson', { lesson: router.query.lessonId, user: user?.id, status: 'active' });
+        socket.emit("changeStatusInLesson", {
+          lesson: router.query.lessonId,
+          user: user?.id,
+          status: "active",
+        });
 
       // Set up the check for 30 seconds later
       checkValueTimeout = setTimeout(() => {
         if (doc?.htmlBody?.length === previousLength) {
-          console.log(`Value after 30 seconds: ${doc} (unchanged)`);
-          socket.emit('changeStatusInLesson', { lesson: router.query.lessonId, user: user?.id, status: 'idle' });
+          socket.emit("changeStatusInLesson", {
+            lesson: router.query.lessonId,
+            user: user?.id,
+            status: "idle",
+          });
         } else {
-          console.log('Value has changed');
         }
       }, 30000); // 30 seconds
 
       setDocument(doc as CodeDocument);
+      // @ts-ignore doc?.htmlBody is an array
+      dispatch(setCode(doc?.htmlBody?.join("") ?? ""));
     } catch (error) {
       console.log("Error: ", error);
     }
