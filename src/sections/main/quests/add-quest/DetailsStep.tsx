@@ -15,7 +15,10 @@ import { RHFSelect, RHFTextField } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
+import {
+  ICourse,
+  IModule,
+} from "src/redux/services/interfaces/courseUnits.interface";
 import { useTranslate } from "src/utils/translateHelper";
 
 import {
@@ -38,17 +41,16 @@ export default function DetailsStep({
   const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
-  const [course, setCourse] = useState<string | null>(
-    methods.getValues("course") ?? null
-  );
-  const selectedCourse = useMemo(
-    () => data?.find((c) => c.id === course),
-    [data, course]
-  );
+  const [course, setCourse] = useState<string | null>();
   const translate = useTranslate();
 
+  const selectedModules = useMemo(
+    () => data?.find((c) => c.id === course)?.units,
+    [data, course]
+  );
+
   useEffect(() => {
-    setCourse(methods.getValues("course"));
+    setCourse(methods.getValues("course") ?? data?.[0]?.id);
   }, [data]);
 
   return (
@@ -154,17 +156,17 @@ export default function DetailsStep({
               border: theme.palette.mode === "light" ? "" : "1px solid #fff",
             }}
           >
-            {!selectedCourse?.units?.length && (
+            {!selectedModules?.length && (
               <option key="empty" value="empty">
                 {translate("quest_you_dont_have_module_msg")}
               </option>
             )}
-            {selectedCourse?.units
+            {selectedModules
               ? [
                   <option key="module" value="all">
                     {translate("quest_all_modules")}
                   </option>,
-                  ...selectedCourse?.units.map((unit) => (
+                  ...selectedModules.map((unit) => (
                     <option key={unit.id} value={unit.id}>
                       {unit.name}
                     </option>
