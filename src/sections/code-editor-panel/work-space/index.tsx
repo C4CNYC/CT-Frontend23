@@ -1,25 +1,30 @@
-import { type FC, useRef, useState } from "react"
+import { useRouter } from "next/router";
+import { type FC, useRef, useState } from "react";
 
 import { FaDesktop } from "@react-icons/all-files/fa/FaDesktop"
 import { TiDocumentText } from "@react-icons/all-files/ti/TiDocumentText"
-import { useDispatch } from "react-redux"
-import { useRouter } from "next/router"
-import SwipeableViews from "react-swipeable-views"
+import { useDispatch } from "react-redux";
+import SwipeableViews from "react-swipeable-views";
 
-import { useTheme } from "@mui/material/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
-import { Stack, type StackProps } from "@mui/system"
-import { toggleBrowser, toggleInstrations, } from "src/redux/slices/code-panel-global"
-import { useSocket } from "@hooks"
-import { setTab } from "src/redux/slices/mobile-tab-manager"
-import { useSelector } from "src/redux/store"
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { Stack, type StackProps } from "@mui/system";
 
-import CodeEditorBlock from "./blocks/code-editor-block"
-import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn"
-import NavPanel from "./blocks/nav-panel"
-import SliderBlock from "./blocks/slider-block"
-import ViewBlock from "./blocks/view-block"
-import { CodeDocument } from "./blocks/view-block/browser-view"
+import { useSocket } from "@hooks";
+import {
+  setCode,
+  toggleBrowser,
+  toggleInstrations,
+} from "src/redux/slices/code-panel-global";
+import { setTab } from "src/redux/slices/mobile-tab-manager";
+import { useSelector } from "src/redux/store";
+
+import CodeEditorBlock from "./blocks/code-editor-block";
+import HidedTabBtn from "./blocks/code-editor-block/hided-tab-btn";
+import NavPanel from "./blocks/nav-panel";
+import SliderBlock from "./blocks/slider-block";
+import ViewBlock from "./blocks/view-block";
+import { CodeDocument } from "./blocks/view-block/browser-view";
 import { TAB_TITLES } from "@sections/code-editor-panel/work-space/TAB_TITLES"
 import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
 
@@ -32,7 +37,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   onSubmitLesson,
   data,
   user,
-  code,
   language,
   isFetching = false,
   lastLessonCode,
@@ -58,11 +62,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
   const onChangeCode = (doc: Record<string, string>) => {
     try {
-      console.log("onchangetext1", doc);
-      console.log("onchangetext1 infomation", user);
-      console.log("onchangetext1_:", user?.id);
-      console.log("onchangetext1__:", router?.query?.lessonId);
-
       if (checkValueTimeout) {
         // Clear the previous timeout if the value changes
         clearTimeout(checkValueTimeout);
@@ -70,19 +69,27 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
       previousLength = doc?.htmlBody?.length; // Store the current value
       if (router.query.lessonId && user)
-        socket.emit('changeStatusInLesson', { lesson: router.query.lessonId, user: user?.id, status: 'active' });
+        socket.emit("changeStatusInLesson", {
+          lesson: router.query.lessonId,
+          user: user?.id,
+          status: "active",
+        });
 
       // Set up the check for 30 seconds later
       checkValueTimeout = setTimeout(() => {
         if (doc?.htmlBody?.length === previousLength) {
-          console.log(`Value after 30 seconds: ${doc} (unchanged)`);
-          socket.emit('changeStatusInLesson', { lesson: router.query.lessonId, user: user?.id, status: 'idle' });
+          socket.emit("changeStatusInLesson", {
+            lesson: router.query.lessonId,
+            user: user?.id,
+            status: "idle",
+          });
         } else {
-          console.log('Value has changed');
         }
       }, 30000); // 30 seconds
 
       setDocument(doc as CodeDocument);
+      // @ts-ignore doc?.htmlBody is an array
+      dispatch(setCode(doc?.htmlBody?.join("") ?? ""));
     } catch (error) {
       console.log("Error: ", error);
     }
