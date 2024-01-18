@@ -1,21 +1,24 @@
 import { type FC, memo } from "react";
 
-import { AiOutlineCopy } from "react-icons/ai";
-import { BsClipboard } from "react-icons/bs";
-import {
-  MdKeyboardHide,
-  MdNavigateBefore,
-  MdNavigateNext,
-} from "react-icons/md";
-import { RiFilePaper2Fill, RiShareForwardFill } from "react-icons/ri";
-import { TbBoxMargin, TbBraces, TbTool } from "react-icons/tb";
+import { AiOutlineCopy } from "@react-icons/all-files/ai/AiOutlineCopy";
+import { BsClipboard } from "@react-icons/all-files/bs/BsClipboard";
+import { MdKeyboardHide } from "@react-icons/all-files/md/MdKeyboardHide";
+import { MdNavigateBefore } from "@react-icons/all-files/md/MdNavigateBefore";
+import { MdNavigateNext } from "@react-icons/all-files/md/MdNavigateNext";
+
+import { RiFilePaper2Fill } from "@react-icons/all-files/ri/RiFilePaper2Fill";
+import { RiShareForwardFill } from "@react-icons/all-files/ri/RiShareForwardFill";
+import { TbBoxMargin } from "@react-icons/all-files/tb/TbBoxMargin";
+import { TbBraces } from "@react-icons/all-files/tb/TbBraces";
+import { TbTool } from "@react-icons/all-files/tb/TbTool";
+
 
 import { Box, Button, Divider } from "@mui/material";
 import { styled } from "@mui/system";
 
-import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from "@components";
 import SettingDrawer from "@sections/code-panel/top-bar/nav-bar/options/setting-drawer";
 import { copyPasteEvent } from "src/components/real-time-editor/events/copy-paste";
+import { moveCursorEvent, pasteSymbolEvent, undoRedoEvent } from "src/components/real-time-editor/events";
 
 import {
   BOTTOM_BOX,

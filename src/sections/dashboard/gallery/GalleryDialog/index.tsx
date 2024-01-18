@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { BiSave } from "react-icons/bi";
-import { BsArrowsFullscreen } from "react-icons/bs";
-import { HiCode, HiOutlineDesktopComputer } from "react-icons/hi";
-import { TbArrowsMinimize } from "react-icons/tb";
+import { BiSave } from "@react-icons/all-files/bi/BiSave";
+import { BsArrowsFullscreen } from "@react-icons/all-files/bs/BsArrowsFullscreen";
+import { HiCode } from "@react-icons/all-files/hi/HiCode";
+import { HiOutlineDesktopComputer } from "@react-icons/all-files/hi/HiOutlineDesktopComputer";
+import { TbArrowsMinimize } from "@react-icons/all-files/tb/TbArrowsMinimize";
 
 import CloseIcon from "@mui/icons-material/Close";
 import {

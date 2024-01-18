@@ -8,8 +8,6 @@ import Head from "next/head";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 // theme
 import { ThemeProvider } from "@theme/index";
-// map
-import "mapbox-gl/dist/mapbox-gl.css";
 // lazy image
 import "react-lazy-load-image-component/src/effects/blur.css";
 // redux
@@ -19,24 +17,28 @@ import "simplebar/src/simplebar.css";
 // slick-carousel
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-// lightbox
-import "yet-another-react-lightbox/plugins/captions.css";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
-import "yet-another-react-lightbox/styles.css";
 
 // @mui
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 // components
+
 import {
   MotionLazyContainer,
-  ProgressBar,
+} from "src/components/animate/MotionLazyContainer";
+import {
   SettingsProvider,
-  SnackbarProviderWrapper,
-  StyledChart,
   ThemeSettings,
-} from "@components";
+} from "src/components/settings";
+import {
+  SnackbarProviderWrapper,
+} from "src/components/snackbar";
+
+import {
+  ProgressBar,
+} from "src/components/progress-bar";
+
 // utils
 import { createEmotionCache } from "@utils";
 import { AuthProvider } from "src/auth/JwtContext";
@@ -81,7 +83,6 @@ export default function MyApp(props: MyAppProps): React.ReactElement {
                     <ThemeSettings>
                       <ThemeLocalization>
                         <SnackbarProviderWrapper>
-                          <StyledChart />
                           <ProgressBar />
                           {getLayout(<Component {...pageProps} />)}
                         </SnackbarProviderWrapper>

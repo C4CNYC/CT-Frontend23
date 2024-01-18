@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 interface ViewToomblerProps {
   fullScreenView: boolean;

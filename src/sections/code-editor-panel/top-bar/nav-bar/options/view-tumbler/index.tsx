@@ -3,7 +3,7 @@ import { type FC } from "react";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 interface ViewToomblerProps {
   isFullScreenView: boolean;

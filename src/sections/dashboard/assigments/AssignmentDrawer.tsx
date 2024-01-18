@@ -4,7 +4,7 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { format } from "date-fns";
 import { Controller, useForm } from "react-hook-form";
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";

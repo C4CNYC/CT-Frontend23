@@ -24,7 +24,7 @@ import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
 import { Stack } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import {
   useGetLessonContentValidationsManagerQuery,
   useRemoveLessonContentValiationManagerMutation,

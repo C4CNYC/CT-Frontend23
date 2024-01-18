@@ -5,7 +5,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import { Box, IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { Logo } from "@components";
+import { Logo } from "src/components/logo";
 
 import { TopBarMenu } from "./TopBarMenu";
 

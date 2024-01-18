@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import _ from "lodash";
+import * as _ from "lodash-es";
 
 import { BaseSearchInterface } from "@utils";
 

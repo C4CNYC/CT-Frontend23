@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { HiMenuAlt2 } from "react-icons/hi";
+import { HiMenuAlt2 } from "@react-icons/all-files/hi/HiMenuAlt2";
 
 import { Button, Stack, useMediaQuery, useTheme } from "@mui/material";
 

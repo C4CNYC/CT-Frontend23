@@ -7,11 +7,7 @@ import { Box } from "@mui/system";
 
 import {
   Iconify,
-  resetLessonEvent,
-  updateColorsEvent,
-  updateFontSize,
-  updateLineWrap,
-} from "@components";
+} from "src/components/iconify";
 import { setSlideIndex } from "src/redux/slices/code-panel-global";
 import { setStartTour } from "src/redux/slices/tour";
 import { useTranslate } from "src/utils/translateHelper";
@@ -21,6 +17,7 @@ import EditorFontSize from "./preferences/EditorFontSize";
 import EditorWordWrap from "./preferences/EditorWordWrap";
 import IntroTour from "./preferences/IntroTour";
 import ResetCode from "./preferences/ResetCode";
+import { resetLessonEvent, updateColorsEvent, updateFontSize, updateLineWrap } from "src/components/real-time-editor"
 
 const SettingDrawer = (): React.ReactElement => {
   const dispatch = useDispatch();

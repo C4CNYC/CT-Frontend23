@@ -31,17 +31,14 @@ import {
 // utils
 import { fToNow } from "@utils";
 
-// _mock_
-import { _notifications } from "../../../_mock/arrays";
-
 // ----------------------------------------------------------------------
 
 export default function NotificationsPopover(): React.ReactElement {
-  const [notifications, setNotifications] = useState(_notifications);
+  const [notifications, setNotifications] = useState<any[]>([]);
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
 
-  const totalUnRead = notifications.filter((item) => item.isUnRead).length;
+  const totalUnRead = notifications.filter((item: any) => item.isUnRead).length;
 
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
@@ -53,7 +50,7 @@ export default function NotificationsPopover(): React.ReactElement {
 
   const handleMarkAllAsRead = (): void => {
     setNotifications(
-      notifications.map((notification) => ({
+      notifications.map((notification: any) => ({
         ...notification,
         isUnRead: false,
       }))
@@ -109,7 +106,7 @@ export default function NotificationsPopover(): React.ReactElement {
               </ListSubheader>
             }
           >
-            {notifications.slice(0, 2).map((notification) => (
+            {notifications.slice(0, 2).map((notification: any) => (
               <NotificationItem
                 key={notification.id}
                 notification={notification}
@@ -128,7 +125,7 @@ export default function NotificationsPopover(): React.ReactElement {
               </ListSubheader>
             }
           >
-            {notifications.slice(2, 5).map((notification) => (
+            {notifications.slice(2, 5).map((notification: any) => (
               <NotificationItem
                 key={notification.id}
                 notification={notification}

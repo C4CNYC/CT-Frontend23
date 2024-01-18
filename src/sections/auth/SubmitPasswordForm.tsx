@@ -8,7 +8,7 @@ import * as Yup from "yup";
 import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useSubmitPasswordMutation } from "src/redux/services/auth";
 
 import { FormProvider, RHFTextField } from "../../components/hook-form";

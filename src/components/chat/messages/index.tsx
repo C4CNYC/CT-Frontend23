@@ -6,13 +6,12 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 import { convertTimestamp } from "@sections/chat/helpers";
-import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { BaseResponseInterface } from "@utils";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 
 interface IMessages {
   senderId: string;
-  messages: IChatMessage[];
+  messages: any[];
   getUserData: (id: string) => (IFriend & BaseResponseInterface) | undefined;
   onSend: (
     innerHtml: string,

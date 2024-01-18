@@ -2,8 +2,8 @@ import React, { MouseEventHandler, useCallback, useState } from "react";
 
 import { useCommands } from "@remirror/react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiOutlineClear } from "react-icons/ai";
-import { MdFormatColorText } from "react-icons/md";
+import { AiOutlineClear } from "@react-icons/all-files/ai/AiOutlineClear";
+import { MdFormatColorText } from "@react-icons/all-files/md/MdFormatColorText";
 
 import { IconButton, Stack } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";

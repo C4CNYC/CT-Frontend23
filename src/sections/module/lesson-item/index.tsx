@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useAtom } from "jotai";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
-import { HiLockClosed } from "react-icons/hi2";
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
+import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
+import { GoTriangleUp } from "@react-icons/all-files/go/GoTriangleUp";
+import { HiLockClosed } from "@react-icons/all-files/hi2/HiLockClosed";
 import RocketIcon from "../icons/RocketIcon";
-import { TbPlayerPlay } from "react-icons/tb";
+import { TbPlayerPlay } from "@react-icons/all-files/tb/TbPlayerPlay";
 
 import {
   Box,

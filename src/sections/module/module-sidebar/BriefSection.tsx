@@ -1,7 +1,7 @@
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { LuSchool } from "react-icons/lu";
-import { MdOutlinePlayLesson } from "react-icons/md";
-import { SiLevelsdotfyi } from "react-icons/si";
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
+import { LuSchool } from "@react-icons/all-files/lu/LuSchool";
+import { MdOutlinePlayLesson } from "@react-icons/all-files/md/MdOutlinePlayLesson";
+import { SiLevelsdotfyi } from "@react-icons/all-files/si/SiLevelsdotfyi";
 
 import {
   Box,

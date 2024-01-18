@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { Avatar, Conversation } from "@chatscope/chat-ui-kit-react";
-import _ from "lodash";
+import * as _ from "lodash-es";
 
-import { IChatMessage } from "@sections/chat/hooks/useFirebaseChat.hook";
 import { BaseResponseInterface } from "@utils";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 
@@ -17,7 +16,7 @@ interface IUserList {
   user: User;
   getMessages: (
     reciverId: string,
-    cb: (messages: IChatMessage[]) => void,
+    cb: (messages: any[]) => void,
     limit?: number
   ) => void;
 }
@@ -28,7 +27,7 @@ export const UsersItem = ({
   user,
 }: //   students,
 IUserList): React.ReactElement => {
-  const [lastMessage, setLastMessage] = useState<IChatMessage | null>(null);
+  const [lastMessage, setLastMessage] = useState<any | null>(null);
   useEffect(() => {
     if (!user) return;
     getMessages(

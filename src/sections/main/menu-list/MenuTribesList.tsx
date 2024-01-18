@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { t } from "i18next";
-import { FaCampground, FaPlus } from "react-icons/fa";
-import { IoPeople } from "react-icons/io5";
+import { FaCampground } from "@react-icons/all-files/fa/FaCampground";
+import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
+import { IoPeople } from "@react-icons/all-files/io5/IoPeople";
 
 import {
   Button,

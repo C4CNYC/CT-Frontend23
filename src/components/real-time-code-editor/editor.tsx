@@ -15,7 +15,13 @@ import { voidFunction } from "@utils";
 
 import { peerExtension } from "../../codemirror/extensions/collab";
 import { cursorExtension } from "../../codemirror/extensions/cursors";
-import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
+// import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
+
+export interface State {
+  connected: boolean;
+  version?: number;
+  doc?: string;
+}
 
 interface IEditor {
   roomId: string;

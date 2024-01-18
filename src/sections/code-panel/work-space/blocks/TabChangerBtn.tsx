@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
-import { MdOutlineSwipeLeft, MdOutlineSwipeRight } from "react-icons/md";
+import { MdOutlineSwipeLeft } from "@react-icons/all-files/md/MdOutlineSwipeLeft";
+import { MdOutlineSwipeRight } from "@react-icons/all-files/md/MdOutlineSwipeRight";
 
 import { Box, IconButton } from "@mui/material";
 

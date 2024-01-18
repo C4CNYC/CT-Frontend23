@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 import { Box, IconButton, ListItem } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 import { CheckersItemText } from "../checkers/checkers-item-text";
 

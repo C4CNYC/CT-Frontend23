@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { FaArrowRight, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
+import { FaChevronDown } from "@react-icons/all-files/fa/FaChevronDown";
+import { FaChevronUp } from "@react-icons/all-files/fa/FaChevronUp";
+
 
 import {
   Box,
@@ -23,7 +26,7 @@ import {
 
 import CompleatedIcon from "../icons/CompleatedIcon";
 import RocketIcon from "../icons/RocketIcon";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
 
 interface RoadItemProps {
   compleated: boolean;

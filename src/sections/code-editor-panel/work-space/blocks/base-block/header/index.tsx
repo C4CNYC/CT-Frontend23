@@ -1,6 +1,6 @@
 import { type FC, type ReactNode, useMemo } from "react";
 
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "@react-icons/all-files/ai/AiOutlineClose";
 
 import {
   Box,

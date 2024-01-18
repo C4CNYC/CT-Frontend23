@@ -1,7 +1,6 @@
 import { differenceInDays } from "date-fns";
-import { Timestamp } from "firebase/firestore";
 
-export function convertTimestamp(timestamp?: Timestamp): string {
+export function convertTimestamp(timestamp?: any): string {
   if (!timestamp) return "";
   const dateNow = new Date();
   const date = timestamp.toDate();

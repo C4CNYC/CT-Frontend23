@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { Logo } from "@components";
+import { Logo } from "src/components/logo";
 import { useOffSetTop, useResponsive } from "@hooks";
 import { bgBlur } from "@utils";
 

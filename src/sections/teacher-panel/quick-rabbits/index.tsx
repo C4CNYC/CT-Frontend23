@@ -10,7 +10,6 @@ import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
 import { RootState, useSelector } from "src/redux/store";
 import { useDispatch } from "react-redux";
 import { removeRabit } from "src/redux/slices/rabits";
-import { io } from "socket.io-client";
 import { useSocket } from "@hooks";
 
 export const QuickRabbits = (): React.ReactElement => {

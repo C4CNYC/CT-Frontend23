@@ -1,8 +1,8 @@
 import { SetStateAction, useState } from "react";
 
 import Hamburger from "hamburger-react";
-import { FaUsers } from "react-icons/fa";
-import { IoMdSchool } from "react-icons/io";
+import { FaUsers } from "@react-icons/all-files/fa/FaUsers";
+import { IoMdSchool } from "@react-icons/all-files/io/IoMdSchool";
 
 import { Box, Divider, Link, List, ListItem, Typography } from "@mui/material";
 

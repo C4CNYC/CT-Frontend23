@@ -1,12 +1,12 @@
 import NextLink from "next/link";
 
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { GrOverview } from "react-icons/gr";
-import { IoImageOutline } from "react-icons/io5";
-import { LuSchool } from "react-icons/lu";
-import { MdOutlinePlayLesson } from "react-icons/md";
-import { SiLevelsdotfyi } from "react-icons/si";
-import { TbFileCertificate } from "react-icons/tb";
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
+import { GrOverview } from "@react-icons/all-files/gr/GrOverview";
+import { IoImageOutline } from "@react-icons/all-files/io5/IoImageOutline";
+import { LuSchool } from "@react-icons/all-files/lu/LuSchool";
+import { MdOutlinePlayLesson } from "@react-icons/all-files/md/MdOutlinePlayLesson";
+import { SiLevelsdotfyi } from "@react-icons/all-files/si/SiLevelsdotfyi";
+import { TbFileCertificate } from "@react-icons/all-files/tb/TbFileCertificate";
 
 import {
   Link,

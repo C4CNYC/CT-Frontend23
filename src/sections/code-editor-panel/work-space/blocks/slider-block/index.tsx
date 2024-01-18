@@ -8,9 +8,9 @@ import React, {
   useState,
 } from "react";
 
-import _ from "lodash";
-import { SlDirections } from "react-icons/sl";
-import { TbArrowBarToLeft } from "react-icons/tb";
+import * as _ from "lodash-es";
+import { SlDirections } from "@react-icons/all-files/sl/SlDirections";
+import { TbArrowBarToLeft } from "@react-icons/all-files/tb/TbArrowBarToLeft";
 import { useDispatch } from "react-redux";
 import Carousel from "react-slick";
 

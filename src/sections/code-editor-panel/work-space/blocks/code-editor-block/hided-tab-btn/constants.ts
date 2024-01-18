@@ -1,6 +1,6 @@
 import { type SxProps } from "@mui/system";
 
-import { TAB_TITLES } from "@sections/code-editor-panel/work-space";
+import { TAB_TITLES } from "@sections/code-editor-panel/work-space/TAB_TITLES"
 
 export const COLLAPSEBAR_TITLE_SX = {
   position: "absolute",

@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 
 import { useSnackbar } from "notistack";
-import { HiArrowUpTray } from "react-icons/hi2";
-import { IoClose } from "react-icons/io5";
+import { HiArrowUpTray } from "@react-icons/all-files/hi2/HiArrowUpTray";
+import { IoClose } from "@react-icons/all-files/io5/IoClose";
 
 import { Box, Collapse, IconButton, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";

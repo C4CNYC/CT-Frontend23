@@ -1,5 +1,5 @@
 import { Control, Controller } from "react-hook-form";
-import { TbInfoCircleFilled } from "react-icons/tb";
+import { TbInfoCircleFilled } from "@react-icons/all-files/tb/TbInfoCircleFilled";
 
 import { FormGroup, TextField, Typography, useTheme } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";

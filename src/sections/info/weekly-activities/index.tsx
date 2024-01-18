@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { AiFillInfoCircle } from "react-icons/ai";
+import { AiFillInfoCircle } from "@react-icons/all-files/ai/AiFillInfoCircle";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Card, Menu, MenuItem, Stack, Typography } from "@mui/material";

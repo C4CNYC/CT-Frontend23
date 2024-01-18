@@ -2,7 +2,7 @@ import { type CSSProperties, type FC, type ReactNode } from "react";
 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import Draggable from "react-draggable";
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { IoChatboxEllipsesOutline } from "@react-icons/all-files/io5/IoChatboxEllipsesOutline";
 import { useDispatch } from "react-redux";
 
 import CloseIcon from "@mui/icons-material/Close";

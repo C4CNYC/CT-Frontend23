@@ -1,6 +1,6 @@
 import { type FC } from "react";
 
-import { CgClose } from "react-icons/cg";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
 
 import { Box, Typography } from "@mui/material";
 

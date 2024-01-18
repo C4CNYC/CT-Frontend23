@@ -1,15 +1,15 @@
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 
 import { format } from "date-fns";
-import _ from "lodash";
-import { HiOutlineLightBulb, HiOutlineSquares2X2 } from "react-icons/hi2";
-import { LuPencil } from "react-icons/lu";
-import {
-  MdOutlineAutoMode,
-  MdOutlineHome,
-  MdOutlineQuiz,
-} from "react-icons/md";
-import { TbPuzzle } from "react-icons/tb";
+import * as _ from "lodash-es";
+import { HiOutlineLightBulb } from "@react-icons/all-files/hi2/HiOutlineLightBulb";
+import { HiOutlineSquares2X2 } from "@react-icons/all-files/hi2/HiOutlineSquares2X2";
+import { LuPencil } from "@react-icons/all-files/lu/LuPencil";
+import { MdOutlineAutoMode } from "@react-icons/all-files/md/MdOutlineAutoMode";
+import { MdOutlineHome } from "@react-icons/all-files/md/MdOutlineHome";
+import { MdOutlineQuiz } from "@react-icons/all-files/md/MdOutlineQuiz";
+
+import { TbPuzzle } from "@react-icons/all-files/tb/TbPuzzle";
 
 import {
   Checkbox,

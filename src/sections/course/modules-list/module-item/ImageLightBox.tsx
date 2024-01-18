@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BiShowAlt } from "react-icons/bi";
+import { BiShowAlt } from "@react-icons/all-files/bi/BiShowAlt";
 
 import {
   Box,

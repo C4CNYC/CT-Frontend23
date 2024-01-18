@@ -1,4 +1,4 @@
-import { BiLockOpenAlt } from "react-icons/bi";
+import { BiLockOpenAlt } from "@react-icons/all-files/bi/BiLockOpenAlt";
 
 import { Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/system";

@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 import React, { useEffect, useRef, useState } from "react";
 
-import { BiCodeAlt } from "react-icons/bi";
+import { BiCodeAlt } from "@react-icons/all-files/bi/BiCodeAlt";
 
 import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";

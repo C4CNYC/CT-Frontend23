@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import { SlArrowDown } from "@react-icons/all-files/sl/SlArrowDown";
+import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
 
 import { Button, Stack, Typography, useTheme } from "@mui/material";
 

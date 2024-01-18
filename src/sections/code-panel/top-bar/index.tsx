@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import NavBar from "./nav-bar";
 
 interface ITopPanel {
-  chatComponent: React.ReactElement;
+  chatComponent?: React.ReactElement | null;
 }
 
 const TopPanel = ({ chatComponent }: ITopPanel): React.ReactElement | null => {

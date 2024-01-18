@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
-import { IoSettingsOutline } from "react-icons/io5";
-import { TbListDetails } from "react-icons/tb";
+import { IoSettingsOutline } from "@react-icons/all-files/io5/IoSettingsOutline";
+import { TbListDetails } from "@react-icons/all-files/tb/TbListDetails";
 
 import LoadingButton from "@mui/lab/LoadingButton";
 import {

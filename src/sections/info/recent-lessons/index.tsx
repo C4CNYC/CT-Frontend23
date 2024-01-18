@@ -1,4 +1,4 @@
-import { AiFillInfoCircle } from "react-icons/ai";
+import { AiFillInfoCircle } from "@react-icons/all-files/ai/AiFillInfoCircle";
 
 import { Card, Stack, Typography } from "@mui/material";
 

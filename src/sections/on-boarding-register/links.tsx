@@ -1,6 +1,6 @@
 import nextLink from "next/link";
 
-import { HiArrowRight } from "react-icons/hi";
+import { HiArrowRight } from "@react-icons/all-files/hi/HiArrowRight";
 
 import { Link, Typography } from "@mui/material";
 

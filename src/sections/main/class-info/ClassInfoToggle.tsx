@@ -1,9 +1,9 @@
 import nextLink from "next/link";
 import { useState } from "react";
 
-import { HiArrowNarrowRight } from "react-icons/hi";
-import { IoClose } from "react-icons/io5";
-import { MdOutlineWifiTethering } from "react-icons/md";
+import { HiArrowNarrowRight } from "@react-icons/all-files/hi/HiArrowNarrowRight";
+import { IoClose } from "@react-icons/all-files/io5/IoClose";
+import { MdOutlineWifiTethering } from "@react-icons/all-files/md/MdOutlineWifiTethering";
 
 import { Collapse, IconButton, Link, Stack, Typography } from "@mui/material";
 
