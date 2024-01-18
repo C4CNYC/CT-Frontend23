@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import { ResizerUi } from "@components";
 
 import { CodePanel } from "./code-panel";
-import { QuickRabbits } from "./quick-rabbits";
+// import { QuickRabbits } from "./quick-rabbits";
 import { TopBar } from "./top-bar";
 import { SocketContext } from "../../context/socket-context";
 import { useCallback, useEffect, useMemo, useRef } from "react";
@@ -65,7 +65,7 @@ export const TeacherPanel = (): React.ReactElement => {
             defaultSize={550}
           >
             <CodePanel />
-            <QuickRabbits />
+            {/* <QuickRabbits /> */}
           </ResizerUi>
         </Stack>
       </Stack>

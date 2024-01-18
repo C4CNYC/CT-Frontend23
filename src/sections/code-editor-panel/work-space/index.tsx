@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { type FC, useRef, useState } from "react";
 
-import { FaDesktop } from "react-icons/fa";
-import { TiDocumentText } from "react-icons/ti";
+import { FaDesktop } from "@react-icons/all-files/fa/FaDesktop"
+import { TiDocumentText } from "@react-icons/all-files/ti/TiDocumentText"
 import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
@@ -11,12 +11,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { Stack, type StackProps } from "@mui/system";
 
 import { useSocket } from "@hooks";
-import { type BaseResponseInterface } from "@utils";
-import { type AuthUserType } from "src/auth/types";
-import {
-  type ILesson,
-  type ILessonContent,
-} from "src/redux/interfaces/content.interface";
 import {
   setCode,
   toggleBrowser,
@@ -31,25 +25,8 @@ import NavPanel from "./blocks/nav-panel";
 import SliderBlock from "./blocks/slider-block";
 import ViewBlock from "./blocks/view-block";
 import { CodeDocument } from "./blocks/view-block/browser-view";
-
-export type SupportedLang = "html" | "javascript";
-
-export const TAB_TITLES = {
-  instructions: "Instructions",
-  browser_preview: "Browser Preview",
-};
-
-export interface WorkSpaceProps {
-  isFetching?: boolean;
-  lesson?: ILesson & BaseResponseInterface;
-  data: Array<ILessonContent & BaseResponseInterface>;
-  user: AuthUserType;
-  language: SupportedLang;
-  onChangeCode: (code: string) => void;
-  onSubmitChalange: (lessonContentId: string) => Promise<void>;
-  onSubmitLesson: () => Promise<void>;
-  lastLessonCode?: string;
-}
+import { TAB_TITLES } from "@sections/code-editor-panel/work-space/TAB_TITLES"
+import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
 
 let previousLength: number | null = null;
 let checkValueTimeout: any | null = null;

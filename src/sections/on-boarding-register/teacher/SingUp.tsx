@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import { useGoogleLogin } from "@react-oauth/google";
-import { FaArrowRight } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { MdArrowBackIosNew } from "react-icons/md";
+import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
+import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
+import { MdArrowBackIosNew } from "@react-icons/all-files/md/MdArrowBackIosNew";
 
 import { LoadingButton } from "@mui/lab";
 import {

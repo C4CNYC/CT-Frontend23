@@ -12,7 +12,7 @@ import SettingDrawer from "./options/setting-drawer";
 import Timer from "./options/timer/timer";
 
 interface IDesktopBar {
-  chatComponent: React.ReactElement;
+  chatComponent?: React.ReactElement | null;
 }
 
 const DesktopBar = ({ chatComponent }: IDesktopBar): React.ReactElement => {

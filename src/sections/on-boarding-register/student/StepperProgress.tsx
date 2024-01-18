@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { MdArrowBackIosNew } from "react-icons/md";
+import { MdArrowBackIosNew } from "@react-icons/all-files/md/MdArrowBackIosNew";
 
 import {
   IconButton,

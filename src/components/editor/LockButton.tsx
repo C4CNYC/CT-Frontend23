@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
-import { AiFillLock, AiFillUnlock } from "react-icons/ai";
+import { AiFillLock } from "@react-icons/all-files/ai/AiFillLock";
+import { AiFillUnlock } from "@react-icons/all-files/ai/AiFillUnlock";
 
 import Button from "@mui/material/Button";
 

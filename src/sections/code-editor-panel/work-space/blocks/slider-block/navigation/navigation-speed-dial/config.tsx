@@ -1,9 +1,10 @@
 import { Badge } from "@mui/material";
 import { voidFunction } from "@utils";
 import { type ReactNode } from "react";
-import { BiFullscreen, BiMedal } from "react-icons/bi";
-import { MdOutlineNoteAlt } from "react-icons/md";
-import { TbMessageCircle } from "react-icons/tb";
+import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
+import { BiMedal } from "@react-icons/all-files/bi/BiMedal";
+import { MdOutlineNoteAlt } from "@react-icons/all-files/md/MdOutlineNoteAlt";
+import { TbMessageCircle } from "@react-icons/all-files/tb/TbMessageCircle";
 
 interface Action {
   icon: ReactNode

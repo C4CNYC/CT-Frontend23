@@ -1,7 +1,8 @@
-import { AiOutlineHeart, AiOutlineStar } from "react-icons/ai";
-import { HiDotsVertical } from "react-icons/hi";
-import { MdIosShare } from "react-icons/md";
-import { TbFileCertificate } from "react-icons/tb";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
+import { HiDotsVertical } from "@react-icons/all-files/hi/HiDotsVertical";
+import { MdIosShare } from "@react-icons/all-files/md/MdIosShare";
+import { TbFileCertificate } from "@react-icons/all-files/tb/TbFileCertificate";
 
 import { IconButton, Stack, useTheme } from "@mui/material";
 

@@ -1,6 +1,7 @@
 import { type FC, ReactNode, useState } from "react";
 
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import { SlArrowDown } from "@react-icons/all-files/sl/SlArrowDown";
+import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
 
 import Diversity1Icon from "@mui/icons-material/Diversity1";
 import {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
 import { Rating } from "react-simple-star-rating";
 
 import { Box, IconButton } from "@mui/material";

@@ -1,6 +1,7 @@
 import { memo, useState } from "react";
 
-import { ImMinus, ImPlus } from "react-icons/im";
+import { ImMinus } from "@react-icons/all-files/im/ImMinus";
+import { ImPlus } from "@react-icons/all-files/im/ImPlus";
 
 import { Box, Collapse, Stack, Typography } from "@mui/material";
 

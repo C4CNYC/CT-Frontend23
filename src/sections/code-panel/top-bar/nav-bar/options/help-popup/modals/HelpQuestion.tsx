@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 import { chatHandlerAtom } from "../../chatHendlerAtom";
 import { helpMsgAtom } from "./helpMsgAtom";

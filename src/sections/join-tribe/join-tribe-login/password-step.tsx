@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { MdArrowBackIosNew } from "react-icons/md";
+import { MdArrowBackIosNew } from "@react-icons/all-files/md/MdArrowBackIosNew";
 
 import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";

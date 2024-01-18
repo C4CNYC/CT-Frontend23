@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 
 import { useSnackbar } from "notistack";
-import { RxLinkedinLogo } from "react-icons/rx";
+import { RxLinkedinLogo } from "@react-icons/all-files/rx/RxLinkedinLogo";
 
 import { LoadingButton } from "@mui/lab";
 import {

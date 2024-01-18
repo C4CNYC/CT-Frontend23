@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 
 import { Box, Stack } from "@mui/material";
 
-import { Logo } from "@components";
+import { Logo } from "src/components/logo";
 import AccountPopover from "@layouts/dashboard/header/AccountPopover";
 
 import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";

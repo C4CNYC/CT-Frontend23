@@ -20,7 +20,6 @@ import { Divider, Stack } from "@mui/material";
 
 import { LessonContentContext } from "@sections/dashboard/lessons/LessonStep/LessonStepContent/LessonContent.context";
 
-import { LockButton } from "./LockButton";
 import { SaveButton } from "./SaveButton";
 import {
   FontFamilyButtons,

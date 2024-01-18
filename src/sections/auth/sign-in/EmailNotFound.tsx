@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { MdArrowBackIosNew } from "react-icons/md";
+import { MdArrowBackIosNew } from "@react-icons/all-files/md/MdArrowBackIosNew";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import { Button, IconButton, Stack, Theme, Typography } from "@mui/material";

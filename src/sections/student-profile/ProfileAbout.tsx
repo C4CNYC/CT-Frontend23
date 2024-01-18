@@ -3,7 +3,7 @@ import { countries } from "@assets/data";
 import { Card, CardHeader, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { fDateTime } from "@utils";
 import { IUser } from "src/redux/interfaces/auth.interface";
 import { useTranslate } from "src/utils/translateHelper";

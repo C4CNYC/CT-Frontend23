@@ -1,8 +1,8 @@
 import NextLink from "next/link";
 import { useMemo } from "react";
 
-import { BsFillInfoCircleFill } from "react-icons/bs";
-import { RiShareBoxFill } from "react-icons/ri";
+import { BsFillInfoCircleFill } from "@react-icons/all-files/bs/BsFillInfoCircleFill";
+import { RiShareBoxFill } from "@react-icons/all-files/ri/RiShareBoxFill";
 
 import {
   Box,

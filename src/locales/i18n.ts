@@ -8,13 +8,13 @@ import { localStorageAvailable } from "@utils";
 //
 import { defaultLang } from "./config-lang";
 //
-import arLocales from "./langs/ar";
-import cnLocales from "./langs/cn";
+// import arLocales from "./langs/ar";
+// import cnLocales from "./langs/cn";
 import enLocales from "./langs/en";
-import esLocales from "./langs/es";
-import frLocales from "./langs/fr";
-import ptLocales from "./langs/pt";
-import vnLocales from "./langs/vn";
+// import esLocales from "./langs/es";
+// import frLocales from "./langs/fr";
+// import ptLocales from "./langs/pt";
+// import vnLocales from "./langs/vn";
 
 // ----------------------------------------------------------------------
 
@@ -32,12 +32,12 @@ i18n
   .init({
     resources: {
       en: { translations: enLocales },
-      fr: { translations: frLocales },
-      vn: { translations: vnLocales },
-      cn: { translations: cnLocales },
-      ar: { translations: arLocales },
-      es: { translations: esLocales },
-      pt: { translations: ptLocales },
+      // fr: { translations: frLocales },
+      // vn: { translations: vnLocales },
+      // cn: { translations: cnLocales },
+      // ar: { translations: arLocales },
+      // es: { translations: esLocales },
+      // pt: { translations: ptLocales },
     },
     lng,
     fallbackLng: defaultLang.value,

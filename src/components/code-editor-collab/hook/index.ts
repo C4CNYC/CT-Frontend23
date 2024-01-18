@@ -18,7 +18,7 @@ import { unsubscribeSocket, EmitSocketEvents } from "./utils/socket"
 import { useModeSubscriptions } from "./useModeSubscriotions";
 import { EditorMode } from "./constants";
 import { RoomStatus } from "../components/status-label";
-import { RESET_LESSON_EVENT } from "@components";
+import { RESET_LESSON_EVENT } from "src/components/real-time-editor"
 
 export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string

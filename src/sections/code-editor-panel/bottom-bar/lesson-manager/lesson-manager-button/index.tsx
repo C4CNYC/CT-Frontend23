@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { type BaseResponseInterface } from "@utils";
 import { type ILesson } from "src/redux/interfaces/content.interface";
 import { useTranslate } from "src/utils/translateHelper";

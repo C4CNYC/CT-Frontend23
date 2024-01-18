@@ -1,5 +1,5 @@
-import { MdOutlineDarkMode } from "react-icons/md";
-import { MdOutlineLightMode } from "react-icons/md";
+import { MdOutlineDarkMode } from "@react-icons/all-files/md/MdOutlineDarkMode";
+import { MdOutlineLightMode } from "@react-icons/all-files/md/MdOutlineLightMode";
 
 import { IconButton } from "@mui/material";
 

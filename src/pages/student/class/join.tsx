@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
 import * as Yup from "yup";
 
 import { LoadingButton } from "@mui/lab";

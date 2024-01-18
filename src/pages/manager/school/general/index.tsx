@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useState } from "react";
 
 import { useSnackbar } from "notistack";
-import { BsPeopleFill } from "react-icons/bs";
-import { MdContacts } from "react-icons/md";
+import { BsPeopleFill } from "@react-icons/all-files/bs/BsPeopleFill";
+import { MdContacts } from "@react-icons/all-files/md/MdContacts";
 import { useSelector } from "react-redux";
 
 import { Box, Card, Container, Stack, Tab, Tabs } from "@mui/material";
@@ -25,7 +25,7 @@ import {
 import { RootState } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
 
-import SkeletonSchool from "./skeleton-school";
+import SkeletonSchool from "@sections/schools/skeleton-school";
 
 UserProfilePage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

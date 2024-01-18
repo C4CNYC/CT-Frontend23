@@ -5,12 +5,12 @@ import Draggable from "react-draggable";
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, IconButton, useMediaQuery, useTheme } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 import { chatHandlerAtom } from "./chatHendlerAtom";
 
 interface IChatPopup {
-  chatComponent: React.ReactElement;
+  chatComponent?: React.ReactElement | null;
 }
 
 const ChatPopup = ({ chatComponent }: IChatPopup): React.ReactElement => {

@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 
 import { Box, Link, ListItemText, Tooltip } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 import RoleBasedGuard from "../../../auth/RoleBasedGuard";
 import { useLocales } from "../../../locales";

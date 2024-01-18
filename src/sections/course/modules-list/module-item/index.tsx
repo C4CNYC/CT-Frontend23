@@ -1,8 +1,8 @@
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import { MdIosShare } from "react-icons/md";
+import { HiOutlineArrowNarrowRight } from "@react-icons/all-files/hi/HiOutlineArrowNarrowRight";
+import { MdIosShare } from "@react-icons/all-files/md/MdIosShare";
 
 import {
   Box,

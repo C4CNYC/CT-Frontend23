@@ -2,9 +2,9 @@ import React, { MouseEventHandler, useCallback, useState } from "react";
 
 import { useCommands } from "@remirror/react";
 import { useDetectClickOutside } from "react-detect-click-outside";
-import { AiFillCheckCircle } from "react-icons/ai";
-import { GoBrowser } from "react-icons/go";
-import { RxCrossCircled } from "react-icons/rx";
+import { AiFillCheckCircle } from "@react-icons/all-files/ai/AiFillCheckCircle";
+import { GoBrowser } from "@react-icons/all-files/go/GoBrowser";
+import { RxCrossCircled } from "@react-icons/all-files/rx/RxCrossCircled";
 import "remirror/styles/all.css";
 
 import { IconButton, Stack, TextField } from "@mui/material";

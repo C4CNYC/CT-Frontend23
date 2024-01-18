@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useState } from "react";
 
-import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
+import SkeletonMembers from "@sections/schools/SkeletonMembers";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 

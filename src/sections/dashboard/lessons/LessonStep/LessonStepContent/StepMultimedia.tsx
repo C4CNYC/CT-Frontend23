@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 
 import { Box } from "@mui/material";
 
-import { MyEditor, ResizerUi } from "@components";
+import { ResizerUi } from "@components";
+import { MyEditor } from "src/components/editor/MyEditor";
 
 import { LessonContentContext } from "./LessonContent.context";
 import { BaseResponseInterface } from "@utils";

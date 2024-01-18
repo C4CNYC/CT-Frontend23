@@ -1,6 +1,6 @@
-import { BsBookmark } from "react-icons/bs";
-import { FiSettings } from "react-icons/fi";
-import { TbCheckupList } from "react-icons/tb";
+import { BsBookmark } from "@react-icons/all-files/bs/BsBookmark";
+import { FiSettings } from "@react-icons/all-files/fi/FiSettings";
+import { TbCheckupList } from "@react-icons/all-files/tb/TbCheckupList";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LogoutIcon from "@mui/icons-material/Logout";

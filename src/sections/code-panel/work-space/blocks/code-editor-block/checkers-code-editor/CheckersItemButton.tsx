@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 
 import { IconButton, ListItem } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 import CheckersItemText from "./CheckersItemText";
 import { checkersAnimationAtom } from "./checkers-animation-atom";

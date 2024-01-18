@@ -1,5 +1,5 @@
 import { Extensions } from "src/components/code-editor-collab/hook/constants";
-import { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
+import type { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
 import { getFileExtension } from "src/utils/getFileExtension";
 
 const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js];
@@ -13,7 +13,7 @@ interface ValidateProps {
   isMultipleExtensionFiles: boolean
 }
 
-const isExtensionExist = (fileList: File[], extension: string) => 
+const isExtensionExist = (fileList: File[], extension: string) =>
   fileList.some(({ name }) => getFileExtension(name) === extension)
 
 export const validate = ({

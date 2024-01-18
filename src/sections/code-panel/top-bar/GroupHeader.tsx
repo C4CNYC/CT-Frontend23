@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 
-import { MdWifiTethering } from "react-icons/md";
+import { MdWifiTethering } from "@react-icons/all-files/md/MdWifiTethering";
 
 import {
   Avatar,

@@ -1,5 +1,6 @@
-import { AiOutlineHeart, AiOutlineStar } from "react-icons/ai";
-import { TbFileCertificate } from "react-icons/tb";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+import { AiOutlineStar } from "@react-icons/all-files/ai/AiOutlineStar";
+import { TbFileCertificate } from "@react-icons/all-files/tb/TbFileCertificate";
 
 import { Paper, Stack, Typography } from "@mui/material";
 

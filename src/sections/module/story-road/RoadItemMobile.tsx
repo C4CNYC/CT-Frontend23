@@ -1,8 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { FaArrowRight, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
+import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
+import { FaChevronDown } from "@react-icons/all-files/fa/FaChevronDown";
+import { FaChevronUp } from "@react-icons/all-files/fa/FaChevronUp";
 
 import {
   Box,

@@ -1,10 +1,10 @@
 import nextLink from "next/link";
 import { useState } from "react";
 
-import { BsThreeDots } from "react-icons/bs";
-import { FiUser } from "react-icons/fi";
-import { MdCopyAll } from "react-icons/md";
-import { TbShare2 } from "react-icons/tb";
+import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots";
+import { FiUser } from "@react-icons/all-files/fi/FiUser";
+import { MdCopyAll } from "@react-icons/all-files/md/MdCopyAll";
+import { TbShare2 } from "@react-icons/all-files/tb/TbShare2";
 
 import {
   Button,

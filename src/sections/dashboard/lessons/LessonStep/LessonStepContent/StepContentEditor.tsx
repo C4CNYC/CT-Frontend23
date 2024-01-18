@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { useSnackbar } from "notistack";
-import { BsCodeSlash } from "react-icons/bs";
-import { CgScreen } from "react-icons/cg";
-import { IoMdInformationCircleOutline } from "react-icons/io";
-import { MdOutlinePermMedia } from "react-icons/md";
+import { BsCodeSlash } from "@react-icons/all-files/bs/BsCodeSlash";
+import { CgScreen } from "@react-icons/all-files/cg/CgScreen";
+import { IoMdInformationCircleOutline } from "@react-icons/all-files/io/IoMdInformationCircleOutline";
+import { MdOutlinePermMedia } from "@react-icons/all-files/md/MdOutlinePermMedia";
 
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { styled } from "@mui/material/styles";

@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";

@@ -33,7 +33,7 @@ import {
   UnderlineExtension,
   WhitespaceExtension,
 } from "remirror/extensions";
-import data from "svgmoji/emoji.json";
+// import data from "svgmoji/emoji.json";
 
 type Extensions =
   | HeadingExtension
@@ -101,5 +101,5 @@ export const extensions = (): Extensions[] => [
   new BulletListExtension(),
   new OrderedListExtension(),
   new TaskListExtension(),
-  new EmojiExtension({ data, moji: "noto" }),
+  // new EmojiExtension({ data, moji: "noto" }),
 ];

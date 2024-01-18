@@ -1,6 +1,6 @@
 import { type FC, memo, useCallback, useEffect, useRef, useState } from "react";
 
-import { BiCodeAlt } from "react-icons/bi";
+import { BiCodeAlt } from "@react-icons/all-files/bi/BiCodeAlt";
 import { useDispatch } from "react-redux";
 
 import { Box, Collapse, useMediaQuery } from "@mui/material";
@@ -136,7 +136,7 @@ const getTitleStyles = (isDesktop: boolean): string => {
   .cm-scroller::-webkit-scrollbar{
     width: 0px;
   }
- 
+
 `;
 };
 

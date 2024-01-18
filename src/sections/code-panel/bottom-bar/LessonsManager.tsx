@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 
 import { useAtom } from "jotai";
-import { IoMdClose } from "react-icons/io";
-import { RxExternalLink } from "react-icons/rx";
+import { IoMdClose } from "@react-icons/all-files/io/IoMdClose";
+import { RxExternalLink } from "@react-icons/all-files/rx/RxExternalLink";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -28,9 +28,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Iconify,
-  resetLessonEvent,
-} from "@components";
+} from "src/components/accordeon";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student";
 import { useGetPublicCourseContentQuery } from "src/redux/services/public-student";
@@ -38,6 +36,8 @@ import { useGetPublicCourseContentQuery } from "src/redux/services/public-studen
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";
 import { CodePanelContext } from "../context/CodePanel.context";
 import SkeletonDrawer from "./SkeletonDrawer";
+import { resetLessonEvent } from "src/components/real-time-editor"
+import { Iconify } from "src/components/iconify"
 
 const LessonManager = (): React.ReactElement => {
   const theme = useTheme();

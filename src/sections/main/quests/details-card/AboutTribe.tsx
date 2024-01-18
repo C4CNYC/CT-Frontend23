@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useTranslate } from "src/utils/translateHelper";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({

@@ -1,7 +1,7 @@
 import { type FC, useEffect } from "react";
 
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { SlClose } from "react-icons/sl";
+import { IoMdCheckmarkCircleOutline } from "@react-icons/all-files/io/IoMdCheckmarkCircleOutline";
+import { SlClose } from "@react-icons/all-files/sl/SlClose";
 import { useDispatch } from "react-redux";
 
 import { ListItem, Typography } from "@mui/material";

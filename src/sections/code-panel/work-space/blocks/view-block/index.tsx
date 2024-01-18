@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { CgBrowser } from "react-icons/cg";
+import { CgBrowser } from "@react-icons/all-files/cg/CgBrowser";
 
 import { Typography } from "@mui/material";
 

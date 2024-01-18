@@ -6,7 +6,7 @@ import { SentIcon } from "@assets/icons";
 
 import { Link, Typography } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import CompactLayout from "@layouts/compact";
 import { PATH_AUTH } from "@routes/paths";
 import AuthNewPasswordForm from "@sections/auth/AuthNewPasswordForm";

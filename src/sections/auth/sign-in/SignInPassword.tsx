@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
-import { MdArrowBackIosNew } from "react-icons/md";
+import { MdArrowBackIosNew } from "@react-icons/all-files/md/MdArrowBackIosNew";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import { LoadingButton } from "@mui/lab";

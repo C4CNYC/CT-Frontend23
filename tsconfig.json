@@ -41,7 +41,9 @@
   "exclude": [
     "next-env.d.ts",
     "node_modules",
-    "editor.tsx"
+    "editor.tsx",
+    "_ref",
+    "**/_ref"
   ],
   "include": [
     "**/*.ts",
