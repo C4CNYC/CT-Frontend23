@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { io } from "socket.io-client";
 
-import { RealTimeCodeEditor } from "@components";
+import { RealTimeCodeEditor } from "src/components/real-time-code-editor";
 import { BaseResponseInterface } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";

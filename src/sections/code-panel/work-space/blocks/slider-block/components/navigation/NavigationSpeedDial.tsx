@@ -1,8 +1,9 @@
 import { useAtom } from "jotai";
-import { BiFullscreen, BiMedal } from "react-icons/bi";
-import { BsLightningCharge } from "react-icons/bs";
-import { MdOutlineNoteAlt } from "react-icons/md";
-import { TbMessageCircle } from "react-icons/tb";
+import { BiFullscreen } from "@react-icons/all-files/bi/BiFullscreen";
+import { BiMedal } from "@react-icons/all-files/bi/BiMedal";
+import { BsLightningCharge } from "@react-icons/all-files/bs/BsLightningCharge";
+import { MdOutlineNoteAlt } from "@react-icons/all-files/md/MdOutlineNoteAlt";
+import { TbMessageCircle } from "@react-icons/all-files/tb/TbMessageCircle";
 
 import { Badge, SpeedDial, SpeedDialAction, useTheme } from "@mui/material";
 

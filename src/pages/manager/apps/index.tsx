@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 import { format } from "date-fns";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSnackbar } from "notistack";
 
 import {

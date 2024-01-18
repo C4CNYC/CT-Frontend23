@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { useGoogleLogin } from "@react-oauth/google";
-import { FaArrowRight } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { FaArrowRight } from "@react-icons/all-files/fa/FaArrowRight";
+import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { StepWizardChildProps } from "react-step-wizard";
 
 import { LoadingButton } from "@mui/lab";

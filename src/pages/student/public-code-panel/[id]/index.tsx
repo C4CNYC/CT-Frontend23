@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
-import _ from "lodash";
+import * as _ from "lodash-es";
 import { useSnackbar } from "notistack";
 import Confetti from "react-confetti";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
@@ -13,7 +13,6 @@ import { Box } from "@mui/material";
 
 import { EmptyContent } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { CodePanelChat } from "@sections/chat";
 import SkeletonCodePanel from "@sections/code-editor-panel/skeleton";
 import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
@@ -28,6 +27,8 @@ import {
   useGetPublicLessonQuery,
 } from "src/redux/services/public-student";
 import { useTranslate } from "src/utils/translateHelper";
+
+// import { CodePanelChat } from "@sections/chat";
 
 const Tour = dynamic(
   async () =>
@@ -161,7 +162,10 @@ export default function Index(): React.ReactElement {
               bgcolor="white"
               sx={{ position: "relative", overflow: "hidden" }}
             >
-              <TopPanel chatComponent={<CodePanelChat />} />
+              <TopPanel
+                // chatComponent={<CodePanelChat />}
+                chatComponent={null}
+              />
               <WorkSpace />
               <BottomBar />
             </Box>

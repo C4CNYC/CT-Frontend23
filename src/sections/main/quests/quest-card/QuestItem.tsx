@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { format, formatDistanceToNow } from "date-fns";
 import { useSnackbar } from "notistack";
-import { RiExternalLinkLine } from "react-icons/ri";
+import { RiExternalLinkLine } from "@react-icons/all-files/ri/RiExternalLinkLine";
 
 import { LoadingButton } from "@mui/lab";
 import {

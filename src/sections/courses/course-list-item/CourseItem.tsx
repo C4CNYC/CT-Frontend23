@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { SlArrowDown, SlArrowUp } from "react-icons/sl";
+import { SlArrowDown } from "@react-icons/all-files/sl/SlArrowDown";
+import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
 
 import {
   Box,

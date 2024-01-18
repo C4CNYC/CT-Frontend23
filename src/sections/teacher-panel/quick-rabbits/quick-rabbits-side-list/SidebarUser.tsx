@@ -9,20 +9,21 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { io } from "socket.io-client";
 
-import {
-  IChatMessage,
-  useFirebaseChat,
-} from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
+// import {
+//   IChatMessage,
+//   useFirebaseChat,
+// } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
-import { isNull } from "lodash";
+import * as _ from "lodash-es";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createRabit } from "src/redux/slices/rabits";
 import { ActivityStatus } from "../../../../types/activity-status";
 import { getActivityColor } from "../../../../utils/activity-color";
 import { useSocket } from "@hooks";
+
+type IChatMessage = any;
 
 const AvatarSkeleton = (): React.ReactElement => {
   return (
@@ -51,7 +52,7 @@ export const SidebarUser = ({
   const senderId = "SUPPORT";
   const dispatch = useDispatch();
   const [lastMessage, setLastMessage] = useState<IChatMessage>();
-  const { getMessages } = useFirebaseChat();
+  // const { getMessages } = useFirebaseChat();
 
   const {
     first_name: firstName,
@@ -66,17 +67,17 @@ export const SidebarUser = ({
     return getActivityColor(status);
   }, [status]);
 
-  useEffect(() => {
-    getMessages(
-      senderId,
-      id,
-      (data) => {
-        if (!data.length) return;
-        setLastMessage(data[0]);
-      },
-      1
-    );
-  }, []);
+  // useEffect(() => {
+  //   getMessages(
+  //     senderId,
+  //     id,
+  //     (data) => {
+  //       if (!data.length) return;
+  //       setLastMessage(data[0]);
+  //     },
+  //     1
+  //   );
+  // }, []);
 
   const socket = useSocket();
 
@@ -170,7 +171,7 @@ export const SidebarUser = ({
 };
 
 function getAvatarColor(time: number | null): string {
-  if (isNull(time)) return "#C4C4C4";
+  if (_.isNull(time)) return "#C4C4C4";
   if (time >= 0 && time <= 5) return "#0198ED";
   if (time < 50 && time > 5) return "#E27510";
   return "#C4C4C4";
@@ -181,7 +182,7 @@ function getTooltipAvatarMessage(
   isOnline: boolean
 ): string {
   if (!isOnline) return "student offline";
-  if (isNull(time)) return "was active long time ago";
+  if (_.isNull(time)) return "was active long time ago";
   if (time === 0 || time <= 5) return "active";
   if (time < 50 && time > 5) return `was active ${time} minutes ago`;
   return "was active long time ago";

@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
-import { CgArrowUpO } from "react-icons/cg";
-import { HiOutlineLightBulb } from "react-icons/hi2";
+import { CgArrowUpO } from "@react-icons/all-files/cg/CgArrowUpO";
+import { HiOutlineLightBulb } from "@react-icons/all-files/hi2/HiOutlineLightBulb";
 
 import {
   FormControl,

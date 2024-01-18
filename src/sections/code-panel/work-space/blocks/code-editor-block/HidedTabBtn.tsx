@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
-import { ImBook } from "react-icons/im";
-import { LuMonitorUp } from "react-icons/lu";
+import { ImBook } from "@react-icons/all-files/im/ImBook";
+import { LuMonitorUp } from "@react-icons/all-files/lu/LuMonitorUp";
 
 import { Button } from "@mui/material";
 

@@ -5,7 +5,7 @@ import { MuiColorInput, matchIsValidColor } from "mui-color-input";
 import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 
 import BasePreference from "./BasePreference";
 

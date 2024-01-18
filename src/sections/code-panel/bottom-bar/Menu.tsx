@@ -1,10 +1,11 @@
 import nextLink from "next/link";
 import { useContext, useState } from "react";
 
-import { BsFolder2Open } from "react-icons/bs";
-import { GiSave } from "react-icons/gi";
-import { IoSaveOutline } from "react-icons/io5";
-import { MdOutlinePhotoLibrary, MdOutlineUpload } from "react-icons/md";
+import { BsFolder2Open } from "@react-icons/all-files/bs/BsFolder2Open";
+import { GiSave } from "@react-icons/all-files/gi/GiSave";
+import { IoSaveOutline } from "@react-icons/all-files/io5/IoSaveOutline";
+import { MdOutlinePhotoLibrary } from "@react-icons/all-files/md/MdOutlinePhotoLibrary";
+import { MdOutlineUpload } from "@react-icons/all-files/md/MdOutlineUpload";
 
 import {
   Chip,

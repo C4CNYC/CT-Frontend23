@@ -233,7 +233,7 @@ export const contextMenuExtension = ({
               view.dispatch({
                 effects: addComment.of({
                   type: "add-comment",
-                  id: crypto.randomUUID(),
+                  id: window.crypto.randomUUID(),
                   from: s?.from ?? 0,
                   to: s?.to ?? 0,
                   content:

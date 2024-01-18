@@ -1,8 +1,8 @@
 import { format } from "date-fns";
-import { FaGraduationCap } from "react-icons/fa";
-import { HiUsers } from "react-icons/hi";
-import { IoCalendar } from "react-icons/io5";
-import { TiLocation } from "react-icons/ti";
+import { FaGraduationCap } from "@react-icons/all-files/fa/FaGraduationCap";
+import { HiUsers } from "@react-icons/all-files/hi/HiUsers";
+import { IoCalendar } from "@react-icons/all-files/io5/IoCalendar";
+import { TiLocation } from "@react-icons/all-files/ti/TiLocation";
 
 import { Box, Typography } from "@mui/material";
 

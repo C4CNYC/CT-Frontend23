@@ -1,21 +1,22 @@
-import { AiOutlineSolution } from "react-icons/ai";
-import { BiConversation } from "react-icons/bi";
-import { BsFileEarmarkTextFill } from "react-icons/bs";
-import {
-  FaRegStickyNote,
-  FaSchool,
-  FaTasks,
-  FaUserFriends,
-  FaUserShield,
-  FaUsers,
-} from "react-icons/fa";
-import { FiSettings } from "react-icons/fi";
-import { GiProgression } from "react-icons/gi";
-import { GoFileSubmodule } from "react-icons/go";
-import { IoMdSchool } from "react-icons/io";
-import { MdPlayLesson } from "react-icons/md";
-import { RiOrganizationChart } from "react-icons/ri";
-import { Tb3DCubeSphere, TbPhoto } from "react-icons/tb";
+import { AiOutlineSolution } from "@react-icons/all-files/ai/AiOutlineSolution";
+import { BiConversation } from "@react-icons/all-files/bi/BiConversation";
+import { BsFileEarmarkTextFill } from "@react-icons/all-files/bs/BsFileEarmarkTextFill";
+
+import { FaRegStickyNote } from "@react-icons/all-files/fa/FaRegStickyNote";
+import { FaSchool } from "@react-icons/all-files/fa/FaSchool";
+import { FaTasks } from "@react-icons/all-files/fa/FaTasks";
+import { FaUserFriends } from "@react-icons/all-files/fa/FaUserFriends";
+import { FaUserShield } from "@react-icons/all-files/fa/FaUserShield";
+import { FaUsers } from "@react-icons/all-files/fa/FaUsers";
+
+import { FiSettings } from "@react-icons/all-files/fi/FiSettings";
+import { GiProgression } from "@react-icons/all-files/gi/GiProgression";
+import { GoFileSubmodule } from "@react-icons/all-files/go/GoFileSubmodule";
+import { IoMdSchool } from "@react-icons/all-files/io/IoMdSchool";
+import { MdPlayLesson } from "@react-icons/all-files/md/MdPlayLesson";
+import { RiOrganizationChart } from "@react-icons/all-files/ri/RiOrganizationChart";
+import { Tb3DCubeSphere } from "@react-icons/all-files/tb/Tb3DCubeSphere";
+import { TbPhoto } from "@react-icons/all-files/tb/TbPhoto";
 
 import { Iconify, Label } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";

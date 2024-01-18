@@ -2,9 +2,9 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
 import { useSnackbar } from "notistack";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { MdOutlineMail } from "react-icons/md";
-import { SiGoogleclassroom } from "react-icons/si";
+import { AiOutlineArrowRight } from "@react-icons/all-files/ai/AiOutlineArrowRight";
+import { MdOutlineMail } from "@react-icons/all-files/md/MdOutlineMail";
+import { SiGoogleclassroom } from "@react-icons/all-files/si/SiGoogleclassroom";
 
 import {
   Box,

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { MdOutlineTimer } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
+import { MdOutlineTimer } from "@react-icons/all-files/md/MdOutlineTimer";
+import { RxCross2 } from "@react-icons/all-files/rx/RxCross2";
 
 import {
   IconButton,

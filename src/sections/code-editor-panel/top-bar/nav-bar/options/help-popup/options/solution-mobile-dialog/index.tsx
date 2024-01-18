@@ -1,7 +1,7 @@
 import { type FC } from "react";
 
 import { CopyBlock, dracula } from "react-code-blocks";
-import { AiOutlineCode } from "react-icons/ai";
+import { AiOutlineCode } from "@react-icons/all-files/ai/AiOutlineCode";
 
 import {
   Dialog,
@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useSelector } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
 

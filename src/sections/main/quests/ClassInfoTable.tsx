@@ -1,12 +1,14 @@
 import NextLink from "next/link";
 import { useState } from "react";
 
-import { AiOutlineFundProjectionScreen } from "react-icons/ai";
-import { CiMountain1, CiShare1 } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa";
-import { GiProgression } from "react-icons/gi";
-import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
-import { SiGoogleclassroom } from "react-icons/si";
+import { AiOutlineFundProjectionScreen } from "@react-icons/all-files/ai/AiOutlineFundProjectionScreen";
+import { CiMountain1 } from "@react-icons/all-files/ci/CiMountain1";
+import { CiShare1 } from "@react-icons/all-files/ci/CiShare1";
+import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
+import { GiProgression } from "@react-icons/all-files/gi/GiProgression";
+import { IoPeopleOutline } from "@react-icons/all-files/io5/IoPeopleOutline";
+import { IoSettingsOutline } from "@react-icons/all-files/io5/IoSettingsOutline";
+import { SiGoogleclassroom } from "@react-icons/all-files/si/SiGoogleclassroom";
 
 import {
   Badge,

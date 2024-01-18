@@ -1,7 +1,7 @@
 // next
 import Image from "next/image";
 
-import { ImTwitter } from "react-icons/im";
+import { ImTwitter } from "@react-icons/all-files/im/ImTwitter";
 
 // icons
 import CircleIcon from "@mui/icons-material/Circle";

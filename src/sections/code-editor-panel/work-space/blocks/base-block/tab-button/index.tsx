@@ -1,6 +1,7 @@
 import { type FC, useMemo } from "react";
 import { useDispatch } from "react-redux";
-import { MdOutlineSwipeLeft, MdOutlineSwipeRight } from "react-icons/md";
+import { MdOutlineSwipeLeft } from "@react-icons/all-files/md/MdOutlineSwipeLeft";
+import { MdOutlineSwipeRight } from "@react-icons/all-files/md/MdOutlineSwipeRight";
 
 import { Box, IconButton } from "@mui/material";
 

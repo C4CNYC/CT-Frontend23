@@ -1,27 +1,21 @@
-import { type FC, useCallback, useRef, useState } from "react";
-
-import { FaDesktop } from "react-icons/fa";
-import { TiDocumentText } from "react-icons/ti";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { type FC, useRef, useState } from "react";
+
+import { FaDesktop } from "@react-icons/all-files/fa/FaDesktop"
+import { TiDocumentText } from "@react-icons/all-files/ti/TiDocumentText"
+import { useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Stack, type StackProps } from "@mui/system";
 
-import { type BaseResponseInterface } from "@utils";
-import { type AuthUserType } from "src/auth/types";
+import { useSocket } from "@hooks";
 import {
-  type ILesson,
-  type ILessonContent,
-} from "src/redux/interfaces/content.interface";
-import {
+  setCode,
   toggleBrowser,
   toggleInstrations,
 } from "src/redux/slices/code-panel-global";
-import { useSocket } from "@hooks";
-import { useAuthContext } from "src/auth/useAuthContext";
 import { setTab } from "src/redux/slices/mobile-tab-manager";
 import { useSelector } from "src/redux/store";
 
@@ -31,26 +25,8 @@ import NavPanel from "./blocks/nav-panel";
 import SliderBlock from "./blocks/slider-block";
 import ViewBlock from "./blocks/view-block";
 import { CodeDocument } from "./blocks/view-block/browser-view";
-
-export type SupportedLang = "html" | "javascript";
-
-export const TAB_TITLES = {
-  instructions: "Instructions",
-  browser_preview: "Browser Preview",
-};
-
-export interface WorkSpaceProps {
-  isFetching?: boolean;
-  lesson?: ILesson & BaseResponseInterface;
-  data: Array<ILessonContent & BaseResponseInterface>;
-  user: AuthUserType;
-  code: string;
-  language: SupportedLang;
-  onChangeCode: (code: string) => void;
-  onSubmitChalange: (lessonContentId: string) => Promise<void>;
-  onSubmitLesson: () => Promise<void>;
-  lastLessonCode?: string;
-}
+import { TAB_TITLES } from "@sections/code-editor-panel/work-space/TAB_TITLES"
+import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
 
 let previousLength: number | null = null;
 let checkValueTimeout: any | null = null;
@@ -61,7 +37,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
   onSubmitLesson,
   data,
   user,
-  code,
   language,
   isFetching = false,
   lastLessonCode,
@@ -87,11 +62,6 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
   const onChangeCode = (doc: Record<string, string>) => {
     try {
-      console.log("onchangetext1", doc);
-      console.log("onchangetext1 infomation", user);
-      console.log("onchangetext1_:", user?.id);
-      console.log("onchangetext1__:", router?.query?.lessonId);
-
       if (checkValueTimeout) {
         // Clear the previous timeout if the value changes
         clearTimeout(checkValueTimeout);
@@ -99,19 +69,27 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
       previousLength = doc?.htmlBody?.length; // Store the current value
       if (router.query.lessonId && user)
-        socket.emit('changeStatusInLesson', { lesson: router.query.lessonId, user: user?.id, status: 'active' });
+        socket.emit("changeStatusInLesson", {
+          lesson: router.query.lessonId,
+          user: user?.id,
+          status: "active",
+        });
 
       // Set up the check for 30 seconds later
       checkValueTimeout = setTimeout(() => {
         if (doc?.htmlBody?.length === previousLength) {
-          console.log(`Value after 30 seconds: ${doc} (unchanged)`);
-          socket.emit('changeStatusInLesson', { lesson: router.query.lessonId, user: user?.id, status: 'idle' });
+          socket.emit("changeStatusInLesson", {
+            lesson: router.query.lessonId,
+            user: user?.id,
+            status: "idle",
+          });
         } else {
-          console.log('Value has changed');
         }
       }, 30000); // 30 seconds
 
       setDocument(doc as CodeDocument);
+      // @ts-ignore doc?.htmlBody is an array
+      dispatch(setCode(doc?.htmlBody?.join("") ?? ""));
     } catch (error) {
       console.log("Error: ", error);
     }

@@ -8,7 +8,7 @@ import DesktopBar from "./nav-bar/desktop-bar";
 import MobileBar from "./nav-bar/mobile-bar";
 
 interface ITopPanel {
-  chatComponent: ReactNode;
+  chatComponent?: ReactNode | null;
   onHanldeFullScreen: () => void;
   isFullScreenView: boolean;
 }

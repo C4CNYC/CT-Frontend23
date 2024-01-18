@@ -1,5 +1,5 @@
-import { AiTwotoneEdit } from "react-icons/ai";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { AiTwotoneEdit } from "@react-icons/all-files/ai/AiTwotoneEdit";
+import { RiDeleteBin6Line } from "@react-icons/all-files/ri/RiDeleteBin6Line";
 
 import { Button, Divider } from "@mui/material";
 

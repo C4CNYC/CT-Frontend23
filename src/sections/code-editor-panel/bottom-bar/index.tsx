@@ -25,11 +25,11 @@ const STACK_STYLES = {
 const BottomBar: FC<BottomBarProps> = ({
   publicPage = false,
   sliderSteps,
-  code,
   language,
   lessonManagerComponent,
 }) => {
   const activeTab = useSelector((state) => state.mobileTabManager.activeTab);
+  const code = useSelector((state) => state.codePanelGlobal.code);
   return (
     <Stack
       pl="20px"

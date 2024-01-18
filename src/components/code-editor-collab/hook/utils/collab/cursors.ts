@@ -1,4 +1,4 @@
-import { debounce } from "lodash";
+import * as _ from "lodash-es";
 import { type Extension, StateField, StateEffectType } from "@codemirror/state";
 import {
 	type DecorationSet,
@@ -10,7 +10,7 @@ import {
 import { cursorBaseTheme } from "./cursor-theme";
 
 const TOOLTIP_IN_VIEW_TIME = 5000;
-const debouncedHideTooltip = debounce(
+const debouncedHideTooltip = _.debounce(
 	(dom: HTMLDivElement) => dom.style.display = "none",
 	TOOLTIP_IN_VIEW_TIME
 )

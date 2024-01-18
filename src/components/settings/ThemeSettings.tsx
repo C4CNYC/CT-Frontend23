@@ -1,7 +1,7 @@
 import ThemeColorPresets from "./ThemeColorPresets";
 import ThemeContrast from "./ThemeContrast";
-import ThemeRtlLayout from "./ThemeRtlLayout";
-import SettingsDrawer from "./drawer";
+// import ThemeRtlLayout from "./ThemeRtlLayout";
+// import SettingsDrawer from "./drawer";
 
 // ----------------------------------------------------------------------
 
@@ -13,10 +13,10 @@ export function ThemeSettings({ children }: Props): React.ReactElement | null {
   return (
     <ThemeColorPresets>
       <ThemeContrast>
-        <ThemeRtlLayout>
+        {/* <ThemeRtlLayout> */}
           {children}
-          <SettingsDrawer />
-        </ThemeRtlLayout>
+          {/* <SettingsDrawer /> */}
+        {/* </ThemeRtlLayout> */}
       </ThemeContrast>
     </ThemeColorPresets>
   );

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import match from "autosuggest-highlight/match";
 import parse from "autosuggest-highlight/parse";
-import { TbInfoCircleFilled } from "react-icons/tb";
+import { TbInfoCircleFilled } from "@react-icons/all-files/tb/TbInfoCircleFilled";
 
 import {
   Autocomplete,

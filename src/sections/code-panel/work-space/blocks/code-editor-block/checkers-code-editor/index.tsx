@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { IValidationMap } from "src/utils/validationMaping";
 

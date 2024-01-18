@@ -10,12 +10,14 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 
-import {
-  IChatMessage,
-  useFirebaseChat,
-} from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
+// import {
+//   IChatMessage,
+//   useFirebaseChat,
+// } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
 import { BaseResponseInterface } from "@utils";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
+
+type IChatMessage = any;
 
 interface IMessages {
   reciverId: string;
@@ -28,13 +30,13 @@ export const Messages = ({
 }: IMessages): React.ReactElement => {
   const senderId = "SUPPORT";
   const [messages, setMessages] = useState<IChatMessage[]>([]);
-  const { getMessages, sendMessage } = useFirebaseChat();
+  // const { getMessages, sendMessage } = useFirebaseChat();
 
-  useEffect(() => {
-    getMessages(senderId, reciverId, (data) => {
-      setMessages(data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getMessages(senderId, reciverId, (data) => {
+  //     setMessages(data);
+  //   });
+  // }, []);
 
   return (
     <>
@@ -86,9 +88,9 @@ export const Messages = ({
               ))}
             </MessageList>
             <MessageInput
-              onSend={(innerHtml, textContent) => {
-                sendMessage(textContent, reciverId, senderId);
-              }}
+              // onSend={(innerHtml, textContent) => {
+              //   sendMessage(textContent, reciverId, senderId);
+              // }}
               placeholder="Type message here"
               style={{
                 padding: "15px 8px 22px 8px",

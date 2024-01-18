@@ -3,7 +3,7 @@
 import { Box, BoxProps } from "@mui/material";
 
 // components
-import { useSettingsContext } from "@components";
+import { useSettingsContext } from "src/components/settings";
 import { useResponsive } from "@hooks";
 
 // config

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import SchoolFiltersSkeleton from "@pages/manager/school/students/school-filter-skeleton";
+import SchoolFiltersSkeleton from "@sections/schools/school-filter-skeleton";
 
 import Autocomplete, {
   AutocompleteChangeDetails,
@@ -11,7 +11,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useFilters } from "@hooks";
 import { BaseResponseInterface } from "@utils";
 import {

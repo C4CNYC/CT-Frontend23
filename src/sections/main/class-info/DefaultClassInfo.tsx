@@ -1,10 +1,10 @@
 import nextLink from "next/link";
 import { useState } from "react";
 
-import { BsThreeDots } from "react-icons/bs";
-import { FiUser } from "react-icons/fi";
-import { MdCopyAll } from "react-icons/md";
-import { TbShare2 } from "react-icons/tb";
+import { BsThreeDots } from "@react-icons/all-files/bs/BsThreeDots";
+import { FiUser } from "@react-icons/all-files/fi/FiUser";
+import { MdCopyAll } from "@react-icons/all-files/md/MdCopyAll";
+import { TbShare2 } from "@react-icons/all-files/tb/TbShare2";
 
 import {
   Button,
@@ -25,6 +25,7 @@ import { BaseResponseInterface } from "@utils";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
+import { useGetTeacherListQuery } from "src/redux/services/admin/school-amdin";
 import { Role } from "src/redux/services/enums/role.enum";
 import {
   useUpdateClassesAvatarMutation,
@@ -62,6 +63,13 @@ export default function DefaultClassInfo({
   const handleOpenPopover = (event: React.MouseEvent<HTMLElement>): void => {
     setOpenPopover(event.currentTarget);
   };
+
+  const { data: teachers } = useGetTeacherListQuery(
+    {
+      schoolId: classData?.school?.id as string,
+    },
+    { skip: !classData?.school?.id }
+  );
 
   const onCopy = (textToCopy: string) => {
     if (textToCopy) {
@@ -153,7 +161,10 @@ export default function DefaultClassInfo({
               direction={isMobile ? "column" : "row"}
               sx={MAIN_CLASS_INFO_STACK_SX}
             >
-              <ClassInfoMain classData={classData} />
+              <ClassInfoMain
+                teacher={teachers?.data?.[0]}
+                classData={classData}
+              />
               <Stack
                 direction="row"
                 alignItems="center"

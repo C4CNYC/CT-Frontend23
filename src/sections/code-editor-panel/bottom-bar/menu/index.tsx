@@ -1,6 +1,6 @@
 import { type FC, useMemo, useState } from "react";
 
-import { GiSave } from "react-icons/gi";
+import { GiSave } from "@react-icons/all-files/gi/GiSave";
 
 import {
   Chip,
@@ -15,7 +15,6 @@ import { Box } from "@mui/system";
 
 import { useTranslate } from "src/utils/translateHelper";
 
-import { SupportedLang } from "../../work-space";
 import { getActions } from "./config";
 import {
   ACTION_FAB_PROPS,
@@ -24,6 +23,7 @@ import {
   getChipSx,
   getSpeedDialFabProps,
 } from "./constants";
+import { SupportedLang } from "@sections/code-editor-panel/work-space/types"
 
 export interface MenuProps {
   code: string;

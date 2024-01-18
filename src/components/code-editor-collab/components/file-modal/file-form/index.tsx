@@ -3,7 +3,7 @@ import { type FC, useState, useEffect, useRef, KeyboardEvent } from "react";
 import { Button, TextField, CircularProgress } from "@mui/material";
 
 import ConfirmModalWrapper from "../confirm-wrapper-modal";
-import { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
+import type { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
 
 import { validate } from "./validator"
 import { styles } from "./styles"
@@ -52,7 +52,7 @@ const FileForm: FC<FileFormProps> = ({
       fileList,
       isMultipleExtensionFiles
     });
-    
+
     setError(error);
 
     if (error != null) {
@@ -65,7 +65,7 @@ const FileForm: FC<FileFormProps> = ({
     } finally {
       setIsLoading(false);
     }
-    
+
     _onClose();
   }
 

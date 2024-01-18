@@ -2,7 +2,7 @@ import { type FC } from "react"
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { voidFunction } from "@utils";
 
 import { styles } from "./styles"

@@ -20,7 +20,6 @@ import CreatePalette, {
   CLASS_PALETTE,
 } from "@sections/main/create-class/createPalette";
 import { createRandomAvatar } from "@utils";
-import { randomInArray } from "src/_mock";
 import {
   useCreateClassesMutation,
   useUpdateClassesAvatarMutation,
@@ -29,6 +28,10 @@ import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
 import { useTranslate } from "src/utils/translateHelper";
+
+export function randomInArray<T>(array: T[]): T {
+  return array[Math.floor(Math.random() * array.length)];
+}
 
 CreateClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

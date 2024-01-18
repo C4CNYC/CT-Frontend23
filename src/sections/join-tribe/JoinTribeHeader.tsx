@@ -1,5 +1,5 @@
-import { FiUsers } from "react-icons/fi";
-import { ImLocation2 } from "react-icons/im";
+import { FiUsers } from "@react-icons/all-files/fi/FiUsers";
+import { ImLocation2 } from "@react-icons/all-files/im/ImLocation2";
 
 import { Avatar, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";

@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import InviteTeacherDialog from "@sections/dashboard/organization/schools/InviteTeacherDialog";
 import SkeletonSchoolDetailsDrawer from "@sections/dashboard/schools/portal/SkeletonSchoolDetailsDrawer";
 import {

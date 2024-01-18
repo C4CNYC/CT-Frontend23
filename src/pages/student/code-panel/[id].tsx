@@ -13,13 +13,10 @@ import { Socket, io } from "socket.io-client";
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-editor-panel/skeleton";
-import WorkSpace from "@sections/code-editor-panel/work-space";
+// import WorkSpace from "@sections/code-editor-panel/work-space";
 import { useCodePanel } from "src/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
-import { useGetClassQuery } from "src/redux/services/manager/classes-student";
-import { useDispatch } from "src/redux/store";
-import { setClass } from "src/redux/slices/code-panel";
 import { SocketContext } from "../../../context/socket-context";
 import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
@@ -29,6 +26,11 @@ type LessonUserResponseType = {
   id: string;
   status: string;
 }
+
+const WorkSpace = dynamic(
+  async () => await import("@sections/code-editor-panel/work-space"),
+  { ssr: false }
+);
 
 const Tour = dynamic(
   async () => await import("@sections/code-editor-panel/code-panel-tour"),
@@ -40,7 +42,7 @@ const TopPanel = dynamic(
   { loading: () => <CPTopBarSkeleton /> }
 );
 
-const Confetti = dynamic(async () => await import("react-confetti"));
+const Confetti = dynamic(async () => await import("react-confetti"), { ssr: false });
 
 const ChatPopup = dynamic(
   async () =>
@@ -79,8 +81,6 @@ export default function Index(): React.ReactElement | null {
     isDesktop,
     lessonManagerProps,
   } = useCodePanel();
-
-  const dispatch = useDispatch();
 
   const theme = useTheme();
   const boxProps = useMemo(() => getBoxProps(theme), [theme]);

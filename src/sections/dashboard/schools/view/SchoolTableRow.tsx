@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { BiDotsVerticalRounded } from "react-icons/bi";
+import { BiDotsVerticalRounded } from "@react-icons/all-files/bi/BiDotsVerticalRounded";
 
 import {
   Avatar,

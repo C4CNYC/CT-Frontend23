@@ -1,6 +1,6 @@
 import { type FC, useState } from "react";
 
-import { BsChatText } from "react-icons/bs";
+import { BsChatText } from "@react-icons/all-files/bs/BsChatText";
 
 import {
   Box,
@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Iconify } from "@components";
+import { Iconify } from "src/components/iconify";
 import { useTranslate } from "src/utils/translateHelper";
 
 import FullCodeSolutionModal from "../../modals/FullCodeSolution";

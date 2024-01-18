@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import SkeletonMembers from "@pages/manager/organization/members/SkeletonMembers";
+import SkeletonMembers from "@sections/schools/SkeletonMembers";
 import { useSnackbar } from "notistack";
 import { useSelector } from "react-redux";
 

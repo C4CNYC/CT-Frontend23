@@ -1,6 +1,6 @@
-import { AiOutlineCode } from "react-icons/ai";
-import { BsChatText } from "react-icons/bs";
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { AiOutlineCode } from "@react-icons/all-files/ai/AiOutlineCode";
+import { BsChatText } from "@react-icons/all-files/bs/BsChatText";
+import { MdOutlineTipsAndUpdates } from "@react-icons/all-files/md/MdOutlineTipsAndUpdates";
 
 export enum IActionDialogType {
   tips = "Tips",

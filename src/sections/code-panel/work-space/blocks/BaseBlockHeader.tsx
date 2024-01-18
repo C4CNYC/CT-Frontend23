@@ -1,4 +1,4 @@
-import { TbArrowsMinimize } from "react-icons/tb";
+import { TbArrowsMinimize } from "@react-icons/all-files/tb/TbArrowsMinimize";
 
 import {
   Box,

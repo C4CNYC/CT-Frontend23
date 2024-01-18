@@ -1,4 +1,4 @@
-import { FaSave } from "react-icons/fa";
+import { FaSave } from "@react-icons/all-files/fa/FaSave";
 
 import Button from "@mui/material/Button";
 

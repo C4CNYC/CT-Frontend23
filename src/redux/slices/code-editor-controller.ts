@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { EditorMode } from "src/components/code-editor-collab/hook/constants";
+import type { EditorMode } from "src/components/code-editor-collab/hook/constants";
 
 export interface CodeEditorControllerRoom {
   roomId: string
