@@ -74,6 +74,11 @@ const RoadItemMobile = ({
   const seeMoreBtnSx = useMemo(() => getSeeMoreBtnSx(theme), [theme]);
 
   const buttonSx = useMemo(() => getMobileButtonSx(lastActive), [lastActive]);
+  const descroptionGradientTesxtSx = {
+    ...DESCRIPTION_GRADIENT_TEXT_SX,
+    fontSize: "14px",
+  };
+  const lessonTimeSx = { ...LESSON_TIME_SX, fontSize: "14px" };
 
   const redirectToCodePanel = () => {
     push(
@@ -176,13 +181,11 @@ const RoadItemMobile = ({
           <Box sx={getDescriptionBoxSx}>
             <Typography mb={1}>{description}</Typography>
             <Box sx={{ display: "flex", gap: "20px" }}>
-              <Typography
-                sx={{ ...DESCRIPTION_GRADIENT_TEXT_SX, fontSize: "14px" }}
-              >
+              <Typography sx={descroptionGradientTesxtSx}>
                 <RocketIcon width={20} height={20} />
                 {type === "practical" ? "Part of Project" : "Exercise"}
               </Typography>
-              <Typography sx={{ ...LESSON_TIME_SX, fontSize: "14px" }}>
+              <Typography sx={lessonTimeSx}>
                 <AiOutlineClockCircle size={20} />
                 {projectTime}
               </Typography>
