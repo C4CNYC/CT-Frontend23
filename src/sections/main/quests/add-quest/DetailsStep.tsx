@@ -15,10 +15,7 @@ import { RHFSelect, RHFTextField } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
-import {
-  ICourse,
-  IModule,
-} from "src/redux/services/interfaces/courseUnits.interface";
+import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { useTranslate } from "src/utils/translateHelper";
 
 import {
