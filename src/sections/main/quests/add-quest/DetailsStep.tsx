@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { UseFormReturn } from "react-hook-form";
+
 import {
   Avatar,
   FormGroup,
@@ -25,24 +27,27 @@ import {
 
 export default function DetailsStep({
   coursesData,
+  methods,
 }: {
   coursesData: {
     data: Array<ICourse & BaseResponseInterface> | undefined;
     isLoading: boolean;
   };
+  methods: UseFormReturn<any>;
 }): React.ReactElement {
   const theme = useTheme();
   const { data, isLoading } = coursesData;
   const [type, setType] = useState<AssignmentTypes>(AssignmentTypes.COURSE);
-  const [course, setCourse] = useState<string | null>(data?.[0].id ?? null);
-  const selectedCourse = useMemo(
-    () => data?.find((c) => c.id === course),
-    [data, course]
-  );
+  const [course, setCourse] = useState<string | null>();
   const translate = useTranslate();
 
+  const selectedModules = useMemo(
+    () => data?.find((c) => c.id === course)?.units,
+    [data, course]
+  );
+
   useEffect(() => {
-    setCourse(data?.[0].id ?? null);
+    setCourse(methods.getValues("course") ?? data?.[0]?.id);
   }, [data]);
 
   return (
@@ -96,9 +101,9 @@ export default function DetailsStep({
                 name="course"
                 size="small"
                 onChange={(event: any) => {
+                  methods.setValue("course", event?.target?.value);
                   setCourse(event?.target?.value);
                 }}
-                value={course}
                 disabled={!data?.length}
                 sx={selectStyle(theme)}
               >
@@ -148,17 +153,17 @@ export default function DetailsStep({
               border: theme.palette.mode === "light" ? "" : "1px solid #fff",
             }}
           >
-            {!selectedCourse?.units?.length && (
+            {!selectedModules?.length && (
               <option key="empty" value="empty">
                 {translate("quest_you_dont_have_module_msg")}
               </option>
             )}
-            {selectedCourse?.units
+            {selectedModules
               ? [
                   <option key="module" value="all">
                     {translate("quest_all_modules")}
                   </option>,
-                  ...selectedCourse?.units.map((unit) => (
+                  ...selectedModules.map((unit) => (
                     <option key={unit.id} value={unit.id}>
                       {unit.name}
                     </option>

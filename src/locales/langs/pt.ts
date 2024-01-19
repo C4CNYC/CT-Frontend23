@@ -600,6 +600,7 @@ const pt = {
   quest_close_date: "Data de encerramento:",
   quest_close_date_info:
     "Depois disso, os envios não são mais recebidos.O padrão é 3 dias após a 'data de vencimento'.",
+  quest_no_descr: "Não há detalhes disponíveis para esta missão.",
 
   // My Notes
   notes_my: "Minhas anotações",

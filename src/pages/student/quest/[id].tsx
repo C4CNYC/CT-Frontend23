@@ -1,7 +1,7 @@
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   Container,
@@ -9,6 +9,7 @@ import {
   Skeleton,
   SxProps,
   Theme,
+  Typography,
   useTheme,
 } from "@mui/material";
 
@@ -32,6 +33,7 @@ export default function Quest(): React.ReactElement | null {
   const { query } = useRouter();
   const theme = useTheme();
   const { themeStretch } = useSettingsContext();
+  const [hasContent, setHasContent] = useState(false);
   const containerSx = useMemo(() => getContainerSx(theme), [theme]);
   const skeletonSx = useMemo(() => getSkeletonSx(theme), [theme]);
   const { data, isLoading } = useGetAssignmentStudentQuery(
@@ -56,6 +58,11 @@ export default function Quest(): React.ReactElement | null {
     return <Skeleton variant="rounded" height="600px" />;
   }
 
+  useEffect(() => {
+    const content = JSON.parse(data.description).doc.content;
+    setHasContent(content.some((el: any) => el.content));
+  }, [data]);
+
   return (
     <>
       <Head>
@@ -64,7 +71,14 @@ export default function Quest(): React.ReactElement | null {
       <Container maxWidth={themeStretch ? false : "lg"} sx={containerSx}>
         <QuestHeader />
         <QuestMain teachers={teachers} questName={data.name} />
-        <QuestDescription description={data?.description} />
+        {hasContent ? (
+          <QuestDescription description={data?.description} />
+        ) : (
+          <Typography variant="h4" pt={3}>
+            {translate("quest_no_descr")}
+          </Typography>
+        )}
+
         {isLoadingCourse ? (
           <Skeleton variant="rounded" sx={skeletonSx} />
         ) : (

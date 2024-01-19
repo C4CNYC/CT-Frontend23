@@ -608,6 +608,7 @@ const es = {
   quest_close_date: "Fecha de cierre:",
   quest_close_date_info:
     "Una vez transcurrido este plazo, ya no se recibirán envíos. Por defecto son 3 días después de la 'Fecha de vencimiento'.",
+  quest_no_descr: "No hay detalles disponibles para esta misión.",
 
   // My Notes
   notes_my: "Mis notas",
