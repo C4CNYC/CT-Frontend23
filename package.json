@@ -79,7 +79,7 @@
     "lodash-es": "^4.17.21",
     "mui-color-input": "^1.0.4",
     "mui-tel-input": "^3.0.2",
-    "next": "13.5.6",
+    "next": "13.4.19",
     "next-s3-upload": "^0.2.10",
     "node-html-parser": "^6.1.10",
     "notistack": "^2.0.8",
