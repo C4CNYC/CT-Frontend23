@@ -65,6 +65,7 @@ export const OPEN_BTN_WRAPPER_SX = {
 };
 
 export const INDICATORS_WRAPPER_SX = {
+  zIndex: 1,
   width: 5,
   bottom: -45,
   right: 0,
