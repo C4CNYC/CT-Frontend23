@@ -2,13 +2,12 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { useAtom } from "jotai";
 import { AiOutlineClockCircle } from "@react-icons/all-files/ai/AiOutlineClockCircle";
 import { GoTriangleDown } from "@react-icons/all-files/go/GoTriangleDown";
 import { GoTriangleUp } from "@react-icons/all-files/go/GoTriangleUp";
 import { HiLockClosed } from "@react-icons/all-files/hi2/HiLockClosed";
-import RocketIcon from "../icons/RocketIcon";
 import { TbPlayerPlay } from "@react-icons/all-files/tb/TbPlayerPlay";
+import { useAtom } from "jotai";
 
 import {
   Box,
@@ -26,8 +25,9 @@ import {
   IGlobalCodePanelAtom,
   globalCodePanelAtom,
 } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { ILessonCurrent } from "src/redux/interfaces/content.interface";
+import { ILesson } from "src/redux/interfaces/content.interface";
 
+import RocketIcon from "../icons/RocketIcon";
 import TrainingProgress from "./LessonProgress";
 import {
   DURATION_SX,
@@ -41,7 +41,7 @@ import {
 } from "./constants";
 
 interface ILessonItemProps {
-  lesson: ILessonCurrent;
+  lesson: ILesson;
   unitId: string;
   lastVisitedData: boolean;
   locked: boolean;
@@ -115,8 +115,8 @@ export default function LessonItem({
           ) : null}
           <Stack direction="row" gap={2} flexWrap="wrap">
             <Typography variant="body2" sx={MODE_TITLE_SX}>
-              <RocketIcon width={20} height={20}/>
-              Part of Project
+              <RocketIcon width={20} height={20} />
+              {lesson.type === "practical" ? "Part of Project" : "Exercise"}
             </Typography>
             <Typography variant="body2" sx={DURATION_SX}>
               <AiOutlineClockCircle size={20} />

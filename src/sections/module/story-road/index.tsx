@@ -30,6 +30,7 @@ const StoryRoad = ({ lessons, lastActiveIndex }: StoryRoadProps) => {
               name={l.name}
               description={l.description}
               lessonId={l.id}
+              type={l.type}
             />
           ))
         : lessons.map((l, i) => (
@@ -45,6 +46,7 @@ const StoryRoad = ({ lessons, lastActiveIndex }: StoryRoadProps) => {
               name={l.name}
               description={l.description}
               lessonId={l.id}
+              type={l.type}
             />
           ))}
     </>
