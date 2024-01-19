@@ -33,7 +33,7 @@ export const BOX_SX = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: 25,
+  width: 30,
   height: 30,
   borderRadius: "15px 0px 0px 15px",
   zIndex: 301,
@@ -66,7 +66,7 @@ export const OPEN_BTN_WRAPPER_SX = {
 
 export const INDICATORS_WRAPPER_SX = {
   zIndex: 1,
-  width: 5,
+  width: 8,
   bottom: -45,
   right: 0,
   py: "5px",
@@ -79,7 +79,7 @@ export const INDICATORS_WRAPPER_SX = {
 };
 
 export const getIndicatorSx = (isValid: boolean): SxProps => ({
-  width: 2,
+  width: 4,
   height: 16,
   color: "red",
   borderRadius: "4px 0px 0px 4px",
