@@ -1,7 +1,8 @@
 import { IconButton, IconButtonProps } from "@mui/material";
 
-import { Iconify, useSettingsContext } from "@components";
-import { useResponsive } from "@hooks";
+import { Iconify } from "src/components/iconify";
+import { useSettingsContext } from "src/components/settings";
+import { useResponsive } from "src/hooks/useResponsive";
 
 import { NAV } from "../../../config-global";
 

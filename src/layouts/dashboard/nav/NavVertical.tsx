@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 import { Box, Drawer, Stack } from "@mui/material";
 import { useTheme } from "@mui/system";
 
-import { Logo, NavSectionVertical, Scrollbar } from "@components";
+import { Scrollbar } from "src/components/scrollbar";
+import { NavSectionVertical } from "src/components/nav-section";
+import { Logo } from "src/components/logo";
+
 import { useResponsive } from "@hooks";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";

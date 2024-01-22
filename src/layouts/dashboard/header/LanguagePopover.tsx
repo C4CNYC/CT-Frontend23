@@ -4,7 +4,9 @@ import { useState } from "react";
 import { MenuItem, Stack } from "@mui/material";
 
 // components
-import { IconButtonAnimate, Image, MenuPopover } from "@components";
+import { MenuPopover } from "src/components/menu-popover";
+import { Image } from "src/components/image";
+import { IconButtonAnimate } from "src/components/animate";
 
 // locales
 import { useLocales } from "../../../locales";

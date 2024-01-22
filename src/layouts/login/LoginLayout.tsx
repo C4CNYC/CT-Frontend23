@@ -2,7 +2,8 @@
 import { Stack, Typography } from "@mui/material";
 
 // components
-import { Image, Logo } from "@components";
+import { Logo } from "src/components/logo";
+import { Image } from "src/components/image";
 import ThemeSwitcher from "src/components/theme-switcher";
 import { useTranslate } from "src/utils/translateHelper";
 

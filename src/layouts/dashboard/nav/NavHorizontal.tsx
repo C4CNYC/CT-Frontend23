@@ -7,9 +7,9 @@ import { AppBar, Box, BoxProps, Toolbar } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // components
-import { NavSectionHorizontal } from "@components";
+import { NavSectionHorizontal } from "src/components/nav-section";
 // utils
-import { bgBlur } from "@utils";
+import { bgBlur } from "src/utils/cssStyles";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 

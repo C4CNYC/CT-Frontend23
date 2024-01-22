@@ -8,7 +8,8 @@ import {
 } from "react";
 
 // utils
-import { localStorageAvailable, voidFunction } from "@utils";
+import { localStorageAvailable } from "src/utils/localStorageAvailable";
+import { voidFunction } from "src/utils/voidFunction";
 
 //
 import { defaultSettings } from "./config-setting";

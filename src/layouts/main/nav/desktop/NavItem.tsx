@@ -8,7 +8,8 @@ import { m } from "framer-motion";
 import { CardActionArea, Link, LinkProps } from "@mui/material";
 
 // components
-import { Iconify, Image } from "@components";
+import { Iconify } from "src/components/iconify";
+import { Image } from "src/components/image";
 
 //
 import { NavItemDesktopProps, NavItemProps } from "../types";

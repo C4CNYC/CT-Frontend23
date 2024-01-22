@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import { Box, Stack } from "@mui/material";
 import { useTheme } from "@mui/system";
 
-import { LogoMin, NavSectionMini } from "@components";
-import { hideScrollbarX } from "@utils";
+import { LogoMin } from "src/components/logo";
+import { NavSectionMini } from "src/components/nav-section";
+import { hideScrollbarX } from "src/utils/cssStyles";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 

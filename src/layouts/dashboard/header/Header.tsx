@@ -3,9 +3,12 @@ import { useRouter } from "next/router";
 import { AppBar, IconButton, Stack, Toolbar, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { Iconify, Logo, useSettingsContext } from "@components";
-import { useOffSetTop, useResponsive } from "@hooks";
-import { bgBlur } from "@utils";
+import { Iconify } from "src/components/iconify";
+import { Logo } from "src/components/logo";
+import { useSettingsContext } from "src/components/settings";
+import { useOffSetTop } from "src/hooks/useOffSetTop";
+import { useResponsive } from "src/hooks/useResponsive";
+import { bgBlur } from "src/utils/cssStyles";
 import ThemeSwitcher from "src/components/theme-switcher";
 import { useSelector } from "src/redux/store";
 
