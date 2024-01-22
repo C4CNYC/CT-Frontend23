@@ -8,8 +8,8 @@ import {
   IModuleCreate,
   IModuleDelete,
   IModulesSearchParams,
-  IRemoveLessonFromModule,
-} from "../interfaces/courseUnits.interface";
+  IRemoveLessonFromModule, IUpdateModuleLesson,
+} from "../interfaces/courseUnits.interface"
 
 const extendedApi = managerApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -71,7 +71,7 @@ const extendedApi = managerApi.injectEndpoints({
     addLessonToModule: builder.mutation<void, IAddLessonToModule>({
       query: ({ id, ...body }) => ({
         url: `/manager/module/${id}/lesson`,
-        method: "PATCH",
+        method: "POST",
         body,
       }),
       invalidatesTags: [{ type: "Lessons" }],
@@ -80,6 +80,14 @@ const extendedApi = managerApi.injectEndpoints({
       query: ({ id, ...body }) => ({
         url: `/manager/module/${id}/lesson`,
         method: "DELETE",
+        body,
+      }),
+      invalidatesTags: [{ type: "Lessons" }],
+    }),
+    updateModuleLesson: builder.mutation<void, IUpdateModuleLesson>({
+      query: ({ id, ...body }) => ({
+        url: `/manager/module/${id}/lesson`,
+        method: "PATCH",
         body,
       }),
       invalidatesTags: [{ type: "Lessons" }],
@@ -93,6 +101,7 @@ export const {
   // -------------mutation-----------
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
+  useUpdateModuleLessonMutation,
   useCreateModuleMutation,
   useDeleteModuleMutation,
   useUpdateModuleMutation,

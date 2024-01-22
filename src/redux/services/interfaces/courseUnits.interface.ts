@@ -16,6 +16,7 @@ export interface IModule {
 }
 
 export interface ILesson {
+  id: string;
   data: [];
   active: boolean;
   name: string;
@@ -24,6 +25,7 @@ export interface ILesson {
   meta: Record<string, Record<string, any>>;
   independent: boolean;
   type: "practical" | "exercise" | "quiz";
+  sort?: number;
 }
 
 export interface ICourse {
@@ -87,11 +89,18 @@ export interface ILessonUpdate {
 export interface IAddLessonToModule {
   id: string;
   lesson_id: string;
+  sort?: number;
 }
 
 export interface IRemoveLessonFromModule {
   id: string;
   lesson_id: string;
+}
+
+export interface IUpdateModuleLesson {
+  id: string;
+  lesson_id: string;
+  sort?: number;
 }
 
 export interface IAddModuleToCourse {
