@@ -18,7 +18,8 @@ import { RiOrganizationChart } from "@react-icons/all-files/ri/RiOrganizationCha
 import { Tb3DCubeSphere } from "@react-icons/all-files/tb/Tb3DCubeSphere";
 import { TbPhoto } from "@react-icons/all-files/tb/TbPhoto";
 
-import { Iconify, Label } from "@components";
+import { Label } from "src/components/label";
+import { Iconify } from "src/components/iconify";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import FeedbackDialog from "@sections/feedback/FeedbackDialog";

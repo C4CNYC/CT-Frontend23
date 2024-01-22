@@ -14,12 +14,11 @@ import {
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 
-import {
-  CustomAvatar,
-  IconButtonAnimate,
-  MenuPopover,
-  useSnackbar,
-} from "@components";
+import { MenuPopover } from "src/components/menu-popover";
+import { IconButtonAnimate } from "src/components/animate";
+import { useSnackbar } from "src/components/snackbar";
+import { CustomAvatar } from "src/components/custom-avatar";
+
 import {
   MANAGER_PATH_DASHBOARD,
   MANAGER_PATH_PAGE,

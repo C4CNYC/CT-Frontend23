@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { Drawer, IconButton, List } from "@mui/material";
 
 // components
-import { Iconify, Logo, Scrollbar } from "@components";
+import { Logo } from "src/components/logo";
+import { Iconify } from "src/components/iconify";
+import { Scrollbar } from "src/components/scrollbar";
 
 // config
 import { NAV } from "../../../../config-global";

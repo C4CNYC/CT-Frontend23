@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { Box } from "@mui/material";
 
-import { useSettingsContext } from "@components";
-import { useResponsive } from "@hooks";
+import { useSettingsContext } from "src/components/settings";
+import { useResponsive } from "src/hooks/useResponsive";
 
 import AuthGuard from "../../auth/AuthGuard";
 import Main from "./Main";
