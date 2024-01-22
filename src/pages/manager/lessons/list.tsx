@@ -18,19 +18,20 @@ import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMai
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "@sections/dashboard/skeleton/skeletonList"
-import { BaseResponseInterface, getCountTakingElment } from "@utils"
-import { ILesson, ILessonContent, ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface"
+import { getCountTakingElment } from "@utils"
+import { ILesson, ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface"
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager"
 import { useTranslate } from "src/utils/translateHelper"
 
 import FilterLessons from "./filter"
-import { DragDropContext, Draggable, Droppable, DropResult } from "@hello-pangea/dnd"
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd"
 import { useCallback, useEffect, useState } from "react"
 import {
   useUpdateModuleLessonMutation
 } from "../../../redux/services/manager/modules-manager"
 
 function moveItemInArray<T>(array: T[], from: number, to: number, on: number = 1): T[] {
+  // eslint-disable-next-line no-return-assign,no-sequences
   return array = array.slice(), array.splice(to, 0, ...array.splice(from, on)), array
 }
 
@@ -50,7 +51,7 @@ function getSort(
   }
 
   // case: move to end
-  if (destination.index >= lessons.length - 1) {
+  if (destination?.index && destination?.index >= lessons.length - 1) {
     const lastId = lessons.length - 1;
     return parseSort(lessons[lastId].sort) + 1;
   }
@@ -108,7 +109,7 @@ export default function LessonsListPage (): React.ReactElement {
     setLessons(data?.data ?? [])
   }, [data])
 
-  const [updateModuleLesson, { isLoading: isLoadingLessonUpdate }] =
+  const [updateModuleLesson] =
     useUpdateModuleLessonMutation();
 
   const onDragEnd = useCallback((result: DropResult): void => {
@@ -128,26 +129,6 @@ export default function LessonsListPage (): React.ReactElement {
     ) {
       return
     }
-
-    // const start = board.columns.contents
-    // const finish = board.columns.contents
-    // const updatedCardIds = [...start.cardIds]
-    //
-    // updatedCardIds.splice(source.index, 1)
-    //
-    // updatedCardIds.splice(destination.index, 0, draggableId)
-    //
-    // const updatedColumn = {
-    //   ...start,
-    //   cardIds: updatedCardIds,
-    // }
-    //
-    // dispatch(
-    //   persistCard({
-    //     ...board.columns,
-    //     [updatedColumn.id]: updatedColumn,
-    //   })
-    // )
 
     setLessons(moveItemInArray(lessons, source.index, destination.index))
 

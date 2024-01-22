@@ -32,7 +32,7 @@ import { RxDragHandleDots2 } from "@react-icons/all-files/rx/RxDragHandleDots2"
 // ----------------------------------------------------------------------
 
 interface Props {
-  lesson: ILesson & BaseResponseInterface;
+  lesson: ILesson;
   index?: number
 }
 
