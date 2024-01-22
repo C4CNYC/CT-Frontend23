@@ -73,7 +73,10 @@ export default function ModuleLessonsAutocomplete({
       };
       switch (reason) {
         case "selectOption": {
-          await addLesson(payload).unwrap();
+          await addLesson({
+            ...payload,
+            sort: Math.max(...addedLessons.data.map(o => o.sort ?? 0))
+          }).unwrap();
           enqueueSnackbar(
             translate("courses_added_to_module", {
               name: details?.option.name ?? "",

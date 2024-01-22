@@ -89,6 +89,7 @@ export interface ILessonUpdate {
 export interface IAddLessonToModule {
   id: string;
   lesson_id: string;
+  sort?: number;
 }
 
 export interface IRemoveLessonFromModule {
