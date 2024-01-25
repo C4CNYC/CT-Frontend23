@@ -65,6 +65,7 @@ export const getDrawerSx = (
   isCodePreviewVisible: boolean
 ): SxProps => {
   return {
+    zIndex: 9999,
     width: 60,
     minHeight: "70%",
     position: "absolute",
