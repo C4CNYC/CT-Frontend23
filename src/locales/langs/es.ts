@@ -786,9 +786,11 @@ const es = {
   code_will_preload: "Este código precarga al espacio de trabajo de la lección",
   complexity: "Complejidad",
   new_folder: "Nueva carpeta",
+  new_file: "Archivo nuevo",
   image_url_copied_msg: "URL de imagen copiada al portapapeles",
   folders: "Carpetas",
   folder_name: "Nombre de la carpeta",
+  file_name: "Nombre del archivo",
   validation_removed: "Regla de validación eliminada",
   validation_rules: "Reglas de validación",
   not_recommend_count_validations:

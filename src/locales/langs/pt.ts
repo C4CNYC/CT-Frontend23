@@ -776,9 +776,11 @@ const pt = {
     "Este código será pré-carregado para o espaço de trabalho da lição",
   complexity: "Complexidade",
   new_folder: "Nova pasta",
+  new_file: "Novo arquivo",
   image_url_copied_msg: "URL de imagem copiado para a área de transferência",
   folders: "Pastas",
   folder_name: "Nome da pasta",
+  file_name: "Nome do arquivo",
   validation_removed: "Regra de validação removida",
   validation_rules: "Regras de validação",
   not_recommend_count_validations:

@@ -790,9 +790,11 @@ const ar = {
   code_will_preload: "سيتم تحميل هذا الرمز مسبقًا إلى مساحة عمل الدرس",
   complexity: "تعقيد",
   new_folder: "ملف جديد",
+  new_file: "ملف جديد",
   image_url_copied_msg: "تم نسخ عنوان URL للصورة إلى الحافظة",
   folders: "المجلدات",
   folder_name: "إسم الملف",
+  file_name: "اسم الملف",
   validation_removed: "تمت إزالة قاعدة التحقق من الصحة",
   validation_rules: "قواعد التحقق من الصحة",
   not_recommend_count_validations:
