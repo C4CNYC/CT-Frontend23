@@ -791,9 +791,11 @@ const fr = {
     "Ce code sera préchargé dans l'espace de travail de la leçon",
   complexity: "Complexité",
   new_folder: "Nouveau dossier",
+  new_file: "Nouveau fichier",
   image_url_copied_msg: "URL de l'image copiée dans le presse-papiers",
   folders: "Dossiers",
   folder_name: "Nom de dossier",
+  file_name: "Nom de fichier",
   validation_removed: "Règle de validation supprimée",
   validation_rules: "Règles de validation",
   not_recommend_count_validations:

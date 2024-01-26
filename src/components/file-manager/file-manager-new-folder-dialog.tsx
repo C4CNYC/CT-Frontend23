@@ -8,34 +8,46 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 import { useTranslate } from "src/utils/translateHelper";
+import { Skeleton } from "@mui/material";
+import * as React from "react";
 
 // ----------------------------------------------------------------------
 
 interface Props extends DialogProps {
   title?: string;
+  label?: string;
+  name?:string;
+  fileLoading?:boolean;
+  fileUrl?:string;
   //
   onCreate?: VoidFunction;
   onUpdate?: VoidFunction;
   //
   folderName?: string;
   onChangeFolderName?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeFile?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   //
   open: boolean;
   onClose: VoidFunction;
 }
 
 export default function FileManagerNewFolderDialog({
-  title = "Upload Files",
-  open,
-  onClose,
-  //
-  onCreate,
-  onUpdate,
-  //
-  folderName,
-  onChangeFolderName,
-  ...other
-}: Props) {
+                                                     title = "Upload Files",
+                                                     open,
+                                                     label,
+                                                     name,
+                                                     onClose,
+                                                     fileLoading,
+                                                     fileUrl,
+                                                     //
+                                                     onCreate,
+                                                     onUpdate,
+                                                     //
+                                                     folderName,
+                                                     onChangeFolderName,
+                                                     onChangeFile,
+                                                     ...other
+                                                   }: Props) {
   const translate = useTranslate();
 
   return (
@@ -45,22 +57,29 @@ export default function FileManagerNewFolderDialog({
         {title}{" "}
       </DialogTitle>
 
-      <DialogContent dividers sx={{ pt: 1, pb: 0, border: "none" }}>
+      {!fileLoading ?  <DialogContent dividers sx={{ pt: 1, pb: 0, border: "none" }}>
         {(onCreate || onUpdate) && (
           <TextField
             fullWidth
-            label={translate("folder_name")}
+            label={label || translate("folder_name")}
             value={folderName}
             onChange={onChangeFolderName}
             sx={{ mb: 3 }}
+            name={name}
+            required
           />
         )}
-      </DialogContent>
+        {onChangeFile && <TextField
+          inputProps={{ accept: "image/*" }}
+          type="file"
+          onChange={onChangeFile}
+        />}
+      </DialogContent> : <Skeleton variant="rectangular" height="160px" />}
 
       <DialogActions>
         {(onCreate || onUpdate) && (
           <Stack direction="row" justifyContent="flex-end" flexGrow={1}>
-            <Button variant="soft" onClick={onCreate || onUpdate}>
+            <Button disabled={fileLoading || !folderName ||  !fileUrl} variant="soft" onClick={onCreate || onUpdate}>
               {onUpdate ? translate("save") : translate("create")}
             </Button>
           </Stack>

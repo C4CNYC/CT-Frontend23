@@ -1,22 +1,26 @@
 // @mui
-import { Box, Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Link, Stack, Typography } from "@mui/material";
 
 //
 import { LinkItem } from "./LinkItem";
 import { CustomBreadcrumbsProps } from "./types";
+import { useTranslate } from "../../utils/translateHelper";
 
 // ----------------------------------------------------------------------
 
 export function CustomBreadcrumbs({
-  links,
-  action,
-  heading,
-  moreLink,
-  activeLast,
-  sx,
-  ...other
-}: CustomBreadcrumbsProps): React.ReactElement | null {
-  const lastLink = links[links.length - 1].name;
+                                    links,
+                                    action,
+                                    heading,
+                                    moreLink,
+                                    activeLast,
+                                    backClick,
+                                    sx,
+                                    ...other
+                                  }: CustomBreadcrumbsProps): React.ReactElement | null {
+  const lastLink = links[links.length - 1]?.name;
+  const translate = useTranslate();
+
 
   return (
     <Box sx={{ mb: 3, ...sx }}>
@@ -30,18 +34,23 @@ export function CustomBreadcrumbs({
           )}
 
           {/* BREADCRUMBS */}
-          {!!links.length && (
-            <Breadcrumbs separator={<Separator />} {...other}>
-              {links.map((link) => (
-                <LinkItem
-                  key={link.name ?? ""}
-                  link={link}
-                  activeLast={activeLast}
-                  disabled={link.name === lastLink}
-                />
-              ))}
-            </Breadcrumbs>
-          )}
+          <Box display="flex" flexDirection="column" gap={1}>
+            {backClick && <Button onClick={backClick} color="error" variant="outlined">
+              {translate("btn_group_back")}
+            </Button>}
+            {!!links.length && (
+              <Breadcrumbs separator={<Separator />} {...other}>
+                {links.map((link) => (
+                  <LinkItem
+                    key={link.name ?? ""}
+                    link={link}
+                    activeLast={activeLast}
+                    disabled={link.name === lastLink}
+                  />
+                ))}
+              </Breadcrumbs>
+            )}
+          </Box>
         </Box>
 
         {action && <Box sx={{ flexShrink: 0 }}> {action} </Box>}

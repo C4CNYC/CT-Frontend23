@@ -22,15 +22,17 @@ import {
   useCreateMediaMutation,
   useDeleteMediaMutation,
   useGetAllMediaQuery,
+  useUploadMediaFileMutation
 } from "src/redux/services/manager/media-manager";
 import { useTranslate } from "src/utils/translateHelper";
 
 export interface MediaModalProps {
   children: React.ReactElement;
 }
+
 export function MediaModal({
-  children,
-}: MediaModalProps): React.ReactElement | null {
+                             children
+                           }: MediaModalProps): React.ReactElement | null {
   const { copy } = useCopyToClipboard();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -42,13 +44,18 @@ export function MediaModal({
   const [fileCollapse, setFileCollapse] = React.useState<boolean>(true);
   const [selected, setSelected] = React.useState<string[]>([]);
   const [newFolder, setNewFolder] = React.useState<boolean>(false);
+  const [newFile, setNewFile] = React.useState<boolean>(false);
+  const [fileLoading, setFileLoading] = React.useState<boolean>(false);
   const [newFolderName, setNewFolderName] = React.useState<string>("");
+  const [fileUrl, setFileUrl] = React.useState<string>("");
+  const [fileName, setFileName] = React.useState<string>("");
   const [currentPathFiles, setCurrentPathFiles] =
     React.useState<(IMedia & BaseResponseInterface)[]>();
 
-  const { data, isLoading, refetch } = useGetAllMediaQuery({}, { skip: !open });
+  const { data, isLoading,refetch } = useGetAllMediaQuery({ page: 1 ,take:50});
   const [deleteMedia] = useDeleteMediaMutation();
   const [createMedia] = useCreateMediaMutation();
+  const [uploadMediaFile] = useUploadMediaFileMutation();
   let insertImage: any;
   try {
     const commands = useCommands();
@@ -79,6 +86,12 @@ export function MediaModal({
   const handleClose = (): void => {
     setOpen(false);
   };
+  const backClick = (): void => {
+    const paths = [...currentPath];
+    if (paths.length > 1)
+      paths.splice(-1);
+    setCurrentPath(paths);
+  };
 
   const style = {
     position: "absolute" as const,
@@ -107,11 +120,30 @@ export function MediaModal({
 
   const handleChangeFolderName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setNewFolderName(event.target.value);
+      if (event.target.name === "file") {
+        setFileName(event.target.value);
+      } else {
+        setNewFolderName(event.target.value);
+      }
     },
     [setNewFolderName]
   );
-
+  const handleFileChange = async (event: any) => {
+    const file = new FormData();
+    file.append("file", event.target.files[0]);
+    setFileLoading(true)
+    try {
+      const res:any = await uploadMediaFile({ file })
+      setFileUrl(res.data.url);
+      enqueueSnackbar(translate("messages_img_updated"));
+      setFileLoading(false)
+    } catch (error: any) {
+      enqueueSnackbar(translate("messages_img_not_updated"), {
+        variant: "error"
+      });
+      setFileLoading(false)
+    }
+  };
   const onBreadcrumbClick = (path: string) => {
     const index = currentPath.indexOf(path);
     setCurrentPath(currentPath.slice(0, index + 1));
@@ -120,7 +152,7 @@ export function MediaModal({
   return (
     <>
       {React.cloneElement(children, {
-        onClick: handleOpen,
+        onClick: handleOpen
       })}
       <Modal
         open={open}
@@ -130,7 +162,7 @@ export function MediaModal({
       >
         <Box sx={style}>
           {isLoading && (
-            <Skeleton variant="rectangular" height="400px" sx={{ mb: "4px" }} />
+            <Skeleton variant="rectangular" height="400px" />
           )}
           {!isLoading && (
             <>
@@ -143,12 +175,13 @@ export function MediaModal({
               >
                 <CustomBreadcrumbs
                   heading={translate("media")}
+                  backClick={backClick}
                   links={currentPath.map((p, i) => ({
                     name: i === 0 ? "/" : p,
-                    onClick: () => onBreadcrumbClick(p),
+                    onClick: () => onBreadcrumbClick(p)
                   }))}
                   sx={{
-                    mb: { xs: 0 },
+                    mb: { xs: 0 }
                   }}
                 />
                 <IconButton
@@ -211,7 +244,7 @@ export function MediaModal({
                             onSelect={() =>
                               setCurrentPath([
                                 ...currentPath,
-                                name ?? file.name,
+                                name ?? file.name
                               ])
                             }
                             onDelete={() => onDelete(file.id)}
@@ -228,6 +261,7 @@ export function MediaModal({
                 </Collapse>
                 <FileManagerNewFolderDialog
                   open={newFolder}
+                  label={translate("folder_name")}
                   onClose={() => setNewFolder(false)}
                   title={translate("new_folder")}
                   onCreate={() => {
@@ -238,7 +272,7 @@ export function MediaModal({
                       )}/${newFolderName}/`.replace("/", ""),
                       size: 0,
                       type: "folder",
-                      acl: "public",
+                      acl: "public"
                     })
                       .unwrap()
                       .then(() => {
@@ -247,10 +281,41 @@ export function MediaModal({
                         refetch();
                       });
                   }}
+                  name="folder"
                   folderName={newFolderName}
                   onChangeFolderName={handleChangeFolderName}
                 />
-
+                 <FileManagerNewFolderDialog
+                  open={newFile}
+                  onClose={() => setNewFile(false)}
+                  label={translate("file_name")}
+                  title={translate("new_file")}
+                  onCreate={() => {
+                    createMedia({
+                      url: fileUrl,
+                      name: `${currentPath.join(
+                        "/"
+                      )}/`.replace("/", "") + fileName ,
+                      size: 0,
+                      type: "image",
+                      acl: "public"
+                    })
+                      .unwrap()
+                      .then(() => {
+                        setNewFile(false);
+                        setNewFolderName("");
+                        setFileName("");
+                        setFileUrl("");
+                        refetch();
+                      });
+                  }}
+                  name="file"
+                  folderName={fileName}
+                  onChangeFolderName={handleChangeFolderName}
+                  onChangeFile={handleFileChange}
+                  fileLoading={fileLoading}
+                  fileUrl={fileUrl}
+                />
                 <Divider sx={{ my: 5, borderStyle: "dashed" }} />
 
                 <FileManagerPanel
@@ -258,6 +323,7 @@ export function MediaModal({
                   subTitle={`${
                     currentPathFiles?.filter((d) => d.type !== "folder").length
                   } files`}
+                  onOpen={() => setNewFile(true)}
                   collapse={fileCollapse}
                   onCollapse={() => {
                     setFileCollapse(!fileCollapse);
@@ -270,7 +336,7 @@ export function MediaModal({
                       xs: "repeat(1, 1fr)",
                       sm: "repeat(2, 1fr)",
                       md: "repeat(3, 1fr)",
-                      lg: "repeat(4, 1fr)",
+                      lg: "repeat(4, 1fr)"
                     }}
                     gap={3}
                   >
@@ -296,7 +362,7 @@ export function MediaModal({
                               acl: file.acl,
                               userId: file.userId,
                               dateCreated: file.createdAt,
-                              dateModified: file.updatedAt,
+                              dateModified: file.updatedAt
                             }}
                             selected={selected.includes(file.id)}
                             onSelect={() => onSelect(file.id)}

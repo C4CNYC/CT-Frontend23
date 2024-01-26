@@ -7,7 +7,7 @@ import {
   IMediaDelete,
   IMediaPathUpdate,
   IMediaSearchParams,
-  IMediaUpdate,
+  IMediaUpdate
 } from "../interfaces/media.interface";
 
 const extendedApi = managerApi.injectEndpoints({
@@ -19,18 +19,18 @@ const extendedApi = managerApi.injectEndpoints({
       query: (params) => ({
         url: "/manager/media",
         method: "GET",
-        params,
+        params
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Media"],
+      providesTags: ["Media"]
     }),
     getMedia: builder.query<IMedia & BaseResponseInterface, { id: string }>({
       query: ({ id }) => ({
         url: `/manager/media/${id}`,
-        method: "GET",
+        method: "GET"
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["Media"],
+      providesTags: ["Media"]
     }),
     updateMedia: builder.mutation<
       IMedia & BaseResponseInterface,
@@ -39,9 +39,9 @@ const extendedApi = managerApi.injectEndpoints({
       query: ({ id, ...body }) => ({
         url: `/manager/media/${id}`,
         method: "PATCH",
-        body,
+        body
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: "Media" }]
     }),
     updateMediaPath: builder.mutation<
       IMedia & BaseResponseInterface,
@@ -50,9 +50,9 @@ const extendedApi = managerApi.injectEndpoints({
       query: (body) => ({
         url: `/manager/media/path`,
         method: "PATCH",
-        body,
+        body
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: "Media" }]
     }),
     createMedia: builder.mutation<
       IMediaCreate & BaseResponseInterface,
@@ -61,9 +61,9 @@ const extendedApi = managerApi.injectEndpoints({
       query: ({ ...body }) => ({
         url: "/manager/media",
         method: "POST",
-        body,
+        body
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: "Media" }]
     }),
     deleteMedia: builder.mutation<
       IMediaDelete & BaseResponseInterface,
@@ -71,20 +71,35 @@ const extendedApi = managerApi.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/manager/media/${id}`,
-        method: "DELETE",
+        method: "DELETE"
       }),
-      invalidatesTags: [{ type: "Media" }],
+      invalidatesTags: [{ type: "Media" }]
     }),
+    uploadMediaFile: builder.mutation<
+     any,
+      {
+        file: FormData;
+      }
+    >({
+      query: ({ file }) => ({
+        url: "/manager/media/upload",
+        method: "POST",
+        body: file
+      }),
+      invalidatesTags: [{ type: "Media" }]
+    })
   }),
-  overrideExisting: false,
+  overrideExisting: false
 });
 
 export const {
   useGetAllMediaQuery,
   useGetMediaQuery,
+
   // -------------mutation-----------
   useCreateMediaMutation,
   useUpdateMediaPathMutation,
   useUpdateMediaMutation,
   useDeleteMediaMutation,
+  useUploadMediaFileMutation
 } = extendedApi;

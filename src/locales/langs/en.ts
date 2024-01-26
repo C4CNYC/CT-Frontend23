@@ -787,9 +787,11 @@ const en = {
   code_will_preload: "This code will preload to the lesson work-space",
   complexity: "Complexity",
   new_folder: "New Folder",
+  new_file: "New File",
   image_url_copied_msg: "Image URL copied to clipboard",
   folders: "Folders",
   folder_name: "Folder name",
+  file_name: "File name",
   validation_removed: "Validation rule removed",
   validation_rules: "Validation Rules",
   not_recommend_count_validations:
