@@ -1,7 +1,7 @@
 import Head from "next/head";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   Container,
@@ -33,6 +33,7 @@ export default function Quest(): React.ReactElement | null {
   const { query } = useRouter();
   const theme = useTheme();
   const { themeStretch } = useSettingsContext();
+  const [hasContent, setHasContent] = useState(false);
   const containerSx = useMemo(() => getContainerSx(theme), [theme]);
   const skeletonSx = useMemo(() => getSkeletonSx(theme), [theme]);
   const { data, isLoading } = useGetAssignmentStudentQuery(
@@ -53,12 +54,16 @@ export default function Quest(): React.ReactElement | null {
     { skip: !query.schoolId }
   );
 
+  useEffect(() => {
+    if (data) {
+      const content = JSON.parse(data?.description as string).doc.content;
+      setHasContent(content.some((el: any) => el.content));
+    }
+  }, [data]);
+
   if (isLoading || !data) {
     return <Skeleton variant="rounded" height="600px" />;
   }
-
-  const content = JSON.parse(data.description).doc.content;
-  const hasContent = content.some((el: any) => el.content);
 
   return (
     <>
