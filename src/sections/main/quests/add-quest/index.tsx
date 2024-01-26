@@ -269,6 +269,7 @@ export default function AddQuest(): React.ReactElement {
                 onClick={() => {
                   push(STUDENT_PATH_DASHBOARD.class.id(query.id as string));
                 }}
+                size="large"
                 variant="soft"
                 color="error"
               >
@@ -276,7 +277,7 @@ export default function AddQuest(): React.ReactElement {
               </Button>
               <LoadingButton
                 type="submit"
-                color="success"
+                color="secondary"
                 variant="contained"
                 loading={isLoading || isUpdating || isAddingToClass}
               >

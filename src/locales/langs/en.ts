@@ -82,7 +82,7 @@ const en = {
   actions_continue: "Continue",
   actions_enroll_now: "Enroll Now",
   actions_explore: "Explore",
-  actions_launch: "LAUNCH",
+  actions_launch: "Launch",
   actions_approve: "Approve",
   actions_previous: "Previous",
   actions_next: "Next",
