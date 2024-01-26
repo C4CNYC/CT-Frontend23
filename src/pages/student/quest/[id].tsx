@@ -54,14 +54,16 @@ export default function Quest(): React.ReactElement | null {
     { skip: !query.schoolId }
   );
 
+  useEffect(() => {
+    if (data) {
+      const content = JSON.parse(data?.description as string).doc.content;
+      setHasContent(content.some((el: any) => el.content));
+    }
+  }, [data]);
+
   if (isLoading || !data) {
     return <Skeleton variant="rounded" height="600px" />;
   }
-
-  useEffect(() => {
-    const content = JSON.parse(data.description).doc.content;
-    setHasContent(content.some((el: any) => el.content));
-  }, [data]);
 
   return (
     <>
