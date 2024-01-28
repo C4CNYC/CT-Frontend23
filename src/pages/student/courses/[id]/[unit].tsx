@@ -158,7 +158,7 @@ export default function ModulePage(): React.ReactElement {
           <ModuleSidebar
             level="Beginner"
             grade="6th-10th Grade"
-            duration={module ? module?.duration : "20 min"}
+            duration={module?.duration && typeof module?.duration === "string" ? module.duration : "20 min"}
             lessonCount={`${module?.lessons?.length} ${translate("lessons")}`}
             description={
               module?.description
