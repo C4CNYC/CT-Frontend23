@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { type FC, type RefObject, useEffect, useMemo } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, RootState } from "src/redux/store";
 import { DndContext } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -18,7 +18,6 @@ import { useLessonStatus, useSocket } from "@hooks";
 import { ILessonUserStatus } from "@types";
 import { type BaseResponseInterface } from "@utils";
 import { type IFriend } from "src/redux/interfaces/friends.interface";
-import { RootState } from "src/redux/store";
 
 import CodeBlock from "./components/code-block";
 import CutomNavItem from "./components/custom-nav-item";
@@ -56,38 +55,37 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
     draggableConfig,
     users,
     setUsers,
-    previewdUsers,
-    isCodePreviewVisible,
+    previewUsers,
     activeUsersAmount,
-    isCodeBlocksVisible,
     isUsersLoading,
     onLoadMore,
     hasNextPage,
   } = useNavPanel(wrapperListenerRef);
 
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
+
   const router = useRouter();
   const socket = useSocket();
   const usersStatus = useLessonStatus();
-  console.log("socket navpanel:", socket);
   const room = useSelector(
     (state: RootState) => state.codeEditorController.room
   );
-  const roomId = room?.roomId || "";
+  const roomId = room?.roomId ?? "";
 
   const drawerSx = useMemo(() => {
-    return getDrawerSx(isOpen, isCodePreviewVisible);
-  }, [isOpen, isCodePreviewVisible]);
+    return getDrawerSx(isOpen, isRealtimeCodeEnabled);
+  }, [isOpen, isRealtimeCodeEnabled]);
 
   const stackCodeBoxSx = useMemo(() => {
     return getStackCodeBoxSx(draggableConfig?.height, isOpen);
   }, [draggableConfig?.height, isOpen]);
 
-  useEffect(() => {
-    console.log({ users });
-  }, [users]);
+  // useEffect(() => {
+  //   console.log({ users });
+  // }, [users]);
 
   useEffect(() => {
-    console.log({ usersStatus });
+    // console.log({ usersStatus });
     const _users = users.map((_user: IFriend & BaseResponseInterface) => {
       if (
         !usersStatus.some(
@@ -112,19 +110,20 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
   const onChangeUserStatus = (status: string = "active") => {
     try {
       // if (socket && socket.connected && router.query.lessonId) {
-      socket.emit("changeStatusInLesson", {
+      socket?.emit("changeStatusInLesson", {
         lesson: router.query.lessonId,
         user: roomId,
         status,
       });
       // }
-      setUsers((_users: (IFriend & BaseResponseInterface)[]) =>
-        _users.map((_user: IFriend & BaseResponseInterface) => {
+      setUsers((_users: IFriend[]) =>
+        _users.map((_user: IFriend) => {
           if (_user.id === roomId) return { ..._user, status };
           return { ..._user };
         })
       );
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log("onChangeUserStatusError: ", error);
     }
   };
@@ -133,7 +132,9 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
     <Drawer ref={drawerRef} open={isOpen} variant="permanent" sx={drawerSx}>
       <HeaderItem
         activeUsers={activeUsersAmount}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen)
+        }}
         isOpen={isOpen}
       />
 
@@ -156,8 +157,12 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
                 <NavItem
                   key={`${user.id}-${index}`}
                   data={user}
-                  onToggle={() => setIsOpen(!isOpen)}
-                  onClick={() => onAddBlock(user)}
+                  onToggle={() => {
+                    setIsOpen(!isOpen)
+                  }}
+                  onClick={() => {
+                    onAddBlock(user)
+                  }}
                 />
               ))}
             </SimpleInfiniteList>
@@ -193,23 +198,23 @@ const NavPanel: FC<NavPanelProps> = ({ cursorName, wrapperListenerRef }) => {
         />
       </List>
 
-      {isCodeBlocksVisible && (
+      {isRealtimeCodeEnabled && (
         <Stack sx={stackCodeBoxSx}>
           <DndContext onDragEnd={onDragEnd}>
             <SortableContext
-              items={previewdUsers}
+              items={previewUsers}
               strategy={verticalListSortingStrategy}
             >
-              {previewdUsers.map((user) => {
+              {previewUsers.map((user) => {
                 return (
                   <SortableItem key={user.id} id={user.id}>
                     <CodeBlock
-                      onClose={() => onDeletePreviewUser(user.id)}
+                      onClose={() => {
+                        onDeletePreviewUser(user.id)
+                      }}
                       data={user}
                       cursorName={cursorName}
-                      onChangeUserStatus={(status) =>
-                        onChangeUserStatus(status)
-                      }
+                      onChangeUserStatus={onChangeUserStatus}
                     />
                   </SortableItem>
                 );

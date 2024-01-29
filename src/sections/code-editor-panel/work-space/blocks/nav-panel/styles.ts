@@ -62,7 +62,7 @@ export const STACK_SX = {
 
 export const getDrawerSx = (
   isOpen: boolean,
-  isCodePreviewVisible: boolean
+  isRealtimeCodeEnabled: boolean
 ): SxProps => {
   return {
     zIndex: 9999,
@@ -73,7 +73,7 @@ export const getDrawerSx = (
     top: "50%",
     transform: "translateY(-50%)",
     transition: "margin-right .3s",
-    marginRight: isCodePreviewVisible ? 0 : "-70px",
+    marginRight: isRealtimeCodeEnabled ? 0 : "-70px",
     "& .MuiDrawer-paper": {
       paddingBottom: "167px",
       transition: "right .5s",

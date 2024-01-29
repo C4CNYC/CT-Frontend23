@@ -16,11 +16,12 @@ export interface IFriend {
   verified: boolean;
   active: boolean;
   avatar: string;
-  createdAt: string;
   cover: string;
-  usermane: string | null;
+  username: string | null;
   socials: ISocials[];
   status: string;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface IFriendsSearchParams extends BaseSearchInterface {
   name?: string;

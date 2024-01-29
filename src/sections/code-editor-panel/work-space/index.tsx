@@ -68,12 +68,13 @@ const WorkSpace: FC<WorkSpaceProps> = ({
       }
 
       previousLength = doc?.htmlBody?.length; // Store the current value
-      if (router.query.lessonId && user)
+      if (router.query.lessonId && user) {
         socket.emit("changeStatusInLesson", {
-          lesson: router.query.lessonId,
-          user: user?.id,
-          status: "active",
-        });
+                  lesson: router.query.lessonId,
+                  user: user?.id,
+                  status: "active",
+                });
+      }
 
       // Set up the check for 30 seconds later
       checkValueTimeout = setTimeout(() => {
@@ -83,14 +84,13 @@ const WorkSpace: FC<WorkSpaceProps> = ({
             user: user?.id,
             status: "idle",
           });
-        } else {
         }
       }, 30000); // 30 seconds
 
       setDocument(doc as CodeDocument);
-      // @ts-ignore doc?.htmlBody is an array
       dispatch(setCode(doc?.htmlBody?.join("") ?? ""));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log("Error: ", error);
     }
   };

@@ -1,17 +1,17 @@
 import {
+  Dispatch,
   type MutableRefObject,
-  RefObject,
+  RefObject, SetStateAction,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from "react";
+} from "react"
 
 import { type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-import { useFilters } from "@hooks";
-import { useSocket } from "@hooks";
+import { useFilters } from "src/hooks/useFilters";
 import { BaseResponseInterface } from "@utils";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";
@@ -28,13 +28,11 @@ interface UseNavPanelReturn {
   setIsOpen: (isOpen: boolean) => void;
   onDragEnd: (e: DragEndEvent) => void;
   onDeletePreviewUser: (id: string) => void;
-  previewdUsers: FriendUser[];
+  previewUsers: FriendUser[];
   draggableConfig: DraggableBlockConfig | null;
   users: FriendUser[];
-  setUsers: Function;
-  isCodePreviewVisible: boolean;
+  setUsers: Dispatch<SetStateAction<FriendUser[]>>;
   activeUsersAmount: number;
-  isCodeBlocksVisible: boolean;
   isUsersLoading: boolean;
   onLoadMore: () => void;
   hasNextPage: boolean;
@@ -46,18 +44,11 @@ const FILTER_NAME = "page";
 export const useNavPanel = (
   wrapperListenerRef: RefObject<HTMLDivElement | null>
 ): UseNavPanelReturn => {
-  const socket = useSocket();
-  console.log("socket:", socket);
-
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [previewdUsers, setPreviewdUsers] = useState<FriendUser[]>([]);
+  const [previewUsers, setPreviewUsers] = useState<FriendUser[]>([]);
   const [draggableConfig, setDraggableConfig] =
     useState<DraggableBlockConfig | null>(null);
-  const isCodePreviewVisible = useSelector(
-    (state) => state.codePanelGlobal.isCodePreviewVisible
-  );
-  const [isCodeBlocksVisible, setIsCodeBlocksVisible] = useState(false);
   const classId = useSelector(state => state?.codePanel?.class?.id);
   const { filters, setFilter } = useFilters(DEFAULT_FILTERS);
   const [users, setUsers] = useState<FriendUser[]>([]);
@@ -68,9 +59,9 @@ export const useNavPanel = (
   useEffect(() => {
     setFilter("class_id", classId as string)
   }, [classId])
-  
+
   const onLoadMore = () => {
-    if (data == null || data.meta.hasNextPage === false) {
+    if (!data?.meta?.hasNextPage) {
       return;
     }
 
@@ -78,32 +69,32 @@ export const useNavPanel = (
   };
 
   const onAddBlock = (user: FriendUser): void => {
-    const newPreviewedUsers = [...previewdUsers];
+    const newPreviewedUsers = [...previewUsers];
     const isMaxBlocksInView =
       newPreviewedUsers.length === draggableConfig?.blockAmount;
     const isExist = newPreviewedUsers.some(({ id }) => id === user.id);
-    console.log({ user });
+
     if (isExist) {
       return;
     }
 
     if (isMaxBlocksInView) {
       newPreviewedUsers.splice(newPreviewedUsers.length - 1, 1);
-      setPreviewdUsers([...newPreviewedUsers, user]);
+      setPreviewUsers([...newPreviewedUsers, user]);
 
       return;
     }
 
-    setPreviewdUsers([...newPreviewedUsers, user]);
+    setPreviewUsers([...newPreviewedUsers, user]);
   };
 
   const onDeletePreviewUser = (_id: string): void => {
-    const index = previewdUsers.findIndex(({ id }) => id === _id);
+    const index = previewUsers.findIndex(({ id }) => id === _id);
 
     if (index > -1) {
-      const newPreviewdUsers = [...previewdUsers];
-      newPreviewdUsers.splice(index, 1);
-      setPreviewdUsers(newPreviewdUsers);
+      const newPreviewUsers = [...previewUsers];
+      newPreviewUsers.splice(index, 1);
+      setPreviewUsers(newPreviewUsers);
     }
   };
 
@@ -111,7 +102,7 @@ export const useNavPanel = (
     const { active, over } = event;
 
     if (over != null && active != null && active.id !== over.id) {
-      setPreviewdUsers((items) => {
+      setPreviewUsers((items) => {
         const oldIndex = items.findIndex(({ id }) => id === active.id);
         const newIndex = items.findIndex(({ id }) => id === over.id);
 
@@ -121,14 +112,14 @@ export const useNavPanel = (
   };
 
   useEffect(() => {
-    let resizeObserver: ResizeObserver | null = null;
+    let resizeObserver: ResizeObserver;
 
     if (wrapperListenerRef.current != null) {
-      const resizeObserver = new ResizeObserver(([{ contentRect }]) => {
+      resizeObserver = new ResizeObserver(([{ contentRect }]) => {
         const config = getDraggableBlockConfig(contentRect);
 
         setDraggableConfig(config);
-        setPreviewdUsers((prev) =>
+        setPreviewUsers((prev) =>
           config.blockAmount < prev.length
             ? prev.slice(0, config.blockAmount)
             : prev
@@ -146,22 +137,6 @@ export const useNavPanel = (
   }, [wrapperListenerRef]);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (!isCodePreviewVisible) {
-      setIsCodeBlocksVisible(false);
-      setIsOpen(false);
-    } else {
-      timeout = setTimeout(() => {
-        setIsCodeBlocksVisible(true);
-      }, 400);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [isCodePreviewVisible]);
-
-  useEffect(() => {
     if (data?.data != null) {
       setUsers((prev) => [
         ...prev,
@@ -173,7 +148,7 @@ export const useNavPanel = (
   }, [data?.data]);
 
   const { activeUsersAmount, sortedUsers } = useMemo(() => {
-    const statusOrder: { [status: string]: number } = {
+    const statusOrder: Record<string, number> = {
       active: 1,
       idle: 2,
       inactive: 3,
@@ -194,13 +169,11 @@ export const useNavPanel = (
     setIsOpen,
     onDragEnd,
     onDeletePreviewUser,
-    previewdUsers,
+    previewUsers,
     draggableConfig,
     activeUsersAmount,
     users: sortedUsers,
     setUsers,
-    isCodePreviewVisible,
-    isCodeBlocksVisible,
     isUsersLoading,
     onLoadMore,
     hasNextPage: data?.meta.hasNextPage ?? false,

@@ -12,7 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { toggleCodePreview } from "src/redux/slices/code-panel-global";
+import { toggleRealtimeCodeEnabled } from "src/redux/slices/code-panel-global";
 import { useSelector } from "src/redux/store";
 
 import CustomSwitch from "./custom-switch";
@@ -31,13 +31,13 @@ const GroupHeader: FC = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up(1000));
   const tribe = useSelector((state) => state.codePanel.class);
   const dispatch = useDispatch()
-  const isCodePreviewVisible = useSelector((state) => state.codePanelGlobal.isCodePreviewVisible)
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
   if (!isDesktop) {
     return null;
   }
 
   const onChange = () => {
-    dispatch(toggleCodePreview(!isCodePreviewVisible));
+    dispatch(toggleRealtimeCodeEnabled(!isRealtimeCodeEnabled));
   };
 
   const groupTitle =
@@ -67,7 +67,7 @@ const GroupHeader: FC = () => {
 
       <PersonIcon display="flex" justifyContent="center" alignItems="center" />
 
-      <CustomSwitch isActive={isCodePreviewVisible} onChange={onChange} />
+      <CustomSwitch isActive={isRealtimeCodeEnabled} onChange={onChange} />
     </Stack>
   );
 };
