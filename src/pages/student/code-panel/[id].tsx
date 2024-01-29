@@ -20,6 +20,21 @@ import { SocketContext } from "../../../context/socket-context";
 import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
 import { ILessonUserStatus } from "@types";
+import { useSelector } from "../../../redux/store"
+
+
+// dec2hex :: Integer -> String
+// i.e. 0-255 -> '00'-'ff'
+function dec2hex (dec: number) {
+  return dec.toString(16).padStart(2, "0")
+}
+
+// generateId :: Integer -> String
+function generateId (len: number) {
+  const arr = new Uint8Array((len || 40) / 2)
+  window.crypto.getRandomValues(arr)
+  return Array.from(arr, dec2hex).join("")
+}
 
 interface LessonUserResponseType {
   id: string;
@@ -88,42 +103,52 @@ export default function Index(): ReactElement | null {
 
   const router = useRouter();
   const lessonId = router.query.lessonId;
+  const [socket, setSocket] = useState<Socket>()
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
 
   useEffect(() => {
-    const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
-      path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? "/api",
-      auth: user ? { userId: user.id } : {},
-    });
-    socket.on("connect_error", (error) => {
-      // eslint-disable-next-line no-console
-      console.error("Connection error", error);
-    });
+    let socket: Socket | undefined;
 
-    socket.on("connect", () => {
-      // eslint-disable-next-line no-console
-      console.log("Connected to socket server", lessonId);
-
-      if (lessonId) {
+    if (isRealtimeCodeEnabled) {
+      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
+        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
+        auth: user ? { userId: user?.id || generateId(20) } : {},
+      });
+      socket.on("connect_error", (error) => {
         // eslint-disable-next-line no-console
-        console.log("joinNewLesson", JSON.stringify({ lesson: lessonId, userId: user?.id }));
+        console.error("Connection error", error);
+      });
 
-        socket.emit("joinLesson", JSON.stringify({ lesson: lessonId }));
-      }
-    });
+      socket.on("connect", () => {
+        // eslint-disable-next-line no-console
+        console.log("Connected to socket server", lessonId);
+
+        setSocket(socket)
+
+        if (lessonId) {
+          // eslint-disable-next-line no-console
+          console.log("joinNewLesson", JSON.stringify({ lesson: lessonId, userId: user?.id }));
+
+          socket?.emit("joinLesson", JSON.stringify({ lesson: lessonId }));
+        }
+      });
+    } else {
+      setSocket(undefined)
+    }
 
     return () => {
-      socket.off("joinLesson");
-      socket.off("leaveLesson");
-      socket.disconnect();
+      socket?.off("joinLesson");
+      socket?.off("leaveLesson");
+      socket?.disconnect();
     };
-  }, []);
+  }, [isRealtimeCodeEnabled]);
 
   useEffect(() => {
-    if (router.query.lessonId) {
+    if (router.query.lessonId && socket) {
       socket.emit("joinLesson", JSON.stringify({ lesson: router.query.lessonId, user: user?.student_profile?.id }));
 
       socket.on("joinLesson_", (data: { lesson: string, user: string }) => {
-        const { lesson, user } = data;
+        const { user } = data;
         setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status: "idle" }])
       });
       socket.on("changeStatusInLesson_", (data: { user: string, status: string }) => {
@@ -150,14 +175,14 @@ export default function Index(): ReactElement | null {
         console.log("in:", e);
       });
       return () => {
-        socket.off("joinLesson_");
-        socket.off("changeStatusInLesson_");
-        socket.off("lessonMembers");
+        socket?.off("joinLesson_");
+        socket?.off("changeStatusInLesson_");
+        socket?.off("lessonMembers");
         // socket.off('leaveLesson_')
-        socket.emit("leaveLesson", JSON.stringify({ lesson: router.query.lessonId, user: user?.student_profile?.id }));
+        socket?.emit("leaveLesson", JSON.stringify({ lesson: router.query.lessonId, user: user?.student_profile?.id }));
       };
     }
-  }, [router.query.lessonId]);
+  }, [router.query.lessonId, socket]);
 
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />;

@@ -3,9 +3,9 @@ import { Socket } from "socket.io-client";
 
 import { type FileInfo, type File, createFile } from "../utils/collab/requests";
 import { useModeSubscriptions } from "./useModeSubscriptions";
-import { EmitSocketEvents, SubscribedEvents } from "../utils/socket";
-import { EditorMode } from "../constants";
+import { EmitSocketEvents } from "../utils/socket";
 import {
+  EditorMode,
   DEFAULT_FILE,
   MIN_FILE_LIST_LENGTH,
   getEmptyFileManagement
@@ -28,7 +28,7 @@ interface UseFileManagerReturn {
 }
 
 interface UseFileManagerProps {
-  socket: Socket
+  socket?: Socket
   roomId: string
   mode: EditorMode
 }
@@ -49,6 +49,10 @@ export const useFileManager = ({
   // ------------------------------------------------------ //
 
   const onAddFile = async (fileName: string): Promise<void> => {
+    if (!socket) {
+      console.error("TODO onAddFile not implemented without sockets");
+      return;
+    }
     const file = await createFile({ roomId, fileName, socket });
     setFileList([...fileList, file]);
   }
@@ -67,7 +71,7 @@ export const useFileManager = ({
       const newAddedFileList = [...addedFileList];
       newAddedFileList.splice(addedFileIndex, 1);
       setAddedFileList(newAddedFileList);
-      socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList);
+      socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList);
     }
 
     let newActiveFile: File | null = null;
@@ -91,17 +95,17 @@ export const useFileManager = ({
     const newActiveFile = onDeleteFile(fileName);
 
     if (newActiveFile != null) {
-      socket.emit(EmitSocketEvents.SetActiveFile, roomId, newActiveFile);
+      socket?.emit(EmitSocketEvents.SetActiveFile, roomId, newActiveFile);
     }
 
-    socket.emit(EmitSocketEvents.DeleteFile, roomId, fileName);
+    socket?.emit(EmitSocketEvents.DeleteFile, roomId, fileName);
   }, [onDeleteFile, socket]);
 
   const onChangeFileWithEvents = (fileName: File): void => {
     setActiveFile(fileName);
 
     if (mode === EditorMode.Owner) {
-      socket.emit(EmitSocketEvents.SetActiveFile, roomId, fileName);
+      socket?.emit(EmitSocketEvents.SetActiveFile, roomId, fileName);
     }
   }
 
@@ -113,7 +117,7 @@ export const useFileManager = ({
 
       setAddedFileList(newAddedFileList);
 
-      socket.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList);
+      socket?.emit(EmitSocketEvents.AddedFileListUpdated, roomId, newAddedFileList);
     }
 
     _setActiveFile(fileName);
@@ -130,7 +134,7 @@ export const useFileManager = ({
   }, []);
 
   const onUpdateFileList = useCallback((fileName: File, socketId: string) => {
-    if (socket.id !== socketId) {
+    if (socket?.id !== socketId) {
       setFileList((prev) => {
         const isExist = prev.some(({ id }) => id === fileName.id);
 

@@ -14,13 +14,13 @@ import { SubscribedEvents } from "./utils/socket";
 
 interface UseModeSubscriptionsProps {
   roomId: string
-  socket: Socket
+  socket?: Socket
   initializeBlockedRef: MutableRefObject<boolean>
   runInitWatcher: () => Promise<void>
   runInitSubOwner: (isFirstInit: boolean) => void
   mode: EditorMode
   roomStatus: RoomStatus
-  onChange?: (doc: any) => void 
+  onChange?: (doc: any) => void
 }
 
 const CODE_CHANGE_DELAY = 700;
@@ -50,7 +50,6 @@ export const useModeSubscriptions = ({
     runInitSubOwnerRef.current = runInitSubOwner;
   }, [runInitWatcher]);
 
-
   const modeSockets = useMemo(() => {
     const existResponseEvent = `${SubscribedEvents.RoomExistResponse}${roomId}`;
     const deleteResponseEvent = `${SubscribedEvents.RoomDeleteResponse}${roomId}`;
@@ -60,13 +59,13 @@ export const useModeSubscriptions = ({
       subscribe: {
         [EditorMode.Watcher]: {
           [RoomStatus.Inactive]: () => {
-            socket.on(existResponseEvent, () => {
+            socket?.on(existResponseEvent, () => {
               initializeBlockedRef.current = false;
               runInitWatcherRef.current();
             });
           },
           [RoomStatus.Active]: () => {
-            socket.on(deleteResponseEvent, () => {
+            socket?.on(deleteResponseEvent, () => {
               initializeBlockedRef.current = false;
               runInitWatcherRef.current();
             });
@@ -74,33 +73,33 @@ export const useModeSubscriptions = ({
         },
         [EditorMode.SubOwner]: {
           [RoomStatus.Inactive]: () => {
-            socket.on(existResponseEvent, () => {
+            socket?.on(existResponseEvent, () => {
               initializeBlockedRef.current = false;
               runInitSubOwnerRef.current(true)
             });
           },
           [RoomStatus.Active]: () => {
-            socket.on(deleteResponseEvent, () => {
+            socket?.on(deleteResponseEvent, () => {
               initializeBlockedRef.current = false;
               runInitSubOwnerRef.current(true);
             });
-            socket.on(docUpdatedEvent, delayedOnChange)
+            socket?.on(docUpdatedEvent, delayedOnChange)
           }
         },
         [EditorMode.Owner]: {
           [RoomStatus.Active]: () => {
-            socket.on(docUpdatedEvent, delayedOnChange)
+            socket?.on(docUpdatedEvent, delayedOnChange)
           },
           [RoomStatus.Inactive]: null
         }
       },
       unsuscribe: {
         [RoomStatus.Inactive]: () => {
-          socket.off(existResponseEvent);
+          socket?.off(existResponseEvent);
         },
         [RoomStatus.Active]: () => {
-          socket.off(deleteResponseEvent);
-          socket.off(docUpdatedEvent);
+          socket?.off(deleteResponseEvent);
+          socket?.off(docUpdatedEvent);
         }
       }
     }

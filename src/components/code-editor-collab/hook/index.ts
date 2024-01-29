@@ -24,7 +24,7 @@ export interface UseCodeEditorCollabProps extends MemoizedProps {
   roomId: string
   mode?: EditorMode
   activeFile: File
-  socket: Socket
+  socket?: Socket
   onRoomStatusChanged?: (roomStatus: RoomStatus) => void
 }
 
@@ -70,7 +70,7 @@ export const useCodeEditorCollab = ({
 
   const clearSocketData = useCallback((): void => {
     if (initRoomDataRef.current.mode === EditorMode.Owner) {
-      socket.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId);
+      socket?.emit(EmitSocketEvents.DeleteRoom, initRoomDataRef.current.roomId);
     }
 
     unsubscribeSocket(socket);
@@ -169,25 +169,24 @@ export const useCodeEditorCollab = ({
     [EditorMode.Watcher]: runInitWatcher,
   }), [runInitWatcher, runInitOwner, runInitSubOwner]);
 
-  window.addEventListener(RESET_LESSON_EVENT, () => {
-    editorView.current?.destroy();
-    if (initializeBlockedRef.current) {
-      return;
-    }
-    initialize[modeRef.current](firstInit.current);
-  });
-
   useEffect(() => {
-    return () => {
-      window.removeEventListener(RESET_LESSON_EVENT, () => {
-        editorView.current?.destroy();
-        if (initializeBlockedRef.current) {
-          return;
-        }
+    const onResetLesson = () => {
+      editorView.current?.destroy();
+      if (initializeBlockedRef.current) {
+        return;
+      }
+
+      if (socket) {
         initialize[modeRef.current](firstInit.current);
-      });
+      }
     }
-  }, []);
+
+    window.addEventListener(RESET_LESSON_EVENT, onResetLesson);
+
+    return () => {
+      window.removeEventListener(RESET_LESSON_EVENT, onResetLesson);
+    }
+  }, [socket]);
 
   useModeSubscriptions({
     roomId,
@@ -213,12 +212,19 @@ export const useCodeEditorCollab = ({
   useEffect(() => {
     editorView.current?.destroy();
 
+    if (!socket) {
+      setIsLoading(false);
+      return;
+    }
+
     if (initializeBlockedRef.current) {
       return;
     }
 
+
+
     initialize[modeRef.current](firstInit.current);
-  }, [initialize]);
+  }, [initialize, socket]);
 
   useEffect(() => {
     window.addEventListener("beforeunload", clearSocketData);

@@ -69,7 +69,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
       previousLength = doc?.htmlBody?.length; // Store the current value
       if (router.query.lessonId && user) {
-        socket.emit("changeStatusInLesson", {
+        socket?.emit("changeStatusInLesson", {
                   lesson: router.query.lessonId,
                   user: user?.id,
                   status: "active",
@@ -79,7 +79,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
       // Set up the check for 30 seconds later
       checkValueTimeout = setTimeout(() => {
         if (doc?.htmlBody?.length === previousLength) {
-          socket.emit("changeStatusInLesson", {
+          socket?.emit("changeStatusInLesson", {
             lesson: router.query.lessonId,
             user: user?.id,
             status: "idle",
@@ -124,7 +124,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
         )}
 
         <CodeEditorBlock
-          preloadedCode={lastLessonCode || data[slideIndex]?.preload_body || ""}
+          preloadedCode={(lastLessonCode ?? data[slideIndex]?.preload_body) || ""}
           validations={data[slideIndex]?.validations || ""}
           code={document?.htmlBody?.join("") ?? ""}
           user={user}

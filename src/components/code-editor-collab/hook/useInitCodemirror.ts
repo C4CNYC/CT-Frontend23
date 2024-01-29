@@ -32,7 +32,7 @@ const language = ({ name }: File): LanguageSupport[] => {
 }
 
 interface UseBaseInit {
-  socket: Socket
+  socket?: Socket
   withTooltip: boolean
   onChange?: (code: Record<string, string>) => void
   roomId: string
@@ -84,20 +84,24 @@ export const useInitCodemirror = ({
       ...language(fileName),
       dracula,
       lineWrap.of(EditorView.lineWrapping),
-      peerExtension({
-        socket,
-        roomId,
-        startVersion: version,
-        fileName,
-        addCursor
-      }),
-      cursorExtension({
-        cursorId: cursorName,
-        tooltipText: cursorText,
-        withTooltip,
-        addCursor,
-        userId: user?.id,
-      }),
+
+      ...(socket ? [
+        peerExtension({
+          socket,
+          roomId,
+          startVersion: version,
+          fileName,
+          addCursor
+        }),
+        cursorExtension({
+          cursorId: cursorName,
+          tooltipText: cursorText,
+          withTooltip,
+          addCursor,
+          userId: user?.id,
+        }),
+      ] : []),
+
       contextMenuExtension({
         userId: user?.id,
       }),
