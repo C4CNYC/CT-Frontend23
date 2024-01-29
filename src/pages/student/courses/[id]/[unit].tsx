@@ -1,6 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+import { number, string } from "yup";
 
 import {
   Container,
@@ -62,6 +64,16 @@ export default function ModulePage(): React.ReactElement {
       { id: query.unit as string },
       { skip: !query.unit }
     );
+
+  const moduleDuration = useMemo(
+    () =>
+      module?.duration
+        ? Object.entries(module.duration)
+            .map(([dataType, count]) => `${count} ${dataType}`)
+            .join(" ")
+        : "20 min",
+    [module]
+  );
 
   useEffect(() => {
     if (modules) {
@@ -158,7 +170,7 @@ export default function ModulePage(): React.ReactElement {
           <ModuleSidebar
             level="Beginner"
             grade="6th-10th Grade"
-            duration={module?.duration && typeof module?.duration === "string" ? module.duration : "20 min"}
+            duration={moduleDuration}
             lessonCount={`${module?.lessons?.length} ${translate("lessons")}`}
             description={
               module?.description
