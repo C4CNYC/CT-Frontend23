@@ -159,7 +159,7 @@ export default function ProgressTable({
         <Table>
           <TableHead>
             <TableRow>
-              {viewBy.user === "name" && (
+              {viewBy?.user === "name" && (
                 <>
                   <TableHeadSort
                     id="first_name"
@@ -181,7 +181,7 @@ export default function ProgressTable({
                   </TableHeadSort>
                 </>
               )}
-              {viewBy.user === "username" && (
+              {viewBy?.user === "username" && (
                 <TableHeadSort
                   id="username"
                   sortDirection={sortDirection}
@@ -284,10 +284,10 @@ export default function ProgressTable({
               ?.slice(((filters.page ?? 1) - 1) * 20, (filters.page ?? 0) * 20)
               ?.map((el) => (
                 <TableRow>
-                  {viewBy.user === "username" && (
+                  {viewBy?.user === "username" && (
                     <TableCell size="small">{el?.username}</TableCell>
                   )}
-                  {viewBy.user === "name" && (
+                  {viewBy?.user === "name" && (
                     <>
                       <TableCell size="small">{el?.first_name}</TableCell>
                       <TableCell size="small">
