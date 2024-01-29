@@ -159,7 +159,7 @@ export default function ProgressTable({
         <Table>
           <TableHead>
             <TableRow>
-              {viewBy.user === "name" && (
+              {viewBy?.user === "name" && (
                 <>
                   <TableHeadSort
                     id="first_name"
@@ -181,7 +181,7 @@ export default function ProgressTable({
                   </TableHeadSort>
                 </>
               )}
-              {viewBy.user === "username" && (
+              {viewBy?.user === "username" && (
                 <TableHeadSort
                   id="username"
                   sortDirection={sortDirection}
@@ -284,16 +284,16 @@ export default function ProgressTable({
               ?.slice(((filters.page ?? 1) - 1) * 20, (filters.page ?? 0) * 20)
               ?.map((el) => (
                 <TableRow>
-                  {viewBy.user === "username" && (
-                    <TableCell size="small">{el.username}</TableCell>
+                  {viewBy?.user === "username" && (
+                    <TableCell size="small">{el?.username}</TableCell>
                   )}
-                  {viewBy.user === "name" && (
+                  {viewBy?.user === "name" && (
                     <>
-                      <TableCell size="small">{el.first_name}</TableCell>
+                      <TableCell size="small">{el?.first_name}</TableCell>
                       <TableCell size="small">
                         {!lastNameOnly
-                          ? `${el.last_name.substring(0, 1)}`
-                          : el.last_name}
+                          ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ""}`
+                          : el?.last_name}
                       </TableCell>
                     </>
                   )}
@@ -321,8 +321,8 @@ export default function ProgressTable({
                         key={item.id}
                         studentName={`${el.first_name} ${
                           !lastNameOnly
-                            ? `${el.last_name.substring(0, 1)}`
-                            : el.last_name
+                            ? `${el?.last_name ? el?.last_name?.substring(0, 1) : ""}`
+                            : el?.last_name
                         }`}
                         type={levelName}
                         name={item.name}
