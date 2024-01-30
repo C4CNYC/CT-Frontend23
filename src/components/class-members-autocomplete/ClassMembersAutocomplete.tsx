@@ -129,7 +129,7 @@ export default function ClassMembersAutocomplete({
         />
       )}
       renderOption={(props, recipient, { inputValue }) => {
-        const { email } = recipient?.account || "";
+        const { email } = recipient?.account || {};
 
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
