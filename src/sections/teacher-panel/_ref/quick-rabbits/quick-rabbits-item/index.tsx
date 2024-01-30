@@ -10,15 +10,15 @@ import { useSelector } from "react-redux";
 import { IconButton, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-import { Iconify } from "src/components/iconify";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { Messages } from "@sections/teacher-panel/quick-rabbits/quick-rabbits-item/message";
-import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
-import { RootState } from "src/redux/store";
+import { Iconify } from "../../../../../components/iconify";
+import { MANAGER_PATH_DASHBOARD } from "../../../../../routes/manager.paths";
+import { Messages } from "./message";
+import { useGetStudentsQuery } from "../../../../../redux/services/manager/students-manager";
+import { RootState } from "../../../../../redux/store";
 
 import { GROUP_CHAT_RABBIT } from "../quick-rabbits-side-list";
-import { getDocument } from "../../../../codemirror/extensions/collab";
-import { useSocket } from "@hooks";
+import { getDocument } from "../../../../../codemirror/extensions/collab";
+import { useSocket } from "../../../../../hooks";
 
 interface IQuickRabbitsItem {
   rabit: { id: string, email: string, avatar: string };

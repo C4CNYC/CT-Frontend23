@@ -14,8 +14,8 @@ import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 //   IChatMessage,
 //   useFirebaseChat,
 // } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
-import { BaseResponseInterface } from "@utils";
-import { IStudent } from "src/redux/services/interfaces/user.interface";
+import { BaseResponseInterface } from "../../../../../../utils";
+import { IStudent } from "../../../../../../redux/services/interfaces/user.interface";
 
 type IChatMessage = any;
 

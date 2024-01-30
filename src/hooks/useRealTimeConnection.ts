@@ -12,7 +12,7 @@ export function useRealtimeConnection() {
     () => Promise<ActivityStatus>
   >(async () => {
     return await new Promise((resolve) => {
-      socket.emit("getOwnActivityStatus", (activityStatus: ActivityStatus) => {
+      socket?.emit("getOwnActivityStatus", (activityStatus: ActivityStatus) => {
         resolve(activityStatus);
       });
     });
@@ -23,7 +23,7 @@ export function useRealtimeConnection() {
   >(
     async (roomId) => {
       return await new Promise((resolve, reject) => {
-        socket.emit(
+        socket?.emit(
           "getActivityStatus",
           roomId,
           (activityStatus: RoomActivity | PermissionError) => {
@@ -43,7 +43,7 @@ export function useRealtimeConnection() {
     (callback: (roomId: string, roomActivity: RoomActivity) => void) => void
   >(
     (callback) => {
-      socket.on("activityStatusAvailable", callback);
+      socket?.on("activityStatusAvailable", callback);
     },
     [socket]
   );
@@ -52,7 +52,7 @@ export function useRealtimeConnection() {
     (callback?: (roomId: string, roomActivity: RoomActivity) => void) => void
   >(
     (callback) => {
-      socket.off("activityStatusAvailable", callback);
+      socket?.off("activityStatusAvailable", callback);
     },
     [socket]
   );
@@ -61,7 +61,7 @@ export function useRealtimeConnection() {
     (callback: (userId: string, activityStatus: ActivityStatus) => void) => void
   >(
     (callback) => {
-      socket.on("activityStatus", callback);
+      socket?.on("activityStatus", callback);
     },
     [socket]
   );
@@ -72,7 +72,7 @@ export function useRealtimeConnection() {
     ) => void
   >(
     (callback) => {
-      socket.off("activityStatus", callback);
+      socket?.off("activityStatus", callback);
     },
     [socket]
   );

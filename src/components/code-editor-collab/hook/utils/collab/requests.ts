@@ -80,14 +80,14 @@ export const getDocument = async ({
   ...other
 }: GetDocumentProps): Promise<GetDocumentReturn> => {
   return await new Promise(function(resolve) {
-    console.log("getdoc", other);
+    console.log("getDocument", other);
 
     if (!socket) {
       console.error('TODO getDocument not implemented without sockets')
       resolve({
         doc: Text.of([]),
         // ...other
-      });
+      } as any);
     } else {
       socket.emit(EmitSocketEvents.GetDoc, other);
 

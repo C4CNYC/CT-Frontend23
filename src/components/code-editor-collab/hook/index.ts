@@ -88,6 +88,8 @@ export const useCodeEditorCollab = ({
   })
 
   const runInitSubOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
+    if (!socket) return;
+
     firstInit.current = false;
     const isRoom = await isRoomExist(roomId, socket);
 
@@ -115,6 +117,8 @@ export const useCodeEditorCollab = ({
   }, [activeFile, baseInit, onResetFileManager, socket]);
 
   const runInitOwner = useCallback(async (isFirstInit: boolean): Promise<void> => {
+    if (!socket) return;
+
     firstInit.current = false;
     setRoomStatus(RoomStatus.Active);
 
@@ -132,6 +136,8 @@ export const useCodeEditorCollab = ({
   }, [activeFile, baseInit, onResetFileManager, socket]);
 
   const runInitWatcher = useCallback(async (): Promise<void> => {
+    if (!socket) return;
+
     firstInit.current = false;
     const isRoom = await isRoomExist(roomId, socket);
 
@@ -220,8 +226,6 @@ export const useCodeEditorCollab = ({
     if (initializeBlockedRef.current) {
       return;
     }
-
-
 
     initialize[modeRef.current](firstInit.current);
   }, [initialize, socket]);

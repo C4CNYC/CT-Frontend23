@@ -88,7 +88,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
       }, 30000); // 30 seconds
 
       setDocument(doc as CodeDocument);
-      dispatch(setCode(doc?.htmlBody?.join("") ?? ""));
+      dispatch(setCode((doc?.htmlBody as unknown as string[])?.join("") ?? ""));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log("Error: ", error);

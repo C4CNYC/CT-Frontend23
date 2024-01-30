@@ -3,14 +3,14 @@ import { useRouter } from "next/router";
 import { Grid, Stack } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
 
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
+import { MANAGER_PATH_DASHBOARD } from "../../../../routes/manager.paths";
 
 import QuickRabbitsItem from "./quick-rabbits-item";
 import { QuickRabbitsSideList } from "./quick-rabbits-side-list";
-import { RootState, useSelector } from "src/redux/store";
+import { RootState, useSelector } from "../../../../redux/store";
 import { useDispatch } from "react-redux";
-import { removeRabit } from "src/redux/slices/rabits";
-import { useSocket } from "@hooks";
+import { removeRabit } from "../../../../redux/slices/rabits";
+import { useSocket } from "../../../../hooks";
 
 export const QuickRabbits = (): React.ReactElement => {
   const theme = useTheme();
