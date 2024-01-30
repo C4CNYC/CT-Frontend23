@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Socket } from "socket.io-client";
-
 import { CodeEditor } from "./editor";
 import { getDocument } from "../../codemirror/extensions/collab";
 import { useSocket } from "@hooks";
+import { Socket } from "socket.io-client"
 
 interface State {
   connected: boolean;
@@ -27,7 +26,7 @@ export const RealTimeCodeEditor = ({
   connectionType = "connect",
   onChangeCode,
 }: IRealTimeCodeEditor): React.ReactElement | null => {
-  const socket = useSocket();
+  const socket = useSocket() as Socket;
   const [state, setState] = useState<State>({
     connected: false,
     version: undefined,

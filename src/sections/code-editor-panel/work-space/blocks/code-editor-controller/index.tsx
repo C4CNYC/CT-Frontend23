@@ -6,19 +6,8 @@ import { useSelector } from "src/redux/store";
 import { voidFunction } from "@utils";
 import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket";
 import { useAuthContext } from "../../../../../auth/useAuthContext";
-
-// dec2hex :: Integer -> String
-// i.e. 0-255 -> '00'-'ff'
-function dec2hex (dec: number) {
-  return dec.toString(16).padStart(2, "0")
-}
-
-// generateId :: Integer -> String
-function generateId (len: number) {
-  const arr = new Uint8Array((len || 40) / 2)
-  window.crypto.getRandomValues(arr)
-  return Array.from(arr, dec2hex).join("")
-}
+import { useSocket } from "src/hooks/useSocket"
+import { Socket } from "socket.io-client"
 
 interface CodeEditorControllerProps {
   onChange?: (value: Record<string, string>) => void
@@ -33,23 +22,28 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
   const room = useSelector(state => state.codeEditorController.room);
   console.log("roomId:", room?.roomId);
 
-  const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
+  // const socket = useMemo(() => createSocket(user?.id || generateId(20)), [user]);
+  const socket = useSocket()
 
   useEffect(() => {
-    const runEffect = async () => {
+    const runAsyncEffect = async (socket: Socket) => {
       const isConnected = await waitConnectSocket(socket);
 
       if (isConnected) {
         setIsConnected(isConnected)
       } else {
-        runEffect()
+        void runAsyncEffect(socket)
       }
     }
 
-    void runEffect()
+    if (socket) {
+      void runAsyncEffect(socket)
+    } else {
+      setIsConnected(false)
+    }
   }, [socket])
 
-  if (room == null || !isConnected) {
+  if (room == null /* || !isConnected */) {
     return null
   }
 

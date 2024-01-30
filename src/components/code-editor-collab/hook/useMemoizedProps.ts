@@ -4,9 +4,9 @@ import { File, type FileInfo } from "./utils/collab/requests";
 export interface MemoizedProps {
   code?: string
   cursorText?: string
-	withTooltip?: boolean
-	preloadedCode?: string
-	onChange?: (code: Record<string, string>) => void
+  withTooltip?: boolean
+  preloadedCode?: string
+  onChange?: (code: Record<string, string>) => void
   setActiveFile: (fileName: File) => void
   onResetFileManager: (info?: FileInfo) => void
   defaultFileName: string
@@ -45,8 +45,8 @@ export const useMemoizedProps = ({
   }, [onResetFileManager]);
 
   useEffect(() => {
-		onChangeRef.current = onChange;
-	}, [onChange]);
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   const _onChange = useCallback((code: Record<string, string>): void => {
     onChangeRef.current?.(code);

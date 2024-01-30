@@ -1,10 +1,10 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ReactElement, useEffect, useMemo, useState } from "react"
 
 import { useTheme } from "@mui/material/styles";
-import { type Theme, type SxProps } from "@mui/system";
+import { type Theme } from "@mui/system";
 
 import { Box } from "@mui/material";
 import { FullScreen } from "react-full-screen";
@@ -13,7 +13,6 @@ import { Socket, io } from "socket.io-client";
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-editor-panel/skeleton";
-// import WorkSpace from "@sections/code-editor-panel/work-space";
 import { useCodePanel } from "src/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
@@ -21,8 +20,23 @@ import { SocketContext } from "../../../context/socket-context";
 import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
 import { ILessonUserStatus } from "@types";
+import { useSelector } from "../../../redux/store"
 
-type LessonUserResponseType = {
+
+// dec2hex :: Integer -> String
+// i.e. 0-255 -> '00'-'ff'
+function dec2hex (dec: number) {
+  return dec.toString(16).padStart(2, "0")
+}
+
+// generateId :: Integer -> String
+function generateId (len: number) {
+  const arr = new Uint8Array((len || 40) / 2)
+  window.crypto.getRandomValues(arr)
+  return Array.from(arr, dec2hex).join("")
+}
+
+interface LessonUserResponseType {
   id: string;
   status: string;
 }
@@ -70,7 +84,7 @@ const getBoxProps = (theme: Theme) => ({
   overflow: "hidden",
 });
 
-export default function Index(): React.ReactElement | null {
+export default function Index(): ReactElement | null {
   const {
     handle,
     isLoadingComplete,
@@ -87,57 +101,59 @@ export default function Index(): React.ReactElement | null {
   const { user } = useAuthContext();
   const [usersStatus, setUsersStatus] = useState<ILessonUserStatus[]>([]);
 
-  const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
-    path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? "/api",
-    auth: user ? { userId: user.id } : {},
-  });
-  socket.on('connect_error', (error) => {
-    console.error('Connection error', error);
-  });
   const router = useRouter();
   const lessonId = router.query.lessonId;
-
-  // const getSocket = useCallback(() => {
-  //   if (socket.current) {
-  //     return socket.current;
-  //   }
-  //   socket.current = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
-  //     path: "/api/",
-  //     auth: user ? { userId: user.id } : {},
-  //   });
-  //   console.log(socket.current)
-  //   return socket.current;
-  // }, [socket]);
+  const [socket, setSocket] = useState<Socket>()
+  const isRealtimeCodeEnabled = useSelector((state) => state.codePanelGlobal.isRealtimeCodeEnabled)
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Connected to socket server', lessonId);
+    let socket: Socket | undefined;
 
-      if (lessonId) {
-        console.log('joinNewLesson', JSON.stringify({ lesson: lessonId, userId: user?.id }));
+    if (isRealtimeCodeEnabled) {
+      socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
+        path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
+        auth: user ? { userId: user?.id || generateId(20) } : {},
+      });
+      socket.on("connect_error", (error) => {
+        // eslint-disable-next-line no-console
+        console.error("Connection error", error);
+      });
 
-        socket.emit("joinLesson", JSON.stringify({ lesson: lessonId }));
-      }
-    });
+      socket.on("connect", () => {
+        // eslint-disable-next-line no-console
+        console.log("Connected to socket server", lessonId);
+
+        setSocket(socket)
+
+        if (lessonId) {
+          // eslint-disable-next-line no-console
+          console.log("joinNewLesson", JSON.stringify({ lesson: lessonId, userId: user?.id }));
+
+          socket?.emit("joinLesson", JSON.stringify({ lesson: lessonId }));
+        }
+      });
+    } else {
+      setSocket(undefined)
+    }
 
     return () => {
-      socket.off("joinLesson");
-      socket.off("leaveLesson");
-      socket.disconnect();
+      socket?.off("joinLesson");
+      socket?.off("leaveLesson");
+      socket?.disconnect();
     };
-  }, []);
+  }, [isRealtimeCodeEnabled]);
 
   useEffect(() => {
-    if (router.query.lessonId) {
+    if (router.query.lessonId && socket) {
       socket.emit("joinLesson", JSON.stringify({ lesson: router.query.lessonId, user: user?.student_profile?.id }));
 
       socket.on("joinLesson_", (data: { lesson: string, user: string }) => {
-        const { lesson, user } = data;
-        setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status: 'idle' }])
+        const { user } = data;
+        setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status: "idle" }])
       });
       socket.on("changeStatusInLesson_", (data: { user: string, status: string }) => {
         const { status, user } = data;
-        setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status: status }])
+        setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status }])
       });
 
       socket.on("lessonMembers", (data: { participants: LessonUserResponseType[] }) => {
@@ -145,69 +161,28 @@ export default function Index(): React.ReactElement | null {
         setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, ...participants])
       });
       socket.on("leaveLesson_", (data: { lesson: string, user: string }) => {
-        const { lesson, user } = data;
-        setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status: 'inactive' }]);
+        const { user } = data;
+        setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus.filter(_status => _status.id !== user), { id: user, status: "inactive" }]);
       });
 
       socket.onAnyOutgoing((e) => {
+        // eslint-disable-next-line no-console
         console.log("out:", e);
       });
 
       socket.onAny((e) => {
+        // eslint-disable-next-line no-console
         console.log("in:", e);
       });
       return () => {
-        socket.off('joinLesson_');
-        socket.off('changeStatusInLesson_');
-        socket.off('lessonMembers');
+        socket?.off("joinLesson_");
+        socket?.off("changeStatusInLesson_");
+        socket?.off("lessonMembers");
         // socket.off('leaveLesson_')
-        socket.emit("leaveLesson", JSON.stringify({ lesson: router.query.lessonId, user: user?.student_profile?.id }));
+        socket?.emit("leaveLesson", JSON.stringify({ lesson: router.query.lessonId, user: user?.student_profile?.id }));
       };
     }
-    return undefined;
-  }, [router.query.lessonId]);
-
-  // useEffect(() => {
-  //   socket.on("joinLesson_", (data: any) => {
-  //     console.log("joinLesson response");
-  //     const { lesson, user } = data;
-  //     console.log({ lesson, user });
-  //     setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, { id: user, status: 'idle' }])
-  //   });
-  //   socket.on("leaveLesson_", (data: any) => {
-  //     console.log("leaveLesson response");
-  //     const { lesson, user } = data;
-  //     console.log({ lesson, user });
-  //     // setUsersStatus((_usersStatus: ILessonUserStatus[]) => [..._usersStatus, { id: user, status: 'idle' }])
-  //   });
-  //   return () => {
-  //     socket.off('joinLesson_')
-  //     socket.off('leaveLesson_')
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   if (router.query.lessonId && socket.current) {
-
-  //     socket.current.emit("joinLesson", router.query.lessonId);
-
-  //     return () => {
-  //       socket.current?.emit("leaveLesson", router.query.lessonId);
-  //     };
-  //   }
-  //   return undefined;
-  // }, [router.query.lessonId]);
-
-  // useEffect(() => {
-  //   if (user && socket.current) {
-
-  //     socket.current.emit("joinRoom", user.student_profile.id);
-  //     return () => {
-  //       socket.current?.emit("leaveRoom", user.student_profile.id);
-  //     };
-  //   }
-  //   return undefined;
-  // }, [user]);
+  }, [router.query.lessonId, socket]);
 
   if (!isLoadingComplete) {
     return <SkeletonCodePanel />;

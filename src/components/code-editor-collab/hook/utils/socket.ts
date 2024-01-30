@@ -29,7 +29,8 @@ export enum EmitSocketEvents {
   AddedFileListUpdated = "addedFileListUpdated",
 }
 
-export const unsubscribeSocket = (socket: Socket | null): void => {
+export const unsubscribeSocket = (socket?: Socket): void => {
+  if (!socket) return;
   _.values(SubscribedEvents).forEach((event) => {
     socket?.off(event);
   });
@@ -39,7 +40,7 @@ export const unsubscribeSocket = (socket: Socket | null): void => {
 
 export const createSocket = (userId?: null | string): Socket => {
   return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
-    path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? "/api",
+    path: process.env.NEXT_PUBLIC_CODE_STREAM_API_PATH ?? undefined,
     auth: userId ? { userId } : {}
   });
 };

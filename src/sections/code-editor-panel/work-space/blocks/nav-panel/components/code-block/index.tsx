@@ -22,6 +22,8 @@ import { BOX_COLORS, HEADER_COLORS } from "./constants"
 import { getRandomIndex } from "../../hook/utils";
 
 import styles from "./styles"
+import { Socket } from "socket.io-client"
+import { useSocket } from "src/hooks/useSocket"
 
 let previousValue: string | null = null;
 let checkValueTimeout: any | null = null;
@@ -47,15 +49,16 @@ const CodeBlock: FC<CodeBlockProps> = ({
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive);
   const route = useRouter();
   const lesson = route.query.lesson;
+  const socket = useSocket();
 
-  const { boxSx, headerSx, socket } = useMemo(() => {
+  const { boxSx, headerSx/* , socket */ } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0];
     const headerColor = HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0];
 
     return {
       boxSx: styles.getBoxSx(boxColor),
       headerSx: styles.getHeaderSx(headerColor),
-      socket: createSocket()
+      // socket: createSocket()
     };
   }, []);
 
@@ -74,16 +77,21 @@ const CodeBlock: FC<CodeBlockProps> = ({
   }
 
   useEffect(() => {
-    const runEffect = async () => {
+    const runAsyncEffect = async (socket: Socket) => {
       const isConnected = await waitConnectSocket(socket);
 
       if (isConnected) {
         setIsConnected(isConnected)
       } else {
-        void runEffect();
+        void runAsyncEffect(socket)
       }
     }
-    void runEffect()
+
+    if (socket) {
+      void runAsyncEffect(socket)
+    } else {
+      setIsConnected(false)
+    }
   }, [socket])
 
 

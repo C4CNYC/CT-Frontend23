@@ -14,14 +14,14 @@ import {
 //   IChatMessage,
 //   useFirebaseChat,
 // } from "@sections/teacher-panel/atoms/useFirebaseChat.hook";
-import LoaderDelay from "@sections/teacher-panel/LoaderDelay";
+import LoaderDelay from "../../../LoaderDelay";
 import * as _ from "lodash-es";
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createRabit } from "src/redux/slices/rabits";
-import { ActivityStatus } from "../../../../types/activity-status";
-import { getActivityColor } from "../../../../utils/activity-color";
-import { useSocket } from "@hooks";
+import { createRabit } from "../../../../../redux/slices/rabits";
+import { ActivityStatus } from "../../../../../types/activity-status";
+import { getActivityColor } from "../../../../../utils/activity-color";
+import { useSocket } from "../../../../../hooks";
 
 type IChatMessage = any;
 

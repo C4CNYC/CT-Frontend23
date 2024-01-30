@@ -20,13 +20,13 @@ import MuiDrawer from "@mui/material/Drawer";
 import { CSSObject, Theme, styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 
-import { onlineStudentsAtom } from "@sections/teacher-panel/atoms/online-students.atom";
+import { onlineStudentsAtom } from "../../../atoms/online-students.atom";
 
 import { SidebarUser } from "./SidebarUser";
 import { SkeletonSidebarUser } from "./SkeletonSidebarUser";
-import { createRabit } from "src/redux/slices/rabits";
-import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
-import { useRoomActivity } from "@hooks";
+import { createRabit } from "../../../../../redux/slices/rabits";
+import { useGetClassStudentsQuery } from "../../../../../redux/services/manager/classes-student";
+import { useRoomActivity } from "../../../../../hooks/useRoomActivity";
 
 const drawerWidth = 250;
 export const GROUP_CHAT_RABBIT = "Group Chat";

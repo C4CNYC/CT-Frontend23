@@ -9,7 +9,7 @@ interface UseModeSubscriotionsProps {
   roomId: string
   onDeleteFile: (fileName: File) => void
   setActiveFile: (fileName: File) => void
-  socket: Socket
+  socket?: Socket
   onUpdateFileList: (fileName: File, socketId: string) => void
   mode: EditorMode
 }
@@ -41,29 +41,29 @@ export const useModeSubscriptions = ({
     return {
       subscribe: {
         [EditorMode.SubOwner]: () => {
-          socket.on(deleteEvent, (fileName: File) => {
+          socket?.on(deleteEvent, (fileName: File) => {
             deleteFileRef.current(fileName);
           });
-          socket.on(addFileEvent, onUpdateFileList);
+          socket?.on(addFileEvent, onUpdateFileList);
         },
         [EditorMode.Watcher]: () => {
-          socket.on(fileChangedEvent, (fileName: File) => {
+          socket?.on(fileChangedEvent, (fileName: File) => {
             setActiveFileRef.current(fileName);
           });
-          socket.on(addFileEvent, onUpdateFileList);
+          socket?.on(addFileEvent, onUpdateFileList);
         },
-        [EditorMode.Owner]: () => socket.on(addFileEvent, onUpdateFileList)
+        [EditorMode.Owner]: () => socket?.on(addFileEvent, onUpdateFileList)
       },
       unsubscribe: {
         [EditorMode.SubOwner]: () => {
-          socket.off(addFileEvent);
-          socket.off(deleteEvent);
+          socket?.off(addFileEvent);
+          socket?.off(deleteEvent);
         },
         [EditorMode.Watcher]: () => {
-          socket.off(fileChangedEvent);
-          socket.off(addFileEvent);
+          socket?.off(fileChangedEvent);
+          socket?.off(addFileEvent);
         },
-        [EditorMode.Owner]: () => socket.off(addFileEvent)
+        [EditorMode.Owner]: () => socket?.off(addFileEvent)
       }
     }
   }, [roomId, socket, onUpdateFileList]);

@@ -25,10 +25,10 @@ interface CodeEditorCollabProps extends Omit<UseCodeEditorCollabProps, ReducedFi
   className?: string
   isReadOnly?: boolean
   withFileManager?: boolean
-  socket: Socket
+  socket?: Socket
   isMultipleExtensionFiles?: boolean
   defaultFileName?: string
-  onChangeCode?:(value: string)=>void
+  onChangeCode?: (value: string) => void
 }
 
 const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
@@ -125,7 +125,7 @@ const CodeEditorCollab: FC<CodeEditorCollabProps> = ({
         extensions={extensions}
         readOnly={isReadOnly}
         value={doc}
-        onChange={(e) => onChangeCode(e)}
+        onChange={onChangeCode}
       />
     </div>
   )
