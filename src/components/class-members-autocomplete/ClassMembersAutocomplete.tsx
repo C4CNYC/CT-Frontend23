@@ -77,7 +77,7 @@ export default function ClassMembersAutocomplete({
           await joinClass(payload).unwrap();
           enqueueSnackbar(
             translate("classes_joined_to_class_msg", {
-              email: details?.option.email ?? "",
+              email: details?.option?.email ?? "",
             })
           );
           return;
@@ -86,7 +86,7 @@ export default function ClassMembersAutocomplete({
           await leftClass(payload).unwrap();
           enqueueSnackbar(
             translate("classes_left_class_msg", {
-              email: details?.option.email ?? "",
+              email: details?.option?.email ?? "",
             })
           );
         }
@@ -129,7 +129,8 @@ export default function ClassMembersAutocomplete({
         />
       )}
       renderOption={(props, recipient, { inputValue }) => {
-        const { email } = recipient.account;
+        const { email } = recipient?.account || {};
+
         const matches = match(email, inputValue);
         const parts = parse(email, matches);
 
