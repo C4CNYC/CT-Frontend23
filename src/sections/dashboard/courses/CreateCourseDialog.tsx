@@ -91,9 +91,12 @@ export default function CreateCourseDialog({
     price: Yup.string().required(translate("required_price")),
     description: Yup.string().required(translate("required_description")),
     content_id: Yup.string().required(translate("required_content_id")),
-    initial_likes: Yup.number().required(translate("required_initial_likes")),
-    initial_stars: Yup.number().required(translate("required_initial_stars")),
-    initial_enrolled: Yup.number().required(
+    initial_likes: Yup.number().transform((value) => Number.isNaN(value) ? null : value )
+      .nullable().required(translate("required_initial_likes")),
+    initial_stars: Yup.number().transform((value) => Number.isNaN(value) ? null : value )
+      .nullable().required(translate("required_initial_stars")),
+    initial_enrolled: Yup.number().transform((value) => Number.isNaN(value) ? null : value )
+      .nullable().required(
       translate("required_initial_enrolled")
     ),
     skills: Yup.array(),
