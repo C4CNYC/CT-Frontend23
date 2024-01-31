@@ -34,7 +34,7 @@ export const MODE_TITLE_SX = {
   color: "#0198ED",
   background: "linear-gradient(#7A16C9, #F618D3B5)",
   backgroundClip: "text",
-  WebkitTextFillColor: "transparent"
+  WebkitTextFillColor: "transparent",
 };
 export const DURATION_SX = {
   whiteSpace: "nowrap",
@@ -50,6 +50,7 @@ export const LINK_BTN_SX = {
   boxShadow: 2,
 };
 export const LOCKED_BTN_CONT_SX = {
+  cursor: "pointer",
   display: "flex",
   gap: 3,
   alignItems: "center",
@@ -91,3 +92,39 @@ export const getProgressStyles = (isStarted: boolean) => ({
   position: "relative",
   background: "#fff",
 });
+
+export const START_LINK_SX = {
+  display: "flex",
+  gap: 3,
+  p: 0.5,
+  pl: 2,
+  alignItems: "center",
+  borderRadius: "80px",
+  mt: "auto",
+  color: "#fff",
+  background: "linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)",
+};
+
+export const DIALOG_TITLE_WRAPPER_SX = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+};
+
+export const CLOSE_DIALOG_ICON_SX = {
+  position: "absolute",
+  top: 12,
+  right: 12,
+};
+
+export const DIALOG_CONTENT_WRAPPER_SX = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 4,
+};
+
+export const DIALOG_SUBTITLE_SX = {
+  display: "flex",
+  alignItems: "center",
+  gap: 2,
+};
