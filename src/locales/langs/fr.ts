@@ -506,6 +506,8 @@ const fr = {
   lesson_dialog_subtitle: "Vous n’avez pas terminé la formation précédente.",
   lesson_dialog_tooltip:
     "La situation: Cette «Formation» s'appuie sur le code de la «Formation» précédente. Si vous démarrez cette «Formation» maintenant, la «Solution Code» de la formation précédente sera ajoutée. Le «Code Solution» est le code correct de la «Formation» précédente sans aucune personnalisation",
+  lesson_dialog_btn_start: "Oui. Commencer la leçon",
+  lesson_dialog_btn_back: "Non, j'y retournerai",
 
   // Modules pages
   modules: "Modules",

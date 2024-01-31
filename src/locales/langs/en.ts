@@ -505,6 +505,8 @@ const en = {
   lesson_dialog_subtitle: "You haven’t finished the previous training.",
   lesson_dialog_tooltip:
     "The Situation: This “Training” builds on the code of the previous “Training.” If you start this “Training” now, the “Code Solution” from the previous training will be added. The “Code Solution” is the correct code of the previous “Training” without any personalization",
+  lesson_dialog_btn_start: "Yes. Start the lesson",
+  lesson_dialog_btn_back: "No. I'll go back",
 
   // Modules pages
   modules: "Modules",

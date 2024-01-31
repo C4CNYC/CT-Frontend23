@@ -69,7 +69,7 @@ export default function LessonDialog({
               router.push(link);
             }}
           >
-            Yes. Start the lesson
+            {translate("lesson_dialog_btn_start")}
           </Button>
           <Button
             color="info"
@@ -78,7 +78,7 @@ export default function LessonDialog({
               closeDialog();
             }}
           >
-            No. I'll go back
+            {translate("lesson_dialog_btn_back")}
           </Button>
         </DialogContent>
       </Box>
