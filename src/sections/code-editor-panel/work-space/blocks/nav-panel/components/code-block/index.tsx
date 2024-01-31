@@ -16,7 +16,7 @@ import { type IFriend } from "src/redux/interfaces/friends.interface";
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { setRoom } from "src/redux/slices/code-editor-controller";
 import { RoomStatus } from "src/components/code-editor-collab/components/status-label";
-import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket";
+import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket"
 
 import { BOX_COLORS, HEADER_COLORS } from "./constants"
 import { getRandomIndex } from "../../hook/utils";
@@ -49,16 +49,16 @@ const CodeBlock: FC<CodeBlockProps> = ({
   const [editorStatus, setEditorStatus] = useState(RoomStatus.Inactive);
   const route = useRouter();
   const lesson = route.query.lesson;
-  const socket = useSocket();
+  // const socket = useSocket();
 
-  const { boxSx, headerSx/* , socket */ } = useMemo(() => {
+  const { boxSx, headerSx, socket } = useMemo(() => {
     const boxColor = BOX_COLORS[getRandomIndex(BOX_COLORS.length)] ?? BOX_COLORS[0];
     const headerColor = HEADER_COLORS[getRandomIndex(HEADER_COLORS.length)] ?? HEADER_COLORS[0];
 
     return {
       boxSx: styles.getBoxSx(boxColor),
       headerSx: styles.getHeaderSx(headerColor),
-      // socket: createSocket()
+      socket: createSocket()
     };
   }, []);
 
@@ -88,12 +88,15 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
 
     if (socket) {
-      void runAsyncEffect(socket)
+      if (socket.connected) {
+        setIsConnected(true)
+      } else {
+        void runAsyncEffect(socket)
+      }
     } else {
       setIsConnected(false)
     }
   }, [socket])
-
 
   const onChangeCode = (value: string) => {
     if (checkValueTimeout) {
@@ -102,15 +105,17 @@ const CodeBlock: FC<CodeBlockProps> = ({
     }
 
     previousValue = value; // Store the current value
-    onChangeUserStatus('active');
+    onChangeUserStatus("active");
 
     // Set up the check for 30 seconds later
     checkValueTimeout = setTimeout(() => {
       if (value === previousValue) {
+        // eslint-disable-next-line no-console
         console.log(`Value after 30 seconds: ${value} (unchanged)`);
-        onChangeUserStatus('idle')
+        onChangeUserStatus("idle")
       } else {
-        console.log('Value has changed');
+        // eslint-disable-next-line no-console
+        console.log("Value has changed");
       }
     }, 30000); // 30 seconds
   }

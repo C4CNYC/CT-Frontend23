@@ -23,7 +23,7 @@ const initialState: IGlobalCodePanel = {
   code: "",
   isInstructionsHidden: false,
   isBrowserHidden: false,
-  isRealtimeCodeEnabled: false,
+  isRealtimeCodeEnabled: true,
 };
 
 type PickedStoreItem<T extends keyof IGlobalCodePanel> = IGlobalCodePanel[T];

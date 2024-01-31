@@ -232,7 +232,10 @@ export const useCodeEditorCollab = ({
 
   useEffect(() => {
     window.addEventListener("beforeunload", clearSocketData);
-    return () => { clearSocketData(); };
+    return () => {
+      window.removeEventListener("beforeunload", clearSocketData);
+      clearSocketData();
+    };
   }, [clearSocketData]);
 
   return {

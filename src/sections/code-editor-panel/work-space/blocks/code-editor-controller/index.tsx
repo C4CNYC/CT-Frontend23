@@ -37,7 +37,11 @@ const CodeEditorController: FC<CodeEditorControllerProps> = ({
     }
 
     if (socket) {
-      void runAsyncEffect(socket)
+      if (socket.connected) {
+        setIsConnected(true)
+      } else {
+        void runAsyncEffect(socket)
+      }
     } else {
       setIsConnected(false)
     }
