@@ -9,7 +9,7 @@ import { Iconify } from "src/components/iconify";
 import CompactLayout from "@layouts/compact";
 import { PATH_AUTH } from "@routes/paths";
 import AuthResetPasswordForm from "@sections/auth/AuthResetPasswordForm";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 ResetPasswordPage.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>

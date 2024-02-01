@@ -23,7 +23,7 @@ import {
   useUpdateSchoolCoverImgMutation,
 } from "src/redux/services/manager/schools-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import SkeletonSchool from "@sections/schools/skeleton-school";
 

@@ -7,7 +7,7 @@ import { TiLocation } from "@react-icons/all-files/ti/TiLocation";
 import { Box, Typography } from "@mui/material";
 
 import { IStudent } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface ITribeStatisticsProps {
   students: IStudent[];

@@ -28,7 +28,7 @@ import {
 } from "@components";
 import TipsTab from "@sections/dashboard/lessons/CreateLessonDialog/TipsTab";
 import { useAddModuleToCourseMutation } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   useCreateModuleMutation,

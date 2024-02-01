@@ -32,7 +32,7 @@ import {
 } from "src/redux/services/manager/progress-manager";
 import { useGetStudentsQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Progress.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

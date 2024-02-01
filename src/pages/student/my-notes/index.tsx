@@ -8,7 +8,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { SkeletonBreadcrumbs } from "@sections/dashboard/skeleton/skeletonBreadcrumbs";
 import NotesList from "@sections/my-notes/NotesList";
 import { useGetGoalsQuery } from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Goals.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

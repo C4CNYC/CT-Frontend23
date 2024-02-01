@@ -5,7 +5,7 @@ import { HiArrowRight } from "@react-icons/all-files/hi/HiArrowRight";
 import { Link, Typography } from "@mui/material";
 
 import { PATH_AUTH } from "@routes/paths";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   isRegister?: boolean;

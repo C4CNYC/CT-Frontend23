@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useOffSetTop } from "@hooks";
 
 // config
-import { HEADER } from "../../config-global";
+import { HEADER } from "../../config";
 
 //
 const Header = dynamic(async () => await import("./Header"), { ssr: false });

@@ -11,8 +11,8 @@ import { Stack } from "@mui/material";
 import { FormProvider } from "@components";
 import { SingLink } from "@sections/on-boarding-register/links";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
-import { useTranslate } from "src/utils/translateHelper";
+import { STUDENT_PATH_AFTER_LOGIN } from "../../../config";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import EmailNotFound from "./EmailNotFound";
 import SignInLogin from "./SignInLogin";

@@ -19,7 +19,7 @@ import { Iconify, MenuPopover } from "@components";
 import { BaseResponseInterface } from "@utils";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import Preferences from "./Modals/Preferences";
 import Validation from "./Modals/Validation";

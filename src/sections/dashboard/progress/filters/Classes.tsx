@@ -17,7 +17,7 @@ import { IClass } from "src/redux/interfaces/class.interface";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IFilterCoursesAutocomplete {
   classId: string;

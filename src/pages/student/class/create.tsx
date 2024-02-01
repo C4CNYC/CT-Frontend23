@@ -27,7 +27,7 @@ import {
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export function randomInArray<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];

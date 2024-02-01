@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface ICourseSidebarPros {
   duration: string;

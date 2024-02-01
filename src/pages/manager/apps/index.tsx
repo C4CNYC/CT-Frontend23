@@ -38,7 +38,7 @@ import {
   useDeleteIntegrationMutation,
   useGetIntegrationsListQuery,
 } from "src/redux/services/manager/integration-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

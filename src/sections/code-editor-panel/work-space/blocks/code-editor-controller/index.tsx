@@ -6,7 +6,7 @@ import { useSelector } from "src/redux/store";
 import { voidFunction } from "@utils";
 import { createSocket, waitConnectSocket } from "src/components/code-editor-collab/hook/utils/socket";
 import { useAuthContext } from "../../../../../auth/useAuthContext";
-import { useSocket } from "src/hooks/useSocket"
+import { useSocket } from "src/lib/hooks/useSocket"
 import { Socket } from "socket.io-client"
 
 interface CodeEditorControllerProps {

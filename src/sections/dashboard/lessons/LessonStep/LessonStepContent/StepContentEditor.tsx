@@ -16,7 +16,7 @@ import {
   useUpdateLessonContentMutation,
 } from "src/redux/services/manager/lesson-content-manager";
 import { useGetLessonIntegrationsQuery } from "src/redux/services/manager/lessons-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { LessonContentContext } from "./LessonContent.context";
 import SkeletonContentCode from "./SkeletonContentCode";

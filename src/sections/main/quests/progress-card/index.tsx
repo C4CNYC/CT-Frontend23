@@ -15,7 +15,7 @@ import { Stack } from "@mui/system";
 import { useFilters } from "@hooks";
 import ProgressTable from "@sections/dashboard/progress/progressTable/ProgressTable";
 import { SkeletonProgressTable } from "@sections/dashboard/progress/progressTable/SkeletonProgressTable";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { useAuthContext } from "../../../../auth/useAuthContext";
 import {

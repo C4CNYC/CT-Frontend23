@@ -13,7 +13,7 @@ import Modal from "@mui/material/Modal";
 import { Stack } from "@mui/system";
 
 import { fData } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { FormProvider, RHFUploadAvatar } from "../hook-form";
 

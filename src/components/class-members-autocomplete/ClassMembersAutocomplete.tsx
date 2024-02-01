@@ -28,7 +28,7 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 type StudentType = IStudent & BaseResponseInterface;
 

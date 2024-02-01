@@ -11,7 +11,7 @@ import { BaseResponseInterface } from "@utils";
 import { AuthUserType } from "src/auth/types";
 import { CodeEditor } from "src/components/real-time-editor/editor";
 import { IValidation } from "src/redux/interfaces/content.interface";
-import { mapValidations } from "src/utils/validationMaping";
+import { mapValidations } from "src/lib/utils/validationMaping";
 
 import BaseBlock from "../BaseBlock";
 import { CodingSymbols, CodingTools } from "./CodingControls";

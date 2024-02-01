@@ -27,7 +27,7 @@ import {
 } from "@components";
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { GeneralTab } from "./GeneralTab";
 

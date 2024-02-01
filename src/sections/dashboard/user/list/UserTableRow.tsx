@@ -28,7 +28,7 @@ import {
 import { BaseResponseInterface } from "@utils";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

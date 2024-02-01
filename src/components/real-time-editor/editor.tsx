@@ -5,13 +5,13 @@ import { Compartment, EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 import { dracula } from "thememirror";
 
 import { State } from ".";
 import { initListeners, removeListeners } from "./listeners";
-import { peerExtension } from "../../codemirror/extensions/collab";
-import { cursorExtension } from "../../codemirror/extensions/cursors";
+import { peerExtension } from "../../lib/codemirror/extensions/collab";
+import { cursorExtension } from "../../lib/codemirror/extensions/cursors";
 
 interface IEditor {
   roomId?: string;

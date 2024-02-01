@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 
 import { Image } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface MenuHugDialogProps {
   children: ReactNode | ReactNode[];

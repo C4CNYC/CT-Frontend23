@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-import { IValidationMap } from "src/utils/validationMaping";
+import { IValidationMap } from "src/lib/utils/validationMaping";
 
 import CheckersItemButton from "./CheckersItemButton";
 

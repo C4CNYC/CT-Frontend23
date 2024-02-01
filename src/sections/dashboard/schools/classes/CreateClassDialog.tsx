@@ -13,7 +13,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValuesProps {
   name: string;

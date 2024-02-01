@@ -5,7 +5,7 @@ import { Divider, Drawer, DrawerProps, Stack, Typography } from "@mui/material";
 
 import { Scrollbar } from "@components";
 import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { countries } from "../../../../assets/data";
 import TeacherSection from "../../organization/schools/TeachersSection";

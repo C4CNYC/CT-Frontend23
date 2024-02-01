@@ -5,7 +5,7 @@ import Stack from "@mui/system/Stack";
 
 import { SetFilterType } from "@hooks";
 import { IFriendsSearchParams } from "src/redux/interfaces/friends.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   filters: IFriendsSearchParams;

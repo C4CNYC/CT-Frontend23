@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 
 import { ISchool } from "src/redux/services/interfaces/school.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IChooseShoolModalProps {
   openDialog: boolean;

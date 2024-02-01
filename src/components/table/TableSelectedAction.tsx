@@ -1,7 +1,7 @@
 // @mui
 import { Checkbox, Stack, StackProps, Typography } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

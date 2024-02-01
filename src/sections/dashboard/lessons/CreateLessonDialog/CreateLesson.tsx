@@ -23,7 +23,7 @@ import {
   useUpdateLessonMutation,
 } from "src/redux/services/manager/lessons-manager";
 import { useAddLessonToModuleMutation } from "src/redux/services/manager/modules-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValuesProps {
   name: string;

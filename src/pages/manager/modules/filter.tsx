@@ -13,7 +13,7 @@ import {
   IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   filters: IModulesSearchParams;

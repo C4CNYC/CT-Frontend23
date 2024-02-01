@@ -33,7 +33,7 @@ import CustomTabPanel, {
 } from "src/components/custom-tab-panel";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";

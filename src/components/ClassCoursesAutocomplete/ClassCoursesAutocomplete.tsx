@@ -18,13 +18,13 @@ import {
 
 import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
-import { ICourse } from "@types";
+import { ICourse } from "src/types";
 import { BaseResponseInterface } from "@utils";
 import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { useManagerGetCourseQuery } from "../../redux/services/manager/courses-manager";
 

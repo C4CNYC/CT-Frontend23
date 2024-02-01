@@ -11,7 +11,7 @@ import {
 import { type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 
-import { useFilters } from "src/hooks/useFilters";
+import { useFilters } from "src/lib/hooks/useFilters";
 import { BaseResponseInterface } from "@utils";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";

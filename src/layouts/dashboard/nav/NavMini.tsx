@@ -5,11 +5,11 @@ import { useTheme } from "@mui/system";
 
 import { LogoMin } from "src/components/logo";
 import { NavSectionMini } from "src/components/nav-section";
-import { hideScrollbarX } from "src/utils/cssStyles";
+import { hideScrollbarX } from "src/lib/utils/cssStyles";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 
-import { NAV } from "../../../config-global";
+import { NAV } from "../../../config";
 import LetsCodeBtn from "./LestCodeBtn";
 import NavToggleButton from "./NavToggleButton";
 import { menuConfig } from "./config-navigation";

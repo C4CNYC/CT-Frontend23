@@ -16,7 +16,7 @@ import {
   useRemoveSocialsMutation,
   useUpdateSocialsMutation,
 } from "src/redux/services/manager/socials-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import LinkSelect from "./LinkSelect";
 

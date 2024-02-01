@@ -12,7 +12,7 @@ import { Logo } from "src/components/logo";
 import { useOffSetTop, useResponsive } from "@hooks";
 import { bgBlur } from "@utils";
 
-import { HEADER } from "../../config-global";
+import { HEADER } from "../../config";
 import { PATH_AUTH } from "../../routes/paths";
 import navConfig from "./nav/config-navigation";
 import NavDesktop from "./nav/desktop";

@@ -30,7 +30,7 @@ import { useSelector } from "src/redux/store";
 import BrowserView, {
   CodeDocument,
 } from "src/sections/code-editor-panel/work-space/blocks/view-block/browser-view/index";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import BaseBlock from "../base-block";
 import { LOADER_SCREEN_SX, getBoxSx, getCarouselSettings } from "./constants";

@@ -42,7 +42,7 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import MemberRow from "./MemberRow";
 

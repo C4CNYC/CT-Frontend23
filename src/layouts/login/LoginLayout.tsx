@@ -5,7 +5,7 @@ import { Stack, Typography } from "@mui/material";
 import { Logo } from "src/components/logo";
 import { Image } from "src/components/image";
 import ThemeSwitcher from "src/components/theme-switcher";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 //
 import {

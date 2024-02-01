@@ -27,14 +27,14 @@
     "paths": {
       "@components": ["src/components"],
       "@pages/*": ["src/pages/*"],
-      "@hooks": ["src/hooks"],
-      "@types": ["src/@types"],
+      "@hooks": ["src/lib/hooks"],
+      "@types": ["src/types"],
       "@sections/*": ["src/sections/*"],
       "@routes/*": ["src/routes/*"],
       "@layouts/*": ["src/layouts/*"],
       "@assets/*": ["src/assets/*"],
       "@theme/*": ["src/theme/*"],
-      "@utils": ["src/utils"],
+      "@utils": ["src/lib/utils"],
       "src": ["src"]
     }
   },

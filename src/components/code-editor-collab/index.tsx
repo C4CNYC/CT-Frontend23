@@ -1,5 +1,5 @@
 import { type FC, memo } from "react";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 import CodeMirror from "@uiw/react-codemirror";
 
 import LoadingCodeEditor from "./components/loading-code-editor";

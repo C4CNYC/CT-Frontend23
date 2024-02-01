@@ -13,15 +13,15 @@ import { Socket, io } from "socket.io-client";
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-editor-panel/skeleton";
-import { useCodePanel } from "src/hooks/useCodePanel";
+import { useCodePanel } from "src/lib/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 import { SocketContext } from "../../../context/socket-context";
 import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
-import { ILessonUserStatus } from "@types";
+import { ILessonUserStatus } from "src/types";
 import { useSelector } from "../../../redux/store"
-
+import { unsubscribeSocket } from "../../../components/code-editor-collab/hook/utils/socket"
 
 // dec2hex :: Integer -> String
 // i.e. 0-255 -> '00'-'ff'
@@ -139,6 +139,7 @@ export default function Index(): ReactElement | null {
     return () => {
       socket?.off("joinLesson");
       socket?.off("leaveLesson");
+      // unsubscribeSocket(socket);
       socket?.disconnect();
     };
   }, [isRealtimeCodeEnabled]);

@@ -7,7 +7,7 @@ import "remirror/styles/all.css";
 
 import { BaseResponseInterface, isJson } from "@utils";
 import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
 import EditorToolbar from "./EditorToolbar";

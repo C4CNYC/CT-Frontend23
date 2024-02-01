@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 
 import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

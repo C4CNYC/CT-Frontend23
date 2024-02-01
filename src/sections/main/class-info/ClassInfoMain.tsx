@@ -6,7 +6,7 @@ import { useTheme } from "@mui/system";
 import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { IUser } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   CLASS_AVATAR_SX,

@@ -21,7 +21,7 @@ import {
   IFriendsSearchParams,
 } from "src/redux/interfaces/friends.interface";
 import { useGetFriendsStudentContentQuery } from "src/redux/services/manager/friends-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import FilterFriends from "./filter";
 

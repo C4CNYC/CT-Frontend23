@@ -21,7 +21,7 @@ import SkeletonList, {
 import { getCountTakingElment } from "@utils"
 import { ILesson, ILessonSearchParams } from "src/redux/services/interfaces/courseUnits.interface"
 import { useGetLessonsQuery } from "src/redux/services/manager/lessons-manager"
-import { useTranslate } from "src/utils/translateHelper"
+import { useTranslate } from "src/lib/utils/translateHelper"
 
 import FilterLessons from "./filter"
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd"

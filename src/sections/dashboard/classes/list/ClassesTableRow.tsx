@@ -27,7 +27,7 @@ import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassPreferences from "../modal";
 

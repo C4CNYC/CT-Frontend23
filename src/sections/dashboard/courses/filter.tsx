@@ -5,7 +5,7 @@ import Stack from "@mui/system/Stack";
 
 import { SetFilterType } from "@hooks";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   filters: ICourseSearchParams;

@@ -1,4 +1,4 @@
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 import { useCallback, useState } from "react";
 import { dracula } from "thememirror";
 import { LanguageSupport, indentUnit } from "@codemirror/language";
@@ -7,7 +7,7 @@ import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
 import { langs } from "@uiw/codemirror-extensions-langs";
 
-import { getFileExtension } from "src/utils/getFileExtension";
+import { getFileExtension } from "src/lib/utils/getFileExtension";
 
 import { type Cursor, cursorExtension } from "./utils/collab/cursors";
 import { contextMenuExtension } from "./utils/collab/context-menu";

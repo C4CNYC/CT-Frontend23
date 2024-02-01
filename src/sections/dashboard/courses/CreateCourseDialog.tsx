@@ -31,7 +31,7 @@ import {
   SingleFilePreview,
   useSnackbar,
 } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   useCreateCourseMutation,

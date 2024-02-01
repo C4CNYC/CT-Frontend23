@@ -6,13 +6,13 @@ import { useTheme } from "@mui/material/styles";
 import { Iconify } from "src/components/iconify";
 import { Logo } from "src/components/logo";
 import { useSettingsContext } from "src/components/settings";
-import { useOffSetTop } from "src/hooks/useOffSetTop";
-import { useResponsive } from "src/hooks/useResponsive";
-import { bgBlur } from "src/utils/cssStyles";
+import { useOffSetTop } from "src/lib/hooks/useOffSetTop";
+import { useResponsive } from "src/lib/hooks/useResponsive";
+import { bgBlur } from "src/lib/utils/cssStyles";
 import ThemeSwitcher from "src/components/theme-switcher";
 import { useSelector } from "src/redux/store";
 
-import { HEADER, NAV } from "../../../config-global";
+import { HEADER, NAV } from "../../../config";
 import AccountPopover from "./AccountPopover";
 import LanguagePopover from "./LanguagePopover";
 import NavAccount from "./SchoolAccount";

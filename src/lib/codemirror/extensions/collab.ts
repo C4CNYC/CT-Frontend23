@@ -8,7 +8,7 @@ import {
 import { ChangeSet, Extension, StateEffect, Text } from "@codemirror/state";
 import { EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
 import { error } from "console";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 
 import { addCursor, removeCursor } from "./cursors";
 

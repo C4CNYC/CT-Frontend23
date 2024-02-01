@@ -22,8 +22,8 @@ import {
 import { useGetLessonQuery } from "src/redux/services/manager/lessons-manager";
 import { getBoard, persistCard } from "src/redux/slices/lesson-steps";
 import { RootState, useDispatch } from "src/redux/store";
-import { getOrder } from "src/utils/getTaskOrder";
-import { useTranslate } from "src/utils/translateHelper";
+import { getOrder } from "src/lib/utils/getTaskOrder";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import CreateLessonDialog from "../CreateLessonDialog/CreateLessonDialog";
 import LessonListItem from "./LesonListItem";

@@ -15,8 +15,8 @@ import {
   useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
 } from "src/redux/services/auth";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { fData } from "src/utils/formatNumber";
+import { BaseResponseInterface } from "src/lib/utils/baseResponce.interface";
+import { fData } from "src/lib/utils/formatNumber";
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };

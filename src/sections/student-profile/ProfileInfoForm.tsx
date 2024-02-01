@@ -23,7 +23,7 @@ import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),

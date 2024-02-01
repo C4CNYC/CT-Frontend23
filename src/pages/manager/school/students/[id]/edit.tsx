@@ -12,7 +12,7 @@ import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayo
 import { useGetStudentQuery } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <SchoolDashboardLayout>{page}</SchoolDashboardLayout>

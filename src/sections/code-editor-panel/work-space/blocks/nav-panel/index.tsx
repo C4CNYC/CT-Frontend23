@@ -15,7 +15,7 @@ import { CircularProgress, Divider, Drawer, List, Stack } from "@mui/material";
 
 import { SimpleInfiniteList } from "@components";
 import { useLessonStatus, useSocket } from "@hooks";
-import { ILessonUserStatus } from "@types";
+import { ILessonUserStatus } from "src/types";
 import { type BaseResponseInterface } from "@utils";
 import { type IFriend } from "src/redux/interfaces/friends.interface";
 

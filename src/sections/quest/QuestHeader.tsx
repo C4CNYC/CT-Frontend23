@@ -5,7 +5,7 @@ import { MdOutlineArrowBackIosNew } from "@react-icons/all-files/md/MdOutlineArr
 // import { TbShare2 } from "react-icons/tb"; // Hide share link
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export default function QuestHeader(): React.ReactElement {
   const { back } = useRouter();

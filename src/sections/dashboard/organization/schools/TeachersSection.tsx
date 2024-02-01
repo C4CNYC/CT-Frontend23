@@ -19,7 +19,7 @@ import {
   useDeleteTeacherMutation,
   useGetTeacherListQuery,
 } from "src/redux/services/admin/school-amdin";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import TeacherItem from "./TeacherItem";
 

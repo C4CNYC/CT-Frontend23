@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Card, Grid, Skeleton, Stack, Typography } from "@mui/material";
 
 import { useGetSocialsQuery } from "src/redux/services/manager/socials-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import LinkForm from "./LinkForm";
 import LinkItem from "./LinkItem";

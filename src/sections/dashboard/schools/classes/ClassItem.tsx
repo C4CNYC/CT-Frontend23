@@ -16,7 +16,7 @@ import { BaseResponseInterface } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
 import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AddClassDialog from "./CreateClassDialog";
 

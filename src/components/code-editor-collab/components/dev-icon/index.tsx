@@ -4,7 +4,7 @@ import CssIcon from "react-devicons/css3/original";
 import HtmlIcon from "react-devicons/html5/original";
 import JsIcon from "react-devicons/javascript/original";
 
-import { getFileExtension } from "src/utils/getFileExtension";
+import { getFileExtension } from "src/lib/utils/getFileExtension";
 
 export enum SupportedExtensions {
   Css = "css",

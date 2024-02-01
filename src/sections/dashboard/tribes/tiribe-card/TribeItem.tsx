@@ -17,7 +17,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { BaseResponseInterface, getLinearGradient } from "@utils";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import TribeButtons from "./TribeButtons";
 import TribeHeaderBtn from "./TribeHeaderBtn";

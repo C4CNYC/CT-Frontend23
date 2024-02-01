@@ -13,7 +13,7 @@ import {
 import makeStyles from "@mui/styles/makeStyles";
 import { Box } from "@mui/system";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { getActions } from "./config";
 import {

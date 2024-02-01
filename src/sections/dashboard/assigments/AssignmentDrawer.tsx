@@ -33,7 +33,7 @@ import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
 import { ISkill } from "src/redux/interfaces/content.interface";
 import { useUpdateAssignmentMutation } from "src/redux/services/manager/assignments-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IAssignmentDarawerProps {
   openDetails: boolean;

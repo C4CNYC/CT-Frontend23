@@ -24,7 +24,7 @@ import {
   useGetAllMediaQuery,
   useUploadMediaFileMutation
 } from "src/redux/services/manager/media-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export interface MediaModalProps {
   children: React.ReactElement;

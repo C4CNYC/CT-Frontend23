@@ -9,7 +9,7 @@ import { LoadingButton } from "@mui/lab";
 
 import { FormProvider, RHFTextField } from "@components";
 import { useResetPasswordMutation } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { PATH_AUTH } from "../../routes/paths";
 

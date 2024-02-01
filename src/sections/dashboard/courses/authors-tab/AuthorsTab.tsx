@@ -2,7 +2,7 @@ import { Button, Skeleton, Stack } from "@mui/material";
 
 import { EmptyContent } from "@components";
 import { useGetAuthorsQuery } from "src/redux/services/manager/author-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AddAuthorDialog from "./AddAuthorDialog";
 import AuthorsList from "./AuthorsList";

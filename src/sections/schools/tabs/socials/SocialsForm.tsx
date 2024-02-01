@@ -10,7 +10,7 @@ import { Box, Grid, MenuItem } from "@mui/material";
 
 import { FormProvider, RHFSelect, RHFTextField } from "@components";
 import { useCreateSchoolSocialMutation } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { Socials } from "../../../../assets/data";
 import { SchoolSocials } from "../../../../redux/services/interfaces/school.interface";

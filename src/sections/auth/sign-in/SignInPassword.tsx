@@ -17,7 +17,7 @@ import {
 import { Iconify, RHFTextField } from "@components";
 import { PATH_AUTH } from "@routes/paths";
 import { styledRegisterInput } from "@sections/on-boarding-register/styles";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { RESER_PASS_SX, TYPO_CONT_SX, getButtonSx } from "./constants";
 

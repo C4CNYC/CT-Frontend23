@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export default function FilterCourses(): React.ReactElement {
   const { push } = useRouter();

@@ -24,7 +24,7 @@ import {
   usePostGoalMutation,
   useUpdateGoalMutation,
 } from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValuesProps {
   title: string;

@@ -8,7 +8,7 @@ import DashboardLayout from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import UserNewEditForm from "@sections/dashboard/user/UserNewEditForm";
 import { useGetOrgMemberQuery } from "src/redux/services/admin/members-admin";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 UserEditPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

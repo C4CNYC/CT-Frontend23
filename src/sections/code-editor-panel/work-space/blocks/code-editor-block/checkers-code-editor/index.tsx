@@ -9,7 +9,7 @@ import { Stack } from "@mui/system";
 import { setIsVisible } from "src/redux/slices/checkers-animation";
 import { setNextStepAble } from "src/redux/slices/code-panel-global";
 import { useSelector } from "src/redux/store";
-import { type IValidationMap } from "src/utils/validationMaping";
+import { type IValidationMap } from "src/lib/utils/validationMaping";
 
 import { CheckerIcon } from "./CheckersIcon";
 import CheckersCompleated from "./checkers-compleated";

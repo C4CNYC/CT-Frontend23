@@ -17,7 +17,7 @@ import {
   useGetGoogleClassesQuery,
   useMigrateGoogleClassesStudentsMutation,
 } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { Iconify } from "../iconify";
 import { useSnackbar } from "../snackbar";

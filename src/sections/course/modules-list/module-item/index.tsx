@@ -18,7 +18,7 @@ import {
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { IModuleContent } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ActionsBlock from "./ActionsBlock";
 import ImageLightBox from "./ImageLightBox";

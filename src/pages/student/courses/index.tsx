@@ -7,7 +7,7 @@ import { StudentDashboardLayout } from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CourseList from "@sections/courses/CourseList";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Courses.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

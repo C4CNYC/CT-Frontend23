@@ -16,7 +16,7 @@ import { BaseResponseInterface } from "@utils";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   AVATAR_SX,

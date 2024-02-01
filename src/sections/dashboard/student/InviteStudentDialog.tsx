@@ -17,7 +17,7 @@ import {
 
 import { FormProvider, RHFTextField } from "@components";
 import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValueProps {
   email: string;

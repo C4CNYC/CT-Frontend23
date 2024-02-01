@@ -17,7 +17,7 @@ import {
 import { RHFTextField, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 

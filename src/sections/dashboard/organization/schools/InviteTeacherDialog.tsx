@@ -22,7 +22,7 @@ import {
 } from "src/redux/services/admin/members-admin";
 import { useAddTeacherMutation } from "src/redux/services/admin/school-amdin";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import UserItem from "./UserItem";
 

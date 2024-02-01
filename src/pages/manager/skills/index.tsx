@@ -40,7 +40,7 @@ import {
   useGetSkillQuery,
   useRemoveSkillMutation,
 } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Skills.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

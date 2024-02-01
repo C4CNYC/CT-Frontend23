@@ -31,7 +31,7 @@ import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassInfoMain from "./ClassInfoMain";
 import OnceOffNotification from "./OnceOffNotification";

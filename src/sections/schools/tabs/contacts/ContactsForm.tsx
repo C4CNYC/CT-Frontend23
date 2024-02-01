@@ -9,7 +9,7 @@ import { Box, Card, Grid, Stack, Typography } from "@mui/material";
 
 import { FormProvider, RHFTextField } from "@components";
 import { useUpdateSchoolContactsMutation } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { SchoolContacts } from "../../../../redux/services/interfaces/school.interface";
 

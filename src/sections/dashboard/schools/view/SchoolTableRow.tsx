@@ -14,7 +14,7 @@ import {
 
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { ISchoolSummary } from "src/redux/services/interfaces/school.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 

@@ -28,7 +28,7 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useUpdateClassesSettingsMutation } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassroomModal from "../classroom-modal";
 import EmailAddressModal from "../email-address-domain";

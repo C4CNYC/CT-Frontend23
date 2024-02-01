@@ -1,6 +1,6 @@
 import { Extensions } from "src/components/code-editor-collab/hook/constants";
 import type { File } from "src/components/code-editor-collab/hook/utils/collab/requests";
-import { getFileExtension } from "src/utils/getFileExtension";
+import { getFileExtension } from "src/lib/utils/getFileExtension";
 
 const validationList: string[] = [Extensions.Html, Extensions.Css, Extensions.Js];
 const EMPTY_ERROR = "Cannot be empty";

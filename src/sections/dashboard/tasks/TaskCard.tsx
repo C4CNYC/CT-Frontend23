@@ -13,7 +13,7 @@ import {
 import CreateCodeDialog from "@sections/dashboard/tasks/CodeDialog";
 import { ITask } from "src/redux/services/interfaces/task.interface";
 import { useDeleteTaskMutation } from "src/redux/services/manager/tasks-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   task: ITask;

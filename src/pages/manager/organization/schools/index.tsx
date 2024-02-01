@@ -7,7 +7,7 @@ import DashboardLayout from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import AddSchoolDialog from "@sections/dashboard/schools/portal/AddSchoolDialog";
 import SchoolTable from "@sections/dashboard/schools/view/SchoolTable";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Index.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

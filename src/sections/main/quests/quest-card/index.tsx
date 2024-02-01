@@ -4,7 +4,7 @@ import { EmptyContent, SimpleInfiniteList } from "@components";
 import { FilterMode, useFilters } from "@hooks";
 import { IAssignmetsSearchParams } from "src/redux/interfaces/assignment.interface";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import QuestItem from "./QuestItem";
 

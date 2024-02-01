@@ -1,4 +1,4 @@
-import { ActivityStatus } from "../types/activity-status";
+import { ActivityStatus } from "../types/collab/activity-status";
 
 export function getActivityColor(status: ActivityStatus | undefined) {
   switch (status) {

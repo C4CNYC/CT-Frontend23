@@ -10,7 +10,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import EmailStep from "./email-step";
 import PasswordStep from "./password-step";

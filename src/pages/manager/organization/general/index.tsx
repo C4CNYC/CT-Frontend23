@@ -18,7 +18,7 @@ import {
   useGetOrganizationQuery,
   useUpdateOrgCoverMutation,
 } from "src/redux/services/admin/organization-admin";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const TABS = [
   {

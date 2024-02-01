@@ -12,10 +12,10 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import AvatarGroup, { avatarGroupClasses } from '@mui/material/AvatarGroup';
 // utils
-import { fDateTime } from 'src/utils/formatTime';
-import { fData } from 'src/utils/formatNumber';
+import { fDateTime } from 'src/lib/utils/formatTime';
+import { fData } from 'src/lib/utils/formatNumber';
 // types
-import { IFileManager } from 'src/@types/file';
+import { IFileManager } from '../../types/file';
 // components
 import { Iconify } from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';

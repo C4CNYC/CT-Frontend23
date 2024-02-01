@@ -9,7 +9,7 @@ import { Stack } from "@mui/system";
 
 import { Iconify } from "src/components/iconify";
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
-import { IValidationMap } from "src/utils/validationMaping";
+import { IValidationMap } from "src/lib/utils/validationMaping";
 
 import CheckersCompleated from "./CheckersCompleated";
 import CheckersMenu from "./CheckersMenu";

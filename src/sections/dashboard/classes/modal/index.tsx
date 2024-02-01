@@ -25,7 +25,7 @@ import {
 } from "@components";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AddClassTab from "./AddClassTab";
 

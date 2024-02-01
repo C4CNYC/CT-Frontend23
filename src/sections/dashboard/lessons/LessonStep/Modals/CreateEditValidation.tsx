@@ -23,7 +23,7 @@ import {
   useCreateLessonContentValidationManagerMutation,
   useUpdateLessonContentValidationManagerMutation,
 } from "src/redux/services/manager/lesson-content-validation-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValuesProps {
   regex: string;

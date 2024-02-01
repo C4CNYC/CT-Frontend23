@@ -6,7 +6,7 @@ import { alpha, styled } from "@mui/material/styles";
 import { bgBlur } from "@utils";
 
 // config
-import { ICON } from "../../../config-global";
+import { ICON } from "../../../config";
 //
 import { NavItemProps } from "../types";
 

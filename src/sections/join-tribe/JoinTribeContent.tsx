@@ -10,7 +10,7 @@ import { Button, Link, Stack, Typography } from "@mui/material";
 import { Image } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IJoinTribeContentProps {
   classId: string;

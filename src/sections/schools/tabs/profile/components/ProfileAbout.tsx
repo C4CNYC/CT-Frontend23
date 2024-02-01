@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import { Iconify } from "src/components/iconify";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";
 

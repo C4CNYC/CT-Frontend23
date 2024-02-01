@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { Stack } from "@mui/material";
 
-import { hideScrollbarY } from "src/utils/cssStyles";
+import { hideScrollbarY } from "src/lib/utils/cssStyles";
 
 import { NavListProps, NavSectionProps } from "../types";
 import NavList from "./NavList";

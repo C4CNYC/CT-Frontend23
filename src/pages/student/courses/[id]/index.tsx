@@ -10,7 +10,7 @@ import CourseInfo from "@sections/course/CourseInfo";
 import CourseSidebar from "@sections/course/course-sidebar";
 import ModulesListBlock from "@sections/course/modules-list";
 import { useGetCoursContentQuery } from "src/redux/services/manager/courses-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 CoursePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

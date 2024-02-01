@@ -20,7 +20,7 @@ import {
   usePostProjectMutation,
   useUpdateProjectCoverMutation,
 } from "src/redux/services/manager/gallery-student";
-import { getImageFromCode } from "src/utils/getImageFromCode";
+import { getImageFromCode } from "src/lib/utils/getImageFromCode";
 
 interface IPublishModal {
   children: React.ReactElement;

@@ -16,7 +16,7 @@ import { alpha, styled, useTheme } from "@mui/material/styles";
 import { SvgColor } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { IFriend } from "src/redux/interfaces/friends.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

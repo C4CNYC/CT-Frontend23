@@ -34,7 +34,7 @@ import {
   useUpdateStudentMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValuesProps extends Omit<IStudent, keyof BaseResponseInterface> {
   avatarUrl: File & { preview: string };

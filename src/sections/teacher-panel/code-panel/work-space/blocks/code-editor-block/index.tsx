@@ -7,7 +7,7 @@ import { RealTimeCodeEditor } from "src/components/real-time-code-editor";
 import { BaseResponseInterface } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { ILessonContentValidation } from "src/redux/services/interfaces/lessonContentValidation.interface";
-import { mapValidations } from "src/utils/validationMaping";
+import { mapValidations } from "src/lib/utils/validationMaping";
 
 import BaseBlock from "../BaseBlock";
 import Checkers from "./code-checkers";

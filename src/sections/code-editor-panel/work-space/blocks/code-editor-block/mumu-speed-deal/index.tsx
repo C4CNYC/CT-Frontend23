@@ -12,10 +12,10 @@ import {
 
 import SolutionMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/solution-mobile-dialog";
 import UnstuckMobileDialog from "@sections/code-editor-panel/top-bar/nav-bar/options/help-popup/options/unstack-dialogs/UnstuckMobileDialog";
-import { useCodePanel } from "src/hooks/useCodePanel";
+import { useCodePanel } from "src/lib/hooks/useCodePanel";
 import { useGetLessonStudentQuery } from "src/redux/services/manager/lesson-student";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import TipsPopover from "../tips-popover";
 import { IActionDialogType, actions, actionsTips } from "./config";
