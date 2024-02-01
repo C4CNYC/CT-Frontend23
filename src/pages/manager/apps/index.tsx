@@ -21,13 +21,13 @@ import { Container, Stack } from "@mui/system";
 import {
   CustomBreadcrumbs,
   Iconify,
-  ModalIntegration,
   Scrollbar,
   TableNoData,
   TablePaginationCustom,
   useSettingsContext,
   useTable,
 } from "@components";
+import {ModalIntegration} from "src/components/modal-integration"
 import { useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";

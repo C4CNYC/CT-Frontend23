@@ -67,7 +67,7 @@ export const CodeEditor = ({
           lintKeymap: true,
         }),
         lineWrap.of(EditorView.lineWrapping),
-        html(),
+        // html(),
         ...(socket && state && cursorId && roomId
         ? [
           peerExtension(socket, state.version ?? 0, cursorId, roomId),

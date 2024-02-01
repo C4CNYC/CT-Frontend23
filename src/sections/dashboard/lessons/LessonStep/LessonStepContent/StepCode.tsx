@@ -69,7 +69,7 @@ export default function StepCode({
           theme={dracula}
           height="calc(100vh - 96px)"
           // extensions={[loadLanguage("html")]}
-          extensions={[html()]}
+          // extensions={[html()]}
           onChange={(value) => {
             setValue(value);
           }}

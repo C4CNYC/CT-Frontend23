@@ -2,7 +2,6 @@ export * from "./addAlpha";
 export * from "./axios";
 export * from "./baseRequest.interface";
 export * from "./baseResponse.interface";
-export * from "./chatgptTutor";
 export * from "./convertDuration";
 export * from "./convertNumber";
 export * from "./countTakingElments";

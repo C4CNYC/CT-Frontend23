@@ -24,7 +24,7 @@ import { html } from "@codemirror/lang-html"
 import { css } from "@codemirror/lang-css"
 import { javascript } from "@codemirror/lang-javascript"
 
-const langs = {
+const langs: Record<string, any> = {
   html,
   css,
   javascript,
@@ -252,9 +252,7 @@ export default function CreateCodeDialog({
               theme={theme === "dracula" ? dracula : xcodeLight}
               value={codeValue}
               height="80vh"
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-expect-error
-              extensions={[loadLanguage(lang)]}
+              extensions={[langs[lang]]}
               onChange={(value) => {
                 onChange(value);
               }}

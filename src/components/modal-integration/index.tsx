@@ -2,32 +2,20 @@ import React, { useState } from "react";
 
 import { javascript } from "@codemirror/lang-javascript";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { LoadingButton } from "@mui/lab";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from "@mui/material";
+import { Box } from "@mui/system";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 
-import { LoadingButton } from "@mui/lab";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Stack,
-} from "@mui/material";
-import { Box } from "@mui/system";
-
-import {
-  FormProvider,
-  ModalCodeFullscreen,
-  RHFCode,
-  RHFTextField,
-} from "@components";
+import { FormProvider, RHFCode, RHFTextField } from "@components";
+import { ModalCodeFullscreen } from "src/components/modal-code-fullscreen";
+import { useTranslate } from "src/lib/utils/translateHelper";
 import {
   useCreateIntegrationMutation,
   useEditIntegrationMutation,
 } from "src/redux/services/manager/integration-manager";
-import { useTranslate } from "src/lib/utils/translateHelper";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Tenant name is required"),
@@ -64,10 +52,8 @@ export function ModalIntegration({
   const handleClose = (): void => {
     setOpen(false);
   };
-  const [createIntegration, { isLoading: creatLoading }] =
-    useCreateIntegrationMutation();
-  const [updateIntegration, { isLoading: updateLoading }] =
-    useEditIntegrationMutation();
+  const [createIntegration, { isLoading: creatLoading }] = useCreateIntegrationMutation();
+  const [updateIntegration, { isLoading: updateLoading }] = useEditIntegrationMutation();
   const translate = useTranslate();
 
   const methods = useForm<IntegrationForm>({
@@ -79,11 +65,7 @@ export function ModalIntegration({
 
   const onSubmit = async (data: IntegrationForm): Promise<void> => {
     try {
-      enqueueSnackbar(
-        id
-          ? translate("integrations_updated_msg")
-          : translate("integrations_created_msg")
-      );
+      enqueueSnackbar(id ? translate("integrations_updated_msg") : translate("integrations_created_msg"));
     } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
@@ -107,9 +89,7 @@ export function ModalIntegration({
     <>
       <div onClick={handleOpen}>{children}</div>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle sx={{ pb: 2 }}>
-          {translate("integrations_create_int")}
-        </DialogTitle>
+        <DialogTitle sx={{ pb: 2 }}>{translate("integrations_create_int")}</DialogTitle>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             {isEdit ? (
@@ -118,10 +98,7 @@ export function ModalIntegration({
                   <RHFTextField placeholder={translate("name")} name="name" />
                 </Box>
                 <Box>
-                  <ModalCodeFullscreen
-                    title={translate("integrations_head_links_plh")}
-                    name="head"
-                  />
+                  <ModalCodeFullscreen title={translate("integrations_head_links_plh")} name="head" />
                   <RHFCode
                     placeholder={translate("integrations_head_links_plh")}
                     name="head"
@@ -130,10 +107,7 @@ export function ModalIntegration({
                   />
                 </Box>
                 <Box>
-                  <ModalCodeFullscreen
-                    title={translate("integrations_body_links_plh")}
-                    name="scripts"
-                  />
+                  <ModalCodeFullscreen title={translate("integrations_body_links_plh")} name="scripts" />
                   <RHFCode
                     placeholder={translate("integrations_body_links_plh")}
                     name="scripts"
@@ -148,10 +122,7 @@ export function ModalIntegration({
                   <RHFTextField placeholder={translate("name")} name="name" />
                 </Box>
                 <Box>
-                  <ModalCodeFullscreen
-                    title={translate("integrations_head_links_plh")}
-                    name="head"
-                  />
+                  <ModalCodeFullscreen title={translate("integrations_head_links_plh")} name="head" />
                   <RHFCode
                     placeholder={translate("integrations_head_links_plh")}
                     name="head"
@@ -160,10 +131,7 @@ export function ModalIntegration({
                   />
                 </Box>
                 <Box>
-                  <ModalCodeFullscreen
-                    title={translate("integrations_body_links_plh")}
-                    name="scripts"
-                  />
+                  <ModalCodeFullscreen title={translate("integrations_body_links_plh")} name="scripts" />
                   <RHFCode
                     placeholder={translate("integrations_body_links_plh")}
                     name="scripts"
@@ -178,12 +146,7 @@ export function ModalIntegration({
             <Button variant="outlined" color="inherit" onClick={onCancel}>
               {translate("actions_cancel")}
             </Button>
-            <LoadingButton
-              loading={creatLoading || updateLoading}
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
+            <LoadingButton loading={creatLoading || updateLoading} variant="contained" color="primary" type="submit">
               {translate("actions_save")}
             </LoadingButton>
           </DialogActions>

@@ -14,7 +14,7 @@ import { voidFunction } from "src/lib/utils/voidFunction";
 //
 import { defaultSettings } from "./config-setting";
 import { defaultPreset, getPresets, presetsOption } from "./presets";
-import {
+import type {
   SettingsContextProps,
   ThemeColorPresetsValue,
   ThemeContrastValue,
