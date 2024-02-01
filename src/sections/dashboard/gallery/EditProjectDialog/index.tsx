@@ -76,7 +76,7 @@ export default function EditProjectDialog({
         ...data,
       }).unwrap();
       enqueueSnackbar("Updated successfully");
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

@@ -56,7 +56,7 @@ export default function JoinClass(): React.ReactElement {
       if (status === "joined") {
         push(STUDENT_PATH_DASHBOARD.class.id(tribe.id));
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

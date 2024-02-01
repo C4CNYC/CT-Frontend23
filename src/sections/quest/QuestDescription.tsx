@@ -18,7 +18,7 @@ export default function QuestDescription({ description }: Props) {
       new BoldExtension(),
       new ItalicExtension(),
       new UnderlineExtension(),
-    ],
+    ] as any,
     stringHandler: "html",
   });
   const theme = useTheme();

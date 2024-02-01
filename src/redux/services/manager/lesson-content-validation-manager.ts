@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 import { managerApi } from ".";
 import { ILessonContent } from "../interfaces/courseUnits.interface";

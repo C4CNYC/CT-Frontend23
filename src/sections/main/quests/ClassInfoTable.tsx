@@ -25,7 +25,7 @@ import { useTheme } from "@mui/system";
 
 import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { useAuthContext } from "src/auth/useAuthContext";
 import CustomTabPanel, {

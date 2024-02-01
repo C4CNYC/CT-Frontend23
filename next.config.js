@@ -19,6 +19,9 @@ const nextConfig = {
     // !! WARN !!
     // ignoreBuildErrors: true,
   },
+  experimental: {
+    fallbackNodePolyfills: false
+  }
   // see https://github.com/react-icons/react-icons/issues/786
   // modularizeImports: {
   //   "react-icons/?(((\\w*)?/?)*)": {

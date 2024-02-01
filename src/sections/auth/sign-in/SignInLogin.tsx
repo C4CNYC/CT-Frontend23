@@ -42,7 +42,7 @@ export default function SignInLogin({
       try {
         await loginWithGoogle(token);
         router.push(STUDENT_PATH_AFTER_LOGIN);
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
       }
       setIsLoading(false);

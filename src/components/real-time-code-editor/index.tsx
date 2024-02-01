@@ -44,7 +44,7 @@ export const RealTimeCodeEditor = ({
         version,
         doc: doc.toString(),
       }));
-    } catch (e) {
+    } catch (e: any) {
       // If no data is returned, set up data for offline editing
       setState((prev) => ({
         ...prev,

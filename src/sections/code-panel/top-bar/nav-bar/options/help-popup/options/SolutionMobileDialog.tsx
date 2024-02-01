@@ -71,7 +71,6 @@ export default function SolutionMobileDialog({
             text={solutionCode || "NO SOLUTION"}
             language="html"
             theme={dracula}
-            wrapLines
             customStyle={{
               height: "100%",
               width: "100%",

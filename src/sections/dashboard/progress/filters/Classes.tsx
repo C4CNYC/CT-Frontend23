@@ -12,7 +12,7 @@ import {
 import { Stack } from "@mui/system";
 
 import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";

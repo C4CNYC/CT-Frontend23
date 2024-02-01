@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { LoadingButton } from "@mui/lab";
 import { Box, Button, Stack, Typography } from "@mui/material";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import {
   useCreateLessonContentMutation,

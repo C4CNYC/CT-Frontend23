@@ -230,7 +230,7 @@ export default function AsssignmentsListPage() {
         assignmentId,
       }).unwrap();
       enqueueSnackbar(translate("assignments_delete_msg"));
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

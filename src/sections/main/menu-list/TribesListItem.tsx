@@ -12,7 +12,7 @@ import {
 
 import { useSettingsContext } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 
 import {

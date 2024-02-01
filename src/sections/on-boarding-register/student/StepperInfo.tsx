@@ -45,7 +45,7 @@ export default function StepperInfo(): React.ReactElement {
       }).unwrap();
 
       reload();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

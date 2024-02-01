@@ -6,7 +6,7 @@ import Stack from "@mui/system/Stack";
 
 import { SetFilterType, useFilters } from "@hooks";
 import SkeletonFilter from "@sections/dashboard/skeleton/skeletonFilter";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import {
   ICourse,
   ICourseSearchParams,

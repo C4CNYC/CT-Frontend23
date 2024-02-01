@@ -85,7 +85,7 @@ export default function SkillsAutocomplete({
             );
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.data.message, { variant: "error" });
       }
     }

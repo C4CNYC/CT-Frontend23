@@ -102,7 +102,7 @@ export default function ProfileInfoForm({
         updateStudentAvatar({ file }).unwrap();
       }
       enqueueSnackbar(translate("messages_update_success"));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

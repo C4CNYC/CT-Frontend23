@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 
 import { baseQueryWrapper } from "../helpers/base_query_wrapper";

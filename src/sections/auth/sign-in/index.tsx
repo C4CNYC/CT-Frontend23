@@ -44,7 +44,7 @@ export default function SignInMain(): React.ReactElement {
     try {
       await login(data.email, data.password, "codetribe");
       replace(STUDENT_PATH_AFTER_LOGIN);
-    } catch (e) {
+    } catch (e: any) {
       setError(e.message);
     }
   };

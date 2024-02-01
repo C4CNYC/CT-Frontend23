@@ -59,7 +59,7 @@ export default function EmailAddressModal({
       await inviteStudent({ schoolId, email, class_id: classId }).unwrap();
       enqueueSnackbar(translate("messages_student_invited"));
       methods.reset({ email: "" });
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

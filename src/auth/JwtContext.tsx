@@ -1,23 +1,14 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
+import { createContext, useCallback, useEffect, useMemo, useReducer } from "react";
 
 import { useDispatch } from "react-redux";
 
-import { axios, localStorageAvailable, voidFunction } from "@utils";
+import { axios } from "src/lib/utils/axios";
+import { localStorageAvailable } from "src/lib/utils/localStorageAvailable";
+import { voidFunction } from "src/lib/utils/voidFunction";
 import { Role } from "src/redux/services/enums/role.enum";
 import { cleanUser, cleanUserRole, setUser } from "src/redux/slices/global";
 
-import {
-  ActionMapType,
-  AuthStateType,
-  AuthUserType,
-  JWTContextType,
-} from "./types";
+import { ActionMapType, AuthStateType, AuthUserType, JWTContextType } from "./types";
 import { isValidToken, setSession } from "./utils";
 
 // ----------------------------------------------------------------------
@@ -109,18 +100,14 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-export function AuthProvider({
-  children,
-}: AuthProviderProps): React.ReactElement | null {
+export function AuthProvider({ children }: AuthProviderProps): React.ReactElement | null {
   const [state, dispatch] = useReducer(reducer, initialState);
   const reduxDispatch = useDispatch();
   const storageAvailable = localStorageAvailable();
 
   const initialize = useCallback(async () => {
     try {
-      const accessToken = storageAvailable
-        ? localStorage.getItem("accessToken")
-        : "";
+      const accessToken = storageAvailable ? localStorage.getItem("accessToken") : "";
 
       const tenantName = localStorage.getItem("tenantName") ?? "codetribe";
       const isManagerRoute = window.location.pathname.includes("manager/");
@@ -176,34 +163,28 @@ export function AuthProvider({
   };
 
   // LOGIN
-  const login = useCallback(
-    async (email: string, password: string, tenantName: string) => {
-      try {
-        localStorage.setItem("tenantName", tenantName);
-        const { data } = await axios.post<any, any>("auth/signin", {
-          email,
-          password,
-        });
+  const login = useCallback(async (email: string, password: string, tenantName: string) => {
+    try {
+      localStorage.setItem("tenantName", tenantName);
+      const { data } = await axios.post<any, any>("auth/signin", {
+        email,
+        password,
+      });
 
-        const { access_token: accessToken, user } = data;
-        reduxDispatch(setUser(user));
-        setSession(
-          accessToken,
-          localStorage.getItem("tenantName") ?? "codetribe"
-        );
+      const { access_token: accessToken, user } = data;
+      reduxDispatch(setUser(user));
+      setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
 
-        dispatch({
-          type: Types.LOGIN,
-          payload: {
-            user,
-          },
-        });
-      } catch (error) {
-        throw new Error(error.message);
-      }
-    },
-    []
-  );
+      dispatch({
+        type: Types.LOGIN,
+        payload: {
+          user,
+        },
+      });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }, []);
 
   // LOGIN WITH GOOGLE
   const loginWithGoogle = async (token: string) => {
@@ -228,15 +209,12 @@ export function AuthProvider({
     try {
       const { data } = await axios.post<any, any>("auth/google-signup", {
         auth_token: token,
-        role
+        role,
       });
 
       const { access_token: accessToken, user } = data;
       reduxDispatch(setUser(user));
-      setSession(
-        accessToken,
-        localStorage.getItem("tenantName") ?? "codetribe"
-      );
+      setSession(accessToken, localStorage.getItem("tenantName") ?? "codetribe");
 
       dispatch({
         type: Types.REGISTER,
@@ -244,7 +222,7 @@ export function AuthProvider({
           user,
         },
       });
-    } catch (error) {
+    } catch (error: any) {
       throw new Error(error.message);
     }
   };
@@ -299,12 +277,7 @@ export function AuthProvider({
   );
 
   const registerToOrganization = useCallback(
-    async (
-      email: string,
-      password: string,
-      firstName: string,
-      lastName: string
-    ) => {
+    async (email: string, password: string, firstName: string, lastName: string) => {
       const { data } = await axios.post("/auth/signup", {
         email,
         password,
@@ -365,9 +338,5 @@ export function AuthProvider({
     ]
   );
 
-  return (
-    <AuthContext.Provider value={memoizedValue}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;
 }

@@ -21,20 +21,7 @@ import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
 import { ILessonUserStatus } from "src/types";
 import { useSelector } from "../../../redux/store"
-import { unsubscribeSocket } from "../../../components/code-editor-collab/hook/utils/socket"
-
-// dec2hex :: Integer -> String
-// i.e. 0-255 -> '00'-'ff'
-function dec2hex (dec: number) {
-  return dec.toString(16).padStart(2, "0")
-}
-
-// generateId :: Integer -> String
-function generateId (len: number) {
-  const arr = new Uint8Array((len || 40) / 2)
-  window.crypto.getRandomValues(arr)
-  return Array.from(arr, dec2hex).join("")
-}
+import generateId from "../../../lib/utils/generate-id"
 
 interface LessonUserResponseType {
   id: string;

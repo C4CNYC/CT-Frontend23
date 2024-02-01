@@ -9,7 +9,7 @@ import { palette } from "@theme/palette";
 import { primaryFont } from "@theme/typography";
 
 // utils
-import { createEmotionCache } from "@utils";
+import { createEmotionCache } from "src/lib/utils/createEmotionCache";
 
 // ----------------------------------------------------------------------
 

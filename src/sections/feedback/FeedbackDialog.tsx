@@ -61,7 +61,7 @@ export default function FeedbackDialog({
         ...formValues,
         feedback: "",
       }));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

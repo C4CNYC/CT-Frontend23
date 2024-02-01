@@ -67,7 +67,7 @@ async function pullUpdates(
         }
         try {
           resolve(JSON.parse(updates));
-        } catch (e) {
+        } catch (e: any) {
           reject(new Error("No permission to access this document"));
         }
       });
@@ -200,7 +200,7 @@ export const peerExtension = (
           if (sendableUpdates(this.view.state).length) {
             await this.push();
           }
-        } catch (e) {
+        } catch (e: any) {
           // The push failed - we don't try again. It will automatically push again when the connection is restored
           this.pushing = false;
         }
@@ -217,7 +217,7 @@ export const peerExtension = (
           if (sendableUpdates(this.view.state).length) {
             await this.push();
           }
-        } catch (e) {
+        } catch (e: any) {
           // The pull failed - we don't try again. It will automatically pull again when the connection is restored
         }
       }

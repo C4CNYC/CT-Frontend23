@@ -1,6 +1,6 @@
 import { useMediaQuery, useTheme } from "@mui/material";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ILesson } from "src/redux/interfaces/content.interface";
 
 import RoadItem from "./RoadItem";

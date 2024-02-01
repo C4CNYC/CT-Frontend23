@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useUpdateClassMutation } from "src/redux/services/admin/school-amdin";
 import { useUpdateClassesAvatarMutation } from "src/redux/services/manager/classes-manager";

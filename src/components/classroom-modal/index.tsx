@@ -68,7 +68,7 @@ export default function ClassroomModal({
       }).unwrap();
       enqueueSnackbar(translate("messages_migrate"));
       setOpen(false);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

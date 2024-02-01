@@ -3,7 +3,7 @@ import { FaSchool } from "@react-icons/all-files/fa/FaSchool";
 import { Avatar, Stack, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 import { useTranslate } from "src/lib/utils/translateHelper";

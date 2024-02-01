@@ -97,7 +97,6 @@ const CodeContent: FC = () => {
         text={solutionCode || translate("not_available_for_this_step")}
         language="html"
         theme={dracula}
-        wrapLines
         customStyle={CODE_BLOCK_CUSTOM_STYLES}
       />
     </DialogContent>

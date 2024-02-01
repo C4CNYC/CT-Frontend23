@@ -10,7 +10,7 @@ import {
 } from "@mui/material/styles";
 
 // components
-import { useSettingsContext } from "@components";
+import { useSettingsContext } from "src/components/settings";
 
 //
 import { customShadows } from "./customShadows";

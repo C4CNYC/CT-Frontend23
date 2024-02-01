@@ -61,7 +61,7 @@ export default function JoinTribeLogin({
         `${STUDENT_PATH_DASHBOARD.class.id(classId)}?` +
           `${new URLSearchParams({ joinCode: query.id as string })}`
       );
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

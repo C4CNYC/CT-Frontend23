@@ -25,7 +25,7 @@ import {
   MenuPopover,
   RoleSelector,
 } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
 import { useTranslate } from "src/lib/utils/translateHelper";

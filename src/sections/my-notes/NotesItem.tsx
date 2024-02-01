@@ -32,7 +32,7 @@ export default function NotesItem({ note }: INotesItemProps) {
     try {
       await deleteNote({ id: note.id as string }).unwrap();
       enqueueSnackbar(translate("messages_deleted"));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

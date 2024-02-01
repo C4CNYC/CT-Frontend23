@@ -103,7 +103,6 @@ const CodeContent = (): React.ReactElement => {
         text={solutionCode || "Not available for this step."}
         language="html"
         theme={dracula}
-        wrapLines
         customStyle={{
           textAlign: "left",
           height: "250px",

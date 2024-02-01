@@ -84,7 +84,7 @@ export default function AddSchool(): React.ReactElement {
       }).unwrap();
       localStorage.setItem("ON-BOARDING", "on-boarding");
       reload();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

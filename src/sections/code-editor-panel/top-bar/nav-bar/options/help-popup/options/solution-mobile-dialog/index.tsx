@@ -64,7 +64,6 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
             text={solutionCode || translate(NO_SOLUTION_TEXT)}
             language="html"
             theme={dracula}
-            wrapLines
             customStyle={COPY_BLOCK_CUSTOM_STYLES}
           />
         </DialogContent>

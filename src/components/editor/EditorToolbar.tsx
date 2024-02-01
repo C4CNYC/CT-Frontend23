@@ -30,7 +30,7 @@ import {
 } from "./toolbars";
 import EmojiPickerBtn from "./toolbars/EmojiPicker";
 import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import MenuItems from "./MenuItems";
 
 interface Props {

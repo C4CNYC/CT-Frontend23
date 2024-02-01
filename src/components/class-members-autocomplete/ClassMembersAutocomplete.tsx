@@ -20,7 +20,7 @@ import {
 
 import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useGetStudentsQuery,

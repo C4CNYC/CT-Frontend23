@@ -13,7 +13,7 @@ import TextField from "@mui/material/TextField";
 
 import { Iconify } from "src/components/iconify";
 import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import {
   ClassSearchParams,
   IClass,

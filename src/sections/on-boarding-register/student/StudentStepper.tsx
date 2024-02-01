@@ -68,7 +68,7 @@ export default function StudentStepper(): React.ReactElement {
         role: Role.Student,
         emojiAvatar: randomEmoji,
       });
-    } catch (error) {
+    } catch (error: any) {
       methods.setError("root", {
         ...error,
         message: error.message,

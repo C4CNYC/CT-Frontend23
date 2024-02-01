@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IUser } from "src/redux/services/interfaces/user.interface";
 
 // ----------------------------------------------------------------------

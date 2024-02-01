@@ -23,7 +23,6 @@ export * from "./loader-deley";
 export * from "./loading-screen";
 export * from "./logo";
 export * from "./logoSmall";
-export * from "./markdown";
 export * from "./menu-popover";
 export * from "./modal-code-fullscreen";
 export * from "./progress-bar";

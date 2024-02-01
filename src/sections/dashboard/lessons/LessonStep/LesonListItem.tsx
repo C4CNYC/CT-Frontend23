@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 
 import { Iconify, MenuPopover } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { useTranslate } from "src/lib/utils/translateHelper";

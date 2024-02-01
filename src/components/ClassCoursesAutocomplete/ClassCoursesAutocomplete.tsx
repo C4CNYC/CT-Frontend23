@@ -19,7 +19,7 @@ import {
 import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
 import { ICourse } from "src/types";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import {
   useAddCourseToClassMutation,
   useRemoveCourseFromClassMutation,

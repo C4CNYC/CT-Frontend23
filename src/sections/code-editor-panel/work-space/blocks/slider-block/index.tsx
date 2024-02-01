@@ -17,7 +17,7 @@ import Carousel from "react-slick";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import { EmptyContent, LoadingScreen } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/interfaces/content.interface";
 import { IIntegration } from "src/redux/interfaces/integration.interface";

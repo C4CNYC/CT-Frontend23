@@ -135,7 +135,7 @@ export default function CreateLessonDialog({
         }).unwrap();
         enqueueSnackbar(translate("messages_tip_deleted"));
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

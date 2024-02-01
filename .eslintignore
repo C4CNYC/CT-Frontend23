@@ -1,2 +1,7 @@
 next-env.d.ts
 **/*.stories.tsx
+.next
+dist
+node_modules/
+_ref/*
+**/_ref/*

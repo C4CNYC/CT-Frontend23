@@ -71,7 +71,7 @@ export default function LinkItem({
       }).unwrap();
       enqueueSnackbar(translate("networks_tab_edited_msg"));
       setEdit(!edit);
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",
@@ -85,7 +85,7 @@ export default function LinkItem({
         studentId,
       }).unwrap();
       enqueueSnackbar(translate("networks_tab_deleted_msg"));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

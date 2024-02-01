@@ -21,7 +21,7 @@ import { MenuPopover, useSettingsContext, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ClassPreferences from "@sections/dashboard/classes/modal";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";

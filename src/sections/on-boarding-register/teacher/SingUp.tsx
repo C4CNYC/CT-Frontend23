@@ -52,7 +52,7 @@ export default function SingUp({
         } else {
           goToStep(2);
         }
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
       }
       setIsLoading(false);

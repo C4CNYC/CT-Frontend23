@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 import { RHFSelect, RHFTextField } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { RHFRemirror } from "src/components/hook-form/RHFRemirror";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";

@@ -83,7 +83,7 @@ export default function AssignmentDrawer({
       }).unwrap();
       enqueueSnackbar(translate("assignments_updated_msg"));
       onCloseDetails();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

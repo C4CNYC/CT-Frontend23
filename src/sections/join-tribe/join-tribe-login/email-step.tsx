@@ -31,7 +31,7 @@ export default function EmailStep({
     onSuccess: async ({ access_token: token }) => {
       try {
         loginWithGoogle(token);
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
       }
     },

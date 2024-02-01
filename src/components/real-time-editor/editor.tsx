@@ -4,14 +4,15 @@ import { indentUnit } from "@codemirror/language";
 import { Compartment, EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
-import { langs } from "@uiw/codemirror-extensions-langs";
+// import { langs } from "@uiw/codemirror-extensions-langs";
 import type { Socket } from "socket.io-client";
-import { dracula } from "thememirror";
+import { dracula } from "@uiw/codemirror-theme-dracula";
 
 import { State } from ".";
 import { initListeners, removeListeners } from "./listeners";
 import { peerExtension } from "../../lib/codemirror/extensions/collab";
 import { cursorExtension } from "../../lib/codemirror/extensions/cursors";
+import { html } from "@codemirror/lang-html"
 
 interface IEditor {
   roomId?: string;
@@ -66,7 +67,7 @@ export const CodeEditor = ({
           lintKeymap: true,
         }),
         lineWrap.of(EditorView.lineWrapping),
-        langs.html(),
+        html(),
         ...(socket && state && cursorId && roomId
         ? [
           peerExtension(socket, state.version ?? 0, cursorId, roomId),

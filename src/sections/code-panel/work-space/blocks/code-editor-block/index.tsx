@@ -7,7 +7,7 @@ import { Box, Collapse, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import CodeEditorCollab from "src/components/code-editor-collab";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { AuthUserType } from "src/auth/types";
 import { CodeEditor } from "src/components/real-time-editor/editor";
 import { IValidation } from "src/redux/interfaces/content.interface";

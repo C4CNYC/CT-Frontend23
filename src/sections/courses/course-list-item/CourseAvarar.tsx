@@ -42,7 +42,7 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
         setLiked(true);
         enqueueSnackbar("Liked!");
       }
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError?.data?.message, {
         variant: "error",
@@ -54,7 +54,7 @@ export default function CourseAvatar({ course }: Props): React.ReactElement {
     try {
       updateRating({ id: course.id, rating }).unwrap();
       enqueueSnackbar("You rated course!");
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError?.data?.message, {
         variant: "error",

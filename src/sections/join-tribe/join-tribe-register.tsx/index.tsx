@@ -67,7 +67,7 @@ export default function JoinTribeRegister({
       });
       await login(data.email, data.password, "codetribe");
       enqueueSnackbar(translate("register_successfully"));
-    } catch (error) {
+    } catch (error: any) {
       methods.setError("root", {
         ...error,
         message: error.message,

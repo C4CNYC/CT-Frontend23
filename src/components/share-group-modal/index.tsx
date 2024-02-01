@@ -23,7 +23,7 @@ import { Stack } from "@mui/system";
 
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
@@ -97,7 +97,7 @@ export default function ShareGroupModal({
         request_join_enable: (e.target as HTMLInputElement).value === "true",
       }).unwrap();
       enqueueSnackbar(translate("messages_changes_updated"));
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

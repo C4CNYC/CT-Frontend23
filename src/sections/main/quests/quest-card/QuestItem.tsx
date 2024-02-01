@@ -58,7 +58,7 @@ export default function QuestItem({
       await pinAssignment({ assignmentId: assignment.id }).unwrap();
       // await unpinAssignment({assignmentId: assignment.id}).unwrap();
       enqueueSnackbar(translate("home_assignment_pined"));
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };
@@ -70,7 +70,7 @@ export default function QuestItem({
         assignmentId: assignment.id,
       }).unwrap();
       enqueueSnackbar(translate("home_assignment_deleted"));
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
     handleCloseConfirm();

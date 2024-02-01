@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { langs, loadLanguage } from "@uiw/codemirror-extensions-langs";
+// import { langs, loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { xcodeLight } from "@uiw/codemirror-theme-xcode";
 import CodeMirror from "@uiw/react-codemirror";
@@ -20,6 +20,15 @@ import {
 } from "src/redux/services/manager/tasks-manager";
 
 import TasksInput from "./TasksInput";
+import { html } from "@codemirror/lang-html"
+import { css } from "@codemirror/lang-css"
+import { javascript } from "@codemirror/lang-javascript"
+
+const langs = {
+  html,
+  css,
+  javascript,
+}
 
 interface Prop {
   children: React.ReactElement;
@@ -227,7 +236,7 @@ export default function CreateCodeDialog({
                   value={lang}
                   size="small"
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    handleLangChange(event);
+                    handleLangChange(event)
                   }}
                 >
                   {Object.values(langs).map((lang, index) => (

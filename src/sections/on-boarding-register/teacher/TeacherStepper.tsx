@@ -65,7 +65,7 @@ export default function TeacherStepper(): React.ReactElement {
         lastName: data.lastName,
         role: Role.Manager,
       });
-    } catch (error) {
+    } catch (error: any) {
       methods.setError("root", {
         ...error,
         message: error.message,

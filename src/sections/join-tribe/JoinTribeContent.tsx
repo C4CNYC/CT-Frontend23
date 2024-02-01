@@ -41,7 +41,7 @@ export default function JoinTribeContent({
         setIsPending(true);
         cleanJoinTribeStorage();
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

@@ -166,7 +166,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
         classId: query.id as string,
         student_id: studentId,
       }).unwrap();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

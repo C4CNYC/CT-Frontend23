@@ -13,6 +13,7 @@ import { Button, Grow, MenuItem, MenuList, Paper, Popper } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
 import { addComment } from "./comments";
+import generateId from "../../../../../lib/utils/generate-id"
 
 interface ContextMenu {
   position: ContextMenuPosition;
@@ -233,7 +234,7 @@ export const contextMenuExtension = ({
               view.dispatch({
                 effects: addComment.of({
                   type: "add-comment",
-                  id: window.crypto.randomUUID(),
+                  id: generateId(20),
                   from: s?.from ?? 0,
                   to: s?.to ?? 0,
                   content:

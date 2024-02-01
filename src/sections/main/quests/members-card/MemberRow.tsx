@@ -61,7 +61,7 @@ export default function MemberRow({
         student_id: row.id as string,
       }).unwrap();
       enqueueSnackbar(translate("members_approved_msg"));
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

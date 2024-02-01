@@ -130,7 +130,7 @@ export default function Preferences({
       }).unwrap();
       enqueueSnackbar(translate("step_updated"));
       setOpenDialog(false);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

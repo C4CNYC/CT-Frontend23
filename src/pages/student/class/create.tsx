@@ -103,7 +103,7 @@ export default function CreateClass(): React.ReactElement {
           push(STUDENT_PATH_DASHBOARD.class.id(classInfo.id));
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };
