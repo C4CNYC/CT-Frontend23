@@ -34,6 +34,7 @@ module.exports = {
       {
         jsxSingleQuote: false,
         singleAttributePerLine: false,
+        semi: false,
       },
       {
         usePrettierrc: true,
@@ -44,7 +45,6 @@ module.exports = {
     "react/no-unescaped-entities": ["off"],
     "react/display-name": ["off"],
 
-    "@typescript-eslint/semi": 0,
     "@typescript-eslint/space-before-function-paren": 0,
     "@typescript-eslint/strict-boolean-expressions": 0,
     "@typescript-eslint/member-delimiter-style": 0,

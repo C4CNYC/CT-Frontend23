@@ -123,7 +123,7 @@ class ContextMenuWidget extends WidgetType {
             </Paper>
           </Grow>
         )}
-      </Popper>
+      </Popper> as any
     );
     return dom;
   }

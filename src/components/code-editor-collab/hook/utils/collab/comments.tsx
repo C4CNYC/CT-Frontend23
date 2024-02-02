@@ -96,7 +96,7 @@ class CommentWidget extends WidgetType {
     dom.setAttribute("data-comment-id", this.comment.id);
     const root = createRoot(dom);
     root.render(
-      <CommentContent comment={this.comment} isExpanded={this.isExpanded} />
+      <CommentContent comment={this.comment} isExpanded={this.isExpanded} /> as any
     );
     return dom;
   }

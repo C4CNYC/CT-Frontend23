@@ -19,7 +19,7 @@ export default function GalleryCodeTab({
       style={{ height: "100%" }}
       height="100%"
       // extensions={[loadLanguage("html")]}
-      // extensions={[html()]}
+      extensions={[html()]}
       onChange={(value) => {
         setCode(value);
       }}

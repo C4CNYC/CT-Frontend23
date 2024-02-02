@@ -58,7 +58,7 @@ export const CodeEditor = ({
         // keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup(),
-        // html(),
+        html(),
         peerExtension(socket, state.version ?? 0, cursorId, roomId),
         cursorExtension(cursorText),
       ],

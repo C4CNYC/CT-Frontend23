@@ -12,6 +12,11 @@ import { Image, MotionContainer, varFade } from "@components";
 import CarouselArrows from "./CarouselArrows";
 import CarouselDots from "./CarouselDots";
 
+interface CarouselItemProps {
+  item: ItemProps;
+  isActive?: boolean;
+}
+
 const StyledOverlay = styled("div")(({ theme }) => ({
   top: 0,
   left: 0,
@@ -22,79 +27,10 @@ const StyledOverlay = styled("div")(({ theme }) => ({
   backgroundColor: alpha(theme.palette.grey[900], 0.64),
 }));
 
-interface ItemProps {
-  id: string;
-  image: string;
-  title: string;
-  description: string;
-}
-
-interface Props extends CardProps {
-  list: ItemProps[];
-}
-
-export function SliderDemoMui({ list, ...other }: Props): React.ReactElement {
-  const theme = useTheme();
-  const [currentIndex, setCurrentIndex] = useState(
-    theme.direction === "rtl" ? list.length - 1 : 0
-  );
-  const carouselRef = useRef<Carousel>(null);
-  const carouselSettings = {
-    speed: 900,
-    dots: true,
-    arrows: false,
-    autoplay: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    rtl: Boolean(theme.direction === "rtl"),
-    beforeChange: (current: number, next: number) => {
-      setCurrentIndex(next);
-    },
-    ...CarouselDots({
-      sx: {
-        bottom: 20,
-        right: 20,
-        position: "absolute",
-      },
-    }),
-  };
-  const handlePrev = (): void => {
-    carouselRef.current?.slickPrev();
-  };
-  const handleNext = (): void => {
-    carouselRef.current?.slickNext();
-  };
-
-  return (
-    <Card {...other}>
-      <Carousel ref={carouselRef} {...carouselSettings}>
-        {list.map((app, index) => (
-          <CarouselItem
-            key={app.id}
-            item={app}
-            isActive={index === currentIndex}
-          />
-        ))}
-      </Carousel>
-
-      <CarouselArrows
-        onNext={handleNext}
-        onPrevious={handlePrev}
-        sx={{ top: 8, right: 8, position: "absolute", color: "common.white" }}
-      />
-    </Card>
-  );
-}
-
-interface CarouselItemProps {
-  item: ItemProps;
-  isActive?: boolean;
-}
-
 function CarouselItem({
   item,
   isActive,
-}: CarouselItemProps): React.ReactElement {
+}: CarouselItemProps) {
   const { image, title, description } = item;
 
   return (
@@ -132,5 +68,71 @@ function CarouselItem({
         }}
       />
     </MotionContainer>
+  );
+}
+
+interface ItemProps {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+}
+
+
+interface Props extends CardProps {
+  list: ItemProps[];
+}
+
+export function SliderDemoMui({ list, ...other }: Props): React.ReactElement {
+  const theme = useTheme();
+  const [currentIndex, setCurrentIndex] = useState(
+    theme.direction === "rtl" ? list.length - 1 : 0
+  );
+  const carouselRef = useRef<Carousel>(null);
+  const carouselSettings = {
+    speed: 900,
+    dots: true,
+    arrows: false,
+    autoplay: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    rtl: Boolean(theme.direction === "rtl"),
+    beforeChange: (current: number, next: number) => {
+      setCurrentIndex(next);
+    },
+    ...CarouselDots({
+      sx: {
+        bottom: 20,
+        right: 20,
+        position: "absolute",
+      },
+    }),
+  };
+  const handlePrev = (): void => {
+    carouselRef.current?.slickPrev();
+  };
+  const handleNext = (): void => {
+    carouselRef.current?.slickNext();
+  };
+
+
+  return (
+    <Card {...other}>
+      <Carousel ref={carouselRef} {...carouselSettings}>
+        {list.map((app, index) => (
+          <CarouselItem
+            key={app.id}
+            item={app}
+            isActive={index === currentIndex}
+          />
+        ))}
+      </Carousel>
+
+      <CarouselArrows
+        onNext={handleNext}
+        onPrevious={handlePrev}
+        sx={{ top: 8, right: 8, position: "absolute", color: "common.white" }}
+      />
+    </Card>
   );
 }
