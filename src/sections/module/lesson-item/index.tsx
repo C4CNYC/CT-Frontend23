@@ -26,7 +26,7 @@ import {
   globalCodePanelAtom,
 } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { ILesson } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import RocketIcon from "../icons/RocketIcon";
 import LessonDialog from "./LessonDialog";

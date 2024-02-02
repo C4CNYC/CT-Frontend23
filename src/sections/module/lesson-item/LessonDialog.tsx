@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   CLOSE_DIALOG_ICON_SX,
