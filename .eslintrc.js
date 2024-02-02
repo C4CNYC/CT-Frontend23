@@ -17,7 +17,7 @@ const IMPORT_ORDER_CONFIG = {
     order: "asc",
     caseInsensitive: true,
   },
-};
+}
 
 module.exports = {
   extends: ["next", "prettier"],
@@ -45,6 +45,8 @@ module.exports = {
     "react/no-unescaped-entities": ["off"],
     "react/display-name": ["off"],
 
+    "no-restricted-imports": ["error", { paths: ["react-code-blocks", "@uiw/codemirror-extensions-langs"] }],
+
     "@typescript-eslint/space-before-function-paren": 0,
     "@typescript-eslint/strict-boolean-expressions": 0,
     "@typescript-eslint/member-delimiter-style": 0,
@@ -62,4 +64,4 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "no-console": ["error", { allow: [""] }],
   },
-};
+}

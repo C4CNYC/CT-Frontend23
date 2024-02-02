@@ -13,7 +13,6 @@ export * from "./flattenArray";
 export * from "./formatNumber";
 export * from "./formatTime";
 export * from "./getLinearGradient";
-export * from "./highlight";
 export * from "./isJson";
 export * from "./localStorageAvailable";
 export * from "./randomGradient";
