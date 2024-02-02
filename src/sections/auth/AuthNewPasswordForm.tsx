@@ -14,7 +14,7 @@ import { IconButton, InputAdornment, Stack } from "@mui/material";
 import { FormProvider, Iconify, RHFTextField, useSnackbar } from "@components";
 // components
 import { useSubmitPasswordMutation } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // routes
 import { PATH_AUTH } from "../../routes/paths";

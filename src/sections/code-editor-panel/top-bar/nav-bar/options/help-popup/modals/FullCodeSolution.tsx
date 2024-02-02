@@ -1,48 +1,33 @@
-import { type FC, useState } from "react";
+import { type FC, useState } from "react"
 
-import { CopyBlock, dracula } from "react-code-blocks";
+// import { CopyBlock, dracula } from "react-code-blocks";
+import { Box, Button, Dialog, DialogActions, DialogContent, Typography } from "@mui/material"
+import { Stack } from "@mui/system"
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Typography,
-} from "@mui/material";
-import { Stack } from "@mui/system";
+import { useTranslate } from "src/lib/utils/translateHelper"
+import { useSelector } from "src/redux/store"
 
-import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
-
-import {
-  BUTTON_STYLES,
-  CODE_BLOCK_CUSTOM_STYLES,
-  DIALOG_ACTIONS_STYLES,
-  DIALOG_CONTENT_STYLES,
-} from "./constants";
+import { BUTTON_STYLES, CODE_BLOCK_CUSTOM_STYLES, DIALOG_ACTIONS_STYLES, DIALOG_CONTENT_STYLES } from "./constants"
 
 interface IFullCodeSolutionModal {
-  children: React.ReactElement;
-  disabled: boolean;
+  children: React.ReactElement
+  disabled: boolean
 }
 
-const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
-  children,
-  disabled,
-}) => {
-  const [open, setOpen] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const translate = useTranslate();
+const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({ children, disabled }) => {
+  const [open, setOpen] = useState(false)
+  const [showContent, setShowContent] = useState(false)
+  const translate = useTranslate()
 
   const handleOpen = (): void => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const handleClose = (): void => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   const handleShowContent = (): void => {
-    setShowContent(true);
-  };
+    setShowContent(true)
+  }
 
   return (
     <>
@@ -79,43 +64,41 @@ const FullCodeSolutionModal: FC<IFullCodeSolutionModal> = ({
         </DialogActions>
       </Dialog>
     </>
-  );
-};
+  )
+}
 
 const CodeContent: FC = () => {
-  const translate = useTranslate();
-  const solutionCode = useSelector(
-    (state) => state.codePanelGlobal.solutionCode
-  );
+  const translate = useTranslate()
+  const solutionCode = useSelector((state) => state.codePanelGlobal.solutionCode)
 
   return (
     <DialogContent sx={DIALOG_CONTENT_STYLES}>
       <Typography mb="30px" variant="h4">
         {translate("solution_code")}
       </Typography>
-      <CopyBlock
-        text={solutionCode || translate("not_available_for_this_step")}
-        language="html"
-        theme={dracula}
-        wrapLines
-        customStyle={CODE_BLOCK_CUSTOM_STYLES}
-      />
+      {/* <CopyBlock */}
+      {/*   text={solutionCode || translate("not_available_for_this_step")} */}
+      {/*   language="html" */}
+      {/*   theme={dracula} */}
+      {/*   customStyle={CODE_BLOCK_CUSTOM_STYLES} */}
+      {/* /> */}
+      <Box component="div" style={CODE_BLOCK_CUSTOM_STYLES as any}>
+        {solutionCode || translate("not_available_for_this_step")}
+      </Box>
     </DialogContent>
-  );
-};
+  )
+}
 
 const QuestionContent: FC = () => {
-  const translate = useTranslate();
+  const translate = useTranslate()
   return (
     <DialogContent sx={DIALOG_CONTENT_STYLES}>
       <Typography mb="30px" variant="h4">
         {translate("full_code_solution")}
       </Typography>
-      <Typography variant="subtitle2">
-        {translate("are_you_sure_see_solution")}
-      </Typography>
+      <Typography variant="subtitle2">{translate("are_you_sure_see_solution")}</Typography>
     </DialogContent>
-  );
-};
+  )
+}
 
-export default FullCodeSolutionModal;
+export default FullCodeSolutionModal

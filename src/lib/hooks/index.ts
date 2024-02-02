@@ -8,7 +8,7 @@ export * from "./useDebouncedEffect";
 export * from "./useDoubleClick";
 export * from "./useEventListener";
 export * from "./useFilters";
-export * from "./useMousePosition";
+export * from "./_ref/useMousePosition";
 export * from "./useOffSetTop";
 export * from "./useResponsive";
 export * from "./useWindowDimension";

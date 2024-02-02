@@ -3,7 +3,7 @@
 function path(root: string, sublink: string): string {
   return `${root}${sublink}`;
 }
-export const STUDENT_ROOTS_MAIN = "/main";
+export const STUDENT_ROOTS_MAIN = "/";
 
 // ----------------------------------------------------------------------
 

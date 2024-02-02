@@ -7,7 +7,7 @@ import { Button, Typography } from "@mui/material";
 
 import { MotionContainer, varBounce } from "src/components/animate";
 import TeacherSkeletonPanel from "@sections/teacher-panel/code-panel/teacher-skeleton-panel/TeacherSkeletonPanel";
-import { PageNotFoundIllustration } from "src/assets/illustrations";
+import PageNotFoundIllustration from "src/assets/illustrations/PageNotFoundIllustration";
 import { useGetMySchoolsQuery } from "src/redux/services/manager/schools-manager";
 import { setSchool } from "src/redux/slices/manager";
 import { RootState, dispatch, useSelector } from "src/redux/store";

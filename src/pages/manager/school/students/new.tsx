@@ -11,7 +11,7 @@ import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 // sections
 import { SchoolDashboardLayout } from "src/layouts/dashboard/SchoolDashboardLayout";
 import StudentNewEditForm from "src/sections/dashboard/student/StudentNewEditForm";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

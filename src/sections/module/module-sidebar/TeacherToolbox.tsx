@@ -8,7 +8,7 @@ import { Link, Paper, Stack, useTheme } from "@mui/material";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export default function TeacherToolbox({
   teacherForum,

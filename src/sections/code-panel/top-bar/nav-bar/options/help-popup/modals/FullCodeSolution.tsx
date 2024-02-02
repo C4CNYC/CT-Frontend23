@@ -1,15 +1,16 @@
 import { useState } from "react";
 
 import { useAtom } from "jotai";
-import { CopyBlock, dracula } from "react-code-blocks";
+// import { CopyBlock, dracula } from "react-code-blocks";
 
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   Typography,
-} from "@mui/material";
+} from "@mui/material"
 import { Stack } from "@mui/system";
 
 import { globalCodePanelAtom } from "@sections/code-panel/atoms/global-code-panel.atom";
@@ -99,20 +100,29 @@ const CodeContent = (): React.ReactElement => {
       <Typography mb="30px" variant="h4">
         SOLUTION CODE
       </Typography>
-      <CopyBlock
-        text={solutionCode || "Not available for this step."}
-        language="html"
-        theme={dracula}
-        wrapLines
-        customStyle={{
-          textAlign: "left",
-          height: "250px",
-          overflowY: "scroll",
-          borderRadius: "0",
-          boxShadow: "none",
-          fontSize: "0.75rem",
-        }}
-      />
+      {/* <CopyBlock */}
+      {/*   text={solutionCode || "Not available for this step."} */}
+      {/*   language="html" */}
+      {/*   theme={dracula} */}
+      {/*   customStyle={{ */}
+      {/*     textAlign: "left", */}
+      {/*     height: "250px", */}
+      {/*     overflowY: "scroll", */}
+      {/*     borderRadius: "0", */}
+      {/*     boxShadow: "none", */}
+      {/*     fontSize: "0.75rem", */}
+      {/*   }} */}
+      {/* /> */}
+      <Box component="div" style={{
+        textAlign: "left",
+        height: "250px",
+        overflowY: "scroll",
+        borderRadius: "0",
+        boxShadow: "none",
+        fontSize: "0.75rem",
+      } as any}>
+        {solutionCode || "Not available for this step."}
+      </Box>
     </DialogContent>
   );
 };

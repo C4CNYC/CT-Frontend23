@@ -19,7 +19,7 @@ import {
 
 import { FormProvider, RHFTextField, useSnackbar } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   children: React.ReactElement[] | React.ReactElement;
@@ -62,7 +62,7 @@ export default function InviteFriendsModal({
         ...formValues,
         email: "",
       }));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

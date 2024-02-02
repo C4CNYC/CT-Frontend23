@@ -16,7 +16,7 @@ import {
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { ICourseElement } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import CourseAvatar from "./CourseAvarar";
 import CourseButtons from "./CourseButtons";

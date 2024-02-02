@@ -15,8 +15,8 @@ import {
   useUdpateProfileAvatarMutation,
   useUpdateProfileMutation,
 } from "src/redux/services/auth";
-import { BaseResponseInterface } from "src/utils/baseResponce.interface";
-import { fData } from "src/utils/formatNumber";
+import { BaseResponseInterface } from "../../lib/utils/baseResponse.interface";
+import { fData } from "src/lib/utils/formatNumber";
 
 interface FormValuesProps extends Omit<IUser, keyof BaseResponseInterface> {
   photoURL: File & { preview: string };
@@ -97,7 +97,7 @@ export default function ProfileEditForm({
         if (!photoURL) return;
         await updateAvatar(currentUser?.id, photoURL);
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error?.data?.message, {
         variant: "error",
       });

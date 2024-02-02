@@ -44,7 +44,7 @@ import {
   useGetOrgMembersQuery,
 } from "src/redux/services/admin/members-admin";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import SkeletonMembers from "@sections/schools/SkeletonMembers";
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Fade, Portal, Stack } from "@mui/material";
 
-import useActiveLink from "src/hooks/useActiveLink";
+import useActiveLink from "src/lib/hooks/useActiveLink";
 
 import { NavItemProps } from "../types";
 import { NavItem, NavItemDashboard } from "./NavItem";

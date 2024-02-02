@@ -18,7 +18,7 @@ export const getImageFromCode = async (code: string) => {
     const response = await fetch(canvas.toDataURL("image/png"));
     const blob = await response.blob();
     return new File([blob], "cover.png", { type: "image/png" });
-  } catch (error) {
+  } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log(error.data.message);
     return null;

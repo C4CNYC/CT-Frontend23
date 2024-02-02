@@ -49,7 +49,7 @@ import {
   useGetStudentsQuery,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const STATUS_OPTIONS = ["all", "invites"];
 

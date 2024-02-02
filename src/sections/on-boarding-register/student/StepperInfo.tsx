@@ -11,7 +11,7 @@ import { DatePicker } from "@mui/x-date-pickers";
 
 import { FormProvider, RHFSelect, useSnackbar } from "@components";
 import { useUpdateStudentProfileMutation } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -45,7 +45,7 @@ export default function StepperInfo(): React.ReactElement {
       }).unwrap();
 
       reload();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

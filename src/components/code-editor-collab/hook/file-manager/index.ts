@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 
 import { type FileInfo, type File, createFile } from "../utils/collab/requests";
 import { useModeSubscriptions } from "./useModeSubscriptions";

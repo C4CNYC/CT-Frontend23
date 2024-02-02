@@ -17,13 +17,13 @@ import {
   Tabs,
   Tooltip,
   Typography,
-  useTheme,
+  useTheme
 } from "@mui/material";
 
 import { FormProvider, useSnackbar } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CustomTabPanel, {
-  customTabProps,
+  customTabProps
 } from "src/components/custom-tab-panel";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ISkill } from "src/redux/interfaces/content.interface";
@@ -32,10 +32,10 @@ import {
   useGetAssignmentQuery,
   useUpdateAssignmentMutation,
   useUpdateClassAssignmentMutation,
-  useUpdateCourseAssignmentMutation,
+  useUpdateCourseAssignmentMutation
 } from "src/redux/services/manager/assignments-manager";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";
@@ -45,28 +45,33 @@ import {
   DATE_PARSER,
   DAYS_TO_CLOSE,
   DAYS_TO_END,
-  RANDOM_NAME,
   TABS_SX,
   TOOLTIP_TEXT,
-  mainContainerStyles,
+  mainContainerStyles
 } from "./constants";
 import { CreateQuestSchema } from "./helpers/create-quest.schema";
 import { FormQuestProps } from "./helpers/quest.interface";
+import { animals, colors, uniqueNamesGenerator } from "unique-names-generator";
 
 export default function AddQuest(): React.ReactElement {
   const theme = useTheme();
   const { enqueueSnackbar } = useSnackbar();
-  const { query, push } = useRouter();
+  const { query, push, reload } = useRouter();
   const translate = useTranslate();
-
   const [assignmentsSkillsId, setAssignmentsSkillsId] = useState<ISkill[]>();
   const [value, setValue] = useState(0);
+  const RANDOM_NAME = uniqueNamesGenerator({
+    dictionaries: [colors, animals],
+    separator: " ",
+    length: 2,
+    style: "capital"
+  });
 
   const { data: assignment, isLoading: isAssignmentLoading } =
     useGetAssignmentQuery(
       {
         schoolId: query.schoolId as string,
-        assignmentId: query.assignmentId as string,
+        assignmentId: query.assignmentId as string
       },
       { skip: !query.assignmentId || !query.schoolId }
     );
@@ -89,7 +94,7 @@ export default function AddQuest(): React.ReactElement {
         startDate: format(DATE_PARSER(assignment?.start_date), DATE_FORMAT),
         dueDate: format(DATE_PARSER(assignment?.end_date), DATE_FORMAT),
         closeDate: format(DATE_PARSER(assignment?.close_date), DATE_FORMAT),
-        active: assignment?.active,
+        active: assignment?.active
       });
     }
   }, [isAssignmentLoading]);
@@ -117,8 +122,8 @@ export default function AddQuest(): React.ReactElement {
         DATE_PARSER(assignment?.close_date, DAYS_TO_CLOSE),
         DATE_FORMAT
       ),
-      active: assignment?.active ?? true,
-    },
+      active: assignment?.active ?? true
+    }
   });
 
   const onSubmit = async (formData: FormQuestProps) => {
@@ -132,18 +137,18 @@ export default function AddQuest(): React.ReactElement {
           start_date: formData.startDate,
           end_date: formData.dueDate,
           close_date: formData.closeDate,
-          active: Boolean(formData.active),
+          active: Boolean(formData.active)
         }).unwrap();
         enqueueSnackbar(translate("assignments_updated_successfuly"));
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
-            assignmentId: assignment.id,
+            assignmentId: assignment.id
           })
         );
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
-          variant: "error",
+          variant: "error"
         });
       }
     } else {
@@ -158,29 +163,29 @@ export default function AddQuest(): React.ReactElement {
           close_date: formData.closeDate,
           active: Boolean(formData.active),
           skill_tags: assignmentsSkillsId?.map((el) => el.id) ?? [],
-          classes: [query.id as string],
+          classes: [query.id as string]
         }).unwrap();
         await addAssignmentToClass({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
-          class_id: query.id as string,
+          class_id: query.id as string
         }).unwrap();
         await addCourseToAssignment({
           assignmentId: newAssignment.id,
           schoolId: query.schoolId as string,
-          course_id: formData.course,
+          course_id: formData.course
         });
         push(
           STUDENT_PATH_DASHBOARD.class.id(query.id as string, {
             schoolId: query.schoolId as string,
             assignmentId: newAssignment.id,
-            ...(query.onBoarding ? { onBoarding: "on-boarding" } : {}),
+            ...(query.onBoarding ? { onBoarding: "on-boarding" } : {})
           })
         );
         enqueueSnackbar(translate("assignments_created_successfuly"));
       } catch (error: any) {
         enqueueSnackbar(error.data.message, {
-          variant: "error",
+          variant: "error"
         });
       }
     }
@@ -250,7 +255,7 @@ export default function AddQuest(): React.ReactElement {
                 methods={methods}
                 coursesData={{
                   data: coursesData.data?.data,
-                  isLoading: coursesData.isLoading,
+                  isLoading: coursesData.isLoading
                 }}
               />
             </CustomTabPanel>

@@ -7,7 +7,7 @@ import {
   useMemo
 } from "react";
 import { type Extension } from "@codemirror/state";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 import { EditorView } from "@codemirror/view";
 
 import { type File, getFileInfo, isRoomExist } from "./utils/collab/requests";

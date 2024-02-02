@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ISocials } from "src/redux/interfaces/socials.interface";
 
 import { managerApi } from ".";

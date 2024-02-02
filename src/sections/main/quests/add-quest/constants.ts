@@ -13,12 +13,6 @@ export const DAYS_TO_CLOSE = 10;
 export const TOOLTIP_TEXT = `A quest is an assignment for a class.
 You can assign a part of or a full course, or you can assign any document link or open project to a class through a quest.`;
 
-export const RANDOM_NAME = uniqueNamesGenerator({
-  dictionaries: [colors, animals],
-  separator: " ",
-  length: 2,
-  style: "capital",
-});
 
 export const selectStyle = (theme: Theme) => ({
   height: "41px",

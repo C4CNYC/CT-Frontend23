@@ -7,7 +7,7 @@ import { Container, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 
 // assets
-import { ForbiddenIllustration } from "../assets/illustrations";
+import ForbiddenIllustration from "../assets/illustrations/ForbiddenIllustration";
 //
 import { useAuthContext } from "./useAuthContext";
 

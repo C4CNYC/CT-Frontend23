@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Collapse } from "@mui/material";
 
 import { NavSectionVertical } from "src/components/nav-section";
-import useActiveLink from "src/hooks/useActiveLink";
+import useActiveLink from "src/lib/hooks/useActiveLink";
 
 import { NavItemProps } from "../types";
 import NavItem from "./NavItem";

@@ -23,7 +23,7 @@ import QuestRating from "@sections/quest/QuestRating";
 import { useGetTeacherListQuery } from "src/redux/services/admin/school-amdin";
 import { useGetAssignmentStudentQuery } from "src/redux/services/manager/assignments-student";
 import { useGetCoursQuery } from "src/redux/services/manager/courses-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Quest.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

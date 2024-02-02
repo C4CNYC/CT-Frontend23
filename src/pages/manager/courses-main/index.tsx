@@ -21,7 +21,7 @@ import SkeletonList from "@sections/dashboard/skeleton/skeletonList";
 import { getCountTakingElment } from "@utils";
 import { ICourseSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 CoursesListPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

@@ -2,7 +2,7 @@ import { Checkbox, Table, TableBody, TableCell, TableRow } from "@mui/material";
 
 import { Label, TableEmptyRows, TableHeadCustom, emptyRows } from "@components";
 import { voidFunction } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IPendingInvitesTabProps {
   order: "asc" | "desc" | undefined;

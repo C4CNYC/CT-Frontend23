@@ -9,7 +9,7 @@ import { useTheme } from "@mui/system";
 import { Iconify } from "src/components/iconify";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { getLetsCodeBtnSx } from "./constants";
 

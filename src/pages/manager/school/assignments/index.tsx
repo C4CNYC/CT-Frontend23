@@ -48,7 +48,7 @@ import {
   useDeleteAssignmentMutation,
   useGetAssignmentListQuery,
 } from "src/redux/services/manager/assignments-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import FilterAssignments from "./filter";
 
@@ -230,7 +230,7 @@ export default function AsssignmentsListPage() {
         assignmentId,
       }).unwrap();
       enqueueSnackbar(translate("assignments_delete_msg"));
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

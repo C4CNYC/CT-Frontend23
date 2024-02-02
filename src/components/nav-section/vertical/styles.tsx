@@ -3,7 +3,7 @@ import { ListItemButton, ListItemIcon, ListSubheader } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
 // config
-import { ICON, NAV } from "../../../config-global";
+import { ICON, NAV } from "../../../config";
 //
 import { NavItemProps } from "../types";
 

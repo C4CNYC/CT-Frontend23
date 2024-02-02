@@ -10,7 +10,7 @@ import ProfileCover from "@sections/student-profile/ProfileCover";
 import ProfileLinks from "@sections/student-profile/ProfileLinks";
 import ProfileMain from "@sections/student-profile/ProfileMain";
 import { useProfileQuery } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 UserProfile.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

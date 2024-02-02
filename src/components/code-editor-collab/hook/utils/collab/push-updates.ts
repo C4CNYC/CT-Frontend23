@@ -1,5 +1,5 @@
 import { sendableUpdates } from "@codemirror/collab";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 
 import { EmitSocketEvents, SubscribedEvents } from "../socket";
 import { File } from "./requests";

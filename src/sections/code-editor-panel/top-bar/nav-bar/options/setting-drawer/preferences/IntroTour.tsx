@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import BasePreference from "./BasePreference";
 

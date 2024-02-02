@@ -5,7 +5,7 @@ import { IconButton, Stack, Typography } from "@mui/material";
 
 import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { type CodeEditorControllerRoom } from "src/redux/slices/code-editor-controller";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface TitleProps {
   room: CodeEditorControllerRoom | null;

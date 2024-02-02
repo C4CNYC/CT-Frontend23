@@ -3,7 +3,7 @@ import { type FC, useMemo } from "react";
 import { Skeleton, Typography, useTheme } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   AVAILABLE_TYP_SX,

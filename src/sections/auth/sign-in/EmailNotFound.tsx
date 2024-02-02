@@ -6,7 +6,7 @@ import { StepWizardChildProps } from "react-step-wizard";
 import { Button, IconButton, Stack, Theme, Typography } from "@mui/material";
 
 import { Image } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   setError: Dispatch<SetStateAction<string>>;

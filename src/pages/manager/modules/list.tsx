@@ -1,50 +1,39 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import Head from "next/head";
-
-import { Box, Button, Container } from "@mui/material";
-
-import {
-  CustomBreadcrumbs,
-  Iconify,
-  SimpleInfiniteList,
-  useSettingsContext,
-} from "@components";
-import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
-import DashboardLayout from "@layouts/dashboard";
-import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
-import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import ModuleCard from "@sections/dashboard/modules/ModuleCard";
-import ModuleOrganizing from "@sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing";
+import FilterModules from "./filter"
+import { CustomBreadcrumbs, Iconify, SimpleInfiniteList, useSettingsContext } from "@components"
+import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks"
+import DashboardLayout from "@layouts/dashboard"
+import { Box, Button, Container } from "@mui/material"
+import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths"
+import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths"
+import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain"
+import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog"
+import ModuleCard from "@sections/dashboard/modules/ModuleCard"
+// import { getCountTakingElment } from "src/lib/utils/countTakingElments";
+import ModuleOrganizing from "@sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing"
 // import { getCountTakingElment } from "src/utils/countTakingElments";
-import SkeletonList, {
-  DefaultSkeletonItem,
-} from "@sections/dashboard/skeleton/skeletonList";
-import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
-import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import SkeletonList, { DefaultSkeletonItem } from "@sections/dashboard/skeleton/skeletonList"
+import Head from "next/head"
+import { useTranslate } from "src/lib/utils/translateHelper"
+import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface"
+import { useGetModulesQuery } from "src/redux/services/manager/modules-manager"
 
-import FilterModules from "./filter";
-
-ModulesListPage.getLayout = (page: React.ReactElement) => (
-  <DashboardLayout>{page}</DashboardLayout>
-);
+ModulesListPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>
 
 export default function ModulesListPage(): React.ReactElement | string {
-  const { themeStretch } = useSettingsContext();
-  const translate = useTranslate();
+  const { themeStretch } = useSettingsContext()
+  const translate = useTranslate()
   const { filters, setFilter } = useFilters<IModulesSearchParams>(
     {
       name: "",
       course_id: "",
     },
     FilterMode.global
-  );
-  const { data, isLoading, isFetching } = useGetModulesQuery(filters);
+  )
+  const { data, isLoading, isFetching } = useGetModulesQuery(filters)
 
   if (isLoading) {
-    return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />;
+    return <SkeletonList filter={2} count={DEFAULT_TAKE_PER_PAGE} />
   }
   return (
     <>
@@ -67,10 +56,7 @@ export default function ModulesListPage(): React.ReactElement | string {
           ]}
           action={
             <CreateModuleDialog>
-              <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-              >
+              <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
                 {translate("modules_create_module")}
               </Button>
             </CreateModuleDialog>
@@ -89,8 +75,8 @@ export default function ModulesListPage(): React.ReactElement | string {
           <SimpleInfiniteList
             hasNextPage={data?.meta.hasNextPage ?? false}
             onLoadMore={() => {
-              if (data?.meta.take !== Number(filters?.take)) return;
-              setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE);
+              if (data?.meta.take !== Number(filters?.take)) return
+              setFilter("take", Number(filters.take) + DEFAULT_TAKE_PER_PAGE)
             }}
             loading={isLoading ?? isFetching}
           >
@@ -111,5 +97,5 @@ export default function ModulesListPage(): React.ReactElement | string {
         <ModuleOrganizing />
       </Container>
     </>
-  );
+  )
 }

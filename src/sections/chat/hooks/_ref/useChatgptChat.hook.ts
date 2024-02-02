@@ -5,7 +5,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { aiAssistantId, chatgptTutor } from "@utils";
+import { aiAssistantId, chatgptTutor } from "src/lib/utils/chatgptTutor";
 
 import { getRoomId } from "@sections/chat/hooks/getRoomId"
 

@@ -6,7 +6,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { FormProvider, RHFTextField } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { useUpdateOrgCustomizationMutation } from "src/redux/services/admin/organization-customization";
 import { CustomizationResponce } from "src/redux/services/interfaces/organization.interface";
 

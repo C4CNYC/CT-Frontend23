@@ -11,7 +11,7 @@ import { Logo } from "src/components/logo";
 import { bgBlur } from "@utils";
 
 // config
-import { HEADER } from "../../config-global";
+import { HEADER } from "../../config";
 // routes
 import { PATH_PAGE } from "../../routes/paths";
 

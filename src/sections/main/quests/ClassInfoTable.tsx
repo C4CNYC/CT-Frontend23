@@ -25,7 +25,7 @@ import { useTheme } from "@mui/system";
 
 import { Iconify, MenuPopover } from "@components";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { useAuthContext } from "src/auth/useAuthContext";
 import CustomTabPanel, {
@@ -33,7 +33,7 @@ import CustomTabPanel, {
 } from "src/components/custom-tab-panel";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import DetailsTab from "./details-card";
 import MemberCard from "./members-card";

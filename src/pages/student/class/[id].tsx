@@ -14,7 +14,7 @@ import { useGetClassQuery } from "src/redux/services/manager/classes-student";
 import { useGetPublicTribeQuery } from "src/redux/services/public/tribe-public";
 import { setClass } from "src/redux/slices/code-panel";
 import { useDispatch } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 HomeOverview.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -24,7 +24,7 @@ export default function HomeOverview(): React.ReactElement {
   const dispatch = useDispatch();
   const { themeStretch } = useSettingsContext();
   const { query } = useRouter();
-  
+
   localStorage.setItem("classId", query.id as string);
   localStorage.setItem("joinCode", query.joinCode as string);
 

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
 import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
-import { useS3Upload } from "next-s3-upload";
+// import { useS3Upload } from "next-s3-upload";
 import { ImageAttributes, ImageExtension } from "remirror/extensions";
 import "remirror/styles/all.css";
 
 import { BaseResponseInterface, isJson } from "@utils";
 import { useCreateMediaMutation } from "src/redux/services/manager/media-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
 import EditorToolbar from "./EditorToolbar";
@@ -43,7 +43,7 @@ function Editor({
   data,
   lessonId,
 }: Props): React.ReactElement {
-  const { uploadToS3 } = useS3Upload();
+  // const { uploadToS3 } = useS3Upload();
   const [createMedia] = useCreateMediaMutation();
   const translate = useTranslate();
   const uploadHandler = (files: FileWithProgress[]): DelayedImage[] => {
@@ -55,30 +55,33 @@ function Editor({
         async () =>
           await new Promise<ImageAttributes>((resolve, reject) => {
             completed += 1;
-            uploadToS3(file, {
-              endpoint: {
-                request: {
-                  body: {},
-                  headers: {
-                    "x-tenant-id":
-                      localStorage.getItem("tenantName") ?? "codetribe",
-                  },
-                },
-              },
-            }).then(({ url, key }) => {
-              progress(completed / files.length);
-              createMedia({
-                url,
-                name: file.name,
-                size: file.size,
-                type: "image",
-                acl: "public",
-              })
-                .unwrap()
-                .then(() => {
-                  resolve({ src: url, fileName: key });
-                });
-            });
+            // @TODO S3 upload tmp disabled, needs to be moved to server side
+            console.error('S3 upload tmp disabled, needs to be moved to server side')
+            alert('S3 upload tmp disabled, needs to be moved to server side')
+            // uploadToS3(file, {
+            //   endpoint: {
+            //     request: {
+            //       body: {},
+            //       headers: {
+            //         "x-tenant-id":
+            //           localStorage.getItem("tenantName") ?? "codetribe",
+            //       },
+            //     },
+            //   },
+            // }).then(({ url, key }) => {
+            //   progress(completed / files.length);
+            //   createMedia({
+            //     url,
+            //     name: file.name,
+            //     size: file.size,
+            //     type: "image",
+            //     acl: "public",
+            //   })
+            //     .unwrap()
+            //     .then(() => {
+            //       resolve({ src: url, fileName: key });
+            //     });
+            // });
           })
       );
     }

@@ -19,7 +19,7 @@ import SkeletonTribe from "@sections/skeleton/SekeltonTribe";
 import ProfileCover from "@sections/student-profile/ProfileCover";
 import { fNumber } from "@utils";
 import { useGetClassQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 TribeProfilePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

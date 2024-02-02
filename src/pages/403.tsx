@@ -3,7 +3,7 @@ import Head from "next/head";
 import NextLink from "next/link";
 
 // assets
-import { ForbiddenIllustration } from "@assets/illustrations";
+import ForbiddenIllustration from "@assets/illustrations/ForbiddenIllustration";
 import { m } from "framer-motion";
 
 // @mui
@@ -13,7 +13,7 @@ import { Button, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 // layouts
 import CompactLayout from "@layouts/compact";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

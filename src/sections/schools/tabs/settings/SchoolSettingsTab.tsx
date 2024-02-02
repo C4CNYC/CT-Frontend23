@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@mui/material";
 
 import { useGetSchoolSettingsQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import SettingsForm from "./SettingsForm";
 import SkeletonSettingsTab from "./SkeletonSettingsTab";

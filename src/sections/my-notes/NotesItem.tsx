@@ -9,7 +9,7 @@ import { ConfirmDialog, Iconify } from "@components";
 import { APIError } from "src/redux/interfaces/custom-error.interface";
 import { IGoals } from "src/redux/interfaces/goals.interface";
 import { useRemoveGoalMutation } from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AddEditNoteDialog from "./AddEditGoalDialog";
 
@@ -32,7 +32,7 @@ export default function NotesItem({ note }: INotesItemProps) {
     try {
       await deleteNote({ id: note.id as string }).unwrap();
       enqueueSnackbar(translate("messages_deleted"));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

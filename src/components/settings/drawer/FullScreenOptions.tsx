@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 //
 import { SvgColor } from "../../svg-color";

@@ -60,7 +60,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
     try {
       await deleteProject({ id: id as string }).unwrap();
       enqueueSnackbar("Project deleted!");
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",
@@ -78,7 +78,7 @@ export default function GalleryItem({ item }: Props): React.ReactElement {
     try {
       await updataeProject({ id: id as string, ...updatedItem }).unwrap();
       enqueueSnackbar("Updated successfully");
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

@@ -14,7 +14,7 @@ import {
   useUpdateAuthorCoverMutation,
   useUpdateAuthorMutation,
 } from "src/redux/services/manager/author-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const LINK_URL =
   // eslint-disable-next-line no-useless-escape

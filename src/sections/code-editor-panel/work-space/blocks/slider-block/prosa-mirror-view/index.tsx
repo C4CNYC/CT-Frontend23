@@ -1,9 +1,7 @@
 import { type FC } from "react";
 
 import { FileExtension } from "@remirror/extension-file";
-import { ReactComponentExtension } from "@remirror/extension-react-component";
-import { TableExtension } from "@remirror/extension-react-tables";
-import { Remirror, ThemeProvider, useRemirror } from "@remirror/react";
+import { Remirror, ThemeProvider, useRemirror, ReactComponentExtension, TableExtension } from "@remirror/react";
 import jsx from "refractor/lang/jsx.js";
 import typescript from "refractor/lang/typescript.js";
 import {
@@ -116,7 +114,7 @@ const ProsaMirrorView: FC<ProsaMirrorViewProps> = ({
   multimediaValue,
 }) => {
   const { manager, state } = useRemirror({
-    extensions,
+    extensions: extensions as any, // @ToDo,
     content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
     stringHandler: "html",
   });

@@ -6,7 +6,7 @@ import { ResizerUi } from "@components";
 import { MyEditor } from "src/components/editor/MyEditor";
 
 import { LessonContentContext } from "./LessonContent.context";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 
 interface Props {

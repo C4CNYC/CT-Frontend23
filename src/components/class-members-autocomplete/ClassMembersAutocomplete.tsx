@@ -20,7 +20,7 @@ import {
 
 import { CustomAvatar, Iconify, SearchNotFound } from "@components";
 import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import {
   useGetStudentsQuery,
@@ -28,7 +28,7 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 type StudentType = IStudent & BaseResponseInterface;
 

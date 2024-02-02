@@ -24,7 +24,7 @@ import {
   usePostGoalMutation,
   useUpdateGoalMutation,
 } from "src/redux/services/manager/goals-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface FormValuesProps {
   title: string;
@@ -84,7 +84,7 @@ const AddEditNotesDialog = ({
         note ? translate("messages_edited") : translate("messages_added")
       );
       methods.reset();
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

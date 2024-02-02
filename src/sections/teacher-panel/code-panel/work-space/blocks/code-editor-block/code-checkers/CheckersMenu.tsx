@@ -4,7 +4,7 @@ import { LazyMotion, domAnimation, m } from "framer-motion";
 
 import { Box } from "@mui/material";
 
-import { IValidationMap } from "src/utils/validationMaping";
+import { IValidationMap } from "src/lib/utils/validationMaping";
 
 import { CheckersItemBtn } from "../checkers/checkers-item-btn";
 

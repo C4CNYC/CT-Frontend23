@@ -21,13 +21,13 @@ import { Container, Stack } from "@mui/system";
 import {
   CustomBreadcrumbs,
   Iconify,
-  ModalIntegration,
   Scrollbar,
   TableNoData,
   TablePaginationCustom,
   useSettingsContext,
   useTable,
 } from "@components";
+import {ModalIntegration} from "src/components/modal-integration"
 import { useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard/DashboardLayout";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
@@ -38,7 +38,7 @@ import {
   useDeleteIntegrationMutation,
   useGetIntegrationsListQuery,
 } from "src/redux/services/manager/integration-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 AppsPage.getLayout = (page: React.ReactElement) => (
   <DashboardLayout>{page}</DashboardLayout>

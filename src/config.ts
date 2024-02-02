@@ -1,8 +1,5 @@
-// ----------------------------------------------------------------------
 import { MANAGER_PATH_PAGE } from "@routes/manager.paths";
 import { STUDENT_PATH_PAGE } from "@routes/student.paths";
-
-export const HOST_API_KEY = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 // ROOT PATH AFTER LOGIN SUCCESSFUL
 export const STUDENT_PATH_AFTER_LOGIN = STUDENT_PATH_PAGE.home; // as '/dashboard/app'

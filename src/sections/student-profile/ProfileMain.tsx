@@ -7,7 +7,7 @@ import ProfileAbout from "./ProfileAbout";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileSocialInfo from "./ProfileSocialInfo";
 import { IUser } from "src/redux/interfaces/auth.interface";
-// import { BaseResponseInterface } from "@utils";
+// import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 interface IProfileMainProps {
   data?: IUser;

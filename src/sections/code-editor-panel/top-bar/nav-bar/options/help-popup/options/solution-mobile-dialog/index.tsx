@@ -1,19 +1,20 @@
 import { type FC } from "react";
 
-import { CopyBlock, dracula } from "react-code-blocks";
+// import { CopyBlock, dracula } from "react-code-blocks";
 import { AiOutlineCode } from "@react-icons/all-files/ai/AiOutlineCode";
 
 import {
+  Box,
   Dialog,
   DialogContent,
   DialogTitle,
   IconButton,
   Typography,
-} from "@mui/material";
+} from "@mui/material"
 
 import { Iconify } from "src/components/iconify";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   COPY_BLOCK_CUSTOM_STYLES,
@@ -60,13 +61,15 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
         </DialogTitle>
 
         <DialogContent sx={DIALOG_CONTENT_SX}>
-          <CopyBlock
-            text={solutionCode || translate(NO_SOLUTION_TEXT)}
-            language="html"
-            theme={dracula}
-            wrapLines
-            customStyle={COPY_BLOCK_CUSTOM_STYLES}
-          />
+          {/* <CopyBlock */}
+          {/*   text={solutionCode || translate(NO_SOLUTION_TEXT)} */}
+          {/*   language="html" */}
+          {/*   theme={dracula} */}
+          {/*   customStyle={COPY_BLOCK_CUSTOM_STYLES} */}
+          {/* /> */}
+          <Box component="div" style={COPY_BLOCK_CUSTOM_STYLES as any}>
+            {solutionCode || translate('no_solution')}
+          </Box>
         </DialogContent>
       </Dialog>
     </>

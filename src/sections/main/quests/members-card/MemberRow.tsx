@@ -17,7 +17,7 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { Role } from "src/redux/services/enums/role.enum";
 import { IStudent } from "src/redux/services/interfaces/user.interface";
 import { useUpdateClassPendingMutation } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IMemberRowProps {
   row: IStudent;
@@ -61,7 +61,7 @@ export default function MemberRow({
         student_id: row.id as string,
       }).unwrap();
       enqueueSnackbar(translate("members_approved_msg"));
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

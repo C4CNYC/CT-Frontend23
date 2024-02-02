@@ -21,13 +21,13 @@ import {
 
 import {
   FormProvider,
-  ModalCodeFullscreen,
   RHFCode,
   RHFTextField,
 } from "@components";
+import {ModalCodeFullscreen} from "src/components/modal-code-fullscreen"
 import { LessonContentComplexity } from "src/redux/services/enums/lesson-content-complexity.enum";
 import { useUpdateLessonContentMutation } from "src/redux/services/manager/lesson-content-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { GeneralTab } from "./GeneralTab";
 
@@ -130,7 +130,7 @@ export default function Preferences({
       }).unwrap();
       enqueueSnackbar(translate("step_updated"));
       setOpenDialog(false);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

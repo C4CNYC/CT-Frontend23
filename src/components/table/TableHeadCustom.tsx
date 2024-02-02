@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

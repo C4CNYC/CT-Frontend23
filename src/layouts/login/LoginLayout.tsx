@@ -1,11 +1,12 @@
 // @mui
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 // components
-import { Logo } from "src/components/logo";
-import { Image } from "src/components/image";
-import ThemeSwitcher from "src/components/theme-switcher";
-import { useTranslate } from "src/utils/translateHelper";
+import { Logo } from "src/components/logo"
+import { Image } from "src/components/image"
+import ThemeSwitcher from "src/components/theme-switcher"
+import { useTranslate } from "src/lib/utils/translateHelper"
 
 //
 import {
@@ -14,7 +15,7 @@ import {
   StyledSection,
   StyledSectionBg,
   StyledSwitcher,
-} from "./styles";
+} from "./styles"
 
 // ----------------------------------------------------------------------
 
@@ -25,61 +26,71 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function LoginLayout({
+export default function LoginLayout ({
   children,
   illustration,
   title,
   subtitle,
 }: Props): React.ReactElement | null {
-  const translate = useTranslate();
+  const translate = useTranslate()
   return (
-    <StyledRoot>
-      <StyledSection>
-        <Logo
-          sx={{
-            zIndex: 9,
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            justifyContent: "center",
-            width: "100%",
-            mt: { xs: 1.5, md: 5 },
-          }}
-        />
-        <Typography variant="h3" sx={{ maxWidth: 480, textAlign: "left" }}>
-          {title ?? translate("login_hi")}
-        </Typography>
-
-        <Typography
-          variant="subtitle2"
-          sx={{
-            mb: 10,
+    <GoogleOAuthProvider
+      clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
+    >
+      <StyledRoot>
+        <StyledSection>
+          <Logo
+            sx={{
+              zIndex: 9,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              justifyContent: "center",
+              width: "100%",
+              mt: {
+                xs: 1.5,
+                md: 5
+              },
+            }}
+          />
+          <Typography variant="h3" sx={{
             maxWidth: 480,
-            textAlign: "left",
-            color: "text.secondary",
-          }}
-        >
-          {subtitle ?? translate("login_welcome_back")}
-        </Typography>
+            textAlign: "left"
+          }}>
+            {title ?? translate("login_hi")}
+          </Typography>
 
-        <Image
-          disabledEffect
-          visibleByDefault
-          alt="auth"
-          src={illustration ?? "/assets/illustrations/auth-cat.png"}
-          sx={{ maxWidth: 720 }}
-        />
+          <Typography
+            variant="subtitle2"
+            sx={{
+              mb: 10,
+              maxWidth: 480,
+              textAlign: "left",
+              color: "text.secondary",
+            }}
+          >
+            {subtitle ?? translate("login_welcome_back")}
+          </Typography>
 
-        <StyledSectionBg />
-      </StyledSection>
+          <Image
+            disabledEffect
+            visibleByDefault
+            alt="auth"
+            src={illustration ?? "/assets/illustrations/auth-cat.png"}
+            sx={{ maxWidth: 720 }}
+          />
 
-      <StyledContent>
-        <Stack sx={{ width: 1 }}> {children} </Stack>
-      </StyledContent>
-      <StyledSwitcher>
-        <ThemeSwitcher />
-      </StyledSwitcher>
-    </StyledRoot>
-  );
+          <StyledSectionBg/>
+        </StyledSection>
+
+        <StyledContent>
+          <Stack sx={{ width: 1 }}> {children} </Stack>
+        </StyledContent>
+        <StyledSwitcher>
+          <ThemeSwitcher/>
+        </StyledSwitcher>
+      </StyledRoot>
+    </GoogleOAuthProvider>
+  )
 }

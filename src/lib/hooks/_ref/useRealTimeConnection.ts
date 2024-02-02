@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 
-import { ActivityStatus } from "../types/activity-status";
-import { PermissionError } from "../types/errors/permission-error";
-import { RoomActivity } from "../types/room-activity";
-import { useSocket } from "./useSocket";
+import { ActivityStatus } from "../../types/activity-status";
+import { PermissionError } from "../../types/errors/permission-error";
+import { RoomActivity } from "../../types/room-activity";
+import { useSocket } from "../useSocket";
 
 export function useRealtimeConnection() {
   const socket = useSocket();

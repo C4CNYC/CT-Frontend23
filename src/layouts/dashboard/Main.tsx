@@ -4,10 +4,10 @@ import { Box, BoxProps } from "@mui/material";
 
 // components
 import { useSettingsContext } from "src/components/settings";
-import { useResponsive } from "src/hooks/useResponsive";
+import { useResponsive } from "src/lib/hooks/useResponsive";
 
 // config
-import { HEADER, NAV } from "../../config-global";
+import { HEADER, NAV } from "../../config";
 
 // ----------------------------------------------------------------------
 

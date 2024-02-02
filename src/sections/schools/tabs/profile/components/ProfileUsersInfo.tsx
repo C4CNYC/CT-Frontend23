@@ -1,7 +1,7 @@
 import { Card, Divider, Stack, Typography } from "@mui/material";
 
 import { fNumber } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   studentCount?: number | null;

@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 
 import { useInviteStudentMutation } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { FormProvider, RHFTextField } from "../hook-form";
 import { Iconify } from "../iconify";
@@ -59,7 +59,7 @@ export default function EmailAddressModal({
       await inviteStudent({ schoolId, email, class_id: classId }).unwrap();
       enqueueSnackbar(translate("messages_student_invited"));
       methods.reset({ email: "" });
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

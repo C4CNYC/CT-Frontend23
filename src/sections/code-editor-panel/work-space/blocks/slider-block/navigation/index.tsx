@@ -2,7 +2,7 @@ import { type FC, useCallback, useEffect, useMemo, useState } from "react";
 
 import { Box, Button, Tooltip, Typography, useTheme } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { BOX_SX, getNestedBoxSx } from "./constants";
 import NavigationElement from "./navigation-element";

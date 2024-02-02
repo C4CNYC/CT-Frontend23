@@ -23,7 +23,7 @@ import {
 import CreateLessonDialog from "@sections/dashboard/lessons/CreateLessonDialog/CreateLessonDialog"
 import { BaseResponseInterface } from "@utils"
 import { ILesson } from "src/redux/services/interfaces/courseUnits.interface"
-import { useTranslate } from "src/utils/translateHelper"
+import { useTranslate } from "src/lib/utils/translateHelper"
 
 import { useDeleteLessonMutation } from "../../../redux/services/manager/lessons-manager"
 import { Draggable } from "@hello-pangea/dnd"

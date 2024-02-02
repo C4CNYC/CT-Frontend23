@@ -5,7 +5,7 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import { ICourseSearchParams } from "src/redux/interfaces/content.interface";
 import { useGetCourseQuery } from "src/redux/services/manager/courses-student";
 import { useGetPublicCourseQuery } from "src/redux/services/public-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import CoursesItem from "./course-list-item/CourseItem";
 import SkeletonCourse from "./course-list-item/SkeletonCourse";

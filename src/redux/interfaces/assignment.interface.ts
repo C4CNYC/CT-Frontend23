@@ -1,4 +1,4 @@
-import { ICourse } from "@types";
+import { ICourse } from "src/types";
 import { BaseSearchInterface } from "@utils";
 import { AssignmentTypes } from "src/redux/enums/assignment-types.enum";
 import { ISkill } from "src/redux/interfaces/content.interface";

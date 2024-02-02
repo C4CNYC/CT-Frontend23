@@ -8,13 +8,13 @@ import {
 } from "react";
 
 // utils
-import { localStorageAvailable } from "src/utils/localStorageAvailable";
-import { voidFunction } from "src/utils/voidFunction";
+import { localStorageAvailable } from "src/lib/utils/localStorageAvailable";
+import { voidFunction } from "src/lib/utils/voidFunction";
 
 //
 import { defaultSettings } from "./config-setting";
 import { defaultPreset, getPresets, presetsOption } from "./presets";
-import {
+import type {
   SettingsContextProps,
   ThemeColorPresetsValue,
   ThemeContrastValue,

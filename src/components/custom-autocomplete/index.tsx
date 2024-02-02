@@ -13,14 +13,14 @@ import TextField from "@mui/material/TextField";
 
 import { Iconify } from "src/components/iconify";
 import { useFilters } from "@hooks";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import {
   ClassSearchParams,
   IClass,
 } from "src/redux/interfaces/class.interface";
 import { useGetClassesQuery } from "src/redux/services/manager/classes-manager";
 import { RootState, useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   filterName: string;

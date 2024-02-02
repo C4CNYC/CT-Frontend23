@@ -26,7 +26,7 @@ import {
   useAddLessonToModuleMutation,
   useRemoveLessonFromModuleMutation,
 } from "src/redux/services/manager/modules-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 type LessonType = ILesson & BaseResponseInterface;
 

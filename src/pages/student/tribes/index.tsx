@@ -11,7 +11,7 @@ import SkeletonTribes from "@sections/dashboard/tribes/skeletonTribes";
 import TribeItem from "@sections/dashboard/tribes/tiribe-card/TribeItem";
 import TribesCounter from "@sections/dashboard/tribes/tribesCounter";
 import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 enum TabType {
   Active = "active",

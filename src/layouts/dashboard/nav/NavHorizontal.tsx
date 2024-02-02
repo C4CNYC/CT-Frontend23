@@ -9,12 +9,12 @@ import { useTheme } from "@mui/material/styles";
 // components
 import { NavSectionHorizontal } from "src/components/nav-section";
 // utils
-import { bgBlur } from "src/utils/cssStyles";
+import { bgBlur } from "src/lib/utils/cssStyles";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 
 // config
-import { HEADER } from "../../../config-global";
+import { HEADER } from "../../../config";
 //
 import { menuConfig } from "./config-navigation";
 

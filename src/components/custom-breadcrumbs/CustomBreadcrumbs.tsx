@@ -4,7 +4,7 @@ import { Box, Breadcrumbs, Button, Link, Stack, Typography } from "@mui/material
 //
 import { LinkItem } from "./LinkItem";
 import { CustomBreadcrumbsProps } from "./types";
-import { useTranslate } from "../../utils/translateHelper";
+import { useTranslate } from "../../lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

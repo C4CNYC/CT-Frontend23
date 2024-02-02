@@ -69,7 +69,7 @@ export default function JoinCode({ children }: Props) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       enqueueSnackbar("Verify success!");
       setOpen(false);
-    } catch (error) {}
+    } catch (error: any) {}
   };
 
   return (

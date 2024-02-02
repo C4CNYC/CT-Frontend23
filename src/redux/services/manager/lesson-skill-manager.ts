@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 import { managerApi } from ".";
 import { ISkill } from "../interfaces/skill.interface";

@@ -12,7 +12,7 @@ import { EditorMode } from "src/components/code-editor-collab/hook/constants";
 import { type IValidation } from "src/redux/interfaces/content.interface";
 import { setRoom } from "src/redux/slices/code-editor-controller";
 import { useSelector } from "src/redux/store";
-import { mapValidations } from "src/utils/validationMaping";
+import { mapValidations } from "src/lib/utils/validationMaping";
 
 import BaseBlock from "../base-block";
 import CodeEditorController from "../code-editor-controller";

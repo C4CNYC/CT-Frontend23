@@ -18,7 +18,7 @@ import {
 import { SvgColor } from "@components";
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
 import { useDeleteAuthorMutation } from "src/redux/services/manager/author-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AddAuthorDialog from "./AddAuthorDialog";
 

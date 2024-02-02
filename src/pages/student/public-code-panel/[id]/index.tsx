@@ -26,7 +26,7 @@ import {
   useGetPublicLessonContentQuery,
   useGetPublicLessonQuery,
 } from "src/redux/services/public-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // import { CodePanelChat } from "@sections/chat";
 

@@ -4,7 +4,7 @@ import { MouseEvent } from "react";
 import { Button, Link, Stack } from "@mui/material";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   CONTINUE_COURSE_BTN_SX,

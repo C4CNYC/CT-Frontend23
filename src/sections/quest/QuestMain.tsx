@@ -3,7 +3,7 @@ import { Avatar, Stack, Tooltip, Typography } from "@mui/material";
 import { TOOLTIP_TEXT } from "@sections/main/quests/add-quest/constants";
 import { BaseListResponseInterface, BaseResponseInterface } from "@utils";
 import { IStudent, IUser } from "src/redux/services/interfaces/user.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IQuestMainProps {
   mentor?: IStudent & BaseResponseInterface;

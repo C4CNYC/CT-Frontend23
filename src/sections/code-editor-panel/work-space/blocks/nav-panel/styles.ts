@@ -65,7 +65,7 @@ export const getDrawerSx = (
   isRealtimeCodeEnabled: boolean
 ): SxProps => {
   return {
-    zIndex: 9999,
+    zIndex: 1200,
     width: 60,
     minHeight: "70%",
     position: "absolute",

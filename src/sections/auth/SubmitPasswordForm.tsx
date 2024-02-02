@@ -56,7 +56,7 @@ export default function SubmitPasswordForm() {
       }).unwrap();
       enqueueSnackbar("Change password success!");
       push(PATH_AUTH.signIn);
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

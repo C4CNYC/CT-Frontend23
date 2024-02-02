@@ -12,7 +12,7 @@ import {
   useUpdateSchoolAvatarImgMutation,
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { countries } from "../../../../../assets/data";
 import { SchoolProfile } from "../../../../../redux/services/interfaces/school.interface";

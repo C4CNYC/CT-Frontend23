@@ -22,7 +22,7 @@ import {
   useDeleteClassesMutation,
   useUpdateClassesAvatarMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassItem from "./ClassItem";
 import AddClassDialog from "./CreateClassDialog";

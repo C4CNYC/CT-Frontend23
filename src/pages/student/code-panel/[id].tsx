@@ -13,28 +13,15 @@ import { Socket, io } from "socket.io-client";
 import SkeletonCodePanel, {
   CPTopBarSkeleton,
 } from "@sections/code-editor-panel/skeleton";
-import { useCodePanel } from "src/hooks/useCodePanel";
+import { useCodePanel } from "src/lib/hooks/useCodePanel";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 import { SocketContext } from "../../../context/socket-context";
 import { LessonUserContext } from "../../../context/lesson-context";
 import SignUpDialog from "./sign-up-dialog";
-import { ILessonUserStatus } from "@types";
+import { ILessonUserStatus } from "src/types";
 import { useSelector } from "../../../redux/store"
-
-
-// dec2hex :: Integer -> String
-// i.e. 0-255 -> '00'-'ff'
-function dec2hex (dec: number) {
-  return dec.toString(16).padStart(2, "0")
-}
-
-// generateId :: Integer -> String
-function generateId (len: number) {
-  const arr = new Uint8Array((len || 40) / 2)
-  window.crypto.getRandomValues(arr)
-  return Array.from(arr, dec2hex).join("")
-}
+import generateId from "../../../lib/utils/generate-id"
 
 interface LessonUserResponseType {
   id: string;
@@ -139,6 +126,7 @@ export default function Index(): ReactElement | null {
     return () => {
       socket?.off("joinLesson");
       socket?.off("leaveLesson");
+      // unsubscribeSocket(socket);
       socket?.disconnect();
     };
   }, [isRealtimeCodeEnabled]);

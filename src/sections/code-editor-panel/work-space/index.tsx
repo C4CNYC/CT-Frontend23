@@ -89,7 +89,7 @@ const WorkSpace: FC<WorkSpaceProps> = ({
 
       setDocument(doc as CodeDocument);
       dispatch(setCode((doc?.htmlBody as unknown as string[])?.join("") ?? ""));
-    } catch (error) {
+    } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log("Error: ", error);
     }

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 
-import useActiveLink from "src/hooks/useActiveLink";
+import useActiveLink from "src/lib/hooks/useActiveLink";
 
 import { NavListProps } from "../types";
 import NavItem from "./NavItem";

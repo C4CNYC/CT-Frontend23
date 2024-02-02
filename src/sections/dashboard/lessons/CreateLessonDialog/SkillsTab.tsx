@@ -26,7 +26,7 @@ import {
   useUpdateLessonSkillMutation,
 } from "src/redux/services/manager/lesson-skill-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export default function SkillsTab({
   lessonId,

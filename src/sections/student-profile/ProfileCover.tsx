@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 import { CustomAvatar } from "@components";
 import { getLinearGradient } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const StyledInfo = styled("div")(({ theme }) => ({
   left: 0,

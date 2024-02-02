@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { IGoals } from "src/redux/interfaces/goals.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AddEditGoalDialog from "./AddEditGoalDialog";
 import NotesItem from "./NotesItem";

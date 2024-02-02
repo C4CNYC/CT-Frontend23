@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { alpha, styled } from "@mui/material/styles";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { Iconify } from "../iconify";
 import RejectionFiles from "./errors/RejectionFiles";

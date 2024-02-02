@@ -10,7 +10,7 @@ import { FormProvider, useSnackbar } from "@components";
 import { generateRandomEmoji } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
 import SingUp from "../teacher/SingUp";
@@ -68,7 +68,7 @@ export default function StudentStepper(): React.ReactElement {
         role: Role.Student,
         emojiAvatar: randomEmoji,
       });
-    } catch (error) {
+    } catch (error: any) {
       methods.setError("root", {
         ...error,
         message: error.message,

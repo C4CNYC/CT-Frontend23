@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { IFriend } from "src/redux/interfaces/friends.interface";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 interface NavItemProps {
   onClick?: () => void

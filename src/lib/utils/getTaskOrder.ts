@@ -1,7 +1,7 @@
 import { type DropResult } from "@hello-pangea/dnd";
 
-import { BaseResponseInterface } from "@utils";
-import { type IAssignmentsCard } from "src/@types/assignments";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
+import { type IAssignmentsCard } from "../../types/assignments";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 
 // solution for count order depend of new position

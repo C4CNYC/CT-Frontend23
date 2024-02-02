@@ -17,7 +17,7 @@ import {
   useGetGoogleClassesQuery,
   useMigrateGoogleClassesStudentsMutation,
 } from "src/redux/services/manager/students-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { Iconify } from "../iconify";
 import { useSnackbar } from "../snackbar";
@@ -68,7 +68,7 @@ export default function ClassroomModal({
       }).unwrap();
       enqueueSnackbar(translate("messages_migrate"));
       setOpen(false);
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

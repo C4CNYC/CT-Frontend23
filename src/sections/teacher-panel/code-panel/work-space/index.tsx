@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import SwipeableViews from "react-swipeable-views";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 
 import { globalCodePanelAtom } from "../atoms/global-code-panel.atom";

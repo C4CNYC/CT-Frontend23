@@ -1,4 +1,4 @@
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 import { useMemo, useEffect, useRef } from "react";
 
 import { EmitSocketEvents, SubscribedEvents } from "../utils/socket";

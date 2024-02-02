@@ -4,7 +4,7 @@ import { CgClose } from "@react-icons/all-files/cg/CgClose";
 
 import { Box, Typography } from "@mui/material";
 
-import { type IValidationMap } from "src/utils/validationMaping";
+import { type IValidationMap } from "src/lib/utils/validationMaping";
 
 import { CheckerIcon } from "../CheckersIcon";
 import CheckersItemButton from "../checkers-item-button";

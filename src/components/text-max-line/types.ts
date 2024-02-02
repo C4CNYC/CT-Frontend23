@@ -12,6 +12,6 @@ export interface TextMaxLineProps extends IProps {
   line?: number;
   asLink?: boolean;
   persistent?: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   variant?: Variant;
 }
