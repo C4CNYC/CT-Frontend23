@@ -4,7 +4,7 @@ import { FormGroup, Stack, Typography, useTheme } from "@mui/material";
 
 import { RHFSelect } from "@components";
 import { ISkill } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import SkillsAutocomplete from "./components/SkillsAutocomplete";
 import TimeController from "./components/TimeController";

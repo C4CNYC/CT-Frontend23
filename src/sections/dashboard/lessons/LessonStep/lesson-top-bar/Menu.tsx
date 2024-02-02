@@ -18,7 +18,7 @@ import { Box } from "@mui/system";
 import { Iconify, MenuPopover } from "@components";
 import { PATH_AUTH } from "@routes/paths";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { menuConfig } from "./menu-config";
 

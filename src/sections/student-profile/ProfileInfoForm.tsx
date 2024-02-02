@@ -23,7 +23,7 @@ import {
   useUdpateStudentProfileAvatarMutation,
   useUpdateStudentProfileMutation,
 } from "src/redux/services/auth";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const UpdateUserSchema = Yup.object().shape({
   firstName: Yup.string(),
@@ -102,7 +102,7 @@ export default function ProfileInfoForm({
         updateStudentAvatar({ file }).unwrap();
       }
       enqueueSnackbar(translate("messages_update_success"));
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError.data.message, {
         variant: "error",

@@ -96,7 +96,7 @@ export default function ProfileForm({
         if (!photoURL) return;
         await updateAvatar(currentUser?.id, photoURL);
       }
-    } catch (error) {
+    } catch (error: any) {
       const typedError = error as APIError;
       enqueueSnackbar(typedError?.data?.message, {
         variant: "error",

@@ -42,7 +42,7 @@ import {
   useStudentLeftClassMutation,
 } from "src/redux/services/manager/students-manager";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import MemberRow from "./MemberRow";
 
@@ -166,7 +166,7 @@ export default function MemberCard({ activeTab }: IMemberCardProps) {
         classId: query.id as string,
         student_id: studentId,
       }).unwrap();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

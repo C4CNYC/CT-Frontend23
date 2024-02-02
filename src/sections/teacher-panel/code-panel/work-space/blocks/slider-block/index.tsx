@@ -8,7 +8,7 @@ import { Box } from "@mui/system";
 
 import { LoaderDeleyContent } from "@components";
 import { globalCodePanelAtom } from "@sections/teacher-panel/code-panel/atoms/global-code-panel.atom";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { LessonContentType } from "src/redux/services/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/services/interfaces/courseUnits.interface";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";

@@ -8,7 +8,7 @@ import { FormProvider, RHFSelect, RHFSwitch } from "@components";
 import { useUpdateSchoolSettingsMutation } from "src/redux/services/manager/schools-manager";
 import { setSchoolSettings } from "src/redux/slices/schoolSettings";
 import { dispatch } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { SchoolSettings } from "../../../../redux/services/interfaces/school.interface";
 

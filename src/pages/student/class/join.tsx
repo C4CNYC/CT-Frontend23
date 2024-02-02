@@ -24,7 +24,7 @@ import {
 import { StudentDashboardLayout } from "@layouts/dashboard";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import { useJoinClassMutation } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 JoinClass.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>
@@ -56,7 +56,7 @@ export default function JoinClass(): React.ReactElement {
       if (status === "joined") {
         push(STUDENT_PATH_DASHBOARD.class.id(tribe.id));
       }
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

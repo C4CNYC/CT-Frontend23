@@ -5,7 +5,7 @@ import { FaChevronRight } from "@react-icons/all-files/fa/FaChevronRight";
 import { useSelector } from "react-redux";
 import { RootState } from "src/redux/store";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   Badge,

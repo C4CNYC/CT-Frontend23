@@ -29,7 +29,7 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { useProfileQuery } from "src/redux/services/auth";
 import { Role } from "src/redux/services/enums/role.enum";
 import { setStudentMode } from "src/redux/slices/global";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { useAuthContext } from "../../../auth/useAuthContext";
 

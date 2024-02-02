@@ -6,7 +6,7 @@ import { alpha, useTheme } from "@mui/material/styles";
 
 // utils
 import { bgBlur } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 //
 import { IconButtonAnimate } from "../../animate";

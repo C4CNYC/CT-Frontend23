@@ -4,7 +4,7 @@ import { HiMenuAlt2 } from "@react-icons/all-files/hi/HiMenuAlt2";
 
 import { Button, Stack, useMediaQuery, useTheme } from "@mui/material";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ILesson } from "src/redux/interfaces/content.interface";
 
 import { SWITCH_BTN_SX, getLessonListSx } from "./constants";

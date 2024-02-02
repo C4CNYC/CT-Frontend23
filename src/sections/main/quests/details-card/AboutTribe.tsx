@@ -4,7 +4,7 @@ import { Card, CardHeader, Link, Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,

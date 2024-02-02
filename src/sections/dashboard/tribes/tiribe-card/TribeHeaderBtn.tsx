@@ -7,7 +7,7 @@ import { ImExit } from "@react-icons/all-files/im/ImExit";
 import { Box, Button, IconButton } from "@mui/material";
 
 import { MenuPopover } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ExitTribeDialog from "../exitTribeDialog";
 

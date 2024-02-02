@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IFilterCoursesAutocomplete {
   courseId: string;

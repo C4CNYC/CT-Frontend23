@@ -35,7 +35,7 @@ import {
   useUpdateCourseAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
 import { useManagerGetCourseQuery } from "src/redux/services/manager/courses-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import DetailsStep from "./DetailsStep";
 import SettingsStep from "./SettingsStep";

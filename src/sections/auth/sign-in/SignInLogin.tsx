@@ -18,8 +18,8 @@ import {
 import { RHFTextField, useSnackbar } from "@components";
 import { styledRegisterInput } from "@sections/on-boarding-register/styles";
 import { useAuthContext } from "src/auth/useAuthContext";
-import { STUDENT_PATH_AFTER_LOGIN } from "src/config-global";
-import { useTranslate } from "src/utils/translateHelper";
+import { STUDENT_PATH_AFTER_LOGIN } from "../../../config";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IProps {
   isValid?: boolean;
@@ -42,7 +42,7 @@ export default function SignInLogin({
       try {
         await loginWithGoogle(token);
         router.push(STUDENT_PATH_AFTER_LOGIN);
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
       }
       setIsLoading(false);

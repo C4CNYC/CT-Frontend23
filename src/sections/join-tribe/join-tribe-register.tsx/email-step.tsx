@@ -32,7 +32,7 @@ export default function EmailStep({
     onSuccess: async ({ access_token: token }) => {
       try {
         registerWithGoogle(token, Role.Student);
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.message, { variant: "error" });
       }
     },

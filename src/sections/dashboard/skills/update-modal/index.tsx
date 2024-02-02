@@ -18,7 +18,7 @@ import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
 } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const IntegrationSchema = Yup.object().shape({
   name: Yup.string().required("Skill name is required"),

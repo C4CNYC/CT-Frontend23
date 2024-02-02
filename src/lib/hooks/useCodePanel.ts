@@ -35,9 +35,9 @@ import {
   setUnitId,
 } from "src/redux/slices/code-panel-global";
 import type { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
-import { useGetModuleWithLessonsQuery } from "../redux/services/manager/modules-student";
+import { useGetModuleWithLessonsQuery } from "../../redux/services/manager/modules-student";
 import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
 import { resetLessonEvent } from "src/components/real-time-editor"
 

@@ -16,9 +16,9 @@ import {
 import { ConfirmDialog, Iconify, Label, MenuPopover } from "@components";
 import { Status } from "src/redux/enums/assignments.enum";
 import { IAssignmentFull } from "src/redux/interfaces/assignment.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
-import { fDate } from "../../../utils/formatTime";
+import { fDate } from "../../../lib/utils/formatTime";
 import AssignmentDrawer from "./AssignmentDrawer";
 
 interface Props {

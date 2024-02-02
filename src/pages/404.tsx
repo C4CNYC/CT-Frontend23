@@ -9,7 +9,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 import CompactLayout from "@layouts/compact";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 Page404.getLayout = (page: React.ReactElement) => (
   <CompactLayout>{page}</CompactLayout>

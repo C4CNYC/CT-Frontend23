@@ -6,7 +6,7 @@ import { Control, Controller } from "react-hook-form";
 import { Box, Stack, Typography } from "@mui/material";
 
 import { RHFTextField, RHFUploadAvatar } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { FormAddClassProps } from ".";
 

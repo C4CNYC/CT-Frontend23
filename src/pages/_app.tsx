@@ -1,55 +1,39 @@
-// i18n
-// next
-import { NextPage } from "next";
-import { AppProps } from "next/app";
-import Head from "next/head";
+import { NextPage } from "next"
+import { AppProps } from "next/app"
+import Head from "next/head"
 
-// ----------------------------------------------------------------------
-import { CacheProvider, EmotionCache } from "@emotion/react";
-// theme
-import { ThemeProvider } from "@theme/index";
-// lazy image
-import "react-lazy-load-image-component/src/effects/blur.css";
-// redux
-import { Provider as ReduxProvider } from "react-redux";
-// scroll bar
-import "simplebar/src/simplebar.css";
-// slick-carousel
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+import { CacheProvider, EmotionCache } from "@emotion/react"
+import { ThemeProvider } from "src/theme"
+import { Provider as ReduxProvider } from "react-redux"
 
-// @mui
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-
-// components
+import { LocalizationProvider } from "@mui/x-date-pickers"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 
 import {
   MotionLazyContainer,
-} from "src/components/animate/MotionLazyContainer";
+} from "src/components/animate/MotionLazyContainer"
 import {
   SettingsProvider,
   ThemeSettings,
-} from "src/components/settings";
+} from "src/components/settings"
 import {
   SnackbarProviderWrapper,
-} from "src/components/snackbar";
+} from "src/components/snackbar"
 
 import {
   ProgressBar,
-} from "src/components/progress-bar";
+} from "src/components/progress-bar"
 
-// utils
-import { createEmotionCache } from "@utils";
-import { AuthProvider } from "src/auth/JwtContext";
-// locales
-import ThemeLocalization from "src/locales";
-import "src/locales/i18n";
-// redux
-import { store } from "src/redux/store";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { createEmotionCache } from "src/lib/utils/createEmotionCache"
+import { AuthProvider } from "src/auth/JwtContext"
+import ThemeLocalization from "src/locales"
+import "src/locales/i18n"
+import { store } from "src/redux/store"
 
-const clientSideEmotionCache = createEmotionCache();
+import "react-lazy-load-image-component/src/effects/blur.css"
+import "simplebar/dist/simplebar.css"
+
+const clientSideEmotionCache = createEmotionCache()
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
@@ -60,41 +44,40 @@ interface MyAppProps extends AppProps {
   Component: NextPageWithLayout;
 }
 
-export default function MyApp(props: MyAppProps): React.ReactElement {
-  const { Component, pageProps, emotionCache = clientSideEmotionCache } = props;
+export default function MyApp (props: MyAppProps): React.ReactElement {
+  const {
+    Component,
+    pageProps,
+    emotionCache = clientSideEmotionCache
+  } = props
 
-  const getLayout = Component.getLayout ?? ((page) => page);
+  const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        <meta name="viewport" content="initial-scale=1, width=device-width"/>
       </Head>
-
       <ReduxProvider store={store}>
-        <GoogleOAuthProvider
-          clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH_CLIENT_ID as string}
-        >
-          <AuthProvider>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <SettingsProvider>
-                <MotionLazyContainer>
-                  <ThemeProvider>
-                    <ThemeSettings>
-                      <ThemeLocalization>
-                        <SnackbarProviderWrapper>
-                          <ProgressBar />
-                          {getLayout(<Component {...pageProps} />)}
-                        </SnackbarProviderWrapper>
-                      </ThemeLocalization>
-                    </ThemeSettings>
-                  </ThemeProvider>
-                </MotionLazyContainer>
-              </SettingsProvider>
-            </LocalizationProvider>
-          </AuthProvider>
-        </GoogleOAuthProvider>
+        <AuthProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <SettingsProvider>
+              <MotionLazyContainer>
+                <ThemeProvider>
+                  <ThemeSettings>
+                    <ThemeLocalization>
+                      <SnackbarProviderWrapper>
+                        <ProgressBar/>
+                        {getLayout(<Component {...pageProps} />)}
+                      </SnackbarProviderWrapper>
+                    </ThemeLocalization>
+                  </ThemeSettings>
+                </ThemeProvider>
+              </MotionLazyContainer>
+            </SettingsProvider>
+          </LocalizationProvider>
+        </AuthProvider>
       </ReduxProvider>
     </CacheProvider>
-  );
+  )
 }

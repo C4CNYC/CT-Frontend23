@@ -17,7 +17,7 @@ import Carousel from "react-slick";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 import { EmptyContent, LoadingScreen } from "@components";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { LessonContentType } from "src/redux/enums/lesson-content-type.enum";
 import { ILessonContent } from "src/redux/interfaces/content.interface";
 import { IIntegration } from "src/redux/interfaces/integration.interface";
@@ -30,7 +30,7 @@ import { useSelector } from "src/redux/store";
 import BrowserView, {
   CodeDocument,
 } from "src/sections/code-editor-panel/work-space/blocks/view-block/browser-view/index";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import BaseBlock from "../base-block";
 import { LOADER_SCREEN_SX, getBoxSx, getCarouselSettings } from "./constants";

@@ -26,7 +26,7 @@ import {
   useUpdateSkillAssignmentMutation,
 } from "src/redux/services/manager/assignments-manager";
 import { useGetSkillQuery } from "src/redux/services/manager/skills-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface ISkillsAutocompleteProps {
   setAssignmentsSkillsId: (s: ISkill[]) => void;
@@ -85,7 +85,7 @@ export default function SkillsAutocomplete({
             );
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         enqueueSnackbar(error.data.message, { variant: "error" });
       }
     }

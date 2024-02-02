@@ -116,7 +116,7 @@ export default function ProsaMirrorView({
   ];
 
   const { manager, state } = useRemirror({
-    extensions,
+    extensions: extensions as any,
     content: isJson(multimediaValue) ? JSON.parse(multimediaValue)?.doc : "",
     stringHandler: "html",
   });

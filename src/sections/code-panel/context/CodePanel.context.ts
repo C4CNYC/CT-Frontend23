@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { AuthUserType } from "src/auth/types";
 import {
   ILesson,

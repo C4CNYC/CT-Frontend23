@@ -3,8 +3,8 @@ import { MdCelebration } from "@react-icons/all-files/md/MdCelebration";
 
 import { Box, Stack, Typography } from "@mui/material";
 
-import { ICourse } from "@types";
-import { useTranslate } from "src/utils/translateHelper";
+import { ICourse } from "src/types";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   course: ICourse;

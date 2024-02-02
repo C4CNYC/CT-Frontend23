@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 
 import { ISchool } from "../../slices/global";

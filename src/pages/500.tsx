@@ -13,7 +13,7 @@ import { Button, Typography } from "@mui/material";
 import { MotionContainer, varBounce } from "@components";
 // layouts
 import CompactLayout from "@layouts/compact";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // ----------------------------------------------------------------------
 

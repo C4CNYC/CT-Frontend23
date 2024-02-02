@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { LoadingScreen } from "@components";
 import {
   STUDENT_PATH_AFTER_LOGIN,
-} from "src/config-global";
+} from "../config";
 
 import { useAuthContext } from "./useAuthContext";
 

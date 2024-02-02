@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { Unit } from "src/redux/interfaces/challenges.interface";
 import { ILesson } from "src/redux/interfaces/content.interface";
 

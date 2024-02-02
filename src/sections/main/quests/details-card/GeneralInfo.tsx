@@ -4,7 +4,7 @@ import { Card, Divider, Skeleton, Stack, Typography } from "@mui/material";
 
 import { useGetAssignmentListStudentQuery } from "src/redux/services/manager/assignments-student";
 import { useGetClassStudentsQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IGeneralInfo {
   activeTab: boolean;

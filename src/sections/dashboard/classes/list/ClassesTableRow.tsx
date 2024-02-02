@@ -23,11 +23,11 @@ import {
   useSnackbar,
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { useStudentJoinClassMutation } from "src/redux/services/manager/students-manager";
 import { RootState } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassPreferences from "../modal";
 
@@ -75,7 +75,7 @@ export default function ClassesTableRow({
         student_id: myStudentProfileId ?? "",
       }).unwrap();
       enqueueSnackbar(translate("classes_msg_joined_to_class"));
-    } catch (e) {
+    } catch (e: any) {
       enqueueSnackbar(translate("messages_error"), { variant: "error" });
     }
   };

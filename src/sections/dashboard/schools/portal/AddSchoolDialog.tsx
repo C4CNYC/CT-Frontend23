@@ -15,7 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { FormProvider, RHFSelect, RHFTextField } from "@components";
 import { useCreateOrganizationSchoolMutation } from "src/redux/services/admin/school-amdin";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { countries } from "../../../../assets/data";
 

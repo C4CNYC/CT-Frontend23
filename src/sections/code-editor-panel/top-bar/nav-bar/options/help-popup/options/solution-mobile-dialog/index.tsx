@@ -13,7 +13,7 @@ import {
 
 import { Iconify } from "src/components/iconify";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   COPY_BLOCK_CUSTOM_STYLES,
@@ -64,7 +64,6 @@ export const SolutionMobileDialog: FC<SolutionMobileDialogProps> = ({
             text={solutionCode || translate(NO_SOLUTION_TEXT)}
             language="html"
             theme={dracula}
-            wrapLines
             customStyle={COPY_BLOCK_CUSTOM_STYLES}
           />
         </DialogContent>

@@ -15,10 +15,10 @@ import { alpha, useTheme } from "@mui/material/styles";
 
 // utils
 import { bgBlur } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 // config
-import { NAV } from "../../../config-global";
+import { NAV } from "../../../config";
 //
 import { Iconify } from "../../iconify";
 import { Scrollbar } from "../../scrollbar";

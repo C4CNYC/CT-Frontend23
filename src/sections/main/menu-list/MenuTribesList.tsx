@@ -25,7 +25,7 @@ import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { StyledSubheader } from "src/components/nav-section/vertical/styles";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useGetStudentClassesQuery } from "src/redux/services/manager/classes-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import JoinClassModal from "./JoinTribeModal";
 import TribeListItem from "./TribesListItem";

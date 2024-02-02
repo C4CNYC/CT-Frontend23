@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 export interface IAssignments {
   id: string;

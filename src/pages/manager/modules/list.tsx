@@ -15,13 +15,13 @@ import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
-// import { getCountTakingElment } from "src/utils/countTakingElments";
+// import { getCountTakingElment } from "src/lib/utils/countTakingElments";
 import SkeletonList, {
   DefaultSkeletonItem,
 } from "@sections/dashboard/skeleton/skeletonList";
 import { IModulesSearchParams } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import FilterModules from "./filter";
 

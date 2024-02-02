@@ -67,7 +67,7 @@ export default function InviteForm(): React.ReactElement {
         pathname: PATH_AUTH.signIn,
         query: { tenant_name },
       });
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.data.message, { variant: "error" });
     }
   };

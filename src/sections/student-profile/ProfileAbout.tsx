@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import { Iconify } from "src/components/iconify";
 import { fDateTime } from "@utils";
 import { IUser } from "src/redux/interfaces/auth.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 const StyledIcon = styled(Iconify)(({ theme }) => ({
   width: 20,

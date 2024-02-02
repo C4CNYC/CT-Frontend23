@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Box, Dialog, DialogTitle, IconButton } from "@mui/material";
 
 import { IAuthor } from "src/redux/services/interfaces/author.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AuthorForm from "./AuthorForm";
 

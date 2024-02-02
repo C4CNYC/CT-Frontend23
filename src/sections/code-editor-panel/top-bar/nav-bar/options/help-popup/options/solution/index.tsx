@@ -14,7 +14,6 @@ const Solution: FC = () => {
       text={solutionCode || NO_SOLUTION_TEXT}
       language="html"
       theme={dracula}
-      wrapLines
       customStyle={COPY_BLOCK_STYLES}
     />
   );

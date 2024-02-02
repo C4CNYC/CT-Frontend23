@@ -49,7 +49,7 @@ export function RHFRemirror({
       new BoldExtension(),
       new ItalicExtension(),
       new UnderlineExtension(),
-    ],
+    ] as any,
     content: field.value.doc ?? "",
     stringHandler: "html",
   });

@@ -12,7 +12,7 @@ import { Stack } from "@mui/system";
 
 import { CustomBreadcrumbs } from "@components";
 import { useCopyToClipboard } from "@hooks";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import FileManagerFileItem from "src/components/file-manager/file-manager-file-item";
 import FileManagerFolderItem from "src/components/file-manager/file-manager-folder-item";
 import FileManagerNewFolderDialog from "src/components/file-manager/file-manager-new-folder-dialog";
@@ -24,7 +24,7 @@ import {
   useGetAllMediaQuery,
   useUploadMediaFileMutation
 } from "src/redux/services/manager/media-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export interface MediaModalProps {
   children: React.ReactElement;
@@ -60,7 +60,7 @@ export function MediaModal({
   try {
     const commands = useCommands();
     insertImage = commands.insertImage;
-  } catch (e) {
+  } catch (e: any) {
     insertImage = ({ src }: { src: string }) => {
       copy(src);
       enqueueSnackbar(translate("image_url_copied_msg"));

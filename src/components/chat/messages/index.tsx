@@ -6,7 +6,7 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 import { convertTimestamp } from "@sections/chat/helpers";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 
 interface IMessages {

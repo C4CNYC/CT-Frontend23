@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Button, SelectChangeEvent } from "@mui/material";
 // types
-import { IFolderManager } from 'src/@types/file';
+import { IFolderManager } from '../../types/file';
 // components
 import { Iconify } from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';

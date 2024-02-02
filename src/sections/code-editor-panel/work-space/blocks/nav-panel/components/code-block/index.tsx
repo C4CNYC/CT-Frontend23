@@ -23,7 +23,7 @@ import { getRandomIndex } from "../../hook/utils";
 
 import styles from "./styles"
 import { Socket } from "socket.io-client"
-import { useSocket } from "src/hooks/useSocket"
+import { useSocket } from "src/lib/hooks/useSocket"
 
 let previousValue: string | null = null;
 let checkValueTimeout: any | null = null;

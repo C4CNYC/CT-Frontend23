@@ -22,9 +22,9 @@ import {
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateCourseDialog from "@sections/dashboard/courses/CreateCourseDialog";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ICourse } from "src/redux/services/interfaces/courseUnits.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { useDeleteCourseMutation } from "../../../../redux/services/manager/courses-manager";
 import * as Yup from "yup";

@@ -1,8 +1,8 @@
 import { Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { ILesson } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import AuthorsSection from "./AuthorsSection";
 import BriefSection from "./BriefSection";

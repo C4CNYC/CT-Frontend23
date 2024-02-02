@@ -2,7 +2,7 @@
 import { palette } from "@theme/palette";
 
 //
-import { ThemeColorPresetsValue } from "./types";
+import type { ThemeColorPresetsValue } from "./types";
 
 // ----------------------------------------------------------------------
 

@@ -2,7 +2,7 @@ import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 
 import { Button, Typography } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IGoogleBtn {
   onClick: () => void;

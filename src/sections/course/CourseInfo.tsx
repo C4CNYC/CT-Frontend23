@@ -6,7 +6,7 @@ import { SlArrowUp } from "@react-icons/all-files/sl/SlArrowUp";
 import { Button, Stack, Typography, useTheme } from "@mui/material";
 
 import { Image } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import CourseSummarily from "./CourseSummarily.1";
 import {

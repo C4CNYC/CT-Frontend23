@@ -13,7 +13,7 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { ICON_BTN_SX, LINK_SX, STACK_SX, getBaseStackSx } from "./constants";
 

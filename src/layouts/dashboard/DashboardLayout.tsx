@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 // components
 import { useSettingsContext } from "src/components/settings";
 // hooks
-import { useResponsive } from "src/hooks/useResponsive";
+import { useResponsive } from "src/lib/hooks/useResponsive";
 
 // auth
 import AuthGuard from "../../auth/AuthGuard";

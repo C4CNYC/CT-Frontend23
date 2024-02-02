@@ -21,7 +21,7 @@ import {
   useGetMySchoolsQuery,
   useUpdateSchoolProfileMutation,
 } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 
@@ -84,7 +84,7 @@ export default function AddSchool(): React.ReactElement {
       }).unwrap();
       localStorage.setItem("ON-BOARDING", "on-boarding");
       reload();
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

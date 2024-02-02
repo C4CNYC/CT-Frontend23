@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { Iconify, RHFTextField } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { styledRegisterInput } from "../styles";
 

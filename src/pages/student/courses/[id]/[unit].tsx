@@ -31,7 +31,7 @@ import {
 } from "src/redux/services/manager/courses-student";
 import { useGetStudentLastVisitedUnitAndLessonQuery } from "src/redux/services/manager/lesson-student";
 import { useGetModuleWithLessonsQuery } from "src/redux/services/manager/modules-student";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 ModulePage.getLayout = (page: React.ReactElement) => (
   <StudentDashboardLayout>{page}</StudentDashboardLayout>

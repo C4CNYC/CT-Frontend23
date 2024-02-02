@@ -8,7 +8,7 @@ import { Container, Stack } from "@mui/material";
 import { useOffSetTop } from "@hooks";
 
 // config
-import { HEADER } from "../../config-global";
+import { HEADER } from "../../config";
 
 //
 const Header = dynamic(async () => await import("./Header"), { ssr: false });

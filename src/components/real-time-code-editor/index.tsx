@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import { CodeEditor } from "./editor";
-import { getDocument } from "../../codemirror/extensions/collab";
+import { getDocument } from "../../lib/codemirror/extensions/collab";
 import { useSocket } from "@hooks";
 import { Socket } from "socket.io-client"
 
@@ -44,7 +44,7 @@ export const RealTimeCodeEditor = ({
         version,
         doc: doc.toString(),
       }));
-    } catch (e) {
+    } catch (e: any) {
       // If no data is returned, set up data for offline editing
       setState((prev) => ({
         ...prev,

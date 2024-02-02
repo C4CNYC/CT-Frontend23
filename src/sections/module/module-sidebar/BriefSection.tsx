@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { convertDuration } from "@utils";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IBriefSectionProps {
   duration: string;

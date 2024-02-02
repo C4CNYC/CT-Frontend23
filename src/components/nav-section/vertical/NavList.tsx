@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Collapse } from "@mui/material";
 
-import useActiveLink from "src/hooks/useActiveLink";
+import useActiveLink from "src/lib/hooks/useActiveLink";
 
 import { NavListProps } from "../types";
 import NavItem from "./NavItem";

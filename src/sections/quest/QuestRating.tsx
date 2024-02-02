@@ -16,7 +16,7 @@ import {
 import { useTheme } from "@mui/system";
 
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import {
   QUEST_DIVIDER,

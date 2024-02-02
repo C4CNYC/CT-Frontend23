@@ -10,7 +10,6 @@ const Solution = (): React.ReactElement => {
       text={solutionCode || "NO SOLUTION"}
       language="html"
       theme={dracula}
-      wrapLines
       customStyle={{
         height: "150px",
         overflowY: "scroll",

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Box, Dialog } from "@mui/material";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { IClass } from "src/redux/interfaces/class.interface";
 
 import JoinTribeContent from "./JoinTribeContent";

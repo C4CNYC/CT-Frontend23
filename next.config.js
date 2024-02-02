@@ -19,6 +19,10 @@ const nextConfig = {
     // !! WARN !!
     // ignoreBuildErrors: true,
   },
+  transpilePackages: ["mui-tel-input"],
+  // experimental: {
+  //   fallbackNodePolyfills: false
+  // }
   // see https://github.com/react-icons/react-icons/issues/786
   // modularizeImports: {
   //   "react-icons/?(((\\w*)?/?)*)": {

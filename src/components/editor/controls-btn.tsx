@@ -6,7 +6,7 @@ import { TbPhoto } from "@react-icons/all-files/tb/TbPhoto";
 import { Button } from "@mui/material";
 
 import { MediaModal } from "@sections/dashboard/medias/MediaModal";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export function TipsBtn(): React.ReactElement {
   const translate = useTranslate();

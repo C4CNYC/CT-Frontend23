@@ -2,7 +2,7 @@ import Preferences from "@sections/dashboard/lessons/LessonStep/Modals/Preferenc
 import { ChallengeBtn, MediaBtn, SettingsBtn, TipsBtn } from "./controls-btn";
 import { Stack, SxProps } from "@mui/material";
 import { ILessonContent } from "../../redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import { Theme } from "@mui/system";
 import Validation from "@sections/dashboard/lessons/LessonStep/Modals/Validation";
 

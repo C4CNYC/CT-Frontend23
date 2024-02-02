@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import { loadLanguage } from "@uiw/codemirror-extensions-langs";
+// import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { useAtom } from "jotai";
-import { dracula } from "thememirror";
+import { dracula } from "@uiw/codemirror-theme-dracula";
 
 import { Box } from "@mui/system";
 
@@ -14,8 +14,9 @@ import { IIntegration } from "src/redux/services/interfaces/integration.interfac
 
 import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";
 import { ILessonContent } from "../../../../../redux/services/interfaces/courseUnits.interface";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import MenuItems from "src/components/editor/MenuItems";
+import { html } from "@codemirror/lang-html"
 
 interface Props {
   content: string;
@@ -67,9 +68,8 @@ export default function StepCode({
           value={value}
           theme={dracula}
           height="calc(100vh - 96px)"
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          extensions={[loadLanguage("html")]}
+          // extensions={[loadLanguage("html")]}
+          extensions={[html()]}
           onChange={(value) => {
             setValue(value);
           }}

@@ -9,7 +9,7 @@ import { Stack } from "@mui/material";
 import { FormProvider, useSnackbar } from "@components";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { Role } from "src/redux/services/enums/role.enum";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { RegisterStudenTeacher, SingLink } from "../links";
 import AddSchool from "./AddSchool";
@@ -65,7 +65,7 @@ export default function TeacherStepper(): React.ReactElement {
         lastName: data.lastName,
         role: Role.Manager,
       });
-    } catch (error) {
+    } catch (error: any) {
       methods.setError("root", {
         ...error,
         message: error.message,

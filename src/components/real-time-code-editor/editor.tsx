@@ -8,13 +8,14 @@ import { indentUnit } from "@codemirror/language";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { basicSetup } from "@uiw/codemirror-extensions-basic-setup";
-import { langs } from "@uiw/codemirror-extensions-langs";
-import { Socket } from "socket.io-client";
+// import { langs } from "@uiw/codemirror-extensions-langs";
+import type { Socket } from "socket.io-client";
 
 import { voidFunction } from "@utils";
 
-import { peerExtension } from "../../codemirror/extensions/collab";
-import { cursorExtension } from "../../codemirror/extensions/cursors";
+import { peerExtension } from "../../lib/codemirror/extensions/collab";
+import { cursorExtension } from "../../lib/codemirror/extensions/cursors";
+import { html } from "@codemirror/lang-html"
 // import { State } from "../../sections/teacher-panel/code-panel/work-space/blocks/code-editor-block";
 
 export interface State {
@@ -57,7 +58,7 @@ export const CodeEditor = ({
         // keymap.of(defaultKeymap),
         indentUnit.of("\t"),
         basicSetup(),
-        langs.html(),
+        html(),
         peerExtension(socket, state.version ?? 0, cursorId, roomId),
         cursorExtension(cursorText),
       ],

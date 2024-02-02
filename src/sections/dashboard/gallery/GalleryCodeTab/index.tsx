@@ -1,7 +1,8 @@
 import React from "react";
 
-import { loadLanguage } from "@uiw/codemirror-extensions-langs";
+// import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
+import { html } from "@codemirror/lang-html"
 
 interface Props {
   code: string;
@@ -17,9 +18,8 @@ export default function GalleryCodeTab({
       value={code}
       style={{ height: "100%" }}
       height="100%"
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      extensions={[loadLanguage("html")]}
+      // extensions={[loadLanguage("html")]}
+      extensions={[html()]}
       onChange={(value) => {
         setCode(value);
       }}

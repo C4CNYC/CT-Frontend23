@@ -12,7 +12,7 @@ import {
 import { Iconify } from "src/components/iconify";
 import { type BaseResponseInterface } from "@utils";
 import { type ILesson } from "src/redux/interfaces/content.interface";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { ICON_BTN_SX, TYP_SX, getButtonSx } from "./constants";
 

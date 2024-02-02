@@ -15,7 +15,7 @@ import { TextMaxLine, MenuPopover, Iconify, ConfirmDialog } from "@components";
 //
 // import SchoolDetailsDrawer from "../portal/SchoolDetailsDrawer";
 import Image from "next/image";
-import { IUserProfileSchool } from "@types";
+import { IUserProfileSchool } from "src/types";
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {

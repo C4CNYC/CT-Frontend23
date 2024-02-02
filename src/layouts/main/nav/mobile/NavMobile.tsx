@@ -11,7 +11,7 @@ import { Iconify } from "src/components/iconify";
 import { Scrollbar } from "src/components/scrollbar";
 
 // config
-import { NAV } from "../../../../config-global";
+import { NAV } from "../../../../config";
 //
 import { NavProps } from "../types";
 import NavList from "./NavList";

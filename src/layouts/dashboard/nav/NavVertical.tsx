@@ -14,7 +14,7 @@ import { useResponsive } from "@hooks";
 import { Role } from "src/redux/services/enums/role.enum";
 import { RootState } from "src/redux/store";
 
-import { NAV } from "../../../config-global";
+import { NAV } from "../../../config";
 import LetsCodeBtn from "./LestCodeBtn";
 import NavToggleButton from "./NavToggleButton";
 import { menuConfig } from "./config-navigation";

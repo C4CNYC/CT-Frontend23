@@ -7,7 +7,7 @@ import { MdOutlineWifiTethering } from "@react-icons/all-files/md/MdOutlineWifiT
 
 import { Collapse, IconButton, Link, Stack, Typography } from "@mui/material";
 
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export default function ClassInfoToggle(): React.ReactElement {
   const [openJoin, setOpenJoin] = useState<boolean>(true);

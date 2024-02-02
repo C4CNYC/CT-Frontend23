@@ -23,7 +23,7 @@ import {
 import { Iconify } from "src/components/iconify";
 import { chatHandlerAtom } from "@sections/code-panel/top-bar/nav-bar/options/chatHendlerAtom";
 import { helpMsgAtom } from "@sections/code-panel/top-bar/nav-bar/options/help-popup/modals/helpMsgAtom";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 // import { useAuthContext } from "src/auth/useAuthContext";
 import { IFriend } from "src/redux/interfaces/friends.interface";
 import { RootState } from "src/redux/store";

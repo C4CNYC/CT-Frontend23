@@ -1,4 +1,4 @@
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 import { ILesson, ILessonContent, IModule } from "./courseUnits.interface";
 import { ILessonContentValidation } from "./lessonContentValidation.interface";

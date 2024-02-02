@@ -6,14 +6,14 @@ import Stack from "@mui/system/Stack";
 
 import { SetFilterType, useFilters } from "@hooks";
 import SkeletonFilter from "@sections/dashboard/skeleton/skeletonFilter";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import {
   ILessonSearchParams,
   IModule,
   IModulesSearchParams,
 } from "src/redux/services/interfaces/courseUnits.interface";
 import { useGetModulesQuery } from "src/redux/services/manager/modules-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface Props {
   filters: ILessonSearchParams;

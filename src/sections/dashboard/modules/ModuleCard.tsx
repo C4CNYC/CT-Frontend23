@@ -22,7 +22,7 @@ import {
 } from "@components";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import { useDeleteModuleMutation } from "../../../redux/services/manager/modules-manager";
 

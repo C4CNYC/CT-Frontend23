@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Box, Collapse, TableProps } from "@mui/material";
 
 // @types
-import { IFile } from "@types";
+import { IFile } from "src/types";
 
 // components
 //

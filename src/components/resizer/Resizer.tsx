@@ -4,6 +4,8 @@ interface Props {
   children: React.ReactNode;
 }
 
+const SP = SplitPane as any
+
 export const ResizerUi = ({
   children,
   ...props
@@ -57,7 +59,7 @@ export const ResizerUi = ({
           }
         `}
       </style>
-      <SplitPane {...props}>{children}</SplitPane>
+      <SP {...props}>{children}</SP>
     </>
   );
 };

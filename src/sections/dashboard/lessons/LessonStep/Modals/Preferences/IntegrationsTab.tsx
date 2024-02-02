@@ -28,7 +28,7 @@ import {
   useGetLessonIntegrationsQuery,
   useRemoveIntegrationMutation,
 } from "src/redux/services/manager/lessons-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 export function IntegrationsTab({
   contentId,

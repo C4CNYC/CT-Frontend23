@@ -36,7 +36,7 @@ import {
   IClassProgressModule,
 } from "src/redux/interfaces/class.interface";
 import { RootState, useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 interface IProgressTable {
   filters: BaseSearchInterface & {

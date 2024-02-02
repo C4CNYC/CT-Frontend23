@@ -10,7 +10,7 @@ import {
 } from "src/components/iconify";
 import { setSlideIndex } from "src/redux/slices/code-panel-global";
 import { setStartTour } from "src/redux/slices/tour";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import EditColors from "./preferences/EditColors";
 import EditorFontSize from "./preferences/EditorFontSize";

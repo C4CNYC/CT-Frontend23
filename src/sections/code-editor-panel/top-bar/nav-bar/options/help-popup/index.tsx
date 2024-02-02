@@ -14,7 +14,7 @@ import {
   Iconify,
   MenuPopover,
 } from "@components";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import HelpQuestionModal from "./modals/HelpQuestion";
 import Solution from "./options/solution";

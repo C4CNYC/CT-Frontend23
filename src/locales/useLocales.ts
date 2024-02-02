@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 
 import { Localization } from "@mui/material/locale";
 
-import { useSettingsContext } from "@components";
-import { localStorageAvailable } from "@utils";
+import { useSettingsContext } from "src/components/settings";
+import { localStorageAvailable } from "src/lib/utils/localStorageAvailable";
 
 import { allLangs, defaultLang } from "./config-lang";
 

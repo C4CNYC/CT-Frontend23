@@ -21,7 +21,7 @@ import { MenuPopover, useSettingsContext, useSnackbar } from "@components";
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
 import ClassPreferences from "@sections/dashboard/classes/modal";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import ShareGroupModal from "src/components/share-group-modal";
 import { IClass } from "src/redux/interfaces/class.interface";
@@ -31,7 +31,7 @@ import {
   useUpdateClassesAvatarMutation,
   useUpdateClassesMutation,
 } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassInfoMain from "./ClassInfoMain";
 import OnceOffNotification from "./OnceOffNotification";

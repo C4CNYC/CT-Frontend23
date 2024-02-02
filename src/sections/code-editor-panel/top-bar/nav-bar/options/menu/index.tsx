@@ -26,7 +26,7 @@ import { UserType } from "@utils";
 import { useAuthContext } from "src/auth/useAuthContext";
 import { setStartTour } from "src/redux/slices/tour";
 import { useSelector } from "src/redux/store";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import MobileHamburger from "./MobileHamburger";
 import config, { ILinks } from "./config";

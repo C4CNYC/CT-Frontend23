@@ -23,12 +23,12 @@ import { Stack } from "@mui/system";
 
 import { useCopyToClipboard } from "@hooks";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 import RoleBasedGuard from "src/auth/RoleBasedGuard";
 import { IClass } from "src/redux/interfaces/class.interface";
 import { Role } from "src/redux/services/enums/role.enum";
 import { useUpdateClassesSettingsMutation } from "src/redux/services/manager/classes-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import ClassroomModal from "../classroom-modal";
 import EmailAddressModal from "../email-address-domain";
@@ -97,7 +97,7 @@ export default function ShareGroupModal({
         request_join_enable: (e.target as HTMLInputElement).value === "true",
       }).unwrap();
       enqueueSnackbar(translate("messages_changes_updated"));
-    } catch (error) {
+    } catch (error: any) {
       enqueueSnackbar(error.message, { variant: "error" });
     }
   };

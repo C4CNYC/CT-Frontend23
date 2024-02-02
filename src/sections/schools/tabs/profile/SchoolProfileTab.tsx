@@ -5,7 +5,7 @@ import { Card, Grid, Stack, Typography } from "@mui/material";
 import { UploadAvatar } from "@components";
 import { fData } from "@utils";
 import { useGetSchoolProfileQuery } from "src/redux/services/manager/schools-manager";
-import { useTranslate } from "src/utils/translateHelper";
+import { useTranslate } from "src/lib/utils/translateHelper";
 
 import SkeletonProfileTab from "./SkeletomProfileTab";
 import ProfileAbout from "./components/ProfileAbout";

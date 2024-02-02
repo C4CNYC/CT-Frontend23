@@ -8,7 +8,7 @@ import { alpha } from "@mui/material/styles";
 
 //
 import { Iconify, IconifyProps } from "../iconify";
-import { useSettingsContext } from "../settings";
+import { useSettingsContext } from "../settings/SettingsContext";
 //
 import StyledNotistack from "./styles";
 

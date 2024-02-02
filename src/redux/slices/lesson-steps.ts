@@ -2,7 +2,7 @@ import { Dispatch, createSlice } from "@reduxjs/toolkit";
 import keyBy from "lodash/keyBy";
 import omit from "lodash/omit";
 
-import { BaseResponseInterface } from "@utils";
+import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
 
 import { ILessonContent } from "../services/interfaces/courseUnits.interface";
 
