@@ -30,7 +30,7 @@ const ProsaMirrorView = dynamic(
 interface ISliderBlock {
   data: Array<ILessonContent & BaseResponseInterface>;
   onSubmitLesson: () => void;
-  onSubmitChalange: (slideId: string) => void;
+  onSubmitChallenge: (slideId: string) => void;
   integrations: Array<IIntegration & BaseResponseInterface>;
 }
 
@@ -46,7 +46,7 @@ const icon = <SlDirections size="20px" color="#43D4DD" />;
 const SliderBlock = ({
   data,
   onSubmitLesson,
-  onSubmitChalange,
+  onSubmitChallenge,
   integrations,
 }: ISliderBlock): React.ReactElement => {
   const theme = useTheme();
@@ -75,7 +75,7 @@ const SliderBlock = ({
 
   const handleNext = (skip = false): void => {
     if (stepHasValidation && !skip) {
-      onSubmitChalange(data[slideIndex].id);
+      onSubmitChallenge(data[slideIndex].id);
     }
     if (hasNextStep) {
       carousel1.current?.slickNext();

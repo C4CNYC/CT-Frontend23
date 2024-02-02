@@ -77,7 +77,7 @@ export default function Index(): React.ReactElement {
     );
   };
 
-  const onSubmitChalange = async (): Promise<void> => {
+  const onSubmitChallenge = async (): Promise<void> => {
     enqueueSnackbar(translate("messages_chalage_comleted"));
   };
 
@@ -146,7 +146,7 @@ export default function Index(): React.ReactElement {
           <Tour />
           <CodePanelContext.Provider
             value={{
-              onSubmitChalange,
+              onSubmitChallenge,
               onSubmitLesson,
               lesson,
               data,

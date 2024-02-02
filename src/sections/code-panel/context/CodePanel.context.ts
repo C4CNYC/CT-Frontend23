@@ -10,7 +10,7 @@ import {
 import { SupportedLang } from "../work-space";
 
 interface ICodePanelContext {
-  onSubmitChalange: (lessonContentId: string) => void;
+  onSubmitChallenge: (lessonContentId: string) => void;
   onSubmitLesson: () => void;
   lesson?: ILesson & BaseResponseInterface;
   data: Array<ILessonContent & BaseResponseInterface>;
@@ -24,9 +24,9 @@ interface ICodePanelContext {
 }
 
 export const CodePanelContext = createContext<ICodePanelContext>({
-  onSubmitChalange: function (lessonContentId: string): void {
+  onSubmitChallenge: function (lessonContentId: string): void {
     throw new Error(
-      "pls provide 'onSubmitChalange' function to context 'CodePanelContext'"
+      "pls provide 'onSubmitChallenge' function to context 'CodePanelContext'"
     );
   },
   onSubmitLesson: function (): void {

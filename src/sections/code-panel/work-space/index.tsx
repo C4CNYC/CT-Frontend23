@@ -21,7 +21,7 @@ const WorkSpace = (): React.ReactElement => {
 
   const {
     lesson,
-    onSubmitChalange,
+    onSubmitChallenge,
     onSubmitLesson,
     data,
     user,
@@ -41,7 +41,7 @@ const WorkSpace = (): React.ReactElement => {
       <Stack px={1} gap={1} display="flex" direction="row" alignItems="stretch">
         {!isInstructionsHidden ? (
           <SliderBlock
-            onSubmitChalange={onSubmitChalange}
+            onSubmitChallenge={onSubmitChallenge}
             onSubmitLesson={onSubmitLesson}
             data={data}
             integrations={lesson?.integrations ?? []}
@@ -68,7 +68,7 @@ const WorkSpace = (): React.ReactElement => {
     >
       <SliderBlock
         onSubmitLesson={onSubmitLesson}
-        onSubmitChalange={onSubmitChalange}
+        onSubmitChallenge={onSubmitChallenge}
         data={data}
         integrations={lesson?.integrations ?? []}
       />
