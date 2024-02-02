@@ -5,7 +5,6 @@ export * from "./baseResponse.interface";
 export * from "./convertDuration";
 export * from "./convertNumber";
 export * from "./countTakingElments";
-export * from "./createEmotionCache";
 export * from "./createRandomAvatar";
 export * from "./cssStyles";
 export * from "./enums/userType.enum";
