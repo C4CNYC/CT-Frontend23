@@ -12,7 +12,7 @@ export interface WorkSpaceProps {
   code: string;
   language: SupportedLang;
   onChangeCode: (code: string) => void;
-  onSubmitChalange: (lessonContentId: string) => Promise<void>;
+  onSubmitChallenge: (lessonContentId: string) => Promise<void>;
   onSubmitLesson: () => Promise<void>;
   lastLessonCode?: string;
 }
