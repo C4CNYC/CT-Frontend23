@@ -1,5 +1,5 @@
 import { SchoolDashboardLayout } from "@layouts/dashboard/SchoolDashboardLayout";
-import { TeacherPanel } from "@sections/teacher-panel";
+// import { TeacherPanel } from "@sections/teacher-panel";
 
 // ----------------------------------------------------------------------
 
@@ -9,6 +9,7 @@ ClassSettingPage.getLayout = (page: React.ReactElement) => (
 
 // ----------------------------------------------------------------------
 
-export default function ClassSettingPage(): React.ReactElement {
-  return <TeacherPanel />;
+export default function ClassSettingPage() {
+  return null;
+  // return <TeacherPanel />;
 }

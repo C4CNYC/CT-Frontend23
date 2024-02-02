@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Grid, Stack } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
 
-import { MANAGER_PATH_DASHBOARD } from "../../../../routes/manager.paths";
+import { MANAGER_PATH_DASHBOARD } from "../../../../../routes/manager.paths";
 
 import QuickRabbitsItem from "./quick-rabbits-item";
 import { QuickRabbitsSideList } from "./quick-rabbits-side-list";

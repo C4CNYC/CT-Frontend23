@@ -12,18 +12,18 @@ import { useDispatch, useSelector } from "react-redux"
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths"
 import type { BottomBarProps } from "@sections/code-editor-panel/bottom-bar"
 import { type LessonManagerProps } from "@sections/code-editor-panel/bottom-bar/lesson-manager"
-import { isValidLastVisitedData } from "@sections/code-editor-panel/helpers"
+// import { isValidLastVisitedData } from "@sections/code-editor-panel/helpers"
 import { getNextLessonId } from "@sections/code-editor-panel/utils/navigation"
 import { WorkSpaceProps } from "@sections/code-editor-panel/work-space/types"
 import { useAuthContext } from "src/auth/useAuthContext"
 import { resetLessonEvent } from "src/components/real-time-editor"
 import { useTranslate } from "src/lib/utils/translateHelper"
-import type { LastVisitedState } from "src/redux/interfaces/content.interface"
+// import type { LastVisitedState } from "src/redux/interfaces/content.interface"
 import { useGetChallangesQuery } from "src/redux/services/manager/challenges-student"
 import {
   useGetLessonContentStudentQuery,
   useGetLessonStudentQuery,
-  useUpdateStudentLastVisitedDataMutation,
+  // useUpdateStudentLastVisitedDataMutation,
 } from "src/redux/services/manager/lesson-student"
 import { useCompleteLessonMutation } from "src/redux/services/manager/progress-student"
 import { setCourseId, setLessonId, setSlideIndex, setUnitId } from "src/redux/slices/code-panel-global"
@@ -61,10 +61,10 @@ export const useCodePanel = (): UseCodePanelReturn => {
   const [confetti, setConfetti] = useState(false)
   const [code, setCode] = useState<string>("")
 
-  const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
-    unitId: null,
-    lessonId: null,
-  })
+  // const [lastVisitedData, setLastVisitedData] = useState<LastVisitedState>({
+  //   unitId: null,
+  //   lessonId: null,
+  // })
 
   const unitId = searchParams.get("unitId")
   const lessonId = searchParams.get("lessonId")
@@ -78,7 +78,7 @@ export const useCodePanel = (): UseCodePanelReturn => {
   )
 
   const [completeLesson] = useCompleteLessonMutation()
-  const [updateLastVisitedDataTrigger] = useUpdateStudentLastVisitedDataMutation()
+  // const [updateLastVisitedDataTrigger] = useUpdateStudentLastVisitedDataMutation()
 
   const {
     data: lessonContent,
@@ -134,11 +134,11 @@ export const useCodePanel = (): UseCodePanelReturn => {
     )
   }
 
-  const updateLastVisitedData = async () => {
-    if (isValidLastVisitedData(lastVisitedData)) {
-      await updateLastVisitedDataTrigger(lastVisitedData).unwrap()
-    }
-  }
+  // const updateLastVisitedData = async () => {
+  //   if (isValidLastVisitedData(lastVisitedData)) {
+  //     await updateLastVisitedDataTrigger(lastVisitedData).unwrap()
+  //   }
+  // }
 
   const onChooseLesson = (lessonId: string, unitId: string) => {
     if (query.lessonId === lessonId) return
@@ -215,18 +215,18 @@ export const useCodePanel = (): UseCodePanelReturn => {
     }
   }, [query.id])
 
-  useEffect(() => {
-    setLastVisitedData({
-      unitId,
-      lessonId,
-    })
-  }, [unitId, lessonId])
-
-  useEffect(() => {
-    return () => {
-      updateLastVisitedData()
-    }
-  }, [lastVisitedData])
+  // useEffect(() => {
+  //   setLastVisitedData({
+  //     unitId,
+  //     lessonId,
+  //   })
+  // }, [unitId, lessonId])
+  //
+  // useEffect(() => {
+  //   return () => {
+  //     updateLastVisitedData()
+  //   }
+  // }, [lastVisitedData])
 
   const isLoadingComplete =
     !!lesson && !isLoadingLessonContent && !isLoadingCourseContent && !isLoadingLesson && query.id != null

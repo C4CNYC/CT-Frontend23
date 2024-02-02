@@ -8,14 +8,14 @@ import { dracula } from "@uiw/codemirror-theme-dracula";
 import { Box } from "@mui/system";
 
 import { ResizerUi } from "@components";
-import { SaveButton } from "src/components/editor/SaveButton";
+import { SaveButton } from "../../../../../components/remirror-editor/SaveButton";
 import { useDebounceCallback } from "@hooks";
 import { IIntegration } from "src/redux/services/interfaces/integration.interface";
 
 import { lessonViewAtom } from "../lesson-atoms/lesson-view-atom";
 import { ILessonContent } from "../../../../../redux/services/interfaces/courseUnits.interface";
 import { BaseResponseInterface } from "src/lib/utils/baseResponse.interface";
-import MenuItems from "src/components/editor/MenuItems";
+import MenuItems from "../../../../../components/remirror-editor/MenuItems";
 import { html } from "@codemirror/lang-html"
 
 interface Props {
