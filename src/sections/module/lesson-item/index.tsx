@@ -26,8 +26,10 @@ import {
   globalCodePanelAtom,
 } from "@sections/code-panel/atoms/global-code-panel.atom";
 import { ILesson } from "src/redux/interfaces/content.interface";
+import { useTranslate } from "src/utils/translateHelper";
 
 import RocketIcon from "../icons/RocketIcon";
+import LessonDialog from "./LessonDialog";
 import TrainingProgress from "./LessonProgress";
 import {
   DURATION_SX,
@@ -36,6 +38,7 @@ import {
   LOCKED_BTN_SX,
   MODE_TITLE_SX,
   SEE_MORE_SX,
+  START_LINK_SX,
   getLessonContentSx,
   getLessonSx,
 } from "./constants";
@@ -66,6 +69,15 @@ export default function LessonItem({
   const [openDetails, setOpenDetails] = useState(false);
   const [, setGlobalCodePanel] = useAtom(globalCodePanelAtom);
   const courseId = useRouter().query.id;
+  const [open, setOpen] = useState(false);
+
+  const openDialog = () => {
+    setOpen(true);
+  };
+
+  const closeDialog = () => {
+    setOpen(false);
+  };
 
   const updateCodePanelAtom = ({
     courseId,
@@ -79,6 +91,8 @@ export default function LessonItem({
       lessonId,
     }));
   };
+
+  const translate = useTranslate();
 
   return (
     <Stack sx={getLessonSx(theme)}>
@@ -131,18 +145,7 @@ export default function LessonItem({
               courseId as string
             )}?unitId=${unitId}&lessonId=${lesson.id}`}
             underline="none"
-            sx={{
-              display: "flex",
-              gap: 3,
-              p: 0.5,
-              pl: 2,
-              alignItems: "center",
-              borderRadius: "80px",
-              mt: "auto",
-              color: "#fff",
-              background:
-                "linear-gradient(308.87deg, #FFF739 -19.29%, #FF6DC5 89.25%)",
-            }}
+            sx={START_LINK_SX}
             onClick={() => {
               updateCodePanelAtom({
                 courseId: courseId as string,
@@ -151,18 +154,32 @@ export default function LessonItem({
               });
             }}
           >
-            <Typography variant="h5"> Start </Typography>
+            <Typography variant="h5"> {translate("actions_start")} </Typography>
             <Box sx={LINK_BTN_SX}>
               <TbPlayerPlay size={30} style={{ color: "#364954" }} />
             </Box>
           </Link>
         ) : (
-          <Box sx={LOCKED_BTN_CONT_SX}>
-            <Typography variant="h5"> Start </Typography>
-            <Box sx={LOCKED_BTN_SX}>
-              <HiLockClosed size={30} style={{ color: "#C4CDD5" }} />
+          <>
+            <Box
+              sx={LOCKED_BTN_CONT_SX}
+              onClick={() => {
+                openDialog();
+              }}
+            >
+              <Typography variant="h5">{translate("actions_start")}</Typography>
+              <Box sx={LOCKED_BTN_SX}>
+                <HiLockClosed size={30} style={{ color: "#C4CDD5" }} />
+              </Box>
             </Box>
-          </Box>
+            <LessonDialog
+              open={open}
+              closeDialog={closeDialog}
+              link={`${STUDENT_PATH_DASHBOARD.codePanel.workSpace(
+                courseId as string
+              )}?unitId=${unitId}&lessonId=${lesson.id}`}
+            />
+          </>
         )}
       </Stack>
     </Stack>

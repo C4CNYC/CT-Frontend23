@@ -494,6 +494,14 @@ const pt = {
   courses_lesson_plans: "Planos de aula",
   courses_teachers_forum: "Fórum de Professores",
 
+  // Catalog
+  lesson_dialog_title: "É MELHOR FAZER OS TREINAMENTOS EM ORDEM.",
+  lesson_dialog_subtitle: "Você não terminou o treinamento anterior.",
+  lesson_dialog_tooltip:
+    "A situação: Este “Treinamento” baseia-se no código do “Treinamento” anterior. Se você iniciar este “Treinamento” agora, a “Solução de Código” do treinamento anterior será adicionada. A “Solução de Código” é o código correto do “Treinamento” anterior sem qualquer personalização",
+  lesson_dialog_btn_start: "Sim. Comece a lição",
+  lesson_dialog_btn_back: "Não. Eu voltarei",
+
   // Modules pages
   modules: "Módulos",
   module: "Módulo",

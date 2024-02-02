@@ -501,6 +501,14 @@ const es = {
   courses_lesson_plans: "Planes de lecciones",
   courses_teachers_forum: "Foro de profesores",
 
+  // Catalog
+  lesson_dialog_title: "LO MEJOR ES HACER LOS ENTRENAMIENTOS EN ORDEN.",
+  lesson_dialog_subtitle: "No has terminado el entrenamiento anterior.",
+  lesson_dialog_tooltip:
+    "La situación: Esta “Capacitación” se basa en el código de la “Capacitación” anterior. Si comienza esta 'Capacitación' ahora, se agregará la 'Solución de código' de la capacitación anterior. El “Código Solución” es el código correcto del “Entrenamiento” anterior sin ninguna personalización.",
+  lesson_dialog_btn_start: "Sí. comenzar la lección",
+  lesson_dialog_btn_back: "No, volveré",
+
   // Modules pages
   modules: "Módulos",
   module: "Módulo",
