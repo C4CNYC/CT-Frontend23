@@ -87,8 +87,8 @@ export default function Index(): React.ReactElement | null {
   const { user } = useAuthContext();
   const [usersStatus, setUsersStatus] = useState<ILessonUserStatus[]>([]);
 
-  const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
-    path: "/api/",
+  const socket = io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
+    // path: "/api/",
     auth: user ? { userId: user.id } : {},
   });
   socket.on('connect_error', (error) => {

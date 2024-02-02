@@ -38,8 +38,8 @@ export const unsubscribeSocket = (socket: Socket | null): void => {
 };
 
 export const createSocket = (userId?: null | string): Socket => {
-  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API ?? "", {
-    path: "/api",
+  return io(process.env.NEXT_PUBLIC_CODE_STREAM_API_HOST ?? "", {
+    // path: "/api",
     auth: userId ? { userId } : {}
   });
 };
