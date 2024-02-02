@@ -13,8 +13,10 @@ import { DEFAULT_TAKE_PER_PAGE, FilterMode, useFilters } from "@hooks";
 import DashboardLayout from "@layouts/dashboard";
 import { MANAGER_PATH_DASHBOARD } from "@routes/manager.paths";
 import { STUDENT_PATH_DASHBOARD } from "@routes/student.paths";
+import LessonStepMain from "@sections/dashboard/lessons/LessonStep/LessonStepMain";
 import CreateModuleDialog from "@sections/dashboard/modules/CreateModuleDialog";
 import ModuleCard from "@sections/dashboard/modules/ModuleCard";
+import ModuleOrganizing from "@sections/dashboard/modules/ModuleOrganizing/ModuleOrganizing";
 // import { getCountTakingElment } from "src/utils/countTakingElments";
 import SkeletonList, {
   DefaultSkeletonItem,
@@ -106,6 +108,7 @@ export default function ModulesListPage(): React.ReactElement | string {
               : null}
           </SimpleInfiniteList>
         </Box>
+        <ModuleOrganizing />
       </Container>
     </>
   );

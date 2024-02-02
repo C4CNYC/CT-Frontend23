@@ -9,18 +9,19 @@ import { studentPublicApi } from "./services/public-student";
 import { publicApi } from "./services/public/tribe-public";
 import { schoolSettingsApi } from "./services/school-settings-manager";
 import { studentAuthApi } from "./services/student-auth";
+import chatHandlerReducer from "./slices/chat-handler";
+import checkersAnimationReducer from "./slices/checkers-animation";
+import codeEditorCollabController from "./slices/code-editor-controller";
 import codePanelReducer from "./slices/code-panel";
+import codePanelGlobalReducer from "./slices/code-panel-global";
 import globalRducer from "./slices/global";
 import lessonStepsReducer from "./slices/lesson-steps";
 import managerReducer from "./slices/manager";
+import mobileTabManagerReducer from "./slices/mobile-tab-manager";
+import moduleLessonReducer from "./slices/module-organizing";
 import rabitsReduce from "./slices/rabits";
 import schoolSettingsReducer from "./slices/schoolSettings";
-import codePanelGlobalReducer from "./slices/code-panel-global"
-import tourReducer from "./slices/tour"
-import checkersAnimationReducer from "./slices/checkers-animation"
-import mobileTabManagerReducer from "./slices/mobile-tab-manager";
-import chatHandlerReducer from "./slices/chat-handler";
-import codeEditorCollabController from "./slices/code-editor-controller";
+import tourReducer from "./slices/tour";
 
 interface INoopStorage {
   getItem: (_key: string) => Promise<null>;
@@ -48,7 +49,7 @@ export const rootPersistConfig = {
   key: "root",
   storage,
   keyPrefix: "redux-",
-  whitelist: ['codePanel'],
+  whitelist: ["codePanel"],
 };
 
 const rootReducer = combineReducers({
@@ -62,6 +63,7 @@ const rootReducer = combineReducers({
   global: globalRducer,
   manager: managerReducer,
   lessonSteps: lessonStepsReducer,
+  moduleLesson: moduleLessonReducer,
   schoolSettings: schoolSettingsReducer,
   codePanel: codePanelReducer,
   rabits: rabitsReduce,
@@ -70,7 +72,7 @@ const rootReducer = combineReducers({
   checkersAnimation: checkersAnimationReducer,
   mobileTabManager: mobileTabManagerReducer,
   chatHandler: chatHandlerReducer,
-  codeEditorController: codeEditorCollabController
+  codeEditorController: codeEditorCollabController,
 });
 
 export default rootReducer;

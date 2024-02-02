@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { LoadingButton } from "@mui/lab";
@@ -36,6 +37,16 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
 
   const [openPopover, setOpenPopover] = useState<HTMLElement | null>(null);
   const [deleteModule] = useDeleteModuleMutation();
+
+  const router = useRouter();
+
+  const openContentCreationTool = (): void => {
+    router.push(
+      `${router.pathname}?${new URLSearchParams({ moduleId: module.id })}`,
+      undefined,
+      { shallow: true }
+    );
+  };
 
   const onDelete = async (): Promise<void> => {
     setLoading(true);
@@ -182,6 +193,10 @@ export default function ModuleCard({ module }: any): React.ReactElement | null {
             {translate("actions_edit")}
           </MenuItem>
         </CreateModuleDialog>
+
+        <MenuItem onClick={() => openContentCreationTool()}>
+          rearenge lesson
+        </MenuItem>
 
         <Divider sx={{ borderStyle: "dashed" }} />
 
