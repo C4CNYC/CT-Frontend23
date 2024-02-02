@@ -20,7 +20,7 @@ import {
   usePostProjectMutation,
   useUpdateProjectCoverMutation,
 } from "src/redux/services/manager/gallery-student";
-import { getImageFromCode } from "src/lib/utils/getImageFromCode";
+// import { getImageFromCode } from "src/lib/utils/getImageFromCode";
 
 interface IPublishModal {
   children: React.ReactElement;
@@ -75,6 +75,7 @@ const PublishModal = ({
 
   const onSubmit = async (data: FormValuesProps): Promise<void> => {
     const file = new FormData();
+    const { getImageFromCode } = await import("src/lib/utils/getImageFromCode");
     const cover = await getImageFromCode(code);
     try {
       const postedProject = await postProject({

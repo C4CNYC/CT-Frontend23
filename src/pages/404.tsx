@@ -1,7 +1,7 @@
 import Head from "next/head";
 import NextLink from "next/link";
 
-import { PageNotFoundIllustration } from "@assets/illustrations";
+import PageNotFoundIllustration from "@assets/illustrations/PageNotFoundIllustration";
 import { m } from "framer-motion";
 
 import { Box, Button, Typography } from "@mui/material";
