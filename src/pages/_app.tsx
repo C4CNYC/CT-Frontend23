@@ -18,6 +18,9 @@ import { ThemeProvider } from "src/theme"
 import "src/locales/i18n"
 import "react-lazy-load-image-component/src/effects/blur.css"
 import "simplebar/dist/simplebar.css"
+// slick-carousel
+import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css"
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode
